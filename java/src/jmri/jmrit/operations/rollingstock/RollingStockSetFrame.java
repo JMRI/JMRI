@@ -512,6 +512,8 @@ public class RollingStockSetFrame<T extends RollingStock> extends OperationsFram
                 if (trackDestinationBox.getSelectedItem() != null) {
                     destTrack = (Track) trackDestinationBox.getSelectedItem();
                 }
+                log.debug("changeDestination: {}, ({})", destinationBox.getSelectedItem(),
+                        destTrack);
                 if (destTrack != null && rs.getDestinationTrack() != destTrack
                         && destTrack.getTrackType().equals(Track.STAGING)
                         && (rs.getTrain() == null || !rs.getTrain().isBuilt())) {
@@ -749,22 +751,24 @@ public class RollingStockSetFrame<T extends RollingStock> extends OperationsFram
         if (destinationBox.getSelectedItem() == null) {
             trackDestinationBox.removeAllItems();
         } else {
-            log.debug("RollingStockFrame sees destination: {}", destinationBox.getSelectedItem());
-            Location loc = (Location) destinationBox.getSelectedItem();
+            log.debug("updateDestinationTrackComboBox destination: {}, ({})", destinationBox.getSelectedItem(),
+                    trackDestinationBox.getSelectedItem());
+            Location destination = (Location) destinationBox.getSelectedItem();
             Track track = null;
             if (trackDestinationBox.getSelectedItem() != null) {
                 track = (Track) trackDestinationBox.getSelectedItem();
             }
-            loc.updateComboBox(trackDestinationBox, _rs, autoDestinationTrackCheckBox.isSelected(), true);
+            destination.updateComboBox(trackDestinationBox, _rs, autoDestinationTrackCheckBox.isSelected(), true);
             // check for staging, add track if train is built and terminates into staging
             if (autoDestinationTrackCheckBox.isSelected() && trainBox.getSelectedItem() != null) {
                 Train train = (Train) trainBox.getSelectedItem();
                 if (train.isBuilt() && train.getTerminationTrack() != null
-                        && train.getTerminationTrack().getLocation() == loc) {
+                        && train.getTerminationTrack().getLocation() == destination) {
                     trackDestinationBox.addItem(train.getTerminationTrack());
+                    trackDestinationBox.setSelectedItem(track);
                 }
             }
-            if (_rs != null && _rs.getDestination() != null && _rs.getDestination().equals(loc)) {
+            if (_rs != null && _rs.getDestination() != null && _rs.getDestination().equals(destination)) {
                 if (_rs.getDestinationTrack() != null) {
                     trackDestinationBox.setSelectedItem(_rs.getDestinationTrack());
                 } else if (track != null) {

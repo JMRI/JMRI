@@ -19,6 +19,7 @@
   <version author="Alain Le Marchand" version="1.2" lastUpdated="20140830"/>
   <version author="Alain Le Marchand" version="1.3" lastUpdated="20160124"/>
   <version author="Marc N Fournier" version="1.4" lastUpdated="20170210"/>
+  <version author="Alain Le Marchand" version="1.5" lastUpdated="20171217"/>
   <!-- Created from version 36 of the Digitrax_01x3 file -->
   <!-- Version 0 - New Series 6 non-sound Digitrax decoders (Alain Le Marchand) -->
   <!--             DH166D, DH166P, DH166PD, DN136D, DN136PS, DN146IP, DN166PS, DZ126, DZ126PS, DS126IN, DZ126T, DZ146, DZ146PS
@@ -29,6 +30,7 @@
   <!-- Version 1.3-CV7 checked equal to 51 on DN136D - suspect all versions starting with 51, in full overlap with Series 5 (Alain Le Marchand)    -->
   <!--             Changed Low Version from 52 to 51                                                -->
   <!-- Version 1.4-Add DH166MT -->
+  <!-- Version 1.5-Add DN166I3 + Named outputs for N scale Intermountain decoders DN166Ixx -->
   <!-- WARNING :   High Versions of decoders (CV07) unknown (by me) - to be adjusted after users feed back  -->
   <decoder>
     <family name="Series 6 with FX3, silent, improved BEMF" mfg="Digitrax" lowVersionID="51" highVersionID="64">
@@ -94,67 +96,76 @@
         <size length="1.158" width="0.386" height="0.115" units="inches"/>
       </model>
       <model model="DN166I0" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale SD40T-2/SD45T-2 Tunnel Motor">
-        <output name="1" label="LED" connection="LED"/>
-        <output name="2" label="LED" connection="LED"/>
-        <output name="3" label="Pad" connection="solder"/>
-        <output name="4" label="Pad" connection="solder"/>
-        <output name="5" label="Pad" connection="solder"/>
-        <output name="6" label="Pad" connection="solder"/>
+        <output name="1" label="LED|Front" connection="LED"/>
+        <output name="2" label="LED|Rear" connection="LED"/>
+        <output name="3" label="Pad|F1" connection="solder"/>
+        <output name="4" label="Pad|F2" connection="solder"/>
+        <output name="5" label="Pad|F3" connection="solder"/>
+        <output name="6" label="Pad|F4" connection="solder"/>
         <size length="3.5" width=".367" height="0.135" units="inches"/>
       </model>
       <model model="DN166I1A" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale FT-A Units">
-        <output name="1" label="Pad/LED" connection="solder"/>
-        <output name="2" label="Pad/LED" connection="solder"/>
-        <output name="3" label="Pad" connection="solder"/>
-        <output name="4" label="Pad" connection="solder"/>
-        <output name="5" label="Pad" connection="solder"/>
-        <output name="6" label="Pad" connection="solder"/>
+        <output name="1" label="Pad|F0F" connection="solder"/>
+        <output name="2" label="Pad|F0R" connection="solder"/>
+        <output name="3" label="Pad|F1" connection="solder"/>
+        <output name="4" label="Pad|F2" connection="solder"/>
+        <output name="5" label="Pad|F3" connection="solder"/>
+        <output name="6" label="Pad|F4" connection="solder"/>
         <size length="2.165" width="0.472" height="0.098" units="inches"/>
       </model>
       <model model="DN166I1B" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale FT-B Units">
-        <output name="1" label="Pad/LED" connection="solder"/>
-        <output name="2" label="Pad/LED" connection="solder"/>
-        <output name="3" label="Pad" connection="solder"/>
-        <output name="4" label="Pad" connection="solder"/>
-        <output name="5" label="Pad" connection="solder"/>
-        <output name="6" label="Pad" connection="solder"/>
+        <output name="1" label="Pad|F0F" connection="solder"/>
+        <output name="2" label="Pad|F0R" connection="solder"/>
+        <output name="3" label="Pad|F1" connection="solder"/>
+        <output name="4" label="Pad|F2" connection="solder"/>
+        <output name="5" label="Pad|F3" connection="solder"/>
+        <output name="6" label="Pad|F4" connection="solder"/>
         <size length="2.165" width="0.472" height="0.098" units="inches"/>
       </model>
       <model model="DN166I1C" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale F3 &amp; F7 Units">
-        <output name="1" label="Pad/LED" connection="solder"/>
-        <output name="2" label="Pad/LED" connection="solder"/>
-        <output name="3" label="Pad" connection="solder"/>
-        <output name="4" label="Pad" connection="solder"/>
-        <output name="5" label="Pad" connection="solder"/>
-        <output name="6" label="Pad" connection="solder"/>
+        <output name="1" label="Pad|F0F" connection="solder"/>
+        <output name="2" label="Pad|F0R" connection="solder"/>
+        <output name="3" label="Pad|F1" connection="solder"/>
+        <output name="4" label="Pad|F2" connection="solder"/>
+        <output name="5" label="Pad|F3" connection="solder"/>
+        <output name="6" label="Pad|F4" connection="solder"/>
         <size length="2.165" width="0.472" height="0.098" units="inches"/>
       </model>
       <model model="DN166I1D" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for New InterMountain N-Scale F7A/B, FP7 &amp; FP9 Units">
-        <output name="1" label="Pad/LED" connection="solder"/>
-        <output name="2" label="Pad/LED" connection="solder"/>
-        <output name="3" label="Pad" connection="solder"/>
-        <output name="4" label="Pad" connection="solder"/>
-        <output name="5" label="Pad" connection="solder"/>
-        <output name="6" label="Pad" connection="solder"/>
+        <output name="1" label="Pad|F0F" connection="solder"/>
+        <output name="2" label="Pad|F0R" connection="solder"/>
+        <output name="3" label="Pad|F1" connection="solder"/>
+        <output name="4" label="Pad|F2" connection="solder"/>
+        <output name="5" label="Pad|F3" connection="solder"/>
+        <output name="6" label="Pad|F4" connection="solder"/>
         <size length="2.165" width="0.472" height="0.098" units="inches"/>
       </model>
       <model model="DN166I2" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale FP7 &amp; FP9 Units">
-        <output name="1" label="Pad/LED" connection="solder"/>
-        <output name="2" label="Pad/LED" connection="solder"/>
-        <output name="3" label="Pad" connection="solder"/>
-        <output name="4" label="Pad" connection="solder"/>
-        <output name="5" label="Pad" connection="solder"/>
-        <output name="6" label="Pad" connection="solder"/>
+        <output name="1" label="Pad|F0F" connection="solder"/>
+        <output name="2" label="Pad|F0R" connection="solder"/>
+        <output name="3" label="Pad|F1" connection="solder"/>
+        <output name="4" label="Pad|F2" connection="solder"/>
+        <output name="5" label="Pad|F3" connection="solder"/>
+        <output name="6" label="Pad|F4" connection="solder"/>
         <size length="2.165" width="0.472" height="0.098" units="inches"/>
       </model>
       <model model="DN166I2B" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N-Scale FP7 released 2014">
-        <output name="1" label="Pad/LED" connection="solder"/>
-        <output name="2" label="Pad/LED" connection="solder"/>
-        <output name="3" label="Pad" connection="solder"/>
-        <output name="4" label="Pad" connection="solder"/>
-        <output name="5" label="Pad" connection="solder"/>
-        <output name="6" label="Pad" connection="solder"/>
+        <output name="1" label="Pad|F0F" connection="solder"/>
+        <output name="2" label="Pad|F0R" connection="solder"/>
+        <output name="3" label="Pad|F1" connection="solder"/>
+        <output name="4" label="Pad|F2" connection="solder"/>
+        <output name="5" label="Pad|F3" connection="solder"/>
+        <output name="6" label="Pad|F4" connection="solder"/>
         <size length="2.165" width="0.472" height="0.098" units="inches"/>
+      </model>
+      <model model="DN166I3" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2.0A)" formFactor="N" connector="DropIn" comment="for InterMountain N Scale SD40-2 released 2017">
+        <output name="1" label="LED|Front" connection="LED"/>
+        <output name="2" label="LED|Rear" connection="LED"/>
+        <output name="3" label="Pad|F1" connection="solder"/>
+        <output name="4" label="Pad|F2" connection="solder"/>
+        <output name="5" label="Pad|F3" connection="solder"/>
+        <output name="6" label="Pad|F4" connection="solder"/>
+        <size length="2.603" width="0.329" height="0.065" units="inches"/>
       </model>
       <model model="DN166PS" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="N" connector="NMRAmedium" comment="N/HO-Scale, with Medium Plug">
         <output name="1" label="White" connection="plug"/>

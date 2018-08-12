@@ -81,8 +81,8 @@ pas &#234;tre un probl&#232;me pour vous. </p>
 
 	  <p>Certaines versions de Windows, en particulier Win2000, ne peut pas g&#233;rer
  la liaison LocoBuffer correctement. Vous verrez 
-DecoderPro ou JmriDemo &#234;tre incapable de communiquer avec la
-centrale de commande, m&#234;me si vous pouvez voir le trafic avec la LocoNet sur le moniteur
+ DecoderPro ou PanelPro &#234;tre incapable de communiquer avec la
+ centrale de commande, m&#234;me si vous pouvez voir le trafic avec la LocoNet sur le moniteur
 LocoNet . Pour r&#233;soudre ce probl&#232;me, essayez d'ouvrir les pr&#233;f&#233;rences et 
 s&#233;lectionnez l'option "aucun contr&#244;le de flux", cliquez sur Enregistrer, puis quittez et
 red&#233;marrer le programme. Notez que ce probl&#232;me est sp&#233;cifique &#224;

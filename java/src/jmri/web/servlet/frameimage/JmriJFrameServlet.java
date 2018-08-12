@@ -36,6 +36,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
+import jmri.InstanceManager;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 import jmri.server.json.JSON;
@@ -206,8 +207,9 @@ public class JmriJFrameServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (WebServerPreferences.getDefault().isDisableFrames()) {
-            if (WebServerPreferences.getDefault().isRedirectFramesToPanels()) {
+        WebServerPreferences preferences = InstanceManager.getDefault(WebServerPreferences.class);
+        if (preferences.isDisableFrames()) {
+            if (preferences.isRedirectFramesToPanels()) {
                 if (JSON.JSON.equals(request.getParameter("format"))) {
                     response.sendRedirect("/panel?format=json");
                 } else {
@@ -220,7 +222,7 @@ public class JmriJFrameServlet extends HttpServlet {
         }
         JmriJFrame frame = null;
         String name = getFrameName(request.getRequestURI());
-        List<String> disallowedFrames = Arrays.asList(WebServerPreferences.getDefault().getDisallowedFrames());
+        List<String> disallowedFrames = Arrays.asList(preferences.getDisallowedFrames());
         if (name != null) {
             if (disallowedFrames.contains(name)) {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Frame [" + name + "] not allowed (check Preferences)");
@@ -256,12 +258,13 @@ public class JmriJFrameServlet extends HttpServlet {
     }
 
     private void doHtml(JmriJFrame frame, HttpServletRequest request, HttpServletResponse response, Map<String, String[]> parameters) throws ServletException, IOException {
+        WebServerPreferences preferences = InstanceManager.getDefault(WebServerPreferences.class);
         Date now = new Date();
         boolean click = false;
-        boolean useAjax = WebServerPreferences.getDefault().isUseAjax();
-        boolean plain = WebServerPreferences.getDefault().isSimple();
-        String clickRetryTime = Integer.toString(WebServerPreferences.getDefault().getClickDelay());
-        String noclickRetryTime = Integer.toString(WebServerPreferences.getDefault().getRefreshDelay());
+        boolean useAjax = preferences.isUseAjax();
+        boolean plain = preferences.isSimple();
+        String clickRetryTime = Integer.toString(preferences.getClickDelay());
+        String noclickRetryTime = Integer.toString(preferences.getRefreshDelay());
         boolean protect = false;
         if (parameters.containsKey("coords")) { // NOI18N
             click = true;
@@ -335,7 +338,7 @@ public class JmriJFrameServlet extends HttpServlet {
     }
 
     private void doList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<String> disallowedFrames = Arrays.asList(WebServerPreferences.getDefault().getDisallowedFrames());
+        List<String> disallowedFrames = Arrays.asList(InstanceManager.getDefault(WebServerPreferences.class).getDisallowedFrames());
         String format = request.getParameter("format"); // NOI18N
         ObjectMapper mapper = new ObjectMapper();
         Date now = new Date();
@@ -417,10 +420,10 @@ public class JmriJFrameServlet extends HttpServlet {
             return null;
         } else {
             // if request contains parameters, strip those off
-            int stop = (URI.contains("?")) ? URI.indexOf("?") : URI.length(); // NOI18N
-            String name = URI.substring(URI.lastIndexOf("/"), stop); // NOI18N
+            int stop = (URI.contains("?")) ? URI.indexOf('?') : URI.length(); // NOI18N
+            String name = URI.substring(URI.lastIndexOf('/'), stop); // NOI18N
             // URI contains a leading / at this point
-            name = name.substring(1, name.lastIndexOf(".")); // NOI18N
+            name = name.substring(1, name.lastIndexOf('.')); // NOI18N
             name = URLDecoder.decode(name, UTF8); //undo escaped characters
             log.debug("Frame name is {}", name); // NOI18N
             return name;

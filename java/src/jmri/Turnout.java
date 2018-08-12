@@ -253,6 +253,12 @@ public interface Turnout extends NamedBean {
     public int getFeedbackMode();
 
     /**
+     * Request an update from the layout soft/hardware. May not even happen, and
+     * if it does it will happen later; listen for the result.
+     */
+    public void requestUpdateFromLayout();
+
+    /**
      * Get if automatically retrying an operation is blocked for this turnout.
      *
      * @return true if retrying is disabled; false otherwise

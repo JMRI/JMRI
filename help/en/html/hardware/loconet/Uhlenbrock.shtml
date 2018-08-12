@@ -7,8 +7,8 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI Hardware Support - Uhlenbrock Intellibox</title>
-  <meta content="Michael Beck" name="Author">
-  <meta content="John Plocher" name="Author">
+  <meta name="author" content="Michael Beck">
+  <meta name="author" content="John Plocher">
   <meta name="keywords" content=
   "Uhlenbrock Intellibox java model railroad JMRI install">
   <!-- Style -->

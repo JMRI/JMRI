@@ -28,9 +28,11 @@ import org.slf4j.LoggerFactory;
 abstract public class AbstractSimulatorConnectionConfig extends AbstractConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process. Currently uses the
-     * serialportadapter, but this will change to a simulator port adapter in
-     * due course.
+     * Create a connection configuration with a preexisting adapter. This is
+     * used principally when loading a configuration that defines this
+     * connection.
+     *
+     * @param p the adapter to create a connection configuration for
      */
     public AbstractSimulatorConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         adapter = p;
@@ -55,9 +57,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
     @SuppressWarnings("unchecked")
     @Override
     protected void checkInitDone() {
-        if (log.isDebugEnabled()) {
-            log.debug("init called for " + name());
-        }
+        log.debug("init called for ()", name());
         if (init) {
             return;
         }
@@ -67,8 +67,8 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-                        JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
-                        systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
+                        systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
                 }
             });
@@ -76,8 +76,8 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
                 @Override
                 public void focusLost(FocusEvent e) {
                     if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-                        JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
-                        systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
+                        systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
                 }
 
@@ -89,7 +89,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-                        JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionNameDialog", connectionNameField.getText()));
                         connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                     }
                 }
@@ -98,7 +98,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
                 @Override
                 public void focusLost(FocusEvent e) {
                     if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-                        JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionNameDialog", connectionNameField.getText()));
                         connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                     }
                 }
@@ -130,7 +130,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         }
 
         if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
     }
@@ -180,7 +180,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         }
 
         if (adapter.getSystemConnectionMemo() != null) {
-            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
         NUMOPTIONS = NUMOPTIONS + options.size();

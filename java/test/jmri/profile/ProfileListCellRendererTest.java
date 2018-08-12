@@ -31,7 +31,7 @@ public class ProfileListCellRendererTest {
      */
     @Test
     public void testGetListCellRendererComponent() {
-        JList list = new JList(new ProfileListModel());
+        JList<Profile> list = new JList<>(new ProfileListModel());
         list.setToolTipText(null);
         ProfileListCellRenderer instance = new ProfileListCellRenderer();
         Profile activeProfile = ProfileManager.getDefault().getActiveProfile();

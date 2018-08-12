@@ -31,12 +31,6 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
         return Bundle.getMessage("BeanNameReporter");
     }
     
-    // for combo boxes
-    @Override
-    public String toString() {
-        return getDisplayName();
-    }
-
     @Override
     public Object getCurrentReport() {
         return _currentReport;

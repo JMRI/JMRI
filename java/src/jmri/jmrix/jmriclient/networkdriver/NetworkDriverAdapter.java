@@ -46,8 +46,7 @@ public class NetworkDriverAdapter extends JMRIClientPortController {
 
     @Deprecated
     static public NetworkDriverAdapter instance() {
-        log.error("Deprecated method instance Called");
-        new java.lang.Exception().printStackTrace();
+        log.error("Deprecated method instance Called", new Exception());
         return null;
     }
 

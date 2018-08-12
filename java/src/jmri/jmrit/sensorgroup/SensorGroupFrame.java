@@ -77,14 +77,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         p2xs.add(p21s);
         _sensorModel = new SensorTableModel();
         JTable sensorTable = new JTable(_sensorModel);
-        /*
-         JTable sensorTable = jmri.util.JTableUtil.sortableDataModel(sensorModel);
-         try {
-         jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter)sensorTable.getModel());
-         tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-         tmodel.setSortingStatus(SensorTableModel.SNAME_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
-         } catch (ClassCastException e3) {}  // if not a sortable table model
-         */
+
         sensorTable.setRowSelectionAllowed(false);
         sensorTable.setPreferredScrollableViewportSize(new java.awt.Dimension(450, 200));
         TableColumnModel sensorColumnModel = sensorTable.getColumnModel();

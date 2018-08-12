@@ -7,6 +7,7 @@ import javax.vecmath.Point3d;
 import jmri.CommandStation;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,7 +55,7 @@ public class Engine implements ReadingListener {
     public double getVSound() {
         return vsound;
     }
-    private double vsound = 0.013544;  // 0.013544 inches/usec, .000345 m/usec, 
+    private double vsound = 0.013544;  // 0.013544 inches/usec, .000345 m/usec,
     private int offset = 0;
 
     public void setOffset(int offset) {
@@ -102,7 +103,7 @@ public class Engine implements ReadingListener {
     }
 
     /**
-     * Get a particular reciever by address (starting at 1)
+     * Get a particular receiver by address (starting at 1)
      */
     public void setReceiver(int address, Receiver receiver) {
         if (receivers == null) {
@@ -153,7 +154,7 @@ public class Engine implements ReadingListener {
         log.debug("po false " + r.getId());
         pollOutstanding = false;
 
-        // make a list of receiver positions to provide 
+        // make a list of receiver positions to provide
         // to the new Calculator.  Missing/unconfigured receivers
         // are null.
         Point3d list[] = new Point3d[receivers.length];
@@ -166,7 +167,7 @@ public class Engine implements ReadingListener {
 
             Point3d p = getReceiverPosition(i);
             if (p != null) {
-                receivers[i].setLastTime((int) r.getValue(i));  // recievers numbered from 1
+                receivers[i].setLastTime((int) r.getValue(i));  // receivers numbered from 1
                 log.debug("    " + i + "th value min " + receivers[i].getMinTime() + " < time "
                         + r.getValue(i) + " < max "
                         + receivers[i].getMaxTime() + " at " + p);
@@ -193,7 +194,7 @@ public class Engine implements ReadingListener {
         Distributor.instance().submitMeasurement(m);
     }
 
-    // Store the lastMeasurement 
+    // Store the lastMeasurement
     void saveLastMeasurement(String id, Measurement m) {
         for (int i = 0; i < getNumTransmitters(); i++) {
             if (getTransmitter(i).getId().equals(id) && getTransmitter(i).isPolled()) {
@@ -317,7 +318,7 @@ public class Engine implements ReadingListener {
                 Transmitter t = new Transmitter(r.getId(), false, address, r.isLongAddress());
                 t.setRosterName(r.getId());
                 transmitters.add(t);
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 // just skip this entry
                 if (r != null) {
                     log.warn("Skip roster entry: " + r.getId());
@@ -330,8 +331,8 @@ public class Engine implements ReadingListener {
         // load the polling status, custom IDs, etc, from file if possible
         try {
             loadPollConfig(new File(PollingFile.defaultFilename()));
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException | JDOMException e) {
+            log.error("Unable to load {}", PollingFile.defaultFilename(), e);
         }
     }
 
@@ -351,7 +352,7 @@ public class Engine implements ReadingListener {
         if (file.exists()) {
             PollingFile pf = new PollingFile();
             pf.loadFile(file);
-            // first make sure transmitters defined      
+            // first make sure transmitters defined
             pf.getTransmitters(this);
             // and possibly start polling
             pf.getPollValues();

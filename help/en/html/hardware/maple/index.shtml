@@ -149,7 +149,8 @@
       <h3>Third Party info</h3>
 
       <p><a href="http://www.maplesystems.com">Maple Systems
-      website</a> <!--#include virtual="/Footer" --></p>
+      website</a></p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

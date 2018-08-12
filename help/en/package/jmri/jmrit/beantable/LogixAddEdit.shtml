@@ -9,7 +9,7 @@
   <title>JMRI: Adding/Editing Logix</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Logix Add Edit">
   <!--#include virtual="/Style" -->
 </head>
@@ -76,7 +76,7 @@
       menu on the Logix Table will open a window with a list showing
       the details for each conditional. It is an effective way to
       review the entire contents of a Logix. Click on the close button
-      to close the window.<span class="since">since 4.7.3</span><p>
+      to close the window.<span class="since">since 4.7.3</span>
       <div style="margin-left: 2em">
       <a href="images/ConditionalBrowser.png">
       <img src="images/ConditionalBrowser.png"

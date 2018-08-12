@@ -165,7 +165,8 @@ file.
       <p>Now that panel should show icons for the occupancy sensor
       and turnout that work independently to show both the position
       (by following the line) and the occupancy (through the color)
-      of that turnout. <!--#include virtual="/Footer" --></p>
+      of that turnout.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

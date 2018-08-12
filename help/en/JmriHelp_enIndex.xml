@@ -34,8 +34,22 @@
  </indexitem>
  <indexitem text="CAN Bus " target="html.hardware.can.index"/>
 
- <indexitem text="CBUS (MERG) " target="html.hardware.can.cbus.index"/>
+ <indexitem text="CBUS (MERG) " target="html.hardware.can.cbus.index">
+  <indexitem text="Connection Details " target="html.hardware.can.cbus.Details"/>
 
+  <indexitem text="Naming Events " target="html.hardware.can.cbus.Names"/>
+
+  <indexitem text="Console Tool " target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame"/>
+
+  <indexitem text="Send Frame / Event Tool " target="package.jmri.jmrix.can.swing.send.CanSendFrame"/>
+
+  <indexitem text="Event Capture Tool " target="package.jmri.jmrix.can.swing.configtool.ConfigToolFrame"/>
+
+  <indexitem text="Event Table Tool " target="package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane"/>
+
+  <indexitem text="Node Config Tool " target="package.jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane"/>
+
+ </indexitem>
  <indexitem text="Clock ">
   <indexitem text="Introduction " target="html.tools.fastclock.index"/>
 
@@ -130,7 +144,9 @@
 
  <indexitem text="Error Codes " target="html.setup.Errors"/>
 
- <indexitem text="FindBugs " target="html.doc.Technical.FindBugs"/>
+ <indexitem text="FindBugs " target="html.doc.Technical.SpotBugs"/>
+
+ <indexitem text="SpotBugs " target="html.doc.Technical.SpotBugs"/>
 
  <indexitem text="Fleischmann " target="html.hardware.loconet.Fleischmann"/>
 
@@ -278,6 +294,8 @@
  </indexitem>
  <indexitem text="MacOS Serial Ports " target="html.hardware.MacintoshSerialPorts"/>
 
+ <indexitem text="Manifest Creator " target="html.apps.ManifestCreator.index"/>
+
  <indexitem text="Manuals " target="manual.index"/>
 
  <indexitem text="Marklin " target="html.hardware.marklin.index"/>
@@ -300,6 +318,8 @@
 
  <indexitem text="OpenLCB " target="html.hardware.openlcb.index">
   <indexitem text="Configure Nodes " target="package.jmri.jmrix.openlcb.swing.networktree.NetworkTreePane"/>
+
+  <indexitem text="OpenLCB Signal Masts " target="html.hardware.openlcb.OlcbSignalMast"/>
 
  </indexitem>
  <indexitem text="OperationsPro " target="package.jmri.jmrit.operations.Operations">
@@ -529,6 +549,8 @@
 
  </indexitem>
  <indexitem text="Tracker " target="html.tools.tracker.index"/>
+
+ <indexitem text="TrainCrew " target="html.apps.TrainCrew.index"/>
 
  <indexitem text="Transits ">
   <indexitem text="Add/Edit a Transit " target="package.jmri.jmrit.beantable.TransitAddEdit"/>

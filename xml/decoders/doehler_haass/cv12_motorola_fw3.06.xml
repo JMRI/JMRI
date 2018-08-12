@@ -57,48 +57,56 @@
         <choice xml:lang="it">Disattivato</choice>
         <choice xml:lang="fr">Désactivé</choice>
         <choice xml:lang="de">Deaktiviert</choice>
+        <choice xml:lang="ca">Desactivat</choice>
       </enumChoice>
       <enumChoice choice="Active (main address only)" value="1">
         <choice>Active (main address only)</choice>
         <choice xml:lang="it">Attivo (solo Ind.principale)</choice>
         <choice xml:lang="fr">Actif (adresse principale)</choice>
         <choice xml:lang="de">Aktiv (ohne Zusatzadresse)</choice>
+        <choice xml:lang="ca">Actiu (No és adreça principal)</choice>
       </enumChoice>
       <enumChoice choice="Active (with 1 extra address)" value="2">
         <choice>Active (with 1 extra address)</choice>
         <choice xml:lang="it">Attivo (con 1 Ind.extra)</choice>
         <choice xml:lang="fr">Actif (1 adresse supplémentaire)</choice>
         <choice xml:lang="de">Aktiv (mit 1 Zusatzadresse)</choice>
+        <choice xml:lang="ca">Actiu (amb una adreça extra)</choice>
       </enumChoice>
       <enumChoice choice="Active (with 2 extra addresses)" value="3">
         <choice>Active (with 2 extra addresses)</choice>
         <choice xml:lang="it">Attivo (con 2 Ind.extra)</choice>
         <choice xml:lang="fr">Actif (2 adresses supplémentaires)</choice>
         <choice xml:lang="de">Aktiv (mit 2 Zusatzadressen)</choice>
+         <choice xml:lang="ca">Actiu (amb dues adreçes extres)</choice>
       </enumChoice>
       <enumChoice choice="Active (with 3 extra addresses)" value="4">
         <choice>Active (with 3 extra addresses)</choice>
         <choice xml:lang="it">Attivo (con 3 Ind.extra)</choice>
         <choice xml:lang="fr">Actif (3 adresses supplémentaires)</choice>
         <choice xml:lang="de">Aktiv (mit 3 Zusatzadressen)</choice>
+         <choice xml:lang="ca">Actiu (amb tres adreces extres)</choice>
       </enumChoice>
       <enumChoice choice="Active (with 4 extra addresses)" value="5">
         <choice>Active (with 4 extra addresses)</choice>
         <choice xml:lang="it">Attivo (con 4 Ind.extra)</choice>
         <choice xml:lang="fr">Actif (4 adresses supplémentaires)</choice>
         <choice xml:lang="de">Aktiv (mit 4 Zusatzadressen)</choice>
+         <choice xml:lang="ca">Actiu (amb quatre adreces extres)</choice>
       </enumChoice>
       <enumChoice choice="Active (with 5 extra addresses)" value="6">
         <choice>Active (with 5 extra addresses)</choice>
         <choice xml:lang="it">Attivo (con 5 Ind.extra)</choice>
         <choice xml:lang="fr">Actif (5 adresses supplémentaires)</choice>
         <choice xml:lang="de">Aktiv (mit 5 Zusatzadressen)</choice>
+         <choice xml:lang="ca">Actiu (amb cinc adreces extres)</choice>
       </enumChoice>
       <enumChoice choice="Active (with 6 extra addresses)" value="7">
         <choice>Active (with 6 extra addresses)</choice>
         <choice xml:lang="it">Attivo (con 6 Ind.extra)</choice>
         <choice xml:lang="fr">Actif (6 adresses supplémentaires)</choice>
         <choice xml:lang="de">Aktiv (mit 6 Zusatzadressen)</choice>
+         <choice xml:lang="ca">Actiu (amb sis adreces extres)</choice>
       </enumChoice>
     </enumVal>
     <label>Motorola</label>
@@ -109,5 +117,6 @@
     <label xml:lang="it">Direzione invertita in MM1</label>
     <label xml:lang="fr">Direction inversée en MM1</label>
     <label xml:lang="de">Fahrtrichtung in MM1</label>
+    <label xml:lang="ca">Invertir Sentit Motorola</label>
   </variable>
 </variables>

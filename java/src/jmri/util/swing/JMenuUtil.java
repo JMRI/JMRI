@@ -1,7 +1,5 @@
 package jmri.util.swing;
 
-import static jmri.util.swing.GuiUtilBase.rootFromName;
-
 import java.awt.Container;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;

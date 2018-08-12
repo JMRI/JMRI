@@ -66,7 +66,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
 
         c.doNextStep(new SerialReply(), i);
 
-        jmri.util.JUnitAppender.assertWarnMessage("addresses don't match: 128, 1, going to state 1");
+        jmri.util.JUnitAppender.assertWarnMessage("addresses don't match: 128, 1. going to state 1");
         Assert.assertEquals("not invoked", false, invoked);
     }
 
@@ -94,9 +94,10 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
         DataInputStream i = new DataInputStream(new ByteArrayInputStream(
                 new byte[]{(byte) 129, (byte) 90, (byte) 129, (byte) 32}));
 
+
         c.doNextStep(new SerialReply(), i);
 
-        jmri.util.JUnitAppender.assertWarnMessage("parity mismatch: 18, going to state 2 with content 129,32");
+        jmri.util.JUnitAppender.assertWarnMessage("parity mismatch: 18, going to state 2 with content 129, 32");
         Assert.assertEquals("not invoked", false, invoked);
     }
 
@@ -242,7 +243,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
         c.doNextStep(new SerialReply(), i);
         c.doNextStep(new SerialReply(), i);
 
-        jmri.util.JUnitAppender.assertWarnMessage("addresses don't match: 128, 129, going to state 1");
+        jmri.util.JUnitAppender.assertWarnMessage("addresses don't match: 128, 129. going to state 1");
         Assert.assertEquals("invoked", true, invoked);
         Assert.assertEquals("byte 0", (byte) 129, testBuffer[0]);
         Assert.assertEquals("byte 1", (byte) 90, testBuffer[1]);
@@ -262,7 +263,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
         c.doNextStep(new SerialReply(), i);
         c.doNextStep(new SerialReply(), i);
 
-        jmri.util.JUnitAppender.assertWarnMessage("parity mismatch: 25, going to state 2 with content 129,90");
+        jmri.util.JUnitAppender.assertWarnMessage("parity mismatch: 25, going to state 2 with content 129, 90");
         Assert.assertEquals("invoked", true, invoked);
         Assert.assertEquals("byte 0", (byte) 129, testBuffer[0]);
         Assert.assertEquals("byte 1", (byte) 90, testBuffer[1]);
@@ -273,10 +274,10 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     @Test
     public void testSerialNodeEnumeration() {
         SerialTrafficController c = (SerialTrafficController) tc;
-        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6);
-        SerialNode f = new SerialNode(3, SerialNode.NODE2002V1);
-        SerialNode d = new SerialNode(2, SerialNode.NODE2002V1);
-        SerialNode e = new SerialNode(6, SerialNode.NODE2002V6);
+        SerialNode b = new SerialNode(1, SerialNode.NODE2002V6, c);
+        SerialNode f = new SerialNode(3, SerialNode.NODE2002V1, c);
+        SerialNode d = new SerialNode(2, SerialNode.NODE2002V1, c);
+        SerialNode e = new SerialNode(6, SerialNode.NODE2002V6, c);
         Assert.assertEquals("1st Node", b, c.getNode(0));
         Assert.assertEquals("2nd Node", f, c.getNode(1));
         Assert.assertEquals("3rd Node", d, c.getNode(2));
@@ -302,8 +303,8 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     @Test
     public void testSerialOutput() {
         SerialTrafficController c = (SerialTrafficController) tc;
-        SerialNode a = new SerialNode();
-        SerialNode g = new SerialNode(5, SerialNode.NODE2002V1);
+        SerialNode a = new SerialNode(c);
+        SerialNode g = new SerialNode(5, SerialNode.NODE2002V1, c);
         Assert.assertTrue("must Send", g.mustSend());
         g.resetMustSend();
         Assert.assertNotNull("exists", a);
@@ -418,7 +419,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
-        tc = new SerialTrafficController() {
+        tc = new SerialTrafficController(new GrapevineSystemConnectionMemo()) {
             @Override
             void loadBuffer(AbstractMRReply msg) {
                 testBuffer[0] = buffer[0];

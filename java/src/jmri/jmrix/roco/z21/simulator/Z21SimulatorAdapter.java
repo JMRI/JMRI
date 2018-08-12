@@ -1,15 +1,13 @@
 package jmri.jmrix.roco.z21.simulator;
 
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 import java.net.*;
+import jmri.JmriException;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.roco.z21.Z21Adapter;
 import jmri.jmrix.roco.z21.Z21Message;
 import jmri.jmrix.roco.z21.Z21Reply;
 import jmri.jmrix.roco.z21.Z21TrafficController;
-import jmri.JmriException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -88,16 +86,16 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
             try {
                 sourceThread.join();
             } catch (InterruptedException ie){
-                // interrupted durring cleanup.
+                // interrupted during cleanup.
             }
         }
     }
-    
+
     volatile boolean threadStopRequest;
     volatile DatagramSocket socket;
-    
+
     static class LogoffException extends JmriException {}
-    
+
     /**
      * {@inheritDoc}
      */
@@ -122,7 +120,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
                     // and wait for the data to arrive.
                     s.receive(receivePacket);
                     if (threadStopRequest) return;
-                    
+
                     Z21Message msg = new Z21Message(receivePacket.getLength());
                     for(int i=0;i< receivePacket.getLength();i++)
                         msg.setElement(i,receivePacket.getData()[i]);
@@ -154,8 +152,7 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
 
                 } catch (java.io.IOException ex3) {
                     if (!threadStopRequest) {
-                        log.debug("IO Exception" );
-                        ex3.printStackTrace();
+                        log.error("IO Exception", ex3);
                     } else {
                         return;
                     }
@@ -296,11 +293,11 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
             reply.setElement(offset++,xnetadapter.locoData[i].getAddressLsb());// byte 6, LocoAddress lsb.
             reply.setElement(offset++,0x00);// bytes 7-10,32 bit reception counter.
             reply.setElement(offset++,0x00);
-            reply.setElement(offset++,0x00); 
+            reply.setElement(offset++,0x00);
             reply.setElement(offset++,0x01);
             reply.setElement(offset++,0x00);// bytes 11-14,32 bit error counter.
             reply.setElement(offset++,0x00);
-            reply.setElement(offset++,0x00); 
+            reply.setElement(offset++,0x00);
             reply.setElement(offset++,0x00);
             reply.setElement(offset++,xnetadapter.locoData[i].getSpeed());//currently reserved.Speed in firmware<=1.12
             reply.setElement(offset++,0x00);//currently reserved.Options in firmware<=1.12

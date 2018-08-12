@@ -3,8 +3,8 @@
 <html lang="fr">
 <head>
  <title>JMRI Hardware Support - Fleischmann Twin Centre via Serial Port</title>
-    <meta content="Michael Beck" name="Author">
-    <meta content="John Plocher" name="Author">
+    <meta name="author" content="Michael Beck">
+    <meta name="author" content="John Plocher">
     <meta name="keywords" content="Uhlenbrock Intellibox java model railroad JMRI install">
 
 <!-- Style -->

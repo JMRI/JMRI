@@ -4,7 +4,7 @@ import java.util.Collection;
 import javax.annotation.Nonnull;
 
 /**
- * An ArrayList that FindBugs understands will never contain null elements.
+ * An ArrayList that SpotBugs understands will never contain null elements.
  *
  * @see java.util.ArrayList
  * @see java.util.List
@@ -13,13 +13,13 @@ import javax.annotation.Nonnull;
 public class NonNullArrayList<E> extends ArrayList<E> {
 
     @Override
-    public boolean add(@Nonnull E e) { 
+    public boolean add(@Nonnull E e) {
         if (e == null) throw new IllegalArgumentException("NonNullArrayList.addAll cannot add null item");
-        return super.add(e); 
+        return super.add(e);
     }
 
     @Override
-    public void add(int i, @Nonnull E e) { 
+    public void add(int i, @Nonnull E e) {
         if (e == null) throw new IllegalArgumentException("NonNullArrayList.addAll cannot add null item");
         super.add(i, e);
     }
@@ -31,7 +31,7 @@ public class NonNullArrayList<E> extends ArrayList<E> {
         }
         return super.addAll(c);
     }
-    
+
     @Override
     public boolean addAll(int i, Collection<? extends E> c) { // ideally, would be "extends @Nonnull e", but that's not this annotation
         for (E e : c ) {
@@ -39,28 +39,28 @@ public class NonNullArrayList<E> extends ArrayList<E> {
         }
         return super.addAll(i, c);
     }
-    
+
     @Override
     @Nonnull
     public E get(int i) { return super.get(i); }
-    
+
     @Override
     @Nonnull
     public E remove(int i) { return super.remove(i); }
-    
+
     @Override
     @Nonnull
-    public E set(int i, @Nonnull E e) { 
+    public E set(int i, @Nonnull E e) {
         if (e == null) throw new IllegalArgumentException("NonNullArrayList.addAll cannot set item null");
         return super.set(i, e);
     }
-    
-    // test routines for FindBugs checking - protected so you don't see them
+
+    // test routines for SpotBugs checking - protected so you don't see them
     // These should be clean
     protected NonNullArrayList<Integer> testAddAndReturn() {
         NonNullArrayList<Integer> t = new NonNullArrayList<>();
         t.add(100);
-        // t.add(null); // FindBugs will tag this
+        // t.add(null); // SpotBugs will tag this
         return t;
     }
 
@@ -68,8 +68,8 @@ public class NonNullArrayList<E> extends ArrayList<E> {
         NonNullArrayList<Integer> t = new NonNullArrayList<>();
         t.add(100);
         for (Integer s : t) {
-            if (s.toString().equals(c)) return true; // FindBugs should not require null check
-        }     
+            if (s.toString().equals(c)) return true; // SpotBugs should not require null check
+        }
         return false;
     }
 

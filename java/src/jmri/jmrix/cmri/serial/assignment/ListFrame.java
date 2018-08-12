@@ -87,7 +87,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
     public void initComponents() {
 
         // set the frame's initial state
-        setTitle(Bundle.getMessage("MenuItemAssignments"));
+        setTitle(Bundle.getMessage("WindowTitle") + Bundle.getMessage("WindowConnectionMemo") + _memo.getUserName()); // NOI18N
         setSize(500, 300);
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -142,8 +142,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
         panel1.add(panel11);
         panel1.add(panel12);
         Border panel1Border = BorderFactory.createEtchedBorder();
-        Border panel1Titled = BorderFactory.createTitledBorder(panel1Border,
-                Bundle.getMessage("NodePanelName") + " " + _memo.getUserName());
+        Border panel1Titled = BorderFactory.createTitledBorder(panel1Border," ");
         panel1.setBorder(panel1Titled);
         contentPane.add(panel1);
 
@@ -330,11 +329,11 @@ public class ListFrame extends jmri.util.JmriJFrame {
         // set up a page title
         String head;
         if (inputSelected) {
-            head = "C/MRI " + Bundle.getMessage("AssignmentPanelInputName") + " - "
-                    + Bundle.getMessage("NodeBoxLabel") + " " + selNodeID;
+            head = Bundle.getMessage("Connection") +" "+ _memo.getUserName() + "  "+ Bundle.getMessage("AssignmentPanelInputName") + " "
+                    + Bundle.getMessage("NodeBoxLabel") + " " + selNodeID + "  ";
         } else {
-            head = "C/MRI " + Bundle.getMessage("AssignmentPanelOutputName") + " - "
-                    + Bundle.getMessage("NodeBoxLabel") + " " + selNodeID;
+            head = Bundle.getMessage("Connection") +" "+ _memo.getUserName() + "  " + Bundle.getMessage("AssignmentPanelOutputName") + " "
+                    + Bundle.getMessage("NodeBoxLabel") + " " + selNodeID + "  ";
         }
         // initialize a printer writer
         HardcopyWriter writer = null;
@@ -407,18 +406,8 @@ public class ListFrame extends jmri.util.JmriJFrame {
                 } else {
                     return sName;
                 }
+                
             } else if (c == USERNAME_COLUMN) {
-                String sName = null;
-                if (curRow != r) {
-                    if (inputSelected) {
-                        sName = _memo.isInputBitFree(selNodeNum, (r + 1));
-                    } else {
-                        sName = _memo.isOutputBitFree(selNodeNum, (r + 1));
-                    }
-                    curRow = r;
-                    curRowSysName = sName;
-                }
-            } else if (c == COMMENT_COLUMN)            {
                 String sName = null;
                 if (curRow != r) {
                     if (inputSelected) {
@@ -436,6 +425,39 @@ public class ListFrame extends jmri.util.JmriJFrame {
                 } else {
                     return (_memo.getUserNameFromSystemName(sName));
                 }
+
+                
+            } else if (c == COMMENT_COLUMN) {
+                String sName = null;
+                if (curRow != r) {
+                    if (inputSelected) {
+                        sName = _memo.isInputBitFree(selNodeNum, (r + 1));
+                    } else {
+                        sName = _memo.isOutputBitFree(selNodeNum, (r + 1));
+                    }
+                    curRow = r;
+                    curRowSysName = sName;
+                } else {
+                    sName = curRowSysName;
+                }
+                if (sName == null) {
+                    return ("");
+                }
+                
+                if (inputSelected) {
+                    jmri.Sensor s = null;
+                    s = jmri.InstanceManager.sensorManagerInstance().getBySystemName(sName);
+                    if (s != null) {
+                        return s.getComment();
+                    }
+                } else {
+                    jmri.Turnout t = null;
+                    t = jmri.InstanceManager.turnoutManagerInstance().getBySystemName(sName);
+                    if (t != null) {
+                        return t.getComment();
+                    }
+                }
+
             }
 
             return "";

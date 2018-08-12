@@ -3,59 +3,51 @@ package jmri.jmrit.withrottle;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandleManager;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test simple functioning of MultiThrottleController
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class MultiThrottleControllerTest extends TestCase {
+public class MultiThrottleControllerTest {
+    
+    private FacelessServer f;
+    private java.net.Socket s;
 
+    @Test
     public void testCtor() {
-        java.net.Socket s = new java.net.Socket();
-        FacelessServer f = new FacelessServer(){
-           @Override
-           public void createServerThread(){
-           }
-        };
-
         DeviceServer ds = new DeviceServer(s,f);
         jmri.util.JUnitAppender.assertErrorMessage("Stream creation failed (DeviceServer)");
         MultiThrottleController panel = new MultiThrottleController('A',"test",ds,ds);
         Assert.assertNotNull("exists", panel );
     }
 
-    // from here down is testing infrastructure
-    public MultiThrottleControllerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", MultiThrottleControllerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(MultiThrottleControllerTest.class);
-        return suite;
-    }
-
-    @Override
+    @Before
     public void setUp() throws Exception {
-        super.setUp();
         JUnitUtil.setUp();
         InstanceManager.setDefault(NamedBeanHandleManager.class, new NamedBeanHandleManager());
+        InstanceManager.setDefault(WiThrottlePreferences.class, new WiThrottlePreferences());
+        s = new java.net.Socket();
+        f = new FacelessServer(){
+            @Override
+            public void listen(){
+            }
+        };
     }
     
-    @Override
+    @After
     public void tearDown() throws Exception {
-        super.tearDown();
+        try {
+          f.disableServer();
+          JUnitUtil.waitFor( () -> { return f.isListen; });
+        } catch(java.lang.NullPointerException npe) {
+          // not all tests fully configure the server, so an
+          // NPE here is ok.
+        }
         JUnitUtil.tearDown();
     }
 }

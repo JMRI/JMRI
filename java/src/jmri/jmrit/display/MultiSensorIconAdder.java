@@ -30,12 +30,12 @@ import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.TransferHandler;
 import javax.swing.event.ListSelectionEvent;
+import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.jmrit.catalog.CatalogTreeLeaf;
 import jmri.jmrit.catalog.CatalogTreeNode;
-import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -215,13 +215,9 @@ public class MultiSensorIconAdder extends IconAdder {
             dim = panel.getPreferredSize();
         }
         while ((cnt % 3) != 0) {
-            try {
-                rowPanel.add(Box.createRigidArea(dim));
-                cnt++;
-            } catch (NullPointerException npe) {
-                /* never */
-
-            }
+            java.util.Objects.requireNonNull(rowPanel, "should not have found rowPanel null here");    
+            rowPanel.add(Box.createRigidArea(dim));
+            cnt++;
         }
         if (rowPanel != null) {
             _iconPanel.add(rowPanel);
@@ -334,7 +330,7 @@ public class MultiSensorIconAdder extends IconAdder {
         valueChanged(null);
         if (!_update) {
             _defaultIcons.addLeaf(label, path);
-            InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
+            InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
         }
         makeIconPanel(!_update);
         this.invalidate();
@@ -378,7 +374,7 @@ public class MultiSensorIconAdder extends IconAdder {
 //                    break;
                 }
             }
-            InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
+            InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
         }
         makeIconPanel(!_update);
     }

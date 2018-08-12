@@ -55,13 +55,16 @@ public class SpeedProfilePanel extends JPanel {
         }
         if (anomalies != null) {
             _table.addKeyListener(new KeyListener() {
+                @Override
                 public void keyTyped(KeyEvent ke) {
                     char ch = ke.getKeyChar(); 
                     if (ch == KeyEvent.VK_DELETE || ch == KeyEvent.VK_X) {
                         deleteRow();
                     }
                 }
+                @Override
                 public void keyPressed(KeyEvent e) {}
+                @Override
                 public void keyReleased(KeyEvent e) {}
             });
             _table.getColumnModel().getColumn(SpeedTableModel.FORWARD_SPEED_COL).setCellRenderer(new ColorCellRenderer());
@@ -94,6 +97,10 @@ public class SpeedProfilePanel extends JPanel {
             bar.setValue(pos);
         }
         add(pane);
+    }
+
+    void setEditable(boolean set ) {
+        ((SpeedTableModel)_table.getModel()).setEditable(set);
     }
 
     private void deleteRow() {
@@ -144,14 +151,14 @@ public class SpeedProfilePanel extends JPanel {
         static final int NUMCOLS = 4;
         
         java.text.DecimalFormat threeDigit = new java.text.DecimalFormat("0.000");
-        ArrayList<Map.Entry<Integer, SpeedStep>> speedArray = new  ArrayList<Map.Entry<Integer, SpeedStep>>();
+        ArrayList<Map.Entry<Integer, SpeedStep>> speedArray = new  ArrayList<>();
         RosterSpeedProfile profile;
         Boolean _editable;
         HashMap<Integer, Boolean> _anomaly;
         
         SpeedTableModel(RosterSpeedProfile sp, HashMap<Integer, Boolean> anomaly) {
             profile = sp;
-            _editable = (anomaly != null && anomaly.size() > 0);
+            _editable = (anomaly != null); // allow mergeProfile editing
             _anomaly = anomaly;
             TreeMap<Integer, SpeedStep> speeds = sp.getProfileSpeeds();
             Map.Entry<Integer, SpeedStep> entry = speeds.firstEntry();
@@ -159,6 +166,10 @@ public class SpeedProfilePanel extends JPanel {
                 speedArray.add(entry);
                 entry = speeds.higherEntry(entry.getKey());
             }
+        }
+
+        void setEditable(boolean set ) {
+            _editable = set;
         }
 
         HashMap<Integer, Boolean> getAnomalies() {

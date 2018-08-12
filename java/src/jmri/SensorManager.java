@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public interface SensorManager extends Manager<Sensor> {
+public interface SensorManager extends ProvidingManager<Sensor> {
 
     /**
      * Locate via user name, then system name if needed. If that fails, create a
@@ -39,6 +39,10 @@ public interface SensorManager extends Manager<Sensor> {
      */
     @Nonnull
     public Sensor provideSensor(@Nonnull String name) throws IllegalArgumentException;
+
+    @Override
+    /** {@inheritDoc} */
+    default public Sensor provide(@Nonnull String name) throws IllegalArgumentException { return provideSensor(name); }
 
     /**
      * Locate via user name, then system name if needed. Does not create a new
@@ -124,8 +128,8 @@ public interface SensorManager extends Manager<Sensor> {
 
     /**
      * Determine if the address supplied is valid and free, if not then it shall
-     * return the next free valid address up to a maximum of 10 address away
-     * from the initial address.
+     * return the next free valid address up to a maximum of 10 addresses away
+     * from the initial address. Used when adding add a range of Sensors.
      *
      * @param curAddress - The hardware address of the sensor we wish to add
      * @param prefix     - The System Prefix used to make up the systemName
@@ -138,6 +142,17 @@ public interface SensorManager extends Manager<Sensor> {
     @CheckForNull
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
+    /**
+     * Get a system name for a given hardware address and system prefix.
+     *
+     * @param curAddress desired hardware address
+     * @param prefix     system prefix used in system name
+     * @return the complete sensor system name for the prefix and current
+     *         address
+     * @throws jmri.JmriException if unable to create a system name for the
+     *                            given address, possibly due to invalid address
+     *                            format
+     */
     @Nonnull
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
 
@@ -162,6 +177,7 @@ public interface SensorManager extends Manager<Sensor> {
     /**
      * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
+    @Override
     public String getEntryToolTip();
 
 }

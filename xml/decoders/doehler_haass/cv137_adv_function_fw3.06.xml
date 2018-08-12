@@ -36,6 +36,7 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Extended mapping</label>
     <label xml:lang="de">Erweiterte Funktionszuordnung</label>
+    <label xml:lang="ca">Mapejat estès</label>
     <tooltip>bit4</tooltip>
     <tooltip xml:lang="de">Erweiterte Funktionszuordnungen aktivieren</tooltip>
   </variable>
@@ -46,15 +47,18 @@
       <enumChoice choice="AUX3">
         <choice>AUX3 and AUX4 on ZCLK and ZDAT</choice>
         <choice xml:lang="de">AUX3 und AUX4 an ZCLK und ZDAT</choice>
+        <choice xml:lang="ca">ZCLK i ZDAT funcionen com AUX3 i AUX4</choice>
       </enumChoice>
       <enumChoice choice="AUX5">
         <choice>AUX5 and AUX6 on ZCLK and ZDAT</choice>
         <choice xml:lang="de">AUX5 und AUX6 an ZCLK und ZDAT</choice>
+        <choice xml:lang="ca">ZCLK i ZDAT funcionen com AUX5 i AUX6</choice>
       </enumChoice>
      </enumChoiceGroup>
     </enumVal>
     <label>AUX on SUSI</label>
     <label xml:lang="de">AUX an SUSI</label>
+    <label xml:lang="ca">AUX en SUSI</label>
     <tooltip>bit5</tooltip>
     <tooltip xml:lang="de">Nur gültig, wenn CV137/Bit 0=1 und Bit 4=1</tooltip>
   </variable>

@@ -91,6 +91,7 @@ public class SlipIconAdder extends IconAdder {
         return doubleSlip;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void reset() {
         _turnoutMap = new HashMap<String, NamedBeanHandle<Turnout>>();
@@ -108,7 +109,7 @@ public class SlipIconAdder extends IconAdder {
     JRadioButton upperWestToUpperEastButton = new JRadioButton(Bundle.getMessage("UpperWestToUpperEast"));
 
     /**
-     * Override. First look for a table selection to set the sensor. If not,
+     * {@inheritDoc} First look for a table selection to set the sensor. If not,
      * then look to change the icon image (super).
      */
     @Override
@@ -314,7 +315,8 @@ public class SlipIconAdder extends IconAdder {
             try {
                 rowPanel.add(Box.createRigidArea(dim));
                 cnt++;
-            } catch (NullPointerException npe) { /* never */
+            } catch (NullPointerException npe) {
+                /* never */
 
             }
         }
@@ -445,8 +447,7 @@ public class SlipIconAdder extends IconAdder {
     }
 
     /**
-     * Override
-     *
+     * {@inheritDoc}
      */
     @Override
     public void complete(ActionListener addIconAction, boolean changeIconAction,
@@ -459,16 +460,19 @@ public class SlipIconAdder extends IconAdder {
 
     class ExportHandler extends TransferHandler {
 
+        /** {@inheritDoc} */
         @Override
         public int getSourceActions(JComponent c) {
             return COPY;
         }
 
+        /** {@inheritDoc} */
         @Override
         public Transferable createTransferable(JComponent c) {
             return new TransferableNamedBean();
         }
 
+        /** {@inheritDoc} */
         @Override
         public void exportDone(JComponent c, Transferable t, int action) {
         }
@@ -482,22 +486,25 @@ public class SlipIconAdder extends IconAdder {
             try {
                 dataFlavor = new DataFlavor(NamedBeanFlavorMime);
             } catch (ClassNotFoundException cnfe) {
-                cnfe.printStackTrace();
+                log.error("Unable to find class supporting {}", NamedBeanFlavorMime, cnfe);
             }
         }
 
+        /** {@inheritDoc} */
         @Override
         public DataFlavor[] getTransferDataFlavors() {
             //if (log.isDebugEnabled()) log.debug("TransferableNamedBean.getTransferDataFlavors ");
             return new DataFlavor[]{dataFlavor};
         }
 
+        /** {@inheritDoc} */
         @Override
         public boolean isDataFlavorSupported(DataFlavor flavor) {
             //if (log.isDebugEnabled()) log.debug("TransferableNamedBean.isDataFlavorSupported ");
             return dataFlavor.equals(flavor);
         }
 
+        /** {@inheritDoc} */
         @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (log.isDebugEnabled()) {
@@ -511,7 +518,7 @@ public class SlipIconAdder extends IconAdder {
     }
 
     /**
-     * Override. Activate Add to Panel button when all icons are assigned
+     * {@inheritDoc} Activate Add to Panel button when all icons are assigned
      * sensors.
      */
     @Override
@@ -633,29 +640,33 @@ public class SlipIconAdder extends IconAdder {
             try {
                 dataFlavor = new DataFlavor(NamedBeanFlavorMime);
             } catch (ClassNotFoundException cnfe) {
-                cnfe.printStackTrace();
+                log.error("Unable to find class supporting {}", NamedBeanFlavorMime, cnfe);
             }
             new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this);
-            //if (log.isDebugEnabled()) log.debug("DropPanel ctor");
         }
 
+        /** {@inheritDoc} */
         @Override
         public void dragExit(DropTargetEvent dte) {
         }
 
+        /** {@inheritDoc} */
         @Override
         public void dragEnter(DropTargetDragEvent dtde) {
         }
 
+        /** {@inheritDoc} */
         @Override
         public void dragOver(DropTargetDragEvent dtde) {
             //if (log.isDebugEnabled()) log.debug("DropPanel.dragOver");
         }
 
+        /** {@inheritDoc} */
         @Override
         public void dropActionChanged(DropTargetDragEvent dtde) {
         }
 
+        /** {@inheritDoc} */
         @Override
         public void drop(DropTargetDropEvent e) {
             try {

@@ -70,8 +70,8 @@ like via the usual tables if desired. <a name="tools" id="tools">
 
       <p>For more information on the protocol and available
       equipment, please see the <a href=
-      "http://www.xapautomation.org">xAP home page</a>. 
-      <!--#include virtual="/Footer" --></p>
+      "http://www.xapautomation.org">xAP home page</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -1,35 +1,19 @@
 package jmri.jmrix.ecos.swing.locodatabase;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        BundleTest.class,
+        EcosLocoTableActionTest.class,
+        EcosLocoTableTabActionTest.class,
+})
 
 /**
  * Tests for the jmri.jmrix.ecos.swing.locodatabase package
  *
  * @author	Bob Jacobsen
  */
-public class PackageTest extends TestCase {
-
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.ecos.swing.locodatabase.PackageTest");  // no tests in this class itself
-        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(EcosLocoTableActionTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(EcosLocoTableTabActionTest.class));
-
-        return suite;
-    }
-
+public class PackageTest  {
 }

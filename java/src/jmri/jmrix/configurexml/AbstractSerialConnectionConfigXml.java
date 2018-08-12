@@ -76,6 +76,8 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
     public boolean load(Element shared, Element perNode) {
         boolean result = true;
         getInstance();
+        log.info("Starting to connect for \"{}\"", adapter.getSystemConnectionMemo()!=null ? adapter.getSystemConnectionMemo().getUserName() : "(Unknown Connection)");
+        
         // configure port name
         String portName = perNode.getAttribute("port").getValue();
         adapter.setPort(portName);

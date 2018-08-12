@@ -26,8 +26,8 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: PanelPro, an application to make Control
-      Panels</h1>The JMRI libraries contain the PanelPro
+      <h1>JMRI: PanelPro</h1>
+      The JMRI libraries contain the PanelPro
       application for creating control panels. This page describes
       the application, and how to use it.
 
@@ -73,8 +73,12 @@
       your railroad (ie. select the signal rules based on different
       company practices!, and no need to know how to create the
       rules to link your signals to the state of turnouts, blocks
-      and other signals !). In addition, the Layout description of
-      your railway can be used by scripts such as AutoDispatcher2
+      and other signals !). Layout Editor Panels may also be used to
+      set up automatic running of trains on your layout using <a href=
+      "../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a>.
+      In addition, the Layout description of your railway can be
+      used by scripts such as the included
+      <a href="../..//tools/scripting/Examples.shtml">AutoDispatcher2</a>
       to automatically control your trains. There are many other
       tools within JMRI which require a description of your
       railroad and the description comes from the Layout built in
@@ -94,9 +98,12 @@
       several standard graphics sets distributed with JMRI, but it
       is often necessary to make some of the elements in an
       external graphics package to be imported as GIF or PNG files.
-      These might be the Panel Background, or the icons to attach
+      These might include the Panel Background, or the icons to attach
       to active elements (switches, levers, track state, signals,
-      etc.) which are then placed on the Panel.</p>
+      etc.) which are then placed on the Panel.<br>
+      Control Panel Editor supports using
+      <a href="../../../package/jmri/jmrit/logix/Warrant.shtml">
+      Warrants</a> and automatic running of trains.</p>
 
       <p><a href=
       "http://quaker-valley.com/CTC/JMRI%20Panel%20Tutorial.gif">
@@ -390,7 +397,8 @@
       you'd refer to a LocoNet Turnout as LT13; a LocoNet sensor as
       LS21, etc. See the page on <a href=
       "../../doc/Technical/Names.shtml">Names &amp; Naming</a> for
-      more information. <!--#include virtual="/Footer" --></p>
+      more information.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

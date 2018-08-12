@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2018 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- Events for Märklin mLD/3 and mSD/3 decoders                            -->
+
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice value="66">
+    <choice>Driving Change</choice>
+    <choice xml:lang="de">Fahrtwechsel</choice>
+    <choice xml:lang="fr">Changem. Conduite</choice>
+  </enumChoice>
+  <enumChoice value="67">
+    <choice>Direction Change</choice>
+    <choice xml:lang="de">Richtungswechsel</choice>
+    <choice xml:lang="fr">Changem. Direction</choice>
+  </enumChoice>
+  <enumChoice value="79">
+    <choice>Random</choice>
+    <choice xml:lang="de">Random</choice>
+    <choice xml:lang="fr">Aléatoire</choice>
+  </enumChoice>
+  <enumChoice value="80">
+    <choice>Front Light</choice>
+    <choice xml:lang="de">Licht vorne</choice>
+    <choice xml:lang="fr">Feu Avant</choice>
+  </enumChoice>
+  <enumChoice value="81">
+    <choice>Rear Light</choice>
+    <choice xml:lang="de">Licht hinten</choice>
+    <choice xml:lang="fr">Feu Arrière</choice>
+  </enumChoice>
+  <enumChoice value="82">
+    <choice>Aux 1</choice>
+    <choice xml:lang="de">Aux 1</choice>
+    <choice xml:lang="fr">Aux 1</choice>
+  </enumChoice>
+  <enumChoice value="83">
+    <choice>Aux 2</choice>
+    <choice xml:lang="de">Aux 2</choice>
+    <choice xml:lang="fr">Aux 2</choice>
+  </enumChoice>
+  <enumChoice value="84">
+    <choice>Aux 3</choice>
+    <choice xml:lang="de">Aux 3</choice>
+    <choice xml:lang="fr">Aux 3</choice>
+  </enumChoice>
+  <enumChoice value="85">
+    <choice>Aux 4</choice>
+    <choice xml:lang="de">Aux 4</choice>
+    <choice xml:lang="fr">Aux 4</choice>
+  </enumChoice>
+  <enumChoice value="86">
+    <choice>Aux 5</choice>
+    <choice xml:lang="de">Aux 5</choice>
+    <choice xml:lang="fr">Aux 5</choice>
+  </enumChoice>
+  <enumChoice value="87">
+    <choice>Aux 6</choice>
+    <choice xml:lang="de">Aux 6</choice>
+    <choice xml:lang="fr">Aux 6</choice>
+  </enumChoice>
+  <enumChoice value="112">
+    <choice>Deactivate ABV</choice>
+    <choice xml:lang="de">ABV ausschalten</choice>
+    <choice xml:lang="fr">ABV désactivé</choice>
+  </enumChoice>
+  <enumChoice value="113">
+    <choice>Switching</choice>
+    <choice xml:lang="de">Rangiergang</choice>
+    <choice xml:lang="fr">Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="114" include="Märklin mSD/3">
+    <choice>Brake Squeal Off</choice>
+    <choice xml:lang="de">Bremsenquietschen aus</choice>
+    <choice xml:lang="fr">Désact. Criss. freins</choice>
+  </enumChoice>
+  <enumChoice value="117" include="Märklin mSD/3">
+    <choice>Sound Mute</choice>
+    <choice xml:lang="de">Sound Mute</choice>
+    <choice xml:lang="fr">Sons Muets</choice>
+  </enumChoice>
+  <enumChoice value="118" include="Märklin mSD/3">
+    <choice>Brake Squeal Type</choice>
+    <choice xml:lang="de">Bremsenquiet. Spielewelt</choice>
+    <choice xml:lang="fr">Type Crissem. freins</choice>
+  </enumChoice>
+  <enumChoice value="160">
+    <choice>And 1</choice>
+    <choice xml:lang="de">Und 1</choice>
+    <choice xml:lang="fr">Et 1</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>And 2</choice>
+    <choice xml:lang="de">Und 2</choice>
+    <choice xml:lang="fr">Et 2</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>And 3</choice>
+    <choice xml:lang="de">Und 3</choice>
+    <choice xml:lang="fr">Et 3</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>And 4</choice>
+    <choice xml:lang="de">Und 4</choice>
+    <choice xml:lang="fr">Et 4</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>And 5</choice>
+    <choice xml:lang="de">Und 5</choice>
+    <choice xml:lang="fr">Et 5</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>And 6</choice>
+    <choice xml:lang="de">Und 6</choice>
+    <choice xml:lang="fr">Et 6</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>And 7</choice>
+    <choice xml:lang="de">Und 7</choice>
+    <choice xml:lang="fr">Et 7</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>And 8</choice>
+    <choice xml:lang="de">Und 8</choice>
+    <choice xml:lang="fr">Et 8</choice>
+  </enumChoice>
+  <enumChoice value="168">
+    <choice>Timer 1</choice>
+    <choice xml:lang="de">Timer 1</choice>
+    <choice xml:lang="fr">Timer 1</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Timer 2</choice>
+    <choice xml:lang="de">Timer 2</choice>
+    <choice xml:lang="fr">Timer 2</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Timer 3</choice>
+    <choice xml:lang="de">Timer 3</choice>
+    <choice xml:lang="fr">Timer 3</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Timer 4</choice>
+    <choice xml:lang="de">Timer 4</choice>
+    <choice xml:lang="fr">Timer 4</choice>
+  </enumChoice>
+  <enumChoice value="176" include="Märklin mSD/3">
+    <choice>Operating Sound</choice>
+    <choice xml:lang="de">Fahrsound</choice>
+    <choice xml:lang="fr">Son de conduite</choice>
+  </enumChoice>
+  <enumChoice value="177" include="Märklin mSD/3">
+    <choice>Sound 1</choice>
+    <choice xml:lang="de">Sound 1</choice>
+    <choice xml:lang="fr">Son 1</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 2</choice>
+    <choice xml:lang="de">Sound 2</choice>
+    <choice xml:lang="fr">Son 2</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 3</choice>
+    <choice xml:lang="de">Sound 3</choice>
+    <choice xml:lang="fr">Son 3</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 4</choice>
+    <choice xml:lang="de">Sound 4</choice>
+    <choice xml:lang="fr">Son 4</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 5</choice>
+    <choice xml:lang="de">Sound 5</choice>
+    <choice xml:lang="fr">Son 5</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 6</choice>
+    <choice xml:lang="de">Sound 6</choice>
+    <choice xml:lang="fr">Son 6</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 7</choice>
+    <choice xml:lang="de">Sound 7</choice>
+    <choice xml:lang="fr">Son 7</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 8</choice>
+    <choice xml:lang="de">Sound 8</choice>
+    <choice xml:lang="fr">Son 8</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 9</choice>
+    <choice xml:lang="de">Sound 9</choice>
+    <choice xml:lang="fr">Son 9</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 10</choice>
+    <choice xml:lang="de">Sound 10</choice>
+    <choice xml:lang="fr">Son 10</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 11</choice>
+    <choice xml:lang="de">Sound 11</choice>
+    <choice xml:lang="fr">Son 11</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 12</choice>
+    <choice xml:lang="de">Sound 12</choice>
+    <choice xml:lang="fr">Son 12</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 13</choice>
+    <choice xml:lang="de">Sound 13</choice>
+    <choice xml:lang="fr">Son 13</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 14</choice>
+    <choice xml:lang="de">Sound 14</choice>
+    <choice xml:lang="fr">Son 14</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 15</choice>
+    <choice xml:lang="de">Sound 15</choice>
+    <choice xml:lang="fr">Son 15</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 16</choice>
+    <choice xml:lang="de">Sound 16</choice>
+    <choice xml:lang="fr">Son 16</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 17</choice>
+    <choice xml:lang="de">Sound 17</choice>
+    <choice xml:lang="fr">Son 17</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 18</choice>
+    <choice xml:lang="de">Sound 18</choice>
+    <choice xml:lang="fr">Son 18</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 19</choice>
+    <choice xml:lang="de">Sound 19</choice>
+    <choice xml:lang="fr">Son 19</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 20</choice>
+    <choice xml:lang="de">Sound 20</choice>
+    <choice xml:lang="fr">Son 20</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 21</choice>
+    <choice xml:lang="de">Sound 21</choice>
+    <choice xml:lang="fr">Son 21</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 22</choice>
+    <choice xml:lang="de">Sound 22</choice>
+    <choice xml:lang="fr">Son 22</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 23</choice>
+    <choice xml:lang="de">Sound 23</choice>
+    <choice xml:lang="fr">Son 23</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 24</choice>
+    <choice xml:lang="de">Sound 24</choice>
+    <choice xml:lang="fr">Son 24</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 25</choice>
+    <choice xml:lang="de">Sound 25</choice>
+    <choice xml:lang="fr">Son 25</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 26</choice>
+    <choice xml:lang="de">Sound 26</choice>
+    <choice xml:lang="fr">Son 26</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 27</choice>
+    <choice xml:lang="de">Sound 27</choice>
+    <choice xml:lang="fr">Son 27</choice>
+  </enumChoice>
+  <enumChoice include="Märklin mSD/3">
+    <choice>Sound 28</choice>
+    <choice xml:lang="de">Sound 28</choice>
+    <choice xml:lang="fr">Son 28</choice>
+  </enumChoice>
+  <enumChoice value="255">
+    <choice>None</choice>
+    <choice xml:lang="de">Keine</choice>
+    <choice xml:lang="fr">Aucune</choice>
+  </enumChoice>
+</enumVal>

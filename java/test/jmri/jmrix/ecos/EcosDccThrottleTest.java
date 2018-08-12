@@ -5,7 +5,6 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -390,6 +389,7 @@ public class EcosDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @BeforeClass
     public static void earlySetup(){
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         tc = new EcosInterfaceScaffold();
     }

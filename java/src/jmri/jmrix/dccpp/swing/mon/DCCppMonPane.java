@@ -1,6 +1,5 @@
 package jmri.jmrix.dccpp.swing.mon;
 
-import jmri.jmrix.dccpp.DCCppConstants;
 import jmri.jmrix.dccpp.DCCppListener;
 import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppReply;

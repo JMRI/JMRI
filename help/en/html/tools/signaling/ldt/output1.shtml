@@ -31,14 +31,14 @@
       L Signals</h2>
 
       <h2><b>Home signal with 5 or 7 lamps</b> <img src=
-      "output1_html_m4f5f2ce4.png" name="obr&#225;zky2" align=
+      "output1_html_m4f5f2ce4.png" align=
       "middle" width="8" height="26" border="0"> <img src=
-      "output1_html_44a4ff16.png" name="obr&#225;zky3" align=
+      "output1_html_44a4ff16.png" align=
       "middle" width="12" height="26" border="0"></h2>
 
       <p style="margin-bottom: 0in">decoder: LS-DEC-SBB</p>
 
-      <table width="100%" border="1" bordercolor="#000000"
+      <table width="100%" border="1"
       cellpadding="3" cellspacing="0">
         <col width="40*">
         <col width="29*">
@@ -197,12 +197,12 @@
       <p style="margin-bottom: 0in"><br></p>
 
       <h2><b>Home signal with 4 lamps</b> <img src=
-      "output1_html_m55495bcc.png" name="obr&#225;zky1" align=
+      "output1_html_m55495bcc.png" align=
       "middle" width="8" height="21" border="0"></h2>
 
       <p style="margin-bottom: 0in">decoder: LS-DEC-SBB</p>
 
-      <table width="100%" border="1" bordercolor="#000000"
+      <table width="100%" border="1"
       cellpadding="3" cellspacing="0">
         <col width="40*">
         <col width="29*">
@@ -361,12 +361,12 @@
       <p style="margin-bottom: 0in"><br></p>
 
       <h2><b>Home signal with 3 lamps</b> <img src=
-      "output1_html_7f201b69.png" name="obr&#225;zky4" align=
+      "output1_html_7f201b69.png" align=
       "middle" width="8" height="17" border="0"></h2>
 
       <p style="margin-bottom: 0in">decoder: LS-DEC-DB</p>
 
-      <table width="100%" border="1" bordercolor="#000000"
+      <table width="100%" border="1"
       cellpadding="3" cellspacing="0">
         <col width="40*">
         <col width="29*">
@@ -525,12 +525,12 @@
       <p style="margin-bottom: 0in"><br></p>
 
       <h2><b>Advance signal with 5 lamps</b> <img src=
-      "output1_html_m140dd523.png" name="obr&#225;zky6" align=
+      "output1_html_m140dd523.png" align=
       "middle" width="15" height="17" border="0"></h2>
 
       <p style="margin-bottom: 0in">decoder: LS-DEC-SBB</p>
 
-      <table width="100%" border="1" bordercolor="#000000"
+      <table width="100%" border="1"
       cellpadding="3" cellspacing="0">
         <col width="40*">
         <col width="29*">
@@ -689,12 +689,12 @@
       <p style="margin-bottom: 0in"><br></p>
 
       <h2><b>Advance signal with 4 lamps</b> <img src=
-      "output1_html_4a835f8c.png" name="obr&#225;zky5" align=
+      "output1_html_4a835f8c.png" align=
       "middle" width="15" height="16" border="0"></h2>
 
       <p style="margin-bottom: 0in">decoder: LS-DEC-DB</p>
 
-      <table width="100%" border="1" bordercolor="#000000"
+      <table width="100%" border="1"
       cellpadding="3" cellspacing="0">
         <col width="40*">
         <col width="29*">
@@ -853,12 +853,12 @@
       <p style="margin-bottom: 0in"><br></p>
 
       <h2><b>Dwarf signal</b> <img src="output1_html_m5bfb00d.png"
-      name="obr&#225;zky7" align="middle" width="14" height="14"
+      align="middle" width="14" height="14"
       border="0"></h2>
 
       <p style="margin-bottom: 0in">decoder: LS-DEC-DB</p>
 
-      <table width="100%" border="1" bordercolor="#000000"
+      <table width="100%" border="1"
       cellpadding="3" cellspacing="0">
         <col width="40*">
         <col width="29*">
@@ -1018,7 +1018,7 @@
 
       <p style="margin-bottom: 0in">decoder: LS-DEC-DB</p>
 
-      <table width="100%" border="1" bordercolor="#000000"
+      <table width="100%" border="1"
       cellpadding="3" cellspacing="0">
         <col width="40*">
         <col width="29*">

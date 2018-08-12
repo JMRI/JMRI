@@ -80,9 +80,10 @@ public class EasyDccConsistTest extends jmri.implementation.AbstractConsistTestB
     @After
     @Override
     public void tearDown() {
+        _memo.getTrafficController().terminateThreads();
         _memo = null;
-        JUnitUtil.tearDown();
         c = null;
+        JUnitUtil.tearDown();
     }
 
 }

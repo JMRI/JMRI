@@ -46,7 +46,7 @@ public class XBeeNode extends IEEE802154Node {
     private final static byte DefaultPanID[] = {0x00,0x00};
 
     /**
-     * Creates a new instance of XBeeNode
+     * Create a new instance of XBeeNode.
      */
     public XBeeNode() {
         identifier = "";
@@ -57,12 +57,10 @@ public class XBeeNode extends IEEE802154Node {
     public XBeeNode(byte pan[], byte user[], byte global[]) {
         super(pan, user, global);
         identifier = "";
-        if (log.isDebugEnabled()) {
-            log.debug("Created new node with panId: "
-                    + StringUtil.arrayToString(pan)
-                    + " userId: " + StringUtil.arrayToString(user)
-                    + " and GUID: " + StringUtil.arrayToString(global));
-        }
+        log.debug("Created new node with panId: {} userId: {} and GUID: {}",
+                StringUtil.arrayToString(pan),
+                StringUtil.arrayToString(user),
+                StringUtil.arrayToString(global));
         pinObjects = new HashMap<Integer, NamedBean>();
         isPolled = false;
         userAddress = new XBee16BitAddress(user);
@@ -72,17 +70,14 @@ public class XBeeNode extends IEEE802154Node {
     public XBeeNode(RemoteXBeeDevice rxd) throws TimeoutException, XBeeException {
         super(DefaultPanID, rxd.get16BitAddress().getValue(), rxd.get64BitAddress().getValue());
         identifier = rxd.getNodeID();
-       
+
         try{
            setPANAddress(rxd.getPANID());
         } catch (TimeoutException t) {
           // we dont need the PAN ID for communicaiton,so just continue.
         }
- 
-        if (log.isDebugEnabled()) {
-            log.debug("Created new node from RemoteXBeeDevice: {}",
-                    rxd.toString() );
-        }
+
+        log.debug("Created new node from RemoteXBeeDevice: {}", rxd.toString() );
         pinObjects = new HashMap<Integer, NamedBean>();
         isPolled = false;
         device = rxd;
@@ -91,7 +86,7 @@ public class XBeeNode extends IEEE802154Node {
     }
 
     /**
-     * Set the traffic controller associated with this node.
+     * Set the Traffic Controller associated with this node.
      */
     public void setTrafficController(XBeeTrafficController controller) {
         tc = controller;
@@ -99,7 +94,9 @@ public class XBeeNode extends IEEE802154Node {
 
     /**
      * Create the needed Initialization packet (AbstractMRMessage) for this
-     * node. Returns null if not needed.
+     * node.
+     *
+     * @return null because not needed for XBeeNode
      */
     @Override
     public AbstractMRMessage createInitPacket() {
@@ -107,16 +104,17 @@ public class XBeeNode extends IEEE802154Node {
     }
 
     /**
-     * Create an Transmit packet (AbstractMRMessage) to send current state
+     * Create an Transmit packet (AbstractMRMessage) to send current state.
      */
     @Override
     public AbstractMRMessage createOutPacket() {
         return null;
-    } //TODO
+    } // TODO
 
     /**
-     * Are there sensors present, and hence this node will need to be polled?
-     * Note: returns 'true' if at least one sensor is active for this node
+     * Are sensors present, and hence will this node need to be polled?
+     *
+     * @return 'true' if at least one sensor is active for this node
      */
     @Override
     public boolean getSensorsActive() {
@@ -131,12 +129,15 @@ public class XBeeNode extends IEEE802154Node {
     }
 
     /**
-     * Get/set the isPolled attribute;
+     * Set the isPolled attribute.
      */
     public void setPoll(boolean poll) {
         isPolled = poll;
     }
 
+    /**
+     * Get the isPolled attribute.
+     */
     public boolean getPoll() {
         return isPolled;
     }
@@ -154,7 +155,7 @@ public class XBeeNode extends IEEE802154Node {
     }
 
     /**
-     * A reply was received, so there was not timeout, do any needed processing.
+     * A reply was received, so there was not timeout; do any needed processing.
      */
     @Override
     public void resetTimeout(AbstractMRMessage m) {
@@ -162,7 +163,7 @@ public class XBeeNode extends IEEE802154Node {
     }
 
     /**
-     *  Convert the 16 bit user address to an XBee16BitAddress object.
+     * Convert the 16 bit user address to an XBee16BitAddress object.
      */
     public XBee16BitAddress getXBeeAddress16() {
         if(device!=null) {
@@ -173,7 +174,7 @@ public class XBeeNode extends IEEE802154Node {
     }
 
     /**
-     *  Convert the 64 bit address to an XBee64BitAddress object.
+     * Convert the 64 bit address to an XBee64BitAddress object.
      */
     public XBee64BitAddress getXBeeAddress64() {
         if(device!=null) {
@@ -186,6 +187,7 @@ public class XBeeNode extends IEEE802154Node {
     /**
      * XBee Nodes store an identifier. we want to be able to store and retrieve
      * this information.
+     *
      * @param id text id for node
      */
     public void setIdentifier(String id) {
@@ -201,7 +203,7 @@ public class XBeeNode extends IEEE802154Node {
     }
 
     /**
-     * Set the bean associated with the specified pin
+     * Set the bean associated with the specified pin.
      *
      * @param pin  is the XBee pin assigned.
      * @param bean is the bean we are attempting to add.
@@ -219,7 +221,7 @@ public class XBeeNode extends IEEE802154Node {
     }
 
     /**
-     * Remove the bean associated with the specified pin
+     * Remove the bean associated with the specified pin.
      *
      * @param pin  is the XBee pin assigned.
      * @param bean is the bean we are attempting to remove.
@@ -236,7 +238,7 @@ public class XBeeNode extends IEEE802154Node {
     }
 
     /**
-     * Get the bean associated with the specified pin
+     * Get the bean associated with the specified pin.
      *
      * @param pin is the XBee pin assigned.
      * @return the bean assigned to the pin, or null if no bean is assigned.
@@ -251,7 +253,6 @@ public class XBeeNode extends IEEE802154Node {
      *
      * @param pin is the XBee pin assigned.
      * @return true if the pin has a bean assigned to it, false otherwise.
-     *
      */
     public boolean getPinAssigned(int pin) {
         return (pinObjects.containsKey(pin));
@@ -320,7 +321,7 @@ public class XBeeNode extends IEEE802154Node {
     }
 
     /**
-     * Get the stream object associated with this node.  Create it if it does
+     * Get the stream object associated with this node. Create it if it does
      * not exist.
      */
     public XBeeIOStream getIOStream() {
@@ -336,7 +337,7 @@ public class XBeeNode extends IEEE802154Node {
      * Connect a StreamPortController object to the XBeeIOStream
      * associated with this node.
      *
-     * @param cont AbstractSTreamPortController object to connect.
+     * @param cont AbstractSTreamPortController object to connect
      */
     public void connectPortController(jmri.jmrix.AbstractStreamPortController cont) {
         connectedController = cont;
@@ -351,24 +352,15 @@ public class XBeeNode extends IEEE802154Node {
             java.lang.reflect.Constructor<?> ctor = T.getConstructor(java.io.DataInputStream.class, java.io.DataOutputStream.class, String.class);
             connectedController = (jmri.jmrix.AbstractStreamPortController) ctor.newInstance(getIOStream().getInputStream(), getIOStream().getOutputStream(), "XBee Node " + getPreferedName());
             connectedController.configure();
-        } catch (java.lang.InstantiationException ie) {
-            log.error("Unable to construct Stream Port Controller for node.");
-            ie.printStackTrace();
-        } catch (java.lang.NoSuchMethodException nsm) {
-            log.error("Unable to construct Stream Port Controller for node.");
-            nsm.printStackTrace();
-        } catch (java.lang.IllegalAccessException iae) {
-            log.error("Unable to construct Stream Port Controller for node.");
-            iae.printStackTrace();
-        } catch (java.lang.reflect.InvocationTargetException ite) {
-            log.error("Unable to construct Stream Port Controller for node.");
-            ite.printStackTrace();
+        } catch (java.lang.InstantiationException | java.lang.NoSuchMethodException | java.lang.IllegalAccessException | java.lang.reflect.InvocationTargetException ex) {
+            log.error("Unable to construct Stream Port Controller for node.", ex);
         }
     }
 
     /**
      * Get the StreamPortController ojbect associated with the XBeeIOStream
      * associated with this node.
+     *
      * @return connected {@link jmri.jmrix.AbstractStreamPortController}
      */
     public jmri.jmrix.AbstractStreamPortController getPortController() {
@@ -378,7 +370,7 @@ public class XBeeNode extends IEEE802154Node {
     private jmri.jmrix.AbstractStreamPortController connectedController = null;
 
     /**
-     * Provide a string representation of this XBee Node
+     * Provide a string representation of this XBee Node.
      */
     @Override
     public String toString(){
@@ -401,7 +393,7 @@ public class XBeeNode extends IEEE802154Node {
      * @throws TimeoutException lock timed out
      * @throws XBeeException invalid Xbee values, pins
      */
-    void setPRParameter(int pin, jmri.Sensor.PullResistance pr) throws TimeoutException,XBeeException {
+    void setPRParameter(int pin, jmri.Sensor.PullResistance pr) throws TimeoutException, XBeeException {
        // flip the bits in the PR data byte, and then send to the node.
        if(pin>7 || pin < 0){
           throw new IllegalArgumentException("Invalid pin specified");
@@ -470,7 +462,7 @@ public class XBeeNode extends IEEE802154Node {
             default:
                 log.warn("Unhandled pin value: {}", pin);
                 break;
-              
+
           }
           device.setParameter("PR",PRValue);
           device.applyChanges();  // force the XBee to start using the new value.
@@ -482,7 +474,7 @@ public class XBeeNode extends IEEE802154Node {
     }
 
    /**
-    * Package protected method to check to see if the PR parameter indicates 
+    * Package protected method to check to see if the PR parameter indicates
     * the specified pin has the pull-up resistor enabled.
     *
     * @param pin the pin number
@@ -499,9 +491,9 @@ public class XBeeNode extends IEEE802154Node {
        byte prbyte;
        try {
           readLock.lock();
-          if(PRValue == null){ 
+          if(PRValue == null){
              PRValue = device.getParameter("PR");
-          } 
+          }
           prbyte = PRValue[0];
        } finally {
           readLock.unlock();
@@ -564,7 +556,7 @@ public class XBeeNode extends IEEE802154Node {
               retval = jmri.Sensor.PullResistance.PULL_OFF;
            }
            break;
-       default: 
+       default:
           retval = jmri.Sensor.PullResistance.PULL_OFF;
        }
        return retval;

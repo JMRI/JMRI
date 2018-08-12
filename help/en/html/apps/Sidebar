@@ -50,6 +50,7 @@
 		    <ul>
 		    <li><dfn><a href="../tools/signaling/index.shtml">Signaling</a></dfn>
 		    <li><dfn><a href="../tools/EntryExit.shtml">Entry Exit (NX)</a></dfn>
+		    <li><dfn><a href="../../package/jmri/jmrit/logix/Warrant.shtml">Warrants</a></dfn>
 		    <li><dfn><a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a></dfn>
 		    <li><dfn><a href="../tools/Routes.shtml">Routes</a></dfn>
 		    <li><dfn><a href="../tools/fastclock/index.shtml">Fast Clocks</a></dfn>
@@ -114,10 +115,6 @@
    		  </ul>
 		</dd>
 </dl>
-
-<a href="/donations.shtml">
- <img src="http://sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="RIGHT" alt="Donate to JMRI" />
-</a> 
 
 	</div> <!-- closes #side -->
 <!-- /Sidebar -->

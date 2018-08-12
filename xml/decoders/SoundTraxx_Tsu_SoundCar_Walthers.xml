@@ -14,6 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Alain Le Marchand" version="1" lastUpdated="20171209"/>
+  <version author="Alain Le Marchand" version="1.1" lastUpdated="20180101"/>
   <!--  This file contains the Tsunami definitions for Walthers cars factory-equipped with OEM Tsunami SoundCar.
         Note that these decoders are derived from aftermarket SoundCar decoders, but are using the Flex-Map
         function mapping of the Tsunami2 and Econami range, making them kind of hybrid decoders between
@@ -21,6 +22,10 @@
   <!-- version 1:   Created from "Soundtraxx_Tsu_SoundCar.xml" version 3.				-->
   <!--              Based on SoundTraxx datasheets for Walthers factory-equipped with SoundCar		-->
   <!--              Thank you to Justin Revard of SoundTraxx customer support for detailed information  -->
+  <!-- version 1.1: Update after clarification with SoundTraxx customer support                         -->
+  <!--              CV61, 63, 64, Speed table (CV66-95) added  + Specific pane for Speed Table          -->
+  <!--              CV218 removed (CV63 used instead)                                                   -->
+  <!--              CV112.0 effect linked to generator, not to a specific key                           -->
   <!--                                                                                                  -->
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
@@ -1816,7 +1821,6 @@
         <comment xml:lang="it">0-15 secondi</comment>
       </variable>
       <!-- End Lighting Configuration -->
-      <!-- Not used in this OEM decoder
       <variable CV="61" mask="XVVVVVVV" item="Advanced Group 1 Option 6" default="0" tooltip="When F11 is pressed, locos baseline braking rate is modified by this amount">
         <decVal max="127"/>
         <label>F11 Braking Rate (0-127)</label>
@@ -1829,19 +1833,18 @@
         <label>F11 Braking Sign</label>
         <label xml:lang="it">F11 Segno Frenata</label>
       </variable>
-      -->
   	  <!-- Not used in this decoder	- Sound only decoder
       <variable CV="62" mask="XXXXXXXV" item="Advanced Group 1 Option 8" default="0" tooltip="Compensates for incompatibilities that may occur when using some methods of transponding">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumTransponding.xml"/>
         <label>Transponding Control</label>
       </variable>
 	  -->
-  	  <!-- Not used in this decoder	- Sound only decoder
-      <variable CV="63" item="Radio Power Conversion" default="20" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
+  	  <!-- Sound only decoder - Motor control CVS used for synchronizing the clickety clack, flat spot, wheel noise and flange squeal sound effects -->
+      <variable CV="63" item="Radio Power Conversion" default="20" tooltip="&lt;html&gt;Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move.&lt;br&gt;Note: used for synchronizing the clickety clack, flat spot, wheel noise and flange squeal sound effects&lt;/html&gt;">
         <decVal/>
         <label>Analog Mode Motor Start Voltage (0-255)</label>
       </variable>
-      <variable CV="64" item="Zero-1 Power Conversion" default="180" tooltip="Sets the maximum average voltage applied to the motor when operating in analog mode">
+      <variable CV="64" item="Zero-1 Power Conversion" default="180" tooltip="&lt;html&gt;Sets the maximum average voltage applied to the motor when operating in analog mode.&lt;br&gt;Note: used for synchronizing the clickety clack, flat spot, wheel noise and flange squeal sound effects&lt;/html&gt;">
         <decVal/>
         <label>Analog Mode Max Motor Voltage (0-255)</label>
       </variable>
@@ -1857,22 +1860,23 @@
         <decVal/>
         <label>Reverse Trim (0-255)</label>
       </variable>
-	  -->
+
       <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUuserId.xml"/>
 	  <!-- Sound Configuration starts here -->
-      <variable CV="112" mask="XXXXXXXV" item="Sound Option 1" default="0" tooltip="Generator Control">
+      <variable CV="112" mask="XXXXXXXV" item="Sound Option 1" default="0">
         <enumVal>
-          <enumChoice choice="Generator sound effect controlled by F9">
-            <choice>Generator sound effect controlled by F9</choice>
-            <choice xml:lang="it">Effetto suono Generatore controllato da F9</choice>
+          <enumChoice choice="Sound effect controlled by Function key">
+            <choice>Sound effect controlled by Function key</choice>
+            <choice xml:lang="it">Effetto suono controllato da tasto Funzione</choice>
           </enumChoice>
-          <enumChoice choice="Generator sound effect always on">
-            <choice>Generator sound effect always on</choice>
-            <choice xml:lang="it">Effetto suono Generatore sempre On</choice>
+          <enumChoice choice="Sound effect always on">
+            <choice>Sound effect always on</choice>
+            <choice xml:lang="it">Effetto suono sempre On</choice>
           </enumChoice>
         </enumVal>
         <label>Generator Control</label>
         <label xml:lang="it">Controllo Generatore</label>
+        <tooltip>&lt;html&gt;The generator can either be automatic or controlled with a function key (default F16).&lt;br&gt;  When the automatic generator is enabled, the function key is ignored.&lt;/html&gt;</tooltip>
       </variable>
       <variable CV="112" mask="XXXXXXVX" item="Sound Option 2" default="0" tooltip="Sets the number of axles per truck used to determine the clickety-clack rate">
         <enumVal>
@@ -2030,7 +2034,7 @@
               <label>Brake Sounds</label>
               <label xml:lang="it">Suono freni</label>
         </variable>
-      <variable CV="118" item="Advanced Group 2 Option 6" default="204" tooltip="&lt;html&gt;Adjust the motor response following a momentary power glitch&lt;br&gt;      0 or 128 = Disabled&lt;br&gt;      1-127 = Absolute Limiting (will return to this speed step)&lt;br&gt;      129-255 = Proportional Limiting (a percentage of set speed)&lt;br&gt;      Note: This feature is not relevant for this decoder&lt;/html&gt;">
+      <variable CV="118" item="Advanced Group 2 Option 6" default="204" tooltip="&lt;html&gt;Adjust the motor response following a momentary power glitch&lt;br&gt;      0 or 128 = Disabled&lt;br&gt;      1-127 = Absolute Limiting (will return to this speed step)&lt;br&gt;      129-255 = Proportional Limiting (a percentage of set speed)&lt;br&gt;Note: used for synchronizing the clickety clack, flat spot, wheel noise and flange squeal sound effects&lt;/html&gt;">
         <decVal/>
         <label>Motor Recovery Speed (0-255)</label>
         <label xml:lang="it">Velocità ripristino motore (0-255)</label>
@@ -2333,11 +2337,13 @@
         <label>Motor Control Sample Aperture Time (0-255)</label>
       </variable>
         -->
+      <!-- Not used in this decoder
       <variable CV="218" mask="VVVVVVVV" item="Analog Vstart" default="15">
         <decVal/>
         <label>Analog Mode Sound Start Voltage (0-255)</label>
         <tooltip>&lt;html&gt;Determines the voltage level required to start sound effects in analog mode;&lt;br&gt; The sound start voltage is calculated as a fraction of the available supply voltage.&lt;br&gt; Starting Voltage = (CV 218 ÷ 10) + 6V &lt;/html&gt;</tooltip>
       </variable>
+      -->
       <!-- Livestock Select follows -->
       <!-- Not used in this decoder
       <variable CV="226" mask="XXXXXXVV" item="Sound Option 18" default="0" tooltip="Livestock Select option" include="SoundCar103">
@@ -2516,4 +2522,6 @@
   <!-- Specific panes for Flex-Map function mapping from Tsunami2/Econami   -->
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/SNDPaneFnMap.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/SNDlegacyPaneFnMap.xml"/>
+  <!-- Specific pane for Speed table with information related to this SoundCar decoder -->
+  <xi:include href="http://jmri.org/xml/decoders/soundtraxx/SNDSpeedTablePane.xml"/>
 </decoder-config>

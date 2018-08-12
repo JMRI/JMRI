@@ -11,10 +11,10 @@ import org.slf4j.LoggerFactory;
 /**
  * An implementation of DccThrottle via AbstractThrottle with code specific to a
  * PR2 connection.
- * <P>
+ * <p>
  * Speed in the Throttle interfaces and AbstractThrottle is a float, but in
  * LocoNet is an int with values from 0 to 127.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2006
  */
 public class Pr2Throttle extends AbstractThrottle {
@@ -34,7 +34,8 @@ public class Pr2Throttle extends AbstractThrottle {
     }
 
     /**
-     * Convert a LocoNet speed integer to a float speed value
+     * Convert a LocoNet speed integer to a float speed value.
+     *
      * @param lSpeed loconet speed value
      * @return speed as float 0-&gt;1.0
      */
@@ -61,6 +62,9 @@ public class Pr2Throttle extends AbstractThrottle {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected int intSpeed(float fSpeed) {
         int speed = super.intSpeed(fSpeed);
@@ -160,7 +164,6 @@ public class Pr2Throttle extends AbstractThrottle {
         // rest are zero
 
         ((LocoNetSystemConnectionMemo) adapterMemo).getLnTrafficController().sendLocoNetMessage(l);
-        //LnTrafficController.instance().sendLocoNetMessage(l);
     }
 
     /**
@@ -181,6 +184,9 @@ public class Pr2Throttle extends AbstractThrottle {
         writeData();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void sendFunctionGroup3() {
         writeData();
@@ -188,7 +194,7 @@ public class Pr2Throttle extends AbstractThrottle {
 
     /**
      * Set the speed.
-     * <P>
+     * <p>
      * This intentionally skips the emergency stop value of 1.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
@@ -224,41 +230,24 @@ public class Pr2Throttle extends AbstractThrottle {
     }
 
     /**
-     * Release the loco from this throttle, then clean up the object.
+     * {@inheritDoc}
      */
-    @Override
-    public void release() {
-        dispose();
-    }
-
-    /**
-     * Dispatch the loco from this throttle, then clean up the object.
-     */
-    @Override
-    public void dispatch() {
-        dispose();
-    }
-
     @Override
     public String toString() {
         return getLocoAddress().toString();
     }
 
     /**
-     * Dispose when finished with this object. After this, further usage of this
-     * Throttle object will result in a JmriException.
+     * {@inheritDoc}
      */
-    @Override
-    public void dispose() {
-        log.debug("dispose");
-        super.dispose();
-    }
-
     @Override
     public LocoAddress getLocoAddress() {
         return address;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void throttleDispose() {
         finishRecord();

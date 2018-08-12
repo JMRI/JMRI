@@ -1,7 +1,9 @@
 package jmri.jmrix.lenz;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 
 /**
  * XNetConsistManagerTest.java
@@ -27,5 +29,13 @@ public class XNetConsistManagerTest extends jmri.implementation.AbstractConsistM
         cm = null;
         jmri.util.JUnitUtil.tearDown();
     }
+
+    @Test
+    @Override
+    public void testIsCommandStationConsistPossible(){
+       // true for XPressNet
+       Assert.assertTrue("CS Consist Possible",cm.isCommandStationConsistPossible());
+    }
+
 
 }

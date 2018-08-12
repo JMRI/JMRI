@@ -7,9 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <P>
- * Tests for SprogThrottleManager
- * </P>
+ * Tests for SprogThrottleManager.
+ *
  * @author Paul Bender Copyright (C) 2017
  */
 public class SprogThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
@@ -37,6 +36,7 @@ public class SprogThrottleManagerTest extends jmri.managers.AbstractThrottleMana
 
     @After
     public void tearDown() {
+        stcs.dispose();
         JUnitUtil.tearDown();
     }
 

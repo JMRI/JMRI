@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -8,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Threading</title>
-  <meta content="Bob Jacobsen" name="Author">
+    <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code threading">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -24,22 +23,22 @@
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header" -->
+</head><!--#include virtual="/Header.shtml" -->
 
 <body>
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Threading</h1>
+      <h1>JMRI Code: Threading</h1>
       
-      The vast majority of JMRI code (and
+      <p>The vast majority of JMRI code (and
       programmers) don't have to worry about threading. Their code
       gets invoked, and invokes other code, and threading takes
       care of itself. This is particularly true of event-based
       code, which responds to events from e.g. the GUI or a layout
       object changing, and calls methods on other objects, which
-      may in turn create more events.
+      may in turn create more events.</p>
 
       <p>This simplicity comes from using a single thread for
       processing most of JMRI's activity: The Java Swing event
@@ -153,22 +152,41 @@
     
     <p>
     The 
-    <a href="http://jmri.org/JavaDoc/doc/jmri/util/PropertyChangeEventQueueTest.html">jmri.util.PropertyChangeEventQueueTest</a>
-    can handle listening to lots of NamedBeans without possibly missing or overlapping some notifications.
+    <a href="http://jmri.org/JavaDoc/doc/jmri/util/PropertyChangeEventQueue.html">jmri.util.PropertyChangeEventQueue</a>
+    class can handle listening to lots of NamedBeans without possibly missing or overlapping some notifications.
     The 
-    <a href="https://github.com/JMRI/JMRI/tree/master/java/test/jmri/util/ThreadingDemoAndTest.java">jmri.jmrit.automat.SigLet</a>
+    <a href="https://github.com/JMRI/JMRI/tree/master/java/src/jmri/jmrit/automat/Siglet.java">jmri.jmrit.automat.Siglet</a>
     class is an example of using this.
     
     
 <h2>Debugging</h2>
 
+<a id="dump"></a>
 <h3>Getting a thread-dump</h3>
 
 When debugging threading issues, it can be helpful to get a "thread dump".
+<p>
+To do this when using an Oracle JVM (most common case), open a separate window
+and on that command line enter the command 'jvisualvm'.  This will open a new
+window with tools for browsing all the Java currently running on your machine.
+Then
+<ol>
+<li>In the upper left, double-click the line that shows your running JMRI instance.
+    (You might have to open the "Local" selector to see it) If should
+    say something about PanelPro or DecoderPro. It'll take a few seconds,
+    but then the right side will open with new information.
+<li>Select the "Threads" tab in the middle-upper on the right side.
+<li>Click the "Thread Dump" button in upper right.
+<li>A new tab will open with the dump. There's no direct way to save that, but 
+    you can copy and paste those contents into an editor to save them or an email to send them.
+</ol>
+
+<p>
+If for some reason you can't use jvisualvm, then:
 <ul>
-<li>To do this on Linux and macOS when running from a command line, type control-backspace
-<li>To do this on Linux and macOS when running detached, e.g. from startup icon, 
-    <ul>
+<li>On Linux and macOS when running from a command line, type control-backspace
+<li>On Linux and macOS when running detached, e.g. from startup icon, 
+    <ul> 
     <li>Get the process ID (PID) from e.g. ps or Activity Monitor (under application name, e.g. PanelPro)<br>
 <code>
 ps | grep java | grep apps | awk '{print $1}'<br>
@@ -188,7 +206,7 @@ kill -s QUIT `ps | grep java | grep apps | awk '{print $1}'`<br>
 Note that if running under Ant or an IDE, you might get more than one dump:  The one
 you're looking for from JMRI, plus many one from Ant or the IDE itself.
 
-    <!--#include virtual="/Footer" -->
+    <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

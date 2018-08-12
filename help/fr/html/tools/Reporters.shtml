@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- Updated by Blorec Herv&#233; le 201-01-05-->
-<!-- $Id$ -->
 
 <html lang="fr">
 <head>
@@ -8,11 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Reporter Documentation</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "sensor model railroad JMRI decoderpro panelpro"><!-- Style -->
   <meta http-equiv="Content-Type" content=

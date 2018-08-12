@@ -1,12 +1,30 @@
 package jmri.jmrit.vsdecoder.swing;
 
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonModel;
+import java.beans.PropertyChangeEvent;
+import javax.swing.JOptionPane;
+import javax.swing.BorderFactory;
+import javax.swing.JSpinner;
+import javax.swing.JToggleButton;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.Timer;
+import jmri.jmrit.vsdecoder.EnginePane;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * class DieselPane
  *
  * Diesel sound control buttons for the new GUI
  */
 
-/*
+/**
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -21,20 +39,9 @@ package jmri.jmrit.vsdecoder.swing;
  * for more details.
  * <P>
  *
- * @author   Mark Underwood Copyright (C) 2011
- * 
+ * @author Mark Underwood Copyright (C) 2011
+ * @author Klaus Killinger Copyright (C) 2018
  */
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import javax.swing.BorderFactory;
-import javax.swing.JSpinner;
-import javax.swing.JToggleButton;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.event.ChangeEvent;
-import jmri.jmrit.vsdecoder.EnginePane;
-
 @SuppressWarnings("serial")
 public class DieselPane extends EnginePane {
 
@@ -47,6 +54,10 @@ public class DieselPane extends EnginePane {
 
     Integer throttle_setting;
     Boolean engine_started;
+
+    private Timer timer;
+    int dtime = 1;
+    float lastSpeed = 0.0f;
 
     /**
      * Constructor
@@ -75,8 +86,37 @@ public class DieselPane extends EnginePane {
         initComponents();
     }
 
+    protected Timer newTimer(int time, boolean repeat, ActionListener al) {
+        timer = new Timer(time, al);
+        timer.setRepeats(repeat);
+        return timer;
+    }
+
+    // Lock the start/stop-button until the start/stop-sound has finished
+    void startDelayTimer() {
+        if (dtime > 1) {
+            start_button.setEnabled(false);
+            timer = newTimer(dtime, false, new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    start_button.setEnabled(true);
+                }
+            });
+            timer.start();
+        }
+    }
+
+    @Override
+    public void setButtonDelay(long t) {
+        // Timer only takes an int ... cap the length at MAXINT
+        // Note: this only works for positive lengths ...
+        if (t > Integer.MAX_VALUE) {
+            t = Integer.MAX_VALUE; // small enough to safely cast
+        }
+        dtime = (int) t; // time in ms
+    }
+
     /**
-     * Build teh GUI components
+     * Build the GUI components
      */
     @Override
     public void initComponents() {
@@ -101,9 +141,32 @@ public class DieselPane extends EnginePane {
                 startButtonChange(e);
             }
         });
+
+        start_button.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent ev) {
+                startButtonStateChange(ev);
+            }
+        });
+
         this.add(start_button);
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         this.setVisible(true);
+    }
+
+    // Respond to a start button press with stateChanged
+    public void startButtonStateChange(ChangeEvent ev) {
+        AbstractButton abstractButton = (AbstractButton) ev.getSource();
+        ButtonModel buttonModel = abstractButton.getModel();
+        boolean armed = buttonModel.isArmed();
+        boolean pressed = buttonModel.isPressed();
+        boolean selected = buttonModel.isSelected();
+        if (armed && pressed && selected && (lastSpeed > 0.0f) && (!engine_started)) {
+            buttonModel.setArmed(false);
+            buttonModel.setPressed(false);
+            buttonModel.setSelected(false);
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("EngineStartSpeedMessage"));
+        }
     }
 
     /**
@@ -128,20 +191,26 @@ public class DieselPane extends EnginePane {
         } else {
             start_button.setText(Bundle.getMessage("ButtonEngineStart"));
         }
+        startDelayTimer();
+    }
+
+    @Override
+    public void startButtonClick() {
+        start_button.doClick(); // Animate button and process ChangeEvent
     }
 
     /**
      * Return true if the start button is "on"
      */
     public boolean engineIsOn() {
-        return (start_button.isSelected());
+        return start_button.isSelected();
     }
 
     /**
      * Return current notch setting of the throttle slider
      */
     public int throttleNotch() {
-        return ((Integer) throttle_spinner.getModel().getValue());
+        return (Integer) throttle_spinner.getModel().getValue();
     }
 
     /**
@@ -151,5 +220,12 @@ public class DieselPane extends EnginePane {
     public void setThrottle(int t) {
         throttle_spinner.setValue(t);
     }
+
+    @Override
+    public void setSpeed(float s) {
+        lastSpeed = s;
+    }
+
+    // private static final Logger log = LoggerFactory.getLogger(DieselPane.class);
 
 }

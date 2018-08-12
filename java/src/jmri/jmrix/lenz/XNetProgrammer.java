@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -366,11 +365,13 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
                 return;  
             } else if (m.isCommErrorMessage()) {
                 // We experienced a communications error
-                // report it as an error
-                log.error("Communications error in REQUESTSENT state while programming.  Error: " + m.toString());
-                progState = NOTPROGRAMMING;
-                stopTimer();
-                notifyProgListenerEnd(_val, jmri.ProgListener.CommError);
+                if(_controller.hasTimeSlot()) {
+                   // We have a timeslot, so report it as an error
+                   log.error("Communications error in REQUESTSENT state while programming.  Error: " + m.toString());
+                   progState = NOTPROGRAMMING;
+                   stopTimer();
+                   notifyProgListenerEnd(_val, jmri.ProgListener.CommError);
+                }
             }
         } else if (progState == INQUIRESENT) {
             if (log.isDebugEnabled()) {
@@ -478,11 +479,13 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
                 return;  
             } else if (m.isCommErrorMessage()) {
                 // We experienced a communications error
-                // report it as an error
-                log.error("Communications error in INQUIRESENT state while programming.  Error: " + m.toString());
-                progState = NOTPROGRAMMING;
-                stopTimer();
-                notifyProgListenerEnd(_val, jmri.ProgListener.CommError);
+                if(_controller.hasTimeSlot()) {
+                   // We have a timeslot, so report it as an error
+                   log.error("Communications error in INQUIRESENT state while programming.  Error: " + m.toString());
+                   progState = NOTPROGRAMMING;
+                   stopTimer();
+                   notifyProgListenerEnd(_val, jmri.ProgListener.CommError);
+               }
             } else {
                 // nothing important, ignore
                 log.debug("Ignoring message " + m.toString());

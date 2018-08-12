@@ -3,11 +3,12 @@
  * elements.
  *
  * <h2>Requests</h2>
- *
+ * <p>
  * JSON messages in four different forms from the client are handled by the JSON
  * services:
  * <ul>
  * <li>list requests in the form:
+ * <code>{"type":"<em>type</em>","method":"list"}</code> or
  * <code>{"type":"list","list":"<em>type</em>"}</code> or
  * <code>{"list":"<em>type</em>"}</code>.</li>
  * <li>individual item state requests in the form:
@@ -19,15 +20,13 @@
  * Optionally a <strong>method</strong> node with the value <em>post</em> is
  * included in the message:
  * <code>{"type":"<em>type</em>","method":"post","data":{"name":"<em>name</em>",...}}</code>.
- * The <em>method</em> node may be included in the <em>data</em> node:
+ * For historical reasons, the <em>method</em> node may be included in the
+ * <em>data</em> node:
  * <code>{"type":"<em>type</em>","data":{"name":"<em>name</em>","method":"post",...}}</code>
- * Note that not all types support this.</li>
+ * Note that this is discouraged and not all types support this.</li>
  * <li>individual types can be created if a <strong>method</strong> node with
  * the value <em>put</em> is included in message:
- * <code>{"type":"<em>type</em>","method":"put","data":{"name":"<em>name</em>"}}</code>.
- * The <em>method</em> node may be included in the <em>data</em> node:
- * <code>{"type":"turnout","data":{"name":"LT14","method":"put"}}</code> Note
- * that not all types support this.</li>
+ * <code>{"type":"<em>type</em>","method":"put","data":{"name":"<em>name</em>"}}</code>.</li>
  * </ul></li>
  * <li>a heartbeat in the form <code>{"type":"ping"}</code>. The heartbeat gets
  * a <code>{"type":"pong"}</code> response.</li>
@@ -35,7 +34,7 @@
  * identical response is sent before the connection gets closed.</li></ul>
  *
  * <h2>Responses</h2>
- *
+ * <p>
  * JSON messages sent to the client will be in the form:
  * <ul>
  * <li><code>{"type":"<em>type</em>","data":{"name":"<em>name</em>",...}}</code>

@@ -8,7 +8,6 @@ import javax.swing.JTable;
 import javax.swing.SortOrder;
 import javax.swing.table.TableRowSorter;
 import jmri.swing.RowSorterUtil;
-import jmri.util.SystemNameComparator;
 
 /**
  * Provide a JPanel to display a table of NamedBeans.
@@ -41,8 +40,7 @@ public class BeanTablePane extends jmri.util.swing.JmriPanel {
         dataTable = dataModel.makeJTable(dataModel.getMasterClassName(), dataModel, sorter);
         dataScroll = new JScrollPane(dataTable);
 
-        // give system name column as smarter sorter and use it initially
-        sorter.setComparator(BeanTableDataModel.SYSNAMECOL, new SystemNameComparator());
+        // use NamedBean's built-in Comparator interface for sorting the system name column
         RowSorterUtil.setSortOrder(sorter, BeanTableDataModel.SYSNAMECOL, SortOrder.ASCENDING);
         this.dataTable.setRowSorter(sorter);
 

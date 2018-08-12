@@ -402,7 +402,7 @@ public class MrcPacketizer extends MrcTrafficController {
                                     transmitLock.notify();
                                 }
                                 break;
-                            case MrcPackets.GOODCMDRECIEVEDCODE:      //Possibly shouldn't change the state, as we wait for further confirmation.
+                            case MrcPackets.GOODCMDRECEIVEDCODE:      //Possibly shouldn't change the state, as we wait for further confirmation.
                                 if (mCurrentState == CONFIRMATIONONLY) {
                                     synchronized (transmitLock) {
                                         mCurrentState = IDLESTATE;
@@ -411,7 +411,7 @@ public class MrcPacketizer extends MrcTrafficController {
                                 }
                                 msg = new MrcMessage(4);
                                 break;
-                            case MrcPackets.BADCMDRECIEVEDCODE:
+                            case MrcPackets.BADCMDRECEIVEDCODE:
                                 mCurrentState = BADCOMMAND;
                                 msg = new MrcMessage(4);
                                 break;
@@ -431,9 +431,9 @@ public class MrcPacketizer extends MrcTrafficController {
                         // check for message-blocking error
                         int b = readByteProtected(istream) & 0xFF;
                         msg.setElement(i, b);
-                        log.trace("char {} is: ", i, Integer.toHexString(b));
+                        log.trace("char {} is: {}", i, Integer.toHexString(b));
                     }
-                    /*Slight trade off with this we may see any transmitted message go out prior to the 
+                    /*Slight trade off with this we may see any transmitted message go out prior to the
                      poll message being passed to the monitor. */
                     if (pollForUs) {
                         synchronized (xmtHandler) {
@@ -443,12 +443,12 @@ public class MrcPacketizer extends MrcTrafficController {
 
                     if ((msg.getMessageClass() & MrcInterface.POLL) != MrcInterface.POLL && msg.getNumDataElements() > 6) {
                         if (!msg.validCheckSum()) {
-                            log.warn("Ignore Mrc packet with bad checksum: {0}", msg.toString()); //IN18N
+                            log.warn("Ignore Mrc packet with bad checksum: {}", msg); //IN18N
                             throw new MrcMessageException();
                         } else {
                             for (int i = 1; i < msg.getNumDataElements(); i += 2) {
                                 if (msg.getElement(i) != 0x00) {
-                                    log.warn("Ignore Mrc packet with bad bit: {0}", msg.toString()); //IN18N
+                                    log.warn("Ignore Mrc packet with bad bit: {}", msg); //IN18N
                                     throw new MrcMessageException();
                                 }
                             }
@@ -458,15 +458,15 @@ public class MrcPacketizer extends MrcTrafficController {
                     {
                         log.trace("queue message for notification: {}", msg);
                         final MrcMessage thisMsg = msg;
-                        final MrcPacketizer thisTC = trafficController;
+                        final MrcPacketizer thisTc = trafficController;
                         // return a notification via the queue to ensure end
                         Runnable r = new Runnable() {
                             MrcMessage msgForLater = thisMsg;
-                            MrcPacketizer myTC = thisTC;
+                            MrcPacketizer myTc = thisTc;
 
                             @Override
                             public void run() {
-                                myTC.notifyRcv(time, msgForLater);
+                                myTc.notifyRcv(time, msgForLater);
                             }
                         };
                         javax.swing.SwingUtilities.invokeLater(r);
@@ -486,8 +486,7 @@ public class MrcPacketizer extends MrcTrafficController {
                 } // normally, we don't catch RuntimeException, but in this
                 // permanently running loop it seems wise.
                 catch (RuntimeException e) {
-                    log.warn("Unknown Exception: {0}", e);  //IN18N
-                    e.printStackTrace();
+                    log.warn("Unknown Exception", e);  //IN18N
                 }
             } // end of permanent loop
         }
@@ -537,7 +536,7 @@ public class MrcPacketizer extends MrcTrafficController {
                 try {
                     if (m.getMessageClass() != MrcInterface.POLL) {
                         mCurrentState = WAITFORCMDRECEIVED;
-                        /* We set the current state before transmitting the message otherwise 
+                        /* We set the current state before transmitting the message otherwise
                          the reply to the message may be received before the state is set
                          and the message will timeout and be retransmitted */
                         if (!m.isReplyExpected()) {
@@ -547,7 +546,7 @@ public class MrcPacketizer extends MrcTrafficController {
                     }
                     ostream.write(msg);
                     ostream.flush();
-                    messageTransmited(m);
+                    messageTransmitted(m);
                     if (m.getMessageClass() != MrcInterface.POLL) {
                         if (log.isTraceEnabled()) { // avoid String building if not needed
                             log.trace("end write to stream: {}", jmri.util.StringUtil.hexStringFromBytes(msg));
@@ -587,7 +586,7 @@ public class MrcPacketizer extends MrcTrafficController {
                                 }
                             }
                         } else {
-                            log.warn("Message missed {0} polls for message {1}", consecutiveMissedPolls, m.toString()); //IN18N
+                            log.warn("Message missed {} polls for message {}", consecutiveMissedPolls, m); //IN18N
                             consecutiveMissedPolls = 0;
                         }
                     } else if (mCurrentState == DOUBLELOCOCONTROL && m.getRetries() >= 0) {
@@ -607,7 +606,7 @@ public class MrcPacketizer extends MrcTrafficController {
                         consecutiveMissedPolls = 0;
                     }
                 } catch (java.io.IOException e) {
-                    log.warn("sendMrcMessage: IOException: {1}", e.toString()); //IN18N
+                    log.warn("sendMrcMessage: IOException: {}", e); //IN18N
                 }
             }
         }
@@ -667,11 +666,11 @@ public class MrcPacketizer extends MrcTrafficController {
 
     /**
      * When a message is finally transmitted, forward it to listeners if echoing
-     * is needed
-     * @param msg message to tag a transmitted message
+     * is needed.
      *
+     * @param msg message to tag a transmitted message
      */
-    protected void messageTransmited(MrcMessage msg) {
+    protected void messageTransmitted(MrcMessage msg) {
         //if (debug) log.debug("message transmitted");
         if (!echo) {
             return;

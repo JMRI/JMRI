@@ -2,7 +2,6 @@ package jmri.jmrix.loconet.downloader;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -48,6 +47,7 @@ public class LoaderPaneTest extends jmri.util.swing.JmriPanelTest {
 
     @After
     public void tearDown() {
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 

@@ -1,12 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 
-<html lang="en">
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Me 2008 -->
-  <!-- $Id$ -->
   <!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
 
   <title>JMRI: Single CV Programmer</title><!-- Style -->
@@ -54,11 +53,11 @@
       vous permettent pas de lire sur la voie principale, dans ce
       cas le bouton "Lire" sera d&eacute;sactiv&eacute;.</p>
 
-      <p>&Atilde;&euro; la droite de ceci est un endroit o&ugrave;
+      <p>&Aacute; la droite de ceci est un endroit o&ugrave;
       vous pouvez s&eacute;lectionner le format des valeurs
       d'entr&eacute;es soit en valeur D&eacute;cimale (base 10) ou
-      hexad&eacute;cimale (base 16). 
-      <!--#include virtual="/Footer" --></p>
+      hexad&eacute;cimale (base 16).</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

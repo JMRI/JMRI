@@ -169,6 +169,39 @@ public class Z21MessageTest {
         Assert.assertEquals("Monitor String","04 00 85 00",m.toMonitorString());
     }
 
+    @Test
+    public void getLocoNetMessage(){
+        byte msg[]={
+           (byte)0xEF,(byte)0x0E,(byte)0x03,(byte)0x00,(byte)0x03,
+           (byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,
+           (byte)0x00,(byte)0x00,(byte)0x00};
+        jmri.jmrix.loconet.LocoNetMessage l = new jmri.jmrix.loconet.LocoNetMessage(msg);
+        Z21Message m = new Z21Message(l);
+        jmri.jmrix.loconet.LocoNetMessage x = m.getLocoNetMessage();
+        Assert.assertEquals("0th byte", 0xEF, x.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", 0x0E, x.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", 0x03, x.getElement(2) & 0xFF);
+        Assert.assertEquals("4nd byte", 0x03, x.getElement(4) & 0xFF);
+    }
+
+    @Test
+    public void getNullLocoNetMessage(){
+        byte msg[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
+        Z21Message m = new Z21Message(msg,17);
+        Assert.assertNull("non-LocoNetTunnel LocoNet Message",m.getLocoNetMessage());
+    }
+
+    @Test
+    public void MonitorStringLocoNetMessage(){
+        byte msg[]={
+           (byte)0xEF,(byte)0x0E,(byte)0x03,(byte)0x00,(byte)0x03,
+           (byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,
+           (byte)0x00,(byte)0x00,(byte)0x00};
+        jmri.jmrix.loconet.LocoNetMessage l = new jmri.jmrix.loconet.LocoNetMessage(msg);
+        Z21Message m = new Z21Message(l);
+        Assert.assertEquals("Monitor String","LocoNet Tunnel Message: EF 0E 03 00 03 00 00 00 00 00 00 00 00",m.toMonitorString());
+    }
+
 
     // The minimal setup for log4J
     @Before

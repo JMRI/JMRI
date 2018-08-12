@@ -45,9 +45,7 @@ public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler
 
     static protected String generateStackTrace(Throwable e) {
         StringWriter writer = new StringWriter();
-        try (PrintWriter pw = new PrintWriter(writer)) {
-            e.printStackTrace(pw);
-        }
+        e.printStackTrace(new PrintWriter(writer));
         return writer.toString();
     }
 

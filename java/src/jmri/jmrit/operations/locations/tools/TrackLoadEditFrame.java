@@ -362,9 +362,11 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         loadNameExclude.setEnabled(enabled);
         loadAndTypeCheckBox.setEnabled(enabled);
 
+        // enable ship options if any of the three generate loads from staging is selected
+        // or if there are any ship load restrictions for this track
         boolean en = enabled
                 && (_track.isAddCustomLoadsAnyStagingTrackEnabled() || _track.isAddCustomLoadsAnySpurEnabled() || _track
-                .isAddCustomLoadsEnabled());
+                .isAddCustomLoadsEnabled() || !_track.getShipLoadOption().equals(Track.ALL_LOADS));
 
         shipLoadNameAll.setEnabled(en);
         shipLoadNameInclude.setEnabled(en);

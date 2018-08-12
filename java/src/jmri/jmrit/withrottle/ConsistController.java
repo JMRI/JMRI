@@ -10,6 +10,7 @@ import jmri.Consist;
 import jmri.ConsistManager;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+import jmri.LocoAddress;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.jmrit.consisttool.ConsistFile;
@@ -29,9 +30,14 @@ public class ConsistController extends AbstractController implements ProgListene
     public ConsistController() {
         //  writeFile needs to be separate method
         if (InstanceManager.getDefault(WiThrottlePreferences.class).isUseWiFiConsist()) {
-            manager = new WiFiConsistManager();
-            InstanceManager.store(manager, ConsistManager.class);
-            log.debug("Using WiFiConsisting");
+            try {
+               manager = new WiFiConsistManager();
+               InstanceManager.store(manager, ConsistManager.class);
+               log.debug("Using WiFiConsisting");
+            } catch (NullPointerException npe) {
+               log.error("Attempting to use WiFiConsisting, but no Command Station available");
+               manager = null;
+            }
         } else {
             manager = InstanceManager.getNullableDefault(ConsistManager.class);
             log.debug("Using JMRIConsisting");
@@ -84,7 +90,7 @@ public class ConsistController extends AbstractController implements ProgListene
 
     public void sendAllConsistData() {
         // Loop thru JMRI consists and send consist detail for each
-        for (DccLocoAddress conAddr : manager.getConsistList()) {
+        for (LocoAddress conAddr : manager.getConsistList()) {
             sendDataForConsist(manager.getConsist(conAddr));
         }
     }
@@ -129,7 +135,7 @@ public class ConsistController extends AbstractController implements ProgListene
      * @param message string containing new consist information
      */
     @Override
-    void handleMessage(String message) {
+    void handleMessage(String message, DeviceServer deviceServer) {
         try {
             if (message.charAt(0) == 'P') {  //  Change consist 'P'ositions
                 reorderConsist(message);

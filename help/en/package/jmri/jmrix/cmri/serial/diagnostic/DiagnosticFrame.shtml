@@ -6,7 +6,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
 
   <title>JMRI: C/MRI Diagnostics</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -24,14 +23,14 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h2>JMRI: C/MRI Diagnostics</h2>When it asks for output card
+      <h2>JMRI: C/MRI Diagnostics</h2>
+      <p>When it asks for output card
       number, it means the address. For example, if you have two
       input cards at 0 and 1, then output cards are address 2, 3,
       and 4, you can specify 2, 3 and 4 here. Don't think it refers
-      to the "1st" output card, etc.
+      to the "1st" output card, etc.</p>
 
-      <p>This is the cmri.serial.diagnostic.DiagnosticFrame help
-      page <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

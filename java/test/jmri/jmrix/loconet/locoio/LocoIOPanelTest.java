@@ -37,16 +37,18 @@ public class LocoIOPanelTest extends jmri.util.swing.JmriPanelTest {
 
         // dispose and end operation
         f.dispose();
+        memo.dispose();
     }
 
     @Test
     public void testAddrField() {
         // make sure that the address field does a notify
         // and new address is used
-        // prepare an interface
 
+        // prepare an interface
         LocoIOPanel f = (LocoIOPanel) panel;
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
+        lnis.setSystemConnectionMemo(memo);
         memo.setLnTrafficController(lnis);
         f.initComponents(memo);
 
@@ -65,6 +67,7 @@ public class LocoIOPanelTest extends jmri.util.swing.JmriPanelTest {
 
         // dispose and end operation
         f.dispose();
+        memo.dispose();
     }
 
     @Test
@@ -77,6 +80,7 @@ public class LocoIOPanelTest extends jmri.util.swing.JmriPanelTest {
             }
         };
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
+        lnis.setSystemConnectionMemo(memo);
         memo.setLnTrafficController(lnis);
         f.initComponents(memo);
 
@@ -94,6 +98,7 @@ public class LocoIOPanelTest extends jmri.util.swing.JmriPanelTest {
 
         // dispose and end operation
         f.dispose();
+        memo.dispose();
     }
 
     // The minimal setup for log4J

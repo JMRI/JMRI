@@ -40,9 +40,8 @@ public class JmrixConfigPaneXml extends AbstractXmlAdapter {
         try {
             XmlAdapter x = (XmlAdapter) Class.forName(adapter).newInstance();
             return x.store(oprime);
-        } catch (Exception e) {
-            log.error("Exception: " + e);
-            e.printStackTrace();
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+            log.error("Exception: ", e);
             return null;
         }
     }

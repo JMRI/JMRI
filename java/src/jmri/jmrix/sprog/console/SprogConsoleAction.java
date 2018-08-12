@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a SprogConsoleFrame object
+ * Swing action to create and register a SprogConsoleFrame object.
  *
  * @author	Andrew Crosland Copyright (C) 2008
  */
@@ -15,7 +15,7 @@ public class SprogConsoleAction extends AbstractAction {
 
     private SprogSystemConnectionMemo _memo;
 
-    public SprogConsoleAction(String s,SprogSystemConnectionMemo memo) {
+    public SprogConsoleAction(String s, SprogSystemConnectionMemo memo) {
         super(s);
         _memo = memo;
     }
@@ -30,8 +30,7 @@ public class SprogConsoleAction extends AbstractAction {
         }
         f.setVisible(true);
     }
+
     private final static Logger log = LoggerFactory.getLogger(SprogConsoleAction.class);
+
 }
-
-
-

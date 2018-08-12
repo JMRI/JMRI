@@ -19,17 +19,17 @@ import jmri.server.json.JsonSocketService;
  *
  * @author Randall Wood Copyright 2017
  */
-public class JsonMessageSocketService extends JsonSocketService {
+public class JsonMessageSocketService extends JsonSocketService<JsonMessageHttpService> {
 
     private JsonMessageClientManager messageClientManager = null;
 
     public JsonMessageSocketService(JsonConnection connection) {
-        super(connection);
+        super(connection, new JsonMessageHttpService(connection.getObjectMapper()));
         messageClientManager = InstanceManager.getDefault(JsonMessageClientManager.class);
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
         switch (type) {
             case JSON.HELLO:
                 if (!data.path(CLIENT).isMissingNode()) {
@@ -40,7 +40,7 @@ public class JsonMessageSocketService extends JsonSocketService {
                 }
                 break;
             case JsonMessage.CLIENT:
-                switch (data.path(JSON.METHOD).asText()) {
+                switch (method) {
                     case JSON.DELETE:
                         // remove client id
                         if (!data.path(CLIENT).isMissingNode()) {
@@ -75,6 +75,7 @@ public class JsonMessageSocketService extends JsonSocketService {
                         }
                         break;
                 }
+                break;  // break inside gets to here, then this goes out
             default:
                 // ignore anything else
                 break;

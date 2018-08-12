@@ -13,6 +13,7 @@
           <text>See manual for further details</text>
           <text xml:lang="it">Vedere Manuale per ulteriori dettagli</text>
           <text xml:lang="de">Beachten Sie die Bedienungsanleitung für weitere Details</text>
+          <text xml:lang="ca">Veure el manual per a més detalls</text>
         </label>
       </column>
     </row>
@@ -46,6 +47,7 @@
           <text>                  SETTINGS</text>
           <text xml:lang="it">                  PROGRAMMA</text>
           <text xml:lang="de">              EINSTELLUNGEN</text>
+          <text xml:lang="ca">                  ESTABLEIX</text>
         </label>
         <label>
           <text> </text>
@@ -54,54 +56,67 @@
           <text>             0 = Default</text>
           <text xml:lang="it">       0   = Default</text>
           <text xml:lang="de">             0 = Grundzustand (immer an wenn F-Taste an)</text>
+          <text xml:lang="ca">                  0 = Per defecte</text>
         </label>
       <separator/>
         <label>
           <text>             1 = Only by forward</text>
           <text xml:lang="de">             1 = nur bei vorwärts</text>
+          <text xml:lang="ca">             1 = Momés endavant</text>
         </label>
         <label>
           <text>             2 = Only by backward</text>
           <text xml:lang="de">             2 = nur bei rückwärts</text>
+          <text xml:lang="ca">             2 = Només enrere</text>
+
         </label>
       <separator/>
         <label>
           <text>             3 = Only by stop</text>
           <text xml:lang="de">             3 = nur im Stand</text>
+          <text xml:lang="ca">             3 = Només per parada</text>
         </label>
         <label>
           <text>             6 = Only by drive</text>
           <text xml:lang="de">             6 = nur bei Fahrt</text>
+          <text xml:lang="ca">             2 = Només en viatge</text>
         </label>
       <separator/>
         <label>
           <text>             9 = Only by F0 (Light) off</text>
           <text xml:lang="de">             9 = nur bei F0 (Licht) aus</text>
+          <text xml:lang="ca">             9 = Només amb F0 (llum) apagada</text>
         </label>
         <label>
           <text>           18 = Only by F0 (Light) on</text>
           <text xml:lang="de">           18 = nur bei F0 (Licht) an</text>
+          <text xml:lang="ca">             18 = Només amb F0 (llum) engegada</text>
         </label>
       <separator/>
         <label>
           <text>           27 = Not by shunt on</text>
           <text xml:lang="de">           27 = nicht im Rangiergang</text>
+          <text xml:lang="ca">           27 = No en maniobres</text>
         </label>
         <label>
           <text>           54 = Only by shunt</text>
           <text xml:lang="de">           54 = nur im Rangiergang</text>
+          <text xml:lang="ca">           54 = Només en maniobres</text>
         </label>
         <label>
           <text>           81 = Ignore direction by shunt</text>
           <text xml:lang="de">           81 = Im Rangiergang Richtung ignorieren</text>
+          <text xml:lang="ca">           81 = Ignora el sentit en maniobres</text>
         </label>
         <label>
           <text>         108 = Ignore drive/stop by shunt</text>
           <text xml:lang="de">         108 = Im Rangiergang Fahrt/Stand ignorieren</text>
+          <text xml:lang="ca">         108 = Ignora conducció/parada en maniobres</text>
         </label>
         <label>
           <text>         135 = Ignore direction and drive/stop by shunt</text>
           <text xml:lang="de">         135 = Im Rangiergang Richtung und Fahrt/Stand ignorieren</text>
+           <text xml:lang="ca">        135 = Ignora conducció/parada en maniobres</text>
         </label>
       <separator/>
         <label>

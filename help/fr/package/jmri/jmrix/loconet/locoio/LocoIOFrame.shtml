@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="fr">
 <head>
@@ -38,9 +37,7 @@
       D&eacute;finition Decoder</a> dans le cat&eacute;gorie
       "Public Domain and DIY".</p>
 
-      <p>Ceci est le page d'aide
-      /jmri/jmrix/loconet/locoio/LocoIOFrame 
-      <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -4,13 +4,11 @@ import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.Scale;
 import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Assert;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 

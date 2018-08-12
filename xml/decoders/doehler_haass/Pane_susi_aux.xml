@@ -14,6 +14,7 @@
 					<text>AUX 1 and 2 are only available starting with firmware 1.07 (Dec. 2015)</text>
 					<text xml:lang="fr">AUX 1 et 2 disponibles à partir du firmware 1.07 (Déc. 2015)</text>
 					<text xml:lang="de">AUX 1 und 2 nur ab Firmware 1.07 (Dez. 2015) verfügbar.</text>
+					<text xml:lang="ca">AUX 1 i 2 a partir del Firmware 1.07 (Des. 2015) verfügbar.</text>
 				</label>
 			</column>
 		</griditem>
@@ -23,6 +24,7 @@
 					<text>Those outputs are unamplified! (5V, max 20mA)</text>
 					<text xml:lang="fr">Ces sorties sont non amplifiées! (5V, max 20mA)</text>
 					<text xml:lang="de">Unverstärkte Ausgänge! (5V, max 20mA)</text>
+					<text xml:lang="ca">Sortides lògiques! (5V, max 20mA)</text>
 				</label>
 			</column>
 		</griditem>

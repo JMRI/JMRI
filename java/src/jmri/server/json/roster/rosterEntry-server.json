@@ -1,0 +1,130 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-rosterEntry-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"rosterEntry\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Identity of the rosterEntry"
+        },
+        "address": {
+            "type": "string",
+            "description": "DCC address of the rosterEntry"
+        },
+        "isLongAddress": {
+            "type": "boolean",
+            "description": "DCC address of the rosterEntry"
+        },
+        "road": {
+            "type": "string",
+            "description": "Owning railroad of the rosterEntry"
+        },
+        "number": {
+            "type": "string",
+            "description": "Owning railroad roster number of the rosterEntry"
+        },
+        "mfg": {
+            "type": "string",
+            "description": "Manufacturer of device in the rosterEntry"
+        },
+        "model": {
+            "type": "string",
+            "description": "Model of device in the rosterEntry"
+        },
+        "decoderModel": {
+            "type": "string",
+            "description": "Model of the decoder controlling the rosterEntry"
+        },
+        "decoderFamily": {
+            "type": "string",
+            "description": "Family of the decoder controlling the rosterEntry"
+        },
+        "maxSpeedPct": {
+            "type": "integer",
+            "description": "Maximum speed of the rosterEntry as a percentage"
+        },
+        "shuntingFunction": {
+            "type": ["string", "null"],
+            "description": "Function key that triggers shunting capability"
+        },
+        "owner": {
+            "type": "string",
+            "description": "Owner of device in rosterEntry"
+        },
+        "dateModified": {
+            "type": ["string", "null"],
+            "description": "The date this rosterEntry was last modified in ISO 8601 format"
+        },
+        "comment": {
+            "type": "string",
+            "description": "Comment for the rosterEntry"
+        },
+        "icon": {
+            "type": ["", "null"],
+            "description": "URL of icon for the rosterEntry"
+        },
+        "image": {
+            "type": ["", "null"],
+            "description": "URL of icon for the rosterEntry"
+        },
+        "functionKeys": {
+            "type": "array",
+            "description": "Function keys for the rosterEntry",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Function key"
+                    },
+                    "label": {
+                        "type": ["string", "null"],
+                        "description": "Label for function key"
+                    },
+                    "lockable": {
+                        "type": "boolean",
+                        "description": "\"false\" if key is momentary, \"true\" otherwise"
+                    },
+                    "icon": {
+                        "type": ["string", "null"],
+                        "description": "URL of icon for function key when not selected or pressed"
+                    },
+                    "selectedIcon": {
+                        "type": ["string", "null"],
+                        "description": "URL of icon for function key when selected or pressed"
+                    }
+                },
+                "additionalProperties": false,
+                "required": ["name", "label", "lockable", "icon", "selectedIcon"]
+            }
+        },
+        "rosterGroups": {
+            "type": "array",
+            "description": "rosterGroups this rosterEntry is in",
+            "items": {
+                "type": "string",
+                "description": "Name of the rosterGroup"
+            }
+        },
+        "attributes": {
+            "type": "array",
+            "description": "Additional properties of the rosterEntry",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Key by which property is accessed"
+                    },
+                    "value": {
+                        "type": ["string", "null"],
+                        "description": "String value of property or null"
+                    }
+                }
+            }
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name", "address", "isLongAddress", "road", "number", "mfg", "model", "decoderModel", "decoderFamily", "maxSpeedPct", "dateModified", "owner", "comment", "icon", "image", "functionKeys", "rosterGroups", "attributes"]
+}

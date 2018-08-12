@@ -49,7 +49,6 @@ public class TextFilterTest {
     @Test
     public void testGetDescription() {
         TextFilter instance = new TextFilter();
-        String expResult = "Text Documents (*.txt)";
         Assert.assertEquals("Text Documents (*.txt)", instance.getDescription());
     }
 

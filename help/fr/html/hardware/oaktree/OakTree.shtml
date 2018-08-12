@@ -1,7 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!--  $Id$ -->
-<!-- UpDated  by Blorec Herv&#233; le 2013-09-18-->
+<!-- Updated  by Blorec Herv&#233; le 2013-09-18-->
 
 <html lang="fr">
 <head>
@@ -10,9 +9,7 @@
 
   <title>JMRI Hardware Guide: Oak Tree Systems Railroad Control
   Interface (RCI)</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "Oak Tree Systems Railroad Control Interface RCI java model railroad JMRI install windows">
   <!-- Style -->

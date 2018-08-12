@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Michael</firstname>
+        <surname>Mosher</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2017-11-09</date>
+      <authorinitials>MM</authorinitials>
+      <revremark>New file for defualt value 128, made from standard version</revremark>
+    </revision>
+  </revhistory>
+  <variable item="Reverse Trim" CV="95" default="128" comment="Range 0-255">
+    <decVal/>
+    <label>Reverse Trim</label>
+    <label xml:lang="cs">Korekce rychlosti vzad</label>
+    <label xml:lang="it">Correzione Velocità Indietro</label>
+    <label xml:lang="fr">Correction vitesse arrière</label>
+    <label xml:lang="de">Rückwärts Trimm</label>
+    <label xml:lang="nl">Trim Achteruit</label>
+    <comment xml:lang="cs">Meze 0-255</comment>
+    <comment xml:lang="it">Valori 0-255</comment>
+    <comment xml:lang="fr">Valeur 0-255</comment>
+    <comment xml:lang="de">Wert 0-255</comment>
+    <comment xml:lang="nl">Waarde van 0-255</comment>
+  </variable>
+</variables>

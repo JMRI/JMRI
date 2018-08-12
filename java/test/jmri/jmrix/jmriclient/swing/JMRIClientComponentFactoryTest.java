@@ -17,8 +17,7 @@ import org.junit.Test;
  */
 public class JMRIClientComponentFactoryTest {
 
-
-    private JMRIClientTrafficController tc = null;
+    // private JMRIClientTrafficController tc = null;
     private JMRIClientSystemConnectionMemo m = null;
  
     @Test
@@ -31,13 +30,15 @@ public class JMRIClientComponentFactoryTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new JMRIClientTrafficController();
+        // tc = new JMRIClientTrafficController();
         m = new JMRIClientSystemConnectionMemo();
         m.setSystemPrefix("ABC");
 
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();        tc = null;
+    public void tearDown() {
+        // JUnitUtil.tearDown();
+        // tc = null;
     }
 }

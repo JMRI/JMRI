@@ -10,8 +10,6 @@ import org.junit.Test;
 import org.openlcb.NodeID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.can.CanInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -27,12 +25,17 @@ public class ClientActionsTest {
         OlcbInterface iface = canInterface.getInterface();
         ClientActions t = new ClientActions(iface);
         Assert.assertNotNull("exists",t);
+        // terminate the canInterface (and terminate thread)
+        canInterface.dispose();
+        // terminate the OlcbInterface (and terminate thread)
+        iface.dispose();
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

@@ -24,7 +24,11 @@ public class NceConsistTest extends jmri.implementation.AbstractConsistTestBase 
 
     @Test public void testCtor2() {
         // DccLocoAddress constructor test.
-        NceConsist c = new NceConsist(new DccLocoAddress(3, false),memo);
+        NceConsist c = new NceConsist(new DccLocoAddress(3, false),memo){
+           @Override
+           void killConsist(int address, boolean isLong){
+           }
+        };
         // send a reply the memory read instruction trigged by the constructor above.
         nnis.sendTestReply(new NceReply(nnis,"00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"),null);
         Assert.assertNotNull(c);
@@ -81,7 +85,11 @@ public class NceConsistTest extends jmri.implementation.AbstractConsistTestBase 
         nnis = new NceInterfaceScaffold();
         memo = new NceSystemConnectionMemo();
         memo.setNceTrafficController(nnis);
-        c = new NceConsist(3,memo);
+        c = new NceConsist(3,memo){
+           @Override
+           void killConsist(int address, boolean isLong){
+           }
+        };
         // send a reply the memory read instruction trigged by the constructor above.
         nnis.sendTestReply(new NceReply(nnis,"00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"),null);
     }

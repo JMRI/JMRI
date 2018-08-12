@@ -3,7 +3,6 @@ package jmri.jmrix.lenz;
 import java.util.ResourceBundle;
 import jmri.AddressedProgrammerManager;
 import jmri.CommandStation;
-import jmri.ConsistManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.LightManager;

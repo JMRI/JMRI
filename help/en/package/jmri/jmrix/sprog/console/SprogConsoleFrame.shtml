@@ -6,7 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: SPROG Console</title><!-- Style -->
+  <title>JMRI: SPROG Console</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -22,13 +23,14 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: SPROG Console</h1>The SPROG Console window provides
+      <h1>JMRI: SPROG Console</h1>
+      <p>The SPROG Console window provides
       a way to monitor and control SPROG operation from a single
-      place.
+      place.</p>
 
-      <p>This is the
-      package/jmri/jmrix/sprog/console/SprogConsoleFrame page. 
-      <!--#include virtual="/Footer" --></p>
+      <img src="../images/SprogConsoleTool.png" width="759" height="389">
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

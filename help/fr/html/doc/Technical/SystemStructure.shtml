@@ -1,12 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- Updated by Blorec Herv&#233;  2016-08-15-->  
 <html lang="fr">
 <head>
-    <TITLE>
+    <title>
  	JMRI: System Structure
-    </TITLE>
-    <META content="Bob Jacoben" name=Author>
+    </title>
+    <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical system add">
 
   <!-- Style -->

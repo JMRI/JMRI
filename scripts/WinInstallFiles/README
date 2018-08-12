@@ -6,4 +6,5 @@ Should you need to recreate the LaunchJMRI.exe use 'ant launchjmri.exe` or
 
 Note that this ant target is not included in the package-windows target: We  do not remake the LaunchJMRI.exe file as part of the build of the release packages.  
 
+Note that there have been problems reported doing this on macOS, though others have made it work. Check that the length of the created file is reasonable.
 

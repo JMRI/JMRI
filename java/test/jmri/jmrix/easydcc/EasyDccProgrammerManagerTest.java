@@ -12,12 +12,14 @@ import org.junit.Test;
  */
 public class EasyDccProgrammerManagerTest {
 
+
+    private EasyDccTrafficControlScaffold tc = null;
+    private EasyDccSystemConnectionMemo memo = null;
+
+
     @Test
     public void testCTor() {
         // infrastructure objects
-        EasyDccTrafficControlScaffold tc = new EasyDccTrafficControlScaffold(null);
-        EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo(tc);
-
         EasyDccProgrammer p = new EasyDccProgrammer(memo);
         EasyDccProgrammerManager t = new EasyDccProgrammerManager(p, memo);
         Assert.assertNotNull("exists",t);
@@ -27,10 +29,13 @@ public class EasyDccProgrammerManagerTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        tc = new EasyDccTrafficControlScaffold(null);
+        memo = new EasyDccSystemConnectionMemo(tc);
     }
 
     @After
     public void tearDown() {
+        tc.terminateThreads();
         JUnitUtil.tearDown();
     }
 

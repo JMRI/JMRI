@@ -6,9 +6,9 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Allocate Extra Window Help</title>
-  <meta content="Dave Duchamp" name="Author">
-  <meta name="keywords" content="JMRI help Dispatcher New Train">
+  <title>JMRI: Dispatcher - Allocate Extra Help</title>
+  <meta name="author" content="Dave Duchamp">
+  <meta name="keywords" content="JMRI help Dispatcher Allocate Extra">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -17,7 +17,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -25,13 +26,15 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Dispatcher: Allocate Extra</h1>
+      <h1>JMRI Dispatcher: Allocate Extra</h1>
 
       <h2>Introduction</h2>
 
-      <p>The <b>Allocate Extra</b> oane allows "extra Sections"
-      to be allocated to any Active Train. "Extra Sections" are
-      Sections that are not in the sequence of Sections defined in
+      <p>The <b>Allocate Extra Section</b> pane allows "Extra Sections"
+      to be allocated to any Dispatcher Active Train.
+      "Extra Sections" are
+      <a href="../beantable/SectionTable.shtml">Sections</a>
+      that are not in the sequence of Sections defined in
       the Transit being followed by the Active Train. The need to
       allocate "extra Sections" can arise if the engineer of an
       Active Train needs to do more than simply run around the
@@ -43,7 +46,8 @@
       panel, using this window to select the Active Train and the
       Section to be allocated. Once allocated, extra Sections will
       show in the <b>Allocated Sections</b> table in the
-      <b><a href="Dispatcher.shtml">Dispatcher</a></b> window. The
+      <b><a href="Dispatcher.shtml">Dispatcher</a></b> window.
+      <br>The
       <b>Release</b> button in the Allocated Section Table should
       be used to release the extra Sections when they are no longer
       required. The <b>Auto Release</b> option does not release
@@ -63,7 +67,7 @@
           <p>Click the <b>Allocate Extra...</b> button in the
           <b><a href="Dispatcher.shtml">Dispatcher</a></b> window.
           This brings up the window shown below.</p><img src=
-          "images/AllocateExtraWindow.jpg" height="146" width="267">
+          "images/AllocateExtraWindow.png" width="326" height="141">
         </li>
 
         <li>
@@ -105,6 +109,7 @@
       disappear.</p>
 
       <p>Back to <a href="Dispatcher.shtml">Dispatcher</a> help.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

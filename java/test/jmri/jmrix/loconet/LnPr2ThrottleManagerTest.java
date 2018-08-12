@@ -10,29 +10,28 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class LnPr2ThrottleManagerTest {
+public class LnPr2ThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
-    @Test
-    public void testCTor() { 
-        LnPr2ThrottleManager t = new LnPr2ThrottleManager(new LocoNetSystemConnectionMemo());
-        Assert.assertNotNull("exists",t);
-    }
+    private LocoNetSystemConnectionMemo memo;
 
     @Test
     public void testSetAndGettActiveAddress() { 
-        LnPr2ThrottleManager t = new LnPr2ThrottleManager(new LocoNetSystemConnectionMemo());
-        t.requestThrottleSetup(new jmri.DccLocoAddress(3,false));
-        Assert.assertEquals("activeAddress",new jmri.DccLocoAddress(3,false),t.getActiveAddress());
+        ((LnPr2ThrottleManager)tm).requestThrottleSetup(new jmri.DccLocoAddress(3,false));
+        Assert.assertEquals("activeAddress",new jmri.DccLocoAddress(3,false),
+                 ((LnPr2ThrottleManager)tm).getActiveAddress());
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        memo = new LocoNetSystemConnectionMemo();
+        tm = new LnPr2ThrottleManager(memo);
     }
 
     @After
     public void tearDown() {
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 

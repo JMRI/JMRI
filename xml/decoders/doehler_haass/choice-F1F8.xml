@@ -19,6 +19,7 @@
         <choice>None</choice>
         <choice xml:lang="it">Nessuna</choice>
         <choice xml:lang="de">keine</choice>
+        <choice xml:lang="ca">Cap</choice>
       </enumChoice>
       <enumChoice choice="F1">
         <choice>F1</choice>

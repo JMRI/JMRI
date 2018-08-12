@@ -1,6 +1,7 @@
 package jmri.jmrix.rps;
 
 import java.util.List;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.SignalHead;
@@ -90,11 +91,11 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
     }
 
     @Override
-    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
+    public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
     }
 
     @Override
-    public void notifyStealThrottleRequired(DccLocoAddress address){
+    public void notifyStealThrottleRequired(LocoAddress address){
         // this is an automatically stealing impelementation.
         jmri.InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }

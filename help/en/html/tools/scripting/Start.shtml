@@ -240,8 +240,8 @@ returns to the command line.
       a "class" that does what you want. In short form, this gives
       you a way to have independent code to run inside the program.
       But don't worry about this until you've got some more
-      experience with scripting. 
-      <!--#include virtual="/Footer" --></p>
+      experience with scripting.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

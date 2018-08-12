@@ -13,11 +13,14 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Alain Le Marchand" version="9.1" lastUpdated="20150524"/>
   <version author="Alain Le Marchand" version="9" lastUpdated="20150125"/>
+  <version author="Alain Le Marchand" version="9.1" lastUpdated="20150524"/>
+  <version author="Alain Le Marchand" version="9.2" lastUpdated="20180103"/>
   <!-- This file contains the OEM Bachmann Tsunami definitions for Bachmann Diesel locomotives	    -->
   <!-- Version 9  Created from SoundTraxx_Tsu_Steam_Bachmann.xml version 8 file                     -->
   <!-- Version 9.1  Update following publication of datasheet 20150429: horn names, CV216           -->
+  <!-- version 9.2 Specific UserID with tooltip indicating version number,
+                  from SoundTraxx Product Identification guide Rev.B                                -->
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
                 For these decoders, convention is taken that FX5=output 3, FX6=output 4, Air Horn=output 5, etc.
@@ -1126,7 +1129,7 @@
         <decVal/>
         <label>Reverse Trim (0-255)</label>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUuserId.xml"/>
       <variable CV="112" mask="XXXXXXXV" item="Sound Option 6" default="0" tooltip="If using manual engine notching, set to Automatic as [RPM-] will be using this function">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumManAuto.xml"/>
         <label>Auto Air Compressor Enable</label>

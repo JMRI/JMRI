@@ -49,6 +49,7 @@
     <label xml:lang="it">Volt Massimi</label>
     <label xml:lang="fr">Vmax</label>
     <label xml:lang="de">Höchstgeschwindigkeit (Vmax)</label>
+    <label xml:lang="ca">Voltatge Màxim</label>
   </variable>
   <variable CV="49" default="0" item="Motor Option 2" tooltip="0=1ms, 1=2ms, 2=4ms, 3=8ms">
     <decVal min="0" max="3"/>
@@ -56,6 +57,7 @@
     <label xml:lang="it">Largh.Impulsi</label>
     <label xml:lang="fr">Largeur d'impulsion</label>
     <label xml:lang="de">Impulsbreite</label>
+    <label xml:lang="ca">Llargària d'impuls</label>
   </variable>
   <variable CV="61" default="31" item="Speed in shunting mode" tooltip="CV61 (0-127)">
     <decVal min="0" max="127"/>
@@ -63,5 +65,6 @@
     <label xml:lang="it">Velocità in Manovra</label>
     <label xml:lang="fr">Vitesse en mode manoeuvre</label>
     <label xml:lang="de">Rangiergang Geschwindigkeit</label>
+    <label xml:lang="ca">Velocitat en maniobres</label>
   </variable>
 </variables>

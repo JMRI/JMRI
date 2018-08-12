@@ -10,7 +10,7 @@ import jmri.jmrix.rfid.swing.RfidPanelInterface;
 import jmri.util.swing.sdi.JmriJFrameInterface;
 
 /**
- * Swing action to create and register a MonFrame object
+ * Swing action to create and register a MonFrame object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Matthew Harris Copyright (C) 2011
@@ -29,7 +29,7 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements RfidLis
 
     @Override
     public String getTitle() {
-        return "RFID Device Command Monitor";
+        return Bundle.getMessage("MonitorXTitle", "RFID Device");
     }
 
     @Override
@@ -87,12 +87,12 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements RfidLis
     }
 
     /**
-     * Nested class to create one of these using old-style defaults
+     * Nested class to create one of these using old-style defaults.
      */
     static public class Default extends RfidNamedPaneAction {
 
         public Default() {
-            super("RFID Device Command Monitor",
+            super(Bundle.getMessage("MonitorXTitle", "RFID Device"),
                     new JmriJFrameInterface(),
                     SerialMonPane.class.getName(),
                     InstanceManager.getDefault(RfidSystemConnectionMemo.class));

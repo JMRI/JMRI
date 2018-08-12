@@ -23,9 +23,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         super();
     }
 
-    static java.util.ResourceBundle rb
-            = java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
-
     /**
      * A simulated connection needs no extra information, so we reimplement the
      * superclass method to just write the necessary parts.
@@ -41,7 +38,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         if (adapter.getCurrentPortName() != null) {
             e.setAttribute("port", adapter.getCurrentPortName());
         } else {
-            e.setAttribute("port", rb.getString("noneSelected"));
+            e.setAttribute("port", Bundle.getMessage("noneSelected"));
         }
         if (adapter.getManufacturer() != null) {
             e.setAttribute("manufacturer", adapter.getManufacturer());

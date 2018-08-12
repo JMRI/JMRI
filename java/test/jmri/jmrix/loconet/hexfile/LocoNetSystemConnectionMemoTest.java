@@ -2,9 +2,8 @@ package jmri.jmrix.loconet.hexfile;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
+import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 
 /**
  *
@@ -17,13 +16,19 @@ public class LocoNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnection
     @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-        scm = new LocoNetSystemConnectionMemo();
+       JUnitUtil.setUp();
+       LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
+       LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
+       memo.setLnTrafficController(lnis);
+       memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
+       memo.configureManagers();
+       scm = memo;
     }
    
     @Override
     @After
     public void tearDown() {
+        ((LocoNetSystemConnectionMemo)scm).dispose();
         JUnitUtil.tearDown();
     }
 

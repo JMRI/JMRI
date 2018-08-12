@@ -22,6 +22,7 @@ public class SprogType {
     public static final int SPROGII = 20;
     public static final int SPROGIIUSB = 21;
     public static final int SPROGIIv3 = 23;
+    public static final int SPROGIIv4 = 24;
     public static final int SPROG3 = 30;
     public static final int SPROGIV = 40;
     public static final int SPROG5 = 50;
@@ -49,10 +50,7 @@ public class SprogType {
      * @return true if this object holds a SPROG type
      */
     public boolean isSprog() {
-        if (sprogType < SPROGV4) {
-            return false;
-        }
-        return true;
+        return sprogType >= SPROGV4;
     }
 
     /**
@@ -61,10 +59,7 @@ public class SprogType {
      * @return true if this object holds a SPROG II type
      */
     public boolean isSprogII() {
-        if ((sprogType >= SPROGII) && (sprogType <= SPROGIIv3)) {
-            return true;
-        }
-        return false;
+        return (sprogType >= SPROGII) && (sprogType <= SPROGIIv4);
     }
 
     /**
@@ -107,6 +102,7 @@ public class SprogType {
                 return 8;
 
             case SPROGIIv3:
+            case SPROGIIv4:
             case SPROG3:
             case SPROGIV:
             case SPROG5:
@@ -156,6 +152,7 @@ public class SprogType {
                 break;
 
             case SPROGIIv3:
+            case SPROGIIv4:
             case SPROG3:
             case SPROGIV:
             case SPROG5:
@@ -173,7 +170,7 @@ public class SprogType {
                 break;
                 
             case PISPROGONE:
-                if ((addr >= 0x1000) && (addr < 0x3F00)) {
+                if ((addr >= 0x1000) && (addr < 0x3E00)) {
                     return true;
                 }
                 break;
@@ -191,6 +188,7 @@ public class SprogType {
                 return 0x200;
 
             case SPROGIIv3:
+            case SPROGIIv4:
             case SPROG3:
             case SPROGIV:
             case SPROG5:
@@ -221,7 +219,8 @@ public class SprogType {
     }
 
     /**
-     *
+     * @param t Numeric SPROG type
+     * 
      * @return String representation of a SPROG type
      */
     public String toString(int t) {
@@ -243,6 +242,8 @@ public class SprogType {
                 return "SPROG II ";
             case SPROGIIv3:
                 return "SPROG IIv3 ";
+            case SPROGIIv4:
+                return "SPROG IIv4 ";
             case SPROG3:
                 return "SPROG 3 ";
             case SPROGIV:

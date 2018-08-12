@@ -3,7 +3,6 @@ package jmri.util.iharder.dnd;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
@@ -36,6 +35,6 @@ public class TransferableObjectTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TransferableObjectTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TransferableObjectTest.class.getName());
 
 }

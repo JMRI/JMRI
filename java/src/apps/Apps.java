@@ -84,12 +84,14 @@ import jmri.util.HelpUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.Log4JUtil;
 import jmri.util.SystemType;
+import jmri.util.ThreadingUtil;
 import jmri.util.WindowMenu;
 import jmri.util.iharder.dnd.FileDrop;
 import jmri.util.swing.FontComboUtil;
 import jmri.util.swing.JFrameInterface;
 import jmri.util.swing.SliderSnap;
 import jmri.util.swing.WindowInterface;
+import jmri.util.usb.RailDriverMenuItem;
 import jmri.web.server.WebServerAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -105,7 +107,7 @@ import org.slf4j.LoggerFactory;
 public class Apps extends JPanel implements PropertyChangeListener, WindowListener {
 
     static String profileFilename;
-    Action prefsAction = new TabbedPreferencesAction();
+    private Action prefsAction;  // defer initialization until needed so that Bundle accesses translate
 
     @SuppressFBWarnings(value = {"ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", "SC_START_IN_CTOR"},
             justification = "only one application at a time. The thread is only called to help improve user experiance when opening the preferences, it is not critical for it to be run at this stage")
@@ -113,22 +115,29 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         super(true);
         long start = System.nanoTime();
+        log.trace("starting ctor at {}", start);
 
         splash(false);
         splash(true, true);
+        log.trace("splash screens up, about to setButtonSpace");
         setButtonSpace();
+        log.trace("about to setJynstrumentSpace");
         setJynstrumentSpace();
 
+        log.trace("setLogo");
         jmri.Application.setLogo(logo());
+        log.trace("setURL");
         jmri.Application.setURL(line2());
 
         // Enable proper snapping of JSliders
         SliderSnap.init();
 
         // Prepare font lists
+        log.trace("prepareFontLists");
         prepareFontLists();
 
         // Get configuration profile
+        log.trace("start to get configuration profile - locate files");
         // Needs to be done before loading a ConfigManager or UserPreferencesManager
         FileUtil.createDirectory(FileUtil.getPreferencesPath());
         // Needs to be declared final as we might need to
@@ -143,14 +152,17 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         } else {
             profileFile = new File(profileFilename);
         }
+        log.trace("setConfigFile");
         ProfileManager.getDefault().setConfigFile(profileFile);
         // See if the profile to use has been specified on the command line as
         // a system property org.jmri.profile as a profile id.
         if (System.getProperties().containsKey(ProfileManager.SYSTEM_PROPERTY)) {
             ProfileManager.getDefault().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
         }
+        log.trace("check if profile exists");
         // @see jmri.profile.ProfileManager#migrateToProfiles Javadoc for conditions handled here
         if (!profileFile.exists()) { // no profile config for this app
+            log.trace("profileFile {} doesn't exist", profileFile);
             try {
                 if (ProfileManager.getDefault().migrateToProfiles(configFilename)) { // migration or first use
                     // notify user of change only if migration occurred
@@ -168,6 +180,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                 log.error(ex.getMessage());
             }
         }
+        log.trace("about to try getStartingProfile");
         try {
             ProfileManagerDialog.getStartingProfile(sp);
             // Manually setting the configFilename property since calling
@@ -176,11 +189,15 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
             Profile profile = ProfileManager.getDefault().getActiveProfile();
             log.info("Starting with profile {}", (profile != null ? profile.getId() : "<none>"));
+            
+            // rapid language set; must follow up later with full setting as part of preferences
+            apps.gui.GuiLafPreferencesManager.setLocaleMinimally(profile);
         } catch (IOException ex) {
             log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
         }
 
         // install shutdown manager
+        log.trace("about to install ShutDownManager");
         InstanceManager.setDefault(ShutDownManager.class, new DefaultShutDownManager());
 
         // add the default shutdown task to save blocks
@@ -244,6 +261,16 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         } else {
             file = singleConfig;
         }
+                
+        // ensure the UserPreferencesManager has loaded. Done on GUI
+        // thread as it can modify GUI objects
+        log.debug("*** About to getDefault(jmri.UserPreferencesManager.class) with file {}", file);
+        ThreadingUtil.runOnGUI(() -> {
+            InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        });
+        log.debug("*** Done");
+
+        // now (attempt to) load the config file
         log.debug("Using config file(s) {}", file.getPath());
         if (file.exists()) {
             log.debug("start load config file {}", file.getPath());
@@ -523,7 +550,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         systemsMenu(menuBar, wi);
         scriptMenu(menuBar, wi);
         debugMenu(menuBar, wi);
-        menuBar.add(new WindowMenu(wi)); // * GT 28-AUG-2008 Added window menu
+        menuBar.add(new WindowMenu(wi));
         helpMenu(menuBar, wi);
         log.debug("end building menus");
     }
@@ -555,6 +582,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     public void doPreferences() {
+        if (prefsAction == null) prefsAction = new TabbedPreferencesAction();
         prefsAction.actionPerformed(null);
     }
 
@@ -596,6 +624,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // Include prefs in Edit menu if not on Mac OS X or not using Aqua Look and Feel
         if (!SystemType.isMacOSX() || !UIManager.getLookAndFeel().isNativeLookAndFeel()) {
             editMenu.addSeparator();
+            if (prefsAction == null) prefsAction = new TabbedPreferencesAction();
             editMenu.add(prefsAction);
         }
 
@@ -639,6 +668,9 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         d.add(new jmri.jmrix.libusb.UsbViewAction());
 
         d.add(new JSeparator());
+
+        d.add(new RailDriverMenuItem());
+
         try {
             d.add(new RunJythonScript(Bundle.getMessage("MenuRailDriverThrottle"), new File(FileUtil.findURL("jython/RailDriver.py").toURI())));
         } catch (URISyntaxException | NullPointerException ex) {
@@ -654,6 +686,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         d.add(new JSeparator());
         d.add(new WiThrottleCreationAction());
+
+        d.add(new JSeparator());
+        d.add(new apps.TrainCrew.InstallFromURL());
+        
+        // add final to menu bar
         menuBar.add(d);
 
     }
@@ -1077,6 +1114,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         // Create menu categories and add to the menu bar, add actions to menus
         containedPane.createMenus(containedPane.menuBar, wi);
+        // connect Help target now that globalHelpBroker has been instantiated
+        containedPane.attachHelp();
 
         // invoke plugin, if any
         JmriPlugin.start(frame, containedPane.menuBar);
@@ -1179,11 +1218,15 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     private void prepareFontLists() {
         // Prepare font lists
-        new Thread(() -> {
+        Thread fontThread = new Thread(() -> {
             log.debug("Prepare font lists...");
             FontComboUtil.prepareFontLists();
             log.debug("...Font lists built");
-        }, "PrepareFontListsThread").start();
+        }, "PrepareFontListsThread");
+        
+        fontThread.setDaemon(true);
+        fontThread.setPriority(Thread.MIN_PRIORITY);
+        fontThread.start();
     }
 
     @Override
@@ -1207,5 +1250,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     }
 
+    /**
+     * Attach Help target to Help button on Main Screen.
+     */
+    protected void attachHelp() {
+    }
+
     private final static Logger log = LoggerFactory.getLogger(Apps.class);
+
 }

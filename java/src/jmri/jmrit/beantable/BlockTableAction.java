@@ -37,6 +37,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import jmri.Block;
+import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -53,7 +54,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003, 2008
  * @author Egbert Broerse Copyright (C) 2017
  */
-public class BlockTableAction extends AbstractTableAction {
+public class BlockTableAction extends AbstractTableAction<Block> {
 
     /**
      * Create an action with a specific title.
@@ -114,7 +115,7 @@ public class BlockTableAction extends AbstractTableAction {
         // load graphic state column display preference
         _graphicState = InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
 
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<Block>() {
             static public final int EDITCOL = NUMCOLUMN;
             static public final int DIRECTIONCOL = EDITCOL + 1;
             static public final int LENGTHCOL = DIRECTIONCOL + 1;
@@ -146,17 +147,17 @@ public class BlockTableAction extends AbstractTableAction {
             }
 
             @Override
-            public Manager getManager() {
+            public Manager<Block> getManager() {
                 return InstanceManager.getDefault(jmri.BlockManager.class);
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
+            public Block getBySystemName(String name) {
                 return InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(name);
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
+            public Block getByUserName(String name) {
                 return InstanceManager.getDefault(jmri.BlockManager.class).getByUserName(name);
             }
 
@@ -166,7 +167,7 @@ public class BlockTableAction extends AbstractTableAction {
             }
 
             @Override
-            public void clickOn(NamedBean t) {
+            public void clickOn(Block t) {
                 // don't do anything on click; not used in this class, because
                 // we override setValueAt
             }
@@ -184,7 +185,7 @@ public class BlockTableAction extends AbstractTableAction {
                     log.debug("requested getValueAt(\"" + row + "\"), row outside of range");
                     return "Error table size";
                 }
-                Block b = (Block) getBySystemName(sysNameList.get(row));
+                Block b = getBySystemName(sysNameList.get(row));
                 if (b == null) {
                     log.debug("requested getValueAt(\"" + row + "\"), Block doesn't exist");
                     return "(no Block)";
@@ -258,7 +259,7 @@ public class BlockTableAction extends AbstractTableAction {
             @Override
             public void setValueAt(Object value, int row, int col) {
                 // no setting of block state from table
-                Block b = (Block) getBySystemName(sysNameList.get(row));
+                Block b = getBySystemName(sysNameList.get(row));
                 if (col == VALUECOL) {
                     b.setValue(value);
                     fireTableRowsUpdated(row, row);
@@ -606,9 +607,9 @@ public class BlockTableAction extends AbstractTableAction {
                 }
 
                 public JLabel updateLabel(String value, int row) {
-                    if (iconHeight > 0) { // if necessary, increase row height;
+//                     if (iconHeight > 0) { // if necessary, increase row height;
                         //table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5)); // TODO adjust table row height for Block icons
-                    }
+//                     }
                     if (value.equals(Bundle.getMessage("BlockUnOccupied")) && offIcon != null) {
                         label = new JLabel(offIcon);
                         label.setVerticalAlignment(JLabel.BOTTOM);
@@ -965,6 +966,11 @@ public class BlockTableAction extends AbstractTableAction {
         addFrame = null;
     }
 
+    /**
+     * Respond to Create new item pressed on Add Block pane.
+     *
+     * @param e the click event
+     */
     void okPressed(ActionEvent e) {
 
         int NumberOfBlocks = 1;
@@ -980,13 +986,17 @@ public class BlockTableAction extends AbstractTableAction {
                 return;
             }
         }
-        String user = userName.getText().trim(); // N11N
-        if (user.equals("")) {
+        String user = userName.getText();
+        String uName = user; // keep result separate to prevent recursive manipulation
+        user = NamedBean.normalizeUserName(user);
+        if (user == null || user.length() == 0) {
             user = null;
         }
-        String sName = sysName.getText().trim().toUpperCase(); // N11N
-        // initial check for empty entry
-        if (sName.length() < 1 && !_autoSystemName.isSelected()) {
+        String system = sysName.getText();
+        String sName = system; // keep result separate to prevent recursive manipulation
+        sName = InstanceManager.getDefault(BlockManager.class).normalizeSystemName(sName);
+        // initial check for empty entry using the raw name
+        if (sName.length() < 3 && !_autoSystemName.isSelected()) {  // Using 3 to catch a plain IB
             statusBar.setText(Bundle.getMessage("WarningSysNameEmpty"));
             statusBar.setForeground(Color.red);
             sysName.setBackground(Color.red);
@@ -997,62 +1007,68 @@ public class BlockTableAction extends AbstractTableAction {
 
         // Add some entry pattern checking, before assembling sName and handing it to the blockManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameBlock"));
-        String errorMessage = null;
         StringBuilder b;
 
         for (int x = 0; x < NumberOfBlocks; x++) {
-            if (x != 0) {
+            if (x != 0) { // start at 2nd Block
                 if (user != null) {
-                    b = new StringBuilder(userName.getText().trim()); // N11N
+                    b = new StringBuilder(user);
                     b.append(":");
                     b.append(Integer.toString(x));
-                    user = b.toString();
+                    uName = b.toString();
                 }
                 if (!_autoSystemName.isSelected()) {
-                    b = new StringBuilder(sysName.getText().trim()); // N11N
+                    b = new StringBuilder(system);
                     b.append(":");
                     b.append(Integer.toString(x));
                     sName = b.toString();
                 }
             }
             Block blk;
+            String xName = "";
             try {
                 if (_autoSystemName.isSelected()) {
-                    blk = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(user);
+                    blk = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(uName);
+                    if (blk == null) {
+                        xName = uName;
+                        throw new java.lang.IllegalArgumentException();
+                    }
                 } else {
-                    blk = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(sName, user);
+                    blk = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(sName, uName);
+                    if (blk == null) {
+                        xName = sName;
+                        throw new java.lang.IllegalArgumentException();
+                    }
                 }
             } catch (IllegalArgumentException ex) {
                 // user input no good
-                handleCreateException(sName);
-                errorMessage = "An error has occurred";
+                handleCreateException(xName);
+                statusBar.setText(Bundle.getMessage("ErrorAddFailedCheck"));
                 statusBar.setForeground(Color.red);
                 return; // without creating
             }
-            if (blk != null) {
-                if (lengthField.getText().length() != 0) {
-                    blk.setLength(Integer.parseInt(lengthField.getText()));
-                }
-                /*if (blockSpeed.getText().length()!=0)
-                 blk.setSpeedLimit(Integer.parseInt(blockSpeed.getText()));*/
-                try {
-                    blk.setBlockSpeed((String) speeds.getSelectedItem());
-                } catch (jmri.JmriException ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + (String) speeds.getSelectedItem());
-                }
-                if (checkPerm.isSelected()) {
-                    blk.setPermissiveWorking(true);
-                }
-                String cName = (String) cur.getSelectedItem();
-                if (cName.equals(noneText)) {
-                    blk.setCurvature(Block.NONE);
-                } else if (cName.equals(gradualText)) {
-                    blk.setCurvature(Block.GRADUAL);
-                } else if (cName.equals(tightText)) {
-                    blk.setCurvature(Block.TIGHT);
-                } else if (cName.equals(severeText)) {
-                    blk.setCurvature(Block.SEVERE);
-                }
+            if (lengthField.getText().length() != 0) {
+                blk.setLength(Integer.parseInt(lengthField.getText()));
+            }
+            /*if (blockSpeed.getText().length()!=0)
+             blk.setSpeedLimit(Integer.parseInt(blockSpeed.getText()));*/
+            try {
+                blk.setBlockSpeed((String) speeds.getSelectedItem());
+            } catch (jmri.JmriException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + (String) speeds.getSelectedItem());
+            }
+            if (checkPerm.isSelected()) {
+                blk.setPermissiveWorking(true);
+            }
+            String cName = (String) cur.getSelectedItem();
+            if (cName.equals(noneText)) {
+                blk.setCurvature(Block.NONE);
+            } else if (cName.equals(gradualText)) {
+                blk.setCurvature(Block.GRADUAL);
+            } else if (cName.equals(tightText)) {
+                blk.setCurvature(Block.TIGHT);
+            } else if (cName.equals(severeText)) {
+                blk.setCurvature(Block.SEVERE);
             }
             // add first and last names to statusMessage user feedback string
             if (x == 0 || x == NumberOfBlocks - 1) {

@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 })
 
 /**
- * Tests for the jmri.jmrix.sprog.console package
+ * Tests for the jmri.jmrix.sprog.console package.
  *
  * @author  Paul Bender	Copyright (C) 2016
  */

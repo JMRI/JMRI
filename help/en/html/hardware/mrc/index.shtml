@@ -94,7 +94,7 @@
       Consisting is NOT currently supported</b></p>
 
       <h3>Turnouts</h3>MRC-connected Turnouts have System Names
-      like "MRT123", where "MR" is the name for MRC System, "T"
+      like "MT123", where "M" is the name for MRC System, "T"
       means Turnout, and "123" is the address.
 
       <h3>MRC Routes</h3>Triggering of MRC system Routes is

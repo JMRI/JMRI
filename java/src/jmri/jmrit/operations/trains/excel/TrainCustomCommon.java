@@ -22,7 +22,7 @@ public abstract class TrainCustomCommon {
     private String csvNamesFileName = "CSVFilesFile.txt"; // NOI18N
     private int fileCount = 0;
     private int waitTimeSeconds = 0;
-    private Process process;   
+    private Process process;
     private boolean alive = false;
 
     public String getFileName() {
@@ -45,23 +45,24 @@ public abstract class TrainCustomCommon {
     abstract public String getDirectoryName();
 
     abstract public void setDirectoryName(String name);
-    
+
     public int getFileCount() {
         return fileCount;
     }
 
     /**
      * Adds one CSV file path to the collection of files to be processed.
+     *
      * @param csvFile The File to add.
      *
      */
     @SuppressFBWarnings(value = "UW_UNCOND_WAIT")
     public void addCVSFile(File csvFile) {
         // Ignore null files...
-        if (csvFile == null  || !excelFileExists()) {
+        if (csvFile == null || !excelFileExists()) {
             return;
         }
-        
+
         // once the process starts, we can't add files to the common file
         while (InstanceManager.getDefault(TrainCustomManifest.class).isProcessAlive() || InstanceManager.getDefault(TrainCustomSwitchList.class).isProcessAlive()) {
             synchronized (this) {
@@ -72,29 +73,30 @@ public abstract class TrainCustomCommon {
                 }
             }
         }
-        
+
         fileCount++;
         waitTimeSeconds = getFileCount() * Control.excelWaitTime;
         alive = true;
 
-        File csvNamesFile = new File(OperationsManager.getInstance().getFile(getDirectoryName()), csvNamesFileName);
+        File csvNamesFile = new File(InstanceManager.getDefault(OperationsManager.class).getFile(getDirectoryName()), csvNamesFileName);
 
         try {
             FileUtil.appendTextToFile(csvNamesFile, csvFile.getAbsolutePath());
 
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Unable to write to {}", csvNamesFile, e);
         }
     }
 
     /**
      * Processes the CSV files using a Custom external program that reads the
      * file of file names.
+     *
      * @return True if successful.
      */
     @SuppressFBWarnings(value = "UW_UNCOND_WAIT")
     public boolean process() {
-        
+
         // check to see it the Excel program is available
         if (!excelFileExists()) {
             return false;
@@ -104,7 +106,7 @@ public abstract class TrainCustomCommon {
         if (getFileCount() == 0) {
             return true; // done
         }
-        
+
         // only one copy of the excel program is allowed to run.  Two copies running in parallel has issues.
         while (InstanceManager.getDefault(TrainCustomManifest.class).isProcessAlive() || InstanceManager.getDefault(TrainCustomSwitchList.class).isProcessAlive()) {
             synchronized (this) {
@@ -115,29 +117,28 @@ public abstract class TrainCustomCommon {
                 }
             }
         }
-        
+
         log.debug("Queued {} files to custom Excel program", getFileCount());
 
         // Build our command string out of these bits
         // We need to use cmd and start to allow launching data files like
         // Excel spreadsheets
         // It should work OK with actual programs.
- 
         if (SystemType.isWindows()) {
             String cmd = "cmd /c start " + getFileName() + " " + mcAppArg; // NOI18N
             try {
                 process = Runtime.getRuntime().exec(cmd, null,
-                        OperationsManager.getInstance().getFile(getDirectoryName()));
+                        InstanceManager.getDefault(OperationsManager.class).getFile(getDirectoryName()));
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error("Unable to execute {}", getFileName(), e);
             }
         } else {
             String cmd = "open " + getFileName() + " " + mcAppArg; // NOI18N
             try {
                 process = Runtime.getRuntime().exec(cmd, null,
-                        OperationsManager.getInstance().getFile(getDirectoryName()));
+                        InstanceManager.getDefault(OperationsManager.class).getFile(getDirectoryName()));
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error("Unable to execute {}", getFileName(), e);
             }
         }
         fileCount = 0;
@@ -145,14 +146,15 @@ public abstract class TrainCustomCommon {
     }
 
     public boolean excelFileExists() {
-        File file = new File(OperationsManager.getInstance().getFile(getDirectoryName()), getFileName());
+        File file = new File(InstanceManager.getDefault(OperationsManager.class).getFile(getDirectoryName()), getFileName());
         return file.exists();
     }
 
     @SuppressFBWarnings(value = "UW_UNCOND_WAIT")
     public boolean checkProcessReady() {
-        if (!isProcessAlive())
+        if (!isProcessAlive()) {
             return true;
+        }
         if (alive) {
             log.debug("Wait time: {} seconds process ready", waitTimeSeconds);
             int loopCount = waitTimeSeconds; // number of seconds to wait
@@ -163,7 +165,7 @@ public abstract class TrainCustomCommon {
                         wait(1000); // 1 sec
                     } catch (InterruptedException e) {
                         // TODO Auto-generated catch block
-                        e.printStackTrace();
+                        log.error("Thread unexpectedly interrupted", e);
                     }
                 }
             }
@@ -180,7 +182,7 @@ public abstract class TrainCustomCommon {
     }
 
     /**
-     * 
+     *
      * @return true if process completes without a timeout, false if there's a
      *         timeout.
      * @throws InterruptedException if process thread is interrupted
@@ -189,7 +191,7 @@ public abstract class TrainCustomCommon {
         log.debug("Wait time: {} seconds", waitTimeSeconds);
         boolean status;
         synchronized (process) {
-            File file = new File(OperationsManager.getInstance().getFile(getDirectoryName()), getCommonFileName());
+            File file = new File(InstanceManager.getDefault(OperationsManager.class).getFile(getDirectoryName()), getCommonFileName());
             if (!file.exists()) {
                 log.debug("Common file not found! Normal when processing multiple files");
             }
@@ -204,13 +206,14 @@ public abstract class TrainCustomCommon {
         alive = false;
         return status;
     }
-    
+
     /**
      * Checks to see if the common file exists
+     *
      * @return true if the common file exists
      */
     public boolean doesCommonFileExist() {
-        File file = new File(OperationsManager.getInstance().getFile(getDirectoryName()), getCommonFileName());
+        File file = new File(InstanceManager.getDefault(OperationsManager.class).getFile(getDirectoryName()), getCommonFileName());
         return file.exists();
     }
 
@@ -244,5 +247,5 @@ public abstract class TrainCustomCommon {
         mc.addContent(common);
     }
 
-        private final static Logger log = LoggerFactory.getLogger(TrainCustomCommon.class);
+    private final static Logger log = LoggerFactory.getLogger(TrainCustomCommon.class);
 }

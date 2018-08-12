@@ -1,11 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- UpDated by Blorec Herv&#233; le 2016-07-25--> <html lang="fr">
+<html lang="fr">
+<!-- Updated by Blorec Herv&#233; le 2016-07-25-->
 <head>
-    <TITLE>
+    <title>
  	JMRI: Internationalisation
-    </TITLE>
-    <META content="Bob Jacobsen" name="Author">
+    </title>
+    <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code I8N internationalization">
 
 <!-- Style -->

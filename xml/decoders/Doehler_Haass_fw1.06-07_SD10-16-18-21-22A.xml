@@ -12,76 +12,304 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version version="1" author="Ronald Kuhn, ronald@wirkuhns.de" lastUpdated="2016-12-14"/>
-  <!-- 1 2016/07/10 Creation 
-        Decoder template for the Doehler & Haass combo sound decoder
-        with Firmware v1.06 and 1.07.
-  -->
-  <decoder>
-    <family name="Sound Decoders (2016)" mfg="Doehler und Haass">
-    <!--family name="Combo sound decoders" mfg="Doehler und Haass"-->
-      <model model="SD10A (firmware 1.06+)" lowVersionID="026" highVersionID="026" numOuts="6" numFns="16" productID="SD10A_1.06" comment="SD10A-0 / SD10A-1 / SD10A-3 with update from March 2016" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
-        <output name="1" label="Front|Light" maxcurrent="150mA">
-          <label xml:lang="de">LV</label>
-        </output>
-        <output name="2" label="Rear|Light" maxcurrent="150mA">
-          <label xml:lang="de">LR</label>
-        </output>
-        <output name="3" label="AUX|1" maxcurrent="300mA">
-          <label xml:lang="de">AUX 1</label>
-        </output>
-        <output name="4" label="AUX|2" maxcurrent="300mA">
-          <label xml:lang="de">AUX 2</label>
-        </output>
-        <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
-          <label xml:lang="de">AUX 3|(o. SUSI ZCLK)</label>
-        </output>
-        <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
-          <label xml:lang="de">AUX 4|(or SUSI ZDAT)</label>
-        </output>
-        <output name="7" label="Dimmed Lights|(or AUX 5)">
-          <label xml:lang="de">Abblend-|licht (o. AUX 5)</label>
-        </output>
-        <output name="8" label="Shunting Speed|(or AUX 6)">
-          <label xml:lang="de">Rangiergang|(o. AUX 6)</label>
-        </output>
-        <size length="21.4" width="9.1" height="3.4" units="mm"/>
-        <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-        </protocols>
-      </model>
-      <model model="SD16A (firmware 1.06+)" lowVersionID="026" highVersionID="026" numOuts="8" numFns="16" productID="SD16A_1.06" comment="SD16A-4 with update from March 2016" maxInputVolts="30V" maxMotorCurrent="1,5A" maxTotalCurrent="1,5A" connector="PluX16">
-        <output name="1" label="Front|Light" maxcurrent="150mA">
-          <label xml:lang="de">LV</label>
-        </output>
-        <output name="2" label="Rear|Light" maxcurrent="150mA">
-          <label xml:lang="de">LR</label>
-        </output>
-        <output name="3" label="AUX|1" maxcurrent="300mA">
-          <label xml:lang="de">AUX 1</label>
-        </output>
-        <output name="4" label="AUX|2" maxcurrent="300mA">
-          <label xml:lang="de">AUX 2</label>
-        </output>
-        <output name="5" label="AUX|3" maxcurrent="1.0A">
-          <label xml:lang="de">AUX 3</label>
-        </output>
-        <output name="6" label="AUX|4" maxcurrent="1.0A">
-          <label xml:lang="de">AUX 4</label>
+<version version="1" author="Ronald Kuhn, ronald@wirkuhns.de" lastUpdated="2016-12-14"/>
+<!-- 1 2016/07/10 Creation 
+	Decoder template for the Doehler & Haass combo sound decoder
+	with Firmware v1.06 and 1.07.
+-->
+<decoder>
+<family name="Sound Decoders (2016)" mfg="Doehler und Haass">
+<!--family name="Combo sound decoders" mfg="Doehler und Haass"-->
+  <model model="SD10A (firmware 1.06+)" lowVersionID="026" highVersionID="026" numOuts="6" numFns="16" productID="SD10A_1.06" comment="SD10A-0 / SD10A-1 / SD10A-3 with update from March 2016" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
+	<output name="1" label="Front|Light" maxcurrent="150mA">
+	  <label xml:lang="de">LV</label>
+	  <label xml:lang="ca">Llum Frontal</label>
+	</output>
+	<output name="2" label="Rear|Light" maxcurrent="150mA">
+	  <label xml:lang="de">Llum porsterior</label>
+	</output>
+	<output name="3" label="AUX|1" maxcurrent="300mA">
+	  <label xml:lang="de">AUX 1</label>
+	  <label xml:lang="ca">AUX 1</label>
+	</output>
+	<output name="4" label="AUX|2" maxcurrent="300mA">
+	  <label xml:lang="de">AUX 2</label>
+	  <label xml:lang="ca">AUX 2</label>
+	</output>
+	<output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
+	  <label xml:lang="de">AUX 3|(o. SUSI ZCLK)</label>
+	  <label xml:lang="ca">Aux 3|(o ZCLK SUSI </label>
+	</output>
+	<output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
+	  <label xml:lang="de">AUX 4|(or SUSI ZDAT)</label>
+	  <label xml:lang="ca">AUX 4|(o ZDAT SUSI</label>
+	</output>
+	<output name="7" label="Dimmed Lights|(or AUX 5)">
+	  <label xml:lang="de">Abblend-|licht (o. AUX 5)</label>
+	  <label xml:lang="ca">Intensitat llums|(o AUX5)</label>
+	</output>
+	<output name="8" label="Shunting Speed|(or AUX 6)">
+	  <label xml:lang="de">Rangiergang|(o. AUX 6)</label>
+	  <label xml:lang="ca">Velocitat de maniobres|(o F6)</label>
+	</output>
+	<size length="21.4" width="9.1" height="3.4" units="mm"/>
+	<protocols>
+		<protocol>dcc</protocol>
+		<protocol>selectrix</protocol>
+		<protocol>motorola</protocol>
+	</protocols>
+  </model>
+  <model model="SD16A (firmware 1.06+)" lowVersionID="026" highVersionID="026" numOuts="8" numFns="16" productID="SD16A_1.06" comment="SD16A-4 with update from March 2016" maxInputVolts="30V" maxMotorCurrent="1,5A" maxTotalCurrent="1,5A" connector="PluX16">
+	<output name="1" label="Front|Light" maxcurrent="150mA">
+	  <label xml:lang="de">LV</label>
+	  <label xml:lang="ca">Llum Frontal</label>
+	</output>
+	<output name="2" label="Rear|Light" maxcurrent="150mA">
+	  <label xml:lang="ca">Llum Posterior</label>
+	  <label xml:lang="de">LR</label>
+	</output>
+	<output name="3" label="AUX|1" maxcurrent="300mA">
+	  <label xml:lang="de">AUX 1</label>
+	  <label xml:lang="ca">AUX 1</label>
+	</output>
+	<output name="4" label="AUX|2" maxcurrent="300mA">
+	  <label xml:lang="de">AUX 2</label>
+	  <label xml:lang="ca">AUX 2</label>
+	</output>
+	<output name="5" label="AUX|3" maxcurrent="1.0A">
+	  <label xml:lang="de">AUX 3</label>
+	  <label xml:lang="ca">AUX 3</label>
+	</output>
+	<output name="6" label="AUX|4" maxcurrent="1.0A">
+	  <label xml:lang="de">AUX 4</label>
+	  <label xml:lang="ca">AUX 4</label>
+	</output>
+	<output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
+	  <label xml:lang="de">AUX 5</label>
+	  <label xml:lang="ca">AUX 6</label>
+	</output>
+	<output name="8" label="AUX|6" maxcurrent="NC - Logic Level">
+	  <label xml:lang="de">AUX 6</label>
+	  <label xml:lang="ca">AUX 6</label>
+	</output>
+	<output name="9" label="Dimmed|Lights">
+	  <label xml:lang="de">Abblend-|licht</label>
+	  <label xml:lang="ca">Intensitat llums</label>
+	</output>
+	<output name="10" label="Shunting|Speed">
+	  <label xml:lang="de">Rangiergang</label>
+	  <label xml:lang="ca">velocitat de maniobres</label>
+	</output>
+	<size length="21.5" width="10.5" height="3.0" units="mm"/>
+	<protocols>
+		<protocol>dcc</protocol>
+		<protocol>selectrix</protocol>
+		<protocol>motorola</protocol>
+	</protocols>
+  </model>
+  <model model="SD18A (firmware 1.06+)" lowVersionID="026" highVersionID="026" numOuts="6" numFns="16" productID="SD18A_1.06" comment="SD18A with update from March 2016" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
+	<output name="1" label="Front|Light" maxcurrent="150mA">
+	  <label xml:lang="de">LV</label>
+	</output>
+	<output name="2" label="Rear|Light" maxcurrent="150mA">
+	  <label xml:lang="de">LR</label>
+	</output>
+	<output name="3" label="AUX|1" maxcurrent="300mA">
+	  <label xml:lang="de">AUX 1</label>
+	</output>
+	<output name="4" label="AUX|2" maxcurrent="300mA">
+	  <label xml:lang="de">AUX 2</label>
+	</output>
+	<output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
+	  <label xml:lang="de">AUX 3|(o. SUSI ZCLK)</label>
+	</output>
+	<output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
+	  <label xml:lang="de">AUX 4|(or SUSI ZDAT)</label>
+	</output>
+	<output name="7" label="Dimmed Lights|(or AUX 5)">
+	  <label xml:lang="de">Abblend-|licht (o. AUX 5)</label>
+	</output>
+	<output name="8" label="Shunting Speed|(or AUX 6)">
+	  <label xml:lang="de">Rangiergang|(o. AUX 6)</label>
+	</output>
+	<size length="25.0" width="9.5" height="2.8" units="mm"/>
+	<protocols>
+		<protocol>dcc</protocol>
+		<protocol>selectrix</protocol>
+		<protocol>motorola</protocol>
+	</protocols>
+  </model>
+  <model model="SD21A (firmware 1.06+)" lowVersionID="026" highVersionID="026" numOuts="8" numFns="16" productID="SD21A_1.06" comment="SD21A-4 with update from March 2016" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
+	<output name="1" label="Front|Light" maxcurrent="150mA">
+	  <label xml:lang="de">LV</label>
+	  <label xml:lang="ca">Llum Frontal</label>
+	</output>
+	<output name="2" label="Rear|Light" maxcurrent="150mA">
+	  <label xml:lang="de">LR</label>
+	  <label xml:lang="ca">Llum posterior</label>
+	</output>
+	<output name="3" label="AUX|1" maxcurrent="300mA">
+	  <label xml:lang="de">AUX 1</label>
+	  <label xml:lang="ca">AUX 1</label>
+	</output>
+	<output name="4" label="AUX|2" maxcurrent="300mA">
+	  <label xml:lang="de">AUX 2</label>
+	  <label xml:lang="ca">AUX 2</label>
+	</output>
+	<output name="5" label="AUX|3" maxcurrent="1.0A">
+	  <label xml:lang="de">AUX 3</label>
+	  <label xml:lang="ca">AUX 3</label>
+	</output>
+	<output name="6" label="AUX|4" maxcurrent="1.0A">
+	  <label xml:lang="de">AUX 4</label>
+	  <label xml:lang="ca">AUX 4</label>
+	</output>
+	<output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
+	  <label xml:lang="de">AUX 5</label>
+	  <label xml:lang="ca">AUX 5</label>
+	</output>
+	<output name="8" label="AUX|6" maxcurrent="NC - Logic Level">
+	  <label xml:lang="de">AUX 6</label>
+	  <label xml:lang="ca">AUX 6</label>
+	</output>
+	<output name="9" label="Dimmed|Lights">
+	  <label xml:lang="de">Abblend-|licht</label>
+	  <label xml:lang="ca">Intensitat de Llum</label>
+	</output>
+	<output name="10" label="Shunting|Speed">
+	  <label xml:lang="de">Rangiergang</label>
+	  <label xml:lang="ca">Velocitat de maniobres</label>
+	</output>
+	<size length="30.2" width="15.8" height="5.2" units="mm"/>
+	<protocols>
+		<protocol>dcc</protocol>
+		<protocol>selectrix</protocol>
+		<protocol>motorola</protocol>
+	</protocols>
+  </model>
+  <model model="SD22A (firmware 1.06+)" lowVersionID="026" highVersionID="026" numOuts="8" numFns="16" productID="SD22A_1.06" comment="SD22A-4 with update from March 2016" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="PluX22">
+	<output name="1" label="Front|Light" maxcurrent="150mA">
+	  <label xml:lang="de">LV</label>
+	  <label xml:lang="ca">Llum Frontal</label>
+	</output>
+	<output name="2" label="Rear|Light" maxcurrent="150mA">
+	  <label xml:lang="de">LR</label>
+	  <label xml:lang="ca">Llum posterior</label>
+	</output>
+	<output name="3" label="AUX|1" maxcurrent="300mA">
+	  <label xml:lang="de">AUX 1</label>
+	  <label xml:lang="ca">AUX 1</label>
+	</output>
+	<output name="4" label="AUX|2" maxcurrent="300mA">
+	  <label xml:lang="de">AUX 2</label>
+	  <label xml:lang="ca">AUX 2</label>
+	</output>
+	<output name="5" label="AUX|3" maxcurrent="1.0A">
+	  <label xml:lang="de">AUX 3</label>
+	  <label xml:lang="ca">AUX 3</label>
+	</output>
+	<output name="6" label="AUX|4" maxcurrent="1.0A">
+	  <label xml:lang="de">AUX 4</label>
+	  <label xml:lang="ca">AUX 4</label>
+	</output>
+	<output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
+	  <label xml:lang="de">AUX 5</label>
+	  <label xml:lang="ca">AUX 5</label>
+	</output>
+	<output name="8" label="AUX|6" maxcurrent="NC - Logic Level">
+	  <label xml:lang="de">AUX 6</label>
+	  <label xml:lang="ca">AUX 6</label>
+	</output>
+	<output name="9" label="Dimmed|Lights">
+	  <label xml:lang="de">Abblend-|licht</label>
+	  <label xml:lang="ca">Intensitat de llums</label>
+	</output>
+	<output name="10" label="Shunting|Speed">
+	  <label xml:lang="de">Rangiergang</label>
+	  <label xml:lang="ca">Velocitat de Maniobres</label>
+	</output>
+	<size length="30.2" width="15.8" height="5.2" units="mm"/>
+	<protocols>
+		<protocol>dcc</protocol>
+		<protocol>selectrix</protocol>
+		<protocol>motorola</protocol>
+	</protocols>
+  </model>
+  <model model="SD10A (firmware 1.07+)" lowVersionID="056" highVersionID="056" numOuts="6" numFns="16" productID="SD10A_1.07" comment="SD10A-0 / SD10A-1 / SD10A-3 with update from June 2016" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
+	<output name="1" label="Front|Light" maxcurrent="150mA">
+	  <label xml:lang="de">LV</label>
+	  <label xml:lang="ca">Llum frontal</label>
+	</output>
+	<output name="2" label="Rear|Light" maxcurrent="150mA">
+	  <label xml:lang="de">LR</label>
+	  <label xml:lang="ca">Llum Posterior</label>
+	</output>
+	<output name="3" label="AUX|1" maxcurrent="300mA">
+	  <label xml:lang="de">AUX 1</label>
+	  <label xml:lang="ca">Aux 1</label>
+	</output>
+	<output name="4" label="AUX|2" maxcurrent="300mA">
+	  <label xml:lang="de">AUX 2</label>
+	  <label xml:lang="ca">Aux 2</label>
+	</output>
+	<output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
+	  <label xml:lang="de">AUX 3|(o. SUSI ZCLK)</label>
+	  <label xml:lang="ca">AUX 3|o SUSI ZCLK</label>
+	</output>
+	<output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
+	  <label xml:lang="de">AUX 4|(or SUSI ZDAT)</label>
+	  <label xml:lang="ca">AUX 4| o SUSI ZDAT</label>
+	</output>
+	<output name="7" label="Dimmed Lights|(or AUX 5)">
+	  <label xml:lang="de">Abblend-|licht (o. AUX 5)</label>
+	  <label xml:lang="ca">Intensitat llums o AUX 5</label>
+	</output>
+	<output name="8" label="Shunting Speed|(or AUX 6)">
+	  <label xml:lang="de">Rangiergang|(o. AUX 6)</label>
+	  <label xml:lang="ca">Velocitat de Maniobres|o AUX 6</label>
+	</output>
+	<size length="21.4" width="9.1" height="3.4" units="mm"/>
+	<protocols>
+		<protocol>dcc</protocol>
+		<protocol>selectrix</protocol>
+		<protocol>motorola</protocol>
+	</protocols>
+  </model>
+  <model model="SD16A (firmware 1.07+)" lowVersionID="056" highVersionID="056" numOuts="8" numFns="16" productID="SD16A_1.07" comment="SD16A-4 with update from June 2016" maxInputVolts="30V" maxMotorCurrent="1,5A" maxTotalCurrent="1,5A" connector="PluX16">
+	<output name="1" label="Front|Light" maxcurrent="150mA">
+	  <label xml:lang="de">LV</label>
+	  <label xml:lang="ca">Llum Frontal</label>
+	</output>
+	<output name="2" label="Rear|Light" maxcurrent="150mA">
+	  <label xml:lang="de">LR</label>
+	  <label xml:lang="ca">Llum posterior</label>
+	</output>
+	<output name="3" label="AUX|1" maxcurrent="300mA">
+	  <label xml:lang="de">AUX 1</label>
+	  <label xml:lang="ca">AUX 1</label>
+	</output>
+	<output name="4" label="AUX|2" maxcurrent="300mA">
+	  <label xml:lang="de">AUX 2</label>
+	  <label xml:lang="ca">AUX 2</label>
+	</output>
+	<output name="5" label="AUX|3" maxcurrent="1.0A">
+	  <label xml:lang="de">AUX 3</label>
+	  <label xml:lang="ca">AUX 3</label>
+	</output>
+	<output name="6" label="AUX|4" maxcurrent="1.0A">
+	  <label xml:lang="de">AUX 4</label>
         </output>
         <output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
-          <label xml:lang="de">AUX 5</label>
+            <label xml:lang="de">AUX 5</label>
         </output>
         <output name="8" label="AUX|6" maxcurrent="NC - Logic Level">
-          <label xml:lang="de">AUX 6</label>
+            <label xml:lang="de">AUX 6</label>
         </output>
         <output name="9" label="Dimmed|Lights">
-          <label xml:lang="de">Abblend-|licht</label>
+            <label xml:lang="de">Abblend-|licht</label>
         </output>
         <output name="10" label="Shunting|Speed">
-          <label xml:lang="de">Rangiergang</label>
+            <label xml:lang="de">Rangiergang</label>
         </output>
         <size length="21.5" width="10.5" height="3.0" units="mm"/>
         <protocols>
@@ -89,361 +317,183 @@
             <protocol>selectrix</protocol>
             <protocol>motorola</protocol>
         </protocols>
-      </model>
-      <model model="SD18A (firmware 1.06+)" lowVersionID="026" highVersionID="026" numOuts="6" numFns="16" productID="SD18A_1.06" comment="SD18A with update from March 2016" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
-        <output name="1" label="Front|Light" maxcurrent="150mA">
+  </model>
+  <model model="SD18A (firmware 1.07+)" lowVersionID="056" highVersionID="056" numOuts="6" numFns="16" productID="SD18A_1.07" comment="SD18A with update from June 2016" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
+      <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
-        </output>
-        <output name="2" label="Rear|Light" maxcurrent="150mA">
+      </output>
+      <output name="2" label="Rear|Light" maxcurrent="150mA">
           <label xml:lang="de">LR</label>
-        </output>
-        <output name="3" label="AUX|1" maxcurrent="300mA">
+      </output>
+      <output name="3" label="AUX|1" maxcurrent="300mA">
           <label xml:lang="de">AUX 1</label>
-        </output>
-        <output name="4" label="AUX|2" maxcurrent="300mA">
+      </output>
+      <output name="4" label="AUX|2" maxcurrent="300mA">
           <label xml:lang="de">AUX 2</label>
-        </output>
-        <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
+      </output>
+      <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
           <label xml:lang="de">AUX 3|(o. SUSI ZCLK)</label>
-        </output>
-        <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
+      </output>
+      <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
           <label xml:lang="de">AUX 4|(or SUSI ZDAT)</label>
-        </output>
-        <output name="7" label="Dimmed Lights|(or AUX 5)">
+      </output>
+      <output name="7" label="Dimmed Lights|(or AUX 5)">
           <label xml:lang="de">Abblend-|licht (o. AUX 5)</label>
-        </output>
-        <output name="8" label="Shunting Speed|(or AUX 6)">
+      </output>
+      <output name="8" label="Shunting Speed|(or AUX 6)">
           <label xml:lang="de">Rangiergang|(o. AUX 6)</label>
-        </output>
-        <size length="25.0" width="9.5" height="2.8" units="mm"/>
-        <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-        </protocols>
-      </model>
-      <model model="SD21A (firmware 1.06+)" lowVersionID="026" highVersionID="026" numOuts="8" numFns="16" productID="SD21A_1.06" comment="SD21A-4 with update from March 2016" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
-        <output name="1" label="Front|Light" maxcurrent="150mA">
+      </output>
+      <size length="25.0" width="9.5" height="2.8" units="mm"/>
+      <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+      </protocols>
+  </model>
+  <model model="SD21A (firmware 1.07+)" lowVersionID="056" highVersionID="056" numOuts="8" numFns="16" productID="SD21A_1.07" comment="SD21A-4 with update from June 2016" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
+      <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
-        </output>
-        <output name="2" label="Rear|Light" maxcurrent="150mA">
+      </output>
+      <output name="2" label="Rear|Light" maxcurrent="150mA">
           <label xml:lang="de">LR</label>
-        </output>
-        <output name="3" label="AUX|1" maxcurrent="300mA">
+      </output>
+      <output name="3" label="AUX|1" maxcurrent="300mA">
           <label xml:lang="de">AUX 1</label>
-        </output>
-        <output name="4" label="AUX|2" maxcurrent="300mA">
+      </output>
+      <output name="4" label="AUX|2" maxcurrent="300mA">
           <label xml:lang="de">AUX 2</label>
-        </output>
-        <output name="5" label="AUX|3" maxcurrent="1.0A">
+      </output>
+      <output name="5" label="AUX|3" maxcurrent="1.0A">
           <label xml:lang="de">AUX 3</label>
-        </output>
-        <output name="6" label="AUX|4" maxcurrent="1.0A">
+      </output>
+      <output name="6" label="AUX|4" maxcurrent="1.0A">
           <label xml:lang="de">AUX 4</label>
-        </output>
-        <output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
+      </output>
+      <output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
           <label xml:lang="de">AUX 5</label>
-        </output>
-        <output name="8" label="AUX|6" maxcurrent="NC - Logic Level">
+      </output>
+      <output name="8" label="AUX|6" maxcurrent="NC - Logic Level">
           <label xml:lang="de">AUX 6</label>
-        </output>
-        <output name="9" label="Dimmed|Lights">
+      </output>
+      <output name="9" label="Dimmed|Lights">
           <label xml:lang="de">Abblend-|licht</label>
-        </output>
-        <output name="10" label="Shunting|Speed">
+      </output>
+      <output name="10" label="Shunting|Speed">
           <label xml:lang="de">Rangiergang</label>
-        </output>
-        <size length="30.2" width="15.8" height="5.2" units="mm"/>
-        <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-        </protocols>
-      </model>
-      <model model="SD22A (firmware 1.06+)" lowVersionID="026" highVersionID="026" numOuts="8" numFns="16" productID="SD22A_1.06" comment="SD22A-4 with update from March 2016" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="PluX22">
-        <output name="1" label="Front|Light" maxcurrent="150mA">
+      </output>
+      <size length="30.2" width="15.8" height="5.2" units="mm"/>
+      <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+      </protocols>
+  </model>
+  <model model="SD22A (firmware 1.07+)" lowVersionID="056" highVersionID="056" numOuts="8" numFns="16" productID="SD22A_1.07" comment="SD22A-4 with update from June 2016" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="PluX22">
+      <output name="1" label="Front|Light" maxcurrent="150mA">
           <label xml:lang="de">LV</label>
-        </output>
-        <output name="2" label="Rear|Light" maxcurrent="150mA">
+      </output>
+      <output name="2" label="Rear|Light" maxcurrent="150mA">
           <label xml:lang="de">LR</label>
-        </output>
-        <output name="3" label="AUX|1" maxcurrent="300mA">
+      </output>
+      <output name="3" label="AUX|1" maxcurrent="300mA">
           <label xml:lang="de">AUX 1</label>
-        </output>
-        <output name="4" label="AUX|2" maxcurrent="300mA">
+      </output>
+      <output name="4" label="AUX|2" maxcurrent="300mA">
           <label xml:lang="de">AUX 2</label>
-        </output>
-        <output name="5" label="AUX|3" maxcurrent="1.0A">
+      </output>
+      <output name="5" label="AUX|3" maxcurrent="1.0A">
           <label xml:lang="de">AUX 3</label>
-        </output>
-        <output name="6" label="AUX|4" maxcurrent="1.0A">
+      </output>
+      <output name="6" label="AUX|4" maxcurrent="1.0A">
           <label xml:lang="de">AUX 4</label>
-        </output>
-        <output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
+      </output>
+      <output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
           <label xml:lang="de">AUX 5</label>
-        </output>
-        <output name="8" label="AUX|6" maxcurrent="NC - Logic Level">
+      </output>
+      <output name="8" label="AUX|6" maxcurrent="NC - Logic Level">
           <label xml:lang="de">AUX 6</label>
-        </output>
-        <output name="9" label="Dimmed|Lights">
+      </output>
+      <output name="9" label="Dimmed|Lights">
           <label xml:lang="de">Abblend-|licht</label>
-        </output>
-        <output name="10" label="Shunting|Speed">
+      </output>
+      <output name="10" label="Shunting|Speed">
           <label xml:lang="de">Rangiergang</label>
-        </output>
-        <size length="30.2" width="15.8" height="5.2" units="mm"/>
-        <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-        </protocols>
-      </model>
-      <model model="SD10A (firmware 1.07+)" lowVersionID="056" highVersionID="056" numOuts="6" numFns="16" productID="SD10A_1.07" comment="SD10A-0 / SD10A-1 / SD10A-3 with update from June 2016" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
-        <output name="1" label="Front|Light" maxcurrent="150mA">
-          <label xml:lang="de">LV</label>
-        </output>
-        <output name="2" label="Rear|Light" maxcurrent="150mA">
-          <label xml:lang="de">LR</label>
-        </output>
-        <output name="3" label="AUX|1" maxcurrent="300mA">
-          <label xml:lang="de">AUX 1</label>
-        </output>
-        <output name="4" label="AUX|2" maxcurrent="300mA">
-          <label xml:lang="de">AUX 2</label>
-        </output>
-        <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
-          <label xml:lang="de">AUX 3|(o. SUSI ZCLK)</label>
-        </output>
-        <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
-          <label xml:lang="de">AUX 4|(or SUSI ZDAT)</label>
-        </output>
-        <output name="7" label="Dimmed Lights|(or AUX 5)">
-          <label xml:lang="de">Abblend-|licht (o. AUX 5)</label>
-        </output>
-        <output name="8" label="Shunting Speed|(or AUX 6)">
-          <label xml:lang="de">Rangiergang|(o. AUX 6)</label>
-        </output>
-        <size length="21.4" width="9.1" height="3.4" units="mm"/>
-        <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-        </protocols>
-      </model>
-      <model model="SD16A (firmware 1.07+)" lowVersionID="056" highVersionID="056" numOuts="8" numFns="16" productID="SD16A_1.07" comment="SD16A-4 with update from June 2016" maxInputVolts="30V" maxMotorCurrent="1,5A" maxTotalCurrent="1,5A" connector="PluX16">
-        <output name="1" label="Front|Light" maxcurrent="150mA">
-          <label xml:lang="de">LV</label>
-        </output>
-        <output name="2" label="Rear|Light" maxcurrent="150mA">
-          <label xml:lang="de">LR</label>
-        </output>
-        <output name="3" label="AUX|1" maxcurrent="300mA">
-          <label xml:lang="de">AUX 1</label>
-        </output>
-        <output name="4" label="AUX|2" maxcurrent="300mA">
-          <label xml:lang="de">AUX 2</label>
-        </output>
-        <output name="5" label="AUX|3" maxcurrent="1.0A">
-          <label xml:lang="de">AUX 3</label>
-        </output>
-        <output name="6" label="AUX|4" maxcurrent="1.0A">
-          <label xml:lang="de">AUX 4</label>
-        </output>
-        <output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
-          <label xml:lang="de">AUX 5</label>
-        </output>
-        <output name="8" label="AUX|6" maxcurrent="NC - Logic Level">
-          <label xml:lang="de">AUX 6</label>
-        </output>
-        <output name="9" label="Dimmed|Lights">
-          <label xml:lang="de">Abblend-|licht</label>
-        </output>
-        <output name="10" label="Shunting|Speed">
-          <label xml:lang="de">Rangiergang</label>
-        </output>
-        <size length="21.5" width="10.5" height="3.0" units="mm"/>
-        <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-        </protocols>
-      </model>
-      <model model="SD18A (firmware 1.07+)" lowVersionID="056" highVersionID="056" numOuts="6" numFns="16" productID="SD18A_1.07" comment="SD18A with update from June 2016" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Next18">
-        <output name="1" label="Front|Light" maxcurrent="150mA">
-          <label xml:lang="de">LV</label>
-        </output>
-        <output name="2" label="Rear|Light" maxcurrent="150mA">
-          <label xml:lang="de">LR</label>
-        </output>
-        <output name="3" label="AUX|1" maxcurrent="300mA">
-          <label xml:lang="de">AUX 1</label>
-        </output>
-        <output name="4" label="AUX|2" maxcurrent="300mA">
-          <label xml:lang="de">AUX 2</label>
-        </output>
-        <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA">
-          <label xml:lang="de">AUX 3|(o. SUSI ZCLK)</label>
-        </output>
-        <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA">
-          <label xml:lang="de">AUX 4|(or SUSI ZDAT)</label>
-        </output>
-        <output name="7" label="Dimmed Lights|(or AUX 5)">
-          <label xml:lang="de">Abblend-|licht (o. AUX 5)</label>
-        </output>
-        <output name="8" label="Shunting Speed|(or AUX 6)">
-          <label xml:lang="de">Rangiergang|(o. AUX 6)</label>
-        </output>
-        <size length="25.0" width="9.5" height="2.8" units="mm"/>
-        <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-        </protocols>
-      </model>
-      <model model="SD21A (firmware 1.07+)" lowVersionID="056" highVersionID="056" numOuts="8" numFns="16" productID="SD21A_1.07" comment="SD21A-4 with update from June 2016" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
-        <output name="1" label="Front|Light" maxcurrent="150mA">
-          <label xml:lang="de">LV</label>
-        </output>
-        <output name="2" label="Rear|Light" maxcurrent="150mA">
-          <label xml:lang="de">LR</label>
-        </output>
-        <output name="3" label="AUX|1" maxcurrent="300mA">
-          <label xml:lang="de">AUX 1</label>
-        </output>
-        <output name="4" label="AUX|2" maxcurrent="300mA">
-          <label xml:lang="de">AUX 2</label>
-        </output>
-        <output name="5" label="AUX|3" maxcurrent="1.0A">
-          <label xml:lang="de">AUX 3</label>
-        </output>
-        <output name="6" label="AUX|4" maxcurrent="1.0A">
-          <label xml:lang="de">AUX 4</label>
-        </output>
-        <output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
-          <label xml:lang="de">AUX 5</label>
-        </output>
-        <output name="8" label="AUX|6" maxcurrent="NC - Logic Level">
-          <label xml:lang="de">AUX 6</label>
-        </output>
-        <output name="9" label="Dimmed|Lights">
-          <label xml:lang="de">Abblend-|licht</label>
-        </output>
-        <output name="10" label="Shunting|Speed">
-          <label xml:lang="de">Rangiergang</label>
-        </output>
-        <size length="30.2" width="15.8" height="5.2" units="mm"/>
-        <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-        </protocols>
-      </model>
-      <model model="SD22A (firmware 1.07+)" lowVersionID="056" highVersionID="056" numOuts="8" numFns="16" productID="SD22A_1.07" comment="SD22A-4 with update from June 2016" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="PluX22">
-        <output name="1" label="Front|Light" maxcurrent="150mA">
-          <label xml:lang="de">LV</label>
-        </output>
-        <output name="2" label="Rear|Light" maxcurrent="150mA">
-          <label xml:lang="de">LR</label>
-        </output>
-        <output name="3" label="AUX|1" maxcurrent="300mA">
-          <label xml:lang="de">AUX 1</label>
-        </output>
-        <output name="4" label="AUX|2" maxcurrent="300mA">
-          <label xml:lang="de">AUX 2</label>
-        </output>
-        <output name="5" label="AUX|3" maxcurrent="1.0A">
-          <label xml:lang="de">AUX 3</label>
-        </output>
-        <output name="6" label="AUX|4" maxcurrent="1.0A">
-          <label xml:lang="de">AUX 4</label>
-        </output>
-        <output name="7" label="AUX|5" maxcurrent="NC - Logic Level">
-          <label xml:lang="de">AUX 5</label>
-        </output>
-        <output name="8" label="AUX|6" maxcurrent="NC - Logic Level">
-          <label xml:lang="de">AUX 6</label>
-        </output>
-        <output name="9" label="Dimmed|Lights">
-          <label xml:lang="de">Abblend-|licht</label>
-        </output>
-        <output name="10" label="Shunting|Speed">
-          <label xml:lang="de">Rangiergang</label>
-        </output>
-        <size length="30.2" width="15.8" height="5.2" units="mm"/>
-        <protocols>
-            <protocol>dcc</protocol>
-            <protocol>selectrix</protocol>
-            <protocol>motorola</protocol>
-        </protocols>
-      </model>
-    </family>
-    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
-    <variables>
-        <!-- START Common D&H variable files -->
-            <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common.xml"/>
-            <!-- Standard variables with defaults for regular decoders  -->
-            <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common_pwr_normal.xml"/>
-            <!-- Standard variables for decoders released after around 2012  -->
-            <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_base.xml"/>
-            <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_dc.xml"/>
-            <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv65_95.xml"/>
-            <!-- Analog functions  -->
-            <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv29_analog.xml"/>
-            <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
-            <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_analogModeFunction.xml"/>
-            <!-- Railcom feedback  -->
-            <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv28-29_railcom_base.xml"/>
-            <!-- SECTION 5    - Extra Railcom feedback options as of fw3.06 -->
-            <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv135-136_144_railcom_fw3.06.xml"/>
-            <!-- Motorola support -->
-            <!--xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv12_motorola.xml"/-->
-            <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv12_motorola_fw3.06.xml"/>
-        <!-- END Common D&H variable files -->
+      </output>
+      <size length="30.2" width="15.8" height="5.2" units="mm"/>
+      <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+      </protocols>
+  </model>
+</family>
+<programming direct="yes" paged="yes" register="yes" ops="yes"/>
+<variables>
+    <!-- START Common D&H variable files -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common.xml"/>
+    <!-- Standard variables with defaults for regular decoders  -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_common_pwr_normal.xml"/>
+    <!-- Standard variables for decoders released after around 2012  -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_base.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Vars_post2012_dc.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv65_95.xml"/>
+    <!-- Analog functions  -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv29_analog.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_analogModeFunction.xml"/>
+    <!-- Railcom feedback  -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv28-29_railcom_base.xml"/>
+    <!-- SECTION 5    - Extra Railcom feedback options as of fw3.06 -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv135-136_144_railcom_fw3.06.xml"/>
+    <!-- Motorola support -->
+    <!--xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv12_motorola.xml"/-->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv12_motorola_fw3.06.xml"/>
+    <!-- END Common D&H variable files -->
 
-        <!-- START combo sound variable files -->
-            <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv311-348_911-948.xml"/>
-            <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv350_950.xml"/>
-            <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv351-359_951-959.xml"/>
-            <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv360-362_960-962.xml"/>
-            <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv364-373_964-973.xml"/>
-            <!-- 2014-10 fw1.03+ -->
-            <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv349_949.xml"/>
-            <!--xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv137_bits0.xml"/-->
-            <!--xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv137_bits1-2.xml"/-->
-            <!-- 2015-05 fw1.04+ -->
-            <!--xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_bits4-5.xml"/-->
-            <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137.xml"/>
-            <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv138-143.xml"/>
-            <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv125-133.xml"/>
-            <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv374-377_974-977.xml"/>
-            <!-- 2016-03 fw1.06+ -->
-            <!--  New effects as of fw3.06 -->
-            <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06.xml"/>
-            <!--  initialmapping options as of fw3.06 -->
-            <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv153_fw3.06.xml"/>
-            <!--  deceleration options as of fw3.06 -->
-            <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv154-155_fw3.06.xml"/>
-            <!--  New Manufacturer ID and Version as of fw3.06 -->
-            <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv260-265_fw3.06.xml"/>
-        <!-- END combo sound variable files -->
-    </variables>
-    <resets>
-     <factReset label="Reset All CVs" CV="8" default="8">
-      <label xml:lang="fr">Reset - retour aux valeurs d'usine pour tous les CVs</label>
-      <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
-      <label xml:lang="de">Zurücksetzen aller CV auf die Werkseinstellungen</label>
-     </factReset>
-    </resets>
-  </decoder>
-    <!-- Common pane(s)  -->
-    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_StartBrakeShunt.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_function_fw3.06.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_common.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_info.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_firmware.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom_fw3.06.xml"/>
-    <!--xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom.xml"/-->
-    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_motorola.xml"/>
-    <!-- Pane(s) valid for some decoders only  -->
-    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_susi.xml"/>
+    <!-- START combo sound variable files -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv311-348_911-948.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv350_950.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv351-359_951-959.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv360-362_960-962.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv364-373_964-973.xml"/>
+    <!-- 2014-10 fw1.03+ -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv349_949.xml"/>
+    <!--xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv137_bits0.xml"/-->
+    <!--xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv137_bits1-2.xml"/-->
+    <!-- 2015-05 fw1.04+ -->
+    <!--xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_bits4-5.xml"/-->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv138-143.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv125-133.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv374-377_974-977.xml"/>
+    <!-- 2016-03 fw1.06+ -->
+    <!--  New effects as of fw3.06 -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06.xml"/>
+    <!--  initialmapping options as of fw3.06 -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv153_fw3.06.xml"/>
+    <!--  deceleration options as of fw3.06 -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv154-155_fw3.06.xml"/>
+    <!--  New Manufacturer ID and Version as of fw3.06 -->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv260-265_fw3.06.xml"/>
+    <!-- END combo sound variable files -->
+</variables>
+<resets>
+    <factReset label="Reset All CVs" CV="8" default="8">
+        <label xml:lang="fr">Reset - retour aux valeurs d'usine pour tous les CVs</label>
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+        <label xml:lang="de">Zurücksetzen aller CV auf die Werkseinstellungen</label>
+    </factReset>
+</resets>
+</decoder>
+<!-- Common pane(s)  -->
+<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_StartBrakeShunt.xml"/>
+<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_function_fw3.06.xml"/>
+<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_common.xml"/>
+<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_info.xml"/>
+<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_firmware.xml"/>
+<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom_fw3.06.xml"/>
+<!--xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom.xml"/-->
+<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_motorola.xml"/>
+<!-- Pane(s) valid for some decoders only  -->
+<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_susi.xml"/>
 </decoder-config>

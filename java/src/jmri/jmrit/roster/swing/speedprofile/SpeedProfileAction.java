@@ -32,8 +32,7 @@ public class SpeedProfileAction extends JmriAbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());
-            ex.printStackTrace();
+            log.error("Exception: ", ex);
         }
         f.setVisible(true);
     }

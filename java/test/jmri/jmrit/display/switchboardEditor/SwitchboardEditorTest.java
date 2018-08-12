@@ -83,6 +83,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
+            jmri.util.JUnitUtil.resetProfileManager();
             e = swe = new SwitchboardEditor("Test Layout");
         }
     }
@@ -91,6 +92,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase {
     public void tearDown() {
         if (swe != null) {
             JUnitUtil.dispose(swe);
+            JUnitUtil.dispose(swe.getTargetFrame());
             e = swe = null;
         }
         JUnitUtil.tearDown();

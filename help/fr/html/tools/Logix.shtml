@@ -1,14 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- UpDated  by Blorec Herv&#233;  2017-01-03-->
+<!-- Updated  by Blorec Herv&#233;  2017-01-03-->
 <html lang="fr">
 <head>
- <TITLE>
+ <title>
       JMRI: Logix Documentation
-</TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="David Duchamp" name=Author>
-    <META name="keywords" content="java model railroad JMRI Logix">
+</title>
+    <meta name="author" content="David Duchamp">
+    <meta name="keywords" content="java model railroad JMRI Logix">
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">

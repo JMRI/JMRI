@@ -9,7 +9,7 @@
   <title>JMRI: Add/Edit Transits</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Transit Add Edit">
   <!--#include virtual="/Style" -->
 </head>
@@ -19,9 +19,9 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Adding/Editing Transits</h1><a name="addTransit" id=
-      "addTransit"></a>
+      <h1>Adding/Editing Transits</h1>
 
+      <a name="addTransit" id="addTransit"></a>
       <h2>Adding a new Transit</h2>To add a new Transit, follow
       this procedure:
 
@@ -32,7 +32,7 @@
           bring up the Transit Table, and click the <b>Add...</b>
           button at the bottom of the table to bring up the
           Add/Edit Transit window.</p><img src=
-          "images/TransitAddFrame.png" height="558" width="747">
+          "images/TransitAddFrame.png" width="664" height="480">
         </li>
 
         <li>
@@ -67,16 +67,31 @@
         </li>
 
         <li>
-          <p>Next add <b>Sections</b>
-          to the Transit. Every Transit
+          <p>Next add <b>Sections</b> to the Transit. Every Transit
           must have at least two Sections, but most will have many
           more. Two "Primary" Sections are needed to define the
-          direction of the Transit.
+          direction of the Transit.<br>
           <a href="SectionTable.shtml">Sections</a> must be connected, and
           must be entered in order. Select the Section you would
           like to begin the Transit in the upper popup menu. At any
           point during Section addition, this popup menu lists only
-          those Sections that are eligible for addition.<br>
+          those Sections that are eligible for addition.</p>
+          <p>If applicable, check <b>Section is Safe</b> to add the next
+          Section with the Safe checkbox selected.<br>
+          Safe Sections allow auto-assigned Trains to safely halt during
+          a Transit without blocking a Transit for an opposing Train.
+          For example:<br>
+          <img src=
+          "images/TransitSafeSections.png" width="1113" height="240"><br>
+          Once Train Amtrak 139 leaves the upper block of the
+          interlocking at Manion, it reaches the next Safe Section.<br>
+          You would set up The transit for this Train as follows:<br>
+          <img src=
+          "images/TransitEditSafe.png" width="670" height="381"><br>(for
+          more on Safe see the
+          <a href="../dispatcher/NewTrain.shtml#allocateOptions">Activate
+          New Train</a> Help)
+          <br>
           Click <b>Add Next Section</b> to add the first Section of
           the Transit.</p>
         </li>
@@ -126,8 +141,8 @@
 
           <div style="margin-left: 2em">
             <p>If at any time you decide you want to start over,
-            click <b>Remove Sections from Transit</b> to clear the table of
-            Sections, and return to step 4 above.</p>
+            click <b>Remove Sections from Transit</b> to clear the
+            table of Sections, and return to step 4 above.</p>
 
             <p>The <b>Remove Last Section</b> and <b>Remove First
             Section</b> buttons delete a Section at the end or
@@ -200,7 +215,7 @@
           that shown above, except the System Name will be fixed,
           and the <b>Create</b> button will be replaced with an
           <b>Update</b> Button.</p><img src="images/TransitEditFrame.png"
-          height="559" width="682">
+          width="666" height="489">
         </li>
 
         <li>
@@ -230,6 +245,7 @@
 
       <p>Back to the <a href="TransitTable.shtml">Transit Table
       help page</a>.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

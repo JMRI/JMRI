@@ -25,7 +25,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -37,12 +36,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTextField;
+import jmri.CatalogTreeManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
+import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PanelMenu;
@@ -50,6 +50,7 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.ToolTip;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriColorChooser;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,56 +58,55 @@ import org.slf4j.LoggerFactory;
 /**
  * Provides a simple editor for adding jmri.jmrit.display items to a captive
  * JFrame.
- * <P>
+ * <p>
  * GUI is structured as a band of common parameters across the top, then a
  * series of things you can add.
- * <P>
+ * <p>
  * All created objects are put specific levels depending on their type (higher
  * levels are in front):
- * <UL>
- * <LI>BKG background
- * <LI>ICONS icons and other drawing symbols
- * <LI>LABELS text labels
- * <LI>TURNOUTS turnouts and other variable track items
- * <LI>SENSORS sensors and other independently modified objects
- * </UL>
- * <P>
+ * <ul>
+ *   <li>BKG background
+ *   <li>ICONS icons and other drawing symbols
+ *   <li>LABELS text labels
+ *   <li>TURNOUTS turnouts and other variable track items
+ *   <li>SENSORS sensors and other independently modified objects
+ * </ul>
+ * <p>
  * The "contents" List keeps track of all the objects added to the target frame
  * for later manipulation.
- * <P>
+ * <p>
  * If you close the Editor window, the target is left alone and the editor
  * window is just hidden, not disposed. If you close the target, the editor and
  * target are removed, and dispose is run. To make this logic work, the
  * PanelEditor is descended from a JFrame, not a JPanel. That way it can control
  * its own visibility.
- * <P>
+ * <p>
  * The title of the target and the editor panel are kept consistent via the
  * {#setTitle} method.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2003, 2007
+ * @author Bob Jacobsen Copyright (c) 2002, 2003, 2007
  * @author Dennis Miller 2004
- * @author Howard G. Penny Copyright: Copyright (c) 2005
- * @author Matthew Harris Copyright: Copyright (c) 2009
- * @author Pete Cressman Copyright: Copyright (c) 2009, 2010
- *
+ * @author Howard G. Penny Copyright (c) 2005
+ * @author Matthew Harris Copyright (c) 2009
+ * @author Pete Cressman Copyright (c) 2009, 2010
  */
 public class PanelEditor extends Editor implements ItemListener {
 
-    private JTextField nextX = new JTextField("0", 4);
-    private JTextField nextY = new JTextField("0", 4);
+    private final JTextField nextX = new JTextField("0", 4);
+    private final JTextField nextY = new JTextField("0", 4);
 
-    private JCheckBox editableBox = new JCheckBox(Bundle.getMessage("CheckBoxEditable"));
-    private JCheckBox positionableBox = new JCheckBox(Bundle.getMessage("CheckBoxPositionable"));
-    private JCheckBox controllingBox = new JCheckBox(Bundle.getMessage("CheckBoxControlling"));
+    private final JCheckBox editableBox = new JCheckBox(Bundle.getMessage("CheckBoxEditable"));
+    private final JCheckBox positionableBox = new JCheckBox(Bundle.getMessage("CheckBoxPositionable"));
+    private final JCheckBox controllingBox = new JCheckBox(Bundle.getMessage("CheckBoxControlling"));
     //private JCheckBox showCoordinatesBox = new JCheckBox(Bundle.getMessage("CheckBoxShowCoordinates"));
-    private JCheckBox showTooltipBox = new JCheckBox(Bundle.getMessage("CheckBoxShowTooltips"));
-    private JCheckBox hiddenBox = new JCheckBox(Bundle.getMessage("CheckBoxHidden"));
-    private JCheckBox menuBox = new JCheckBox(Bundle.getMessage("CheckBoxMenuBar"));
-    private JLabel scrollableLabel = new JLabel(Bundle.getMessage("ComboBoxScrollable"));
-    private JComboBox<String> scrollableComboBox = new JComboBox<String>();
+    private final JCheckBox showTooltipBox = new JCheckBox(Bundle.getMessage("CheckBoxShowTooltips"));
+    private final JCheckBox hiddenBox = new JCheckBox(Bundle.getMessage("CheckBoxHidden"));
+    private final JCheckBox menuBox = new JCheckBox(Bundle.getMessage("CheckBoxMenuBar"));
+    private final JLabel scrollableLabel = new JLabel(Bundle.getMessage("ComboBoxScrollable"));
+    private final JComboBox<String> scrollableComboBox = new JComboBox<>();
 
-    private JButton labelAdd = new JButton(Bundle.getMessage("ButtonAddText"));
-    private JTextField nextLabel = new JTextField(10);
+    private final JButton labelAdd = new JButton(Bundle.getMessage("ButtonAddText"));
+    private final JTextField nextLabel = new JTextField(10);
 
     private JComboBox<ComboBoxItem> _addIconBox;
 
@@ -125,10 +125,11 @@ public class PanelEditor extends Editor implements ItemListener {
             public void run() {
                 try {
                     // Build resource catalog and load CatalogTree.xml now
-                    jmri.jmrit.catalog.CatalogPanel catalog = new jmri.jmrit.catalog.CatalogPanel();
+                    CatalogPanel catalog = new CatalogPanel();
                     catalog.createNewBranch("IFJAR", "Program Directory", "resources");
+                    // log.debug("init run created (var=catalog)"); // where's this used, just a test run?
                 } catch (Exception ex) {
-                    log.error("Error in trying to setup preferences " + ex.toString());
+                    log.error("Error trying to set up preferences {}", ex.toString());
                 }
             }
         };
@@ -166,7 +167,7 @@ public class PanelEditor extends Editor implements ItemListener {
         storeIndexItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                InstanceManager.getDefault(ImageIndexEditor.class).storeImageIndex();
+                InstanceManager.getDefault(CatalogTreeManager.class).storeImageIndex();
             }
         });
         JMenuItem editItem = new JMenuItem(Bundle.getMessage("editIndexMenu"));
@@ -197,7 +198,7 @@ public class PanelEditor extends Editor implements ItemListener {
             @Override
             public void actionPerformed(ActionEvent event) {
                 if (deletePanel()) {
-                    dispose(true);
+                    dispose();
                 }
             }
         });
@@ -205,11 +206,11 @@ public class PanelEditor extends Editor implements ItemListener {
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.display.PanelEditor", true);
 
-        // allow naming the panel
+        // allow renaming the panel
         {
             JPanel namep = new JPanel();
             namep.setLayout(new FlowLayout());
-            JButton b = new JButton(Bundle.getMessage("ButtonSetName"));
+            JButton b = new JButton(Bundle.getMessage("renamePanelMenu", "..."));
             b.addActionListener(new ActionListener() {
                 PanelEditor editor;
 
@@ -277,7 +278,7 @@ public class PanelEditor extends Editor implements ItemListener {
         }
 
         // Selection of the type of entity for the icon to represent is done from a combobox
-        _addIconBox = new JComboBox<ComboBoxItem>();
+        _addIconBox = new JComboBox<>();
         _addIconBox.setMinimumSize(new Dimension(75, 75));
         _addIconBox.setMaximumSize(new Dimension(200, 200));
         _addIconBox.addItem(new ComboBoxItem("RightTurnout"));
@@ -461,7 +462,7 @@ public class PanelEditor extends Editor implements ItemListener {
 
     static class ComboBoxItem {
 
-        private String name;
+        private final String name;
         private String bundleName;
 
         protected ComboBoxItem(String n) {
@@ -496,7 +497,7 @@ public class PanelEditor extends Editor implements ItemListener {
     }
 
     /*
-     *  itemListener for JComboBox
+     * itemListener for JComboBox.
      */
     @Override
     public void itemStateChanged(ItemEvent e) {
@@ -513,7 +514,7 @@ public class PanelEditor extends Editor implements ItemListener {
                 } else if (name.equals("RPSreporter")) {
                     addRpsReporter();
                 } else {
-                    log.error("Unable to open Icon Editor \"" + item.getName() + "\"");
+                    log.error("Unable to open Icon Editor \"{}\"", item.getName());
                 }
             }
             _addIconBox.setSelectedIndex(-1);
@@ -522,11 +523,10 @@ public class PanelEditor extends Editor implements ItemListener {
 
     /**
      * Handle close of editor window.
-     * <P>
+     * <p>
      * Overload/override method in JmriJFrame parent, which by default is
      * permanently closing the window. Here, we just want to make it invisible,
      * so we don't dispose it (yet).
-     *
      */
     @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -557,7 +557,7 @@ public class PanelEditor extends Editor implements ItemListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (deletePanel()) {
-                    dispose(true);
+                    dispose();
                 }
             }
         });
@@ -596,6 +596,7 @@ public class PanelEditor extends Editor implements ItemListener {
     /**
      * ************* implementation of Abstract Editor methods **********
      */
+
     /**
      * The target window has been requested to close, don't delete it at this
      * time. Deletion must be accomplished via the Delete this panel menu item.
@@ -708,7 +709,7 @@ public class PanelEditor extends Editor implements ItemListener {
     public void mousePressed(MouseEvent event) {
         setToolTip(null); // ends tooltip if displayed
         if (log.isDebugEnabled()) {
-            log.debug("mousePressed at (" + event.getX() + "," + event.getY() + ") _dragging=" + _dragging);
+            log.debug("mousePressed at ({},{}) _dragging= {}", event.getX(), event.getY(), _dragging);
         }
         _anchorX = event.getX();
         _anchorY = event.getY();
@@ -743,7 +744,7 @@ public class PanelEditor extends Editor implements ItemListener {
                 if (_multiItemCopyGroup != null && !_multiItemCopyGroup.contains(_currentSelection)) {
                     _multiItemCopyGroup = null;
                 }
-//                    _selectionGroup = null;
+                // _selectionGroup = null;
             }
         } else {
             if (event.isPopupTrigger()) {
@@ -764,7 +765,7 @@ public class PanelEditor extends Editor implements ItemListener {
                 _currentSelection = null;
             }
         }
-        //if ((event.isControlDown() || _selectionGroup!=null) && _currentSelection!=null){
+        // if ((event.isControlDown() || _selectionGroup!=null) && _currentSelection!=null){
         if ((event.isControlDown()) || event.isMetaDown() || event.isAltDown()) {
             //Don't want to do anything, just want to catch it, so that the next two else ifs are not
             //executed
@@ -900,7 +901,7 @@ public class PanelEditor extends Editor implements ItemListener {
 
     @Override
     public void mouseMoved(MouseEvent event) {
-        //if (_debug) log.debug("mouseMoved at ("+event.getX()+","+event.getY()+")");
+        // log.debug("mouseMoved at ({},{})", event.getX(), event.getY());
         if (_dragging || event.isPopupTrigger()) {
             return;
         }
@@ -936,8 +937,8 @@ public class PanelEditor extends Editor implements ItemListener {
     public void mouseClicked(MouseEvent event) {
         setToolTip(null); // ends tooltip if displayed
         if (log.isDebugEnabled()) {
-            log.debug("mouseClicked at (" + event.getX() + "," + event.getY() + ") dragging= " + _dragging
-                    + " selectRect is " + (_selectRect == null ? "null" : "not null"));
+            log.debug("mouseClicked at ({},{}) dragging= {} selectRect is {}",
+                    event.getX(), event.getY(), _dragging, (_selectRect == null ? "null" : "not null"));
         }
         List<Positionable> selections = getSelectedItems(event);
 
@@ -963,7 +964,7 @@ public class PanelEditor extends Editor implements ItemListener {
             } else {
                 showPopUp(_currentSelection, event);
             }
-            //_selectionGroup = null; //Show popup only works for a single item
+            // _selectionGroup = null; // Show popup only works for a single item
 
         } else {
             if (_currentSelection != null && !_dragging && !event.isControlDown()) {
@@ -990,7 +991,7 @@ public class PanelEditor extends Editor implements ItemListener {
 
     @Override
     protected void copyItem(Positionable p) {
-        _multiItemCopyGroup = new ArrayList<Positionable>();
+        _multiItemCopyGroup = new ArrayList<>();
         _multiItemCopyGroup.add(p);
     }
 
@@ -1002,7 +1003,7 @@ public class PanelEditor extends Editor implements ItemListener {
             return;
         }
         JPopupMenu popup = new JPopupMenu();
-        JMenuItem edit = new JMenuItem("Paste");
+        JMenuItem edit = new JMenuItem(Bundle.getMessage("MenuItemPaste"));
         edit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -1027,14 +1028,14 @@ public class PanelEditor extends Editor implements ItemListener {
 
     protected void showMultiSelectPopUp(final MouseEvent event, Positionable p) {
         JPopupMenu popup = new JPopupMenu();
-        JMenuItem copy = new JMenuItem(Bundle.getMessage("ButtonCopy")); // changed "edit" to "copy"
+        JMenuItem copy = new JMenuItem(Bundle.getMessage("MenuItemCopy")); // changed "edit" to "copy"
         if (p.isPositionable()) {
             setShowAlignmentMenu(p, popup);
         }
         copy.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                _multiItemCopyGroup = new ArrayList<Positionable>();
+                _multiItemCopyGroup = new ArrayList<>();
                 // must make a copy or pasteItem() will hang
                 if (_selectionGroup != null) {
                     for (Positionable comp : _selectionGroup) {
@@ -1057,8 +1058,8 @@ public class PanelEditor extends Editor implements ItemListener {
         if (!isEditable()) {
             return;
         }
-        JMenu _add = new JMenu("Add Item"); // NOI18N
-        // for the following list, I18N picked up later on
+        JMenu _add = new JMenu(Bundle.getMessage("MenuItemAddItem"));
+        // for items in the following list, I18N is picked up later on
         addItemPopUp(new ComboBoxItem("RightTurnout"), _add);
         addItemPopUp(new ComboBoxItem("LeftTurnout"), _add);
         addItemPopUp(new ComboBoxItem("SlipTOEditor"), _add);
@@ -1122,7 +1123,7 @@ public class PanelEditor extends Editor implements ItemListener {
             return;
         }
         if (_selectionGroup == null) {
-            _selectionGroup = new ArrayList<Positionable>();
+            _selectionGroup = new ArrayList<>();
         }
         boolean removed = false;
         for (int i = 0; i < _selectionGroup.size(); i++) {
@@ -1161,7 +1162,7 @@ public class PanelEditor extends Editor implements ItemListener {
             /*We make a copy of the selected items and work off of that copy
              as amendments are made to the multiItemCopyGroup during this process
              which can result in a loop*/
-            ArrayList<Positionable> _copyOfMultiItemCopyGroup = new ArrayList<Positionable>(_multiItemCopyGroup);
+            ArrayList<Positionable> _copyOfMultiItemCopyGroup = new ArrayList<>(_multiItemCopyGroup);
             Collections.copy(_copyOfMultiItemCopyGroup, _multiItemCopyGroup);
             for (Positionable comp : _copyOfMultiItemCopyGroup) {
                 copied = (JComponent) comp;
@@ -1290,9 +1291,10 @@ public class PanelEditor extends Editor implements ItemListener {
     }
 
     public void setBackgroundMenu(JPopupMenu popup) {
+        // Panel background, not text background
         JMenuItem edit = new JMenuItem(Bundle.getMessage("FontBackgroundColor"));
         edit.addActionListener((ActionEvent event) -> {
-            Color desiredColor = JColorChooser.showDialog(this,
+            Color desiredColor = JmriColorChooser.showDialog(this,
                                  Bundle.getMessage("FontBackgroundColor"),
                                  getBackgroundColor());
             if (desiredColor!=null ) {
@@ -1302,9 +1304,6 @@ public class PanelEditor extends Editor implements ItemListener {
         popup.add(edit);
     }
 
-    /**
-     * ***************************************************
-     */
-    // initialize logging
     private final static Logger log = LoggerFactory.getLogger(PanelEditor.class);
+
 }

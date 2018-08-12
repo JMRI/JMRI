@@ -64,7 +64,7 @@ public class Bundle {
      * @return Internationalized text
      */
     static String getMessage(String key) {
-        return b.handleGetMessage(key);
+        return getBundle().handleGetMessage(key);
     }
 
     /**
@@ -78,7 +78,7 @@ public class Bundle {
      * @return Internationalized text
      */
     static String getMessage(Locale locale, String key) {
-        return b.handleGetMessage(locale, key);
+        return getBundle().handleGetMessage(locale, key);
     }
 
     /**
@@ -95,7 +95,7 @@ public class Bundle {
      * @return Internationalized text
      */
     static String getMessage(String key, Object... subs) {
-        return b.handleGetMessage(key, subs);
+        return getBundle().handleGetMessage(key, subs);
     }
 
     /**
@@ -113,7 +113,7 @@ public class Bundle {
      * @return Internationalized text
      */
     static String getMessage(Locale locale, String key, Object... subs) {
-        return b.handleGetMessage(locale, key, subs);
+        return getBundle().handleGetMessage(locale, key, subs);
     }
 
     /**
@@ -142,6 +142,7 @@ public class Bundle {
      * @throws MissingResourceException if message cannot be found
      */
     public String handleGetMessage(Locale locale, String key) {
+        log.trace("handleGetMessage for key {}", key);
         if (bundleName() != null) {
             ResourceBundle rb = ResourceBundle.getBundle(bundleName(), locale);
             if (rb.containsKey(key)) {
@@ -198,7 +199,7 @@ public class Bundle {
         return name;
     }
 
-    protected jmri.Bundle getBundle() {
+    protected static jmri.Bundle getBundle() {
         return b;
     }
 
@@ -211,4 +212,7 @@ public class Bundle {
     //           log.error("Failed to load defaults because of missing bundle");
     //           return;
     //        }
+    
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Bundle.class);
+
 }

@@ -9,7 +9,7 @@
   <title>JMRI: Route Table Help</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Route Table">
   <!--#include virtual="/Style" -->
 </head>
@@ -102,15 +102,15 @@
         Routes</a>.</dd>
       </dl>
 
-      <h2><a name="Turnout lock feature">Turnout Lock</a></h2>
+      <h2><a name="Turnout_lock_feature">Turnout Lock</a></h2>
 
       <p>See the <a href=
-      "RouteAddEdit.shtml#Turnout%20lock%20feature">Route Add/Edit
+      "RouteAddEdit.shtml#Turnout_lock_feature">Route Add/Edit
       help page</a>.</p>
 
       <p>For more information on Routes, see the <a href=
-      "../../../../html/tools/Routes.shtml">Routes help page</a>. 
-      <!--#include virtual="/Footer" --></p>
+      "../../../../html/tools/Routes.shtml">Routes help page</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

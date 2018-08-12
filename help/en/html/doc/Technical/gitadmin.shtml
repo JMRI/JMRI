@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <title>JMRI: GitHub Administration</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI Git Github">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+<!--#include virtual="/Header.shtml" -->
+
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>JMRI Code: GitHub Administration</h1>
+
+      <h2>Background</h2>
+      
+      JMRI uses
+      <a href="https://github.com">GitHub</a>
+      to host our 
+      <a href="https://github.com/JMRI/JMRI">main code repository</a>, 
+      <a href="https://github.com/JMRI/JMRI/releases">releases and downloads</a>
+      and 
+      <a href="https://github.com/JMRI/JMRI/issues">issues lists</a>.
+      It also hosts 
+      <a href="https://github.com/JMRI">several related repositories</a>.
+      
+      <p>
+      The rest of this page records how we configure and use GitHub,
+      along with associated procedures.
+      
+      <p>
+      Related info on other pages:
+      <ul>
+        <li><a href="ContinuousIntegration.shtml">Continuous Integration</a>
+            - doesn't really talk about how GitHub is configured for this, now how the services
+                are configured
+        <li><a href="gitdeveloper.shtml">Labels on Issues/PRs</a>
+        <li>The
+            <a href="https://github.com/JMRI/JMRI/blob/master/scripts/HOWTO-distribution.md">release process</a>
+            works with GitHub repositories, Issues and releases.
+      </ul>
+      
+      <h2>Merging a PR</h2>
+      
+      Except in exceptional circumstances (which should probably be discussed in the PR itself),
+      PRs should only be merged when:
+      <ul>
+        <li>They have passed all the CI tests
+        <li>They have no outstanding reviews
+        <li>If in a new area, large or from a new contributor, 
+            they have been in-cue for at least a day or so to allow people to take a look at them
+        <li>Don't appear to have any un-resolved controversies in the comments
+      </ul>
+      
+      If you want a bit more time before somebody merges a PR, either start a review saying that
+      or set "WIP" in the title while explaining why in a comment.
+
+      <p>
+      When restarting CI after a failure, please copy at least a few lines around the
+      relevant part of the log to a comment. It can be very useful to attach the entire 
+      raw log if the failure is obscure, novel or otherwise needs investigation.
+      
+      <p>
+      When merging a PR, please do the following:
+      <ul>
+        <li>Assign it to the original submitter, at least.
+            Developers and maintainers can be assigned to any PR, but 
+            other people who create PRs can only be assigned to their own.
+            By assigning the PR, we make it easy to find what non-developers 
+            have contributed.
+        <li>Set the current milestone on the PR.  
+      </ul>
+      
+      <h2>How we use "Teams"</h2>
+      
+      <p>What each team does
+      
+      <p>Terms for adding people to developer status
+        <ul>
+        <li>Have to have a real name on their GitHub account?
+        <li>Have to subscribe (and stay subscribed) to jmri-developers?
+        <li>Have to have worked on something other than their own projects?
+      </ul>
+      
+      <h2>Branches</h2>
+      
+      What do we keep as
+      <a href="https://github.com/JMRI/JMRI/branches">main repository branches</a>
+      (as opposed to in user repositories, which is not our problem)?
+      When do we clean them out?
+      
+    
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

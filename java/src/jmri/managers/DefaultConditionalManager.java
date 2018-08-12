@@ -289,8 +289,6 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      */
     @Override
     public List<String> getSystemNameListForLogix(Logix x) {
-//        log.error("getSystemNameListForLogix - Not implemented yet.");
-//        return null;
         if (x == null) {
             return null;
         }
@@ -299,7 +297,6 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
         for (int i = 0; i < x.getNumConditionals(); i++) {
             nameList.add(x.getConditionalByNumberOrder(i));
         }
-        Collections.sort(nameList);
         return nameList;
     }
 
@@ -344,7 +341,7 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      * Maintain a list of conditionals that refer to a particular conditional.
      * @since 4.7.4
      */
-    private HashMap<String, ArrayList<String>> conditionalWhereUsed = new HashMap<>();
+    private final HashMap<String, ArrayList<String>> conditionalWhereUsed = new HashMap<>();
 
     /**
      * Return a copy of the entire map.  Used by
@@ -420,7 +417,7 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
         }
 
         if (conditionalWhereUsed.containsKey(target)) {
-            ArrayList refList = conditionalWhereUsed.get(target);
+            ArrayList<?> refList = conditionalWhereUsed.get(target);
             refList.remove(reference);
             if (refList.size() == 0) {
                 conditionalWhereUsed.remove(target);

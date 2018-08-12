@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Matthew Harris copyright (c) 2009
  */
-public class AudioTableAction extends AbstractTableAction {
+public class AudioTableAction extends AbstractTableAction<Audio> {
 
     AudioTableDataModel listeners;
     AudioTableDataModel buffers;
@@ -102,7 +102,7 @@ public class AudioTableAction extends AbstractTableAction {
              */
             @Override
             void extras() {
-                addToFrame(null);
+                addToFrame(this);
             }
         };
         setTitle();
@@ -260,7 +260,7 @@ public class AudioTableAction extends AbstractTableAction {
     /**
      * Define abstract AudioTableDataModel
      */
-    abstract public class AudioTableDataModel extends BeanTableDataModel implements PropertyChangeListener {
+    abstract public class AudioTableDataModel extends BeanTableDataModel<Audio> implements PropertyChangeListener {
 
         char subType;
 
@@ -420,7 +420,7 @@ public class AudioTableAction extends AbstractTableAction {
         }
 
         @Override
-        protected void clickOn(NamedBean t) {
+        protected void clickOn(Audio t) {
             // Do nothing
         }
 

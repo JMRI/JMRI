@@ -1,7 +1,6 @@
 package jmri.managers;
 
 import jmri.PowerManager;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;

@@ -1,5 +1,6 @@
 package jmri.jmrit.withrottle;
 
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -46,12 +47,12 @@ public class ConsistFunctionController implements ThrottleListener {
     }
 
     @Override
-    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
+    public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
         log.error("Throttle request failed for " + address + " because " + reason);
     }
 
     @Override
-    public void notifyStealThrottleRequired(DccLocoAddress address){
+    public void notifyStealThrottleRequired(LocoAddress address){
         // this is an automatically stealing impelementation.
         InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }

@@ -206,6 +206,15 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     }
 
     /**
+     * is this enabled?
+     * @return true if enabled
+     */
+    @Override
+    public boolean isEnabled() {
+        return speedControllerEnable;
+    }
+    
+    /**
      * Set the GUI to match that the loco is set to forward.
      *
      * @param isForward True if the loco is set to forward, false otherwise.
@@ -927,7 +936,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * Perform an emergency stop.
      *
      */
-    private void stop() {
+    public void stop() {
         if (this.throttle == null) {
             return;
         }

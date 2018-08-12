@@ -17,7 +17,7 @@ public class AcelaPortControllerTest extends jmri.jmrix.AbstractSerialPortContro
     public void setUp(){
        JUnitUtil.setUp();
        AcelaSystemConnectionMemo memo = new AcelaSystemConnectionMemo();
-       AcelaTrafficController tc = new AcelaTrafficControlScaffold();
+       new AcelaTrafficControlScaffold();
        apc = new AcelaPortController(memo){
             @Override
             public boolean status(){

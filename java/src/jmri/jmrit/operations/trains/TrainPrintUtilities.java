@@ -42,15 +42,15 @@ public class TrainPrintUtilities {
     /**
      * Print or preview a train manifest, build report, or switch list.
      *
-     * @param file File to be printed or previewed
-     * @param name Title of document
-     * @param isPreview true if preview
-     * @param fontName optional font to use when printing document
+     * @param file          File to be printed or previewed
+     * @param name          Title of document
+     * @param isPreview     true if preview
+     * @param fontName      optional font to use when printing document
      * @param isBuildReport true if build report
-     * @param logoURL optional pathname for logo
-     * @param printerName optional default printer name
-     * @param orientation Setup.LANDSCAPE, Setup.PORTRAIT, or Setup.HANDHELD
-     * @param fontSize font size
+     * @param logoURL       optional pathname for logo
+     * @param printerName   optional default printer name
+     * @param orientation   Setup.LANDSCAPE, Setup.PORTRAIT, or Setup.HANDHELD
+     * @param fontSize      font size
      */
     public static void printReport(File file, String name, boolean isPreview, String fontName,
             boolean isBuildReport, String logoURL, String printerName, String orientation, int fontSize) {
@@ -164,23 +164,23 @@ public class TrainPrintUtilities {
                 if ((!Setup.getPickupEnginePrefix().equals("") && line.startsWith(Setup
                         .getPickupEnginePrefix()))
                         || (!Setup.getPickupCarPrefix().equals("") && line.startsWith(Setup
-                                .getPickupCarPrefix()))
+                        .getPickupCarPrefix()))
                         || (!Setup.getSwitchListPickupCarPrefix().equals("") && line
-                                .startsWith(Setup.getSwitchListPickupCarPrefix()))) {
+                        .startsWith(Setup.getSwitchListPickupCarPrefix()))) {
                     // log.debug("found a pickup line");
                     c = Setup.getPickupColor();
                 } else if ((!Setup.getDropEnginePrefix().equals("") && line.startsWith(Setup
                         .getDropEnginePrefix()))
                         || (!Setup.getDropCarPrefix().equals("") && line.startsWith(Setup
-                                .getDropCarPrefix()))
+                        .getDropCarPrefix()))
                         || (!Setup.getSwitchListDropCarPrefix().equals("") && line.startsWith(Setup
-                                .getSwitchListDropCarPrefix()))) {
+                        .getSwitchListDropCarPrefix()))) {
                     // log.debug("found a drop line");
                     c = Setup.getDropColor();
                 } else if ((!Setup.getLocalPrefix().equals("") && line.startsWith(Setup
                         .getLocalPrefix()))
                         || (!Setup.getSwitchListLocalPrefix().equals("") && line.startsWith(Setup
-                                .getSwitchListLocalPrefix()))) {
+                        .getSwitchListLocalPrefix()))) {
                     // log.debug("found a drop line");
                     c = Setup.getLocalColor();
                 } else if (!line.startsWith(TrainCommon.TAB)) {
@@ -269,8 +269,8 @@ public class TrainPrintUtilities {
             log.debug("Close failed");
         }
         out.close();
-        // open editor
-        openDesktopEditor(buildReport);
+        // open the file
+        TrainUtilities.openDesktop(buildReport);
     }
 
     /*
@@ -333,33 +333,6 @@ public class TrainPrintUtilities {
         } else {
             log.debug("ERROR first characters of build report not valid (" + line + ")");
             return "ERROR " + line; // NOI18N
-        }
-    }
-
-    /**
-     * This method uses Desktop which is supported in Java 1.6.
-     * @param file The File to be opened using an editor.
-     */
-    public static void openDesktopEditor(File file) {
-        if (!java.awt.Desktop.isDesktopSupported()) {
-            log.warn("desktop not supported");
-            return;
-        }
-        java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
-        if (desktop.isSupported(java.awt.Desktop.Action.EDIT)) {
-            try {
-                desktop.edit(file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else if (desktop.isSupported(java.awt.Desktop.Action.OPEN)) {
-            try {
-                desktop.open(file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            log.warn("desktop edit or open not supported");
         }
     }
 

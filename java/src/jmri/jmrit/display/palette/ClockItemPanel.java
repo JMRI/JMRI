@@ -3,7 +3,6 @@ package jmri.jmrit.display.palette;
 import java.awt.Color;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,9 +15,9 @@ import javax.swing.JPanel;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.AnalogClock2Display;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.util.swing.ImagePanel;
-import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,12 +26,12 @@ import org.slf4j.LoggerFactory;
  */
 public class ClockItemPanel extends IconItemPanel {
 
-    public ClockItemPanel(JmriJFrame parentFrame, String type, Editor editor) {
+    public ClockItemPanel(DisplayFrame parentFrame, String type, Editor editor) {
         super(parentFrame, type, editor);
         setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
-
     }
 
+    @Override
     protected JPanel instructions() {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
@@ -46,8 +45,12 @@ public class ClockItemPanel extends IconItemPanel {
 
     @Override
     protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap) {
-        _iconPanel = new ImagePanel();
-        updateBackgrounds(); // create array of backgrounds
+        if (_iconPanel == null) {
+            _iconPanel = new ImagePanel();            
+            _iconPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+        } else {
+            _iconPanel.removeAll();
+        }
 
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
         while (it.hasNext()) {
@@ -70,16 +73,11 @@ public class ClockItemPanel extends IconItemPanel {
                 label.setName(borderName);
                 panel.add(label);
             } catch (java.lang.ClassNotFoundException cnfe) {
-                cnfe.printStackTrace();
+                log.error("Unable to find class supporting {}", Editor.POSITIONABLE_FLAVOR, cnfe);
             }
             _iconPanel.add(panel);
         }
-        add(_iconPanel, 1);
-    }
-
-    @Override
-    public void initButtonPanel() {
-        add(makeBgButtonPanel(_iconPanel, null, _backgrounds));
+        _iconPanel.setImage(_backgrounds[_paletteFrame.getPreviewBg()]); // pick up shared setting
     }
 
     public class ClockDragJLabel extends DragJLabel {
@@ -106,7 +104,7 @@ public class ClockItemPanel extends IconItemPanel {
                 c.setOpaque(false);
                 c.update();
                 c.setLevel(Editor.CLOCK);
-                return c;                
+                return c;
             } else if (DataFlavor.stringFlavor.equals(flavor)) {
                 StringBuilder sb = new StringBuilder(_itemType);
                 sb.append(" icon \"");

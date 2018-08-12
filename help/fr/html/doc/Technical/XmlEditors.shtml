@@ -1,12 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!--  $Id$ -->
-<!-- UpDated by Herv&#233; Blorec  2016-08-19-->
+<!-- Updated by Herv&#233; Blorec  2016-08-19-->
 <html lang="fr">
 <head>
-    <TITLE>
+    <title>
  	JMRI: XML Editors
-   </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+   </title>
+    <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code xml editors">
 
 <!-- /Style -->
@@ -39,7 +38,7 @@
 
       <p>Cette page donne la liste des &eacute;diteurs XML qui ont
       &eacute;t&eacute; mentionn&eacute;s sur le <a href=
-      "http://groups.yahoo.com/group/jmriusers/">groupe de
+      "https://groups.io/g/jmriusers">groupe de
       discussion des utilisateurs JMRI</a>.</p>
 
 <h2>&#233;diteurs Libres</h2>

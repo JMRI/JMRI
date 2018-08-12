@@ -1,6 +1,5 @@
 package jmri.server.json.light;
 
-import static jmri.server.json.JSON.COMMENT;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.INCONSISTENT;
 import static jmri.server.json.JSON.OFF;
@@ -8,14 +7,15 @@ import static jmri.server.json.JSON.ON;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.UNKNOWN;
-import static jmri.server.json.JSON.USERNAME;
 import static jmri.server.json.light.JsonLight.LIGHT;
+import static jmri.server.json.light.JsonLight.LIGHTS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
+import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.server.json.JsonException;
@@ -37,7 +37,7 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService {
         root.put(TYPE, LIGHT);
         Light light = InstanceManager.lightManagerInstance().getLight(name);
         ObjectNode data = this.getNamedBean(light, name, type, locale);
-        root.put(DATA, data);
+        root.set(DATA, data);
         if (light != null) {
             switch (light.getState()) {
                 case Light.ON:
@@ -64,12 +64,7 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService {
         if (light == null) {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", LIGHT, name));
         }
-        if (data.path(USERNAME).isTextual()) {
-            light.setUserName(data.path(USERNAME).asText());
-        }
-        if (data.path(COMMENT).isTextual()) {
-            light.setComment(data.path(COMMENT).asText());
-        }
+        this.postNamedBean(light, data, name, type, locale);
         int state = data.path(STATE).asInt(UNKNOWN);
         switch (state) {
             case ON:
@@ -105,5 +100,19 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService {
         }
         return root;
 
+    }
+
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+        switch (type) {
+            case LIGHT:
+            case LIGHTS:
+                return doSchema(type,
+                        server,
+                        "jmri/server/json/light/light-server.json",
+                        "jmri/server/json/light/light-client.json");
+            default:
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+        }
     }
 }

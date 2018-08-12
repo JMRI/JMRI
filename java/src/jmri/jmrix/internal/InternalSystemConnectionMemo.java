@@ -53,6 +53,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
     private jmri.progdebugger.DebugProgrammerManager programManager;
     
 
+    @Override
     public InternalConsistManager getConsistManager() {
         if (consistManager == null) {
             log.debug("Create InternalConsistManager by request");

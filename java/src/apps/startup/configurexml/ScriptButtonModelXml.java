@@ -6,7 +6,6 @@ import apps.startup.StartupModel;
 import java.io.FileNotFoundException;
 import java.util.Locale;
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.util.FileUtil;
 import jmri.util.prefs.InitializationException;

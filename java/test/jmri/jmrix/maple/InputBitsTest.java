@@ -19,10 +19,10 @@ public class InputBitsTest extends TestCase {
     }
 
     public void testAccessors() {
-        ibit.setNumInputBits(72);
-        ibit.setTimeoutTime(1500);
-        Assert.assertEquals("check numInputBits", 72, ibit.getNumInputBits());
-        Assert.assertEquals("check timeoutTime", 1500, ibit.getTimeoutTime());
+        InputBits.setNumInputBits(72);
+        InputBits.setTimeoutTime(1500);
+        Assert.assertEquals("check numInputBits", 72, InputBits.getNumInputBits());
+        Assert.assertEquals("check timeoutTime", 1500, InputBits.getTimeoutTime());
     }
 
     public void testMarkChangesInitial() {

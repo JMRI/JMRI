@@ -1,34 +1,19 @@
 package jmri.jmrit.operations.router;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        OperationsCarRouterTest.class,
+        BundleTest.class,
+        RouterTest.class,
+})
 
 /**
  * Tests for the jmrit.operations.router package
  *
  * @author	Bob Coleman
  */
-public class PackageTest extends TestCase {
-
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrit.operations.router.PackageTest"); // no tests in class itself
-        suite.addTest(OperationsCarRouterTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(BundleTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(RouterTest.class));
-        return suite;
-    }
-
+public class PackageTest  {
 }

@@ -14,6 +14,7 @@ import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.trains.TrainLogger;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.ColorUtil;
+import jmri.util.swing.JmriColorChooser;
 import jmri.web.server.WebServerPreferences;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -444,6 +445,11 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         getDefault().onlyActiveTrains = enabled;
     }
 
+    /**
+     * When true, router checks that the car's destination is serviced by departure track.
+     * Very restrictive, not recommended.
+     * @return true if enabled.
+     */
     public static boolean isCheckCarDestinationEnabled() {
         return getDefault().checkCarDestination;
     }
@@ -496,6 +502,13 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         return getDefault().trainIntoStagingCheck;
     }
 
+    /**
+     * Controls staging track selection, when true, the terminus staging track
+     * has to have the same characteristics as the train.
+     *
+     * @param enabled when true, the terminal staging track must service the
+     *            same car types, loads, etc. as the train
+     */
     public static void setTrainIntoStagingCheckEnabled(boolean enabled) {
         getDefault().trainIntoStagingCheck = enabled;
     }
@@ -508,6 +521,10 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         getDefault().trackImmediatelyAvail = enabled;
     }
 
+    /**
+     * allow cars to return to the same staging location if no other options (tracks) are available
+     * @return true if cars are allowed to depart and return to same staging location
+     */
     public static boolean isAllowReturnToStagingEnabled() {
         return getDefault().allowCarsReturnStaging;
     }
@@ -567,8 +584,8 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     }
 
     public static String getRailroadName() {
-        if (getDefault().railroadName == null) {
-            return WebServerPreferences.getDefault().getRailroadName();
+        if (getDefault().railroadName.isEmpty()) {
+            return InstanceManager.getDefault(WebServerPreferences.class).getRailroadName();
         }
         return getDefault().railroadName;
     }
@@ -701,6 +718,10 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         return getDefault().buildReportLevel;
     }
 
+    /**
+     * Sets the report level for the car router.
+     * @param level BUILD_REPORT_NORMAL, BUILD_REPORT_DETAILED, BUILD_REPORT_VERY_DETAILED
+     */
     public static void setRouterBuildReportLevel(String level) {
         getDefault().routerBuildReportLevel = level;
     }
@@ -792,6 +813,13 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         return getDefault().switchListAllTrains;
     }
 
+    /**
+     * Used to determine if there's spaces or form feed between trains and
+     * locations when printing switch lists. see
+     * getSwitchListPageFormatComboBox()
+     *
+     * @param format PAGE_NORMAL, PAGE_PER_TRAIN, or PAGE_PER_VISIT
+     */
     public static void setSwitchListPageFormat(String format) {
         getDefault().switchListPageFormat = format;
     }
@@ -1054,6 +1082,10 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         return getDefault().manifestFormat;
     }
 
+    /**
+     * Sets the format for manifests
+     * @param format STANDARD_FORMAT, TWO_COLUMN_FORMAT, or TWO_COLUMN_TRACK_FORMAT
+     */
     public static void setManifestFormat(String format) {
         getDefault().manifestFormat = format;
     }
@@ -1424,11 +1456,12 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     }
 
     public static void setDropTextColor(String color) {
-        getDefault().dropColor = ColorUtil.stringToColor(color);
+        setDropColor(ColorUtil.stringToColor(color));
     }
 
     public static void setDropColor(Color c) {
         getDefault().dropColor = c;
+        JmriColorChooser.addRecentColor(c);
     }
 
     public static String getPickupTextColor() {
@@ -1436,11 +1469,12 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     }
 
     public static void setPickupTextColor(String color) {
-        getDefault().pickupColor = ColorUtil.stringToColor(color);
+        setPickupColor(ColorUtil.stringToColor(color));
     }
 
     public static void setPickupColor(Color c) {
         getDefault().pickupColor = c;
+        JmriColorChooser.addRecentColor(c);
     }
 
     public static String getLocalTextColor() {
@@ -1448,11 +1482,12 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     }
 
     public static void setLocalTextColor(String color) {
-        getDefault().localColor = ColorUtil.stringToColor(color);
+        setLocalColor(ColorUtil.stringToColor(color));
     }
 
     public static void setLocalColor(Color c) {
         getDefault().localColor = c;
+        JmriColorChooser.addRecentColor(c);
     }
 
     public static Color getPickupColor() {
@@ -1621,7 +1656,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     /**
      *
      * @return the available text colors used for printing
-     * @deprecated since 4.9.6 use a {@link javax.swing.JColorChooser } instead. 
+     * @deprecated since 4.9.6 use a {@link javax.swing.JColorChooser } instead.
      */
     @Deprecated
     public static JComboBox<String> getPrintColorComboBox() {
@@ -1768,10 +1803,10 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     public static Element store() {
         Element values;
         Element e = new Element(Xml.OPERATIONS);
-        e.addContent(values = new Element(Xml.RAIL_ROAD));
-        if (Setup.getRailroadName().equals(WebServerPreferences.getDefault().getRailroadName())) {
-            values.setAttribute(Xml.NAME, Xml.USE_JMRI_RAILROAD_NAME);
-        } else {
+
+        // only store railroad name if it doesn't match the preferences railroad name
+        if (!InstanceManager.getDefault(WebServerPreferences.class).getRailroadName().equals(getRailroadName())) {
+            e.addContent(values = new Element(Xml.RAIL_ROAD));
             values.setAttribute(Xml.NAME, getRailroadName());
         }
 
@@ -2015,9 +2050,9 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
                 && (a = operations.getChild(Xml.RAIL_ROAD).getAttribute(Xml.NAME)) != null) {
             String name = a.getValue();
             log.debug("railroadName: {}", name);
-            if (name.equals(Xml.USE_JMRI_RAILROAD_NAME)) {
-                getDefault().railroadName = null;
-            } else {
+            // code before 4.11 "useJmriRailroadName" when using the preferences railroad name.
+            // here for backwards compatibility
+            if (!name.equals(Xml.USE_JMRI_RAILROAD_NAME)) {
                 getDefault().railroadName = name; // don't set the dirty bit
             }
         }

@@ -20,6 +20,7 @@ public class VetoedBell implements Bell {
     NamedBeanHandle<Sensor> hVeto;
     Bell bell;
         
+    @Override
     public void ring() {
         if (hVeto.getBean().getKnownState() != Sensor.ACTIVE) {
             bell.ring();

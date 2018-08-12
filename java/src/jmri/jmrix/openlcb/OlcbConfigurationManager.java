@@ -3,6 +3,7 @@ package jmri.jmrix.openlcb;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.List;
 import java.util.ResourceBundle;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
@@ -68,7 +69,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
                 getThrottleManager());
 
         if (getProgrammerManager().isAddressedModePossible()) {
-            InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+            InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         }
         if (getProgrammerManager().isGlobalProgrammerAvailable()) {
             jmri.InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
@@ -334,6 +335,12 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
      * bytes of PID. That changes each time, which isn't perhaps what's wanted.
      */
     protected void getOurNodeID() {
+        List<NodeID> previous = InstanceManager.getList(NodeID.class);
+        if (!previous.isEmpty()) {
+            nodeID = previous.get(0);
+            return;
+        }
+
         long pid = getProcessId(1);
         log.debug("Process ID: {}", pid);
 

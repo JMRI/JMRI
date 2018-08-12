@@ -1,0 +1,46 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-roster-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"roster\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "System name of the roster"
+        },
+        "userName": {
+            "type": "string",
+            "description": "User name of the roster"
+        },
+        "comment": {
+            "type": "string",
+            "description": "Comment for the roster"
+        },
+        "properties": {
+            "type": "array",
+            "description": "NamedBean properties of the roster",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "description": "Key by which property is accessed"
+                    },
+                    "value": {
+                        "type": ["string", "null"],
+                        "description": "String value of property or null"
+                    }
+                },
+                "additionalProperties": false,
+                "required": ["name", "value"]
+            }
+        },
+        "state": {
+            "type": "integer",
+            "description": "The state of the roster",
+            "enum": [0, 2, 4, 8]
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name", "userName", "comment", "properties", "state"]
+}

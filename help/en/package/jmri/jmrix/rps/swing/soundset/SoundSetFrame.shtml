@@ -73,8 +73,8 @@
       <p>Currently, the automatic update only works while this
       window is open. Once we have more experience with this tool,
       we'll probably make this feature operate automatically,
-      without needing the window. 
-      <!--#include virtual="/Footer" --></p>
+      without needing the window.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

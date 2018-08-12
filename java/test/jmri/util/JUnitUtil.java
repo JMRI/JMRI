@@ -289,7 +289,7 @@ public class JUnitUtil {
     /**
      * Set a NamedBean (Turnout, Sensor, SignalHead, ...) to a specific value in
      * a thread-safe way, including waiting for the state to appear.
-     *
+     * <p>
      * You can't assume that all the consequences of that setting will have
      * propagated through when this returns; those might take a long time. But
      * the set operation itself will be complete.
@@ -299,7 +299,9 @@ public class JUnitUtil {
      */
     static public void setBeanStateAndWait(NamedBean bean, int state) {
         setBeanState(bean, state);
-        JUnitUtil.waitFor(()->{return state == bean.getState();}, "setAndWait "+bean.getSystemName()+": "+state);
+        JUnitUtil.waitFor(() -> {
+            return state == bean.getState();
+        }, "setAndWait " + bean.getSystemName() + ": " + state);
     }
 
     public static void resetInstanceManager() {
@@ -414,7 +416,8 @@ public class JUnitUtil {
     public static void initDebugCommandStation() {
         jmri.CommandStation cs = new jmri.CommandStation() {
             @Override
-            public void sendPacket(@Nonnull byte[] packet, int repeats) {
+            public boolean sendPacket(@Nonnull byte[] packet, int repeats) {
+            return true;
             }
 
             @Override
@@ -502,6 +505,21 @@ public class JUnitUtil {
             log.error("Failed to reset jmri.Application static field", x);
         }
     }
+
+    /*
+     * Use reflection to reset the jmri.util.node.NodeIdentity instance
+     */
+    public static void resetNodeIdentity() {
+        try {
+            Class<?> c = jmri.util.node.NodeIdentity.class;
+            java.lang.reflect.Field f = c.getDeclaredField("instance");
+            f.setAccessible(true);
+            f.set(c, null);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
+            log.error("Failed to reset jmri.util.node.NodeIdentity static field", x);
+        }
+    }
+
 
     public static void initGuiLafPreferencesManager() {
         GuiLafPreferencesManager m = new GuiLafPreferencesManager();
@@ -599,12 +617,12 @@ public class JUnitUtil {
     }
 
     /**
-     * Service method to find the test class name in the traceback.
-     * Heuristic: First jmri or apps class that isn't this one.
+     * Service method to find the test class name in the traceback. Heuristic:
+     * First jmri or apps class that isn't this one.
      */
     static String getTestClassName() {
         StackTraceElement[] trace = Thread.currentThread().getStackTrace();
-        
+
         for (StackTraceElement e : trace) {
             if (e.getClassName().startsWith("jmri") || e.getClassName().startsWith("apps")) {
                 if (!e.getClassName().endsWith("JUnitUtil")) {
@@ -615,7 +633,7 @@ public class JUnitUtil {
 
         return "<unknown class>";
     }
-    
+
     /**
      * Dispose of any disposable windows. This should only be used if there is
      * no ability to actually close windows opened by a test using
@@ -630,11 +648,20 @@ public class JUnitUtil {
         // close any open remaining windows from earlier tests
         for (Frame frame : Frame.getFrames()) {
             if (frame.isDisplayable()) {
-                String message = "Cleaning up frame \"{}\" (a {}) in {}.";
-                if (error) {
-                    log.error(message, frame.getTitle(), frame.getClass(), getTestClassName());
-                } else if (warn) {
-                    log.warn(message, frame.getTitle(), frame.getClass(), getTestClassName());
+                if (frame.getClass().getName().equals("javax.swing.SwingUtilities$SharedOwnerFrame")) {
+                    String message = "Cleaning up nameless invisible frame created by creating a dialog with a null parent in {}.";
+                    if (!error) {
+                        log.warn(message, getTestClassName());
+                    } else {
+                        log.error(message, getTestClassName());
+                    }
+                } else {
+                    String message = "Cleaning up frame \"{}\" (a {}) in {}.";
+                    if (error) {
+                        log.error(message, frame.getTitle(), frame.getClass(), getTestClassName());
+                    } else if (warn) {
+                        log.warn(message, frame.getTitle(), frame.getClass(), getTestClassName());
+                    }
                 }
                 JUnitUtil.dispose(frame);
             }
@@ -687,6 +714,8 @@ public class JUnitUtil {
      * @param window the window to dispose of
      */
     public static void dispose(@Nonnull Window window) {
+        java.util.Objects.requireNonNull(window, "Window cannot be null");
+        
         ThreadingUtil.runOnGUI(() -> {
             window.dispose();
         });

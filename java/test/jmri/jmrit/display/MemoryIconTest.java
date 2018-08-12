@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
@@ -14,10 +13,9 @@ import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.*;
+
 import org.netbeans.jemmy.operators.JLabelOperator;
 import org.netbeans.jemmy.ComponentChooser;
 
@@ -176,12 +174,21 @@ public class MemoryIconTest extends PositionableTestBase {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemoryIcon Panel");
             p = to = new MemoryIcon("MemoryTest1", editor );
             to.setMemory("IM1");
         }
+    }
+
+    @Override
+    @After
+    public void tearDown() {
+        super.tearDown();
+        to = null;
+        JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);

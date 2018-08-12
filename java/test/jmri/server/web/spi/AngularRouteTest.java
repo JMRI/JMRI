@@ -27,44 +27,43 @@ public class AngularRouteTest {
 
     @Test
     public void testGetConstructor() {
-        AngularRoute ar;
         try {
-            ar = new AngularRoute(null, "b", "c", "d");
+            new AngularRoute(null, "b", "c", "d");
             fail("NPE should have been thrown");
         } catch (NullPointerException ex) {
             // ignore, as expected
         }
         try {
-            ar = new AngularRoute("a", "b", "c", "d");
+            new AngularRoute("a", "b", "c", "d");
             fail("IllegalArgumentException should have been thrown");
         } catch (IllegalArgumentException ex) {
             // ignore, as expected
         }
         try {
-            ar = new AngularRoute("a", null, null, null);
+            new AngularRoute("a", null, null, null);
             fail("IllegalArgumentException should have been thrown");
         } catch (IllegalArgumentException ex) {
             // ignore, as expected
         }
         try {
-            ar = new AngularRoute("a", null, "c", "d");
+            new AngularRoute("a", null, "c", "d");
             fail("IllegalArgumentException should have been thrown");
         } catch (IllegalArgumentException ex) {
             // ignore, as expected
         }
         try {
-            ar = new AngularRoute("a", "b", null, "d");
+            new AngularRoute("a", "b", null, "d");
             fail("IllegalArgumentException should have been thrown");
         } catch (IllegalArgumentException ex) {
             // ignore, as expected
         }
         try {
-            ar = new AngularRoute("a", null, null, "d");
+            new AngularRoute("a", null, null, "d");
         } catch (IllegalArgumentException ex) {
             fail("IllegalArgumentException should not have been thrown");
         }
         try {
-            ar = new AngularRoute("a", "b", "c", null);
+            new AngularRoute("a", "b", "c", null);
         } catch (IllegalArgumentException ex) {
             fail("IllegalArgumentException should not have been thrown");
         }

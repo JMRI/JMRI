@@ -11,8 +11,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -30,12 +28,14 @@ public class LnNamedPaneActionTest {
         LnNamedPaneAction t = new LnNamedPaneAction("Test Action",jf,"test",memo);
         Assert.assertNotNull("exists",t);
         jf.dispose();
+        memo.dispose();
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
     }
 
     @After

@@ -1,4 +1,4 @@
-<<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
@@ -123,6 +123,20 @@ dt><a href="../../../../../xml/signals/B&O-2009/index.shtml">B&amp;O-2009</a>
 
 <dt><a href="../../../../../xml/signals/CROR-2008/index.shtml">CROR-2008</a>
     <dd>Transport Canada (TC) 2008 O-0-93 rule book
+
+<dt><a href="../../../../../xml/signals/CSD-1962-zakladni/index.shtml">CSD-1962-zakladni</a> &ndash;
+    <a href="../../../../../xml/signals/CSD-1962-cestova/index.shtml">CSD-1962-cestova</a> &ndash;
+    <a href="../../../../../xml/signals/CSD-1962-vlozena/index.shtml">CSD-1962-vlozena</a> &ndash;
+    <a href="../../../../../xml/signals/CSD-1962-mechaniky/index.shtml">CSD-1962-mechaniky</a> &ndash;
+    <a href="../../../../../xml/signals/SZDC-2015-zakladni/index.shtml">SZDC-2015-zakladni</a> </dt>
+
+<dd>&#268;SD &ndash; &#268;eskoslovensk&#233; st&#225;tn&#237; dr&#225;hy &ndash; Tch&#233;coslovaquie d&#233;finition du signal 1962 <br>  
+    <i>CSD-1962-zakladni &ndash; signaux de base &ndash; Set 0</i> <br>
+    <i>CSD-1962-cestova &ndash; signaux interm&#233;diaires &ndash; Set 1</i> <br>
+    <i>CSD-1962-vlozena &ndash; signaux embarqu&#233;s et signaux de triage &#224; bosse &ndash; Set 2</i> <br>
+    <i>CSD-1962-mechaniky &ndash; signaux m&#233;caniques &ndash; Set 4</i> <br>
+    S&#381;DC &ndash; Spr&#225;va &#382;elezni&#269;n&#237; dopravn&#237; cesty &ndash; D&#233;finition du signal tch&#232;que 2015 <br>  
+    <i>SZDC-2015-zakladni &ndash; signaux de base &ndash; Set 3</i> </dd>
 
 <dt><a href="../../../../../xml/signals/CSX-1998/index.shtml">CSX-1998</a>
 	<dd>CSX Transportation Signal Rules - 281-298, January 1998<br/>

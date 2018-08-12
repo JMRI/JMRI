@@ -9,10 +9,12 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
+    private LocoNetSystemConnectionMemo memo;
+ 
     @Test
     public void testCTor() {
         Assert.assertNotNull("exists",instance);
@@ -20,7 +22,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * The default mode is 28 speed steps
      */
     @Test
@@ -398,7 +400,6 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     public void testRelease_0args() {
         instance.release();
-        jmri.util.JUnitAppender.assertWarnMessage("Dispose called without knowing the original throttle listener");
     }
 
     /**
@@ -408,7 +409,6 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     public void testDispatch_0args() {
         instance.dispatch();
-        jmri.util.JUnitAppender.assertWarnMessage("Dispose called without knowing the original throttle listener");
     }
 
 
@@ -419,14 +419,15 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         JUnitUtil.setUp();
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         SlotManager slotmanager = new SlotManager(lnis);
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new LnThrottleManager(memo));
+        memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new LnPr2ThrottleManager(memo));
         instance = new Pr2Throttle(memo,new jmri.DccLocoAddress(5,false));
     }
 
     @After
     @Override
     public void tearDown() {
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 

@@ -1,18 +1,15 @@
 package jmri.util.swing;
 
-import java.awt.GraphicsEnvironment;
 import javax.swing.*;
-import jmri.*;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
  *
- * @author Bob Jacobsen Copyright (C) 2017	
+ * @author Bob Jacobsen Copyright (C) 2017
  */
 public class JComboBoxUtilTest {
 
@@ -20,6 +17,7 @@ public class JComboBoxUtilTest {
     public void testCall() {
         JComboBox<String> c = new JComboBox<>(new String[]{"A", "B"});
         JComboBoxUtil.setupComboBoxMaxRows(c);
+        Assert.assertTrue("Max Row Count", c.getMaximumRowCount() > 7);  // NOI18N
     }
 
     // The minimal setup for log4J

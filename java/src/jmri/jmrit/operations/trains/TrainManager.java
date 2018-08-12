@@ -58,8 +58,8 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     private String _trainScheduleActiveId = NONE;
 
     // Scripts
-    protected List<String> _startUpScripts = new ArrayList<String>(); // list of script pathnames to run at start up
-    protected List<String> _shutDownScripts = new ArrayList<String>(); // list of script pathnames to run at shut down
+    protected List<String> _startUpScripts = new ArrayList<>(); // list of script pathnames to run at start up
+    protected List<String> _shutDownScripts = new ArrayList<>(); // list of script pathnames to run at shut down
 
     // property changes
     public static final String LISTLENGTH_CHANGED_PROPERTY = "TrainsListLength"; // NOI18N
@@ -275,7 +275,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     }
 
     // stores known Train instances by id
-    private Hashtable<String, Train> _trainHashTable = new Hashtable<String, Train>();
+    private final Hashtable<String, Train> _trainHashTable = new Hashtable<>();
 
     /**
      * @param name The train's name.
@@ -527,7 +527,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     }
 
     private List<Train> getTrainsByList(List<Train> sortList, int attribute) {
-        List<Train> out = new ArrayList<Train>();
+        List<Train> out = new ArrayList<>();
         for (Train train : sortList) {
             String trainAttribute = (String) getTrainAttribute(train, attribute);
             for (int j = 0; j < out.size(); j++) {
@@ -544,7 +544,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     }
 
     private List<Train> getTrainsByIntList(List<Train> sortList, int attribute) {
-        List<Train> out = new ArrayList<Train>();
+        List<Train> out = new ArrayList<>();
         for (Train train : sortList) {
             int trainAttribute = (Integer) getTrainAttribute(train, attribute);
             for (int j = 0; j < out.size(); j++) {
@@ -597,7 +597,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
         if (!InstanceManager.getDefault(TrainManagerXml.class).isTrainFileLoaded()) {
             log.error("TrainManager getList called before trains completely loaded!");
         }
-        List<Train> out = new ArrayList<Train>();
+        List<Train> out = new ArrayList<>();
         Enumeration<Train> en = _trainHashTable.elements();
         while (en.hasMoreElements()) {
             out.add(en.nextElement());
@@ -715,8 +715,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     }
 
     /**
-     * Makes a copy of an existing train. Only the train's description isn't
-     * copied.
+     * Makes a copy of an existing train.
      *
      * @param train     the train to copy
      * @param trainName the name of the new train
@@ -773,7 +772,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
             newTrain.addTerminationScript(scriptName);
         }
         // manifest options
-        newTrain.setTrainRailroadName(train.getTrainRailroadName());
+        newTrain.setRailroadName(train.getRailroadName());
         newTrain.setManifestLogoURL(train.getManifestLogoURL());
         newTrain.setShowArrivalAndDepartureTimes(train.isShowArrivalAndDepartureTimesEnabled());
         // build options
@@ -800,8 +799,8 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
      */
     public List<Train> getTrainsArrivingThisLocationList(Location location) {
         // get a list of trains
-        List<Train> out = new ArrayList<Train>();
-        List<Integer> arrivalTimes = new ArrayList<Integer>();
+        List<Train> out = new ArrayList<>();
+        List<Integer> arrivalTimes = new ArrayList<>();
         for (Train train : getTrainsByTimeList()) {
             if (!train.isBuilt()) {
                 continue; // train wasn't built so skip
@@ -893,7 +892,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
         }
     }
 
-    public void buildSelectedTrains(final List<Train> trains) {
+    public void buildSelectedTrains(List<Train> trains) {
         // use a thread to allow table updates during build
         Thread build = new Thread(new Runnable() {
             @Override

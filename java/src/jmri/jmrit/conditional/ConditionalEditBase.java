@@ -2,8 +2,9 @@ package jmri.jmrit.conditional;
 
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.lang.StringBuilder;
 import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.HashMap;
@@ -37,6 +38,7 @@ import jmri.SignalMast;
 import jmri.SignalMastManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.jmrit.beantable.LRouteTableAction;
 import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
@@ -53,7 +55,7 @@ import org.slf4j.LoggerFactory;
 /**
  * This is the base class for the Conditional edit view classes. Contains shared
  * variables and methods.
- * <p>
+ *
  * @author Dave Sand copyright (c) 2017
  */
 public class ConditionalEditBase {
@@ -90,7 +92,7 @@ public class ConditionalEditBase {
     JmriBeanComboBox _comboNameBox = null;
 
     /**
-     * Input selection names
+     * Input selection names.
      *
      * @since 4.7.3
      */
@@ -149,7 +151,6 @@ public class ConditionalEditBase {
     JTabbedPane _pickTabPane = null;        // The tabbed panel for the pick table
     PickFrame _pickTables;
 
-    PickSinglePanel _pickSingle = null;     // used to build the JFrame, content copied from the table type pick object.
     JFrame _pickSingleFrame = null;
     PickSingleListener _pickListener = null;
 
@@ -163,7 +164,7 @@ public class ConditionalEditBase {
     // 2) Notify the calling Logix that the conditional view is closing
     // 3) Notify the calling Logix that it is to be deleted
     /**
-     * Create a custom listener event
+     * Create a custom listener event.
      */
     public interface LogixEventListener extends EventListener {
 
@@ -177,12 +178,12 @@ public class ConditionalEditBase {
 
     /**
      * This contains a list of commands to be processed by the listener
-     * recipient
+     * recipient.
      */
     public HashMap<String, String> logixData = new HashMap<>();
 
     /**
-     * Add a listener
+     * Add a listener.
      *
      * @param listener The recipient
      */
@@ -191,7 +192,7 @@ public class ConditionalEditBase {
     }
 
     /**
-     * Remove a listener -- not used
+     * Remove a listener -- not used.
      *
      * @param listener The recipient
      */
@@ -200,7 +201,7 @@ public class ConditionalEditBase {
     }
 
     /**
-     * Notify the listeners to check for new data
+     * Notify the listeners to check for new data.
      */
     void fireLogixEvent() {
         for (LogixEventListener l : listenerList) {
@@ -208,9 +209,145 @@ public class ConditionalEditBase {
         }
     }
 
-    // ------------ Shared Conditional Methods ------------
+    // ------------ Antecedent Methods ------------
+
     /**
-     * Verify that the user name is not a duplicate for the selected Logix
+     * Create an antecedent string based on the current variables
+     * <p>
+     * The antecedent consists of all of the variables "in order"
+     * combined with the current operator.
+     * @since 4.11.5
+     * @param variableList The current variable list
+     * @return the resulting antecedent string
+     */
+    String makeAntecedent(ArrayList<ConditionalVariable> variableList) {
+        StringBuilder antecedent = new StringBuilder(64);
+        if (variableList.size() != 0) {
+            String row = "R"; //NOI18N
+            if (variableList.get(0).isNegated()) {
+                antecedent.append("not ");
+            }
+            antecedent.append(row + "1");
+            for (int i = 1; i < variableList.size(); i++) {
+                ConditionalVariable variable = variableList.get(i);
+                switch (variable.getOpern()) {
+                    case Conditional.OPERATOR_AND:
+                        antecedent.append(" and ");
+                        break;
+                    case Conditional.OPERATOR_OR:
+                        antecedent.append(" or ");
+                        break;
+                    default:
+                        break;
+                }
+                if (variable.isNegated()) {
+                    antecedent = antecedent.append("not ");
+                }
+                antecedent.append(row);
+                antecedent.append(i + 1);
+            }
+        }
+        return antecedent.toString();
+    }
+
+    /**
+     * Add a variable R# entry to the antecedent string.
+     * If not the first one, include <strong>and</strong> or <strong>or</strong> depending on the logic type
+     * @since 4.11.5
+     * @param logicType The current logic type.
+     * @param varListSize The current size of the variable list.
+     * @param antecedent The current antecedent
+     * @return an extended antecedent
+     */
+    String appendToAntecedent(int logicType, int varListSize, String antecedent) {
+        if (varListSize > 1) {
+            if (logicType == Conditional.OPERATOR_OR) {
+                antecedent = antecedent + " or ";   // NOI18N
+            } else {
+                antecedent = antecedent + " and ";  // NOI18N
+            }
+        }
+        return antecedent + "R" + varListSize; // NOI18N
+    }
+
+    /**
+     * Check the antecedent and logic type.
+     * <p>
+     * The antecedent text is translated and verified.  A new one is created if necessary.
+     * @since 4.11.5
+     * @param logicType The current logic type.  Types other than Mixed are ignored.
+     * @param antecedentText The proposed antecedent string using the local language.
+     * @param variableList The current variable list.
+     * @param curConditional The current conditional.
+     * @return false if antecedent can't be validated
+     */
+    boolean validateAntecedent(int logicType, String antecedentText, ArrayList<ConditionalVariable> variableList, Conditional curConditional) {
+        if (logicType != Conditional.MIXED
+                || LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())
+                || antecedentText == null
+                || antecedentText.trim().length() == 0) {
+            return true;
+        }
+
+        String antecedent = translateAntecedent(antecedentText, true);
+        if (antecedent.length() > 0) {
+            String message = curConditional.validateAntecedent(antecedent, variableList);
+            if (message != null) {
+                JOptionPane.showMessageDialog(null,
+                        message + Bundle.getMessage("ParseError8"), // NOI18N
+                        Bundle.getMessage("ErrorTitle"),            // NOI18N
+                        JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Translate an antecedent string between English and the current language
+     * as determined by the Bundle classes.
+     * <p>
+     * The property files have Logic??? keys for translating to the target language.
+     * @since 4.11.5
+     * @param antecedent The antecedent string which can either local or English
+     * @param isLocal True if the antecedent string has local words.
+     * @return the translated antecedent string.
+     */
+    public static String translateAntecedent(String antecedent, boolean isLocal) {
+        if (antecedent == null) {
+            return null;
+        }
+        String oldAnd, oldOr, oldNot;
+        String newAnd, newOr, newNot;
+        if (isLocal) {
+            // To English
+            oldAnd = Bundle.getMessage("LogicAND").toLowerCase();  // NOI18N
+            oldOr = Bundle.getMessage("LogicOR").toLowerCase();    // NOI18N
+            oldNot = Bundle.getMessage("LogicNOT").toLowerCase();  // NOI18N
+            newAnd = "and";  // NOI18N
+            newOr = "or";    // NOI18N
+            newNot = "not";  // NOI18N
+        } else {
+            // From English
+            oldAnd = "and";  // NOI18N
+            oldOr = "or";    // NOI18N
+            oldNot = "not";  // NOI18N
+            newAnd = Bundle.getMessage("LogicAND").toLowerCase();  // NOI18N
+            newOr = Bundle.getMessage("LogicOR").toLowerCase();    // NOI18N
+            newNot = Bundle.getMessage("LogicNOT").toLowerCase();  // NOI18N
+        }
+        log.debug("translateAntecedent: before {}", antecedent);
+        antecedent = antecedent.replaceAll(oldAnd, newAnd);
+        antecedent = antecedent.replaceAll(oldOr, newOr);
+        antecedent = antecedent.replaceAll(oldNot, newNot);
+        log.debug("translateAntecedent: after  {}", antecedent);
+        return antecedent;
+    }
+
+    // ------------ Shared Conditional Methods ------------
+
+    /**
+     * Verify that the user name is not a duplicate for the selected Logix.
      *
      * @param uName is the user name to be checked
      * @param logix is the Logix that is being updated
@@ -223,10 +360,10 @@ public class ConditionalEditBase {
                 // Conditional with this user name already exists
                 log.error("Failure to update Conditional with Duplicate User Name: " // NOI18N
                         + uName);
-                javax.swing.JOptionPane.showMessageDialog(
-                        null, Bundle.getMessage("Error10"), // NOI18N
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("Error10"), // NOI18N
                         Bundle.getMessage("ErrorTitle"), // NOI18N
-                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         } // else return true;
@@ -282,6 +419,10 @@ public class ConditionalEditBase {
                 nameBox = new JmriBeanComboBox(
                         InstanceManager.getDefault(EntryExitPairs.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
                 break;
+            case Conditional.ITEM_TYPE_OTHER:   // 14
+                nameBox = new JmriBeanComboBox(
+                        InstanceManager.getDefault(jmri.RouteManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+                break;
             default:
                 return null;             // Skip any other items.
         }
@@ -298,7 +439,7 @@ public class ConditionalEditBase {
      *
      * @since 4.7.3
      */
-    static class NameBoxListener implements ItemListener {
+    static class NameBoxListener implements ActionListener {
 
         /**
          * @param textField The target field object when an entry is selected
@@ -310,9 +451,8 @@ public class ConditionalEditBase {
         JTextField saveTextField;
 
         @Override
-        public void itemStateChanged(ItemEvent e) {
-            // Get the combo box, the display name and the new state
-            int newState = e.getStateChange();
+        public void actionPerformed(ActionEvent e) {
+            // Get the combo box and display name
             Object src = e.getSource();
             if (!(src instanceof JmriBeanComboBox)) {
                 return;
@@ -320,16 +460,15 @@ public class ConditionalEditBase {
             JmriBeanComboBox srcBox = (JmriBeanComboBox) src;
             String newName = srcBox.getSelectedDisplayName();
 
-            if (newState == ItemEvent.SELECTED) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Name ComboBox Item Event: new name = '{}'", newName);  // NOI18N
-                }
-                saveTextField.setText(newName);
+            if (log.isDebugEnabled()) {
+                log.debug("NameBoxListener: new name = '{}'", newName);  // NOI18N
             }
+            saveTextField.setText(newName);
         }
     }
 
     // ------------ Single Pick List Table Methods ------------
+
     /**
      * Create a single panel picklist JFrame for choosing action and variable
      * names.
@@ -351,40 +490,42 @@ public class ConditionalEditBase {
             }
         }
 
+        PickSinglePanel _pickSingle;
+
         switch (itemType) {
             case Conditional.ITEM_TYPE_SENSOR:      // 1
-                _pickSingle = new PickSinglePanel(PickListModel.sensorPickModelInstance());
+                _pickSingle = new PickSinglePanel<Sensor>(PickListModel.sensorPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_TURNOUT:     // 2
-                _pickSingle = new PickSinglePanel(PickListModel.turnoutPickModelInstance());
+                _pickSingle = new PickSinglePanel<Turnout>(PickListModel.turnoutPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_LIGHT:       // 3
-                _pickSingle = new PickSinglePanel(PickListModel.lightPickModelInstance());
+                _pickSingle = new PickSinglePanel<Light>(PickListModel.lightPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_SIGNALHEAD:  // 4
-                _pickSingle = new PickSinglePanel(PickListModel.signalHeadPickModelInstance());
+                _pickSingle = new PickSinglePanel<SignalHead>(PickListModel.signalHeadPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_SIGNALMAST:  // 5
-                _pickSingle = new PickSinglePanel(PickListModel.signalMastPickModelInstance());
+                _pickSingle = new PickSinglePanel<SignalMast>(PickListModel.signalMastPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_MEMORY:      // 6
-                _pickSingle = new PickSinglePanel(PickListModel.memoryPickModelInstance());
+                _pickSingle = new PickSinglePanel<Memory>(PickListModel.memoryPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_LOGIX:      // 7 -- can be either Logix or Conditional
                 if (!actionType) {
                     // State Variable
                     return;
                 }
-                _pickSingle = new PickSinglePanel(PickListModel.logixPickModelInstance());
+                _pickSingle = new PickSinglePanel<Logix>(PickListModel.logixPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_WARRANT:     // 8
-                _pickSingle = new PickSinglePanel(PickListModel.warrantPickModelInstance());
+                _pickSingle = new PickSinglePanel<Warrant>(PickListModel.warrantPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_OBLOCK:      // 10
-                _pickSingle = new PickSinglePanel(PickListModel.oBlockPickModelInstance());
+                _pickSingle = new PickSinglePanel<OBlock>(PickListModel.oBlockPickModelInstance());
                 break;
             case Conditional.ITEM_TYPE_ENTRYEXIT:   // 11
-                _pickSingle = new PickSinglePanel(PickListModel.entryExitPickModelInstance());
+                _pickSingle = new PickSinglePanel<jmri.jmrit.entryexit.DestinationPoints>(PickListModel.entryExitPickModelInstance());
                 break;
             default:
                 return;             // Skip any other items.
@@ -415,7 +556,6 @@ public class ConditionalEditBase {
             _pickSingleFrame = null;
             _pickListener = null;
             _pickTable = null;
-            _pickSingle = null;
         }
     }
 
@@ -461,6 +601,7 @@ public class ConditionalEditBase {
     }
 
     // ------------ Pick List Table Methods ------------
+
     /**
      * Open a new drag-n-drop Pick List to drag Variable and Action names from
      * to form Logix Conditionals.
@@ -475,7 +616,7 @@ public class ConditionalEditBase {
     }
 
     /**
-     * Hide the drag-n-drop Pick List if the last detail edit is closing
+     * Hide the drag-n-drop Pick List if the last detail edit is closing.
      */
     void hidePickListTable() {
         if (_pickTables != null) {
@@ -484,8 +625,8 @@ public class ConditionalEditBase {
     }
 
     /**
-     * Set the pick list tab based on the variable or action type If there is
-     * not a corresponding tab, hide the picklist
+     * Set the pick list tab based on the variable or action type. If there is
+     * not a corresponding tab, hide the picklist.
      *
      * @param curType    is the current type
      * @param actionType True if Action, false if Variable.
@@ -550,7 +691,7 @@ public class ConditionalEditBase {
     }
 
     /**
-     * Recursive search for the tab panel
+     * Recursive search for the tab panel.
      *
      * @param compList The components for the current Level
      * @param level    The current level in the structure
@@ -576,6 +717,7 @@ public class ConditionalEditBase {
     }
 
     // ------------ Manage Conditional Reference map ------------
+
     /**
      * Build a tree set from conditional references.
      *
@@ -594,7 +736,7 @@ public class ConditionalEditBase {
     }
 
     /**
-     * Check for conditional references
+     * Check for conditional references.
      *
      * @since 4.7.4
      * @param logixName The Logix under consideration
@@ -622,9 +764,9 @@ public class ConditionalEditBase {
                     Conditional cRef = xRef.getConditional(refName);
                     String[] msgs = new String[]{c.getUserName(), c.getSystemName(), cRef.getUserName(),
                         cRef.getSystemName(), xRef.getUserName(), xRef.getSystemName()};
-                    javax.swing.JOptionPane.showMessageDialog(null,
-                            java.text.MessageFormat.format(Bundle.getMessage("Error11"), (Object[]) msgs), // NOI18N
-                            Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);        // NOI18N
+                    JOptionPane.showMessageDialog(null,
+                            Bundle.getMessage("Error11", (Object[])msgs), // NOI18N
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE); // NOI18N
                     return false;
                 }
             }
@@ -711,9 +853,9 @@ public class ConditionalEditBase {
                     }
                     validateIntensity(Integer.valueOf((String) m.getValue()).intValue());
                 } catch (NumberFormatException ex) {
-                    javax.swing.JOptionPane.showMessageDialog(
-                            null, java.text.MessageFormat.format(Bundle.getMessage("Error24"), // NOI18N
-                                    intReference), Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.WARNING_MESSAGE); // NOI18N
+                    JOptionPane.showMessageDialog(null,
+                            Bundle.getMessage("Error24", intReference),
+                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE); // NOI18N
                 }
                 return true;    // above is a warning to set memory correctly
             }
@@ -731,9 +873,9 @@ public class ConditionalEditBase {
      */
     boolean validateIntensity(int time) {
         if (time < 0 || time > 100) {
-            javax.swing.JOptionPane.showMessageDialog(
-                    null, java.text.MessageFormat.format(Bundle.getMessage("Error38"), // NOI18N
-                            time, Bundle.getMessage("Error42")), Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);   // NOI18N
+            JOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("Error38", time, Bundle.getMessage("Error42")),
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE); // NOI18N
             return false;
         }
         return true;
@@ -777,9 +919,9 @@ public class ConditionalEditBase {
                     }
                     validateTime(actionType, Float.valueOf((String) m.getValue()).floatValue());
                 } catch (NumberFormatException ex) {
-                    javax.swing.JOptionPane.showMessageDialog(
-                            null, java.text.MessageFormat.format(Bundle.getMessage("Error24"), // NOI18N
-                                    memRef), Bundle.getMessage("WarningTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);   // NOI18N
+                    JOptionPane.showMessageDialog(null,
+                            Bundle.getMessage("Error24", memRef),
+                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);   // NOI18N
                 }
                 return true;    // above is a warning to set memory correctly
             }
@@ -820,9 +962,9 @@ public class ConditionalEditBase {
                 default:
                     break;
             }
-            javax.swing.JOptionPane.showMessageDialog(
-                    null, java.text.MessageFormat.format(Bundle.getMessage("Error38"), // NOI18N
-                            time, Bundle.getMessage(errorNum)), Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);       // NOI18N
+            JOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("Error38", time, Bundle.getMessage(errorNum)),
+                    Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);       // NOI18N
             return false;
         }
         return true;
@@ -851,9 +993,9 @@ public class ConditionalEditBase {
                 errorNum = "Error27";       // NOI18N
                 break;
             case Conditional.ACTION_SET_LIGHT_INTENSITY:
-                javax.swing.JOptionPane.showMessageDialog(
-                        null, Bundle.getMessage("Error43"), // NOI18N
-                        Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);       // NOI18N
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("Error43"), // NOI18N
+                        Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);       // NOI18N
                 return;
             case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
                 errorNum = "Error29";       // NOI18N
@@ -861,9 +1003,9 @@ public class ConditionalEditBase {
             default:
                 log.warn("Unexpected action type {} in displayBadNumberReference", actionType);  // NOI18N
         }
-        javax.swing.JOptionPane.showMessageDialog(
-                null, java.text.MessageFormat.format(Bundle.getMessage("Error9"), // NOI18N
-                        Bundle.getMessage(errorNum)), Bundle.getMessage("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);       // NOI18N
+        JOptionPane.showMessageDialog(null,
+                Bundle.getMessage("Error9", Bundle.getMessage(errorNum)),
+                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);       // NOI18N
     }
 
     /**
@@ -894,16 +1036,18 @@ public class ConditionalEditBase {
     }
 
     /**
-     * Check if user will provide a valid item name in a Memory variable
+     * Check if user will provide a valid item name in a Memory variable.
      *
      * @param memName Memory location to provide item name at run time
      * @return false if user replies No
      */
     boolean confirmIndirectMemory(String memName) {
         if (!_suppressIndirectRef) {
-            int response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
-                    Bundle.getMessage("ConfirmIndirectReference"), memName), // NOI18N
-                    Bundle.getMessage("ConfirmTitle"), JOptionPane.YES_NO_CANCEL_OPTION, // NOI18N
+            int response = JOptionPane.showConfirmDialog(null,
+                    Bundle.getMessage("ConfirmIndirectReference", memName,
+                            Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
+                            Bundle.getMessage("ButtonCancel")), // NOI18N
+                    Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_CANCEL_OPTION, // NOI18N
                     JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.NO_OPTION) {
                 return false;
@@ -1305,10 +1449,10 @@ public class ConditionalEditBase {
         }
         if (error) {
             // if unsuccessful, print error message
-            javax.swing.JOptionPane.showMessageDialog(null,
-                    java.text.MessageFormat.format(Bundle.getMessage("Error26"), // NOI18N
-                            new Object[]{s}), Bundle.getMessage("ErrorTitle"), // NOI18N
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("Error26", s),
+                    Bundle.getMessage("ErrorTitle"), // NOI18N
+                    JOptionPane.ERROR_MESSAGE);
             return (-1);
         }
         // here if successful
@@ -1344,6 +1488,7 @@ public class ConditionalEditBase {
     }
 
     // ------------ Error Dialogs ------------
+
     /**
      * Send an Invalid Conditional SignalHead state message for Edit Logix pane.
      *
@@ -1351,10 +1496,10 @@ public class ConditionalEditBase {
      * @param appearance to compare to
      */
     void messageInvalidSignalHeadAppearance(String name, String appearance) {
-        javax.swing.JOptionPane.showMessageDialog(null,
-                java.text.MessageFormat.format(Bundle.getMessage("Error21"), // NOI18N
-                        new Object[]{name, appearance}), Bundle.getMessage("ErrorTitle"), // NOI18N
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null,
+                Bundle.getMessage("Error21", name, appearance),
+                Bundle.getMessage("ErrorTitle"), // NOI18N
+                JOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -1364,10 +1509,10 @@ public class ConditionalEditBase {
      * @param itemType type of Bean to look for
      */
     void messageInvalidActionItemName(String name, String itemType) {
-        javax.swing.JOptionPane.showMessageDialog(null,
-                java.text.MessageFormat.format(Bundle.getMessage("Error22"), // NOI18N
-                        new Object[]{name, Bundle.getMessage("BeanName" + itemType)}), Bundle.getMessage("ErrorTitle"), // NOI18N
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null,
+                Bundle.getMessage("Error22", name, Bundle.getMessage("BeanName" + itemType)),
+                Bundle.getMessage("ErrorTitle"), // NOI18N
+                JOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -1376,10 +1521,10 @@ public class ConditionalEditBase {
      * @param svName proposed name that duplicates an existing name
      */
     void messageDuplicateConditionalUserName(String svName) {
-        javax.swing.JOptionPane.showMessageDialog(null,
-                java.text.MessageFormat.format(Bundle.getMessage("Error30"), // NOI18N
-                        new Object[]{svName}), Bundle.getMessage("ErrorTitle"), // NOI18N
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null,
+                Bundle.getMessage("Error30", svName),
+                Bundle.getMessage("ErrorTitle"), // NOI18N
+                JOptionPane.ERROR_MESSAGE);
     }
 
     protected String getClassName() {
@@ -1387,4 +1532,5 @@ public class ConditionalEditBase {
     }
 
     private final static Logger log = LoggerFactory.getLogger(ConditionalEditBase.class);
+
 }

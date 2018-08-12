@@ -10,7 +10,7 @@
   <title>Roster Grouping</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Roster Grouping">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -28,11 +28,14 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Roster Grouping</h1>This table lists all the Roster
+      <h1>Roster Grouping</h1>
+
+      <p>This table lists all the Roster
       entries, from the drop down box at the top select the group
       that you wish to view/add/remove entries to. Placing a tick
       will add that entry to the Roster Group, removing the tick
-      will remove that Entry from the Roster Group 
+      will remove that Entry from the Roster Group.</p>
+
       <!--#include virtual="/Footer" -->
     </div>
   </div>

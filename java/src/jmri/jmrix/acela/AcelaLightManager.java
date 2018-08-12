@@ -2,7 +2,6 @@ package jmri.jmrix.acela;
 
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
-import jmri.Manager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

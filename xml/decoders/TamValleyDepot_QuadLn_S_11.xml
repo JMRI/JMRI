@@ -13,12 +13,14 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
-	<version author="robin@n3ix.com" version="2.01" lastUpdated="20140823"/>
+	<version author="robin@n3ix.com" version="2.03.1" lastUpdated="20180410"/>
 	<decoder>
 		<family name="Quad-LN_S" mfg="Tam Valley Depot" type="stationary" comment="The Quad-LN_S is programmed in OPs mode except for the device address.">
 			<model model="Quad-LN_S_v1" comment="4 Servo Driver with Signaling or 4 additonal Servos" lowVersionID="6"/>
 		</family>
-		<programming direct="no" paged="yes" register="no" ops="yes"/>
+        <programming direct="no" paged="yes" register="no" ops="no">
+            <mode>LOCONETOPSBOARD</mode>
+        </programming>
 		
 		<variables>
             <variable item="Expansion" CV="11" mask="XXXXXXVV" default="0">
@@ -89,6 +91,18 @@
 					<enumChoice choice="2 Sec"/>
 					<enumChoice choice="4 Sec"/>
 					<enumChoice choice="8 Sec"/>
+				</enumVal>
+			</variable>
+			<variable item="Disable Interrogate" CV="12" mask="XVXXXXXX" default="0">
+				<enumVal>
+					<enumChoice choice="Normal"/>
+					<enumChoice choice="Disable"/>
+				</enumVal>
+			</variable>
+			<variable item="Switch State Request" CV="12" mask="VXXXXXXX" default="0">
+				<enumVal>
+					<enumChoice choice="Ignore"/>
+					<enumChoice choice="Respond"/>
 				</enumVal>
 			</variable>
 
@@ -225,6 +239,12 @@
                     <display item="Local Actions" format="checkbox" tooltip="Provide visibililty on Loconet for local actions">
                         <label>Broadcast Local Actions</label>
                     </display>
+                    <display item="Switch State Request" format="checkbox" tooltip="Respond to Switch State request with servo, lock and sensor states">
+                        <label>Switch State Request</label>
+                    </display>
+                    <display item="Disable Interrogate" format="checkbox" tooltip="Ignore Stationary Decoder Interrogation messages">
+                        <label>Disable Interrogate</label>
+                    </display>
                     <label label=" "/>
                     <label label=" "/>
                     <label label=" "/>
@@ -284,7 +304,10 @@
                         <text>Firmware version 1.0 or later is required with this Quad-LN_S family decoder template file.</text>
                     </label>
 					<label>
-                        <text>Decoder Template File Version: 2.01</text>
+                        <text>Firmware version 2.0 or later is required when using the Detector Board.</text>
+                    </label>
+					<label>
+                        <text>Decoder Template File Version: 2.03.1</text>
                     </label>
 					<label>
                         <text>Decoder Transform File Version: x.xx</text>

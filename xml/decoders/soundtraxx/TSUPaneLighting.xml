@@ -20,6 +20,7 @@
     <row>
       <label>
         <text>LIGHTING EFFECTS AND CONTROLS</text>
+        <text xml:lang="fr">EFFETS et COMMANDES des LUMIÈRES</text>
         <text xml:lang="it">EFFETTI LUMINOSI E CONTROLLI</text>
       </label>
     </row>
@@ -172,5 +173,11 @@
     </row>
   </column>
   <name>Lights</name>
+  <name xml:lang="ca">Llums</name>
+  <name xml:lang="cs">Osvětlení</name>
+  <name xml:lang="da">Lys</name>
+  <name xml:lang="de">Licht</name>
+  <name xml:lang="fr">Lumières</name>
   <name xml:lang="it">Luci</name>
+  <name xml:lang="nl">Licht</name>
 </pane>

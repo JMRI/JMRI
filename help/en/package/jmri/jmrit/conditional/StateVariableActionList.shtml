@@ -9,7 +9,7 @@
   <title>JMRI: Conditional State Variables and Actions List</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI help Logix Conditional Add Edit">
   <!--#include virtual="/Style" -->
@@ -371,6 +371,21 @@
 
               <li><strong>Disable Logix</strong>: Disables the specified logix.
               Specify the logix to disable by entering its name.</li>
+            </ul></li>
+
+            <li>Entry Exit<ul>
+              <li><strong>Set NX Pair Enabled</strong>: Enables the specified
+              Entry/Exit Pair.  Specify the Entry/Exit Pair to enable by
+              entering its name.</li>
+
+              <li><strong>Set NX Pair Disabled</strong>: Disables the specified
+              Entry/Exit Pair.  Specify the Entry/Exit Pair to enable by
+              entering its name.</li>
+
+              <li><strong>Set NX Pair Segment Active / Inactive</strong>:
+              Request that the route segment for the specified Entry/Exit Pair
+              be activated if not active or deactivated if active. Specify the
+              Entry/Exit Pair to enable by entering its name.</li>
             </ul></li>
 
             <li>Warrant<ul>

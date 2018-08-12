@@ -8,16 +8,15 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * <P>
- * Tests for SprogPowerManager
- * </P>
+ * Tests for SprogPowerManager.
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class SprogPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
 
     private SprogTrafficControlScaffold stc = null;
 
-    // service routines to simulate recieving on, off from interface
+    // service routines to simulate receiving on, off from interface
     @Override
     protected void hearOn() {
       stc.sendTestReply(new SprogReply("+"));
@@ -94,12 +93,14 @@ public class SprogPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBa
         apps.tests.Log4JFixture.setUp();
         SprogSystemConnectionMemo m = new SprogSystemConnectionMemo();
         stc = new SprogTrafficControlScaffold(m);
+        stc.setTestReplies(true);
         m.setSprogTrafficController(stc);  // constructor calls getSprogTrafficController.
         p = new SprogPowerManager(m);
     }
 
     @After
     public void tearDown() {
+        stc.dispose();
         JUnitUtil.tearDown();
     }
 

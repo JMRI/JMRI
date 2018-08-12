@@ -241,7 +241,7 @@ public class TrainIconAnimationTest {
         Assert.assertEquals("Route Name", "Southbound Main Route", r1.getName());
 
         RouteLocation rl1 = new RouteLocation("1r1", l1);
-        rl1.setSequenceId(1);
+        rl1.setSequenceNumber(1);
         rl1.setTrainDirection(RouteLocation.SOUTH);
         rl1.setMaxCarMoves(5);
         rl1.setMaxTrainLength(1000);
@@ -251,7 +251,7 @@ public class TrainIconAnimationTest {
         Assert.assertEquals("Route Location 1 Id", "1r1", rl1.getId());
         Assert.assertEquals("Route Location 1 Name", "North End", rl1.getName());
         RouteLocation rl2 = new RouteLocation("1r2", l2);
-        rl2.setSequenceId(2);
+        rl2.setSequenceNumber(2);
         rl2.setTrainDirection(RouteLocation.SOUTH);
         // test for only 1 pickup and 1 drop
         rl2.setMaxCarMoves(2);
@@ -262,7 +262,7 @@ public class TrainIconAnimationTest {
         Assert.assertEquals("Route Location 2 Id", "1r2", rl2.getId());
         Assert.assertEquals("Route Location 2 Name", "North Industries", rl2.getName());
         RouteLocation rl3 = new RouteLocation("1r3", l3);
-        rl3.setSequenceId(3);
+        rl3.setSequenceNumber(3);
         rl3.setTrainDirection(RouteLocation.SOUTH);
         rl3.setMaxCarMoves(5);
         rl3.setMaxTrainLength(1000);

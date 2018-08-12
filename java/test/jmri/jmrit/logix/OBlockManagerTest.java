@@ -38,7 +38,7 @@ public class OBlockManagerTest {
     public void testProvideFailure() {
         boolean correct = false;
         try {
-            OBlock t = l.provideOBlock("");
+            l.provideOBlock("");
             Assert.fail("didn't throw");
         } catch (IllegalArgumentException ex) {
             correct = true;

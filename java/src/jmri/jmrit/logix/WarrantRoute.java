@@ -8,7 +8,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +88,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     private final JComboBox<String> _rosterBox = new JComboBox<>();
     private final JTextField _dccNumBox = new JTextField();
     private final JTextField _trainNameBox = new JTextField(6);
-    private JButton _viewProfile = new JButton(Bundle.getMessage("ViewProfile"));
+    private final JButton _viewProfile = new JButton(Bundle.getMessage("ViewProfile"));
     private SpeedProfileTable _spTable = null;
     private JmriJFrame _pickListFrame;
 
@@ -99,18 +98,13 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
      */
     protected WarrantRoute() {
         super(false, true);
+        if (log.isDebugEnabled()) log.debug("newInstance");
+        WarrantPreferences preferences = WarrantPreferences.getDefault();
+        setDepth(preferences.getSearchDepth());
+
         _routeModel = new RouteTableModel();
         _speedUtil = new SpeedUtil(null);
         getRoster();
-        WarrantPreferences.getDefault().addPropertyChangeListener((PropertyChangeEvent evt) -> {
-            switch (evt.getPropertyName()) {
-                case WarrantPreferences.SEARCH_DEPTH:
-                    this.setDepth((int) evt.getNewValue());
-                    break;
-                default:
-                    // do nothing
-            }
-        });
     }
 
     public abstract void selectedRoute(ArrayList<BlockOrder> orders);
@@ -246,7 +240,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         if (_spTable != null) {
             _spTable.dispose();
         }
-        RosterSpeedProfile speedProfile = _speedUtil.getMergeProfile();
+        RosterSpeedProfile speedProfile = _speedUtil.getSpeedProfile();
         if (speedProfile.hasForwardSpeeds() || speedProfile.hasReverseSpeeds()) {
             _spTable = new SpeedProfileTable(speedProfile, _speedUtil.getRosterId());
             _spTable.setVisible(true);
@@ -879,11 +873,11 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
      * @param routeTree the routes
      */
     protected void pickRoute(List<DefaultMutableTreeNode> destNodes, DefaultTreeModel routeTree) {
-        if (destNodes.size() == 1) {
+/*        if (destNodes.size() == 1) {      // for Leo
             showRoute(destNodes.get(0), routeTree);
             selectedRoute(_orders);
             return;
-        }
+        }*/
         _pickRouteDialog = new JDialog(this, Bundle.getMessage("DialogTitle"), false);
         _pickRouteDialog.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -913,6 +907,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             });
             buttons.add(button);
             panel.add(button);
+            if (destNodes.size() == 1) {
+                button.setSelected(true);
+            }
         }
         JScrollPane scrollPane = new JScrollPane(panel);
         mainPanel.add(scrollPane, BorderLayout.CENTER);

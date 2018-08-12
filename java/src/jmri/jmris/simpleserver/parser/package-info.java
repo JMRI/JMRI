@@ -2,7 +2,7 @@
  * The contents of this package are automatically generated (except for the
  * SRCPVistor class).
  *
- * We turn off selected FindBugs checking in the resulting generated code at the
+ * We turn off selected SpotBugs checking in the resulting generated code at the
  * package level.
  */
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {

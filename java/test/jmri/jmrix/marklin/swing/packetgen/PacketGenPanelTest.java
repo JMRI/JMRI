@@ -2,9 +2,7 @@ package jmri.jmrix.marklin.swing.packetgen;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of PacketGenPanel

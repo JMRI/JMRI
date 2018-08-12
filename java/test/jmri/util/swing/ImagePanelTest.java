@@ -1,11 +1,9 @@
 package jmri.util.swing;
 
-import java.awt.Color;
 import java.awt.image.BufferedImage;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 

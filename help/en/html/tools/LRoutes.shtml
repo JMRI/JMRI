@@ -7,9 +7,9 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: LRoute Documentation</title>
-  <meta content="Pete Cressman" name="Author">
+  <meta name="author" content="Pete Cressman">
   <meta name="keywords" content=
-  "hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
+  "layout java model railroad JMRI panelpro tools LRoute">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -18,7 +18,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -109,7 +110,7 @@
           taken in the LRoute from the list by clicking on the
           checkbox in the <b>Include</b> column. For each included
           item, use the combo box in the <b>Set Action</b> column
-          to select the the action that should be taken for the
+          to select the action that should be taken for the
           entity. For example, an included turnout is to be 'Set
           Closed', 'Set Thrown' or 'Toggle'd and an included sensor
           is to be 'Set Active', 'Set Inactive' or 'Toggle'd when
@@ -139,7 +140,7 @@
           trigger) the LRoute from the list by clicking on the
           checkbox in the <b>Include</b> column. For each included
           item, use the combo box in the <b>Trigger State</b>
-          column to select the the state that should be taken to
+          column to select the state that should be taken to
           trigger the entity. For example, an included turnout may
           be set to trigger 'On Closed', 'On Thrown' or On Change'.
           It will prevent triggering when thrown if 'Veto When
@@ -216,7 +217,7 @@
         </li>
       </ol>
 
-      <p>To abort abort adding the LRoute, press the <b>Cancel</b>
+      <p>To abort adding the LRoute, press the <b>Cancel</b>
       button.</p>
 
       <h3>To edit an existing LRoute:</h3>
@@ -488,10 +489,10 @@
       expression defined by the LRoute is that the "non-veto
       entities are OR'ed together as a clause and the "veto"
       entities are AND'ed together as a clause. The two clauses are
-      then joined by an AND operator.</p><a name="setroutebehavior"
-      id="setroutebehavior"></a>
+      then joined by an AND operator.</p>
 
-      <h2>Setting Behavior to Match That of Routes</h2>
+      <a name="setroutebehavior" id="setroutebehavior"></a>
+      <h2>Setting Behavior to Match that of Routes</h2>
 
       <p>In Routes, the 'veto' entities are passive. That is,
       although the 'veto' state prevents the Route from triggering,
@@ -504,6 +505,7 @@
       <b>Old</b> button. If you want the LRoute to trigger its
       actions when all the 'veto's are removed, press the
       <b>New</b> button.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

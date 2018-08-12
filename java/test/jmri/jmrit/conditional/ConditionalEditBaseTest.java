@@ -43,7 +43,6 @@ public class ConditionalEditBaseTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ConditionalEditBase cdlBase = new ConditionalEditBase();
 
-        JTable _pickTables = null;
         cdlBase.openPickListTable();
         cdlBase.hidePickListTable();
         cdlBase.setPickListTab(1, true);
@@ -58,7 +57,6 @@ public class ConditionalEditBaseTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ConditionalEditBase cdlBase = new ConditionalEditBase();
 
-        PickSinglePanel _pickSingle = null;
         JTextField _actionNameField = new JTextField("");
 
         cdlBase.createSinglePanelPickList(2, cdlBase.new PickSingleListener(_actionNameField, 2), true);

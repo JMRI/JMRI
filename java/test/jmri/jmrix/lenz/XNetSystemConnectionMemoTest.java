@@ -73,7 +73,11 @@ public class XNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
           }
         });
 
-        scm = new XNetSystemConnectionMemo(tc);
+        XNetSystemConnectionMemo memo = new XNetSystemConnectionMemo(tc);
+        memo.setSensorManager(new XNetSensorManager(tc,memo.getSystemPrefix()));
+        memo.setLightManager(new XNetLightManager(tc,memo.getSystemPrefix()));
+        memo.setTurnoutManager(new XNetTurnoutManager(tc,memo.getSystemPrefix()));
+        scm = memo;
     }
 
     @After

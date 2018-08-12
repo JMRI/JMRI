@@ -2,85 +2,47 @@ package jmri.util;
 
 import java.util.Comparator;
 
+import jmri.Manager;
+
 /**
  * Comparator for JMRI System Names.
  * <P>
- * A System Name is two letters followed by either an alpha name or a number. In
- * the number case, this does a numeric comparison. If the number is appended
- * with letters, does the numeric sort on the digits followed by a lexigraphic
- * sort on the remainder.
+ * A System Name is a system prefix followed by type letter then a suffix with a system-specific format. 
+ * This class first compares on prefix, then if the prefixes are equal it 
+ * compares the type letter, then if they're still equal it
+ * does an {@link AlphanumComparator} compare on suffix.
+ * <p>
+ * Note it's better to use {@link NamedBeanComparator} if possible, as that 
+ * can do type-specific comparison of the suffix part of complicated names.
+ * See the <a href="http://jmri.org/help/en/html/doc/Technical/Names.shtml">Names documentation page</a>.
  * <p>
  * Note this is intended to take names as provided:  It does not do normalization or
  * expansion.
  *
- * @author	Bob Jacobsen Copyright (C) 2004
- * @author Howard Penny
- * @author Pete Cressman
+ * @author	Bob Jacobsen Copyright (C) 2004, 2009, 2017
+ * @deprecated Use NamedBean comparison instead
  */
-public class SystemNameComparator implements Comparator<Object> {
+@Deprecated
+public class SystemNameComparator implements Comparator<String> {
 
     public SystemNameComparator() {
     }
 
+    static AlphanumComparator ac = new AlphanumComparator();
+    
     @Override
-    public int compare(Object o1, Object o2) {
+    public int compare(String o1, String o2) {
 
-        // if both strings are three or less characters long
-        if (o1.toString().length() <= 3 && o2.toString().length() <= 3) {
-            return o1.toString().compareTo(o2.toString());
-        } else  // if the first two characters of both strings match
-        if (!o1.toString().regionMatches(0, o2.toString(), 0, 2)) {
-            return o1.toString().compareTo(o2.toString());
-        } else {
-            if (true) {
-                AlphanumComparator ac = new AlphanumComparator();
-                return ac.compare(o1.toString(), o2.toString());
-            } else {    //TODO: dead-code strip this
-                // extract length of digits
-                char[] ch1 = o1.toString().substring(2).toCharArray();
-                char[] ch2 = o2.toString().substring(2).toCharArray();
-                int numDigit1 = 0;
-                int numDigit2 = 0;
-                for (int i = 0; i < ch1.length; i++) {
-                    if (Character.isDigit(ch1[i])) {
-                        numDigit1++;
-                    } else {
-                        break;
-                    }
-                }
-                for (int i = 0; i < ch2.length; i++) {
-                    if (Character.isDigit(ch2[i])) {
-                        numDigit2++;
-                    } else {
-                        break;
-                    }
-                }
-                if (numDigit1 == numDigit2) {
-                    try {
-                        int diff = Integer.parseInt(new String(ch1, 0, numDigit1))
-                                - Integer.parseInt(new String(ch2, 0, numDigit2));
-                        if (diff != 0) {
-                            return diff;
-                        }
-                        if (numDigit1 == ch1.length && numDigit2 == ch2.length) {
-                            return diff;
-                        } else {
-                            if (numDigit1 == ch1.length) {
-                                return -1;
-                            }
-                            // both have non-digit chars remaining
-                            return new String(ch1, numDigit1, ch1.length - numDigit1).compareTo(
-                                    new String(ch2, numDigit2, ch2.length - numDigit2));
-                        }
-                    } catch (NumberFormatException nfe) {
-                        return o1.toString().compareTo(o2.toString());
-                    } catch (IndexOutOfBoundsException ioob) {
-                        return o1.toString().compareTo(o2.toString());
-                    }
-                } else {
-                    return (numDigit1 - numDigit2);
-                }
-            }
-        }
+        int p1len = Manager.getSystemPrefixLength(o1);
+        int p2len = Manager.getSystemPrefixLength(o2);
+
+        int comp = ac.compare(o1.substring(0, p1len), o2.substring(0, p2len));
+        if (comp != 0) return comp;
+
+        char c1 = o1.charAt(p1len);
+        char c2 = o2.charAt(p2len);
+           
+        if (c1 == c2) return ac.compare(o1.substring(p1len+1), o2.substring(p2len+1));
+        else return (c1 > c2) ? +1 : -1 ;
     }
 }

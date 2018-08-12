@@ -65,8 +65,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
         _RepeaterModel = new SignalMastRepeaterModel();
         JTable _RepeaterTable = new JTable(_RepeaterModel);
 
-        TableRowSorter<SignalMastRepeaterModel> sorter = new TableRowSorter<>(_RepeaterModel);
-        sorter.setComparator(SignalMastRepeaterModel.DIR_COLUMN, new jmri.util.SystemNameComparator());
+        TableRowSorter<SignalMastRepeaterModel> sorter = new TableRowSorter<>(_RepeaterModel); // leave default sorting
         RowSorterUtil.setSortOrder(sorter, SignalMastRepeaterModel.DIR_COLUMN, SortOrder.ASCENDING);
         _RepeaterTable.setRowSorter(sorter);
 
@@ -94,7 +93,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
         footer.add(_MasterBox);
         footer.add(new JLabel(Bundle.getMessage("Slave") + " : "));
         footer.add(_SlaveBox);
-        _addRepeater = new JButton(Bundle.getMessage("ButtonAdd"));
+        _addRepeater = new JButton(Bundle.getMessage("AddButtonText"));
         _addRepeater.setEnabled(false);
         _addRepeater.addActionListener(new ActionListener() {
             @Override

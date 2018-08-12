@@ -6,7 +6,6 @@ import jmri.jmrit.display.EditorScaffold;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableJComponentTest;
 import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
@@ -18,6 +17,7 @@ import org.junit.Test;
  */
 public class PositionableShapeTest extends PositionableJComponentTest {
 
+    @Override
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -36,12 +36,20 @@ public class PositionableShapeTest extends PositionableJComponentTest {
     }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()){
            editor = new EditorScaffold();
            p = new PositionableShape(editor) {
+
+               @Override
+               protected DrawFrame makeEditFrame(boolean create) {
+                   // bogus body, not used in tests
+                   return null;
+               }
+
                @Override
                protected Shape makeShape() {
                    // bogus body, not used in tests

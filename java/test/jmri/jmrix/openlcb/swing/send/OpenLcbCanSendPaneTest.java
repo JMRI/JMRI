@@ -2,9 +2,7 @@ package jmri.jmrix.openlcb.swing.send;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 /**
  * @author Bob Jacobsen Copyright 2013
@@ -33,6 +31,7 @@ public class OpenLcbCanSendPaneTest extends jmri.util.swing.JmriPanelTest {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         memo = new jmri.jmrix.can.CanSystemConnectionMemo();
         tc = new jmri.jmrix.can.TestTrafficController();
         memo.setTrafficController(tc);

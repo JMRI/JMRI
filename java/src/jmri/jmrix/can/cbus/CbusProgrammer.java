@@ -18,12 +18,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusProgrammer extends AbstractProgrammer implements CanListener, AddressedProgrammer {
 
-    public CbusProgrammer() {
-        Exception e = new Exception("Dummy method called");
-        e.printStackTrace();
-        // throw e;
-    }
-
     public CbusProgrammer(int nodenumber, TrafficController tc) {
         this.nodenumber = nodenumber;
         // need a longer LONG_TIMEOUT

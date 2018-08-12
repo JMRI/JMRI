@@ -4,6 +4,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import javax.swing.SortOrder;
+import jmri.InstanceManager;
+import jmri.swing.JmriJTablePersistenceManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -166,46 +168,52 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         }
 
         List<Element> tablesList = shared.getChildren("tableDetails");
-        for (Element tables : tablesList) {
-            List<Element> tableList = tables.getChildren("table");
-            for (Element table : tableList) {
-                List<Element> columnList = table.getChildren("column");
-                String strTableName = table.getAttribute("name").getValue();
-                for (Element column : columnList) {
-                    String strColumnName = column.getAttribute("name").getValue();
-                    int order = -1;
-                    int width = -1;
-                    SortOrder sort = SortOrder.UNSORTED;
-                    boolean hidden = false;
-                    if (column.getChild("order") != null) {
-                        order = Integer.parseInt(column.getChild("order").getText());
-                    }
-                    if (column.getChild("width") != null) {
-                        width = Integer.parseInt(column.getChild("width").getText());
-                    }
-                    if (column.getChild("sortOrder") != null) {
-                        sort = SortOrder.valueOf(column.getChild("sortOrder").getText());
-                        // before 4.3.5 we used "sort" save column sort state
-                    } else if (column.getChild("sort") != null) {
-                        switch (Integer.parseInt(column.getChild("sort").getText())) {
-                            case 1: // old sort scheme used 1 for ascending
-                                sort = SortOrder.ASCENDING;
-                                break;
-                            case -1: // old sort scheme used -1 for descending
-                                sort = SortOrder.DESCENDING;
-                                break;
-                            default:
-                                break;
+        InstanceManager.getOptionalDefault(JmriJTablePersistenceManager.class).ifPresent((jtpm) -> {
+            for (Element tables : tablesList) {
+                List<Element> tableList = tables.getChildren("table");
+                for (Element table : tableList) {
+                    String strTableName = table.getAttribute("name").getValue();
+                    // if this table is already persisted, do not try to persist it again
+                    // this can happen if profile preferences have only been partly migrated
+                    if (!jtpm.isPersistenceDataRetained(strTableName)) {
+                        List<Element> columnList = table.getChildren("column");
+                        for (Element column : columnList) {
+                            String strColumnName = column.getAttribute("name").getValue();
+                            int order = -1;
+                            int width = -1;
+                            SortOrder sort = SortOrder.UNSORTED;
+                            boolean hidden = false;
+                            if (column.getChild("order") != null) {
+                                order = Integer.parseInt(column.getChild("order").getText());
+                            }
+                            if (column.getChild("width") != null) {
+                                width = Integer.parseInt(column.getChild("width").getText());
+                            }
+                            if (column.getChild("sortOrder") != null) {
+                                sort = SortOrder.valueOf(column.getChild("sortOrder").getText());
+                                // before 4.3.5 we used "sort" save column sort state
+                            } else if (column.getChild("sort") != null) {
+                                switch (Integer.parseInt(column.getChild("sort").getText())) {
+                                    case 1: // old sort scheme used 1 for ascending
+                                        sort = SortOrder.ASCENDING;
+                                        break;
+                                    case -1: // old sort scheme used -1 for descending
+                                        sort = SortOrder.DESCENDING;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            if (column.getChild("hidden") != null && column.getChild("hidden").getText().equals("yes")) {
+                                hidden = true;
+                            }
+
+                            jtpm.setTableColumnPreferences(strTableName, strColumnName, order, width, sort, hidden);
                         }
                     }
-                    if (column.getChild("hidden") != null && column.getChild("hidden").getText().equals("yes")) {
-                        hidden = true;
-                    }
-
-                    p.setTableColumnPreferences(strTableName, strColumnName, order, width, sort, hidden);
                 }
             }
-        }
+        });
         p.finishLoading();
         return true;
     }

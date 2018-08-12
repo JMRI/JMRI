@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2004
  * @author Dave Duchamp Copyright (C) 2004
  */
+@Deprecated
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
     protected JTextField nodeAddrField = new JTextField(3);
@@ -532,7 +533,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         if (changedNode) {
             // Remind user to Save new configuration
             JOptionPane.showMessageDialog(this,
-                    Bundle.getMessage("Reminder1") + "\n" + Bundle.getMessage("Reminder2", Bundle.getMessage("ButtonSave")), // NOI18N
+                    Bundle.getMessage("ReminderNode1") + "\n" + Bundle.getMessage("Reminder2", Bundle.getMessage("ButtonSave")), // NOI18N
                     Bundle.getMessage("ReminderTitle"), // NOI18N
                     JOptionPane.INFORMATION_MESSAGE);
         }

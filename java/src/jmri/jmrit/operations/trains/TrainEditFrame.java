@@ -64,9 +64,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     RouteManager routeManager;
 
     public Train _train = null;
-    List<JCheckBox> typeCarCheckBoxes = new ArrayList<JCheckBox>();
-    List<JCheckBox> typeEngineCheckBoxes = new ArrayList<JCheckBox>();
-    List<JCheckBox> locationCheckBoxes = new ArrayList<JCheckBox>();
+    List<JCheckBox> typeCarCheckBoxes = new ArrayList<>();
+    List<JCheckBox> typeEngineCheckBoxes = new ArrayList<>();
+    List<JCheckBox> locationCheckBoxes = new ArrayList<>();
     JPanel typeCarPanelCheckBoxes = new JPanel();
     JPanel typeEnginePanelCheckBoxes = new JPanel();
     JPanel roadAndLoadStatusPanel = new JPanel();
@@ -941,6 +941,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     }
 
     RouteEditFrame ref;
+    protected static final String NEW_LINE = "\n"; // NOI18N
 
     private void editAddRoute() {
         log.debug("Edit/add route");
@@ -956,7 +957,16 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
         // warn user if train is built that they shouldn't edit the train's route
         if (route != null && route.getStatus().equals(Route.TRAIN_BUILT)) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("DoNotModifyRoute"), Bundle.getMessage("BuiltTrain"),
+            // list the built trains for this route
+            StringBuffer buf = new StringBuffer(Bundle.getMessage("DoNotModifyRoute"));
+            for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
+                if (train.getRoute() == route && train.isBuilt()) {
+                    buf.append(NEW_LINE +
+                            MessageFormat.format(Bundle.getMessage("TrainIsBuilt"),
+                                    new Object[]{train.getName(), route.getName()}));
+                }
+            }
+            JOptionPane.showMessageDialog(this, buf.toString(), Bundle.getMessage("BuiltTrain"),
                     JOptionPane.WARNING_MESSAGE);
         }
         ref.initComponents(route, _train);
@@ -1011,7 +1021,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         setVisible(true);
     }
 
-    List<Frame> children = new ArrayList<Frame>();
+    List<Frame> children = new ArrayList<>();
 
     public void setChildFrame(Frame frame) {
         if (children.contains(frame)) {

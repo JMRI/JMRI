@@ -56,7 +56,7 @@ public class LightTableActionTest extends AbstractTableActionBase {
         a.actionPerformed(null); // show table
         // create 2 lights and see if they exist
         Light il1 = InstanceManager.lightManagerInstance().provideLight("IL1");
-        Light il2 = InstanceManager.lightManagerInstance().provideLight("IL2");
+        InstanceManager.lightManagerInstance().provideLight("IL2");
         il1.setState(Light.ON);
         il1.setState(Light.OFF);
 
@@ -109,6 +109,7 @@ public class LightTableActionTest extends AbstractTableActionBase {
     @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();

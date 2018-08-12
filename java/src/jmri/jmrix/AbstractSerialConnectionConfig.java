@@ -70,7 +70,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     @Override
     protected void checkInitDone() {
         if (log.isDebugEnabled()) {
-            log.debug("init called for " + name());
+            log.debug("init called for {}", name());
         }
         if (init) {
             return;
@@ -90,7 +90,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 public void actionPerformed(ActionEvent e) {
                     if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
-                        systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+                        systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
                 }
             });
@@ -99,7 +99,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 public void focusLost(FocusEvent e) {
                     if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("ConnectionPrefixDialog", systemPrefixField.getText()));
-                        systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+                        systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
                 }
 
@@ -156,6 +156,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
     @Override
     public void updateAdapter() {
+        log.debug("updateAdapter() to {}", systemPrefixField.getText());
         adapter.setPort(PortNameMapper.getPortFromName((String) portBox.getSelectedItem()));
         adapter.configureBaudRate((String) baudBox.getSelectedItem());
         for (String i : options.keySet()) {
@@ -163,7 +164,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         }
 
         if (adapter.getSystemConnectionMemo() != null && !adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
     }
@@ -335,7 +336,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         }
 
         if (adapter.getSystemConnectionMemo() != null) {
-            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
             NUMOPTIONS = NUMOPTIONS + 2;
         }

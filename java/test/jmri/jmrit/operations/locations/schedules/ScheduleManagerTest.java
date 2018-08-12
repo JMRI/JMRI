@@ -67,7 +67,7 @@ public class ScheduleManagerTest extends OperationsTestCase {
         // JComboBox box2 = sm.getSidingsByScheduleComboBox(s1);
         // Assert.assertEquals("First siding name", null, box2.getItemAt(0));
         // now add a schedule to siding
-        t.setScheduleId(sch1.getId());
+        t.setSchedule(sch1);
 
 		// JComboBox box3 = sm.getSidingsByScheduleComboBox(s1);
         // LocationTrackPair ltp = (LocationTrackPair)box3.getItemAt(0);

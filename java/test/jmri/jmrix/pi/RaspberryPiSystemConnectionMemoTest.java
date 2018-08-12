@@ -139,10 +139,14 @@ public class RaspberryPiSystemConnectionMemoTest extends jmri.jmrix.SystemConnec
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        
         GpioProvider myprovider = new PiGpioProviderScaffold();
         GpioFactory.setDefaultProvider(myprovider);
         JUnitUtil.setUp();
-        scm = new RaspberryPiSystemConnectionMemo();
+        RaspberryPiSystemConnectionMemo memo = new RaspberryPiSystemConnectionMemo();
+        memo.configureManagers();
+        scm = memo;
     }
 
     @After

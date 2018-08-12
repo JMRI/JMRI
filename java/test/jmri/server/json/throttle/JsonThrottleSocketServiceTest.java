@@ -1,12 +1,14 @@
 package jmri.server.json.throttle;
 
+import jmri.server.json.JsonMockConnection;
 import jmri.util.JUnitUtil;
+
+import java.io.DataOutputStream;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -16,16 +18,8 @@ public class JsonThrottleSocketServiceTest {
 
     @Test
     public void testCTor() {
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-                    // null output string drops characters
-                    // could be replaced by one that checks for specific outputs
-                    @Override
-                    public void write(int b) throws java.io.IOException {
-                    }
-                });
-        jmri.server.json.JsonMockConnection mc = new jmri.server.json.JsonMockConnection(output);
-        JsonThrottleSocketService t = new JsonThrottleSocketService(mc);
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonThrottleSocketService t = new JsonThrottleSocketService(connection);
         Assert.assertNotNull("exists",t);
     }
 
@@ -33,13 +27,12 @@ public class JsonThrottleSocketServiceTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
-    // private final static Logger log = LoggerFactory.getLogger(JsonThrottleSocketServiceTest.class);
 
 }

@@ -1,12 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- Updated  by Blorec Herv&#233;  2017-01-11 -->
 <html lang="fr">
 <head>
  <title>JMRI Hardware Support - Using a PDA</title>
-    <meta content="Michael Beck" name="Author">
-    <meta content="John Plocher" name="Author">
+    <meta name="author" content="Michael Beck">
+    <meta name="author" content="John Plocher">
     <meta name="keywords" content="model railroad JMRI PDA">
 
 <!-- Style -->

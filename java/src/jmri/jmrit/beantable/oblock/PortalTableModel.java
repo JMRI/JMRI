@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman (C) 2010
  */
-public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
+public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Portal> {
 
     public static final int FROM_BLOCK_COLUMN = 0;
     public static final int NAME_COLUMN = 1;
@@ -59,18 +59,18 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
     }
 
     @Override
-    public Manager getManager() {
+    public Manager<Portal> getManager() {
         _manager = InstanceManager.getDefault(PortalManager.class);
         return _manager;
     }
 
     @Override
-    public NamedBean getBySystemName(String name) {
+    public Portal getBySystemName(String name) {
         return _manager.getBySystemName(name);
     }
 
     @Override
-    public NamedBean getByUserName(String name) {
+    public Portal getByUserName(String name) {
         return _manager.getByUserName(name);
     }
 
@@ -85,7 +85,7 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
     }
 
     @Override
-    public void clickOn(NamedBean t) {
+    public void clickOn(Portal t) {
     }
 
     @Override

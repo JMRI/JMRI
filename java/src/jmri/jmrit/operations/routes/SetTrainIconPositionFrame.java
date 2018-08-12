@@ -47,9 +47,10 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     JLabel textNorthY = new JLabel("   Y  ");
     JLabel textSouthX = new JLabel("   X  ");
     JLabel textSouthY = new JLabel("   Y  ");
+    
+    JLabel textRangeX = new JLabel("   X +/-");
+    JLabel textRangeY = new JLabel("   Y +/-");
 
-    // text field
-    // check boxes
     // major buttons
     JButton placeButton = new JButton(Bundle.getMessage("PlaceTestIcon"));
     JButton applyButton = new JButton(Bundle.getMessage("UpdateRoutes"));
@@ -67,6 +68,10 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     JSpinner spinTrainIconNorthY = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 1));
     JSpinner spinTrainIconSouthX = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 1));
     JSpinner spinTrainIconSouthY = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 1));
+    
+    // detection range
+    JSpinner spinTrainIconRangeX = new JSpinner(new SpinnerNumberModel(Location.RANGE_DEFAULT, 0, 1000, 1));
+    JSpinner spinTrainIconRangeY = new JSpinner(new SpinnerNumberModel(Location.RANGE_DEFAULT, 0, 1000, 1));
 
     // Four test train icons
     TrainIcon _tIonEast;
@@ -121,6 +126,14 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         addItem(pSouth, spinTrainIconSouthX, 1, 0);
         addItem(pSouth, textSouthY, 2, 0);
         addItem(pSouth, spinTrainIconSouthY, 3, 0);
+        
+        JPanel pRange = new JPanel();
+        pRange.setLayout(new GridBagLayout());
+        pRange.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RangeTrainIcon")));
+        addItem(pRange, textRangeX, 0, 0);
+        addItem(pRange, spinTrainIconRangeX, 1, 0);
+        addItem(pRange, textRangeY, 2, 0);
+        addItem(pRange, spinTrainIconRangeY, 3, 0);
 
         JPanel pControl = new JPanel();
         pControl.setLayout(new GridBagLayout());
@@ -140,6 +153,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         getContentPane().add(pSouth);
         getContentPane().add(pEast);
         getContentPane().add(pWest);
+        getContentPane().add(pRange);
         getContentPane().add(pControl);
 
         // add help menu to window
@@ -163,6 +177,9 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         addSpinnerChangeListerner(spinTrainIconNorthY);
         addSpinnerChangeListerner(spinTrainIconSouthX);
         addSpinnerChangeListerner(spinTrainIconSouthY);
+        
+        addSpinnerChangeListerner(spinTrainIconRangeX);
+        addSpinnerChangeListerner(spinTrainIconRangeY);
 
         initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight400));
 
@@ -270,6 +287,9 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         spinTrainIconNorthY.setValue(l.getTrainIconNorth().y);
         spinTrainIconSouthX.setValue(l.getTrainIconSouth().x);
         spinTrainIconSouthY.setValue(l.getTrainIconSouth().y);
+        
+        spinTrainIconRangeX.setValue(l.getTrainIconRangeX());
+        spinTrainIconRangeY.setValue(l.getTrainIconRangeY());
     }
 
     private void spinnersEnable(boolean enable) {
@@ -281,6 +301,9 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         spinTrainIconNorthY.setEnabled(enable);
         spinTrainIconSouthX.setEnabled(enable);
         spinTrainIconSouthY.setEnabled(enable);
+        
+        spinTrainIconRangeX.setEnabled(enable);
+        spinTrainIconRangeY.setEnabled(enable);
     }
 
     private void saveSpinnerValues(Location l) {
@@ -289,6 +312,9 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         l.setTrainIconWest(new Point((Integer) spinTrainIconWestX.getValue(), (Integer) spinTrainIconWestY.getValue()));
         l.setTrainIconNorth(new Point((Integer) spinTrainIconNorthX.getValue(), (Integer) spinTrainIconNorthY.getValue()));
         l.setTrainIconSouth(new Point((Integer) spinTrainIconSouthX.getValue(), (Integer) spinTrainIconSouthY.getValue()));
+        
+        l.setTrainIconRangeX((Integer)spinTrainIconRangeX.getValue());
+        l.setTrainIconRangeY((Integer)spinTrainIconRangeY.getValue());
     }
 
     // place test markers on panel

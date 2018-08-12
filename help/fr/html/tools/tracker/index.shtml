@@ -1,7 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- UpDated by Blorec Herv&#233; 2013-10-05-->
+<!-- Updated by Blorec Herv&#233; 2013-10-05-->
 
 <html lang="fr">
 <head>
@@ -9,11 +8,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Block Tracking</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "java model railroad JMRI block tracking"><!-- Style -->
   <meta http-equiv="Content-Type" content=

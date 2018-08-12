@@ -67,7 +67,7 @@ public class CbusProgrammerTest extends TestCase {
 
         Assert.assertEquals("listeners", 0, tc.numListeners());
         Assert.assertEquals("sent count", 1, tc.outbound.size());
-        Assert.assertEquals("content 1", "96 00 03 04 05",
+        Assert.assertEquals("content 1", "[78] 96 00 03 04 05",
                 tc.outbound.get(0).toString());
 
         // no reply from CAN and listener replies immediately,
@@ -88,7 +88,7 @@ public class CbusProgrammerTest extends TestCase {
 
         Assert.assertEquals("listeners", 0, tc.numListeners());
         Assert.assertEquals("sent count", 1, tc.outbound.size());
-        Assert.assertEquals("content 1", "71 00 03 04",
+        Assert.assertEquals("content 1", "[78] 71 00 03 04",
                 tc.outbound.get(0).toString());
         Assert.assertTrue("listener not invoked", !reply);
 

@@ -142,10 +142,10 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
         JPanel p3 = new JPanel();
         add(p3);
-        
+
         addButtonAction(setButton);
     }
-    
+
     // validate if a value is a legal cab id for the system
     // needed since there are gaps in the USB based command stations
     public boolean validateCabId(int id) {
@@ -218,9 +218,9 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
         if (firstTime) {
             try {
-                Thread.sleep(1000); // wait for panel to display 
+                Thread.sleep(1000); // wait for panel to display
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                log.error("Thread interrupted.", e);
             }
         }
 
@@ -326,7 +326,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
         return true;
     }
 
-    // USB set Cab Id in USB 
+    // USB set Cab Id in USB
     private void writeUsbCabId(int value) {
         replyLen = REPLY_1;   // Expect 1 byte response
         waiting++;

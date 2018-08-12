@@ -1,6 +1,5 @@
 package jmri.jmrix.direct;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -26,8 +25,12 @@ import org.slf4j.LoggerFactory;
  */
 public class TrafficController implements jmri.CommandStation {
 
-    public TrafficController() {
+    /**
+     * Create a new Direct TrafficController instance.
+     */
+    public TrafficController(DirectSystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
     /**
@@ -51,7 +54,7 @@ public class TrafficController implements jmri.CommandStation {
      *                in the current implementation
      */
     @Override
-    public void sendPacket(byte[] packet, int repeats) {
+    public boolean sendPacket(byte[] packet, int repeats) {
 
         if (repeats != 1) {
             log.warn("Only single transmissions currently available");
@@ -63,7 +66,7 @@ public class TrafficController implements jmri.CommandStation {
         if (msgAsInt[0] == 0) {
             // failed to make packet
             log.error("Failed to convert packet to transmitable form: {}", java.util.Arrays.toString(packet));
-            return;
+            return false;
         }
 
         // have to recopy & reformat, as there's only a byte write in Java 1
@@ -91,11 +94,11 @@ public class TrafficController implements jmri.CommandStation {
         } catch (IOException e) {
             log.warn("sendMessage: Exception: {}", e.getMessage());
         }
-
+        return true;
     }
 
     // methods to connect/disconnect to a source of data in an AbstractSerialPortController
-
+    private DirectSystemConnectionMemo _memo = null;
     private AbstractSerialPortController controller = null;
 
     public boolean status() {
@@ -139,12 +142,12 @@ public class TrafficController implements jmri.CommandStation {
 
     @Override
     public String getUserName() {
-        return "Others";
+        return _memo.getUserName();
     }
 
     @Override
     public String getSystemPrefix() {
-        return "N";
+        return _memo.getSystemPrefix();
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrafficController.class);

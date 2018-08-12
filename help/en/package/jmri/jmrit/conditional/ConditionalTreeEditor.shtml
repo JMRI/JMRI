@@ -7,9 +7,9 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Conditional Tree Editor</title>
+  <meta name="author" content="Dave Sand">
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Dave Sand" name="Author">
   <meta name="keywords" content=
   "JMRI help Logix Conditional Add Edit">
   <!--#include virtual="/Style" -->
@@ -50,9 +50,10 @@
       selected tree row.</li>
       </ul>
 
-      <p>The workflow for the tree editor is dynamic.  As each change is made,
-      it is applied to the Conditional tables.  As long as the panel xml file
-      has not been updated, it is still possible to recover.</p>
+      <p><strong><em>The workflow for the tree editor is dynamic.  As each
+      change is made, it is applied to the Conditional tables.  As long as the
+      panel xml file has not been updated, it is still possible to recover.
+      </em></strong></p>
 
       <p>The tree structure makes it very easy to move around.  The only
       restriction is that a different tree node cannot be selected if there is

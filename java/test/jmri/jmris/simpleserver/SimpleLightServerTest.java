@@ -12,33 +12,14 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2012,2016
  */
-public class SimpleLightServerTest {
-
-    @Test
-    public void testCtor() {
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-            // null output string drops characters
-            // could be replaced by one that checks for specific outputs
-            @Override
-            public void write(int b) throws java.io.IOException {
-            }
-        });
-        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        SimpleLightServer a = new SimpleLightServer(input, output);
-        Assert.assertNotNull(a);
-    }
+public class SimpleLightServerTest extends jmri.jmris.AbstractLightServerTestBase {
+        
+    private StringBuilder sb = null;
+    private java.io.DataOutputStream output = null;
+    private java.io.DataInputStream input = null;
 
     @Test
     public void testConnectionCtor() {
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-            // null output string drops characters
-            // could be replaced by one that checks for specific outputs
-            @Override
-            public void write(int b) throws java.io.IOException {
-            }
-        });
         jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);
         SimpleLightServer a = new SimpleLightServer(jcs);
         Assert.assertNotNull(a);
@@ -47,16 +28,7 @@ public class SimpleLightServerTest {
     // test sending a message.
     @Test
     public void testSendMessage() {
-        StringBuilder sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-            @Override
-            public void write(int b) throws java.io.IOException {
-                sb.append((char) b);
-            }
-        });
-        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        SimpleLightServer a = new SimpleLightServer(input, output);
+        SimpleLightServer a = (SimpleLightServer)ls;
         // NOTE: this test uses reflection to test a private method.
         java.lang.reflect.Method sendMessageMethod = null;
         try {
@@ -81,14 +53,6 @@ public class SimpleLightServerTest {
     // test sending a message.
     @Test
     public void testSendMessageWithConnection() {
-        StringBuilder sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-            @Override
-            public void write(int b) throws java.io.IOException {
-                sb.append((char) b);
-            }
-        });
         jmri.jmris.JmriConnectionScaffold jcs = new jmri.jmris.JmriConnectionScaffold(output);
         SimpleLightServer a = new SimpleLightServer(jcs);
         // NOTE: this test uses reflection to test a private method.
@@ -117,16 +81,7 @@ public class SimpleLightServerTest {
     // test sending an error message.
     @Test
     public void testSendErrorStatus() {
-        StringBuilder sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-            @Override
-            public void write(int b) throws java.io.IOException {
-                sb.append((char) b);
-            }
-        });
-        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        SimpleLightServer a = new SimpleLightServer(input, output);
+        SimpleLightServer a = (SimpleLightServer)ls;
         try {
             a.sendErrorStatus("IT1");
             Assert.assertEquals("sendErrorStatus check", "LIGHT ERROR\n", sb.toString());
@@ -138,16 +93,7 @@ public class SimpleLightServerTest {
     // test sending an ON status message.
     @Test
     public void CheckSendOnStatus() {
-        StringBuilder sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-            @Override
-            public void write(int b) throws java.io.IOException {
-                sb.append((char) b);
-            }
-        });
-        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        SimpleLightServer a = new SimpleLightServer(input, output);
+        SimpleLightServer a = (SimpleLightServer)ls;
         try {
             a.sendStatus("IL1", jmri.Light.ON);
             Assert.assertEquals("sendErrorStatus check", "LIGHT IL1 ON\n", sb.toString());
@@ -159,16 +105,7 @@ public class SimpleLightServerTest {
     // test sending an OFF status message.
     @Test
     public void CheckSendOffStatus() {
-        StringBuilder sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-            @Override
-            public void write(int b) throws java.io.IOException {
-                sb.append((char) b);
-            }
-        });
-        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        SimpleLightServer a = new SimpleLightServer(input, output);
+        SimpleLightServer a = (SimpleLightServer)ls;
         try {
             a.sendStatus("IL1", jmri.Light.OFF);
             Assert.assertEquals("sendErrorStatus check", "LIGHT IL1 OFF\n", sb.toString());
@@ -180,16 +117,7 @@ public class SimpleLightServerTest {
     // test sending an ON status message.
     @Test
     public void CheckSendUnknownStatus() {
-        StringBuilder sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-            @Override
-            public void write(int b) throws java.io.IOException {
-                sb.append((char) b);
-            }
-        });
-        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        SimpleLightServer a = new SimpleLightServer(input, output);
+        SimpleLightServer a = (SimpleLightServer)ls;
         try {
             a.sendStatus("IL1", 255);
             Assert.assertEquals("sendErrorStatus check", "LIGHT IL1 UNKNOWN\n", sb.toString());
@@ -201,16 +129,7 @@ public class SimpleLightServerTest {
     // test parsing an ON status message.
     @Test
     public void testParseOnStatus() {
-        StringBuilder sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-            @Override
-            public void write(int b) throws java.io.IOException {
-                sb.append((char) b);
-            }
-        });
-        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        SimpleLightServer a = new SimpleLightServer(input, output);
+        SimpleLightServer a = (SimpleLightServer)ls;
         try {
             a.parseStatus("LIGHT IL1 ON\n");
             jmri.Light light = (jmri.InstanceManager.getDefault(jmri.LightManager.class)).getLight("IL1");
@@ -227,18 +146,7 @@ public class SimpleLightServerTest {
     // test parsing an OFF status message.
     @Test
     public void testParseOffStatus() {
-        StringBuilder sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-            // null output string drops characters
-            // could be replaced by one that checks for specific outputs
-            @Override
-            public void write(int b) throws java.io.IOException {
-                sb.append((char) b);
-            }
-        });
-        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        SimpleLightServer a = new SimpleLightServer(input, output);
+        SimpleLightServer a = (SimpleLightServer)ls;
         try {
             a.parseStatus("LIGHT IL1 OFF\n");
             jmri.Light light = (jmri.InstanceManager.getDefault(jmri.LightManager.class)).getLight("IL1");
@@ -255,18 +163,7 @@ public class SimpleLightServerTest {
     // test parsing an UNKNOWN status message.
     @Test
     public void testParseUnkownStatus() {
-        StringBuilder sb = new StringBuilder();
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-            // null output string drops characters
-            // could be replaced by one that checks for specific outputs
-            @Override
-            public void write(int b) throws java.io.IOException {
-                sb.append((char) b);
-            }
-        });
-        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        SimpleLightServer a = new SimpleLightServer(input, output);
+        SimpleLightServer a = (SimpleLightServer)ls;
         try {
             a.parseStatus("LIGHT IL1 UNKNOWN\n");
             // this currently causes no change of state, so we are just
@@ -278,16 +175,29 @@ public class SimpleLightServerTest {
 
     // The minimal setup for log4J
     @Before
-    public void setUp() throws Exception {
+    @Override
+    public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.JUnitUtil.initDebugThrottleManager();
+        sb = new StringBuilder();
+        output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+            // null output string drops characters
+            // could be replaced by one that checks for specific outputs
+            @Override
+            public void write(int b) throws java.io.IOException {
+                sb.append((char) b);
+            }
+        });
+        input = new java.io.DataInputStream(System.in);
+        ls = new SimpleLightServer(input, output);
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

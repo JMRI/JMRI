@@ -45,8 +45,7 @@ public class NceNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
             ((NcePanelInterface) p).initComponents(memo);
             return p;
         } catch (Exception ex) {
-            log.warn("could not init pane class: " + paneClass + " due to:" + ex);
-            ex.printStackTrace();
+            log.warn("could not init pane class: {}", paneClass, ex);
         }
 
         return p;

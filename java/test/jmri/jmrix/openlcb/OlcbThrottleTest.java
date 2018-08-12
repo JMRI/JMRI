@@ -3,9 +3,12 @@ package jmri.jmrix.openlcb;
 import jmri.DccLocoAddress;
 import jmri.util.JUnitUtil;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import jmri.jmrix.can.TestTrafficController;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbThrottle class.
@@ -13,6 +16,9 @@ import org.junit.Test;
  * @author	Bob Jacobsen Copyright 2008, 2010, 2011
  */
 public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
+        
+    private static OlcbSystemConnectionMemo m;
+    private static OlcbConfigurationManager ocm;
 
     /**
      * Test of getIsForward method, of class AbstractThrottle.
@@ -358,18 +364,32 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-        OlcbSystemConnectionMemo m = new OlcbSystemConnectionMemo();
-        m.setTrafficController(new jmri.jmrix.can.TestTrafficController());
-        OlcbConfigurationManager ocm = new OlcbConfigurationManager(m);
-        m.configureManagers();
-        ocm.configureManagers();
         instance = new OlcbThrottle(new DccLocoAddress(100,true),m,ocm);
     }
 
     @Override
     @After
     public void tearDown() {
+        instance = null;
+    }
+
+    @BeforeClass
+    public static void preClassInit() {
+        JUnitUtil.setUp();
+        m = new OlcbSystemConnectionMemo();
+        TestTrafficController tc = new TestTrafficController();
+        m.setTrafficController(tc);
+        ocm = new OlcbConfigurationManagerScaffold(m);
+        ocm.configureManagers();
+    }
+
+    @AfterClass
+    public static void postClassTearDown() {
+        if(m != null && m.getInterface() !=null ) {
+           m.getInterface().dispose();
+        }
+        m = null;
+        ocm = null;
         JUnitUtil.tearDown();
     }
 }

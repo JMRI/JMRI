@@ -54,7 +54,6 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
 
     @Test
     public void testSerialOutput() {
-        SerialTrafficController c = (SerialTrafficController)tc;
         SerialNode a = new SerialNode(memo);
         SerialNode g = new SerialNode(5, SerialNode.IO24,memo);
         Assert.assertNotNull("exists", a);
@@ -176,8 +175,8 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new SerialTrafficController();
         memo = new OakTreeSystemConnectionMemo();
+        tc = new SerialTrafficController(memo);
         memo.setTrafficController((SerialTrafficController)tc);
     }
 

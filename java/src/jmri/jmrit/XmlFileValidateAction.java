@@ -79,51 +79,7 @@ public class XmlFileValidateAction extends jmri.util.swing.JmriAbstractAction {
             xmlfile.setValidate(XmlFile.Validate.CheckDtdThenSchema);
             readFile(file);
         } catch (Exception ex) {
-            // because of XInclude, we're doing this
-            // again to validate the entire file
-            // without losing the error message
-            Document doc;
-            try {
-                InputStream stream = new BufferedInputStream(new FileInputStream(file));
-                SAXBuilder builder = new SAXBuilder("org.apache.xerces.parsers.SAXParser", false);
-                builder.setEntityResolver(new jmri.util.JmriLocalEntityResolver());
-                builder.setFeature("http://apache.org/xml/features/xinclude", true);
-                builder.setFeature("http://apache.org/xml/features/xinclude/fixup-base-uris", false);
-                builder.setFeature("http://apache.org/xml/features/validation/schema", false);
-                builder.setFeature("http://apache.org/xml/features/validation/schema-full-checking", false);
-                builder.setFeature("http://xml.org/sax/features/namespaces", true);
-                doc = builder.build(new BufferedInputStream(stream));
-            } catch (JDOMException | IOException ex2) {
-                showFailResults(_who, "Err(1): " + ex2);
-                return;
-            }
-            XMLOutputter outputter = new XMLOutputter();
-            outputter.setFormat(Format.getPrettyFormat()
-                    .setLineSeparator(System.getProperty("line.separator"))
-                    .setTextMode(Format.TextMode.PRESERVE));
-            StringWriter out = new StringWriter();
-            try {
-                outputter.output(doc, out);
-            } catch (IOException ex2) {
-                showFailResults(_who, "Err(4): " + ex2);
-                return;
-            }
-            StringReader input = new StringReader(new String(out.getBuffer()));
-            SAXBuilder builder = new SAXBuilder("org.apache.xerces.parsers.SAXParser", true);
-            builder.setEntityResolver(new jmri.util.JmriLocalEntityResolver());
-            builder.setFeature("http://apache.org/xml/features/xinclude", true);
-            builder.setFeature("http://apache.org/xml/features/xinclude/fixup-base-uris", false);
-            builder.setFeature("http://apache.org/xml/features/validation/schema", true);
-            builder.setFeature("http://apache.org/xml/features/validation/schema-full-checking", true);
-            builder.setFeature("http://xml.org/sax/features/namespaces", true);
-            try {
-                builder.build(input).getRootElement();
-            } catch (JDOMException | IOException ex2) {
-                showFailResults(_who, "Err(2): " + ex2);
-                return;
-            }
-
-            showFailResults(_who, "Err(3): " + ex);
+            showFailResults(_who, ex.getMessage());
             return;
         }
         showOkResults(_who, "OK");

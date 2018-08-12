@@ -9,27 +9,30 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstract base for of objects to handle configuring a layout connection via
+ * Abstract base for objects to handle configuring a layout connection via
  * various types of SerialDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2012
  * @author Andrew Crosland 2008
- * 
+ *
  */
 abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
-    
+
     /**
-     * Ctor for an object being created during load process; Swing init is
-     * deferred.
+     * Create a connection configuration with a preexisting adapter. This is
+     * used principally when loading a configuration that defines this
+     * connection.
+     *
+     * @param p the adapter to create a connection configuration for
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Create a connection configuration without a preexisting adapter.
      */
     public ConnectionConfig() {
         super();
@@ -38,9 +41,7 @@ abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnecti
     @SuppressWarnings("unchecked")
     @Override
     protected void checkInitDone() {
-        if (log.isDebugEnabled()) {
-            log.debug("init called for " + name());
-        }
+        log.debug("init called for {}", name());
         if (init) {
             return;
         }
@@ -88,4 +89,5 @@ abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnecti
 
     @Override
     abstract protected void setInstance(); // necessary to get right type
+
 }

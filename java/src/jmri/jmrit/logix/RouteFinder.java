@@ -131,8 +131,13 @@ public class RouteFinder implements Runnable {
                             level, pBlock.getDisplayName(), pOrder.getPathName(), paths.size());
                 }
                 if (paths.isEmpty()) {
-                    log.error("Portal \"" + pName + "\" " + (exitPortal.getOpposingBlock(pBlock) == null
-                            ? "is malformed! Only one block!" : "does not have any paths into the next block!"));
+                    if (nextBlock == null) {
+                        log.error("Portal \"{}\" is malformed! \"{}\" not connected to another block!", 
+                                pName, pBlock.getDisplayName());
+                    } else {
+                        log.error("Portal \"{}\" does not have any paths from \"{}\" to \"{}\"",
+                                pName, pBlock.getDisplayName(), nextBlock.getDisplayName());
+                    }
                 }
                 // walk all paths
                 for (int k = 0; k < paths.size(); k++) {

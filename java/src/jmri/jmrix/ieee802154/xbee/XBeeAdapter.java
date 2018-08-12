@@ -6,12 +6,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.NoSuchPortException;
-import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
-import purejavacomm.SerialPortEvent;
-import purejavacomm.SerialPortEventListener;
 import purejavacomm.*;
 
 /**
@@ -66,15 +60,18 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
             }
             if (log.isDebugEnabled()) {
                 // report additional status
-                log.debug(" port flow control shows "
-                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"));
+                log.debug(" port flow control shows " // NOI18N
+                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
+
+                // log events
+                setPortEventLogging(activeSerialPort);
             }
+
             opened = true;
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (IOException ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+            log.error("Unexpected exception while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
@@ -165,7 +162,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_NONE; // default
         configureLeadsAndFlowControl(activeSerialPort, flow);
-        
+
 
         if (log.isDebugEnabled()) {
             activeSerialPort.notifyOnFramingError(true);
@@ -266,7 +263,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
     public void open(){
        log.debug("open called");
        iConnectionOpened = true;
-       // don't do anything here.  We handle the details of open through the 
+       // don't do anything here.  We handle the details of open through the
        // openPort call, which is called from the JMRI infrastructure.
     }
 

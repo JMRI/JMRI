@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Pete Cressman Copyright: Copyright (c) 2011
- *
  */
 public class EditCircuitFrame extends jmri.util.JmriJFrame {
 
@@ -80,7 +79,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
         JPanel panel = new JPanel();
-//        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        // panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(CircuitBuilder.makeTextBoxPanel(false, _blockState, "blockState", false, null));
         _blockState.setPreferredSize(new Dimension(150, _blockState.getPreferredSize().height));
         contentPane.add(panel);
@@ -100,7 +99,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         contentPane.add(p);
 
         panel = new JPanel();
-//        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        // panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.add(Box.createHorizontalGlue());
         panel.add(CircuitBuilder.makeTextBoxPanel(
                 false, _numTrackSeg, "Segments", false, null));
@@ -115,7 +114,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
         panel = new JPanel();
-//        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        // panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         _detectorSensorName.setPreferredSize(new Dimension(300, _detectorSensorName.getPreferredSize().height));
         panel.add(CircuitBuilder.makeTextBoxPanel(
                 false, _detectorSensorName, "DetectionSensor", true, "detectorSensorName"));
@@ -123,7 +122,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         contentPane.add(panel);
 
         panel = new JPanel();
-//        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        // panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         _errorSensorName.setPreferredSize(new Dimension(300, _errorSensorName.getPreferredSize().height));
         panel.add(CircuitBuilder.makeTextBoxPanel(
                 false, _errorSensorName, "ErrorSensor", true, "detectorErrorName"));
@@ -134,7 +133,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
         JPanel pp = new JPanel();
-//        pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
+        // pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
         _length.setText(Float.toString(_block.getLengthIn()));
         pp.add(CircuitBuilder.makeTextBoxPanel(
                 false, _length, "Length", true, "TooltipBlockLength"));
@@ -288,9 +287,10 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         }
     }
 
-    /**
+    /*
      * *********************** end setup *************************
      */
+
     private void changeBlockName() {
         String name = _blockName.getText();
         if (name == null || name.trim().length() == 0) {

@@ -21,6 +21,7 @@ import javax.swing.WindowConstants;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
+import jmri.LocoAddress;
 import jmri.Programmer;
 import jmri.ThrottleListener;
 import jmri.jmrit.DccLocoAddressSelector;
@@ -48,7 +49,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     private DccThrottle throttle;
     private DccThrottle consistThrottle;
 
-    private DccLocoAddressSelector addrSelector = new DccLocoAddressSelector();
+    private final DccLocoAddressSelector addrSelector = new DccLocoAddressSelector();
     private DccLocoAddress currentAddress;
     private DccLocoAddress consistAddress;
     private ArrayList<AddressListener> listeners;
@@ -94,7 +95,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
      */
     public void addAddressListener(AddressListener l) {
         if (listeners == null) {
-            listeners = new ArrayList<AddressListener>(2);
+            listeners = new ArrayList<>(2);
         }
         if (!listeners.contains(l)) {
             listeners.add(l);
@@ -230,12 +231,12 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     }
 
     @Override
-    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
+    public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
         javax.swing.JOptionPane.showMessageDialog(null, reason, Bundle.getMessage("FailedSetupRequestTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
     }
 
     @Override
-    public void notifyStealThrottleRequired(DccLocoAddress address){
+    public void notifyStealThrottleRequired(LocoAddress address){
         InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, 
                 InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isSilentSteal() || 
                 ( javax.swing.JOptionPane.YES_OPTION == javax.swing.JOptionPane.showConfirmDialog(this, Bundle.getMessage("StealQuestionText",address.toString()), Bundle.getMessage("StealRequestTitle"), javax.swing.JOptionPane.YES_NO_OPTION)));
@@ -358,8 +359,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         constraints.gridwidth = GridBagConstraints.REMAINDER;
         mainPanel.add(getRosterEntrySelector(), constraints);
 
-        conRosterBox = NceConsistRoster.instance().fullRosterComboBox();
-        if (NceConsistRoster.instance().numEntries() > 0) {
+        conRosterBox = InstanceManager.getDefault(NceConsistRoster.class).fullRosterComboBox();
+        if (InstanceManager.getDefault(NceConsistRoster.class).numEntries() > 0) {
             conRosterBox.insertItemAt(Bundle.getMessage("NoConsistSelected"), 0);  // empty entry
             conRosterBox.setSelectedIndex(0);
             conRosterBox.setToolTipText(Bundle.getMessage("SelectConsistFromRosterTT"));
@@ -429,23 +430,23 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     private void consistRosterSelected() {
         if (!(conRosterBox.getSelectedItem().equals(Bundle.getMessage("NoConsistSelected")))) {
             String rosterEntryTitle = conRosterBox.getSelectedItem().toString();
-            NceConsistRosterEntry cre = NceConsistRoster.instance()
+            NceConsistRosterEntry nceConsistRosterEntry = InstanceManager.getDefault(NceConsistRoster.class)
                     .entryFromTitle(rosterEntryTitle);
 
-            DccLocoAddress a = new DccLocoAddress(Integer.parseInt(cre
-                    .getLoco1DccAddress()), cre.isLoco1LongAddress());
+            DccLocoAddress a = new DccLocoAddress(Integer.parseInt(nceConsistRosterEntry
+                    .getLoco1DccAddress()), nceConsistRosterEntry.isLoco1LongAddress());
             addrSelector.setAddress(a);
             consistAddress = null;
             int cA = 0;
             try {
-                cA = Integer.parseInt(cre.getConsistNumber());
+                cA = Integer.parseInt(nceConsistRosterEntry.getConsistNumber());
             } catch (NumberFormatException e) {
 
             }
             if (0 < cA && cA < 128) {
                 consistAddress = new DccLocoAddress(cA, false);
             } else {
-                log.warn("consist number missing " + cre.getLoco1DccAddress());
+                log.warn("consist number missing " + nceConsistRosterEntry.getLoco1DccAddress());
                 JOptionPane.showMessageDialog(mainPanel,
                         Bundle.getMessage("ConsistNumberHasNotBeenAssigned"),
                         Bundle.getMessage("NeedsConsistNumber"),
@@ -580,7 +581,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     public Element getXml() {
         Element me = new Element("AddressPanel");
         //Element window = new Element("window");
-        java.util.ArrayList<Element> children = new java.util.ArrayList<Element>(1);
+        java.util.ArrayList<Element> children = new java.util.ArrayList<>(1);
         children.add(WindowPreferences.getPreferences(this));
         children.add((new jmri.configurexml.LocoAddressXml())
                 .store(addrSelector.getAddress()));

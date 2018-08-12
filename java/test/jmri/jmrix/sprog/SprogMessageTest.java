@@ -8,10 +8,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * JUnit tests for the SprogMessage class
+ * JUnit tests for the SprogMessage class.
  *
  * @author	Bob Jacobsen Copyright 2012
-  */
+ */
 public class SprogMessageTest{
 
     @Test
@@ -54,6 +54,5 @@ public class SprogMessageTest{
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 
 }

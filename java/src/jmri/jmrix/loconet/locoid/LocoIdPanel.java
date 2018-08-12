@@ -10,7 +10,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
 /**
- * User interface for setting the LocoNet ID
+ * User interface for setting the LocoNet ID.
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2010
  */
@@ -27,20 +27,18 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
 
     public LocoIdPanel() {
         super();
+        idBox = new javax.swing.JComboBox<String>(IDValues);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
     public void initComponents() {
-        ResourceBundle rb = ResourceBundle
-                .getBundle("jmri.jmrix.loconet.locoid.LocoId");
 
         // Create our UI elements, two buttons and a drop-down.
-        setButton = new javax.swing.JButton(rb.getString("ButtonSet"));
-        readButton = new javax.swing.JButton(rb.getString("ButtonRead"));
-        idBox = new javax.swing.JComboBox<String>(IDValues);
+        setButton = new javax.swing.JButton(Bundle.getMessage("ButtonSet"));
+        readButton = new javax.swing.JButton(Bundle.getMessage("ButtonRead"));
 
         // Do our layout, two buttons side by side, drop down below.
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -54,7 +52,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
 
         p = new JPanel();
         p.setLayout(new java.awt.FlowLayout());
-        p.add(new JLabel(rb.getString("LabelValue")));
+        p.add(new JLabel(Bundle.getMessage("LabelValue")));
         p.add(idBox);
 
         add(p);
@@ -74,7 +72,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         });
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -82,7 +80,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         return "package.jmri.jmrix.loconet.locoid.LocoIdFrame"; // NOI18N
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -90,7 +88,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         return getTitle(Bundle.getMessage("MenuItemSetID"));
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -201,7 +199,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel implements
         t.addLocoNetListener(~0, this);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override

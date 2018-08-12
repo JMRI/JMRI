@@ -5,8 +5,8 @@
  <title>
       JMRI: Block Edit Help
  </title>
-    <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <meta content="Bob Jacobsen" name="Author">
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI help Block Table Edit">
 
 <!--#include virtual="/Style" -->
@@ -104,7 +104,7 @@ Avec "Utilisation actuelle?" d&#233;s&#233;lectionn&#233;e, la valeur du canton 
 <td><img src="BlocksEditSpeedPopup.png" width="249" height="191"></td>
 <td>Options Vitesse:
 <ul>
-<li>Normal gÃ©nÃ©rale
+<li>Normal générale
 <li>Cab
 <li>Maximum
 <li>Normal

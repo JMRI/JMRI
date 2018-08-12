@@ -3,6 +3,7 @@ package jmri.implementation;
 import jmri.DccLocoAddress;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -33,8 +34,37 @@ abstract public class AbstractConsistManagerTestBase {
         // a consist.
         DccLocoAddress addr = new DccLocoAddress(5,false);
         Assert.assertNotNull("add consist",cm.getConsist(addr));
+        Assert.assertEquals("list has 1 entry",1,cm.getConsistList().size());
     }
 
+    @Test
+    public void testGetConsistListEmpty(){
+        // by default, there should be no consists
+        Assert.assertNotNull("list exists",cm.getConsistList());
+        Assert.assertTrue("empty list",cm.getConsistList().isEmpty());
+    }
+
+    @Test
+    public void testDelConsist(){
+        DccLocoAddress addr = new DccLocoAddress(5,false);
+        cm.getConsist(addr);
+        int size = cm.getConsistList().size();
+        cm.delConsist(addr);
+        Assert.assertEquals("list has (size-1) entries",size-1,cm.getConsistList().size());
+    }
+
+    @Test
+    public void testIsCommandStationConsistPossible(){
+       // default is false, override if necessary
+       Assert.assertFalse("CS Consist Possible",cm.isCommandStationConsistPossible());
+    }
+
+    @Test
+    public void tesCsConsistNeedsSeperateAddress(){
+       Assume.assumeTrue(cm.isCommandStationConsistPossible());
+       // default is false, override if necessary
+       Assert.assertFalse("CS Consist Needs Seperate Address",cm.csConsistNeedsSeperateAddress());
+    }
 
     // private final static Logger log = LoggerFactory.getLogger(AbstractConsistManagerTestBase.class);
 

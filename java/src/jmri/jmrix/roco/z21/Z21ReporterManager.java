@@ -18,13 +18,13 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager {
 
     private Z21SystemConnectionMemo _memo = null;
 
-    /**  
+    /**
      * Create a new Z21ReporterManager
-     * @param memo an instance of Z21SystemConnectionMemo this manager 
+     * @param memo an instance of Z21SystemConnectionMemo this manager
      *             is associated with.
      */
 @SuppressFBWarnings(value = "RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE",
-            justification = "False positive from findbugs.  The Value may not be null if there is another railcom manager installed")
+            justification = "False positive from spotbugs.  The Value may not be null if there is another railcom manager installed")
     public Z21ReporterManager(Z21SystemConnectionMemo memo){
         _memo = memo;
         if(InstanceManager.getDefault(RailComManager.class)==null){

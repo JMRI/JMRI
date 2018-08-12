@@ -9,8 +9,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -25,6 +23,7 @@ public class LocoStatsFuncTest {
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
         LocoStatsFunc t = new LocoStatsFunc(memo);
         Assert.assertNotNull("exists",t);
+        memo.dispose();
     }
 
     // The minimal setup for log4J

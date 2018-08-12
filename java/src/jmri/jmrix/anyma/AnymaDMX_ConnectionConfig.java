@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * This uses the {@link AnymaDMX_UsbPortAdapter} class to do the actual
  * connection.
  *
- * @author George Warner Copyright (c) 2017
+ * @author George Warner Copyright (c) 2017-2018
  * @since 4.9.6
  * @see AnymaDMX_UsbPortAdapter
  */
@@ -44,7 +44,7 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
         log.debug("*    updateAdapter()");
         if ((adapter.getSystemConnectionMemo() != null)
                 && !adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-            systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
+            systemPrefixField.setValue(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
     }

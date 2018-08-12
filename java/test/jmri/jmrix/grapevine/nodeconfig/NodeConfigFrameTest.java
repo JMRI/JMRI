@@ -10,8 +10,6 @@ import org.junit.Test;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.jmrix.grapevine.SerialTrafficController;
 import jmri.jmrix.grapevine.SerialTrafficControlScaffold;
-import jmri.jmrix.grapevine.SerialMessage;
-import jmri.jmrix.grapevine.SerialListener;
 
 /**
  *
@@ -50,8 +48,10 @@ public class NodeConfigFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        SerialTrafficController tc = new SerialTrafficControlScaffold();
+        jmri.util.JUnitUtil.resetProfileManager();
+
         memo = new GrapevineSystemConnectionMemo();
+        SerialTrafficController tc = new SerialTrafficControlScaffold(memo);
         memo.setTrafficController(tc);
     }
 

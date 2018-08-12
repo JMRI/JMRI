@@ -1,6 +1,13 @@
 package jmri.jmrit.vsdecoder;
 
-/*
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.SwingUtilities;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -15,15 +22,9 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author   Mark Underwood Copyright (C) 2011
- * 
+ * @author Mark Underwood Copyright (C) 2011
+ * @author Klaus Killinger Copyright (C) 2018
  */
-import java.awt.event.ActionListener;
-import javax.swing.Timer;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 // Usage:
 // EngineSound() : constructor
 // play() : plays short horn pop
@@ -35,12 +36,14 @@ class EngineSound extends VSDSound {
     boolean initialized = false;
     boolean engine_started = false;
     boolean auto_start_engine = false;
+    boolean is_auto_start; // Can be used in config.xml
+    boolean is_first = false;
 
     int fade_length = 100;
     int fade_in_time = 100;
     int fade_out_time = 100;
 
-    javax.swing.Timer t;
+    EnginePane engine_pane;
 
     public EngineSound(String name) {
         super(name);
@@ -51,25 +54,25 @@ class EngineSound extends VSDSound {
 
     public boolean init() {
         auto_start_engine = VSDecoderManager.instance().getVSDecoderPreferences().isAutoStartingEngine();
-        return (true);
+        return true;
     }
 
     // Note:  Play and Loop do the same thing, since all of the notch sounds are set to loop.
     @Override
     public void play() {
         log.debug("EngineSound Play");
-        if (engine_started || auto_start_engine) {
-            is_playing = true;
-        }
+        //if (engine_started || auto_start_engine) {
+        //    is_playing = true;
+        //}
     }
 
     // Note:  Play and Loop do the same thing, since all of the notch sounds are set to loop.
     @Override
     public void loop() {
         log.debug("EngineSound Loop");
-        if (engine_started || auto_start_engine) {
-            is_playing = true;
-        }
+        //if (engine_started || auto_start_engine) {
+        //    is_playing = true;
+        //}
     }
 
     @Override
@@ -88,11 +91,11 @@ class EngineSound extends VSDSound {
     }
 
     public int getFadeInTime() {
-        return (this.fade_in_time);
+        return this.fade_in_time;
     }
 
     public int getFadeOutTime() {
-        return (this.fade_out_time);
+        return this.fade_out_time;
     }
 
     protected void setFadeInTime(int t) {
@@ -107,7 +110,7 @@ class EngineSound extends VSDSound {
         try {
             this.setFadeInTime(Integer.parseInt(s));
         } catch (NumberFormatException e) {
-            log.debug("setFadeInTime Failed to parse int from: " + s);
+            log.debug("setFadeInTime Failed to parse int from: {}", s);
         }
     }
 
@@ -124,7 +127,7 @@ class EngineSound extends VSDSound {
         try {
             this.setFadeOutTime(Integer.parseInt(s));
         } catch (NumberFormatException e) {
-            log.debug("setFadeOutTime Failed to parse int from: " + s);
+            log.debug("setFadeOutTime Failed to parse int from: {}", s);
         }
     }
 
@@ -134,9 +137,8 @@ class EngineSound extends VSDSound {
         if (notch < 1) {
             notch = 1;
         }
-        log.warn("Throttle: " + throttle + " Notch: " + notch);
-        return (notch);
-
+        log.debug("Throttle: {}, Notch: {}", throttle, notch);
+        return notch;
     }
 
     static final public int calcEngineNotch(final double throttle) {
@@ -145,22 +147,23 @@ class EngineSound extends VSDSound {
         if (notch < 1) {
             notch = 1;
         }
-        //log.warn("Throttle: " + throttle + " Notch: " + notch);
-        return (notch);
-
+        //log.warn("Throttle: {}, Notch: {}", throttle, notch);
+        return notch;
     }
 
     // This is the default behavior.  Subclasses can do fancier things
     // if they want.
     public void handleSpeedChange(Float s, EnginePane e) {
-        e.setThrottle(EngineSound.calcEngineNotch(s));
+        engine_pane = e;
+        engine_pane.setSpeed(s);
     }
 
-    @Override
-    protected Timer newTimer(int time, boolean repeat, ActionListener al) {
-        t = new Timer(time, al);
-        t.setRepeats(repeat);
-        return (t);
+    void setFirstSpeed(boolean f) {
+        is_first = f;
+    }
+
+    boolean getFirstSpeed() {
+        return is_first;
     }
 
     public void startEngine() {
@@ -168,11 +171,10 @@ class EngineSound extends VSDSound {
     }
 
     public void stopEngine() {
-        engine_started = false;
     }
 
     public boolean isEngineStarted() {
-        return (engine_started);
+        return engine_started;
     }
 
     public void setEngineStarted(boolean es) {
@@ -194,15 +196,51 @@ class EngineSound extends VSDSound {
         // do nothing.
     }
 
+    // Note: We have to invoke engine_pane later because everything's not really setup yet
+    // Need some more time to get the speed from the assigned throttle
+    void autoStartCheck() {
+        if (auto_start_engine || is_auto_start) {
+            SwingUtilities.invokeLater(() -> {
+                t = newTimer(40, false, new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        if (engine_pane != null && getFirstSpeed()) {
+                            engine_pane.startButtonClick();
+                        } else {
+                            log.warn("engine pane or speed not found");
+                        }
+                    }
+                });
+                t.start();
+            });
+        }
+    }
+
+    protected boolean setXMLAutoStart(Element e) {
+        String a = e.getChildText("auto-start");
+        if ((a != null) && (a.equals("yes"))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     protected float setXMLGain(Element e) {
         String g = e.getChildText("gain");
-        log.debug("  gain: " + g);
-        if ((g != null) && !(g.equals(""))) {
-            return (Float.parseFloat(g));
+        log.debug("  gain: {}", g);
+        if ((g != null) && !(g.isEmpty())) {
+            return Float.parseFloat(g);
         } else {
-            return (default_gain);
+            return default_gain;
         }
+    }
 
+    protected float setXMLReferenceDistance(Element e) {
+        String a = e.getChildText("reference-distance");
+        if ((a != null) && (!a.isEmpty())) {
+            return Float.parseFloat(a);
+        } else {
+            return default_reference_distance;
+        }
     }
 
     @Override
@@ -211,7 +249,7 @@ class EngineSound extends VSDSound {
         me.setAttribute("name", this.getName());
         me.setAttribute("type", "engine");
         // Do something, eventually...
-        return (me);
+        return me;
     }
 
     public void setXml(Element e, VSDFile vf) {
@@ -222,8 +260,8 @@ class EngineSound extends VSDSound {
         //log.debug("EngineSound: " + this.getName());
         this.setFadeInTime(e.getChildText("fade-in-time"));
         this.setFadeOutTime(e.getChildText("fade-out-time"));
-        log.debug("Name: " + this.getName() + "Fade-In-Time: " + this.getFadeInTime()
-                + " Fade-Out-Time: " + this.getFadeOutTime());
+        log.debug("Name: {}, Fade-In-Time: {}, Fade-Out-Time: {}", this.getName(),
+            this.getFadeInTime(), this.getFadeOutTime());
     }
 
     private static final Logger log = LoggerFactory.getLogger(EngineSound.class);

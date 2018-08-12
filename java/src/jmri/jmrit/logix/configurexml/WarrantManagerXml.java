@@ -59,6 +59,7 @@ public class WarrantManagerXml //extends XmlFile
             }
             if (warrant instanceof SCWarrant) {
                 elem.setAttribute("wtype", "SC");
+                elem.setAttribute("speedFactor", ""+((SCWarrant) warrant).getSpeedFactor());
                 elem.setAttribute("timeToPlatform", ""+((SCWarrant) warrant).getTimeToPlatform());
                 elem.setAttribute("forward", ((SCWarrant) warrant).getForward()?"true":"false");
             } else {
@@ -242,6 +243,11 @@ public class WarrantManagerXml //extends XmlFile
                 if (elem.getAttribute("forward") != null) {
                     ((SCWarrant)warrant).setForward(elem.getAttribute("forward").getValue().equals("true"));
                 }
+                if (elem.getAttribute("speedFactor") != null) {
+                    try {
+                        ((SCWarrant)warrant).setSpeedFactor(elem.getAttribute("speedFactor").getFloatValue());
+                    } catch (DataConversionException e) {}
+                }
                 warrant.setNoRamp(SCWa);
                 warrant.setShareRoute(SCWa);
             }
@@ -268,6 +274,7 @@ public class WarrantManagerXml //extends XmlFile
             }
 
             boolean forward =true;
+            /* Deferred to fix a bug when loading linked warrants - see loop below.
             List<Element> throttleCmds = elem.getChildren("throttleCommand");
             if (throttleCmds != null) {
                 for (int k=0; k<throttleCmds.size(); k++) {
@@ -278,6 +285,7 @@ public class WarrantManagerXml //extends XmlFile
                     }
                 }                
             }
+            */
             if (SCWa) {
                 if (elem.getAttribute("forward") != null) {
                     forward = elem.getAttribute("forward").getValue().equals("true");
@@ -289,6 +297,32 @@ public class WarrantManagerXml //extends XmlFile
             Element train = elem.getChild("train");
             if (train!=null) {
                 loadTrain(train, warrant);
+            }
+        }
+
+        // A second pass through the warrant list done to load the commands. This is done so that
+        // references made to warrants in commands are fully specified. Due to ThrottleSetting
+        // Ctor using provideWarrant to establish the reenced warrant.
+        warrantList = shared.getChildren("warrant");
+        for (int i=0; i<warrantList.size(); i++) {
+            boolean forward =true;
+            Element elem = warrantList.get(i);
+            if (elem.getAttribute("systemName") == null) {
+                break;
+            }
+            String sysName = null;
+            if (elem.getAttribute("systemName") != null)
+                sysName = elem.getAttribute("systemName").getValue();
+            Warrant warrant = manager.getBySystemName(sysName);
+            List<Element> throttleCmds = elem.getChildren("throttleCommand");
+            if (throttleCmds != null) {
+                for (int k=0; k<throttleCmds.size(); k++) {
+                    ThrottleSetting ts = loadThrottleCommand(throttleCmds.get(k));
+                    warrant.addThrottleCommand(ts);
+                    if (ts.getCommand().toUpperCase().equals("FORWARD")) {
+                        forward = ts.getValue().toUpperCase().equals("TRUE");
+                    }
+                }                
             }
         }
         return true;

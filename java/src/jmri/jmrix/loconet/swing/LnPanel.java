@@ -36,12 +36,19 @@ abstract public class LnPanel extends jmri.util.swing.JmriPanel implements LnPan
         }
     }
 
-    public String getTitle(String menuTitle) { return getTitleHelper(memo, menuTitle); }
-    
+    public String getTitle(String menuTitle) {
+        return getTitleHelper(memo, menuTitle);
+    }
+
     /**
      * Create menu title from connection name.
      * <p>
-     * Static to allow code to be shared by other LnPanelInterface implementations.
+     * Static to allow code to be shared by other LnPanelInterface
+     * implementations.
+     *
+     * @param memo      the memo to get connection name from
+     * @param menuTitle window title
+     * @return window title with connection name
      */
     public static String getTitleHelper(LocoNetSystemConnectionMemo memo, String menuTitle) {
         String uName = "";

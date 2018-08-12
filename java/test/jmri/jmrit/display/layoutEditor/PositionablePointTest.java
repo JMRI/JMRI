@@ -396,12 +396,14 @@ public class PositionablePointTest {
         if (le != null) {
             JUnitUtil.dispose(le);
         }
+        le = null;
         JUnitUtil.tearDown();
     }
 
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
     }
 
     @After

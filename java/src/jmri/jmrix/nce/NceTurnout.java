@@ -173,6 +173,7 @@ public class NceTurnout extends AbstractTurnout {
      *
      * @return Both cab and pushbutton (decoder) modes
      */
+    @Override
     public int getPossibleLockModes() { return CABLOCKOUT | PUSHBUTTONLOCKOUT ; }
 
     /**

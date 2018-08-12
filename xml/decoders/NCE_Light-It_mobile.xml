@@ -62,6 +62,19 @@
             <mode>OPSBYTEMODE</mode>
         </programming>
         <variables>
+            <!-- Add dummy variables first to set up opsOnly mode for shortAndLongAddress -->
+            <variable CV="1" item="Dummy 1" opsOnly="yes">
+                <decVal/>
+            </variable>
+            <variable CV="17" item="Dummy 17" opsOnly="yes">
+                <decVal/>
+            </variable>
+            <variable CV="18" item="Dummy 18" opsOnly="yes">
+                <decVal/>
+            </variable>
+            <variable CV="29" item="Dummy 29" opsOnly="yes">
+                <decVal/>
+            </variable>
             <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/nce/lightItCVs.xml"/>
         </variables>

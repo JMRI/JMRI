@@ -11,13 +11,12 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Debugging implementation of Programmer interface.
- * <P>
+ * <p>
  * Remembers writes, and returns the last written value when a read to the same
  * CV is made.
  * <p>

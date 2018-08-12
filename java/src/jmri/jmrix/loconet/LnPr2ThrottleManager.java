@@ -7,10 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * LocoNet implementation of a ThrottleManager for the PR2
- * <P>
+ * LocoNet implementation of a ThrottleManager for the PR2.
+ * <p>
  * Does direct "push" writes to the extended slot in the PR2.
- * <P>
+ * <p>
  * The PR2 only allows a single locomotive address to be active, because it
  * implements a single-slot command station.
  *
@@ -44,7 +44,11 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
         // The PR2 has only one slot, hence
         // doesn't require an interaction with the command
         // station to allocate slot, so immediately trigger the callback.
-        activeAddress = (DccLocoAddress) address;
+        if (address instanceof DccLocoAddress) {
+            activeAddress = (DccLocoAddress) address;
+        } else {
+            log.error("cannot cast the passed address to DccLocoAddress.");
+        }
         log.debug("new Pr2Throttle for " + activeAddress);
         notifyThrottleKnown(new Pr2Throttle((LocoNetSystemConnectionMemo) adapterMemo, activeAddress), activeAddress);
     }

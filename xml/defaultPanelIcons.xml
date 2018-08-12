@@ -213,13 +213,27 @@
     </MultiSensor>
 
     <Light>
+      <Cross>
+        <StateOff>
+          resources/icons/smallschematics/lights/cross-off.png
+        </StateOff>
+        <StateOn>
+          resources/icons/smallschematics/lights/cross-on.png
+        </StateOn>
+        <BeanStateInconsistent>
+          resources/icons/smallschematics/lights/cross-inconsistent.png
+        </BeanStateInconsistent>
+        <BeanStateUnknown>
+          resources/icons/smallschematics/lights/cross-unknown.png
+        </BeanStateUnknown>
+      </Cross>
       <LeftTurnout>
         <StateOff>
           resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif
         </StateOff>
-        <StateOn> 
+        <StateOn>
           resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif
-        </StateOn> 
+        </StateOn>
         <BeanStateInconsistent> 
           resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif
         </BeanStateInconsistent> 
@@ -231,9 +245,9 @@
         <StateOff>
           resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif
         </StateOff>
-        <StateOn> 
+        <StateOn>
           resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif
-        </StateOn> 
+        </StateOn>
         <BeanStateInconsistent> 
           resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif
         </BeanStateInconsistent> 

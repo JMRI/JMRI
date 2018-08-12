@@ -24,7 +24,7 @@ public class ReportContextTest {
         ReportContext t = new ReportContext();
         Assert.assertNotNull("exists",t);
         
-        String output = t.getReport(false);
+        t.getReport(false);  // check it runs OK
     }
 
     @Test
@@ -40,6 +40,7 @@ public class ReportContextTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
     }
 
     @After

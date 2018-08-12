@@ -1,17 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$Id: Threads.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
-<!-- UpDated by Blorec Herv&#233;  2016-08-017-->
-  <html lang="fr">
-<head>
-    <TITLE>
- 	JMRI: Liaison
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code threading">
-
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
+<!-- Updated by Blorec Herv&#233;  2016-08-017-->
 
 <html lang="fr">
 <head>
@@ -19,13 +7,8 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Liaison</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code threading">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -38,7 +21,7 @@
 </head><!--#include virtual="/Header" -->
 
 	<div id="mainContent">
-	    <H1>JMRI: Liaison</H1>
+	    <h1>JMRI: Liaison</h1>
 
 La grande majorit&#233; des codeurs JMRI (et programmeurs) n'ont pas &#224; 
 se soucier des liaisons. Leur code se trouve invoqu&#233;, et appelle un autre code, 
@@ -68,7 +51,7 @@ Il y a des moments o&#249; vous pouvez vouloir faire des choses un peu plus comp
 </ul>
 
 Nous pr&#233;f&#233;rerions que vous manipuliez les questions de liaison qui se posent dans ce cas par l'interm&#233;diaire de la clase
-<a href="http://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html">jmri.util.ThreadingUtil<a/>. 
+<a href="http://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html">jmri.util.ThreadingUtil</a>.
 ThreadingUtil fournit des utilitaires qui rendent cela ais&#233; 
 pour appeler les fonctions n&#233;cessaire sur le bon lien.
 <p>

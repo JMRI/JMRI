@@ -1,16 +1,11 @@
 package jmri.jmrit.beantable;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JComboBox;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JTable;
-import javax.swing.table.TableCellRenderer;
+import jmri.SignalMast;
 import jmri.jmrit.beantable.signalmast.SignalMastTableDataModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2009, 2010
  */
-public class SignalMastTableAction extends AbstractTableAction {
+public class SignalMastTableAction extends AbstractTableAction<SignalMast> {
 
     /**
      * Create an action with a specific title.
@@ -105,44 +100,6 @@ public class SignalMastTableAction extends AbstractTableAction {
                 frame.setVisible(true);
             }
         });
-    }
-
-    /**
-     * @deprecated since 4.5.7
-     */
-    @Deprecated
-    public static class MyComboBoxEditor extends DefaultCellEditor {
-
-        public MyComboBoxEditor(Vector<String> items) {
-            super(new JComboBox<String>(items));
-        }
-    }
-
-    /**
-     * @deprecated since 4.5.7
-     */
-    @Deprecated
-    public static class MyComboBoxRenderer extends JComboBox<String> implements TableCellRenderer {
-
-        public MyComboBoxRenderer(Vector<String> items) {
-            super(items);
-        }
-
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                boolean isSelected, boolean hasFocus, int row, int column) {
-            if (isSelected) {
-                setForeground(table.getSelectionForeground());
-                super.setBackground(table.getSelectionBackground());
-            } else {
-                setForeground(table.getForeground());
-                setBackground(table.getBackground());
-            }
-
-            // Select the current value
-            setSelectedItem(value);
-            return this;
-        }
     }
 
     @Override

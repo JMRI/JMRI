@@ -74,8 +74,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         dataScroll = new JScrollPane(dataTable);
         dataTable.setRowHeight(InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize() + 4);
 
-        // Use a "Numeric, if not, Alphanumeric" comparator
-        sorter.setComparator(RosterTableModel.IDCOL, new jmri.util.PreferNumericComparator());
+        sorter.setComparator(RosterTableModel.IDCOL, new jmri.util.AlphanumComparator());
 
         // set initial sort
         List<RowSorter.SortKey> sortKeys = new ArrayList<>();

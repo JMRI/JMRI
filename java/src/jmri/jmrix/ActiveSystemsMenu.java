@@ -1,6 +1,5 @@
 package jmri.jmrix;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import jmri.jmrix.swing.ComponentFactory;
@@ -44,12 +43,10 @@ public class ActiveSystemsMenu extends JMenu {
                 m.add(menu);
             }
         }
-
     }
 
     /**
-     * Add active systems as submenus inside a single menu entry. Only used in
-     * JmriDemo, which has a huge number of menus.
+     * Add active systems as submenus inside a single menu entry.
      */
     static public void addItems(JMenu m) {
 
@@ -63,7 +60,6 @@ public class ActiveSystemsMenu extends JMenu {
                 m.add(menu);
             }
         }
-
     }
 
     static JMenu getMenu(String className) {

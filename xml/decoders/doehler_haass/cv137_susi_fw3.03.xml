@@ -44,15 +44,18 @@
         <choice>Activated</choice>
         <choice xml:lang="fr">Activé</choice>
         <choice xml:lang="de">Aktiviert</choice>
+        <choice xml:lang="ca">Actiu</choice>
       </enumChoice>
       <enumChoice choice="Deactivated (Use ZCLK and ZDAT as AUX 3 and AUX 4 instead)" value="1">
         <choice>Deactivated (Use ZCLK and ZDAT as AUX 3 and AUX 4 instead)</choice>
         <choice xml:lang="fr">Désactivé (Utiliser ZCLK et ZDAT comme AUX 3 et AUX 4)</choice>
         <choice xml:lang="de">Deaktiviert (ZCLK und ZDAT als AUX 3 und AUX 4 nutzen)</choice>
+        <choice xml:lang="ca">Desactivat (Usar ZCLK i ZDAT com si fos AUX3 i AUX4</choice>
       </enumChoice>
     </enumVal>
     <label>SUSI mode</label>
     <label xml:lang="fr">Mode SUSI</label>
     <label xml:lang="de">SUSI Modus</label>
+    <label xml:lang="ca">Mode SUSI</label>
   </variable>
 </variables>

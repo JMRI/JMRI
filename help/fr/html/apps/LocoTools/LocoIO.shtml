@@ -306,7 +306,8 @@ demand&#233;. -->
       re&ccedil;ue par l'unit&eacute; LocoIO, l'op&eacute;ration
       sera renouvel&eacute;e jusqu'&agrave; ce qu'elle
       r&eacute;ussisse ou jusqu'&agrave; ce que vous fermiez la
-      fen&ecirc;tre. <!--#include virtual="/Footer" --></p>
+      fen&ecirc;tre.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

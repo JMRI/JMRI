@@ -6,10 +6,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Enumeration;
-import java.util.TooManyListenersException;
 import java.util.Vector;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.LnPacketizer;
+import jmri.jmrix.loconet.LnPacketizerStrict;
 import jmri.jmrix.loconet.LnPortController;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import org.slf4j.Logger;
@@ -18,13 +18,11 @@ import purejavacomm.CommPortIdentifier;
 import purejavacomm.NoSuchPortException;
 import purejavacomm.PortInUseException;
 import purejavacomm.SerialPort;
-import purejavacomm.SerialPortEvent;
-import purejavacomm.SerialPortEventListener;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Provide access to LocoNet via a LocoBuffer attached to a serial comm port.
- * <P>
+ * <p>
  * Normally controlled by the LocoBufferFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2010
@@ -40,9 +38,14 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         option1Name = "FlowControl"; // NOI18N
         option2Name = "CommandStation"; // NOI18N
         option3Name = "TurnoutHandle"; // NOI18N
-        options.put(option1Name, new Option(Bundle.getMessage("XconnectionUsesLabel", Bundle.getMessage("TypeSerial")), validOption1));
-        options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), getCommandStationListWithStandaloneLN(), false));
-        options.put(option3Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"})); // TODO I18N
+        option4Name = "PacketizerType"; //NOI18N
+        options.put(option1Name, new Option(Bundle.getMessage("XconnectionUsesLabel", Bundle.getMessage("TypeSerial")), validOption1));  // NOI18N
+        options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), getCommandStationListWithStandaloneLN(), false));  // NOI18N
+        options.put(option3Name, new Option(Bundle.getMessage("TurnoutHandling"),
+                new String[]{Bundle.getMessage("HandleNormal"), Bundle.getMessage("HandleSpread"), Bundle.getMessage("HandleOneOnly"), Bundle.getMessage("HandleBoth")})); // I18N
+        options.put(option4Name, new Option(Bundle.getMessage("PacketizerTypeLabel"),packetizerOptions()));  // NOI18N
+        options.put("TranspondingPresent", new Option(Bundle.getMessage("TranspondingPresent"), 
+                new String[]{Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonYes")} )); // NOI18N
     }
     
     /**
@@ -70,7 +73,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     @Override
     public Vector<String> getPortNames() {
         // first, check that the comm package can be opened and ports seen
-        portNameVector = new Vector<String>();
+        portNameVector = new Vector<>();
         Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
@@ -134,82 +137,16 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
                 // report additional status
                 log.debug(" port flow control shows " // NOI18N
                         + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
-            }
-            if (log.isDebugEnabled()) {
-                // arrange to notify later
-                activeSerialPort.addEventListener(new SerialPortEventListener() {
-                    @Override
-                    public void serialEvent(SerialPortEvent e) {
-                        int type = e.getEventType();
-                        switch (type) {
-                            case SerialPortEvent.DATA_AVAILABLE:
-                                log.info("SerialEvent: DATA_AVAILABLE is " + e.getNewValue()); // NOI18N
-                                return;
-                            case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
-                                log.info("SerialEvent: OUTPUT_BUFFER_EMPTY is " + e.getNewValue()); // NOI18N
-                                return;
-                            case SerialPortEvent.CTS:
-                                log.info("SerialEvent: CTS is " + e.getNewValue()); // NOI18N
-                                return;
-                            case SerialPortEvent.DSR:
-                                log.info("SerialEvent: DSR is " + e.getNewValue()); // NOI18N
-                                return;
-                            case SerialPortEvent.RI:
-                                log.info("SerialEvent: RI is " + e.getNewValue()); // NOI18N
-                                return;
-                            case SerialPortEvent.CD:
-                                log.info("SerialEvent: CD is " + e.getNewValue()); // NOI18N
-                                return;
-                            case SerialPortEvent.OE:
-                                log.info("SerialEvent: OE (overrun error) is " + e.getNewValue()); // NOI18N
-                                return;
-                            case SerialPortEvent.PE:
-                                log.info("SerialEvent: PE (parity error) is " + e.getNewValue()); // NOI18N
-                                return;
-                            case SerialPortEvent.FE:
-                                log.info("SerialEvent: FE (framing error) is " + e.getNewValue()); // NOI18N
-                                return;
-                            case SerialPortEvent.BI:
-                                log.info("SerialEvent: BI (break interrupt) is " + e.getNewValue()); // NOI18N
-                                return;
-                            default:
-                                log.info("SerialEvent of unknown type: " + type + " value: " + e.getNewValue()); // NOI18N
-                                return;
-                        }
-                    }
-                }
-                );
-                try {
-                    activeSerialPort.notifyOnFramingError(true);
-                } catch (Exception e) {
-                    log.debug("Could not notifyOnFramingError: " + e); // NOI18N
-                }
 
-                try {
-                    activeSerialPort.notifyOnBreakInterrupt(true);
-                } catch (Exception e) {
-                    log.debug("Could not notifyOnBreakInterrupt: " + e); // NOI18N
-                }
-
-                try {
-                    activeSerialPort.notifyOnParityError(true);
-                } catch (Exception e) {
-                    log.debug("Could not notifyOnParityError: " + e); // NOI18N
-                }
-
-                try {
-                    activeSerialPort.notifyOnOverrunError(true);
-                } catch (Exception e) {
-                    log.debug("Could not notifyOnOverrunError: " + e); // NOI18N
-                }
-
+                // log events
+                setPortEventLogging(activeSerialPort);
             }
 
             opened = true;
 
         } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (IOException | TooManyListenersException ex) {
+        } catch (IOException ex) {
             log.error("Unexpected exception while opening port {} trace follows:", portName, ex); // NOI18N
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
@@ -239,8 +176,9 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
 
         setCommandStationType(getOptionState(option2Name));
         setTurnoutHandling(getOptionState(option3Name));
+        setTranspondingAvailable(getOptionState("TranspondingPresent"));
         // connect to a packetizing traffic controller
-        LnPacketizer packets = new LnPacketizer();
+        LnPacketizer packets = getPacketizer(getOptionState(option4Name));
         packets.connectPort(this);
 
         // create memo
@@ -248,7 +186,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         // do the common manager config
 
         this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                mTurnoutNoRetry, mTurnoutExtraSpace);
+                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable);
         this.getSystemConnectionMemo().configureManagers();
 
         // start operation
@@ -295,16 +233,18 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
-        // find and configure flow control
+        // find and configure flow control from option
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also defaults in selectedOption1
         if (getOptionState(option1Name).equals(validOption1[1])) {
             flow = SerialPort.FLOWCONTROL_NONE;
         }
         configureLeadsAndFlowControl(activeSerialPort, flow);
         
-        log.debug("Found flow control " + activeSerialPort.getFlowControlMode() // NOI18N
-                + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT // NOI18N
-                + " RTSCTS_IN= " + SerialPort.FLOWCONTROL_RTSCTS_IN); // NOI18N
+        log.info("LocoBuffer (serial) adapter"
+                +(activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=")
+                +activeSerialPort.getFlowControlMode()
+                + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT
+                + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN);
     }
 
     @Override
@@ -326,6 +266,58 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
+
+    /**
+     *  Define the readable data and internal code
+     */
+    private static String[][] packetizers = { {Bundle.getMessage("PacketizerTypelnPacketizer"),"lnPacketizer" },
+            {Bundle.getMessage("PacketizerTypelnPacketizerStrict"),"lnPacketizerStrict"} };
+
+    /**
+     *
+     * @return String array of readable choices
+     */
+    private String[] packetizerOptions() {
+        String[] retval = new String[packetizers.length];
+        for (int i=0;i < packetizers.length; i++) {
+            retval[i]=packetizers[i][0];
+        }
+        return retval;
+    }
+    /**
+     * for a given readable choice return internal value
+     * or the default
+     * @return - internal value
+     */
+    protected String getPacketizerOption(String s) {
+        for (int i=0;i < packetizers.length; i++) {
+            if (packetizers[i][0].equals(s)) {
+                return packetizers[i][1];
+            }
+        }
+        return "lnPacketizer";
+    }
+    /**
+     * 
+     * @param s the packetizer to use in its readable form.
+     * @return a LnPacketizer
+     */
+    protected LnPacketizer getPacketizer(String s) {
+        LnPacketizer packets;
+        String packetSelection = getPacketizerOption(s);
+        switch (packetSelection) {
+            case "lnPacketizer":
+                packets = new LnPacketizer(this.getSystemConnectionMemo());
+                break;
+            case "lnPacketizerStrict":
+                packets = new LnPacketizerStrict(this.getSystemConnectionMemo());
+                break;
+            default:
+                packets = new LnPacketizer(this.getSystemConnectionMemo());
+                log.warn("Using Normal do not understand option [{}]", packetSelection);
+        }
+        return packets;
+    }
 
     private final static Logger log = LoggerFactory.getLogger(LocoBufferAdapter.class);
 

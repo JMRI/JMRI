@@ -8,24 +8,25 @@ import org.junit.Test;
 
 /**
  * JUnit tests for the SecsiSystemConnectionMemo class
- * <p>
  *
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class SecsiSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
      
     @Override
     @Test
     public void testProvidesConsistManager(){
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+       Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
     @Override
     @Before
     public void setUp(){
        JUnitUtil.setUp();
-       SerialTrafficController tc = new SerialTrafficControlScaffold();
-       scm = new SecsiSystemConnectionMemo();
+       SecsiSystemConnectionMemo memo = new SecsiSystemConnectionMemo();
+       memo.setTrafficController(new SerialTrafficControlScaffold(memo));
+       memo.configureManagers();
+       scm = memo;
     }
 
     @Override

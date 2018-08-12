@@ -48,6 +48,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 import javax.swing.KeyStroke;
 import javax.swing.SwingWorker;
+import jmri.CatalogTreeManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.CatalogPanel;
@@ -68,6 +69,7 @@ import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.SensorIcon;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.controlPanelEditor.shape.ShapeDrawer;
+import jmri.jmrit.display.palette.ColorDialog;
 import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.logix.WarrantTableAction;
 import jmri.util.HelpUtil;
@@ -96,7 +98,7 @@ import org.slf4j.LoggerFactory;
  * The "contents" List keeps track of all the objects added to the target frame
  * for later manipulation. Extends the behavior it shares with PanelPro DnD
  * implemented at JDK 1.2 for backward compatibility
- *
+ * <P>
  * @author Pete Cressman Copyright: Copyright (c) 2009, 2010, 2011
  *
  */
@@ -186,7 +188,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             public CatalogPanel doInBackground() {
                 return CatalogPanel.makeDefaultCatalog();
             }
-
             /**
              * Minimal implementation to catch and log errors
              */
@@ -411,7 +412,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         JMenuItem storeIndexItem = new JMenuItem(Bundle.getMessage("MIStoreImageIndex"));
         _fileMenu.add(storeIndexItem);
         storeIndexItem.addActionListener((ActionEvent event) -> {
-            InstanceManager.getDefault(ImageIndexEditor.class).storeImageIndex();
+            InstanceManager.getDefault(CatalogTreeManager.class).storeImageIndex();
         });
 
         JMenuItem editItem = new JMenuItem(Bundle.getMessage("renamePanelMenu", "..."));
@@ -442,7 +443,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _fileMenu.add(deleteItem);
         deleteItem.addActionListener((ActionEvent event) -> {
             if (deletePanel()) {
-                dispose(true);
+                dispose();
             }
         });
         _fileMenu.addSeparator();
@@ -982,7 +983,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             name = name.substring(0, name.length() - ending.length());
         }
         if (name.equals(defaultName)) {
-            name = Bundle.getMessage("untitled") + " (" + name + ")";
+            name = Bundle.getMessage("untitled") + "(" + name + ")";
         }
        if (isEditable()) {
             super.setTitle(name + " " + Bundle.getMessage("LabelEditor"));
@@ -1112,6 +1113,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 }
                 _manualSelection = false;
             }
+        } else {
+            if (event.isControlDown() && (event.isPopupTrigger() || event.isMetaDown() || event.isAltDown())) {
+/*                ActionListener colorAction = ((ActionEvent event) -> {
+                    colorChanged(); // callback
+                });*/
+                new ColorDialog(this, getTargetPanel(), null);
+            }
         }
         if (!isEditable() && selection != null && selection.isHidden()) {
             selection = null;
@@ -1195,8 +1203,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     ///////////////// Handle mouse events ////////////////
-
     private long _mouseDownTime = 0;
+
     @Override
     public void mousePressed(MouseEvent event) {
         _mouseDownTime = System.currentTimeMillis();
@@ -1265,7 +1273,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
             if (isEditable()) {
                 _shapeDrawer.doMouseReleased(selection, event, this);
-                
+
                 if (!_circuitBuilder.doMouseReleased(selection, _dragging)) {
                     if (selection != null) {
                         if (!_dragging) {
@@ -1352,7 +1360,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         setToolTip(null); // ends tooltip if displayed
 
         long time = System.currentTimeMillis();
-        if (time - _mouseDownTime < 50) {
+        if (time - _mouseDownTime < 200) {
             return;     // don't drag until sure mouse down was not just a select click
         }
 
@@ -1463,7 +1471,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             if (g instanceof Graphics2D) {
                 Graphics2D g2d = (Graphics2D) g;
                 g2d.setStroke(new java.awt.BasicStroke(2.0f));
-                
+
             }
             g.setColor(new Color(150, 150, 255));
             for (Positionable p : _secondSelectionGroup) {
@@ -1651,17 +1659,15 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                     popupSet |= setTextAttributes(pl, popup);       // only for plain icons
                 }   Add backgrounds & text over icons later */
                 if (!pl.isIcon()) {
-                    popupSet |= setTextAttributes(pl, popup);
-                    if (p instanceof MemoryIcon) {
-                        popupSet |= p.setTextEditMenu(popup);
-                    }
+                    popupSet |= p.setTextEditMenu(popup);
+                    popupSet |= setTextAttributes(p, popup);
+//                    popupSet |= pl.setEditTextMenu(popup);
                 } else if (p instanceof SensorIcon) {
                     popup.add(CoordinateEdit.getTextEditAction(p, "OverlayText"));
                     if (pl.isText()) {
                         popupSet |= setTextAttributes(p, popup);
+//                        popupSet |= pl.setEditTextMenu(popup);
                     }
-                } else {
-                    popupSet = p.setTextEditMenu(popup);
                 }
             } else if (p instanceof PositionableJPanel) {
                 popupSet |= setTextAttributes(p, popup);
@@ -1808,7 +1814,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             _namedIconDataFlavor = new DataFlavor(ImageIndexEditor.IconDataFlavorMime);
             _positionableListDataFlavor = new DataFlavor(List.class, "JComponentList");
         } catch (ClassNotFoundException cnfe) {
-            cnfe.printStackTrace();
+            log.error("Unable to find class supporting {}", ImageIndexEditor.IconDataFlavorMime, cnfe);
         }
         new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this);
     }
@@ -1842,6 +1848,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         try {
             //Point pt = evt.getLocation(); coords relative to entire window
             Point pt = _targetPanel.getMousePosition(true);
+            if (pt == null) {
+                return;
+            }
             Transferable tr = evt.getTransferable();
             if (log.isDebugEnabled()) { // avoid string building if not debug
                 DataFlavor[] flavors = tr.getTransferDataFlavors();
@@ -1856,7 +1865,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 if (item == null) {
                     return;
                 }
-                item.setLocation(pt.x, pt.y);
+                item.setLocation((int) Math.round(pt.x/getPaintScale()), (int) Math.round(pt.y/getPaintScale()));
                 // now set display level in the pane.
                 item.setDisplayLevel(item.getDisplayLevel());
                 item.setEditor(this);
@@ -1878,7 +1887,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 } else {
                     ni.setDisplayLevel(ICONS);
                 }
-                ni.setLocation(pt.x, pt.y);
+                ni.setLocation((int) Math.round(pt.x/getPaintScale()), (int) Math.round(pt.y/getPaintScale()));
                 ni.setEditor(this);
                 putItem(ni);
                 ni.updateSize();
@@ -1889,7 +1898,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 PositionableLabel l = new PositionableLabel(text, this);
                 l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
                 l.setDisplayLevel(LABELS);
-                l.setLocation(pt.x, pt.y);
+                l.setLocation((int) Math.round(pt.x/getPaintScale()), (int) Math.round(pt.y/getPaintScale()));
                 l.setEditor(this);
                 putItem(l);
                 evt.dropComplete(true);
@@ -1898,6 +1907,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                         = (List<Positionable>) tr.getTransferData(_positionableListDataFlavor);
                 for (Positionable pos : dragGroup) {
                     pos.setEditor(this);
+                    pos.setLocation((int) Math.round(pt.x/getPaintScale()), (int) Math.round(pt.y/getPaintScale()));
                     putItem(pos);
                     pos.updateSize();
                     log.debug("DnD Add {}", pos.getNameString());
@@ -1947,5 +1957,4 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     private final static Logger log = LoggerFactory.getLogger(ControlPanelEditor.class);
-
 }

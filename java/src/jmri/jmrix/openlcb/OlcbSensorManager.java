@@ -1,6 +1,11 @@
 package jmri.jmrix.openlcb;
 
+import java.util.ArrayList;
+import java.util.List;
+import jmri.BooleanPropertyDescriptor;
 import jmri.JmriException;
+import jmri.NamedBean;
+import jmri.NamedBeanPropertyDescriptor;
 import jmri.Sensor;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
@@ -21,9 +26,44 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
 
     String prefix = "M";
 
+    // Whether we accumulate partially loaded objects in pendingSensors.
+    private boolean isLoading = false;
+    // Turnouts that are being loaded from XML.
+    private final ArrayList<OlcbSensor> pendingSensors = new ArrayList<>();
+
     @Override
     public String getSystemPrefix() {
         return prefix;
+    }
+
+    @Override
+    public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
+        List<NamedBeanPropertyDescriptor<?>> l = new ArrayList<>();
+        l.add(new BooleanPropertyDescriptor(OlcbUtils.PROPERTY_IS_AUTHORITATIVE, OlcbTurnout
+                .DEFAULT_IS_AUTHORITATIVE) {
+            @Override
+            public String getColumnHeaderText() {
+                return Bundle.getMessage("OlcbStateAuthHeader");
+            }
+
+            @Override
+            public boolean isEditable(NamedBean bean) {
+                return OlcbUtils.isOlcbBean(bean);
+            }
+        });
+        l.add(new BooleanPropertyDescriptor(OlcbUtils.PROPERTY_LISTEN, OlcbTurnout
+                .DEFAULT_LISTEN) {
+            @Override
+            public String getColumnHeaderText() {
+                return Bundle.getMessage("OlcbStateListenHeader");
+            }
+
+            @Override
+            public boolean isEditable(NamedBean bean) {
+                return OlcbUtils.isOlcbBean(bean);
+            }
+        });
+        return l;
     }
 
     // to free resources when no longer used
@@ -54,9 +94,45 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         }
 
         // OK, make
-        Sensor s = new OlcbSensor(getSystemPrefix(), addr, memo.get(OlcbInterface.class));
+        OlcbSensor s = new OlcbSensor(getSystemPrefix(), addr, memo.get(OlcbInterface.class));
         s.setUserName(userName);
+
+        synchronized (pendingSensors) {
+            if (isLoading) {
+                pendingSensors.add(s);
+            } else {
+                s.finishLoad();
+            }
+        }
         return s;
+    }
+
+    /**
+     * This function is invoked before an XML load is started. We defer initialization of the
+     * newly created Sensors until finishLoad because the feedback type might be changing as we
+     * are parsing the XML.
+     */
+    public void startLoad() {
+        log.debug("Sensor manager : start load");
+        synchronized (pendingSensors) {
+            isLoading = true;
+        }
+    }
+
+    /**
+     * This function is invoked after the XML load is complete and all Sensors are instantiated
+     * and their feedback type is read in. We use this hook to finalize the construction of the
+     * OpenLCB objects whose instantiation was deferred until the feedback type was known.
+     */
+    public void finishLoad() {
+        log.debug("Sensor manager : finish load");
+        synchronized (pendingSensors) {
+            for (OlcbSensor s : pendingSensors) {
+                s.finishLoad();
+            }
+            pendingSensors.clear();
+            isLoading = false;
+        }
     }
 
     @Override
@@ -100,13 +176,13 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     // listen for sensors, creating them as needed
     @Override
     public void reply(CanReply l) {
-        // doesn't do anything, because for now 
+        // doesn't do anything, because for now
         // we want you to create manually
     }
 
     @Override
     public void message(CanMessage l) {
-        // doesn't do anything, because 
+        // doesn't do anything, because
         // messages come from us
     }
 

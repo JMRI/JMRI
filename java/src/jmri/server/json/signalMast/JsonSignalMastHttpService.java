@@ -10,12 +10,14 @@ import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.TOKEN_HELD;
 import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.signalMast.JsonSignalMast.SIGNAL_MAST;
+import static jmri.server.json.signalMast.JsonSignalMast.SIGNAL_MASTS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
+import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.SignalMast;
 import jmri.SignalMastManager;
@@ -25,7 +27,7 @@ import jmri.server.json.JsonNamedBeanHttpService;
 /**
  * JSON HTTP service for {@link jmri.SignalMast}s.
  *
- * @author Randall Wood (C) 2016
+ * @author Randall Wood Copyright 2016, 2018
  */
 public class JsonSignalMastHttpService extends JsonNamedBeanHttpService {
 
@@ -39,16 +41,16 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService {
         root.put(TYPE, SIGNAL_MAST);
         SignalMast signalMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
         ObjectNode data = this.getNamedBean(signalMast, name, type, locale);
-        root.put(DATA, data);
+        root.set(DATA, data);
         if (signalMast != null) {
             String aspect = signalMast.getAspect();
             if (aspect == null) {
-                aspect = ASPECT_UNKNOWN; //if null, set aspect to "Unknown"   
+                aspect = ASPECT_UNKNOWN; //if null, set aspect to "Unknown"
             }
             data.put(ASPECT, aspect);
             data.put(LIT, signalMast.getLit());
             data.put(TOKEN_HELD, signalMast.getHeld());
-            //state is appearance, plus flags for held and dark statii
+            //state is appearance, plus flags for held and dark statuses
             if ((signalMast.getHeld()) && (signalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD) != null)) {
                 data.put(STATE, ASPECT_HELD);
             } else if ((!signalMast.getLit()) && (signalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK) != null)) {
@@ -93,5 +95,19 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService {
             root.add(this.doGet(SIGNAL_MAST, name, locale));
         }
         return root;
+    }
+
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+        switch (type) {
+            case SIGNAL_MAST:
+            case SIGNAL_MASTS:
+                return doSchema(type,
+                        server,
+                        "jmri/server/json/signalMast/signalMast-server.json",
+                        "jmri/server/json/signalMast/signalMast-client.json");
+            default:
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+        }
     }
 }

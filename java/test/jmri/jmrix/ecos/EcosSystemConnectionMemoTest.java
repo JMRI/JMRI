@@ -18,7 +18,7 @@ public class EcosSystemConnectionMemoTest  extends jmri.jmrix.SystemConnectionMe
     @Override
     @Test
     public void testProvidesConsistManager(){
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+       Assert.assertTrue("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
     @Before
@@ -26,7 +26,9 @@ public class EcosSystemConnectionMemoTest  extends jmri.jmrix.SystemConnectionMe
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         scm = memo = new jmri.jmrix.ecos.EcosSystemConnectionMemo();
-
+        memo.setEcosTrafficController(new EcosInterfaceScaffold());
+        memo.configureManagers();
+        memo.getPreferenceManager().setPreferencesLoaded();
         jmri.InstanceManager.store(memo, jmri.jmrix.ecos.EcosSystemConnectionMemo.class);
     }
 

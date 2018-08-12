@@ -6,6 +6,7 @@ import jmri.Sensor;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -19,8 +20,6 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2016
  */
 public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
-
-    private GpioProvider myprovider = null;
 
     @Override
     public String getSystemName(int i) {
@@ -105,6 +104,16 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
     }
 
     @Override
+    @Test
+    public void testProvideName() {
+        // create
+        Sensor t = l.provide("" + 14);
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(14)));
+    }
+    
+    @Override
     @Before
     public void setUp() {
        apps.tests.Log4JFixture.setUp();
@@ -117,7 +126,6 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
     @After
     public void tearDown() {
        jmri.util.JUnitUtil.resetInstanceManager();
-       myprovider = null;
        apps.tests.Log4JFixture.tearDown();
     }
 

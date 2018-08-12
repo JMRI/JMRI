@@ -7,9 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <P>
- * Tests for SprogProgrammer
- * </P>
+ * Tests for SprogProgrammer.
+ *
  * @author Paul Bender Copyright (C) 2017
  */
 public class SprogProgrammerTest {
@@ -38,8 +37,8 @@ public class SprogProgrammerTest {
 
     @After
     public void tearDown() {
+        stcs.dispose();
         JUnitUtil.tearDown();
     }
-
 
 }

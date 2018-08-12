@@ -3,7 +3,6 @@ package jmri.jmrix.sprog;
 import java.util.*;
 import jmri.*;
 import jmri.jmrix.AbstractProgrammer;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

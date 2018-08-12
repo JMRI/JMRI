@@ -4,8 +4,8 @@
 <head>
  <title>JMRI Hardware Setup Support - Terminal Server Connection</title>
 
-    <meta content="David D Zuhn" name="Author">
-    <meta content="John Plocher" name="Author">
+    <meta name="author" content="David D Zuhn">
+    <meta name="author" content="John Plocher">
     <meta name="keywords" content="EasyDCC Lantronix terminal server java model railroad JMRI install">
 
 <!-- Style -->

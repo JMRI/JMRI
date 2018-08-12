@@ -42,12 +42,14 @@
    <variable label="Volume sound fader" CV="349" default="0" tooltip="CV349: 0=>0%, 255=>200%" item="Sound Setting 6" exclude="SUSI sound modules,SD18A_1.00,SD18A_1.01,SD18A_1.02,SD21A_1.01,SD21A_1.02">
 		<decVal/>
 		<label xml:lang="fr">Volume mode silencieux</label>
+		<label xml:lang="ca">Volume mode silenciós</label>
 		<label xml:lang="de">Lautstärke Ausblendeffekt</label>
 	</variable>
 	<variable label="Volume sound fader" CV="949" default="0" tooltip="CV949: 0=>0%, 255=>200%" item="Sound Setting 6" exclude="Combo sound decoders,SH10A_1.00,SH10A_1.01,SH10A_1.02,SH10A_1.03,SH10A_1.04">
 		<decVal/>
 		<label xml:lang="fr">Volume mode silencieux</label>
 		<label xml:lang="de">Lautstärke Ausblendeffekt</label>
+		<label xml:lang="ca">Volume mode silenciós</label>
 	</variable>
 	
   <!-- END SIMILAR CV --> 

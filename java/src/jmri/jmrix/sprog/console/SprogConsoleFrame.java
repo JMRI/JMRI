@@ -28,11 +28,11 @@ import org.slf4j.LoggerFactory;
  * Updated Jan 2010 by Andrew Berridge - fixed errors caused by trying to send
  * some commands while slot manager is active
  * 
- * Updated April 2016 by Andrew Crosland remove the checks on slot manager
+ * Updated April 2016 by Andrew Crosland - remove the checks on slot manager
  * status, implement a timeout and look for the correct replies which may be
  * delayed by replies for slot manager.
  *
- * Refactored
+ * Refactored, I18N
  *
  * @author	Andrew Crosland Copyright (C) 2008, 2016
  */
@@ -62,7 +62,6 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
 
     // members for handling the SPROG interface
     SprogTrafficController tc = null;
-    SprogMessage msg;
     String replyString;
     String tmpString = null;
     State state = State.IDLE;
@@ -73,21 +72,12 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
 
         IDLE,
         CURRENTQUERYSENT, // awaiting reply to "I"
-        MODEQUERYSENT, // awaiting reply to "M"
-        CURRENTSENT, // awaiting reply to "I xxx"
-        MODESENT, // awaiting reply to "M xxx"
-        WRITESENT   		// awaiting reply to "W"
+        MODEQUERYSENT,    // awaiting reply to "M"
+        CURRENTSENT,      // awaiting reply to "I xxx"
+        MODESENT,         // awaiting reply to "M xxx"
+        WRITESENT   	  // awaiting reply to "W"
     }
 
-    /*static final int IDLE = 0;
-     static final int CRSENT = 1;                // awaiting reply to " "
-     static final int QUERYSENT = 2;             // awaiting reply to "?"
-     static final int CURRENTQUERYSENT = 3;      // awaiting reply to "I"
-     static final int MODEQUERYSENT = 4;         // awaiting reply to "M"
-     static final int CURRENTSENT = 5;           // awaiting reply to "I xxx"
-     static final int MODESENT = 6;              // awaiting reply to "M xxx"
-     static final int WRITESENT = 7;             // awaiting reply to "W"
-     */
     public SprogConsoleFrame(SprogSystemConnectionMemo memo) {
         super();
         _memo = memo;
@@ -135,11 +125,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                 BorderFactory.createEtchedBorder(), Bundle.getMessage("CommandHistoryTitle")));
 
         // Let user press return to enter message
-        entryField.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                enterButtonActionPerformed(e);
-            }
+        entryField.addActionListener((java.awt.event.ActionEvent e) -> {
+            enterButtonActionPerformed(e);
         });
 
         /*
@@ -164,18 +151,12 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                         cmdTextField.getPreferredSize().height)
         );
 
-        cmdTextField.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                sendButtonActionPerformed(e);
-            }
+        cmdTextField.addActionListener((java.awt.event.ActionEvent e) -> {
+            sendButtonActionPerformed(e);
         });
 
-        sendButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                sendButtonActionPerformed(e);
-            }
+        sendButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            sendButtonActionPerformed(e);
         });
 
         cmdPane1.add(cmdLabel);
@@ -201,17 +182,10 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         speed28Button.setToolTipText(Bundle.getMessage("ButtonXStepTooltip", 28));
         speed128Button.setToolTipText(Bundle.getMessage("ButtonXStepTooltip", 128));
 
-//        getContentPane().add(speedPanel); // now embedded inside "Configuration" frame
-
         /*
          * Configuration panel
          */
         JPanel configPanel = new JPanel();
-        // is now embedded inside "Configuration" frame:
-//        configPanel.setBorder(BorderFactory.createTitledBorder(
-//                BorderFactory.createEtchedBorder(), Bundle.getMessage("ConfigurationTitle")));
-//        configPanel.setLayout(new FlowLayout());
-
         // *** Which versions support current limit ???
         currentLabel.setText(Bundle.getMessage("CurrentLimitLabel"));
         currentLabel.setVisible(true);
@@ -225,11 +199,6 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                 )
         );
 
-//        currentTextField.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent e) {
-//                validateCurrent();
-//            }
-//        });
         ztcCheckBox.setText(Bundle.getMessage("ButtonSetZTCMode"));
         ztcCheckBox.setVisible(true);
         ztcCheckBox.setToolTipText(Bundle.getMessage("ButtonSetZTCModeTooltip"));
@@ -250,8 +219,6 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         configPanel.add(blueCheckBox);
         configPanel.add(unlockCheckBox);
 
-//        getContentPane().add(configPanel);
-
         /*
          * Status Panel
          */
@@ -264,11 +231,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         saveButton.setVisible(true);
         saveButton.setToolTipText(Bundle.getMessage("ButtonApplyTooltip"));
 
-        saveButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                saveButtonActionPerformed(e);
-            }
+        saveButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            saveButtonActionPerformed(e);
         });
 
         statusPanel.add(speedPanel);
@@ -278,6 +242,9 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         getContentPane().add(statusPanel);
 
         // pack for display
+        pack();
+        cmdPane1.setMaximumSize(statusPanel.getSize());
+        statusPanel.setMaximumSize(statusPanel.getSize());
         pack();
 
         // Now the GUI is all setup we can get the SPROG version
@@ -292,14 +259,6 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         addHelpMenu("package.jmri.jmrix.sprog.console.SprogConsoleFrame", true);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void enterButtonActionPerformed(java.awt.event.ActionEvent e) {
-        nextLine(entryField.getText() + "\n", "");
-    }
-
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         SprogMessage m = new SprogMessage(cmdTextField.getText());
         // Messages sent by us will not be forwarded back so add to display manually
@@ -307,6 +266,10 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         tc.sendSprogMessage(m, this);
     }
 
+    /**
+     * Validate the current limit value entered by the user, depending on the
+     * SPROG version.
+     */
     @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // validateCurrent() is called from synchronised code
     public void validateCurrent() {
@@ -381,23 +344,29 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     }
 
     /**
-     * {@inheritDoc}
+     * Handle a SprogVersion notification.
+     * <p>
+     * Decode the SPROG version and populate the console gui appropriately with 
+     * the features applicable to the version.
+     * 
+     * @param v The SprogVersion being handled
      */
     @Override
     synchronized public void notifyVersion(SprogVersion v) {
+        SprogMessage msg;
         sv = v;
         // Save it for others
         _memo.setSprogVersion(v);
         if (log.isDebugEnabled()) {
-            log.debug("Found: " + sv.toString());
+            log.debug("Found: {}", sv.toString());
         }
         if (sv.sprogType.isSprog() == false) {
             // Didn't recognize a SPROG so check if it is in boot mode already
-            JOptionPane.showMessageDialog(null, "SPROG prompt not found",
-                    "SPROG Console", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("TypeNoSprogPromptFound"),
+                    Bundle.getMessage("SprogConsoleTitle"), JOptionPane.ERROR_MESSAGE);
         } else {
             if ((sv.sprogType.sprogType > SprogType.SPROGIIv3) &&(sv.sprogType.sprogType < SprogType.NANO)) {
-                currentTextField.setToolTipText("Enter new current limit in milliAmps (less than 2500)");
+                currentTextField.setToolTipText(Bundle.getMessage("CurrentLimitFieldTooltip2500"));
             }
             // We know what we're connected to
             setTitle(title() + " - Connected to " + sv.toString());
@@ -451,15 +420,21 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
      * {@inheritDoc}
      */
     @Override
-    public synchronized void notifyMessage(SprogMessage l) {  // receive a message and log it
+    public synchronized void notifyMessage(SprogMessage l) { // receive a message and log it
         nextLine("cmd: \"" + l.toString(_memo.getSprogTrafficController().isSIIBootMode()) + "\"\n", "");
     }
 
     /**
-     * {@inheritDoc}
+     * Handle a SprogReply in a console specific way.
+     * <p>
+     * Parse replies from the SPROG using a state machine to determine what we are
+     * expecting in response to commands sent to the SPROG. Extract data to populate
+     * various fields in the gui.
+     * 
+     * @param l The SprogReply to be parsed
      */
     @Override
-    public synchronized void notifyReply(SprogReply l) {  // receive a reply message and log it
+    public synchronized void notifyReply(SprogReply l) { // receive a reply message and log it
         SprogMessage msg;
         int currentLimitFromHardware;
         replyString = l.toString();
@@ -485,8 +460,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                     try {
                         currentLimitFromHardware = Integer.parseInt(tmpString);
                     } catch (NumberFormatException e) {
-                        JOptionPane.showMessageDialog(null, "Malformed Reply for current limit",
-                                "SPROG Console", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorFrameDialogLimit"),
+                                Bundle.getMessage("SprogConsoleTitle"), JOptionPane.ERROR_MESSAGE);
                         state = State.IDLE;
                         return;
                     }
@@ -516,8 +491,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                     try {
                         modeWord = Integer.parseInt(tmpString, 16);
                     } catch (NumberFormatException e) {
-                        JOptionPane.showMessageDialog(null, "Malformed Reply for mode word",
-                                "SPROG Console", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorFrameDialogWord"),
+                                Bundle.getMessage("SprogConsoleTitle"), JOptionPane.ERROR_MESSAGE);
                         state = State.IDLE;
                         return;
                     }
@@ -595,8 +570,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
      * Internal routine to handle a timeout.
      */
     synchronized protected void timeout() {
-        JOptionPane.showMessageDialog(null, "Timeout talking to SPROG",
-                "Timeout", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, Bundle.getMessage("TypeTimeoutTalkingToSPROG"),
+                Bundle.getMessage("Timeout"), JOptionPane.ERROR_MESSAGE);
         state = State.IDLE;
     }
 
@@ -621,16 +596,14 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     }
 
     /**
-     * Internal routine to handle timer starts {@literal &} restarts
+     * Internal routine to handle timer starts {@literal &} restarts.
+     *
      * @param delay milliseconds to delay
      */
     protected void restartTimer(int delay) {
         if (timer == null) {
-            timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    timeout();
-                }
+            timer = new javax.swing.Timer(delay, (java.awt.event.ActionEvent e) -> {
+                timeout();
             });
         }
         timer.stop();

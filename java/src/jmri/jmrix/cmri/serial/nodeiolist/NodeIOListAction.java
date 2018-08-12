@@ -25,6 +25,7 @@ public class NodeIOListAction extends AbstractAction {
         this("C/MRI Node Bit Assignments",memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         NodeIOListFrame f = new NodeIOListFrame(_memo);
         try {

@@ -1,6 +1,7 @@
 package jmri.jmrix.lenz;
 
 import jmri.Consist;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.implementation.AbstractConsistManager;
 import org.slf4j.Logger;
@@ -51,12 +52,15 @@ public class XNetConsistManager extends AbstractConsistManager {
      * Add a new XNetConsist with the given address to consistTable/consistList.
      */
     @Override
-    public Consist addConsist(DccLocoAddress address) {
+    public Consist addConsist(LocoAddress address) {
+        if (! (address instanceof DccLocoAddress)) {
+            throw new IllegalArgumentException("address is not a DccLocoAddress object");
+        }
         if (consistTable.containsKey(address)) { // no duplicates allowed.
             return consistTable.get(address);
         }
         XNetConsist consist;
-        consist = new XNetConsist(address, tc, systemMemo);
+        consist = new XNetConsist((DccLocoAddress) address, tc, systemMemo);
         consistTable.put(address, consist);
         return (consist);
     }

@@ -39,30 +39,36 @@
       <decVal min="97" max="97"/>
         <label>Manufacturer</label>
         <label xml:lang="de">Herstellerkennung</label>
+        <label xml:lang="ca">Fabricant</label>
     </variable>
     <variable item="Decoder ID" CV="261" readOnly="yes" default="0">
       <decVal min="0" max="250"/>
         <label>Decoder ID</label>
         <label xml:lang="de">Decoderkennzeichen</label>
+        <label xml:lang="ca">ID del decoder</label>
     </variable>
     <variable item="Decoder Version 2" CV="262" readOnly="yes" default="0">
       <decVal min="0" max="250"/>
         <label>Firmware Version</label>
         <label xml:lang="de">Versionsnummer</label>
+         <label xml:lang="ca">Versió número</label>
     </variable>
     <variable item="Date 1" CV="263" readOnly="yes" default="0">
       <decVal min="0" max="255"/>
         <label>Date</label>
         <label xml:lang="de">Datum</label>
+         <label xml:lang="ca">Data</label>
     </variable>
     <variable item="Revision 2" CV="264" readOnly="yes" default="0">
       <decVal min="0" max="255"/>
         <label>Revision</label>
         <label xml:lang="de">Revisionsnummer</label>
+         <label xml:lang="ca">Número de revisió</label>
     </variable>
     <variable item="Date 2" CV="265" readOnly="yes" default="0">
       <decVal min="0" max="255"/>
         <label>Date</label>
         <label xml:lang="de">Datum</label>
+         <label xml:lang="ca">Data</label>
     </variable>
 </variables>

@@ -17,7 +17,7 @@ public class DCCppSerialPortControllerTest extends jmri.jmrix.AbstractSerialPort
     public void setUp(){
        JUnitUtil.setUp();
        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
-       DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
+       new DCCppSystemConnectionMemo(tc);
        apc = new DCCppSerialPortController(){
             @Override
             public boolean status(){

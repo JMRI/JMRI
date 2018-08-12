@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: OBlock Add/Edit Help</title>
-  <meta name="Author" content="Bob Jacobsen">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help OBlock Table">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -32,7 +32,7 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Creating and Editing OBlocks, Portals and OPaths</h1>
+      <h1>Warrants: Creating and Editing OBlocks, Portals and OPaths</h1>
 
       <p>Start by entering each Occupancy Block of your layout into
       the <b>Occupancy Block Table</b>:</p>
@@ -62,7 +62,9 @@
             <li>Sensor "LS11" state is Sensor Active</li>
 
             <li>Sensor "LS12" state is Sensor Active</li>
-          </ul>Select <b>OR</b> as the Logic Operator<br>
+          </ul>
+
+          Select <b>OR</b> as the Logic Operator<br>
           and add as Actions:
 
           <ul>
@@ -78,14 +80,12 @@
           System Name. To continue editing the row, look for it at
           the top of the window. It will stay in place as long as
           it has the same System Name.</p>
-        </li>
 
-        <li style="list-style: none">
           <p class="flushleft">Next, enter the Portals between the
           Blocks into the <b>Portal Table</b>:</p>
         </li>
 
-        <li>For each point between the the Blocks you have defined
+        <li>For each point between the Blocks you have defined
         in the Occupancy Block Table, enter a Portal row for each
         Portal (gap) between the two Blocks.
 
@@ -197,11 +197,13 @@
 
       <p>To read about how OBlocks, Portals and OPaths can be used
       to generate train routes and make automated train scripts,
-      see <a href="../logix/Warrant.shtml">Warrants</a>.</p>
+      see <a href="Warrant.shtml">Warrants</a>.</p>
 
-      <p>Also see the <a href="../logix/WarrantTable.shtml">Warrant
-      Table help</a> for details on creating and editing Warrants. 
-      <!--#include virtual="/Footer" --></p>
+      <p>Also see the <a href="WarrantTable.shtml">Warrant
+      Table help</a> for details on creating and editing Warrants.</p>
+
+      <p>Back to <a href="OBlockTable.shtml">OBlock Table</a> Help.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

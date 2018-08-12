@@ -7,9 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <P>
- * Tests for SprogConnectionTypeList
- * </P>
+ * Tests for SprogConnectionTypeList.
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class SprogConnectionTypeListTest {
@@ -23,19 +22,20 @@ public class SprogConnectionTypeListTest {
    @Test
    public void ManfacturerString(){
        SprogConnectionTypeList ct = new SprogConnectionTypeList();
-       Assert.assertEquals("Manufacturers",new String[]{"SPROG DCC"},ct.getManufacturers());
+       Assert.assertEquals("Manufacturers",new String[]{"SPROG DCC"}, ct.getManufacturers());
    }
 
    @Test
    public void ProtocolClassList(){
        SprogConnectionTypeList ct = new SprogConnectionTypeList();
-       Assert.assertEquals("Protocol Class List",new String[]{
+       Assert.assertEquals("Protocol Class List", new String[]{
             "jmri.jmrix.sprog.sprog.ConnectionConfig",
             "jmri.jmrix.sprog.sprogCS.ConnectionConfig",
             "jmri.jmrix.sprog.sprognano.ConnectionConfig",
             "jmri.jmrix.sprog.pi.pisprogone.ConnectionConfig",
             "jmri.jmrix.sprog.pi.pisprogonecs.ConnectionConfig",
-            "jmri.jmrix.sprog.pi.pisprognano.ConnectionConfig"},
+            "jmri.jmrix.sprog.pi.pisprognano.ConnectionConfig",
+            "jmri.jmrix.sprog.simulator.ConnectionConfig"},
             ct.getAvailableProtocolClasses());
    }
 
@@ -49,6 +49,5 @@ public class SprogConnectionTypeListTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 
 }

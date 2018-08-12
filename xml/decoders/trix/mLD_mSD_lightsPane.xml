@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) JMRI 2018 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- Light pane for Märklin mLD and mSD decoders (also for /3 series)       -->
+
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
+  <name>Lights</name>
+  <name xml:lang="ca">Llums</name>
+  <name xml:lang="cs">Osvětlení</name>
+  <name xml:lang="da">Lys</name>
+  <name xml:lang="de">Licht</name>
+  <name xml:lang="fr">Lumières</name>
+  <name xml:lang="it">Luci</name>
+  <name xml:lang="nl">Licht</name>
+  <column>
+    <display item="Light Option 1"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Mode Front Light"/>
+    <row>
+      <display item="Dimmer Front Light"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Dimmer Front Light" label="" format="hslider"/>
+    </row>
+    <row>
+      <display item="Period Front Light"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Period Front Light" label="" format="hslider"/>
+    </row>
+    <row>
+      <display item="Delay Front Light"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Delay Front Light" label="" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Mode Rear Light"/>
+    <row>
+      <display item="Dimmer Rear Light"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Dimmer Rear Light" label="" format="hslider"/>
+    </row>
+    <row>
+      <display item="Period Rear Light"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Period Rear Light" label="" format="hslider"/>
+    </row>
+    <row>
+      <display item="Delay Rear Light"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Delay Rear Light" label="" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Mode Aux 1"/>
+    <row>
+      <display item="Dimmer Aux 1"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Dimmer Aux 1" label="" format="hslider"/>
+    </row>
+    <row>
+      <display item="Period Aux 1"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Period Aux 1" label="" format="hslider"/>
+    </row>
+    <row>
+      <display item="Delay Aux 1"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Delay Aux 1" label="" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Mode Aux 2"/>
+    <row>
+      <display item="Dimmer Aux 2"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Dimmer Aux 2" label="" format="hslider"/>
+    </row>
+    <row>
+      <display item="Period Aux 2"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Period Aux 2" label="" format="hslider"/>
+    </row>
+    <row>
+      <display item="Delay Aux 2"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Delay Aux 2" label="" format="hslider"/>
+    </row>
+  </column>
+  <column>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Mode Aux 3"/>
+    <row>
+      <display item="Dimmer Aux 3"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Dimmer Aux 3" label="" format="hslider"/>
+    </row>
+    <row>
+      <display item="Period Aux 3"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Period Aux 3" label="" format="hslider"/>
+    </row>
+    <row>
+      <display item="Delay Aux 3"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Delay Aux 3" label="" format="hslider"/>
+    </row>
+    <display item="Option Aux 3"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Mode Aux 4"/>
+    <row>
+      <display item="Dimmer Aux 4"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Dimmer Aux 4" label="" format="hslider"/>
+    </row>
+    <row>
+      <display item="Period Aux 4"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Period Aux 4" label="" format="hslider"/>
+    </row>
+    <row>
+      <display item="Delay Aux 4"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Delay Aux 4" label="" format="hslider"/>
+    </row>
+    <display item="Option Aux 4"/>
+    <label>
+      <text> </text>
+    </label>
+  </column>
+		<group>
+      <!-- Only when Motor type is Auxiliary functions 5 & 6 (CV52) -->
+		  <qualifier>
+			  <variableref>Motor Type</variableref>
+			  <relation>eq</relation>
+			  <value>0</value>
+      </qualifier>
+      <column>
+      <display item="Mode Aux 5"/>
+      <row>
+        <display item="Dimmer Aux 5"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Dimmer Aux 5" label="" format="hslider"/>
+      </row>
+      <row>
+        <display item="Period Aux 5"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Period Aux 5" label="" format="hslider"/>
+      </row>
+      <row>
+        <display item="Delay Aux 5"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Delay Aux 5" label="" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Mode Aux 6"/>
+      <row>
+        <display item="Dimmer Aux 6"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Dimmer Aux 6" label="" format="hslider"/>
+      </row>
+      <row>
+        <display item="Period Aux 6"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Period Aux 6" label="" format="hslider"/>
+      </row>
+      <row>
+        <display item="Delay Aux 6"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Delay Aux 6" label="" format="hslider"/>
+      </row>
+    </column>
+    </group>
+</pane>

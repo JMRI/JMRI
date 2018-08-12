@@ -18,6 +18,7 @@
   <version author="Alain Le Marchand" version="3" lastUpdated="20150406"/>
   <version author="Alain Le Marchand" version="4" lastUpdated="20150524"/>
   <version author="Alain Le Marchand" version="5" lastUpdated="20160522"/>
+  <version author="Alain Le Marchand" version="6" lastUpdated="20180103"/>
   <!-- This file contains the definitions for the Bachmann spec'd Sound Value series of decoders	-->
   <!-- version 1	Based on the "Soundtraxx_Tsu files.                                             -->
   <!--			Includes the Alco 2-6-0                                                         -->
@@ -35,6 +36,8 @@
   <!--                  Previous def. kept in file "SoundTraxx_Bachmann_SndVal_Stm_deprecated.xml"          -->
   <!--                  Add [HO] 4-4-0, 4-6-0 - [N] 4-6-2 K4                                                -->
   <!--                  Renamed "Alco 2-6-0" in "2-6-0 Mogul - Alco [HO]"                                   -->
+  <!-- version 6        Specific UserID with tooltip indicating version number,
+                        from SoundTraxx Product Identification guide Rev.B                                  -->
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
                 For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc.
@@ -1565,20 +1568,7 @@
         <decVal/>
         <label>Reverse Trim (0-255)</label>
       </variable>
-      <variable CV="105" item="User Id #1" tooltip="&lt;html&gt;Use to set a custom user ID or number.  Note: when&lt;br&gt;      the decoder is reset to default values, this CV is&lt;br&gt;      preset to the softwares minor revision code.&lt;/html&gt;">
-        <decVal/>
-        <label>User Identifier #1 (0-255)</label>
-        <label xml:lang="it">Id Utente #1 (0-255)</label>
-        <label xml:lang="fr">CV Utilisateur #1 (0-255)</label>
-        <label xml:lang="de">Benutzer-CV #1 (0-255)</label>
-      </variable>
-      <variable CV="106" item="User Id #2" tooltip="&lt;html&gt;Use to set a custom user ID or number.  Note: when&lt;br&gt;      the decoder is reset to default values, this CV is&lt;br&gt;      preset to the softwares default CV value configuration.&lt;/html&gt;">
-        <decVal/>
-        <label>User Identifier #2 (0-255)</label>
-        <label xml:lang="it">Id Utente #2 (0-255)</label>
-        <label xml:lang="fr">CV Utilisateur #2 (0-255)</label>
-        <label xml:lang="de">Benutzer-CV #2 (0-255)</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUuserId.xml"/>
       <variable CV="112" mask="XXXXXXXV" item="Sound Option 1" default="0" exclude="440,Baldwin460,PRRK4_N" tooltip="&lt;html&gt;Choose whether the locomotive has one or two air pumps.&lt;br&gt; ! NOT documented for this model - might be disabled !&lt;/html&gt;">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumAirPump.xml"/>
         <label>Air Pump 2 Enable</label>

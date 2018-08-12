@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -19,18 +20,19 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
-import jmri.NamedBean;
 import jmri.SignalMast;
 import jmri.SignalMastLogic;
 import jmri.SignalMastLogicManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SignalMastLogicTableAction extends AbstractTableAction {
+public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLogic> {
 
     /**
      * Create an action with a specific title.
@@ -52,10 +54,11 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
     public void actionPerformed(ActionEvent e) {
         // create the JTable model, with changes for specific NamedBean
         createModel();
-        TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter<>(m);
+        TableRowSorter<BeanTableDataModel<SignalMastLogic>> sorter = new TableRowSorter<>(m);
         JTable dataTable = m.makeJTable(m.getMasterClassName(), m, sorter);
         // create the frame
-        f = new jmri.jmrit.beantable.BeanTableFrame(m, helpTarget(), dataTable) {};
+        f = new jmri.jmrit.beantable.BeanTableFrame(m, helpTarget(), dataTable) {
+        };
         setMenuBar(f);
         setTitle();
         addToFrame(f);
@@ -64,10 +67,11 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
     }
 
     /**
-     * Insert a table specific Tools menu.
-     * Account for the Window and Help menus, which are already added to the menu bar
-     * as part of the creation of the JFrame, by adding the Tools menu 2 places earlier
-     * unless the table is part of the ListedTableFrame, that adds the Help menu later on.
+     * Insert a table specific Tools menu. Account for the Window and Help
+     * menus, which are already added to the menu bar as part of the creation of
+     * the JFrame, by adding the Tools menu 2 places earlier unless the table is
+     * part of the ListedTableFrame, that adds the Help menu later on.
+     *
      * @param f the JFrame of this table
      */
     @Override
@@ -76,10 +80,10 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
         JMenuBar menuBar = f.getJMenuBar();
         int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenu before 'Window' and 'Help'
         int offset = 1;
-        log.debug("setMenuBar number of menu items = " + pos);
+        log.debug("setMenuBar number of menu items = {}", pos);
         for (int i = 0; i <= pos; i++) {
             if (menuBar.getComponent(i) instanceof JMenu) {
-                if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
+                if (((AbstractButton) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
                     offset = -1; // correct for use as part of ListedTableAction where the Help Menu is not yet present
                 }
             }
@@ -109,7 +113,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
 
     @Override
     protected void createModel() {
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<SignalMastLogic>() {
             static public final int SOURCECOL = 0;
             static public final int SOURCEAPPCOL = 1;
             static public final int DESTCOL = 2;
@@ -137,7 +141,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
             }
 
             @Override
-            public void clickOn(jmri.NamedBean t) {
+            public void clickOn(SignalMastLogic t) {
             }
 
             @Override
@@ -158,13 +162,13 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                     }
                 }
                 List<SignalMastLogic> source = getManager().getSignalMastLogicList();
-                signalMastLogicList = new ArrayList<Hashtable<SignalMastLogic, SignalMast>>();
+                signalMastLogicList = new ArrayList<>();
                 for (int i = 0; i < source.size(); i++) {
                     List<SignalMast> destList = source.get(i).getDestinationList();
                     source.get(i).addPropertyChangeListener(this);
                     source.get(i).getSourceMast().addPropertyChangeListener(this);
                     for (int j = 0; j < destList.size(); j++) {
-                        Hashtable<SignalMastLogic, SignalMast> hash = new Hashtable<SignalMastLogic, SignalMast>(1);
+                        Hashtable<SignalMastLogic, SignalMast> hash = new Hashtable<>(1);
                         hash.put(source.get(i), destList.get(j));
                         destList.get(j).addPropertyChangeListener(this);
                         signalMastLogicList.add(hash);
@@ -181,7 +185,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                 // updateNameList();
                 if (e.getPropertyName().equals("length") || e.getPropertyName().equals("updatedDestination") || e.getPropertyName().equals("updatedSource")) {
                     updateNameList();
-                    log.debug("Table changed length to " + signalMastLogicList.size());
+                    log.debug("Table changed length to {}", signalMastLogicList.size());
                     fireTableDataChanged();
                 } else if (e.getSource() instanceof SignalMastLogic) {
                     SignalMastLogic logic = (SignalMastLogic) e.getSource();
@@ -213,7 +217,6 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                 }
             }
 
-            //}
             /**
              * Is this property event announcing a change this table should
              * display?
@@ -223,7 +226,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
              */
             @Override
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-                return ((e.getPropertyName().indexOf("Comment") >= 0) || (e.getPropertyName().indexOf("Enable") >= 0));
+                return ((e.getPropertyName().contains("Comment")) || (e.getPropertyName().contains("Enable")));
             }
 
             @Override
@@ -256,7 +259,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                     // button fired, delete Bean
                     deleteLogic(row, col);
                 } else if (col == ENABLECOL) {
-                    boolean enable = ((Boolean) value).booleanValue();
+                    boolean enable = ((Boolean) value);
                     if (enable) {
                         getLogicFromRow(row).setEnabled(getDestMastFromRow(row));
                     } else {
@@ -350,29 +353,22 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                 return null;
             }
 
-            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
-                                justification="better to keep cases in column order rather than to combine")
             @Override
             public int getPreferredWidth(int col) {
                 switch (col) {
                     case SOURCECOL:
+                    case DESTCOL:
+                    case DESTAPPCOL:
+                    case SOURCEAPPCOL:
                         return new JTextField(10).getPreferredSize().width;
                     case COMCOL:
                         return 75;
-                    case DESTCOL:
-                        return new JTextField(10).getPreferredSize().width;
                     case EDITLOGICCOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
                         return new JTextField(6).getPreferredSize().width;
                     case DELCOL: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
-                        return new JTextField(5).getPreferredSize().width;
-                    case DESTAPPCOL:
-                        return new JTextField(10).getPreferredSize().width;
-                    case SOURCEAPPCOL:
-                        return new JTextField(10).getPreferredSize().width;
                     case ENABLECOL:
                         return new JTextField(5).getPreferredSize().width;
                     default:
-                        //log.warn("Unexpected column in getPreferredWidth: "+col);
                         return new JTextField(8).getPreferredSize().width;
                 }
             }
@@ -398,12 +394,12 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
+            public SignalMastLogic getBySystemName(String name) {
                 return null;
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
+            public SignalMastLogic getByUserName(String name) {
                 return null;
             }
 
@@ -474,6 +470,36 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
             protected void showPopup(MouseEvent e) {
 
             }
+
+            @Override
+            protected void setColumnIdentities(JTable table) {
+                super.setColumnIdentities(table);
+                Enumeration<TableColumn> columns;
+                if (table.getColumnModel() instanceof XTableColumnModel) {
+                    columns = ((XTableColumnModel) table.getColumnModel()).getColumns(false);
+                } else {
+                    columns = table.getColumnModel().getColumns();
+                }
+                while (columns.hasMoreElements()) {
+                    TableColumn column = columns.nextElement();
+                    switch (column.getModelIndex()) {
+                        case SOURCEAPPCOL:
+                            column.setIdentifier("SrcAspect");
+                            break;
+                        case DESTAPPCOL:
+                            column.setIdentifier("DstAspect");
+                            break;
+                        case DELCOL:
+                            column.setIdentifier("Delete");
+                            break;
+                        case EDITLOGICCOL:
+                            column.setIdentifier("Edit");
+                            break;
+                        default:
+                        // use existing value
+                    }
+                }
+            }
         };
     }
 
@@ -536,33 +562,32 @@ public class SignalMastLogicTableAction extends AbstractTableAction {
                     } catch (jmri.JmriException e) {
                         // Notify of problem
                         try {
-                            javax.swing.SwingUtilities.invokeAndWait(()->{
+                            javax.swing.SwingUtilities.invokeAndWait(() -> {
                                 InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removePropertyChangeListener(propertyGenerateListener);
                                 JOptionPane.showMessageDialog(null, e.toString());
                                 signalMastLogicFrame.setVisible(false);
                             });
                         } catch (java.lang.reflect.InvocationTargetException ex) {
-                            log.error("failed to notify of problem with automaticallyDiscoverSignallingPairs", ex );
+                            log.error("failed to notify of problem with automaticallyDiscoverSignallingPairs", ex);
                         } catch (InterruptedException ex) {
-                            log.error("interrupted while notifying of problem with automaticallyDiscoverSignallingPairs", ex );
+                            log.error("interrupted while notifying of problem with automaticallyDiscoverSignallingPairs", ex);
                         }
                     }
-                    
+
                     // process complete, update GUI
                     try {
-                        javax.swing.SwingUtilities.invokeAndWait(()->{
+                        javax.swing.SwingUtilities.invokeAndWait(() -> {
                             m.updateNameList();
                             suppressUpdate = false;
                             m.fireTableDataChanged();
                             if (genSect.isSelected()) {
-                                ((jmri.managers.DefaultSignalMastLogicManager) 
-                                    InstanceManager.getDefault(jmri.SignalMastLogicManager.class)).generateSection();
+                                ((jmri.managers.DefaultSignalMastLogicManager) InstanceManager.getDefault(jmri.SignalMastLogicManager.class)).generateSection();
                             }
                         });
                     } catch (java.lang.reflect.InvocationTargetException ex) {
-                        log.error("failed to update at end of automaticallyDiscoverSignallingPairs", ex );
+                        log.error("failed to update at end of automaticallyDiscoverSignallingPairs", ex);
                     } catch (InterruptedException ex) {
-                        log.error("interrupted during update at end of automaticallyDiscoverSignallingPairs", ex );
+                        log.error("interrupted during update at end of automaticallyDiscoverSignallingPairs", ex);
                     }
                 }
             };

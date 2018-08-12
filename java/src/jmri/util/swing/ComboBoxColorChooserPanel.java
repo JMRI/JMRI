@@ -2,7 +2,6 @@ package jmri.util.swing;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.Icon;
 import javax.swing.JComboBox;

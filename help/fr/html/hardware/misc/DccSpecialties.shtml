@@ -6,7 +6,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
   <!-- UpDated  by Blorec Herv&#233; 2013-09-17-->
 
   <title>JMRI: Programming DCC Specialties Products</title>
@@ -69,7 +68,8 @@
       <a href="http://jmri.org/jython">des exemples de
       r&eacute;pertoires de scripts</a> dans le <a href=
       "http://jmri.org/download">T&eacute;l&eacute;chargements
-      JMRI</a> . <!--#include virtual="/Footer" --></p>
+      JMRI</a> .</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

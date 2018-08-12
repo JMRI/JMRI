@@ -79,10 +79,13 @@
                   <xs:attribute name="type" type="xs:integer" use="required" />
                   <xs:attribute name="systemName"  use="required">
                     <xs:simpleType>
-                      <xs:annotation><xs:documentation>Allow empty string and single space, emitted by old code</xs:documentation></xs:annotation>
+                      <xs:annotation><xs:documentation>Allow user names, empty string and single space, emitted by old code</xs:documentation></xs:annotation>
                       <xs:union>
                         <xs:simpleType>
                           <xs:restriction base="systemNameType" />
+                        </xs:simpleType>
+                        <xs:simpleType>
+                          <xs:restriction base="userNameType" />
                         </xs:simpleType>
                         <xs:simpleType>
                           <xs:restriction base="xs:string">
@@ -105,10 +108,13 @@
                   <xs:attribute name="type" type="xs:integer" use="required" />
                   <xs:attribute name="systemName"  use="required">
                     <xs:simpleType>
-                      <xs:annotation><xs:documentation>Allow single or empty space, emitted by old code</xs:documentation></xs:annotation>
+                      <xs:annotation><xs:documentation>Allow user names, single or empty space, emitted by old code</xs:documentation></xs:annotation>
                       <xs:union>
                         <xs:simpleType>
                           <xs:restriction base="systemNameType" />
+                        </xs:simpleType>
+                        <xs:simpleType>
+                          <xs:restriction base="userNameType" />
                         </xs:simpleType>
                         <xs:simpleType>
                           <xs:restriction base="xs:string">

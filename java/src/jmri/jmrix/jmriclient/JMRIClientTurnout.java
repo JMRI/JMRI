@@ -113,12 +113,15 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
         return true;
     }
 
-    // request a stuatus update from the layout.
-    protected void requestUpdateFromLayout() {
+    // request a status update from the layout.
+    @Override
+    public void requestUpdateFromLayout() {
         // create the message
         String text = "TURNOUT " + transmitName + "\n";
         // create and send the message itself
         tc.sendJMRIClientMessage(new JMRIClientMessage(text), this);
+        // This will handle ONESENSOR and TWOSENSOR feedback modes.
+        super.requestUpdateFromLayout();
     }
 
     @Override

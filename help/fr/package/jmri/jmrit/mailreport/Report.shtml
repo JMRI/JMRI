@@ -5,8 +5,6 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright ($Author$) 2009 -->
-  <!-- <!== $Id$ -->
 
   <title>JMRI: Send Problem Report</title>
   <meta http-equiv="Content-Type" content=
@@ -71,8 +69,8 @@
 
       <p>Enfin,appuyer sur envoyer. Si tout va bien, la
       fen&ecirc;tre va se fermer quelques secondes apr&egrave;s que
-      l'information ait &eacute;t&eacute; envoy&eacute;. 
-      <!--#include virtual="/Footer" --></p>
+      l'information ait &eacute;t&eacute; envoy&eacute;.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

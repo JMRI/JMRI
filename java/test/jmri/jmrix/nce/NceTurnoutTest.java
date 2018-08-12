@@ -30,8 +30,10 @@ public class NceTurnoutTest extends AbstractTurnoutTestBase {
     }
 
     @Test
+    @SuppressWarnings("all") // suppressing "Comparing identical expressions" for this test only as we want to do runtime test
     public void testLockCoding() {
         Assert.assertTrue(Turnout.CABLOCKOUT != Turnout.PUSHBUTTONLOCKOUT);
+        
         // test for proper bit coding, needed because CABLOCKOUT | PUSHBUTTONLOCKOUT is used for "both"
         Assert.assertTrue( (Turnout.CABLOCKOUT & Turnout.PUSHBUTTONLOCKOUT) == 0);
     }

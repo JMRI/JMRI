@@ -57,7 +57,11 @@ public class EliteXNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnecti
         // infrastructure objects
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
 
-        scm = new EliteXNetSystemConnectionMemo(tc);
+        EliteXNetSystemConnectionMemo memo = new EliteXNetSystemConnectionMemo(tc);
+        memo.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager(tc,memo.getSystemPrefix()));
+        memo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(tc,memo.getSystemPrefix()));
+        memo.setTurnoutManager(new EliteXNetTurnoutManager(tc,memo.getSystemPrefix()));
+        scm = memo;
     }
 
     @After

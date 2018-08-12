@@ -54,6 +54,7 @@ public class WaitHandlerTest extends TestCase {
                 flag2 = true;
             }
         };
+        t.setName("Seperate Thread Waiting Test Thread");
         t.start();
 
         JUnitUtil.waitFor(()->{return flag1;},"flag1 not set");
@@ -79,6 +80,7 @@ public class WaitHandlerTest extends TestCase {
                 flag2 = true;
             }
         };
+        t.setName("Interupt Test Thread");
         t.start();
 
         JUnitUtil.waitFor(()->{return flag1;},"flag1 not set");
@@ -114,6 +116,7 @@ public class WaitHandlerTest extends TestCase {
                 flag2 = true;
             }
         };
+        t.setName("Spurious Wake Test Thread");
         t.start();
 
         JUnitUtil.waitFor(()->{return flag1;},"flag1 not set");
@@ -153,6 +156,7 @@ public class WaitHandlerTest extends TestCase {
                 flag2 = true;
             }
         };
+        t.setName("Crosscheck Test Method Test Thread");
         t.start();
 
         JUnitUtil.waitFor(()->{return flag1;},"flag1 not set");

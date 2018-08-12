@@ -162,7 +162,8 @@
 
       <p>There's also a pop-up menu (ctrl-click on a Mac) that will
       let you rotate the icon so that it points in whatever
-      direction you want. <!--#include virtual="/Footer" --></p>
+      direction you want.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

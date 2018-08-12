@@ -1,7 +1,11 @@
 package jmri.managers;
 
 import java.text.DecimalFormat;
+
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Objects;
+
 import jmri.Manager;
 import jmri.Memory;
 import jmri.MemoryManager;
@@ -16,18 +20,21 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         implements MemoryManager {
 
+    /** {@inheritDoc} */
     @Override
     public int getXMLOrder() {
         return Manager.MEMORIES;
     }
 
+    /** {@inheritDoc} */
     @Override
     public char typeLetter() {
         return 'M';
     }
 
+    /** {@inheritDoc} */
     @Override
-    public Memory provideMemory(String sName) {
+    public @Nonnull Memory provideMemory(@Nonnull String sName) {
         Memory t = getMemory(sName);
         if (t != null) {
             return t;
@@ -39,8 +46,9 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         }
     }
 
+    /** {@inheritDoc} */
     @Override
-    public Memory getMemory(String name) {
+    public Memory getMemory(@Nonnull String name) {
         Memory t = getByUserName(name);
         if (t != null) {
             return t;
@@ -49,28 +57,29 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         return getBySystemName(name);
     }
 
+    /** {@inheritDoc} */
     @Override
-    public Memory getBySystemName(String name) {
+    public Memory getBySystemName(@Nonnull String name) {
         return _tsys.get(name);
     }
 
+    /** {@inheritDoc} */
     @Override
-    public Memory getByUserName(String key) {
+    public Memory getByUserName(@Nonnull String key) {
         return _tuser.get(key);
     }
 
+    /** {@inheritDoc} */
     @Override
-    public Memory newMemory(String systemName, String userName) {
-        if (log.isDebugEnabled()) {
-            log.debug("new Memory:"
-                    + ((systemName == null) ? "null" : systemName)
-                    + ";" + ((userName == null) ? "null" : userName));
-        }
+    public @Nonnull Memory newMemory(@Nonnull String systemName, @Nullable String userName) {
+        log.debug("new Memory: {}; {}", systemName, userName); // NOI18N
+        Objects.requireNonNull(systemName, "Value of requested systemName cannot be null");
+
         // return existing if there is one
         Memory s;
         if ((userName != null) && ((s = getByUserName(userName)) != null)) {
             if (getBySystemName(systemName) != s) {
-                log.error("inconsistent user (" + userName + ") and system name (" + systemName + ") results; userName related to (" + s.getSystemName() + ")");
+                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, systemName, s.getSystemName()); // NOI18N
             }
             return s;
         }
@@ -80,8 +89,7 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
                 // check if already on set in Object, might be inconsistent
                 if (!userName.equals(s.getUserName())) {
                     // this is a problem
-                    log.warn("newMemory request for system name \"{}\" user name \"{}\" found memory with existing user name \"{}\"",
-                            systemName, userName, s.getUserName());
+                    log.warn("newMemory request for system name \"{}\" user name \"{}\" found memory with existing user name \"{}\"", systemName, userName, s.getUserName());
                 } else {
                     s.setUserName(userName);
                 }
@@ -116,8 +124,9 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         return s;
     }
 
+    /** {@inheritDoc} */
     @Override
-    public Memory newMemory(String userName) {
+    public @Nonnull Memory newMemory(@Nonnull String userName) {
         int nextAutoMemoryRef = lastAutoMemoryRef + 1;
         StringBuilder b = new StringBuilder("IM:AUTO:");
         String nextNumber = paddedNumber.format(nextAutoMemoryRef);
@@ -138,9 +147,11 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
      * @return a new Memory
      */
     @Nonnull
-    abstract protected Memory createNewMemory(String systemName, String userName);
+    abstract protected Memory createNewMemory(@Nonnull String systemName, @Nullable String userName);
 
+    /** {@inheritDoc} */
     @Override
+    @Nonnull 
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameMemory");
     }

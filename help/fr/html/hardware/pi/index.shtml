@@ -4,7 +4,7 @@
 <!-- translated by Herv&#233; BLOREC on 2017-02-06 -->	
 <title>JMRI Hardware Setup Support - Raspberry Pi GPIO</title>
 
-<meta content="Paul Bender" name="Author">
+<meta name="author" content="Paul Bender">
 <meta name="keywords" content="Raspberry Pi GPIO Configuration Information for JMRI">
 
 <!-- Style -->
@@ -75,7 +75,7 @@ sp&#233;cifiques au mod&#232;le.
 	Pour aider les utilisateurs &#224; diff&#233;rencier leurs connexions, chaque connexion 
 	a un "Nom Connexion", qui est utilis&#233; comme nom de l'&#233;l&#233;ment de menu associ&#233; dans 
 	la fen&#234;tre principale de l'outil JMRI. Les utilisateurs peuvent modifier 
-	le Â«nom de connexionÂ» pour toute connexion adapt&#233;e &#224; leurs besoins.
+	le «nom de connexion» pour toute connexion adapt&#233;e &#224; leurs besoins.
 	-->
 	</li> Cliquez "enregistrer. Si on vous demande si vous voulez quitter le programme 
 	cliquez, "Oui".</li>

@@ -137,7 +137,7 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
     }
 
     public void setStatus(String status) {
-//        if (log.isDebugEnabled()) log.debug("Icon "+getPortal().getName()+" setStatus("+status+") regular="+_regular+" icon= "+_iconMap.get(status));
+        // if (log.isDebugEnabled()) log.debug("Icon "+getPortal().getName()+" setStatus("+status+") regular="+_regular+" icon= "+_iconMap.get(status));
         setIcon(_iconMap.get(status));
         _status = status;
         updateSize();
@@ -220,8 +220,8 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         return getPortal().getDescription();
     }
 
-    /*
-     * Disable popup items that apply to whole selection Group
+    /**
+     * Disable popup items that apply to whole selection Group.
      * @see jmri.jmrit.display.PositionableLabel#doViemMenu()
      */
     @Override
@@ -271,8 +271,8 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         });
     }
 
-    /*
-     * Use this call to set actions that will not effect whole selection Group
+    /**
+     * Use this call to set actions that will not affect whole selection Group.
      * @see jmri.jmrit.display.PositionableLabel#setEditItemMenu(javax.swing.JPopupMenu)
      */
     @Override

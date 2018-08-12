@@ -109,7 +109,7 @@ public class TrainManifestOptionFrame extends OperationsFrame {
 
         // load fields
         if (_train != null) {
-            railroadNameTextField.setText(_train.getTrainRailroadName());
+            railroadNameTextField.setText(_train.getRailroadName());
             showTimesCheckBox.setSelected(_train.isShowArrivalAndDepartureTimesEnabled());
         }
 
@@ -174,7 +174,7 @@ public class TrainManifestOptionFrame extends OperationsFrame {
         }
         if (ae.getSource() == saveButton) {
             if (_train != null) {
-                _train.setTrainRailroadName(railroadNameTextField.getText());
+                _train.setRailroadName(railroadNameTextField.getText());
                 _train.setShowArrivalAndDepartureTimes(showTimesCheckBox.isSelected());
                 _train.setModified(true);
             }

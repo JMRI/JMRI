@@ -1,13 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- UpDated  by Blorec Herv&#233; le 2017-01-02 -->
+<!-- Updated  by Blorec Herv&#233; le 2017-01-02 -->
 <html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Light Documentation</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
   <!-- Style -->
@@ -24,11 +23,11 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
 
-        
-<H1>JMRI:Documentation Lumi&#232;re</H1>
+	<div id="mainContent">
+<h1>JMRI:Documentation Lumi&#232;re</h1>
 
 <h2>Qu'est ce que les Lumi&#232;res?</H2>
 
@@ -44,10 +43,6 @@ Lumi&#232;re ou un Aiguillage, mais pas les deux, peut commander un bit de sorti
 Puisque les Lumi&#232;res n'ont pas la structure de r&#233;trosignalisation des Aiguillages, les Lumi&#232;res ne doivent pas
 &#234;tre utilis&#233;es pour commander les Aiguillages sur le r&#233;seau; seuls les Aiguillages devraient &#234;tre utilis&#233;s pour commander les commutateurs de voies (Aiguillage) . Pour des raisons historiques, les apparences des Feux de Signalisation sont d&#233;finies en utilisant les aiguillages, m&#234;me si elles peuvent &#234;tre des lumi&#232;res physiques. Alors les Aiguillages devraient &#234;tre utilis&#233;s pour r&#233;f&#233;rencer les bits de sortie num&#233;rique utilis&#233;s avec les Feux de Signalisation JMRI. Lumi&#232;re doit &#234;tre utilis&#233;e si vous avez besoin d'un m&#233;canisme simple pour commander l'&#233;clairage ou des d&#233;cors, les voyants du panneau, Ou pour d'autres t&#226;ches de commutation o&#249; les m&#233;canismes de commande de Lumi&#232;res r&#233;pondent au besoin 
 </p>
-
-
-
-
 
 <p>En option, une Lumi&#232;re peut &#234;tre contr&#244;l&#233;e de quatre fa&#231;ons: elle peut &#234;tre
 contr&#244;l&#233;e par un Capteur, par un Aiguillage, par l'Horloge acc&#233;l&#233;r&#233;e JMRI, ou commut&#233;e
@@ -190,7 +185,7 @@ corriger l'erreur et cliquez sur  <b>Cr&#233;er</b> &#224; nouveau.
 	modification n'est apport&#233;e &#224; la Lumi&#232;re s&#233;lectionn&#233;e.</li>
 </ol>
 
-<a name="lightcontrol"><H3>Options  de Commande Automatis&#233;e des Lumi&#232;res</h3></a>
+<a name="lightcontrol"><h3>Options  de Commande Automatis&#233;e des Lumi&#232;res</h3></a>
 
 Le fonctionnement d'une lumi&#232;re peut &#234;tre command&#233;e par les moyens suivants:
 	<ul>
@@ -225,7 +220,7 @@ Le fonctionnement d'une lumi&#232;re peut &#234;tre command&#233;e par les moyen
 </li>
 </ul>
 	
-<a name="variablelight"><H3>Lumi&#232;res Variables </H3></a>
+<a name="variablelight"><h3>Lumi&#232;res Variables </h3></a>
 
 <p>
 	Une lumi&#232;re variable permet un niveau variable d'intensit&#233;s entre On et Off.
@@ -275,10 +270,10 @@ Le fonctionnement d'une lumi&#232;re peut &#234;tre command&#233;e par les moyen
 		transition contr&#244;l&#233;e du courant de r&#233;glage pour le nouveau r&#233;glage.
 		</dd>    
 	</dl>
-</p>
+
 	
     
-<a name="VariableLightSettings"><H3>R&#233;glages Variables de la lumi&#232;re</H3></a>
+<a name="VariableLightSettings"><h3>R&#233;glages Variables de la lumi&#232;re</h3></a>
 <p>
 	Ces param&#232;tres ajustent la mani&#232;re dont la commande "intensit&#233;" est utilis&#233;e.
 	<dl>
@@ -303,7 +298,9 @@ Le fonctionnement d'une lumi&#232;re peut &#234;tre command&#233;e par les moyen
 		 aussi rapidement que l'appareil est en mesure de le faire
 </dd>
 	</dl>
-</p>
-<!--#include virtual="/Footer" -->
+
+		<!--#include virtual="/Footer" -->
+	</div><!-- closes #mainContent-->
+</div><!-- closes #mBody-->
 </body>
 </html>

@@ -3,6 +3,10 @@ package jmri.managers;
 import jmri.Memory;
 import jmri.implementation.DefaultMemory;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
+
 /**
  * Provide the concrete implementation for the Internal Memory Manager.
  *
@@ -23,6 +27,20 @@ public class DefaultMemoryManager extends AbstractMemoryManager {
             systemName = "IM" + systemName;
         }
         return new DefaultMemory(systemName, userName);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * Forces upper case and trims leading and trailing whitespace.
+     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
+     */
+    @CheckReturnValue
+    @Override
+    public @Nonnull
+    String normalizeSystemName(@Nonnull String inputName) {
+        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
+        return inputName.toUpperCase().trim();
     }
 
 }

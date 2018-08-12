@@ -1,6 +1,9 @@
 package jmri.managers;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Objects;
+
 import jmri.JmriException;
 import jmri.Manager;
 import jmri.Turnout;
@@ -13,7 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Abstract partial implementation of a TurnoutManager.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         implements TurnoutManager, java.beans.VetoableChangeListener {
@@ -24,18 +27,21 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getXMLOrder() {
         return Manager.TURNOUTS;
     }
 
+    /** {@inheritDoc} */
     @Override
     public char typeLetter() {
         return 'T';
     }
 
+    /** {@inheritDoc} */
     @Override
-    public Turnout provideTurnout(String name) {
+    public Turnout provideTurnout(@Nonnull String name) {
         Turnout result = getTurnout(name);
         if (result == null) {
             if (name.startsWith(getSystemPrefix() + typeLetter())) {
@@ -47,8 +53,9 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         return result;
     }
 
+    /** {@inheritDoc} */
     @Override
-    public Turnout getTurnout(String name) {
+    public Turnout getTurnout(@Nonnull String name) {
         Turnout result = getByUserName(name);
         if (result == null) {
             result = getBySystemName(name);
@@ -56,24 +63,26 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         return result;
     }
 
+    /** {@inheritDoc} */
     @Override
-    public Turnout getBySystemName(String name) {
+    public Turnout getBySystemName(@Nonnull String name) {
         return _tsys.get(name);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Turnout getByUserName(String key) {
         return _tuser.get(key);
     }
 
+    /** {@inheritDoc} */
     @Override
-    public Turnout newTurnout(String systemName, String userName) {
+    public Turnout newTurnout(@Nonnull String systemName, @Nullable String userName) {
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "+ ((userName == null) ? "null" : userName));  // NOI18N
+
         // add normalize? see AbstractSensor
-        if (log.isDebugEnabled()) {
-            log.debug("newTurnout: {};{}",
-                    ((systemName == null) ? "null" : systemName),
-                    ((userName == null) ? "null" : userName));
-        }
+        log.debug("newTurnout: {};{}",systemName, userName);
+
         // is system name in correct format?
         if (!systemName.startsWith(getSystemPrefix() + typeLetter())
                 || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
@@ -126,26 +135,19 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         return s;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameTurnout");
     }
 
-    /**
-     * Get text to be used for the Turnout.CLOSED state in user communication.
-     * Allows text other than "CLOSED" to be use with certain hardware system to
-     * represent the Turnout.CLOSED state.
-     */
+    /** {@inheritDoc} */
     @Override
     public String getClosedText() {
         return Bundle.getMessage("TurnoutStateClosed");
     }
 
-    /**
-     * Get text to be used for the Turnout.THROWN state in user communication.
-     * Allows text other than "THROWN" to be use with certain hardware system to
-     * represent the Turnout.THROWN state.
-     */
+    /** {@inheritDoc} */
     @Override
     public String getThrownText() {
         return Bundle.getMessage("TurnoutStateThrown");
@@ -163,12 +165,13 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
      * informing the user of the problem.
      */
     @Override
-    public int askNumControlBits(String systemName) {
+    public int askNumControlBits(@Nonnull String systemName) {
         return 1;
     }
 
+    /** {@inheritDoc} */
     @Override
-    public boolean isNumControlBitsSupported(String systemName) {
+    public boolean isNumControlBitsSupported(@Nonnull String systemName) {
         return false;
     }
 
@@ -183,12 +186,13 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
      * (normally in seconds).
      */
     @Override
-    public int askControlType(String systemName) {
+    public int askControlType(@Nonnull String systemName) {
         return 0;
     }
 
+    /** {@inheritDoc} */
     @Override
-    public boolean isControlTypeSupported(String systemName) {
+    public boolean isControlTypeSupported(@Nonnull String systemName) {
         return false;
     }
 
@@ -198,14 +202,9 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
      *
      * @return never null
      */
-    abstract protected Turnout createNewTurnout(String systemName, String userName);
+    abstract protected Turnout createNewTurnout(@Nonnull String systemName, String userName);
 
-    /*
-     * Provide list of supported operation types.
-     * <p>
-     * Order is important because
-     * they will be tried in the order specified.
-     */
+    /** {@inheritDoc} */
     @Override
     public String[] getValidOperationTypes() {
         if (jmri.InstanceManager.getNullableDefault(jmri.CommandStation.class) != null) {
@@ -217,18 +216,20 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /**
      * A temporary method that determines if it is possible to add a range of
-     * turnouts in numerical order eg 10 to 30.
+     * turnouts in numerical order eg 10 to 30, primarily used to enable/disable the Add
+     * range box in the Add new turnout panel.
      *
      * @param systemName configured system connection name
      * @return false as default, unless overridden by implementations as supported
      */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return false;
     }
 
+    /** {@inheritDoc} */
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         try {
             Integer.parseInt(curAddress);
         } catch (java.lang.NumberFormatException ex) {
@@ -238,8 +239,9 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         return prefix + typeLetter() + curAddress;
     }
 
+    /** {@inheritDoc} */
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         // If the hardware address passed does not already exist then this can
         // be considered the next valid address.
         String tmpSName = "";
@@ -289,12 +291,11 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     String defaultClosedSpeed = "Normal";
     String defaultThrownSpeed = "Restricted";
 
-    @SuppressFBWarnings(value = "NP_NULL_PARAM_DEREF", justification = "We are validating user input however the value is stored in its original format")
+    /** {@inheritDoc} */
     @Override
-    public void setDefaultClosedSpeed(String speed) throws JmriException {
-        if (speed == null) {
-            throw new JmriException("Value of requested turnout default closed speed can not be null");
-        }
+    public void setDefaultClosedSpeed(@Nonnull String speed) throws JmriException {
+        Objects.requireNonNull(speed, "Value of requested turnout default closed speed can not be null");
+
         if (defaultClosedSpeed.equals(speed)) {
             return;
         }
@@ -319,11 +320,11 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         firePropertyChange("DefaultTurnoutClosedSpeedChange", oldSpeed, speed);
     }
 
+    /** {@inheritDoc} */
     @Override
-    public void setDefaultThrownSpeed(String speed) throws JmriException {
-        if (speed == null) {
-            throw new JmriException("Value of requested turnout default thrown speed can not be null");
-        }
+    public void setDefaultThrownSpeed(@Nonnull String speed) throws JmriException {
+        Objects.requireNonNull(speed, "Value of requested turnout default thrown speed can not be null");
+
         if (defaultThrownSpeed.equals(speed)) {
             return;
         }
@@ -349,19 +350,19 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         firePropertyChange("DefaultTurnoutThrownSpeedChange", oldSpeed, speed);
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getDefaultThrownSpeed() {
         return defaultThrownSpeed;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getDefaultClosedSpeed() {
         return defaultClosedSpeed;
     }
 
-    /**
-     * Provide a manager-agnostic tooltip for the Add new item beantable pane.
-     */
+    /** {@inheritDoc} */
     @Override
     public String getEntryToolTip() {
         String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help

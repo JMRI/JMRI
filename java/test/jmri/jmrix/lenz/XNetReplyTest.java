@@ -1280,7 +1280,7 @@ public class XNetReplyTest {
 
     @Test
     public void testToMonitorStringCSVersionReply(){
-        String version = jmri.util.IntlUtilities.valueOf(3.6);
+        jmri.util.IntlUtilities.valueOf(3.6);
         XNetReply r = new XNetReply("63 21 36 00 55");
         Assert.assertEquals("Monitor String",Bundle.getMessage("XNetReplyCSVersion",3.6,Bundle.getMessage("CSTypeLZ100")),r.toMonitorString());
         r = new XNetReply("63 21 36 01 55");

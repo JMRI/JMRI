@@ -34,18 +34,18 @@ public interface ThrottleListener extends EventListener {
     /**
      * Get notification that an attempt to request a throttle has failed
      *
-     * @param address DccLocoAddress of the failed loco request.
+     * @param address LocoAddress of the failed loco request.
      * @param reason  The reason why the throttle request failed.
      */
-    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason);
+    public void notifyFailedThrottleRequest(LocoAddress address, String reason);
 
     /**
      * Get notification that a throttle request requires is in use by another
      * device, and a "steal" may be required.
      *
-     * @param address DccLocoAddress of the throttle that needs to be stolen.
+     * @param address LocoAddress of the throttle that needs to be stolen.
      */
-    public void notifyStealThrottleRequired(DccLocoAddress address);
+    public void notifyStealThrottleRequired(LocoAddress address);
 
 }
 

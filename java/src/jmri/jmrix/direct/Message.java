@@ -2,13 +2,11 @@ package jmri.jmrix.direct;
 
 import javax.annotation.Nonnull;
 import jmri.ProgrammingMode;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Encodes a message for direct DCC
- * <P>
+ * Encodes a message for Direct DCC.
  *
  * @author Bob Jacobsen Copyright (C) 2004
  */
@@ -80,6 +78,7 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
     }
 
     // static methods to return a formatted message
+
     static public Message getEnableMain() {
         log.error("getEnableMain doesn't have a reasonable implementation yet");
         return null;
@@ -163,6 +162,12 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
         m.setElement(offset + 1, s.charAt(1));
         m.setElement(offset + 2, s.charAt(2));
         return s;
+    }
+
+    // static methods to recognize a message
+
+    public int getAddr() {
+        return getElement(0) & 0x7F;
     }
 
     private final static Logger log = LoggerFactory.getLogger(Message.class);

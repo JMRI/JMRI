@@ -7,9 +7,9 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Monitor CTI Acela Traffic</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
-  "JMRI help monitor grapevine traffic message packet">
+  "JMRI help monitor acela traffic message packet">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -27,7 +27,8 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Monitor CTI Acela Traffic</h1>This is the
+      <h1>Monitor CTI Acela Traffic</h1>
+      This is the
       help/jmri/jmrix/acela/serialmon/SerialMonFrame help page
 
       <p>For more information on the various controls and options,

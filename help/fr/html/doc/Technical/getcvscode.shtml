@@ -1,12 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="fr">
  <!-- Translated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-08-22 -->
 <head>
     <title>
  	JMRI: Getting the OLD CVS Code - no longer supported
     </title>
-    <meta content="Bob Jacobsen" name="Author">
+	<meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code CVS download">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -132,37 +131,3 @@ s&#233;lectionnez "CVS Update", Vous pouvez aussi juste actualiser un simple dos
 	</div> <!-- closes #mBody-->
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,18 +1,19 @@
 package jmri.jmrix.internal;
 
 import jmri.Consist;
-import jmri.ConsistManager;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+import jmri.implementation.AbstractConsistManager;
 
 /**
  * Default Consist Manager which uses the NmraConsist class for
- * the consists it builds
+ * the consists it builds.
  *
  * @author Paul Bender Copyright (C) 2003
  * @author Randall Wood Copyright (C) 2013
  */
-public class InternalConsistManager extends jmri.implementation.AbstractConsistManager {
+public class InternalConsistManager extends AbstractConsistManager {
 
     public InternalConsistManager() {
         super();
@@ -38,20 +39,24 @@ public class InternalConsistManager extends jmri.implementation.AbstractConsistM
      * {@inheritDoc}
      */
     @Override
-    public Consist addConsist(DccLocoAddress address) {
+    public Consist addConsist(LocoAddress address) {
+        if (! (address instanceof DccLocoAddress)) {
+            throw new IllegalArgumentException("address is not a DccLocoAddress object");
+        }
         if (consistTable.containsKey(address)) {
             return (consistTable.get(address));
         }
-        Consist consist=null;
-        if(InstanceManager.getNullableDefault(jmri.CommandStation.class) !=null ) {
-           consist = new jmri.implementation.NmraConsist(address);
+        Consist consist = null;
+        if (InstanceManager.getNullableDefault(jmri.CommandStation.class) != null ) {
+           consist = new jmri.implementation.NmraConsist((DccLocoAddress) address);
         }
-        else if(InstanceManager.getNullableDefault(jmri.AddressedProgrammerManager.class)!=null){
-           consist = new jmri.implementation.DccConsist(address);
+        else if (InstanceManager.getNullableDefault(jmri.AddressedProgrammerManager.class) != null){
+           consist = new jmri.implementation.DccConsist((DccLocoAddress) address);
         }
-        if(consist!=null) {
+        if (consist != null) {
            consistTable.put(address, consist);
         }
         return (consist); 
     }
+
 }

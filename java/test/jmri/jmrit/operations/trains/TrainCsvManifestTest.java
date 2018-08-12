@@ -16,6 +16,7 @@ public class TrainCsvManifestTest {
     @Test
     public void testCTor() {
         Train train1 = InstanceManager.getDefault(TrainManager.class).getTrainById("1");
+        Assert.assertTrue(train1.build());
         TrainCsvManifest t = new TrainCsvManifest(train1);
         Assert.assertNotNull("exists", t);
     }
@@ -24,6 +25,7 @@ public class TrainCsvManifestTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitOperationsUtil.resetOperationsManager();
         jmri.util.JUnitOperationsUtil.initOperationsData();
     }

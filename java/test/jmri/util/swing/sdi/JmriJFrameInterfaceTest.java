@@ -32,3 +32,4 @@ public class JmriJFrameInterfaceTest {
     // private final static Logger log = LoggerFactory.getLogger(JmriJFrameInterfaceTest.class);
 
 }
+

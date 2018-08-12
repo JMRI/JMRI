@@ -6,7 +6,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
   <!-- Translated  by Blorec Hervé le 2011-10-30-->
 
   <title>JMRI: Select PR3 Mode</title><!-- Style -->
@@ -50,8 +49,8 @@
       <p>Pour plus d'informations sur la PR3, s'il vous
       pla&Atilde;&reg;t voir ses <a href=
       "../../../../../../html/hardware/loconet/PR3.shtml">page de
-      r&Atilde;&copy;f&Atilde;&copy;rence JMRI</a>. 
-      <!--#include virtual="/Footer" --></p>
+      r&Atilde;&copy;f&Atilde;&copy;rence JMRI</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

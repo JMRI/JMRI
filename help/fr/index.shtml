@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!-- Translated by Blorec Hervé le 2011-22-05 -->
+
+<html>
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <meta name="author" content="Bob Jacobsen, JMRI">
+
+  <title>Page d'Aide JMRI</title>
+</head>
+
+<body>
+  <h1>JMRI Syst&Atilde;&uml;me d'Aide</h1>
+
+  <p>Ceci est la page d'aide de haut niveau JMRI.</p>
+
+  <p>La <a href="Acknowledgements.shtml">page de remerciements</a>
+  montre que beaucoup de personnes ont
+  &Atilde;&copy;t&Atilde;&copy; en mesure de contribuer.</p>
+
+  <h2>Utilisation du Syst&Atilde;&uml;me d'Aide</h2>Si vous voyez
+  ceci gr&Atilde;&cent;ce &Atilde;  un outil d'aide du programme,
+  la section &Atilde;  gauche vous donne trois types
+  d'acc&Atilde;&uml;s &Atilde;  l'aide de JMRI.
+
+  <ul>
+    <li>L'ic&Atilde;&acute;ne "livre" indique une <a href=
+    "webtoc.shtml">Table des Mati&Atilde;&uml;res</a>.</li>
+
+    <li>L'ic&Atilde;&acute;ne "onglets" indique le <a href=
+    "webindex.shtml">Index</a>.</li>
+
+    <li>La "Loupe" vous permet de rechercher le contenu</li>
+  </ul>Si vous voyez ceci sur le web, les liens ci-dessus vous
+  permettent de vous rendre &Atilde; ux sections correspondantes.
+
+  <h2>Information future</h2>La page web principale de JMRI
+  <a href="http://jmri.org">http://jmri.org</a> est un bon point de
+  d&Atilde;&copy;part pour obtenir des renseignements sur
+  l'&Atilde;&copy;tat actuel, les mises &Atilde;  jour, etc (en
+  fonction sur votre ordinateur, vous pourriez avoir &Atilde; 
+  copier ce lien dans votre navigateur Web pour &Atilde;&ordf;tre
+  en mesure de voir des sites ext&Atilde;&copy;rieurs correctement)
+
+  <p>La <a href=
+  "http://lists.sourceforge.net/lists/listinfo/jmri-announce">jmri-announce</a>
+  liste de diffusion comporte des annonces de nouvelles versions,
+  des changements majeurs, etc. Cette liste est
+  destin&Atilde;&copy;e &Atilde;  avoir un tr&Atilde;&uml;s faible
+  trafic, les d&Atilde;&copy;bats, etc. devraient avoir lieu
+  ailleurs. Vous pouvez vous abonner en envoyant le mot "subscribe
+  " dans le sujet ou le corps d'un e-mail &Atilde;  <a href=
+  "mailto:jmri-announce-request@lists.sourceforge.net">jmri-announce-request@lists.sourceforge.net</a>.</p>
+
+  <p>Nous avons un groupe "JMRI utilisateurs" pour une
+  discussion g&Atilde;&copy;n&Atilde;&copy;rale. Si vous souhaitez
+  poser une question, obtenir des d'aide, ou de
+  sugg&Atilde;&copy;rer des am&Atilde;&copy;liorations, ce groupe
+  de discussion est un bon endroit. Vous pouvez abonner, voir les
+  messages, etc, &Atilde;  <a href=
+  "https://groups.io/g/jmriusers">https://groups.io/g/jmriusers</a>.</p>
+
+  <p>Nos<a href=
+  "http://jmri.org/help/en/html/doc/Technical/index.shtml">pages
+  techniques</a> sont encore en cours d'&Atilde;&copy;criture.
+  C'est encore un stade pr&Atilde;&copy;coce, et nous sommes
+  &Atilde;  court de documentation. Mais si vous &Atilde;&ordf;tes
+  int&Atilde;&copy;ress&Atilde;&copy;s en travaillant avec le code,
+  nous serions ravis de vous aider &Atilde;  d&Atilde;&copy;marrer
+  par e-mail, etc.</p>
+</body>
+</html>

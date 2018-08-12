@@ -69,12 +69,10 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
 
         public SerialListenerScaffold() {
             rcvdReply = null;
-            rcvdMsg = null;
         }
 
         @Override
         public void message(SerialMessage m) {
-            rcvdMsg = m;
         }
 
         @Override
@@ -83,8 +81,6 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
         }
     }
     private SerialReply rcvdReply;
-    private SerialMessage rcvdMsg;
-
     // internal class to simulate a PortController
     class SerialPortControllerScaffold extends SerialPortController {
 
@@ -154,7 +150,6 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     @After
     public void tearDown() {
         rcvdReply = null;
-        rcvdMsg = null;
         JUnitUtil.tearDown();
     }
 

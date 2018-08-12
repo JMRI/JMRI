@@ -94,7 +94,8 @@
       indicates the icon is displayed at full size. If a large
       image file had been found, the scale might be 0.25:1 to
       indicate that the display is 1/4 the actual size of the image
-      that could be transferred to the Panel. Below the icons is a
+      that could be transferred to the Panel.<br>
+      <span class="since">since 4.9.7</span>Below the icons is a
       "View On:" combo box that allows you to choose the background to
       the icons. This may help in determining what parts of the icon
       are opaque and what parts are transparent. Initially, the current

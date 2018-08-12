@@ -40,8 +40,7 @@ public class Dcc4PcNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
             ((Dcc4PcPanelInterface) p).initComponents(memo);
             return p;
         } catch (Exception ex) {
-            log.warn("could not init pane class: " + paneClass + " due to:" + ex);
-            ex.printStackTrace();
+            log.warn("could not init pane class: {}", paneClass, ex);
         }
 
         return p;

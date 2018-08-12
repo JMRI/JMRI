@@ -1,6 +1,8 @@
 package jmri.jmrix;
 
 import jmri.util.JUnitUtil;
+import jmri.InstanceManager;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -60,9 +62,10 @@ public class SystemConnectionMemoTest {
                return super.provides(c);
            }
            @Override
+           @SuppressWarnings("unchecked") // dynamic check
            public <T> T get(Class <?> T){
                if(T.equals(jmri.CommandStation.class)){
-                  return (T) jmri.InstanceManager.getDefault(T);
+                  return (T) InstanceManager.getDefault(T);
                }
                return super.get(T);
            }
@@ -86,9 +89,10 @@ public class SystemConnectionMemoTest {
                return super.provides(c);
            }
            @Override
+           @SuppressWarnings("unchecked") // dynamic check
            public <T> T get(Class <?> T){
                if(T.equals(jmri.CommandStation.class)){
-                  return (T) jmri.InstanceManager.getDefault(T);
+                  return (T) InstanceManager.getDefault(T);
                }
                return super.get(T);
            }
@@ -111,9 +115,10 @@ public class SystemConnectionMemoTest {
                return super.provides(c);
            }
            @Override
+           @SuppressWarnings("unchecked") // dynamic check
            public <T> T get(Class <?> T){
                if(T.equals(jmri.AddressedProgrammerManager.class)){
-                  return (T) jmri.InstanceManager.getDefault(T);
+                  return (T) InstanceManager.getDefault(T);
                }
                return super.get(T);
            }
@@ -137,9 +142,10 @@ public class SystemConnectionMemoTest {
                return super.provides(c);
            }
            @Override
+           @SuppressWarnings("unchecked") // dynamic check
            public <T> T get(Class <?> T){
                if(T.equals(jmri.AddressedProgrammerManager.class)){
-                  return (T) jmri.InstanceManager.getDefault(T);
+                  return (T) InstanceManager.getDefault(T);
                }
                return super.get(T);
            }

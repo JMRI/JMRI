@@ -1,12 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- UpDated by Blorec Herv&#233;  2016-08-03--> 
+<!-- Updated by Blorec Herv&#233;  2016-08-03-->
  <html lang="fr">
 <head>
-    <TITLE>
+    <title>
  	JMRI:Les tests unitaires avec JUnit
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    </title>
+    <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code ">
 
 <!-- Style -->
@@ -380,7 +379,7 @@ Voici quelques id&#233;es qui peuvent aider &#224; &#233;viter ces types de prob
 	    de code JMRI. Il peut &#234;tre utile de cr&#233;er un sous-r&#233;pertoire l&#224; pour les 
 	    fichiers cr&#233;&#233;s par un test particulier. Assurez-vous que le r&#233;pertoire 
 	    existe avant la cr&#233;ation de fichiers dans le r&#233;pertoire, et de cr&#233;er le 
-	    r&#233;pertoire si n&#233;cessaire.Â Â Â    
+	    r&#233;pertoire si n&#233;cessaire.      
 		 Un exemple est montr&#233; ici:
 <CODE><PRE>
     String tempDirectoryName = "temp";<br/>

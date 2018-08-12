@@ -22,7 +22,8 @@ public class SprogConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
             "jmri.jmrix.sprog.sprognano.ConnectionConfig",
             "jmri.jmrix.sprog.pi.pisprogone.ConnectionConfig",
             "jmri.jmrix.sprog.pi.pisprogonecs.ConnectionConfig",
-            "jmri.jmrix.sprog.pi.pisprognano.ConnectionConfig"
+            "jmri.jmrix.sprog.pi.pisprognano.ConnectionConfig",
+            "jmri.jmrix.sprog.simulator.ConnectionConfig"
         };
     }
 

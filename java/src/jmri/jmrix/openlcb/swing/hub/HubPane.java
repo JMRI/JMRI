@@ -30,19 +30,9 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
             @Override
             public void notifyOwner(String line) {
                 nextLine = line;
-                SwingUtilities.invokeLater(new Runnable() {
-                            String message = nextLine;
-
-                    @Override
-                            public void run() {
-                                try {
-                                    label.setText(message);
-                                } catch (Exception x) {
-                                    x.printStackTrace();
-                                }
-                            }
-                        }
-                );
+                SwingUtilities.invokeLater(() -> {
+                    label.setText(nextLine);
+                });
             }
         };
     }

@@ -24,12 +24,32 @@ public class SerialSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionM
     @Before
     public void setUp(){
        JUnitUtil.setUp();
-       SerialTrafficController tc = new SerialTrafficController(){
+       SerialSystemConnectionMemo memo = new SerialSystemConnectionMemo();
+       memo.setTrafficController(new SerialTrafficController(){
           @Override
           public void sendSerialMessage(SerialMessage m,SerialListener reply) {
           }
-       };
-       scm = new SerialSystemConnectionMemo();
+          @Override
+          public void transmitLoop(){
+          }
+          @Override
+          public void receiveLoop(){
+          }
+       });
+       memo.setSerialAddress(new SerialAddress(memo));
+       memo.setTurnoutManager(new SerialTurnoutManager(memo.getTrafficController()));
+       memo.setLightManager(new SerialLightManager(memo.getTrafficController()){
+          @Override
+          protected jmri.Light createNewSpecificLight(String systemName,String userName){ 
+             return null;
+          }
+       });
+       memo.setSensorManager(new SerialSensorManager(memo.getTrafficController()){
+          @Override
+          public void reply(SerialReply r){ 
+          }
+       });
+       scm = memo;
     }
 
     @Override

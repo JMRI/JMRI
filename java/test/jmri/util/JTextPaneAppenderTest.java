@@ -42,6 +42,7 @@ public class JTextPaneAppenderTest {
     }
 
     @After
+    @SuppressWarnings("unchecked") // cast required by logging APIs
     public void tearDown() {        
         // remove any JTextPaneAppender objects that 
         // have been added to logging

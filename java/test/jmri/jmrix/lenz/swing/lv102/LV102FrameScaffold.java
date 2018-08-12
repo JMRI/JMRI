@@ -39,11 +39,11 @@ public class LV102FrameScaffold extends JFrameOperator{
    }
 
    public String getSelectedVoltage(){
-        return ((String) ((JComboBox) new JLabelOperator(IFrameOperator,Bundle.getMessage("LV102Track")).getLabelFor()).getSelectedItem());
+        return ((String) ((JComboBox<?>) new JLabelOperator(IFrameOperator,Bundle.getMessage("LV102Track")).getLabelFor()).getSelectedItem());
    }
 
    public String getSelectedELineValue(){
-        return ((String) ((JComboBox) new JLabelOperator(IFrameOperator,Bundle.getMessage("LV102ELine")).getLabelFor()).getSelectedItem());
+        return ((String) ((JComboBox<?>) new JLabelOperator(IFrameOperator,Bundle.getMessage("LV102ELine")).getLabelFor()).getSelectedItem());
    }
 
 }

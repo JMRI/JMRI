@@ -40,47 +40,55 @@
     <label>LV</label>
     <tooltip>Activate the function to be activated for LV.</tooltip>
     <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn LV aktiviert werden soll.</tooltip>
+    <tooltip xml:lang="ca">Activar les funcions per activar en marxa endavant.</tooltip>
   </variable>
   <variable item="Initialmapping - LR" CV="153" mask="XXXXXXVX" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>LR</label>
     <tooltip>Activate the function to be activated for LR.</tooltip>
     <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn LR aktiviert werden soll.</tooltip>
+    <tooltip xml:lang="ca">Activar la funcions per activar en marxa enrere.</tooltip>
   </variable>
   <variable item="Initialmapping - AUX1" CV="153" mask="XXXXXVXX" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AUX1</label>
     <tooltip>Activate the function to be activated for AUX1.</tooltip>
     <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn AUX1 aktiviert werden soll.</tooltip>
+    <tooltip xml:lang="ca">Activar la funció que activa AUX1.</tooltip>
   </variable>
   <variable item="Initialmapping - AUX2" CV="153" mask="XXXXVXXX" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AUX2</label>
     <tooltip>Activate the function to be activated for AUX2.</tooltip>
     <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn AUX2 aktiviert werden soll.</tooltip>
+    <tooltip xml:lang="ca">Activar la funció que activa AUX2.</tooltip>
   </variable>
   <variable item="Initialmapping - AUX3" CV="153" mask="XXXVXXXX" default="0" exclude="PD12A_2016.03,PD12A_2016.06,DH05C_2016.03,DH05C_2016.06,DH10C_2016.03,DH10C_2016.06">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AUX3</label>
     <tooltip>Activate the function to be activated for AUX3.</tooltip>
     <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn AUX3 aktiviert werden soll.</tooltip>
+    <tooltip xml:lang="ca">Activar la funció que activa AUX3.</tooltip>
   </variable>
   <variable item="Initialmapping - AUX4" CV="153" mask="XXVXXXXX" default="0" exclude="PD12A_2016.03,PD12A_2016.06,DH05C_2016.03,DH05C_2016.06,DH10C_2016.03,DH10C_2016.06">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AUX4</label>
     <tooltip>Activate the function to be activated for AUX4.</tooltip>
     <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn AUX4 aktiviert werden soll.</tooltip>
+    <tooltip xml:lang="ca">Activar la funció que activa AUX4.</tooltip>
   </variable>
   <variable item="Initialmapping - AUX5" CV="153" mask="XVXXXXXX" default="0" exclude="PD12A_2016.03,PD12A_2016.06,DH05C_2016.03,DH05C_2016.06,DH10C_2016.03,DH10C_2016.06,DH12A_2016.03,DH12A_2016.06,DH16A_2016.03,DH16A_2016.06,DH22A_2016.03,DH22A_2016.06">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AUX5</label>
     <tooltip>Activate the function to be activated for AUX5.</tooltip>
     <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn AUX5 aktiviert werden soll.</tooltip>
+    <tooltip xml:lang="ca">Activar la funció que activa AUX5.</tooltip>
   </variable>
   <variable item="Initialmapping - AUX6" CV="153" mask="VXXXXXXX" default="0" exclude="PD12A_2016.03,PD12A_2016.06,DH05C_2016.03,DH05C_2016.06,DH10C_2016.03,DH10C_2016.06,DH12A_2016.03,DH12A_2016.06,DH16A_2016.03,DH16A_2016.06,DH22A_2016.03,DH22A_2016.06">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>AUX6</label>
     <tooltip>Activate the function to be activated for AUX6.</tooltip>
     <tooltip xml:lang="de">Aktivieren Sie die Funktion wenn AUX6 aktiviert werden soll.</tooltip>
+    <tooltip xml:lang="ca">Activar la funció que activa AUX6.</tooltip>
   </variable>
 </variables>

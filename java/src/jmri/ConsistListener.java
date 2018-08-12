@@ -32,7 +32,7 @@ public interface ConsistListener extends EventListener {
      *                    bitwise combination of the various status coded
      *                    defined in this interface.
      */
-    public void consistReply(DccLocoAddress locoaddress, int status);
+    public void consistReply(LocoAddress locoaddress, int status);
     /**
      * Constant denoting that the request completed correctly. Note this is a
      * specific value; all others are bitwise combinations

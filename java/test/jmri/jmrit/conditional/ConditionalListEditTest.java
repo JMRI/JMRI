@@ -26,7 +26,7 @@ public class ConditionalListEditTest {
     @Test
     public void addConditionalTest() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ConditionalListEdit cdlList = new ConditionalListEdit("IX101");  // NOI18N
+        new ConditionalListEdit("IX101");
 
         JFrameOperator editFrame = new JFrameOperator(Bundle.getMessage("TitleEditLogix"));  // NOI18N
         Assert.assertNotNull(editFrame);
@@ -59,7 +59,7 @@ public class ConditionalListEditTest {
         new JComboBoxOperator(actFrame, Bundle.getMessage("TurnoutStateClosed")).selectItem(Bundle.getMessage("TurnoutStateThrown"));  // NOI18N
         new JButtonOperator(actFrame, Bundle.getMessage("ButtonUpdate")).push();  // NOI18N
         
-        new JButtonOperator(cdlFrame, Bundle.getMessage("UpdateConditionalButton")).push();  // NOI18N
+        new JButtonOperator(cdlFrame, Bundle.getMessage("ButtonUpdate")).push();  // NOI18N
         new JButtonOperator(editFrame, Bundle.getMessage("ButtonDone")).push();  // NOI18N
     }
     

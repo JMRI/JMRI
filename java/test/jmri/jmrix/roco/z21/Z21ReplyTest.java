@@ -4,6 +4,7 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -195,7 +196,6 @@ public class Z21ReplyTest {
         byte msg[]={(byte)0x14,(byte)0x00,(byte)0x85,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x00};
         Z21Reply m = new Z21Reply(msg,20);
         Assert.assertTrue("System Data Changed Reply",m.isSystemDataChangedReply());
-        byte msg1[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
         Assert.assertEquals("Main Current",256,m.getSystemDataMainCurrent());
     }
 
@@ -204,7 +204,6 @@ public class Z21ReplyTest {
         byte msg[]={(byte)0x14,(byte)0x00,(byte)0x85,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x00};
         Z21Reply m = new Z21Reply(msg,20);
         Assert.assertTrue("System Data Changed Reply",m.isSystemDataChangedReply());
-        byte msg1[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
         Assert.assertEquals("Programming Track Current",0,m.getSystemDataProgCurrent());
     }
 
@@ -213,7 +212,6 @@ public class Z21ReplyTest {
         byte msg[]={(byte)0x14,(byte)0x00,(byte)0x85,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x00};
         Z21Reply m = new Z21Reply(msg,20);
         Assert.assertTrue("System Data Changed Reply",m.isSystemDataChangedReply());
-        byte msg1[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
         Assert.assertEquals("Filtered Main Current",256,m.getSystemDataFilteredMainCurrent());
     }
 
@@ -222,7 +220,6 @@ public class Z21ReplyTest {
         byte msg[]={(byte)0x14,(byte)0x00,(byte)0x85,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x00};
         Z21Reply m = new Z21Reply(msg,20);
         Assert.assertTrue("System Data Changed Reply",m.isSystemDataChangedReply());
-        byte msg1[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
         Assert.assertEquals("Temperature",0,m.getSystemDataTemperature());
     }
 
@@ -231,7 +228,6 @@ public class Z21ReplyTest {
         byte msg[]={(byte)0x14,(byte)0x00,(byte)0x85,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x00};
         Z21Reply m = new Z21Reply(msg,20);
         Assert.assertTrue("System Data Changed Reply",m.isSystemDataChangedReply());
-        byte msg1[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
         Assert.assertEquals("Supply Voltage",1280,m.getSystemDataSupplyVoltage());
     }
 
@@ -240,8 +236,38 @@ public class Z21ReplyTest {
         byte msg[]={(byte)0x14,(byte)0x00,(byte)0x85,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x00};
         Z21Reply m = new Z21Reply(msg,20);
         Assert.assertTrue("System Data Changed Reply",m.isSystemDataChangedReply());
-        byte msg1[]={(byte)0x07,(byte)0x00,(byte)0x40,(byte)0x00,(byte)0x61,(byte)0x82,(byte)0xE3};
         Assert.assertEquals("Main Current",1798,m.getSystemDataVCCVoltage());
+    }
+
+    @Test
+    public void getLocoNetReply(){
+        byte msg[]={(byte)0x11,(byte)0x00,(byte)0xA2,(byte)0x00,
+           (byte)0xEF,(byte)0x0E,(byte)0x03,(byte)0x00,(byte)0x03,
+           (byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,
+           (byte)0x00,(byte)0x00,(byte)0x00};
+        Z21Reply m = new Z21Reply(msg,17);
+        jmri.jmrix.loconet.LocoNetMessage x = m.getLocoNetMessage();
+        Assert.assertEquals("0th byte", 0xEF, x.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", 0x0E, x.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", 0x03, x.getElement(2) & 0xFF);
+        Assert.assertEquals("4nd byte", 0x03, x.getElement(4) & 0xFF);
+    }
+
+    @Test
+    public void getNullLocoNetReply(){
+        byte msg[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
+        Z21Reply m = new Z21Reply(msg,17);
+        Assert.assertNull("non-LocoNetTunnel LocoNet Reply",m.getLocoNetMessage());
+    }
+
+    @Test
+    public void MonitorStringLocoNetReply(){
+        byte msg[]={(byte)0x11,(byte)0x00,(byte)0xA2,(byte)0x00,
+           (byte)0xEF,(byte)0x0E,(byte)0x03,(byte)0x00,(byte)0x03,
+           (byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,
+           (byte)0x00,(byte)0x00,(byte)0x00};
+        Z21Reply m = new Z21Reply(msg,17);
+        Assert.assertEquals("Monitor String","LocoNet Tunnel Reply: EF 0E 03 00 03 00 00 00 00 00 00 00 00",m.toMonitorString());
     }
 
 

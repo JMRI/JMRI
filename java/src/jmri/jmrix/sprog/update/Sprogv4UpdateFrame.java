@@ -13,7 +13,10 @@ import org.slf4j.LoggerFactory;
  * Refactored
  *
  * @author	Andrew Crosland Copyright (C) 2004
-  */
+ * 
+ * @deprecated since 4.11.1; supports uncommon Sprog versions that are confused with Sprog II versions.
+ */
+@Deprecated
 public class Sprogv4UpdateFrame
         extends SprogUpdateFrame
         implements SprogVersionListener {
@@ -74,14 +77,10 @@ public class Sprogv4UpdateFrame
     @Override
     synchronized protected void stateSetBootSent() {
         // Only old SPROG v4 reach this state
-        if (log.isDebugEnabled()) {
-            log.debug("reply in SETBOOTSENT state");
-        }
+        log.debug("reply in SETBOOTSENT state");
         if (replyString.indexOf("L>") >= 0) {
             // Enable the file chooser button
-            if (log.isDebugEnabled()) {
-                log.debug("Found v4 bootloader prompt");
-            }
+            log.debug("Found v4 bootloader prompt");
             tc.setSprogState(SprogState.V4BOOTMODE);
             openFileChooserButton.setEnabled(true);
 
@@ -98,14 +97,10 @@ public class Sprogv4UpdateFrame
     @Override
     synchronized protected void stateBootVerReqSent() {
         stopTimer();
-        if (log.isDebugEnabled()) {
-            log.debug("reply in VERREQSENT state " + replyString);
-        }
+        log.debug("reply in VERREQSENT state {}", replyString);
         // Look for echo of extended address command
         if (replyString.indexOf(":02000004") > 0) {
-            if (log.isDebugEnabled()) {
-                log.debug("Found SPROG v4 bootloader");
-            }
+            log.debug("Found SPROG v4 bootloader");
             statusBar.setText(Bundle.getMessage("StatusConnectedToBootloader", "4"));
             // Enable the file chooser button
             openFileChooserButton.setEnabled(true);
@@ -125,9 +120,7 @@ public class Sprogv4UpdateFrame
     @Override
     synchronized protected void stateWriteSent() {
         stopTimer();
-        if (log.isDebugEnabled()) {
-            log.debug("reply in WRITESENT state");
-        }
+        log.debug("reply in WRITESENT state");
         // Check for correct response to type of write that was sent
         if ((reply.getElement(reply.getNumDataElements() - 1) == '.')) {
             if (hexFile.read() > 0) {
@@ -151,9 +144,7 @@ public class Sprogv4UpdateFrame
         stopTimer();
         // Check for correct response to end of file
         if (replyString.indexOf("S") > 0) {
-            if (log.isDebugEnabled()) {
-                log.debug("Good reply in EOFSENT state");
-            }
+            log.debug("Good reply in EOFSENT state");
             bootState = BootState.V4RESET;
             statusBar.setText(Bundle.getMessage("StatusResetting"));
         } else {
@@ -169,15 +160,11 @@ public class Sprogv4UpdateFrame
         stopTimer();
         // Check for correct response to end of file
         if (replyString.indexOf("S") > 0) {
-            if (log.isDebugEnabled()) {
-                log.debug("Good reply in V4RESET state");
-            }
+            log.debug("Good reply in V4RESET state");
             statusBar.setText(Bundle.getMessage("StatusSuccess"));
             bootState = BootState.IDLE;
         } else {
-            if (log.isDebugEnabled()) {
-                log.debug("Bad reply in V4RESET state");
-            }
+            log.debug("Bad reply in V4RESET state");
         }
         tc.setSprogState(SprogState.NORMAL);
     }
@@ -255,4 +242,5 @@ public class Sprogv4UpdateFrame
 
     private final static Logger log = LoggerFactory
             .getLogger(Sprogv4UpdateFrame.class);
+
 }

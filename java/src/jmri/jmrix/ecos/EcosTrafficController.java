@@ -12,11 +12,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Converts Stream-based I/O to/from ECOS messages. The "EcosInterface" side
  * sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a EcosPortController is via a pair of *Streams, which then
  * carry sequences of characters for transmission. Note that this processing is
  * handled in an independent thread.
- * <P>
+ * <p>
  * This handles the state transitions, based on the necessary state in each
  * message.
  *
@@ -24,6 +24,9 @@ import org.slf4j.LoggerFactory;
  */
 public class EcosTrafficController extends AbstractMRTrafficController implements EcosInterface {
 
+    /**
+     * Create a new EcosTrafficController instance.
+     */
     public EcosTrafficController() {
         super();
         log.debug("creating a new EcosTrafficController object");
@@ -129,7 +132,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     }
 
     @SuppressFBWarnings(value = "MS_PKGPROTECT")
-    // FindBugs wants this package protected, but we're removing it when multi-connection
+    // SpotBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     final static protected EcosTrafficController self = null;
 

@@ -24,10 +24,41 @@ public class ThreadingUtilTest extends TestCase {
         Assert.assertTrue(done);
     }
 
+    Object testRef = null;
+    public void testToGuiWarn() {
+        // if (!java.lang.management.ManagementFactory
+        //                                        .getThreadMXBean().isObjectMonitorUsageSupported())
+        //        log.info("This JVM doesn't support object monitor tracking");
+        // if (!java.lang.management.ManagementFactory
+        //                                        .getThreadMXBean().isSynchronizerUsageSupported())
+        //        log.info("This JVM doesn't support synchronized lock tracking");
+                                                
+        final Object lockedThing = new Object();
+        done = false;
+        
+        synchronized (lockedThing) {
+            // first, run something that also wants the lock
+            new Thread(() -> {
+                synchronized (lockedThing) {
+                    testRef = lockedThing;
+                }
+            }).start();
+            
+            ThreadingUtil.runOnGUI( ()-> { 
+                done = true; 
+                Assert.assertNull(testRef); // due to lock
+            } );
+ 
+            JUnitUtil.waitFor( ()->{ return done; }, "GUI thread complete");
+            Assert.assertNull(testRef); // due to lock
+        }
+        JUnitUtil.waitFor( ()->{ return testRef != null; }, "Locked thread complete");
+    }
+
     public void testThreadingNesting() {
         done = false;
         
-        new Thread(
+        Thread t = new Thread(
             new Runnable() {
                 @Override
                 public void run() {
@@ -41,7 +72,9 @@ public class ThreadingUtilTest extends TestCase {
                     } );
                 }
             }
-        ).start();
+        );
+        t.setName("Thread Nesting Test Thread");
+        t.start();
 
         // wait for separate thread to do it's work before confirming test
         JUnitUtil.waitFor( ()->{ return done; }, "Separate thread complete");
@@ -82,6 +115,18 @@ public class ThreadingUtilTest extends TestCase {
         
         // wait for separate thread to do it's work before confirming test
         JUnitUtil.waitFor( ()->{ return done; }, "Delayed operation complete");
+    }
+
+    public void testThreadingRunOnGUIwithReturn() {
+        done = false;
+        
+        Integer value = ThreadingUtil.runOnGUIwithReturn( ()-> { 
+            done = true; 
+            return new Integer(21);
+        });
+
+        Assert.assertTrue(done);
+        Assert.assertEquals(new Integer(21), value);
     }
 
     public void testThreadingDelayLayout() {

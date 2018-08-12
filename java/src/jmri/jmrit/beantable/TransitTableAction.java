@@ -54,24 +54,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register a TransitTable GUI.
- * <p>
- * This file is part of JMRI.
- * <P>
- * JMRI is open source software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published by the
- * Free Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Dave Duchamp Copyright (C) 2008, 2010, 2011
  */
-public class TransitTableAction extends AbstractTableAction {
+public class TransitTableAction extends AbstractTableAction<Transit> {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -85,7 +75,6 @@ public class TransitTableAction extends AbstractTableAction {
         if (sectionManager == null || transitManager == null) {
             setEnabled(false);
         }
-
     }
 
     public TransitTableAction() {
@@ -100,7 +89,7 @@ public class TransitTableAction extends AbstractTableAction {
      */
     @Override
     protected void createModel() {
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<Transit>() {
 
             static public final int EDITCOL = NUMCOLUMN;
             static public final int DUPLICATECOL = EDITCOL + 1;
@@ -113,24 +102,24 @@ public class TransitTableAction extends AbstractTableAction {
                 }
                 Transit z = InstanceManager.getDefault(jmri.TransitManager.class).getBySystemName(name);
                 if (z == null) {
-                    log.debug("requested getValue(\"" + name + "\"), Transit doesn't exist");
+                    log.debug("requested getValue(\"{}\"), Transit doesn't exist", name);
                     return "(no Transit)";
                 }
                 return "Transit";
             }
 
             @Override
-            public Manager getManager() {
+            public TransitManager getManager() {
                 return InstanceManager.getDefault(jmri.TransitManager.class);
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
+            public Transit getBySystemName(String name) {
                 return InstanceManager.getDefault(jmri.TransitManager.class).getBySystemName(name);
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
+            public Transit getByUserName(String name) {
                 return InstanceManager.getDefault(jmri.TransitManager.class).getByUserName(name);
             }
 
@@ -140,7 +129,7 @@ public class TransitTableAction extends AbstractTableAction {
             }
 
             @Override
-            public void clickOn(NamedBean t) {
+            public void clickOn(Transit t) {
             }
 
             @Override
@@ -156,7 +145,7 @@ public class TransitTableAction extends AbstractTableAction {
                         log.debug("row is greater than name list");
                         return "";
                     }
-                    Transit z = (Transit) getBySystemName(sysNameList.get(row));
+                    Transit z = getBySystemName(sysNameList.get(row));
                     if (z == null) {
                         return "";
                     } else {
@@ -190,7 +179,7 @@ public class TransitTableAction extends AbstractTableAction {
 
                         @Override
                         public void run() {
-                            String sName = (String) getValueAt(row, SYSNAMECOL);
+                            String sName = ((Transit) getValueAt(row, SYSNAMECOL)).getSystemName();
                             editPressed(sName);
                         }
                     }
@@ -208,7 +197,7 @@ public class TransitTableAction extends AbstractTableAction {
 
                         @Override
                         public void run() {
-                            String sName = (String) getValueAt(row, SYSNAMECOL);
+                            String sName = ((Transit) getValueAt(row, SYSNAMECOL)).getSystemName();
                             duplicatePressed(sName);
                         }
                     }
@@ -375,7 +364,7 @@ public class TransitTableAction extends AbstractTableAction {
     String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
 
     /**
-     * Responds to the Add... button and the Edit buttons in Transit Table
+     * Responds to the Add... button and the Edit buttons in Transit Table.
      */
     @Override
     protected void addPressed(ActionEvent e) {
@@ -889,7 +878,7 @@ public class TransitTableAction extends AbstractTableAction {
             }
         }
         if (sOld == null) {
-            log.error("Missing primary Section for seq = " + seq);
+            log.error("Missing primary Section for seq = {}", seq);
             return;
         }
         List<Section> possibles = new ArrayList<>();
@@ -1102,7 +1091,7 @@ public class TransitTableAction extends AbstractTableAction {
             }
         }
         if (primarySection == null) {
-            log.error("Missing primary Section for seq = " + seq);
+            log.error("Missing primary Section for seq = {}", seq);
             return;
         }
         List<Section> possibles = new ArrayList<>();
@@ -1257,7 +1246,7 @@ public class TransitTableAction extends AbstractTableAction {
         if (_autoSystemName.isSelected()) {
             curTransit = transitManager.createNewTransit(uName);
         } else {
-            String sName = sysName.getText().toUpperCase();
+            String sName = InstanceManager.getDefault(jmri.TransitManager.class).normalizeSystemName(sysName.getText());
             curTransit = transitManager.createNewTransit(sName, uName);
         }
         if (curTransit == null) {
@@ -1762,7 +1751,7 @@ public class TransitTableAction extends AbstractTableAction {
             TitledBorder border = BorderFactory.createTitledBorder(rbx.getString("SelectASignal"));
             signalPanel = new JPanel();
             signalPanel.setBorder(border);
-            signalPanel.add(new JLabel(rbx.getString("HeadLabel")));
+            signalPanel.add(new JLabel(rbx.getString("MastLabel")));
             signalPanel.add(signalMastComboBox);
             signalMastComboBox.setFirstItemBlank(true);
             signalMastComboBox.addActionListener(new ActionListener() {
@@ -1773,7 +1762,7 @@ public class TransitTableAction extends AbstractTableAction {
                     }
                 }
             });
-            signalPanel.add(new JLabel(rbx.getString("MastLabel")));
+            signalPanel.add(new JLabel(rbx.getString("HeadLabel")));
             signalPanel.add(signalHeadComboBox);
             signalHeadComboBox.setFirstItemBlank(true);
             signalHeadComboBox.addActionListener(new ActionListener() {
@@ -2185,7 +2174,7 @@ public class TransitTableAction extends AbstractTableAction {
      * Validate entered data for selected Action. Converted to use JSpinners
      * where applicable, 2017.
      *
-     * @return
+     * @return true if data entered into field whatStringField is valid for selected Action type tWhat
      */
     private boolean validateWhatData() {
         tWhat = whatBox.getSelectedIndex() + 1;
@@ -2242,7 +2231,7 @@ public class TransitTableAction extends AbstractTableAction {
                 whatStringField.setText(tWhatString); // re-enter normalized value in display field
                 break;
             case TransitSectionAction.LOCOFUNCTION:
-                tWhatData1 = (Integer) whatMinuteSpinner1.getValue();
+                tWhatData1 = (Integer) locoFunctionSpinner.getValue();
                 tWhatString = "On"; // NOI18N
                 if (offButton.isSelected()) {
                     tWhatString = "Off"; // NOI18N
@@ -2540,7 +2529,7 @@ public class TransitTableAction extends AbstractTableAction {
         String s = sectionList.get(r).getSystemName();
         String u = sectionList.get(r).getUserName();
         if ((u != null) && (!u.equals(""))) {
-            return (s + "( " + u + " )");
+            return (s + " ( " + u + " )");
         }
         return s;
     }
@@ -2575,6 +2564,9 @@ public class TransitTableAction extends AbstractTableAction {
         public Class<?> getColumnClass(int c) {
             if (c == ACTION_COLUMN) {
                 return JButton.class;
+            }
+            if (c == SAFE_COLUMN) {
+                return Boolean.class;
             }
             return String.class;
         }
@@ -2613,7 +2605,7 @@ public class TransitTableAction extends AbstractTableAction {
                 case ALTERNATE_COLUMN:
                     return rbx.getString("AlternateColName");
                 case SAFE_COLUMN:
-                    return "Safe"; //rbx.getString("SafeColName");
+                    return rbx.getString("SafeColName");
                 default:
                     return "";
             }
@@ -2634,7 +2626,7 @@ public class TransitTableAction extends AbstractTableAction {
                 case ALTERNATE_COLUMN:
                     return new JTextField(12).getPreferredSize().width;
                 case SAFE_COLUMN:
-                    return new JTextField(12).getPreferredSize().width;
+                    return new JTextField(4).getPreferredSize().width;
                 default:
                     // fall through
                     break;
@@ -2668,11 +2660,8 @@ public class TransitTableAction extends AbstractTableAction {
                     }
                     return rbx.getString("Primary");
                 case SAFE_COLUMN:
-                    if (safe[rx]) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    boolean val = safe[rx];
+                    return Boolean.valueOf(val);
                 default:
                     return Bundle.getMessage("BeanStateUnknown");
             }
@@ -2683,11 +2672,8 @@ public class TransitTableAction extends AbstractTableAction {
             if (col == ACTION_COLUMN) {
                 addEditActionsPressed(row);
             } else if (col == SAFE_COLUMN) {
-                if ( value.equals("true")) {
-                    safe[row] = true;
-                } else if (value.equals("false")) {
-                    safe[row] = false;
-                }
+                boolean val = ((Boolean) value).booleanValue();
+                safe[row] = val; // use checkbox to show Safe
             }
             return;
         }
@@ -2695,7 +2681,7 @@ public class TransitTableAction extends AbstractTableAction {
 
     /**
      * Table model for Actions in Special Actions window. Currently shows max. 5
-     * rows
+     * rows.
      */
     public class SpecialActionTableModel extends javax.swing.table.AbstractTableModel implements
             java.beans.PropertyChangeListener {
@@ -2835,4 +2821,5 @@ public class TransitTableAction extends AbstractTableAction {
     }
 
     private final static Logger log = LoggerFactory.getLogger(TransitTableAction.class);
+
 }

@@ -49,6 +49,7 @@
     <label xml:lang="it">Freni con segnale asimmetrico (normale)</label>
     <label xml:lang="fr">Freinage/signal asymétrique (normal)</label>
     <label xml:lang="de">Bremsen - Asymmetrie (normal)</label>
+    <label xml:lang="ca">Frena amb senyal assimètrica (normal)</label>
   </variable>
   <variable item="Brake on asymmetrical signal (inverted)" CV="27" mask="XXXXXXVX" tooltip="CV27 Bit 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
@@ -56,6 +57,7 @@
     <label xml:lang="it">Freni con segnale asimmetrico (invertito)</label>
     <label xml:lang="fr">Freinage/signal asymétrique (inversé)</label>
     <label xml:lang="de">Bremsen - Asymmetrie (invers)</label>
+    <label xml:lang="ca">Frena amb senyal assimpetrica (invers)</label>
   </variable>
   <variable item="Brake on negative power" CV="27" mask="XXXVXXXX" tooltip="CV27 Bit 4">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
@@ -63,6 +65,7 @@
     <label xml:lang="it">Freni con alim.negativa</label>
     <label xml:lang="fr">Freinage/courant négatif</label>
     <label xml:lang="de">Bremsen - Negative Spannung</label>
+    <label xml:lang="ca">Frena amb alimentació negativa</label>
   </variable>
   <variable item="Brake on positive power" CV="27" mask="XXVXXXXX" tooltip="CV27 Bit 5">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
@@ -70,6 +73,7 @@
     <label xml:lang="it">Freni con alim.positiva</label>
     <label xml:lang="fr">Freinage/courant positif</label>
     <label xml:lang="de">Bremsen - Positif Spannung</label>
+     <label xml:lang="ca">Frena amb alimentació positiva</label>
   </variable>
   <variable item="Brake with diode (normal)" CV="27" mask="XVXXXXXX" tooltip="CV27 Bit 6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
@@ -77,6 +81,7 @@
     <label xml:lang="it">Freni con diodo(normale)</label>
     <label xml:lang="fr">Freinage/diode (normal)</label>
     <label xml:lang="de">Bremsen - Diode (normal)</label>
+    <label xml:lang="ca">Frena amb diode (normal)</label>
   </variable>
   <variable item="Brake with diode (inverted)" CV="27" mask="VXXXXXXX" tooltip="CV27 Bit 7">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
@@ -84,6 +89,7 @@
     <label xml:lang="it">Freni con diodo(invertito)</label>
     <label xml:lang="fr">Freinage/diode (inversé)</label>
     <label xml:lang="de">Bremsen - Diode (invers)</label>
+    <label xml:lang="ca">Frena amb diode (invers)</label>
   </variable>
   <!-- Extra options for DH05C/DH10C/DH16A/DH18A (in DH Options panel) -->
   <variable item="Function for front and rear lights on" CV="121" tooltip="CV121" minOut="2">
@@ -102,6 +108,7 @@
     <label xml:lang="it">Funzione per luci frontali e retro on</label>
     <label xml:lang="fr">Fonction pour feux avant et arrière</label>
     <label xml:lang="de">Funktion für LV und LR ein</label>
+    <label xml:lang="ca">Funció per a llums frontals i posteriors </label>
   </variable>
   <variable item="Function for AUX 1 and AUX 2 on" CV="122" tooltip="CV122" minOut="4">
     <enumVal>
@@ -119,6 +126,7 @@
     <label xml:lang="it">Funzione per AUX1 e AUX2 on</label>
     <label xml:lang="fr">Fonction pour allumer AUX 1 et AUX 2</label>
     <label xml:lang="de">Funktion für AUX 1 und AUX 2 ein</label>
+    <label xml:lang="ca">Funció per engegar AUX 1 i AUX 2</label>
   </variable>
   <variable item="Reduced speed in braking zones" CV="123" default="63" tooltip="CV123 (0-127)">
     <decVal min="0" max="127"/>
@@ -126,6 +134,7 @@
     <label xml:lang="it">Riduzione velocità in zone frenate</label>
     <label xml:lang="fr">Vitesse réduite (asym.)</label>
     <label xml:lang="de">Langsamfahrt Geschw. bei bremsen</label>
+    <label xml:lang="ca">Velocitat reduïda en zones de frenada</label>
   </variable>
   <variable item="Threshold for asymmetric behavior" CV="134" default="6" tooltip="CV134 (0-15)">
     <decVal min="0" max="15"/>
@@ -133,5 +142,6 @@
     <label xml:lang="it">Soglia per segnale asimmetrico</label>
     <label xml:lang="fr">Limite de signal asymétrique</label>
     <label xml:lang="de">Entscheidungsschwelle für Asymmetrie</label>
+    <label xml:lang="ca">Llindar de senyal assimètric</label>
   </variable>
 </variables>

@@ -5,7 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-//import jmri.jmrix.easydcc.EasyDccCommandStation;
 import jmri.jmrix.easydcc.EasyDccMessage;
 import jmri.jmrix.easydcc.EasyDccPortController; // no special xSimulatorController
 import jmri.jmrix.easydcc.EasyDccReply;
@@ -18,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * Provide access to a simulated EasyDCC system.
  * <p>
  * Currently, the EasyDCC SimulatorAdapter reacts to commands sent from the user interface
- * with messages an appropriate reply message.
+ * with an appropriate reply message.
  * Based on jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter / DCCppSimulatorAdapter 2017
  * <p>
  * NOTE: Some material in this file was modified from other portions of the
@@ -38,8 +37,6 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
 
     private boolean outputBufferEmpty = true;
     private boolean checkBuffer = true;
-    private boolean trackPowerState = false;
-
     // Simulator responses
     char EDC_OPS = 0x4F;
     char EDC_PROG = 0x50;
@@ -49,11 +46,15 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
         setManufacturer(jmri.jmrix.easydcc.EasyDccConnectionTypeList.EASYDCC);
     }
 
+    /**
+     * {@inheritDoc}
+     * Simulated input/output pipes.
+     */
     @Override
     public String openPort(String portName, String appName) {
         try {
             PipedOutputStream tempPipeI = new PipedOutputStream();
-            log.debug("tempPipeI created {}", tempPipeI != null);
+            log.debug("tempPipeI created");
             pout = new DataOutputStream(tempPipeI);
             inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
             log.debug("inpipe created {}", inpipe != null);
@@ -103,7 +104,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
     public void configure() {
         // connect to the traffic controller
         log.debug("set tc for memo {}", getSystemConnectionMemo().getUserName());
-        EasyDccTrafficController control = new EasyDccTrafficController(getSystemConnectionMemo());
+        EasyDccTrafficController control = new EasyDccSimulatorTrafficController(getSystemConnectionMemo());
         //compare with: XNetTrafficController packets = new XNetPacketizer(new LenzCommandStation());
         control.connectPort(this);
         this.getSystemConnectionMemo().setEasyDccTrafficController(control);
@@ -128,6 +129,9 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
 
     // Base class methods for the EasyDccPortController simulated interface
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataInputStream getInputStream() {
         if (!opened || pin == null) {
@@ -137,6 +141,9 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
         return pin;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened || pout == null) {
@@ -146,14 +153,16 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
         return pout;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean status() {
         return opened;
     }
 
     /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed.
+     * Get an array of valid baud rates.
      *
      * @return null
      */
@@ -195,7 +204,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
                 } else {
                     buf.append("null message buffer");
                 }
-//                log.debug(buf.toString());
+                log.trace(buf.toString()); // generates a lot of traffic
             }
             if (m != null) {
                 r = generateReply(m);
@@ -240,7 +249,6 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
     private EasyDccReply generateReply(EasyDccMessage msg) {
         log.debug("Generate Reply to message type {} (string = {})", msg.toString().charAt(0), msg.toString());
 
-        String s, r;
         EasyDccReply reply = new EasyDccReply();
         int i = 0;
         char command = msg.toString().charAt(0);
@@ -249,8 +257,8 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
 
             case 'X': // eXit programming
             case 'S': // Send packet
-            case 'D': // Deque packet
-            case 'Q': // Que packet
+            case 'D': // Dequeue packet
+            case 'Q': // Queue packet
             case 'F': // display memory
             case 'C': // program loCo
                 reply.setElement(i++, EDC_OPS); // capital O for Operation
@@ -263,13 +271,11 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
 
             case 'E':
                 log.debug("TRACK_POWER_ON detected");
-                trackPowerState = true;
                 reply.setElement(i++, EDC_OPS); // capital O for Operation
                 break;
 
             case 'K':
                 log.debug("TRACK_POWER_OFF detected");
-                trackPowerState = false;
                 reply.setElement(i++, EDC_OPS); // capital O for Operation
                 break;
 
@@ -314,7 +320,9 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
 
             default:
                 log.debug("non-reply message detected");
-                reply.setElement(i++, EDC_OPS); // capital O for Operation
+                reply.setElement(i++, '?'); // per page 2 of the EasyDCC computer
+                                          // operations manual, an invalid 
+                                          // command returns ?<CR>
         }
         log.debug("Reply generated = {}", reply.toString());
         reply.setElement(i++, 0x0d); // add final CR for all replies
@@ -349,7 +357,7 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
      * <p>
      * Only used in the Receive thread.
      *
-     * @returns filled message, only when the message is complete.
+     * @return filled message, only when the message is complete.
      * @throws IOException when presented by the input source.
      */
     private EasyDccMessage loadChars() throws java.io.IOException {

@@ -37,7 +37,7 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
          radio throttles. 
          */
         log.debug("new EasyDccThrottle for {}", address);
-        notifyThrottleKnown(new EasyDccThrottle((EasyDccSystemConnectionMemo) _memo, (DccLocoAddress) address), address);
+        notifyThrottleKnown(new EasyDccThrottle(_memo, (DccLocoAddress) address), address);
     }
 
     // EasyDcc does not have a 'dispatch' function.

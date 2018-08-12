@@ -24,6 +24,8 @@ public class TrainManifestTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+
         jmri.util.JUnitOperationsUtil.resetOperationsManager();
         jmri.util.JUnitOperationsUtil.initOperationsData();
     }

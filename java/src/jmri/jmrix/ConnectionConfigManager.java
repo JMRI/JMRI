@@ -432,9 +432,5 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
                 this.exceptions.add(new InitializationException(memo.description, Bundle.getMessage("ErrorSubException", memo.description) + memo.description));
             }
         }
-
-        public List<InitializationException> getExceptions() {
-            return this.exceptions;
-        }
     }
 }

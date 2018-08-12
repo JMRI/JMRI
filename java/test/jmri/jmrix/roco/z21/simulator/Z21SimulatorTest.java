@@ -18,8 +18,6 @@ import org.junit.Test;
  */
 public class Z21SimulatorTest {
 
-    private static  java.net.InetAddress host;
-    private static int port = 21105; // default port for Z21 connections.
     private static Z21SimulatorAdapter a = null;
 
 
@@ -45,12 +43,13 @@ public class Z21SimulatorTest {
         JUnitUtil.setUp();
         JUnitUtil.initConfigureManager();
         try {
-           host = java.net.InetAddress.getLocalHost();
+           java.net.InetAddress.getLocalHost(); // checking to see if it works
         } catch(java.net.UnknownHostException uhe){
             Assert.fail("Unable to create host localhost");
         }
         // create a new simulator.
         a = new Z21SimulatorAdapter();
+        
         // connect the port
         try {
            a.connect();

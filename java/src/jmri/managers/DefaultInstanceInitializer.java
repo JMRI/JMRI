@@ -2,12 +2,10 @@ package jmri.managers;
 
 import java.util.Arrays;
 import java.util.Set;
-import jmri.AddressedProgrammerManager;
 import jmri.AudioManager;
 import jmri.BlockManager;
 import jmri.ClockControl;
 import jmri.ConditionalManager;
-import jmri.GlobalProgrammerManager;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.LightManager;
@@ -35,7 +33,7 @@ import org.openide.util.lookup.ServiceProvider;
  * {@link jmri.InstanceManager}.
  * <P>
  * Not all {@link jmri.InstanceManager} related classes are provided by this
- * class. See the discussion in {@link jmri.InstanceManager} of initilization
+ * class. See the discussion in {@link jmri.InstanceManager} of initialization
  * methods.
  * <hr>
  * This file is part of JMRI.
@@ -79,14 +77,6 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
 
         if (type == MemoryManager.class) {
             return new DefaultMemoryManager();
-        }
-
-        if (type == AddressedProgrammerManager.class) {
-            return new DeferringProgrammerManager();
-        }
-
-        if (type == GlobalProgrammerManager.class) {
-            return new DeferringProgrammerManager();
         }
 
         if (type == RailComManager.class) {
@@ -159,8 +149,6 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
                 LightManager.class,
                 LogixManager.class,
                 MemoryManager.class,
-                AddressedProgrammerManager.class,
-                GlobalProgrammerManager.class,
                 RailComManager.class,
                 ReporterManager.class,
                 RouteManager.class,

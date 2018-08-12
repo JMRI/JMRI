@@ -30,13 +30,13 @@
       <h2>JMRI: LDT Signaling for DB (German Federal Railways )
       Signals</h2>
 
-      <h2 b="">Exit signal <b><img src="output2_html_cf50511.png"
-      name="obr&#225;zky8" align="middle" width="10" height="18"
+      <h2>Exit signal <b><img src="output2_html_cf50511.png"
+      align="middle" width="10" height="18"
       border="0"></b></h2>
 
       <p style="margin-bottom: 0in">decoder: LS-DEC-DB</p>
 
-      <table width="100%" border="1" bordercolor="#000000"
+      <table width="100%" border="1"
       cellpadding="3" cellspacing="0">
         <col width="40*">
         <col width="29*">
@@ -194,13 +194,13 @@
 
       <p style="margin-bottom: 0in"><br></p>
 
-      <h2 b="">Entry signal <b><img src="output2_html_116eed62.png"
-      name="obr&#225;zky9" align="middle" width="10" height="18"
+      <h2>Entry signal <b><img src="output2_html_116eed62.png"
+      align="middle" width="10" height="18"
       border="0"></b></h2>
 
       <p style="margin-bottom: 0in">decoder: LS-DEC-DB</p>
 
-      <table width="100%" border="1" bordercolor="#000000"
+      <table width="100%" border="1"
       cellpadding="3" cellspacing="0">
         <col width="40*">
         <col width="29*">
@@ -358,13 +358,13 @@
 
       <p style="margin-bottom: 0in"><br></p>
 
-      <h2 b="">Advance signal <b><img src=
-      "output2_html_m30be16a8.png" name="obr&#225;zky10" align=
+      <h2>Advance signal <b><img src=
+      "output2_html_m30be16a8.png" align=
       "middle" width="16" height="15" border="0"></b></h2>
 
       <p style="margin-bottom: 0in">decoder: LS-DEC-DB</p>
 
-      <table width="100%" border="1" bordercolor="#000000"
+      <table width="100%" border="1"
       cellpadding="3" cellspacing="0">
         <col width="40*">
         <col width="29*">

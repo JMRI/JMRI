@@ -52,7 +52,11 @@ public class DCCppSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
         // infrastructure objects
         DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
 
-        scm = new DCCppSystemConnectionMemo(tc);
+        DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
+        memo.setTurnoutManager(new DCCppTurnoutManager(tc, memo.getSystemPrefix()));
+        memo.setSensorManager(new DCCppSensorManager(tc, memo.getSystemPrefix()));
+        memo.setLightManager(new DCCppLightManager(tc, memo.getSystemPrefix()));
+        scm = memo;      
     }
 
     @Override

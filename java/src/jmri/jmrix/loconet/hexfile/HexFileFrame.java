@@ -3,7 +3,11 @@ package jmri.jmrix.loconet.hexfile;
 import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+import jmri.DccLocoAddress;
+import jmri.DccThrottle;
 import jmri.GlobalProgrammerManager;
+import jmri.LocoAddress;
+import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.managers.DefaultProgrammerManager;
@@ -28,6 +32,8 @@ public class HexFileFrame extends JmriJFrame {
     javax.swing.JButton jButton1 = new javax.swing.JButton();
     javax.swing.JTextField delayField = new javax.swing.JTextField(5);
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
+    
+    private int connectedAddresses = 0;
 
     // to find and remember the log file
     final javax.swing.JFileChooser inputFileChooser
@@ -37,7 +43,7 @@ public class HexFileFrame extends JmriJFrame {
         super();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -126,7 +132,6 @@ public class HexFileFrame extends JmriJFrame {
         // leaves the LocoNet Packetizer (e.g. the simulated connection)
         // running.
         super.dispose();
-
     }
 
     LnPacketizer packets = null;
@@ -157,7 +162,7 @@ public class HexFileFrame extends JmriJFrame {
             return;
         }
         // connect to a packetizing LnTrafficController
-        packets = new LnPacketizer();
+        packets = new LnPacketizer(port.getSystemConnectionMemo());
         packets.connectPort(port);
         connected = true;
 
@@ -166,17 +171,21 @@ public class HexFileFrame extends JmriJFrame {
 
         // do the common manager config
         port.getSystemConnectionMemo().configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, // full featured by default
-                false, false);
+                false, false, false);
         port.getSystemConnectionMemo().configureManagers();
-        LnSensorManager LnSensorManager = (LnSensorManager) port.getSystemConnectionMemo().getSensorManager();
-        LnSensorManager.setDefaultSensorState(port.getOptionState("SensorDefaultState")); // NOI18N
+        if (port.getSystemConnectionMemo().getSensorManager() instanceof LnSensorManager) {
+            LnSensorManager LnSensorManager = (LnSensorManager) port.getSystemConnectionMemo().getSensorManager();
+            LnSensorManager.setDefaultSensorState(port.getOptionState("SensorDefaultState")); // NOI18N
+        } else {
+            log.info("Sensor Manager referenced by port is not an LnSensorManager. Have not set the default sensor state.");
+        }
 
         // Install a debug programmer, replacing the existing LocoNet one
         DefaultProgrammerManager ep = port.getSystemConnectionMemo().getProgrammerManager();
         port.getSystemConnectionMemo().setProgrammerManager(
                 new jmri.progdebugger.DebugProgrammerManager(port.getSystemConnectionMemo()));
         if (port.getSystemConnectionMemo().getProgrammerManager().isAddressedModePossible()) {
-            jmri.InstanceManager.setAddressedProgrammerManager(port.getSystemConnectionMemo().getProgrammerManager());
+            jmri.InstanceManager.store(port.getSystemConnectionMemo().getProgrammerManager(), jmri.AddressedProgrammerManager.class);
         }
         if (port.getSystemConnectionMemo().getProgrammerManager().isGlobalProgrammerAvailable()) {
             jmri.InstanceManager.store(port.getSystemConnectionMemo().getProgrammerManager(), GlobalProgrammerManager.class);
@@ -184,14 +193,44 @@ public class HexFileFrame extends JmriJFrame {
         jmri.InstanceManager.deregister(ep, jmri.AddressedProgrammerManager.class);
         jmri.InstanceManager.deregister(ep, jmri.GlobalProgrammerManager.class);
 
-        // Install a debug throttle manager, replacing the existing LocoNet one
-        port.getSystemConnectionMemo().setThrottleManager(new jmri.jmrix.debugthrottle.DebugThrottleManager(port.getSystemConnectionMemo()));
+        // Install a debug throttle manager and override 
+        DebugThrottleManager tm = new DebugThrottleManager(port.getSystemConnectionMemo() ) {
+            /**
+             * Only address 128 and above can be a long address
+             */
+            @Override
+            public boolean canBeLongAddress(int address) {
+                return (address >= 128);
+            }
+
+            @Override
+            public void requestThrottleSetup(LocoAddress a, boolean control) {
+                connectedAddresses++;
+                DccLocoAddress address = (DccLocoAddress) a;
+                //create some testing situations
+                if (connectedAddresses > 5) {
+                    log.warn("SLOT MAX of 5 exceeded");
+                    failedThrottleRequest(address, "SLOT MAX of 5 exceeded");
+                    return;
+                }
+                // otherwise, continue with setup
+                super.requestThrottleSetup(a, control);
+            }
+
+            @Override
+            public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {
+                connectedAddresses--;
+                return super.disposeThrottle(t, l);
+            }    
+        };
+
+        port.getSystemConnectionMemo().setThrottleManager(tm);
         jmri.InstanceManager.setThrottleManager(
                 port.getSystemConnectionMemo().getThrottleManager());
 
         // start operation of packetizer
         packets.startThreads();
-        sourceThread = new Thread(port);
+        sourceThread = new Thread(port, "LocoNet HexFileFrame");
         sourceThread.start();
     }
 

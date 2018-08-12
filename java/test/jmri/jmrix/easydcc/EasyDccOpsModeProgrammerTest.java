@@ -31,6 +31,7 @@ public class EasyDccOpsModeProgrammerTest {
 
     @After
     public void tearDown() {
+        _memo.getTrafficController().terminateThreads();
         _memo = null;
         JUnitUtil.tearDown();
     }

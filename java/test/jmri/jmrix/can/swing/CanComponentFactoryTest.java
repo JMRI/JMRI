@@ -18,8 +18,7 @@ import org.junit.Test;
  */
 public class CanComponentFactoryTest {
 
-
-    private TrafficController tc = null;
+    // private TrafficController tc = null;
     private CanSystemConnectionMemo m = null;
  
     @Test
@@ -32,13 +31,15 @@ public class CanComponentFactoryTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new TestTrafficController();
+        // tc = new TestTrafficController();
         m = new CanSystemConnectionMemo();
         m.setSystemPrefix("ABC");
 
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();        tc = null;
+    public void tearDown() {
+        JUnitUtil.tearDown();
+        // tc = null;
     }
 }

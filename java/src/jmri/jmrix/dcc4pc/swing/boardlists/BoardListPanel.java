@@ -19,7 +19,6 @@ import javax.swing.table.TableRowSorter;
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
 import jmri.jmrix.dcc4pc.swing.Dcc4PcPanelInterface;
 import jmri.swing.RowSorterUtil;
-import jmri.util.SystemNameComparator;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -50,7 +49,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
     @Override
     public void initComponents(Dcc4PcSystemConnectionMemo memo) {
         super.initComponents(memo);
-        senMan = jmri.InstanceManager.getDefault(jmri.jmrix.dcc4pc.Dcc4PcSensorManager.class);
+        senMan = memo.getSensorManager();
         _boardListCount = senMan.getBoards();
 
         setLayout(new BorderLayout());
@@ -64,8 +63,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
 
         _BoardModel = new ReaderBoardModel();
         JTable boardTable = new JTable(_BoardModel);
-        TableRowSorter<ReaderBoardModel> sorter = new TableRowSorter<>(_BoardModel);
-        sorter.setComparator(ReaderBoardModel.ADDRESS_COLUMN, new SystemNameComparator());
+        TableRowSorter<ReaderBoardModel> sorter = new TableRowSorter<>(_BoardModel); // leave default comparator for Integers
         RowSorterUtil.setSortOrder(sorter, ReaderBoardModel.ADDRESS_COLUMN, SortOrder.ASCENDING);
         
         boardTable.setRowSelectionAllowed(false);
@@ -265,10 +263,6 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
             senMan.changeBoardAddress(boardAddress, Integer.valueOf(newAddressField.getText()));
         }
 
-       //
-        //protected void deletePair(int r){
-            /*jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removeSignalMastLogic(senMan, _boardListCount.get(r));*/
-        //}
         public static final int ADDRESS_COLUMN = 0;
         public static final int INPUTS_COLUMN = 1;
         public static final int ENCODING_COLUMN = 2;

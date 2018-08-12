@@ -316,7 +316,7 @@ public class LayoutSlipTest {
         Assert.assertEquals("lts.getBounds() is equal to...",
                 new Rectangle2D.Double(30.20101012677667, 85.85786437626905, 39.59797974644667, 28.284271247461902),
                 lts.getBounds());
-        Rectangle2D b = ltd.getBounds();
+        ltd.getBounds();
         Assert.assertEquals("ltd.getBounds() is equal to...",
                 new Rectangle2D.Double(30.20101012677667, 85.85786437626905, 39.59797974644667, 28.284271247461902),
                 lts.getBounds());
@@ -724,6 +724,7 @@ public class LayoutSlipTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             lts = new LayoutSlip("single", new Point2D.Double(50.0, 100.0), +45.0, layoutEditor, LayoutTurnout.SINGLE_SLIP);
             ltd = new LayoutSlip("double", new Point2D.Double(100.0, 50.0), -45.0, layoutEditor, LayoutTurnout.DOUBLE_SLIP);

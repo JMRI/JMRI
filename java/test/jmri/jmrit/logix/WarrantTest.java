@@ -4,7 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import jmri.BeanSetting;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -253,6 +252,7 @@ public class WarrantTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initShutDownManager();
 //        JUnitUtil.initWarrantManager();

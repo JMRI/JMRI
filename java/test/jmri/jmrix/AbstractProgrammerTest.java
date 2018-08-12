@@ -3,7 +3,6 @@ package jmri.jmrix;
 import java.util.List;
 import jmri.ProgListener;
 import jmri.ProgrammingMode;
-import jmri.managers.DefaultProgrammerManager;
 import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;

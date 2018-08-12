@@ -45,7 +45,7 @@ public class XmlFileTest extends TestCase {
         final String docTypeInvalid = "<!DOCTYPE layout-config SYSTEM \"layout-config-2-5-4.dtd\">";
 
         final String contentSchemaValid = "<decoderIndex-config xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"http://jmri.org/xml/schema/decoder.xsd\">";
-        final String contentSchemaInvalid = "<decoderIndex-config xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"http://jmri.org/xml/schema/layout-2-9-6.xsd \">";
+        final String contentSchemaInvalid = "<decoderIndex-config xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"http://jmri.org/xml/schema/layout-2-9-6.xsd\">";
         final String contentSchemaAbsent = "<decoderIndex-config>";
         
         final String ending = "<decoderIndex><mfgList nmraListDate=\"\" updated=\"\"><manufacturer mfg=\"\"/></mfgList><familyList><family mfg=\"\" name=\"\" file=\"\"/></familyList></decoderIndex></decoderIndex-config>";

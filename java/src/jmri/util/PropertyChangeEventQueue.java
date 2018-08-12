@@ -34,6 +34,7 @@ public class PropertyChangeEventQueue {
      *                   a copy of the contents, so future changes irrelevant.
      */
     public PropertyChangeEventQueue(@Nonnull Collection<NamedBean> collection) {
+        this();
         for (NamedBean item : collection) {
             items.add(item);
             item.addPropertyChangeListener(listener);

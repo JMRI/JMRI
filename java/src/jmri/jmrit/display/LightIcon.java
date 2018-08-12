@@ -10,12 +10,12 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An icon to display a status of a light.
- * <P>
+ * <p>
  * A click on the icon will command a state change. Specifically, it will set
  * the state to the opposite (THROWN vs CLOSED) of the current state.
- * <P>
- * The default icons are for a left-handed turnout, facing point for east-bound
- * traffic.
+ * <p>
+ * The default icons show a crossed lamp symbol.
+ * @see Editor#addLightEditor()
  *
  * @author Bob Jacobsen Copyright (c) 2002
  */
@@ -23,8 +23,8 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
 
     public LightIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
-        super(new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
-                "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif"), editor);
+        super(new NamedIcon("resources/icons/smallschematics/lights/cross-on.png",
+                "resources/icons/smallschematics/lights/cross-off.png"), editor);
         _control = true;
         displayState(lightState());
         setPopupUtility(null);
@@ -79,13 +79,13 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
     }
 
     // display icons
-    String offLName = "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif";
+    String offLName = "resources/icons/smallschematics/lights/cross-on.png";
     NamedIcon off = new NamedIcon(offLName, offLName);
-    String onLName = "resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif";
+    String onLName = "resources/icons/smallschematics/lights/cross-off.png";
     NamedIcon on = new NamedIcon(onLName, onLName);
-    String inconsistentLName = "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif";
+    String inconsistentLName = "resources/icons/smallschematics/lights/cross-inconsistent.png";
     NamedIcon inconsistent = new NamedIcon(inconsistentLName, inconsistentLName);
-    String unknownLName = "resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif";
+    String unknownLName = "resources/icons/smallschematics/lights/cross-unknown.png";
     NamedIcon unknown = new NamedIcon(unknownLName, unknownLName);
 
     public NamedIcon getOffIcon() {

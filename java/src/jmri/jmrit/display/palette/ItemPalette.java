@@ -2,6 +2,7 @@ package jmri.jmrit.display.palette;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.net.URL;
@@ -29,36 +30,126 @@ import jmri.jmrit.catalog.CatalogTreeNode;
 import jmri.jmrit.catalog.DirectorySearcher;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.picker.PickListModel;
 import jmri.util.FileUtil;
-import jmri.util.JmriJFrame;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Container for adding items to Control Panels. Loads and stores icons used in
- * Control Panel Editor panels. For background colors to work on a particular editor
- * instance, select the 'Item Palette' item under 'Add Items' menu to configure 
+ * Container for adding items to Control Panels. Starting point for palette package.
+ * <p>
+ * Loads and stores icons used in Control Panel Editor panels.
+ * For background colors to work on a particular editor instance, select the
+ * 'Item Palette' item under 'Add Items' menu and configure the 'Backgrounds' tab
  * ItemPalette for that editor. Otherwise any item can be dragged and
- * dropped to any editor. The icons are displayed on the background
- * of the last editor to call the ItemPalette instance. The user can set it
- * to another color or a white/gray squares pattern using the "View on:" combo.
+ * dropped to any editor.
+ * <p>
+ * The icons are displayed on the background of the last editor to call the
+ * ItemPalette instance. In session the user can set it to another color or a white/gray
+ * squares pattern using the "View on:" combo. This choice is shared across tabs
+ * as a field on the {@link jmri.jmrit.display.DisplayFrame} parent frame.
+ * <p>
+ * <a href="doc-files/ItemPalette-ClassDiagram.png"><img src="doc-files/ItemPalette-ClassDiagram.png" alt="UML Class diagram" height="50%" width="50%"></a>
  *
- * @author Pete Cressman Copyright (c) 2010
+ * @author Pete Cressman Copyright (c) 2010, 2018
+ * @author Egbert Broerse Copyright (c) 2017
  */
-public class ItemPalette extends JmriJFrame implements ChangeListener {
+/*
+@startuml jmri/jmrit/display/palette/doc-files/ItemPalette-ClassDiagram.png
+
+abstract class JPanel
+package "jmri.util.swing.ImagePanel" {
+   class ImagePanel {
+-BufferedImage back
++setImage()
++paintComponent()
+}
+}
+package "jmri.util.swing.DrawSquares" {
+   class "DrawSquares" {
++DrawSquares()
+}
+}
+abstract class ItemPanel {
+-String type
+#int previewBgSet
+#BufferedImage[] _backgrounds
+#MakeBgCombo()
+}
+JPanel --|> ItemPanel
+abstract class FamilyItemPanel
+class TableItemPanel
+class IndicatorItemPanel
+IndicatorItemPanel : type = "Indicator"
+object viewOnCombo
+viewOnCombo : -int choice
+viewOnCombo : +EventListener InitListener
+object preview
+preview : -image = 1
+preview : +EventListener comboListener
+object TurnoutItemPanel
+TurnoutItemPanel : type = "Turnout"
+TableItemPanel -- TurnoutItemPanel
+object SensorItemPanel
+SensorItemPanel : type = "Sensor"
+TableItemPanel -- SensorItemPanel
+class SignalMastItemPanel
+SignalMastItemPanel : type = "SignalMast"
+TableItemPanel --|> SignalMastItemPanel
+class MultiSensorItemPanel
+MultiSensorItemPanel : type = "MultiSensor"
+TableItemPanel --|> MultiSensorItemPanel
+class IconItemPanel
+class BackgroundItemPanel
+BackgroundItemPanel : type = "Background"
+IconItemPanel --|> BackgroundItemPanel
+class ClockItemPanel
+ClockItemPanel : type = "Clock"
+IconItemPanel --|> ClockItemPanel
+class DecoratorPanel
+DecoratorPanel : #int previewBgSet
+DecoratorPanel : #BufferedImage[] _backgrounds
+JPanel --|> DecoratorPanel
+abstract class DragJComponent
+JPanel --|> DragJComponent
+class TextItemPanel
+TextItemPanel : type = "Text"
+
+ItemPanel --|> FamilyItemPanel
+FamilyItemPanel --|> TableItemPanel
+FamilyItemPanel --|> IndicatorItemPanel
+DecoratorPanel *-- viewOnCombo
+FamilyItemPanel *-- viewOnCombo : if != SignalMast
+FamilyItemPanel *-- preview
+IconItemPanel *-- viewOnCombo : if != Background
+SignalMastItemPanel *-- viewOnCombo
+viewOnCombo ..> preview: setImage[n]
+viewOnCombo -- DrawSquares
+ItemPanel --|> IconItemPanel
+ItemPanel --|> TextItemPanel
+DecoratorPanel -- TextItemPanel
+ImagePanel -- preview
+DragJComponent --|> ReporterItemPanel
+ReporterItemPanel *-- preview
+' MemoryItemPanel not shown
+
+@enduml
+*/
+
+public class ItemPalette extends DisplayFrame implements ChangeListener {
 
     public static final int STRUT_SIZE = 10;
 
-    static JTabbedPane _tabPane;
-    static HashMap<String, ItemPanel> _tabIndex;
+    protected static JTabbedPane _tabPane;
+    private static HashMap<String, ItemPanel> _tabIndex;
 
     static HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> _iconMaps;
     // for now, special case 4 level maps since IndicatorTO is the only case.
     static HashMap<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>> _indicatorTOMaps;
-    private ItemPanel _currentItemPanel;
+    static protected ItemPanel _currentItemPanel;
 
     /**
      * Store palette icons in preferences file catalogTrees.xml
@@ -133,14 +224,13 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         if (_iconMaps == null) {
             // long t = System.currentTimeMillis();
             new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
-            _iconMaps = new HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>();
+            _iconMaps = new HashMap<>();
             _indicatorTOMaps
-                    = new HashMap<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>>();
+                    = new HashMap<>();
 
             if (!loadSavedIcons(ed)) {
                 loadDefaultIcons(ed);
             }
-            // System.out.println("Palette icons loaded in " + (System.currentTimeMillis()-t) + " milliseconds.");
         }
     }
 
@@ -182,7 +272,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     static HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>
             loadIndicatorFamilyMap(CatalogTreeNode node, Editor ed) {
         HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyMap
-                = new HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>();
+                = new HashMap<>();
         @SuppressWarnings("unchecked") // node.children() is still unchecked in JDOM2
         Enumeration<CatalogTreeNode> ee = node.children();
         while (ee.hasMoreElements()) {
@@ -196,13 +286,13 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
 
     static HashMap<String, HashMap<String, NamedIcon>> loadFamilyMap(CatalogTreeNode node, Editor ed) {
         HashMap<String, HashMap<String, NamedIcon>> familyMap
-                = new HashMap<String, HashMap<String, NamedIcon>>();
+                = new HashMap<>();
         @SuppressWarnings("unchecked") // node.children() is still unchecked in JDOM2
         Enumeration<CatalogTreeNode> ee = node.children();
         while (ee.hasMoreElements()) {
             CatalogTreeNode famNode = ee.nextElement();
             String familyName = (String) famNode.getUserObject();
-            HashMap<String, NamedIcon> iconMap = new HashMap<String, NamedIcon>();
+            HashMap<String, NamedIcon> iconMap = new HashMap<>();
             List<CatalogTreeLeaf> list = famNode.getLeaves();
             for (int i = 0; i < list.size(); i++) {
                 String iconName = list.get(i).getName();
@@ -214,7 +304,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
                     if (icon == null) {
                         log.info("{} removed for url = {}", iconName, path);
                     } else {
-                        InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
+                        InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
                     }
                 }
                 if (icon != null) {
@@ -290,7 +380,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
                 }
                 List<Element> families = typeList.get(i).getChildren();
                 loadFamilies(itemType, families, ed);
-                InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
+                InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
             }
         } catch (org.jdom2.JDOMException e) {
             log.error("error reading file \"defaultPanelIcons.xml\" due to: " + e);
@@ -301,11 +391,11 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
 
     static HashMap<String, HashMap<String, NamedIcon>> loadDefaultFamilyMap(List<Element> families, Editor ed) {
         HashMap<String, HashMap<String, NamedIcon>> familyMap
-                = new HashMap<String, HashMap<String, NamedIcon>>();
+                = new HashMap<>();
         for (int k = 0; k < families.size(); k++) {
             String familyName = families.get(k).getName();
             HashMap<String, NamedIcon> iconMap
-                    = new HashMap<String, NamedIcon>();     // Map of all icons of in family, familyName
+                    = new HashMap<>();     // Map of all icons of in family, familyName
             List<Element> iconfiles = families.get(k).getChildren();
             for (int j = 0; j < iconfiles.size(); j++) {
                 String iconName = iconfiles.get(j).getName();
@@ -336,7 +426,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     static HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>
             loadDefaultIndicatorTOMap(List<Element> typeList, Editor ed) {
         HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap
-                = new HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>();     // Map of all families of type, typeName
+                = new HashMap<>(); // Map of all families of type, typeName
         for (int k = 0; k < typeList.size(); k++) {
             String familyName = typeList.get(k).getName();
             List<Element> types = typeList.get(k).getChildren();
@@ -357,11 +447,9 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         ItemPalette instance = InstanceManager.getOptionalDefault(ItemPalette.class).orElseGet(() -> {
             return InstanceManager.setDefault(ItemPalette.class, new ItemPalette(title, ed));
         });
-        Iterator<Entry<String, ItemPanel>> iter = _tabIndex.entrySet().iterator();
+        Iterator<ItemPanel> iter = _tabIndex.values().iterator();
         while (iter.hasNext()) {
-            Entry<String, ItemPanel> entry = iter.next();
-            ItemPanel tab = entry.getValue();
-            tab.setEditor(ed);            
+            iter.next().setEditor(ed);
         }
         String name = ed.getName();
         if (name == null || name.equals("")) {
@@ -369,15 +457,13 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         }
         instance.setTitle(Bundle.getMessage("MenuItemItemPalette") + " - " + name);
         // Either of these positioning calls puts the instance on the primary monitor. ???
-        java.awt.Point pt = ed.getLocation();
-        instance.setLocation(pt.x, pt.y);
-        // instance.setLocationRelativeTo(ed);
+        instance.setLocation(jmri.util.PlaceWindow.nextTo(ed, null, instance));
         instance.pack();
         instance.setVisible(true);
         return instance;
     }
     
-    private ItemPalette(String title, Editor ed) {
+    public ItemPalette(String title, Editor ed) {
         super(false, false);
         init(title, ed);
     }
@@ -404,90 +490,89 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         pack();
     }
 
-    /**
-     * Add the tabs on the the Control Panel Editor.
+    /*
+     * Add the tabs on the Control Panel Editor.
      */
     static void buildTabPane(ItemPalette palette, Editor editor) {
         _tabPane = new JTabbedPane();
-        _tabIndex = new HashMap<String, ItemPanel>();
+        _tabIndex = new HashMap<>();
 
         ItemPanel itemPanel = new TableItemPanel(palette, "Turnout", null,
                 PickListModel.turnoutPickModelInstance(), editor);
+        addItemTab(itemPanel, "Turnout", "BeanNameTurnout");
         itemPanel.init();  // show panel on start
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNameTurnout"));
-        _tabIndex.put("Turnout", itemPanel);
 
         itemPanel = new TableItemPanel(palette, "Sensor", null,
                 PickListModel.sensorPickModelInstance(), editor);
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNameSensor"));
-        _tabIndex.put("Sensor", itemPanel);
+        addItemTab(itemPanel, "Sensor", "BeanNameSensor");
 
         itemPanel = new SignalHeadItemPanel(palette, "SignalHead", null,
                 PickListModel.signalHeadPickModelInstance(), editor);
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNameSignalHead"));
-        _tabIndex.put("SignalHead", itemPanel);
+        addItemTab(itemPanel, "SignalHead", "BeanNameSignalHead");
 
         itemPanel = new SignalMastItemPanel(palette, "SignalMast", null,
                 PickListModel.signalMastPickModelInstance(), editor);
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNameSignalMast"));
-        _tabIndex.put("SignalMast", itemPanel);
+        addItemTab(itemPanel, "SignalMast", "BeanNameSignalMast");
 
         itemPanel = new MemoryItemPanel(palette, "Memory", null,
                 PickListModel.memoryPickModelInstance(), editor);
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNameMemory"));
-        _tabIndex.put("Memory", itemPanel);
+        addItemTab(itemPanel, "Memory", "BeanNameMemory");
 
         itemPanel = new ReporterItemPanel(palette, "Reporter", null,
                 PickListModel.reporterPickModelInstance(), editor);
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNameReporter"));
-        _tabIndex.put("Reporter", itemPanel);
+        addItemTab(itemPanel, "Reporter", "BeanNameReporter");
 
         itemPanel = new TableItemPanel(palette, "Light", null,
                 PickListModel.lightPickModelInstance(), editor);
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNameLight"));
-        _tabIndex.put("Light", itemPanel);
+        addItemTab(itemPanel, "Light", "BeanNameLight");
 
         itemPanel = new MultiSensorItemPanel(palette, "MultiSensor", null,
                 PickListModel.multiSensorPickModelInstance(), editor);
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("MultiSensor"));
-        _tabIndex.put("MultiSensor", itemPanel);
+        addItemTab(itemPanel, "MultiSensor", "MultiSensor");
 
-        ItemPanel iconPanel = new IconItemPanel(palette, "Icon", editor);
-        _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Icon"));
-        _tabIndex.put("Icon", iconPanel); // changed from "itemPanel"
+        itemPanel = new IconItemPanel(palette, "Icon", editor);
+        addItemTab(itemPanel, "Icon", "Icon");
 
-        iconPanel = new BackgroundItemPanel(palette, "Background", editor);
-        _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Background"));
-        _tabIndex.put("Background", iconPanel);
+        itemPanel = new BackgroundItemPanel(palette, "Background", editor);
+        addItemTab(itemPanel, "Background", "Background");
 
-        iconPanel = new TextItemPanel(palette, "Text", editor);
-        _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Text"));
-        _tabIndex.put("Text", iconPanel);
+        itemPanel = new TextItemPanel(palette, "Text", editor);
+        addItemTab(itemPanel, "Text", "Text");
 
-        iconPanel = new RPSItemPanel(palette, "RPSReporter", null, editor);
-        // itemPanel.init();  // show panel on start
-        _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("RPSreporter")); // stored in jmri.jmrit.display.DisplayBundle
-        _tabIndex.put("RPSReporter", iconPanel);
+        itemPanel = new RPSItemPanel(palette, "RPSReporter", null, editor);
+        addItemTab(itemPanel, "RPSReporter", "RPSreporter");
 
-        iconPanel = new ClockItemPanel(palette, "FastClock", editor);
-        _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("FastClock"));
-        _tabIndex.put("FastClock", iconPanel);
+        itemPanel = new ClockItemPanel(palette, "FastClock", editor);
+        addItemTab(itemPanel, "FastClock", "FastClock");
 
         itemPanel = new IndicatorItemPanel(palette, "IndicatorTrack", null, editor);
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("IndicatorTrack"));
-        _tabIndex.put("IndicatorTrack", itemPanel);
+        addItemTab(itemPanel, "IndicatorTrack", "IndicatorTrack");
 
         itemPanel = new IndicatorTOItemPanel(palette, "IndicatorTO", null,
                 PickListModel.turnoutPickModelInstance(), editor);
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("IndicatorTO"));
-        _tabIndex.put("IndicatorTO", itemPanel);
+        addItemTab(itemPanel, "IndicatorTO", "IndicatorTO");
 
         itemPanel = new PortalItemPanel(palette, "Portal", null, editor);
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("BeanNamePortal"));
-        _tabIndex.put("Portal", itemPanel);
+        addItemTab(itemPanel, "Portal", "BeanNamePortal");
 
         _tabPane.addChangeListener(palette);
-        // _tabPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+    }
+    
+    static void addItemTab(ItemPanel itemPanel, String key, String tabTitle) {
+        JScrollPane scrollPane = new JScrollPane(itemPanel);
+        _tabPane.add(scrollPane, Bundle.getMessage(tabTitle));
+        _tabIndex.put(key, itemPanel);
+    }
+
+    @Override
+    public void updateBackground0(java.awt.image.BufferedImage im) {
+        int bgIdx = getPreviewBg();
+        Iterator<ItemPanel> iter = _tabIndex.values().iterator();
+        while (iter.hasNext()) {
+            ItemPanel panel = iter.next();
+            panel.updateBackground0(im);
+            panel.setPreviewBg(bgIdx);
+        }
     }
 
     @Override
@@ -497,13 +582,35 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         JTabbedPane tp = (JTabbedPane) e.getSource();
         JScrollPane sp = (JScrollPane) tp.getSelectedComponent();
         ItemPanel p = (ItemPanel) sp.getViewport().getView();
-        p.init();
-        log.debug("different tab displayed");
+        Dimension oldTabDim = null;
+        log.debug("different tab displayed for {} previewBgSet updated to {}", p._itemType, getPreviewBg());
         if (_currentItemPanel != null) {
             _currentItemPanel.closeDialogs();
+            oldTabDim = _currentItemPanel.getSize();
+        }
+        Dimension totalDim = _tabPane.getSize();
+        p.init(); // (re)initialize tab pane
+        p.revalidate();
+        Dimension newTabDim = p.getPreferredSize();
+        if (oldTabDim == null) {
+            oldTabDim = newTabDim;
+        }
+        Dimension deltaDim = new Dimension(totalDim.width - oldTabDim.width, totalDim.height - oldTabDim.height);
+        if (log.isDebugEnabled()) 
+            log.debug("_tabPane Dim= ({}, {}) Old Dim({})= ({}, {}) NewDim({})= ({}, {})", totalDim.width, totalDim.height, 
+                _currentItemPanel._itemType, oldTabDim.width, oldTabDim.height,  p._itemType, newTabDim.width, newTabDim.height);
+        // tabPane must be larger than the current panel it is displaying
+        if (deltaDim.width < 8) {
+            deltaDim.width = 8;
+        }
+        if (deltaDim.height < 50) { // at least 2 rows of tabs
+            deltaDim.height = 50;
+        }
+        reSize(_tabPane, deltaDim, newTabDim);
+        if (p._bgColorBox != null) {
+            p._bgColorBox.setSelectedIndex(getPreviewBg());
         }
         _currentItemPanel = p;
-        pack();
     }
 
     private void makeMenus(Editor editor) {
@@ -553,10 +660,10 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         super.windowClosing(e);
     }
 
-    /**
+    /*
      * Look for duplicate name of family in the iterated set.
      */
-    private static boolean familyNameOK(java.awt.Frame frame, String type, String family, Iterator<String> it) {
+    protected static boolean familyNameOK(java.awt.Frame frame, String type, String family, Iterator<String> it) {
         if (family == null || family.length() == 0) {
             JOptionPane.showMessageDialog(frame,
                     Bundle.getMessage("EnterFamilyName"),
@@ -564,7 +671,9 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
             return false;
         }
         while (it.hasNext()) {
-            if (family.equals(it.next())) {
+            String f = it.next();
+            log.debug("familyNameOK compare {} {} to {}", type, family, f);
+            if (family.equals(f)) {
                 JOptionPane.showMessageDialog(frame,
                         java.text.MessageFormat.format(Bundle.getMessage("DuplicateFamilyName"),
                                 new Object[]{family, type}),
@@ -586,7 +695,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
      */
     static protected boolean addFamily(java.awt.Frame frame, String type, String family, HashMap<String, NamedIcon> iconMap) {
         if (ItemPalette.getFamilyMaps(type) == null) {
-            HashMap<String, HashMap<String, NamedIcon>> typeMap = new HashMap<String, HashMap<String, NamedIcon>>();
+            HashMap<String, HashMap<String, NamedIcon>> typeMap = new HashMap<>();
             _iconMaps.put(type, typeMap);
             // typeMap.put(family, iconMap);
         }
@@ -597,9 +706,10 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
              if (itemPanel instanceof FamilyItemPanel) {
              ((FamilyItemPanel)itemPanel).updateFamiliesPanel();
              }*/
-            InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
+            InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
             return true;
         }
+        log.warn("addFamily: family name \"{}\" for type {} NOT OK! map size= {}", family, type, iconMap.size());
         return false;
     }
 
@@ -624,7 +734,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
             log.debug("removeIconMap for family \"{}\" in type \"{}\"", family, type);
         }
         _iconMaps.get(type).remove(family);
-        InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
+        InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
         if (log.isDebugEnabled()) {
             HashMap<String, HashMap<String, NamedIcon>> families = getFamilyMaps(type);
             if (families != null && families.size() > 0) {
@@ -667,7 +777,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         Iterator<String> iter = ItemPalette.getLevel4FamilyMaps(type).keySet().iterator();
         if (familyNameOK(frame, type, family, iter)) {
             getLevel4FamilyMaps(type).put(family, iconMap);
-            InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
+            InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
             return true;
         }
         return false;
@@ -678,7 +788,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
             String key, HashMap<String, NamedIcon> iconMap) {
         HashMap<String, HashMap<String, NamedIcon>> familyMap = getLevel4Family(type, family);
         familyMap.put(key, iconMap);
-        InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
+        InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
     }
 
     // Currently only needed for IndicatorTO type
@@ -697,7 +807,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
     // Currently only needed for IndicatorTO type
     static protected void removeLevel4IconMap(String type, String family, String key) {
         if (log.isDebugEnabled()) {
-            log.debug("removelvl4IconMap for indicator family \"{}\" in type \"{}\" with key \"{}\"",
+            log.debug("removeLevel4IconMap for indicator family \"{}\" in type \"{}\" with key \"{}\"",
                     family, type, key);
         }
         if (key != null) {
@@ -705,13 +815,13 @@ public class ItemPalette extends JmriJFrame implements ChangeListener {
         } else {
             _indicatorTOMaps.get(type).remove(family);
         }
-        InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
+        InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
     }
 
     ///////////////////////////////////////////////////////////////////////////////
     
     static protected HashMap<String, NamedIcon> cloneMap(HashMap<String, NamedIcon> map) {
-        HashMap<String, NamedIcon> clone = new HashMap<String, NamedIcon>();
+        HashMap<String, NamedIcon> clone = new HashMap<>();
         if (map != null) {
             Iterator<Entry<String, NamedIcon>> it = map.entrySet().iterator();
             while (it.hasNext()) {

@@ -1,7 +1,5 @@
 package jmri.jmrix.anyma;
 
-import static jmri.Light.OFF;
-
 import jmri.implementation.AbstractVariableLight;
 import jmri.util.MathUtil;
 import org.slf4j.Logger;
@@ -12,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Implementation of the Light Object for anyma dmx
  * <P>
- * @author George Warner Copyright (c) 2017
+ * @author George Warner Copyright (c) 2017-2018
  * @since 4.9.6
  */
 public class AnymaDMX_UsbLight extends AbstractVariableLight {

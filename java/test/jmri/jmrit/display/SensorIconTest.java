@@ -25,13 +25,24 @@ public class SensorIconTest extends PositionableIconTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
-           Editor ef = new EditorScaffold();
-           SensorIcon si = new SensorIcon(ef);
+           editor = new EditorScaffold();
+           SensorIcon si = new SensorIcon(editor);
            jmri.Sensor s = jmri.InstanceManager.sensorManagerInstance().provideSensor("IS1");
            si.setSensor(new jmri.NamedBeanHandle<>("IS1", s));
            p=si;
         }
+    }
+
+    @After
+    public void tearDown() {
+        if (editor!=null) {
+            editor.dispose();
+        }
+        editor = null;
+        p=null;
+        JUnitUtil.tearDown();
     }
 
 }

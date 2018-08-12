@@ -4,22 +4,22 @@ import java.util.List;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.oaktree.SerialNode;
 import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
-import jmri.jmrix.oaktree.SerialTrafficController;
 import jmri.jmrix.oaktree.serialdriver.ConnectionConfig;
 import jmri.jmrix.oaktree.serialdriver.SerialDriverAdapter;
 import org.jdom2.Element;
 
 /**
  * Handle XML persistance of layout connections by persisting the
- * SerialDriverAdapter (and connections). Note this is named as the XML version
- * of a ConnectionConfig object, but it's actually persisting the
- * SerialDriverAdapter.
- * <P>
+ * SerialDriverAdapter (and connections).
+ * <p>
+ * Note this is named as the XML version of a ConnectionConfig object,
+ * but it's actually persisting the SerialDriverAdapter.
+ * <p>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006
+ * @author Bob Jacobsen Copyright (c) 2003, 2006
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -28,7 +28,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     /**
-     * Write out the SerialNode objects too
+     * Write out the SerialNode objects too.
      *
      * @param e Element being extended
      */
@@ -59,7 +59,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     @Override
     protected void getInstance() {
-        if(adapter == null) {
+        if (adapter == null) {
            adapter = new SerialDriverAdapter();
         }
     }

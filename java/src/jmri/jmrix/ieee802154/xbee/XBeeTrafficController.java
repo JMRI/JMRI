@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * Traffic Controller interface for communicating with XBee devices directly
  * using the XBee API.
  *
- * @author Paul Bender Copyright (C) 2013,2016
+ * @author Paul Bender Copyright (C) 2013, 2016
  */
 public class XBeeTrafficController extends IEEE802154TrafficController implements IPacketReceiveListener, IModemStatusReceiveListener, IDataReceiveListener, XBeeInterface {
 
@@ -43,7 +43,8 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     }
 
     /**
-     * <p>
+     * Get a message of zero length.
+     *
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
      */
@@ -53,7 +54,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     }
 
     /**
-     * Make connection to existing PortController object.
+     * Make connection to an existing PortController object.
      */
     @Override
     @SuppressFBWarnings(value = {"UW_UNCOND_WAIT","WA_NOT_IN_LOOP"}, justification="The unconditional wait outside of a loop is used to allow the hardware to react to a reset request.")
@@ -64,7 +65,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
                XBeeAdapter xbp = (XBeeAdapter) p;
                xbee = new XBeeDevice(xbp);
                xbee.open();
-               xbee.reset(); 
+               xbee.reset();
                try {
                   synchronized(this){
                      wait(2000);
@@ -86,7 +87,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     }
 
     /**
-     * Actually transmits the next message to the port
+     * Actually transmit the next message to the port.
      */
     @Override
     synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
@@ -166,13 +167,13 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     }
 
     /**
-     * Public method to register a node
+     * Register a node.
      */
     @Override
     public void registerNode(jmri.jmrix.AbstractNode node) {
         if(node instanceof XBeeNode) {
            super.registerNode(node);
-           XBeeNode xbnode= (XBeeNode) node;
+           XBeeNode xbnode = (XBeeNode) node;
            xbnode.setTrafficController(this);
         } else {
            throw new java.lang.IllegalArgumentException("Attempt to register node of incorrect type for this connection");
@@ -201,11 +202,10 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         nodeArray[numNodes] = null;
         // remove this node from the network too.
         getXBee().getNetwork().addRemoteDevice(node.getXBee());
- 
     }
 
-
     // XBee IPacketReceiveListener interface methods
+
     @Override
     public void packetReceived(XBeePacket response) {
 
@@ -214,22 +214,23 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     }
 
     // XBee IModemStatusReceiveListener interface methods
+
     @Override
     public void modemStatusEventReceived(ModemStatusEvent modemStatusEvent){
        log.debug("modemStatusEventReceived called with event {} ", modemStatusEvent);
     }
 
     // XBee IDataReceiveListener interface methods
+
     @Override
     public void dataReceived(com.digi.xbee.api.models.XBeeMessage xbm){
        log.debug("dataReceived called with message {} ", xbm);
     }
 
-
     private void dispatchResponse(XBeePacket response){
         XBeeReply reply = new XBeeReply(response);
 
-        // message is complete, dispatch it !!
+        // message is complete, dispatch it
         replyInDispatch = true;
         if (log.isDebugEnabled()) {
             log.debug("dispatch reply of length " + reply.getNumDataElements()
@@ -245,9 +246,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
             javax.swing.SwingUtilities.invokeAndWait(r);
             log.debug("dispatch thread complete");
         } catch (Exception e) {
-            log.error("Unexpected exception in invokeAndWait:" + e);
-            log.error("cause:" + e.getCause());
-            e.printStackTrace();
+            log.error("Unexpected exception in invokeAndWait:", e);
         }*/
         if (log.isDebugEnabled()) {
             log.debug("dispatch thread invoked");
@@ -259,7 +258,8 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
 
     /*
      * Build a new IEEE802154 Node.
-     * @return new IEEE802154Node.
+     *
+     * @return new IEEE802154Node
      */
     @Override
     public jmri.jmrix.ieee802154.IEEE802154Node newNode() {
@@ -338,7 +338,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         }
         return (null);
     }
- 
+
    /**
      * Public method to identify an XBeeNode from its RemoteXBeeDevice object.
      *
@@ -365,6 +365,14 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
      */
     public XBeeDevice getXBee(){
         return xbee;
+    }
+
+    @Override
+    protected void terminate(){
+       if(xbee!=null) {
+          xbee.close();
+          xbee=null;
+       }
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeTrafficController.class);

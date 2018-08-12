@@ -78,6 +78,26 @@ public interface SignalMast extends NamedBean {  // to eventually be Signal
     public SignalAppearanceMap getAppearanceMap();
 
     /**
+     * Set the specific mast type for this mast. 
+     * This is the
+     * type that appears in the SystemName and filename, i.e. "SL-3-high"
+     * for the 
+     * <a href="http://jmri.org/xml/signals/AAR-1946/appearance-SL-3-high.xml">AAR-1946/appearance-SL-3-high.xml</a>
+     * definition.
+     */
+    public void setMastType(@Nonnull String type);
+
+    /**
+     * Get the specific mast type for this mast.
+     * This is the
+     * type that appears in the SystemName and filename, i.e. "SL-3-high"
+     * for the 
+     * <a href="http://jmri.org/xml/signals/AAR-1946/appearance-SL-3-high.xml">AAR-1946/appearance-SL-3-high.xml</a>
+     * definition.
+     */
+    public String getMastType();
+    
+    /**
      * Get if signal mast is lit or dark. Changes to this property can be
      * listened to using the property {@literal Lit}.
      *

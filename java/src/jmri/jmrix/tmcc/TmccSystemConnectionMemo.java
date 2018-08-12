@@ -112,7 +112,7 @@ public class TmccSystemConnectionMemo extends SystemConnectionMemo {
             return true;
         }
 
-        return false; // nothing, by default
+        return super.provides(type);
     }
 
     /**
@@ -132,7 +132,7 @@ public class TmccSystemConnectionMemo extends SystemConnectionMemo {
         if (T.equals(TurnoutManager.class)) {
             return (T) getTurnoutManager();
         }
-        return null; // nothing, by default
+        return super.get(T);
     }
 
     private ThrottleManager throttleManager;

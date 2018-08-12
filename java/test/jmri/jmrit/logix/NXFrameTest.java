@@ -3,7 +3,6 @@ package jmri.jmrit.logix;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.List;
-import java.util.Locale;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Sensor;
@@ -141,7 +140,7 @@ public class NXFrameTest {
         Warrant warrant = tableFrame.getModel().getWarrantAt(0);
         Assert.assertNotNull("warrant", warrant);
         Assert.assertNotNull("warrant.getBlockOrders(", warrant.getBlockOrders());
-        List<BlockOrder> orders = warrant.getBlockOrders();
+        warrant.getBlockOrders();
 /*        if (orders.size()!=7) {
             System.out.println();
             System.out.println(warrant.getSystemName()+" " +warrant.getUserName());
@@ -210,7 +209,7 @@ public class NXFrameTest {
         jfo.requestClose();
         // we may want to use jemmy to close the panel as well.
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("NXWarrantTest");
-        panel.dispose(true);    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
+        panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }
 
     private void pressButton(WindowOperator frame, String text) {
@@ -294,6 +293,7 @@ public class NXFrameTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();

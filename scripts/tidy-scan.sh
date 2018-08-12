@@ -1,5 +1,6 @@
 #! /bin/bash
-# scan the help files for HMTL errors, used in Jenkins
+# scan the help files for HMTL errors, used in Jenkins as "tidy-scan.sh help/en/*/*"
+# formats output for Jenkins presentation
 # if an argument is provided, i.e. "help/en/*/" scan there, otherwise scan all the help
 
 if [[ "$@" == "" ]] ; then

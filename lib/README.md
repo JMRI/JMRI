@@ -28,13 +28,13 @@ development and release operations:
 
 On macOS, most of these changes can be affected with:
 ```
-find . -type f -exec gsed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
+find . -type f -not -path './.git/*' -exec gsed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
 ```
 (you may need to install gsed using [Homebrew](http://brew.sh))
 
 On Linux, these same changes can be affected with:
 ```
-find . -type f -exec sed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
+find . -type f -not -path './.git/*' -exec sed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
 ```
 
 Note that Windows installers don't necessarily remove existing library versions.
@@ -54,17 +54,19 @@ for example:
 ```
 mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplugin -Dversion=0.0 -Durl=file:./lib -DrepositoryId=lib -DupdateReleaseInfo=true -Dfile=./lib/jhidrawplugin.jar
 ```
+After that, add and commit the additional files that were created within lib/
 
 ### Specific components:
-
-##### vecmath-1.5.2.jar
-- from Java3D 1.5.2
-- from http://search.maven.org/#search%7Cga%7C1%7Cg%3Ajavax.vecmath
 
 ##### commons-lang3-3.2.1.jar
 - version 3.2.1
 - provides org.apache.commons.lang3
 - from https://commons.apache.org/proper/commons-lang/
+
+##### commons-text-1.2.jar
+- version 1.2
+- provides Apache Commons string utilities
+- from https://commons.apache.org/proper/commons-text/
 
 ##### javacsv.jar
 - version 2.0 of 2006-12-12
@@ -82,7 +84,7 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 - from http://www.slf4j.org
 
 ##### openlcb.jar
-- 0.7.15 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.15/openlcb-0.7.15.jar or the maven central repository.
+- 0.7.18 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.18/openlcb-0.7.18.jar or the maven central repository.
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -98,10 +100,6 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 ##### security.policy
 - (JMRI file)
 
-##### xercesImpl.jar
-- version Xerces-J 2.11.0
-- from http://www.apache.org/dist/xerces/j/
-
 ##### jdom.jar
 - (deprecated, we've moved to JDOM2; will be removed from here and control files post JMRI 3.12, but remains for e.g. CATS now)
 - version 1.1
@@ -111,12 +109,16 @@ mvn deploy:deploy-file -DgroupId=net.bobis.jinput.hidraw -DartifactId=jhidrawplu
 - version 2.0.5
 - from <jdom.org>
 
-##### jackson-annotations-2.8.5.jar, jackson-core-2.8.5.jar, jackson-databind-2.8.5.jar
+##### jackson-annotations-2.8.11.jar, jackson-core-2.8.11.jar, jackson-databind-2.8.11.jar
 - JSON processing library com.fasterxml.jackson
-- version 2.8.5
+- version 2.8.11
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
-- JavaDoc http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.8.5
+- JavaDoc http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.8.11
 
+##### mqtt-client-0.4.0.jar
+starting in JMRI 4.11.5
+
+##### BlueCove access to bluetooth
 bluecove-2.1.1-SNAPSHOT.jar
 lib/bluecove-bluez-2.1.1-SNAPSHOT.jar
 bluecove-gpl-2.1.1-SNAPSHOT.jar
@@ -215,15 +217,6 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 
 ##### jakarta-regexp-1.5.jar
 
-##### checker-framework directory and contents
-- The Checker Framework 2.0.1 (1-Jun-2016)
-- From http://types.cs.washington.edu/checker-framework/
-
-##### ecj.jar
-- Eclipse compiler 4.6 from
-    - http://download.eclipse.org/eclipse/downloads/drops4/R-4.6-201606061100/  (via ecj-4.6.jar) June 22, 2016
-- used in ant warnings target
-
 ##### jna-4.4.0.jar
 - Java Native Access library
 - from http://search.maven.org/#artifactdetails%7Cnet.java.dev.jna%7Cjna%7C4.4.0%7Cjar
@@ -231,6 +224,10 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 ##### jna-platform-4.4.0.jar
 - Java Native Access platform-specific utilities library
 - from http://search.maven.org/#artifactdetails%7Cnet.java.dev.jna%7Cjna-platform%7C4.4.0%7Cjar
+
+##### vecmath-1.5.2.jar
+- from Java3D 1.5.2
+- from http://search.maven.org/#search%7Cga%7C1%7Cg%3Ajavax.vecmath
 
 ##### xAPlib.jar
 - xAP automation protocol support
@@ -241,12 +238,24 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - PBender 03-Mar-2014 This version comes from the XBee library source repository
 - (we needed some of the functionality, but the pre-compiled library has not been updated).
 
+##### xercesImpl.jar
+- version Xerces-J 2.11.0
+- from http://www.apache.org/dist/xerces/j/
+
+
+
+
 
 ## For unit tests & development work only:
 
-##### UmlGraph-5.7
-- from http://www.umlgraph.org/download.html
-- only used for ant javadoc-uml
+##### checker-framework directory and contents
+- The Checker Framework 2.0.1 (1-Jun-2016)
+- From http://types.cs.washington.edu/checker-framework/
+
+##### ecj.jar
+- Eclipse compiler 4.6 from
+    - http://download.eclipse.org/eclipse/downloads/drops4/R-4.6-201606061100/  (via ecj-4.6.jar) June 22, 2016
+- used in ant warnings target
 
 ##### junit-4.12.jar
 - version 4.12
@@ -284,16 +293,32 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - from <http://developer.apple.com/library/mac/samplecode/AppleJavaExtensions/>
 - Used for building only, not at runtime
 
-##### annotations.jar, jsr305.jar
-- From Findbugs 3.0.0 from http://findbugs.sourceforge.net
+## SpotBugs static analysis
+
+##### jcip-annotations-1.0.jar
+- From Java Concurrency In Practice (http://jcip.net)
 - Only needed at compile/build time, not runtime
+- http://repo1.maven.org/maven2/net/jcip/jcip-annotations/1.0/
+
+##### jsr305.jar
+- From FindBugs 3.0.0 from http://findbugs.sourceforge.net
+- Only needed at compile/build time, not runtime
+
+##### spotbugs-annotations-3.1.1.jar
+- From SpotBugs 3.1.1
+- Only needed at compile/build time, not runtime
+- http://repo1.maven.org/maven2/com/github/spotbugs/spotbugs-annotations/3.1.1/
+
+##### UmlGraph-5.7
+- from http://www.umlgraph.org/download.html
+- only used for ant javadoc-uml
 
 
 ## Older, no longer present:
 
-##### crimson.jar
+##### crimson.jar    
 - version 1.1.3
-- from <http://xml.apache.org/crimson/>
+- from http://xml.apache.org/crimson/
 - No longer used as of JMRI 2.7.6
 
 ##### MRJAdaper.jar

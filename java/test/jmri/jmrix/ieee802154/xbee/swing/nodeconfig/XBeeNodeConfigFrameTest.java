@@ -3,7 +3,6 @@ package jmri.jmrix.ieee802154.xbee.swing.nodeconfig;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
 import jmri.jmrix.ieee802154.xbee.XBeeInterfaceScaffold;
-import jmri.jmrix.ieee802154.xbee.XBeeNode;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -50,6 +49,8 @@ public class XBeeNodeConfigFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+
         tc = new XBeeInterfaceScaffold();
         m = new XBeeConnectionMemo();
         m.setSystemPrefix("ABC");
@@ -57,6 +58,8 @@ public class XBeeNodeConfigFrameTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();        tc = null;
+    public void tearDown() {        
+        tc = null;
+        JUnitUtil.tearDown();
     }
 }

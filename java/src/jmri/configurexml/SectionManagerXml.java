@@ -175,7 +175,8 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
             log.debug("Found " + sectionList.size() + " sections");
         }
         SectionManager tm = InstanceManager.getDefault(jmri.SectionManager.class);
-
+        tm.setDataListenerMute(true);
+        
         for (int i = 0; i < sectionList.size(); i++) {
             String sysName = getSystemName(sectionList.get(i));
             String userName = getUserName(sectionList.get(i));
@@ -249,6 +250,8 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
                 }
             }
         }
+
+        tm.setDataListenerMute(false);
     }
 
     @Override

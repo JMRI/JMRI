@@ -37,8 +37,6 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
 
     private boolean outputBufferEmpty = true;
     private boolean checkBuffer = true;
-    private boolean trackPowerState = false;
-
     // Simulator responses
     char EDC_OPS = 0x4F;
     char EDC_PROG = 0x50;
@@ -48,11 +46,15 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         setManufacturer(jmri.jmrix.tmcc.SerialConnectionTypeList.LIONEL);
     }
 
+    /**
+     * {@inheritDoc}
+     * Simulated input/output pipes.
+     */
     @Override
     public String openPort(String portName, String appName) {
         try {
             PipedOutputStream tempPipeI = new PipedOutputStream();
-            log.debug("tempPipeI created {}", tempPipeI != null);
+            log.debug("tempPipeI created");
             pout = new DataOutputStream(tempPipeI);
             inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
             log.debug("inpipe created {}", inpipe != null);
@@ -127,6 +129,9 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
 
     // Base class methods for the SerialPortController simulated interface
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataInputStream getInputStream() {
         if (!opened || pin == null) {
@@ -136,6 +141,9 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         return pin;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DataOutputStream getOutputStream() {
         if (!opened || pout == null) {
@@ -145,6 +153,9 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         return pout;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean status() {
         return opened;
@@ -217,7 +228,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      */
     private SerialMessage readMessage() {
         SerialMessage msg = null;
-//        log.debug("Simulator reading message");
+        // log.debug("Simulator reading message");
         try {
             if (inpipe != null && inpipe.available() > 0) {
                 msg = loadChars();
@@ -239,9 +250,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     private SerialReply generateReply(SerialMessage msg) {
         log.debug("Generate Reply to message type {} (string = {})", msg.toString().charAt(0), msg.toString());
 
-        String s, r;
         SerialReply reply = new SerialReply();
-        int i = 0;
         char command = msg.toString().charAt(0);
         log.debug("Message type = " + command);
         switch (command) {
@@ -282,7 +291,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      * <p>
      * Only used in the Receive thread.
      *
-     * @returns filled message, only when the message is complete.
+     * @return filled message, only when the message is complete.
      * @throws IOException when presented by the input source.
      */
     private SerialMessage loadChars() throws java.io.IOException {

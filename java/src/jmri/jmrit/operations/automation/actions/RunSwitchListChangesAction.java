@@ -105,7 +105,7 @@ public class RunSwitchListChangesAction extends Action {
                     status = InstanceManager.getDefault(TrainCustomSwitchList.class).waitForProcessToComplete(); // wait up to 60 seconds per file
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    log.error("Thread interrupeted while waiting", e);
                 }
             } else {
                 log.info("No switch list changes found");
