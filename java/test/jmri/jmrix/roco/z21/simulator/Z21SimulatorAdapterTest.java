@@ -110,7 +110,9 @@ public class Z21SimulatorAdapterTest {
     @BeforeClass
     static public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
+
         try {
            host = java.net.InetAddress.getLocalHost();
         } catch(java.net.UnknownHostException uhe){

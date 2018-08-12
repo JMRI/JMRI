@@ -100,7 +100,8 @@ public class SignallingGuiToolsTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultSignalMastManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initDefaultSignalMastManager();
     }
 
     @After
