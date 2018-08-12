@@ -1,5 +1,6 @@
 package jmri.jmrit.throttle;
 
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -38,6 +39,7 @@ public class AddressPanelTest extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
+        JUnitUtil.resetProfileManager();
     }
     
     @Override

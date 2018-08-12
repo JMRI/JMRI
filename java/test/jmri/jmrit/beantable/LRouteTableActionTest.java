@@ -123,6 +123,7 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
 
         JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();

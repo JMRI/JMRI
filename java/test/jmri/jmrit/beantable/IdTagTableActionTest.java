@@ -42,7 +42,9 @@ public class IdTagTableActionTest extends AbstractTableActionBase {
     @Before
     @Override
     public void setUp() {
-        JUnitUtil.setUp();        jmri.util.JUnitUtil.initShutDownManager();
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+        jmri.util.JUnitUtil.initShutDownManager();
         a = new IdTagTableAction();
     }
 

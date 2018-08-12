@@ -252,6 +252,7 @@ public class WarrantTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initShutDownManager();
 //        JUnitUtil.initWarrantManager();

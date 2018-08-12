@@ -37,6 +37,7 @@ public class PrintActionTest {
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDebugProgrammerManager();
     }
 
