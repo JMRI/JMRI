@@ -389,6 +389,7 @@ public class EcosDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @BeforeClass
     public static void earlySetup(){
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         tc = new EcosInterfaceScaffold();
     }

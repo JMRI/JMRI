@@ -31,6 +31,7 @@ public class ThrottleFrameTest {
     @After
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @Before

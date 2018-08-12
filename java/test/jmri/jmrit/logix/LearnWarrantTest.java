@@ -225,6 +225,7 @@ public class LearnWarrantTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
