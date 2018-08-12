@@ -709,6 +709,7 @@ public class LayoutSlipTest {
     public static void beforeClass() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
+            JUnitUtil.resetProfileManager();
             layoutEditor = new LayoutEditor();
         }
     }
@@ -718,6 +719,7 @@ public class LayoutSlipTest {
         if (layoutEditor != null) {
             JUnitUtil.dispose(layoutEditor);
         }
+        layoutEditor = null;
         JUnitUtil.tearDown();
     }
 
