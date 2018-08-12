@@ -31,6 +31,7 @@ public class LayoutTrackExpectedStateTest {
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
     }
 
     @After

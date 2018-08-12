@@ -1643,6 +1643,8 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+
         // infrastructure objects
         tc = new XNetInterfaceScaffold(new LenzCommandStation());
         memo = new XNetSystemConnectionMemo(tc);

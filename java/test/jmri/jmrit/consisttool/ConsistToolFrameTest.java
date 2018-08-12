@@ -44,11 +44,16 @@ public class ConsistToolFrameTest {
 
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+
+        InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
 
 }

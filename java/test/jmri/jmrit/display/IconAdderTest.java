@@ -88,6 +88,7 @@ public class IconAdderTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         jmri.InstanceManager.store(new jmri.jmrit.catalog.DefaultCatalogTreeManager(), jmri.CatalogTreeManager.class);
     }
 

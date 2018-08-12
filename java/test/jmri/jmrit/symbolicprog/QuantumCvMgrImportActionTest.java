@@ -28,6 +28,7 @@ public class QuantumCvMgrImportActionTest {
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 

@@ -33,14 +33,15 @@ public class CanNamedPaneActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        // tc = new TestTrafficController();
+        jmri.util.JUnitUtil.resetProfileManager();
+
         m = new CanSystemConnectionMemo();
         m.setSystemPrefix("ABC");
     }
 
     @After
     public void tearDown() {
-        // tc = null;
+        m = null;
         JUnitUtil.tearDown();
     }
 

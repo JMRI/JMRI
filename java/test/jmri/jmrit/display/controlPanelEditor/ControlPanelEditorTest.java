@@ -34,6 +34,7 @@ public class ControlPanelEditorTest extends jmri.jmrit.display.AbstractEditorTes
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             e = frame = new ControlPanelEditor("Control Panel Editor Test");
         }

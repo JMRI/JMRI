@@ -99,6 +99,8 @@ public class EntryExitPairsTest {
     public static void before() throws Exception {
         JUnitUtil.setUp();
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        jmri.util.JUnitUtil.resetProfileManager();
+
         tools = new EntryExitTestTools();
         panels = tools.getPanels();
         Assert.assertNotNull("Get LE panels", panels);  // NOI18N
@@ -111,6 +113,13 @@ public class EntryExitPairsTest {
     @AfterClass
     public static void after() {
         panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
+        eep = null;
+        lbm = null;
+        sm = null;
+        tm = null;
+        panels = null;
+        tools = null;
+        
         JUnitUtil.tearDown();
     }
 
