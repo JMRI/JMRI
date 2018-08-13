@@ -179,23 +179,6 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         return powerManager;
     }
 
-    private LocoNetConsistManager consistManager = null;
-
-    /**
-     * Get connections Consist Manager
-     * @return the LocoNet Consist manager; may be null in some circumstances
-     */
-    @Override
-    public LocoNetConsistManager getConsistManager() {
-        if (getDisabled()) {
-            return null;
-        }
-        if (consistManager == null) {
-            consistManager = new LocoNetConsistManager(this);
-        }
-        return consistManager;
-    }
-
     /**
      * Configure the subset of LocoNet managers valid for the PR3 in MS100 mode.
      */
@@ -223,6 +206,8 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         }
 
         InstanceManager.setReporterManager(getReporterManager());
+
+        setConsistManager(new LocoNetConsistManager(this));
 
         jmri.ClockControl cc = getClockControl();
         // make sure InstanceManager knows about that
