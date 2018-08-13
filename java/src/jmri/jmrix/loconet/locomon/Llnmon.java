@@ -1013,6 +1013,7 @@ public class Llnmon {
 
             case LnConstants.OPC_ALM_WRITE:
             case LnConstants.OPC_ALM_READ: {
+                
                 if (l.getElement(1) == 0x10) {
 
                     if ((l.getElement(2) == 0)
@@ -1059,6 +1060,15 @@ public class Llnmon {
                             && (l.getElement(14) == 0)) {
                         return Bundle.getMessage("LN_MSG_QUERY_ALIAS", l.getElement(4));
                     }
+
+                } else if (l.getElement(1) == 0x15) {
+                    int slot = ( (l.getElement(2) & 0x07 ) *128) + l.getElement(3); // slot number for this request
+
+                    result = interpretExtendedSlotRdWr(l, slot) ;
+                    if (result.length() > 0) {
+                        return result;
+                    }
+                    break;
 
                 }
                 return Bundle.getMessage(
@@ -3867,6 +3877,58 @@ public class Llnmon {
 
         String locoAdrStr = figureAddressIncludingAliasing(adr, adr2, ss2, id1, id2);
         return Bundle.getMessage(((command == LnConstants.OPC_WR_SL_DATA)
+                ? "LN_MSG_SLOT_LOCO_INFO_WRITE"
+                : "LN_MSG_SLOT_LOCO_INFO_READ"),
+                slot,
+                locoAdrStr,
+                LnConstants.CONSIST_STAT(stat),
+                LnConstants.LOCO_STAT(stat),
+                LnConstants.DEC_MODE(stat),
+                directionOfTravelString((dirf & LnConstants.DIRF_DIR) == 0),
+                spd, // needs re-interpretation for some cases of slot consisting state
+                dirf0_4[0],
+                dirf0_4[1],
+                dirf0_4[2],
+                dirf0_4[3],
+                dirf0_4[4],
+                sndf5_8[0],
+                sndf5_8[1],
+                sndf5_8[2],
+                sndf5_8[3],
+                trackStatusByteToString(trackStatus),
+                Bundle.getMessage("LN_MSG_SLOT_HELPER_SS2_SIMPLE",
+                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                StringUtil.twoHexFromInt(ss2))),
+                Bundle.getMessage("LN_MSG_SLOT_HELPER_ID1_ID2_AS_THROTTLE_ID",
+                        idString(id1, id2)));
+    }
+
+    private String interpretExtendedSlotRdWr(LocoNetMessage l, int slot) {
+
+        /**
+         * ************************************************
+         * extended slot read/write message               *
+         * ************************************************
+         */
+        trackStatus = l.getElement(7); // track status
+        int id1 =  l.getElement(19);
+        int id2 = l.getElement(18);
+        int command = l.getOpCode();
+        int stat = l.getElement(4); // slot status
+        //int adr = l.getElement(5) + 128 * l.getElement(6); // loco address
+        int adr = l.getElement(5);
+        int spd = l.getElement(8); // command speed
+        int dirf = l.getElement(10) & 0b00111111; // direction and F0-F4 bits
+        String[] dirf0_4 = interpretF0_F4toStrings(dirf);
+        int ss2 = l.getElement(18); // slot status 2 (tells how to use
+        // ID1/ID2 & ADV Consist)
+        int adr2 = l.getElement(6); // loco address high
+        int snd = l.getElement(10); // Sound 1-4 / F5-F8
+        String[] sndf5_8 = interpretF5_F8toStrings(snd);
+        int id = l.getElement(18) + 256 * l.getElement(19);
+
+        String locoAdrStr = figureAddressIncludingAliasing(adr, adr2, ss2, id1, id2);
+        return Bundle.getMessage(((command == 0xEE)
                 ? "LN_MSG_SLOT_LOCO_INFO_WRITE"
                 : "LN_MSG_SLOT_LOCO_INFO_READ"),
                 slot,

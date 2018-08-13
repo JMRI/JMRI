@@ -180,55 +180,12 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         return powerManager;
     }
 
-    @Override
-    public LocoNetConsistManager getConsistManager() {
-        if (getDisabled()) {
-            return null;
-        }
-        if (mode == MS100MODE) {
-//            return super.getPowerManager();
-        }
-        if (consistManager == null) {
-            consistManager = new LocoNetConsistManager(this);
-        }
-        return consistManager;
-    }
-    private LocoNetConsistManager consistManager = null;
     /**
      * Configure the subset of LocoNet managers valid for the PR3 in MS100 mode.
      */
     public void configureManagersMS100() {
         mode = MS100MODE;
-
-        tm = new LocoNetThrottledTransmitter(getLnTrafficController(), mTurnoutExtraSpace);
-        log.debug("ThrottleTransmitted configured with :{}", mTurnoutExtraSpace); // NOI18N
-
-        InstanceManager.store(super.getPowerManager(), jmri.PowerManager.class);
-
-        InstanceManager.setTurnoutManager(getTurnoutManager());
-
-        InstanceManager.setLightManager(getLightManager());
-
-        InstanceManager.setSensorManager(getSensorManager());
-
-        InstanceManager.setThrottleManager(super.getThrottleManager());
-        
-        InstanceManager.store(getConsistManager(), jmri.ConsistManager.class );
-
-        if (getProgrammerManager().isAddressedModePossible()) {
-            InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
-        }
-        if (getProgrammerManager().isGlobalProgrammerAvailable()) {
-            InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
-        }
-
-        InstanceManager.setReporterManager(getReporterManager());
-
-        jmri.ClockControl cc = getClockControl();
-        // make sure InstanceManager knows about that
-        InstanceManager.store(cc, jmri.ClockControl.class);
-        InstanceManager.setDefault(jmri.ClockControl.class, cc);
-
+        super.configureManagers();
     }
 
     @Override
