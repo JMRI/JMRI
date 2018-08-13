@@ -13,7 +13,7 @@ touch ./failed_files.txt
 
 rm -f ./test_results.txt
 
-for jmri_test in $( find java/test/$1 -name \*Test.java ! -name AllTest.java ! -name HeadLessTest.java ! -name PackageTest.java ! -name FailTest.java | sort) 
+for jmri_test in $( find java/test/$1 -name \*Test.java ! -name AllTest.java ! -name HeadLessTest.java ! -name PackageTest.java ! -name FailTest.java | sort -r) 
     do jmri_test=${jmri_test#java/test/} 
         jmri_test=${jmri_test%\.java}
         echo ${jmri_test} >> ./test_results.txt
