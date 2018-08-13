@@ -284,6 +284,7 @@ public class LayoutEditorToolsTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()) {
+            jmri.util.JUnitUtil.resetProfileManager();
            le = new LayoutEditor();
            let = new LayoutEditorTools(le);
         }

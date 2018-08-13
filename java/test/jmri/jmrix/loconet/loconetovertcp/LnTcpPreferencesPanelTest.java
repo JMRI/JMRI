@@ -22,6 +22,8 @@ public class LnTcpPreferencesPanelTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+
         jmri.util.JUnitUtil.initStartupActionsManager();
     }
 

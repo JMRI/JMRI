@@ -63,6 +63,7 @@ public class MDITest {
     @Before
     public void setUp() {
         JUnitUtil.resetApplication();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

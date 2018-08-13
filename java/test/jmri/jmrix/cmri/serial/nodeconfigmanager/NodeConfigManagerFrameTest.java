@@ -35,11 +35,10 @@ public class NodeConfigManagerFrameTest {
         frame.dispose();
     }
 
-
-
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
     }
 
     @After

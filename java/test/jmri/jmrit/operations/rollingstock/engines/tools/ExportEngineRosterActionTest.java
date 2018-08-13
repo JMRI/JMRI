@@ -29,6 +29,7 @@ public class ExportEngineRosterActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

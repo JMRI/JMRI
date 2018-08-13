@@ -31,6 +31,7 @@ public class PrintEngineRosterActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

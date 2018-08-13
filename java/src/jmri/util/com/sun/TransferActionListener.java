@@ -1,6 +1,7 @@
+package jmri.util.com.sun;
+
 // This class comes from the Java Swing tutorial at
 // http://java.sun.com/docs/books/tutorial/uiswing/examples/dnd/ListCutPasteProject
-package jmri.util.com.sun;
 /*
  * Copyright (c) 1995 - 2008 Sun Microsystems, Inc.  All rights reserved.
  *

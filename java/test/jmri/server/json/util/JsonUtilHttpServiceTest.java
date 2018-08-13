@@ -46,6 +46,7 @@ public class JsonUtilHttpServiceTest {
     @Before
     public void setUp() throws IOException {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager(new NullProfile("JsonUtilHttpServiceTest", "12345678", FileUtil.getFile("program:test")));
         JUnitUtil.initConnectionConfigManager();
     }

@@ -43,6 +43,7 @@ public class SignalMastTableActionTest extends AbstractTableActionBase {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         a = new SignalMastTableAction();
     }
 

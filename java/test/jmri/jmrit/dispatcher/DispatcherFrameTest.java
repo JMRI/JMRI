@@ -167,6 +167,7 @@ public class DispatcherFrameTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

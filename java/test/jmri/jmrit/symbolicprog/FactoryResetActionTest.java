@@ -30,6 +30,7 @@ public class FactoryResetActionTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDebugProgrammerManager();
     }
 

@@ -41,6 +41,7 @@ public class PortalIconTest extends PositionableIconTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
            editor = new ControlPanelEditor("Portal Icon Test Panel");
            p = new PortalIcon(editor);
