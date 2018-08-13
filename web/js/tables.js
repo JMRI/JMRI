@@ -4,11 +4,12 @@
  * TODO: add children listeners to additional types (below the line)
  * TODO: update other language NavBar.html, Tables.html
  * TODO: update json help with correct program references
- * TODO: add sort and filter to tables
+ * TODO: add filter to tables
  * TODO: add button or dropdown to change state for selected items
  * TODO: add enum descriptions to schema and use them for converting states, and 
  *         for calc'ing the "next" state
  * TODO: additional columns and changes for block, light, route
+ * TODO: why does no configProfile show isAutoStart?
  */
 
 var jmri = null;
@@ -73,20 +74,21 @@ function replaceRow(name, data) {
     }
 }
 
+/* convert each cell into more human-readable form */
 function displayCellValue(type, colName, value) {
 	if (value==null) {
 		return ""; //return empty string for any null value
 	}
-	if ($.isArray(value)) {
-		return "array["+value.length+"]" ; //placeholder						
+	if ($.isArray(value)) { 
+		return "array["+value.length+"]"; //return array[size] for arrays						
 	}
-//	if (typeof value === "object") { //special treatment for objects
-//			if (value.name) {
-//				return "vvv"+value.name;  //if it has a name, use it
-//			} else {
-//				return "[obj]" ; //placeholder				
-//			}
-//	}
+	if (typeof value === "object") {
+			if (value.name) {
+				return value.name;  // return name of object if it has one
+			} else {
+				return "[obj]" ; //placeholder				
+			}
+	}
 	//convert known states to human-readable strings, if not known show as is
 	if ((colName == "state") || (colName == "occupiedSense")) {
 		switch (type) {
@@ -126,7 +128,7 @@ function displayCellValue(type, colName, value) {
 			return value; //not special, just return the passed in value
 		}
 	}
-	return htmlEncode(value);
+	return htmlEncode(value); //otherwise replace special characters
 }
 
 //replace some special chars with html equivalents
