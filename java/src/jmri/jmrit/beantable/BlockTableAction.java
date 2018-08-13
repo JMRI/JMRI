@@ -1016,7 +1016,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     // Find first block with unused system name
                     while (true) {
                         system = nextName(system);
-                        //log.warn("Trying " + system);
+                        // log.warn("Trying " + system);
                         Block blk = InstanceManager.getDefault(jmri.BlockManager.class).getByUserName(system);
                         if (blk == null) {
                             sName = system;
