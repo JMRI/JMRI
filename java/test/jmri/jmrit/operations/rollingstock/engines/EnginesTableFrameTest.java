@@ -1,4 +1,3 @@
-//EnginesTableFrameTest.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.awt.GraphicsEnvironment;

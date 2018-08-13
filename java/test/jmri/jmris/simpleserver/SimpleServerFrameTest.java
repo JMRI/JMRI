@@ -1,4 +1,3 @@
-//SimpleServerFrameTest.java
 package jmri.jmris.simpleserver;
 
 import java.awt.GraphicsEnvironment;

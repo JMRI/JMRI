@@ -1,4 +1,3 @@
-// TrainPrintUtilities
 package jmri.jmrit.operations.trains;
 
 import java.awt.Color;

@@ -1,4 +1,3 @@
-//XmlTest.java
 package jmri.jmrit.operations.locations;
 
 import java.io.File;

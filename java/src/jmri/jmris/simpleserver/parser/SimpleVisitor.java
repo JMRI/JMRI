@@ -1,4 +1,3 @@
-//SimpleVisitor.java
 package jmri.jmris.simpleserver.parser;
 
 import jmri.InstanceManager;
