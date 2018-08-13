@@ -309,9 +309,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
      */
     @Override
     public String getTitle() {
-        if (memo != null) {
-            return (memo.getUserName() + " " + Bundle.getMessage("EventTableTitle"));
-        }
         return Bundle.getMessage("EventTableTitle");
     }
     
