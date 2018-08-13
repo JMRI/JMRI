@@ -472,23 +472,19 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             }
         }
         else if (col == SESSION_ON_COLUMN) {
-            // log.debug("242 updating event on or off in setValueAt");
             _sessionon[row] = _sessionon[row] + 1;
-            Runnable r = new Notify(row, this);   // -1 in first arg means all
+            Runnable r = new Notify(row, this); 
             javax.swing.SwingUtilities.invokeLater(r);
             }
         else if (col == SESSION_OFF_COLUMN) {
-            // log.debug("242 updating event on or off in setValueAt");
             _sessionoff[row] = _sessionoff[row] + 1;
-            Runnable r = new Notify(row, this);   // -1 in first arg means all
+            Runnable r = new Notify(row, this);
             javax.swing.SwingUtilities.invokeLater(r);
         }        else if (col == LATEST_TIMESTAMP_COLUMN) {
-            // log.debug("242 updating event on or off in setValueAt");
             _latesttimestamp[row] = new Date();
-            Runnable r = new Notify(row, this);   // -1 in first arg means all
+            Runnable r = new Notify(row, this);
             javax.swing.SwingUtilities.invokeLater(r);
         }
-        
         // table is dirty
         _saved = false;
     }
@@ -592,9 +588,12 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         }
 
         _rowCount--;
-        if ( _rowCount<0 ) { _rowCount=0; }        
+        if ( _rowCount<0 ) {
+            _rowCount=0;
+        }        
 
-        Runnable r = new Notify(-1, this);   // -1 in first arg means all
+        Runnable r = new Notify(row, this);
+        javax.swing.SwingUtilities.invokeLater(r);
     }
     
     
