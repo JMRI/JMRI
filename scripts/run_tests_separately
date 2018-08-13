@@ -2,7 +2,7 @@
 # 
 # Run each test individually. 
 #
-# ARgument, if present, is a directory under java/test, e.g. "jmri/managers"
+# Argument, if present, is a starting _directory_ under java/test, e.g. "jmri/managers"
 #  
 # The list of test files that fail goes into /failed_files.txt
 # Log output from all files is concatenated into /test_results.txt
@@ -21,4 +21,4 @@ for jmri_test in $( find java/test/$1 -name \*Test.java ! -name AllTest.java ! -
 done
 
 # error exit if any failed
-if [ -s ./failed_files.txt ]; then exit 1; fi
+if [ -s ./failed_files.txt ]; then echo "The following files failed, details in test_results.txt"; cat ./failed_files.txt; exit 1; fi
