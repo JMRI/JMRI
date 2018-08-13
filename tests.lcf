@@ -65,15 +65,14 @@ log4j.appender.R=org.apache.log4j.FileAppender
 log4j.appender.R.File=tests.log
 log4j.appender.R.Append=false
 log4j.appender.R.layout=org.apache.log4j.PatternLayout
-#log4j.appender.R.layout.ConversionPattern=%d{ss,SSS} [%t] %-5p %c{2}.%M() - %m%n
-log4j.appender.R.layout.ConversionPattern=[%t] %-5p %c{4}.%M() - %m%n
+log4j.appender.R.layout.ConversionPattern=%d{ss,SSS} [%t] %-5p %c{2}.%M() - %m%n
 log4j.appender.R.Threshold=TRACE
 
 # ###################################################################
 #   Configure some verbose components
 # ###################################################################
 
-# Default Jetty server to only logging WARN since it can be verbose at points
+# Default Jetty server to only logging WARN since INFO can be verbose at points
 log4j.category.org.eclipse.jetty=WARN
 log4j.category.org.eclipse.jetty.server.handler=WARN
 
@@ -87,6 +86,27 @@ log4j.category.javax.jmdns=OFF
 # Turning off logging for the WebDriver Manager
 log4j.category.io.github.bonigarcia.wdm=OFF
 
+# ###################################################################
+#    Examples of how you can ask for more detailed logging
+# ###################################################################
+
+# Valid priority names are FATAL, ERROR, WARN, INFO, DEBUG, and TRACE. 
+
+# Examples of changing priority of specific categories (classes, packages):
+#
+# log4j.category.jmri.InstanceManager=DEBUG
+# log4j.category.jmri.implementation.DefaultSignalMastLogic=DEBUG
+# log4j.category.jmri.implementation.SignalSpeedMap=DEBUG
+# log4j.category.jmri.jmrit.symbolicprog.DecVariableValue=DEBUG
+# log4j.category.jmri.jmrit.symbolicprog=DEBUG
+# log4j.category.jmri.jmrix.nce=DEBUG
+# log4j.category.jmri.jmrix.nce.NceTrafficController=DEBUG
+# log4j.category.jmri.server.json=TRACE
+
+# ###################################################################
+#    Settings needed for specific tests (last so not accidentally overridden)
+# ###################################################################
+
 # Needed for Jenkins I18N testing
 log4j.category.jmri.util.I18NTest=DEBUG
 
@@ -96,25 +116,7 @@ log4j.category.jmri.util.Log4JUtilTest = WARN
 # Needed for jmri.util.JUnitAppenderTest
 log4j.category.jmri.util.JUnitAppenderTest = INFO
 
-# Turn on INFO for application tests
+# INFO is part of application tests
 log4j.category.apps.Apps = INFO
 log4j.category.apps.PanelPro.PanelPro = INFO
-
-# ###################################################################
-#    Examples of how you can ask for more detailed logging
-# ###################################################################
-
-# Valid priority names are FATAL, ERROR, WARN, INFO, DEBUG, and TRACE. 
-
-# Examples of changing priority of specific categories (classes, packages):
-#
-log4j.category.jmri.server.json=TRACE
-# log4j.category.jmri.InstanceManager=DEBUG
-# log4j.category.jmri.implementation.DefaultSignalMastLogic=DEBUG
-# log4j.category.jmri.implementation.SignalSpeedMap=DEBUG
-# log4j.category.jmri.jmrit.symbolicprog.DecVariableValue=DEBUG
-# log4j.category.jmri.jmrit.symbolicprog.LongAddrVariableValueTest=DEBUG
-# log4j.category.jmri.jmrix.nce=DEBUG
-# log4j.category.jmri.jmrix.nce.NceTrafficController=DEBUG
-
 
