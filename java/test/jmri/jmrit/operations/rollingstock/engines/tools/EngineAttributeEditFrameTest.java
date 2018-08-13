@@ -1,4 +1,3 @@
-//EngineAttributeEditFrame.java
 package jmri.jmrit.operations.rollingstock.engines.tools;
 
 import java.awt.GraphicsEnvironment;
