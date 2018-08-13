@@ -101,15 +101,15 @@ var jmri_logging = false;
 
 // log object properties
 function $logProperties(obj, force = false) {
-    if (jmri_logging || force) {
-        var $propList = "";
-        for (var $propName in obj) {
-            if (typeof obj[$propName] != "undefined") {
-                $propList += ($propName + "='" + obj[$propName] + "', ");
-            }
-        }
-        jmri.log("$logProperties(obj): " + $propList + ".");
-    }
+	if (jmri_logging || force) {
+		var $propList = "";
+		for (var $propName in obj) {
+			if (typeof obj[$propName] != "undefined") {
+				$propList += ($propName + "='" + obj[$propName] + "', ");
+			}
+		}
+		jmri.log("$logProperties(obj): " + $propList + ".");
+	}
 }
 
 //process the response returned for the requestPanelXML command
@@ -579,7 +579,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget.jsonType = "turnout"; // JSON object type
                                 $widget['x'] = $widget.xcen; //normalize x,y
                                 $widget['y'] = $widget.ycen;
-                                if ((typeof $widget.name !== "undefined") && ($widget.disabled !== "yes")) {
+                                if ((typeof $widget.name !== "undefined") && ($widget.disabled !== "yes")) { 
                                     $widget.classes += $widget.jsonType + " clickable "; //make it clickable (unless no turnout assigned)
                                 }
                                 //set widget occupancy sensor from block to speed affected changes later
@@ -733,7 +733,6 @@ function processPanelXML($returnedData, $success, $xhr) {
 
                                 //draw the tracksegment
                                 $drawTrackSegment($widget);
-
                                 if ($widget["occupancysensor"])
                                     jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
                                 break;
@@ -1300,7 +1299,7 @@ function $drawTurnout($widget) {
             }
         }
     }
-
+    
     // erase and draw turnout circles if enabled, including occupancy check
     if (($gPanel.turnoutcircles == "yes") && ($widget.disabled !== "yes")) {
     	$drawCircle($widget.xcen, $widget.ycen, $gPanel.turnoutcirclesize * SIZE, erase, 1);
@@ -1312,7 +1311,7 @@ function $drawTurnout($widget) {
     		if ($widget.occupancystate == ACTIVE) {
     			$('#'+$widget.id).removeClass("clickable");
     			$('#'+$widget.id).unbind(UPEVENT, $handleClick);
-    		} else {
+    		} else { 
     			$('#'+$widget.id).addClass("clickable");
     			$('#'+$widget.id).bind(UPEVENT, $handleClick);
     		}
@@ -1467,7 +1466,7 @@ function $drawSlip($widget) {
     }
 
     if (($gPanel.turnoutcircles == "yes") && ($widget.disabled !== "yes")) {
-
+    	
         //draw the two control circles
         var $cr = $gPanel.turnoutcirclesize * SIZE;  //turnout circle radius
 
@@ -1604,12 +1603,10 @@ function $drawLine($pt1x, $pt1y, $pt2x, $pt2y, $color, $width) {
         $gCtx.strokeStyle = $color;
     if (typeof $width !== "undefined" && $savLineWidth != $width)
         $gCtx.lineWidth = $width;
-
     $gCtx.beginPath();
     $gCtx.moveTo($pt1x, $pt1y);
     $gCtx.lineTo($pt2x, $pt2y);
     $gCtx.stroke();
-
     // put color and width back to default, if changed
     if ($savStrokeStyle != $color)
       $gCtx.strokeStyle = $savStrokeStyle;
@@ -2139,7 +2136,7 @@ var $getNextState = function($widget) {
                 for (k in $widget) {
                     var s = k.substr(4) * 1; //extract the state from current icon var, insure it is treated as numeric
                     //get valid value, name starts with 'icon', but not the HELD or DARK ones
-                    if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && k != 'icon' + HELD && k != 'icon' + DARK) {
+                    if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && k != 'icon' + HELD && k != 'icon' + DARK) { 
                         if (typeof $firstState == "undefined")
                             $firstState = s;  //remember the first state (for last one)
                         if (typeof $currentState !== "undefined" && typeof $nextState == "undefined")

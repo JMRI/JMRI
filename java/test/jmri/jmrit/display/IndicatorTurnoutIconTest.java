@@ -58,6 +58,7 @@ public class IndicatorTurnoutIconTest extends PositionableIconTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new PanelEditor("Test IndicatorTurnoutIcon Panel");
             IndicatorTurnoutIcon to = new IndicatorTurnoutIcon(editor);

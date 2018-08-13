@@ -156,7 +156,7 @@
       If you have one of these systems and can confirm that VSD
       responds to throttle changes, please mention this on the
       <a href="https://groups.io/g/jmriusers">
-	  JMRI users Groups.io group</a></p>
+      JMRI users Groups.io group</a></p>
 
       <p>Notably missing from this list is the popular NCE PowerCab
       system.</p>
@@ -179,9 +179,6 @@
       "VSDLocations" id="VSDLocations"></a>
 
       <h4>Location Following</h4>
-
-      <p>(Note: This function will be active starting with test
-      release 3.1.5.)</p>
 
       <p>With input from locomotive tracking hardware, Virtual
       Sound Decoder is able to move the apparent source of the
@@ -255,6 +252,22 @@
       <p>For more information on Operations, see the JMRI&reg;
       Operating User's Guide.</p>
 
+      <a name="advanced_location_following" id=
+      "advanced_location_following"></a>
+
+      <h4>Advanced Location Following</h4>
+
+      <p>Since JMRI Test Release 4.13.2 the "Advanced Location
+      Following" is available. The Advanced Location Following
+      calculates the position of a loco within a location and
+      sets the sound position continuously. This lets the sound
+      following the loco smoothly without a "jump".</p>
+
+      <p>For details on setting up Advanced Location Following,
+      see the
+      <a href="VSD_LocationsMgr.shtml#advanced_location_following">
+      Manage VSD Locations</a> instructions.</p>
+
       <h5>Menu Items</h5>
 
       <h6>File-&gt;Load VSD File</h6>
@@ -273,8 +286,7 @@
       <p>The VSDecoder Preferences pane allows the user to change
       various preferences in how the VSDecoder works.</p>
 
-      <p><img src="images/VSD_Preferences.png" width="828" height=
-      "222"></p>
+      <p><img src="images/VSD_Preferences.png" alt="Preferences window" width="828" height="222"></p>
 
       <h5>Auto Start Engine</h5>
 

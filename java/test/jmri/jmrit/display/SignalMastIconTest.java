@@ -78,6 +78,7 @@ public class SignalMastIconTest extends PositionableIconTest {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new PanelEditor("Test SignalMastIcon Panel");
             p = new SignalMastIcon(editor);

@@ -404,6 +404,18 @@ public interface Manager<E extends NamedBean> {
         // This is also quite a bit slower than the tuned implementation below
         int p = startsWithLegacySystemPrefix(inputName);
         if (p > 0) {
+            if (legacyNameSet.size() == 0) {
+                if (InstanceManager.getNullableDefault(ShutDownManager.class) == null) {
+                // for migration purposes, we don't insist that apps (and tests)
+                // be preconfigured with a shutdown manager before getting here
+                    InstanceManager.setDefault(ShutDownManager.class, new jmri.managers.DefaultShutDownManager());
+                }
+                // register our own shutdown
+                InstanceManager.getDefault(ShutDownManager.class)
+                                .register(legacyReportTask);
+            }
+            legacyNameSet.add(inputName);
+            
             return p;
         }
 
@@ -417,6 +429,18 @@ public interface Manager<E extends NamedBean> {
         return i;
     }
 
+    @Deprecated
+    static Set<String> legacyNameSet = Collections.synchronizedSet(new HashSet<String>(200)); // want fast search and insert
+    @Deprecated
+    static ShutDownTask legacyReportTask = new jmri.implementation.AbstractShutDownTask("Legacy Name List"){
+                            public boolean execute() {
+                                org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Manager.class);
+                                log.warn("The following legacy names need to be migrated:");
+                                for (String name : legacyNameSet) log.warn("    {}", name);
+                                return true;
+                            }
+                };
+                        
     /**
      * Provides the system prefix of the given system name.
      * <p>
@@ -435,6 +459,7 @@ public interface Manager<E extends NamedBean> {
         return inputName.substring(0, getSystemPrefixLength(inputName));
     }
 
+    
     /**
      * Indicate whether a system-prefix is one of the legacy non-parsable ones
      * that are being removed during the JMRI 4.11 cycle.

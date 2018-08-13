@@ -29,11 +29,23 @@ public class ProfileManagerTest {
     }
 
     @Test
+    @SuppressWarnings("null")
     public void testSetActiveProfile_Profile() throws IOException {
         ProfileManager pm = new ProfileManager();
-        // null profile
-        pm.setActiveProfile((Profile) null);
-        Assert.assertNull(pm.getActiveProfile());
+        // expect this to throw exception because profile is null
+        boolean threw = false;
+        try {
+            // null profile
+            pm.setActiveProfile((Profile) null);
+        } catch (IllegalArgumentException ex) {
+            if (ex.getMessage().equals("profile is null")) {
+                threw = true;
+            } else {
+                Assert.fail("failed to set profile due to wrong reason: " + ex);
+            }
+        }
+        Assert.assertTrue("Expected exception IllegalArgumentException", threw);
+        
         // non-null profile
         File profileFolder = new File(folder.newFolder(Profile.PROFILE), "test");
         NullProfile p = new NullProfile("test", "test", profileFolder);
@@ -43,19 +55,31 @@ public class ProfileManagerTest {
     }
 
     @Test
+    @SuppressWarnings("null")
     public void testSetActiveProfile_String() throws IOException {
         ProfileManager pm = new ProfileManager();
-        // null profile
-        pm.setActiveProfile((String) null);
-        Assert.assertNull(pm.getActiveProfile());
+        // expect this to throw exception because identifier is null
+        boolean threw = false;
+        try {
+            // null profile
+            pm.setActiveProfile((String) null);
+        } catch (IllegalArgumentException ex) {
+            if (ex.getMessage().equals("identifier is null")) {
+                threw = true;
+            } else {
+                Assert.fail("failed to set profile due to wrong reason: " + ex);
+            }
+        }
+        Assert.assertTrue("Expected exception IllegalArgumentException", threw);
+        
         // non-existant profile
         pm.setActiveProfile("NonExistantId");
-        Assert.assertNull(pm.getActiveProfile());
+        Assert.assertFalse(pm.hasActiveProfile());
         JUnitAppender.assertWarnMessage("Unable to set active profile.  No profile with id NonExistantId could be found.");
         // existant non-profile directory (real directory, but no profile)
         String folderName = folder.newFolder("non-profile").getAbsolutePath();
         pm.setActiveProfile(folderName);
-        Assert.assertNull(pm.getActiveProfile());
+        Assert.assertFalse(pm.hasActiveProfile());
         JUnitAppender.assertErrorMessage(folderName + " is not a profile folder.");
         JUnitAppender.assertWarnMessage("Unable to set active profile.  No profile with id " + folderName + " could be found.");
         // existant profile directory
@@ -64,7 +88,7 @@ public class ProfileManagerTest {
         FileUtil.copy(new File("java/test/jmri/profile/samples/ln-simulator"), profileFolder); // where is existing profile?
         pm.setActiveProfile(folderName);
         Profile p = new Profile(profileFolder);
-        Assert.assertNotNull(pm.getActiveProfile());
+        Assert.assertTrue(pm.hasActiveProfile());
         Assert.assertEquals(p, pm.getActiveProfile());
     }
 

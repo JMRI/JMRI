@@ -158,6 +158,7 @@ public class SerialMonFrameTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
 
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }

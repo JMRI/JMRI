@@ -83,6 +83,9 @@ public class DccSignalMast extends AbstractSignalMast {
         String mast = parts[2];
 
         mast = mast.substring(0, mast.indexOf("("));
+        log.trace("In configureFromName setMastType to {}", mast);
+        setMastType(mast);
+        
         String tmp = parts[2].substring(parts[2].indexOf("(") + 1, parts[2].indexOf(")"));
         try {
             dccSignalDecoderAddress = Integer.parseInt(tmp);

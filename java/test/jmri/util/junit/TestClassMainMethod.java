@@ -12,9 +12,17 @@ public class TestClassMainMethod {
     // Main entry point
     static public void main(String[] args) {
         String className = args[0];
+        
+        // as a convenience, allow file names and paths 
+        className = className.replace("//","/");    
+        if (className.endsWith(".java")) className = className.replace(".java","");
+        if (className.startsWith("java/test/")) className = className.replace("java/test/","");
+        if (className.startsWith("/")) className = className.substring(1, className.length());
+
         // as a convenience, allow e.g. jmri/BundleTest in addition to jmri.BundleTest
         className = className.replace('/','.');    
         className = className.replace("..",".");    
+        
         try {
             // first try to find a main in the class
             Class<?> cl = Class.forName(className);

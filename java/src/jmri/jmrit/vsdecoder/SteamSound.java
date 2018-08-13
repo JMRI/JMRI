@@ -122,7 +122,8 @@ class SteamSound extends EngineSound {
         return (int) Math.round(rpm_f);
     }
 
-    private double speedCurve(float t) {
+    @Override
+    double speedCurve(float t) {
         return Math.pow(t, exponent) / 1.0;
     }
 

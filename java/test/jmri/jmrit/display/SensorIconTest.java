@@ -25,6 +25,7 @@ public class SensorIconTest extends PositionableIconTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
            editor = new EditorScaffold();
            SensorIcon si = new SensorIcon(editor);

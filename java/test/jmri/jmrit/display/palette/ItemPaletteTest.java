@@ -21,7 +21,7 @@ public class ItemPaletteTest {
     public void testShow() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.util.ThreadingUtil.runOnGUI(() -> {
-            ip = ItemPalette.getDefault("Test ItemPalette",  new ControlPanelEditor("ED"));
+            ip = ItemPalette.getDefault("Test ItemPalette",  new ControlPanelEditor("EdItemPalette"));
             ip.pack();
             ip.setVisible(true);
         });

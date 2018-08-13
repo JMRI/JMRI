@@ -1,4 +1,3 @@
-//SimpleServerManagerTest.java
 package jmri.jmris.simpleserver;
 
 import junit.framework.Test;
@@ -41,6 +40,7 @@ public class SimpleServerManagerTest extends TestCase {
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
     }
 
     @Override

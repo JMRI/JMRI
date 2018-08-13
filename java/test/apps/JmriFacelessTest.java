@@ -59,6 +59,7 @@ public class JmriFacelessTest {
     @Before
     public void setUp() {
         JUnitUtil.resetApplication();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

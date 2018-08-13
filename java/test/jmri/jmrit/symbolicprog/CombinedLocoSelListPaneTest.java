@@ -91,6 +91,7 @@ public class CombinedLocoSelListPaneTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
     }
 

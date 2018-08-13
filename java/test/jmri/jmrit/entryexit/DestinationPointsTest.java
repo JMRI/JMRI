@@ -93,6 +93,7 @@ public class DestinationPointsTest {
     public static void setUp() throws Exception {
         JUnitUtil.setUp();
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        jmri.util.JUnitUtil.resetProfileManager();
         tools = new EntryExitTestTools();
         panels = tools.getPanels();
         Assert.assertEquals("Get LE panels", 2, panels.size());  // NOI18N
@@ -106,6 +107,12 @@ public class DestinationPointsTest {
     public static void tearDown() {
         panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
         JUnitUtil.tearDown();
+        tm = null;
+        sm = null;
+        lbm = null;
+        eep = null;
+        panels = null;
+        tools = null;
     }
 
 //     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DestinationPointsTest.class);

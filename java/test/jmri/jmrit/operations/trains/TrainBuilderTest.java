@@ -13718,6 +13718,7 @@ public class TrainBuilderTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
 
         JUnitOperationsUtil.resetOperationsManager();
         // setup new managers
