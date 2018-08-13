@@ -26,6 +26,7 @@ public class SchedulesByLoadFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         jmri.util.JUnitOperationsUtil.resetOperationsManager();
         jmri.util.JUnitOperationsUtil.initOperationsData();
     }

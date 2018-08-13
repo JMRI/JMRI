@@ -1,5 +1,3 @@
-// NodeConfigurationMgr.java
-
 package jmri.jmrix.cmri.serial.nodeconfigmanager;
 
 import java.awt.event.ActionEvent;

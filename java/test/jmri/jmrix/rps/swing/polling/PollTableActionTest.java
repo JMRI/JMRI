@@ -33,11 +33,13 @@ public class PollTableActionTest {
     @Before
     public void setUp(){
         jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         memo = new RpsSystemConnectionMemo();
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
+        memo = null;
         jmri.util.JUnitUtil.tearDown();
     }
 }

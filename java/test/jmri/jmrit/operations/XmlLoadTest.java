@@ -93,6 +93,7 @@ public class XmlLoadTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();

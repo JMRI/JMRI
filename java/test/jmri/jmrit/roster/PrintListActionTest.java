@@ -30,6 +30,7 @@ public class PrintListActionTest {
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

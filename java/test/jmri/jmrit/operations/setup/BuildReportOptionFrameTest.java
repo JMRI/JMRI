@@ -40,6 +40,7 @@ public class BuildReportOptionFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After
