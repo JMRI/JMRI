@@ -2,11 +2,7 @@ package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  *
@@ -41,11 +37,18 @@ public class PositionableJComponentTest extends PositionableTestBase {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+
         if(!GraphicsEnvironment.isHeadless()){
            editor = new EditorScaffold();
            p = new PositionableJComponent(editor);
            ((PositionableJComponent)p).setName("PositionableJComponent");
         }
+    }
+
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }
