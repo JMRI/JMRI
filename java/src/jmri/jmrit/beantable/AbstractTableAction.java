@@ -140,6 +140,26 @@ abstract public class AbstractTableAction<E extends NamedBean> extends AbstractA
     }
 
     /**
+     * Increments trailing digits of a system/user name (string)
+     * I.E. "Geo7" ==> "Geo8"
+     * Note: preserves leading zeros: "Geo007" ==> "Geo008"
+     * Also: if no trailing digits appends "1": "Geo" ==> "Geo1"
+     * 
+     * @param name the system or user name string
+     * @return the same name with incremented trailing digits
+     */
+    protected @Nonnull String nextName(@Nonnull String name) {
+        final String[] parts = name.split("(?=\\d+$)", 2);
+        String numString = "0";
+        if (parts.length == 2) {
+            numString = parts[1];
+        }
+        final int numStringLength = numString.length();
+        final int num = Integer.parseInt(numString) + 1;
+        return parts[0] + String.format("%0" + numStringLength + "d", num);
+    }
+
+    /**
      * Specify the JavaHelp target for this specific panel.
      *
      * @return a fixed default string "index" pointing to to highest level in

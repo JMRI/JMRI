@@ -987,12 +987,12 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                 return;
             }
         }
-        String user = userName.getText();
-        String uName = user; // keep result separate to prevent recursive manipulation
-        user = NamedBean.normalizeUserName(user);
+        String user = NamedBean.normalizeUserName(userName.getText());
         if (user == null || user.isEmpty()) {
             user = null;
         }
+        String uName = user; // keep result separate to prevent recursive manipulation
+
         String system = sysName.getText();
         String sName = system; // keep result separate to prevent recursive manipulation
         sName = InstanceManager.getDefault(BlockManager.class).normalizeSystemName(sName);
@@ -1017,7 +1017,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     while (true) {
                         system = nextName(system);
                         // log.warn("Trying " + system);
-                        Block blk = InstanceManager.getDefault(jmri.BlockManager.class).getByUserName(system);
+                        Block blk = InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(system);
                         if (blk == null) {
                             sName = system;
                             break;
@@ -1098,17 +1098,6 @@ public class BlockTableAction extends AbstractTableAction<Block> {
         statusBar.setForeground(Color.gray);
 
         pref.setSimplePreferenceState(systemNameAuto, _autoSystemNameCheckBox.isSelected());
-    }
-
-    private String nextName(String name) {
-        final String[] parts = name.split("(?=\\d+$)", 2);
-        String numString = "0";
-        if (parts.length == 2) {
-            numString = parts[1];
-        }
-        final int numStringLength = numString.length();
-        final int num = Integer.parseInt(numString) + 1;
-        return parts[0] + String.format("%0" + numStringLength + "d", num);
     }
 
     void handleCreateException(String sysName) {
