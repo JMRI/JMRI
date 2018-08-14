@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author mstevetodd (C) 2018
+ * @author Randall Wood (C) 2016
  */
 public class JsonOperationsSocketService extends JsonSocketService<JsonOperationsHttpService> {
 

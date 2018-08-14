@@ -44,7 +44,7 @@ public class JsonOperations {
      */
     public static final String LOCATION_ID = "locationId"; // NOI18N
     /**
-     * {@value #LOCATION_COMMENT}
+     * {@value #LOCATION_NAME}
      */
     public static final String LOCATION_NAME = "locationName"; // NOI18N
     /**
