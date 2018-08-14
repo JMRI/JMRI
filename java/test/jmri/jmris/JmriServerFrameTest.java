@@ -1,4 +1,3 @@
-//JmriServerFrameTest.java
 package jmri.jmris;
 
 import java.awt.GraphicsEnvironment;

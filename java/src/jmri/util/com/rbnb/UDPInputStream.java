@@ -1,3 +1,5 @@
+package jmri.util.com.rbnb;
+
 // This class comes from the Java2s code examples at
 // http://www.java2s.com/Code/Java/Network-Protocol/UDPInputStream.htm
 /*
@@ -33,7 +35,6 @@
  ***                ***
  *****************************************************************
  */
-package jmri.util.com.rbnb;
 
 import java.io.IOException;
 import java.io.InputStream;
