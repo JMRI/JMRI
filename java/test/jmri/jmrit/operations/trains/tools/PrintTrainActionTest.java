@@ -32,6 +32,7 @@ public class PrintTrainActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

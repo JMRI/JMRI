@@ -1,4 +1,4 @@
-package jmri.jmrit.progsupport;
+ package jmri.jmrit.progsupport;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.BoxLayout;
@@ -69,6 +69,7 @@ public class ProgServiceModePaneTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

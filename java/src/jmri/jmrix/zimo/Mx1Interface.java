@@ -1,4 +1,3 @@
-// Mx1Interface
 package jmri.jmrix.zimo;
 
 /**

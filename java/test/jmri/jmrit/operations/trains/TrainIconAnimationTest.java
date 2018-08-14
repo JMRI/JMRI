@@ -378,6 +378,7 @@ public class TrainIconAnimationTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         jmri.util.JUnitOperationsUtil.resetOperationsManager();
     }
 

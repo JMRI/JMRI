@@ -1,4 +1,3 @@
-//TrainsScheduleEditAction.java
 package jmri.jmrit.operations.trains.timetable;
 
 import java.awt.event.ActionEvent;

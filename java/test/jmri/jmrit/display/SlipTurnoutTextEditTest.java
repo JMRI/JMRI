@@ -42,6 +42,7 @@ public class SlipTurnoutTextEditTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

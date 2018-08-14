@@ -27,14 +27,14 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonUtilSocketServiceTest {
 
-    private static final Logger log = LoggerFactory.getLogger(JsonUtilSocketServiceTest.class);
-
     public JsonUtilSocketServiceTest() {
     }
 
     @BeforeClass
     public static void setUpClass() {
         Log4JFixture.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
     }
 
     @AfterClass
@@ -44,13 +44,13 @@ public class JsonUtilSocketServiceTest {
 
     @Before
     public void setUp() throws IOException {
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
     }
 
     @After
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
     }
 
     /**
@@ -135,4 +135,5 @@ public class JsonUtilSocketServiceTest {
         }
     }
 
+    private static final Logger log = LoggerFactory.getLogger(JsonUtilSocketServiceTest.class);
 }
