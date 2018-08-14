@@ -102,7 +102,6 @@ public class ColorDialogTest {
 
     @After
     public void tearDown() {
-        JUnitUtil.dispose(_cpe);
         JUnitUtil.tearDown();
     }
 }
