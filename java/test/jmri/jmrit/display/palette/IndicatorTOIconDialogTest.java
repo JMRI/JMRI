@@ -34,6 +34,7 @@ public class IndicatorTOIconDialogTest {
     @Before
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 

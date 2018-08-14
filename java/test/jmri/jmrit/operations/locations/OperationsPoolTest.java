@@ -1,4 +1,3 @@
-//OperationsPoolTest.java
 package jmri.jmrit.operations.locations;
 
 import java.util.List;

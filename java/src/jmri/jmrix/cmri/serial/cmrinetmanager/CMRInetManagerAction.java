@@ -1,4 +1,3 @@
-// CMRInetManagerAction.java
 package jmri.jmrix.cmri.serial.cmrinetmanager;
 
 import java.awt.event.ActionEvent;

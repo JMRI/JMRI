@@ -31,6 +31,7 @@ public class ItemPaletteTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After
