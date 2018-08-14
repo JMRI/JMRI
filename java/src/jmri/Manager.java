@@ -430,7 +430,7 @@ public interface Manager<E extends NamedBean> {
     }
 
     @Deprecated
-    static Set<String> legacyNameSet = Collections.synchronizedSet(new HashSet(200)); // want fast search and insert
+    static Set<String> legacyNameSet = Collections.synchronizedSet(new HashSet<String>(200)); // want fast search and insert
     @Deprecated
     static ShutDownTask legacyReportTask = new jmri.implementation.AbstractShutDownTask("Legacy Name List"){
                             public boolean execute() {

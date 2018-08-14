@@ -1,6 +1,8 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
+import javax.swing.JComponent;
+import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -16,14 +18,15 @@ import org.netbeans.jemmy.operators.JDialogOperator;
  */
 public class ColorDialogTest {
 
-    ControlPanelEditor cpe;
+    ControlPanelEditor _cpe;
+    PositionableLabel _pos;
     
     @Test
     public void testCTor1() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        BlockedThread th = new BlockedThread(cpe, ColorDialog.ONLY);
+        BlockedThread th = new BlockedThread(_cpe, _cpe.getTargetPanel(), ColorDialog.ONLY);
         th.start();
-        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("ColorChooser"));
+        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("PanelColor"));
         JButtonOperator jbo = new JButtonOperator(jdo , jmri.jmrit.display.palette.Bundle.getMessage("ButtonDone"));
         jbo.push();     // why does it not push - ??
     }
@@ -31,9 +34,9 @@ public class ColorDialogTest {
     @Test
     public void testCTor2() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        BlockedThread th = new BlockedThread(cpe, ColorDialog.BORDER);
+        BlockedThread th = new BlockedThread(_cpe, _pos, ColorDialog.BORDER);
         th.start();
-        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("ColorChooser"));
+        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("SetBorderSizeColor"));
         JButtonOperator jbo = new JButtonOperator(jdo , jmri.jmrit.display.palette.Bundle.getMessage("ButtonDone"));
         jbo.push();     // why does it not push - ??
     }
@@ -41,9 +44,9 @@ public class ColorDialogTest {
     @Test
     public void testCTor3() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        BlockedThread th = new BlockedThread(cpe, ColorDialog.MARGIN);
+        BlockedThread th = new BlockedThread(_cpe, _pos, ColorDialog.MARGIN);
         th.start();
-        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("ColorChooser"));
+        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("SetMarginSizeColor"));
         JButtonOperator jbo = new JButtonOperator(jdo , jmri.jmrit.display.palette.Bundle.getMessage("ButtonDone"));
         jbo.push();     // why does it not push - ??
     }
@@ -51,9 +54,9 @@ public class ColorDialogTest {
     @Test
     public void testCTor4() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        BlockedThread th = new BlockedThread(cpe, ColorDialog.FONT);
+        BlockedThread th = new BlockedThread(_cpe, _pos, ColorDialog.FONT);
         th.start();
-        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("ColorChooser"));
+        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("SetFontSizeColor"));
         JButtonOperator jbo = new JButtonOperator(jdo , jmri.jmrit.display.palette.Bundle.getMessage("ButtonDone"));
         jbo.push();     // why does it not push - ??
     }
@@ -61,9 +64,9 @@ public class ColorDialogTest {
     @Test
     public void testCTor5() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        BlockedThread th = new BlockedThread(cpe, ColorDialog.TEXT);
+        BlockedThread th = new BlockedThread(_cpe, _pos, ColorDialog.TEXT);
         th.start();
-        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("ColorChooser"));
+        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("SetTextSizeColor"));
         JButtonOperator jbo = new JButtonOperator(jdo , jmri.jmrit.display.palette.Bundle.getMessage("ButtonDone"));
         jbo.push();     // why does it not push - ??
     }
@@ -71,16 +74,18 @@ public class ColorDialogTest {
     class BlockedThread extends Thread implements Runnable {
         ColorDialog _cd;
         ControlPanelEditor _cpe;
+        JComponent _target;
         int _type;
         
-        BlockedThread(ControlPanelEditor ed, int type) {
+        BlockedThread(ControlPanelEditor ed, JComponent target, int type) {
             _cpe = ed;
+            _target = target;
             _type = type;
         }
 
         @Override
         public void run() {
-            _cd = new ColorDialog(_cpe, _cpe.getTargetPanel(), _type, null);
+            _cd = new ColorDialog(_cpe, _target, _type, null);
         }
     }
 
@@ -88,12 +93,16 @@ public class ColorDialogTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        cpe = new ControlPanelEditor("Fred");
+        JUnitUtil.resetProfileManager();
+        _cpe = new ControlPanelEditor("Fred");
+        _pos = new PositionableLabel("Some Text", _cpe);
+        _cpe.putItem(_pos);
+        jmri.util.JUnitUtil.resetProfileManager();
     }
 
     @After
     public void tearDown() {
-        JUnitUtil.dispose(cpe);
+        JUnitUtil.dispose(_cpe);
         JUnitUtil.tearDown();
     }
 }

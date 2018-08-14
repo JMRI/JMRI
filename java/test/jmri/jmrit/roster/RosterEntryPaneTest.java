@@ -21,6 +21,7 @@ public class RosterEntryPaneTest extends TestCase {
 
     @Override
     public void setUp() {
+        jmri.util.JUnitUtil.resetProfileManager();
         // create Element
         eOld = new org.jdom2.Element("locomotive")
                 .setAttribute("id", "id info")

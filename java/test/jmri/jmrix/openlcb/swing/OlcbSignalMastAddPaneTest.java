@@ -234,6 +234,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     @BeforeClass
     static public void preClassInit() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalTurnoutManager();
         nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});
         

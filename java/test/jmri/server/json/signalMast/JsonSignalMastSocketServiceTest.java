@@ -118,6 +118,7 @@ public class JsonSignalMastSocketServiceTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initDefaultSignalMastManager();
         JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initSignalMastLogicManager();

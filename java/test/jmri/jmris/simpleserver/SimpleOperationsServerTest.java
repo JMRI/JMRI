@@ -1,4 +1,3 @@
-//SimpleOperationsServerTest.java
 package jmri.jmris.simpleserver;
 
 import jmri.util.JUnitUtil;
@@ -171,6 +170,7 @@ public class SimpleOperationsServerTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalSensorManager();

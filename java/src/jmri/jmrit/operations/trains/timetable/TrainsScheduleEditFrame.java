@@ -1,4 +1,3 @@
-//TrainsScheduleEditFrame.java
 package jmri.jmrit.operations.trains.timetable;
 
 import java.awt.Dimension;

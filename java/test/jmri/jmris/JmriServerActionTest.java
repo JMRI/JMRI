@@ -1,4 +1,3 @@
-//JmriServerActionTest.java
 package jmri.jmris;
 
 import apps.tests.Log4JFixture;

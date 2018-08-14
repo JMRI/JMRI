@@ -1,4 +1,3 @@
-//InterchangeEditFrameTest.java
 package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;

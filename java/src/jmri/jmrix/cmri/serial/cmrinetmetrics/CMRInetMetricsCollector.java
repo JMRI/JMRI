@@ -1,5 +1,3 @@
-// CMRInetMetricsCollector.java
-
 package jmri.jmrix.cmri.serial.cmrinetmetrics;
 
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;

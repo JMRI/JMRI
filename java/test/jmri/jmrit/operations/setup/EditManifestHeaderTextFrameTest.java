@@ -38,6 +38,7 @@ public class EditManifestHeaderTextFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

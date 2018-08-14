@@ -1,4 +1,3 @@
-//OperationsTestCase.java
 package jmri.jmrit.operations;
 
 import javax.swing.JButton;
