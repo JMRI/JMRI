@@ -1,4 +1,3 @@
-// simpleTurnout.java
 package jmri.jmrix.loconet.ds64;
 
 import org.slf4j.Logger;

@@ -1,4 +1,3 @@
-//TrainCommonTest.java
 package jmri.jmrit.operations.trains;
 
 import jmri.jmrit.operations.OperationsTestCase;

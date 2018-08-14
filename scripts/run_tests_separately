@@ -1,0 +1,24 @@
+#! /bin/bash
+# 
+# Run each test individually. 
+#
+# Argument, if present, is a starting _directory_ under java/test, e.g. "jmri/managers"
+#  
+# The list of test files that fail goes into /failed_files.txt
+# Log output from all files is concatenated into /test_results.txt
+#
+
+rm -f ./failed_files.txt
+touch ./failed_files.txt
+
+rm -f ./test_results.txt
+
+for jmri_test in $( find java/test/$1 -name \*Test.java ! -name AllTest.java ! -name HeadLessTest.java ! -name PackageTest.java ! -name FailTest.java | sort -r) 
+    do jmri_test=${jmri_test#java/test/} 
+        jmri_test=${jmri_test%\.java}
+        echo ${jmri_test} >> ./test_results.txt
+        ./runtest.csh ${jmri_test} >> ./test_results.txt 2>&1 || echo ${jmri_test} >> ./failed_files.txt
+done
+
+# error exit if any failed
+if [ -s ./failed_files.txt ]; then echo "The following files failed, details in test_results.txt"; cat ./failed_files.txt; exit 1; fi

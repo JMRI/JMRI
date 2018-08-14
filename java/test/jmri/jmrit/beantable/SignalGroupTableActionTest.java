@@ -101,6 +101,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         a = new SignalGroupTableAction();
     }

@@ -1,4 +1,3 @@
-// PackageTest
 package jmri.util.docbook;
 
 import org.junit.runner.RunWith;
