@@ -1,7 +1,6 @@
 /*
  * TablesServlet specific JavaScript
  * 
- * TODO: add children listeners to additional types (below the line)
  * TODO: update other language NavBar.html, Tables.html
  * TODO: update json help with correct program references
  * TODO: add filter to tables
@@ -42,7 +41,12 @@ function rebuildTable(data) {
 		//build all data rows for table body, store item name in rows for later lookup
 		var tbody = '';
 		data.forEach(function(item) {
-			tbody += '<tr data-name="'+item.data.name+'">';
+            if (typeof item.data["id"] !== "undefined") { 
+            	key = item.data.id; //use id for row key if exists, else use name
+            } else {
+            	key = item.data.name;                	
+            }			
+			tbody += '<tr data-name="'+key+'">';
 			$.each(item.data, function (index, value) {
 				tbody += '<td>' + displayCellValue($("html").data("table-type"), index, value) + '</td>'; //replace some values with descriptions
 			});
@@ -59,9 +63,9 @@ function rebuildTable(data) {
 	hideEmptyColumns("table#jmri-data tr th");
 }
 
-function replaceRow(name, data) {
-	jmri.log("in replaceRow: name='" + name + "'");
-    var row = $("table#jmri-data tr[data-name='" + name + "']");
+function replaceRow(key, data) {
+	jmri.log("in replaceRow: name='" + key + "'");
+    var row = $("table#jmri-data tr[data-name='" + key + "']");
     if ($(row).length) {
     	var r = "";
     	$.each(data, function (index, value) {
@@ -70,7 +74,7 @@ function replaceRow(name, data) {
     	row.html(r);
     	hideEmptyColumns("table#jmri-data tr th");
     } else {
-    	jmri.log("row not found for name='" + name + "'");
+    	jmri.log("row not found for name='" + key + "'");
     }
 }
 
@@ -175,7 +179,12 @@ $(document).ready(function() {
 			} else if ((data.type) && (data.type == "error")) {
 				showError(data.data.code, data.data.message); //display any errors returned
 			} else if ((data.type) && (data.type !== "hello") && (data.type !== "pong")) {
-				replaceRow(data.data.name, data.data); //if single item, update the row
+                if (typeof data.data["id"] !== "undefined") { 
+                	key = data.data.id; //use id for row key if exists, else use name
+                } else {
+                	key = data.data.name;                	
+                }
+				replaceRow(key, data.data); //if single item, update the row
 			}
 		},	
 	});
