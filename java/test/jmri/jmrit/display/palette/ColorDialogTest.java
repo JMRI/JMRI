@@ -24,51 +24,67 @@ public class ColorDialogTest {
     @Test
     public void testCTor1() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        startEditor();
         BlockedThread th = new BlockedThread(_cpe, _cpe.getTargetPanel(), ColorDialog.ONLY);
         th.start();
         JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("PanelColor"));
         JButtonOperator jbo = new JButtonOperator(jdo , jmri.jmrit.display.palette.Bundle.getMessage("ButtonDone"));
         jbo.push();     // why does it not push - ??
+        JUnitUtil.dispose(_cpe);
     }
 
     @Test
     public void testCTor2() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        startEditor();
         BlockedThread th = new BlockedThread(_cpe, _pos, ColorDialog.BORDER);
         th.start();
         JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("SetBorderSizeColor"));
         JButtonOperator jbo = new JButtonOperator(jdo , jmri.jmrit.display.palette.Bundle.getMessage("ButtonDone"));
         jbo.push();     // why does it not push - ??
+        JUnitUtil.dispose(_cpe);
     }
 
     @Test
     public void testCTor3() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        startEditor();
         BlockedThread th = new BlockedThread(_cpe, _pos, ColorDialog.MARGIN);
         th.start();
         JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("SetMarginSizeColor"));
         JButtonOperator jbo = new JButtonOperator(jdo , jmri.jmrit.display.palette.Bundle.getMessage("ButtonDone"));
         jbo.push();     // why does it not push - ??
+        JUnitUtil.dispose(_cpe);
     }
 
     @Test
     public void testCTor4() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        startEditor();
         BlockedThread th = new BlockedThread(_cpe, _pos, ColorDialog.FONT);
         th.start();
         JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("SetFontSizeColor"));
         JButtonOperator jbo = new JButtonOperator(jdo , jmri.jmrit.display.palette.Bundle.getMessage("ButtonDone"));
         jbo.push();     // why does it not push - ??
+        JUnitUtil.dispose(_cpe);
     }
 
     @Test
     public void testCTor5() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        startEditor();
         BlockedThread th = new BlockedThread(_cpe, _pos, ColorDialog.TEXT);
         th.start();
         JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("SetTextSizeColor"));
         JButtonOperator jbo = new JButtonOperator(jdo , jmri.jmrit.display.palette.Bundle.getMessage("ButtonDone"));
         jbo.push();     // why does it not push - ??
+        JUnitUtil.dispose(_cpe);
+    }
+
+    void startEditor() {
+        _cpe = new ControlPanelEditor("Fred");
+        _pos = new PositionableLabel("Some Text", _cpe);
+        _cpe.putItem(_pos);
     }
 
     class BlockedThread extends Thread implements Runnable {
@@ -94,9 +110,6 @@ public class ColorDialogTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        _cpe = new ControlPanelEditor("Fred");
-        _pos = new PositionableLabel("Some Text", _cpe);
-        _cpe.putItem(_pos);
         jmri.util.JUnitUtil.resetProfileManager();
     }
 
