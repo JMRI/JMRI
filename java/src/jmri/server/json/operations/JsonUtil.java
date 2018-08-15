@@ -114,6 +114,7 @@ public class JsonUtil {
         } else {
             node.set(JSON.RETURN_WHEN_EMPTY, null);
         }
+        node.put(JSON.STATUS, car.getStatus());
         return node;
     }
 
