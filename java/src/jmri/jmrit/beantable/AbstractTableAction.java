@@ -144,7 +144,7 @@ abstract public class AbstractTableAction<E extends NamedBean> extends AbstractA
      * I.E. "Geo7" returns "Geo8"
      * 
      * Note: preserves leading zeros: "Geo007" returns "Geo008"
-     * Also, if no trailing digits appends "1": "Geo" returns "Geo1"
+     * Also, if no trailing digits, appends "1": "Geo" returns "Geo1"
      * 
      * @param name the system or user name string
      * @return the same name with trailing digits incremented by one
