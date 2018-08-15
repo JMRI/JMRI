@@ -142,7 +142,6 @@ abstract public class AbstractTableAction<E extends NamedBean> extends AbstractA
     /**
      * Increments trailing digits of a system/user name (string)
      * I.E. "Geo7" ==> "Geo8"
-     * 
      * Note: preserves leading zeros: "Geo007" ==> "Geo008"
      * Also: if no trailing digits appends "1": "Geo" ==> "Geo1"
      * 
