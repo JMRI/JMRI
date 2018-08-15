@@ -30,6 +30,7 @@ public class PrintCarRosterActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

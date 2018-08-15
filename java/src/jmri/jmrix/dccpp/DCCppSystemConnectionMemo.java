@@ -1,4 +1,3 @@
-//DCCppSystemConnectionMemo.java
 package jmri.jmrix.dccpp;
 
 import java.util.ResourceBundle;

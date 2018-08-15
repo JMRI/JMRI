@@ -1,4 +1,3 @@
-//JsonServerTest.java
 package jmri.jmris.json;
 
 import jmri.util.JUnitUtil;

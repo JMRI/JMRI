@@ -1,5 +1,3 @@
-// NodeIOListAction.java
-
 package jmri.jmrix.cmri.serial.nodeiolist;
 
 import java.awt.event.ActionEvent;

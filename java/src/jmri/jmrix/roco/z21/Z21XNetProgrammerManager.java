@@ -3,6 +3,7 @@ package jmri.jmrix.roco.z21;
 import jmri.AddressedProgrammer;
 import jmri.Programmer;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
 /**
  * Extend XNetProgrammerManager for Z21.
@@ -13,8 +14,15 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
  */
 public class Z21XNetProgrammerManager extends jmri.jmrix.lenz.XNetProgrammerManager {
 
+    private LocoNetSystemConnectionMemo lnMemo = null;
+
     public Z21XNetProgrammerManager(Programmer pProgrammer, XNetSystemConnectionMemo memo) {
-        super(pProgrammer, memo);
+        this(pProgrammer, memo, null);
+    }
+
+    public Z21XNetProgrammerManager(Programmer pProgrammer, XNetSystemConnectionMemo xnetMemo,LocoNetSystemConnectionMemo loconetMemo) {
+        super(pProgrammer, xnetMemo);
+        setLocoNetMemo(loconetMemo);
     }
 
     /**
@@ -28,7 +36,15 @@ public class Z21XNetProgrammerManager extends jmri.jmrix.lenz.XNetProgrammerMana
 
     @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
-        return new Z21XNetOpsModeProgrammer(pAddress, tc);
+        if(lnMemo!=null) {
+           return new Z21XNetOpsModeProgrammer(pAddress, tc, lnMemo.getLnTrafficController()); 
+        } else {
+           return new Z21XNetOpsModeProgrammer(pAddress, tc );
+        }
+    }
+
+    public void setLocoNetMemo(LocoNetSystemConnectionMemo loconetMemo) {
+        lnMemo = loconetMemo;
     }
 
 }
