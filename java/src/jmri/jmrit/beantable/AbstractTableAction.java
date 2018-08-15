@@ -141,10 +141,10 @@ abstract public class AbstractTableAction<E extends NamedBean> extends AbstractA
 
     /**
      * Increments trailing digits of a system/user name (string)
-     * I.E. "Geo7" ==> "Geo8"
+     * I.E. "Geo7" generates "Geo8"
      * 
-     * Note: preserves leading zeros: "Geo007" ==> "Geo008"
-     * Also: if no trailing digits appends "1": "Geo" ==> "Geo1"
+     * Note: preserves leading zeros: "Geo007" generates "Geo008"
+     * Also: if no trailing digits appends "1": "Geo" generates "Geo1"
      * 
      * @param name the system or user name string
      * @return the same name with incremented trailing digits
