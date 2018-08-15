@@ -147,7 +147,7 @@ abstract public class AbstractTableAction<E extends NamedBean> extends AbstractA
      * Also: if no trailing digits appends "1": "Geo" generates "Geo1"
      * 
      * @param name the system or user name string
-     * @return the same name with incremented trailing digits
+     * @return the same name with trailing digits incremented by one
      */
     protected @Nonnull String nextName(@Nonnull String name) {
         final String[] parts = name.split("(?=\\d+$)", 2);
