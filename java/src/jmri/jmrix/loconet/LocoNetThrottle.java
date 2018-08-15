@@ -719,8 +719,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 | (getF3() ? LnConstants.DIRF_F3 : 0)
                 | (getF4() ? LnConstants.DIRF_F4 : 0));
             LocoNetMessage msg = new LocoNetMessage(6);
-            msg.setOpCode(0xd5);
-            msg.setElement(1, (slot.getSlot() / 128) | 0b00010000 );
+            msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F0F6_MASK );
             msg.setElement(2,slot.getSlot() & 0b01111111);
             msg.setElement(3,slot.id() & 0x7F);
             msg.setElement(4, new_F0F6);
@@ -738,8 +738,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                     | (getF12() ? 0b00100000 : 0)
                     | (getF13() ? 0b01000000 : 0));
                 LocoNetMessage msg = new LocoNetMessage(6);
-                msg.setOpCode(0xd5);
-                msg.setElement(1, (slot.getSlot() / 128) | 0b00011000 );
+                msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
+                msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F7F13_MASK );
                 msg.setElement(2,slot.getSlot() & 0b01111111);
                 msg.setElement(3,slot.id() & 0x7F);
                 msg.setElement(4, new_F7F13);
@@ -758,8 +758,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 | (getF19() ? 0b00100000 : 0)
                 | (getF20() ? 0b01000000 : 0));
             LocoNetMessage msg = new LocoNetMessage(6);
-            msg.setOpCode(0xd5);
-            msg.setElement(1, (slot.getSlot() / 128) | 0b00100000 );
+            msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F14F20_MASK );
             msg.setElement(2,slot.getSlot() & 0b01111111);
             msg.setElement(3,slot.id() & 0x7F);
             msg.setElement(4, new_F14F20);
@@ -778,11 +778,11 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 (getF26() ? 0b00100000 : 0) |
                 (getF27() ? 0b01000000 : 0));
         LocoNetMessage msg = new LocoNetMessage(6);
-        msg.setOpCode(0xd5);
+        msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
         if (!getF28()) {
-            msg.setElement(1, (slot.getSlot() / 128) | 0b00101000);
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF_MASK);
         } else {
-            msg.setElement(1, (slot.getSlot() / 128) | 0b00110000);
+            msg.setElement(1, (slot.getSlot() / 128) | LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON_MASK);
         }
         msg.setElement(2, slot.getSlot() & 0b01111111);
         msg.setElement(3, slot.id() & 0x7F);
@@ -795,7 +795,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      */
     protected void sendExpSpeedAndDirection() {
         LocoNetMessage msg = new LocoNetMessage(6);
-        msg.setOpCode(0xd5);
+        msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
         msg.setElement(1, ((slot.getSlot() / 128) & 0x07) | (isForward ? 0x00 : 0x08));
         msg.setElement(2, slot.getSlot() & 0x7f);
         msg.setElement(3, (slot.id() & 0x7f));
@@ -881,7 +881,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 network.sendLocoNetMessage(msg);
             } else {
                 LocoNetMessage msg = new LocoNetMessage(6);
-                msg.setOpCode(0xd5);
+                msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
                 msg.setElement(1, ((slot.getSlot() / 128) & 0x07) | (isForward ? 0x00 : 0x08));
                 msg.setElement(2, slot.getSlot() & 0x7f);
                 msg.setElement(3, (slot.id() & 0x7f));

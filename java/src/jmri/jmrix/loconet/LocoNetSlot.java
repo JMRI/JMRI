@@ -267,7 +267,7 @@ public class LocoNetSlot {
     public void setSlot(LocoNetMessage l) throws LocoNetException { // exception if message can't be parsed
         // sort out valid messages, handle
         switch (l.getOpCode()) {
-            case 0xd5:
+            case LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR:  //speed and functions
                 if ((l.getElement(1) & 0b11110000) == 0) {
                     // speed and direction
                     spd = l.getElement(4);
@@ -310,8 +310,8 @@ public class LocoNetSlot {
                 }
                 notifySlotListeners();
                 break;
-            case 0xe6:
-            case 0xee:
+            case LnConstants.OPC_EXP_RD_SL_DATA:
+            case LnConstants.OPC_EXP_WR_SL_DATA:
                 lastUpdateTime = System.currentTimeMillis();
                 stat = l.getElement(4);
                 addr = l.getElement(5) + 128 * l.getElement(6);
@@ -350,7 +350,7 @@ public class LocoNetSlot {
 
                 notifySlotListeners();
                 break;
-            case 0xd4:
+            case LnConstants.OPC_EXP_SLOT_MOVE:
                 // null move or change status if byte 1 bits 5-3 on
                 if ((l.getElement(1) & 0b11111000 ) == 0b00111000 ) {
                     if (( l.getElement(3) & 0b01100010) == 0b01100000) {
@@ -540,7 +540,7 @@ public class LocoNetSlot {
             return l;
         } else {
             LocoNetMessage l = new LocoNetMessage(6);
-            l.setOpCode(0xd4);
+            l.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE);
             l.setElement(1, ((slot / 128) & 0x07) | 0b00111000 ) ;
             l.setElement(2, slot & 0x7f);
             l.setElement(3, 0x60);
@@ -569,7 +569,7 @@ public class LocoNetSlot {
             return l;
         } else {
             LocoNetMessage l = new LocoNetMessage(6);
-            l.setOpCode(0xd4);
+            l.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE);
             l.setElement(1, ((slot / 128) & 0x07) | 0b00111000 ) ;
             l.setElement(2, slot & 0x7f);
             l.setElement(3, 0x60);
@@ -593,7 +593,7 @@ public class LocoNetSlot {
             return l;
         } else {
             LocoNetMessage l = new LocoNetMessage(6);
-            l.setOpCode(0xd5);
+            l.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
             l.setElement(1, ((slot / 128) & 0x07) | ((dirf &  LnConstants.DIRF_DIR ) >> 2) );
             l.setElement(2, slot & 0x7f);
             l.setElement(3, (id & 0x7f));
@@ -619,7 +619,7 @@ public class LocoNetSlot {
             return l;
         } else {
             LocoNetMessage l = new LocoNetMessage(6);
-            l.setOpCode(0xd4);
+            l.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE);
             l.setElement(1, ((slot / 128) & 0x07) | 0b00111000 ) ;
             l.setElement(2, slot & 0x7f);
             l.setElement(3, 0);
@@ -664,7 +664,7 @@ public class LocoNetSlot {
             return l;
         }
         LocoNetMessage l = new LocoNetMessage(21);
-        l.setOpCode(0xee);
+        l.setOpCode(LnConstants.OPC_EXP_WR_SL_DATA);
         l.setElement(1, 0x15);
         l.setElement(2, (slot / 128) & 0x07);
         l.setElement(3, slot & 0x7F);

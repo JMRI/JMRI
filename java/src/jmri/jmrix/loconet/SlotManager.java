@@ -549,11 +549,11 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             case LnConstants.OPC_MOVE_SLOTS:  // handle the follow-on message when it comes
                 return i; // need to cope with that!!
 
-            case 0xd5:
-            case 0xd4:
+            case LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR:
+            case LnConstants.OPC_EXP_SLOT_MOVE:
                 i = ( ( m.getElement(1) & 0x07 ) *128) + m.getElement(2);
                 return i;
-            case 0xe6:
+            case LnConstants.OPC_EXP_RD_SL_DATA:
             case 0xee:
                 i = ( (m.getElement(2) & 0x07 ) *128) + m.getElement(3);
                 return i;
@@ -717,12 +717,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             // must not have been interesting, or at least routed right
             log.error("slot rejected LocoNetMessage {}", m); // NOI18N
             return;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            log.error("Slot outside limit _slots[{}].setSlot({})",i,m,e);
-            return;
         } catch (Exception e) {
-            log.error("Misc. error _slots[{}].setSlot({})",i,m,e);
-            return;
+            log.error("_slots[{}].setSlot({})",i,m,e);
         }
         // notify listeners that slot may have changed
         notify(_slots[i]);
@@ -738,7 +734,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // is called any time a LocoNet message is received.  Note that we do _NOT_ know why a given message happens!
 
         // if this is OPC_SL_RD_DATA
-        if (m.getOpCode() == LnConstants.OPC_SL_RD_DATA || m.getOpCode() == 0xe6 ) {
+        if (m.getOpCode() == LnConstants.OPC_SL_RD_DATA || m.getOpCode() == LnConstants.OPC_EXP_RD_SL_DATA ) {
             // yes, see if request exists
             // note that the appropriate _slots[] entry has already been updated
             // to reflect the content of the LocoNet message, so _slots[i]
