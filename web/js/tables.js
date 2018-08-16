@@ -1,14 +1,14 @@
 /*
  * TablesServlet specific JavaScript
  * 
- * TODO: add children listeners to additional types (below the line)
  * TODO: update other language NavBar.html, Tables.html
  * TODO: update json help with correct program references
- * TODO: add sort and filter to tables
+ * TODO: add filter to tables
  * TODO: add button or dropdown to change state for selected items
  * TODO: add enum descriptions to schema and use them for converting states, and 
  *         for calc'ing the "next" state
  * TODO: additional columns and changes for block, light, route
+ * TODO: why does no configProfile show isAutoStart?
  */
 
 var jmri = null;
@@ -41,7 +41,12 @@ function rebuildTable(data) {
 		//build all data rows for table body, store item name in rows for later lookup
 		var tbody = '';
 		data.forEach(function(item) {
-			tbody += '<tr data-name="'+item.data.name+'">';
+            if (typeof item.data["id"] !== "undefined") { 
+            	key = item.data.id; //use id for row key if exists, else use name
+            } else {
+            	key = item.data.name;                	
+            }			
+			tbody += '<tr data-name="'+key+'">';
 			$.each(item.data, function (index, value) {
 				tbody += '<td>' + displayCellValue($("html").data("table-type"), index, value) + '</td>'; //replace some values with descriptions
 			});
@@ -58,9 +63,9 @@ function rebuildTable(data) {
 	hideEmptyColumns("table#jmri-data tr th");
 }
 
-function replaceRow(name, data) {
-	jmri.log("in replaceRow: name='" + name + "'");
-    var row = $("table#jmri-data tr[data-name='" + name + "']");
+function replaceRow(key, data) {
+	jmri.log("in replaceRow: name='" + key + "'");
+    var row = $("table#jmri-data tr[data-name='" + key + "']");
     if ($(row).length) {
     	var r = "";
     	$.each(data, function (index, value) {
@@ -69,24 +74,25 @@ function replaceRow(name, data) {
     	row.html(r);
     	hideEmptyColumns("table#jmri-data tr th");
     } else {
-    	jmri.log("row not found for name='" + name + "'");
+    	jmri.log("row not found for name='" + key + "'");
     }
 }
 
+/* convert each cell into more human-readable form */
 function displayCellValue(type, colName, value) {
 	if (value==null) {
 		return ""; //return empty string for any null value
 	}
-	if ($.isArray(value)) {
-		return "array["+value.length+"]" ; //placeholder						
+	if ($.isArray(value)) { 
+		return "array["+value.length+"]"; //return array[size] for arrays						
 	}
-//	if (typeof value === "object") { //special treatment for objects
-//			if (value.name) {
-//				return "vvv"+value.name;  //if it has a name, use it
-//			} else {
-//				return "[obj]" ; //placeholder				
-//			}
-//	}
+	if (typeof value === "object") {
+			if (value.name) {
+				return value.name;  // return name of object if it has one
+			} else {
+				return "[obj]" ; //placeholder				
+			}
+	}
 	//convert known states to human-readable strings, if not known show as is
 	if ((colName == "state") || (colName == "occupiedSense")) {
 		switch (type) {
@@ -126,7 +132,7 @@ function displayCellValue(type, colName, value) {
 			return value; //not special, just return the passed in value
 		}
 	}
-	return htmlEncode(value);
+	return htmlEncode(value); //otherwise replace special characters
 }
 
 //replace some special chars with html equivalents
@@ -173,7 +179,12 @@ $(document).ready(function() {
 			} else if ((data.type) && (data.type == "error")) {
 				showError(data.data.code, data.data.message); //display any errors returned
 			} else if ((data.type) && (data.type !== "hello") && (data.type !== "pong")) {
-				replaceRow(data.data.name, data.data); //if single item, update the row
+                if (typeof data.data["id"] !== "undefined") { 
+                	key = data.data.id; //use id for row key if exists, else use name
+                } else {
+                	key = data.data.name;                	
+                }
+				replaceRow(key, data.data); //if single item, update the row
 			}
 		},	
 	});
