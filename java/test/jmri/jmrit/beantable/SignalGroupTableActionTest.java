@@ -103,6 +103,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        helpTarget = "package.jmri.jmrit.beantable.SignalGroupTable"; 
         a = new SignalGroupTableAction();
     }
 
