@@ -56,16 +56,16 @@ public class PositionableRoundRect extends PositionableRectangle {
         popup.add(new javax.swing.AbstractAction(txt) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                makeEditFrame();
+                makeEditFrame(false);
             }
         });
         return true;
     }
     
-    private void makeEditFrame() {
-        if (_editFrame == null) {
-            _editFrame = new DrawRoundRect("editShape", "roundRect", this);
-            setEditParams();
-        }
+    @Override
+    protected DrawFrame makeEditFrame(boolean create) {
+        _editFrame = new DrawRoundRect("editShape", "roundRect", this, getEditor(), create);
+        _editFrame.setDisplayParams(this);
+        return _editFrame;
     }
 }

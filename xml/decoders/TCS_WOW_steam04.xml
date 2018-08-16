@@ -25,6 +25,8 @@
 	<!-- update names of CV 4.30,31,33,34 -->
 	<version author="Michael Mosher" version="7" lastUpdated="20170808"/>
 	<!-- update volume groups -->
+	<version author="Michael Mosher" version="8" lastUpdated="20180727"/>
+	<!-- add read me pane -->
    <decoder>
       <family name="WOW Steam Sound Set 4" mfg="Train Control Systems">
          <model model="WOW Steam 101 SS4" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="9pin" lowVersionID="4" highVersionID="4" productID="130">
@@ -3010,4 +3012,5 @@
    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol6.xml"/>
    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol7.xml"/>
    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_4cv.xml"/>
+   <xi:include href="http://jmri.org/xml/decoders/tcs/paneWowReadMe.xml"/>
 </decoder-config>

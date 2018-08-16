@@ -405,6 +405,7 @@ public class RosterEntryTest extends TestCase {
     @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         InstanceManager.setDefault(RosterConfigManager.class, new RosterConfigManager());
     }
 

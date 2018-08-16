@@ -164,13 +164,10 @@ public class LogixActionTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        JUnitUtil.initConfigureManager();
-/*        JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initInternalLightManager();
-        JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initInternalSignalHeadManager();
-        JUnitUtil.initMemoryManager();
-        JUnitUtil.initOBlockManager();*/
+        JUnitUtil.setUp();       
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
+
         JUnitUtil.initLogixManager();
         JUnitUtil.initConditionalManager();
     }

@@ -10,22 +10,32 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class Dcc4PcSensorTest {
+public class Dcc4PcSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
-    @Test
-    public void testCTor() {
-        Dcc4PcSensor t = new Dcc4PcSensor("DS1","test");
-        Assert.assertNotNull("exists",t);
-    }
+    @Override
+    public int numListeners() {return 0;}
+
+    @Override
+    public void checkOnMsgSent() {}
+
+    @Override
+    public void checkOffMsgSent() {}
+
+    @Override
+    public void checkStatusRequestMsgSent() {}
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        t = new Dcc4PcSensor("DS1","test");
     }
 
+    @Override
     @After
     public void tearDown() {
+	t.dispose();
         JUnitUtil.tearDown();
     }
 

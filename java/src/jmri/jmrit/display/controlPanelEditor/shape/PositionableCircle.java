@@ -52,17 +52,17 @@ public class PositionableCircle extends PositionableShape {
         popup.add(new javax.swing.AbstractAction(txt) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                makeEditFrame();
+                makeEditFrame(false);
             }
         });
         return true;
     }
     
-    private void makeEditFrame() {
-        if (_editFrame == null) {
-            _editFrame = new DrawCircle("editShape", "Circle", this);
-            setEditParams();
-        }
+    @Override
+    protected DrawFrame makeEditFrame(boolean create) {
+        _editFrame = new DrawCircle("editShape", "Circle", this, getEditor(), create);
+        _editFrame.setDisplayParams(this);
+        return _editFrame;
     }
         
 }

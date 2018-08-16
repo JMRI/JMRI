@@ -103,6 +103,7 @@ public class SensorTableActionTest extends AbstractTableActionBase {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
         a = new SensorTableAction();
     }

@@ -5,8 +5,8 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <meta name="keywords" content="JMRI help MERG CBUS ">
-  <title>JMRI: CBUS Event Capture Tool</title>
+  <meta name="keywords" content="JMRI help MERGCBUS ">
+  <title>JMRI: MERGCBUS Event Capture Tool</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -23,7 +23,7 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-     <h1>JMRI: CBUS Event Capture Tool</h1>
+     <h1>JMRI: MERGCBUS Event Capture Tool</h1>
       
       <ul class="nav">
       <li><a href="#examinemultipleevents">Examine Multiple Events</a></li>
@@ -35,7 +35,7 @@
       <img src="../../../../../../../html/hardware/can/images/MergEventCapture.png"
        alt="Event Capture Tool screenshot" align="right"></a>
 
-      <p>The CBUS Event Capture tool can simplify configuring JMRI
+      <p>The MERGCBUS Event Capture tool can simplify configuring JMRI
       to work well with your <a href=
       "../../../../../../../html/hardware/can/cbus/index.shtml">CBUS</a>
       installation.</p>
@@ -43,7 +43,7 @@
       <p>To <a href=
       "../../../../../../../html/hardware/can/cbus/index.shtml">configure
       JMRI Sensors and Turnouts</a>, you need to identify the
-      associated CBUS events. There are several ways to do this.</p>
+      associated MERGCBUS events. There are several ways to do this.</p>
       
       <p>The rest of this page goes through the alternatives, using
       configuring a Sensor as an example. Similar methods work for
@@ -53,13 +53,13 @@
      <h3><a name="examinemultipleevents" id="examinemultipleevents" 
      >Examine Multiple Events</a></h3>
       <p>The upper part of the screen
-      can capture multiple CBUS Events, which you can then use to
+      can capture multiple MERGCBUS Events, which you can then use to
       create Sensors and Turnouts.
 
-      <p>When a new CBUS message comes it, it will be captured in
+      <p>When a new MERGCBUS message comes it, it will be captured in
       the highest line that has the "Capture" box checked. The box
       will then be unchecked so the captured message is not
-      overwritten by later CBUS messages. If you check a series of
+      overwritten by later MERGCBUS messages. If you check a series of
       boxes, you can capture a series of messages.</p>
 
       <p>Once you've captured the Event you want, you can copy and
@@ -92,7 +92,7 @@
 
       <p>If you press the "Capture Next" button next to one of the
       Event fields, it will stay down (activated) until the next
-      CBUS Event (CAN frame) is seen by the program. That Event is
+      MERGCBUS Event (CAN frame) is seen by the program. That Event is
       captured into the neighboring field for later use.</p>
 
       <p>You can separately capture the two Events for a Sensor if
@@ -102,20 +102,20 @@
 
     <h3>JMRI Help</h3>
     
-      <p>Once you've created a CBUS Sensor or
+      <p>Once you've created a MERGCBUS Sensor or
       Turnout, you can use the <a href=
       "../../../../../jmrit/beantable/SensorTable.shtml">Sensor
       Table</a> or <a href=
       "../../../../../jmrit/beantable/TurnoutTable.shtml">Turnout
       Table</a> to adjust the details.</p>
 
-      <p>The <a href="../console/CbusConsoleFrame.shtml">CBUS
+      <p>The <a href="../console/CbusConsoleFrame.shtml">MERGCBUS
       Console</a> can help you figure out what events are happening
       on your layout.</p>
       
-      <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the MERG CBUS Event Capture window.</p>
+      <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the MERGCBUS Event Capture window.</p>
       
-      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Support page</a>.</p>
+      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI MERGCBUS Support page</a>.</p>
 
       
       <!--#include virtual="/Footer" -->

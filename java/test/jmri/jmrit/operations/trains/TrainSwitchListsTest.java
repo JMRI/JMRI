@@ -550,6 +550,7 @@ public class TrainSwitchListsTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
 
         JUnitOperationsUtil.resetOperationsManager();
         // setup new managers

@@ -1,4 +1,3 @@
-//OperationsTestCase.java
 package jmri.jmrit.operations;
 
 import javax.swing.JButton;
@@ -94,9 +93,9 @@ public class OperationsSwingTestCase {
 
         // load engines
         EngineManager emanager = InstanceManager.getDefault(EngineManager.class);
-        Engine e1 = emanager.newEngine("E", "1");
+        Engine e1 = emanager.newEngine("SP", "1");
         e1.setModel("GP40");
-        Engine e2 = emanager.newEngine("E", "2");
+        Engine e2 = emanager.newEngine("PU", "2");
         e2.setModel("GP40");
         Engine e3 = emanager.newEngine("UP", "3");
         e3.setModel("GP40");

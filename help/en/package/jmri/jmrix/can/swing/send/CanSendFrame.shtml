@@ -8,7 +8,7 @@
 
   <title>JMRI: Send CAN Frame</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help send CBUS packets long short can events frames event hex">
+  <meta name="keywords" content="JMRI help send MERGCBUS packets long short can events frames event hex">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -28,7 +28,7 @@
      <h1>Send CAN Frame</h1>
       <a href=
       "../../../../../../html/hardware/can/images/SendFrame.jpg"><img src="../../../../../../html/hardware/can/images/SendFrame.jpg"
-      width="536" height="335" alt="JMRI MERG CBUS Send Frame Tool" align=
+      width="536" height="335" alt="JMRI MERGCBUS Send Frame Tool" align=
       "right"></a>
 
       <p>The "Send CAN Frame" tool lets you directly send <a href=
@@ -67,7 +67,7 @@
      <h3>JMRI Help</h3>
       
       <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the MERG Send CAN Frame window.</p>
-      <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI CBUS Support page</a>.</p>
+      <p><a href="../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI MERGCBUS Support page</a>.</p>
 
       
       

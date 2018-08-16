@@ -44,6 +44,7 @@ public class TrainByCarTypeFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         JUnitOperationsUtil.resetOperationsManager();
         JUnitOperationsUtil.initOperationsData();
     }

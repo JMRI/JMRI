@@ -119,6 +119,9 @@ public class DisplayFrame extends JmriJFrame {
     public int getPreviewBg() {
         return previewBgSet;
     }
+    
+    public void updateBackground0(java.awt.image.BufferedImage im) {
+    }
 
     /**
      * 

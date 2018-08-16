@@ -202,7 +202,7 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
      */
     @Override
     public void message(LocoNetMessage msg) {
-        // when an XpressNet message shows up here, package it in a Z21Message
+        // when an LocoNet message shows up here, package it in a Z21Message
         Z21Message message = new Z21Message(msg);
         log.debug("LocoNet Message {} forwarded to z21 Interface as {}",
                     msg, message);

@@ -165,7 +165,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel<SignalMast> {
                         return s.getAspect();
                     } else {
                         //Aspect not set
-                        log.debug("NULL aspect returned for mast in row {}", row);
+                        //log.trace("Aspect not set, NULL aspect returned for mast in row {}", row); - too verbose, even at trace
                         return Bundle.getMessage("BeanStateUnknown"); // use place holder string in table
                     }
                 } catch (java.lang.NullPointerException e) {

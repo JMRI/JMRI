@@ -1,6 +1,7 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
 import java.awt.GraphicsEnvironment;
+import jmri.jmrit.display.EditorScaffold;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -15,11 +16,15 @@ import org.junit.Test;
  */
 public class DrawRectangleTest {
 
+    EditorScaffold editor;
+
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
-        DrawRectangle t = new DrawRectangle("newShape", "Rectangle", null);
+        frame.pack();
+        frame.setVisible(true);
+        DrawRectangle t = new DrawRectangle("newShape", "Rectangle", null, frame, false);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(frame);
@@ -28,8 +33,10 @@ public class DrawRectangleTest {
     public void testCTorEdit() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ControlPanelEditor frame = new ControlPanelEditor();
+        frame.pack();
+        frame.setVisible(true);
         PositionableRectangle ps =  new PositionableRectangle(frame);
-        DrawRectangle t = new DrawRoundRect("editShape", "Rectangle", ps);
+        DrawRectangle t = new DrawRectangle("editShape", "Rectangle", ps, frame, true);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(frame);
@@ -39,10 +46,14 @@ public class DrawRectangleTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        editor = new EditorScaffold();
     }
 
     @After
     public void tearDown() {
+        editor = null;
         jmri.util.JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
         JUnitUtil.tearDown();
     }

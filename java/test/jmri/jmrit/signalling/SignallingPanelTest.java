@@ -27,6 +27,7 @@ public class SignallingPanelTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDefaultSignalMastManager();
     }
 

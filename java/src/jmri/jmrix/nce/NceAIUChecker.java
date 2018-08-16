@@ -1,4 +1,3 @@
-//NceAIUChecker.java
 package jmri.jmrix.nce;
 
 import javax.swing.JOptionPane;

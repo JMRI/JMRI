@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * A Signalmast that is built up using turnouts to control a specific
  * appearance. System name specifies the creation information:
  * <pre>
- * IF$tsm:basic:one-searchlight:(IT1)(IT2)
+ * IF$tsm:basic:one-searchlight(IT1)(IT2)
  * </pre> The name is a colon-separated series of terms:
  * <ul>
  * <li>IF$tsm - defines signal masts of this type
@@ -51,6 +51,8 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         String mast = parts[2];
 
         mast = mast.substring(0, mast.indexOf("("));
+        setMastType(mast);
+
         String tmp = parts[2].substring(parts[2].indexOf("($") + 2, parts[2].indexOf(")"));
         try {
             int autoNumber = Integer.parseInt(tmp);
@@ -211,9 +213,13 @@ public class TurnoutSignalMast extends AbstractSignalMast {
 
         TurnoutAspect(String turnoutName, int turnoutState) {
             if (turnoutName != null && !turnoutName.equals("")) {
-                Turnout turn = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
-                namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turn);
                 state = turnoutState;
+                Turnout turn = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
+                if (turn == null) {  
+                    log.error("TurnoutAspect couldn't locate turnout {}", turn);
+                    return;
+                }
+                namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turn);
             }
         }
 

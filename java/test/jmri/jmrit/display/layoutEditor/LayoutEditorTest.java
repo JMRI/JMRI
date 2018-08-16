@@ -814,6 +814,7 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
     public void setUp() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
+            jmri.util.JUnitUtil.resetProfileManager();
             e = le = new LayoutEditor("Test Layout");
             jmri.InstanceManager.setDefault(LayoutBlockManager.class,new LayoutBlockManager());
         }

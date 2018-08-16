@@ -1,4 +1,3 @@
-//JmriConnectionTest.java
 package jmri.jmris;
 
 import junit.framework.Test;

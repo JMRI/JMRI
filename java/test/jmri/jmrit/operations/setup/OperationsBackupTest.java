@@ -1,4 +1,3 @@
-//OperationsBackup2Test.java
 package jmri.jmrit.operations.setup;
 
 import java.io.File;

@@ -44,7 +44,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     NceTrafficController tc = null;
     String prefix = "N";
 
-    private NceSensorManager mInstance = null;
+    private final NceSensorManager mInstance = null;
 
     @Override
     public String getSystemPrefix() {
@@ -189,8 +189,8 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     private NceMessage makeAIUPoll4ByteReply(int aiuNo) {
         NceMessage m = new NceMessage(2);
         m.setBinary(true);
-        m.setReplyLen(4);
-        m.setElement(0, NceBinaryCommand.READ_AUI4_CMD);
+        m.setReplyLen(NceMessage.REPLY_4);
+        m.setElement(0, NceMessage.READ_AUI4_CMD);
         m.setElement(1, aiuNo);
         m.setTimeout(pollTimeout);
         return m;
@@ -205,8 +205,8 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     private NceMessage makeAIUPoll2ByteReply(int aiuNo) {
         NceMessage m = new NceMessage(2);
         m.setBinary(true);
-        m.setReplyLen(2);
-        m.setElement(0, NceBinaryCommand.READ_AUI2_CMD);
+        m.setReplyLen(NceMessage.REPLY_2);
+        m.setElement(0, NceMessage.READ_AUI2_CMD);
         m.setElement(1, aiuNo);
         m.setTimeout(pollTimeout);
         return m;
