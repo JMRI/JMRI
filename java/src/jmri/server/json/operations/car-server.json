@@ -51,10 +51,6 @@
         "consist": {
             "type": "string",
             "description": "The name of the consist the car is in"
-        },
-        "status": {
-            "type": "string",
-            "description": "The status symbol of the car"
         }
     },
     "additionalProperties": false,
