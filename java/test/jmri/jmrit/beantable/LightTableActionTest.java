@@ -113,6 +113,7 @@ public class LightTableActionTest extends AbstractTableActionBase {
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        helpTarget = "package.jmri.jmrit.beantable.LightTable"; 
         a = new LightTableAction();
     }
 
