@@ -311,7 +311,7 @@ public class LocoNetSlot {
                 notifySlotListeners();
                 break;
             case LnConstants.OPC_EXP_RD_SL_DATA:
-            case LnConstants.OPC_EXP_RD_SL_DATA:
+            case LnConstants.OPC_EXP_WR_SL_DATA:
                 lastUpdateTime = System.currentTimeMillis();
                 stat = l.getElement(4);
                 addr = l.getElement(5) + 128 * l.getElement(6);
