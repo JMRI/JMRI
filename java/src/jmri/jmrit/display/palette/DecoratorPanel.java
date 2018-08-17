@@ -4,11 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -49,29 +46,9 @@ import jmri.util.swing.JmriColorChooser;
  *
  * @author PeteCressman Copyright (C) 2009, 2015
  */
-public class DecoratorPanel extends JPanel implements ChangeListener, ItemListener {
+public class DecoratorPanel extends JPanel implements ChangeListener {
 
-    static final String[] JUSTIFICATION = {Bundle.getMessage("left"),
-        Bundle.getMessage("center"),
-        Bundle.getMessage("right")};
-
-    static final String[] STYLES = {Bundle.getMessage("Plain"),
-        Bundle.getMessage("Bold"),
-        Bundle.getMessage("Italic"),
-        Bundle.getMessage("Bold/italic")};
-
-    static final String[] FONTSIZE = {"6", "8", "10", "11", "12", "14", "16",
-        "20", "24", "28", "32", "36"};
-
-    public static final int SIZE = 1;
-    public static final int STYLE = 2;
-    public static final int JUST = 3;
-    public static final int FONT = 4;
-
-    private AJComboBox _fontBox;
-    private AJComboBox _fontSizeBox;
-    private AJComboBox _fontStyleBox;
-    private AJComboBox _fontJustBox;
+    private FontPanel _fontPanel;
 
     public static final int STRUT = 6;
 
@@ -131,28 +108,6 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         _samplePanel.setOpaque(false);
     }
 
-    static class AJComboBox extends JComboBox/*<Class<?>> - can't get this to work*/ {
-        int _which;
-
-        AJComboBox(Font[] items, int which) {
-            super(items);
-            _which = which;
-        }
-        AJComboBox(String[] items, int which) {
-            super(items);
-            _which = which;
-        }
-    }
-
-    private JPanel makeBoxPanel(String caption, JComboBox<Class<?>> box) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(new JLabel(Bundle.getMessage(caption)));
-        box.addItemListener(this);
-        panel.add(box);
-        return panel;
-    }
-
     static class AJSpinner extends JSpinner {
         int _which;
 
@@ -177,11 +132,11 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         }
     }
 
-    private JPanel makeSpinPanel(String caption, JSpinner spin) {
+    public static JPanel makeSpinPanel(String caption, JSpinner spin, ChangeListener listener) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(new JLabel(Bundle.getMessage(caption)));
-        spin.addChangeListener(this);
+        spin.addChangeListener(listener);
         panel.add(spin);
         return panel;
     }
@@ -198,7 +153,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         this.add(makeTextPanel("Text", sample, true));
         _samplePanel.add(sample);
         log.debug("DragDecoratorLabel size {} | panel size {}", sample.getPreferredSize(), _samplePanel.getPreferredSize());
-        finishInit(true, sample);
+        finishInit(true);
     }
 
     /* Called by Editor's TextAttrDialog - i.e. update a panel item from menu */
@@ -273,10 +228,18 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                         util.getFixedWidth(), util.getFixedHeight(), pos.getWidth(), pos.getHeight());
             }
         }
-        finishInit(false, pos);
+        finishInit(false);
     }
 
-    private void finishInit(boolean addBgCombo, Positionable pos) {
+    protected void fontChange() {
+        _selectedButton = FOREGROUND_BUTTON;
+        _fontButton.setSelected(true);
+        _chooser.setColor(_util.getForeground());
+        log.debug("fontChange");
+        updateSamples();
+     }
+
+    private void finishInit(boolean addBgCombo) {
         _chooser = JmriColorChooser.extendColorChooser(_chooser);
         setSuppressRecentColor(true);
         _chooser.getSelectionModel().addChangeListener(this);
@@ -292,7 +255,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         _previewPanel.setImage(_backgrounds[0]);
         _previewPanel.revalidate();        // force redraw
         // after everything created, set selections
-        setFontSelections(pos);
+        _fontPanel.setFontSelections();
         updateSamples();
     }
 
@@ -327,82 +290,30 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         _samplePanel.add(Box.createHorizontalStrut(STRUT));
     }
 
+    @SuppressWarnings("unchecked")
     private void makeFontPanels() {
-        JPanel fontPanel = new JPanel();
-
-        Font defaultFont = _util.getFont();
-        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        String fontFamilyNames[] = ge.getAvailableFontFamilyNames();
-        Font[] fonts = new Font[fontFamilyNames.length];
-        int k = 0;
-        for (String fontFamilyName : fontFamilyNames) {
-            fonts[k++] = new Font(fontFamilyName, defaultFont.getStyle(), defaultFont.getSize()) {
-                @Override
-                public String toString() {
-                    return getFamily();
-                }
-            };
-        }
-        _fontBox = new AJComboBox(fonts, FONT);
-        fontPanel.add(makeBoxPanel("EditFont", _fontBox)); // NOI18N
-
-        _fontSizeBox = new AJComboBox(FONTSIZE, SIZE);
-        fontPanel.add(makeBoxPanel("FontSize", _fontSizeBox)); // NOI18N
-
-        _fontStyleBox = new AJComboBox(STYLES, STYLE);
-        fontPanel.add(makeBoxPanel("FontStyle", _fontStyleBox)); // NOI18N
-
-        _fontJustBox = new AJComboBox(JUSTIFICATION, JUST);
-        fontPanel.add(makeBoxPanel("Justification", _fontJustBox)); // NOI18N
-        this.add(fontPanel);
+        ActionListener fontAction = ((ActionEvent event) -> {
+            fontChange(); // callback
+        });
+        _fontPanel = new FontPanel(_util, fontAction);
+        add(_fontPanel);
 
         JPanel sizePanel = new JPanel();
         SpinnerNumberModel model = new SpinnerNumberModel(_util.getBorderSize(), 0, 100, 1);
         _borderSpin = new AJSpinner(model, BORDER);
-        sizePanel.add(makeSpinPanel("borderSize", _borderSpin));
+        sizePanel.add(makeSpinPanel("borderSize", _borderSpin, this));
         model = new SpinnerNumberModel(_util.getMargin(), 0, 100, 1);
         _marginSpin = new AJSpinner(model, MARGIN);
-        sizePanel.add(makeSpinPanel("marginSize", _marginSpin));
-        model = new SpinnerNumberModel(_util.getFixedWidth(), 0, 1000, 1);
+        sizePanel.add(makeSpinPanel("marginSize", _marginSpin, this));
         if (_isPositionableLabel) {
+            model = new SpinnerNumberModel(_util.getFixedWidth(), 0, 1000, 1);
             _widthSpin = new AJSpinner(model, FWIDTH);
-            sizePanel.add(makeSpinPanel("fixedWidth", _widthSpin));
+            sizePanel.add(makeSpinPanel("fixedWidth", _widthSpin, this));
             model = new SpinnerNumberModel(_util.getFixedHeight(), 0, 1000, 1);
             _heightSpin = new AJSpinner(model, FHEIGHT);
-            sizePanel.add(makeSpinPanel("fixedHeight", _heightSpin));
+            sizePanel.add(makeSpinPanel("fixedHeight", _heightSpin, this));
         }
         this.add(sizePanel);
-    }
-    
-    private void setFontSelections(Positionable pos) {
-        _fontBox.setSelectedItem(_util.getFont());
-        int row = 4;
-        for (int i = 0; i < FONTSIZE.length; i++) {
-            if (_util.getFontSize() == Integer.parseInt(FONTSIZE[i])) {
-                row = i;
-                break;
-            }
-        }
-        _fontSizeBox.setSelectedIndex(row);
-        _fontStyleBox.setSelectedIndex(_util.getFont().getStyle());
-        switch (_util.getJustification()) {
-            case PositionablePopupUtil.LEFT:
-                row = 0;
-                break;
-            case PositionablePopupUtil.RIGHT:
-                row = 2;
-                break;
-            case PositionablePopupUtil.CENTRE:
-                row = 1;
-                break;
-            default:
-                row = 2;
-        }
-        _fontJustBox.setSelectedIndex(row);
-
-        _selectedButton = FOREGROUND_BUTTON;
-        _chooser.setColor(pos.getForeground());
-        _fontButton.setSelected(true);
     }
 
     String bundleCaption = null;
@@ -435,16 +346,16 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 }
 
                 @Override
-                public void keyTyped(KeyEvent E) {
+                public void keyTyped(KeyEvent evt) {
                 }
 
                 @Override
-                public void keyPressed(KeyEvent E) {
+                public void keyPressed(KeyEvent evt) {
                 }
 
                 @Override
-                public void keyReleased(KeyEvent E) {
-                    JTextField tmp = (JTextField) E.getSource();
+                public void keyReleased(KeyEvent evt) {
+                    JTextField tmp = (JTextField) evt.getSource();
                     sample.setText(tmp.getText());
                     updateSamples();
                 }
@@ -656,6 +567,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     break;
                 case FWIDTH:
                     _util.setFixedWidth(num);
+                    _selectedButton = BACKGROUND_BUTTON;
                     _backgroundButton.setSelected(true);
                     c = _util.getBackground();
                     if (c != null) {
@@ -664,6 +576,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     break;
                 case FHEIGHT:
                     _util.setFixedHeight(num);
+                    _selectedButton = BACKGROUND_BUTTON;
                     _backgroundButton.setSelected(true);
                     c = _util.getBackground();
                     if (c != null) {
@@ -790,76 +703,6 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             }
         }
         pos.invalidate();
-    }
-
-    @Override
-    public void itemStateChanged(ItemEvent e) {
-        AJComboBox comboBox = (AJComboBox)e.getSource();
-        switch (comboBox._which) {
-            case SIZE:
-                String size = (String) comboBox.getSelectedItem();
-                _util.setFontSize(Float.valueOf(size));
-                _selectedButton = FOREGROUND_BUTTON;
-                _chooser.setColor(_util.getForeground());
-                _fontButton.setSelected(true);
-                break;
-            case STYLE:
-                int style = 0;
-                switch (comboBox.getSelectedIndex()) {
-                    case 0:
-                        style = Font.PLAIN;
-                        break;
-                    case 1:
-                        style = Font.BOLD;
-                        break;
-                    case 2:
-                        style = Font.ITALIC;
-                        break;
-                    case 3:
-                        style = (Font.BOLD | Font.ITALIC);
-                        break;
-                    default:
-                        log.warn("Unexpected index {}  in itemStateChanged", comboBox.getSelectedIndex());
-                        break;
-                }
-                _util.setFontStyle(style);
-                _selectedButton = FOREGROUND_BUTTON;
-                _chooser.setColor(_util.getForeground());
-                _fontButton.setSelected(true);
-                break;
-            case JUST:
-                int just = 0;
-                switch (comboBox.getSelectedIndex()) {
-                    case 0:
-                        just = PositionablePopupUtil.LEFT;
-                        break;
-                    case 1:
-                        just = PositionablePopupUtil.CENTRE;
-                        break;
-                    case 2:
-                        just = PositionablePopupUtil.RIGHT;
-                        break;
-                    default:
-                        log.warn("Unexpected index {}  in itemStateChanged", comboBox.getSelectedIndex());
-                        break;
-                }
-                _util.setJustification(just);
-                _selectedButton = FOREGROUND_BUTTON;
-                _chooser.setColor(_util.getForeground());
-                _fontButton.setSelected(true);
-                break;
-            case FONT:
-                Font font = (Font) comboBox.getSelectedItem();
-                _util.setFont(font);
-                _selectedButton = FOREGROUND_BUTTON;
-                _chooser.setColor(_util.getForeground());
-                _fontButton.setSelected(true);
-                break;
-            default:
-                log.warn("Unexpected _which {}  in itemStateChanged", comboBox._which);
-                break;
-            }
-        updateSamples();
     }
     
     public void setSuppressRecentColor(boolean bool) {
