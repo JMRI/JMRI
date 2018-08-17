@@ -4,8 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.*;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Nonnull;
 import javax.swing.JButton;
@@ -870,7 +869,7 @@ public class AbstractAutomaton implements Runnable {
 
     NamedBean[] waitChangePrecheckBeans = null;
     int[] waitChangePrecheckStates = null;
-    BlockingQueue<PropertyChangeEvent> waitChangeQueue = new ArrayBlockingQueue<PropertyChangeEvent>(5);
+    BlockingQueue<PropertyChangeEvent> waitChangeQueue = new LinkedBlockingQueue<PropertyChangeEvent>();
 
     /**
      * Wait forever for one of a list of NamedBeans (sensors, signal heads
