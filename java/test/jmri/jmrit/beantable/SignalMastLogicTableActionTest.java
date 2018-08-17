@@ -38,6 +38,7 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase {
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
+        helpTarget = "package.jmri.jmrit.beantable.SignalMastLogicTable"; 
         a = new SignalMastLogicTableAction();
     }
 

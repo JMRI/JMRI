@@ -44,6 +44,7 @@ public class ReporterTableActionTest extends AbstractTableActionBase {
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
+        helpTarget = "package.jmri.jmrit.beantable.ReporterTable"; 
         a = new ReporterTableAction();
     }
 
