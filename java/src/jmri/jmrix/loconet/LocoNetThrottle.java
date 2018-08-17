@@ -881,7 +881,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 network.sendLocoNetMessage(msg);
             } else {
                 LocoNetMessage msg = new LocoNetMessage(6);
-                msg.setOpCode(0xd5);
+                msg.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
                 msg.setElement(1, ((slot.getSlot() / 128) & 0x07) | (isForward ? 0x00 : 0x08));
                 msg.setElement(2, slot.getSlot() & 0x7f);
                 msg.setElement(3, (slot.id() & 0x7f));

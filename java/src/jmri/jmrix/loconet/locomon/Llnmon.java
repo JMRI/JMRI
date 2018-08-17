@@ -655,6 +655,13 @@ public class Llnmon {
                 }
                 break;
             }
+            case LnConstants.OPC_EXP_SLOT_MOVE: 
+                result = interpretOpcExpMoveSlots(l);
+                if (result.length() > 0) {
+                    return result;
+                }
+                break;
+                
 
             /*
              * OPC_LINK_SLOTS   0xB9   ; LINK slot ARG1 to slot ARG2=
@@ -1152,15 +1159,15 @@ public class Llnmon {
                 }
                 break;
             }
-
-            case LnConstants.RE_OPC_IB2_SPECIAL: { // 0xD4
-                result = interpretIb2Special(l);
-                if (result.length() > 0) {
-                    return result;
-                }
-                break;
-
-            }//  case LnConstants.RE_OPC_IB2_SPECIAL: { //0xD4
+//          TODO: put this back for intelibox cmd station.
+//            case LnConstants.RE_OPC_IB2_SPECIAL: { // 0xD4
+//                result = interpretIb2Special(l);
+//                if (result.length() > 0) {
+//                    return result;
+//                }
+//                break;
+//
+//            }//  case LnConstants.RE_OPC_IB2_SPECIAL: { //0xD4
 
             //$FALL-THROUGH$
             default:
@@ -2946,6 +2953,37 @@ public class Llnmon {
             return Bundle.getMessage("LN_MSG_MOVE_SL_MOVE", src, dest);
         }
     }
+
+    private String interpretOpcExpMoveSlots(LocoNetMessage l) {
+            int src = ((l.getElement(1) & 0x07) * 128) + (l.getElement(2) & 0x7f );
+            int dest = ((l.getElement(3) & 0x07) * 128) + (l.getElement(4) & 0x7f );
+        
+            if ((src >= 0x79) && (src <= 0x7f)) {
+                return "";
+            }
+            if ((dest >= 0x79) && (dest <= 0x7f)) {
+                return "";
+            }
+        
+            /* check special cases */
+            if (src == 0) {
+                /* DISPATCH GET */
+        
+                return Bundle.getMessage("LN_MSG_MOVE_SL_GET_DISP");
+            } else if (src == dest) {
+                /* IN USE */
+        
+                return Bundle.getMessage("LN_MSG_MOVE_SL_NULL_MOVE", src);
+            } else if (dest == 0) {
+                /* DISPATCH PUT */
+        
+                return Bundle.getMessage("LN_MSG_MOVE_SL_DISPATCH_PUT", src);
+            } else {
+                /* general move */
+        
+                return Bundle.getMessage("LN_MSG_MOVE_SL_MOVE", src, dest);
+            }
+        }
 
     private String interpretOpcConsistFunc(LocoNetMessage l) {
         int slot = l.getElement(1);
