@@ -44,6 +44,7 @@ public class TransitTableActionTest extends AbstractTableActionBase {
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
+        helpTarget = "package.jmri.jmrit.beantable.TransitTable"; 
         a = new TransitTableAction();
     }
 
