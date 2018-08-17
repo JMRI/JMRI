@@ -57,7 +57,7 @@ public class BackgroundItemPanel extends IconItemPanel {
                 ActionListener colorAction = ((ActionEvent event) -> {
                     colorChanged(); // callback
                 });
-                new ColorDialog(_editor, _editor.getTargetPanel(), colorAction);
+                new ColorDialog(_editor, _editor.getTargetPanel(), ColorDialog.ONLY, colorAction);
             }
         });
         backgroundButton.setToolTipText(Bundle.getMessage("ToolTipEditColor"));
@@ -68,8 +68,6 @@ public class BackgroundItemPanel extends IconItemPanel {
     private void colorChanged() {
         java.awt.Color c = _editor.getTargetPanel().getBackground();
         java.awt.image.BufferedImage im = jmri.util.swing.DrawSquares.getImage(500, 400, 10, c, c);
-//        _backgrounds[0] = im;
-//        _iconPanel.setImage(im);
         _paletteFrame.updateBackground0(im);
     }
 
