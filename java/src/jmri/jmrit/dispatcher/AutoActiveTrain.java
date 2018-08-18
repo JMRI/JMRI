@@ -624,10 +624,10 @@ public class AutoActiveTrain implements ThrottleListener {
 
     protected synchronized void setupNewCurrentSignal(AllocatedSection as) {
         if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
+            removeCurrentSignal();
             SignalHead sh = _lbManager.getFacingSignalHead(_currentBlock, _nextBlock);
             if (sh != null) {
                 // we know we have a new signal, so remove old.
-                removeCurrentSignal();
                 _controllingSignal = sh;
                 _conSignalProtectedBlock = _nextBlock;
                 sh.addPropertyChangeListener(_conSignalListener = (PropertyChangeEvent e) -> {
