@@ -61,6 +61,7 @@ import org.slf4j.LoggerFactory;
  * @author Andrew Crosland (C) 2009
  * @author Kevin Dickerson (C) 2012
  * @author Steve Young (C) 2018
+ * @see CbusEventTableDataModel
  *
  * @since 2.99.2
  */
@@ -218,12 +219,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
     
     
-
-    
-    
-    
-    
-    
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss:SSS dd/MM/yy");
     
     
@@ -349,7 +344,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
 
     
-      /**
+    /**
      * Adds the column header pop listener to a JTable using XTableColumnModel
      * @param table The JTable effected.
      */

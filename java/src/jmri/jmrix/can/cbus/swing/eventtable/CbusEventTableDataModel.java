@@ -53,6 +53,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Andrew Crosland (C) 2009
  * @author Steve Young (c) 2018
+ * @see CbusEventTablePane
  * 
  */
 public class CbusEventTableDataModel extends javax.swing.table.AbstractTableModel implements CanListener {
@@ -141,9 +142,10 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     
     
     /**
-    * Returns String of column name from column int
-    * used in table header
-    */
+     * Returns String of column name from column int
+     * used in table header
+     * @param col
+     */
     @Override
     public String getColumnName(int col) { // not in any order
         switch (col) {
@@ -207,7 +209,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     
     /**
     * Returns int of startup column widths
-    *
+    * @param col
     */
     public int getPreferredWidth(int col) {
         switch (col) {
@@ -251,13 +253,16 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     
     
     /**
-    * Returns int of column width.
-    * Just used for printing.
-    * but also needed for buttons
-    * in a test, there is 86 chars on a line
-    * -1 is invalid
-    * 0 is final column extend to end
-    */
+     * Returns int of column width.
+     * <p>
+     * Just used for printing.
+     * but also needed for buttons
+     * in a test, there is 86 chars on a line
+     * -1 is invalid
+     * 0 is final column extend to end
+     * </p>
+     * @param col
+     */
     public int getColumnWidth(int col) {
         switch (col) {
             case EVENTID_COLUMN:
@@ -346,6 +351,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     
     /**
     * Boolean return to edit table cell or not
+    * @return boolean
     */
     @Override
     public boolean isCellEditable(int row, int col) {
@@ -373,6 +379,8 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
 
      /**
      * Return table values
+     * @param row
+     * @param col
      */
     @Override
     public Object getValueAt(int row, int col) {
@@ -434,6 +442,9 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     /**
      * Capture new comments or node names.
      * Button events
+     * @param value
+     * @param row
+     * @param col
      */
     @Override
     public void setValueAt(Object value, int row, int col) {
@@ -510,7 +521,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     /**
      * send events
      * @param row
-     * @param OfforOn 1 is on, 0 is off, 2 is either
+     * @param OfforOn 1 is on, 0 is off, 2 is either for request update
      * @since 4.13.3
      */
     public void sendEventFromRow(int row, int OfforOn){
@@ -564,11 +575,11 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     
     
     /**
-    * Delete Button Clicked
-    * See whether to display confirm popup
-    * @see removeRow
-    * @param row
-    */
+     * Delete Button Clicked
+     * See whether to display confirm popup
+     * @see removeRow
+     * @param row
+     */
     public void ButtonDeleteClicked(int row) {
         // log.debug("297 DELETE BUTTON CLICKED row {} confirm delete {} ", row, SessionConfirmDeleteRow);
         if (SessionConfirmDeleteRow) {
@@ -599,7 +610,11 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         }
     }
     
-    
+    /**
+     * Remove Row from table
+     * @see ButtonDeleteClicked
+     * @param row
+     */    
    public void removeRow(int row) { // would be better off with events all in 1 array!!
         // log.warn("322 delete row {} with max rows rowcount as {} ", row, _rowCount);
         int imaxrows = _rowCount;
@@ -630,7 +645,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
      * <p>
      * This is optional, in that other table formats can use this table model.
      * But we put it here to help keep it consistent.
-     *
+     * </p>
      */
     public void configureTable(JTable eventTable) {
         // allow reordering of the columns
@@ -649,14 +664,15 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
 
     /**
      * Report whether table has changed.
-     *
+     * @return boolean
      */
     public boolean isTableDirty() {
         return(_saved == false);
     }
 
     /**
-     * Capture node and event, check isevent and send to parse from message.
+     * Capture node and event, check if isevent and send to parse from message.
+     * @param m canmessage
      */
     @Override
     public void message(CanMessage m) {
@@ -675,6 +691,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
 
     /**
      * Capture node and event, check isevent and send to parse from reply.
+     * @param m canmessage
      */
     @Override
     public void reply(CanReply m) {
@@ -693,6 +710,12 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     /**
      * If new event add to table, else update table.
      * takes canid, node, event, onoroff
+     * @since 4.13.3
+     * @param canid
+     * @param node
+     * @param event
+     * @param eventOnOrOff
+     * @param isShort
      */
     public synchronized void parseMessage( int canid, int node, int event, int eventOnOrOff, boolean isShort) {
         // log.debug("304 parseMessage  ");
@@ -728,7 +751,12 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     
     
     /**
-     * Do Node + Event check, returns -1 if not on table, otherwise the row id
+     * Do Node, Event + CANID check, returns -1 if not on table, otherwise the row id
+     * @since 4.13.3
+     * @param event int
+     * @param node int
+     * @param canid int
+     * @return int of row, otherwise -1
      */
     public synchronized int seeIfEventOnTable( int event, int node, int canid) {
         for (int i = 0; i < getRowCount(); i++) {
@@ -750,6 +778,9 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     
     /**
      * Updates the table if event already on table
+     * @param existingRow
+     * @param eventOnOrOff
+     * @since 4.13.3
      */    
     public synchronized void updateEventfromNetwork( int existingRow, int eventOnOrOff ) {
         // log.debug(" 393 updating row {} with status {} ", existingRow, eventOnOrOff);        
@@ -1027,6 +1058,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
      * Printed with headings and vertical lines between each column. Data is
      * word wrapped within a column. Can handle data as strings, integers,
      * comboboxes or booleans
+     * </p>
      */
     public void printTable(HardcopyWriter w) {
         // [AC] variable column sizes
@@ -1202,9 +1234,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             }
         }
     }
-
-
-    
 
     private final static Logger log = LoggerFactory.getLogger(CbusEventTableDataModel.class);
 }
