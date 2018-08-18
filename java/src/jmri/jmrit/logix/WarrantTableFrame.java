@@ -442,7 +442,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
                 comboBox.insertItemAt((String)value, 0);
                 comboBox.setSelectedIndex(0);
                 if (log.isDebugEnabled()) {
-                    TableModel m = table.getModel();
                     WarrantTableModel model = (WarrantTableModel)table.getModel();
                     Warrant warrant = model.getWarrantAt(row);
                     log.debug("getTableCellEditorComponent warrant= {}, selection= {}", 

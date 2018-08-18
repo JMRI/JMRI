@@ -105,11 +105,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
                 };
             }
         };
-
-        
-        
-        
-        
         
 //      eventTable.setAutoCreateRowSorter(false);
         eventScroll = new JScrollPane(eventTable);
@@ -125,14 +120,8 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         // general GUI config
         //setTitle("CBUS Event table"); // TODO I18N
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        
-       
         
         /*
-        
-        
-        
         JPanel paneTopAcross = new JPanel();
         paneTopAcross.setLayout(new BoxLayout(paneTopAcross, BoxLayout.Y_AXIS));
 
@@ -150,20 +139,10 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         
         */
         
-        
-        
-        
         // add file menu items
         // install items in GUI
         JPanel pane1 = new JPanel();
         pane1.setLayout(new FlowLayout());
-
-        
-        
-        
-        
-        
-        
         
         add(pane1);
         add(eventScroll);
@@ -173,14 +152,10 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         //pack();
     }
 
-    
-    
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane";
     }
-    
-    
 
     @Override
     public List<JMenu> getMenus() {
@@ -254,16 +229,11 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         return menuList;
     }
 
-
-    static private CbusEventTablePane self = null;
-
-    
     public void update() {
         eventModel.fireTableDataChanged();
         // TODO disable menuItem if table was saved and has not changed since
         // replacing menuItem by a new getMenus(). Note saveItem.setEnabled(eventModel.isTableDirty());
     }
-
 
     private boolean mShown = false;
 
@@ -288,20 +258,15 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
     @Override
     public void dispose() {
-        
-        
+       
         String className = this.getClass().getSimpleName();
         log.debug("dispose called {} ",className);
-        
         
         eventModel.dispose();
         eventModel = null;
         eventTable = null;
         eventScroll = null;
-        super.dispose();
-        
-        
-        
+        super.dispose();       
     }
 
     /**
