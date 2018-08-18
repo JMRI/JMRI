@@ -123,13 +123,13 @@ public class NceConnectionStatus implements NceListener {
         }
 
         if (epromState == CHECK_OK) {
-            ConnectionStatus.instance().setConnectionState(tc.getPortName(), ConnectionStatus.CONNECTION_UP);
+            ConnectionStatus.instance().setConnectionState(tc.getUserName(), tc.getPortName(), ConnectionStatus.CONNECTION_UP);
             epromState = NORMAL_STATE;
             return null;
         }
 
         if (epromState != INIT_STATE) {
-            ConnectionStatus.instance().setConnectionState(tc.getPortName(), ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(tc.getUserName(), tc.getPortName(), ConnectionStatus.CONNECTION_DOWN);
         }
 
         // no response from command station?
@@ -181,7 +181,7 @@ public class NceConnectionStatus implements NceListener {
                         + " contact NCE if you want to use MONITORING feedback ", "Warning",
                         JOptionPane.INFORMATION_MESSAGE);
             }
-            ConnectionStatus.instance().setConnectionState(tc.getPortName(), ConnectionStatus.CONNECTION_UP);
+            ConnectionStatus.instance().setConnectionState(tc.getUserName(), tc.getPortName(), ConnectionStatus.CONNECTION_UP);
             epromState = NORMAL_STATE;
             return null;
         }
