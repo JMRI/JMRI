@@ -1250,7 +1250,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             if (!testNode.isOutputCard(outCardNum)) {
              statusText1.setText(Bundle.getMessage("DiagnosticError6"));
              return;                          
-            };
+            }
             begOutByte = (testNode.getOutputCardIndex(outCardNum)) * portsPerCard;
         }
         else
