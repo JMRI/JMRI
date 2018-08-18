@@ -876,6 +876,14 @@ public class Llnmon {
                 }
                 break;
             }
+            
+            case LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR: {
+                result = interpretPocExpLocoSpdDirFunction(l);
+                if (result.length() > 0) {
+                    return result;
+                }
+                break;
+            }
 
             /*
              * OPC_PANEL_QUERY 0xDF messages used by throttles to discover
@@ -3049,6 +3057,84 @@ public class Llnmon {
 
     }
 
+    private String interpretPocExpLocoSpdDirFunction(LocoNetMessage l) {
+        int slot = ((l.getElement(1) & 0x07) * 128) + (l.getElement(2) & 0x7f);
+        if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK) == 0) {
+            // speed and direction
+            int spd = l.getElement(4);
+            String direction = Bundle.getMessage((l.getElement(1) & 0b00001000) != 0
+                    ? "LN_MSG_DIRECTION_REV" : "LN_MSG_DIRECTION_FWD");
+            String throttleID = Integer.toHexString(l.getElement(3));
+            return Bundle.getMessage("LN_MSG_OPC_EXP_SPEED_DIRECTION", slot, spd, direction, throttleID);
+        }
+        // Build a string for the functions on off
+        String[] fn = new String[8];
+        for (int bitIndex = 0; bitIndex < 8; bitIndex++) {
+            fn[bitIndex] = (l.getElement(4) >> (7 - bitIndex) & 1) == 1 ? Bundle.getMessage("LN_MSG_FUNC_ON")
+                    : Bundle.getMessage("LN_MSG_FUNC_OFF");
+        }
+        if ((l.getElement(1) &
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F0F6_MASK) {
+            return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F0_F6", slot, fn[3], fn[7], fn[6], fn[5], fn[4], fn[2],
+                    fn[1]);
+        } else if ((l.getElement(1) &
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F7F13_MASK) {
+            return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F7_F13", slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
+                    fn[1]);
+        } else if ((l.getElement(1) &
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F14F20_MASK) {
+            return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F14_20",slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
+                    fn[1]);
+        } else if ((l.getElement(1) &
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF_MASK) {
+            return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F21_F28",slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
+                    fn[1], Bundle.getMessage("LN_MSG_FUNC_OFF"));
+        } else if ((l.getElement(1) &
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON_MASK) {
+            return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F21_F28", slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
+                    fn[1], Bundle.getMessage("LN_MSG_FUNC_ON"));
+        }
+        /*           // function grp 1
+                s[0] = (((dirf & LnConstants.DIRF_F0) == LnConstants.DIRF_F0)
+                        ? Bundle.getMessage("LN_MSG_FUNC_ON")
+                        : Bundle.getMessage("LN_MSG_FUNC_OFF"));
+
+                dirf = dirf & 0b11100000;
+                dirf = dirf | (l.getElement(4) & 0b00011111);
+                snd = snd & 0b11111100;
+                snd = snd | ((l.getElement(4) & 0b01100000) >> 5);
+            } else if ((l.getElement(1) & 0b11111000) == 0b00011000) {
+                // function grp 2
+                snd = snd & 0b11110011;
+                snd = snd | ((l.getElement(4) & 0b00000011) << 2);
+                localF9 = ((l.getElement(4) & 0b00000100) != 0);
+                localF10 = ((l.getElement(4) & 0b00001000) != 0);
+                localF11 = ((l.getElement(4) & 0b00010000) != 0);
+                localF12 = ((l.getElement(4) & 0b00100000) != 0);
+                localF13 = ((l.getElement(4) & 0b01000000) != 0);
+            } else if ((l.getElement(1) & 0b11111000) == 0b00100000) {
+                localF14 = ((l.getElement(4) & 0b00000001) != 0);
+                localF15 = ((l.getElement(4) & 0b00000010) != 0);
+                localF16 = ((l.getElement(4) & 0b00000100) != 0);
+                localF17 = ((l.getElement(4) & 0b00001000) != 0);
+                localF18 = ((l.getElement(4) & 0b00010000) != 0);
+                localF19 = ((l.getElement(4) & 0b00100000) != 0);
+                localF20 = ((l.getElement(4) & 0b01000000) != 0);
+            } else if ((l.getElement(1) & 0b11111000) == 0b00101000 || (l.getElement(1) & 0b11111000) == 0b00110000) {
+                localF21 = ((l.getElement(4) & 0b00000001) != 0);
+                localF22 = ((l.getElement(4) & 0b00000010) != 0);
+                localF23 = ((l.getElement(4) & 0b00000100) != 0);
+                localF24 = ((l.getElement(4) & 0b00001000) != 0);
+                localF25 = ((l.getElement(4) & 0b00010000) != 0);
+                localF26 = ((l.getElement(4) & 0b00100000) != 0);
+                localF27 = ((l.getElement(4) & 0b01000000) != 0);
+                localF28 = ((l.getElement(1) & 0b00010000) != 0);
+            }
+            notifySlotListeners();
+            break;
+*/        
+        return "";
+    }
     private String interpretOpcPanelQuery(LocoNetMessage l) {
         switch (l.getElement(1)) {
             case 0x00: {

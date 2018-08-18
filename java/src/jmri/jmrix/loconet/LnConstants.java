@@ -372,10 +372,12 @@ public final class LnConstants {
     public final static int OPC_MASK = 0x7f;  /* mask for acknowledge opcodes */
 
     /* Expanded slot codes */
-    public final static int OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR = 0xd5;
     public final static int OPC_EXP_SLOT_MOVE = 0xd4;
     public final static int OPC_EXP_RD_SL_DATA = 0xe6;
     public final static int OPC_EXP_WR_SL_DATA = 0xee;
+    public final static int OPC_EXP_SEND_SUB_CODE_MASK = 0b11111000;
+    public final static int OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR = 0xd5;
+    public final static int OPC_EXP_SEND_SPEED_AND_DIR_MASK = 0b00010000;
     public final static int OPC_EXP_SEND_FUNCTION_GROUP_F0F6_MASK = 0b00010000;
     public final static int OPC_EXP_SEND_FUNCTION_GROUP_F7F13_MASK = 0b00011000;
     public final static int OPC_EXP_SEND_FUNCTION_GROUP_F14F20_MASK = 0b00100000;
