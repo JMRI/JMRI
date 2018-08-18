@@ -313,7 +313,7 @@ public class JUnitUtil {
 
     public static void resetTurnoutOperationManager() {
         InstanceManager.reset(TurnoutOperationManager.class);
-        TurnoutOperationManager.getDefault();
+        InstanceManager.getDefault(TurnoutOperationManager.class); // force creation
     }
 
     public static void initConfigureManager() {

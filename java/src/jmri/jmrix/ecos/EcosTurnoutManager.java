@@ -15,8 +15,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import jmri.ConfigureManager;
-import jmri.Turnout;
+
+import jmri.*;
 import jmri.jmrix.ecos.utilities.GetEcosObjectNumber;
 import jmri.jmrix.ecos.utilities.RemoveObjectFromEcos;
 import org.slf4j.Logger;
@@ -196,12 +196,12 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                         //Extract symbol number and set on turnout.
                         int symbol = GetEcosObjectNumber.getEcosObjectNumber(msgContents[0], "[", "]");
                         et.setExtended(symbol);
-                        et.setTurnoutOperation(jmri.TurnoutOperationManager.getInstance().getOperation("NoFeedback"));
+                        et.setTurnoutOperation(jmri.InstanceManager.getDefault(TurnoutOperationManager.class).getOperation("NoFeedback"));
                         if ((symbol == 2) || (symbol == 4)) {
 
                             EcosTurnout etx = (EcosTurnout) provideTurnout(et.getSlaveAddress());
                             etx.setExtended(symbol);
-                            etx.setTurnoutOperation(jmri.TurnoutOperationManager.getInstance().getOperation("NoFeedback"));
+                            etx.setTurnoutOperation(jmri.InstanceManager.getDefault(TurnoutOperationManager.class).getOperation("NoFeedback"));
                             switch (symbol) {
                                 case 2:
                                     et.setComment("Three Way Point with " + et.getSlaveAddress());

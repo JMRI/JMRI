@@ -51,10 +51,6 @@ import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-
-
-
 /**
  * Frame providing a Cbus event table. Menu code copied from BeanTableFrame.
  *
@@ -71,10 +67,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     JTable eventTable;
     JScrollPane eventScroll;
 
-    
-    
-    
-
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
@@ -86,7 +78,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     public CbusEventTablePane() {
         super();
     }
-
 
     public void init() {
 
@@ -114,7 +105,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
         };
 
-                // Use XTableColumnModel so we can control which columns are visible
+        // Use XTableColumnModel so we can control which columns are visible
         XTableColumnModel tcm = new XTableColumnModel();
         eventTable.setColumnModel(tcm);
         
@@ -122,7 +113,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         
         
         eventScroll = new JScrollPane(eventTable);
-        
         
         eventTable.createDefaultColumnsFromModel();
         
@@ -159,8 +149,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
                 }
             }
         });
- 
-        
         
         // configure items for GUI
         eventModel.configureTable(eventTable);
@@ -175,17 +163,11 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         
         addMouseListenerToHeader(eventTable);
         
-        
-        
         // this.setTitle(Bundle.getMessage("MenuItemEventTable")); // TODO I18N
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        
         
         /* TODO _ Add top menu bar
-        
-        
-        
+
         JPanel paneTopAcross = new JPanel();
         paneTopAcross.setLayout(new BoxLayout(paneTopAcross, BoxLayout.Y_AXIS));
 
@@ -203,12 +185,10 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         
         */
         
-        
         // add file menu items
         // install items in GUI
         JPanel pane1 = new JPanel();
         pane1.setLayout(new FlowLayout());
-
         add(pane1);
         add(eventScroll);
 
@@ -217,18 +197,12 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         //pack();
     }
 
-    
-    
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss:SSS dd/MM/yy");
-    
-    
     
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane";
     }
-    
-    
 
     @Override
     public List<JMenu> getMenus() {
@@ -302,7 +276,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         return menuList;
     }
 
-
     /**
      * {@inheritDoc}
      */
@@ -311,9 +284,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         return Bundle.getMessage("EventTableTitle");
     }
     
-    
-    
-
     /*
      * Mouse popup stuff
      */
@@ -338,11 +308,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         }
         popupMenu.show(e.getComponent(), e.getX(), e.getY());
     }
-
-
-
-
-
     
     /**
      * Adds the column header pop listener to a JTable using XTableColumnModel
@@ -418,15 +383,11 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         }
     }
     
-    
-    
-    
     public void update() {
         eventModel.fireTableDataChanged();
         // TODO disable menuItem if table was saved and has not changed since
         // replacing menuItem by a new getMenus(). Note saveItem.setEnabled(eventModel.isTableDirty());
     }
-
 
     private boolean mShown = false;
 
@@ -451,7 +412,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
     @Override
     public void dispose() {
-        
         String className = this.getClass().getSimpleName();
         log.debug("dispose called {} ",className);
         
@@ -460,7 +420,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         eventTable = null;
         eventScroll = null;
         super.dispose();
-        
     }
 
     /**
