@@ -143,6 +143,9 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         eventTable.getColumnModel().getColumn(eventModel.TOGGLE_BUTTON_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
         eventTable.getColumnModel().getColumn(eventModel.TOGGLE_BUTTON_COLUMN).setCellRenderer(new ButtonRenderer());    
 
+        eventTable.getColumnModel().getColumn(eventModel.STATUS_REQUEST_BUTTON_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
+        eventTable.getColumnModel().getColumn(eventModel.STATUS_REQUEST_BUTTON_COLUMN).setCellRenderer(new ButtonRenderer());    
+        
         
         // format the last updated date time
         eventTable.getColumnModel().getColumn(eventModel.LATEST_TIMESTAMP_COLUMN).setCellRenderer(new DefaultTableCellRenderer() {
@@ -167,6 +170,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         tcm.setColumnVisible(tcm.getColumnByModelIndex(eventModel.DELETE_BUTTON_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(eventModel.ON_BUTTON_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(eventModel.OFF_BUTTON_COLUMN), false);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(eventModel.STATUS_REQUEST_BUTTON_COLUMN), false);
         
         addMouseListenerToHeader(eventTable);
         

@@ -87,22 +87,23 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     static public final int TYPE_COLUMN = 4; 
     static public final int ON_BUTTON_COLUMN = 5; 
     static public final int OFF_BUTTON_COLUMN = 6; 
-    static public final int TOGGLE_BUTTON_COLUMN = 7;     
-    static public final int LATEST_TIMESTAMP_COLUMN = 8;
-    static public final int NAME_COLUMN = 9; 
-    static public final int COMMENT_COLUMN = 10;
-    static public final int SESSION_TOTAL_COLUMN = 11;
-    static public final int SESSION_ON_COLUMN = 12;
-    static public final int SESSION_OFF_COLUMN = 13;
-    static public final int DELETE_BUTTON_COLUMN = 14;
+    static public final int TOGGLE_BUTTON_COLUMN = 7;
+    static public final int STATUS_REQUEST_BUTTON_COLUMN = 8;
+    static public final int LATEST_TIMESTAMP_COLUMN = 9;
+    static public final int NAME_COLUMN = 10; 
+    static public final int COMMENT_COLUMN = 11;
+    static public final int SESSION_TOTAL_COLUMN = 12;
+    static public final int SESSION_ON_COLUMN = 13;
+    static public final int SESSION_OFF_COLUMN = 14;
+    static public final int DELETE_BUTTON_COLUMN = 15;
 
-    static public final int MAX_COLUMN = 15;
+    static public final int MAX_COLUMN = 16;
     
     
     // order + which columns to use when saving
-    protected int[] Savecolumns = {0,1,2,3,4,8,9,10}; // will need to change CVS file order if changed
+    protected int[] Savecolumns = {0,1,2,3,4,9,10,11}; // will need to change CVS file order if changed
     
-    protected int[] WhichPrintColumns = {2,3,1,9,10}; // no changes needed to other files if changed
+    protected int[] WhichPrintColumns = {2,3,1,10,11}; // no changes needed to other files if changed
     
     
     // todo array list order of columns to print
@@ -168,6 +169,8 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 return Bundle.getMessage("CbusSendOff");
             case TOGGLE_BUTTON_COLUMN:
                 return Bundle.getMessage("ColumnToggle"); 
+            case STATUS_REQUEST_BUTTON_COLUMN:
+                return Bundle.getMessage("ColumnStatusRequest"); 
             case SESSION_ON_COLUMN:
                 return Bundle.getMessage("ColumnOnSession"); 
             case SESSION_OFF_COLUMN:
@@ -191,6 +194,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         Bundle.getMessage("SendOntip"),
         Bundle.getMessage("SendOfftip"),
         Bundle.getMessage("SendToggleTip"),
+        Bundle.getMessage("ColumnRequestStatusTip"),
         Bundle.getMessage("ColumnLastHeard"),
         Bundle.getMessage("NameColTip"),
         Bundle.getMessage("CommentColTip"),
@@ -228,7 +232,9 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             case OFF_BUTTON_COLUMN:
                 return new JTextField(8).getPreferredSize().width;                
             case TOGGLE_BUTTON_COLUMN:
-                return new JTextField(8).getPreferredSize().width;  
+                return new JTextField(8).getPreferredSize().width; 
+            case STATUS_REQUEST_BUTTON_COLUMN:
+                return new JTextField(8).getPreferredSize().width;
             case SESSION_ON_COLUMN:
                 return new JTextField(7).getPreferredSize().width;  
             case SESSION_OFF_COLUMN:
@@ -276,6 +282,8 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 return 4;
             case TOGGLE_BUTTON_COLUMN:
                 return 4;
+            case STATUS_REQUEST_BUTTON_COLUMN:
+                return 4;
             case SESSION_ON_COLUMN:
                 return 4;
             case SESSION_OFF_COLUMN:
@@ -315,6 +323,8 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 return JButton.class;
             case OFF_BUTTON_COLUMN:
                 return JButton.class;
+            case STATUS_REQUEST_BUTTON_COLUMN:
+                return JButton.class;
             case TOGGLE_BUTTON_COLUMN:
                 return JButton.class;
             case SESSION_ON_COLUMN:
@@ -325,7 +335,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 return Integer.class;
             case LATEST_TIMESTAMP_COLUMN:
                 return Date.class;
-                
             default:
                 return null;
         }
@@ -352,6 +361,8 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             case OFF_BUTTON_COLUMN:
                 return true;
             case TOGGLE_BUTTON_COLUMN:
+                return true;
+            case STATUS_REQUEST_BUTTON_COLUMN:
                 return true;
             default:
                 return false;
@@ -398,6 +409,8 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 } else if (_type[row]==0) {
                     return Bundle.getMessage("CbusSendOff");
                 } 
+            case STATUS_REQUEST_BUTTON_COLUMN:
+                return("Get Status");
             case COMMENT_COLUMN:
                 return _comment[row];
             case DELETE_BUTTON_COLUMN:
@@ -471,6 +484,9 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 sendEventFromRow(row,0);
             }
         }
+        else if (col == STATUS_REQUEST_BUTTON_COLUMN) {
+            sendEventFromRow(row,2);
+        }
         else if (col == SESSION_ON_COLUMN) {
             _sessionon[row] = _sessionon[row] + 1;
             Runnable r = new Notify(row, this); 
@@ -493,7 +509,8 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     
     /**
      * send events
-     * OfforOn 1 is on, 0 is off
+     * @param int row
+     * @param int OfforOn 1 is on, 0 is off, 2 is either
      */
     public void sendEventFromRow(int row, int OfforOn){
         // log.debug( "313 send from row {} ", row);
@@ -516,12 +533,20 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             } else {
                 m.setElement(0, CbusConstants.CBUS_ASON);
             }
-        } else {
+        } else if (OfforOn==0) {
             if (nn > 0) {
                 m.setElement(0, CbusConstants.CBUS_ACOF);
             } else {
                 m.setElement(0, CbusConstants.CBUS_ASOF);
             }
+        } else if (OfforOn==2) {
+            if (nn > 0) {
+                m.setElement(0, CbusConstants.CBUS_AREQ);
+            } else {
+                m.setElement(0, CbusConstants.CBUS_ASRQ);
+            }
+            // set listener to display response or not from response request
+            // 10 seconds ?
         }
     
         m.setElement(1, nn >> 8);
