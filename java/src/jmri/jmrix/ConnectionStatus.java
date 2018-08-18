@@ -103,13 +103,13 @@ public class ConnectionStatus {
             for (ConnectionKey c : portStatus.keySet()) {
                 if (c.getPortName() == null ? portName == null : c.getPortName().equals(portName)) {
                     // if we find a match, return it.
-                    return getConnectionState(c.getSystemName(), c.getPortName());
+                    return portStatus.get(c);
                 }
             }
         }
-        // and if we still don't find a match, go ahead and try with null as
-        // the system name.
-        return getConnectionState(null, portName);
+        // If we still don't find a match, then we don't know the status
+        log.warn("Didn't find system status for port {}", portName);
+        return CONNECTION_UNKNOWN;
     }
 
     /**
@@ -120,21 +120,16 @@ public class ConnectionStatus {
      * @return the status
      */
     public synchronized String getSystemState(@Nonnull String systemName) {
-        ConnectionKey newKey = new ConnectionKey(systemName, null);
-        if (portStatus.containsKey(newKey)) {
-            return getConnectionState(systemName, null);
-        } else {
-            // we have to see if there is a key that has systemName as the port value.
-            for (ConnectionKey c : portStatus.keySet()) {
-                if (c.getSystemName() == null ? systemName == null : c.getSystemName().equals(systemName)) {
-                    // if we find a match, return it.
-                    return getConnectionState(c.getSystemName(), c.getPortName());
-                }
+        // we have to see if there is a key that has systemName as the port value.
+        for (ConnectionKey c : portStatus.keySet()) {
+            if (c.getSystemName() == null ? systemName == null : c.getSystemName().equals(systemName)) {
+                // if we find a match, return it.
+                return portStatus.get(c);
             }
         }
-        // and if we still don't find a match, go ahead and try with null as
-        // the port name.
-        return getConnectionState(systemName, null);
+        // If we still don't find a match, then we don't know the status
+        log.warn("Didn't find system status for system {}", systemName);
+        return CONNECTION_UNKNOWN;
     }
 
     /**
