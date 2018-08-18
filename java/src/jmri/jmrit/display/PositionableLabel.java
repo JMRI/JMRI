@@ -1027,10 +1027,7 @@ public class PositionableLabel extends JLabel implements Positionable {
                 g2d.drawRect(0, 0, width, height);
             }
         }
-        if (false) {    //TODO: dead-strip this; the string is now drawn in paintComponent
-            g2d.setColor(getForeground());
-            g2d.drawString(text, hOffset, vOffset);
-        }
+
         NamedIcon icon = new NamedIcon(bufIm);
         g2d.dispose();
         return icon;
