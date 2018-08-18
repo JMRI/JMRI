@@ -181,24 +181,20 @@ public class ConnectionStatus {
      *
      * @param systemName human-readable name for system like "LocoNet 2"
      *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
-     * @return true if port connection is operational or unknown, false if not
+     * @return true if port connection is operational or unknown, false if not. This includes
+     *                      returning true if the connection is not recognized.
      */
     public synchronized boolean isSystemOk(@Nonnull String systemName) {
-        ConnectionKey newKey = new ConnectionKey(systemName, null);
-        if (portStatus.containsKey(newKey)) {
-            return isConnectionOk(systemName, null);
-        } else {
-            // we have to see if there is a key that has systemName as the port value.
-            for (ConnectionKey c : portStatus.keySet()) {
-                if (c.getSystemName() == null ? systemName == null : c.getSystemName().equals(systemName)) {
-                    // if we find a match, return it.
-                    return isConnectionOk(c.getSystemName(), c.getPortName());
-                }
+        // we have to see if there is a key that has systemName as the port value.
+        for (ConnectionKey c : portStatus.keySet()) {
+            if (c.getSystemName() == null ? systemName == null : c.getSystemName().equals(systemName)) {
+                // if we find a match, return it.
+                return !portStatus.get(c).equals(CONNECTION_DOWN);
             }
         }
-        // and if we still don't find a match, go ahead and try with null as
-        // the port name.
-        return isConnectionOk(systemName, null);
+        // and if we still don't find a match, go ahead and reply true
+        // as we consider the state unknown.
+        return true;
     }
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
