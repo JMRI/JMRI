@@ -509,8 +509,9 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     
     /**
      * send events
-     * @param int row
-     * @param int OfforOn 1 is on, 0 is off, 2 is either
+     * @param row
+     * @param OfforOn 1 is on, 0 is off, 2 is either
+     * @since 4.13.3
      */
     public void sendEventFromRow(int row, int OfforOn){
         // log.debug( "313 send from row {} ", row);
@@ -565,8 +566,8 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     /**
     * Delete Button Clicked
     * See whether to display confirm popup
-    * delete row
-    *
+    * @see removeRow
+    * @param row
     */
     public void ButtonDeleteClicked(int row) {
         // log.debug("297 DELETE BUTTON CLICKED row {} confirm delete {} ", row, SessionConfirmDeleteRow);
