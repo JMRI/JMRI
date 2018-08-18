@@ -264,8 +264,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         // We will just check the normal loco slots 1 to numSlots exclude systemslots
         for (int i = 1; i < numSlots; i++) {
-            if ( ( i > 0 && i < 121) || ( i > 128 )) {
-            slot = _slots[i];
+          slot = _slots[i];
+          if (!slot.isSystemSlot()) {
             if ((slot.slotStatus() == LnConstants.LOCO_IN_USE)
                     && (slot.getLastUpdateTime() <= staleTimeout)) {
                 sendReadSlot(i);

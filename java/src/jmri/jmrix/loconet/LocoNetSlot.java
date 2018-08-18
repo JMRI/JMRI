@@ -38,7 +38,13 @@ public class LocoNetSlot {
         return slot;
     }  // cannot modify the slot number once created
 
-
+    /**
+     * Is this slot a systems slot
+     */
+     public boolean isSystemSlot() {
+         return systemSlot;
+     }
+     
     /** Get decoder mode.
      * Possible values are  
      * {@link LnConstants#DEC_MODE_128A},
@@ -233,10 +239,30 @@ public class LocoNetSlot {
     // create a specific slot
     public LocoNetSlot(int slotNum) {
         slot = slotNum;
+        if ((slot == 0) || (slot > 120 && slot < 128) 
+                || (slot > 247 && slot < 257)
+                || (slot > 375 && slot < 385)) {
+            systemSlot = true;
+        } else {
+            systemSlot = false;
+        }
     }
 
+    /**
+     * This is used only in the tests (43 times) and once in UhlenBrockSlot and therefore is not 
+     * converted for long slots.
+     * @param l LocoNetMessage
+     * @throws LocoNetException
+     */
     public LocoNetSlot(LocoNetMessage l) throws LocoNetException {
         slot = l.getElement(2);
+        if ((slot == 0) || (slot > 120 && slot < 128) 
+                || (slot > 247 && slot < 257)
+                || (slot > 375 && slot < 385)) {
+            systemSlot = true;
+        } else {
+            systemSlot = false;
+        }
         setSlot(l);
     }
 
@@ -679,6 +705,7 @@ public class LocoNetSlot {
 
     // data values to echo slot contents
     final private int slot;   // <SLOT#> is the number of the slot that was read.
+    final private boolean systemSlot;
     private int stat; // <STAT> is the status of the slot
     private int addr; // full address of the loco, made from
     //    <ADDR> is the low 7 (0-6) bits of the Loco address
