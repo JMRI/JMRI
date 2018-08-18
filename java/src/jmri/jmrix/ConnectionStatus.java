@@ -68,20 +68,6 @@ public class ConnectionStatus {
     /**
      * Set the connection state of a communication port.
      *
-     * @param portName communication port name
-     * @param state    port state
-     * @deprecated since 4.7.1 use
-     * {@link #setConnectionState(java.lang.String, java.lang.String, java.lang.String)}
-     * instead.
-     */
-    @Deprecated
-    public synchronized void setConnectionState(@Nonnull String portName, @Nonnull String state) {
-        setConnectionState(null, portName, state);
-    }
-
-    /**
-     * Set the connection state of a communication port.
-     *
      * @param systemName human-readable name for system like "LocoNet 2"
      *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
      * @param portName   the port name

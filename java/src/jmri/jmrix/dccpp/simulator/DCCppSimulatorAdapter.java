@@ -143,7 +143,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     public DataInputStream getInputStream() {
         if (pin == null) {
             log.error("getInputStream called before load(), stream not available");
-            ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
         }
         return pin;
     }
@@ -155,7 +155,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     public DataOutputStream getOutputStream() {
         if (pout == null) {
             log.error("getOutputStream called before load(), stream not available");
-            ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
         }
         return pout;
     }
@@ -198,7 +198,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
         rgen = new Random();
 
-        ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_UP);
+        ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(), ConnectionStatus.CONNECTION_UP);
         for (;;) {
             DCCppMessage m = readMessage();
             if (log.isDebugEnabled()) {
@@ -229,7 +229,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             msg = loadChars();
         } catch (java.io.IOException e) {
             // should do something meaningful here.
-            ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
 
         }
         setOutputBufferEmpty(true);
@@ -527,7 +527,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             }
             outpipe.writeByte((byte) '>');
         } catch (java.io.IOException ex) {
-            ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
         }
     }
 
