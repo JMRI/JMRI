@@ -39,7 +39,7 @@
       long term problems, so we're getting people to migrate their 
       configurations and panel files to the proper format.
       
-      <h2 id="if" name="if">Does this affect me?</h2>
+      <h2 id="if">Does this affect me?</h2>
       You can check if this is an issue for your setup any of a couple ways:
       <ul>
       <li>Open the Preferences, and look at each of the "Connection" panes.  If the connection prefix 
@@ -53,11 +53,11 @@
             If it's there, you should do this migration.
       </ul>
       
-      <h2 id="do" name="do">How to fix the issue</h2>
+      <h2 id="do">How to fix the issue</h2>
       
       To fix this issue, you update your configuration and panel files to
       use new prefixes.
-      <p>
+
       <ul>
       <li>First, you should be using JMRI 4.12 or later. If you're using an earlier
             version, please update to at least JMRI 4.12 and fix any problems.
