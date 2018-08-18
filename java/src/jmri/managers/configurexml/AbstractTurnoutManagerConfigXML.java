@@ -46,7 +46,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
         TurnoutManager tm = (TurnoutManager) o;
         if (tm != null) {
             TurnoutOperationManagerXml tomx = new TurnoutOperationManagerXml();
-            Element opElem = tomx.store(TurnoutOperationManager.getInstance());
+            Element opElem = tomx.store(InstanceManager.getDefault(TurnoutOperationManager.class));
             turnouts.addContent(opElem);
             java.util.Iterator<String> iter
                     = tm.getSystemNameAddedOrderList().iterator();
@@ -347,7 +347,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                     } else if (!str.equals("Default")) {
                         t.setInhibitOperation(false);
                         TurnoutOperation toper
-                                = TurnoutOperationManager.getInstance().getOperation(str);
+                                = InstanceManager.getDefault(TurnoutOperationManager.class).getOperation(str);
                         t.setTurnoutOperation(toper);
                     } else {
                         t.setInhibitOperation(false);
