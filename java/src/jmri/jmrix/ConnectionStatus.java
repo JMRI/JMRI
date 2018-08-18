@@ -52,7 +52,8 @@ public class ConnectionStatus {
     /**
      * Set the connection state of a communication port.
      *
-     * @param systemName human-readable name for system
+     * @param systemName human-readable name for system like "LocoNet 2"
+     *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
      * @param portName   the port name
      */
     public synchronized void addConnection(String systemName, @Nonnull String portName) {
@@ -81,7 +82,8 @@ public class ConnectionStatus {
     /**
      * Set the connection state of a communication port.
      *
-     * @param systemName human-readable name for system, may be null if not available
+     * @param systemName human-readable name for system like "LocoNet 2"
+     *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
      * @param portName   the port name
      * @param state      one of ConnectionStatus.UP, ConnectionStatus.DOWN, or
      *                   ConnectionStatus.UNKNOWN.
@@ -127,7 +129,8 @@ public class ConnectionStatus {
     /**
      * get the status of a communication port based on the system name.
      *
-     * @param systemName human-readable name for system
+     * @param systemName human-readable name for system like "LocoNet 2"
+     *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
      * @return the status
      */
     public synchronized String getSystemState(@Nonnull String systemName) {
@@ -151,7 +154,8 @@ public class ConnectionStatus {
     /**
      * Get the status of a communication port.
      *
-     * @param systemName human-readable name for system
+     * @param systemName human-readable name for system like "LocoNet 2"
+     *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
      * @param portName   the port name
      * @return the status
      */
@@ -181,7 +185,8 @@ public class ConnectionStatus {
     /**
      * Get the status of a communication port.
      *
-     * @param systemName human-readable name for system
+     * @param systemName human-readable name for system like "LocoNet 2"
+     *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
      * @param portName   the port name
      * @return true if port connection is operational or unknown, false if not
      */
@@ -193,7 +198,8 @@ public class ConnectionStatus {
     /**
      * Get the status of a communication port based on the system name.
      *
-     * @param systemName human-readable name for system
+     * @param systemName human-readable name for system like "LocoNet 2"
+     *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
      * @return true if port connection is operational or unknown, false if not
      */
     public synchronized boolean isSystemOk(@Nonnull String systemName) {
@@ -247,7 +253,8 @@ public class ConnectionStatus {
         /**
          * constructor
          *
-         * @param system human-readable name for system
+         * @param system human-readable name for system like "LocoNet 2"
+         *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
          * @param port   port name
          * @throws IllegalArgumentException if both system and port are null;
          */
