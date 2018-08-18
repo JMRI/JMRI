@@ -17,8 +17,7 @@ import org.slf4j.LoggerFactory;
  * which can be obtained from i.e. 
  * {@link SystemConnectionMemo#getUserName}. 
  * Not clear whether {@link ConnectionConfig#getConnectionName} is correct.
- * It's not intended to
- * be the prefix from i.e. {@link PortAdapter#getSystemPrefix}.
+ * It's not intended to be the prefix from i.e. {@link PortAdapter#getSystemPrefix}.
  * Maybe the right thing is to pass in the SystemConnectionMemo?
  *
  * @author Daniel Boudreau Copyright (C) 2007
@@ -53,10 +52,11 @@ public class ConnectionStatus {
     /**
      * Set the connection state of a communication port.
      *
-     * @param systemName human-readable name for system
+     * @param systemName human-readable name for system like "LocoNet 2"
+     *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
      * @param portName   the port name
      */
-    public synchronized void addConnection(String systemName, String portName) {
+    public synchronized void addConnection(String systemName, @Nonnull String portName) {
         log.debug("add connection to monitor {} {}", systemName, portName);
         ConnectionKey newKey = new ConnectionKey(systemName, portName);
         if (!portStatus.containsKey(newKey)) {
@@ -68,26 +68,13 @@ public class ConnectionStatus {
     /**
      * Set the connection state of a communication port.
      *
-     * @param portName communication port name
-     * @param state    port state
-     * @deprecated since 4.7.1 use
-     * {@link #setConnectionState(java.lang.String, java.lang.String, java.lang.String)}
-     * instead.
-     */
-    @Deprecated
-    public synchronized void setConnectionState(String portName, @Nonnull String state) {
-        setConnectionState(null, portName, state);
-    }
-
-    /**
-     * Set the connection state of a communication port.
-     *
-     * @param systemName human-readable name for system
+     * @param systemName human-readable name for system like "LocoNet 2"
+     *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
      * @param portName   the port name
      * @param state      one of ConnectionStatus.UP, ConnectionStatus.DOWN, or
      *                   ConnectionStatus.UNKNOWN.
      */
-    public synchronized void setConnectionState(String systemName, String portName, @Nonnull String state) {
+    public synchronized void setConnectionState(String systemName, @Nonnull String portName, @Nonnull String state) {
         log.debug("set {} connection status: {}", portName, state);
         ConnectionKey newKey = new ConnectionKey(systemName, portName);
         if (!portStatus.containsKey(newKey)) {
@@ -116,47 +103,44 @@ public class ConnectionStatus {
             for (ConnectionKey c : portStatus.keySet()) {
                 if (c.getPortName() == null ? portName == null : c.getPortName().equals(portName)) {
                     // if we find a match, return it.
-                    return getConnectionState(c.getSystemName(), c.getPortName());
+                    return portStatus.get(c);
                 }
             }
         }
-        // and if we still don't find a match, go ahead and try with null as
-        // the system name.
-        return getConnectionState(null, portName);
+        // If we still don't find a match, then we don't know the status
+        log.warn("Didn't find system status for port {}", portName);
+        return CONNECTION_UNKNOWN;
     }
 
     /**
      * get the status of a communication port based on the system name.
      *
-     * @param systemName human-readable name for system
+     * @param systemName human-readable name for system like "LocoNet 2"
+     *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
      * @return the status
      */
     public synchronized String getSystemState(@Nonnull String systemName) {
-        ConnectionKey newKey = new ConnectionKey(systemName, null);
-        if (portStatus.containsKey(newKey)) {
-            return getConnectionState(systemName, null);
-        } else {
-            // we have to see if there is a key that has systemName as the port value.
-            for (ConnectionKey c : portStatus.keySet()) {
-                if (c.getSystemName() == null ? systemName == null : c.getSystemName().equals(systemName)) {
-                    // if we find a match, return it.
-                    return getConnectionState(c.getSystemName(), c.getPortName());
-                }
+        // we have to see if there is a key that has systemName as the port value.
+        for (ConnectionKey c : portStatus.keySet()) {
+            if (c.getSystemName() == null ? systemName == null : c.getSystemName().equals(systemName)) {
+                // if we find a match, return it.
+                return portStatus.get(c);
             }
         }
-        // and if we still don't find a match, go ahead and try with null as
-        // the port name.
-        return getConnectionState(systemName, null);
+        // If we still don't find a match, then we don't know the status
+        log.warn("Didn't find system status for system {}", systemName);
+        return CONNECTION_UNKNOWN;
     }
 
     /**
      * Get the status of a communication port.
      *
-     * @param systemName human-readable name for system
+     * @param systemName human-readable name for system like "LocoNet 2"
+     *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
      * @param portName   the port name
      * @return the status
      */
-    public synchronized String getConnectionState(String systemName, String portName) {
+    public synchronized String getConnectionState(String systemName, @Nonnull String portName) {
         String stateText = CONNECTION_UNKNOWN;
         ConnectionKey newKey = new ConnectionKey(systemName, portName);
         if (portStatus.containsKey(newKey)) {
@@ -182,11 +166,12 @@ public class ConnectionStatus {
     /**
      * Get the status of a communication port.
      *
-     * @param systemName human-readable name for system
+     * @param systemName human-readable name for system like "LocoNet 2"
+     *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
      * @param portName   the port name
      * @return true if port connection is operational or unknown, false if not
      */
-    public synchronized boolean isConnectionOk(String systemName, String portName) {
+    public synchronized boolean isConnectionOk(String systemName, @Nonnull String portName) {
         String stateText = getConnectionState(systemName, portName);
         return !stateText.equals(CONNECTION_DOWN);
     }
@@ -194,25 +179,22 @@ public class ConnectionStatus {
     /**
      * Get the status of a communication port based on the system name.
      *
-     * @param systemName human-readable name for system
-     * @return true if port connection is operational or unknown, false if not
+     * @param systemName human-readable name for system like "LocoNet 2"
+     *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
+     * @return true if port connection is operational or unknown, false if not. This includes
+     *                      returning true if the connection is not recognized.
      */
     public synchronized boolean isSystemOk(@Nonnull String systemName) {
-        ConnectionKey newKey = new ConnectionKey(systemName, null);
-        if (portStatus.containsKey(newKey)) {
-            return isConnectionOk(systemName, null);
-        } else {
-            // we have to see if there is a key that has systemName as the port value.
-            for (ConnectionKey c : portStatus.keySet()) {
-                if (c.getSystemName() == null ? systemName == null : c.getSystemName().equals(systemName)) {
-                    // if we find a match, return it.
-                    return isConnectionOk(c.getSystemName(), c.getPortName());
-                }
+        // we have to see if there is a key that has systemName as the port value.
+        for (ConnectionKey c : portStatus.keySet()) {
+            if (c.getSystemName() == null ? systemName == null : c.getSystemName().equals(systemName)) {
+                // if we find a match, return it.
+                return !portStatus.get(c).equals(CONNECTION_DOWN);
             }
         }
-        // and if we still don't find a match, go ahead and try with null as
-        // the port name.
-        return isConnectionOk(systemName, null);
+        // and if we still don't find a match, go ahead and reply true
+        // as we consider the state unknown.
+        return true;
     }
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
@@ -248,11 +230,12 @@ public class ConnectionStatus {
         /**
          * constructor
          *
-         * @param system human-readable name for system
+         * @param system human-readable name for system like "LocoNet 2"
+         *                      which can be obtained from i.e. {@link SystemConnectionMemo#getUserName}.
          * @param port   port name
          * @throws IllegalArgumentException if both system and port are null;
          */
-        public ConnectionKey(String system, String port) {
+        public ConnectionKey(String system, @Nonnull String port) {
             if (system == null && port == null) {
                 throw new IllegalArgumentException("At least one of system name or port name must be provided");
             }
