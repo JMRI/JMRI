@@ -17,8 +17,7 @@ import org.slf4j.LoggerFactory;
  * which can be obtained from i.e. 
  * {@link SystemConnectionMemo#getUserName}. 
  * Not clear whether {@link ConnectionConfig#getConnectionName} is correct.
- * It's not intended to
- * be the prefix from i.e. {@link PortAdapter#getSystemPrefix}.
+ * It's not intended to be the prefix from i.e. {@link PortAdapter#getSystemPrefix}.
  * Maybe the right thing is to pass in the SystemConnectionMemo?
  *
  * @author Daniel Boudreau Copyright (C) 2007
@@ -56,7 +55,7 @@ public class ConnectionStatus {
      * @param systemName human-readable name for system
      * @param portName   the port name
      */
-    public synchronized void addConnection(String systemName, String portName) {
+    public synchronized void addConnection(String systemName, @Nonnull String portName) {
         log.debug("add connection to monitor {} {}", systemName, portName);
         ConnectionKey newKey = new ConnectionKey(systemName, portName);
         if (!portStatus.containsKey(newKey)) {
@@ -75,19 +74,19 @@ public class ConnectionStatus {
      * instead.
      */
     @Deprecated
-    public synchronized void setConnectionState(String portName, @Nonnull String state) {
+    public synchronized void setConnectionState(@Nonnull String portName, @Nonnull String state) {
         setConnectionState(null, portName, state);
     }
 
     /**
      * Set the connection state of a communication port.
      *
-     * @param systemName human-readable name for system
+     * @param systemName human-readable name for system, may be null if not available
      * @param portName   the port name
      * @param state      one of ConnectionStatus.UP, ConnectionStatus.DOWN, or
      *                   ConnectionStatus.UNKNOWN.
      */
-    public synchronized void setConnectionState(String systemName, String portName, @Nonnull String state) {
+    public synchronized void setConnectionState(String systemName, @Nonnull String portName, @Nonnull String state) {
         log.debug("set {} connection status: {}", portName, state);
         ConnectionKey newKey = new ConnectionKey(systemName, portName);
         if (!portStatus.containsKey(newKey)) {
@@ -156,7 +155,7 @@ public class ConnectionStatus {
      * @param portName   the port name
      * @return the status
      */
-    public synchronized String getConnectionState(String systemName, String portName) {
+    public synchronized String getConnectionState(String systemName, @Nonnull String portName) {
         String stateText = CONNECTION_UNKNOWN;
         ConnectionKey newKey = new ConnectionKey(systemName, portName);
         if (portStatus.containsKey(newKey)) {
@@ -186,7 +185,7 @@ public class ConnectionStatus {
      * @param portName   the port name
      * @return true if port connection is operational or unknown, false if not
      */
-    public synchronized boolean isConnectionOk(String systemName, String portName) {
+    public synchronized boolean isConnectionOk(String systemName, @Nonnull String portName) {
         String stateText = getConnectionState(systemName, portName);
         return !stateText.equals(CONNECTION_DOWN);
     }
@@ -252,7 +251,7 @@ public class ConnectionStatus {
          * @param port   port name
          * @throws IllegalArgumentException if both system and port are null;
          */
-        public ConnectionKey(String system, String port) {
+        public ConnectionKey(String system, @Nonnull String port) {
             if (system == null && port == null) {
                 throw new IllegalArgumentException("At least one of system name or port name must be provided");
             }
