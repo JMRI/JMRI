@@ -28,12 +28,13 @@ public class ThrottleFrameTest {
         JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
     }
 
-    @After
+    @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
-    @Before
+    @After
     public void tearDown() {
         JUnitUtil.tearDown();
     }

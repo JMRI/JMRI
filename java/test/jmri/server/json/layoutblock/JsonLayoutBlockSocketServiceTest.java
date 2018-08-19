@@ -26,6 +26,7 @@ public class JsonLayoutBlockSocketServiceTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initLayoutBlockManager();
     }
 

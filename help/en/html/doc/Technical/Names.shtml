@@ -107,7 +107,7 @@
       these "system names". JMRI code will map these to and from
       whatever information the hardware may need.</p>
 
-      <h2>System Name Format</h2>
+      <h2 id="format">System Name Format</h2>
       
       A system name is formed from a
       short "system prefix" representing the hardware system, followed by a

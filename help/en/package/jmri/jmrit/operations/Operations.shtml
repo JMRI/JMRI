@@ -1546,7 +1546,7 @@
    called "manifestBackups" located in the "operations" directory. You can review your old Manifest
    using the
    <a href="#PrintSavedTrainManifests">Print or Preview Saved Train Manifests</a> under tools in the <a href="#Trains">Trains</a>
-   window.
+   or <a href="#TrainEdit">Edit Train</a> windows.
    <p>The program will also store a copy of each train's build report in a directory called
     "buildStatusBackups" also located in the "operations" directory.</p>
     

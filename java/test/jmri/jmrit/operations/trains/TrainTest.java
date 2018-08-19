@@ -1,4 +1,3 @@
-// TrainTest.java
 package jmri.jmrit.operations.trains;
 
 import jmri.InstanceManager;
@@ -4502,6 +4501,7 @@ public class TrainTest extends OperationsTestCase {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
 
         JUnitOperationsUtil.resetOperationsManager();
 

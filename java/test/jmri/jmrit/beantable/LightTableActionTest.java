@@ -109,9 +109,11 @@ public class LightTableActionTest extends AbstractTableActionBase {
     @Override
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        helpTarget = "package.jmri.jmrit.beantable.LightTable"; 
         a = new LightTableAction();
     }
 

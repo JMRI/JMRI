@@ -26,6 +26,7 @@ public class LocoSelTreePaneTest {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.resetProfileManager();
         jmri.InstanceManager.setDefault(ProgrammerConfigManager.class,new ProgrammerConfigManager());
     }
 

@@ -260,10 +260,11 @@ If you're developing any additional (post-4.13.2) changes that you want in the J
         Project Name
         Description
         Git Modules: Branch
+           Clone (Advanced) refspec should be +refs/heads/master:refs/remotes/origin/release-4.13.2
     
-    and click "Save". If needed, click "Enable".
+- Check under Source Code Management, Additional Behaviours, Advanced Clone Behaviours "Honor refspec" and "Shallow Clone" are checked, Shallow Clone Depth is 1, and time out is 20.
 
-- Check under Source Code Management, Additional Behaviours, Advanced Clone Behaviours that "Shallow Clone" is checked, Shallow Clone Depth is 1, and time out is 20.
+- Click "Save". If needed, click "Enable".
 
 - The build will start shortly (or click "Build Now"). Wait for it to complete.
 
@@ -375,18 +376,13 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.13.1+R9341f13.dmg](https://github.com/JMRI/JMRI/releases/download/v4.13.1/JMRI.4.13.1+R9341f13.dmg) | bd16ea307535837eebbff6df3fe264932b5d0cac38e4a8fdcee4fea9cdd14c10
-[JMRI.4.13.1+R9341f13.exe](https://github.com/JMRI/JMRI/releases/download/v4.13.1/JMRI.4.13.1+R9341f13.exe) | b955acbcfa392dc9f216e7a839ba8bb093516a342eaab1c144c2f05d8786bee5
-[JMRI.4.13.1+R9341f13.tgz](https://github.com/JMRI/JMRI/releases/download/v4.13.1/JMRI.4.13.1+R9341f13.tgz) | f856f313f6875417ecd3f978075d148f697f59dbfefd56cd57f1bc65f0a0668c
+[JMRI.4.13.2+R8a2b21d.dmg](https://github.com/JMRI/JMRI/releases/download/v4.13.2/JMRI.4.13.2+R8a2b21d.dmg) | 742ef5f86f836f0e488d65e345d452c21fa5b1adb50ca05a4b935b5926809c65
+[JMRI.4.13.2+R8a2b21d.exe](https://github.com/JMRI/JMRI/releases/download/v4.13.2/JMRI.4.13.2+R8a2b21d.exe) | abf3d5b2aa5484f9bedb6e8e11163040206839db7341b03989243bb3d5881cc8
+[JMRI.4.13.2+R8a2b21d.tgz](https://github.com/JMRI/JMRI/releases/download/v4.13.2/JMRI.4.13.2+R8a2b21d.tgz) | 66c6dd78bd4e4134117c8281877b3fbed2c69919e3f979ae0ed9a8c12b0d3b13
 
 ```
 
-- Attach files by selecting them or dragging them in. You might have downloaded them above or do it now via e.g. 
-
-```
-curl -o release.zip "http://builds.jmri.org/jenkins/job/TestReleases/job/4.13.1/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"" 
-```
-and expansion; 
+- Attach files by selecting them or dragging them in. Make sure that the Linux one is .tgz, not .tar.
 
 - [ ] it's slow to upload from a typical home connection, so wish we had a way to cross-load them from Jenkins
 
@@ -583,6 +579,15 @@ If you're building locally:
 ```
  
     (The user has to have put the htdocs link in their SF.net account)
+
+================================================================================
+================================================================================
+To do a direct download:
+
+```
+curl -o release.zip "http://builds.jmri.org/jenkins/job/TestReleases/job/4.13.1/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"" 
+```
+and expansion; 
 
 ================================================================================
 ================================================================================

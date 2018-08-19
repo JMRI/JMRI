@@ -44,6 +44,8 @@ public class NcePacketMonitorPanelTest extends jmri.util.swing.JmriPanelTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+
         memo = new NceSystemConnectionMemo();
         memo.setNceTrafficController(new NceTrafficController());
         panel = new NcePacketMonitorPanel();

@@ -32,7 +32,10 @@ public class RailComTableActionTest extends AbstractTableActionBase {
     @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        a = new RailComTableAction();
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+        helpTarget = "package.jmri.jmrit.beantable.RailComTable"; 
+        a = new RailComTableAction();
     }
 
     @Override
