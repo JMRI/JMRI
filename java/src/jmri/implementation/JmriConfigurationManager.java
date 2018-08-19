@@ -34,6 +34,7 @@ import jmri.Application;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.ShutDownManager;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.swing.DialogErrorHandler;
 import jmri.jmrit.XmlFile;
@@ -369,7 +370,7 @@ public class JmriConfigurationManager implements ConfigureManager {
 
 
 
-    private static class ErrorDialog extends JDialog {
+    private static final class ErrorDialog extends JDialog {
         
         enum Result {
             EXIT_PROGRAM,
@@ -460,7 +461,7 @@ public class JmriConfigurationManager implements ConfigureManager {
     
     
     
-    private static class ConnectionsPreferencesDialog extends JDialog {
+    private static final class ConnectionsPreferencesDialog extends JDialog {
         
         enum Result {
             EXIT_PROGRAM,
@@ -468,11 +469,6 @@ public class JmriConfigurationManager implements ConfigureManager {
             EDIT_CONNECTIONS,
         }
         
-        
-        /**
-         * All preferences panels handled, whether persisted or not.
-         */
-        protected HashMap<String, PreferencesPanel> preferencesPanels = new HashMap<>();
         
         Result result = Result.EXIT_PROGRAM;
         
@@ -482,8 +478,28 @@ public class JmriConfigurationManager implements ConfigureManager {
             setTitle("Connections preferences");
             setModal(true);
             
-            JPanel contentPanel = new jmri.util.swing.JmriPanel();
+            ConnectionsPanel contentPanel = new ConnectionsPanel();
             
+            setContentPane(contentPanel);
+            
+            pack();
+            
+            // Center dialog on screen
+            setLocationRelativeTo(null);
+            
+            setVisible(true);
+        }
+        
+    }
+    
+    private static final class ConnectionsPanel extends apps.AppConfigBase {
+        
+        /**
+         * All preferences panels.
+         */
+        private final List<PreferencesPanel> prefPanels = new ArrayList<>();
+        
+        ConnectionsPanel() {
             
             JList list = new JList<>();
             JScrollPane listScroller = new JScrollPane(list);
@@ -520,46 +536,42 @@ public class JmriConfigurationManager implements ConfigureManager {
 
             buttonpanel.add(save);
             
-            contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
+            setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
             
             for (PreferencesPanel panel : ServiceLoader.load(PreferencesPanel.class)) {
                 System.out.format("Daniel: %s%n", panel.getClass().getName());
                 
                 if (panel instanceof jmri.jmrix.swing.ConnectionsPreferencesPanel) {
+                    prefPanels.add(panel);
                     detailpanel.add(panel.getPreferencesComponent());
                 }
             }
             
-            contentPanel.add(buttonpanel);
-            contentPanel.add(new JSeparator(JSeparator.VERTICAL));
-            contentPanel.add(detailpanel);
+            add(buttonpanel);
+            add(new JSeparator(JSeparator.VERTICAL));
+            add(detailpanel);
 
             list.setSelectedIndex(0);
-            
-            setContentPane(contentPanel);
-            
-            pack();
-            
-            // Center dialog on screen
-            setLocationRelativeTo(null);
-            setVisible(true);
         }
         
+        public boolean isPreferencesValid() {
+            return prefPanels.stream().allMatch((panel) -> (panel.isPreferencesValid()));
+        }
         
+        @Override
         public void savePressed(boolean restartRequired) {
-/*            
+            
             ShutDownManager sdm = InstanceManager.getNullableDefault(ShutDownManager.class);
             if (!this.isPreferencesValid() && (sdm == null || !sdm.isShuttingDown())) {
-                for (PreferencesPanel panel : preferencesPanels.values()) {
+                for (PreferencesPanel panel : prefPanels) {
                     if (!panel.isPreferencesValid()) {
                         switch (JOptionPane.showConfirmDialog(this,
-                                apps.gui3.Bundle.getMessage("InvalidPreferencesMessage", panel.getTabbedPreferencesTitle()),
-                                apps.gui3.Bundle.getMessage("InvalidPreferencesTitle"),
+                                Bundle.getMessage("InvalidPreferencesMessage", panel.getTabbedPreferencesTitle()),
+                                Bundle.getMessage("InvalidPreferencesTitle"),
                                 JOptionPane.YES_NO_OPTION,
                                 JOptionPane.ERROR_MESSAGE)) {
                             case JOptionPane.YES_OPTION:
-                                // abort save and return to broken preferences
-                                this.gotoPreferenceItem(panel.getPreferencesItem(), panel.getTabbedPreferencesTitle());
+                                // abort save
                                 return;
                             default:
                                 // do nothing
@@ -569,13 +581,12 @@ public class JmriConfigurationManager implements ConfigureManager {
                 }
             }
             super.savePressed(restartRequired);
-*/            
         }
 
         // package only - for TabbedPreferencesFrame
         boolean invokeSaveOptions() {
             boolean restartRequired = false;
-            for (PreferencesPanel panel : preferencesPanels.values()) {
+            for (PreferencesPanel panel : prefPanels) {
                 // wrapped in isDebugEnabled test to prevent overhead of assembling message
                 if (log.isDebugEnabled()) {
                     log.debug("PreferencesPanel {} ({}) is {}.",
