@@ -2939,16 +2939,14 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
         popup.add(new AbstractAction(Bundle.getMessage("TextAttributes")) {
             Positionable comp;
-            Editor ed;
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 (new TextAttrDialog(comp)).setVisible(true);
             }
 
-            AbstractAction init(Positionable pos, Editor e) {
+            AbstractAction init(Positionable pos, Editor e) { // e unused?
                 comp = pos;
-                ed = e;
                 return this;
             }
         }.init(p, this));
@@ -3018,7 +3016,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @param p       the item to set attributes of
      *
      */
-    protected void setAttributes(PositionablePopupUtil newUtil, Positionable p) {
+    public void setAttributes(PositionablePopupUtil newUtil, Positionable p) {
         p.setPopupUtility(newUtil.clone(p, p.getTextComponent()));
         int mar = newUtil.getMargin();
         int bor = newUtil.getBorderSize();

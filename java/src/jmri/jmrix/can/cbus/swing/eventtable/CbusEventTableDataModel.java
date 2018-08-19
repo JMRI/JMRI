@@ -1119,7 +1119,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
 
         // now print each row of data
         // create a base string the width of the column
-        
         for (int i = 0; i < this.getRowCount(); i++) {
             StringBuffer buf = new StringBuffer();
             // log.debug (" 1070 row i  {} ", i);

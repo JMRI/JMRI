@@ -42,6 +42,3 @@ public class NodeConfigManagerAction extends AbstractAction {
     private final static Logger log = LoggerFactory.getLogger(NodeConfigManagerAction.class);
 
 }
-
-
-/* @(#)NodeConfigurationMgr.java */

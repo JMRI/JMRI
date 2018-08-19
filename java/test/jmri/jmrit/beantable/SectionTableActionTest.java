@@ -44,6 +44,7 @@ public class SectionTableActionTest extends AbstractTableActionBase {
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
+        helpTarget = "package.jmri.jmrit.beantable.SectionTable"; 
         a = new SectionTableAction();
     }
 

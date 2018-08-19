@@ -39,6 +39,3 @@ public class SerialFilterAction extends AbstractAction {
 	private final static Logger log = LoggerFactory.getLogger(SerialFilterAction.class);
 
 }
-
-
-/* @(#)SerialFilterAction.java */
