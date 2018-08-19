@@ -305,7 +305,7 @@ public class WarrantManagerXml //extends XmlFile
         // Ctor using provideWarrant to establish the reenced warrant.
         warrantList = shared.getChildren("warrant");
         for (int i=0; i<warrantList.size(); i++) {
-            boolean forward =true;
+            // boolean forward =true;  // variable not used, see GitHub JMRI/JMRI Issue #5661
             Element elem = warrantList.get(i);
             if (elem.getAttribute("systemName") == null) {
                 break;
@@ -319,9 +319,10 @@ public class WarrantManagerXml //extends XmlFile
                 for (int k=0; k<throttleCmds.size(); k++) {
                     ThrottleSetting ts = loadThrottleCommand(throttleCmds.get(k));
                     warrant.addThrottleCommand(ts);
-                    if (ts.getCommand().toUpperCase().equals("FORWARD")) {
-                        forward = ts.getValue().toUpperCase().equals("TRUE");
-                    }
+                    // the following lines have no effect, see GitHub JMRI/JMRI Issue #5661
+                    //if (ts.getCommand().toUpperCase().equals("FORWARD")) {
+                    //    forward = ts.getValue().toUpperCase().equals("TRUE");
+                    //}
                 }                
             }
         }

@@ -184,7 +184,7 @@ public class TurnoutEditAction extends BeanEditAction {
                         break;
                     default:  // named operation
                         t.setInhibitOperation(false);
-                        t.setTurnoutOperation(TurnoutOperationManager.getInstance().
+                        t.setTurnoutOperation(InstanceManager.getDefault(TurnoutOperationManager.class).
                                 getOperation(((String) automationBox.getSelectedItem())));
                         break;
                 }
@@ -258,7 +258,7 @@ public class TurnoutEditAction extends BeanEditAction {
         currentOperation = null;
         automationBox.removeActionListener(automationSelectionListener);
         if (automationBox.getSelectedIndex() > 1) {
-            currentOperation = TurnoutOperationManager.getInstance().
+            currentOperation = InstanceManager.getDefault(TurnoutOperationManager.class).
                     getOperation(((String) automationBox.getSelectedItem()));
         }
 

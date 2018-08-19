@@ -23,32 +23,93 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h1>JMRI: MERGCBUS Event Table</h1><a href=
-      "../../../../../../../html/hardware/can/images/CbusEventTable.png"><img src="../../../../../../../html/hardware/can/images/CbusEventTable.png"
-      width="476" height="165" alt="Event Table Screen" align=
+      "../../../../../../../html/hardware/can/images/CbusEventTable_963x276.png"><img src="../../../../../../../html/hardware/can/images/CbusEventTable_963x276.png"
+      width="963" height="276" alt="Event Table Screen" align=
       "right"></a>
 
-      <p>The MERGCBUS Event Table displays event information received on your <a href=
+      <p>The MERGCBUS Event Table displays event information on your <a href=
       "../../../../../../../html/hardware/can/cbus/index.shtml">CBUS</a>
       connection.</p>
+      
+      <p>Both incoming to JMRI and outgoing messages are logged to the table.</p>
+
+      <p>While the window is open, it will maintain a list of short on / off events, long on / off events, extended OPC on / off events, on / off accessory response events.</p>
+
+      <p>The table will always start with no entries, data is not maintained between sessions.</p>
+      
+
+      <p>Short event codes will be stripped of any node number contained within the event CAN message.</p>
+      <p>All numeric values decimal.</p>
+
 
     <h3>Columns</h3>
-      <p>The Event Table displays the information in 5 columns (the column
-      order can be rearranged by dragging a header, so it could differ on your system). : </p>
-      <ul>
-        <li>CAN ID</li>
-        <li>Node</li>
-        <li>Name</li>
-        <li>Event</li>
-        <li>Type (On or Off)</li>
-        <li>Comment</li>
-      </ul>
+    <img src="../../../../../../../html/hardware/can/images/CbusEventTable_Columns_123x318.png"
+      width="123" height="318" alt="Event Table Screen" align=
+      "right">
+      
+        <p>The order can be rearranged by dragging the column header. </p>
+        <p>Right click in the header to select a list of columns to display.</p>
+        <p>Change the column sort order by left clicking on the column header.</p>
+      
+    <h4>Event, Node, On or Off</h4>
+        <p>Event number reported within an event CAN message.</p>
+        <p>Node number reported by an event CAN message.</p>
+        <p>Last reported state of event, On or Off.</p>
+    
+    <h4>Send On / Send Off / Toggle</h4>
+        <p>Send an on or off event. If the the event has a node number, this will be a long event otherwise short.</p>
+        <p>Toggle: If event last reported state is currently on, sends an off event and vice versa.</p>
+        
+    <h4>Event Name and Comment</h4>
+        <p>The name entered will be copied to all other events with the same node and an empty name.</p>
 
-    <h3>Printing and Export</h3>
-      <p>From the File menu, choose Export to open file save dialog and save
-      the contents of the table in a CVS (comma separated values) text file.</p>
-      <p>Choose the Print (Preview) menu to create a
-      hard copy of the Event Table.</p>
+        
+    <h4>CAN ID</h4>
+      <p>If the same event is sent from different module nodes ( which should have different CAN ID's ) these will display on seperate rows.</p>
+      
+    <h4>On / Off / Total Session</h4>
+      <p>Running total on events.</p>
+      <p>Running total off events.</p>
+      <p>Total of both off and on events.</p>      
+      
+      
+    <h4>Last Heard</h4>      
+        <p>Time + datestamp of the last time the event was heard. </p>
+      
+      
+      <h4>Delete Event</h4>
+      <p>Delete event from this table after confirmation, option to disable further confirmatiions.</p>
+      <p>The event will be re-added to the table if re-heard on the network.</p>
+      
+      
+      
+    <h4>ID</h4>
+        <p>Debug use only.</p>
+      
+      
 
+    <h3>Printing and Export / Import</h3>
+    
+      <p>You can start the table by adding it to your JMRI startup action list.
+      <br>PanelPro > Edit Preferences > Start Up > Add > Perform Action > Open CBUS Event Table.
+      </p>
+      
+      
+      
+
+    <p>From the File menu, choose Export to open file save dialog and save
+        the contents of the table in a CSV (comma separated values) text file.</p>
+        
+        <p>Choose the Print (Preview) menu to create a
+        hard copy of the Event Table.</p>
+
+        <p>The events are not currently maintained between sessions.</p>
+      
+        <p>It is not currently possible to load data into the table from file.</p>
+
+      
+
+      
     <h3>JMRI Help</h3>
       
       <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the MERG Event Table window.</p>

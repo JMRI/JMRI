@@ -115,13 +115,13 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                 f.getContentPane().removeAll();
                 f.getContentPane().add(new JLabel("failed, error was " + ex));
                 f.pack();
-                jmri.jmrix.ConnectionStatus.instance().setConnectionState(cc.getInfo(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
+                jmri.jmrix.ConnectionStatus.instance().setConnectionState(null, cc.getInfo(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
                 connected = false;
                 result = false;
             }
 
             if (connected) {
-                jmri.jmrix.ConnectionStatus.instance().setConnectionState(cc.getInfo(), jmri.jmrix.ConnectionStatus.CONNECTION_UP);
+                jmri.jmrix.ConnectionStatus.instance().setConnectionState(null, cc.getInfo(), jmri.jmrix.ConnectionStatus.CONNECTION_UP);
                 // configure the other instance objects only if connected.
                 client.configureLocalServices();
                 f.setVisible(false);

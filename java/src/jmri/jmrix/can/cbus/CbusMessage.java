@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
  * Class to allow use of CBUS concepts to access the underlying can message
  *
  * @author Andrew Crosland Copyright (C) 2008
+ * @author Steve Young (C) 2018
+ * 
  */
 public class CbusMessage {
     /* Methods that take a CanMessage as argument */
@@ -54,6 +56,7 @@ public class CbusMessage {
         }
     }
 
+    // returns 0, 1
     public static int getEventType(CanMessage m) {
         if (
            (m.getElement(0) == 0x91)
@@ -79,6 +82,7 @@ public class CbusMessage {
         }
     }
 
+    // is an event boolean
     // this adheres to cbus spec, ie on off responses to an AREQ are events
     // D4 D5 not typo
     public static boolean isEvent(CanMessage m) {
@@ -100,6 +104,37 @@ public class CbusMessage {
         || (m.getElement(0) == 0xF8) || (m.getElement(0) == 0xF9)
         || (m.getElement(0) == 0xFD) || (m.getElement(0) == 0xFE)
      ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    /**
+     * Checks if can message passed is a short event
+     * boolean 
+     */
+    public static boolean isShort(CanMessage m) {
+        if (
+           (m.getElement(0) == 0x98)
+        || (m.getElement(0) == 0x99)
+        || (m.getElement(0) == 0x9D)
+        || (m.getElement(0) == 0x9E)
+        || (m.getElement(0) == 0xB1)
+        || (m.getElement(0) == 0xB8)
+        || (m.getElement(0) == 0xB9)
+        || (m.getElement(0) == 0xBD)
+        || (m.getElement(0) == 0xBE)
+        || (m.getElement(0) == 0xD8)
+        || (m.getElement(0) == 0xD9)
+        || (m.getElement(0) == 0xDD)
+        || (m.getElement(0) == 0xDE)
+        || (m.getElement(0) == 0xF8)
+        || (m.getElement(0) == 0xF9)
+        || (m.getElement(0) == 0xFB)
+        || (m.getElement(0) == 0xFD)
+        || (m.getElement(0) == 0xFE)
+        ) {
             return true;
         } else {
             return false;
@@ -260,6 +295,40 @@ public class CbusMessage {
         }
     }
 
+    
+    /**
+     * Checks if can message passed is a short event
+     * boolean 
+     */
+    public static boolean isShort(CanReply r) {
+        if (
+           (r.getElement(0) == 0x98)
+        || (r.getElement(0) == 0x99)
+        || (r.getElement(0) == 0x9D)
+        || (r.getElement(0) == 0x9E)
+        || (r.getElement(0) == 0xB1)
+        || (r.getElement(0) == 0xB8)
+        || (r.getElement(0) == 0xB9)
+        || (r.getElement(0) == 0xBD)
+        || (r.getElement(0) == 0xBE)
+        || (r.getElement(0) == 0xD8)
+        || (r.getElement(0) == 0xD9)
+        || (r.getElement(0) == 0xDD)
+        || (r.getElement(0) == 0xDE)
+        || (r.getElement(0) == 0xF8)
+        || (r.getElement(0) == 0xF9)
+        || (r.getElement(0) == 0xFB)
+        || (r.getElement(0) == 0xFD)
+        || (r.getElement(0) == 0xFE)
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    
+    
     public static void setId(CanReply r, int id) {
         if (r.isExtended()) {
             if ((id & ~0x1fffff) != 0) {

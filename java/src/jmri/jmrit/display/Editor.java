@@ -2939,16 +2939,14 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
         popup.add(new AbstractAction(Bundle.getMessage("TextAttributes")) {
             Positionable comp;
-            Editor ed;
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 (new TextAttrDialog(comp)).setVisible(true);
             }
 
-            AbstractAction init(Positionable pos, Editor e) {
+            AbstractAction init(Positionable pos, Editor e) { // e unused?
                 comp = pos;
-                ed = e;
                 return this;
             }
         }.init(p, this));

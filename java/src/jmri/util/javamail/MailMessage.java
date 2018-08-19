@@ -19,7 +19,6 @@ package jmri.util.javamail;
  */
 
 /*
- * @(#)msgsend.java 1.20 07/07/06
  *
  * Copyright 1997-2007 Sun Microsystems, Inc. All Rights Reserved.
  *

@@ -37,6 +37,3 @@ public class CMRInetManagerAction extends AbstractAction {
     }
     private final static Logger log = LoggerFactory.getLogger(CMRInetManagerAction.class);
 }
-
-
-/* @(#)CMRInetManagerAction.java */
