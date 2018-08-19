@@ -211,6 +211,7 @@ public class LogixTableActionTest extends AbstractTableActionBase {
         InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("IX103", "Logix 103");
         InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("IX104", "Logix 104");
 
+        helpTarget = "package.jmri.jmrit.beantable.LogixTable"; 
         a = new LogixTableAction();
     }
 

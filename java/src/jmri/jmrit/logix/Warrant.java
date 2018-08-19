@@ -1468,7 +1468,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                         }
                         wait(20);
                         time += 20;
-                    };
+                    }
                     _message = msg;
                 }
                 catch (Exception e) {

@@ -1161,7 +1161,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
      * @param cb the JComboBox
      */
     public static void updateAutomationBox(Turnout t, JComboBox<String> cb) {
-        TurnoutOperation[] ops = TurnoutOperationManager.getInstance().getTurnoutOperations();
+        TurnoutOperation[] ops = InstanceManager.getDefault(TurnoutOperationManager.class).getTurnoutOperations();
         cb.removeAllItems();
         Vector<String> strings = new Vector<String>(20);
         Vector<String> defStrings = new Vector<String>(20);
@@ -1228,7 +1228,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 break;
             default:  // named operation
                 t.setInhibitOperation(false);
-                t.setTurnoutOperation(TurnoutOperationManager.getInstance().
+                t.setTurnoutOperation(InstanceManager.getDefault(TurnoutOperationManager.class).
                         getOperation(((String) cb.getSelectedItem())));
                 break;
         }
@@ -1258,7 +1258,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             editingOps = true;
             TurnoutOperation op = t.getTurnoutOperation();
             if (op == null) {
-                TurnoutOperation proto = TurnoutOperationManager.getInstance().getMatchingOperationAlways(t);
+                TurnoutOperation proto = InstanceManager.getDefault(TurnoutOperationManager.class).getMatchingOperationAlways(t);
                 if (proto != null) {
                     op = proto.makeNonce(t);
                     t.setTurnoutOperation(op);
@@ -1455,12 +1455,12 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
     @Override
     public void addToFrame(BeanTableFrame f) {
         f.addToBottomBox(doAutomationBox, this.getClass().getName());
-        doAutomationBox.setSelected(TurnoutOperationManager.getInstance().getDoOperations());
+        doAutomationBox.setSelected(InstanceManager.getDefault(TurnoutOperationManager.class).getDoOperations());
         doAutomationBox.setToolTipText(Bundle.getMessage("TurnoutDoAutomationBoxTooltip"));
         doAutomationBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TurnoutOperationManager.getInstance().setDoOperations(doAutomationBox.isSelected());
+                InstanceManager.getDefault(TurnoutOperationManager.class).setDoOperations(doAutomationBox.isSelected());
             }
         });
         f.addToBottomBox(showFeedbackBox, this.getClass().getName());
@@ -1514,12 +1514,12 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         }
 
         f.addToBottomBox(doAutomationBox, systemPrefix);
-        doAutomationBox.setSelected(TurnoutOperationManager.getInstance().getDoOperations());
+        doAutomationBox.setSelected(InstanceManager.getDefault(TurnoutOperationManager.class).getDoOperations());
         doAutomationBox.setToolTipText(Bundle.getMessage("TurnoutDoAutomationBoxTooltip"));
         doAutomationBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TurnoutOperationManager.getInstance().setDoOperations(doAutomationBox.isSelected());
+                InstanceManager.getDefault(TurnoutOperationManager.class).setDoOperations(doAutomationBox.isSelected());
             }
         });
         f.addToBottomBox(showFeedbackBox, systemPrefix);

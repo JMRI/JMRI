@@ -15,8 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import jmri.TurnoutOperation;
-import jmri.TurnoutOperationManager;
+import jmri.*;
 
 /**
  * @author John Harper
@@ -75,7 +74,7 @@ public class TurnoutOperationFrame extends JDialog {
         bottomBox.add(deleteButton);
         outerBox.add(bottomBox);
         populateTabs();
-        TurnoutOperationManager.getInstance().addPropertyChangeListener(new PropertyChangeListener() {
+        InstanceManager.getDefault(TurnoutOperationManager.class).addPropertyChangeListener(new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("Content")) {
@@ -111,7 +110,7 @@ public class TurnoutOperationFrame extends JDialog {
     }
 
     private void populateTabs() {
-        TurnoutOperation[] operations = TurnoutOperationManager.getInstance().getTurnoutOperations();
+        TurnoutOperation[] operations = InstanceManager.getDefault(TurnoutOperationManager.class).getTurnoutOperations();
         Component firstPane = null;
         tabPane.removeAll();
         Vector<TurnoutOperation> definitiveOperations = new Vector<TurnoutOperation>(10);

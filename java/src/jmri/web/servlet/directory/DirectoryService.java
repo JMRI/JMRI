@@ -31,11 +31,15 @@ public class DirectoryService extends ResourceService {
             response.setStatus(HttpServletResponse.SC_OK);
             response.setContentType(ServletUtil.UTF8_TEXT_HTML);
 
-            String dir = (new DirectoryResource(request.getLocale(), resource)).getListHTML(request.getRequestURI(), request.getPathInfo().lastIndexOf('/') > 0);
-            
-            byte[] data = dir.getBytes("utf-8");
-            response.setContentLength(data.length);
-            response.getOutputStream().write(data);
+            try ( DirectoryResource r = new DirectoryResource(request.getLocale(), resource) ) {           
+                String dir = r.getListHTML(request.getRequestURI(), 
+                                             request.getPathInfo().lastIndexOf('/') > 0
+                                            );
+                byte[] data = dir.getBytes("utf-8");
+                response.setContentLength(data.length);
+                response.getOutputStream().write(data);
+            }
+
         } else {
             response.sendError(HttpServletResponse.SC_FORBIDDEN);
         }

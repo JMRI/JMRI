@@ -15,8 +15,6 @@ import org.junit.Test;
  */
 public class LnTcpServerTest {
 
-    private LocoNetInterfaceScaffold lnis;
-
     @Test
     public void getInstanceTest() {
         Assert.assertNotNull("Server getInstance", LnTcpServer.getDefault());
@@ -28,14 +26,13 @@ public class LnTcpServerTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
-        // provide a memo in order to later use InstanceManager.getDefault()
-        lnis = new LocoNetInterfaceScaffold(memo);
+        // ensure memo exists in order to later use InstanceManager.getDefault()
+        new LocoNetInterfaceScaffold(memo);  // does this register? or is it now redundant?
         // memo.setLnTrafficController(lnis);
     }
 
     @After
     public void tearDown() {
-        lnis = null;
         JUnitUtil.tearDown();
         JUnitUtil.resetInstanceManager();
     }

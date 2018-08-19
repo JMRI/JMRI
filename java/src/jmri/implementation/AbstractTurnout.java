@@ -605,7 +605,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             if (myTurnoutOperation != null) {
                 to = myTurnoutOperation.getOperator(this);
             } else {
-                TurnoutOperation toper = TurnoutOperationManager.getInstance()
+                TurnoutOperation toper = InstanceManager.getDefault(TurnoutOperationManager.class)
                         .getMatchingOperation(this,
                                 getFeedbackModeForOperation());
                 if (toper != null) {
