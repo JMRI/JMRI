@@ -143,7 +143,7 @@ public class PanelServlet extends AbstractPanelServlet {
                         // but when a panel element has a reference to the panel or to itself as a property, this leads
                         // to infinite recursion
                     } catch (Exception ex) {
-                        log.error("Error storing panel element: " + ex, ex);
+                        log.error("Error storing panel element: {}", sub, ex);
                     }
             }
 

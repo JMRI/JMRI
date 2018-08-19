@@ -968,27 +968,27 @@ public class PositionableLabel extends JLabel implements Positionable {
         }
         int width = getFontMetrics(getFont()).stringWidth(text);
         int height = getFontMetrics(getFont()).getHeight();
-        int hOffset = 0;
+        // int hOffset = 0;  // variable has no effect, see Issue #5662
         int vOffset = getFontMetrics(getFont()).getAscent();
         if (_popupUtil != null) {
             if (_popupUtil.getFixedWidth() != 0) {
                 switch (_popupUtil.getJustification()) {
                     case PositionablePopupUtil.LEFT:
-                        hOffset = _popupUtil.getBorderSize();
+                        // hOffset = _popupUtil.getBorderSize(); // variable has no effect, see Issue #5662
                         break;
                     case PositionablePopupUtil.RIGHT:
-                        hOffset = _popupUtil.getFixedWidth() - width;
-                        hOffset += _popupUtil.getBorderSize();
+                        // hOffset = _popupUtil.getFixedWidth() - width; // variable has no effect, see Issue #5662
+                        // hOffset += _popupUtil.getBorderSize(); // variable has no effect, see Issue #5662
                         break;
                     default:
-                        hOffset = Math.max((_popupUtil.getFixedWidth() - width) / 2, 0);
-                        hOffset += _popupUtil.getBorderSize();
+                        // hOffset = Math.max((_popupUtil.getFixedWidth() - width) / 2, 0); // variable has no effect, see Issue #5662
+                        // hOffset += _popupUtil.getBorderSize(); // variable has no effect, see Issue #5662
                         break;
                 }
                 width = _popupUtil.getFixedWidth() + 2 * _popupUtil.getBorderSize();
             } else {
                 width += 2 * (_popupUtil.getMargin() + _popupUtil.getBorderSize());
-                hOffset += _popupUtil.getMargin() + _popupUtil.getBorderSize();
+                // hOffset += _popupUtil.getMargin() + _popupUtil.getBorderSize(); // variable has no effect, see Issue #5662
             }
             if (_popupUtil.getFixedHeight() != 0) {
                 vOffset = Math.max(vOffset + (_popupUtil.getFixedHeight() - height) / 2, 0);
@@ -1027,10 +1027,7 @@ public class PositionableLabel extends JLabel implements Positionable {
                 g2d.drawRect(0, 0, width, height);
             }
         }
-        if (false) {    //TODO: dead-strip this; the string is now drawn in paintComponent
-            g2d.setColor(getForeground());
-            g2d.drawString(text, hOffset, vOffset);
-        }
+
         NamedIcon icon = new NamedIcon(bufIm);
         g2d.dispose();
         return icon;

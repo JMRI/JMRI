@@ -20,7 +20,7 @@ public class CbusTurnoutTest {
     @Test
     public void testNullEvent() {
         try {
-            CbusTurnout t = new CbusTurnout("MT",null,new TrafficControllerScaffold());
+            new CbusTurnout("MT",null,new TrafficControllerScaffold());
             Assert.fail("Should have thrown an exception");
         } catch (NullPointerException e) {
             Assert.assertTrue(true);

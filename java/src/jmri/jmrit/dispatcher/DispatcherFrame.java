@@ -528,7 +528,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             p22.setLayout(new BorderLayout());
             allocationRequestTableModel = new AllocationRequestTableModel();
             JTable allocationRequestTable = new JTable(allocationRequestTableModel);
-            allocationRequestTable.setName(this.getClass().getName().concat(":allocationRequestTable"));;
+            allocationRequestTable.setName(this.getClass().getName().concat(":allocationRequestTable"));
             allocationRequestTable.setRowSelectionAllowed(false);
             allocationRequestTable.setPreferredScrollableViewportSize(new java.awt.Dimension(950, 100));
             allocationRequestTable.setColumnModel(new XTableColumnModel());

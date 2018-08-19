@@ -11,7 +11,6 @@ import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetConsistManager;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-import jmri.jmrix.loconet.LocoNetThrottledTransmitter;
 import jmri.jmrix.loconet.SlotManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -181,7 +180,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
     }
 
     /**
-     * Configure the subset of LocoNet managers valid for the PR3 in MS100 mode.
+     * Configure the LocoNet managers valid for the PR3 in MS100 mode, same as super, flag the interface type.
      */
     public void configureManagersMS100() {
         mode = MS100MODE;
