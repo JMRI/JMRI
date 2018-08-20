@@ -44,6 +44,7 @@ public class MemoryTableActionTest extends AbstractTableActionBase {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        helpTarget = "package.jmri.jmrit.beantable.MemoryTable"; 
         a = new MemoryTableAction();
     }
 

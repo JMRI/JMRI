@@ -45,6 +45,23 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
         }
     }
 
+    /**
+     * Send an ops-mode write request to the Xpressnet.
+     */
+    @Override
+    synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
+        XNetMessage msg = XNetMessage.getWriteOpsModeCVMsg(mAddressHigh, mAddressLow, CV, val);
+        msg.setBroadcastReply(); // reply comes through a loconet message.
+        tc.sendXNetMessage(msg, this);
+        /* we need to save the programer and value so we can send messages 
+         back to the screen when the programming screen when we receive
+         something from the command station */
+        progListener = p;
+        value = val;
+        progState = REQUESTSENT;
+        restartTimer(msg.getTimeout());
+    }
+
     @Override
     synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {
         XNetMessage msg = XNetMessage.getVerifyOpsModeCVMsg(mAddressHigh, mAddressLow, CV, value);
@@ -132,7 +149,7 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
      *   {@inheritDoc}
      */
     @Override
-    public void message(LocoNetMessage m){
+    synchronized public void message(LocoNetMessage m){
       // the Roco Z21 responds to Operations mode write requests with a 
       // LocoNet message.
         log.debug("LocoNet message received: {}", m);
@@ -142,7 +159,7 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
 
             int val = 0;
             if ((m.getElement(2) & 0x20) != 0) {
-               val = 1;
+               val = m.getElement(10) & 0xFF;
             }
 
             // successful read if LACK return status is not 0x7F
@@ -151,9 +168,9 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
                code = ProgListener.UnknownError;
             }
 
-            progListener.programmingOpReply(val, code);
             progState = NOTPROGRAMMING;
             stopTimer();
+            progListener.programmingOpReply(val, code);
         }
     }
 

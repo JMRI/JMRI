@@ -95,7 +95,7 @@ public class DestinationPointsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.util.JUnitUtil.resetProfileManager();
         tools = new EntryExitTestTools();
-        panels = tools.getPanels();
+        panels = EntryExitTestTools.getPanels();
         Assert.assertEquals("Get LE panels", 2, panels.size());  // NOI18N
         eep = InstanceManager.getDefault(EntryExitPairs.class);
         lbm = InstanceManager.getDefault(LayoutBlockManager.class);

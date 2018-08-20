@@ -147,7 +147,7 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
         }
 
         if (!opened) {
-            ConnectionStatus.instance().setConnectionState(portName, ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(null, portName, ConnectionStatus.CONNECTION_DOWN);
             if (exception[0] != null) {
                 log.error("Exception when connecting to " + portName);
                 return exception[0].getLocalizedMessage();

@@ -34,6 +34,7 @@ public class RailComTableActionTest extends AbstractTableActionBase {
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
+        helpTarget = "package.jmri.jmrit.beantable.RailComTable"; 
         a = new RailComTableAction();
     }
 
