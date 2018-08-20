@@ -470,8 +470,11 @@ public class JUnitUtil {
     public static void clearShutDownManager() {
         ShutDownManager sm = InstanceManager.getNullableDefault(jmri.ShutDownManager.class);
         if (sm == null) return;
-        List<ShutDownTask> tasks = sm.tasks();
-        for (ShutDownTask t : tasks) sm.deregister(t);
+        List<ShutDownTask> list = sm.tasks();
+        while (list != null && list.size() > 0) {
+            sm.deregister(list.get(0));
+            list = sm.tasks();  // avoid ConcurrentModificationException
+        }
     }
 
     /**
