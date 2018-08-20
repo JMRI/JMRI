@@ -90,7 +90,7 @@ public class JUnitUtil {
         // ideally this would be false, true to force an error if an earlier
         // test left a window open, but different platforms seem to have just
         // enough differences that this is, for now, only emitting a warning
-        resetWindows(true, false);
+        resetWindows(false, false);
         resetInstanceManager();
     }
 
@@ -99,7 +99,7 @@ public class JUnitUtil {
      * annotated method.
      */
     public static void tearDown() {
-        resetWindows(true, false); // warn
+        resetWindows(false, false);
         resetInstanceManager();
         Log4JFixture.tearDown();
     }
