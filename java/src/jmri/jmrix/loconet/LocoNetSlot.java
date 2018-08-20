@@ -38,13 +38,14 @@ public class LocoNetSlot {
         return slot;
     }  // cannot modify the slot number once created
 
-    /**
-     * Is this slot a systems slot
-     */
-     public boolean isSystemSlot() {
+/***
+ * 
+ * @return true if this is a systems slot else false
+ */
+    public boolean isSystemSlot() {
          return systemSlot;
      }
-     
+
     /** Get decoder mode.
      * Possible values are  
      * {@link LnConstants#DEC_MODE_128A},
@@ -239,7 +240,7 @@ public class LocoNetSlot {
     // create a specific slot
     public LocoNetSlot(int slotNum) {
         slot = slotNum;
-        if ((slot == 0) || (slot > 120 && slot < 128) 
+        if ((slot == 0) || (slot > 120 && slot < 128)
                 || (slot > 247 && slot < 257)
                 || (slot > 375 && slot < 385)) {
             systemSlot = true;
@@ -249,14 +250,15 @@ public class LocoNetSlot {
     }
 
     /**
-     * This is used only in the tests (43 times) and once in UhlenBrockSlot and therefore is not 
+     * This is used only in the tests (43 times) and once in UhlenBrockSlot and therefore is not
      * converted for long slots.
      * @param l LocoNetMessage
      * @throws LocoNetException
      */
+    //TODO: Convert to expanded slots
     public LocoNetSlot(LocoNetMessage l) throws LocoNetException {
         slot = l.getElement(2);
-        if ((slot == 0) || (slot > 120 && slot < 128) 
+        if ((slot == 0) || (slot > 120 && slot < 128)
                 || (slot > 247 && slot < 257)
                 || (slot > 375 && slot < 385)) {
             systemSlot = true;

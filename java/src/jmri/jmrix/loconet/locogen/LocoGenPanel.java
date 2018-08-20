@@ -104,7 +104,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
             pane1.add(jLabel1);
             pane1.add(packetTextField);
             pane1.add(sendButton);
-            
+
             jLabel2.setText("DCC Start #");
             jLabel2.setVisible(true);
             pane1.add(jLabel2);

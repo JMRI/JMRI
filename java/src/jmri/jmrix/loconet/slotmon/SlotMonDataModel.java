@@ -82,7 +82,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         // start update process
         memo.getSlotManager().update();
     }
-    
+
     /**
      * Forces a refresh of the slots
      */
