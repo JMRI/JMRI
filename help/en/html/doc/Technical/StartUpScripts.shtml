@@ -69,7 +69,7 @@
 
       </ul>
 
-      <h3 id='env">Environment variables</h3>
+      <h3 id="env">Environment variables</h3>
       Since JMRI version 2.11.4, it
       is possible to influence the settings used to launch JMRI via
       the use of environment variables which are interpreted by 
@@ -135,9 +135,9 @@
                 If false or unspecified, the engine will be started when the 
                 first script is launched.</dd>
       </dl>
-      <dl>
         There are also a few that are only used during testing, i.e. in the JUnit CI 
         tests.        
+      <dl>
         <dt>jmri.skipschematests</dt>
             <dd>If true, JUnit tests will skip checking the schema of all the test XML files.</dd>
         <dt>jmri.skipjythontests</dt>
@@ -270,9 +270,9 @@
       script in the Contents/MacOSX directory what does the actual
       startup. This is the same script as used for Linux, see
       please see <a href="#linux">that section</a> for details.
-      <a name="windows" id="windows"></a>
 
-      <h2 id="windows">Windows</h2>Upto and including JMRI version 2.3.2, the
+      <h2 id="windows">Windows</h2>
+      Upto and including JMRI version 2.3.2, the
       Windows .bat files just create a fixed java command and
       executed it.
 
