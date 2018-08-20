@@ -241,7 +241,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         if (!extendedSlots ) {
             m.setOpCode(LnConstants.OPC_LOCO_ADR);  // OPC_LOCO_ADR
         } else {
-            m.setOpCode(0xbe);  // OPC_LOCO_ADR_EXT - Extended slot
+            m.setOpCode(LnConstants.OPC_EXP_REQ_SLOT); //  Extended slot
         }
         m.setElement(1, (i / 128) & 0x7F);
         m.setElement(2, i & 0x7F);
@@ -264,8 +264,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         // We will just check the normal loco slots 1 to numSlots exclude systemslots
         for (int i = 1; i < numSlots; i++) {
-            if ( ( i > 0 && i < 121) || ( i > 128 )) {
-            slot = _slots[i];
+          slot = _slots[i];
+          if (!slot.isSystemSlot()) {
             if ((slot.slotStatus() == LnConstants.LOCO_IN_USE)
                     && (slot.getLastUpdateTime() <= staleTimeout)) {
                 sendReadSlot(i);
@@ -554,7 +554,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 i = ( ( m.getElement(1) & 0x07 ) *128) + m.getElement(2);
                 return i;
             case LnConstants.OPC_EXP_RD_SL_DATA:
-            case 0xee:
+            case LnConstants.OPC_EXP_WR_SL_DATA:
                 i = ( (m.getElement(2) & 0x07 ) *128) + m.getElement(3);
                 return i;
             default:

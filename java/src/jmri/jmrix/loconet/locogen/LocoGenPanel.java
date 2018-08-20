@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+import javax.swing.SpinnerNumberModel;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.ThrottleListener;
@@ -42,9 +43,12 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
-    javax.swing.JButton add10Throttles = new javax.swing.JButton("Add 10 Throttles");
-    javax.swing.JButton del10Throttles = new javax.swing.JButton("Del 10 Throttles");
-    javax.swing.JTextField throttleIdField = new javax.swing.JTextField(4);
+    javax.swing.JButton addThrottles = new javax.swing.JButton("+Throttles");
+    javax.swing.JButton delThrottles = new javax.swing.JButton("-Throttles");
+    javax.swing.JLabel jLabel2 = new javax.swing.JLabel();
+    javax.swing.JSpinner numberOfThrottles = new javax.swing.JSpinner(new SpinnerNumberModel(50,1,400,1));
+    javax.swing.JLabel jLabel3 = new javax.swing.JLabel();
+    javax.swing.JSpinner firstThrottleAddress = new javax.swing.JSpinner(new SpinnerNumberModel(300,1,9999,1));
 
 
     public LocoGenPanel() {
@@ -100,21 +104,29 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
             pane1.add(jLabel1);
             pane1.add(packetTextField);
             pane1.add(sendButton);
-            pane1.add(throttleIdField);
-            pane1.add(add10Throttles);
-            pane1.add(del10Throttles);
+
+            jLabel2.setText("DCC Start #");
+            jLabel2.setVisible(true);
+            pane1.add(jLabel2);
+            pane1.add(firstThrottleAddress);
+            jLabel3.setText("# Throttles");
+            jLabel3.setVisible(true);
+            pane1.add(jLabel3);
+            pane1.add(numberOfThrottles);
+            pane1.add(addThrottles);
+            pane1.add(delThrottles);
             pane1.add(Box.createVerticalGlue());
 
-            add10Throttles.addActionListener(new java.awt.event.ActionListener() {
+            addThrottles.addActionListener(new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    add10ThrottlesActionPerformed(e);
+                    addThrottlesActionPerformed(e);
                 }
             });
-            del10Throttles.addActionListener(new java.awt.event.ActionListener() {
+            delThrottles.addActionListener(new java.awt.event.ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    del10ThrottlesActionPerformed(e);
+                    delThrottlesActionPerformed(e);
                 }
             });
 
@@ -176,15 +188,15 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     private Thread abrty;
     private int throttleAddr = 300;
     private int ac = 0;
-    public void add10ThrottlesActionPerformed(java.awt.event.ActionEvent e) {
+    public void addThrottlesActionPerformed(java.awt.event.ActionEvent e) {
         int count=0;
         try {
-            throttleAddr = Integer.parseInt(throttleIdField.getText());
+            throttleAddr = (int) firstThrottleAddress.getValue();
         }
         catch (Exception e3) {
             log.error("Bother leaving it at[{}]",throttleAddr);
         }
-        while (count < 10) {
+        while (count < (int) numberOfThrottles.getValue()) {
             log.debug("requesting throttle address={}",  throttleAddr);
             boolean ok;
             ok = InstanceManager.throttleManagerInstance().requestThrottle(throttleAddr, this);
@@ -195,16 +207,18 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
             // try{Thread.sleep(20);} catch (Exception e2) {log.info("Ahh");}
             count++;
         }
+        firstThrottleAddress.setValue(throttleAddr);
         //try{Thread.sleep(2000);} catch (Exception e2) {log.info("Ahh2");}
         log.info("Start 300 Current[{}] Size[{}] nonnull[{}] ergo Throttles Good[{}",throttleAddr, throttles.size(),ac,throttleAddr-300 );
     }
 
-    public void del10ThrottlesActionPerformed(java.awt.event.ActionEvent e) {
-        int count = 10;
+    public void delThrottlesActionPerformed(java.awt.event.ActionEvent e) {
+        int count = (int) numberOfThrottles.getValue();
+        int startingDCC = (int) firstThrottleAddress.getValue();
         Iterator<DccThrottle> throttleList = throttles.iterator();
         while (throttleList.hasNext()) {
             DccThrottle item = throttleList.next();
-            if (item != null && item.getLocoAddress().getNumber() > 300 && item.getLocoAddress().getNumber() < 1000 ) {
+            if (item != null && item.getLocoAddress().getNumber() > (startingDCC -1) ) {
                 if ( count < 1) {
                     break;
                 }

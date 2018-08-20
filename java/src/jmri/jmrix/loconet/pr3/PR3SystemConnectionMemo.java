@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.pr3;
 
+import jmri.ConsistManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
@@ -7,6 +8,7 @@ import jmri.ThrottleManager;
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmrix.loconet.LnPowerManager;
 import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.LocoNetConsistManager;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.SlotManager;
