@@ -39,7 +39,7 @@ public class LocoNetSlot {
     }  // cannot modify the slot number once created
 
 /***
- * 
+ *
  * @return true if this is a systems slot else false
  */
     public boolean isSystemSlot() {

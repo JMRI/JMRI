@@ -50,7 +50,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
     //Added by Jeffrey Machacek 2013
     private final JButton clearAllButton = new JButton(Bundle.getMessage("ButtonSlotMonClearAll"));
     private final JButton refreshAllButton = new JButton(Bundle.getMessage("ButtonSlotRefresh"));
-    
+
     private SlotMonDataModel slotModel;
     private JTable slotTable;
     private JScrollPane slotScroll;
@@ -81,12 +81,12 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         showCommonCheckBox.setVisible(true);
         showCommonCheckBox.setSelected(false);
         showCommonCheckBox.setToolTipText(Bundle.getMessage("TooltipSlotMonShowCommon"));
-        
+
         showIdleCheckBox.setText(Bundle.getMessage("TextSlotMonShowIdle"));
         showIdleCheckBox.setVisible(true);
         showIdleCheckBox.setSelected(false);
         showIdleCheckBox.setToolTipText(Bundle.getMessage("TooltipSlotMonShowIdle"));
-        
+
         showFreeCheckBoxe.setText(Bundle.getMessage("TextSlotMonShowFree"));
         showFreeCheckBoxe.setVisible(true);
         showFreeCheckBoxe.setSelected(false);
