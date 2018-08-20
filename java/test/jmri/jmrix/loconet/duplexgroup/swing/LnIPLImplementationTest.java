@@ -512,7 +512,7 @@ public class LnIPLImplementationTest {
             m = new LocoNetMessage(msg);
             switch (dev) {
                 case 1:
-                   Assert.assertEquals ("Ipl Extract host name from device "+dev, "Digitrax (unknown device)", 
+                   Assert.assertEquals ("Ipl Extract host name from device "+dev, "Unknown Host Manufacturer/Device", 
                            iplImplementation.extractInterpretedIplHostDevice(m));
                    break;
                 case 4:
@@ -576,7 +576,7 @@ public class LnIPLImplementationTest {
                            iplImplementation.extractInterpretedIplHostDevice(m));
                    break;
                 default:
-                    Assert.assertEquals("Ipl Extract host name from device "+dev, "Digitrax (unknown device)",
+                    Assert.assertEquals("Ipl Extract host name from device "+dev, "Unknown Host Manufacturer/Device",
                             iplImplementation.extractInterpretedIplHostDevice(m));
                     break;
             }
@@ -591,7 +591,7 @@ public class LnIPLImplementationTest {
             m = new LocoNetMessage(msg);
             switch (dev) {
                 case 1:
-                   Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24", "Digitrax (unknown device)", 
+                   Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24", "Unknown Host Manufacturer/Device", 
                            iplImplementation.extractInterpretedIplHostDevice(m));
                    break;
                 case 4:
@@ -655,7 +655,7 @@ public class LnIPLImplementationTest {
                            iplImplementation.extractInterpretedIplHostDevice(m));
                    break;
                 default:
-                    Assert.assertEquals("Ipl Extract host name from device "+dev+", slave=24", "Digitrax (unknown device)",
+                    Assert.assertEquals("Ipl Extract host name from device "+dev+", slave=24", "Unknown Host Manufacturer/Device",
                             iplImplementation.extractInterpretedIplHostDevice(m));
                     break;
             }
@@ -670,7 +670,7 @@ public class LnIPLImplementationTest {
             m = new LocoNetMessage(msg);
             switch (dev) {
                 case 1:
-                   Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax (unknown device)", 
+                   Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Unknown Host Manufacturer/Device", 
                            iplImplementation.extractInterpretedIplHostDevice(m));
                    break;
                 case 4:
@@ -734,7 +734,7 @@ public class LnIPLImplementationTest {
                            iplImplementation.extractInterpretedIplHostDevice(m));
                    break;
                 default:
-                    Assert.assertEquals("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax (unknown device)",
+                    Assert.assertEquals("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Unknown Host Manufacturer/Device",
                             iplImplementation.extractInterpretedIplHostDevice(m));
                     break;
             }
@@ -749,7 +749,7 @@ public class LnIPLImplementationTest {
             m = new LocoNetMessage(msg);
             switch (dev) {
                 case 1:
-                   Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax (unknown device)", 
+                   Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Unknown Host Manufacturer/Device", 
                            iplImplementation.extractInterpretedIplHostDevice(m));
                    break;
                 case 4:
@@ -813,14 +813,431 @@ public class LnIPLImplementationTest {
                            iplImplementation.extractInterpretedIplHostDevice(m));
                    break;
                 default:
-                    Assert.assertEquals("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax (unknown device)",
+                    Assert.assertEquals("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Unknown Host Manufacturer/Device",
                             iplImplementation.extractInterpretedIplHostDevice(m));
                     break;
             }
         }
 
     }
+    
+    @Test
+    public void decodingTest() {
+        int original[] = {0xE5, 0x14, 0x0F, 0x10, 0, 0, 0, 0, 0, 0, 0, 
+            1, 0, 0, 0, 0, 0, 0, 0, 0};
+        LocoNetMessage msg = new LocoNetMessage(original);
+        Assert.assertFalse("Decoding Test 1 - isIplIdentityQuery",
+                iplImplementation.isIplIdentityQueryMessage(msg));
+        Assert.assertTrue("Decoding Test 1 - isIplIdentityReport",
+                iplImplementation.isIplIdentityReportMessage(msg));
+        msg.setElement(0, 0xE4);
+        Assert.assertFalse("Decoding Test 2 - isIplIdentityQuery",
+                iplImplementation.isIplIdentityQueryMessage(msg));
+        Assert.assertFalse("Decoding Test 2 - isIplIdentityReport",
+                iplImplementation.isIplIdentityReportMessage(msg));
+        msg.setElement(0, 0xE6);
+        Assert.assertFalse("Decoding Test 3 - isIplIdentityQuery",
+                iplImplementation.isIplIdentityQueryMessage(msg));
+        Assert.assertFalse("Decoding Test 3 - isIplIdentityReport",
+                iplImplementation.isIplIdentityReportMessage(msg));
+        msg.setElement(0, 0x64);
+        Assert.assertFalse("Decoding Test 4 - isIplIdentityQuery",
+                iplImplementation.isIplIdentityQueryMessage(msg));
+        Assert.assertFalse("Decoding Test 4 - isIplIdentityReport",
+                iplImplementation.isIplIdentityReportMessage(msg));
+        msg.setElement(0, 0x65);
+        Assert.assertFalse("Decoding Test 5 - isIplIdentityQuery",
+                iplImplementation.isIplIdentityQueryMessage(msg));
+        Assert.assertFalse("Decoding Test 5 - isIplIdentityReport",
+                iplImplementation.isIplIdentityReportMessage(msg));
 
+        msg = new LocoNetMessage(original);
+        msg.setElement(3, 8);
+        Assert.assertTrue("Decoding Test 6 - isIplIdentityQuery",
+                iplImplementation.isIplIdentityQueryMessage(msg));
+        Assert.assertFalse ("Decoding Test 6 - isIplIdentityReport",
+                iplImplementation.isIplIdentityReportMessage(msg));
+        msg.setElement(3, 0x18);
+        Assert.assertFalse("Decoding Test 7 - isIplIdentityQuery",
+                iplImplementation.isIplIdentityQueryMessage(msg));
+        Assert.assertFalse("Decoding Test 7 - isIplIdentityReport",
+                iplImplementation.isIplIdentityReportMessage(msg));
+        msg.setElement(3, 0x28);
+        Assert.assertFalse("Decoding Test 8 - isIplIdentityQuery",
+                iplImplementation.isIplIdentityQueryMessage(msg));
+        Assert.assertFalse("Decoding Test 8 - isIplIdentityReport",
+                iplImplementation.isIplIdentityReportMessage(msg));
+        msg.setElement(3, 0x07);
+        Assert.assertFalse("Decoding Test 9 - isIplIdentityQuery",
+                iplImplementation.isIplIdentityQueryMessage(msg));
+        Assert.assertFalse("Decoding Test 9 - isIplIdentityReport",
+                iplImplementation.isIplIdentityReportMessage(msg));
+        msg.setElement(3, 0x09);
+        Assert.assertFalse("Decoding Test 10 - isIplIdentityQuery",
+                iplImplementation.isIplIdentityQueryMessage(msg));
+        Assert.assertFalse("Decoding Test 10 - isIplIdentityReport",
+                iplImplementation.isIplIdentityReportMessage(msg));
+        
+        msg = new LocoNetMessage(original);
+        msg.setElement(2, 0xF);
+        Assert.assertFalse("Decoding Test 11 - isIplIdentityQuery",
+                iplImplementation.isIplIdentityQueryMessage(msg));
+        Assert.assertTrue ("Decoding Test 11 - isIplIdentityReport",
+                iplImplementation.isIplIdentityReportMessage(msg));
+        msg.setElement(3, 0xE);
+        Assert.assertFalse("Decoding Test 12 - isIplIdentityQuery",
+                iplImplementation.isIplIdentityQueryMessage(msg));
+        Assert.assertFalse("Decoding Test 12 - isIplIdentityReport",
+                iplImplementation.isIplIdentityReportMessage(msg));
+        msg.setElement(3, 0xd);
+        Assert.assertFalse("Decoding Test 13 - isIplIdentityQuery",
+                iplImplementation.isIplIdentityQueryMessage(msg));
+        Assert.assertFalse("Decoding Test 13 - isIplIdentityReport",
+                iplImplementation.isIplIdentityReportMessage(msg));
+        msg.setElement(3, 0xC);
+        Assert.assertFalse("Decoding Test 14 - isIplIdentityQuery",
+                iplImplementation.isIplIdentityQueryMessage(msg));
+        Assert.assertFalse("Decoding Test 14 - isIplIdentityReport",
+                iplImplementation.isIplIdentityReportMessage(msg));
+        msg.setElement(3, 0x07);
+        Assert.assertFalse("Decoding Test 15 - isIplIdentityQuery",
+                iplImplementation.isIplIdentityQueryMessage(msg));
+        Assert.assertFalse("Decoding Test 15 - isIplIdentityReport",
+                iplImplementation.isIplIdentityReportMessage(msg));
+        
+        msg = new LocoNetMessage(original);
+        msg.setElement(2, 0xF);
+        msg.setElement(3, 8);
+        Assert.assertTrue ("Decoding Test 16 - isIplIdentityQuery",
+                iplImplementation.isIplIdentityQueryMessage(msg));
+        Assert.assertFalse("Decoding Test 16 - isIplIdentityReport",
+                iplImplementation.isIplIdentityReportMessage(msg));
+        msg.setElement(3, 0xE);
+        Assert.assertFalse("Decoding Test 17 - isIplIdentityQuery",
+                iplImplementation.isIplIdentityQueryMessage(msg));
+        Assert.assertFalse("Decoding Test 17 - isIplIdentityReport",
+                iplImplementation.isIplIdentityReportMessage(msg));
+        msg.setElement(3, 0xd);
+        Assert.assertFalse("Decoding Test 18 - isIplIdentityQuery",
+                iplImplementation.isIplIdentityQueryMessage(msg));
+        Assert.assertFalse("Decoding Test 18 - isIplIdentityReport",
+                iplImplementation.isIplIdentityReportMessage(msg));
+        msg.setElement(3, 0xC);
+        Assert.assertFalse("Decoding Test 19 - isIplIdentityQuery",
+                iplImplementation.isIplIdentityQueryMessage(msg));
+        Assert.assertFalse("Decoding Test 19 - isIplIdentityReport",
+                iplImplementation.isIplIdentityReportMessage(msg));
+        msg.setElement(3, 0x07);
+        Assert.assertFalse("Decoding Test 20 - isIplIdentityQuery",
+                iplImplementation.isIplIdentityQueryMessage(msg));
+        Assert.assertFalse("Decoding Test 20 - isIplIdentityReport",
+                iplImplementation.isIplIdentityReportMessage(msg));
+    }
+    
+    @Test
+    public void checkInterpretHostManufacturerDevice() {
+        for (int dev = 0; dev < 128; ++dev) {
+            switch (dev) {
+                case 1:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0", 
+                           "Unknown Host Manufacturer/Device", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,0));
+                   break;
+                case 4:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0", 
+                           "Digitrax UT4(x)", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,0));
+                   break;
+                case 20:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0", 
+                           "Digitrax DB210Opto", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,0));
+                   break;
+                case 21:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0", 
+                           "Digitrax DB210", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,0));
+                   break;
+                case 22:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0", 
+                           "Digitrax DB220", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,0));
+                   break;
+                case 27:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0", 
+                           "Digitrax DCS210", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,0));
+                   break;
+                case 28:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0", 
+                           "Digitrax DCS240", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,0));
+                   break;
+                case 35:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0", 
+                           "Digitrax PR3", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,0));
+                   break;
+                case 36:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0", 
+                           "Digitrax PR4", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,0));
+                   break;
+                case 42:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0", 
+                           "Digitrax DT402(x)",
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,0));
+                   break;
+                case 50:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0", 
+                           "Digitrax DT500(x)",
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,0));
+                   break;
+                case 51:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0", 
+                           "Digitrax DCS51", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,0));
+                   break;
+                case 81:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0", 
+                           "Digitrax BXPA1", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,0));
+                   break;
+                case 88:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0", 
+                           "Digitrax BXP88", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,0));
+                   break;
+                case 92:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0", 
+                           "Digitrax UR92", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,0));
+                   break;
+                case 99:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0", 
+                           "Digitrax LNWI", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,0));
+                   break;
+                default:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0", 
+                            "Unknown Host Manufacturer/Device",
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,0));
+                    break;
+            }
+        }
+
+        for (int dev = 0; dev < 128; ++dev) {
+            switch (dev) {
+                case 1:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24", 
+                           "Unknown Host Manufacturer/Device", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,24));
+                   break;
+                case 4:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24", 
+                           "Digitrax UT4D", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,24));
+                   break;
+                case 20:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24", 
+                           "Digitrax DB210Opto", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,24));
+                   break;
+                case 21:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24", 
+                           "Digitrax DB210", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,24));
+                   break;
+                case 22:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24", 
+                           "Digitrax DB220", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,24));
+                   break;
+                case 27:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24", 
+                           "Digitrax DCS210", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,24));
+                   break;
+                case 28:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24", 
+                           "Digitrax DCS240", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,24));
+                   break;
+                case 35:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24", 
+                           "Digitrax PR3", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,24));
+                   break;
+                case 36:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24", 
+                           "Digitrax PR4", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,24));
+                   break;
+                case 42:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24", 
+                           "Digitrax DT402D",
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,24));
+                   break;
+                case 50:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24", 
+                           "Digitrax DT500D",
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,24));
+                   break;
+                case 51:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24", 
+                           "Digitrax DCS51", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,24));
+                   break;
+                case 81:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24", 
+                           "Digitrax BXPA1", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,24));
+                   break;
+                case 88:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24", 
+                           "Digitrax BXP88", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,24));
+                   break;
+                case 92:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24", 
+                           "Digitrax UR92", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,24));
+                   break;
+                case 99:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24", 
+                           "Digitrax LNWI", 
+                           iplImplementation.interpretHostManufacturerDevice(0,dev,0,24));
+                   break;
+                default:
+                    Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0", 
+                            "Unknown Host Manufacturer/Device",
+                            iplImplementation.interpretHostManufacturerDevice(0,dev,0,24));
+                    break;
+            }
+        }
+
+        for (int mfg = 1; mfg < 128; ++mfg) {
+            for (int dev = 0; dev < 128; ++dev) {
+                if (mfg == 87) {
+                    switch (dev) {
+                        case 11:
+                           Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: "+mfg+","+dev+",0,0", 
+                                    "RR-CirKits TC-64",
+                                   iplImplementation.interpretHostManufacturerDevice(mfg,dev,0,0));
+                            break;
+                        case 12:
+                           Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: "+mfg+","+dev+",0,0", 
+                                    "RR-CirKits LNCP",
+                                   iplImplementation.interpretHostManufacturerDevice(mfg,dev,0,0));
+                            break;
+                        case 21:
+                           Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: "+mfg+","+dev+",0,0", 
+                                    "RR-CirKits SignalMan",
+                                   iplImplementation.interpretHostManufacturerDevice(mfg,dev,0,0));
+                            break;
+                        case 22:
+                           Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: "+mfg+","+dev+",0,0", 
+                                    "RR-CirKits TowerMan",
+                                   iplImplementation.interpretHostManufacturerDevice(mfg,dev,0,0));
+                            break;
+                        case 23:
+                           Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: "+mfg+","+dev+",0,0", 
+                                    "RR-CirKits WatchMan",
+                                   iplImplementation.interpretHostManufacturerDevice(mfg,dev,0,0));
+                            break;
+                        case 24:
+                           Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: "+mfg+","+dev+",0,0", 
+                                    "RR-CirKits TC-64 Mk-II",
+                                   iplImplementation.interpretHostManufacturerDevice(mfg,dev,0,0));
+                            break;
+                        case 25:
+                           Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: "+mfg+","+dev+",0,0", 
+                                    "RR-CirKits MotorMan",
+                                   iplImplementation.interpretHostManufacturerDevice(mfg,dev,0,0));
+                            break;
+                        case 28:
+                           Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: "+mfg+","+dev+",0,0", 
+                                    "RR-CirKits MotorMan-II",
+                                   iplImplementation.interpretHostManufacturerDevice(mfg,dev,0,0));
+                            break;
+                        default:
+                           Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: "+mfg+","+dev+",0,0", 
+                                    "RR-CirKits (unknown device)",
+                                   iplImplementation.interpretHostManufacturerDevice(mfg,dev,0,0));
+                            break;
+                    }   
+                } else {
+                    switch (dev) {
+                        default:
+                           Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: "+mfg+","+dev+",0,0", 
+                                    "Unknown Host Manufacturer/Device",
+                                   iplImplementation.interpretHostManufacturerDevice(mfg,dev,0,0));
+                            break;
+                    }
+                }
+            }
+        }
+
+
+    }
+
+    @Test
+    public void testExtractIplReportInfo() {
+        int original[] = {0xE5, 0x14, 0x0F, 0x10, 0, 0, 0, 0, 0, 0, 0, 
+            1, 0, 0, 0, 0, 0, 0, 0, 0};
+        LocoNetMessage msg = new LocoNetMessage(original);
+        
+        for (int mfg = 0; mfg < 256; ++ mfg) {
+            msg.setElement(4, mfg&0x7f);
+            Assert.assertEquals("extractIplMfg "+msg, (mfg&0x7f), 
+                    (int)iplImplementation.extractIplIdentityHostManufacturer(msg));
+        }
+        
+        msg = new LocoNetMessage(original);
+        
+        for (int dev = 0; dev < 256; ++ dev) {
+            msg.setElement(5, dev&0x7f);
+            Assert.assertEquals("extractIplDev "+dev, dev&0x7f, 
+                    (int)iplImplementation.extractIplIdentityHostDevice(msg));
+        }
+        
+        msg = new LocoNetMessage(original);
+        
+        for (int slvMfg = 0; slvMfg < 256; ++ slvMfg) {
+            msg.setElement(7, slvMfg&0x7f);
+            Assert.assertEquals("extractIplDev "+slvMfg, slvMfg&0x7f, 
+                    (int)iplImplementation.extractIplIdentitySlaveManufacturer(msg));
+        }
+        
+        msg = new LocoNetMessage(original);
+        for (int slvDev = 0; slvDev < 256; ++ slvDev) {
+            msg.setElement(6, slvDev&0x7f);
+            Assert.assertEquals("extractIplDev "+slvDev, slvDev&0x7f, 
+                    (int)iplImplementation.extractIplIdentitySlaveDevice(msg));
+        }
+
+        msg = new LocoNetMessage(original);
+        for (int fwRev = 0; fwRev < 256; ++ fwRev) {
+            msg.setElement(8, fwRev&0x7f);
+            Assert.assertEquals("extractIplFwRevString "+Integer.toString(fwRev), 
+                    Integer.toString((fwRev&0x78)>>3)+"."+Integer.toString(fwRev & 0x7), 
+                    iplImplementation.extractIplIdentityHostFrimwareRev(msg));
+            Assert.assertEquals("extractIplFwRevNum "+Integer.toString(fwRev), 
+                    fwRev&0x7f, (int)iplImplementation.extractIplIdentityHostFrimwareRevNum(msg));
+        }
+
+        msg = new LocoNetMessage(original);
+        for (int swRev = 0; swRev < 256; ++ swRev) {
+            msg.setElement(9, ((swRev & 0x80) == 0x80) ? 1:0);
+            msg.setElement(10, swRev & 0x7f);            
+            Assert.assertEquals("extractIplSlaveRevNum "+Integer.toString(swRev), 
+                    swRev, (int)iplImplementation.extractIplIdentitySlaveFrimwareRevNum(msg));
+            Assert.assertEquals("extractIplSlaveFwRevString "+Integer.toString(swRev), 
+                    Integer.toString(swRev>>3)+"."+Integer.toString(swRev & 0x7), 
+                    iplImplementation.extractIplIdentitySlaveFrimwareRev(msg));
+        }
+
+    }
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -497,6 +497,13 @@ public final class LnConstants {
 // Below data is assumed, based on firmware files available from RR-Cirkits web site
     public final static int RE_IPL_MFR_RR_CIRKITS = 87;
     public final static int RE_IPL_RRCIRKITS_HOST_TC64 = 11;
+    public final static int RE_IPL_RRCIRKITS_HOST_LNCP = 12;
+    public final static int RE_IPL_RRCIRKITS_HOST_SIGNALMAN = 21;
+    public final static int RE_IPL_RRCIRKITS_HOST_TOWERMAN = 22;
+    public final static int RE_IPL_RRCIRKITS_HOST_WATCHMAN = 23;
+    public final static int RE_IPL_RRCIRKITS_HOST_TC64_MKII = 24;
+    public final static int RE_IPL_RRCIRKITS_HOST_MOTORMAN = 25;
+    public final static int RE_IPL_RRCIRKITS_HOST_MOTORMAN_II = 28;
     public final static int RE_IPL_RRCIRKITS_SLAVE_ALL = 00;
 
 // Constants associated with OPC_PEER_XFR for Duplex operations
