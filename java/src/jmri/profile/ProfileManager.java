@@ -133,6 +133,7 @@ public class ProfileManager extends Bean {
      *
      * @return the in use Profile or null if there is no Profile in use
      */
+    @Nonnull
     public Profile getActiveProfile() {
         if (activeProfile == null) {
             throw new NullPointerException("activeProfile is null");
@@ -150,6 +151,7 @@ public class ProfileManager extends Bean {
      * @return the name of the active profile or null if there is no active
      *         profile
      */
+    @Nonnull
     public String getActiveProfileName() {
         if (activeProfile == null) {
             throw new NullPointerException("activeProfile is null");

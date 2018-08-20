@@ -413,13 +413,14 @@ public class NodeIdentity {
         String uniqueId = "-";
         try {
             uniqueId += ProfileManager.getDefault().getActiveProfile().getUniqueId();
-        } catch (NullPointerException ex) {
+        } catch (NullPointerException ex) { // because there is no active profile
             uniqueId += ProfileManager.createUniqueId();
+            log.debug("created uniqueID \"{}\" because of there (probably) is no active profile", uniqueId);
         }
         List<String> formerIdList = NodeIdentity.formerIdentities();
         int listSize = formerIdList.size();
         if (listSize < 1) {
-            log.warn("Unable to copy from a former identity; no former identities found.");
+            log.debug("Unable to copy from a former identity; no former identities found.");
             return false;
         }
         log.debug("{} former identies found", listSize);
