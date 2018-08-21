@@ -78,6 +78,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     private javax.swing.Timer swingTmrDuplexInfoQuery;
     private boolean waitingForIplReply;
     private boolean gotQueryReply;
+    private int messagesHandled;
 
     LnDplxGrpInfoImpl thisone;
 
@@ -85,12 +86,9 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
         super();
         thisone = this;
 
-        finishInitialization(LNCMemo);
-    }
-
-    private void finishInitialization(LocoNetSystemConnectionMemo LNCMemo) {
-
         memo = LNCMemo;
+
+        messagesHandled = 0;
 
         // connect to the LnTrafficController
         connect(memo.getLnTrafficController());
@@ -138,7 +136,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
         acceptedGroupChannel = "";
         acceptedGroupPassword = "";
         acceptedGroupId = "";
-
+        
     }
 
     /**
@@ -700,6 +698,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      */
     @Override
     public void message(LocoNetMessage m) {
+        messagesHandled++;
 
         if (handleMessageIplResult(m)) {
             return;
@@ -1138,6 +1137,60 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
         return m;
     }
 
+    /**
+     * Reports the number of UR92 devices which responded to the most-recent 
+     * LocoNet IPL query of UR92 devices.
+     * <p>
+     * Note that code should ignore the value returned by this method
+     * if isWaitingForUr92DeviceReports() is true;
+     * <p>
+     * @return the number of UR92 devices which reported in response to the 
+     *      LocoNet IPL device query which is sent by this class.
+     */
+    public int getNumUr92s() {
+        return numUr92;
+    }
+    
+    /**
+     * Reports whether this class is currently waiting for LocoNet IPL Device
+     * Report messages in response to a LocoNet IPL Device Query for UR92s sent
+     * by this class.
+     * <p>
+     * @return true if the class is waiting for LocoNet IPL reply messages, else 
+     *      false.
+     */
+    public boolean isWaitingForUr92DeviceReports() {
+        return waitingForIplReply;
+    }
+    
+
+    /**
+     * Reports the number of LocoNet messages handled since object construction.
+     * <p>
+     * @return the number of LocoNet messages since this object was constructed.
+     */
+    public int getMessagesHandled() {
+        return messagesHandled;
+    }
+    
+    /**
+     * Reports whether the IPL query timer is running.
+     * <p>
+     * @return true if the timer is running, else false.
+     */
+    public boolean isIplQueryTimerRunning() {
+        return swingTmrIplQuery.isRunning();
+    }
+    
+    /**
+     * Reports whether the Duplex Group Info query timer is running.
+     * <p>
+     * @return true if the timer is running, else false.
+     */
+    public boolean isDuplexGroupQueryRunning() {
+        return swingTmrDuplexInfoQuery.isRunning();
+    }
+    
     // Property Change keys relating to GUI status line
     public final static String DPLX_PC_STAT_LN_UPDATE = "DPLXPCK_STAT_LN_UPDATE"; // NOI18N
     public final static String DPLX_PC_STAT_LN_UPDATE_IF_NOT_CURRENTLY_ERROR = "DPLXPCK_STAT_LN_ON_OVER_UPDATE"; // NOI18N
