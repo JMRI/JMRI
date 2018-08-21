@@ -33,6 +33,7 @@ public class DefaultShutDownManagerTest {
         DefaultShutDownManager dsdm = new DefaultShutDownManager();
         List<?> tasks = this.exposeTasks(dsdm);
         Assert.assertEquals(0, tasks.size());
+        Assert.assertEquals(0, dsdm.tasks().size());
         ShutDownTask task = new QuietShutDownTask("task") {
             @Override
             public boolean execute() {
@@ -41,8 +42,10 @@ public class DefaultShutDownManagerTest {
         };
         dsdm.register(task);
         Assert.assertEquals(1, tasks.size());
+        Assert.assertEquals(1, dsdm.tasks().size());
         dsdm.register(task);
         Assert.assertEquals(1, tasks.size());
+        Assert.assertEquals(1, dsdm.tasks().size());
         try {
             dsdm.register(null);
             Assert.fail("Expected NullPointerException not thrown");

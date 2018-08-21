@@ -1,33 +1,18 @@
 package jmri.util;
 
-import apps.gui.GuiLafPreferencesManager;
-import apps.tests.Log4JFixture;
 import java.awt.Frame;
 import java.awt.Window;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
+import java.util.*;
 import javax.annotation.Nonnull;
-import jmri.ConditionalManager;
-import jmri.ConfigureManager;
-import jmri.GlobalProgrammerManager;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.LogixManager;
-import jmri.MemoryManager;
-import jmri.NamedBean;
-import jmri.PowerManager;
-import jmri.PowerManagerScaffold;
-import jmri.ReporterManager;
-import jmri.RouteManager;
-import jmri.ShutDownManager;
-import jmri.SignalHeadManager;
-import jmri.SignalMastLogicManager;
-import jmri.SignalMastManager;
-import jmri.TurnoutOperationManager;
-import jmri.UserPreferencesManager;
+
+import apps.gui.GuiLafPreferencesManager;
+import apps.tests.Log4JFixture;
+
+import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
@@ -52,6 +37,7 @@ import jmri.progdebugger.DebugProgrammerManager;
 import jmri.util.prefs.JmriConfigurationProvider;
 import jmri.util.prefs.JmriPreferencesProvider;
 import jmri.util.prefs.JmriUserInterfaceConfigurationProvider;
+
 import org.junit.Assert;
 import org.netbeans.jemmy.FrameWaiter;
 import org.netbeans.jemmy.TestOut;
@@ -476,6 +462,26 @@ public class JUnitUtil {
         }
     }
 
+    /**
+     * Leaves ShutDownManager, if any, in place,
+     * but removes its contents.
+     * {@see #initShutDownManager()}
+     */
+    public static void clearShutDownManager() {
+        ShutDownManager sm = InstanceManager.getNullableDefault(jmri.ShutDownManager.class);
+        if (sm == null) return;
+        List<ShutDownTask> list = sm.tasks();
+        while (list != null && list.size() > 0) {
+            sm.deregister(list.get(0));
+            list = sm.tasks();  // avoid ConcurrentModificationException
+        }
+    }
+
+    /**
+     * Creates a new ShutDownManager.
+     * Does not remove the contents (i.e. kill the future actions) of any existing ShutDownManager.
+     * {@see #clearShutDownManager()}
+     */
     public static void initShutDownManager() {
         if (InstanceManager.getNullableDefault(ShutDownManager.class) == null) {
             InstanceManager.setDefault(ShutDownManager.class, new MockShutDownManager());
