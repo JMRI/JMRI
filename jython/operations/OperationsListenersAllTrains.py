@@ -11,14 +11,14 @@ import jmri
 # First, define the listener.  This one just prints some
 # information on the change, but more complicated code is
 # of course possible.
-class MyListener(PropertyChangeListener):    
+class MyListener(PropertyChangeListener):
   def propertyChange(self, event):
     print " "   # add a line between updates to make it easier to read
     print "Train name:",event.source.getName()
     print "Train id:",event.source.getId()
     print "Train status:",event.source.getStatus()
-    print "Change:", event.propertyName," from: ",event.oldValue," to: ",event.newValue 
-    
+    print "Change:", event.propertyName," from: ",event.oldValue," to: ",event.newValue
+
     # Some sample code
     # Get the train and show if it was built.
     # And if not built if it has been terminated.
@@ -26,20 +26,20 @@ class MyListener(PropertyChangeListener):
     tm = jmri.jmrit.operations.trains.TrainManager.instance()
     train = tm.getTrainById(trainId)
     if (train.isBuilt() == True):
-    	print "Train", train.getName(), "is built"
+        print "Train", train.getName(), "is built"
         # the train move complete property change was added in jmri version 3.2
         if (event.propertyName == jmri.jmrit.operations.trains.Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY):
             print "Cars in train:", train.getNumberCarsInTrain()
             print "Train length:", train.getTrainLength()
             print "Train weight:", train.getTrainWeight()
-    else: 
-   		print "Train", train.getName(), "not built"
-    
+    else:
+        print "Train", train.getName(), "not built"
+
     # determine using property change if train has just been built
     if (event.propertyName == jmri.jmrit.operations.trains.Train.BUILT_CHANGED_PROPERTY and event.newValue == "true"):
         print "Train", train.getName(), "built status changed to true"
 
-class listenAllTrains(jmri.jmrit.automat.AbstractAutomaton) :      
+class listenAllTrains(jmri.jmrit.automat.AbstractAutomaton) :
   def init(self):
     # get the train manager
     self.tm = jmri.jmrit.operations.trains.TrainManager.instance()
