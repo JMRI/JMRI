@@ -229,6 +229,89 @@ public class JUnitUtil {
     }
 
     /**
+     * Wait for a specific condition to be true, without having to wait longer
+     * <p>
+     * To be used in tests, will do an assert if the total delay is longer than
+     * 1 second
+     * <p>
+     * Typical use:
+     * <code>JUnitUtil.fasterWaitFor(()->{return replyVariable != null;},"reply not received")</code>
+     *
+     * @param condition condition being waited for
+     * @param name      name of condition being waited for; will appear in
+     *                  Assert.fail if condition not true fast enough
+     */
+    static public void fasterWaitFor(ReleaseUntil condition, String name) {
+        if (javax.swing.SwingUtilities.isEventDispatchThread()) {
+            log.error("Cannot use waitFor on Swing thread", new Exception());
+            return;
+        }
+        int delay = 0;
+        try {
+            while (delay < 1000) {
+                if (condition.ready()) {
+                    return;
+                }
+                int priority = Thread.currentThread().getPriority();
+                try {
+                    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+                    Thread.sleep(5);
+                    delay += 5;
+                } catch (InterruptedException e) {
+                    Assert.fail("failed due to InterruptedException");
+                } finally {
+                    Thread.currentThread().setPriority(priority);
+                }
+            }
+            Assert.fail("\"" + name + "\" did not occur in time");
+        } catch (Exception ex) {
+            Assert.fail("Exception while waiting for \"" + name + "\" " + ex);
+        }
+    }
+
+    /**
+     * Wait at most 1 second for a specific condition to be true, without having to wait longer
+     * <p>
+     * To be used in assumptions, will return false if the total delay is longer
+     * than 1000 milliseconds.
+     * <p>
+     * Typical use:
+     * <code>Assume.assumeTrue("reply not received", JUnitUtil.fasterWaitForTrue(()->{return replyVariable != null;}));</code>
+     *
+     * @param condition condition to wait for
+     * @return true if condition is met before 1 second, false
+     *         otherwise
+     */
+    static public boolean fasterWaitFor(ReleaseUntil condition) {
+        if (javax.swing.SwingUtilities.isEventDispatchThread()) {
+            log.error("Cannot use waitFor on Swing thread", new Exception());
+            return false;
+        }
+        int delay = 0;
+        try {
+            while (delay < 1000) {
+                if (condition.ready()) {
+                    return true;
+                }
+                int priority = Thread.currentThread().getPriority();
+                try {
+                    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+                    Thread.sleep(5);
+                    delay += 5;
+                } catch (InterruptedException e) {
+                    return false;
+                } finally {
+                    Thread.currentThread().setPriority(priority);
+                }
+            }
+            return false;
+        } catch (Exception ex) {
+            log.error("Exception in waitFor condition.", ex);
+            return false;
+        }
+    }
+
+    /**
      * Reset the user files path in the default
      * {@link jmri.util.FileUtilSupport} object (used by
      * {@link jmri.util.FileUtil}) to the default settings/user files path for
