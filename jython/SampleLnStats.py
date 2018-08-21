@@ -63,13 +63,13 @@ class SampleLnStats(jmri.jmrit.automat.AbstractAutomaton) :
 
         # if the LocoBuffer wasn't read, that's a special case
         if ( nowErrors == -1 or self.lastErrors == -1) :
-        	delErrors = -1
+            delErrors = -1
         else :
-        	delErrors = nowErrors - self.lastErrors
+            delErrors = nowErrors - self.lastErrors
         if ( nowBreaks == -1 or self.lastBreaks == -1) :
-        	delBreaks = -1
+            delBreaks = -1
         else :
-        	delBreaks = nowBreaks - self.lastBreaks
+            delBreaks = nowBreaks - self.lastBreaks
 
         # get the current values for traffic
         nowReceivedMsgs = self.trafficController.getReceivedMsgCount()

@@ -65,4 +65,3 @@ for i in range(list.size()) :
     sensors.getSensor(list.get(i)).addPropertyChangeListener(listener)
 
 
- 
