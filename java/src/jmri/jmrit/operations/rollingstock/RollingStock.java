@@ -398,7 +398,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         String oldImagePath = _ImagePath;
         _ImagePath = imagePath;
         if (!oldImagePath.contentEquals(imagePath)) {
-            setDirtyAndFirePropertyChange("car hazardous", oldImagePath, imagePath); // NOI18N
+            setDirtyAndFirePropertyChange("image path", oldImagePath, imagePath); // NOI18N
         }
     }
 

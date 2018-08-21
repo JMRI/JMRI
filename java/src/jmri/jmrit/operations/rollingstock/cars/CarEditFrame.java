@@ -465,8 +465,10 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 
         commentTextField.setText(car.getComment());
         
-        carImage.setImagePath(car.getImagePath());
-        
+        if (FileUtil.getAbsoluteFilename(car.getImagePath()) != null ) {
+            carImage.setImagePath(FileUtil.getAbsoluteFilename(car.getImagePath()));
+        }
+
         valueTextField.setText(car.getValue());
         rfidComboBox.setSelectedItem(car.getIdTag());
         autoTrackCheckBox.setEnabled(true);

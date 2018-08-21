@@ -591,7 +591,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case WAIT_COLUMN:
             case VALUE_COLUMN:
             case RFID_COLUMN:
-            //case PICTURE_COLUMN:
+            case PICTURE_COLUMN:
                 return true;
             default:
                 return false;

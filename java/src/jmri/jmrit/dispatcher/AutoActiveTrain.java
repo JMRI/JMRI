@@ -623,11 +623,10 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     protected synchronized void setupNewCurrentSignal(AllocatedSection as) {
+        removeCurrentSignal();
         if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
-            removeCurrentSignal();
             SignalHead sh = _lbManager.getFacingSignalHead(_currentBlock, _nextBlock);
             if (sh != null) {
-                // we know we have a new signal, so remove old.
                 _controllingSignal = sh;
                 _conSignalProtectedBlock = _nextBlock;
                 sh.addPropertyChangeListener(_conSignalListener = (PropertyChangeEvent e) -> {
@@ -669,8 +668,6 @@ public class AutoActiveTrain implements ThrottleListener {
                 }
             }
             if (sm != null) {
-                // we know we have a new signal, so remove old.
-                removeCurrentSignal();
                 _controllingSignalMast = sm;
                 _conSignalProtectedBlock = nB;
                 sm.addPropertyChangeListener(_conSignalMastListener = (PropertyChangeEvent e) -> {
@@ -758,6 +755,7 @@ public class AutoActiveTrain implements ThrottleListener {
 
     // called by above or when resuming after stopped action
     protected synchronized void setSpeedBySignal() {
+        log.debug("Set Speed by Signal");
         if (_pausingActive || ((_activeTrain.getStatus() != ActiveTrain.RUNNING)
                 && (_activeTrain.getStatus() != ActiveTrain.WAITING)) || ((_controllingSignal == null)
                 && InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD)
