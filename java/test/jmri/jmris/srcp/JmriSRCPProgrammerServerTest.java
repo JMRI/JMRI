@@ -26,7 +26,7 @@ public class JmriSRCPProgrammerServerTest{
     }
 
     @Before
-    protected void setUp() {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
         
         jmri.util.JUnitUtil.resetInstanceManager();
