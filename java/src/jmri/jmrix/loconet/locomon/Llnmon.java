@@ -570,6 +570,12 @@ public class Llnmon {
                         locoAddress);
             }
 
+            case LnConstants.OPC_EXP_REQ_SLOT: {
+                String locoAddress = convertToMixed(l.getElement(2), l.getElement(1));
+                return Bundle.getMessage("LN_MSG_REQ_EXP_SLOT_FOR_ADDR",
+                        locoAddress);
+            }
+
             /*
              * OPC_SW_ACK       0xBD   ; REQ SWITCH WITH acknowledge function (not DT200)
              *                         ; Follow on message: LACK
@@ -1028,7 +1034,6 @@ public class Llnmon {
 
             case LnConstants.OPC_ALM_WRITE:
             case LnConstants.OPC_ALM_READ: {
-                
                 if (l.getElement(1) == 0x10) {
 
                     if ((l.getElement(2) == 0)
@@ -2973,14 +2978,37 @@ public class Llnmon {
             return "";
         }
 
-        /* check special cases */
+        boolean isSettingStatus = ((l.getElement(3) & 0b01110000) == 0b01100000);
+        if (isSettingStatus) {
+            int stat = l.getElement(4);
+            return Bundle.getMessage("LN_MSG_OPC_EXP_SET_STATUS",
+                    src,
+                    LnConstants.CONSIST_STAT(stat),
+                    LnConstants.LOCO_STAT(stat),
+                    LnConstants.DEC_MODE(stat));
+        }
+        boolean isUnconsisting = ((l.getElement(3) & 0b01110000) == 0b01010000);
+        if (isUnconsisting) {
+            // source and dest same, returns slot contents
+            int stat = l.getElement(4);
+            return Bundle.getMessage("LN_MSG_OPC_EXP_UNCONSISTING",
+                    src);
+        }
+        boolean isConsisting = ((l.getElement(3) & 0b01110000) == 0b01000000);
+        if (isConsisting) {
+            //add dest to src, returns dest slot contents
+            int stat = l.getElement(4);
+            return Bundle.getMessage("LN_MSG_OPC_EXP_CONSISTING",
+                    src,dest);
+        }
+       /* check special cases */
         if (src == 0) {
             /* DISPATCH GET */
-
+            // maybe
             return Bundle.getMessage("LN_MSG_MOVE_SL_GET_DISP");
         } else if (src == dest) {
             /* IN USE */
-
+            // correct
             return Bundle.getMessage("LN_MSG_MOVE_SL_NULL_MOVE", src);
         } else if (dest == 0) {
             /* DISPATCH PUT */

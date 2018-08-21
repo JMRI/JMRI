@@ -33,8 +33,8 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
      * Controls whether not-in-use slots are shown
      */
     protected final JCheckBox showUnusedCheckBox = new JCheckBox();
-    /** 
-     * Controls individual statuses to be displaye
+    /**
+     * Controls individual statuses to be displayed
      */
     protected final JCheckBox showCommonCheckBox = new JCheckBox();
     protected final JCheckBox showInUseCheckBox = new JCheckBox();

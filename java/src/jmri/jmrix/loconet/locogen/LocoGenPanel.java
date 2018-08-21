@@ -207,6 +207,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
             // try{Thread.sleep(20);} catch (Exception e2) {log.info("Ahh");}
             count++;
         }
+        firstThrottleAddress.setValue(throttleAddr);
         //try{Thread.sleep(2000);} catch (Exception e2) {log.info("Ahh2");}
         log.info("Start 300 Current[{}] Size[{}] nonnull[{}] ergo Throttles Good[{}",throttleAddr, throttles.size(),ac,throttleAddr-300 );
     }

@@ -241,7 +241,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         if (!extendedSlots ) {
             m.setOpCode(LnConstants.OPC_LOCO_ADR);  // OPC_LOCO_ADR
         } else {
-            m.setOpCode(0xbe);  // OPC_LOCO_ADR_EXT - Extended slot
+            m.setOpCode(LnConstants.OPC_EXP_REQ_SLOT); //  Extended slot
         }
         m.setElement(1, (i / 128) & 0x7F);
         m.setElement(2, i & 0x7F);

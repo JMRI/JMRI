@@ -3,6 +3,7 @@ package jmri.jmrix.loconet;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.List;
+import jmri.jmrix.loconet.locomon.Bundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -379,21 +380,25 @@ public class LocoNetSlot {
                 notifySlotListeners();
                 break;
             case LnConstants.OPC_EXP_SLOT_MOVE:
-                // null move or change status if byte 1 bits 5-3 on
-                if ((l.getElement(1) & 0b11111000 ) == 0b00111000 ) {
-                    if (( l.getElement(3) & 0b01100010) == 0b01100000) {
-                        // new status in byte 4 update status
+                int src = slot;
+                int dest = ((l.getElement(3) & 0x07) * 128) + (l.getElement(4) & 0x7f);
+                // null move or change status or consisting or?
+                if ((l.getElement(1) & 0b11111000) == 0b00111000) {
+                    if (((l.getElement(3) & 0b01110000) == 0b01100000)) {
                         stat = l.getElement(4);
-                    } else if (( l.getElement(3) & 0b0110010) == 0b00000010) {
-                        // add loco in slot 1 to top slot 2
-                        // there will be a status response.
-                        log.info("Prep for consisting");
+                    } else if ((l.getElement(3) & 0b01110000) == 0b01010000) {
+                        // unconsisting returns slot contents so do nothing to this slot
+                        //TODO set dest slot to top/mid etc
+
+                    } else if ((l.getElement(3) & 0b01110000) == 0b01000000) {
+                        //consisting do something?
+                        //TODO
+                    } else if (src == 0 && dest == 0) {
+                        stat = stat & ~LnConstants.LOCO_IN_USE;
+                        log.info("set idle");
                     } else {
-                        // slot move slot zero = dispatch same slot is null move
-                        if (l.getElement(3) == 0 && l.getElement(4) == 0) {
-                            stat = stat & ~LnConstants.LOCO_IN_USE;
-                            log.info("set idle");
-                        }
+                        // a real move slot
+                        // should read both slots
                     }
                 }
                 notifySlotListeners();
