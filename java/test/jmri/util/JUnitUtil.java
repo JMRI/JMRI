@@ -1,33 +1,18 @@
 package jmri.util;
 
-import apps.gui.GuiLafPreferencesManager;
-import apps.tests.Log4JFixture;
 import java.awt.Frame;
 import java.awt.Window;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
+import java.util.*;
 import javax.annotation.Nonnull;
-import jmri.ConditionalManager;
-import jmri.ConfigureManager;
-import jmri.GlobalProgrammerManager;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.LogixManager;
-import jmri.MemoryManager;
-import jmri.NamedBean;
-import jmri.PowerManager;
-import jmri.PowerManagerScaffold;
-import jmri.ReporterManager;
-import jmri.RouteManager;
-import jmri.ShutDownManager;
-import jmri.SignalHeadManager;
-import jmri.SignalMastLogicManager;
-import jmri.SignalMastManager;
-import jmri.TurnoutOperationManager;
-import jmri.UserPreferencesManager;
+
+import apps.gui.GuiLafPreferencesManager;
+import apps.tests.Log4JFixture;
+
+import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
@@ -52,6 +37,7 @@ import jmri.progdebugger.DebugProgrammerManager;
 import jmri.util.prefs.JmriConfigurationProvider;
 import jmri.util.prefs.JmriPreferencesProvider;
 import jmri.util.prefs.JmriUserInterfaceConfigurationProvider;
+
 import org.junit.Assert;
 import org.netbeans.jemmy.FrameWaiter;
 import org.netbeans.jemmy.TestOut;
@@ -104,7 +90,7 @@ public class JUnitUtil {
         // ideally this would be false, true to force an error if an earlier
         // test left a window open, but different platforms seem to have just
         // enough differences that this is, for now, only emitting a warning
-        resetWindows(true, false);
+        resetWindows(false, false);
         resetInstanceManager();
     }
 
@@ -113,7 +99,7 @@ public class JUnitUtil {
      * annotated method.
      */
     public static void tearDown() {
-        resetWindows(true, false); // warn
+        resetWindows(false, false);
         resetInstanceManager();
         Log4JFixture.tearDown();
     }
@@ -243,6 +229,89 @@ public class JUnitUtil {
     }
 
     /**
+     * Wait for a specific condition to be true, without having to wait longer
+     * <p>
+     * To be used in tests, will do an assert if the total delay is longer than
+     * 1 second
+     * <p>
+     * Typical use:
+     * <code>JUnitUtil.fasterWaitFor(()->{return replyVariable != null;},"reply not received")</code>
+     *
+     * @param condition condition being waited for
+     * @param name      name of condition being waited for; will appear in
+     *                  Assert.fail if condition not true fast enough
+     */
+    static public void fasterWaitFor(ReleaseUntil condition, String name) {
+        if (javax.swing.SwingUtilities.isEventDispatchThread()) {
+            log.error("Cannot use waitFor on Swing thread", new Exception());
+            return;
+        }
+        int delay = 0;
+        try {
+            while (delay < 1000) {
+                if (condition.ready()) {
+                    return;
+                }
+                int priority = Thread.currentThread().getPriority();
+                try {
+                    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+                    Thread.sleep(5);
+                    delay += 5;
+                } catch (InterruptedException e) {
+                    Assert.fail("failed due to InterruptedException");
+                } finally {
+                    Thread.currentThread().setPriority(priority);
+                }
+            }
+            Assert.fail("\"" + name + "\" did not occur in time");
+        } catch (Exception ex) {
+            Assert.fail("Exception while waiting for \"" + name + "\" " + ex);
+        }
+    }
+
+    /**
+     * Wait at most 1 second for a specific condition to be true, without having to wait longer
+     * <p>
+     * To be used in assumptions, will return false if the total delay is longer
+     * than 1000 milliseconds.
+     * <p>
+     * Typical use:
+     * <code>Assume.assumeTrue("reply not received", JUnitUtil.fasterWaitForTrue(()->{return replyVariable != null;}));</code>
+     *
+     * @param condition condition to wait for
+     * @return true if condition is met before 1 second, false
+     *         otherwise
+     */
+    static public boolean fasterWaitFor(ReleaseUntil condition) {
+        if (javax.swing.SwingUtilities.isEventDispatchThread()) {
+            log.error("Cannot use waitFor on Swing thread", new Exception());
+            return false;
+        }
+        int delay = 0;
+        try {
+            while (delay < 1000) {
+                if (condition.ready()) {
+                    return true;
+                }
+                int priority = Thread.currentThread().getPriority();
+                try {
+                    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+                    Thread.sleep(5);
+                    delay += 5;
+                } catch (InterruptedException e) {
+                    return false;
+                } finally {
+                    Thread.currentThread().setPriority(priority);
+                }
+            }
+            return false;
+        } catch (Exception ex) {
+            log.error("Exception in waitFor condition.", ex);
+            return false;
+        }
+    }
+
+    /**
      * Reset the user files path in the default
      * {@link jmri.util.FileUtilSupport} object (used by
      * {@link jmri.util.FileUtil}) to the default settings/user files path for
@@ -313,7 +382,7 @@ public class JUnitUtil {
 
     public static void resetTurnoutOperationManager() {
         InstanceManager.reset(TurnoutOperationManager.class);
-        TurnoutOperationManager.getDefault();
+        InstanceManager.getDefault(TurnoutOperationManager.class); // force creation
     }
 
     public static void initConfigureManager() {
@@ -476,6 +545,26 @@ public class JUnitUtil {
         }
     }
 
+    /**
+     * Leaves ShutDownManager, if any, in place,
+     * but removes its contents.
+     * {@see #initShutDownManager()}
+     */
+    public static void clearShutDownManager() {
+        ShutDownManager sm = InstanceManager.getNullableDefault(jmri.ShutDownManager.class);
+        if (sm == null) return;
+        List<ShutDownTask> list = sm.tasks();
+        while (list != null && list.size() > 0) {
+            sm.deregister(list.get(0));
+            list = sm.tasks();  // avoid ConcurrentModificationException
+        }
+    }
+
+    /**
+     * Creates a new ShutDownManager.
+     * Does not remove the contents (i.e. kill the future actions) of any existing ShutDownManager.
+     * {@see #clearShutDownManager()}
+     */
     public static void initShutDownManager() {
         if (InstanceManager.getNullableDefault(ShutDownManager.class) == null) {
             InstanceManager.setDefault(ShutDownManager.class, new MockShutDownManager());

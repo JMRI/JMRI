@@ -61,7 +61,8 @@ public class AudioTableActionTest extends AbstractTableActionBase {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        a = new AudioTableAction();
+        helpTarget = "package.jmri.jmrit.beantable.AudioTable";
+	a = new AudioTableAction();
     }
 
     @After

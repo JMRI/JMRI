@@ -115,8 +115,9 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
 
     @After
     public void tearDown() {
+        jmri.util.JUnitUtil.clearShutDownManager();
         jmri.util.JUnitUtil.resetInstanceManager();
-        JUnitUtil.tearDown();
+        apps.tests.Log4JFixture.tearDown();
     }
 
 

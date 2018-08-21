@@ -13,21 +13,16 @@ import org.slf4j.LoggerFactory;
  */
 
 public class CMRInetMetricsCollector implements SerialListener {
-
-    /**
-     * Add metrics listener to the SerialTrafficController
-     */
-    private CMRISystemConnectionMemo _memo = null; 
     
     /**
      * Collected data instance
      */
     private CMRInetMetricsData _data = new CMRInetMetricsData();
     
-    public CMRInetMetricsCollector(CMRISystemConnectionMemo memo) {
-        super();
-        _memo = memo;        
-    }
+    //public CMRInetMetricsCollector(CMRISystemConnectionMemo memo) { // memo unused?
+    //    super();
+    //}
+    
     public CMRInetMetricsCollector() {
 
         _data.clearAllErrMetrics();
@@ -138,7 +133,5 @@ public class CMRInetMetricsCollector implements SerialListener {
        }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CMRInetMetricsCollector.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(CMRInetMetricsCollector.class.getName());
 }
-
-/* @(#)CMRInetMetricsCollector.java */

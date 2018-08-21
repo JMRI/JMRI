@@ -1,6 +1,7 @@
 package jmri.jmrix.secsi;
 
 import jmri.implementation.AbstractTurnoutTestBase;
+import jmri.util.JUnitUtil;
 import org.junit.Before;
 
 /**
@@ -15,6 +16,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     @Before
     @Override
     public void setUp() {
+        JUnitUtil.setUp();
         // prepare an interface
         SecsiSystemConnectionMemo memo = new SecsiSystemConnectionMemo();
         tcis = new SerialTrafficControlScaffold(memo);

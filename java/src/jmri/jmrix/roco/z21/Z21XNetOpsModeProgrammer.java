@@ -11,6 +11,10 @@ import jmri.jmrix.lenz.XNetListener;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetTrafficController;
+import jmri.jmrix.loconet.LnConstants;
+import jmri.jmrix.loconet.LocoNetListener;
+import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.LnTrafficController;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,15 +26,41 @@ import org.slf4j.LoggerFactory;
  * @see jmri.Programmer
  * @author Paul Bender Copyright (C) 2018
  */
-public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgrammer implements XNetListener, AddressedProgrammer {
+public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgrammer implements XNetListener, AddressedProgrammer, LocoNetListener {
 
     private int _cv;
+    private LnTrafficController lnTC;
 
     public Z21XNetOpsModeProgrammer(int pAddress, XNetTrafficController controller) {
+        this(pAddress,controller,null);
+    }
+
+    public Z21XNetOpsModeProgrammer(int pAddress, XNetTrafficController controller,LnTrafficController lntc) {
         super(pAddress,controller);
         // connect to listen
         controller.addXNetListener(~0,
                 this);
+        lnTC = lntc;
+        if(lnTC!=null) {
+           lnTC.addLocoNetListener(~0,this);
+        }
+    }
+
+    /**
+     * Send an ops-mode write request to the Xpressnet.
+     */
+    @Override
+    synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
+        XNetMessage msg = XNetMessage.getWriteOpsModeCVMsg(mAddressHigh, mAddressLow, CV, val);
+        msg.setBroadcastReply(); // reply comes through a loconet message.
+        tc.sendXNetMessage(msg, this);
+        /* we need to save the programer and value so we can send messages 
+         back to the screen when the programming screen when we receive
+         something from the command station */
+        progListener = p;
+        value = val;
+        progState = REQUESTSENT;
+        restartTimer(msg.getTimeout());
     }
 
     @Override
@@ -116,7 +146,60 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
         }
     }
 
+    /**
+     *   {@inheritDoc}
+     */
+    @Override
+    synchronized public void message(LocoNetMessage m){
+      // the Roco Z21 responds to Operations mode write requests with a 
+      // LocoNet message.
+        log.debug("LocoNet message received: {}", m);
+
+        int slot = m.getElement(2); // slot number for this request
+
+        if(slot == LnConstants.PRG_SLOT && progState == REQUESTSENT) {
+            // we are programming, and this is a programming slot message,
+            // so let's see if it is for us.
+
+            // the following 8 lines and assignment of val were copied 
+            // from the loconet monitor.
+            int hopsa = m.getElement(5); // Ops mode - 7 high address bits
+            // of loco to program
+            int lopsa = m.getElement(6); // Ops mode - 7 low address bits of
+            // loco to program
+            int cvh = m.getElement(8); // hi 3 bits of CV# and msb of data7
+            int cvl = m.getElement(9); // lo 7 bits of CV#
+            int data7 = m.getElement(10); // 7 bits of data to program, msb
+            int cvNumber = (((((cvh & LnConstants.CVH_CV8_CV9) >> 3) | (cvh & LnConstants.CVH_CV7)) * 128) + (cvl & 0x7f)) + 1;
+            int address =  hopsa * 128 + lopsa;
+
+            if(address!=mAddress || cvNumber != _cv ){
+               return; // not for us
+            }
+
+            int val = -1;
+
+            if ((m.getElement(2) & 0x20) != 0) {
+               val = (((cvh & LnConstants.CVH_D7) << 6) | (data7 & 0x7f));
+            }
+  
+            log.debug("received value {} for cv {} on address {}",val,cvNumber,address);
+
+            // successful read if LACK return status is not 0x7F
+            int code = ProgListener.OK;
+            if ((m.getElement(2) == 0x7f)) {
+               code = ProgListener.UnknownError;
+            }
+
+            progState = NOTPROGRAMMING;
+            stopTimer();
+            log.debug("sending code {} val {} to programmer",code,val);
+            progListener.programmingOpReply(val, code);
+        }
+    }
+
+
     // initialize logging
-    // private final static Logger log = LoggerFactory.getLogger(Z21XNetOpsModeProgrammer.class);
+    private final static Logger log = LoggerFactory.getLogger(Z21XNetOpsModeProgrammer.class);
 
 }

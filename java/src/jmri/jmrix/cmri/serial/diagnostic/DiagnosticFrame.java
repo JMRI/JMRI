@@ -341,7 +341,6 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         testSelectBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                    SerialTrafficController stc = _memo.getTrafficController();
                     selTestType = testSelectBox.getSelectedIndex(); 
                     switch(selTestType)
                     {
@@ -1250,7 +1249,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             if (!testNode.isOutputCard(outCardNum)) {
              statusText1.setText(Bundle.getMessage("DiagnosticError6"));
              return;                          
-            };
+            }
             begOutByte = (testNode.getOutputCardIndex(outCardNum)) * portsPerCard;
         }
         else

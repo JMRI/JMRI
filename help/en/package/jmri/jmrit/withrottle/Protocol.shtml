@@ -58,13 +58,15 @@
       <p>When you first open the connection, JMRI responds with a
       number of lines of text that provide information about the
       JMRI instance to which you've connected. Your application
-      then sends comands to JMRI. Each of these commands is plain
+      then sends commands to JMRI. Each of these commands is plain
       text, with a newline character at the end (0A hex). Likewise,
       lines sent back from JMRI are newline terminated.</p>
 
-      <p class="note">Because the Java code calls the println
-      method, you will actually get two newline characters at the
-      end of each line returned.</p>
+      <p>You can see these messages by enabling DEBUG
+      for WiThrottle. Add the line "<b>log4j.category.jmri.jmrit.withrottle=DEBUG</b>"
+      to your default.lcf file and restart JMRI. All messages (both directions)
+      will be added to your JMRI System Console and the session.log file.
+      </p>
 
       <h2>String Parsing</h2>
 

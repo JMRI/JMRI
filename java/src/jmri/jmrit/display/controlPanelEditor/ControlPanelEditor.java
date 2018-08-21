@@ -71,6 +71,7 @@ import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.controlPanelEditor.shape.ShapeDrawer;
 import jmri.jmrit.display.palette.ColorDialog;
 import jmri.jmrit.display.palette.ItemPalette;
+//import jmri.jmrit.display.palette.DecoratorPanel.AJSpinner;
 import jmri.jmrit.logix.WarrantTableAction;
 import jmri.util.HelpUtil;
 import jmri.util.SystemType;
@@ -1115,10 +1116,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
         } else {
             if (event.isControlDown() && (event.isPopupTrigger() || event.isMetaDown() || event.isAltDown())) {
-/*                ActionListener colorAction = ((ActionEvent event) -> {
-                    colorChanged(); // callback
-                });*/
-                new ColorDialog(this, getTargetPanel(), null);
+                new ColorDialog(this, getTargetPanel(), ColorDialog.ONLY, null);
             }
         }
         if (!isEditable() && selection != null && selection.isHidden()) {
@@ -1655,21 +1653,25 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
             if (p instanceof PositionableLabel) {
                 PositionableLabel pl = (PositionableLabel) p;
-                /*                if (pl.isIcon() && "javax.swing.JLabel".equals(pl.getClass().getSuperclass().getName()) ) {
-                    popupSet |= setTextAttributes(pl, popup);       // only for plain icons
-                }   Add backgrounds & text over icons later */
                 if (!pl.isIcon()) {
-                    popupSet |= p.setTextEditMenu(popup);
+                    setColorMenu(popup, pl, ColorDialog.BORDER);
+                    setColorMenu(popup, pl, ColorDialog.MARGIN);
+                    setColorMenu(popup, pl, ColorDialog.FONT);
+                    setColorMenu(popup, pl, ColorDialog.TEXT);
+//                    popupSet |= p.setTextEditMenu(popup);
                     popupSet |= setTextAttributes(p, popup);
-//                    popupSet |= pl.setEditTextMenu(popup);
                 } else if (p instanceof SensorIcon) {
                     popup.add(CoordinateEdit.getTextEditAction(p, "OverlayText"));
                     if (pl.isText()) {
+                        setColorMenu(popup, (JComponent) p, ColorDialog.BORDER);
                         popupSet |= setTextAttributes(p, popup);
 //                        popupSet |= pl.setEditTextMenu(popup);
                     }
                 }
             } else if (p instanceof PositionableJPanel) {
+                setColorMenu(popup, (JComponent) p, ColorDialog.BORDER);
+                setColorMenu(popup, (JComponent) p, ColorDialog.MARGIN);
+                setColorMenu(popup, (JComponent) p, ColorDialog.FONT);
                 popupSet |= setTextAttributes(p, popup);
             }
             if (p instanceof LinkingObject) {
@@ -1703,6 +1705,32 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 p.getHeight() / 2 + (int) ((getPaintScale() - 1.0) * p.getY()));
 
         _currentSelection = null;
+    }
+
+    public void setColorMenu(JPopupMenu popup, JComponent pos, int type) {
+        String title;
+        switch (type ) {
+            case ColorDialog.BORDER:
+                title = "SetBorderSizeColor";
+                break;
+            case ColorDialog.MARGIN:
+                title = "SetMarginSizeColor";
+                break;
+            case ColorDialog.FONT:
+                title = "SetFontSizeColor";
+                break;
+            case ColorDialog.TEXT:
+                title = "SetTextSizeColor";
+                break;
+            default:
+                title = "untitled";
+                return;
+        }
+        JMenuItem edit = new JMenuItem(Bundle.getMessage(title));
+        edit.addActionListener((ActionEvent event) -> {
+            new ColorDialog(this, pos, type, null);
+        });
+        popup.add(edit);
     }
 
     private HashMap<String, NamedIcon> _portalIconMap;

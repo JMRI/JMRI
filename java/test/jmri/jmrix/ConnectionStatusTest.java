@@ -68,53 +68,30 @@ public class ConnectionStatusTest {
     }
 
     @Test
+    public void testIsUnrecognizedSystemOk(){
+        ConnectionStatus cs = new ConnectionStatus();
+        Assert.assertTrue("connection OK",cs.isConnectionOk("Foo"));
+        Assert.assertTrue("connection OK",cs.isConnectionOk("Foo", "Bar"));
+        Assert.assertTrue("connection OK",cs.isConnectionOk(null, "Bar"));
+    }
+
+    @Test
     public void testGetSateForSystemName(){
         ConnectionStatus cs = new ConnectionStatus();
         cs.addConnection("Foo","Bar");
         // set the status of the new connection so we know we are not 
         // retreiving a new value.
         cs.setConnectionState("Foo","Bar",ConnectionStatus.CONNECTION_UP);
+        Assert.assertTrue("connection OK",cs.isConnectionOk("Foo", "Bar"));
         Assert.assertEquals("connection status",ConnectionStatus.CONNECTION_UP,cs.getSystemState("Foo"));
     }
 
     @Test
-    public void testGetState(){
-        // the port only version of getConnectionState is deprecated begining 
-        // with JMRI 4.7.1  This test will need to be removed when the method
-        // is removed.
+    public void testIsConnectionOkWNull(){
         ConnectionStatus cs = new ConnectionStatus();
-        Assert.assertEquals("connection status",ConnectionStatus.CONNECTION_UNKNOWN,cs.getConnectionState("Bar"));
-    }
-
-    @Test
-    public void testAddAndGetState(){
-        // the port only version of getConnectionState is deprecated begining 
-        // with JMRI 4.7.1  This test will need to be removed when the method
-        // is removed.
-        ConnectionStatus cs = new ConnectionStatus();
-        cs.addConnection("Foo","Bar");
-        // set the status of the new connection so we know we are not 
-        // retreiving a new value.
-        cs.setConnectionState("Foo","Bar",ConnectionStatus.CONNECTION_UP);
-        Assert.assertEquals("connection status",ConnectionStatus.CONNECTION_UP,cs.getConnectionState("Bar"));
-    }
-
-    @Test
-    public void testSetAndGetState(){
-        // the port only version of setConnectionState and getConnectionState 
-        // are deprecated begining with JMRI 4.7.1  This test will need to be
-        // removed when the methods are removed.
-        ConnectionStatus cs = new ConnectionStatus();
-        cs.setConnectionState("Bar",ConnectionStatus.CONNECTION_UP);
-        Assert.assertEquals("connection status",ConnectionStatus.CONNECTION_UP,cs.getConnectionState("Bar"));
-    }
-
-    @Test
-    public void testIsConnectionOk(){
-        ConnectionStatus cs = new ConnectionStatus();
-        cs.setConnectionState("Bar",ConnectionStatus.CONNECTION_UP);
+        cs.setConnectionState(null, "Bar",ConnectionStatus.CONNECTION_UP);
         Assert.assertTrue("connection OK",cs.isConnectionOk("Bar"));
-        cs.setConnectionState("Bar",ConnectionStatus.CONNECTION_DOWN);
+        cs.setConnectionState(null, "Bar",ConnectionStatus.CONNECTION_DOWN);
         Assert.assertFalse("connection OK",cs.isConnectionOk("Bar"));
     }
 
