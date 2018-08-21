@@ -161,13 +161,13 @@ class WiimoteThrottle(Jynstrument, PropertyChangeListener, AddressListener, WiiD
         pass
     def combinedInputReceived(self, evt):
         pass
-    def	extensionConnected(self, extension):
+    def extensionConnected(self, extension):
         pass          
-    def	extensionDisconnected(self, extension):
+    def extensionDisconnected(self, extension):
         pass          
     def extensionInputReceived(self, evt):
         pass
-    def	extensionPartiallyInserted(self):
+    def extensionPartiallyInserted(self):
         pass
     def extensionUnknown(self):
         pass

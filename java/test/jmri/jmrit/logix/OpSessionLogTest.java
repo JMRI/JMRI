@@ -26,19 +26,21 @@ public class OpSessionLogTest {
     @Test
     public void openAndClose() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
-        // create a thread that waits to close the dialog box opened later
-        Thread t = new Thread(() -> {
-            // constructor for jdo will wait until the dialog is visible
-            JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("logSession"));
-            jdo.close();
-        });
-        t.setName("OpSessionLog File Chooser Dialog Close Thread");
-        t.start();
-        
+                
         // create the window and make the log file on Swing thread
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             f = new jmri.util.JmriJFrame("OpSessionLog Chooser Test");
+            
+            // create a thread that waits to close the dialog box opened later
+            Thread t = new Thread(() -> {
+                // constructor for jdo will wait until the dialog is visible
+                JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("logSession"));
+                jdo.close();
+            });
+            t.setName("OpSessionLog File Chooser Dialog Close Thread");
+            t.start();
+
+            // get the result of closing
             retval = OpSessionLog.makeLogFile(f);
         });
         
@@ -66,6 +68,7 @@ public class OpSessionLogTest {
 
     @After
     public void tearDown() {
+        f = null;
         JUnitUtil.tearDown();
     }
 

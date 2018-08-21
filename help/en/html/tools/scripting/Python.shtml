@@ -72,9 +72,16 @@
       oddest thing about Python is that the indentation matters.
       Instead of using { and } characters to indicate the beginning
       and end of a block or function, that's done with indentation
-      in Python. Of course, in a C-like language people usually
+      in Python. 
+      Of course, in a C-like language people usually
       indent blocks anyway, but it takes a little getting used to
       that you <em>have</em> to do it in Python.
+      You should indent with four spaces for each level
+      in your code.
+      (Four is a convention, but it really helps readability; 
+      using tabs can cause lots of confusion and is not recommended.
+      Mixing spaces and tabs is likely to cause lots of confusion; 
+      please don't do that)
 
       <p>For example, this is a syntax error:</p>
       <pre>

@@ -87,6 +87,7 @@ public class SystemNameComparatorTest {
 
     @After
     public void tearDown() {
+        jmri.util.JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

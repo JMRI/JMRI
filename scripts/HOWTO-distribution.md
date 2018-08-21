@@ -143,6 +143,12 @@ We roll some general code maintenance items into the release process.
         grep -rlI --exclude-dir=.git '^\xEF\xBB\xBF\xEF\xBB\xBF' .
 ```
 
+- Check for any scripts with tabs. If you find them, use an editor with a "DeTab" tool that can replace them with alignment on 4-character tab columns; do not just replace them with four spaces.
+
+```
+        grep -lr '\t' jython/ | grep '\.py'
+```
+
 - Run "ant alltest"; make sure they all pass; fix problems and commit back
 
 - Run "ant decoderpro"; check for no startup errors, right version, help index present and working OK. Fix problems and commit back.
