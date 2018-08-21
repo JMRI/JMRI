@@ -65,6 +65,12 @@ public class DCCppLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
 
     @After
     public void tearDown() {
+        l.dispose();
+        l = null;
+        xnis = null;
+        jmri.util.JUnitUtil.clearShutDownManager();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        apps.tests.Log4JFixture.tearDown();
         JUnitUtil.tearDown();
     }
 

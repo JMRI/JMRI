@@ -83,7 +83,9 @@ public class SdiJfcUnitTest extends jmri.util.SwingTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
-        //jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.resetProfileManager();
+        
         //jmri.util.JUnitUtil.initInternalTurnoutManager();
         //jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.swing.SamplePane.disposed = new java.util.ArrayList<>();

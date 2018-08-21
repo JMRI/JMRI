@@ -1,5 +1,6 @@
 package jmri.jmrix.secsi;
 
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -43,4 +44,12 @@ public class SerialMessageTest extends TestCase {
         return suite;
     }
 
+    // The minimal setup for log4J
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 }
