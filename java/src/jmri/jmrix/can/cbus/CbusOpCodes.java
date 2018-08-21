@@ -162,21 +162,21 @@ public class CbusOpCodes {
         result.put(CbusConstants.CBUS_QCVS, "Read CV (QCVS) Session:,%1, CV:,%2, Mode:,%1");
         result.put(CbusConstants.CBUS_PCVS, "Report CV (PCVS) Session:,%1, CV:,%2, Data:,%1");
 
-        result.put(CbusConstants.CBUS_ACON, "Long Event On (ACON) NN:,%2, EN:,%2");
-        result.put(CbusConstants.CBUS_ACOF, "Long Event Off (ACOF) NN:,%2, EN:,%2");
+        result.put(CbusConstants.CBUS_ACON, (Bundle.getMessage("CBUS_ACON")) + " (ACON) NN:,%2, EN:,%2"); // NOI18N
+        result.put(CbusConstants.CBUS_ACOF, (Bundle.getMessage("CBUS_ACOF")) + " (ACOF) NN:,%2, EN:,%2"); // NOI18N
         result.put(CbusConstants.CBUS_AREQ, "Accessory Request (AREQ) NN:,%2, EN:,%2");
         result.put(CbusConstants.CBUS_ARON, "Accessory Response ON (ARON) [NN:,%2,] EN:,%2");
         result.put(CbusConstants.CBUS_AROF, "Accessory Response OFF (AROF) [NN:,%2,] EN:,%2");
         result.put(CbusConstants.CBUS_EVULN, "Unlearn Event (EVULN) NN:,%2 EN:,%2");
         result.put(CbusConstants.CBUS_NVSET, "Set Node Variable (NVSET) NN:,%2 NV:,%1, VAL:,%1");
         result.put(CbusConstants.CBUS_NVANS, "Returned Node Variable (NVANS) NN:,%2 NV:,%1 VAL:,%1");
-        result.put(CbusConstants.CBUS_ASON, "Short Event On (ASON) NN:,%2, DN:,%2");
-        result.put(CbusConstants.CBUS_ASOF, "Short Event Off (ASOF) NN:,%2, DN:,%2");
+        result.put(CbusConstants.CBUS_ASON, (Bundle.getMessage("CBUS_ASON")) + " (ASON) NN:,%2, EN:,%2"); // NOI18N
+        result.put(CbusConstants.CBUS_ASOF, (Bundle.getMessage("CBUS_ASOF")) + " (ASOF) NN:,%2, EN:,%2"); // NOI18N
         result.put(CbusConstants.CBUS_ASRQ, "Accessory Short Request (ASRQ) NN:,%2, DN:,%2");
         result.put(CbusConstants.CBUS_PARAN, "Accessory Short Request (PARAN) NN:,%2, Para:,%1, Val:,%1");
         result.put(CbusConstants.CBUS_REVAL, "Accessory Short Request (REVAL) NN:,%2, EN:,%1, EV:,%1");
-        result.put(CbusConstants.CBUS_ARSON, "Accessory Short Request (ARSON) NN:,%2, DN:,%2");
-        result.put(CbusConstants.CBUS_ARSOF, "Accessory Short Request (ARSOF) NN:,%2, DN:,%2");
+        result.put(CbusConstants.CBUS_ARSON, "Accessory Short Request On (ARSON) NN:,%2, DN:,%2");
+        result.put(CbusConstants.CBUS_ARSOF, "Accessory Short Request Off (ARSOF) NN:,%2, DN:,%2");
         result.put(CbusConstants.CBUS_EXTC3, "Extended Op-code (EXTC3):,%1, Data:,%1, ,%1, ,%1");
 
         // Opcodes with 5 data
@@ -192,8 +192,8 @@ public class CbusOpCodes {
         result.put(CbusConstants.CBUS_PNN, "Query Node Response (NEVAL) NN:,%2, Man ID:,%1, Mod ID:,%1, Flags:,%1");
         result.put(CbusConstants.CBUS_ASON1, "Accessory Short ON (ASON1) NN:,%2, DN:,%2, Data:,%1");
         result.put(CbusConstants.CBUS_ASOF1, "Accessory Short OFF (ASOF1) NN:,%2, DN:,%2, Data:,%1");
-        result.put(CbusConstants.CBUS_ARSON1, "Accessory Short Request (ARSON1) NN:,%2, DN:,%2, Data:,%1");
-        result.put(CbusConstants.CBUS_ARSOF1, "Accessory Short Request (ARSOF1) NN:,%2, DN:,%2, Data:,%1");
+        result.put(CbusConstants.CBUS_ARSON1, "Accessory Short Request On (ARSON1) NN:,%2, DN:,%2, Data:,%1");
+        result.put(CbusConstants.CBUS_ARSOF1, "Accessory Short Request Off (ARSOF1) NN:,%2, DN:,%2, Data:,%1");
         result.put(CbusConstants.CBUS_EXTC4, "Extended Op-code (EXTC4):,%1, Data:,%1, ,%1, ,%1, ,%1");
 
         // Opcodes with 6 data
@@ -212,8 +212,8 @@ public class CbusOpCodes {
         result.put(CbusConstants.CBUS_ASON2, "Accessory Short ON (ASON2) NN:,%2, DN:,%2, Data:,%1, ,%1");
         result.put(CbusConstants.CBUS_ASOF2, "Accessory Short OFF (ASOF2) NN:,%2, DN:,%2, Data:,%1, ,%1");
 
-        result.put(CbusConstants.CBUS_ARSON2, "Accessory Short Request (ARSON2) NN:,%2, DN:,%2, Data:,%1, ,%1");
-        result.put(CbusConstants.CBUS_ARSOF2, "Accessory Short Request (ARSOF2) NN:,%2, DN:,%2, Data:,%1, ,%1");
+        result.put(CbusConstants.CBUS_ARSON2, "Accessory Short Request On (ARSON2) NN:,%2, DN:,%2, Data:,%1, ,%1");
+        result.put(CbusConstants.CBUS_ARSOF2, "Accessory Short Request Off (ARSOF2) NN:,%2, DN:,%2, Data:,%1, ,%1");
         result.put(CbusConstants.CBUS_EXTC5, "Extended Op-code (EXTC5):,%1, Data:,%1, ,%1, ,%1, ,%1, ,%1");
 
         // Opcodes with 7 data
@@ -237,8 +237,8 @@ public class CbusOpCodes {
         result.put(CbusConstants.CBUS_DDES, "Device Data Event Short (DDES) DN:,%2, Data:,%1, ,%1, ,%1, ,%1, ,%1");
         result.put(CbusConstants.CBUS_DDRS, "Device Data Response Short (DDRS) DN:,%2, Data:,%1, ,%1, ,%1, ,%1, ,%1");
 
-        result.put(CbusConstants.CBUS_ARSON3, "Accessory Short Request (ARSON3) NN:,%2, DN:,%2, Data:,%1, ,%1, ,%1");
-        result.put(CbusConstants.CBUS_ARSOF3, "Accessory Short Request (ARSOF3) NN:,%2, DN:,%2, Data:,%1, ,%1, ,%1");
+        result.put(CbusConstants.CBUS_ARSON3, "Accessory Short Request On (ARSON3) NN:,%2, DN:,%2, Data:,%1, ,%1, ,%1");
+        result.put(CbusConstants.CBUS_ARSOF3, "Accessory Short Request Off (ARSOF3) NN:,%2, DN:,%2, Data:,%1, ,%1, ,%1");
         result.put(CbusConstants.CBUS_EXTC6, "Extended Op-code (EXTC6):,%1, Data:,%1, ,%1, ,%1, ,%1, ,%1, ,%1");
 
         return Collections.unmodifiableMap(result);
