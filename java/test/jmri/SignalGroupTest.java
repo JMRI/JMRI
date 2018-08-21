@@ -15,7 +15,6 @@ public class SignalGroupTest {
 
     @Test
     public void testSetup() {
-        //apps.tests.Log4JFixture.initLogging();
         // provide 2 turnouts:
         Turnout it1 = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         Turnout it2 = InstanceManager.turnoutManagerInstance().provideTurnout("IT2");

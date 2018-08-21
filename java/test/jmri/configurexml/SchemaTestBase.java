@@ -118,7 +118,7 @@ public class SchemaTestBase {
 
     @BeforeClass
     public static void preClassInit() throws Exception {
-        Log4JFixture.setUp(); // setup logging early so static methods can log
+        JUnitUtil.tearDown();
     }
 
     @After

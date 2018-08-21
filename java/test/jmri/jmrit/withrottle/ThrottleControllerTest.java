@@ -44,6 +44,6 @@ public class ThrottleControllerTest extends TestCase {
     @Override
     public void tearDown() throws Exception {
         super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

@@ -999,6 +999,7 @@ public class JmriUserPreferencesManagerTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.resetPreferencesProviders();
         // ensure no existing UserPreferencesManager interferes with this test
         InstanceManager.reset(UserPreferencesManager.class);
@@ -1006,8 +1007,7 @@ public class JmriUserPreferencesManagerTest {
 
     @After
     public void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
     }
 
     private static class TestJmriUserPreferencesManager extends JmriUserPreferencesManager {
