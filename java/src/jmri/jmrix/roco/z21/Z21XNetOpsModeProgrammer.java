@@ -160,6 +160,7 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
         if(slot == LnConstants.PRG_SLOT && progState == REQUESTSENT) {
             // we are programming, and this is a programming slot message,
             // so let's see if it is for us.
+            log.debug("Right message slot and programming");
 
             // the following 8 lines and assignment of val were copied 
             // from the loconet monitor.
@@ -173,7 +174,12 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
             int cvNumber = (((((cvh & LnConstants.CVH_CV8_CV9) >> 3) | (cvh & LnConstants.CVH_CV7)) * 128) + (cvl & 0x7f)) + 1;
             int address =  hopsa * 128 + lopsa;
 
-            if(address!=mAddress || cvNumber != _cv ){
+            // if we attempt to verify the cvNumber, this fails for 
+            // multiple writes from the Symbolic Programmer.
+            //if(address!=mAddress || cvNumber != _cv ){
+            if(address!=mAddress ){
+               log.debug("message for address {} expecting {}; cv {} expecting {}",
+                          address,mAddress,cvNumber,_cv);
                return; // not for us
             }
 
