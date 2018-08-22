@@ -1359,7 +1359,7 @@
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
                 <label>FX3 Light Type</label>
             </variable>
-            <variable item="FX6 Effect Selection" CV="52" mask="XXXVVVVV" default="0" minOut="4" include="802,791,815" tooltip="Determines the effect generated from the FX4 light output">
+            <variable item="FX6 Effect Selection" CV="52" mask="XXXVVVVV" default="0" minOut="4" tooltip="Determines the effect generated from the FX4 light output">
               <defaultItem default="0" include="802"/>
               <defaultItem default="0" include="791"/>
               <defaultItem default="0" include="815"/>
