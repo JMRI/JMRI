@@ -58,6 +58,7 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
          back to the screen when the programming screen when we receive
          something from the command station */
         progListener = p;
+        _cv = 0xffff & CV;
         value = val;
         progState = REQUESTSENT;
         restartTimer(msg.getTimeout());
@@ -176,8 +177,7 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
 
             // if we attempt to verify the cvNumber, this fails for 
             // multiple writes from the Symbolic Programmer.
-            //if(address!=mAddress || cvNumber != _cv ){
-            if(address!=mAddress ){
+            if(address!=mAddress || cvNumber != _cv ){
                log.debug("message for address {} expecting {}; cv {} expecting {}",
                           address,mAddress,cvNumber,_cv);
                return; // not for us
