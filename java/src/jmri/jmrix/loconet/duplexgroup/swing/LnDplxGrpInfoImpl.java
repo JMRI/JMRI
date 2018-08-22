@@ -145,7 +145,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      *
      * @return true if Password may only include digits.
      */
-    public static final boolean getLimitPasswordToNumericOnly() {
+    public static final boolean isPasswordLimitedToNumbers() {
         return limitPasswordToNumericCharacters;
     }
 
@@ -158,10 +158,9 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * @return true if and only if groupName is a valid Duplex Group Name
      */
     public static final boolean validateGroupName(String sGroupName) {
-        if (sGroupName.length() == 0) {
-            return false;
-        }
-        return sGroupName.matches("^.{8}$"); // NOI18N
+        // Digitrax seems to allow use of any 8-bit character.  So only 
+        // requirement seems to be that the name must be 8 characters long.
+        return sGroupName.length() == 8;
     }
 
     /**
@@ -363,7 +362,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
         int i;
 
         if (validateGroupPassword(sGroupPassword) == false) {
-            if (getLimitPasswordToNumericOnly() == true) {
+            if (isPasswordLimitedToNumbers() == true) {
                 throw new jmri.jmrix.loconet.LocoNetException("Invalid Duplex Group Password - must be a 4 digit number between 0000 and 9999, inclusive"); // NOI18N
             } else {
                 throw new jmri.jmrix.loconet.LocoNetException("Invalid Duplex Group Password - must be a 4 character value using only digits, 'A', 'B', and/or 'C'"); // NOI18N
@@ -1172,7 +1171,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     public int getMessagesHandled() {
         return messagesHandled;
     }
-    
+
     /**
      * Reports whether the IPL query timer is running.
      * <p>
