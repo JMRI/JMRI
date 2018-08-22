@@ -653,7 +653,7 @@
                     </xs:documentation></xs:annotation>
                     <xs:complexType>
                       <xs:attribute name="default" type="xs:int"/>
-                      <xs:attribute name="include" type="xs:int"/>
+                      <xs:attribute name="include" type="xs:string"/>
                     </xs:complexType>
                   </xs:element>
                   <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
