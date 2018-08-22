@@ -53,7 +53,7 @@ public class Z21XNetInitializationManagerTest {
 
     @After
     public void tearDown() throws Exception {
-        Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

@@ -13,6 +13,7 @@ public class JmriSRCPTimeServerTest extends jmri.jmris.AbstractTimeServerTestBas
     @Before
     @Override
     public void setUp(){
+        jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
@@ -28,8 +29,9 @@ public class JmriSRCPTimeServerTest extends jmri.jmris.AbstractTimeServerTestBas
     @After
     @Override
     public void tearDown(){
-       a = null;
-       jmri.util.JUnitUtil.resetInstanceManager();
+        a = null;
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

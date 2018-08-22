@@ -102,7 +102,7 @@ public class DispatcherTrainInfoTest extends TestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
         super.tearDown();
     }
 }
