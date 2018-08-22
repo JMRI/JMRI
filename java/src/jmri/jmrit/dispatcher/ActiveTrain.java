@@ -1018,10 +1018,15 @@ public class ActiveTrain {
     }
 
     protected AllocatedSection reverseAllAllocatedSections() {
-        Iterator<AllocatedSection> allocateSectionList = mAllocatedSections.iterator();
+//        Iterator<AllocatedSection> allocateSectionList = mAllocatedSections.iterator();
         AllocatedSection aSec = null;
-        while (allocateSectionList.hasNext()) {
-            aSec = allocateSectionList.next();
+        for (int i = 0; i < mAllocatedSections.size(); i++) {
+            aSec = mAllocatedSections.get(i);
+//
+//        log.info("ReverseAllAllocated Sections");
+//        while (allocateSectionList.hasNext()) {
+//            aSec = allocateSectionList.next();
+//            log.info("aSec[{}]",aSec.getActiveTrainName());
             int dir = mTransit.getDirectionFromSectionAndSeq(aSec.getSection(), aSec.getSequence());
             if (dir == jmri.Section.FORWARD) {
                 aSec.getSection().setState(jmri.Section.REVERSE);
@@ -1038,7 +1043,7 @@ public class ActiveTrain {
     // of concurrent updates.
     protected  AllocatedSection reverseOneAllocatedSections(String sectionToReverse) {
         AllocatedSection aSec = null;
-        log.debug("All One Allocated Section Sections");
+        log.debug("One Allocated Section Sections");
         int resetCount = 0;
         boolean resetDone = false;
         while (!resetDone && resetCount < 10) {

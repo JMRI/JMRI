@@ -1172,7 +1172,8 @@ public class AutoActiveTrain implements ThrottleListener {
                 log.debug("End Reversal");
                 _previousBlock = _currentBlock;
                 _activeTrain.setTransitReversed(true);
-                AllocatedSection aSec = _activeTrain.reverseAllAllocatedSections();
+                //AllocatedSection aSec = _activeTrain.reverseAllAllocatedSections();
+                AllocatedSection aSec = _activeTrain.reverseOneAllocatedSections(_currentAllocatedSection.getSectionName());
                 setEngineDirection();
                 if ((_nextSection != null) && !isSectionInAllocatedList(_nextSection)) {
                     InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
