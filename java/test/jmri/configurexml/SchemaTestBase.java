@@ -118,7 +118,7 @@ public class SchemaTestBase {
 
     @BeforeClass
     public static void preClassInit() throws Exception {
-        JUnitUtil.tearDown();
+        JUnitUtil.setUp();  // so static ctors can log
     }
 
     @After

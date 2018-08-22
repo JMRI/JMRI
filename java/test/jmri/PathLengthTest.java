@@ -88,15 +88,15 @@ public class PathLengthTest extends TestCase {
         return suite;
     }
 
-    @Before
-    protected void setUp() {
+    @Override
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
         
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
-    @After
+    @Override
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
