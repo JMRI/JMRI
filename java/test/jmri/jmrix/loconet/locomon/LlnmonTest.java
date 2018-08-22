@@ -6281,7 +6281,7 @@ public class LlnmonTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initReporterManager();
+        JUnitUtil.initReporterManager();
 
         jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
         lntm = new LnTurnoutManager(lnis, lnis, "L", false);
@@ -6297,7 +6297,7 @@ public class LlnmonTest extends TestCase {
     @Override
     protected void tearDown() {
         lnsm.dispose();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }
