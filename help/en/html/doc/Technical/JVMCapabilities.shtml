@@ -112,6 +112,15 @@
         </tr>
 
         <tr>
+          <td>The Deprecated annotation can take "since" and "forRemoval" specifications, 
+                which simplifies our API migration management a lot.</td>
+
+          <td>9</td>
+
+          <td>8</td>
+        </tr>
+
+        <tr>
           <td>JMRI uses several com.sun classes that will, at some point,
           no longer be accessible.  This was originally scheduled as part of JPMS for
           1.9, but was later removed.  At some point, we will

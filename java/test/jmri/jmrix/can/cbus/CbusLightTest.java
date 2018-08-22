@@ -117,7 +117,6 @@ public class CbusLightTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-    //    apps.tests.Log4JFixture.setUp();
     }
 
     @After
