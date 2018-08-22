@@ -48,6 +48,7 @@ import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 
 import java.text.DateFormat;
@@ -131,23 +132,34 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         eventTable.setColumnSelectionAllowed(false);
         eventTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         
-        eventTable.getColumnModel().getColumn(eventModel.DELETE_BUTTON_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
-        eventTable.getColumnModel().getColumn(eventModel.DELETE_BUTTON_COLUMN).setCellRenderer(new ButtonRenderer());
+        TableColumnModel eventTableModel = eventTable.getColumnModel();
         
-        eventTable.getColumnModel().getColumn(eventModel.ON_BUTTON_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
-        eventTable.getColumnModel().getColumn(eventModel.ON_BUTTON_COLUMN).setCellRenderer(new ButtonRenderer());
-                
-        eventTable.getColumnModel().getColumn(eventModel.OFF_BUTTON_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
-        eventTable.getColumnModel().getColumn(eventModel.OFF_BUTTON_COLUMN).setCellRenderer(new ButtonRenderer());
+        TableColumn evIdColumn = eventTableModel.getColumn(eventModel.EVENTID_COLUMN);
+        TableColumn caIdColumn = eventTableModel.getColumn(eventModel.CANID_COLUMN);
 
-        eventTable.getColumnModel().getColumn(eventModel.TOGGLE_BUTTON_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
-        eventTable.getColumnModel().getColumn(eventModel.TOGGLE_BUTTON_COLUMN).setCellRenderer(new ButtonRenderer());    
-
-        eventTable.getColumnModel().getColumn(eventModel.STATUS_REQUEST_BUTTON_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
-        eventTable.getColumnModel().getColumn(eventModel.STATUS_REQUEST_BUTTON_COLUMN).setCellRenderer(new ButtonRenderer());    
+        TableColumn delBColumn = eventTableModel.getColumn(eventModel.DELETE_BUTTON_COLUMN);
+        delBColumn.setCellEditor(new ButtonEditor(new JButton()));
+        delBColumn.setCellRenderer(new ButtonRenderer());
         
+        TableColumn onBColumn = eventTableModel.getColumn(eventModel.ON_BUTTON_COLUMN);
+        onBColumn.setCellEditor(new ButtonEditor(new JButton()));
+        onBColumn.setCellRenderer(new ButtonRenderer());
+        
+        TableColumn offBColumn = eventTableModel.getColumn(eventModel.OFF_BUTTON_COLUMN);
+        offBColumn.setCellEditor(new ButtonEditor(new JButton()));
+        offBColumn.setCellRenderer(new ButtonRenderer());    
+        
+        TableColumn togBColumn = eventTableModel.getColumn(eventModel.TOGGLE_BUTTON_COLUMN);
+        togBColumn.setCellEditor(new ButtonEditor(new JButton()));
+        togBColumn.setCellRenderer(new ButtonRenderer());        
+        
+        TableColumn rqStatColumn = eventTableModel.getColumn(eventModel.STATUS_REQUEST_BUTTON_COLUMN);
+        rqStatColumn.setCellEditor(new ButtonEditor(new JButton()));
+        rqStatColumn.setCellRenderer(new ButtonRenderer());   
+
         // format the last updated date time
-        eventTable.getColumnModel().getColumn(eventModel.LATEST_TIMESTAMP_COLUMN).setCellRenderer(new DefaultTableCellRenderer() {
+        TableColumn timeColumn = eventTableModel.getColumn(eventModel.LATEST_TIMESTAMP_COLUMN);
+        timeColumn.setCellRenderer(new DefaultTableCellRenderer() {
             @Override
             protected void setValue(Object value) {
                 if (value != null && value instanceof Date) {
@@ -163,16 +175,14 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
         // general GUI config
         
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(eventModel.EVENTID_COLUMN), false);
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(eventModel.CANID_COLUMN), false);
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(eventModel.DELETE_BUTTON_COLUMN), false);
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(eventModel.ON_BUTTON_COLUMN), false);
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(eventModel.OFF_BUTTON_COLUMN), false);
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(eventModel.STATUS_REQUEST_BUTTON_COLUMN), false);
+        tcm.setColumnVisible(evIdColumn, false);
+        tcm.setColumnVisible(caIdColumn, false);
+        tcm.setColumnVisible(delBColumn, false);
+        tcm.setColumnVisible(onBColumn, false);
+        tcm.setColumnVisible(offBColumn, false);
+        tcm.setColumnVisible(rqStatColumn, false);
         
         addMouseListenerToHeader(eventTable);
-        
-
         
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -199,6 +209,8 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         newnode.add(new JLabel(Bundle.getMessage("CbusNode")));
         JSpinner newnodenumberSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 65535, 1));
         newnode.add(newnodenumberSpinner);
+        newnode.setToolTipText(Bundle.getMessage("NewNodeTip"));
+        newnodenumberSpinner.setToolTipText(Bundle.getMessage("NewNodeTip"));
         
         JPanel newev = new JPanel();
         newev.add(new JLabel("Event"));        
@@ -211,17 +223,20 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
             int nd = (Integer) newnodenumberSpinner.getValue();
             // log.warn("new event button clicked ev {} nd {} ");
             int response=eventModel.newEventFromButton(ev,nd);
-            
+            tablefeedback.append("\n");
+            if (nd>0) {
+                tablefeedback.append (Bundle.getMessage("CbusNode") + nd + " ");
+            }
+            tablefeedback.append (Bundle.getMessage("CbusEvent") + ev + " ");
             if (response==-1){
-                tablefeedback.append("\n" + Bundle.getMessage("CbusNode") + nd + Bundle.getMessage("CbusEvent") + ev + " already on table.");
+                tablefeedback.append("already on table.");
                 JOptionPane.showMessageDialog(null, 
                 (Bundle.getMessage("NoMakeEvent")), Bundle.getMessage("WarningTitle"),
                 JOptionPane.ERROR_MESSAGE);
             }
             if (response==1) {
-                tablefeedback.append("\n" + Bundle.getMessage("CbusNode") + nd + Bundle.getMessage("CbusEvent") + ev + " added to table.");
+                tablefeedback.append("added to table.");
             }
-            
         });
 
         neweventcontainer.add(newnode);
@@ -235,7 +250,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         
         split = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
             eventScroll, scrolltablefeedback);
-        split.setResizeWeight(0.9);
+        split.setResizeWeight(0.95);
         split.setContinuousLayout(true);
 
 
@@ -246,11 +261,21 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane";
     }
-
+    
+    /**
+     * Creates a Menu List
+     * <p>
+     * File - Print, Print Preview, Save, SaveAs csv
+     * Display - show / hide Create new event pane, show/hide bottom feedback pane
+     * </p>
+     */
     @Override
     public List<JMenu> getMenus() {
         List<JMenu> menuList = new ArrayList<JMenu>();
@@ -258,7 +283,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
         ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
-        JMenu displayMenu = new JMenu("Display");
+        JMenu displayMenu = new JMenu(Bundle.getMessage("Display"));
         
         // Not currently implemented
         // JMenuItem openItem = new JMenuItem(rb.getString("MenuItemOpen"));

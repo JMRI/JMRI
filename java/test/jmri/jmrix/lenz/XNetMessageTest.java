@@ -1529,7 +1529,7 @@ public class XNetMessageTest{
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
         // make sure the message timeouts and retries are set to
         // the defaults.
         XNetMessage.setXNetMessageTimeout(5000); 
