@@ -19,6 +19,7 @@ public class SerialLightTest extends AbstractLightTestBase {
     @Override
     @Before
     public void setUp() {
+        jmri.util.JUnitUtil.setUp();
         // prepare an interface
         memo = new GrapevineSystemConnectionMemo();
         tcis = new SerialTrafficControlScaffold(memo);
