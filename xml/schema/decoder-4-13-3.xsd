@@ -649,10 +649,10 @@
                   <xs:element name="defaultItem" minOccurs="0" maxOccurs="unbounded" >
                     <xs:annotation><xs:documentation>
                     Specifies the default value to use when the decoder family/model/productID has a specific value.
-                    Both attributes are required.
+                    Either or both of "include" and "exclude" can be specified.
                     </xs:documentation></xs:annotation>
                     <xs:complexType>
-                      <xs:attribute name="default" type="xs:int"/>
+                      <xs:attribute name="default" type="xs:int" use="required"/>
                       <xs:attribute name="include" type="xs:string" default=""/>
                       <xs:attribute name="exclude" type="xs:string" default=""/>
                     </xs:complexType>
