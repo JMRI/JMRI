@@ -1450,9 +1450,9 @@ public class LnIPLImplementationTest {
                     msg.setElement(13, 1 << (hostSn - 16));
                 }
             }
-            long equivSn = 1L << (long) hostSn;
+            long equivSn = 1L << hostSn;
             Assert.assertEquals("extractIplHostSerialNum for bit "+Integer.toString(hostSn),
-                    (long)equivSn,
+                    equivSn,
                     (long)LnIPLImplementation.extractIplIdentityHostSerialNumber(msg));
         }
 
@@ -1484,7 +1484,7 @@ public class LnIPLImplementationTest {
                     msg.setElement(18, 1 << (swSn - 24));
                 }
             }
-            long equivSn = 1L << (long) swSn;
+            long equivSn = 1L << swSn;
             Assert.assertEquals("extractIplSlaveSerialNum for bit "+Integer.toString(swSn),
                     equivSn,
                     (long)LnIPLImplementation.extractIplIdentitySlaveSerialNumber(msg));
