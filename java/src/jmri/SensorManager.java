@@ -99,11 +99,6 @@ public interface SensorManager extends ProvidingManager<Sensor> {
     @CheckForNull
     public Sensor getBySystemName(@Nonnull String s);
 
-    @CheckReturnValue
-    @Nonnull
-    @Override
-    public List<String> getSystemNameList();
-
     /**
      * Requests status of all layout sensors under this Sensor Manager. This
      * method may be invoked whenever the status of sensors needs to be updated

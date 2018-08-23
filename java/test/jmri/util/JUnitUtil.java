@@ -741,7 +741,7 @@ public class JUnitUtil {
                     String message = "Cleaning up nameless invisible frame created by creating a dialog with a null parent in {}.";
                     if (!error) {
                         log.warn(message, getTestClassName());
-                    } else {
+                    } else if (warn) {
                         log.error(message, getTestClassName());
                     }
                 } else {
@@ -761,7 +761,7 @@ public class JUnitUtil {
                     String message = "Cleaning up nameless invisible window created by creating a dialog with a null parent in {}.";
                     if (!error) {
                         log.warn(message, getTestClassName());
-                    } else {
+                    } else if (warn) {
                         log.error(message, getTestClassName());
                     }
                 } else {

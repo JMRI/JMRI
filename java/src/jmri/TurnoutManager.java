@@ -128,16 +128,6 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
     public Turnout newTurnout(@Nonnull String systemName, @Nullable String userName) throws IllegalArgumentException;
 
     /**
-     * Get a list of all Turnout system names.
-     *
-     * @return the list of names or an empty list if no turnouts have been
-     *         defined
-     */
-    @Nonnull
-    @Override
-    public List<String> getSystemNameList();
-
-    /**
      * Get text to be used for the Turnout.CLOSED state in user communication.
      * Allows text other than "CLOSED" to be used with certain hardware system
      * to represent the Turnout.CLOSED state.

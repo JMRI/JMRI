@@ -16,7 +16,11 @@
 <!-- for more details.                                                      -->
 
 
-<!-- This schema was obsoleted by xml/schema/decoder-4-13-3.xsd -->
+    <!-- not yet in proper Venetian blind form -->
+    <!-- needs to share the pane type with programmer definition -->
+
+    <!-- needs more attribute restrictions -->
+    <!-- needs attribute defaults -->
 
 <xs:schema xmlns:xi="http://www.w3.org/2001/XInclude"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
