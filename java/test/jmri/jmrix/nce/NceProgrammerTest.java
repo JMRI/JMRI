@@ -26,6 +26,7 @@ public class NceProgrammerTest extends TestCase {
 
     @Override
     public void setUp() {
+        jmri.util.JUnitUtil.setUp();
         tc = new NceTrafficController();
         saveCommandOptions = tc.getCommandOptions();
     }
@@ -33,7 +34,10 @@ public class NceProgrammerTest extends TestCase {
     @Override
     public void tearDown() {
         tc.setCommandOptions(saveCommandOptions);
+        tc = null;
+        jmri.util.JUnitUtil.tearDown();
     }
+
     NceTrafficController tc;
     int saveCommandOptions;
 
@@ -529,10 +533,6 @@ public class NceProgrammerTest extends TestCase {
         return suite;
     }
 
-    // The minimal setup is for log4J
-    // apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
-    // protected void setUp() { log4jfixtureInst.setUp(); }
-    // protected void tearDown() { log4jfixtureInst.tearDown(); }
     private final static Logger log = LoggerFactory.getLogger(NceProgrammerTest.class);
 
 }

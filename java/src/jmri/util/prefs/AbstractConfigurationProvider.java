@@ -38,11 +38,13 @@ public abstract class AbstractConfigurationProvider {
             if (!shared) {
                 File nodeDir = new File(dir, NodeIdentity.identity());
                 if (!nodeDir.exists()) {
-                    NodeIdentity.copyFormerIdentity(dir, nodeDir);
+                    boolean success = NodeIdentity.copyFormerIdentity(dir, nodeDir);
+                    if (! success) log.debug("copyFormerIdentity({}, {}) did not copy", dir, nodeDir);
                 }
                 dir = new File(dir, NodeIdentity.identity());
             }
         }
+        log.debug("createDirectory(\"{}\")", dir);
         FileUtil.createDirectory(dir);
         return dir;
     }
@@ -75,4 +77,5 @@ public abstract class AbstractConfigurationProvider {
         this.sharedBackedUp = sharedBackedUp;
     }
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractConfigurationProvider.class);
 }

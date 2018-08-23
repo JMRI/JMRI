@@ -125,8 +125,9 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
 
     @After
     public void tearDown() {
-       jmri.util.JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.clearShutDownManager();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        apps.tests.Log4JFixture.tearDown();
     }
 
 }

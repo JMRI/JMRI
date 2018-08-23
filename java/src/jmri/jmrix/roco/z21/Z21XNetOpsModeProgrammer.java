@@ -11,6 +11,7 @@ import jmri.jmrix.lenz.XNetListener;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetTrafficController;
+import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LnTrafficController;
@@ -57,6 +58,7 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
          back to the screen when the programming screen when we receive
          something from the command station */
         progListener = p;
+        _cv = 0xffff & CV;
         value = val;
         progState = REQUESTSENT;
         restartTimer(msg.getTimeout());
@@ -154,13 +156,40 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
       // LocoNet message.
         log.debug("LocoNet message received: {}", m);
 
-        if (progState == REQUESTSENT) {
-            // for now, assume that if we get this, it is for our write.
+        int slot = m.getElement(2); // slot number for this request
 
-            int val = 0;
-            if ((m.getElement(2) & 0x20) != 0) {
-               val = m.getElement(10) & 0xFF;
+        if(slot == LnConstants.PRG_SLOT && progState == REQUESTSENT) {
+            // we are programming, and this is a programming slot message,
+            // so let's see if it is for us.
+            log.debug("Right message slot and programming");
+
+            // the following 8 lines and assignment of val were copied 
+            // from the loconet monitor.
+            int hopsa = m.getElement(5); // Ops mode - 7 high address bits
+            // of loco to program
+            int lopsa = m.getElement(6); // Ops mode - 7 low address bits of
+            // loco to program
+            int cvh = m.getElement(8); // hi 3 bits of CV# and msb of data7
+            int cvl = m.getElement(9); // lo 7 bits of CV#
+            int data7 = m.getElement(10); // 7 bits of data to program, msb
+            int cvNumber = (((((cvh & LnConstants.CVH_CV8_CV9) >> 3) | (cvh & LnConstants.CVH_CV7)) * 128) + (cvl & 0x7f)) + 1;
+            int address =  hopsa * 128 + lopsa;
+
+            // if we attempt to verify the cvNumber, this fails for 
+            // multiple writes from the Symbolic Programmer.
+            if(address!=mAddress || cvNumber != _cv ){
+               log.debug("message for address {} expecting {}; cv {} expecting {}",
+                          address,mAddress,cvNumber,_cv);
+               return; // not for us
             }
+
+            int val = -1;
+
+            if ((m.getElement(2) & 0x20) != 0) {
+               val = (((cvh & LnConstants.CVH_D7) << 6) | (data7 & 0x7f));
+            }
+  
+            log.debug("received value {} for cv {} on address {}",val,cvNumber,address);
 
             // successful read if LACK return status is not 0x7F
             int code = ProgListener.OK;
@@ -170,6 +199,7 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
 
             progState = NOTPROGRAMMING;
             stopTimer();
+            log.debug("sending code {} val {} to programmer",code,val);
             progListener.programmingOpReply(val, code);
         }
     }
