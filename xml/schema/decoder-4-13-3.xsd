@@ -648,12 +648,13 @@
               <xs:sequence minOccurs="1" maxOccurs="1">
                   <xs:element name="defaultItem" minOccurs="0" maxOccurs="unbounded" >
                     <xs:annotation><xs:documentation>
-                    Specifies the default value to use when the decoder product ID has a specific value.
+                    Specifies the default value to use when the decoder family/model/productID has a specific value.
                     Both attributes are required.
                     </xs:documentation></xs:annotation>
                     <xs:complexType>
                       <xs:attribute name="default" type="xs:int"/>
                       <xs:attribute name="include" type="xs:string"/>
+                      <xs:attribute name="exclude" type="xs:string"/>
                     </xs:complexType>
                   </xs:element>
                   <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
