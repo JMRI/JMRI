@@ -18,6 +18,7 @@ public class NceMessageTest extends TestCase {
 
     @Override
     public void setUp() {
+        jmri.util.JUnitUtil.setUp();
         saveCommandOptions = tc.getCommandOptions();
     }
 
@@ -27,6 +28,8 @@ public class NceMessageTest extends TestCase {
         tc.setCommandOptions(saveCommandOptions);
         Assert.assertTrue("Command has been set", tc.commandOptionSet);
         tc.commandOptionSet = false;	// kill warning message
+        tc = null;
+        jmri.util.JUnitUtil.tearDown();
     }
 
     public void testCreate() {
