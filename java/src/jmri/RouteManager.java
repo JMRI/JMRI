@@ -70,15 +70,6 @@ public interface RouteManager extends Manager<Route> {
     public Route getBySystemName(@Nonnull String s);
 
     /**
-     * Get a list of all Route system names.
-     *
-     * @return the list of route system names or an empty list
-     */
-    @Nonnull
-    @Override
-    public List<String> getSystemNameList();
-
-    /**
      * Delete Route by removing it from the manager. The Route must first be
      * deactivated so it stops processing.
      *

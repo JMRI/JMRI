@@ -140,15 +140,6 @@ public interface AudioManager extends Manager<Audio> {
     public AudioFactory getActiveAudioFactory();
 
     /**
-     * Get a list of all Audio objects' system names.
-     *
-     * @return List of all Audio objects' system names
-     */
-    @Override
-    @Nonnull
-    public List<String> getSystemNameList();
-
-    /**
      * Get a list of specified Audio sub-type objects' system names.
      *
      * @param subType sub-type to retrieve

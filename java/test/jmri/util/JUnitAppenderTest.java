@@ -228,6 +228,31 @@ public class JUnitAppenderTest extends TestCase {
         Assert.assertEquals(0,JUnitAppender.clearBacklog(org.apache.log4j.Level.INFO));
     }
 
+    public void suppressErrorMessage() {
+        String msg = "Message for testing to find";
+
+        log.warn("Dummy");        
+        log.warn(msg);        
+        Assert.assertFalse(JUnitAppender.verifyNoBacklog());
+        JUnitAppender.suppressErrorMessage(msg);
+        Assert.assertTrue(JUnitAppender.verifyNoBacklog());
+        
+        log.warn("Dummy");        
+        log.warn(msg);        
+        log.warn("Dummy");        
+        Assert.assertFalse(JUnitAppender.verifyNoBacklog());
+        JUnitAppender.suppressErrorMessage(msg);
+        Assert.assertFalse(JUnitAppender.verifyNoBacklog());
+        
+        log.error("Dummy");        
+        log.warn(msg);        
+        log.warn("Dummy");        
+        Assert.assertFalse(JUnitAppender.verifyNoBacklog());
+        JUnitAppender.suppressErrorMessage(msg);
+        Assert.assertFalse(JUnitAppender.verifyNoBacklog());
+    }
+
+
     // from here down is testing infrastructure
     public JUnitAppenderTest(String s) {
         super(s);
