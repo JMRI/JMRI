@@ -739,10 +739,10 @@ public class JUnitUtil {
             if (frame.isDisplayable()) {
                 if (frame.getClass().getName().equals("javax.swing.SwingUtilities$SharedOwnerFrame")) {
                     String message = "Cleaning up nameless invisible frame created by creating a dialog with a null parent in {}.";
-                    if (!error) {
-                        log.warn(message, getTestClassName());
-                    } else if (warn) {
+                    if (error) {
                         log.error(message, getTestClassName());
+                    } else if (warn) {
+                        log.warn(message, getTestClassName());
                     }
                 } else {
                     String message = "Cleaning up frame \"{}\" (a {}) in {}.";
@@ -759,10 +759,10 @@ public class JUnitUtil {
             if (window.isDisplayable()) {
                 if (window.getClass().getName().equals("javax.swing.SwingUtilities$SharedOwnerFrame")) {
                     String message = "Cleaning up nameless invisible window created by creating a dialog with a null parent in {}.";
-                    if (!error) {
-                        log.warn(message, getTestClassName());
-                    } else if (warn) {
+                    if (error) {
                         log.error(message, getTestClassName());
+                    } else if (warn) {
+                        log.warn(message, getTestClassName());
                     }
                 } else {
                     String message = "Cleaning up window \"{}\" (a {}) in {}.";
