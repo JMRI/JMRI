@@ -13,7 +13,7 @@ import org.junit.Assert;
  *
  * @author	Bob Jacobsen
  */
-public class SRCPProgrammerTest extends TestCase {
+public class SRCPProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
     public void testCtor() {
         SRCPBusConnectionMemo sm = new SRCPBusConnectionMemo(new SRCPTrafficController() {

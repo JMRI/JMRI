@@ -13,7 +13,7 @@ import org.junit.Assert;
  *
  * @author	Bob Jacobsen
  */
-public class OlcbProgrammerTest extends TestCase {
+public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
     public void testCtor() {
         new OlcbSystemConnectionMemo();
