@@ -4,10 +4,7 @@ import java.util.List;
 import jmri.ProgListener;
 import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import org.junit.*;
 
 /**
  * JUnit tests for the AbstractProgrammer class
@@ -16,15 +13,17 @@ import org.junit.Assert;
  *
  * @author Bob Jacobsen
  */
-public class AbstractProgrammerTest extends TestCase {
+public class AbstractProgrammerTest {
 
-    AbstractProgrammer abstractprogrammer;
+    protected AbstractProgrammer abstractprogrammer;
 
+    @Test
     public void testDefault() {
         Assert.assertEquals("Check Default", ProgrammingMode.DIRECTMODE,
                 abstractprogrammer.getMode());        
     }
     
+    @Test
     public void testDefaultViaBestMode() {
         // Programmer implementation that uses getBestMode for setting default
         abstractprogrammer = new AbstractProgrammer() {
@@ -59,12 +58,14 @@ public class AbstractProgrammerTest extends TestCase {
                 abstractprogrammer.getMode());        
     }
     
+    @Test
     public void testSetGetMode() {
         abstractprogrammer.setMode(ProgrammingMode.REGISTERMODE);
         Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
                 abstractprogrammer.getMode());        
     }
     
+    @Test
     public void testSetModeNull() {
         try {
             abstractprogrammer.setMode(null);
@@ -73,6 +74,7 @@ public class AbstractProgrammerTest extends TestCase {
         Assert.fail("should not have setMode(null)");        
     }
     
+    @Test
     public void testRegisterFromCV() {
         int cv1 = -1;
 
@@ -109,27 +111,10 @@ public class AbstractProgrammerTest extends TestCase {
         }
     }
 
-    // from here down is testing infrastructure
-    public AbstractProgrammerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {AbstractProgrammerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(AbstractProgrammerTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
 
         abstractprogrammer = new AbstractProgrammer() {
 
@@ -157,8 +142,8 @@ public class AbstractProgrammerTest extends TestCase {
         };
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 
