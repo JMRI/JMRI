@@ -239,7 +239,6 @@ public class SignalHeadSignalMastTest {
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
-        JUnitUtil.resetInstanceManager();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SignalHeadSignalMastTest.class);
