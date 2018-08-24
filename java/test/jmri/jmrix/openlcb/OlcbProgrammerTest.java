@@ -1,10 +1,7 @@
 package jmri.jmrix.openlcb;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import org.junit.*;
 
 /**
  * OlcbProgrammerTest.java
@@ -16,36 +13,22 @@ import org.junit.Assert;
 public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
     public void testCtor() {
-        new OlcbSystemConnectionMemo();
-        OlcbProgrammer s = new OlcbProgrammer();
-        Assert.assertNotNull(s);
-    }
-
-    // from here down is testing infrastructure
-    public OlcbProgrammerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OlcbProgrammerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OlcbProgrammerTest.class);
-        return suite;
+        Assert.assertNotNull(abstractprogrammer);
     }
 
     // The minimal setup for log4J
     @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
+        //new OlcbSystemConnectionMemo();
+        abstractprogrammer = new OlcbProgrammer();
     }
 
     @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
+        abstractprogrammer = null;
         JUnitUtil.tearDown();
     }
 }
