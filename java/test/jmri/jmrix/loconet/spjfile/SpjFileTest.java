@@ -79,4 +79,15 @@ public class SpjFileTest extends TestCase {
         return suite;
     }
 
+    // The minimal setup for log4J
+    @Override
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @Override
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
+    }
+
 }

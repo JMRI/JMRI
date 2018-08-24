@@ -279,7 +279,7 @@ public class JUnitAppenderTest extends TestCase {
     @Override
     protected void tearDown() {
 
-        apps.tests.Log4JFixture.tearDown();     
+        jmri.util.JUnitUtil.tearDown();     
 
         // continue the testUnexpectedCheck test
         if (testingUnexpected) {
