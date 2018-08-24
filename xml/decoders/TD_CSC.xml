@@ -21,7 +21,9 @@
       <model model="CSC" lowVersionID="10" comment="Original HW"/>
       <model model="CSCe" lowVersionID="10" comment="Later HW"/>
     </family>
-    <programming direct="no" paged="yes" register="no" ops="yes"/>
+    <programming direct="no" paged="yes" register="no" ops="yes">
+        <mode>LOCONETOPSBOARD</mode>
+    </programming>
     <variables>
       <variable CV="1" mask="VVVVVVVV" item="Short Address" tooltip="Range 1-16000, max value of 127 when programming via DCC" default="10010">
         <splitVal highCV="2" upperMask="XXVVVVVV"/>

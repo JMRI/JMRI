@@ -19,7 +19,9 @@
     <family name="SIC24e" mfg="Team Digital" type="stationary" comment="The SIC24e can be programmed in the usual way">
       <model model="SIC24e" lowVersionID="10"/>
     </family>
-    <programming direct="no" paged="yes" register="no" ops="yes"/>
+    <programming direct="no" paged="yes" register="no" ops="yes">
+        <mode>LOCONETOPSBOARD</mode>
+    </programming>
     <variables>
       <variable CV="1" mask="VVVVVVVV" item="Short Address" tooltip="Range 1-16000, max value of 127 when programming via DCC" default="1">
         <splitVal highCV="2" upperMask="XXVVVVVV"/>

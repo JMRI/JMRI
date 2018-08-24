@@ -19,7 +19,9 @@
     <family name="Stationary Decoder" mfg="Team Digital" type="stationary">
       <model model="SC82" lowVersionID="1" comment="SC82 is a stationary decoder, but it can be programmed in the usual way"/>
     </family>
-    <programming direct="yes" paged="yes" register="no" ops="yes"/>
+    <programming direct="yes" paged="yes" register="no" ops="yes">
+        <mode>LOCONETOPSBOARD</mode>
+    </programming>
     <variables>
       <variable CV="1" mask="VVVVVVVV" item="Short Address" tooltip="Range 1-16000, max value of 127 when programming via DCC" default="1">
         <splitVal highCV="2" upperMask="XXVVVVVV"/>

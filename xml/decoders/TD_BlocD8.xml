@@ -22,7 +22,9 @@
     <family name="BlocD8" mfg="Team Digital" type="stationary">
       <model model="BlocD8" lowVersionID="1" comment="BlocD8 can be programmed in the usual way"/>
     </family>
-    <programming direct="yes" paged="yes" register="no" ops="yes"/>
+    <programming direct="yes" paged="yes" register="no" ops="yes">
+        <mode>LOCONETOPSBOARD</mode>
+    </programming>
     <variables>
       <variable CV="1" mask="XVVVVVVV" item="Short Address" default="1" tooltip="Range 1-99">
         <shortAddressVal/>

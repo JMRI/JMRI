@@ -21,7 +21,10 @@
     <family name="Stationary Decoder" mfg="Team Digital" type="stationary">
       <model model="SRC162" lowVersionID="1" comment="SRC162 is a stationary decoder with serial bus"/>
     </family>
-    <programming direct="yes" paged="yes" register="no" ops="yes"/>
+    <programming direct="yes" paged="yes" register="no" ops="yes">
+        <mode>LOCONETOPSBOARD</mode>
+    </programming>
+
     <variables>
       <!-- item="Short Address" tells the system that this is the DCC address -->
       <!-- "dccaddress" name required in panel to see correct address -->

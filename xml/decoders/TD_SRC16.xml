@@ -31,7 +31,9 @@
     <family name="Stationary Decoder" mfg="Team Digital" type="stationary">
       <model model="SRC16" lowVersionID="1" comment="SRC16 is a stationary decoder with serial bus"/>
     </family>
-    <programming direct="yes" paged="yes" register="no" ops="yes"/>
+    <programming direct="yes" paged="yes" register="no" ops="yes">
+        <mode>LOCONETOPSBOARD</mode>
+    </programming>
     <variables>
       <variable CV="1" mask="XVVVVVVV" item="Short Address" default="1" tooltip="Range 1-99">
         <shortAddressVal/>

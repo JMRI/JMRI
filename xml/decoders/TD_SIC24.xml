@@ -21,7 +21,9 @@
     <family name="SIC24" mfg="Team Digital" type="stationary" comment="SIC24 is not stationary decoder, but it can be programmed in the usual way">
       <model model="SIC24" lowVersionID="12"/>
     </family>
-    <programming direct="no" paged="yes" register="no" ops="yes"/>
+    <programming direct="no" paged="yes" register="no" ops="yes">
+        <mode>LOCONETOPSBOARD</mode>
+    </programming>
     <variables>
       <variable item="Output Addresses" CV="1" mask="VVVVVVVV" default="101" tooltip="Range 1-2040">
         <splitVal highCV="9" upperMask="XXXXVVVV"/>

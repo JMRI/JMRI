@@ -25,7 +25,9 @@
     <family name="SIC24AD" mfg="Team Digital" type="stationary" comment="The SIC24AD can be programmed in the usual way">
       <model model="SIC24AD" lowVersionID="10"/>
     </family>
-    <programming direct="no" paged="yes" register="no" ops="yes"/>
+    <programming direct="no" paged="yes" register="no" ops="yes">
+        <mode>LOCONETOPSBOARD</mode>
+    </programming>
     <variables>
       <variable CV="1" mask="XVVVVVVV" item="Short Address" default="1" tooltip="Range 1-99">
         <shortAddressVal/>
