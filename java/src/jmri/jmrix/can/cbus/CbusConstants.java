@@ -50,7 +50,9 @@ public final class CbusConstants {
 
     // Opcodes with 2 data
     public static final int CBUS_RLOC = 0x40;
+    public static final int CBUS_QCON = 0x41;
     public static final int CBUS_SNN = 0x42;
+    public static final int CBUS_ALOC = 0x43;
     public static final int CBUS_STMOD = 0x44;
     public static final int CBUS_PCON = 0x45;
     public static final int CBUS_KCON = 0x46;
