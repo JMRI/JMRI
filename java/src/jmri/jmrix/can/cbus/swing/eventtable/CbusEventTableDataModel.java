@@ -447,7 +447,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         if (col == NAME_COLUMN) {
             _name[row] = (String) value;
             // look for other occurrences of the same node
-            for (int i = 0; i < _rowCount; i++) {
+            for (int i = 0; i < getRowCount(); i++) {
                 // ignore this one
                 if (i != row) {
                     if (_node[i] == _node[row]) {

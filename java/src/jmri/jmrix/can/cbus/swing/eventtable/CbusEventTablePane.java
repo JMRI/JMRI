@@ -74,14 +74,14 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
-    CbusEventTableDataModel eventModel;
-    JTable eventTable;
-    JScrollPane eventScroll;
-    JSplitPane split;
-    JPanel pane1;
-    JPanel neweventcontainer = new JPanel();        
-    JTextArea tablefeedback = new JTextArea ( 1, 40 );         
-    JScrollPane scrolltablefeedback = new JScrollPane (tablefeedback);    
+    protected CbusEventTableDataModel eventModel=null;
+    protected JTable eventTable=null;
+    protected JScrollPane eventScroll;
+    protected JSplitPane split;
+    protected JPanel pane1;
+    protected JPanel neweventcontainer = new JPanel();        
+    protected JTextArea tablefeedback = new JTextArea ( 1, 40 );         
+    protected JScrollPane scrolltablefeedback = new JScrollPane (tablefeedback);    
     
     private DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss:SSS dd/MM/yy");
     
@@ -98,7 +98,8 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     }
 
     public void init() {
-        eventTable = new JTable(eventModel) {
+        
+        JTable eventTable = new JTable(eventModel) {
             // Override JTable Header to implement table header tool tips.
             @Override
             protected JTableHeader createDefaultTableHeader() {
