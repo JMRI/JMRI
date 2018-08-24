@@ -20,11 +20,7 @@ public class LI100XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
     static final int RESTART_TIME = 20;
 
     @Test
-    public void testCtor() {
-        Assert.assertNotNull(p);
-    }
-
-    @Test
+    @Override
     public void testWriteCvSequence() throws JmriException {
         // and do the write
         p.writeCV(29, 34, l);
@@ -70,6 +66,7 @@ public class LI100XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
     }
 
     @Test
+    @Override
     public void testWriteRegisterSequence() throws JmriException {
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);
@@ -121,6 +118,7 @@ public class LI100XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
     }
 
     @Test
+    @Override
     public void testReadCvSequence() throws JmriException {
         // and do the read
         p.readCV(29, l);
@@ -169,6 +167,7 @@ public class LI100XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
     }
 
     @Test
+    @Override
     public void testReadRegisterSequence() throws JmriException {
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);
@@ -221,6 +220,7 @@ public class LI100XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
     // it checks the sequence for CVs greater than 255, which use
     // different XpressNet commands.
     @Test
+    @Override
     public void testWriteHighCvSequence() throws JmriException {
         // and do the write
         p.writeCV(300, 34, l);
@@ -269,6 +269,7 @@ public class LI100XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
     // it checks the sequence for CVs greater than 256, which use
     // different XpressNet commands.
     @Test
+    @Override
     public void testReadHighCvSequence() throws JmriException {
         // and do the read
         p.readCV(300, l);

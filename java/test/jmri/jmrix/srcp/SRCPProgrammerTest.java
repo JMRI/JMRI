@@ -1,6 +1,7 @@
 package jmri.jmrix.srcp;
 
 import jmri.util.JUnitUtil;
+import jmri.ProgrammingMode;
 import org.junit.*;
 
 /**
@@ -12,8 +13,11 @@ import org.junit.*;
  */
 public class SRCPProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
-    public void testCtor() {
-        Assert.assertNotNull(abstractprogrammer);
+    @Test
+    @Override
+    public void testDefault() {
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBYTEMODE,
+                abstractprogrammer.getMode());        
     }
 
     // The minimal setup for log4J

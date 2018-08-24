@@ -37,6 +37,18 @@ public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
 
     }
 
+    @Test
+    @Override
+    @Ignore("Elite behavior is unknown for this sequence")
+    public void testWriteHighCvSequence() throws JmriException {
+    }
+
+    @Test
+    @Override
+    @Ignore("Elite behavior is unknown for this sequence")
+    public void testReadHighCvSequence() throws JmriException {
+    }
+
     // Test names ending with "String" are for the new writeCV(String, ...)
     // etc methods.  If you remove the older writeCV(int, ...) tests,
     // you can rename these. Note that not all (int,...) tests may have a

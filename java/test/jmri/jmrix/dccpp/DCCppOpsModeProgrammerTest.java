@@ -11,11 +11,12 @@ import org.junit.*;
  * @author	Paul Bender
  * @author	Mark Underwood (C) 2015
  */
-public class DCCppOpsModeProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
- 
+public class DCCppOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
+
     @Test
-    public void testCtor() {
-        Assert.assertNotNull(abstractprogrammer);
+    public void testGetCanRead() {
+        // DccPP supports railcom?
+        Assert.assertTrue("can read", abstractprogrammer.getCanRead());
     }
 
     // The minimal setup for log4J
@@ -27,13 +28,13 @@ public class DCCppOpsModeProgrammerTest extends jmri.jmrix.AbstractProgrammerTes
         DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
 
         DCCppOpsModeProgrammer t = new DCCppOpsModeProgrammer(5, tc);
-	abstractprogrammer = t;
+	    abstractprogrammer = t;
     }
 
     @Override
     @After
     public void tearDown() {
-	abstractprogrammer = null;
+	    abstractprogrammer = null;
         JUnitUtil.tearDown();
     }
 

@@ -1,6 +1,7 @@
 package jmri.jmrix.openlcb;
 
 import jmri.util.JUnitUtil;
+import jmri.ProgrammingMode;
 import org.junit.*;
 
 /**
@@ -12,9 +13,21 @@ import org.junit.*;
  */
 public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
-    public void testCtor() {
-        Assert.assertNotNull(abstractprogrammer);
+    @Test
+    @Override
+    public void testDefault() {
+        Assert.assertEquals("Check Default", OlcbProgrammerManager.OPENLCBMODE,
+                abstractprogrammer.getMode());        
     }
+
+    @Test(expected=java.lang.IllegalArgumentException.class)
+    public void testSetGetMode() {
+        abstractprogrammer.setMode(ProgrammingMode.REGISTERMODE);
+        Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
+                abstractprogrammer.getMode());        
+    }
+    
+    @Test
 
     // The minimal setup for log4J
     @Override

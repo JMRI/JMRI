@@ -18,9 +18,19 @@ public class AbstractProgrammerTest {
     protected AbstractProgrammer abstractprogrammer;
 
     @Test
+    public void testCtor() {
+        Assert.assertNotNull(abstractprogrammer);
+    }
+
+    @Test
     public void testDefault() {
         Assert.assertEquals("Check Default", ProgrammingMode.DIRECTMODE,
                 abstractprogrammer.getMode());        
+    }
+
+    @Test
+    public void testGetCanRead() {
+        Assert.assertTrue("can read", abstractprogrammer.getCanRead());
     }
     
     @Test
@@ -144,6 +154,7 @@ public class AbstractProgrammerTest {
 
     @After
     public void tearDown() {
+        abstractprogrammer = null;
         JUnitUtil.tearDown();
     }
 

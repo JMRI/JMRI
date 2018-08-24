@@ -20,24 +20,17 @@ public class CbusProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     private ProgListenerScaffold testListener;
 
     @Test
-    public void testGetMode() {
-        Assert.assertEquals("CBUSNODEVARMODE", CbusProgrammer.CBUSNODEVARMODE,
-                p.getMode());
+    @Override
+    public void testDefault() {
+        Assert.assertEquals("Check Default", CbusProgrammer.CBUSNODEVARMODE,
+                abstractprogrammer.getMode());        
     }
 
-    @Test
-    public void testSetMode() {
-        try {
-            p.setMode(ProgrammingMode.PAGEMODE);
-        } catch (IllegalArgumentException e) {
-            return;
-        }
-        Assert.fail("No IllegalArgumentException thrown");
-    }
-
-    @Test
-    public void testGetCanRead() {
-        Assert.assertTrue("can read", p.getCanRead());
+    @Test(expected=java.lang.IllegalArgumentException.class)
+    public void testSetGetMode() {
+        abstractprogrammer.setMode(ProgrammingMode.REGISTERMODE);
+        Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
+                abstractprogrammer.getMode());        
     }
 
     @Test

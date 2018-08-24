@@ -233,7 +233,7 @@ public class XNetProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     // it checks the sequence for CVs greater than 256, which use
     // different XpressNet commands.
     @Test
-    public void testReadCvHighSequence() throws JmriException {
+    public void testReadHighCvSequence() throws JmriException {
         // and do the read
         p.readCV(300, l);
         // check "prog mode" message sent

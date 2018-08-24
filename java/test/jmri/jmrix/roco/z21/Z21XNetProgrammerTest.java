@@ -112,7 +112,7 @@ public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
     // different XpressNet commands.
     @Override
     @Test
-    public void testReadCvHighSequence() throws JmriException {
+    public void testReadHighCvSequence() throws JmriException {
         // and do the read
         p.readCV(300, l);
         // check "prog mode" message sent

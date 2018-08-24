@@ -22,6 +22,20 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     private DCCppProgrammer p = null;
 
     @Test
+    @Override
+    public void testDefault() {
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBYTEMODE,
+                abstractprogrammer.getMode());        
+    }
+ 
+    @Test(expected=java.lang.IllegalArgumentException.class)
+    public void testSetGetMode() {
+        abstractprogrammer.setMode(ProgrammingMode.REGISTERMODE);
+        Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
+                abstractprogrammer.getMode());        
+    }
+
+    @Test
     public void testWriteCvSequence() throws JmriException {
         // and do the write
         p.writeCV(29, 34, l);

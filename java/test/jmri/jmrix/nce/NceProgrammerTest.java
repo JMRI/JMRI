@@ -14,12 +14,20 @@ import org.slf4j.LoggerFactory;
 /**
  * JUnit tests for the NceProgrammer class
  * <P>
- * Note most have names starting with x, which disables them; a note why that
- * was done would have been good!
+ * before conversion to JUnit4, most tests had names starting with x, which 
+ * disables them in JUnit3; a note why that was done would have been good!
+ * These tests now have a JUnit4 Ignore attribute.
  *
  * @author	Bob Jacobsen
  */
 public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
+
+    @Test
+    @Override
+    public void testDefault() {
+        Assert.assertEquals("Check Default", ProgrammingMode.PAGEMODE,
+                abstractprogrammer.getMode());        
+    }
 
     @Override
     @Before
@@ -44,11 +52,6 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     private NceInterfaceScaffold tc;
     private NceProgrammer p = null;
     private jmri.ProgListenerScaffold l;
-
-    @Test
-    public void testCreate() {
-        Assert.assertNotNull("programmer exists", p);
-    }
 
     @Test
     @Ignore("disabled for some reason in JUnit3")
