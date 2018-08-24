@@ -173,7 +173,7 @@ public class AccessoryOpsModeProgrammerFacadeTest {
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         InstanceManager.setDefault(CommandStation.class, new MockCommandStation());
         lastPacket = null;

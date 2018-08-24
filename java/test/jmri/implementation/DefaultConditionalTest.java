@@ -44,7 +44,7 @@ public class DefaultConditionalTest extends NamedBeanTest {
     // The minimal setup for log4J
     @Override
     protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         super.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();

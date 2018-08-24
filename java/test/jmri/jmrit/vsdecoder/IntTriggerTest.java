@@ -2,9 +2,7 @@ package jmri.jmrit.vsdecoder;
 
 import java.beans.PropertyChangeEvent;
 import org.jdom2.Element;
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Tests for the IntTrigger class
@@ -161,6 +159,16 @@ public class IntTriggerTest {
         Assert.assertEquals("xml match value", 2, uut.getMatchValue());
         Assert.assertEquals("xml action", Trigger.TargetAction.PLAY, uut.getTargetAction());
 
+    }
+
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }
