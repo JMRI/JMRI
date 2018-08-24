@@ -112,10 +112,10 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
     @Override
     public String getTitle() {
         if (memo != null) {
-            return (memo.getUserName() + " " + Bundle.getMessage("ConfigTitle"));
+            return (memo.getUserName() + " " + Bundle.getMessage("CapConfigTitle"));
 
         }
-        return Bundle.getMessage("ConfigTitle");
+        return Bundle.getMessage("CapConfigTitle");
     }
 
     MakeNamedBean makeSensor;
