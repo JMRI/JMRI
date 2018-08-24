@@ -74,6 +74,7 @@ public class VSDSoundTest extends TestCase {
     @After
     @Override
     public void tearDown() {
+        jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
         Log4JFixture.tearDown();
     }
 }
