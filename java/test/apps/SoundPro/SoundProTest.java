@@ -123,6 +123,8 @@ public class SoundProTest {
         } finally {
             // wait for threads, etc
             jmri.util.JUnitUtil.releaseThread(this, 5000);
+            jmri.util.JUnitAppender.suppressWarnMessage("Timeout can't be handled due to missing node (index 1)");
+            jmri.util.JUnitAppender.suppressWarnMessage("Timeout can't be handled due to missing node (index 0)");
         }
     }
 
