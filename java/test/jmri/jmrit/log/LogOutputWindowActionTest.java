@@ -59,8 +59,8 @@ public class LogOutputWindowActionTest {
             }                        
         }
         
-        jmri.util.JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
     }
 
 }

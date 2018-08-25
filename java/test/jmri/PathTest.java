@@ -145,7 +145,15 @@ public class PathTest extends TestCase {
 
     @Override
     protected void setUp() {
+        jmri.util.JUnitUtil.setUp();
+        
+        jmri.util.JUnitUtil.resetInstanceManager();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
+    }
+
+    @Override
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

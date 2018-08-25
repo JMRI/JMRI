@@ -199,12 +199,12 @@ public class WaitHandlerTest extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
         super.tearDown();
     }
 

@@ -1,6 +1,5 @@
 package jmri.util;
 
-import apps.tests.Log4JFixture;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -88,7 +87,7 @@ public class FileLineEndingsTest {
      * @return a collection of files to validate
      */
     public static Collection<Object[]> getFiles(File directory, String[] patterns, String[] antiPatterns) {
-        Log4JFixture.setUp(); // setup logging early so this method can log
+        jmri.util.JUnitUtil.setUp(); // setup logging early so this method can log
         ArrayList<Object[]> files = new ArrayList<>();
         ArrayList<PathMatcher> antiMatchers = new ArrayList<>();
         for (String antiPattern : antiPatterns) {

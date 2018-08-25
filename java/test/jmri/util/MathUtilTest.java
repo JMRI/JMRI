@@ -268,12 +268,12 @@ public class MathUtilTest extends TestCase {
     @Before
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
     }
 
     @After
     protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
         super.tearDown();
     }
 

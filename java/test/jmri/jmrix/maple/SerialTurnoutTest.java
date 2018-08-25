@@ -52,6 +52,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     @Override
     @Before
     public void setUp() {
+        jmri.util.JUnitUtil.setUp();
         // prepare an interface
         tcis = new SerialTrafficControlScaffold();
         _memo = new MapleSystemConnectionMemo("K", "Maple");
@@ -67,7 +68,8 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
         _memo.dispose();
         n = null;
         t = null;
-        // JUnitUtil.tearDown() clean up is done through the AbstractTurnoutTestBase
+        // Some clean up is done through the AbstractTurnoutTestBase
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }
