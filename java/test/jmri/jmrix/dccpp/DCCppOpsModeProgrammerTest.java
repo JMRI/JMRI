@@ -13,6 +13,7 @@ import org.junit.*;
  */
 public class DCCppOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
 
+    @Override
     @Test
     public void testGetCanRead() {
         // DccPP supports railcom?

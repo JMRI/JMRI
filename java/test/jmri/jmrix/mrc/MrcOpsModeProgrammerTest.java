@@ -10,26 +10,25 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class MrcOpsModeProgrammerTest {
+public class MrcOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
 
-    @Test
-    public void testCTor() {
+    // The minimal setup for log4J
+    @Before
+    @Override
+    public void setUp() {
+        JUnitUtil.setUp();
         MrcSystemConnectionMemo memo = new MrcSystemConnectionMemo();
         MrcInterfaceScaffold tc = new MrcInterfaceScaffold();
         memo.setMrcTrafficController(tc);
         jmri.InstanceManager.store(memo, MrcSystemConnectionMemo.class);
         MrcOpsModeProgrammer t = new MrcOpsModeProgrammer(tc,5,false);
-        Assert.assertNotNull("exists",t);
-    }
-
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
+        abstractprogrammer = t;
     }
 
     @After
+    @Override
     public void tearDown() {
+        abstractprogrammer = null;
         JUnitUtil.tearDown();
     }
 

@@ -10,23 +10,29 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class EcosOpsModeProgrammerTest {
+public class EcosOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
 
+    @Override
     @Test
-    public void testCTor() {
-        EcosTrafficController tc = new EcosInterfaceScaffold();
-        EcosOpsModeProgrammer t = new EcosOpsModeProgrammer(tc,25,false);
-        Assert.assertNotNull("exists",t);
+    public void testGetCanRead() {
+        // Ecos supports railcom
+        Assert.assertTrue("can read", abstractprogrammer.getCanRead());
     }
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        EcosTrafficController tc = new EcosInterfaceScaffold();
+        EcosOpsModeProgrammer t = new EcosOpsModeProgrammer(tc,25,false);
+        abstractprogrammer = t;
     }
 
     @After
+    @Override
     public void tearDown() {
+        abstractprogrammer = null;
         JUnitUtil.tearDown();
     }
 
