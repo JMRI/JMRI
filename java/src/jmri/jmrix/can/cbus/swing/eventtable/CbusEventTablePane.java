@@ -1,7 +1,5 @@
 package jmri.jmrix.can.cbus.swing.eventtable;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.awt.FlowLayout;
 import java.awt.Frame;
 
@@ -74,14 +72,14 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
 
-    CbusEventTableDataModel eventModel;
-    JTable eventTable;
-    JScrollPane eventScroll;
-    JSplitPane split;
-    JPanel pane1;
-    JPanel neweventcontainer = new JPanel();        
-    JTextArea tablefeedback = new JTextArea ( 1, 40 );         
-    JScrollPane scrolltablefeedback = new JScrollPane (tablefeedback);    
+    protected CbusEventTableDataModel eventModel=null;
+    protected JTable eventTable=null;
+    protected JScrollPane eventScroll;
+    protected JSplitPane split;
+    protected JPanel pane1;
+    protected JPanel neweventcontainer = new JPanel();        
+    protected JTextArea tablefeedback = new JTextArea ( 1, 40 );         
+    protected JScrollPane scrolltablefeedback = new JScrollPane (tablefeedback);    
     
     private DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss:SSS dd/MM/yy");
     
@@ -98,7 +96,8 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     }
 
     public void init() {
-        eventTable = new JTable(eventModel) {
+        
+        JTable eventTable = new JTable(eventModel) {
             // Override JTable Header to implement table header tool tips.
             @Override
             protected JTableHeader createDefaultTableHeader() {
@@ -134,31 +133,31 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         
         TableColumnModel eventTableModel = eventTable.getColumnModel();
         
-        TableColumn evIdColumn = eventTableModel.getColumn(eventModel.EVENTID_COLUMN);
-        TableColumn caIdColumn = eventTableModel.getColumn(eventModel.CANID_COLUMN);
+        TableColumn evIdColumn = eventTableModel.getColumn(CbusEventTableDataModel.EVENTID_COLUMN);
+        TableColumn caIdColumn = eventTableModel.getColumn(CbusEventTableDataModel.CANID_COLUMN);
 
-        TableColumn delBColumn = eventTableModel.getColumn(eventModel.DELETE_BUTTON_COLUMN);
+        TableColumn delBColumn = eventTableModel.getColumn(CbusEventTableDataModel.DELETE_BUTTON_COLUMN);
         delBColumn.setCellEditor(new ButtonEditor(new JButton()));
         delBColumn.setCellRenderer(new ButtonRenderer());
         
-        TableColumn onBColumn = eventTableModel.getColumn(eventModel.ON_BUTTON_COLUMN);
+        TableColumn onBColumn = eventTableModel.getColumn(CbusEventTableDataModel.ON_BUTTON_COLUMN);
         onBColumn.setCellEditor(new ButtonEditor(new JButton()));
         onBColumn.setCellRenderer(new ButtonRenderer());
         
-        TableColumn offBColumn = eventTableModel.getColumn(eventModel.OFF_BUTTON_COLUMN);
+        TableColumn offBColumn = eventTableModel.getColumn(CbusEventTableDataModel.OFF_BUTTON_COLUMN);
         offBColumn.setCellEditor(new ButtonEditor(new JButton()));
         offBColumn.setCellRenderer(new ButtonRenderer());    
         
-        TableColumn togBColumn = eventTableModel.getColumn(eventModel.TOGGLE_BUTTON_COLUMN);
+        TableColumn togBColumn = eventTableModel.getColumn(CbusEventTableDataModel.TOGGLE_BUTTON_COLUMN);
         togBColumn.setCellEditor(new ButtonEditor(new JButton()));
         togBColumn.setCellRenderer(new ButtonRenderer());        
         
-        TableColumn rqStatColumn = eventTableModel.getColumn(eventModel.STATUS_REQUEST_BUTTON_COLUMN);
+        TableColumn rqStatColumn = eventTableModel.getColumn(CbusEventTableDataModel.STATUS_REQUEST_BUTTON_COLUMN);
         rqStatColumn.setCellEditor(new ButtonEditor(new JButton()));
         rqStatColumn.setCellRenderer(new ButtonRenderer());   
 
         // format the last updated date time
-        TableColumn timeColumn = eventTableModel.getColumn(eventModel.LATEST_TIMESTAMP_COLUMN);
+        TableColumn timeColumn = eventTableModel.getColumn(CbusEventTableDataModel.LATEST_TIMESTAMP_COLUMN);
         timeColumn.setCellRenderer(new DefaultTableCellRenderer() {
             @Override
             protected void setValue(Object value) {
