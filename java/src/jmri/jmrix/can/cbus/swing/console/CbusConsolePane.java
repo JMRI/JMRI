@@ -167,8 +167,6 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     @Override
     public void initComponents() {
         // the following code sets the frame's initial state
-        _sent = 0;
-        _rcvd = 0;
 
         clearButton.setText(Bundle.getMessage("ButtonClearScreen"));
         clearButton.setVisible(true);
@@ -367,14 +365,8 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
             public void actionPerformed(ActionEvent e) {
                 if (showStatsCheckBox.isSelected()) {
                     statsPane.setVisible(true);
-                    //statsPane.revalidate();
-                    packInside();
-                    //statsPane.repaint();
                 } else {
                     statsPane.setVisible(false);
-                    //statsPane.revalidate();
-                    packInside();
-                    //statsPane.repaint();
                 }
             }
         });
@@ -459,20 +451,10 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
             public void actionPerformed(ActionEvent e) {
                 if (showPacketCheckBox.isSelected()) {
                     rxPane.setVisible(true);
-                    //rxPane.revalidate();
                     sendPane.setVisible(true);
-                    //sendPane.revalidate();
-                    packInside();
-                    //rxPane.repaint();
-                    //sendPane.repaint();
                 } else {
                     rxPane.setVisible(false);
-                    //rxPane.revalidate();
                     sendPane.setVisible(false);
-                    //sendPane.revalidate();
-                    packInside();
-                    //rxPane.repaint();
-                    //sendPane.repaint();
                 }
             }
         });
@@ -526,14 +508,8 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
             public void actionPerformed(ActionEvent e) {
                 if (showEventCheckBox.isSelected()) {
                     evPane.setVisible(true);
-                    //evPane.revalidate();
-                    packInside();
-                    //evPane.repaint();
                 } else {
                     evPane.setVisible(false);
-                    //evPane.revalidate();
-                    packInside();
-                    //evPane.repaint();
                 }
             }
         });
@@ -627,18 +603,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         linesBuffer[CBUS] = new StringBuffer();
     }
 
-    /**
-     * Special version of pack that holds the overall frame size constant.
-     */
-    void packInside() {
-        if (getTopLevelAncestor() != null) {
-            Dimension d = ((javax.swing.JFrame) getTopLevelAncestor()).getSize();
-            ((javax.swing.JFrame) getTopLevelAncestor()).setMinimumSize(d);
-            ((javax.swing.JFrame) getTopLevelAncestor()).setPreferredSize(d);
-            ((javax.swing.JFrame) getTopLevelAncestor()).pack();
-        }
-    }
-
+    
     public void nextLine(String line, String decoded, String priorities, int filter) {
         // Handle display of traffic.
         // line is the traffic in 'normal form',
@@ -1078,8 +1043,8 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         }
     }
 
-    transient private int _sent;
-    transient private int _rcvd;
+    transient private int _sent=0;
+    transient private int _rcvd=0;
     private boolean _decimal;
     private CbusEventFilterFrame _filterFrame;
 
