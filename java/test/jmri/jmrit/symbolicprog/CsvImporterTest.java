@@ -43,8 +43,8 @@ public class CsvImporterTest {
         Assert.assertNotNull("exists",t);
         
         // following messages don't seem to always happen in AppVeyor and Travis CI
-        // jmri.util.JUnitAppender.assertWarnMessage("CV1 was in import file, but not defined by the decoder definition");
-        // jmri.util.JUnitAppender.assertWarnMessage("CV2 was in import file, but not defined by the decoder definition");
+        jmri.util.JUnitAppender.suppressWarnMessage("CV1 was in import file, but not defined by the decoder definition");
+        jmri.util.JUnitAppender.suppressWarnMessage("CV2 was in import file, but not defined by the decoder definition");
         
     }
 

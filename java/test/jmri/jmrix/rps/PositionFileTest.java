@@ -96,6 +96,11 @@ public class PositionFileTest extends TestCase {
         super(s);
     }
 
+    @Override
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PositionFileTest.class.getName()};

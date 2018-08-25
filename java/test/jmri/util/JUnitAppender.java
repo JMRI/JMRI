@@ -246,19 +246,23 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     }
 
     /**
-     * If there's a next matching message of Error severity, just ignore it. Not
-     * an error if not present; mismatch is an error.
+     * If there's a next matching message of specific severity, just ignore it. Not
+     * an error if not present; mismatch is an error. Skips messages of lower severity while looking for the specific one.
      *
      * @param msg the message to suppress
      */
-    public static void suppressErrorMessage(String msg) {
+    public static void suppressMessage(Level level, String msg) {
         if (list.isEmpty()) {
             return;
         }
 
         LoggingEvent evt = list.remove(0);
 
-        while ((evt.getLevel() == Level.INFO) || (evt.getLevel() == Level.DEBUG) || (evt.getLevel() == Level.TRACE)) { // better in Log4J 2
+        while ( 
+                 ( (level.equals(Level.WARN)) && (evt.getLevel() == Level.TRACE || evt.getLevel() == Level.DEBUG || evt.getLevel() == Level.INFO || evt.getLevel() == Level.WARN) )
+                 || 
+                 ( (level.equals(Level.ERROR)) && (evt.getLevel() == Level.TRACE || evt.getLevel() == Level.DEBUG || evt.getLevel() == Level.INFO || evt.getLevel() == Level.WARN || evt.getLevel() == Level.ERROR) )
+                ) { // this is much better with Log4J 2's compareTo method
             if (list.isEmpty()) {
                 return;
             }
@@ -266,13 +270,33 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
         }
 
         // check the remaining message, if any
-        if (evt.getLevel() != Level.ERROR) {
-            Assert.fail("Level mismatch when looking for ERROR message: \"" + msg + "\" found \"" + (String) evt.getMessage() + "\"");
+        if (evt.getLevel() != level) {
+            Assert.fail("Level mismatch when looking for "+level+" message: \"" + msg + "\" found \"" + (String) evt.getMessage() + "\"");
         }
 
         if (!compare(evt, msg)) {
-            Assert.fail("Looking for ERROR message \"" + msg + "\" got \"" + evt.getMessage() + "\"");
+            Assert.fail("Looking for "+level+" message \"" + msg + "\" got \"" + evt.getMessage() + "\"");
         }
+    }
+
+    /**
+     * If there's a next matching message of Error severity, just ignore it. Not
+     * an error if not present; mismatch is an error.
+     *
+     * @param msg the message to suppress
+     */
+    public static void suppressErrorMessage(String msg) {
+        suppressMessage(Level.ERROR, msg);
+    }
+
+    /**
+     * If there's a next matching message of Warn severity, just ignore it. Not
+     * an error if not present; mismatch is an error.
+     *
+     * @param msg the message to suppress
+     */
+    public static void suppressWarnMessage(String msg) {
+        suppressMessage(Level.WARN, msg);
     }
 
     /**

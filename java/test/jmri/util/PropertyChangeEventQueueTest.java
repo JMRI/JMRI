@@ -103,7 +103,7 @@ public class PropertyChangeEventQueueTest extends TestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
         super.tearDown();
     }
 
