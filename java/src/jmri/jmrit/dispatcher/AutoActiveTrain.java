@@ -660,6 +660,14 @@ public class AutoActiveTrain implements ThrottleListener {
             //    cB = nB;
             //    nB = getNextBlock(nB, as);
             //}
+            // get signal mast at current block change, if there is no signal mast there we must proceed at
+            // previous signal mast speed unless the mast is held.
+            boolean weAreNotAtSpeedChangingMast=false;
+            if ( sm == null && nB != null ) {
+                sm  = _lbManager.getFacingSignalMast(cB, nB);
+                if (sm == null) {weAreNotAtSpeedChangingMast=true;}
+            }
+            
             while (sm == null && nB != null) {
                 sm = _lbManager.getFacingSignalMast(cB, nB);
                 if (sm == null) {
@@ -683,7 +691,9 @@ public class AutoActiveTrain implements ThrottleListener {
                 });
                 log.debug("{}: new current signalmast {}({}) for section {}", _activeTrain.getTrainName(), sm.getDisplayName(),
                         sm.getAspect(), as.getSectionName());
-                setSpeedBySignal();
+                if ( !weAreNotAtSpeedChangingMast ) {
+                    setSpeedBySignal();
+                }
             } // Note: null signal head will result when exiting throat-to-throat blocks.
             else {
                 log.debug("{}: new current signalmast is null for section {} - sometimes OK", _activeTrain.getTrainName(),
