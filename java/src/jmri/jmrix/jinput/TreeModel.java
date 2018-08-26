@@ -255,6 +255,7 @@ public final class TreeModel extends DefaultTreeModel {
                 switch (SystemType.getType()) {
                     case SystemType.WINDOWS :
                         log.error("Failed to find expected library", ex);
+                        //$FALL-THROUGH$
                     default:
                         log.info("Did not find an implementation of a class needed for the interface; not proceeding");
                         log.info("This is normal, because support isn't available for {}", SystemType.getOSName());
