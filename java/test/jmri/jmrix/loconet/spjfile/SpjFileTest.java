@@ -14,7 +14,9 @@ import org.junit.Assert;
 public class SpjFileTest extends TestCase {
 
     public void testCreate() {
+        log.warn("Start testCreate");
         new SpjFile(new java.io.File("ac4400.spj"));
+        log.warn("End testCreate");
     }
 
     SpjFile testFile = null;
@@ -25,17 +27,9 @@ public class SpjFileTest extends TestCase {
             testFile.read();
         }
     }
-
-    // The following is commented out; usually used to split
-    // out a file into several subparts
-/*     public void testWriteSubFile() throws java.io.IOException { */
-    /*          */
-    /*         // and write */
-    /*         testFile = new SpjFile("java/test/jmri/jmrix/loconet/spjfile/test.spj"); */
-    /*         testFile.read(); */
-    /*         testFile.writeSubFiles(); */
-    /*     } */
+    
     public void testPlayWav() throws java.io.IOException {
+        log.warn("Start testPlayWav");
         loadFile();
 
         // and write
@@ -48,7 +42,8 @@ public class SpjFileTest extends TestCase {
                 return;
             }
         }
-        jmri.util.JUnitAppender.suppressWarnMessage("line not supported: interface SourceDataLine supporting format PCM_UNSIGNED 11200.0 Hz, 8 bit, mono, 1 bytes/frame, ");
+        //jmri.util.JUnitAppender.suppressWarnMessage("line not supported: interface SourceDataLine supporting format PCM_UNSIGNED 11200.0 Hz, 8 bit, mono, 1 bytes/frame, ");
+        log.warn("End testPlayWav");
     }
 
     public void playSoundBuffer(byte[] data) {
@@ -56,11 +51,13 @@ public class SpjFileTest extends TestCase {
     }
 
     public void testGetMapEntries() throws java.io.IOException {
+        log.warn("Start testGetMapEntries");
         loadFile();
 
         Assert.assertEquals("1", "DIESEL_START_BELL", testFile.getMapEntry(1));
         Assert.assertEquals("2", "DIESEL_START", testFile.getMapEntry(2));
         Assert.assertEquals("31", "USER_F28", testFile.getMapEntry(31));
+        log.warn("End testGetMapEntries");
     }
 
     // from here down is testing infrastructure
