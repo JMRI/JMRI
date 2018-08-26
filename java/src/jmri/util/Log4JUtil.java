@@ -55,7 +55,7 @@ public class Log4JUtil {
             loggerMap = new HashMap<>();
             warnedOnce.put(log, loggerMap);
         } else {
-            if (loggerMap.get(msg) == Boolean.TRUE) return false;
+            if (Boolean.TRUE.equals(loggerMap.get(msg))) return false;
         }
         loggerMap.put(msg, Boolean.TRUE);
         log.warn(msg, args);

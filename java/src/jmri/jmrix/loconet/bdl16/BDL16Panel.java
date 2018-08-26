@@ -51,7 +51,9 @@ public class BDL16Panel extends AbstractBoardProgPanel {
     int[] boardNumbers;
     int origAccessBoardNum = 0;
     java.util.ArrayList<Integer> boardNumsEntryValue = new java.util.ArrayList<Integer>();
-    JComboBox<String> comboBox[];
+    
+    @SuppressWarnings("unchecked") // type erasure means can't ask for new JComboBox<String>[48]
+    JComboBox<String> comboBox[] = new JComboBox[48];
     
     /**
      * BDL16x Programming tool.
@@ -279,9 +281,7 @@ public class BDL16Panel extends AbstractBoardProgPanel {
         readAllButton.setPreferredSize(new java.awt.Dimension((int) (w * 1.1), d.height));
         
         appendLine(addressingPanel);  // add read/write buttons, address
-        
-        comboBox = new JComboBox[48];  // can't use JComboBox<String>[48] as you can't have an array of type-erased types
-        
+                
         JPanel frame1 = new JPanel();
         frame1.setLayout(new BoxLayout(frame1, BoxLayout.PAGE_AXIS));
 
