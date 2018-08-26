@@ -70,6 +70,7 @@ public class IndexedTreeSetTest  extends TestCase {
         System.out.println("DONE IN:" + (System.currentTimeMillis() - t1));
     }
 
+    @SuppressWarnings("unchecked") // this is 3rd party code
     public void testPersistence() throws Exception {
         long t1 = System.currentTimeMillis();
         for (int i = 0; i < 1; i++) {
@@ -95,7 +96,7 @@ public class IndexedTreeSetTest  extends TestCase {
                 f.delete();
             }
             store(f, m);
-            m = (IndexedTreeSet<String>) load(f);
+            m = (IndexedTreeSet<String>) load(f);  // unchecked conversion here
             assertNotSame(hash,System.identityHashCode(m));
 
             System.out.println("saving - restoring:" + (System.currentTimeMillis() - t1));
