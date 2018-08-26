@@ -48,6 +48,7 @@ public class SpjFileTest extends TestCase {
                 return;
             }
         }
+        jmri.util.JUnitAppender.suppressWarnMessage("line not supported: interface SourceDataLine supporting format PCM_UNSIGNED 11200.0 Hz, 8 bit, mono, 1 bytes/frame, ");
     }
 
     public void playSoundBuffer(byte[] data) {
