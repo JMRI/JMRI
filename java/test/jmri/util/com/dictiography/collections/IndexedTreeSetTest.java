@@ -23,9 +23,8 @@ public class IndexedTreeSetTest  extends TestCase {
     }
     
     public void testQuickComparator() {
-        IndexedNavigableSet<String> s = new IndexedTreeSet<String>(new java.util.Comparator(){
-            public int compare(Object e1, Object e2) { return - e1.toString().compareTo(e2.toString()); } // note minus sign
-            public boolean equals(Object e1, Object e2) { return e1.toString().equals(e2.toString()); }
+        IndexedNavigableSet<String> s = new IndexedTreeSet<String>(new java.util.Comparator<String>(){
+            public int compare(String e1, String e2) { return - e1.toString().compareTo(e2.toString()); } // note minus sign
         });
         s.add("Z");
         s.add("A");
