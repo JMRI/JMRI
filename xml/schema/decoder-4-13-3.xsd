@@ -646,6 +646,17 @@
           <xs:element name="variable" minOccurs="0" maxOccurs="unbounded" >
             <xs:complexType>
               <xs:sequence minOccurs="1" maxOccurs="1">
+                  <xs:element name="defaultItem" minOccurs="0" maxOccurs="unbounded" >
+                    <xs:annotation><xs:documentation>
+                    Specifies the default value to use when the decoder family/model/productID has a specific value.
+                    Either or both of "include" and "exclude" can be specified.
+                    </xs:documentation></xs:annotation>
+                    <xs:complexType>
+                      <xs:attribute name="default" type="xs:int" use="required"/>
+                      <xs:attribute name="include" type="xs:string" default=""/>
+                      <xs:attribute name="exclude" type="xs:string" default=""/>
+                    </xs:complexType>
+                  </xs:element>
                   <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
                     <xs:annotation><xs:documentation>
                     Qualifies whether this variable will appear in the interface, depending
