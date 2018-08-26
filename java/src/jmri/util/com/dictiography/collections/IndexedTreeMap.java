@@ -2099,7 +2099,7 @@ public class IndexedTreeMap<K, V>
         private K fromKey, toKey;
 
         private Object readResolve() {
-            return new AscendingSubMap(IndexedTreeMap.this,
+            return new AscendingSubMap<K,V>(IndexedTreeMap.this,
                     fromStart, fromKey, true,
                     toEnd, toKey, false);
         }
