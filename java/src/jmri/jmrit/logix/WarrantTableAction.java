@@ -57,9 +57,6 @@ public class WarrantTableAction extends AbstractAction {
     static JMenu _warrantMenu;
     private static final HashMap<String, Warrant> _warrantMap = new HashMap<String, Warrant>();
     
-    @Deprecated // TrackerTableAction.getInstance()
-    protected static TrackerTableAction _trackerTable;
-    
     private static JTextArea _textArea;
     private static boolean _hasErrors = false;
     private static JDialog _errorDialog;
@@ -72,7 +69,6 @@ public class WarrantTableAction extends AbstractAction {
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "until deprecated TrackerTableAction.getInstance removed")
     protected WarrantTableAction(String menuOption) {
         super(Bundle.getMessage(menuOption));
-        _trackerTable = TrackerTableAction.getInstance();
     }
 
     public static WarrantTableAction getDefault() {
@@ -149,7 +145,7 @@ public class WarrantTableAction extends AbstractAction {
             }
         }
         _warrantMenu.add(new WarrantTableAction("CreateWarrant")); // NOI18N
-        _warrantMenu.add(_trackerTable);
+        _warrantMenu.add(InstanceManager.getDefault(TrackerTableAction.class));
         _warrantMenu.add(new AbstractAction(Bundle.getMessage("CreateNXWarrant")) {
 
             @Override
@@ -314,9 +310,7 @@ public class WarrantTableAction extends AbstractAction {
             return;
         }
 
-        if (_trackerTable != null) {
-            InstanceManager.getDefault(TrackerTableAction.class).mouseClickedOnBlock(block);
-        }
+        InstanceManager.getDefault(TrackerTableAction.class).mouseClickedOnBlock(block);
     }
 
     /* ****************** Error checking ************************/
