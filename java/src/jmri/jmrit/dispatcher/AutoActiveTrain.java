@@ -476,7 +476,9 @@ public class AutoActiveTrain implements ThrottleListener {
                         stopInCurrentSection(BEGINNING_RESET);
                         _activeTrain.setRestart();
                     } else {
-                        setupNewCurrentSignal(as);
+                        // this is a normal block/block change
+                        log.info("Calling from Block state change - else");
+                        setupNewCurrentSignal(as, false);
                     }
                 } else {
                     // reached last block in this transit
@@ -548,8 +550,10 @@ public class AutoActiveTrain implements ThrottleListener {
                 }
             }
             if (_nextBlock != null) {
-                // set up new current signal
-                setupNewCurrentSignal(as);
+                // set up new current signal, as this a beginning we allow a signal not at end of block
+                // to control the speed.
+                log.info("Calling from addAllocatedSection");
+                setupNewCurrentSignal(as,true);
             }
         }
         // if train is stopping for lack of an allocation, set flag to restart it
@@ -622,7 +626,13 @@ public class AutoActiveTrain implements ThrottleListener {
         _controllingSignalMast = null;
     }
 
-    protected synchronized void setupNewCurrentSignal(AllocatedSection as) {
+    /**
+     * 
+     * @param as current section the train is in, can be null
+     * @param newTransitSetUp if true this is setting up a new train
+     */
+    protected synchronized void setupNewCurrentSignal(AllocatedSection as, boolean forceSpeedChange) {
+        log.info("Called [{}]",forceSpeedChange);
         removeCurrentSignal();
         if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
             SignalHead sh = _lbManager.getFacingSignalHead(_currentBlock, _nextBlock);
@@ -662,10 +672,10 @@ public class AutoActiveTrain implements ThrottleListener {
             //}
             // get signal mast at current block change, if there is no signal mast there we must proceed at
             // previous signal mast speed unless the mast is held.
-            boolean weAreNotAtSpeedChangingMast=false;
-            if ( sm == null && nB != null ) {
+            boolean weAreAtSpeedChangingMast=forceSpeedChange;
+            if ( !forceSpeedChange && sm == null && nB != null ) {
                 sm  = _lbManager.getFacingSignalMast(cB, nB);
-                if (sm == null) {weAreNotAtSpeedChangingMast=true;}
+                if (sm != null) {weAreAtSpeedChangingMast=true;}
             }
             
             while (sm == null && nB != null) {
@@ -691,7 +701,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 });
                 log.debug("{}: new current signalmast {}({}) for section {}", _activeTrain.getTrainName(), sm.getDisplayName(),
                         sm.getAspect(), as.getSectionName());
-                if ( !weAreNotAtSpeedChangingMast ) {
+                if ( weAreAtSpeedChangingMast ) {
                     setSpeedBySignal();
                 }
             } // Note: null signal head will result when exiting throat-to-throat blocks.
@@ -1189,7 +1199,9 @@ public class AutoActiveTrain implements ThrottleListener {
                     InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
                     break;
                 }
-                setupNewCurrentSignal(aSec);
+                // a reversal can happen not in mid section
+                log.info("Calling from end reversal");
+                setupNewCurrentSignal(aSec,true);
                 setSpeedBySignal();
                 break;
             case BEGINNING_RESET:
@@ -1209,7 +1221,9 @@ public class AutoActiveTrain implements ThrottleListener {
                             InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
                             break;
                         }
-                        setupNewCurrentSignal(null);
+                        // can be mid block
+                        log.info("Calling from begin reset - nodelay");
+                        setupNewCurrentSignal(null, true);
                         setSpeedBySignal();
                     } else {
                         // then active train is delayed
@@ -1221,7 +1235,9 @@ public class AutoActiveTrain implements ThrottleListener {
                             InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
                             break;
                         }
-                        setupNewCurrentSignal(null);
+                        // can be mid block
+                        log.info("Calling from beginning reset - else");
+                        setupNewCurrentSignal(null, true);
                         setSpeedBySignal();
 
                     }
