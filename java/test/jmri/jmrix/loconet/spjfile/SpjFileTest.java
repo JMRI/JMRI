@@ -39,10 +39,10 @@ public class SpjFileTest extends TestCase {
             if (testFile.headers[i].isWAV()) {
                 byte[] buffer = testFile.headers[i].getByteArray();
                 playSoundBuffer(buffer);
-                return;
+                break;
             }
         }
-        //jmri.util.JUnitAppender.suppressWarnMessage("line not supported: interface SourceDataLine supporting format PCM_UNSIGNED 11200.0 Hz, 8 bit, mono, 1 bytes/frame, ");
+        jmri.util.JUnitAppender.suppressWarnMessage("line not supported: interface SourceDataLine supporting format PCM_UNSIGNED 11200.0 Hz, 8 bit, mono, 1 bytes/frame, ");
         log.warn("End testPlayWav");
     }
 
