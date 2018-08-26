@@ -56,7 +56,10 @@ public class WarrantTableAction extends AbstractAction {
     static int STRUT_SIZE = 10;
     static JMenu _warrantMenu;
     private static final HashMap<String, Warrant> _warrantMap = new HashMap<String, Warrant>();
+    
+    @Deprecated // TrackerTableAction.getInstance()
     protected static TrackerTableAction _trackerTable;
+    
     private static JTextArea _textArea;
     private static boolean _hasErrors = false;
     private static JDialog _errorDialog;
@@ -66,15 +69,10 @@ public class WarrantTableAction extends AbstractAction {
     private static boolean _edit;
     static ShutDownTask _shutDownTask = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "until deprecated getInstance removed")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "until deprecated TrackerTableAction.getInstance removed")
     protected WarrantTableAction(String menuOption) {
         super(Bundle.getMessage(menuOption));
         _trackerTable = TrackerTableAction.getInstance();
-    }
-
-    @Deprecated // use getDefault instead 
-    static WarrantTableAction getInstance() {
-        return getDefault();
     }
 
     public static WarrantTableAction getDefault() {
@@ -128,7 +126,7 @@ public class WarrantTableAction extends AbstractAction {
 
     synchronized protected static void updateWarrantMenu() {
         _warrantMenu.removeAll();
-        _warrantMenu.add(getInstance());
+        _warrantMenu.add(getDefault());
         JMenu editWarrantMenu = new JMenu(Bundle.getMessage("EditWarrantMenu"));
         _warrantMenu.add(editWarrantMenu);
         ActionListener editWarrantAction = (ActionEvent e) -> {
