@@ -1245,7 +1245,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         beanEdit.actionPerformed(null);
     }
 
-    private static boolean editingOps = false;
+    private static java.util.concurrent.atomic.AtomicBoolean editingOps = new java.util.concurrent.atomic.AtomicBoolean(false);
 
     /**
      * Pop up a TurnoutOperationConfig for the turnout.
@@ -1254,8 +1254,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
      * @param box JComboBox that triggered the edit
      */
     protected void editTurnoutOperation(Turnout t, JComboBox<String> box) {
-        if (!editingOps) { // don't open a second edit ops pane
-            editingOps = true;
+        if (!editingOps.getAndSet(true)) { // don't open a second edit ops pane
             TurnoutOperation op = t.getTurnoutOperation();
             if (op == null) {
                 TurnoutOperation proto = InstanceManager.getDefault(TurnoutOperationManager.class).getMatchingOperationAlways(t);
@@ -1333,7 +1332,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                             myOp = null;
                         }
                         self.setVisible(false);
-                        editingOps = false;
+                        editingOps.set(false);
                     }
                 });
                 JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
@@ -1341,7 +1340,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         self.setVisible(false);
-                        editingOps = false;
+                        editingOps.set(false);
                     }
                 });
                 buttonBox.add(Box.createHorizontalGlue());
@@ -1355,7 +1354,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 this.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
-                        editingOps = false; // reset Editmarker
+                        editingOps.set(false);
                     }
                 });
             } else {
