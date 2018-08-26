@@ -1446,7 +1446,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
      * Add the check boxes to show/hide extra columns to the Turnout table
      * frame.
      * <p>
-     * Keep contents synchrinized with
+     * Keep contents synchronized with
      * {@link #addToPanel(AbstractTableTabAction)}
      *
      * @param f a Turnout table frame
@@ -1506,7 +1506,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
      * @param f a Turnout table action
      */
     @Override
-    public void addToPanel(AbstractTableTabAction f) {
+    public void addToPanel(AbstractTableTabAction<Turnout> f) {
         String systemPrefix = ConnectionNameFromSystemName.getConnectionName(turnManager.getSystemPrefix());
         if (turnManager.getClass().getName().contains("ProxyTurnoutManager")) {
             systemPrefix = "All"; // NOI18N
