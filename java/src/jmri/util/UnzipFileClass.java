@@ -34,9 +34,9 @@ public class UnzipFileClass {
 	 */
 	public static void unzipFunction(File directory, InputStream input) {	        
 		// if the output directory doesn't exist, create it
-		if(!directory.exists()) 
-			directory.mkdirs();
-
+		if(!directory.exists()) {
+			if ( !directory.mkdirs() ) log.error("Unable to create output directory {}", directory);
+        }
         String destinationFolder = directory.getPath();
         
 		// buffer for read and write data to file
@@ -58,7 +58,7 @@ public class UnzipFileClass {
 					if(!newDir.exists()) {
 						boolean success = newDir.mkdirs();
 						if(success == false) {
-							log.error("Problem creating Folder");
+							log.error("Problem creating Folder {}", newDir);
 						}
 					}
                 }
