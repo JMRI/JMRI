@@ -17,18 +17,19 @@ import org.junit.*;
  */
 abstract public class AbstractOpsModeProgrammerTestBase extends jmri.AddressedProgrammerTestBase {
 
-    @Override
     @Test
     public void testDefaultViaBestMode() {
         Assert.assertEquals("Check Default", ProgrammingMode.OPSBYTEMODE,
                 ((AbstractProgrammer)programmer).getBestMode());        
     }
 
+    @Override
     @Test
     public void testGetCanRead() {
         Assert.assertFalse("can read", programmer.getCanRead());
     }
     
+    @Override
     @Test(expected=java.lang.IllegalArgumentException.class)
     public void testSetGetMode() {
         programmer.setMode(ProgrammingMode.REGISTERMODE);
