@@ -66,11 +66,13 @@ public class WarrantTableAction extends AbstractAction {
     private static boolean _edit;
     static ShutDownTask _shutDownTask = null;
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "until deprecated getInstance removed")
     protected WarrantTableAction(String menuOption) {
         super(Bundle.getMessage(menuOption));
         _trackerTable = TrackerTableAction.getInstance();
     }
 
+    @Deprecated // use getDefault instead 
     static WarrantTableAction getInstance() {
         return getDefault();
     }
