@@ -16,7 +16,7 @@ public class EcosOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
     @Test
     public void testGetCanRead() {
         // Ecos supports railcom
-        Assert.assertTrue("can read", abstractprogrammer.getCanRead());
+        Assert.assertTrue("can read", programmer.getCanRead());
     }
 
     // The minimal setup for log4J
@@ -26,13 +26,13 @@ public class EcosOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
         JUnitUtil.setUp();
         EcosTrafficController tc = new EcosInterfaceScaffold();
         EcosOpsModeProgrammer t = new EcosOpsModeProgrammer(tc,25,false);
-        abstractprogrammer = t;
+        programmer = t;
     }
 
     @After
     @Override
     public void tearDown() {
-        abstractprogrammer = null;
+        programmer = null;
         JUnitUtil.tearDown();
     }
 

@@ -21,15 +21,22 @@ public class SprogProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Override
     public void testDefault() {
         Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBITMODE,
-                abstractprogrammer.getMode());        
+                programmer.getMode());        
+    }
+    
+    @Override
+    @Test
+    public void testDefaultViaBestMode() {
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBITMODE,
+                ((SprogProgrammer)programmer).getBestMode());        
     }
 
     @Test(expected = java.lang.IllegalArgumentException.class)
     @Override
     public void testSetGetMode() {
-        abstractprogrammer.setMode(ProgrammingMode.REGISTERMODE);
+        programmer.setMode(ProgrammingMode.REGISTERMODE);
         Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
-                abstractprogrammer.getMode());        
+                programmer.getMode());        
     }
 
     // The minimal setup for log4J
@@ -43,13 +50,13 @@ public class SprogProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         stcs = new SprogTrafficControlScaffold(m);
         m.setSprogTrafficController(stcs);
 
-        abstractprogrammer = op = new SprogProgrammer(m);
+        programmer = op = new SprogProgrammer(m);
     }
 
     @After
     public void tearDown() {
         stcs.dispose();
-        abstractprogrammer = op = null;
+        programmer = op = null;
         JUnitUtil.tearDown();
     }
 

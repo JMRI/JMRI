@@ -17,7 +17,14 @@ public class SRCPProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Override
     public void testDefault() {
         Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBYTEMODE,
-                abstractprogrammer.getMode());        
+                programmer.getMode());        
+    }
+
+    @Override
+    @Test
+    public void testDefaultViaBestMode() {
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBYTEMODE,
+                ((SRCPProgrammer)programmer).getBestMode());        
     }
 
     // The minimal setup for log4J
@@ -30,13 +37,13 @@ public class SRCPProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
             public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
             }
         }, "A", 1);
-        abstractprogrammer = new SRCPProgrammer(sm);
+        programmer = new SRCPProgrammer(sm);
     }
 
     @Override
     @After
     public void tearDown() {
-        abstractprogrammer = null;
+        programmer = null;
         JUnitUtil.tearDown();
     }
 }

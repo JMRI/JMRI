@@ -208,7 +208,7 @@ public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
         // infrastructure objects
         t = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
         l = new ProgListenerScaffold();
-        abstractprogrammer = p = new EliteXNetProgrammer(t);
+        programmer = p = new EliteXNetProgrammer(t);
     }
 
     @Override
@@ -216,7 +216,7 @@ public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
     public void tearDown() {
 	t = null;
 	l = null;
-	abstractprogrammer = p = null;
+	programmer = p = null;
         JUnitUtil.tearDown();
     }
 

@@ -19,13 +19,13 @@ public class CbusDccOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProg
     public void setUp() {
         JUnitUtil.setUp();
         CbusDccOpsModeProgrammer t = new CbusDccOpsModeProgrammer(100,true,new TrafficControllerScaffold());
-        abstractprogrammer = t;
+        programmer = t;
     }
 
     @After
     @Override
     public void tearDown() {
-        abstractprogrammer = null;
+        programmer = null;
         JUnitUtil.tearDown();
     }
 

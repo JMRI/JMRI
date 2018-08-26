@@ -15,28 +15,28 @@ import org.junit.*;
  * @author Bob Jacobsen
  * @author Paul Bender copyright (C) 2018 
  */
-abstract public class AbstractOpsModeProgrammerTestBase extends AbstractProgrammerTest {
+abstract public class AbstractOpsModeProgrammerTestBase extends jmri.AddressedProgrammerTestBase {
 
-    @Test
     @Override
-    public void testDefault() {
+    @Test
+    public void testDefaultViaBestMode() {
         Assert.assertEquals("Check Default", ProgrammingMode.OPSBYTEMODE,
-                abstractprogrammer.getMode());        
+                ((AbstractProgrammer)programmer).getBestMode());        
     }
 
     @Test
     public void testGetCanRead() {
-        Assert.assertFalse("can read", abstractprogrammer.getCanRead());
+        Assert.assertFalse("can read", programmer.getCanRead());
     }
     
     @Test(expected=java.lang.IllegalArgumentException.class)
     public void testSetGetMode() {
-        abstractprogrammer.setMode(ProgrammingMode.REGISTERMODE);
+        programmer.setMode(ProgrammingMode.REGISTERMODE);
         Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
-                abstractprogrammer.getMode());        
+                programmer.getMode());        
     }
     
-    // must set the value of abstractprogrammer in setUp.
+    // must set the value of programmer in setUp.
     @Before
     @Override
     abstract public void setUp();

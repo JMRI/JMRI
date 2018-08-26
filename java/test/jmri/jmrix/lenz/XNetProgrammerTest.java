@@ -25,7 +25,14 @@ public class XNetProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Override
     public void testDefault() {
         Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBYTEMODE,
-                abstractprogrammer.getMode());        
+                programmer.getMode());        
+    }
+
+    @Override
+    @Test
+    public void testDefaultViaBestMode() {
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBYTEMODE,
+                ((XNetProgrammer)programmer).getBestMode());        
     }
 
     @Test
@@ -564,7 +571,7 @@ public class XNetProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
                 super.restartTimer(RESTART_TIME);
             }
         };
-	abstractprogrammer=p;
+	programmer=p;
     }
 
     @Override
@@ -572,7 +579,7 @@ public class XNetProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     public void tearDown() {
 	t = null;
 	l = null;
-	abstractprogrammer=p=null;
+	programmer=p=null;
         JUnitUtil.tearDown();
     }
 

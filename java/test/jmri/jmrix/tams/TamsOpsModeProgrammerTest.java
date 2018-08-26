@@ -18,12 +18,12 @@ public class TamsOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
         JUnitUtil.setUp();
         TamsTrafficController tc = new TamsTrafficController();
         TamsOpsModeProgrammer t = new TamsOpsModeProgrammer(tc,1234,true);
-        abstractprogrammer = t;
+        programmer = t;
     }
 
     @After
     public void tearDown() {
-        abstractprogrammer = null;
+        programmer = null;
         JUnitUtil.tearDown();
     }
 

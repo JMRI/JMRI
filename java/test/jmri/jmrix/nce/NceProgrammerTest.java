@@ -26,7 +26,14 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Override
     public void testDefault() {
         Assert.assertEquals("Check Default", ProgrammingMode.PAGEMODE,
-                abstractprogrammer.getMode());        
+                programmer.getMode());        
+    }
+    
+    @Override
+    @Test
+    public void testDefaultViaBestMode() {
+        Assert.assertEquals("Check Default", ProgrammingMode.PAGEMODE,
+                ((NceProgrammer)programmer).getBestMode());        
     }
 
     @Override
@@ -37,14 +44,14 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         l = new jmri.ProgListenerScaffold();
         tc = new NceInterfaceScaffold();
         tc.setCommandOptions(NceTrafficController.OPTION_2004);
-        abstractprogrammer = p = new NceProgrammer(tc);
+        programmer = p = new NceProgrammer(tc);
     }
 
     @Override
     @After
     public void tearDown() {
         tc = null;
-        abstractprogrammer = p = null;
+        programmer = p = null;
 	jmri.util.JUnitUtil.tearDown();
     }
 

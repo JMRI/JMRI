@@ -13,79 +13,19 @@ import org.junit.*;
  *
  * @author Bob Jacobsen
  */
-public class AbstractProgrammerTest {
+public class AbstractProgrammerTest extends jmri.ProgrammerTestBase {
 
-    protected AbstractProgrammer abstractprogrammer;
-
-    @Test
-    public void testCtor() {
-        Assert.assertNotNull(abstractprogrammer);
-    }
-
-    @Test
-    public void testDefault() {
-        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTMODE,
-                abstractprogrammer.getMode());        
-    }
-
-    @Test
-    public void testGetCanRead() {
-        Assert.assertTrue("can read", abstractprogrammer.getCanRead());
-    }
-    
     @Test
     public void testDefaultViaBestMode() {
-        // Programmer implementation that uses getBestMode for setting default
-        abstractprogrammer = new AbstractProgrammer() {
-
-            @Override
-            public List<ProgrammingMode> getSupportedModes() {
-                java.util.ArrayList<ProgrammingMode> retval = new java.util.ArrayList<ProgrammingMode>();
-                
-                retval.add(ProgrammingMode.DIRECTMODE);
-                retval.add(ProgrammingMode.PAGEMODE);
-                retval.add(ProgrammingMode.REGISTERMODE);
-
-                return retval;
-            }
-
-            @Override
-            public ProgrammingMode getBestMode() { return ProgrammingMode.REGISTERMODE; }
-            
-            @Override
-            public void writeCV(int i, int j, ProgListener l) {}
-            @Override
-            public void confirmCV(String i, int j, ProgListener l) {}
-            @Override
-            public void readCV(int i, ProgListener l) {}
-            @Override
-            public void timeout() {}
-            @Override
-            public boolean getCanRead() { return true;}
-        };
-
-        Assert.assertEquals("Check Default", ProgrammingMode.REGISTERMODE,
-                abstractprogrammer.getMode());        
-    }
-    
-    @Test
-    public void testSetGetMode() {
-        abstractprogrammer.setMode(ProgrammingMode.REGISTERMODE);
-        Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
-                abstractprogrammer.getMode());        
-    }
-    
-    @Test
-    public void testSetModeNull() {
-        try {
-            abstractprogrammer.setMode(null);
-        } catch (IllegalArgumentException e) { return;  /* OK */ }
-        
-        Assert.fail("should not have setMode(null)");        
+        Assume.assumeTrue(programmer instanceof AbstractProgrammer);
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTMODE,
+                ((AbstractProgrammer)programmer).getBestMode());        
     }
     
     @Test
     public void testRegisterFromCV() {
+        Assume.assumeTrue(programmer instanceof AbstractProgrammer);
+        AbstractProgrammer abstractprogrammer = (AbstractProgrammer) programmer;
         int cv1 = -1;
 
         try {
@@ -126,7 +66,7 @@ public class AbstractProgrammerTest {
     public void setUp() {
         JUnitUtil.setUp();
 
-        abstractprogrammer = new AbstractProgrammer() {
+        programmer = new AbstractProgrammer() {
 
             @Override
             public List<ProgrammingMode> getSupportedModes() {
@@ -138,6 +78,10 @@ public class AbstractProgrammerTest {
 
                 return retval;
             }
+  
+            // Programmer implementation that uses getBestMode for setting default
+            @Override
+            public ProgrammingMode getBestMode() { return ProgrammingMode.DIRECTMODE; }
 
             @Override
             public void writeCV(int i, int j, ProgListener l) {}
@@ -154,7 +98,7 @@ public class AbstractProgrammerTest {
 
     @After
     public void tearDown() {
-        abstractprogrammer = null;
+        programmer = null;
         JUnitUtil.tearDown();
     }
 

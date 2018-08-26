@@ -331,7 +331,7 @@ public class LI100XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
                 super.restartTimer(RESTART_TIME);
             }
         };
-	abstractprogrammer = p;
+	programmer = p;
     }
 
     @Override
@@ -339,7 +339,7 @@ public class LI100XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest 
     public void tearDown() {
          t = null;
 	 l = null;
-	 abstractprogrammer = p = null;
+	 programmer = p = null;
     	 JUnitUtil.tearDown();
     }
 

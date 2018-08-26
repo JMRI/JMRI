@@ -17,7 +17,14 @@ public class TamsProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Override
     public void testDefault() {
         Assert.assertEquals("Check Default", ProgrammingMode.PAGEMODE,
-                abstractprogrammer.getMode());        
+                programmer.getMode());        
+    }
+
+    @Override
+    @Test
+    public void testDefaultViaBestMode() {
+        Assert.assertEquals("Check Default", ProgrammingMode.PAGEMODE,
+                ((TamsProgrammer)programmer).getBestMode());        
     }
 
     // The minimal setup for log4J
@@ -27,13 +34,13 @@ public class TamsProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         JUnitUtil.setUp();
         TamsTrafficController tc = new TamsTrafficController();
         TamsProgrammer t = new TamsProgrammer(tc);
-        abstractprogrammer = t;
+        programmer = t;
     }
 
     @After
     @Override
     public void tearDown() {
-        abstractprogrammer = null;
+        programmer = null;
         JUnitUtil.tearDown();
     }
 

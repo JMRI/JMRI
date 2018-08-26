@@ -17,7 +17,7 @@ public class DCCppOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgra
     @Test
     public void testGetCanRead() {
         // DccPP supports railcom?
-        Assert.assertTrue("can read", abstractprogrammer.getCanRead());
+        Assert.assertTrue("can read", programmer.getCanRead());
     }
 
     // The minimal setup for log4J
@@ -29,13 +29,13 @@ public class DCCppOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgra
         DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
 
         DCCppOpsModeProgrammer t = new DCCppOpsModeProgrammer(5, tc);
-	    abstractprogrammer = t;
+	    programmer = t;
     }
 
     @Override
     @After
     public void tearDown() {
-	    abstractprogrammer = null;
+	    programmer = null;
         JUnitUtil.tearDown();
     }
 

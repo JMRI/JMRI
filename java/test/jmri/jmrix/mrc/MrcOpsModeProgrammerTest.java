@@ -22,13 +22,13 @@ public class MrcOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgramm
         memo.setMrcTrafficController(tc);
         jmri.InstanceManager.store(memo, MrcSystemConnectionMemo.class);
         MrcOpsModeProgrammer t = new MrcOpsModeProgrammer(tc,5,false);
-        abstractprogrammer = t;
+        programmer = t;
     }
 
     @After
     @Override
     public void tearDown() {
-        abstractprogrammer = null;
+        programmer = null;
         JUnitUtil.tearDown();
     }
 

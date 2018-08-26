@@ -20,12 +20,12 @@ public class NceOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgramm
         JUnitUtil.setUp();
         tcis = new NceTrafficControlScaffold();
         NceOpsModeProgrammer t = new NceOpsModeProgrammer(tcis,1024,true);
-        abstractprogrammer = t;
+        programmer = t;
     }
 
     @After
     public void tearDown() {
-        abstractprogrammer = null;
+        programmer = null;
         tcis = null;
         JUnitUtil.tearDown();
     }

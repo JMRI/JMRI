@@ -23,14 +23,22 @@ public class CbusProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Override
     public void testDefault() {
         Assert.assertEquals("Check Default", CbusProgrammer.CBUSNODEVARMODE,
-                abstractprogrammer.getMode());        
+                programmer.getMode());        
     }
+
+    @Override
+    @Test
+    public void testDefaultViaBestMode() {
+        Assert.assertEquals("Check Default", CbusProgrammer.CBUSNODEVARMODE,
+                ((CbusProgrammer)programmer).getBestMode());        
+    }
+
 
     @Test(expected=java.lang.IllegalArgumentException.class)
     public void testSetGetMode() {
-        abstractprogrammer.setMode(ProgrammingMode.REGISTERMODE);
+        programmer.setMode(ProgrammingMode.REGISTERMODE);
         Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
-                abstractprogrammer.getMode());        
+                programmer.getMode());        
     }
 
     @Test
@@ -75,14 +83,14 @@ public class CbusProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         JUnitUtil.setUp();
         tc = new TrafficControllerScaffold();
         p = new CbusProgrammer(3, tc);
-        abstractprogrammer = p;
+        programmer = p;
         testListener = new ProgListenerScaffold();
     }
 
     @Override
     @After
     public void tearDown() {
-        abstractprogrammer = p = null;
+        programmer = p = null;
         tc = null;
 	testListener = null;
 	JUnitUtil.tearDown();

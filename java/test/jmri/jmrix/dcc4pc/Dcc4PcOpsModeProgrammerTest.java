@@ -17,14 +17,21 @@ public class Dcc4PcOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgr
     @Test
     @Override
     public void testGetCanRead(){
-       Assert.assertTrue("can read",abstractprogrammer.getCanRead());
+       Assert.assertTrue("can read",programmer.getCanRead());
     }
 
     @Test
     @Override
     public void testDefault() {
         Assert.assertEquals("Check Default", ProgrammingMode.OPSBITMODE,
-                abstractprogrammer.getMode());        
+                programmer.getMode());        
+    }
+
+    @Override
+    @Test
+    public void testDefaultViaBestMode() {
+        Assert.assertEquals("Check Default", ProgrammingMode.OPSBITMODE,
+                ((Dcc4PcOpsModeProgrammer)programmer).getBestMode());        
     }
 
     // The minimal setup for log4J
@@ -33,12 +40,12 @@ public class Dcc4PcOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgr
         JUnitUtil.setUp();
         Dcc4PcProgrammerManager pm = new Dcc4PcProgrammerManager(new DebugProgrammerManager());
         Dcc4PcOpsModeProgrammer t = new Dcc4PcOpsModeProgrammer(false, 5, pm);
-        abstractprogrammer = t;
+        programmer = t;
     }
 
     @After
     public void tearDown() {
-        abstractprogrammer = null;
+        programmer = null;
         JUnitUtil.tearDown();
     }
 

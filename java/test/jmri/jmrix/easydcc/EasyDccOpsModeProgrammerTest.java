@@ -22,7 +22,7 @@ public class EasyDccOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProg
         _memo = new EasyDccSystemConnectionMemo("E", "EasyDCC Test");
         _memo.setEasyDccTrafficController(new EasyDccTrafficControlScaffold(_memo));
         EasyDccOpsModeProgrammer p = new EasyDccOpsModeProgrammer(100, false, _memo);
-        abstractprogrammer = p;
+        programmer = p;
     }
 
     @After
@@ -30,7 +30,7 @@ public class EasyDccOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProg
     public void tearDown() {
         _memo.getTrafficController().terminateThreads();
         _memo = null;
-        abstractprogrammer = null;
+        programmer = null;
         JUnitUtil.tearDown();
     }
 

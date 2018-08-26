@@ -161,7 +161,7 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
 
         lastValue = -1;
         lastStatus = -1;
-        abstractprogrammer = op;
+        programmer = op;
 
     }
 
@@ -170,7 +170,7 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
         tc = null;
         op = null;
         pl = null;
-        abstractprogrammer = null;
+        programmer = null;
         JUnitUtil.tearDown();
     }
 

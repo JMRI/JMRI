@@ -84,7 +84,7 @@ public class Z21XNetOpsModeProgrammerTest extends jmri.jmrix.lenz.XNetOpsModePro
 
         lastValue = -1;
         lastStatus = -1;
-        abstractprogrammer = op;
+        programmer = op;
 
     }
 
@@ -94,7 +94,7 @@ public class Z21XNetOpsModeProgrammerTest extends jmri.jmrix.lenz.XNetOpsModePro
         tc = null;
         op = null;
         pl = null;
-        abstractprogrammer = null;
+        programmer = null;
         JUnitUtil.tearDown();
     }
 

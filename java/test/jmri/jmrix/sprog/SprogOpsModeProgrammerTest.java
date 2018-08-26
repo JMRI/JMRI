@@ -29,14 +29,14 @@ public class SprogOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgra
         m.setSprogTrafficController(stcs);
         m.configureCommandStation();
 
-        abstractprogrammer = op = new SprogOpsModeProgrammer(2,false,m);
+        programmer = op = new SprogOpsModeProgrammer(2,false,m);
     }
 
     @After
     public void tearDown() {
         m.getSlotThread().interrupt();
         stcs.dispose();
-        abstractprogrammer = op = null;
+        programmer = op = null;
         JUnitUtil.tearDown();
     }
 

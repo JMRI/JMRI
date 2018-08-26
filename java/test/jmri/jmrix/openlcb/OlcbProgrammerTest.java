@@ -17,14 +17,21 @@ public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Override
     public void testDefault() {
         Assert.assertEquals("Check Default", OlcbProgrammerManager.OPENLCBMODE,
-                abstractprogrammer.getMode());        
+                programmer.getMode());        
+    }
+    
+    @Override
+    @Test
+    public void testDefaultViaBestMode() {
+        Assert.assertEquals("Check Default", OlcbProgrammerManager.OPENLCBMODE,
+                ((OlcbProgrammer)programmer).getBestMode());        
     }
 
     @Test(expected=java.lang.IllegalArgumentException.class)
     public void testSetGetMode() {
-        abstractprogrammer.setMode(ProgrammingMode.REGISTERMODE);
+        programmer.setMode(ProgrammingMode.REGISTERMODE);
         Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
-                abstractprogrammer.getMode());        
+                programmer.getMode());        
     }
     
     @Test
@@ -35,13 +42,13 @@ public class OlcbProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     public void setUp() {
         JUnitUtil.setUp();
         //new OlcbSystemConnectionMemo();
-        abstractprogrammer = new OlcbProgrammer();
+        programmer = new OlcbProgrammer();
     }
 
     @Override
     @After
     public void tearDown() {
-        abstractprogrammer = null;
+        programmer = null;
         JUnitUtil.tearDown();
     }
 }
