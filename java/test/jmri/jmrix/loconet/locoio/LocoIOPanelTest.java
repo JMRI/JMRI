@@ -99,6 +99,10 @@ public class LocoIOPanelTest extends jmri.util.swing.JmriPanelTest {
         // dispose and end operation
         f.dispose();
         memo.dispose();
+        
+        // suppress optional message
+        jmri.util.JUnitAppender.suppressWarnMessage("Address must be [1..126], was 308");
+
     }
 
     // The minimal setup for log4J

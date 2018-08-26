@@ -485,10 +485,6 @@ class Steam1Sound extends EngineSound {
             this(1, null, null, null, null);
         }
 
-        public S1Notch(int notch) {
-            this(notch, null, null, null, null);
-        }
-
         public S1Notch(int notch, AudioBuffer notchfiller, AudioBuffer coastfiller, 
                 List<AudioBuffer> chuff, List<AudioBuffer> coast) {
             my_notch = notch;
@@ -661,7 +657,6 @@ class Steam1Sound extends EngineSound {
         private boolean is_auto_coasting;
         private boolean is_idling;
         private boolean is_braking;
-        private boolean is_decelerating;
         private int lastRpm;
         private long timeOfLastSpeedCheck;
         private int chuff_index;
@@ -682,17 +677,6 @@ class Steam1Sound extends EngineSound {
         private int wait_notch;
         public static final int SLEEP_INTERVAL = 50;
 
-        public S1LoopThread(Steam1Sound p) {
-            super();
-            is_running = false;
-            is_looping = false;
-            is_dying = false;
-            _notch = null;
-            _sound = null;
-            _parent = p;
-            _throttle = 0.0f;
-        }
-
         public S1LoopThread(Steam1Sound d, String s, int ts, float dd, 
                 int nc, int dtr, boolean r) {
             super();
@@ -707,7 +691,6 @@ class Steam1Sound extends EngineSound {
             is_auto_coasting = false;
             is_idling = false;
             is_braking = false;
-            is_decelerating = false;
             waitForFiller = false;
             lastRpm = 0;
             timeOfLastSpeedCheck = 0;
@@ -989,7 +972,6 @@ class Steam1Sound extends EngineSound {
 
         private void updateRpm() {
             if (getRpmNominal() > getRpm()) {
-                is_decelerating = false;
                 // Actual rpm should not exceed highest max-rpm defined in config.xml
                 if (getRpm() < _parent.getNotch(_parent.notch_sounds.size()).getMaxLimit()) {
                     setRpm(getRpm() + 1);
@@ -998,14 +980,12 @@ class Steam1Sound extends EngineSound {
                 } 
                 log.debug("accel - nominal RPM: {}, actual RPM: {}", getRpmNominal(), getRpm());
             } else if (getRpmNominal() < getRpm()) {
-                is_decelerating = true;
                 setRpm(getRpm() - 1);
                 if (getRpm() < 0) {
                     setRpm(0);
                 }
                 log.debug("decel - nominal RPM: {}, actual RPM: {}", getRpmNominal(), getRpm());
             } else {
-                is_decelerating = false;
                 _parent.stopAccDecTimer(); // Speed is unchanged, nothing to do
             }
 
