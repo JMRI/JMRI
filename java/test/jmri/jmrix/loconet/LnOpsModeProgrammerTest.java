@@ -9,40 +9,28 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class LnOpsModeProgrammerTest {
+public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
     LocoNetInterfaceScaffold lnis;
     SlotManager sm;
     LocoNetSystemConnectionMemo memo;
     ProgListenerScaffold pl;
+    LnOpsModeProgrammer lnopsmodeprogrammer;
 
     @Test
     public void testSetMode() {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
-
         try {
             lnopsmodeprogrammer.setMode(ProgrammingMode.PAGEMODE);
         } catch (IllegalArgumentException e) {
             return;
         }
         Assert.fail("No IllegalArgumentException thrown");
-
     }
 
     @Test
     public void testGetMode() {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
-
         ProgrammingMode intRet = lnopsmodeprogrammer.getMode();
         Assert.assertEquals("OpsByteMode", ProgrammingMode.OPSBYTEMODE, intRet);
-    }
-
-    @Test
-    public void testGetCanReadDefault() {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
-
-        Assert.assertEquals("ops mode by default can;t read", false,
-                lnopsmodeprogrammer.getCanRead());
     }
 
     @Test
@@ -50,7 +38,7 @@ public class LnOpsModeProgrammerTest {
         // allow transponding
         sm.setTranspondingAvailable(true);
         
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
+        lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
 
         Assert.assertEquals("ops mode can read with transponding", true,
                 lnopsmodeprogrammer.getCanRead());
@@ -58,8 +46,6 @@ public class LnOpsModeProgrammerTest {
 
     @Test
     public void testSV2DataBytes() {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
-
         LocoNetMessage m = new LocoNetMessage(15);
 
         // check data bytes
@@ -73,8 +59,6 @@ public class LnOpsModeProgrammerTest {
 
     @Test
     public void testSV2highBits() {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
-
         LocoNetMessage m = new LocoNetMessage(15);
 
         // check high bits
@@ -130,8 +114,6 @@ public class LnOpsModeProgrammerTest {
 
      @Test
      public void testSv1Write() throws ProgrammerException {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
-
         int testVal = 120;
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETSV1MODE);
         lnopsmodeprogrammer.writeCV("91",testVal,pl);
@@ -159,7 +141,7 @@ public class LnOpsModeProgrammerTest {
 
      @Test
      public void testBoardRead0() throws ProgrammerException {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
+        lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
 
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETBDOPSWMODE);
         lnopsmodeprogrammer.readCV("113.6",pl);
@@ -194,7 +176,7 @@ public class LnOpsModeProgrammerTest {
 
      @Test
      public void testBoardRead1() throws ProgrammerException {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
+        lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
 
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETBDOPSWMODE);
         lnopsmodeprogrammer.readCV("113.6",pl);
@@ -229,7 +211,7 @@ public class LnOpsModeProgrammerTest {
 
      @Test
      public void testBoardReadTimeout() throws ProgrammerException {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
+        lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
 
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETBDOPSWMODE);
         lnopsmodeprogrammer.readCV("113.6",pl);
@@ -247,7 +229,7 @@ public class LnOpsModeProgrammerTest {
 
      @Test
      public void testBoardWrite() throws ProgrammerException {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
+        lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
 
         int testVal = 1;
 
@@ -282,7 +264,7 @@ public class LnOpsModeProgrammerTest {
 
      @Test
      public void testBoardWriteTimeout() throws ProgrammerException {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
+        lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
 
         int testVal = 1;
 
@@ -302,7 +284,7 @@ public class LnOpsModeProgrammerTest {
 
      @Test
      public void testSv1ARead() throws ProgrammerException {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
+        lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
 
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETSV1MODE);
         lnopsmodeprogrammer.readCV("83",pl);
@@ -333,8 +315,6 @@ public class LnOpsModeProgrammerTest {
 
      @Test
      public void testSv1BRead() throws ProgrammerException {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
-
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETSV1MODE);
         lnopsmodeprogrammer.readCV("83",pl);
 
@@ -360,8 +340,6 @@ public class LnOpsModeProgrammerTest {
 
      @Test
      public void testSv2Write() throws ProgrammerException {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
-
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETSV2MODE);
         lnopsmodeprogrammer.writeCV("22",33,pl);
 
@@ -386,8 +364,6 @@ public class LnOpsModeProgrammerTest {
 
      @Test
      public void testSv2Read() throws ProgrammerException {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
-
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETSV2MODE);
         lnopsmodeprogrammer.readCV("22",pl);
 
@@ -493,11 +469,15 @@ public class LnOpsModeProgrammerTest {
         sm = new SlotManager(lnis);
         memo = new LocoNetSystemConnectionMemo(lnis, sm);
         pl = new ProgListenerScaffold();
+        programmer = lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
     }
 
     @After
     public void tearDown() {
         memo.dispose();
+        lnis = null;
+
+        programmer = lnopsmodeprogrammer = null;
         JUnitUtil.tearDown();
     }
 

@@ -10,25 +10,23 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class NceOpsModeProgrammerTest {
+public class NceOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
 
     private NceTrafficControlScaffold tcis = null;
-
-    @Test
-    public void testCTor() {
-        NceOpsModeProgrammer t = new NceOpsModeProgrammer(tcis,1024,true);
-        Assert.assertNotNull("exists",t);
-    }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         tcis = new NceTrafficControlScaffold();
+        NceOpsModeProgrammer t = new NceOpsModeProgrammer(tcis,1024,true);
+        programmer = t;
     }
 
     @After
     public void tearDown() {
+        programmer = null;
+        tcis = null;
         JUnitUtil.tearDown();
     }
 

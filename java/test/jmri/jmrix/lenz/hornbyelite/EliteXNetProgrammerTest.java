@@ -9,23 +9,17 @@ package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.JmriException;
 import jmri.ProgrammingMode;
+import jmri.ProgListenerScaffold;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import org.junit.*;
 
-public class EliteXNetProgrammerTest extends TestCase {
+public class EliteXNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
 
+    @Override
+    @Test
     public void testWriteCvSequence() throws JmriException {
-        // infrastructure objects
-        XNetInterfaceScaffold t = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
-        EliteXNetListenerScaffold l = new EliteXNetListenerScaffold();
-
-        EliteXNetProgrammer p = new EliteXNetProgrammer(t);
-
         // and do the write
         p.writeCV(10, 20, l);
         // check "prog mode" message sent
@@ -43,17 +37,24 @@ public class EliteXNetProgrammerTest extends TestCase {
 
     }
 
+    @Test
+    @Override
+    @Ignore("Elite behavior is unknown for this sequence")
+    public void testWriteHighCvSequence() throws JmriException {
+    }
+
+    @Test
+    @Override
+    @Ignore("Elite behavior is unknown for this sequence")
+    public void testReadHighCvSequence() throws JmriException {
+    }
+
     // Test names ending with "String" are for the new writeCV(String, ...)
     // etc methods.  If you remove the older writeCV(int, ...) tests,
     // you can rename these. Note that not all (int,...) tests may have a
     // String(String, ...) test defined, in which case you should create those.
+    @Test
     public void testWriteCvSequenceString() throws JmriException {
-        // infrastructure objects
-        XNetInterfaceScaffold t = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
-        EliteXNetListenerScaffold l = new EliteXNetListenerScaffold();
-
-        EliteXNetProgrammer p = new EliteXNetProgrammer(t);
-
         // and do the write
         p.writeCV("10", 20, l);
         // check "prog mode" message sent
@@ -71,13 +72,8 @@ public class EliteXNetProgrammerTest extends TestCase {
 
     }
 
+    @Test
     public void testWriteRegisterSequence() throws JmriException {
-        // infrastructure objects
-        XNetInterfaceScaffold t = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
-        EliteXNetListenerScaffold l = new EliteXNetListenerScaffold();
-
-        EliteXNetProgrammer p = new EliteXNetProgrammer(t);
-
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);
 
@@ -99,13 +95,8 @@ public class EliteXNetProgrammerTest extends TestCase {
 
     }
 
+    @Test
     public void testWriteRegisterSequenceString() throws JmriException {
-        // infrastructure objects
-        XNetInterfaceScaffold t = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
-        EliteXNetListenerScaffold l = new EliteXNetListenerScaffold();
-
-        EliteXNetProgrammer p = new EliteXNetProgrammer(t);
-
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);
 
@@ -127,13 +118,8 @@ public class EliteXNetProgrammerTest extends TestCase {
 
     }
 
+    @Test
     public void testReadCvSequence() throws JmriException {
-        // infrastructure objects
-        XNetInterfaceScaffold t = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
-        EliteXNetListenerScaffold l = new EliteXNetListenerScaffold();
-
-        EliteXNetProgrammer p = new EliteXNetProgrammer(t);
-
         // and do the read
         p.readCV(10, l);
         // check "prog mode" message sent
@@ -152,13 +138,8 @@ public class EliteXNetProgrammerTest extends TestCase {
 
     }
 
+    @Test
     public void testReadCvSequenceString() throws JmriException {
-        // infrastructure objects
-        XNetInterfaceScaffold t = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
-        EliteXNetListenerScaffold l = new EliteXNetListenerScaffold();
-
-        EliteXNetProgrammer p = new EliteXNetProgrammer(t);
-
         // and do the read
         p.readCV("10", l);
         // check "prog mode" message sent
@@ -177,13 +158,8 @@ public class EliteXNetProgrammerTest extends TestCase {
 
     }
 
+    @Test
     public void testReadRegisterSequence() throws JmriException {
-        // infrastructure objects
-        XNetInterfaceScaffold t = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
-        EliteXNetListenerScaffold l = new EliteXNetListenerScaffold();
-
-        EliteXNetProgrammer p = new EliteXNetProgrammer(t);
-
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);
 
@@ -203,13 +179,8 @@ public class EliteXNetProgrammerTest extends TestCase {
         Assert.assertEquals("enquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
     }
 
+    @Test
     public void testReadRegisterSequenceString() throws JmriException {
-        // infrastructure objects
-        XNetInterfaceScaffold t = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
-        EliteXNetListenerScaffold l = new EliteXNetListenerScaffold();
-
-        EliteXNetProgrammer p = new EliteXNetProgrammer(t);
-
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);
 
@@ -229,51 +200,23 @@ public class EliteXNetProgrammerTest extends TestCase {
         Assert.assertEquals("enquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
     }
 
-    // internal class to simulate a XNetListener
-    class EliteXNetListenerScaffold implements jmri.ProgListener {
-
-        public EliteXNetListenerScaffold() {
-            rcvdInvoked = 0;
-            rcvdValue = 0;
-            rcvdStatus = 0;
-        }
-
-        @Override
-        public void programmingOpReply(int value, int status) {
-            rcvdValue = value;
-            rcvdStatus = status;
-            rcvdInvoked++;
-        }
-    }
-    int rcvdValue;
-    int rcvdStatus;
-    int rcvdInvoked;
-
-    // from here down is testing infrastructure
-    public EliteXNetProgrammerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", EliteXNetProgrammerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(EliteXNetProgrammerTest.class);
-        return suite;
-    }
-
     // The minimal setup is for log4J
     @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
+        // infrastructure objects
+        t = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
+        l = new ProgListenerScaffold();
+        programmer = p = new EliteXNetProgrammer(t);
     }
 
     @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
+	t = null;
+	l = null;
+	programmer = p = null;
         JUnitUtil.tearDown();
     }
 

@@ -103,9 +103,9 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(ProgrammingMode.PAGEMODE);
-        ret.add(ProgrammingMode.DIRECTBITMODE);
         ret.add(ProgrammingMode.DIRECTBYTEMODE);
+        ret.add(ProgrammingMode.DIRECTBITMODE);
+        ret.add(ProgrammingMode.PAGEMODE);
         ret.add(ProgrammingMode.REGISTERMODE);
         return ret;
     }
