@@ -35,6 +35,12 @@ public class XNetProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
                 ((XNetProgrammer)programmer).getBestMode());        
     }
 
+    @Override
+    @Test
+    public void testGetCanWriteAddress() {
+        Assert.assertFalse("can write address", programmer.getCanWrite("1234"));
+    }    
+
     @Test
     public void testWriteCvSequence() throws JmriException {
         // and do the write

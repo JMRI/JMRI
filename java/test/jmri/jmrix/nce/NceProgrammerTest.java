@@ -37,6 +37,13 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Override
+    @Test
+    public void testGetCanWriteAddress() {
+        Assert.assertFalse("can write address", programmer.getCanWrite("1234"));
+    }    
+
+
+    @Override
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
