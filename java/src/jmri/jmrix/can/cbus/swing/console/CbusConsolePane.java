@@ -369,10 +369,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         historyPane.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), Bundle.getMessage("PacketHistoryTitle")));
 
-        // sub-pane to hold scrolling text boxes
-        JPanel paneB = new JPanel();
-        // Constrain scroll panels to be side-by-side
-        
+        // scroll panels to be side-by-side
         split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
             jScrollPane1Can, jScrollPane1Cbus);
         split.setResizeWeight(0.3);
