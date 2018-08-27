@@ -43,7 +43,7 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
     }
 
     @Override
-    protected JPanel initTablePanel(PickListModel model, Editor editor) {
+    protected JPanel initTablePanel(PickListModel<Sensor> model, Editor editor) {
         _table = model.makePickTable();
         TableColumn column = new TableColumn(PickListModel.POSITION_COL);
         column.setHeaderValue("Position");

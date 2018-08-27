@@ -26,7 +26,7 @@ public class IconDialogTest {
         PickListModel<Turnout> tableModel = PickListModel.turnoutPickModelInstance(); // N11N
         DisplayFrame df = new DisplayFrame("Icon Dialog Test");
         Editor editor = new EditorScaffold();
-        TableItemPanel<Turnout> tip = new TableItemPanel(df,"IS01","",tableModel,editor);
+        TableItemPanel<Turnout> tip = new TableItemPanel<>(df,"IS01","",tableModel,editor);
         IconDialog t = new IconDialog("Icon","Icon",tip,null);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(df);

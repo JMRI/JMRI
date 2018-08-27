@@ -158,7 +158,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
      * Get a handle in order to change visibility.
      */
     @Override
-    protected JPanel initTablePanel(PickListModel model, Editor editor) {
+    protected JPanel initTablePanel(PickListModel<Turnout> model, Editor editor) {
         _tablePanel = super.initTablePanel(model, editor);
         return _tablePanel;
     }
