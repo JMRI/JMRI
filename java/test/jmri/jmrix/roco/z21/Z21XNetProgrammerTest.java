@@ -18,6 +18,18 @@ public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
 
     @Override
     @Test
+    public void testGetCanReadAddress() {
+        Assert.assertTrue("can read address", programmer.getCanRead("1234"));
+    }   
+ 
+    @Override
+    @Test
+    public void testGetCanWriteAddress() {
+        Assert.assertTrue("can write address", programmer.getCanWrite("1234"));
+    }    
+
+    @Override
+    @Test
     public void testWriteCvSequence() throws JmriException {
         // and do the write
         p.writeCV(29, 34, l);
@@ -144,7 +156,7 @@ public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
-        t = new XNetInterfaceScaffold(new LenzCommandStation());
+        t = new XNetInterfaceScaffold(new RocoZ21CommandStation());
         l = new jmri.ProgListenerScaffold();
 
         p = new Z21XNetProgrammer(t) {

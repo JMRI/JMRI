@@ -8,8 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import javax.mail.internet.AddressException;
@@ -41,9 +40,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ReportPanel extends JPanel {
 
-    static java.util.ResourceBundle rb = null;
-
-    // member declarations
     JButton sendButton;
     JTextField emailField = new JTextField(40);
     JTextField summaryField = new JTextField(40);
@@ -60,9 +56,7 @@ public class ReportPanel extends JPanel {
     String[] profDirs = {"networkservices", "profile", "programmers", "throttle"};
 
     public ReportPanel() {
-        if (rb == null) {
-            rb = java.util.ResourceBundle.getBundle("jmri.jmrit.mailreport.ReportBundle");
-        }
+        ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.mailreport.ReportBundle");
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -147,7 +141,6 @@ public class ReportPanel extends JPanel {
             }
         });
         add(sendButton);
-
     }
     
     // made static, public, not final so can be changed via script
@@ -155,6 +148,7 @@ public class ReportPanel extends JPanel {
 
     @SuppressWarnings("unchecked")
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
+        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.mailreport.ReportBundle");
         try {
             sendButton.setEnabled(false);
             log.debug("initial checks");

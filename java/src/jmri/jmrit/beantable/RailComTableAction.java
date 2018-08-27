@@ -316,7 +316,7 @@ public class RailComTableAction extends AbstractTableAction<RailCom> {
     }
 
     @Override
-    public void addToPanel(AbstractTableTabAction f) {
+    public void addToPanel(AbstractTableTabAction<RailCom> f) {
         log.debug("Added CheckBox in addToPanel method");
     }
 

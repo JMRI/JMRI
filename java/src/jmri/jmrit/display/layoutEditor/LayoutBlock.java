@@ -3181,10 +3181,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             LayoutBlock srcEvent = (LayoutBlock) e.getSource();
 
             if (e.getPropertyName().equals("NewRoute")) {
-                LayoutBlock lbkblock = (LayoutBlock) e.getNewValue();
-
                 if (enableUpdateRouteLogging) {
-                    log.info("==Event type {} New {}", e.getPropertyName(), lbkblock.getDisplayName());
+                    log.info("==Event type {} New {}", e.getPropertyName(), ((LayoutBlock) e.getNewValue()).getDisplayName());
                 }
             } else if (e.getPropertyName().equals("through-path-added")) {
                 if (enableUpdateRouteLogging) {
