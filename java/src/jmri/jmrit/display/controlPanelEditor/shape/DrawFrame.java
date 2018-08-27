@@ -2,6 +2,7 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.GraphicsDevice;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -58,11 +59,11 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
     JPanel _contentPanel;
 
     public DrawFrame(String which, String title, PositionableShape ps, Editor ed, boolean create) {
-        super(title, false, false);
+        super(false, false);
         _shape = ps;
         _editor = ed;
         _create = create;
-        super.setTitle(Bundle.getMessage(which, Bundle.getMessage(title)));
+        setTitle(Bundle.getMessage(which, Bundle.getMessage(title)));
 
         _lineWidth = 1;
         _lineColor = Color.black;
@@ -76,31 +77,27 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
         } else {
             // closingEvent will re-establish listener
             _shape.removeListener();            
-            _contentPanel.add(makeEditPanel());
         }
 
-        JScrollPane scrollPane = new JScrollPane(_contentPanel);
-        super.setContentPane(scrollPane);
+        setContentPane(new JScrollPane(_contentPanel));
 
-        super.addWindowListener(new java.awt.event.WindowAdapter() {
+        addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 closingEvent(true);
             }
         });
         super.pack();
-        Point edLoc = _editor.getLocationOnScreen();
-        Point loc;
         if (_shape == null) {
-            loc = new Point(edLoc.x + 200, edLoc.y);                                
-        } else {
-            loc = jmri.util.PlaceWindow.nextTo(_editor, _shape, this);
+            Point loc = _editor.getLocationOnScreen();
+            loc.x = Math.max(loc.x + 200, 0);
+            loc.y = Math.max(loc.y, 0);
+            setLocation(loc);
+            setVisible(true);
+            setAlwaysOnTop(true);
         }
-        setLocation(loc);
-        super.setVisible(true);
-        setAlwaysOnTop(true);
+        //_shape != null finishes construction at setDisplayParams()
     }
-
     private void addLabel(JPanel panel, String text) {
         JLabel label = new JLabel(text);
         label.setAlignmentX(JComponent.LEFT_ALIGNMENT);
@@ -158,7 +155,7 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
         bg.add(_fillColorButon);
         _lineColorButon.setSelected(true);
         panel.add(p);
-        _chooser = new JColorChooser(Color.LIGHT_GRAY);
+        _chooser = new JColorChooser(_lineColor);
         _chooser.getSelectionModel().addChangeListener((ChangeEvent e) -> {
             colorChange();
         });
@@ -295,16 +292,15 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
         _lineSlider.setValue(_lineWidth);
         _lineColor = _shape.getLineColor();
         _fillColor = _shape.getFillColor();
-        if (_lineColor.getAlpha() >= _fillColor.getAlpha()) {
-            _alphaSlider.setValue(_lineColor.getAlpha());
-            _lineColorButon.setSelected(true);
-        } else {
-            int alpha = _fillColor.getAlpha();
-            if (alpha < 2) {
-                alpha = 255;
-            }
+        int alpha = _lineColor.getAlpha();
+        if (alpha > 5) {
             _alphaSlider.setValue(alpha);
-            _fillColorButon.setSelected(true);
+            _lineColorButon.setSelected(true);
+            _chooser.setColor(_lineColor);
+        } else {
+            _alphaSlider.setValue(_fillColor.getAlpha());
+            _lineColorButon.setSelected(false);
+            _chooser.setColor(_fillColor);
         }
 
         tPanel.addTab(Bundle.getMessage("advancedTab"), null,
@@ -320,6 +316,15 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
         _contentPanel.add(tPanel);
         _contentPanel.add(makeDoneButtonPanel());
         pack();
+        setLocation(jmri.util.PlaceWindow.nextTo(_editor, _shape, this));
+        setVisible(true);
+        setAlwaysOnTop(true);
+        if (log.isDebugEnabled()) {
+            Point pt1 = getLocation();
+            GraphicsDevice device = getGraphicsConfiguration().getDevice();
+            log.debug("setDisplayParams Screen device= {}: getLocation()= [{}, {}]",
+                    device.getIDstring(), pt1.x, pt1.y);
+        }
     }
 
     /**
@@ -345,6 +350,10 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
         JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
         doneButton.addActionListener((ActionEvent a) -> {
             closingEvent(false);
+            JmriColorChooser.addRecentColor(_lineColor);
+            if (_fillColor != null) {
+                JmriColorChooser.addRecentColor(_fillColor);
+           }
         });
         JPanel p =new JPanel();
         p.add(doneButton);
@@ -358,23 +367,18 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
         p =new JPanel();
         p.add(cancelButton);
         panel.add(p);
-//        p1.add(Box.createHorizontalGlue());
-//        p1.add(panel);
-//        p1.add(Box.createHorizontalGlue());
         panel.add(Box.createHorizontalGlue());
         return panel;
     }
 
     private void buttonChange() {
         if (_lineColorButon.isSelected()) {
-            JmriColorChooser.addRecentColor(_fillColor);
-            _chooser.getSelectionModel().setSelectedColor(_lineColor);
+//            _chooser.getSelectionModel().setSelectedColor(_lineColor);
             _chooser.setColor(_lineColor);
-//            _alphaSlider.setValue(_lineColor.getAlpha());
+            _alphaSlider.setValue(_lineColor.getAlpha());
         } else if (_fillColor != null) {
-            JmriColorChooser.addRecentColor(_lineColor);
-            _chooser.setColor(_fillColor);
 //            _chooser.getSelectionModel().setSelectedColor(_fillColor);
+            _chooser.setColor(_fillColor);
             _alphaSlider.setValue(_fillColor.getAlpha());
         } else {
             _alphaSlider.setValue(255);
@@ -394,9 +398,11 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
 
     private void colorChange() {
         Color c = _chooser.getColor();
-        int alpha = _alphaSlider.getValue();
+        int alpha =  c.getAlpha();
+        log.debug("colorChange: color= {}, alpha= {} ", c, alpha);
+        _alphaSlider.setValue(c.getAlpha());
         if (_lineColorButon.isSelected()) {
-            _lineColor = new Color(c.getRed(), c.getGreen(), c.getBlue(), _lineColor.getAlpha());
+            _lineColor = new Color(c.getRed(), c.getGreen(), c.getBlue(), alpha);
             if (_shape != null) {
                 _shape.setLineColor(_lineColor);
             }

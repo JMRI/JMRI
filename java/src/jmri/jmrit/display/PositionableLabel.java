@@ -621,18 +621,19 @@ public class PositionableLabel extends JLabel implements Positionable {
         jmri.jmrit.display.palette.ItemPalette.loadIcons(_editor);
 
         DisplayFrame paletteFrame = new DisplayFrame(title, false, false);
-        paletteFrame.setLocationRelativeTo(this);
-        paletteFrame.toFront();
+//        paletteFrame.setLocationRelativeTo(this);
+//        paletteFrame.toFront();
         return paletteFrame;
     }
 
     public void initPaletteFrame(DisplayFrame paletteFrame, ItemPanel itemPanel) {
         Dimension dim = itemPanel.getPreferredSize();
         JScrollPane sp = new JScrollPane(itemPanel);
-        dim = new Dimension(dim.width +25, dim.height + 25);
+        dim = new Dimension(dim.width + 25, dim.height + 25);
         sp.setPreferredSize(dim);
         paletteFrame.add(sp);
         paletteFrame.pack();
+        paletteFrame.setLocation(jmri.util.PlaceWindow.nextTo(_editor, this, paletteFrame));
         paletteFrame.setVisible(true);
     }
 

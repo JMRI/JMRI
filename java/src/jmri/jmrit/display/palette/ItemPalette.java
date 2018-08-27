@@ -149,7 +149,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     static HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> _iconMaps;
     // for now, special case 4 level maps since IndicatorTO is the only case.
     static HashMap<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>> _indicatorTOMaps;
-    static protected ItemPanel _currentItemPanel;
+    private ItemPanel _currentItemPanel;
 
     /**
      * Store palette icons in preferences file catalogTrees.xml
@@ -225,8 +225,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
             // long t = System.currentTimeMillis();
             new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
             _iconMaps = new HashMap<>();
-            _indicatorTOMaps
-                    = new HashMap<>();
+            _indicatorTOMaps = new HashMap<>();
 
             if (!loadSavedIcons(ed)) {
                 loadDefaultIcons(ed);
@@ -456,9 +455,9 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
             name = Bundle.getMessage("untitled");
         }
         instance.setTitle(Bundle.getMessage("MenuItemItemPalette") + " - " + name);
-        // Either of these positioning calls puts the instance on the primary monitor. ???
-        instance.setLocation(jmri.util.PlaceWindow.nextTo(ed, null, instance));
+        // pack before setLocation
         instance.pack();
+        instance.setLocation(jmri.util.PlaceWindow.nextTo(ed, null, instance));
         instance.setVisible(true);
         return instance;
     }
@@ -483,11 +482,10 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
 
         setLayout(new BorderLayout(5, 5));
         add(_tabPane, BorderLayout.CENTER);
-        setLocation(10, 10);
         JScrollPane sp = (JScrollPane) _tabPane.getSelectedComponent();
         _currentItemPanel = (ItemPanel) sp.getViewport().getView();
         if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
-        pack();
+//        pack();
     }
 
     /*
@@ -606,7 +604,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         if (deltaDim.height < 50) { // at least 2 rows of tabs
             deltaDim.height = 50;
         }
-        reSize(_tabPane, deltaDim, newTabDim);
+        reSize(_tabPane, deltaDim, newTabDim, p._editor);
         if (p._bgColorBox != null) {
             p._bgColorBox.setSelectedIndex(getPreviewBg());
         }

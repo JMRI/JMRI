@@ -277,8 +277,6 @@ public class ColorDialog extends JDialog implements ChangeListener {
                             _util.setBackgroundColor(_chooser.getColor());
                             break;
                         case FONT:
-                            _util.setForeground(_chooser.getColor());
-                            break;
                         case TEXT:
                             _util.setForeground(_chooser.getColor());
                             break;
