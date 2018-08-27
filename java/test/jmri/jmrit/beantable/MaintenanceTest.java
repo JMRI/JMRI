@@ -108,6 +108,19 @@ public class MaintenanceTest {
        Maintenance.findOrphansPressed(new jmri.util.JmriJFrame("FindOrphansParent"));
     }
 
+    @Test
+    public void testFindEmptyPressed(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Thread t = new Thread(() -> {
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(Maintenance.rbm.getString("EmptyConditionalTitle"));
+            jdo.close();
+	});
+        t.setName("Find Empty Dialog Close Thread");
+        t.start();
+       Maintenance.findEmptyPressed(new jmri.util.JmriJFrame("FindEmptyParent"));
+    }
+
 
     // The minimal setup for log4J
     @Before
