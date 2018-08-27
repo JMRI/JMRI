@@ -8,8 +8,12 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.SortedSet;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -1227,15 +1231,13 @@ public class CircuitBuilder {
         t.setFamily(_trackPanel.getFamilyName());
 
         HashMap<String, NamedIcon> iconMap = _trackPanel.getIconMap();
-        if (iconMap != null) {
-            Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
-            while (it.hasNext()) {
-                Entry<String, NamedIcon> entry = it.next();
-                if (log.isDebugEnabled()) {
-                    log.debug("key= " + entry.getKey());
-                }
-                t.setIcon(entry.getKey(), new NamedIcon(entry.getValue()));
+        Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<String, NamedIcon> entry = it.next();
+            if (log.isDebugEnabled()) {
+                log.debug("key= " + entry.getKey());
             }
+            t.setIcon(entry.getKey(), new NamedIcon(entry.getValue()));
         }
         t.setLevel(Editor.TURNOUTS);
         t.setScale(_oldIcon.getScale());
