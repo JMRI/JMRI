@@ -134,5 +134,5 @@ public class FastClockController extends AbstractController {
         updateMinsSetpoint = (short)(fastClock.userGetRate() * UPDATE_MINUTES);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(FastClockController.class);
+    // private final static Logger log = LoggerFactory.getLogger(FastClockController.class);
 }
