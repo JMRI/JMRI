@@ -316,7 +316,7 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
     }
 
     @Override
-    public void addToPanel(AbstractTableTabAction f) {
+    public void addToPanel(AbstractTableTabAction<IdTag> f) {
         f.addToBottomBox(isStateStored, this.getClass().getName());
         isStateStored.setSelected(InstanceManager.getDefault(IdTagManager.class).isStateStored());
         isStateStored.addActionListener((ActionEvent e) -> {

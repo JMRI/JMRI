@@ -1618,7 +1618,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
              * @return an appropriate combobox for this signal head
              */
             @Override
-            protected JComboBox getEditorBox(int row) {
+            protected JComboBox<String> getEditorBox(int row) {
                 return getStateEditorBox(row);
             }
 
@@ -1756,7 +1756,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
          * @return A combobox containing the valid aspect names for this mast
          */
         @Override
-        JComboBox getStateEditorBox(int row) {
+        JComboBox<String> getStateEditorBox(int row) {
             // create dummy comboBox, override in extended classes for each bean
             JComboBox<String> editCombo = new JComboBox<>();
             editCombo.addItem(SET_TO_UNOCCUPIED);
@@ -1845,7 +1845,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
          * @return A combobox containing the valid aspect names for this mast
          */
         @Override
-        JComboBox getStateEditorBox(int row) {
+        JComboBox<String> getStateEditorBox(int row) {
             // create dummy comboBox, override in extended classes for each bean
             JComboBox<String> editCombo = new JComboBox<>();
             editCombo.addItem(SET_TO_THROWN);
@@ -1929,7 +1929,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
          * @return A combobox containing the valid aspect names for this mast
          */
         @Override
-        JComboBox getStateEditorBox(int row) {
+        JComboBox<String> getStateEditorBox(int row) {
             // create dummy comboBox, override in extended classes for each bean
             JComboBox<String> editCombo = new JComboBox<>();
             editCombo.addItem(SET_TO_INACTIVE);
@@ -2086,7 +2086,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
              * @return an appropriate combobox for this signal mast
              */
             @Override
-            protected JComboBox getEditorBox(int row) {
+            protected JComboBox<String> getEditorBox(int row) {
                 return getAspectEditorBox(row);
             }
 

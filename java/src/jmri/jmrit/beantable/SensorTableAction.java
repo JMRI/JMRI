@@ -555,7 +555,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
      * {@inheritDoc}
      */
     @Override
-    public void addToPanel(AbstractTableTabAction f) {
+    public void addToPanel(AbstractTableTabAction<Sensor> f) {
         String systemPrefix = ConnectionNameFromSystemName.getConnectionName(senManager.getSystemPrefix());
 
         if (senManager.getClass().getName().contains("ProxySensorManager")) {

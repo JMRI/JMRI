@@ -286,16 +286,13 @@ public class FirstTimeStartUpWizard {
                 }
             }
             Profile project = ProfileManager.getDefault().getActiveProfile();
-            if (project != null) {
-                InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(owner.getText());
-                InstanceManager.getDefault(GuiLafPreferencesManager.class).setLocale(Locale.getDefault());
-                InstanceManager.getDefault(RosterConfigManager.class).savePreferences(project);
-                InstanceManager.getDefault(GuiLafPreferencesManager.class).savePreferences(project);
-                connectionConfigPane.savePreferences();
-                InstanceManager.getDefault(ConfigureManager.class).storePrefs();
-            } else {
-                log.error("Unable to save first time preferences due to missing profile.");
-            }
+            InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(owner.getText());
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setLocale(Locale.getDefault());
+            InstanceManager.getDefault(RosterConfigManager.class).savePreferences(project);
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).savePreferences(project);
+            connectionConfigPane.savePreferences();
+            InstanceManager.getDefault(ConfigureManager.class).storePrefs();
+            
             dispose();
         }
     }

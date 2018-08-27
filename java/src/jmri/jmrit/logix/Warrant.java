@@ -1669,8 +1669,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 // Train can still be moving after throttle set to 0. Block 
                 // boundaries can be crossed.  This is due to momentum 'gliding'
                 // for any nonE-Stop or by choosing ramping to a stop.
-                if (runState != WAIT_FOR_CLEAR && runState != HALT && 
-                        runState != STOP_PENDING && runState != RAMP_HALT) {
+                // spotbugs knows runState != HALT here
+                if (runState != WAIT_FOR_CLEAR && runState != STOP_PENDING && runState != RAMP_HALT) {
                     // Apparently NOT already stopped or just about to be.
                     // Therefore, assume a Rogue has just entered.
                     setStoppingBlock(block);
@@ -2362,7 +2362,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         float prevSpeed = waitSpeed;
         long waitTime = 0; // time to wait after entering the block before starting ramp
         long speedTime = 0; // time running at a given speed until next speed change
-        float prevRampLen = rampLen;
         float dist = 0;
         boolean increasing = true;
         boolean hasSpeed = (throttleSpeed > 0.0001f);
@@ -2386,7 +2385,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 speedTime += ts.getTime() * timeRatio;
                 if (cmd.equals("SPEED")) {
                     nextThrottle = Float.parseFloat(ts.getValue()); // new speed
-                    prevRampLen = rampLen;
+                    float prevRampLen = rampLen;
                     // calculate a new ramp length starting from speed nextThrottle (modified for speedType)
                     rampLen = _speedUtil.rampLengthForRampDown(throttleSpeed, _curSpeedType, speedType, isForward);
                     rampLen += signalDistAdj;
@@ -2450,6 +2449,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             }
             _engineer.rampSpeedTo(speedType, endBlockIdx, true);
         } else {
+            // don't understand SpotBugs warning here - call to cancelDelayRamp() done above
             _delayCommand = new CommandDelay(speedType, waitTime, endBlockIdx, true);
             _delayCommand.start();
             //_delayCommand.execute();

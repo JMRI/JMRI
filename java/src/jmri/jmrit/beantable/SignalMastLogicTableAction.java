@@ -57,7 +57,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
         TableRowSorter<BeanTableDataModel<SignalMastLogic>> sorter = new TableRowSorter<>(m);
         JTable dataTable = m.makeJTable(m.getMasterClassName(), m, sorter);
         // create the frame
-        f = new jmri.jmrit.beantable.BeanTableFrame(m, helpTarget(), dataTable) {
+        f = new jmri.jmrit.beantable.BeanTableFrame<SignalMastLogic>(m, helpTarget(), dataTable) {
         };
         setMenuBar(f);
         setTitle();
@@ -75,7 +75,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
      * @param f the JFrame of this table
      */
     @Override
-    public void setMenuBar(BeanTableFrame f) {
+    public void setMenuBar(BeanTableFrame<SignalMastLogic> f) {
         final jmri.util.JmriJFrame finalF = f;   // needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
         int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenu before 'Window' and 'Help'

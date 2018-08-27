@@ -15,7 +15,6 @@ import org.junit.Test;
 public class SprogProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
     private SprogTrafficControlScaffold stcs = null;
-    private SprogProgrammer op = null;
 
     @Test
     @Override
@@ -50,13 +49,13 @@ public class SprogProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         stcs = new SprogTrafficControlScaffold(m);
         m.setSprogTrafficController(stcs);
 
-        programmer = op = new SprogProgrammer(m);
+        programmer = new SprogProgrammer(m);
     }
 
     @After
     public void tearDown() {
         stcs.dispose();
-        programmer = op = null;
+        programmer = null;
         JUnitUtil.tearDown();
     }
 

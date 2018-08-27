@@ -938,7 +938,24 @@ selects the different algorithm needed here.
       <p>Attributes on a &lt;variables&gt; element act on all the
       &lt;variable&gt; elements within it, along with any include
       or exclude attributes on those individual
-      variables.</p><a name="pane_include" id="pane_include"></a>
+      variables.</p>
+      
+      <p>You can also use the include mechanism
+      to specify the default value of a variable.
+      <p>Example:</p>
+      <pre style="font-family: monospace;">
+      &lt;variable label="My Variable" CV="72" default="3"&gt;
+        &lt;defaultItem default="12" include="815"/&gt;  
+        &lt;decVal/&gt;
+      &lt;/variable&gt;
+</pre>
+      <p>This will set the default (initial) value
+      of the CV to 12 if the "815" matches, 
+      and otherwise use the default-default of 3.
+      You can have as many defaultItem elements
+      as needed; the first one that matches is used.</p>
+      
+      <a name="pane_include" id="pane_include"></a>
 
       <h4>Include/Exclude During Pane Creation</h4>Whether a pane
       (or part of a pane) is created can be made conditional on the

@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-13-3.xsd">
     <copyright xmlns="http://docbook.org/ns/docbook">
         <year>2016</year>
         <holder>JMRI</holder>
@@ -1575,43 +1575,17 @@
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
                 <label>FX3 Light Type</label>
             </variable>
-            <variable item="FX6 Effect Selection" CV="52" mask="XXXVVVVV" default="0" minOut="4" include="802,791,815,836,828,831,832" tooltip="Determines the effect generated from the FX4 light output">
-              <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
-              <label>FX4 Effect Selection</label>
-            </variable>
-            <variable item="FX6 Effect Selection" CV="52" mask="XXXVVVVV" default="2" minOut="4" include="788,787" tooltip="Determines the effect generated from the FX4 light output">
-              <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
-              <label>FX4 Effect Selection</label>
-            </variable>
-            <variable item="FX6 Effect Selection" CV="52" mask="XXXVVVVV" default="3" minOut="4" include="794,786" tooltip="Determines the effect generated from the FX4 light output">
-              <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
-              <label>FX4 Effect Selection</label>
-            </variable>
-            <variable item="FX6 Effect Selection" CV="52" mask="XXXVVVVV" default="5" minOut="4" include="795,796,777" tooltip="Determines the effect generated from the FX4 light output">
-              <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
-              <label>FX4 Effect Selection</label>
-            </variable>
-            <variable item="FX6 Effect Selection" CV="52" mask="XXXVVVVV" default="8" minOut="4" include="824,798,799,829,830,820" tooltip="Determines the effect generated from the FX4 light output">
-              <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
-              <label>FX4 Effect Selection</label>
-            </variable>
-            <variable item="FX6 Effect Selection" CV="52" mask="XXXVVVVV" default="9" minOut="4" include="797,800,785,803,804,779,792,816,817" tooltip="Determines the effect generated from the FX4 light output">
-              <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
-              <label>FX4 Effect Selection</label>
-            </variable>
-            <variable item="FX6 Effect Selection" CV="52" mask="XXXVVVVV" default="15" minOut="4" include="782,770,771,793,772,776,784,778" tooltip="Determines the effect generated from the FX4 light output">
-              <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
-              <label>FX4 Effect Selection</label>
-            </variable>
-            <variable item="FX6 Effect Selection" CV="52" mask="XXXVVVVV" default="19" minOut="4" include="813,814" tooltip="Determines the effect generated from the FX4 light output">
-              <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
-              <label>FX4 Effect Selection</label>
-            </variable>
-            <variable item="FX6 Effect Selection" CV="52" mask="XXXVVVVV" default="21" minOut="4" include="783,806" tooltip="Determines the effect generated from the FX4 light output">
-              <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
-              <label>FX4 Effect Selection</label>
-            </variable>
-            <variable item="FX6 Effect Selection" CV="52" mask="XXXVVVVV" default="25" minOut="4" include="805" tooltip="Determines the effect generated from the FX4 light output">
+            <variable item="FX6 Effect Selection" CV="52" mask="XXXVVVVV" default="0" minOut="4" tooltip="Determines the effect generated from the FX4 light output">
+              <defaultItem default="0" include="802,791,815,836,828,831,832"/>             
+              <defaultItem default="2" include="788,787"/>             
+              <defaultItem default="3" include="794,786"/>             
+              <defaultItem default="5" include="795,796,777"/>             
+              <defaultItem default="8" include="824,798,799,829,830,820"/>             
+              <defaultItem default="9" include="797,800,785,803,804,779,792,816,817"/>             
+              <defaultItem default="15" include="782,770,771,793,772,776,784,778"/>             
+              <defaultItem default="19" include="813,814"/>             
+              <defaultItem default="21" include="783,806"/>             
+              <defaultItem default="25" include="805"/>             
               <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumEffect.xml"/>
               <label>FX4 Effect Selection</label>
             </variable>

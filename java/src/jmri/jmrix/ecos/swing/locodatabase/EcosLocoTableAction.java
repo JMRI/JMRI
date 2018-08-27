@@ -69,10 +69,10 @@ public class EcosLocoTableAction extends AbstractTableAction<NamedBean> {
     public void actionPerformed(ActionEvent e) {
         // create the JTable model, with changes for specific NamedBean
         createModel();
-        TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter<>(m);
+        TableRowSorter<BeanTableDataModel<NamedBean>> sorter = new TableRowSorter<>(m);
         JTable dataTable = m.makeJTable(getClassName(), m, sorter);
         // create the frame
-        f = new jmri.jmrit.beantable.BeanTableFrame(m, helpTarget(), dataTable) {
+        f = new jmri.jmrit.beantable.BeanTableFrame<NamedBean>(m, helpTarget(), dataTable) {
         };
         setMenuBar(f);
         setTitle();

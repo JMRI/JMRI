@@ -734,7 +734,7 @@ public class Maintenance {
         found = false;
         empty = true;
         jmri.SectionManager sectionManager = InstanceManager.getDefault(jmri.SectionManager.class);
-        java.util.List<String> sysNameList = new java.util.ArrayList(sectionManager.getSystemNameList());
+        java.util.List<String> sysNameList = new java.util.ArrayList<>(sectionManager.getSystemNameList());
 
         transitManager = InstanceManager.getDefault(jmri.TransitManager.class);
         iter1 = transitManager.getSystemNameList().iterator();
@@ -831,7 +831,7 @@ public class Maintenance {
         found = false;
         empty = true;
         jmri.BlockManager blockManager = InstanceManager.getDefault(jmri.BlockManager.class);
-        sysNameList = new java.util.ArrayList(blockManager.getSystemNameList());
+        sysNameList = new java.util.ArrayList<>(blockManager.getSystemNameList());
 
         sectionManager = InstanceManager.getDefault(jmri.SectionManager.class);
         iter1 = sectionManager.getSystemNameList().iterator();
@@ -1029,7 +1029,7 @@ public class Maintenance {
         found = false;
         empty = true;
         jmri.ConditionalManager conditionalManager = InstanceManager.getDefault(jmri.ConditionalManager.class);
-        sysNameList = new java.util.ArrayList(conditionalManager.getSystemNameList());
+        sysNameList = new java.util.ArrayList<>(conditionalManager.getSystemNameList());
 
         iter1 = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNameList().iterator();
         while (iter1.hasNext()) {
