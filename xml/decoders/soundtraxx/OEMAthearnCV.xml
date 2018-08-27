@@ -770,10 +770,6 @@
         <decVal/>
         <label>Independent Brake Release Volume</label>
     </variable>
-    <variable CV="143" mask="VVVVVVVV" item="Sound Setting 16" default="16" tooltip="Sets the volume of the air reservoir poppet valve releasing">
-        <decVal/>
-        <label>Poppet Valve Volume</label>
-    </variable>
     <variable CV="148" mask="VVVVVVVV" item="Sound Setting 21" default="70" tooltip="Sets the volume of the emergency brake application">
         <decVal/>
         <label>E-Brake App Volume</label>
@@ -923,10 +919,6 @@
     </variable>
     <!-- Equalizer Controls follow -->
     <!-- Individual Cut/Boost Controls follow -->
-    <variable item="62 Hz Cut/Boost" CV="226" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
-        <decVal/>
-        <label>62 Hz Cut/Boost</label>
-    </variable>
     <variable item="Analog Mode Function Status - F13" CV="241" mask="XXXXXXXV" default="0" minFn="13">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label xml:lang="it">Stato Funzioni in analogico - F13</label>

@@ -248,7 +248,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             }
         });
         warrantMenu.add(new jmri.jmrit.logix.WarrantTableAction("CreateWarrant"));
-        warrantMenu.add(WarrantTableAction._trackerTable);
+        warrantMenu.add(InstanceManager.getDefault(TrackerTableAction.class));
         warrantMenu.add(new AbstractAction(Bundle.getMessage("CreateNXWarrant")) {
 
             @Override

@@ -42,9 +42,9 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
     @Override
     public String getTitle() {
         if (memo != null) {
-            return (memo.getUserName() + " " + Bundle.getMessage("Title"));
+            return (memo.getUserName() + " " + Bundle.getMessage("NodeConfigTitle"));
         }
-        return Bundle.getMessage("Title");
+        return Bundle.getMessage("NodeConfigTitle");
     }
 
     public NodeConfigToolPane() {

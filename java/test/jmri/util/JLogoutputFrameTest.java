@@ -62,6 +62,6 @@ public class JLogoutputFrameTest {
         }
 
         jmri.util.JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
 }

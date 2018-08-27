@@ -25,16 +25,7 @@ public class SpjFileTest extends TestCase {
             testFile.read();
         }
     }
-
-    // The following is commented out; usually used to split
-    // out a file into several subparts
-/*     public void testWriteSubFile() throws java.io.IOException { */
-    /*          */
-    /*         // and write */
-    /*         testFile = new SpjFile("java/test/jmri/jmrix/loconet/spjfile/test.spj"); */
-    /*         testFile.read(); */
-    /*         testFile.writeSubFiles(); */
-    /*     } */
+    
     public void testPlayWav() throws java.io.IOException {
         loadFile();
 
@@ -45,9 +36,10 @@ public class SpjFileTest extends TestCase {
             if (testFile.headers[i].isWAV()) {
                 byte[] buffer = testFile.headers[i].getByteArray();
                 playSoundBuffer(buffer);
-                return;
+                break;
             }
         }
+        jmri.util.JUnitAppender.suppressWarnMessage("line not supported: interface SourceDataLine supporting format PCM_UNSIGNED 11200.0 Hz, 8 bit, mono, 1 bytes/frame, ");
     }
 
     public void playSoundBuffer(byte[] data) {
@@ -79,4 +71,16 @@ public class SpjFileTest extends TestCase {
         return suite;
     }
 
+    // The minimal setup for log4J
+    @Override
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @Override
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
+    }
+
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SpjFileTest.class);
 }

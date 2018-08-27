@@ -23,9 +23,8 @@ public class IndexedTreeSetTest  extends TestCase {
     }
     
     public void testQuickComparator() {
-        IndexedNavigableSet<String> s = new IndexedTreeSet<String>(new java.util.Comparator(){
-            public int compare(Object e1, Object e2) { return - e1.toString().compareTo(e2.toString()); } // note minus sign
-            public boolean equals(Object e1, Object e2) { return e1.toString().equals(e2.toString()); }
+        IndexedNavigableSet<String> s = new IndexedTreeSet<String>(new java.util.Comparator<String>(){
+            public int compare(String e1, String e2) { return - e1.toString().compareTo(e2.toString()); } // note minus sign
         });
         s.add("Z");
         s.add("A");
@@ -70,6 +69,7 @@ public class IndexedTreeSetTest  extends TestCase {
         System.out.println("DONE IN:" + (System.currentTimeMillis() - t1));
     }
 
+    @SuppressWarnings("unchecked") // this is 3rd party code
     public void testPersistence() throws Exception {
         long t1 = System.currentTimeMillis();
         for (int i = 0; i < 1; i++) {
@@ -95,7 +95,7 @@ public class IndexedTreeSetTest  extends TestCase {
                 f.delete();
             }
             store(f, m);
-            m = (IndexedTreeSet<String>) load(f);
+            m = (IndexedTreeSet<String>) load(f);  // unchecked conversion here
             assertNotSame(hash,System.identityHashCode(m));
 
             System.out.println("saving - restoring:" + (System.currentTimeMillis() - t1));
