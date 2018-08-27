@@ -1101,7 +1101,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             ed.setName(getName());
             ed.init(getName());
 
-            ed._contents = (ArrayList<Positionable>) _contents.clone();
+            ed._contents = new ArrayList<>(_contents);
+
             for (Positionable p : _contents) {
                 p.setEditor(ed);
                 ed.addToTarget(p);

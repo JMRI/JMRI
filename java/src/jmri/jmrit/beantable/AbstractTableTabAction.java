@@ -16,14 +16,14 @@ import javax.swing.SortOrder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.TableRowSorter;
-import jmri.Manager;
+import jmri.*;
 import jmri.swing.RowSorterUtil;
 import jmri.util.AlphanumComparator;
 import jmri.util.ConnectionNameFromSystemName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-abstract public class AbstractTableTabAction extends AbstractTableAction {
+abstract public class AbstractTableTabAction<E extends NamedBean> extends AbstractTableAction<E> {
 
     protected JPanel dataPanel;
     protected JTabbedPane dataTabs;
@@ -41,23 +41,23 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         dataPanel.setLayout(new BorderLayout());
         if (getManager() instanceof jmri.managers.AbstractProxyManager) {
             // build the list, with default at start and internal at end (if present)
-            jmri.managers.AbstractProxyManager proxy = (jmri.managers.AbstractProxyManager) getManager();
+            jmri.managers.AbstractProxyManager<E> proxy = (jmri.managers.AbstractProxyManager<E>) getManager();
 
-            tabbedTableArray.add(new TabbedTableItem(Bundle.getMessage("All"), true, getManager(), getNewTableAction("All"))); // NOI18N
+            tabbedTableArray.add(new TabbedTableItem<E>(Bundle.getMessage("All"), true, getManager(), getNewTableAction("All"))); // NOI18N
 
-            List<jmri.Manager> managerList = proxy.getDisplayOrderManagerList();
-            for (Manager manager : managerList) {
+            List<jmri.Manager<E>> managerList = proxy.getDisplayOrderManagerList();
+            for (Manager<E> manager : managerList) {
                 String manuName = ConnectionNameFromSystemName.getConnectionName(manager.getSystemPrefix());
-                TabbedTableItem itemModel = new TabbedTableItem(manuName, true, manager, getNewTableAction(manuName)); // connection name to display in Tab
+                TabbedTableItem<E> itemModel = new TabbedTableItem<E>(manuName, true, manager, getNewTableAction(manuName)); // connection name to display in Tab
                 tabbedTableArray.add(itemModel);
             }
             
         } else {
             String manuName = ConnectionNameFromSystemName.getConnectionName(getManager().getSystemPrefix());
-            tabbedTableArray.add(new TabbedTableItem(manuName, true, getManager(), getNewTableAction(manuName)));
+            tabbedTableArray.add(new TabbedTableItem<E>(manuName, true, getManager(), getNewTableAction(manuName)));
         }
         for (int x = 0; x < tabbedTableArray.size(); x++) {
-            AbstractTableAction table = tabbedTableArray.get(x).getAAClass();
+            AbstractTableAction<E> table = tabbedTableArray.get(x).getAAClass();
             table.addToPanel(this);
             dataTabs.addTab(tabbedTableArray.get(x).getItemString(), null, tabbedTableArray.get(x).getPanel(), null);
         }
@@ -71,9 +71,9 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         init = true;
     }
 
-    abstract protected Manager getManager();
+    abstract protected Manager<E> getManager();
 
-    abstract protected AbstractTableAction getNewTableAction(String choice);
+    abstract protected AbstractTableAction<E> getNewTableAction(String choice);
 
     @Override
     public JPanel getPanel() {
@@ -83,7 +83,7 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         return dataPanel;
     }
 
-    protected ArrayList<TabbedTableItem> tabbedTableArray = new ArrayList<TabbedTableItem>();
+    protected ArrayList<TabbedTableItem<E>> tabbedTableArray = new ArrayList<TabbedTableItem<E>>();
 
     @Override
     protected void setTitle() {
@@ -99,7 +99,7 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
     }
 
     @Override
-    public void addToFrame(BeanTableFrame f) {
+    public void addToFrame(BeanTableFrame<E> f) {
         try {
             tabbedTableArray.get(dataTabs.getSelectedIndex()).getAAClass().addToFrame(f);
         } catch (ArrayIndexOutOfBoundsException ex) {
@@ -108,7 +108,7 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
     }
 
     @Override
-    public void setMenuBar(BeanTableFrame f) {
+    public void setMenuBar(BeanTableFrame<E> f) {
         try {
             tabbedTableArray.get(dataTabs.getSelectedIndex()).getAAClass().setMenuBar(f);
         } catch (ArrayIndexOutOfBoundsException ex) {
@@ -143,16 +143,16 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         super.dispose();
     }
 
-    protected static class TabbedTableItem {
+    static protected class TabbedTableItem<E extends NamedBean> {  // E comes from the parent
 
-        AbstractTableAction tableAction;
+        AbstractTableAction<E> tableAction;
         String itemText;
-        BeanTableDataModel dataModel;
+        BeanTableDataModel<E> dataModel;
         JTable dataTable;
         JScrollPane dataScroll;
         Box bottomBox;
         boolean addToFrameRan = false;
-        Manager manager;
+        Manager<E> manager;
 
         int bottomBoxIndex; // index to insert extra stuff
         static final int bottomStrutWidth = 20;
@@ -161,7 +161,7 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
 
         final JPanel dataPanel = new JPanel();
 
-        public TabbedTableItem(String choice, boolean stdModel, Manager manager, AbstractTableAction tableAction) {
+        public TabbedTableItem(String choice, boolean stdModel, Manager<E> manager, AbstractTableAction<E> tableAction) {
 
             this.tableAction = tableAction;
             itemText = choice;
@@ -245,7 +245,7 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
             return itemText;
         }
 
-        public AbstractTableAction getAAClass() {
+        public AbstractTableAction<E> getAAClass() {
             return tableAction;
         }
 

@@ -1,9 +1,8 @@
 package jmri.jmrit.beantable;
 
-import jmri.InstanceManager;
-import jmri.Manager;
+import jmri.*;
 
-public class TurnoutTableTabAction extends AbstractTableTabAction {
+public class TurnoutTableTabAction extends AbstractTableTabAction<Turnout> {
 
     public TurnoutTableTabAction(String s) {
         super(s);
@@ -14,7 +13,7 @@ public class TurnoutTableTabAction extends AbstractTableTabAction {
     }
 
     @Override
-    protected Manager getManager() {
+    protected Manager<Turnout> getManager() {
         return InstanceManager.turnoutManagerInstance();
     }
 
@@ -24,7 +23,7 @@ public class TurnoutTableTabAction extends AbstractTableTabAction {
     }
 
     @Override
-    protected AbstractTableAction getNewTableAction(String choice) {
+    protected TurnoutTableAction getNewTableAction(String choice) {
         return new TurnoutTableAction(choice);
     }
 
