@@ -12,6 +12,12 @@ import org.junit.Test;
  */
 public class MrcOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
 
+    @Override
+    @Test
+    public void testGetCanWriteAddress() {
+        Assert.assertFalse("can write address", programmer.getCanWrite("1234"));
+    }    
+
     // The minimal setup for log4J
     @Before
     @Override
