@@ -322,6 +322,6 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         Assert.assertEquals(" value read", 20, l.getRcvdValue());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceProgrammerTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(NceProgrammerTest.class);
 
 }

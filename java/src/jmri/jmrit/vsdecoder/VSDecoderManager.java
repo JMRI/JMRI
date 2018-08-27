@@ -485,9 +485,7 @@ public class VSDecoderManager implements PropertyChangeListener {
             return;
         }
         jmri.NamedBeanHandle<Reporter> h = nbhm.getNamedBeanHandle(sysName, r);
-        if (h == null) {
-            return;
-        }
+
         // Make sure we aren't already registered.
         java.beans.PropertyChangeListener[] ll = r.getPropertyChangeListenersByReference(h.getName());
         if (ll.length == 0) {
@@ -502,10 +500,7 @@ public class VSDecoderManager implements PropertyChangeListener {
             return;
         }
         jmri.NamedBeanHandle<NamedBean> h = nbhm.getNamedBeanHandle(sysName, b);
-        if (h == null) {
-            log.debug("no handle for bean {}", b.getDisplayName());
-            return;
-        }
+
         // Make sure we aren't already registered.
         java.beans.PropertyChangeListener[] ll = b.getPropertyChangeListenersByReference(h.getName());
         if (ll.length == 0) {

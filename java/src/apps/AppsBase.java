@@ -186,7 +186,7 @@ public abstract class AppsBase {
                 // Apps.setConfigFilename() does not reset the system property
                 System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
                 Profile profile = ProfileManager.getDefault().getActiveProfile();
-                log.info("Starting with profile {}", profile != null ? profile.getId() : "<none>");
+                log.info("Starting with profile {}", profile.getId());
             } else {
                 log.error("Specify profile to use as command line argument.");
                 log.error("If starting with saved profile configuration, ensure the autoStart property is set to \"true\"");
