@@ -306,9 +306,9 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
                 // init reply as set in prefs autoInit
                 if (autoInit > 0) { // not disabled
                     log.debug("start init 1 of node {}", nodeaddr);
-                    NodeResponse(nodeaddr, 1, 1, autoInit); // banks 1-4
+                    nodeResponse(nodeaddr, 1, 1, autoInit); // banks 1-4
                 }
-                // all replies are generated and sent by NodeResponse()
+                // all replies are generated and sent by nodeResponse()
                 reply = null;
                 break;
 
@@ -317,9 +317,9 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
                 // init reply as set in prefs autoInit
                 if (autoInit > 0) { // not disabled
                     log.debug("start init 2 of node {}", nodeaddr);
-                    NodeResponse(nodeaddr, 5, 5, autoInit); // bank 5 = parallel
+                    nodeResponse(nodeaddr, 5, 5, autoInit); // bank 5 = parallel
                 }
-                // all replies are generated and sent by NodeResponse()
+                // all replies are generated and sent by nodeResponse()
                 reply = null;
                 break;
 
@@ -428,7 +428,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      * @param endBank   last bank id to report
      * @param initBits  number of inputs/output bits to report
      */
-    private void NodeResponse(int node, int startBank, int endBank, int initBits) {
+    private void nodeResponse(int node, int startBank, int endBank, int initBits) {
         if (node < 1 || node > 127) { // node address invalid
             log.warn("Invalid Node Address; no response generated");
             return;
