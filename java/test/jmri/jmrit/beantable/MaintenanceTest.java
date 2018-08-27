@@ -3,8 +3,10 @@ package jmri.jmrit.beantable;
 import jmri.*;
 import jmri.util.JUnitUtil;
 
+import java.awt.GraphicsEnvironment;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
@@ -82,6 +84,7 @@ public class MaintenanceTest {
    
     @Test
     public void testDeviceReportPressed(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(Maintenance.rbm.getString("CrossReferenceTitle"));
@@ -94,6 +97,7 @@ public class MaintenanceTest {
 
     @Test
     public void testFindOrphansPressed(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(Maintenance.rbm.getString("OrphanTitle"));
