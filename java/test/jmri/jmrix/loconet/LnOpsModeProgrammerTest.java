@@ -17,6 +17,12 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
     ProgListenerScaffold pl;
     LnOpsModeProgrammer lnopsmodeprogrammer;
 
+    @Override
+    @Test
+    public void testGetCanWriteAddress() {
+        Assert.assertFalse("can write address", programmer.getCanWrite("1234"));
+    }    
+
     @Test
     public void testSetMode() {
         try {

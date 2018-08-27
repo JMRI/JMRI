@@ -14,7 +14,6 @@ import org.junit.Test;
 public class SprogOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
 
     private SprogTrafficControlScaffold stcs = null;
-    private SprogOpsModeProgrammer op = null;
     private SprogSystemConnectionMemo m = null;
 
     // The minimal setup for log4J
@@ -29,14 +28,14 @@ public class SprogOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgra
         m.setSprogTrafficController(stcs);
         m.configureCommandStation();
 
-        programmer = op = new SprogOpsModeProgrammer(2,false,m);
+        programmer = new SprogOpsModeProgrammer(2,false,m);
     }
 
     @After
     public void tearDown() {
         m.getSlotThread().interrupt();
         stcs.dispose();
-        programmer = op = null;
+        programmer = null;
         JUnitUtil.tearDown();
     }
 

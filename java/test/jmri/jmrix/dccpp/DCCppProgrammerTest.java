@@ -42,6 +42,19 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
                 programmer.getMode());        
     }
 
+    @Override
+    @Test
+    public void testGetCanWriteAddress() {
+        Assert.assertFalse("can write address", programmer.getCanWrite("1234"));
+    }    
+
+    @Override
+    @Test
+    public void testGetWriteConfirmMode(){
+        Assert.assertEquals("Write Confirm Mode",jmri.Programmer.WriteConfirmMode.DecoderReply,
+                programmer.getWriteConfirmMode("1234"));
+    }
+
     @Test
     public void testWriteCvSequence() throws JmriException {
         // and do the write
