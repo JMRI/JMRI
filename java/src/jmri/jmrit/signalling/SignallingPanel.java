@@ -2114,8 +2114,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
          * @param row Index number (in TableDataModel)
          * @return A combobox containing the valid aspect names for this mast
          */
-        JComboBox getAspectEditorBox(int row) {
-            JComboBox editCombo = editorMap.get(this.getValueAt(row, SNAME_COLUMN));
+        JComboBox<String> getAspectEditorBox(int row) {
+            JComboBox<String> editCombo = editorMap.get(this.getValueAt(row, SNAME_COLUMN));
             if (editCombo == null) {
                 // create a new one with correct aspects
                 editCombo = new JComboBox<String>(getAspectVector(row)); // show it
@@ -2123,7 +2123,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
             return editCombo;
         }
-        Hashtable<Object, JComboBox> editorMap = new Hashtable<Object, JComboBox>();
+        Hashtable<Object, JComboBox<String>> editorMap = new Hashtable<Object, JComboBox<String>>();
 
         /**
          * Holds a Hashtable of valid aspects per signal mast used by
