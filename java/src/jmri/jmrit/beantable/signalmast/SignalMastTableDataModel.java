@@ -368,8 +368,8 @@ public class SignalMastTableDataModel extends BeanTableDataModel<SignalMast> {
      * @param row Index number (in TableDataModel)
      * @return A combobox containing the valid aspect names for this mast
      */
-    JComboBox getAspectEditorBox(int row) {
-        JComboBox editCombo = editorMap.get(this.getValueAt(row, SYSNAMECOL));
+    JComboBox<String> getAspectEditorBox(int row) {
+        JComboBox<String> editCombo = editorMap.get(this.getValueAt(row, SYSNAMECOL));
         if (editCombo == null) {
             // create a new one with correct aspects
             editCombo = new JComboBox<>(getAspectVector(row));
@@ -377,7 +377,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel<SignalMast> {
         }
         return editCombo;
     }
-    HashMap<Object, JComboBox> editorMap = new HashMap<>();
+    HashMap<Object, JComboBox<String>> editorMap = new HashMap<>();
 
     /**
      * Holds a HashMap of valid aspects per signal mast used by getEditorBox()

@@ -410,8 +410,8 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         return r;
     }
 
-    int SignalBankSize = 16; // theoretically: 16
-    int SensorBankSize = 64; // theoretically: 0x3F
+    int signalBankSize = 16; // theoretically: 16
+    int sensorBankSize = 64; // theoretically: 0x3F
     javax.swing.Timer timer;
 
     // streams to share with user class
