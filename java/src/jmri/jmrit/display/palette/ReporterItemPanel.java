@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
-import jmri.NamedBean;
+import jmri.Reporter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
@@ -23,7 +23,7 @@ import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ReporterItemPanel extends TableItemPanel {
+public class ReporterItemPanel extends TableItemPanel<Reporter> {
 
     ReporterIcon _reporter;
 
@@ -121,7 +121,7 @@ public class ReporterItemPanel extends TableItemPanel {
                 _updateButton.setEnabled(true);
                 _updateButton.setToolTipText(null);
             }
-            NamedBean bean = getDeviceNamedBean();
+            Reporter bean = getDeviceNamedBean();
             _reporter.setReporter(bean.getDisplayName());
         } else {
             if (_updateButton != null) {
@@ -145,7 +145,7 @@ public class ReporterItemPanel extends TableItemPanel {
 
         @Override
         protected boolean okToDrag() {
-            NamedBean bean = getDeviceNamedBean();
+            Reporter bean = getDeviceNamedBean();
             if (bean == null) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
@@ -159,7 +159,7 @@ public class ReporterItemPanel extends TableItemPanel {
             if (!isDataFlavorSupported(flavor)) {
                 return null;
             }
-            NamedBean bean = getDeviceNamedBean();
+            Reporter bean = getDeviceNamedBean();
             if (bean == null) {
                 return null;
             }
