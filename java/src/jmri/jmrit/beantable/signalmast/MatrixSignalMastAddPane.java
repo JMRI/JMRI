@@ -231,25 +231,36 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
     public boolean createMast(@Nonnull String sigsysname, @Nonnull String mastname, @Nonnull String username) {
         log.debug("createMast({},{})", sigsysname, mastname);
 
+        // check all boxes are filled
+        if (       (              ( turnoutBox1.getDisplayName() == null || turnoutBox1.getDisplayName().isEmpty() ) )
+                || (bitNum > 1 && ( turnoutBox2.getDisplayName() == null || turnoutBox2.getDisplayName().isEmpty() ) )
+                || (bitNum > 2 && ( turnoutBox3.getDisplayName() == null || turnoutBox3.getDisplayName().isEmpty() ) )
+                || (bitNum > 3 && ( turnoutBox4.getDisplayName() == null || turnoutBox4.getDisplayName().isEmpty() ) )
+                || (bitNum > 4 && ( turnoutBox5.getDisplayName() == null || turnoutBox5.getDisplayName().isEmpty() ) )
+                || (bitNum > 5 && ( turnoutBox6.getDisplayName() == null || turnoutBox6.getDisplayName().isEmpty() ) )
+        ) {
+            // add extra OR in order to set MAXMATRIXBITS > 6
+            // error dialog
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("MatrixOutputEmpty", mastname),
+                    Bundle.getMessage("WarningTitle"),
+                    JOptionPane.ERROR_MESSAGE);
+            log.warn("Empty output on panel");
+            return false;
+        }
+
+        // check all bit sets are filled, no duplicates
+        if (identicalBits()) {
+            // error dialog
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("AspectMastBitsWarning", mastname),
+                    Bundle.getMessage("WarningTitle"),
+                    JOptionPane.ERROR_MESSAGE);
+            log.warn("Identical bits on panel");
+            return false;
+        }
+
         if (currentMast == null) {
-            // Create was pressed for new mast, check all boxes are filled
-            if (       (              ( turnoutBox1.getDisplayName() == null || turnoutBox1.getDisplayName().isEmpty() ) )
-                    || (bitNum > 1 && ( turnoutBox2.getDisplayName() == null || turnoutBox2.getDisplayName().isEmpty() ) ) 
-                    || (bitNum > 2 && ( turnoutBox3.getDisplayName() == null || turnoutBox3.getDisplayName().isEmpty() ) )
-                    || (bitNum > 3 && ( turnoutBox4.getDisplayName() == null || turnoutBox4.getDisplayName().isEmpty() ) ) 
-                    || (bitNum > 4 && ( turnoutBox5.getDisplayName() == null || turnoutBox5.getDisplayName().isEmpty() ) )
-                    || (bitNum > 5 && ( turnoutBox6.getDisplayName() == null || turnoutBox6.getDisplayName().isEmpty() ) )
-                ) {
-                // add extra OR in order to set MAXMATRIXBITS > 6
-                //error dialog
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("MatrixOutputEmpty", mastname),
-                        Bundle.getMessage("WarningTitle"),
-                        JOptionPane.ERROR_MESSAGE);
-                log.error("Empty output on panel");
-                return false;
-            }
-        
-            //create new MatrixMast with props from panel
+            // Create was pressed for new mast:
+            // create new MatrixMast with props from panel
             String name = "IF$xsm:"
                     + sigsysname
                     + ":" + mastname.substring(11, mastname.length() - 4);
@@ -387,42 +398,42 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         JPanel output1panel = new JPanel();
         output1panel.add(turnoutBox1);
         TitledBorder border1 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-        border1.setTitle(Bundle.getMessage("MatrixOutputLabel") + "1 ");
+        border1.setTitle(Bundle.getMessage("MatrixOutputLabel", 1));
         output1panel.setBorder(border1);
         turnoutpanel.add(output1panel);
 
         JPanel output2panel = new JPanel();
         output2panel.add(turnoutBox2);
         TitledBorder border2 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-        border2.setTitle(Bundle.getMessage("MatrixOutputLabel") + "2 ");
+        border2.setTitle(Bundle.getMessage("MatrixOutputLabel", 2));
         output2panel.setBorder(border2);
         turnoutpanel.add(output2panel);
 
         JPanel output3panel = new JPanel();
         output3panel.add(turnoutBox3);
         TitledBorder border3 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-        border3.setTitle(Bundle.getMessage("MatrixOutputLabel") + "3 ");
+        border3.setTitle(Bundle.getMessage("MatrixOutputLabel", 3));
         output3panel.setBorder(border3);
         turnoutpanel.add(output3panel);
 
         JPanel output4panel = new JPanel();
         output4panel.add(turnoutBox4);
         TitledBorder border4 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-        border4.setTitle(Bundle.getMessage("MatrixOutputLabel") + "4 ");
+        border4.setTitle(Bundle.getMessage("MatrixOutputLabel", 4));
         output4panel.setBorder(border4);
         turnoutpanel.add(output4panel);
 
         JPanel output5panel = new JPanel();
         output5panel.add(turnoutBox5);
         TitledBorder border5 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-        border5.setTitle(Bundle.getMessage("MatrixOutputLabel") + "5 ");
+        border5.setTitle(Bundle.getMessage("MatrixOutputLabel", 5));
         output5panel.setBorder(border5);
         turnoutpanel.add(output5panel);
 
         JPanel output6panel = new JPanel();
         output6panel.add(turnoutBox6);
         TitledBorder border6 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-        border6.setTitle(Bundle.getMessage("MatrixOutputLabel") + "6 ");
+        border6.setTitle(Bundle.getMessage("MatrixOutputLabel", 6));
         output6panel.setBorder(border6);
         turnoutpanel.add(output6panel);
 
@@ -689,6 +700,19 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         if (state == false) {
             unLitPanelBits[column - 1] = '0';
         }
+    }
+
+    /**
+     * Check all aspects for duplicates.
+     *
+     * @return true if at least 1 duplicate row of bits is found
+     */
+    private boolean identicalBits() {
+        boolean identical = false;
+        while !(identical) {
+
+        }
+        return identical
     }
 
     /**
@@ -973,4 +997,5 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MatrixSignalMastAddPane.class);
+
 }
