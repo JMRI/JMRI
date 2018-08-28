@@ -30,8 +30,8 @@ import org.slf4j.LoggerFactory;
  * JComboBox variant for showing and selecting JMRI NamedBeans from a specific
  * manager.
  * <p>
- * This class could definitely benefit from beng made generic on <E extends NamedBean>
- * to reduce complexity.  See particularly the "public NamedBean {@link #getNamedBean} method.
+ * This class could definitely benefit from beng made generic on "E extends NamedBean"
+ * to reduce complexity.  See particularly the "public NamedBean {@link #getNamedBean}" method.
  */
 public class JmriBeanComboBox extends JComboBox<String> implements java.beans.PropertyChangeListener {
 
