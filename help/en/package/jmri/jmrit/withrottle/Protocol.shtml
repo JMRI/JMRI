@@ -757,6 +757,17 @@ MTA*&lt;;&gt;qR
       it takes additional information. Some commands, such as 'X'
       require no additional information.</p>
 
+      <h3>'C' and 'c' Set lead loco for consist</h3>
+
+      <p>These two commands both allow you to set the lead loco to
+      which function commands will be sent. This is used in cases where
+      you're not using CV21 and CV22 to determine how locos in an
+      advanced consist should respond to functions.</p>
+
+      <pre class="code">
+MTAL341&lt;;&gt;CL346
+</pre>
+
       <h3>'d' Dispatch and 'r' Release</h3>
 
       <p>For most DCC systems, these are the same thing; if in
@@ -835,14 +846,14 @@ MTA*&lt;;&gt;F012
 MTA*&lt;;&gt;V30
 </pre>
 
-<p>Requests stealing a locomotive. This is a feature that is of most
-    interest when working with Digitrax command stations and allows WiThrottle
-    to support the same steal scenario supported by Digitrax throttles.
-    </p>
-
     <h3>'S' Steal Locomotive</h3>
 
-    <p>Stealing a loco takes a few steps. Here is the sequence</p>
+    <p>Requests stealing a locomotive. This is a feature that is of most
+        interest when working with Digitrax command stations and allows WiThrottle
+        to support the same steal scenario supported by Digitrax throttles.
+        </p>
+    
+        <p>Stealing a loco takes a few steps. Here is the sequence</p>
 
     <ul>
       <li>Send a normal MT+ command to acquire a locomotive</li>
@@ -881,6 +892,97 @@ MTA*&lt;;&gt;V30
       </table>
 
     <p><b>Note:</b> Steal requires JMRI 4.10 or later</p>
+
+    <h2>Consist Controller Commands</h2>
+
+    <p>The commands in this section are used to work with consists.
+    All the consist commands start with "RC", which stands for
+    Roster Consist.</p>
+
+    <ul>
+      <li>'P' Change order of locos in the consist</li>
+
+      <li>'R' Delete (remove) a consist</li>
+
+      <li>'+' Add loco to a consist and/or set the relative direction</li>
+
+      <li>'-' Remove a loco from the consist</li>
+
+      <li>'F' Program CV21 and CV22 function behavior</li>
+    </ul>
+    
+    <h3>'+' Add to Consist</h3>
+
+    <p>Either creates a consist or adds a locomotive to an existing
+    consist. As an example, let's say that consist S123 does <b>not</b>
+    exist. The following commands will create a consist with named
+    "My consist" with two locos:</p>
+
+    <pre class="code">
+RC+&lt;;&gt;S123&lt;;&gt;My consist&lt;:&gt;L40&lt;;&gt;true
+RC+&lt;;&gt;S123&lt;;&gt;My consist&lt;:&gt;L41&lt;;&gt;true
+</pre>
+
+    <p>The parts of this command are as follows:</p>
+
+    <table class="data">
+      <tr>
+        <td>S123</td>
+        <td>The DCC address of the consist</td>
+      </tr>
+      <tr>
+        <td>My consist</td>
+        <td>The JMRI id (name) of the consist</td>
+      </tr>
+      <tr>
+        <td>L40</td>
+        <td>DCC address of the loco to add to the consist</td>
+      </tr>
+      <tr>
+        <td>true</td>
+        <td>Direction is normal (false for reversed)</td>
+      </tr>
+    </table>
+
+    <h3>'-' Remove Loco from Consist</h3>
+
+    <p>Removes a single locomotive from the consist. For example:</p>
+
+    <pre class="code">
+RC-&lt;;&gt;S74&lt;:&gt;L40
+</pre>
+
+    <p>Removes DCC address L40 from the consist with the DCC address
+    of S74.</p>
+
+    <h3>'P' Change Position in Consist</h3>
+
+    <p>This command is used to change the order of locos in a consist.
+    These commands have the following format:</p>
+
+    <pre class="code">
+RCP&lt;;&gt;consistAddress&lt;:&gt;leadLoco&lt;;&gt;nextLoco&lt;;&gt;...* ...&lt;;&gt;nextLoco&lt;;&gt;trailLoco
+</pre>
+
+    <p>Notice that this has no direction infromation--it just has a
+    list of locomotive DCC addresses. For example:</p>
+
+    <pre class="code">
+RCP&lt;;&gt;S74&lt;:&gt;L346&lt;;&gt;L3374
+</pre>
+
+    <p>The example sets the position of the locos in the consist with
+    the DCC address of S74 so that DCC L346 is the lead and L3374 is
+    the trailing loco.</p>
+
+    <h3>'R' Remove Consist</h3>
+
+    <p>Deletes a consist. For example, the following command deletes
+    the consist with DCC address S122.</p>
+
+    <pre class="code">
+RCR&lt;;&gt;S122
+    </pre>
 
     <p>This is the package/jmri/jmrit/withrottle/Protocol help
       page</p><!--#include virtual="/Footer" -->
