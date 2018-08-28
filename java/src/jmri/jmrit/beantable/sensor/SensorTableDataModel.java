@@ -325,7 +325,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
             case EDITCOL:
                 return Bundle.getMessage("ButtonEdit");
             case PULLUPCOL:
-                JComboBox<Sensor.PullResistance> c = new JComboBox<>(Sensor.PullResistance.values());
+                PullResistanceComboBox c = new PullResistanceComboBox(Sensor.PullResistance.values());
                 c.setSelectedItem(s.getPullResistance());
                 c.addActionListener((ActionEvent e) -> {
                     comboBoxAction(e);
@@ -338,6 +338,13 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
             default:
                 return super.getValueAt(row, col);
         }
+    }
+    
+    /**
+     * Small class to ensure type-safety of references otherwise lost to type erasure
+     */
+    static private class PullResistanceComboBox extends JComboBox<Sensor.PullResistance> {
+        public PullResistanceComboBox(Sensor.PullResistance[] values) { super(values); }
     }
 
     /**
@@ -394,7 +401,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 });
                 break;
             case PULLUPCOL:
-                JComboBox<Sensor.PullResistance> cb = (JComboBox<Sensor.PullResistance>) value;
+                PullResistanceComboBox cb = (PullResistanceComboBox) value;
                 s.setPullResistance((Sensor.PullResistance) cb.getSelectedItem());
                 break;
             case FORGETCOL:
