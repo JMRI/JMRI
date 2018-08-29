@@ -2188,5 +2188,5 @@ public class LnDplxGrpInfoImplTest {
     @After
     public void tearDown() {        JUnitUtil.tearDown();    }
 
-    private final static Logger log = LoggerFactory.getLogger(LnDplxGrpInfoImplTest.class);
+//    private final static Logger log = LoggerFactory.getLogger(LnDplxGrpInfoImplTest.class);
 }
