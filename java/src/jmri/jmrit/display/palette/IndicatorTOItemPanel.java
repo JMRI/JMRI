@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import jmri.NamedBean;
+import jmri.Turnout;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
@@ -33,7 +34,7 @@ import org.slf4j.LoggerFactory;
 /**
  * JPanel for IndicatorTurnout items.
  */
-public class IndicatorTOItemPanel extends TableItemPanel {
+public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
 
     private JPanel _tablePanel;
     
@@ -43,7 +44,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     private DetectionPanel _detectPanel;
     protected HashMap<String, HashMap<String, NamedIcon>> _iconGroupsMap;
 
-    public IndicatorTOItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<jmri.Turnout> model, Editor editor) {
+    public IndicatorTOItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<Turnout> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
     }
 
@@ -157,7 +158,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
      * Get a handle in order to change visibility.
      */
     @Override
-    protected JPanel initTablePanel(PickListModel model, Editor editor) {
+    protected JPanel initTablePanel(PickListModel<Turnout> model, Editor editor) {
         _tablePanel = super.initTablePanel(model, editor);
         return _tablePanel;
     }

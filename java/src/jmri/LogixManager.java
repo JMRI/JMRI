@@ -60,14 +60,6 @@ public interface LogixManager extends Manager<Logix> {
     public void activateAllLogixs();
 
     /**
-     * Get a list of all Logix system names.
-     *
-     * {@inheritDoc}
-     */
-    @Override
-    public List<String> getSystemNameList();
-
-    /**
      * Delete Logix by removing it from the manager. The Logix must first be
      * deactivated so it stops processing.
      *

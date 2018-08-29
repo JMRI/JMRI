@@ -128,7 +128,8 @@ public class DefaultSignalAppearanceMapTest {
 
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        h1 = new DefaultSignalHead("IH1", "head1") {
+        JUnitUtil.setUp();        
+        h1 = new DefaultSignalHead("IH1", "head1") {
             @Override
             protected void updateOutput() {
             }
@@ -151,8 +152,12 @@ public class DefaultSignalAppearanceMapTest {
     public void tearDown() {
         InstanceManager.getDefault(jmri.SignalHeadManager.class).deregister(h1);
         h1.dispose();
+        h1 = null;
         InstanceManager.getDefault(jmri.SignalHeadManager.class).deregister(h2);
         h2.dispose();
-        apps.tests.Log4JFixture.tearDown();
+        h2 = null;
+        l1 = null;
+        l2 = null;
+        JUnitUtil.tearDown();
     }
 }

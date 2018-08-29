@@ -90,7 +90,7 @@ public class JUnitUtil {
         // ideally this would be false, true to force an error if an earlier
         // test left a window open, but different platforms seem to have just
         // enough differences that this is, for now, only emitting a warning
-        resetWindows(true, false);
+        resetWindows(false, false);
         resetInstanceManager();
     }
 
@@ -99,7 +99,7 @@ public class JUnitUtil {
      * annotated method.
      */
     public static void tearDown() {
-        resetWindows(true, false); // warn
+        resetWindows(false, false);
         resetInstanceManager();
         Log4JFixture.tearDown();
     }
@@ -215,6 +215,89 @@ public class JUnitUtil {
                     Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
                     Thread.sleep(WAITFOR_DELAY_STEP);
                     delay += WAITFOR_DELAY_STEP;
+                } catch (InterruptedException e) {
+                    return false;
+                } finally {
+                    Thread.currentThread().setPriority(priority);
+                }
+            }
+            return false;
+        } catch (Exception ex) {
+            log.error("Exception in waitFor condition.", ex);
+            return false;
+        }
+    }
+
+    /**
+     * Wait for a specific condition to be true, without having to wait longer
+     * <p>
+     * To be used in tests, will do an assert if the total delay is longer than
+     * 1 second
+     * <p>
+     * Typical use:
+     * <code>JUnitUtil.fasterWaitFor(()->{return replyVariable != null;},"reply not received")</code>
+     *
+     * @param condition condition being waited for
+     * @param name      name of condition being waited for; will appear in
+     *                  Assert.fail if condition not true fast enough
+     */
+    static public void fasterWaitFor(ReleaseUntil condition, String name) {
+        if (javax.swing.SwingUtilities.isEventDispatchThread()) {
+            log.error("Cannot use waitFor on Swing thread", new Exception());
+            return;
+        }
+        int delay = 0;
+        try {
+            while (delay < 1000) {
+                if (condition.ready()) {
+                    return;
+                }
+                int priority = Thread.currentThread().getPriority();
+                try {
+                    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+                    Thread.sleep(5);
+                    delay += 5;
+                } catch (InterruptedException e) {
+                    Assert.fail("failed due to InterruptedException");
+                } finally {
+                    Thread.currentThread().setPriority(priority);
+                }
+            }
+            Assert.fail("\"" + name + "\" did not occur in time");
+        } catch (Exception ex) {
+            Assert.fail("Exception while waiting for \"" + name + "\" " + ex);
+        }
+    }
+
+    /**
+     * Wait at most 1 second for a specific condition to be true, without having to wait longer
+     * <p>
+     * To be used in assumptions, will return false if the total delay is longer
+     * than 1000 milliseconds.
+     * <p>
+     * Typical use:
+     * <code>Assume.assumeTrue("reply not received", JUnitUtil.fasterWaitForTrue(()->{return replyVariable != null;}));</code>
+     *
+     * @param condition condition to wait for
+     * @return true if condition is met before 1 second, false
+     *         otherwise
+     */
+    static public boolean fasterWaitFor(ReleaseUntil condition) {
+        if (javax.swing.SwingUtilities.isEventDispatchThread()) {
+            log.error("Cannot use waitFor on Swing thread", new Exception());
+            return false;
+        }
+        int delay = 0;
+        try {
+            while (delay < 1000) {
+                if (condition.ready()) {
+                    return true;
+                }
+                int priority = Thread.currentThread().getPriority();
+                try {
+                    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+                    Thread.sleep(5);
+                    delay += 5;
                 } catch (InterruptedException e) {
                     return false;
                 } finally {
@@ -656,10 +739,10 @@ public class JUnitUtil {
             if (frame.isDisplayable()) {
                 if (frame.getClass().getName().equals("javax.swing.SwingUtilities$SharedOwnerFrame")) {
                     String message = "Cleaning up nameless invisible frame created by creating a dialog with a null parent in {}.";
-                    if (!error) {
-                        log.warn(message, getTestClassName());
-                    } else {
+                    if (error) {
                         log.error(message, getTestClassName());
+                    } else if (warn) {
+                        log.warn(message, getTestClassName());
                     }
                 } else {
                     String message = "Cleaning up frame \"{}\" (a {}) in {}.";
@@ -676,10 +759,10 @@ public class JUnitUtil {
             if (window.isDisplayable()) {
                 if (window.getClass().getName().equals("javax.swing.SwingUtilities$SharedOwnerFrame")) {
                     String message = "Cleaning up nameless invisible window created by creating a dialog with a null parent in {}.";
-                    if (!error) {
-                        log.warn(message, getTestClassName());
-                    } else {
+                    if (error) {
                         log.error(message, getTestClassName());
+                    } else if (warn) {
+                        log.warn(message, getTestClassName());
                     }
                 } else {
                     String message = "Cleaning up window \"{}\" (a {}) in {}.";

@@ -41,15 +41,16 @@ package jmri.jmrit.withrottle;
  * length of 4 char.
  *
  * Send Info on routes to devices, not specific to any one route. Format:
- * PRT]\[value}|{routeKey]\[value}|{ActiveKey]\[value}|{InactiveKey Send list of
- * routes Format:
+ * PRT]\[value}|{routeKey]\[value}|{ActiveKey]\[value}|{InactiveKey 
+ *
+ * Send list of routes Format:
  * PRL]\[SysName}|{UsrName}|{CurrentState]\[SysName}|{UsrName}|{CurrentState
  * States: 1 - UNKNOWN, 2 - ACTIVE, 4 - INACTIVE (based on turnoutsAligned
  * sensor, if used)
  *
  * Send Info on turnouts to devices, not specific to any one turnout. Format:
- * PTT]\[value}|{turnoutKey]\[value}|{closedKey]\[value}|{thrownKey Send list of
- * turnouts Format:
+ * PTT]\[value}|{turnoutKey]\[value}|{closedKey]\[value}|{thrownKey 
+ * Send list of turnouts Format:
  * PTL]\[SysName}|{UsrName}|{CurrentState]\[SysName}|{UsrName}|{CurrentState
  * States: 1 - UNKNOWN, 2 - CLOSED, 4 - THROWN
  * 
@@ -77,7 +78,7 @@ package jmri.jmrit.withrottle;
  *
  * Alert message: 'HM' + message to display. Cannot have newlines in body of
  * text, only at end of message.
- * Info message: 'Hm' + message to display. Same as HM, but informationa only.
+ * Info message: 'Hm' + message to display. Same as HM, but informational only.
  *
  */
 import java.io.BufferedReader;

@@ -341,7 +341,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
         } else {
             Turnout turn = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutname);
             if (turn == null) {  
-                log.error("setOutpout couldn't locate turnout {}", turn);
+                log.error("setOutpout couldn't locate turnout {}", turnoutname);
                 return;
             }
             NamedBeanHandle<Turnout> namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutname, turn);

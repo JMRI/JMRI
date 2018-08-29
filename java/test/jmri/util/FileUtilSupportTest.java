@@ -329,7 +329,7 @@ public class FileUtilSupportTest {
 
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         this.instance = new FileUtilSupport();
         this.programTestFile = new File(UUID.randomUUID().toString());
@@ -356,6 +356,6 @@ public class FileUtilSupportTest {
         JUnitUtil.waitFor(() -> {
             return !this.preferencesTestFile.exists();
         }, "Remove program test file");
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
 }

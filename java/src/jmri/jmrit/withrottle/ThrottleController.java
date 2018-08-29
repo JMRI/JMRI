@@ -509,7 +509,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     public void setLocoForConsistFunctions(String inPackage) {
         /*
-         *      This is used to control speed an direction on the
+         *      This is used to control speed and direction on the
          *      consist address, but have functions mapped to lead.
          *      Consist address must be set first!
          */

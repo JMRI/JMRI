@@ -354,7 +354,7 @@ public abstract class Apps3 extends AppsBase {
             // Apps.setConfigFilename() does not reset the system property
             System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
             Profile profile = ProfileManager.getDefault().getActiveProfile();
-            log.info("Starting with profile {}", profile != null ? profile.getId() : "<none>");
+            log.info("Starting with profile {}", profile.getId());
 
             // rapid language set; must follow up later with full setting as part of preferences
             apps.gui.GuiLafPreferencesManager.setLocaleMinimally(profile);
@@ -380,7 +380,7 @@ public abstract class Apps3 extends AppsBase {
             Profile profile = ProfileManager.getDefault().getActiveProfile();
             if (!GraphicsEnvironment.isHeadless()) {
                 JOptionPane.showMessageDialog(sp,
-                        Bundle.getMessage("SingleConfigMigratedToSharedConfig", profile != null ? profile.getName() : "<none>"),
+                        Bundle.getMessage("SingleConfigMigratedToSharedConfig", profile.getName()),
                         jmri.Application.getApplicationName(),
                         JOptionPane.INFORMATION_MESSAGE);
             }

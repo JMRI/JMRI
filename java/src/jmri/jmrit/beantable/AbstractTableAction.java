@@ -42,7 +42,7 @@ abstract public class AbstractTableAction<E extends NamedBean> extends AbstractA
      */
     protected abstract void setTitle();
 
-    protected BeanTableFrame f;
+    protected BeanTableFrame<E> f;
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -55,7 +55,7 @@ abstract public class AbstractTableAction<E extends NamedBean> extends AbstractA
         dataTable.getTableHeader().setReorderingAllowed(true);
 
         // create the frame
-        f = new BeanTableFrame(m, helpTarget(), dataTable) {
+        f = new BeanTableFrame<E>(m, helpTarget(), dataTable) {
 
             /**
              * Include an "add" button
@@ -83,7 +83,7 @@ abstract public class AbstractTableAction<E extends NamedBean> extends AbstractA
         return m;
     }
 
-    public void setFrame(@Nonnull BeanTableFrame frame) {
+    public void setFrame(@Nonnull BeanTableFrame<E> frame) {
         f = frame;
     }
 
@@ -97,7 +97,7 @@ abstract public class AbstractTableAction<E extends NamedBean> extends AbstractA
      *
      * @param f the Frame to add to
      */
-    public void addToFrame(@Nonnull BeanTableFrame f) {
+    public void addToFrame(@Nonnull BeanTableFrame<E> f) {
     }
 
     /**
@@ -107,7 +107,7 @@ abstract public class AbstractTableAction<E extends NamedBean> extends AbstractA
      * @param f AbstractTableTabAction for the containing frame containing these
      *          and other tabs
      */
-    public void addToPanel(AbstractTableTabAction f) {
+    public void addToPanel(AbstractTableTabAction<E> f) {
     }
 
     /**
@@ -125,7 +125,7 @@ abstract public class AbstractTableAction<E extends NamedBean> extends AbstractA
      *
      * @param f the Frame to attach the menubar to
      */
-    public void setMenuBar(BeanTableFrame f) {
+    public void setMenuBar(BeanTableFrame<E> f) {
     }
 
     public JPanel getPanel() {

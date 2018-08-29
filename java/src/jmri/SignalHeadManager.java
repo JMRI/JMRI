@@ -47,10 +47,4 @@ public interface SignalHeadManager extends Manager<SignalHead> {
     @CheckReturnValue
     @CheckForNull public SignalHead getBySystemName(@Nonnull String s);
 
-    /**
-     * Get a list of all SignalHead system names.
-     */
-    @Nonnull@Override
- public List<String> getSystemNameList();
-
 }

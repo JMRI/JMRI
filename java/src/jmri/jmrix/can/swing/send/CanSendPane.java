@@ -1,5 +1,6 @@
 package jmri.jmrix.can.swing.send;
 
+import java.awt.event.ActionListener;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -53,7 +54,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
         add(topPane);
 
         JPanel pane1 = new JPanel();
-        pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
+        pane1.setLayout(new BoxLayout(pane1, BoxLayout.X_AXIS));
 
         JPanel entry = new JPanel();
         jLabel1.setText(Bundle.getMessage("FrameLabel"));
@@ -71,12 +72,15 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
         pane1.add(sendButton);
         pane1.add(Box.createVerticalGlue());
 
-        sendButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                sendButtonActionPerformed(e);
-            }
-        });
+        
+        ActionListener l = ae -> {
+            sendButtonActionPerformed(ae);
+        };
+        
+        sendButton.addActionListener(l);
+        packetTextField.addActionListener(l);
+        
+        
         topPane.add(pane1);
 
         // Configure the sequence
@@ -87,26 +91,30 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
         bottomPane.setLayout(new BoxLayout(bottomPane, BoxLayout.Y_AXIS));
         add(bottomPane);
         JPanel pane2 = new JPanel();
-        pane2.setLayout(new GridLayout(MAXSEQUENCE + 1, 4));
-        pane2.add(new JLabel(""));
-        pane2.add(new JLabel(Bundle.getMessage("ButtonSend")));
+        pane2.setLayout(new GridLayout(MAXSEQUENCE + 2, 3));
+        // pane2.add(new JLabel(Bundle.getMessage("ButtonSend")));
+        pane2.add(new JLabel(" "));
         pane2.add(new JLabel(Bundle.getMessage("PacketLabel")));
         pane2.add(new JLabel(Bundle.getMessage("WaitLabel")));
         for (int i = 0; i < MAXSEQUENCE; i++) {
-            pane2.add(new JLabel(Integer.toString(i + 1)+" ",SwingConstants.RIGHT));
+            JPanel numbercheckboxpane = new JPanel();
+            numbercheckboxpane.add(new JLabel(Integer.toString(i + 1)+" ",SwingConstants.RIGHT));
             mUseField[i] = new JCheckBox();
             mPacketField[i] = new JTextField(14);
             numberSpinner[i] = new JSpinner(new SpinnerNumberModel(500, 1, 1000000, 1));
-            pane2.add(mUseField[i]);
+            numbercheckboxpane.add(mUseField[i]);
+            pane2.add(numbercheckboxpane);
             pane2.add(mPacketField[i]);
             mPacketField[i].setToolTipText(Bundle.getMessage("PacketToolTip"));
             pane2.add(numberSpinner[i]);
         }
+        
+        pane2.add(new JLabel(" "));
+        pane2.add(mRunButton);
         bottomPane.add(pane2);
-        bottomPane.add(Box.createVerticalGlue()); // starts a new row in layout
-        bottomPane.add(mRunButton);
-        mRunButton.setToolTipText(Bundle.getMessage("StartToolTip"));
+        // bottomPane.add(Box.createVerticalGlue()); // starts a new row in layout
 
+        mRunButton.setToolTipText(Bundle.getMessage("StartToolTip"));
         mRunButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -143,12 +151,15 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        try {
+         try {
             CanMessage m = createPacket(packetTextField.getText());
             tc.sendCanMessage(m, this);        
             log.debug("sendButtonActionPerformed: " + m);
-        } catch (Exception ex) {     
-            // log.debug (" Unable to create can frame ");
+        } catch (StringIndexOutOfBoundsException ex) {
+            JOptionPane.showMessageDialog(null, 
+            (Bundle.getMessage("NoMakeFrame")), Bundle.getMessage("WarningTitle"),
+                JOptionPane.ERROR_MESSAGE);
+        } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, 
             (Bundle.getMessage("NoMakeFrame")), Bundle.getMessage("WarningTitle"),
                 JOptionPane.ERROR_MESSAGE);
@@ -188,7 +199,8 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
      * Run button pressed down, start the sequence operation.
      */
     public void runButtonActionPerformed(java.awt.event.ActionEvent e) {
-        if (!mRunButton.isSelected()) {
+        if (!mRunButton.isSelected()) {            
+            mRunButton.setText(Bundle.getMessage("ButtonStart"));
             return;
         }
         // make sure at least one is checked
@@ -200,12 +212,14 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
         }
         if (!ok) {
             mRunButton.setSelected(false);
+            mRunButton.setText(Bundle.getMessage("ButtonStart"));
             JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSelectionDialog"),
                     Bundle.getMessage("WarningTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
         // start the operation
         mNextSequenceElement = 0;
+        mRunButton.setText(Bundle.getMessage("ButtonStop"));
         sendNextItem();
     }
 
@@ -229,6 +243,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
     void sendNextItem() {
         // check if still running
         if (!mRunButton.isSelected()) {
+            mRunButton.setText(Bundle.getMessage("ButtonStart"));
             return;
         }
         // have we run off the end?
@@ -244,12 +259,19 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
                 // send it
                 tc.sendCanMessage(m, this);
                 startSequenceDelay();
-            } catch (Exception ex) {
-                // log.debug(" Unable to create can frame ");
+            } catch (StringIndexOutOfBoundsException ex) {
                 JOptionPane.showMessageDialog(null, 
-                (Bundle.getMessage("NoMakeFrame")), Bundle.getMessage("WarningTitle")
-                , JOptionPane.ERROR_MESSAGE);
+                (Bundle.getMessage("NoMakeFrame")), Bundle.getMessage("WarningTitle"),
+                    JOptionPane.ERROR_MESSAGE);
                 mRunButton.setSelected(false);
+                mRunButton.setText(Bundle.getMessage("ButtonStart"));
+                return;
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, 
+                (Bundle.getMessage("NoMakeFrame")), Bundle.getMessage("WarningTitle"),
+                    JOptionPane.ERROR_MESSAGE);
+                mRunButton.setSelected(false);
+                mRunButton.setText(Bundle.getMessage("ButtonStart"));
                 return;
             }
         } else {

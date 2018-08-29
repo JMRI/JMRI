@@ -124,7 +124,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
      * Return the number of rows to be displayed.
      */
     @Override
-    public int getRowCount() {
+    public synchronized int getRowCount() {
         return _rowCount;
     }
 
@@ -148,11 +148,11 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             case CANID_COLUMN:
                 return Bundle.getMessage("ColumnID");
             case NODE_COLUMN:
-                return Bundle.getMessage("ColumnNode");
+                return Bundle.getMessage("CbusNode");
             case NAME_COLUMN:
                 return Bundle.getMessage("ColumnName");
             case EVENT_COLUMN:
-                return Bundle.getMessage("ColumnEvent");
+                return Bundle.getMessage("CbusEvent");
             case TYPE_COLUMN:
                 return Bundle.getMessage("CbusEventOnOrOff");
             case COMMENT_COLUMN:
@@ -447,7 +447,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         if (col == NAME_COLUMN) {
             _name[row] = (String) value;
             // look for other occurrences of the same node
-            for (int i = 0; i < _rowCount; i++) {
+            for (int i = 0; i < getRowCount(); i++) {
                 // ignore this one
                 if (i != row) {
                     if (_node[i] == _node[row]) {
@@ -844,11 +844,16 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     
     
     /**
-     * Does Nothing
+     * disconnect from the CBUS
      */
     public void dispose() {
         // eventTable.removeAllElements();
         // eventTable = null;
+        
+        if (tc != null) {
+            tc.removeCanListener(this);
+        }
+        
     }
 
     
@@ -996,8 +1001,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
 
 
 
-
-    
     
     // move this to global cbus for sending events from other swing
 
