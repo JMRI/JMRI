@@ -29,6 +29,9 @@ import org.slf4j.LoggerFactory;
 /**
  * JComboBox variant for showing and selecting JMRI NamedBeans from a specific
  * manager.
+ * <p>
+ * This class could definitely benefit from beng made generic on "E extends NamedBean"
+ * to reduce complexity.  See particularly the "public NamedBean {@link #getNamedBean}" method.
  */
 public class JmriBeanComboBox extends JComboBox<String> implements java.beans.PropertyChangeListener {
 
@@ -479,6 +482,9 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      *
      * @return the selected bean or null if no selection
      */
+    @SuppressWarnings("unchecked")  // Uses Manager instead of Manager<E> and List<NamedBean>
+                                    // instead of List<E>, which can only really be made
+                                    // safe and efficient with the class being generic
     public NamedBean getNamedBean() {
         NamedBean result;
 
@@ -736,6 +742,8 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      */
     private EnabledComboBoxRenderer _enableRenderer = null;
 
+    @SuppressWarnings("unchecked")  // EnabledComboBoxRenderer from BasicComboBoxRenderer is
+                                    // a ListCellRenderer not a ListCellRenderer<? super String>
     private EnabledComboBoxRenderer getEnabledComboBoxRenderer() {
         if (_enableRenderer == null) {
             _enableRenderer = new EnabledComboBoxRenderer();
