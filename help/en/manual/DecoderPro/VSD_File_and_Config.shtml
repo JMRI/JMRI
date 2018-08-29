@@ -106,7 +106,7 @@
 
       <p>Description:<br>
       Trigger name for Brake-Key: BRAKE_KEY<br>
-	  Trigger name for Half-Speed: HALF_SPEED<br>
+      Trigger name for Half-Speed: HALF_SPEED<br>
       Trigger name for Coast-Key: COAST<br>
       All these Triggers are intended for Engine type "steam1".<br>
       Optional. Must be declared in the tag
