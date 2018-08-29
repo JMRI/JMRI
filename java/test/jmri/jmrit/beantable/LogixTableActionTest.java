@@ -4,12 +4,13 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import jmri.InstanceManager;
 import jmri.Logix;
-import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
+import jmri.util.*;
+import jmri.util.junit.rules.*;
+
+import org.junit.*;
+import org.junit.rules.*;
+
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
@@ -23,6 +24,12 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
 * @author Dave Sand Copyright (C) 2017
  */
 public class LogixTableActionTest extends AbstractTableActionBase {
+
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
     @Test
     public void testCtor() {
