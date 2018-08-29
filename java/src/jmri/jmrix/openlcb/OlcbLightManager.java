@@ -21,7 +21,7 @@ import org.openlcb.OlcbInterface;
  *
  * @author jcollell
  */
-class OlcbLightManager extends AbstractLightManager {
+public class OlcbLightManager extends AbstractLightManager {
 
     public OlcbLightManager(CanSystemConnectionMemo memo) {
         this.memo = memo;

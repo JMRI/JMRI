@@ -299,7 +299,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
     protected OlcbLightManager lightManager;
     
-    private LightManager getLightManager() {
+    public OlcbLightManager getLightManager() {
         if (adapterMemo.getDisabled()) {
             return null;
         }
