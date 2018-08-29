@@ -80,26 +80,45 @@ public class JUnitUtil {
     static final int WAITFOR_MAX_DELAY = 30000; // really long, but only matters when failing, and LayoutEditor/SignalMastLogic is slow
 
     static int count = 0;
-
+    
+    static boolean didSetUp = false;
+    static boolean didTearDown = true;
+    
     /**
      * Setup for tests. This should be the first line in the {@code @Before}
      * annotated method.
      */
     public static void setUp() {
         Log4JFixture.setUp();
+
         // ideally this would be false, true to force an error if an earlier
         // test left a window open, but different platforms seem to have just
-        // enough differences that this is, for now, only emitting a warning
+        // enough differences that this is, for now, turned off
         resetWindows(false, false);
-        resetInstanceManager();
-    }
 
+        resetInstanceManager();
+
+        System.err.println(">> Starting test in "+getTestClassName());
+        if (didSetUp || ! didTearDown) System.err.println("   "+getTestClassName()+".setUp unexpectedly found "+didSetUp+" "+didTearDown);
+        didTearDown = false;
+        didSetUp = true;
+    }
+    
     /**
      * Teardown from tests. This should be the last line in the {@code @After}
      * annotated method.
      */
     public static void tearDown() {
+        if (! didSetUp || didTearDown) System.err.println("   "+getTestClassName()+".tearDown unexpectedly found "+didSetUp+" "+didTearDown);
+        didSetUp = false;
+        didTearDown = true;
+        System.err.println("<<   Ending test in "+getTestClassName());
+
+        // ideally this would be false, true to force an error if an earlier
+        // test left a window open, but different platforms seem to have just
+        // enough differences that this is, for now, turned off
         resetWindows(false, false);
+
         resetInstanceManager();
         Log4JFixture.tearDown();
     }
