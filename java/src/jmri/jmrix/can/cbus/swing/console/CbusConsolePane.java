@@ -130,7 +130,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     protected JPanel statsPane;
     protected JPanel rxPacketPane;
     protected JPanel sendPacketPane;
-    protected JPanel SendEvPane;
+    protected JPanel sendEvPane;
     protected JPanel logOptionspane;
 
     protected JRadioButton onButton = new JRadioButton();
@@ -602,35 +602,35 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         });
 
         // Pane for constructing event to send
-        SendEvPane = new JPanel();
+        sendEvPane = new JPanel();
 
-        SendEvPane.setVisible(true);
+        sendEvPane.setVisible(true);
         showSendEventCheckBox.setSelected(false);
 
         
-        SendEvPane.setBorder(BorderFactory.createTitledBorder(
+        sendEvPane.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createEtchedBorder(), Bundle.getMessage("ButtonSendEvent")));
 
         nnField = new JTextField("0", 5);
         nnField.setToolTipText("<html>" + Bundle.getMessage("ToolTipNodeNumber") + "<br>" +
             Bundle.getMessage("ToolTipPrefix") + "</html>");
-        SendEvPane.add(nodeNumberLabel);
-        SendEvPane.add(nnField);
+        sendEvPane.add(nodeNumberLabel);
+        sendEvPane.add(nnField);
 
         evField = new JTextField("0", 5);
         evField.setToolTipText("<html>" + Bundle.getMessage("ToolTipEvent") + "<br>" +
             Bundle.getMessage("ToolTipPrefix") + "</html>");
-        SendEvPane.add(eventLabel);
-        SendEvPane.add(evField);
+        sendEvPane.add(eventLabel);
+        sendEvPane.add(evField);
 
         onOffGroup.add(onButton);
         onOffGroup.add(offButton);
-        SendEvPane.add(onButton);
-        SendEvPane.add(offButton);
-        SendEvPane.add(sendEvButton);
-        SendEvPane.add(decimalCheckBoxC);
-        SendEvPane.setVisible(false);
-        southPane.add(SendEvPane);
+        sendEvPane.add(onButton);
+        sendEvPane.add(offButton);
+        sendEvPane.add(sendEvButton);
+        sendEvPane.add(decimalCheckBoxC);
+        sendEvPane.setVisible(false);
+        southPane.add(sendEvPane);
 
         add(southPane, BorderLayout.SOUTH);
 
@@ -680,7 +680,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         showSendEventCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SendEvPane.setVisible(showSendEventCheckBox.isSelected());
+                sendEvPane.setVisible(showSendEventCheckBox.isSelected());
             }
         });
 
@@ -738,7 +738,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
 
         
         ActionListener logenteraction = ae -> {
-            TextToLogButtonActionPerformed(ae);
+            textToLogButtonActionPerformed(ae);
         };
         
         logenterButton.addActionListener(logenteraction);
@@ -969,7 +969,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     }
     
     
-    public void TextToLogButtonActionPerformed(java.awt.event.ActionEvent e) {
+    public void textToLogButtonActionPerformed(java.awt.event.ActionEvent e) {
         nextLine(entryField.getText() + "\n", entryField.getText() + "\n", "", -1);
     }
 
@@ -1435,7 +1435,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
      * Keeps the message log windows to a reasonable length
      * https://community.oracle.com/thread/1373400
      */
-    public class TextAreaFIFO extends JTextArea implements DocumentListener {
+    protected static class TextAreaFIFO extends JTextArea implements DocumentListener {
         private int maxLines;
     
         public TextAreaFIFO(int lines) {
