@@ -89,7 +89,6 @@ public class OlcbLight extends AbstractLight {
      */
     @Override
     protected void doNewState(int oldState, int newState) {
-        setState(newState);
         switch (newState) {
             case Light.ON:
                 lightListener.setFromOwnerWithForceNotify(true);

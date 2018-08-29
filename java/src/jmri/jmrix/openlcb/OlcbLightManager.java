@@ -8,11 +8,9 @@ package jmri.jmrix.openlcb;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.BooleanPropertyDescriptor;
-import jmri.JmriException;
 import jmri.Light;
 import jmri.NamedBean;
 import jmri.NamedBeanPropertyDescriptor;
-import jmri.Turnout;
 import jmri.managers.AbstractLightManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import org.openlcb.OlcbInterface;
@@ -125,7 +123,8 @@ public class OlcbLightManager extends AbstractLightManager {
 
     @Override
     public boolean validSystemNameConfig(String address) throws IllegalArgumentException {
-        OlcbAddress a = new OlcbAddress(address);
+        String withoutPrefix = address.replace("ML", "");
+        OlcbAddress a = new OlcbAddress(withoutPrefix);
         OlcbAddress[] v = a.split();
         if (v == null || v.length != 2) {
             //throw new IllegalArgumentException("Did not find usable system name: " + address + " to a valid Olcb light address");
