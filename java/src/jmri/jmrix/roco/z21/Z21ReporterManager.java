@@ -25,7 +25,9 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager {
      */
     public Z21ReporterManager(Z21SystemConnectionMemo memo){
         _memo = memo;
-        if(InstanceManager.getNullableDefault(RailComManager.class)==null){
+        try{
+           InstanceManager.getDefault(RailComManager.class);
+        } catch(NullPointerException npe) {
               // there is no RailComManager, so create a new one
               InstanceManager.setDefault(RailComManager.class,
                                      new jmri.managers.DefaultRailComManager());
