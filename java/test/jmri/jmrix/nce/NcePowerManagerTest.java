@@ -66,7 +66,6 @@ public class NcePowerManagerTest extends AbstractPowerManagerTestBase {
     NceTrafficControlScaffold controller;  // holds dummy NceTrafficController for testing
 
     @After
-    @Override
     public void tearDown() {
         controller = null;
         p = null;
