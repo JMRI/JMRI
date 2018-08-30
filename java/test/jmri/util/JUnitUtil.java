@@ -10,7 +10,6 @@ import java.util.*;
 import javax.annotation.Nonnull;
 
 import apps.gui.GuiLafPreferencesManager;
-import apps.tests.Log4JFixture;
 
 import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
@@ -83,13 +82,18 @@ public class JUnitUtil {
     
     static boolean didSetUp = false;
     static boolean didTearDown = true;
+    static String lastSetUpClassName = "<unknown>";
+    static String lastTearDownClassName = "<unknown>";
     
+    static boolean checkSetUpTearDownSequence = true; // Boolean.getBoolean("jmri.util.JUnitUtil.checkSetUpTearDownSequence"); // false unless set
+    static boolean printSetUpTearDownNames = true; // Boolean.getBoolean("jmri.util.JUnitUtil.printSetUpTearDownNames"); // false unless set
+
     /**
      * Setup for tests. This should be the first line in the {@code @Before}
      * annotated method.
      */
     public static void setUp() {
-        Log4JFixture.setUp();
+        apps.tests.Log4JFixture.setUp();  // this is a deprecated method that needs to be migrated
 
         // ideally this would be false, true to force an error if an earlier
         // test left a window open, but different platforms seem to have just
@@ -98,10 +102,14 @@ public class JUnitUtil {
 
         resetInstanceManager();
 
-        System.err.println(">> Starting test in "+getTestClassName());
-        if (didSetUp || ! didTearDown) System.err.println("   "+getTestClassName()+".setUp unexpectedly found "+didSetUp+" "+didTearDown);
-        didTearDown = false;
-        didSetUp = true;
+        if (checkSetUpTearDownSequence || printSetUpTearDownNames) lastSetUpClassName = getTestClassName();
+        if (printSetUpTearDownNames) System.err.println(">> Starting test in "+lastSetUpClassName);
+        
+        if ( checkSetUpTearDownSequence)  {
+            if (didSetUp || ! didTearDown) System.err.println("   "+getTestClassName()+".setUp unexpectedly found setUp="+didSetUp+" tearDown="+didTearDown+" last tearDown in "+lastTearDownClassName);
+            didTearDown = false;
+            didSetUp = true;
+        }
     }
     
     /**
@@ -109,10 +117,15 @@ public class JUnitUtil {
      * annotated method.
      */
     public static void tearDown() {
-        if (! didSetUp || didTearDown) System.err.println("   "+getTestClassName()+".tearDown unexpectedly found "+didSetUp+" "+didTearDown);
-        didSetUp = false;
-        didTearDown = true;
-        System.err.println("<<   Ending test in "+getTestClassName());
+        if (checkSetUpTearDownSequence || printSetUpTearDownNames) lastTearDownClassName = getTestClassName();
+
+        if (checkSetUpTearDownSequence) {
+            if (! didSetUp || didTearDown) System.err.println("   "+getTestClassName()+".tearDown unexpectedly found setUp="+didSetUp+" tearDown="+didTearDown+" last setUp in "+lastSetUpClassName);
+            didSetUp = false;
+            didTearDown = true;
+        }
+        
+        if (printSetUpTearDownNames)  System.err.println("<<   Ending test in "+lastTearDownClassName);
 
         // ideally this would be false, true to force an error if an earlier
         // test left a window open, but different platforms seem to have just
@@ -120,7 +133,8 @@ public class JUnitUtil {
         resetWindows(false, false);
 
         resetInstanceManager();
-        Log4JFixture.tearDown();
+        apps.tests.Log4JFixture.tearDown();  // this is a deprecated method that needs to be migrated
+
     }
 
     /**
