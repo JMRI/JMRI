@@ -171,7 +171,7 @@ public class LogixTableActionTest extends AbstractTableActionBase {
     }
 
     @Test
-    public void testDeleteLogix() {
+    public void testDeleteLogix() throws InterruptedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LogixTableAction lgxTable = (LogixTableAction) a;
 
@@ -180,21 +180,23 @@ public class LogixTableActionTest extends AbstractTableActionBase {
         Assert.assertNotNull("Found Logix Frame", lgxFrame);  // NOI18N
 
         // Delete IX102, respond No
-        createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"));  // NOI18N
+        Thread t1 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"));  // NOI18N
         lgxTable.deletePressed("IX102");  // NOI18N
+        t1.join();
         Logix chk102 = jmri.InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName("IX102");  // NOI18N
         Assert.assertNotNull("Verify IX102 Not Deleted", chk102);  // NOI18N
 
         // Delete IX103, respond Yes
-        createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"));  // NOI18N
+        Thread t2 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"));  // NOI18N
         lgxTable.deletePressed("IX103");  // NOI18N
+        t2.join();
         Logix chk103 = jmri.InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName("IX103");  // NOI18N
         Assert.assertNull("Verify IX103 Is Deleted", chk103);  // NOI18N
 
         JUnitUtil.dispose(lgxFrame);
     }
 
-    void createModalDialogOperatorThread(String dialogTitle, String buttonText) {
+    Thread createModalDialogOperatorThread(String dialogTitle, String buttonText) {
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(dialogTitle);
@@ -203,6 +205,7 @@ public class LogixTableActionTest extends AbstractTableActionBase {
         });
         t.setName(dialogTitle + " Close Dialog Thread");
         t.start();
+        return t;
     }
 
     @Before
