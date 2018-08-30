@@ -3,10 +3,15 @@ package jmri.jmrit.beantable;
 import jmri.*;
 import jmri.util.JUnitUtil;
 
+import java.awt.GraphicsEnvironment;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JDialogOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  *
@@ -76,7 +81,47 @@ public class MaintenanceTest {
         Assert.assertEquals("SystemName", systemname, result[2]);
         Assert.assertEquals("Listeners", listeners, result[3]);
     }
-    
+   
+    @Test
+    public void testDeviceReportPressed(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Thread t = new Thread(() -> {
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(Maintenance.rbm.getString("CrossReferenceTitle"));
+            jdo.close();
+	});
+        t.setName("Cross Reference Dialog Close Thread");
+        t.start();
+       Maintenance.deviceReportPressed("IS1",new jmri.util.JmriJFrame("DeviceReportParent"));
+    }
+
+    @Test
+    public void testFindOrphansPressed(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Thread t = new Thread(() -> {
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(Maintenance.rbm.getString("OrphanTitle"));
+            jdo.close();
+	});
+        t.setName("Find Orphan Dialog Close Thread");
+        t.start();
+       Maintenance.findOrphansPressed(new jmri.util.JmriJFrame("FindOrphansParent"));
+    }
+
+    @Test
+    public void testFindEmptyPressed(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Thread t = new Thread(() -> {
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(Maintenance.rbm.getString("EmptyConditionalTitle"));
+            jdo.close();
+	});
+        t.setName("Find Empty Dialog Close Thread");
+        t.start();
+       Maintenance.findEmptyPressed(new jmri.util.JmriJFrame("FindEmptyParent"));
+    }
+
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

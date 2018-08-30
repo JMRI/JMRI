@@ -35,6 +35,7 @@ import org.slf4j.LoggerFactory;
  * The positionable parameter is a global, set from outside. The 'fixed'
  * parameter is local, set from the popup here.
  *
+ * <a href="doc-files/Heirarchy.png"><img src="doc-files/Heirarchy.png" alt="UML class diagram for package" height="33%" width="33%"></a>
  * @author Bob Jacobsen Copyright (c) 2002
  */
 public class PositionableLabel extends JLabel implements Positionable {

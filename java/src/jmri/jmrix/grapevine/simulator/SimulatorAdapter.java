@@ -306,9 +306,9 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
                 // init reply as set in prefs autoInit
                 if (autoInit > 0) { // not disabled
                     log.debug("start init 1 of node {}", nodeaddr);
-                    NodeResponse(nodeaddr, 1, 1, autoInit); // banks 1-4
+                    nodeResponse(nodeaddr, 1, 1, autoInit); // banks 1-4
                 }
-                // all replies are generated and sent by NodeResponse()
+                // all replies are generated and sent by nodeResponse()
                 reply = null;
                 break;
 
@@ -317,9 +317,9 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
                 // init reply as set in prefs autoInit
                 if (autoInit > 0) { // not disabled
                     log.debug("start init 2 of node {}", nodeaddr);
-                    NodeResponse(nodeaddr, 5, 5, autoInit); // bank 5 = parallel
+                    nodeResponse(nodeaddr, 5, 5, autoInit); // bank 5 = parallel
                 }
-                // all replies are generated and sent by NodeResponse()
+                // all replies are generated and sent by nodeResponse()
                 reply = null;
                 break;
 
@@ -414,8 +414,8 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         return r;
     }
 
-    int SignalBankSize = 16; // theoretically: 16
-    int SensorBankSize = 64; // theoretically: 0x3F
+    int signalBankSize = 16; // theoretically: 16
+    int sensorBankSize = 64; // theoretically: 0x3F
     javax.swing.Timer timer;
 
     /**
@@ -428,14 +428,14 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      * @param endBank   last bank id to report
      * @param initBits  number of inputs/output bits to report
      */
-    private void NodeResponse(int node, int startBank, int endBank, int initBits) {
+    private void nodeResponse(int node, int startBank, int endBank, int initBits) {
         if (node < 1 || node > 127) { // node address invalid
             log.warn("Invalid Node Address; no response generated");
             return;
         }
         if (initBits > 1) { // leave at max when 1
-            SignalBankSize = 4; // only first 4 signal bits reporting
-            SensorBankSize = 4; // only first 4 sensor bits reporting
+            signalBankSize = 4; // only first 4 signal bits reporting
+            sensorBankSize = 4; // only first 4 sensor bits reporting
         }
         int b1 = -1;
         int b2 = -1;
@@ -451,7 +451,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
                 nReply.setElement(3, (k << 4)); // bank (bit 1234): 1-3 = signals
                 log.debug("element 3 set to 0x{} - {}", (k << 4) & 0x70, Integer.toBinaryString((k << 4) & 0x70));
 
-                for (int j = 1; j < SignalBankSize; j++) { // bits, send state of each signal bit (banks 1, 2, 3)
+                for (int j = 1; j < signalBankSize; j++) { // bits, send state of each signal bit (banks 1, 2, 3)
                     log.debug("Sending signal state of node {}, bank {}, bit {}", node, k, j);
                     nReply.setElement(1, ((j << 3) | 0x6) & 0x7F); // bit id (bits 2345) + state (bits 678): set to Red
 
@@ -475,7 +475,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
                 nReply.setElement(3, (k << 4)); // bank (bit 1234): 4-5 = sensors
                 log.debug("element 3 set to 0x{} - {}", (k << 4) & 0x70, Integer.toBinaryString((k << 4) & 0x70));
 
-                for (int j = 1; j < SensorBankSize; j++) { // bits, send state of each sensor bit (banks 4, 5)
+                for (int j = 1; j < sensorBankSize; j++) { // bits, send state of each sensor bit (banks 4, 5)
                     log.debug("Sending sensor state of node {}, bank {}, bit {}", node, k, j);
                     nReply.setElement(1, ((j << 1) | 0x1) & 0x7F); // bit id (bits 234567) + state (bit 8): inactive
 
