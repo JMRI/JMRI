@@ -1,9 +1,7 @@
 package apps.tests;
 
-import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
 /**
  * Invoke all the JMRI project JUnit tests via a GUI interface.
@@ -21,46 +19,24 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen
  */
-public class AllTest extends TestCase {
-
-    public AllTest(String s) {
-        super(s);
-    }
-
-    // note that initLogging has to be invoked _twice_ to get logging to
-    // work in both the test routines themselves, and also in the TestSuite
-    // code.  And even though it should be protected by a static, it runs
-    // twice!  There are probably two sets of classes being created here...
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", AllTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite
-    public static Test suite() {
-        // all tests from here down in heirarchy
-        TestSuite suite = new TestSuite("AllTest");  // no tests in this class itself
-        // all tests from other classes
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.PackageTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(apps.PackageTest.class));
+ 
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        jmri.PackageTest.class,
+        apps.PackageTest.class,
         // at the end, we check for logging messages again
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.Log4JErrorIsErrorTest.class));
-        return suite;
-    }
+        jmri.util.Log4JErrorIsErrorTest.class
+})
+
+public class AllTest {
 
     @Deprecated // 4.13.3  No longer needed so long as there's a call to jmri.util.JUnitUtil.setup() in the usual way
     public static void initLogging() {
     }
 
-    @Override
-    protected void setUp() {
-        JUnitUtil.setUp();
-    }
-
-    @Override
-    protected void tearDown() {
-        JUnitUtil.tearDown();
-    }
+   static public void main(String[] args) {
+        // launch this class via JUnit4
+       org.junit.runner.JUnitCore.main("apps.tests.AllTest");
+   }
 
 }
