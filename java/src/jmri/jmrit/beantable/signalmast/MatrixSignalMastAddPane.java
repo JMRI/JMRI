@@ -19,10 +19,11 @@ import jmri.util.swing.*;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * A pane for configuring MatrixSignalMast objects
- * <P>
+ * A pane for configuring MatrixSignalMast objects.
+ *
  * @see jmri.jmrit.beantable.signalmast.SignalMastAddPane
  * @author Bob Jacobsen Copyright (C) 2018
+ * @author Egbert Broerse Copyright (C) 2016
  * @since 4.11.2
  */
 public class MatrixSignalMastAddPane extends SignalMastAddPane {
@@ -71,7 +72,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
     char[] bitString;
     char[] unLitPanelBits;
 
-    String emptyChars = "000000"; // size of String = MAXMATRIXBITS; add 0 in order to set > 6
+    String emptyChars = "000000"; // size of String = MAXMATRIXBITS; add 7th 0 in order to set > 6
     char[] emptyBits = emptyChars.toCharArray();
     JLabel bitNumLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("MatrixBitsLabel")));
     JComboBox<String> columnChoice = new JComboBox<>(choiceArray());
@@ -85,7 +86,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         for (int i = 0; i < MAXMATRIXBITS; i++) {
             numberOfOutputs[i] = (i + 1) + "";
         }
-        log.debug("Created output combo  box: {}", Arrays.toString(numberOfOutputs));
+        log.debug("Created output combo box: {}", Arrays.toString(numberOfOutputs));
         return numberOfOutputs;
     }
 
@@ -158,7 +159,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
 
         bitNum = currentMast.getBitNum(); // number of matrix columns = logic outputs = number of bits per Aspect
         updateMatrixMastPanel(); // show only the correct amount of columns for existing matrixMast
-        // @see copyFromMatrixMast line 1840
+        // @see copyFromAnotherMatrixMastAspect(mast)
         if (map != null) {
             Enumeration<String> aspects = map.getAspects();
             // in matrixPanel LinkedHashtable, fill in mast settings per aspect
@@ -248,7 +249,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
             return false;
         }
 
-        // check all bit sets are filled, no duplicates
+        // check if bit sets are identical
         if (identicalBits()) {
             // error dialog
             JOptionPane.showMessageDialog(null, Bundle.getMessage("AspectMastBitsWarning", mastname),
@@ -520,7 +521,6 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         bp.setReference(functionName);
     }
 
-    
     void copyFromAnotherMatrixMastAspect(String strMast) {
         MatrixSignalMast mast = (MatrixSignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(strMast);
         if (mast == null) {
@@ -537,7 +537,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         }
         // cf. line 405 loading an existing mast for edit
         for (String key : matrixAspect.keySet()) {
-            // select the right checkboxes
+            // select the correct checkboxes
             MatrixAspectPanel matrixPanel = matrixAspect.get(key); // load aspectpanel from hashmap
             matrixPanel.setAspectDisabled(mast.isAspectDisabled(key)); // sets a disabled aspect
             if (!mast.isAspectDisabled(key)) {
@@ -703,16 +703,28 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
     }
 
     /**
-     * Check all aspects for duplicates.
+     * Check all aspects for duplicate bit combos.
      *
      * @return true if at least 1 duplicate row of bits is found
      */
     private boolean identicalBits() {
         boolean identical = false;
-        while !(identical) {
-
+        Collection<char[]> seenBits = new HashSet<char[]>(); // fast access, no duplicates Set of bit combinations
+        for (String aspect : matrixAspect.keySet()) {
+            // check per aspect
+            log.debug("aspect {} checked", aspect);
+            if (matrixAspect.get(aspect).isAspectDisabled()) {
+                continue; // skip disabled aspects
+            } else if (seenBits.contains(matrixAspect.get(aspect).trimAspectBits())) {
+                identical = true;
+                log.debug("duplicate {} found", matrixAspect.get(aspect).trimAspectBits());
+                break;
+            } else {
+                seenBits.add(matrixAspect.get(aspect).trimAspectBits());
+                log.debug("added {}", matrixAspect.get(aspect).trimAspectBits());
+            }
         }
-        return identical
+        return identical;
     }
 
     /**
