@@ -1,6 +1,5 @@
 package jmri.jmrit.sound;
 
-import apps.tests.Log4JFixture;
 import jmri.util.FileUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -19,12 +18,14 @@ public class SoundUtilTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
     }
 
     @After
     public void tearDown() {
-        Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
 
     @Test

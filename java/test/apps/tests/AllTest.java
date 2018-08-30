@@ -44,16 +44,15 @@ public class AllTest extends TestCase {
         // all tests from other classes
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.PackageTest.class));
         suite.addTest(new junit.framework.JUnit4TestAdapter(apps.PackageTest.class));
-        // at the end, we check for Log4J messages again
+        // at the end, we check for logging messages again
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.util.Log4JErrorIsErrorTest.class));
         return suite;
     }
 
+    @Deprecated // 4.13.3  No longer needed so long as there's a call to jmri.util.JUnitUtil.setup() in the usual way
     public static void initLogging() {
-        apps.tests.Log4JFixture.initLogging();
     }
 
-    // The minimal setup for log4J
     @Override
     protected void setUp() {
         JUnitUtil.setUp();
