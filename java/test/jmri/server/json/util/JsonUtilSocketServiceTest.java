@@ -11,12 +11,9 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonMockConnection;
 import jmri.util.JUnitUtil;
 import jmri.web.server.WebServerPreferences;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+
+import org.junit.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -105,6 +102,7 @@ public class JsonUtilSocketServiceTest {
      *                             these tests occurs
      */
     @Test
+    @Ignore // See Issue #5642
     public void testOnList() throws Exception {
         Locale locale = Locale.ENGLISH;
         ObjectMapper mapper = new ObjectMapper();

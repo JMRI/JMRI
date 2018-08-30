@@ -84,7 +84,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
             addTable("jmri.jmrit.beantable.SignalMastTableAction", Bundle.getMessage("MenuItemSignalMastTable"), true);
             addTable("jmri.jmrit.beantable.SignalGroupTableAction", Bundle.getMessage("MenuItemSignalGroupTable"), true);
             addTable("jmri.jmrit.beantable.SignalMastLogicTableAction", Bundle.getMessage("MenuItemSignalMastLogicTable"), true);
-            addTable("jmri.jmrit.beantable.ReporterTableAction", Bundle.getMessage("MenuItemReporterTable"), true);
+            addTable("jmri.jmrit.beantable.ReporterTableTabAction", Bundle.getMessage("MenuItemReporterTable"), false);
             addTable("jmri.jmrit.beantable.MemoryTableAction", Bundle.getMessage("MenuItemMemoryTable"), true);
             addTable("jmri.jmrit.beantable.RouteTableAction", Bundle.getMessage("MenuItemRouteTable"), true);
             addTable("jmri.jmrit.beantable.LRouteTableAction", Bundle.getMessage("MenuItemLRouteTable"), true);

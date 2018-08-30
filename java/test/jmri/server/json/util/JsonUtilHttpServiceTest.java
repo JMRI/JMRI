@@ -26,11 +26,9 @@ import jmri.util.JUnitUtil;
 import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.web.server.WebServerPreferences;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -426,6 +424,7 @@ public class JsonUtilHttpServiceTest {
      *
      * @throws jmri.server.json.JsonException if unable to read profiles
      */
+    @Ignore // See Issue #5642
     @Test
     public void testGetConfigProfiles() throws JsonException {
         Locale locale = Locale.ENGLISH;
