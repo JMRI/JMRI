@@ -254,7 +254,9 @@ public class Z21Message extends AbstractMRMessage {
            case 0x0040:
                return Bundle.getMessage("Z21MessageXpressNetTunnelRequest",new Z21XNetMessage(this).toMonitorString());
            case 0x00A2:
-               return Bundle.getMessage("Z21LocoNetLanMessage", getLocoNetMessage().toString());
+               return Bundle.getMessage("Z21LocoNetLanMessage", new jmri.jmrix.loconet.locomon.Llnmon().displayMessage(getLocoNetMessage()));
+           case 0x0089:
+               return Bundle.getMessage("Z21_RAILCOM_GETDATA");
            default:
         }
         return toString();
