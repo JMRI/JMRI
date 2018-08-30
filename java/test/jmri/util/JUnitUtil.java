@@ -84,11 +84,15 @@ public class JUnitUtil {
     static boolean didTearDown = true;
     static String lastSetUpClassName = "<unknown>";
     static String lastSetUpThreadName = "<unknown>";
+    static StackTraceElement[] lastSetUpStackTrace = new StackTraceElement[0];
     static String lastTearDownClassName = "<unknown>";
     static String lastTearDownThreadName = "<unknown>";
+    static StackTraceElement[] lastTearDownStackTrace = new StackTraceElement[0];
     
-    static boolean checkSetUpTearDownSequence = true; // Boolean.getBoolean("jmri.util.JUnitUtil.checkSetUpTearDownSequence"); // false unless set
-    static boolean printSetUpTearDownNames = true; // Boolean.getBoolean("jmri.util.JUnitUtil.printSetUpTearDownNames"); // false unless set
+    static boolean checkSetUpTearDownSequence = Boolean.getBoolean("jmri.util.JUnitUtil.checkSetUpTearDownSequence"); // false unless set true
+    static boolean checkSequenceDumpsStack =    Boolean.getBoolean("jmri.util.JUnitUtil.checkSequenceDumpsStack"); // false unless set true
+
+    static boolean printSetUpTearDownNames = true; // Boolean.getBoolean("jmri.util.JUnitUtil.printSetUpTearDownNames"); // false unless set true
 
     /**
      * Setup for tests. This should be the first line in the {@code @Before}
@@ -107,14 +111,27 @@ public class JUnitUtil {
         if (checkSetUpTearDownSequence || printSetUpTearDownNames) {
             lastSetUpClassName = getTestClassName();
             lastSetUpThreadName = Thread.currentThread().getName();
-        }
         
-        if (printSetUpTearDownNames) System.err.println(">> Starting test in "+lastSetUpClassName);
+            if (printSetUpTearDownNames) System.err.println(">> Starting test in "+lastSetUpClassName);
         
-        if ( checkSetUpTearDownSequence)  {
-            if (didSetUp || ! didTearDown) System.err.println("   "+getTestClassName()+".setUp on thread "+lastSetUpThreadName+" unexpectedly found setUp="+didSetUp+" tearDown="+didTearDown+"; last tearDown was in "+lastTearDownClassName+" thread "+lastTearDownThreadName);
-            didTearDown = false;
-            didSetUp = true;
+            if ( checkSetUpTearDownSequence)  {
+                if (didSetUp || ! didTearDown) {
+                    System.err.println("   "+getTestClassName()+".setUp on thread "+lastSetUpThreadName+" unexpectedly found setUp="+didSetUp+" tearDown="+didTearDown+"; last tearDown was in "+lastTearDownClassName+" thread "+lastTearDownThreadName);
+                    if (checkSequenceDumpsStack) {
+                        System.err.println("---- This stack ------");
+                        Thread.dumpStack();
+                        System.err.println("---- Last setUp stack ------");
+                        for (StackTraceElement e : lastSetUpStackTrace) System.err.println("	at "+e);
+                        System.err.println("---- Last tearDown stack ------");
+                        for (StackTraceElement e : lastTearDownStackTrace) System.err.println("	at "+e);
+                        System.err.println("----------------------");
+                    }
+                }
+                
+                didTearDown = false;
+                didSetUp = true;
+            }
+            if (checkSequenceDumpsStack) lastSetUpStackTrace = Thread.currentThread().getStackTrace();
         }
     }
     
@@ -126,16 +143,30 @@ public class JUnitUtil {
         if (checkSetUpTearDownSequence || printSetUpTearDownNames) {
             lastTearDownClassName = getTestClassName();
             lastTearDownThreadName = Thread.currentThread().getName();
-        }
 
-        if (checkSetUpTearDownSequence) {
-            if (! didSetUp || didTearDown) System.err.println("   "+getTestClassName()+".tearDown on thread "+lastTearDownThreadName+" unexpectedly found setUp="+didSetUp+" tearDown="+didTearDown+"; last setUp was in "+lastSetUpClassName+" thread "+lastSetUpThreadName);
-            didSetUp = false;
-            didTearDown = true;
-        }
+            if (checkSetUpTearDownSequence) {
+                if (! didSetUp || didTearDown) {
+                    System.err.println("   "+getTestClassName()+".tearDown on thread "+lastTearDownThreadName+" unexpectedly found setUp="+didSetUp+" tearDown="+didTearDown+"; last setUp was in "+lastSetUpClassName+" thread "+lastSetUpThreadName);
+                    if (checkSequenceDumpsStack) {
+                        System.err.println("---- This stack ------");
+                        Thread.dumpStack();
+                        System.err.println("---- Last setUp stack ------");
+                        for (StackTraceElement e : lastSetUpStackTrace) System.err.println("	at "+e);
+                        System.err.println("---- Last tearDown stack ------");
+                        for (StackTraceElement e : lastTearDownStackTrace) System.err.println("	at "+e);
+                        System.err.println("----------------------");
+                    }
+                }
+                
+                didSetUp = false;
+                didTearDown = true;
+            }
         
-        if (printSetUpTearDownNames)  System.err.println("<<   Ending test in "+lastTearDownClassName);
+            if (checkSequenceDumpsStack) lastTearDownStackTrace = Thread.currentThread().getStackTrace();
 
+            if (printSetUpTearDownNames)  System.err.println("<<   Ending test in "+lastTearDownClassName);
+
+        }
         // ideally this would be false, true to force an error if an earlier
         // test left a window open, but different platforms seem to have just
         // enough differences that this is, for now, turned off
