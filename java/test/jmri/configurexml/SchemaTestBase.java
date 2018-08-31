@@ -109,6 +109,7 @@ public class SchemaTestBase {
     }
 
     @Before
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -116,6 +117,7 @@ public class SchemaTestBase {
     }
 
     @After
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() throws Exception {
         XmlFile.setDefaultValidate(this.validate);
         JUnitUtil.tearDown();
