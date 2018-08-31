@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import jmri.ProgListenerScaffold;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -503,6 +504,222 @@ public class LocoNetSlotTest {
         t.setSlot(lm);
         Assert.assertEquals("Change F0, F4-F1, for consist-top slot", 0x3F, t.dirf());
         
+    }
+    
+    
+    @Test
+    public void checkFunctionMessage() {
+        LocoNetSlot s = new LocoNetSlot(15);
+        Assert.assertEquals("initial slot function value - F9", false, s.localF9);
+        Assert.assertEquals("initial slot function value - F10", false, s.localF10);
+        Assert.assertEquals("initial slot function value - F11", false, s.localF11);
+        Assert.assertEquals("initial slot function value - F12", false, s.localF12);
+        s.functionMessage(0xA1L);
+        Assert.assertEquals("F9 now", true, s.localF9);
+        s.functionMessage(0xA0L);
+        Assert.assertEquals("F9 now", false, s.localF9);
+        s.functionMessage(0xA2L);
+        Assert.assertEquals("F10 now", true, s.localF10);
+        s.functionMessage(0xA0L);
+        Assert.assertEquals("F10 now", false, s.localF10);
+        s.functionMessage(0xA4L);
+        Assert.assertEquals("F11 now", true, s.localF11);
+        s.functionMessage(0xA0L);
+        Assert.assertEquals("F11 now", false, s.localF11);
+        s.functionMessage(0xA8L);
+        Assert.assertEquals("F12 now", true, s.localF12);
+        s.functionMessage(0xA0L);
+        Assert.assertEquals("F12 now", false, s.localF12);
+        
+        Assert.assertEquals("initial slot function value - F13", false, s.localF13);
+        Assert.assertEquals("initial slot function value - F14", false, s.localF14);
+        Assert.assertEquals("initial slot function value - F15", false, s.localF15);
+        Assert.assertEquals("initial slot function value - F16", false, s.localF16);
+        Assert.assertEquals("initial slot function value - F17", false, s.localF17);
+        Assert.assertEquals("initial slot function value - F18", false, s.localF18);
+        Assert.assertEquals("initial slot function value - F19", false, s.localF19);
+        Assert.assertEquals("initial slot function value - F20", false, s.localF20);
+        s.functionMessage(0xDE01L);
+        Assert.assertEquals("F13 now", true,  s.localF13);
+        s.functionMessage(0xDE00L);
+        Assert.assertEquals("F13 now", false, s.localF13);
+        s.functionMessage(0xDE02L);
+        Assert.assertEquals("F14 now", true,  s.localF14);
+        s.functionMessage(0xDE00L);
+        Assert.assertEquals("F14 now", false, s.localF14);
+        s.functionMessage(0xDE04L);
+        Assert.assertEquals("F15 now", true,  s.localF15);
+        s.functionMessage(0xDE00L);
+        Assert.assertEquals("F15 now", false, s.localF15);
+        s.functionMessage(0xDE08L);
+        Assert.assertEquals("F16 now", true,  s.localF16);
+        s.functionMessage(0xDE00L);
+        Assert.assertEquals("F16 now", false, s.localF16);
+        s.functionMessage(0xDE10L);
+        Assert.assertEquals("F17 now", true,  s.localF17);
+        s.functionMessage(0xDE00L);
+        Assert.assertEquals("F17 now", false, s.localF17);
+        s.functionMessage(0xDE20L);
+        Assert.assertEquals("F18 now", true,  s.localF18);
+        s.functionMessage(0xDE00L);
+        Assert.assertEquals("F18 now", false, s.localF18);
+        s.functionMessage(0xDE40L);
+        Assert.assertEquals("F19 now", true,  s.localF19);
+        s.functionMessage(0xDE00L);
+        Assert.assertEquals("F19 now", false, s.localF19);
+        s.functionMessage(0xDE80L);
+        Assert.assertEquals("F20 now", true,  s.localF20);
+        s.functionMessage(0xDE00L);
+        Assert.assertEquals("F20 now", false, s.localF20);
+        s.functionMessage(0XDF01L);
+        Assert.assertEquals("F21 now", true,  s.localF21);
+        s.functionMessage(0XDF00L);
+        Assert.assertEquals("F21 now", false, s.localF21);
+        s.functionMessage(0XDF02L);
+        Assert.assertEquals("F22 now", true,  s.localF22);
+        s.functionMessage(0XDF00L);
+        Assert.assertEquals("F22 now", false, s.localF22);
+        s.functionMessage(0XDF04L);
+        Assert.assertEquals("F23 now", true,  s.localF23);
+        s.functionMessage(0XDF00L);
+        Assert.assertEquals("F23 now", false, s.localF23);
+        s.functionMessage(0XDF08L);
+        Assert.assertEquals("F24 now", true,  s.localF24);
+        s.functionMessage(0XDF00L);
+        Assert.assertEquals("F24 now", false, s.localF24);
+        s.functionMessage(0XDF10L);
+        Assert.assertEquals("F25 now", true,  s.localF25);
+        s.functionMessage(0XDF00L);
+        Assert.assertEquals("F25 now", false, s.localF25);
+        s.functionMessage(0XDF20L);
+        Assert.assertEquals("F26 now", true,  s.localF26);
+        s.functionMessage(0XDF00L);
+        Assert.assertEquals("F26 now", false, s.localF26);
+        s.functionMessage(0XDF40L);
+        Assert.assertEquals("F27 now", true,  s.localF27);
+        s.functionMessage(0XDF00L);
+        Assert.assertEquals("F27 now", false, s.localF27);
+        s.functionMessage(0XDF80L);
+        Assert.assertEquals("F28 now", true,  s.localF28);
+        s.functionMessage(0XDF00L);
+        Assert.assertEquals("F28 now", false, s.localF28);
+    }
+    
+    @Test
+    public void checkFastClockGetSetMethods() {
+        LocoNetSlot s = new LocoNetSlot(15);
+        s.setFcFracMins(12);
+        jmri.util.JUnitAppender.assertErrorMessage("setFcFracMins invalid for slot 15");
+        s.setFcHours(1);
+        jmri.util.JUnitAppender.assertErrorMessage("setFcHours invalid for slot 15");
+        s.setFcMinutes(12);
+        jmri.util.JUnitAppender.assertErrorMessage("setFcMinutes invalid for slot 15");
+        s.setFcDays(5);
+        jmri.util.JUnitAppender.assertErrorMessage("setFcDays invalid for slot 15");
+        s.setFcRate(0);
+        jmri.util.JUnitAppender.assertErrorMessage("setFcRate invalid for slot 15");
+
+        int v = s.getFcFracMins();
+        jmri.util.JUnitAppender.assertErrorMessage("getFcFracMins invalid for slot 15");
+        v = s.getFcHours();
+        jmri.util.JUnitAppender.assertErrorMessage("getFcHours invalid for slot 15");
+        v = s.getFcMinutes();
+        jmri.util.JUnitAppender.assertErrorMessage("getFcMinutes invalid for slot 15");
+        v = s.getFcDays();
+        jmri.util.JUnitAppender.assertErrorMessage("getFcDays invalid for slot 15");
+        v = s.getFcRate();
+        jmri.util.JUnitAppender.assertErrorMessage("getFcRate invalid for slot 15");
+        
+        
+
+        s = new LocoNetSlot(123);
+        Assert.assertEquals("FcFracMins initial value", 0x3FFF, s.getFcFracMins());
+        Assert.assertEquals("FcMinutes initial value", 53, s.getFcMinutes());
+        Assert.assertEquals("FcHours initial value", 0, s.getFcHours());
+        Assert.assertEquals("FcDays initial value", 0, s.getFcDays());
+        s.setFcFracMins(18);
+        s.setFcMinutes(41);
+        s.setFcHours(2);
+        s.setFcDays(3);
+        Assert.assertEquals("getFcFracMins", 18, s.getFcFracMins());
+        Assert.assertEquals("getFcMinutes", 41, s.getFcMinutes());
+        Assert.assertEquals("getFcHours", 2, s.getFcHours());
+        Assert.assertEquals("getFcDays", 3, s.getFcDays());
+    }
+    
+    @Test
+    public void checkSetAndGetTrackStatus() {
+        LocoNetSlot s = new LocoNetSlot(19);
+        Assert.assertEquals("Checking default track status",7   , s.getTrackStatus());
+        for (int i = 0; i < 256; ++i) {
+            s.setTrackStatus(i);
+            Assert.assertEquals("checking set/get track status for status "+i, i, s.getTrackStatus()); 
+        }
+    }
+
+    @Test
+    public void checkIsF0ToF8() {
+        SlotManager sm;
+        LocoNetSystemConnectionMemo memo;
+
+        sm = new SlotManager(lnis);
+        memo = new LocoNetSystemConnectionMemo(lnis, sm);
+        sm.setSystemConnectionMemo(memo);
+        
+        LocoNetSlot s = new LocoNetSlot(10);
+        Assert.assertEquals("slot number assigned correctly", 10, s.getSlot());
+        LocoNetMessage m = new LocoNetMessage(14);
+        
+        m.setOpCode(0xef);
+        m.setElement(1, 0x0e);
+        m.setElement(2, 0x0A);
+        m.setElement(3, 0x00);
+        m.setElement(4, 0x00);
+        m.setElement(5, 0x00);
+        m.setElement(7, 0x00);
+        m.setElement(8, 0x00);
+        m.setElement(9, 0x00);
+        m.setElement(10, 0x00);
+        m.setElement(11, 0x00);
+        m.setElement(12, 0x00);
+        m.setElement(13, 0x00);
+        for (int i = 0; i < 128; ++i) {
+            m.setElement(6, i);
+            try {
+                s.setSlot(m);
+            } catch (LocoNetException e) {
+                Assert.fail("unexpected exception " + e);
+            }
+            Assert.assertEquals("F0 value from LocoNet Message, loop "+i,((i & 0x10)== 0x10), s.isF0());
+            Assert.assertEquals("F1 value from LocoNet Message, loop "+i,((i & 0x01)== 0x01), s.isF1());
+            Assert.assertEquals("F2 value from LocoNet Message, loop "+i,((i & 0x02)== 0x02), s.isF2());
+            Assert.assertEquals("F3 value from LocoNet Message, loop "+i,((i & 0x04)== 0x04), s.isF3());
+            Assert.assertEquals("F4 value from LocoNet Message, loop "+i,((i & 0x08)== 0x08), s.isF4());
+            Assert.assertFalse ("F5 value from LocoNet Message, loop "+i, s.isF5());
+            Assert.assertFalse ("F6 value from LocoNet Message, loop "+i, s.isF6());
+            Assert.assertFalse ("F7 value from LocoNet Message, loop "+i, s.isF7());
+            Assert.assertFalse ("F8 value from LocoNet Message, loop "+i, s.isF8());
+            Assert.assertEquals("Dir value from LocoNet Message, loop "+1, ((i & 0x20) == 0x00), s.isForward());
+        }
+        m.setElement(6, 0);
+        for (int i = 0; i < 128; ++i) {
+            m.setElement(10, i);
+            try {
+                s.setSlot(m);
+            } catch (LocoNetException e) {
+                Assert.fail("unexpected exception " + e);
+            }
+            Assert.assertFalse ("F0 value from LocoNet Message, loop "+i, s.isF0());
+            Assert.assertFalse ("F1 value from LocoNet Message, loop "+i, s.isF1());
+            Assert.assertFalse ("F2 value from LocoNet Message, loop "+i, s.isF2());
+            Assert.assertFalse ("F3 value from LocoNet Message, loop "+i, s.isF3());
+            Assert.assertFalse ("F4 value from LocoNet Message, loop "+i, s.isF4());
+            Assert.assertEquals("F5 value from LocoNet Message, loop "+i,((i & 0x01)== 0x01), s.isF5());
+            Assert.assertEquals("F6 value from LocoNet Message, loop "+i,((i & 0x02)== 0x02), s.isF6());
+            Assert.assertEquals("F7 value from LocoNet Message, loop "+i,((i & 0x04)== 0x04), s.isF7());
+            Assert.assertEquals("F8 value from LocoNet Message, loop "+i,((i & 0x08)== 0x08), s.isF8());
+            Assert.assertTrue  ("Dir value from LocoNet Message, loop "+1, s.isForward());
+        }
     }
 
     LocoNetInterfaceScaffold lnis;
