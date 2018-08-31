@@ -1,5 +1,6 @@
 package jmri.jmrix.can.swing.send;
 
+import java.awt.event.ActionListener;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -71,12 +72,15 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
         pane1.add(sendButton);
         pane1.add(Box.createVerticalGlue());
 
-        sendButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                sendButtonActionPerformed(e);
-            }
-        });
+        
+        ActionListener l = ae -> {
+            sendButtonActionPerformed(ae);
+        };
+        
+        sendButton.addActionListener(l);
+        packetTextField.addActionListener(l);
+        
+        
         topPane.add(pane1);
 
         // Configure the sequence

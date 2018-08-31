@@ -248,6 +248,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
                    _family = null;  // user doesn't want to be bothered
                    return;
                }
+                _paletteFrame.setLocation(jmri.util.PlaceWindow.nextTo(_editor, null, _paletteFrame));
                _family = JOptionPane.showInputDialog(_paletteFrame, Bundle.getMessage("NoFamilyName"),
                         Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE);
             }

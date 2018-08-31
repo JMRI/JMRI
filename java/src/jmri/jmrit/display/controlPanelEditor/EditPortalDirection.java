@@ -28,8 +28,8 @@ import jmri.jmrit.logix.Portal;
  */
 public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionListener, ListSelectionListener {
 
-    private OBlock _homeBlock;
-    private CircuitBuilder _parent;
+    private final OBlock _homeBlock;
+    private final CircuitBuilder _parent;
     private PortalIcon _icon;
     private JRadioButton _toButton;
     private JRadioButton _fromButton;
@@ -38,8 +38,7 @@ public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionL
     private PortalList _portalList;
 
     static int STRUT_SIZE = 10;
-    static boolean _firstInstance = true;
-    static Point _loc = null;
+    static Point _loc = new Point(-1, -1);
     static Dimension _dim = null;
 
     public EditPortalDirection(String title, CircuitBuilder parent, OBlock block) {
@@ -65,16 +64,14 @@ public class EditPortalDirection extends jmri.util.JmriJFrame implements ActionL
         JPanel border = new JPanel();
         border.setLayout(new java.awt.BorderLayout(10, 10));
         border.add(contentPane);
-        setContentPane(border);
-        if (_firstInstance) {
-            setLocationRelativeTo(_parent._editor);
-//            setSize(500,500);
-            _firstInstance = false;
+        setContentPane(new JScrollPane(border));
+        pack();
+        if (_loc.x < 0) {
+            setLocation(jmri.util.PlaceWindow. nextTo(_parent._editor, null, this));
         } else {
             setLocation(_loc);
             setSize(_dim);
         }
-        pack();
         setVisible(true);
     }
 

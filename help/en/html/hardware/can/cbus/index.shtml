@@ -112,12 +112,14 @@
             <ul>
             <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#logtofile"
             >Logging to a File</a></li>
-            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#packetstats"
-            >Packet Statistics</a></li>
-            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#recent"
-            >Most Recently Received Packet</a></li>
-            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#send"
+            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#stats"
+            >Statistics</a></li>
+            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#packet"
+            >Received and Send Packet</a></li>
+            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#cbusSend"
             >Send Event</a></li>
+            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#highlighter"
+            >Event Highlighter</a></li>
             </ul>
         </li>
 

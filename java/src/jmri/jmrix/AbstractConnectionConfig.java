@@ -51,7 +51,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
                     }
                     super.setText(value);
                     // check for legacy, and if so paint red (will have not gotten here if not valid)
-                    if (jmri.Manager.isLegacySystemPrefix(value.toString())) {
+                    if (jmri.Manager.isLegacySystemPrefix(value)) {
                         setBackground(java.awt.Color.RED);
                         setToolTipText("This is a legacy prefix that should be migrated, ask on JMRIusers");
                     }                    

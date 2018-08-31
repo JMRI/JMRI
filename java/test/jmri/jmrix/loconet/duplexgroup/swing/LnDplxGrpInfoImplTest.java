@@ -49,7 +49,7 @@ public class LnDplxGrpInfoImplTest {
     
     @Test
     public void testMiscellaneousStuff() {
-        Assert.assertFalse("limit Password to Numeric-only", dpxGrpInfoImpl.isPasswordLimitedToNumbers());
+        Assert.assertFalse("limit Password to Numeric-only", LnDplxGrpInfoImpl.isPasswordLimitedToNumbers());
         
     }
     

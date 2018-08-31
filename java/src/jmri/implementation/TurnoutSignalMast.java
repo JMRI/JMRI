@@ -216,7 +216,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
                 state = turnoutState;
                 Turnout turn = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
                 if (turn == null) {  
-                    log.error("TurnoutAspect couldn't locate turnout {}", turn);
+                    log.error("TurnoutAspect couldn't locate turnout {}", turnoutName);
                     return;
                 }
                 namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turn);

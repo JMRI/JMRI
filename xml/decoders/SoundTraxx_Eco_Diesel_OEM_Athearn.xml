@@ -55,6 +55,12 @@
             <authorinitials>MM</authorinitials>
             <revremark>Add new models</revremark>
         </revision>
+        <revision>
+            <revnumber>4</revnumber>
+            <date>2018-08-21</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>Changes required to add new models to TSU2 file (now have some differing default values)</revremark>
+        </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
     <decoder>
@@ -527,9 +533,17 @@
                 <decVal/>
                 <label>Radiator Fans Volume</label>
             </variable>
+            <variable CV="143" mask="VVVVVVVV" item="Sound Setting 16" default="16" tooltip="Sets the volume of the air reservoir poppet valve releasing">
+                <decVal/>
+                <label>Poppet Valve Volume</label>
+            </variable>
             <variable item="Equalizer Control" CV="225" mask="XXXXXVVV" default="3" tooltip="Selects one of six equalizer presets or selects a user adjustable profile">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumEQ.xml"/>
                 <label>Equalizer Control</label>
+            </variable>
+            <variable item="62 Hz Cut/Boost" CV="226" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
+                <decVal/>
+                <label>62 Hz Cut/Boost</label>
             </variable>
             <variable item="125 Hz Cut/Boost" CV="227" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
                 <decVal/>

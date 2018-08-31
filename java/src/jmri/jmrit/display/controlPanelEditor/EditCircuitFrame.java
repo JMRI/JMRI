@@ -2,6 +2,7 @@ package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GraphicsDevice;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import javax.swing.Box;
@@ -11,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import jmri.Sensor;
@@ -49,11 +51,11 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
     private JButton _openPicklistButton;
 
     static int STRUT_SIZE = 10;
-    static boolean _firstInstance = true;
-    static Point _loc = null;
-    static Dimension _dim = null;
+    static Point _loc = new Point(-1, -1);
+    static Dimension _dim = new Dimension();
 
     public EditCircuitFrame(String title, CircuitBuilder parent, OBlock block) {
+        super(false, false);
         _block = block;
         setTitle(java.text.MessageFormat.format(title, _block.getDisplayName()));
         addHelpMenu("package.jmri.jmrit.display.CircuitBuilder", true);
@@ -151,16 +153,24 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         JPanel border = new JPanel();
         border.setLayout(new java.awt.BorderLayout(20, 20));
         border.add(contentPane);
-        setContentPane(border);
+
+        setContentPane(new JScrollPane(border));
+
         pack();
-        if (_firstInstance) {
-            setLocationRelativeTo(_parent._editor);
-            _firstInstance = false;
+        if (_loc.x < 0) {
+            setLocation(jmri.util.PlaceWindow. nextTo(_parent._editor, null, this));
         } else {
             setLocation(_loc);
             setSize(_dim);
         }
         setVisible(true);
+        if (log.isDebugEnabled()) {
+            log.debug("_loc: X= {}, Y= {}", _loc.x, _loc.y);
+            Point pt1 = getLocation();
+            GraphicsDevice device = getGraphicsConfiguration().getDevice();
+            log.debug("Screen device= {}: getLocation()= [{}, {}]",
+                    device.getIDstring(), pt1.x, pt1.y);
+        }
         changeUnits();
     }
 
@@ -429,8 +439,8 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         closePickList();
 
         _parent.checkCircuitFrame(_block);
-        _loc = getLocation(_loc);
-        _dim = getSize(_dim);
+        getLocation(_loc);
+        getSize(_dim);
         dispose();
     }
 

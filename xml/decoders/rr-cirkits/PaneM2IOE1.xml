@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2005, 2011, 2013 All rights reserved -->
+<!-- Copyright (C) JMRI 2005, 2011, 2013, 2018 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -12,6 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - new file includes for Decoder files -->
+<!-- version 1.1 - Add Inv check box -->
 <!-- Panes to show I/O lines -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>I/O-5 A</name>
@@ -65,6 +66,9 @@
       <column>
         <display item="PE1 Type" label="    Type">
           </display>
+      </column>
+      <column>
+        <display item="PE1 Inv" format="checkbox" tooltip="Invert output drive" label="Inv"/>
       </column>
       <column>
         <display item="PE1 Timing" label="                                       Debounce">
@@ -163,6 +167,9 @@
           </display>
       </column>
       <column>
+        <display item="PE2 Inv" format="checkbox" tooltip="Invert output drive" label="Inv"/>
+      </column>
+      <column>
         <display item="PE2 Timing" label="                                       Debounce">
           </display>
       </column>
@@ -259,6 +266,9 @@
           </display>
       </column>
       <column>
+        <display item="PE3 Inv" format="checkbox" tooltip="Invert output drive" label="Inv"/>
+      </column>
+      <column>
         <display item="PE3 Timing" label="                                       Debounce">
           </display>
       </column>
@@ -353,6 +363,9 @@
       <column>
         <display item="PE4 Type" label="    Type">
           </display>
+      </column>
+      <column>
+        <display item="PE4 Inv" format="checkbox" tooltip="Invert output drive" label="Inv"/>
       </column>
       <column>
         <display item="PE4 Timing" label="                                       Debounce">
