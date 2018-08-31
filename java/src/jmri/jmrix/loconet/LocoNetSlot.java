@@ -657,7 +657,7 @@ public class LocoNetSlot {
      */
     public int getFcFracMins() {
         if (getSlot() != LnConstants.FC_SLOT) {
-            log.error("getFcMinutes invalid for slot " + getSlot());
+            log.error("getFcFracMins invalid for slot " + getSlot());
         }
         return 0x3FFF - ((addr & 0x7F) | ((spd & 0x7F) << 7));
     }
@@ -667,7 +667,7 @@ public class LocoNetSlot {
      */
     public void setFcFracMins(int val) {
         if (getSlot() != LnConstants.FC_SLOT) {
-            log.error("setFcMinutes invalid for slot " + getSlot());
+            log.error("setFcFracMins invalid for slot " + getSlot());
         }
         int temp = 0x3FFF - val;
         addr = addr | (temp & 0x7F);
@@ -681,7 +681,7 @@ public class LocoNetSlot {
      */
     public int getFcRate() {
         if (getSlot() != LnConstants.FC_SLOT) {
-            log.error("getFcMinutes invalid for slot " + getSlot());
+            log.error("getFcRate invalid for slot " + getSlot());
         }
         return stat;
     }
@@ -691,7 +691,7 @@ public class LocoNetSlot {
      */
     public void setFcRate(int val) {
         if (getSlot() != LnConstants.FC_SLOT) {
-            log.error("setFcMinutes invalid for slot " + getSlot());
+            log.error("setFcRate invalid for slot " + getSlot());
         }
         stat = val & 0x7F;
     }
