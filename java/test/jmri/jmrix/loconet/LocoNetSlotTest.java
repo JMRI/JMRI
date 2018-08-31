@@ -619,15 +619,15 @@ public class LocoNetSlotTest {
         s.setFcRate(0);
         jmri.util.JUnitAppender.assertErrorMessage("setFcRate invalid for slot 15");
 
-        int v = s.getFcFracMins();
+        s.getFcFracMins();
         jmri.util.JUnitAppender.assertErrorMessage("getFcFracMins invalid for slot 15");
-        v = s.getFcHours();
+        s.getFcHours();
         jmri.util.JUnitAppender.assertErrorMessage("getFcHours invalid for slot 15");
-        v = s.getFcMinutes();
+        s.getFcMinutes();
         jmri.util.JUnitAppender.assertErrorMessage("getFcMinutes invalid for slot 15");
-        v = s.getFcDays();
+        s.getFcDays();
         jmri.util.JUnitAppender.assertErrorMessage("getFcDays invalid for slot 15");
-        v = s.getFcRate();
+        s.getFcRate();
         jmri.util.JUnitAppender.assertErrorMessage("getFcRate invalid for slot 15");
         
         
