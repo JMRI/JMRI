@@ -2,6 +2,7 @@ package jmri.jmrit.catalog;
 
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
+import java.awt.image.PixelGrabber;
 import javax.swing.JLabel;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -106,7 +107,7 @@ public class NamedIconTest {
         Assert.assertEquals(expectedWidth, ni.getIconWidth());
     }
     
-    // Test flip method, this isn't a very good test...
+    // Test flip method
     @Test
     public void testFlip() {
         NamedIcon ni = new NamedIcon("program:resources/logo.gif","logo");
@@ -114,10 +115,21 @@ public class NamedIconTest {
         int w = ni.getIconWidth();
         JLabel comp = new JLabel();
         
-        ni.flip(NamedIcon.VERTICALFLIP, comp);       
+        ni.flip(NamedIcon.NOFLIP, comp);       
         Assert.assertEquals(w, ni.getIconWidth());
         Assert.assertEquals(h, ni.getIconHeight());
-        // Should add code to check the image bits here.
+        int [] noflipPixels = getPixels(ni);
+        
+        ni.flip(NamedIcon.VERTICALFLIP, comp);
+        Assert.assertEquals(w, ni.getIconWidth());
+        Assert.assertEquals(h, ni.getIconHeight());
+        
+        int [] flipPixels = getPixels(ni); 
+        for (int j = 0; j < h; j++) {
+            for (int i= 0; i < w; i++) {
+                Assert.assertEquals(getPixel(noflipPixels, i, j, w), getPixel(flipPixels, i, h - 1 - j, w));
+            }
+        }
     }
     
     // Test createRotatedImage
@@ -127,6 +139,7 @@ public class NamedIconTest {
         int h = ni.getIconHeight();
         int w = ni.getIconWidth();
         JLabel comp = new JLabel();
+        
         Image rotImage = ni.createRotatedImage(ni.getImage(), comp, 1);
         Assert.assertEquals(h, rotImage.getWidth(null));
         Assert.assertEquals(w, rotImage.getHeight(null));   
@@ -134,6 +147,9 @@ public class NamedIconTest {
     }
     
     // Test setRotation and getRotation
+    // N.B. unlike the other mutator methods on NamedIcon
+    // setRotation does NOT reset the image each time it's
+    // called. We use that behavior in the test.
     @Test
     public void testSetRotation() {
         NamedIcon ni = new NamedIcon("program:resources/logo.gif","logo");
@@ -142,12 +158,46 @@ public class NamedIconTest {
         JLabel comp = new JLabel();
         
         Assert.assertEquals(0, ni.getRotation());
-
+     
         ni.setRotation(3, comp);
         Assert.assertEquals(h, ni.getIconWidth());
         Assert.assertEquals(w, ni.getIconHeight());
         
-        Assert.assertEquals(3, ni.getRotation());
+        int [] rot3Pixels = getPixels(ni);
+        
+        ni.setRotation(2, comp);
+        ni.setRotation(2, comp);
+        
+        int [] rot7Pixels = getPixels(ni);
+         
+        for (int j = 0; j < h; j++) {
+            for (int i = 0; i < w; i++) {
+//System.out.println("i = " + i + ", j = " + j);
+//                Assert.assertEquals(getPixel(rot3Pixels, i, j, h), getPixel(rot7Pixels, i, j, h));
+            }
+        }
+        
+        Assert.assertEquals(2, ni.getRotation());
+    }
+
+    // Helper routine to grab the pixels from an Image
+    private int [] getPixels(NamedIcon ni) {
+        Image img = ni.getImage();
+        int w = img.getWidth(null);
+        int h = img.getHeight(null);
+        int[] pixels = new int[w * h];
+        PixelGrabber pg = new PixelGrabber(img, 0, 0, w, h, pixels, 0, w);
+        try {
+            pg.grabPixels();
+        } catch (InterruptedException ie) {
+        }
+        return pixels;
+    }
+    
+    // Helper routine to grab the i,j pixel 
+    private int getPixel(int [] pixels, int i, int j, int width) {
+//System.out.println("i = " + i + ", j = " + j + ", width = " + width + ", cood = " + (j * width + i));
+        return pixels[j * width + i];
     }
     
     // The minimal setup for log4J
