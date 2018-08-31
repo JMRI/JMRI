@@ -319,6 +319,30 @@
 </pre>
 
      <p>
+     Note that you should be invoking
+     <code>jmri.util.JUnitUtil.setUp()</code>
+     and
+     <code>jmri.util.JUnitUtil.tearDown()</code>
+     as above. Some older tests use calls to
+     <code>apps.tests.Log4JFixture.setUp()</code>
+     and
+     <code>apps.tests.Log4JFixture.tearDown()</code>;
+     these should be replaced by the corresponding calls
+     to the <code>JUnitUtil</code> methods.
+     
+     <p>In addition, the tearDown() method should set all member variable 
+            references to null.  This is because JUnit4 keeps the test class
+            objects around until <em>all</em> the tests are complete, so any
+            memory you allocate in one class can't be garbage collected until all 
+            the tests are done.  Setting the references to null allows the objects
+            to be collected. (If the allocated objects have a dispose() method
+            or similar, you should call that too). You should <u>not</u>
+            <a href="#ResetInstMgr">reset the InstanceManager</a>
+            or other managers in the tearDown
+            method; any necessary manager resets will be done automatically, 
+            and duplicating those wastes test time.
+
+     <p>
      You may also choose to copy an existing test file and make
      modifications to suite the needs of your new class. Please
      make sure you're copying a file in the new JUnit4 format,
@@ -433,7 +457,7 @@
         <li>All the test classes should include common code in
         their setUp() and tearDown() code to ensure that log4j is
         properly initiated, and that the custom appender is told
-        when a test is beginning and ending.
+        when a test is beginning and ending. 
 
 <pre style="font-family: monospace;">
     // The minimal setup for log4J
@@ -447,13 +471,6 @@
     }
 </pre>
         </li>
-        <li>In addition, the tearDown() method should set all member variable 
-            references to null.  This is because JUnit4 keeps the test class
-            objects around until <em>all</em> the tests are complete, so any
-            memory you allocate in one class can't be garbage collected until all 
-            the tests are done.  Setting the references to null allows the objects
-            to be collected. (If the allocated objects have a dispose() method
-            or similar, you should call that too)
 
         <li>When a test is deliberately invoking a message, it
         should then use the check to see that the message was
@@ -487,8 +504,7 @@
       won't be able to merge your code into the common repository
       until those are handled.</p>
 
-      <h3><a name="ResetInstMgr" id="ResetInstMgr">Resetting the
-      InstanceManager</a></h3>
+      <h3><a name="ResetInstMgr" id="ResetInstMgr">Resetting the InstanceManager</a></h3>
       If you are testing code that is going
       to reference the InstanceManager, you should clear and reset
       it to ensure you get reproducible results.

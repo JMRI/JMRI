@@ -113,4 +113,14 @@ public class SimpleTimebaseTest extends TestCase {
         TestSuite suite = new TestSuite(SimpleTimebaseTest.class);
         return suite;
     }
+
+    @Override
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @Override
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
+    }
 }

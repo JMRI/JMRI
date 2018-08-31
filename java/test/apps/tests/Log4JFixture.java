@@ -7,12 +7,14 @@ import jmri.util.Log4JUtil;
 import org.apache.log4j.Level;
 import org.junit.Assert;
 
+@Deprecated // (since="4.11.4", forRemoval=true) Java9 syntax // use jmri.util.Log4JUtil
 public class Log4JFixture {
 
     private Log4JFixture() {
         // prevent instanciation
     }
-
+    
+    @Deprecated // (since="4.11.4", forRemoval=true) Java9 syntax // use jmri.util.JUnitUtil
     public static void setUp() {
         // always init logging if needed
         initLogging();
@@ -29,6 +31,8 @@ public class Log4JFixture {
     }
 
     static int count = 0;
+    
+    @Deprecated // (since="4.11.4", forRemoval=true) Java9 syntax // use jmri.util.JUnitUtil
     public static void tearDown() {
         JUnitAppender.end();
         Level severity = Level.ERROR; // level at or above which we'll complain

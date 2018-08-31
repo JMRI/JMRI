@@ -54,8 +54,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     private JToggleButton _units;
 
     static int STRUT_SIZE = 10;
-    static boolean _firstInstance = true;
-    static Point _loc = null;
+    static Point _loc = new Point(-1, -1);
     static Dimension _dim = null;
     public static final String TEST_PATH = "TEST_PATH";
 
@@ -82,12 +81,11 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         JPanel border = new JPanel();
         border.setLayout(new java.awt.BorderLayout(10, 10));
         border.add(contentPane);
-        setContentPane(border);
+        setContentPane(new JScrollPane(border));
         _pathList.setPreferredSize(new java.awt.Dimension(_pathList.getFixedCellWidth(), _pathList.getFixedCellHeight() * 4));
         pack();
-        if (_firstInstance) {
-            setLocationRelativeTo(_parent._editor);
-            _firstInstance = false;
+        if (_loc.x < 0) {
+            setLocation(jmri.util.PlaceWindow. nextTo(_parent._editor, null, this));
         } else {
             setLocation(_loc);
             setSize(_dim);

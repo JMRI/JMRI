@@ -200,7 +200,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     }
 
     // A class to remember the message and who sent it
-    private class MessageTuple {
+    static private class MessageTuple {
         private final SprogMessage message;
         private final SprogListener listener;
         

@@ -60,6 +60,7 @@ public class NcePowerManagerTest extends AbstractPowerManagerTestBase {
     @Before
     @Override
     public void setUp() {
+        jmri.util.JUnitUtil.setUp();
         controller = new NceTrafficControlScaffold();
         p = new NcePowerManager(controller, "N");
     }

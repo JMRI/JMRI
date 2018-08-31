@@ -875,6 +875,9 @@
       <xs:attribute name="rotate" type="xs:integer">
         <xs:annotation><xs:documentation>Deprecated since JMRI 2.8</xs:documentation></xs:annotation>
       </xs:attribute>
+      <xs:attribute name="degrees" type="xs:float">
+        <xs:annotation><xs:documentation>Deprecated, no longer written</xs:documentation></xs:annotation>
+      </xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="EditorSignalHeadIconType">
@@ -1663,7 +1666,7 @@
     <xs:complexType name="EditorIndicatorTrackIconType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML structure for storing a MultiSensorIcon
+          Define the XML structure for storing a IndicatorTrackIcon
         </xs:documentation>
         <xs:appinfo>
           jmri.jmrit.display.configurexml.IndicatorTrackIconXml

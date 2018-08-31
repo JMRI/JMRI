@@ -139,10 +139,9 @@ public abstract class PositionableShape extends PositionableJComponent implement
     }
 
     public void setLineColor(Color c) {
-        if (c == null) {
-            c = Color.black;
+        if (c != null) {
+            _lineColor = c;
         }
-        _lineColor = c;
         invalidateShape();
     }
 
@@ -253,10 +252,14 @@ public abstract class PositionableShape extends PositionableJComponent implement
 
     protected Positionable finishClone(PositionableShape pos) {
         pos._lineWidth = _lineWidth;
-        pos._fillColor =
-                new Color(_fillColor.getRed(), _fillColor.getGreen(), _fillColor.getBlue(), _fillColor.getAlpha());
-        pos._lineColor =
-                new Color(_lineColor.getRed(), _lineColor.getGreen(), _lineColor.getBlue(), _lineColor.getAlpha());
+        if (_fillColor != null) {
+            pos._fillColor =
+                    new Color(_fillColor.getRed(), _fillColor.getGreen(), _fillColor.getBlue(), _fillColor.getAlpha());
+        }
+        if (_lineColor != null) {
+            pos._lineColor =
+                    new Color(_lineColor.getRed(), _lineColor.getGreen(), _lineColor.getBlue(), _lineColor.getAlpha());
+        }
         pos._doHide = _doHide;
         pos._changeLevel = _changeLevel;
         pos.setControlSensor(getSensorName());

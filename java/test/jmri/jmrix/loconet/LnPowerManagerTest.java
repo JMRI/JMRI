@@ -67,6 +67,7 @@ public class LnPowerManagerTest extends AbstractPowerManagerTestBase {
     @Before
     @Override
     public void setUp() {
+        jmri.util.JUnitUtil.setUp();
         controller = new LocoNetInterfaceScaffold();
         memo = new LocoNetSystemConnectionMemo(controller, null);
         p = pwr = new LnPowerManager(memo);
@@ -76,6 +77,9 @@ public class LnPowerManagerTest extends AbstractPowerManagerTestBase {
     public void tearDown() {
         pwr.dispose();
         memo.dispose();
+        pwr = null;
+        memo = null;
+        controller = null;
         JUnitUtil.tearDown();
     }
 

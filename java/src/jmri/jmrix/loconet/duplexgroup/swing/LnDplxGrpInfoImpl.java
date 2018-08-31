@@ -136,7 +136,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
         acceptedGroupChannel = "";
         acceptedGroupPassword = "";
         acceptedGroupId = "";
-
+        
     }
 
     /**

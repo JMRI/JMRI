@@ -150,7 +150,7 @@ public class Z21MessageTest {
     @Test
     public void toMonitorStringRailComDataRequest(){
         Z21Message m = Z21Message.getLanRailComGetDataRequestMessage();
-        Assert.assertEquals("Monitor String","04 00 89 00",m.toMonitorString());
+        Assert.assertEquals("Monitor String",Bundle.getMessage("Z21_RAILCOM_GETDATA"),m.toMonitorString());
     }
 
     @Test
@@ -199,7 +199,7 @@ public class Z21MessageTest {
            (byte)0x00,(byte)0x00,(byte)0x00};
         jmri.jmrix.loconet.LocoNetMessage l = new jmri.jmrix.loconet.LocoNetMessage(msg);
         Z21Message m = new Z21Message(l);
-        Assert.assertEquals("Monitor String","LocoNet Tunnel Message: EF 0E 03 00 03 00 00 00 00 00 00 00 00",m.toMonitorString());
+        Assert.assertEquals("Monitor String","LocoNet Tunnel Message: Write slot 3 information:\n\tLoco 3 (short) is Not Consisted, Free, operating in 28 SS mode, and is moving Forward at speed 0,\n\tF0=Off, F1=Off, F2=Off, F3=Off, F4=Off, F5=Off, F6=Off, F7=Off, F8=Off\n\tMaster supports DT200; Track Status: Off/Paused; Programming Track Status: Available; STAT2=0x00, ThrottleID=0x00 0x00 (0).\n",m.toMonitorString());
     }
 
 

@@ -3162,7 +3162,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         table.getTableHeader().addMouseListener(mouseHeaderListener);
     }
 
-    protected class HeaderActionListener implements ActionListener {
+    static protected class HeaderActionListener implements ActionListener {
 
         TableColumn tc;
         XTableColumnModel tcm;

@@ -29,6 +29,9 @@ public class ClientActionsTest {
         canInterface.dispose();
         // terminate the OlcbInterface (and terminate thread)
         iface.dispose();
+        
+        // expected (but not checked) message
+        jmri.util.JUnitAppender.suppressWarnMessage("ool did not terminate");
     }
 
     // The minimal setup for log4J
