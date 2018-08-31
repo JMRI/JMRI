@@ -5350,9 +5350,15 @@
    <h2>Operations Web Access</h2>
    You can also access some of the OperationPro&trade; windows from a browser. For more information
    see <a href="http://jmri.org/help/en/html/web/">JMRI Web Access</a>.
-   
+
    <p>
-   <img src="images/WebConductor.png">
+    <img src="images/WebConductor.png">
+   </p>
+   By enabling frames found in <a href="../../../apps/TabbedPreferences.shtml">Preferences</a> Web Server, you can
+   access OperationPro&trade; windows like the <a
+    href="#SwitchList">Yardmaster</a> which shows the work for a location.
+   <p>
+    <img src="images/YardmasterWeb.png">
    </p>
 
    <p>End of OperationsPro&trade; help.</p>
