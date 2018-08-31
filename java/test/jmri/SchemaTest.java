@@ -29,13 +29,4 @@ public class SchemaTest extends SchemaTestBase {
         super(file, pass);
     }
 
-    @Before
-    public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-    }
-
-    @After
-    public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
-    }
 }
