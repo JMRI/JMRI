@@ -102,6 +102,47 @@
       &lt;/trigger&gt;
       </pre>
 
+      <h5>More throttle key functions: Brake-Key, Half-Speed-Key and Coast-Key</h5>
+
+      <p>Description:<br>
+      Trigger name for Brake-Key: BRAKE_KEY<br>
+      Trigger name for Half-Speed: HALF_SPEED<br>
+      Trigger name for Coast-Key: COAST<br>
+      All these Triggers are intended for Engine type "steam1".<br>
+      Optional. Must be declared in the tag
+      <strong>sound-event name="ENGINE"</strong>.<br>
+      <em>Since JMRI 4.13.3</em></p>
+
+      <p>Important note on Brake-Key and Half-speed: Please setup those keys in
+      Virtual Sound Decoder only, if your DCC decoder supports such features and
+      can be set likewise.<br>
+      Using a Brake-Key depends on the specification of your DCC decoder. Some
+      DCC decoder support a brake time, which is an optional deceleration-rate
+      and lower than the original one. I recommend to use a throttle key with
+      momentum behavior as the Brake-Key. Don't forget to set the
+      deceleration-rate (both in VSD and in your DCC decoder) to a high value,
+      e.g. 250. If you want to define a brake time in VSD, please do declare
+     (e.g.):</p>
+      <pre>
+      &lt;brake-time&gt;30&lt;/brake-time&gt;
+      </pre>
+
+      <h5>Acceleration-Rate and Deceleration-Rate</h5>
+
+      <p>Description:<br>
+      Allows to set an acceleration-rate and a deceleration-rate for Engine type
+      "steam1". Please note that it is necessary to set the accel-/decel-rates for
+      your DCC-Decoder likewise.<br>
+      Optional. Must be declared in the tag <strong>sound name="ENGINE"
+      type="steam1"</strong>. Default value: 35 / 18<br>
+      <em>Since JMRI 4.13.3</em></p>
+
+      <p>Example:</p>
+      <pre>
+      &lt;accel-rate&gt;35&lt;/accel-rate&gt;
+      &lt;decel-rate&gt;18&lt;/decel-rate&gt;
+      </pre>
+
       <h5>Reference Distance</h5>
 
       <p>Description:<br>
