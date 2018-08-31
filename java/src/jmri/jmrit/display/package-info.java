@@ -8,7 +8,7 @@
  *    <li><a href="http://jmri.org/Panels.html">The "Panels" page</a>
  * </ul>
  *
- * <a href="doc-files/Heirarchy.png"><img src="doc-files/Heirarchy.png" alt="UML State diagram" height="33%" width="33%"></a>
+ * <a href="doc-files/Heirarchy.png"><img src="doc-files/Heirarchy.png" alt="UML class diagram for package" height="33%" width="33%"></a>
  * <!-- Put @see and @since tags down here. -->
  *
  * @see jmri.jmrit.display.palette
@@ -18,6 +18,16 @@ package jmri.jmrit.display;
 
 /*
 @startuml jmri/jmrit/display/doc-files/Heirarchy.png
+
+interface Positionable
+interface IndicatorTrack
+
+Positionable <-- PositionableJComponent
+Positionable <-- PositionableLabel
+Positionable <-- PositionableJPanel
+Positionable <-- PositionableIcon
+
+Positionable <-- IndicatorTrack
 
 javax.swing.JComponent <|-- PositionableJComponent
 javax.swing.JLabel <|-- PositionableLabel
@@ -33,7 +43,7 @@ PositionableLabel  <|-- LocoIcon
 PositionableLabel  <|-- MemoryIcon
 PositionableLabel  <|-- MultiSensorIcon
 PositionableLabel  <|-- ReporterIcon
-PositionableLabel  <|-- SlitTurnoutIcon
+PositionableLabel  <|-- SlipTurnoutIcon
 
 PositionableIcon <|-- IndicatorTrackIcon
 PositionableIcon <|-- SensorIcon

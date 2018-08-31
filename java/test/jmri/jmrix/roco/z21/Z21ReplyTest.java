@@ -267,7 +267,7 @@ public class Z21ReplyTest {
            (byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,
            (byte)0x00,(byte)0x00,(byte)0x00};
         Z21Reply m = new Z21Reply(msg,17);
-        Assert.assertEquals("Monitor String","LocoNet Tunnel Reply: EF 0E 03 00 03 00 00 00 00 00 00 00 00",m.toMonitorString());
+        Assert.assertEquals("Monitor String","LocoNet Tunnel Reply: Unable to parse LocoNet message.\ncontents: EF 0E 03 00 03 00 00 00 00 00 00 00 00\n",m.toMonitorString());
     }
 
 
