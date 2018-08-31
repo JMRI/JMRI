@@ -115,11 +115,6 @@ public class SchemaTestBase {
         this.validate = XmlFile.getDefaultValidate();
     }
 
-    @BeforeClass
-    public static void preClassInit() throws Exception {
-        JUnitUtil.setUp();  // so static ctors can log
-    }
-
     @After
     public void tearDown() throws Exception {
         XmlFile.setDefaultValidate(this.validate);
