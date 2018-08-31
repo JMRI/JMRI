@@ -82,7 +82,7 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
                 removeTab(null, i);
             } else if (evt.getOldValue() == null) {
                 for (JmrixConfigPane pane : this.configPanes) {
-                    if (pane.getCurrentObject().equals(evt.getNewValue())) {
+                    if ((pane.getCurrentObject() != null) && (pane.getCurrentObject().equals(evt.getNewValue()))) {
                         return; // don't add the connection again
                     }
                 }

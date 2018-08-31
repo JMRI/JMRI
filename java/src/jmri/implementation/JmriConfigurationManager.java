@@ -492,6 +492,7 @@ public class JmriConfigurationManager implements ConfigureManager {
         
     }
     
+    
     private static final class ConnectionsPanel extends apps.AppConfigBase {
         
         /**
@@ -552,6 +553,10 @@ public class JmriConfigurationManager implements ConfigureManager {
             add(detailpanel);
 
             list.setSelectedIndex(0);
+            
+            // For testing only! Must be removed!
+            Object comboBox = ((java.awt.Container)((java.awt.Container)((java.awt.Container)((java.awt.Container)((java.awt.Container)detailpanel.getComponent(0)).getComponent(0)).getComponent(0)).getComponent(0)).getComponent(3)).getComponent(0);
+            ((javax.swing.JComboBox)comboBox).setSelectedIndex(((javax.swing.JComboBox)comboBox).getSelectedIndex());
         }
         
         public boolean isPreferencesValid() {
