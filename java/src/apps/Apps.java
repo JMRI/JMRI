@@ -368,7 +368,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             if (!GraphicsEnvironment.isHeadless()) {
                 Profile profile = ProfileManager.getDefault().getActiveProfile();
                 JOptionPane.showMessageDialog(sp,
-                        Bundle.getMessage("SingleConfigMigratedToSharedConfig", (profile != null ? profile.getName() : "<none>")),
+                        Bundle.getMessage("SingleConfigMigratedToSharedConfig", profile),
                         jmri.Application.getApplicationName(),
                         JOptionPane.INFORMATION_MESSAGE);
             }

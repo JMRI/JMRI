@@ -33,7 +33,6 @@ public class CanConverterTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        apps.tests.AllTest.initLogging();
         String[] testCaseName = {"-noloading", CanConverterTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
