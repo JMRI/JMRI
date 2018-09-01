@@ -469,7 +469,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
 
         lnis = new LocoNetInterfaceScaffold();
         sm = new SlotManager(lnis);

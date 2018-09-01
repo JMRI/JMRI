@@ -2,17 +2,15 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
+
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.display.EditorFrameOperator;
-import jmri.util.ColorUtil;
-import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import jmri.util.*;
+import jmri.util.junit.rules.*;
+
+import org.junit.*;
+import org.junit.rules.*;
 import org.netbeans.jemmy.operators.JMenuOperator;
 
 /**
@@ -21,6 +19,12 @@ import org.netbeans.jemmy.operators.JMenuOperator;
  * @author Paul Bender Copyright (C) 2016
  */
 public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase {
+
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
     private LayoutEditor le = null;
 
@@ -183,14 +187,16 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
     @Test
     public void testSetLayoutDimensions() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        // set the panel dimensions to known values
-        le.setLayoutDimensions(100, 100, 100, 100, 100, 100);
-        Assert.assertEquals("layout width after set", 100, le.getLayoutWidth());
-        Assert.assertEquals("layout height after set", 100, le.getLayoutHeight());
-        Assert.assertEquals("window width after set", 100, le.getWindowWidth());
-        Assert.assertEquals("window height after set", 100, le.getWindowHeight());
-        Assert.assertEquals("upper left X after set", 100, le.getUpperLeftX());
-        Assert.assertEquals("upper left Y after set", 100, le.getUpperLeftX());
+        ThreadingUtil.runOnGUI(() -> {
+            // set the panel dimensions to known values
+            le.setLayoutDimensions(100, 100, 100, 100, 100, 100);
+            Assert.assertEquals("layout width after set", 100, le.getLayoutWidth());
+            Assert.assertEquals("layout height after set", 100, le.getLayoutHeight());
+            Assert.assertEquals("window width after set", 100, le.getWindowWidth());
+            Assert.assertEquals("window height after set", 100, le.getWindowHeight());
+            Assert.assertEquals("upper left X after set", 100, le.getUpperLeftX());
+            Assert.assertEquals("upper left Y after set", 100, le.getUpperLeftX());
+        });
     }
 
     @Test
@@ -381,24 +387,29 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
     @Test
     public void testGetShowHelpBar() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        le.setShowHelpBar(true);
-        Assert.assertTrue("getShowHelpBar", le.getShowHelpBar());
-        le.setShowHelpBar(false);
-        Assert.assertFalse("getShowHelpBar", le.getShowHelpBar());
+        
+        ThreadingUtil.runOnGUI(() -> {
+            le.setShowHelpBar(true);
+            Assert.assertTrue("getShowHelpBar", le.getShowHelpBar());
+            le.setShowHelpBar(false);
+            Assert.assertFalse("getShowHelpBar", le.getShowHelpBar());
+        });
     }
 
     @Test
     public void testSetShowHelpBar() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        // toggle a couple of times
-        le.setShowHelpBar(false);
-        Assert.assertFalse("getShowHelpBar after set", le.getShowHelpBar());
-        le.setShowHelpBar(true);
-        Assert.assertTrue("getShowHelpBar", le.getShowHelpBar());
-        le.setShowHelpBar(false);
-        Assert.assertFalse("getShowHelpBar", le.getShowHelpBar());
-        le.setShowHelpBar(true);
-        Assert.assertTrue("getShowHelpBar", le.getShowHelpBar());
+        ThreadingUtil.runOnGUI(() -> {
+            // toggle a couple of times
+            le.setShowHelpBar(false);
+            Assert.assertFalse("getShowHelpBar after set", le.getShowHelpBar());
+            le.setShowHelpBar(true);
+            Assert.assertTrue("getShowHelpBar", le.getShowHelpBar());
+            le.setShowHelpBar(false);
+            Assert.assertFalse("getShowHelpBar", le.getShowHelpBar());
+            le.setShowHelpBar(true);
+            Assert.assertTrue("getShowHelpBar", le.getShowHelpBar());
+        });
     }
 
     @Test

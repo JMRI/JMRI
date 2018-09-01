@@ -57,7 +57,7 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
 
         jmri.util.JUnitUtil.resetInstanceManager();
         l = new InternalLightManager();

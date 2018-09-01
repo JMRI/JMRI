@@ -18,7 +18,6 @@ public class JMRIClientTrafficControllerTest extends jmri.jmrix.AbstractMRTraffi
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
         tc = new JMRIClientTrafficController();
     }
 

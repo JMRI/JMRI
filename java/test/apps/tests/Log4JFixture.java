@@ -14,7 +14,7 @@ public class Log4JFixture {
         // prevent instanciation
     }
     
-    @Deprecated // (since="4.11.4", forRemoval=true) Java9 syntax // use jmri.util.JUnitUtil
+    @Deprecated // (since="4.11.4", forRemoval=true) Java9 syntax // needs to be migrated into a jmri.util class
     public static void setUp() {
         // always init logging if needed
         initLogging();
@@ -32,7 +32,7 @@ public class Log4JFixture {
 
     static int count = 0;
     
-    @Deprecated // (since="4.11.4", forRemoval=true) Java9 syntax // use jmri.util.JUnitUtil
+    @Deprecated // (since="4.11.4", forRemoval=true) Java9 syntax // needs to be migrated into a jmri.util class
     public static void tearDown() {
         JUnitAppender.end();
         Level severity = Level.ERROR; // level at or above which we'll complain

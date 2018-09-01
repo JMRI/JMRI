@@ -80,8 +80,8 @@ public class MergMessageTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
+        jmri.util.JUnitUtil.setUp();
         new TrafficControllerScaffold();
-        apps.tests.Log4JFixture.setUp();
     }
 
     @Override

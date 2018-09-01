@@ -61,7 +61,7 @@ public class JMRIClientPowerManagerTest extends jmri.jmrix.AbstractPowerManagerT
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         stc = new JMRIClientTrafficControlScaffold();
         p = new JMRIClientPowerManager(new JMRIClientSystemConnectionMemo(stc));
     }

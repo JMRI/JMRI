@@ -2,7 +2,7 @@ package jmri.jmrix.secsi;
 
 import jmri.implementation.AbstractTurnoutTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.Before;
+import org.junit.*;
 
 /**
  * Tests for the jmri.jmrix.secsi.SerialTurnout class
@@ -23,6 +23,13 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
         memo.setTrafficController(tcis);
 
         t = new SerialTurnout("VT4", "t4", memo);
+    }
+
+    @After
+    public void tearDown() {
+        tcis = null;
+        t = null;
+        JUnitUtil.tearDown();
     }
 
     @Override

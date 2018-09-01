@@ -9135,6 +9135,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         setOptionMenuTurnoutCircleSize();
     }
 
+    /**
+     * Should only be invoked on the GUI (Swing) thread
+     */
     public void setTurnoutDrawUnselectedLeg(boolean state) {
         if (turnoutDrawUnselectedLeg != state) {
             turnoutDrawUnselectedLeg = state;
@@ -9187,6 +9190,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         layoutName = name;
     }
 
+    /**
+     * Should only be invoked on the GUI (Swing) thread
+     */
     public void setShowHelpBar(boolean state) {
         if (showHelpBar != state) {
             showHelpBar = state;
@@ -9213,6 +9219,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
+    /**
+     * Should only be invoked on the GUI (Swing) thread
+     */
     public void setDrawGrid(boolean state) {
         if (drawGrid != state) {
             drawGrid = state;
@@ -9220,6 +9229,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
+    /**
+     * Should only be invoked on the GUI (Swing) thread
+     */
     public void setSnapOnAdd(boolean state) {
         if (snapToGridOnAdd != state) {
             snapToGridOnAdd = state;
@@ -9227,6 +9239,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
+    /**
+     * Should only be invoked on the GUI (Swing) thread
+     */
     public void setSnapOnMove(boolean state) {
         if (snapToGridOnMove != state) {
             snapToGridOnMove = state;
@@ -9234,6 +9249,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
+    /**
+     * Should only be invoked on the GUI (Swing) thread
+     */
     public void setAntialiasingOn(boolean state) {
         if (antialiasingOn != state) {
             antialiasingOn = state;
