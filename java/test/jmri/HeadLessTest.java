@@ -39,7 +39,6 @@ public class HeadLessTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.JmriTest");  // no tests in this class itself
 
         suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.PackageTest.class));

@@ -112,7 +112,6 @@ public class MergReplyTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        apps.tests.AllTest.initLogging();
         String[] testCaseName = {"-noloading", MergReplyTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
