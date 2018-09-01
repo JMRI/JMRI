@@ -146,7 +146,7 @@ public class AcelaTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffic
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         tc = new AcelaTrafficController();
     }
 

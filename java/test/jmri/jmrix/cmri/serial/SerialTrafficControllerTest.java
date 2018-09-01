@@ -156,13 +156,14 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         tc = new SerialTrafficController();
     }
 
     @Override
     @After
     public void tearDown() {
+        tc = null;
         JUnitUtil.tearDown();
     }
 

@@ -80,7 +80,7 @@ public class SRCPPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         stc = new SRCPTrafficControlScaffold();
         SRCPBusConnectionMemo memo = new SRCPBusConnectionMemo(stc, "TEST", 1);
         p = new SRCPPowerManager(memo, 1);

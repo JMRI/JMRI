@@ -2,6 +2,8 @@ package jmri;
 
 import java.io.File;
 import jmri.configurexml.SchemaTestBase;
+
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
@@ -26,4 +28,5 @@ public class SchemaTest extends SchemaTestBase {
     public SchemaTest(File file, boolean pass) {
         super(file, pass);
     }
+
 }
