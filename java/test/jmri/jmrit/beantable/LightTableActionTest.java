@@ -108,7 +108,8 @@ public class LightTableActionTest extends AbstractTableActionBase {
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -123,7 +124,8 @@ public class LightTableActionTest extends AbstractTableActionBase {
         a = null;
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LightTableActionTest.class);

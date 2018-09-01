@@ -24,7 +24,7 @@ public class DccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestB
     @Override
     @Before
     public void setUp(){
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         // create and register the manager object
         l = new DccTurnoutManager();
         jmri.InstanceManager.setTurnoutManager(l);

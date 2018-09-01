@@ -56,7 +56,7 @@ public class AbstractMRTrafficControllerTest {
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp(); 
+        JUnitUtil.setUp(); 
         JUnitUtil.resetInstanceManager();
         tc = new AbstractMRTrafficController(){
            @Override

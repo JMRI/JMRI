@@ -10,7 +10,6 @@ import java.util.*;
 import javax.annotation.Nonnull;
 
 import apps.gui.GuiLafPreferencesManager;
-import apps.tests.Log4JFixture;
 
 import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
@@ -80,28 +79,102 @@ public class JUnitUtil {
     static final int WAITFOR_MAX_DELAY = 30000; // really long, but only matters when failing, and LayoutEditor/SignalMastLogic is slow
 
     static int count = 0;
+    
+    static boolean didSetUp = false;
+    static boolean didTearDown = true;
+    static String lastSetUpClassName = "<unknown>";
+    static String lastSetUpThreadName = "<unknown>";
+    static StackTraceElement[] lastSetUpStackTrace = new StackTraceElement[0];
+    static String lastTearDownClassName = "<unknown>";
+    static String lastTearDownThreadName = "<unknown>";
+    static StackTraceElement[] lastTearDownStackTrace = new StackTraceElement[0];
+    
+    static boolean checkSetUpTearDownSequence = Boolean.getBoolean("jmri.util.JUnitUtil.checkSetUpTearDownSequence"); // false unless set true
+    static boolean checkSequenceDumpsStack =    Boolean.getBoolean("jmri.util.JUnitUtil.checkSequenceDumpsStack"); // false unless set true
+
+    static boolean printSetUpTearDownNames = Boolean.getBoolean("jmri.util.JUnitUtil.printSetUpTearDownNames"); // false unless set true
 
     /**
      * Setup for tests. This should be the first line in the {@code @Before}
      * annotated method.
      */
     public static void setUp() {
-        Log4JFixture.setUp();
+        apps.tests.Log4JFixture.setUp();  // this is a deprecated method that needs to be migrated
+
         // ideally this would be false, true to force an error if an earlier
         // test left a window open, but different platforms seem to have just
-        // enough differences that this is, for now, only emitting a warning
+        // enough differences that this is, for now, turned off
         resetWindows(false, false);
-        resetInstanceManager();
-    }
 
+        resetInstanceManager();
+
+        if (checkSetUpTearDownSequence || printSetUpTearDownNames) {
+            lastSetUpClassName = getTestClassName();
+            lastSetUpThreadName = Thread.currentThread().getName();
+        
+            if (printSetUpTearDownNames) System.err.println(">> Starting test in "+lastSetUpClassName);
+        
+            if ( checkSetUpTearDownSequence)  {
+                if (didSetUp || ! didTearDown) {
+                    System.err.println("   "+getTestClassName()+".setUp on thread "+lastSetUpThreadName+" unexpectedly found setUp="+didSetUp+" tearDown="+didTearDown+"; last tearDown was in "+lastTearDownClassName+" thread "+lastTearDownThreadName);
+                    if (checkSequenceDumpsStack) {
+                        System.err.println("---- This stack ------");
+                        Thread.dumpStack();
+                        System.err.println("---- Last setUp stack ------");
+                        for (StackTraceElement e : lastSetUpStackTrace) System.err.println("	at "+e);
+                        System.err.println("---- Last tearDown stack ------");
+                        for (StackTraceElement e : lastTearDownStackTrace) System.err.println("	at "+e);
+                        System.err.println("----------------------");
+                    }
+                }
+                
+                didTearDown = false;
+                didSetUp = true;
+            }
+            if (checkSequenceDumpsStack) lastSetUpStackTrace = Thread.currentThread().getStackTrace();
+        }
+    }
+    
     /**
      * Teardown from tests. This should be the last line in the {@code @After}
      * annotated method.
      */
     public static void tearDown() {
+        if (checkSetUpTearDownSequence || printSetUpTearDownNames) {
+            lastTearDownClassName = getTestClassName();
+            lastTearDownThreadName = Thread.currentThread().getName();
+
+            if (checkSetUpTearDownSequence) {
+                if (! didSetUp || didTearDown) {
+                    System.err.println("   "+getTestClassName()+".tearDown on thread "+lastTearDownThreadName+" unexpectedly found setUp="+didSetUp+" tearDown="+didTearDown+"; last setUp was in "+lastSetUpClassName+" thread "+lastSetUpThreadName);
+                    if (checkSequenceDumpsStack) {
+                        System.err.println("---- This stack ------");
+                        Thread.dumpStack();
+                        System.err.println("---- Last setUp stack ------");
+                        for (StackTraceElement e : lastSetUpStackTrace) System.err.println("	at "+e);
+                        System.err.println("---- Last tearDown stack ------");
+                        for (StackTraceElement e : lastTearDownStackTrace) System.err.println("	at "+e);
+                        System.err.println("----------------------");
+                    }
+                }
+                
+                didSetUp = false;
+                didTearDown = true;
+            }
+        
+            if (checkSequenceDumpsStack) lastTearDownStackTrace = Thread.currentThread().getStackTrace();
+
+            if (printSetUpTearDownNames)  System.err.println("<<   Ending test in "+lastTearDownClassName);
+
+        }
+        // ideally this would be false, true to force an error if an earlier
+        // test left a window open, but different platforms seem to have just
+        // enough differences that this is, for now, turned off
         resetWindows(false, false);
+
         resetInstanceManager();
-        Log4JFixture.tearDown();
+        apps.tests.Log4JFixture.tearDown();  // this is a deprecated method that needs to be migrated
+
     }
 
     /**

@@ -231,7 +231,7 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
     @Override
     @Test
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         memo = new SpecificSystemConnectionMemo();
         tc = t = new SpecificTrafficController(memo);
     }

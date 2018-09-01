@@ -167,6 +167,10 @@ public class OrderedHashtableTest extends TestCase {
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
+    @Override
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
+    }
 
     // test suite from all defined tests
     public static Test suite() {

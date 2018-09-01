@@ -121,7 +121,8 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
     // The minimal setup for log4J
     @Override
     protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
         super.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
 

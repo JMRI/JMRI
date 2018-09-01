@@ -1,6 +1,5 @@
 package jmri.profile;
 
-import apps.tests.Log4JFixture;
 import java.io.File;
 import java.io.IOException;
 import jmri.util.FileUtil;
@@ -27,12 +26,12 @@ public class ProfileTest {
 
     @BeforeClass
     public static void setUpClass() {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
     }
 
     @AfterClass
     public static void tearDownClass() {
-        Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
 
     @Before

@@ -1,7 +1,6 @@
 package apps.gui3.paned;
 
 import apps.AppsBase;
-import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
@@ -66,7 +65,8 @@ public class PanedTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
         JUnitUtil.resetApplication();
         JUnitUtil.resetProfileManager();
     }
@@ -74,7 +74,7 @@ public class PanedTest {
     @After
     public void tearDown() {
         JUnitUtil.resetApplication();
-        Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PanedTest.class);
