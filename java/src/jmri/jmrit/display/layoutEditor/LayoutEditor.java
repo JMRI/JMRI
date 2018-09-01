@@ -9314,6 +9314,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param inBlock the block
      * @return true if block was highlighted
      */
+    @SuppressWarnings("unchecked") // Annotate the List<Block> l assignment 
+                                   // First, make JmriBeanComboBox generic on <E extends NamedBean> (and manager) to fix this.
     public boolean highlightBlock(@Nullable Block inBlock) {
         boolean result = false; //assume failure (pessimist!)
 
