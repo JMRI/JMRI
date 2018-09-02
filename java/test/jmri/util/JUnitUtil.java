@@ -37,9 +37,13 @@ import jmri.util.prefs.JmriConfigurationProvider;
 import jmri.util.prefs.JmriPreferencesProvider;
 import jmri.util.prefs.JmriUserInterfaceConfigurationProvider;
 
+import org.apache.log4j.Level;
+
 import org.junit.Assert;
+
 import org.netbeans.jemmy.FrameWaiter;
 import org.netbeans.jemmy.TestOut;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -95,19 +99,35 @@ public class JUnitUtil {
     static boolean checkSequenceDumpsStack =    Boolean.getBoolean("jmri.util.JUnitUtil.checkSequenceDumpsStack"); // false unless set true
 
     /**
-     * Setup for tests. This should be the first line in the {@code @Before}
+     * SJMRI standard setUp for tests. This should be the first line in the {@code @Before}
      * annotated method.
      */
     public static void setUp() {
-        apps.tests.Log4JFixture.setUp();  // this is a deprecated method that needs to be migrated
+        // always init logging if needed
+        String filename = System.getProperty("jmri.log4jconfigfilename", "tests.lcf");
+        Log4JUtil.initLogging(filename);
 
-        // ideally this would be false, true to force an error if an earlier
+        // do not set the UncaughtExceptionHandler while unit testing
+        // individual tests can explicitely set it after calling this method
+        Thread.setDefaultUncaughtExceptionHandler(null);
+        try {
+            JUnitAppender.start();
+        } catch (Throwable e) {
+            System.err.println("Could not start JUnitAppender, but test continues:\n" + e);
+        }
+
+        // silence the Jemmy GUI unit testing framework
+        JUnitUtil.silenceGUITestOutput();
+
+        // ideally this would be resetWindows(false, true) to force an error if an earlier
         // test left a window open, but different platforms seem to have just
         // enough differences that this is, for now, turned off
         resetWindows(false, false);
 
+        // Do a minimal amount of de-novo setup
         resetInstanceManager();
 
+        // Log and/or check the use of setUp and tearDown
         if (checkSetUpTearDownSequence || printSetUpTearDownNames) {
             lastSetUpClassName = getTestClassName();
             lastSetUpThreadName = Thread.currentThread().getName();
@@ -140,6 +160,8 @@ public class JUnitUtil {
      * annotated method.
      */
     public static void tearDown() {
+
+        // Log and/or check the use of setUp and tearDown
         if (checkSetUpTearDownSequence || printSetUpTearDownNames) {
             lastTearDownClassName = getTestClassName();
             lastTearDownThreadName = Thread.currentThread().getName();
@@ -167,13 +189,22 @@ public class JUnitUtil {
             if (printSetUpTearDownNames)  System.err.println("<<   Ending test in "+lastTearDownClassName);
 
         }
-        // ideally this would be false, true to force an error if an earlier
+        
+        // ideally this would be resetWindows(false, true) to force an error if an earlier
         // test left a window open, but different platforms seem to have just
         // enough differences that this is, for now, turned off
         resetWindows(false, false);
 
-        resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();  // this is a deprecated method that needs to be migrated
+        // Check final status of logging in the test just completed
+        JUnitAppender.end();
+        Level severity = Level.ERROR; // level at or above which we'll complain
+        boolean unexpectedMessageSeen = JUnitAppender.unexpectedMessageSeen(severity);
+        JUnitAppender.verifyNoBacklog();
+        JUnitAppender.resetUnexpectedMessageFlags(severity);
+        Assert.assertFalse("Unexpected "+severity+" or higher messages emitted", unexpectedMessageSeen);
+        
+        // Optionally, check that no threads were left running (could be controlled by environment var?)
+        // checkThreads(false);  // true means stop on 1st extra thread
 
     }
 
@@ -881,6 +912,77 @@ public class JUnitUtil {
         ThreadingUtil.runOnGUI(() -> {
             window.dispose();
         });
+    }
+
+    static List<String> threadNames = new ArrayList<String>(Arrays.asList(new String[]{
+        // names we know about from normal running
+        "main",
+        "Java2D Disposer",
+        "AWT-Shutdown",
+        "AWT-EventQueue",
+        "GC Daemon",
+        "Finalizer",
+        "Reference Handler",
+        "Signal Dispatcher",
+        "Java2D Queue Flusher",
+        "Time-limited test",
+        "WindowMonitor-DispatchThread",
+        "RMI Reaper",
+        "RMI TCP Accept",
+        "TimerQueue",
+        "Java Sound Event Dispatcher",
+        "Aqua L&F",
+        "AppKit Thread"
+    }));
+    static List<Thread> threadsSeen = new ArrayList<Thread>();
+
+    /**
+     * Do a diagnostic check of threads, 
+     * providing a traceback if any new ones are still around.
+     * <p>
+     * First implementation is rather simplistic.
+     * @param stop If true, this stop execution after the 1st new thread is found
+     */
+    static void checkThreads(boolean stop) {
+        // now check for extra threads
+        count = 0;
+        Thread.getAllStackTraces().keySet().forEach((t) -> 
+            {
+                if (threadsSeen.contains(t)) return;
+                String name = t.getName();
+                if (! (threadNames.contains(name)
+                     || name.startsWith("RMI TCP Accept")
+                     || name.startsWith("AWT-EventQueue")
+                     || name.startsWith("Aqua L&F")
+                     || name.startsWith("Image Fetcher ")
+                     || name.startsWith("JmDNS(")
+                     || name.startsWith("SocketListener(")
+                     || (name.startsWith("Timer-") && 
+                            ( t.getThreadGroup() != null && 
+                                (t.getThreadGroup().getName().contains("FailOnTimeoutGroup") || t.getThreadGroup().getName().contains("main") )
+                            ) 
+                        )
+                    )) {  
+                    
+                        count++;
+                        threadsSeen.add(t);
+                        System.out.println("New thread \""+t.getName()+"\" group \""+ (t.getThreadGroup()!=null ? t.getThreadGroup().getName() : "(null)")+"\"");
+                    
+                        // for anonymous threads, show the traceback in hopes of finding what it is
+                        if (name.startsWith("Thread-")) {
+                            for (StackTraceElement e : Thread.getAllStackTraces().get(t)) {
+                                if (! e.toString().startsWith("java")) System.out.println("    "+e);
+                            }
+                        }
+                }
+            });
+        if (count > 0) {
+            //Thread.getAllStackTraces().keySet().forEach((t) -> System.err.println("  thread "+t+" "+t.getName()));
+            if (stop) {
+                new Exception("Stopping by request on 1st extra thread").printStackTrace();
+                System.exit(0);
+            }
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class);
