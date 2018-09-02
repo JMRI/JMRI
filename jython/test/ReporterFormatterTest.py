@@ -10,22 +10,22 @@ m = ReporterFormatter()
 if (reporters != None and memories != None ) : 
 
     # start script and check it creates sample objects
-    m.start("LR146", "IM146")
+    m.start("IR146", "IM146")
     if (memories.getMemory('IM146') == None) : raise AssertionError('IM146 not created')
-    if (reporters.getReporter('LR146') == None) : raise AssertionError('LR146 not created')
+    if (reporters.getReporter('IR146') == None) : raise AssertionError('IR146 not created')
 
     # check formatting examples without a connection by directly triggeting a property change event
     import java.beans
-    m.propertyChange(java.beans.PropertyChangeEvent(reporters.getReporter('LR146'), "currentReport", None, "3 enter"))
+    m.propertyChange(java.beans.PropertyChangeEvent(reporters.getReporter('IR146'), "currentReport", None, "3 enter"))
     if (not memories.getMemory('IM146').value == '3 ') : raise AssertionError('IM146 value incorrect: \"'+memories.getMemory('IM146').value+"\"")
 
-    m.propertyChange(java.beans.PropertyChangeEvent(reporters.getReporter('LR146'), "currentReport", None, "257 enter"))
+    m.propertyChange(java.beans.PropertyChangeEvent(reporters.getReporter('IR146'), "currentReport", None, "257 enter"))
     if (not memories.getMemory('IM146').value == '3 257 ') : raise AssertionError('IM146 value incorrect: \"'+memories.getMemory('IM146').value+"\"")
 
-    m.propertyChange(java.beans.PropertyChangeEvent(reporters.getReporter('LR146'), "currentReport", None, "3 exits"))
+    m.propertyChange(java.beans.PropertyChangeEvent(reporters.getReporter('IR146'), "currentReport", None, "3 exits"))
     if (not memories.getMemory('IM146').value == '257 ') : raise AssertionError('IM146 value incorrect: \"'+memories.getMemory('IM146').value+"\"")
 
-    m.propertyChange(java.beans.PropertyChangeEvent(reporters.getReporter('LR146'), "currentReport", None, "257 exits"))
+    m.propertyChange(java.beans.PropertyChangeEvent(reporters.getReporter('IR146'), "currentReport", None, "257 exits"))
     if (not memories.getMemory('IM146').value == '') : raise AssertionError('IM146 value incorrect: \"'+memories.getMemory('IM146').value+"\"")
 
     # success!
