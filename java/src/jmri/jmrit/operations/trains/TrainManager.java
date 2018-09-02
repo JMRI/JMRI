@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
-    private static final String NONE = "";
+    static final String NONE = "";
 
     // Train frame attributes
     private String _trainAction = TrainsTableFrame.MOVE; // Trains frame table button action
