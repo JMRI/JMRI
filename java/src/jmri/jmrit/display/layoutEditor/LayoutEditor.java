@@ -9322,7 +9322,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         blockIDComboBox.setSelectedBean(inBlock);
 
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
-        List<NamedBean> l = blockIDComboBox.getManager().getNamedBeanList();
+        Set<NamedBean> l = blockIDComboBox.getManager().getNamedBeanSet();
         for (NamedBean nb : l) {
             Block b = (Block) nb;
             LayoutBlock lb = lbm.getLayoutBlock(b);
