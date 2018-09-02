@@ -36,11 +36,15 @@ public class HexFileFrame extends JmriJFrame {
     private int connectedAddresses = 0;
 
     // to find and remember the log file
-    final javax.swing.JFileChooser inputFileChooser
-            = jmri.jmrit.XmlFile.userFileChooser("Hex files", "hex"); // NOI18N
+    final javax.swing.JFileChooser inputFileChooser;
 
+    /**
+     * Because this creates a FileChooser, this should be invoked on the
+     * GUI frame
+     */
     public HexFileFrame() {
         super();
+        inputFileChooser = jmri.jmrit.XmlFile.userFileChooser("Hex files", "hex"); // NOI18N
     }
 
     /**
@@ -158,7 +162,7 @@ public class HexFileFrame extends JmriJFrame {
 
     public void configure() {
         if (port == null) {
-            log.error("initComponents called before adapter has been set");
+            log.error("configure called before adapter has been set");
             return;
         }
         // connect to a packetizing LnTrafficController
