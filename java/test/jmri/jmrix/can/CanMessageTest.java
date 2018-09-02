@@ -139,7 +139,6 @@ public class CanMessageTest extends CanMRCommonTestBase {
 
     // test suite from all defined tests
     public static Test suite() {
-        apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite(CanMessageTest.class);
         return suite;
     }

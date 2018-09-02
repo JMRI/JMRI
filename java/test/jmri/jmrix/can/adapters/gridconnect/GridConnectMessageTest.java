@@ -71,7 +71,6 @@ public class GridConnectMessageTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite(GridConnectMessageTest.class);
         return suite;
     }

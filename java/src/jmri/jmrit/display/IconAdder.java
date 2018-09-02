@@ -359,6 +359,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         pack();
     }
 
+    @SuppressWarnings("unchecked") // PickList is a parameterized class, but we don't use that here
     public void setSelection(NamedBean bean) {
         int row = _pickListModel.getIndexOf(bean);
         row = _table.convertRowIndexToView(row);
@@ -619,6 +620,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         return _addButton.isEnabled();
     }
 
+    @SuppressWarnings("unchecked") // PickList is a parameterized class, but we don't use that here
     void addToTable() {
         String name = _sysNametext.getText();
         if (name != null && name.length() > 0) {

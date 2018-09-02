@@ -18,6 +18,7 @@ public class JMRIClientTrafficControllerTest extends jmri.jmrix.AbstractMRTraffi
     @Override
     @Before
     public void setUp() {
+        JUnitUtil.setUp();
         tc = new JMRIClientTrafficController();
     }
 
