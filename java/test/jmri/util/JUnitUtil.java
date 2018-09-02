@@ -98,15 +98,19 @@ public class JUnitUtil {
     static boolean checkSetUpTearDownSequence = Boolean.getBoolean("jmri.util.JUnitUtil.checkSetUpTearDownSequence"); // false unless set true
     static boolean checkSequenceDumpsStack =    Boolean.getBoolean("jmri.util.JUnitUtil.checkSequenceDumpsStack"); // false unless set true
 
+    private static boolean isLoggingInitialized = false;
     /**
      * SJMRI standard setUp for tests. This should be the first line in the {@code @Before}
      * annotated method.
      */
     public static void setUp() {
-        // always init logging if needed
-        String filename = System.getProperty("jmri.log4jconfigfilename", "tests.lcf");
-        Log4JUtil.initLogging(filename);
-
+        if (!isLoggingInitialized) {
+            // init logging if needed
+            isLoggingInitialized = true;
+            String filename = System.getProperty("jmri.log4jconfigfilename", "tests.lcf");
+            Log4JUtil.initLogging(filename);
+        }
+        
         // do not set the UncaughtExceptionHandler while unit testing
         // individual tests can explicitely set it after calling this method
         Thread.setDefaultUncaughtExceptionHandler(null);
@@ -130,11 +134,12 @@ public class JUnitUtil {
         // Log and/or check the use of setUp and tearDown
         if (checkSetUpTearDownSequence || printSetUpTearDownNames) {
             lastSetUpClassName = getTestClassName();
-            lastSetUpThreadName = Thread.currentThread().getName();
         
             if (printSetUpTearDownNames) System.err.println(">> Starting test in "+lastSetUpClassName);
         
             if ( checkSetUpTearDownSequence)  {
+                if (checkSequenceDumpsStack)  lastSetUpThreadName = Thread.currentThread().getName();
+                
                 if (didSetUp || ! didTearDown) {
                     System.err.println("   "+getTestClassName()+".setUp on thread "+lastSetUpThreadName+" unexpectedly found setUp="+didSetUp+" tearDown="+didTearDown+"; last tearDown was in "+lastTearDownClassName+" thread "+lastTearDownThreadName);
                     if (checkSequenceDumpsStack) {
@@ -150,8 +155,9 @@ public class JUnitUtil {
                 
                 didTearDown = false;
                 didSetUp = true;
+
+                if (checkSequenceDumpsStack) lastSetUpStackTrace = Thread.currentThread().getStackTrace();
             }
-            if (checkSequenceDumpsStack) lastSetUpStackTrace = Thread.currentThread().getStackTrace();
         }
     }
     
@@ -164,9 +170,10 @@ public class JUnitUtil {
         // Log and/or check the use of setUp and tearDown
         if (checkSetUpTearDownSequence || printSetUpTearDownNames) {
             lastTearDownClassName = getTestClassName();
-            lastTearDownThreadName = Thread.currentThread().getName();
 
             if (checkSetUpTearDownSequence) {
+                if (checkSequenceDumpsStack) lastTearDownThreadName = Thread.currentThread().getName();
+                
                 if (! didSetUp || didTearDown) {
                     System.err.println("   "+getTestClassName()+".tearDown on thread "+lastTearDownThreadName+" unexpectedly found setUp="+didSetUp+" tearDown="+didTearDown+"; last setUp was in "+lastSetUpClassName+" thread "+lastSetUpThreadName);
                     if (checkSequenceDumpsStack) {
@@ -182,11 +189,12 @@ public class JUnitUtil {
                 
                 didSetUp = false;
                 didTearDown = true;
+            
+                if (checkSequenceDumpsStack) lastTearDownStackTrace = Thread.currentThread().getStackTrace();
             }
         
-            if (checkSequenceDumpsStack) lastTearDownStackTrace = Thread.currentThread().getStackTrace();
-
-            if (printSetUpTearDownNames)  System.err.println("<<   Ending test in "+lastTearDownClassName);
+            // To save time & space, only print end when doing full check
+            if (printSetUpTearDownNames && checkSetUpTearDownSequence)  System.err.println("<<   Ending test in "+lastTearDownClassName);
 
         }
         
@@ -817,16 +825,17 @@ public class JUnitUtil {
         StackTraceElement[] trace = Thread.currentThread().getStackTrace();
 
         for (StackTraceElement e : trace) {
-            if (e.getClassName().startsWith("jmri") || e.getClassName().startsWith("apps")) {
-                if (!e.getClassName().endsWith("JUnitUtil")) {
-                    return e.getClassName();
+            String name = e.getClassName();
+            if (name.startsWith("jmri") || name.startsWith("apps")) {
+                if (!name.endsWith("JUnitUtil")) {
+                    return name;
                 }
             }
         }
 
         return "<unknown class>";
     }
-
+        
     /**
      * Dispose of any disposable windows. This should only be used if there is
      * no ability to actually close windows opened by a test using
