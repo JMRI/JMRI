@@ -72,7 +72,6 @@ public class MergMessageTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite(MergMessageTest.class);
         return suite;
     }

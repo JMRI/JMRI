@@ -143,7 +143,6 @@ public class CanReplyTest extends CanMRCommonTestBase {
 
     // test suite from all defined tests
     public static Test suite() {
-        apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite(CanReplyTest.class);
         return suite;
     }
