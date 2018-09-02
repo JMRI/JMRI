@@ -89,7 +89,7 @@ public class JUnitUtil {
     static String lastTearDownThreadName = "<unknown>";
     static StackTraceElement[] lastTearDownStackTrace = new StackTraceElement[0];
     
-    static boolean printSetUpTearDownNames = true // Boolean.getBoolean("jmri.util.JUnitUtil.printSetUpTearDownNames"); // false unless set true
+    static boolean printSetUpTearDownNames = true; // Boolean.getBoolean("jmri.util.JUnitUtil.printSetUpTearDownNames"); // false unless set true
 
     static boolean checkSetUpTearDownSequence = Boolean.getBoolean("jmri.util.JUnitUtil.checkSetUpTearDownSequence"); // false unless set true
     static boolean checkSequenceDumpsStack =    Boolean.getBoolean("jmri.util.JUnitUtil.checkSequenceDumpsStack"); // false unless set true
