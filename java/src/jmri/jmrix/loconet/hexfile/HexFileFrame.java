@@ -3,15 +3,14 @@ package jmri.jmrix.loconet.hexfile;
 import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
-import jmri.DccLocoAddress;
-import jmri.DccThrottle;
-import jmri.GlobalProgrammerManager;
-import jmri.LocoAddress;
+
+import jmri.*;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.managers.DefaultProgrammerManager;
 import jmri.util.JmriJFrame;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +41,7 @@ public class HexFileFrame extends JmriJFrame {
      * Because this creates a FileChooser, this should be invoked on the
      * GUI frame
      */
+    @InvokeOnGuiThread
     public HexFileFrame() {
         super();
         inputFileChooser = jmri.jmrit.XmlFile.userFileChooser("Hex files", "hex"); // NOI18N
@@ -50,6 +50,7 @@ public class HexFileFrame extends JmriJFrame {
     /**
      * {@inheritDoc}
      */
+    @InvokeOnGuiThread
     @Override
     public void initComponents() {
         if (port == null) {
@@ -121,17 +122,12 @@ public class HexFileFrame extends JmriJFrame {
                 delayFieldActionPerformed(e);
             }
         });
-
-        // create a new Hex file handler, set its delay
-        //port = new LnHexFilePort();
-        //port.setDelay(Integer.valueOf(delayField.getText()).intValue());
-        // and make the connections
-        //configure();
     }
 
     boolean connected = false;
 
     @Override
+    @InvokeOnGuiThread
     public void dispose() {
         // leaves the LocoNet Packetizer (e.g. the simulated connection)
         // running.
@@ -140,6 +136,7 @@ public class HexFileFrame extends JmriJFrame {
 
     LnPacketizer packets = null;
 
+    @InvokeOnGuiThread
     public void openHexFileButtonActionPerformed(java.awt.event.ActionEvent e) {
         // select the file
         // start at current file, show dialog
@@ -160,6 +157,7 @@ public class HexFileFrame extends JmriJFrame {
         // but that normally lets the button go back to default.
     }
 
+    @InvokeOnGuiThread
     public void configure() {
         if (port == null) {
             log.error("configure called before adapter has been set");

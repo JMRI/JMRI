@@ -46,38 +46,7 @@ import java.util.stream.Stream;
 
 import javax.annotation.*;
 import javax.imageio.ImageIO;
-import javax.swing.AbstractAction;
-import javax.swing.AbstractButton;
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JRadioButton;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JRootPane;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.JViewport;
-import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -87,29 +56,11 @@ import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import jmri.Block;
-import jmri.BlockManager;
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Manager;
-import jmri.Memory;
-import jmri.MemoryManager;
-import jmri.NamedBean;
-import jmri.Reporter;
-import jmri.ReporterManager;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.SignalHead;
-import jmri.SignalHeadManager;
-import jmri.SignalMast;
-import jmri.SignalMastLogic;
-import jmri.SignalMastLogicManager;
-import jmri.SignalMastManager;
-import jmri.TransitManager;
-import jmri.Turnout;
-import jmri.UserPreferencesManager;
+
+import jmri.*;
+
 import jmri.configurexml.StoreXmlUserAction;
+
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.dispatcher.DispatcherAction;
 import jmri.jmrit.dispatcher.DispatcherFrame;
@@ -138,6 +89,7 @@ import jmri.util.SystemType;
 import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.swing.JmriColorChooser;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9131,6 +9083,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * Should only be invoked on the GUI (Swing) thread
      */
+    @InvokeOnGuiThread
     public void setTurnoutDrawUnselectedLeg(boolean state) {
         if (turnoutDrawUnselectedLeg != state) {
             turnoutDrawUnselectedLeg = state;
@@ -9186,6 +9139,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * Should only be invoked on the GUI (Swing) thread
      */
+    @InvokeOnGuiThread
     public void setShowHelpBar(boolean state) {
         if (showHelpBar != state) {
             showHelpBar = state;
@@ -9215,6 +9169,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * Should only be invoked on the GUI (Swing) thread
      */
+    @InvokeOnGuiThread
     public void setDrawGrid(boolean state) {
         if (drawGrid != state) {
             drawGrid = state;
@@ -9225,6 +9180,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * Should only be invoked on the GUI (Swing) thread
      */
+    @InvokeOnGuiThread
     public void setSnapOnAdd(boolean state) {
         if (snapToGridOnAdd != state) {
             snapToGridOnAdd = state;
@@ -9235,6 +9191,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * Should only be invoked on the GUI (Swing) thread
      */
+    @InvokeOnGuiThread
     public void setSnapOnMove(boolean state) {
         if (snapToGridOnMove != state) {
             snapToGridOnMove = state;
@@ -9245,6 +9202,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * Should only be invoked on the GUI (Swing) thread
      */
+    @InvokeOnGuiThread
     public void setAntialiasingOn(boolean state) {
         if (antialiasingOn != state) {
             antialiasingOn = state;
