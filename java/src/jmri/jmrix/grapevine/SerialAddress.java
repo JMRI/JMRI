@@ -201,7 +201,7 @@ public class SerialAddress {
         Matcher matcher = getAllPattern().matcher(systemName.substring(prefix.length())); // exclude multichar prefix
         if (!matcher.matches()) {
             // here if an illegal format 
-            log.error("illegal system name format: {}", systemName);
+            log.error("illegal system name format in getNodeFromSystemName: {}", systemName);
             return null;
         }
 
@@ -233,7 +233,7 @@ public class SerialAddress {
         Matcher matcher = getAllPattern().matcher(systemName.substring(prefix.length())); // exclude multichar prefix
         if (!matcher.matches()) {
             // here if an illegal format 
-            log.error("illegal system name format: {}", systemName);
+            log.error("illegal system name format in getBitFromSystemName: {} prefix: {}", systemName, prefix, new Exception("traceback"));
             return 0;
         }
 
@@ -267,7 +267,7 @@ public class SerialAddress {
         Matcher matcher = getAllPattern().matcher(systemName.substring(prefix.length())); // exclude multichar prefix
         if (!matcher.matches()) {
             // here if an illegal format 
-            log.error("illegal system name format: {}", systemName);
+            log.error("illegal system name format in getNodeAddressFromSystemName: {}", systemName);
             return (-1);
         }
 

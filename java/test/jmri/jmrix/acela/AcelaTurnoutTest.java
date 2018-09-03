@@ -92,7 +92,7 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
 
         tcis = new AcelaTrafficControlScaffold();
         memo = new AcelaSystemConnectionMemo(tcis);

@@ -49,6 +49,7 @@ class Steam1Sound extends EngineSound {
     private float exponent;
     private int accel_rate;
     private int decel_rate;
+    private int brake_time;
     private int decel_trigger_rpms;
     private SoundBite idle_sound;
     private SoundBite boiling_sound;
@@ -91,6 +92,15 @@ class Steam1Sound extends EngineSound {
         // This is all we have to do.  The loop thread will handle everything else
         if (_loopThread != null) {
             _loopThread.setThrottle(s);
+        }
+    }
+
+    // Responds to throttle function key (see EngineSound.java and EngineSoundEvent.java)
+    @Override
+    public void functionKey(String event, boolean value, String name) {
+        log.debug("throttle function key {} pressed for {}: {}", event, name, value);
+        if (_loopThread != null) {
+            _loopThread.setFunction(event, value, name);
         }
     }
 
@@ -237,6 +247,14 @@ class Steam1Sound extends EngineSound {
             decel_rate = 18; // Default
         }
         log.debug("decel rate: {}", decel_rate);
+
+        n = e.getChildText("brake-time"); // Optional value
+        if (n != null) {
+            brake_time = Integer.parseInt(n);
+        } else {
+            brake_time = 0;  // Default
+        }
+        log.debug("brake time: {}", brake_time);
 
         // Optional value 
         // auto-start
@@ -655,6 +673,7 @@ class Steam1Sound extends EngineSound {
         private boolean is_looping = false;
         private boolean is_dying = false;
         private boolean is_auto_coasting;
+        private boolean is_key_coasting;
         private boolean is_idling;
         private boolean is_braking;
         private int lastRpm;
@@ -662,6 +681,7 @@ class Steam1Sound extends EngineSound {
         private int chuff_index;
         private int helper_index;
         private boolean waitForFiller;
+        private boolean is_half_speed;
         private int rpm_nominal; // Nominal value
         private int rpm; // Actual value
         private int _top_speed;
@@ -689,6 +709,7 @@ class Steam1Sound extends EngineSound {
             is_looping = false;
             is_dying = false;
             is_auto_coasting = false;
+            is_key_coasting = false;
             is_idling = false;
             is_braking = false;
             waitForFiller = false;
@@ -698,8 +719,7 @@ class Steam1Sound extends EngineSound {
             _notch = null;
             coast_notch = null;
             helper_notch = null;
-            // Sound for queueing.
-            _sound = new SoundBite(s + "_QUEUE");
+            _sound = new SoundBite(s + "_QUEUE"); // Sound for queueing
             _sound.setGain(_parent.engine_gain); // All chuff sounds will have this gain
             count_pre_arrival = 1;
             queue_limit = 2;
@@ -735,6 +755,9 @@ class Steam1Sound extends EngineSound {
                     _throttle = t;
                 }
 
+                if (is_half_speed) {
+                    _throttle = _throttle / 2;
+                }
                 // Calculate the nominal speed (Revolutions Per Minute)
                 setRpmNominal(calcRPM(_throttle));
 
@@ -765,7 +788,7 @@ class Steam1Sound extends EngineSound {
                                 is_braking = true;
                                 log.debug("braking activ!");
                             }
-                        } else if (coast_notch.coast_bufs.size() > 0) {
+                        } else if (coast_notch.coast_bufs.size() > 0 && !is_key_coasting) {
                             is_auto_coasting = true;
                             log.debug("auto-coasting active");
                         }
@@ -819,6 +842,59 @@ class Steam1Sound extends EngineSound {
                 is_auto_coasting = false;
                 log.debug("auto-coasting sound stopped.");
             }
+        }
+
+        private void setFunction(String event, boolean is_true, String name) {
+            // This throttle function key handling differs to configurable sounds:
+            // Do something following certain conditions, when a throttle function key is pressed.
+            // Note: throttle will send initial value(s) before thread is started! 
+            log.debug("throttle function key pressed: {} is {}, function: {}", event, is_true, name);
+            if (name.equals("COAST")) {
+                // Handle key-coasting on/off.
+                log.debug("COAST key pressed");
+                // Set coasting TRUE, if COAST key is pressed. Requires sufficient coasting sounds (chuff_index will rely on that).
+                if (coast_notch == null) {
+                    coast_notch = _parent.getNotch(1); // Because of initial send of throttle key, COAST function key could be "true"
+                }
+                if (is_true && coast_notch.coast_bufs.size() > 0) {
+                    is_key_coasting = true; // When idling is active, key-coasting will start after it.
+                } else {
+                    is_key_coasting = false; // Stop the key-coasting sound
+                }
+                log.debug("is COAST: {}", is_key_coasting);
+            }
+
+            // Speed change if HALF_SPEED key is pressed
+            if (name.equals("HALF_SPEED")) {
+                log.debug("HALF_SPEED key pressed is {}", is_true);
+                if (_parent.engine_started) {
+                    if (is_true) {
+                        is_half_speed = true;
+                    } else {
+                        is_half_speed = false;
+                    }
+                }
+            }
+
+            // Set Accel/Decel off
+            if (name.equals("BRAKE_KEY")) {
+                log.debug("BRAKE_KEY pressed is {}", is_true);
+                if (_parent.engine_started) {
+                    if (is_true) {
+                        if (_parent.brake_time == 0) {
+                            acc_time = 0;
+                            dec_time = 0;
+                        } else {
+                            dec_time = _parent.brake_time;
+                        }
+                        _parent.accdectime = dec_time;
+                    } else {
+                        setupAccDec();
+                        _parent.accdectime = dec_time; // ist das noetig?
+                    }
+                }
+            }
+            // Other throttle function keys may follow ...
         }
 
         public void startEngine() {
@@ -897,7 +973,7 @@ class Steam1Sound extends EngineSound {
                         log.debug("run loop. Buffers queued: {}", _sound.getSource().numQueuedBuffers());
                         if ((_sound.getSource().numQueuedBuffers() < queue_limit) && (getWait() == 0)) {
                             AudioBuffer b;
-                            if (is_auto_coasting) {
+                            if (is_key_coasting || is_auto_coasting) {
                                 // Take the coasting sound. Yes, use same index as for chuffs
                                 b = coast_notch.coast_bufs.get(incChuffIndex());
                             } else {
@@ -1121,7 +1197,7 @@ class Steam1Sound extends EngineSound {
                     AudioBuffer buf = helper_notch.bufs_helper.get(incHelperIndex());
                     byte[] bbytes = new byte[bbufcount];
                     ByteBuffer data;
-                    if (is_auto_coasting) {
+                    if (is_key_coasting || is_auto_coasting) {
                         // Take coasting sound (WAV data)
                         data = coast_notch.coast_bufs_data.get(chuffIndex());
                     } else {
@@ -1146,7 +1222,7 @@ class Steam1Sound extends EngineSound {
             // Fills time after a chuff up to the next chuff with a sound provided by the VSD file
             // Since the filler can be a small amount of time, it might be queued several times
             AudioBuffer fill_buf;
-            if (is_auto_coasting) {
+            if (is_key_coasting || is_auto_coasting) {
                 fill_buf = coast_notch.getCoastFillerBuffer();
             } else {
                 fill_buf = _notch.getNotchFillerBuffer();
@@ -1177,7 +1253,7 @@ class Steam1Sound extends EngineSound {
                     AudioBuffer buf  = helper_notch.bufs_helper.get(incHelperIndex());
                     byte[] bbytes = new byte[bbufcount];
                     ByteBuffer dataf;
-                    if (is_auto_coasting) {
+                    if (is_key_coasting || is_auto_coasting) {
                         dataf = coast_notch.getCoastFillerData();
                     } else {
                         dataf = _notch.getNotchFillerData();

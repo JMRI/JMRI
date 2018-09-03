@@ -2,7 +2,6 @@ package jmri.profile;
 
 import static org.junit.Assert.fail;
 
-import apps.tests.Log4JFixture;
 import java.io.File;
 import java.io.IOException;
 import jmri.util.JUnitUtil;
@@ -28,14 +27,14 @@ public class ProfileUtilsTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
     @After
     public void tearDown() {
         JUnitUtil.resetProfileManager();
-        Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
 
     @Test

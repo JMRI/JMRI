@@ -2,9 +2,7 @@ package jmri.jmrix.nce;
 
 import jmri.JmriException;
 import jmri.jmrix.AbstractPowerManagerTestBase;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * JUnit tests for the NcePowerManager class.
@@ -66,6 +64,13 @@ public class NcePowerManagerTest extends AbstractPowerManagerTestBase {
     }
 
     NceTrafficControlScaffold controller;  // holds dummy NceTrafficController for testing
+
+    @After
+    public void tearDown() {
+        controller = null;
+        p = null;
+        jmri.util.JUnitUtil.tearDown();
+    }
 
     // replace some standard tests, as there's no unsolicted message from the
     // master saying power has changed.  Instead, these test the

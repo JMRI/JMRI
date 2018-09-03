@@ -25,7 +25,7 @@ public class CsOpSwAccessTest {
     @Before
     public void setUp() {
         // The minimal setup for log4J
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         lnis = new LocoNetInterfaceScaffold();
         sm = new SlotManager(lnis);
         memo = new LocoNetSystemConnectionMemo(lnis, sm);

@@ -219,7 +219,7 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("GS2009", 9, SerialAddress.getBitFromSystemName("GS2009", "G"));
 
         Assert.assertEquals("GL29O9", 0, SerialAddress.getBitFromSystemName("GL29O9", "G"));
-        JUnitAppender.assertErrorMessage("illegal system name format: GL29O9");
+        JUnitAppender.assertErrorMessage("illegal system name format in getBitFromSystemName: GL29O9 prefix: G");
 
         Assert.assertEquals("GL1B107", 107, SerialAddress.getBitFromSystemName("GL1B107", "G"));
         Assert.assertEquals("GL2B107", 107, SerialAddress.getBitFromSystemName("GL2B107", "G"));
@@ -341,6 +341,7 @@ public class SerialAddressTest extends TestCase {
     @Override
     protected void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
         tcis = new SerialTrafficControlScaffold(new GrapevineSystemConnectionMemo());
     }
 
