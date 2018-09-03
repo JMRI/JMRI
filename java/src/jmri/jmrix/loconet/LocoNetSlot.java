@@ -63,7 +63,7 @@ public class LocoNetSlot {
 
     // accessors to specific information
     /**
-     * Returns the slot number which was either specified or inferred at object 
+     * Returns the slot number which was either specified or inferred at object
      * creation time.
      * <p>
      * @return the slot number
@@ -73,11 +73,11 @@ public class LocoNetSlot {
     }  // cannot modify the slot number once created
 
 
-    /** 
+    /**
      * Get decoder mode.
-     * 
-     * The decoder (operating) mode is taken from those bits in the slot's STAT 
-     * byte which reflect the "speed steps" and "consisting" mode.  Note that 
+     *
+     * The decoder (operating) mode is taken from those bits in the slot's STAT
+     * byte which reflect the "speed steps" and "consisting" mode.  Note that
      * the other bits from the STAT byte are not visible via this method.
      * this
      * <p>
@@ -98,20 +98,20 @@ public class LocoNetSlot {
         return stat & LnConstants.DEC_MODE_MASK;
     }
 
-    /** 
+    /**
      * Get slot status.
      * <p>
-     * These bits are set based on the STAT byte as seen in LocoNet slot write and 
-     * slot read messages.  These bits determine whether the command station is 
-     * actively "refreshing" the loco's speed and direction information on the 
-     * DCC track signal, and whether the slot is able to be re-assigned for use 
+     * These bits are set based on the STAT byte as seen in LocoNet slot write and
+     * slot read messages.  These bits determine whether the command station is
+     * actively "refreshing" the loco's speed and direction information on the
+     * DCC track signal, and whether the slot is able to be re-assigned for use
      * by another locomotive.
      * <p>
      * For slot numbers not normally associated with mobile decoders, these bits
      * may have other meanings.
      * <p>
      * This returns only those bits of the slot's STAT byte which are related to
-     * the slot's "status". 
+     * the slot's "status".
      * <p>
      * Possible values are
      * {@link LnConstants#LOCO_IN_USE},
@@ -124,10 +124,10 @@ public class LocoNetSlot {
         return stat & LnConstants.LOCOSTAT_MASK;
     }
 
-    /** 
+    /**
      * Get secondary slot status.
      * <p>
-     * These bits are set based on the STAT2 byte as seen in LocoNet slot write and 
+     * These bits are set based on the STAT2 byte as seen in LocoNet slot write and
      * slot read messages.  These bits determine how the command station interprets
      * the "address" field of the slot.
      * <p>
@@ -135,7 +135,7 @@ public class LocoNetSlot {
      * may have other meanings.
      * <p>
      * This returns only those bits of the slot's STAT2 byte which are related to
-     * the slot's "secondary status". 
+     * the slot's "secondary status".
      * <p>
      * @return the slot secondary status bits associated with the slot
      */
@@ -144,11 +144,11 @@ public class LocoNetSlot {
         return ss2;
     }
 
-    /** 
+    /**
      * Get consist status.
      * <p>
      * This returns only those bits of the slot's STAT byte which are related to
-     * the slot's "consisting status". 
+     * the slot's "consisting status".
      * <p>
      * For slot numbers not normally associated with mobile decoders, these bits
      * may have other meanings.
@@ -158,7 +158,7 @@ public class LocoNetSlot {
      * {@link LnConstants#CONSIST_TOP},
      * {@link LnConstants#CONSIST_MID},
      * {@link LnConstants#CONSIST_SUB}
-     * @return 
+     * @return
      */
     public int consistStatus() {
         return stat & LnConstants.CONSIST_MASK;
@@ -187,8 +187,8 @@ public class LocoNetSlot {
      * @return true if F0 is "on", else false
      */
     public boolean isF0() {
-        // TODO: Consider throwing an exception (here and in similar methods) 
-        // if the slot is one of the "special" slots where the slot is not 
+        // TODO: Consider throwing an exception (here and in similar methods)
+        // if the slot is one of the "special" slots where the slot is not
         // storing mobile decoder funciton state in the associated bit.
         return 0 != (dirf & LnConstants.DIRF_F0);
     }
@@ -613,7 +613,7 @@ public class LocoNetSlot {
     /**
      * Returns the mobile decoder address associated with the slot.
      * <p>
-     * Note that the returned address can encode a "short" address, a "long" 
+     * Note that the returned address can encode a "short" address, a "long"
      * address or an "alias".
      * <p>
      * For slot numbers not normally associated with mobile decoders, these bits
@@ -628,8 +628,8 @@ public class LocoNetSlot {
     /**
      * Returns the mobile decoder speed associated with the slot
      * <p>
-     * If this slot object is consisted to another slot and is not the "top" of 
-     * the consist, then the return value is the slot number to which this slot 
+     * If this slot object is consisted to another slot and is not the "top" of
+     * the consist, then the return value is the slot number to which this slot
      * is consisted.
      * <p>
      * For slot numbers not normally associated with mobile decoders, these bits
@@ -645,10 +645,10 @@ public class LocoNetSlot {
      * Returns the mobile decoder direction and F0-F4 bits, as used in the DIRF bits
      * of various LocoNet messages.
      * <p>
-     * If this slot object is consisted to another slot and is not the "top" of 
+     * If this slot object is consisted to another slot and is not the "top" of
      * the consist, then the "direction" bit reflects the relative direction of this
-     * loco with respect to the loco it is consisted to, where "Reverse" means it 
-     * travels in the "reverse" direction with respect to the loco to which it is 
+     * loco with respect to the loco it is consisted to, where "Reverse" means it
+     * travels in the "reverse" direction with respect to the loco to which it is
      * consisted.
      * <p>
      * For slot numbers not normally associated with mobile decoders, these bits
@@ -692,7 +692,7 @@ public class LocoNetSlot {
     /**
      * Returns the programmer command associated with the slot.
      * <p>
-     * The returned value is taken from the <PCMD> byte of programmer slot read 
+     * The returned value is taken from the <PCMD> byte of programmer slot read
      * and write LocoNet messages.
      * <p>
      * For slot numbers other than the programmer slot, these bits
@@ -866,13 +866,13 @@ public class LocoNetSlot {
     }
 
     /**
-     * Sets F9 through F28 (as appropriate) from data extracted from LocoNet 
+     * Sets F9 through F28 (as appropriate) from data extracted from LocoNet
      * "OPC_IMM_PACKET" message.
-     * <p>If the pkt parameter does not contain data from an appropriate 
+     * <p>If the pkt parameter does not contain data from an appropriate
      * OPC_IMM_PACKET message, the pkt is ignored and the slot object remains
      * unchanged.
      * <p>
-     * @param pkt is a "long" consisting of four bytes extracted from a LocoNet 
+     * @param pkt is a "long" consisting of four bytes extracted from a LocoNet
      * "OPC_IMM_PACKET" message.
      * <p>
      * {@link SlotManager#getDirectDccPacket()}
@@ -926,8 +926,8 @@ public class LocoNetSlot {
     }
 
     /**
-     * Sets the object's ID value and returns a LocoNet message to inform the 
-     * command station that the throttle ID has been changed. 
+     * Sets the object's ID value and returns a LocoNet message to inform the
+     * command station that the throttle ID has been changed.
      * @param newID - the new ID number to set into the slot object
      * @return a LocoNet message containing a "Slot Write" message to inform the
      * command station that a specific throttle is controlling the slot.
@@ -987,7 +987,7 @@ public class LocoNetSlot {
      * Creates a LocoNet "OPC_WR_SL_DATA" message containing the current state of
      * the LocoNetSlot object.
      * <p>
-     * @return a LocoNet message which can be used to inform the command station 
+     * @return a LocoNet message which can be used to inform the command station
      * of a change in the slot contents.
      */
     public LocoNetMessage writeSlot() {
@@ -1054,7 +1054,7 @@ public class LocoNetSlot {
     }
 
     /**
-     * Returns the timestamp when this LocoNetSlot was updated by some LocoNet 
+     * Returns the timestamp when this LocoNetSlot was updated by some LocoNet
      * message.
      * <p>
      * @return last time the slot info was updated
@@ -1089,12 +1089,12 @@ public class LocoNetSlot {
      * @return the effective &lt;TRK&gt; byte
      */
     public int getTrackStatus() { return trk; }
-    
+
     /**
      * Set the track status byte (location 7)
      * <p>
-     * Note that setting the LocoNetSlot object's track status may result in a 
-     * change to the command station's actual track status if the slot's status 
+     * Note that setting the LocoNetSlot object's track status may result in a
+     * change to the command station's actual track status if the slot's status
      * is communicated to the command station via an OPC_WR_DL_DATA LocoNet message.
      * <p>
      * @param status is the new track status value.
@@ -1120,7 +1120,7 @@ public class LocoNetSlot {
     /**
      * For fast-clock slot, set "days" value.
      * <p>
-     * Note that the new days value is not effective until a LocoNet 
+     * Note that the new days value is not effective until a LocoNet
      * message is sent which writes the fast-clock slot data.
      * <p>
      * This method logs an error if invoked for a slot other than the fast-clock slot.
@@ -1156,7 +1156,7 @@ public class LocoNetSlot {
     /**
      * For fast-clock slot, set "hours" value.
      * <p>
-     * Note that the new hours value is not effective until a LocoNet 
+     * Note that the new hours value is not effective until a LocoNet
      * message is sent which writes the fast-clock slot data.
      * <p>
      * This method logs an error if invoked for a slot other than the fast-clock slot.
@@ -1192,7 +1192,7 @@ public class LocoNetSlot {
     /**
      * For fast-clock slot, set "minutes" value.
      * <p>
-     * Note that the new minutes value is not effective until a LocoNet 
+     * Note that the new minutes value is not effective until a LocoNet
      * message is sent which writes the fast-clock slot data.
      * <p>
      * This method logs an error if invoked for a slot other than the fast-clock slot.
@@ -1230,7 +1230,7 @@ public class LocoNetSlot {
     /**
      * Set the "frac_mins" value.
      * <p>
-     * Note that the new fractional minutes value is not effective until a LocoNet 
+     * Note that the new fractional minutes value is not effective until a LocoNet
      * message is sent which writes the fast-clock slot data.
      * <p>
      * This method logs an error if invoked for a slot other than the fast-clock slot.
@@ -1267,7 +1267,7 @@ public class LocoNetSlot {
     /**
      * For fast-clock slot, set "rate" value.
      * <p>
-     * Note that the new rate is not effective until a LocoNet message is sent 
+     * Note that the new rate is not effective until a LocoNet message is sent
      * which writes the fast-clock slot data.
      * <p>
      * This method logs an error if invoked for a slot other than the fast-clock slot.
