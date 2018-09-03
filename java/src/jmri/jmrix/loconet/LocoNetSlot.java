@@ -32,189 +32,658 @@ import org.slf4j.LoggerFactory;
  */
 public class LocoNetSlot {
 
+    // create a specific slot
+    /**
+     * Create a slot based solely on a slot number.  The remainder of the slot is
+     * left un-initialized.
+     * <p>
+     * @param slotNum - slot number to be assigned to the new LocoNetSlot object
+     */
+    public LocoNetSlot(int slotNum) {
+        slot = slotNum;
+    }
+
+    /**
+     * Creates a slot object based on the contents of a LocoNet message.
+     * The slot number is assumed to be found in byte 2 of the message
+     * <p>
+     * @param l - a LocoNet message
+     * @throws LocoNetException if the slot does not have an easily-found
+     * slot number
+     */
+    public LocoNetSlot(LocoNetMessage l) throws LocoNetException {
+        // TODO: Consider limiting the types of LocoNet message which can be
+        // used to construct the object to only LocoNet slot write or slot
+        // report messages, since a LocoNetSlot object constructed from a LocoNet
+        // "speed" message or "dir/func" message does not give any other useful
+        // information for object initialization.
+        slot = l.getElement(2);
+        setSlot(l);
+    }
+
     // accessors to specific information
+    /**
+     * Returns the slot number which was either specified or inferred at object 
+     * creation time.
+     * <p>
+     * @return the slot number
+     */
     public int getSlot() {
         return slot;
     }  // cannot modify the slot number once created
 
 
-    /** Get decoder mode.
-     * Possible values are  
+    /** 
+     * Get decoder mode.
+     * 
+     * The decoder (operating) mode is taken from those bits in the slot's STAT 
+     * byte which reflect the "speed steps" and "consisting" mode.  Note that 
+     * the other bits from the STAT byte are not visible via this method.
+     * this
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, these bits
+     * may have other meanings.
+     * <p>
+     * Possible values are
      * {@link LnConstants#DEC_MODE_128A},
      * {@link LnConstants#DEC_MODE_28A},
      * {@link LnConstants#DEC_MODE_128},
      * {@link LnConstants#DEC_MODE_14},
      * {@link LnConstants#DEC_MODE_28TRI},
      * {@link LnConstants#DEC_MODE_28}
+     * <p>
+     * @return the encoded decoder operating mode.
      */
     public int decoderType() {
         return stat & LnConstants.DEC_MODE_MASK;
     }
 
-    /** Get slot status.
-     * Possible values are 
+    /** 
+     * Get slot status.
+     * <p>
+     * These bits are set based on the STAT byte as seen in LocoNet slot write and 
+     * slot read messages.  These bits determine whether the command station is 
+     * actively "refreshing" the loco's speed and direction information on the 
+     * DCC track signal, and whether the slot is able to be re-assigned for use 
+     * by another locomotive.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, these bits
+     * may have other meanings.
+     * <p>
+     * This returns only those bits of the slot's STAT byte which are related to
+     * the slot's "status". 
+     * <p>
+     * Possible values are
      * {@link LnConstants#LOCO_IN_USE},
      * {@link LnConstants#LOCO_IDLE},
      * {@link LnConstants#LOCO_COMMON},
      * {@link LnConstants#LOCO_FREE}
+     * @return the slot status bits associated with the slot
      */
     public int slotStatus() {
         return stat & LnConstants.LOCOSTAT_MASK;
     }
 
+    /** 
+     * Get secondary slot status.
+     * <p>
+     * These bits are set based on the STAT2 byte as seen in LocoNet slot write and 
+     * slot read messages.  These bits determine how the command station interprets
+     * the "address" field of the slot.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, these bits
+     * may have other meanings.
+     * <p>
+     * This returns only those bits of the slot's STAT2 byte which are related to
+     * the slot's "secondary status". 
+     * <p>
+     * @return the slot secondary status bits associated with the slot
+     */
+
     public int ss2() {
         return ss2;
     }
 
-    /** Get consist status.
-     * Possible values are 
+    /** 
+     * Get consist status.
+     * <p>
+     * This returns only those bits of the slot's STAT byte which are related to
+     * the slot's "consisting status". 
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, these bits
+     * may have other meanings.
+     * <p>
+     * Possible values are
      * {@link LnConstants#CONSIST_NO},
      * {@link LnConstants#CONSIST_TOP},
      * {@link LnConstants#CONSIST_MID},
      * {@link LnConstants#CONSIST_SUB}
+     * @return 
      */
     public int consistStatus() {
         return stat & LnConstants.CONSIST_MASK;
     }
 
     // direction and functions
+    /**
+     * Returns the direction of loco movement which applies when the slot's speed
+     * is set for movement.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if slot is set for forward movement, else false
+     */
     public boolean isForward() {
         return 0 == (dirf & LnConstants.DIRF_DIR);
     }
 
+    /**
+     * Returns the slot's F0 state
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F0 is "on", else false
+     */
     public boolean isF0() {
+        // TODO: Consider throwing an exception (here and in similar methods) 
+        // if the slot is one of the "special" slots where the slot is not 
+        // storing mobile decoder funciton state in the associated bit.
         return 0 != (dirf & LnConstants.DIRF_F0);
     }
 
+    /**
+     * Returns the slot's F1 state
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F1 is "on", else false
+     */
     public boolean isF1() {
         return 0 != (dirf & LnConstants.DIRF_F1);
     }
 
+    /**
+     * Returns the slot's F2 state
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F2 is "on", else false
+     */
     public boolean isF2() {
         return 0 != (dirf & LnConstants.DIRF_F2);
     }
 
+    /**
+     * Returns the slot's F3 state
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F3 is "on", else false
+     */
     public boolean isF3() {
         return 0 != (dirf & LnConstants.DIRF_F3);
     }
 
+    /**
+     * Returns the slot's F4 state
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F4 is "on", else false
+     */
     public boolean isF4() {
         return 0 != (dirf & LnConstants.DIRF_F4);
     }
 
+    /**
+     * Returns the slot's F5 state
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F5 is "on", else false
+     */
     public boolean isF5() {
         return 0 != (snd & LnConstants.SND_F5);
     }
 
+    /**
+     * Returns the slot's F6 state
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F6 is "on", else false
+     */
     public boolean isF6() {
         return 0 != (snd & LnConstants.SND_F6);
     }
 
+    /**
+     * Returns the slot's F7 state
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F7 is "on", else false
+     */
     public boolean isF7() {
         return 0 != (snd & LnConstants.SND_F7);
     }
 
+    /**
+     * Returns the slot's F8 state
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F8 is "on", else false
+     */
     public boolean isF8() {
         return 0 != (snd & LnConstants.SND_F8);
     }
 
+    /**
+     * Returns the slot's F9 state
+     * <p>
+     * Some command stations do not actively remember the state of this function.
+     * JMRI attempts to track the messages which control this function, but may not
+     * reliably do so in some cases.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F9 is "on", else false
+     */
     public boolean isF9() {
         return localF9;
     }
 
+    /**
+     * Returns the slot's F10 state
+     * <p>
+     * Some command stations do not actively remember the state of this function.
+     * JMRI attempts to track the messages which control this function, but may not
+     * reliably do so in some cases.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F10 is "on", else false
+     */
     public boolean isF10() {
         return localF10;
     }
 
+    /**
+     * Returns the slot's F11 state
+     * <p>
+     * Some command stations do not actively remember the state of this function.
+     * JMRI attempts to track the messages which control this function, but may not
+     * reliably do so in some cases.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F11 is "on", else false
+     */
     public boolean isF11() {
         return localF11;
     }
 
+    /**
+     * Returns the slot's F12 state
+     * <p>
+     * Some command stations do not actively remember the state of this function.
+     * JMRI attempts to track the messages which control this function, but may not
+     * reliably do so in some cases.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F12 is "on", else false
+     */
     public boolean isF12() {
         return localF12;
     }
 
+    /**
+     * Returns the slot's F13 state
+     * <p>
+     * Some command stations do not actively remember the state of this function.
+     * JMRI attempts to track the messages which control this function, but may not
+     * reliably do so in some cases.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F13 is "on", else false
+     */
     public boolean isF13() {
         return localF13;
     }
 
+    /**
+     * Returns the slot's F14 state
+     * <p>
+     * Some command stations do not actively remember the state of this function.
+     * JMRI attempts to track the messages which control this function, but may not
+     * reliably do so in some cases.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F14 is "on", else false
+     */
     public boolean isF14() {
         return localF14;
     }
 
+    /**
+     * Returns the slot's F15 state
+     * <p>
+     * Some command stations do not actively remember the state of this function.
+     * JMRI attempts to track the messages which control this function, but may not
+     * reliably do so in some cases.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F15 is "on", else false
+     */
     public boolean isF15() {
         return localF15;
     }
 
+    /**
+     * Returns the slot's F16 state
+     * <p>
+     * Some command stations do not actively remember the state of this function.
+     * JMRI attempts to track the messages which control this function, but may not
+     * reliably do so in some cases.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F16 is "on", else false
+     */
     public boolean isF16() {
         return localF16;
     }
 
+    /**
+     * Returns the slot's F17 state
+     * <p>
+     * Some command stations do not actively remember the state of this function.
+     * JMRI attempts to track the messages which control this function, but may not
+     * reliably do so in some cases.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F17 is "on", else false
+     */
     public boolean isF17() {
         return localF17;
     }
 
+    /**
+     * Returns the slot's F1 state
+     * <p>
+     * Some command stations do not actively remember the state of this function.
+     * JMRI attempts to track the messages which control this function, but may not
+     * reliably do so in some cases.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F1 is "on", else false
+     */
     public boolean isF18() {
         return localF18;
     }
 
+    /**
+     * Returns the slot's F19 state
+     * <p>
+     * Some command stations do not actively remember the state of this function.
+     * JMRI attempts to track the messages which control this function, but may not
+     * reliably do so in some cases.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F19 is "on", else false
+     */
     public boolean isF19() {
         return localF19;
     }
 
+    /**
+     * Returns the slot's F20 state
+     * <p>
+     * Some command stations do not actively remember the state of this function.
+     * JMRI attempts to track the messages which control this function, but may not
+     * reliably do so in some cases.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F20 is "on", else false
+     */
     public boolean isF20() {
         return localF20;
     }
 
+    /**
+     * Returns the slot's F21 state
+     * <p>
+     * Some command stations do not actively remember the state of this function.
+     * JMRI attempts to track the messages which control this function, but may not
+     * reliably do so in some cases.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F21 is "on", else false
+     */
     public boolean isF21() {
         return localF21;
     }
 
+    /**
+     * Returns the slot's F22 state
+     * <p>
+     * Some command stations do not actively remember the state of this function.
+     * JMRI attempts to track the messages which control this function, but may not
+     * reliably do so in some cases.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F22 is "on", else false
+     */
     public boolean isF22() {
         return localF22;
     }
 
+    /**
+     * Returns the slot's F23 state
+     * <p>
+     * Some command stations do not actively remember the state of this function.
+     * JMRI attempts to track the messages which control this function, but may not
+     * reliably do so in some cases.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F23 is "on", else false
+     */
     public boolean isF23() {
         return localF23;
     }
 
+    /**
+     * Returns the slot's F24 state
+     * <p>
+     * Some command stations do not actively remember the state of this function.
+     * JMRI attempts to track the messages which control this function, but may not
+     * reliably do so in some cases.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F24 is "on", else false
+     */
     public boolean isF24() {
         return localF24;
     }
 
+    /**
+     * Returns the slot's F25 state
+     * <p>
+     * Some command stations do not actively remember the state of this function.
+     * JMRI attempts to track the messages which control this function, but may not
+     * reliably do so in some cases.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F25 is "on", else false
+     */
     public boolean isF25() {
         return localF25;
     }
 
+    /**
+     * Returns the slot's F26 state
+     * <p>
+     * Some command stations do not actively remember the state of this function.
+     * JMRI attempts to track the messages which control this function, but may not
+     * reliably do so in some cases.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F26 is "on", else false
+     */
     public boolean isF26() {
         return localF26;
     }
 
+    /**
+     * Returns the slot's F27 state
+     * <p>
+     * Some command stations do not actively remember the state of this function.
+     * JMRI attempts to track the messages which control this function, but may not
+     * reliably do so in some cases.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F27 is "on", else false
+     */
     public boolean isF27() {
         return localF27;
     }
 
+    /**
+     * Returns the slot's F28 state
+     * <p>
+     * Some command stations do not actively remember the state of this function.
+     * JMRI attempts to track the messages which control this function, but may not
+     * reliably do so in some cases.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, this bit
+     * may have other meanings.
+     * <p>
+     * @return true if F28 is "on", else false
+     */
     public boolean isF28() {
         return localF28;
     }
 
     // loco address, speed
+    /**
+     * Returns the mobile decoder address associated with the slot.
+     * <p>
+     * Note that the returned address can encode a "short" address, a "long" 
+     * address or an "alias".
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, these bits
+     * may have other meanings.
+     * <p>
+     * @return the mobile decoder address
+     */
     public int locoAddr() {
         return addr;
     }
 
+    /**
+     * Returns the mobile decoder speed associated with the slot
+     * <p>
+     * If this slot object is consisted to another slot and is not the "top" of 
+     * the consist, then the return value is the slot number to which this slot 
+     * is consisted.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, these bits
+     * may have other meanings.
+     * <p>
+     * @return 
+     */
     public int speed() {
         return spd;
     }
 
+    /**
+     * Returns the mobile decoder direction and F0-F4 bits, as used in the DIRF bits
+     * of various LocoNet messages.
+     * <p>
+     * If this slot object is consisted to another slot and is not the "top" of 
+     * the consist, then the "direction" bit reflects the relative direction of this
+     * loco with respect to the loco it is consisted to, where "Reverse" means it 
+     * travels in the "reverse" direction with respect to the loco to which it is 
+     * consisted.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, these bits
+     * may have other meanings.
+     * <p>
+     * @return 
+     */
     public int dirf() {
         return dirf;
     }
 
+    /**
+     * Returns the mobile decoder F5-F8 bits, as used in the DIRF bits
+     * of various LocoNet messages.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, these bits
+     * may have other meanings.
+     * <p>
+     * @return 
+     */
     public int snd() {
         return snd;
     }
 
+    /**
+     * Returns the ID associated with the slot.
+     * <p>
+     * The returned value is a 14-bit integer comprised of ID1 as the least-significant
+     * bits and ID2 as the most-significant bits.
+     * <p>
+     * For slot numbers not normally associated with mobile decoders, these bits
+     * may have other meanings.
+     * <p>
+     * @return 
+     */
     public int id() {
         return id;
     }
@@ -229,16 +698,6 @@ public class LocoNetSlot {
     }
 
     // global track status should be reference through SlotManager
-    // create a specific slot
-    public LocoNetSlot(int slotNum) {
-        slot = slotNum;
-    }
-
-    public LocoNetSlot(LocoNetMessage l) throws LocoNetException {
-        slot = l.getElement(2);
-        setSlot(l);
-    }
-
     boolean localF9 = false;
     boolean localF10 = false;
     boolean localF11 = false;
@@ -261,6 +720,17 @@ public class LocoNetSlot {
     boolean localF28 = false;
 
     // methods to interact with LocoNet
+
+    /**
+     * Update the slot object to reflect the specific contents of a
+     * LocoNet message.
+     * <p>Note that the object's "slot" field
+     * is not updated by this method.
+     * <p>
+     * @param l - a LocoNet message
+     * @throws LocoNetException if the message is not one which
+     *      contains slot-related data
+     */
     @SuppressWarnings("fallthrough")
     @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     public void setSlot(LocoNetMessage l) throws LocoNetException { // exception if message can't be parsed
@@ -311,7 +781,7 @@ public class LocoNetSlot {
                 return;
             }
             case LnConstants.OPC_LOCO_DIRF: {
-                // When slot is consist-mid or consist-sub, this LocoNet Opcode 
+                // When slot is consist-mid or consist-sub, this LocoNet Opcode
                 // can only change the functions; direction cannot be changed.
                 if (((stat & LnConstants.CONSIST_MASK) == LnConstants.CONSIST_MID) ||
                         ((stat & LnConstants.CONSIST_MASK) == LnConstants.CONSIST_SUB)) {
@@ -332,7 +802,7 @@ public class LocoNetSlot {
                     dirf += ((LnConstants.DIRF_DIR | LnConstants.DIRF_F0
                             | LnConstants.DIRF_F1 | LnConstants.DIRF_F2
                             | LnConstants.DIRF_F3 | LnConstants.DIRF_F4) & l.getElement(2));
-                    
+
                 }
                 notifySlotListeners();
                 lastUpdateTime = System.currentTimeMillis();
@@ -350,7 +820,7 @@ public class LocoNetSlot {
                 // slot is mid-consist or sub-consist.
                 if (((stat & LnConstants.CONSIST_MASK) != LnConstants.CONSIST_MID) &&
                         ((stat & LnConstants.CONSIST_MASK) != LnConstants.CONSIST_SUB)) {
-                    
+
                     spd = l.getElement(2);
                     notifySlotListeners();
                     lastUpdateTime = System.currentTimeMillis();
@@ -360,7 +830,7 @@ public class LocoNetSlot {
                 return;
             }
             case LnConstants.OPC_CONSIST_FUNC: {
-                // This opcode can be sent to a slot which is marked as mid-consist 
+                // This opcode can be sent to a slot which is marked as mid-consist
                 // or sub-consist.  Do not pay attention to this message if the
                 // slot is not mid-consist or sub-consist.
                 if (((stat & LnConstants.CONSIST_MASK) == LnConstants.CONSIST_MID) ||
@@ -434,7 +904,7 @@ public class LocoNetSlot {
         l.setElement(2, (stat & ~LnConstants.DEC_MODE_MASK) | status);
         return l;
     }
-    
+
     public LocoNetMessage writeThrottleID(int newID) {
         id = (newID & 0x17F);
         return writeSlot();
@@ -464,15 +934,15 @@ public class LocoNetSlot {
         l.setOpCode(LnConstants.OPC_SLOT_STAT1);
         l.setElement(1, slot);
         l.setElement(2, (stat & ~LnConstants.LOCOSTAT_MASK) | status);
-        
+
     }
 
     /**
      * Create LocoNet message which dispatches this slot
-     * 
-     * Note that the invoking method ought to invoke the slot's NotifySlotListeners 
+     *
+     * Note that the invoking method ought to invoke the slot's NotifySlotListeners
      * method to inform any other interested parties that the slot status has changed.
-     * 
+     *
      * @return LocoNet message which "dispatches" the slot
     */
     public LocoNetMessage dispatchSlot() {
@@ -484,15 +954,15 @@ public class LocoNetSlot {
     }
 
     /**
-     * Create a LocoNet OPC_SLOT_STAT1 message which releases this slot to the 
+     * Create a LocoNet OPC_SLOT_STAT1 message which releases this slot to the
      * "Common" state
-     * 
+     *
      * The invoking method must send the returned LocoNet message to LocoNet in
-     * order to have a useful effect.  
-     * 
-     * Upon receipt of the echo of the transmitted OPC_SLOT_STAT1 message, the 
+     * order to have a useful effect.
+     *
+     * Upon receipt of the echo of the transmitted OPC_SLOT_STAT1 message, the
      * LocoNetSlot object will notify its listeners.
-     * 
+     *
      * @return LocoNet message which "releases" the slot to the "Common" state
     */
     public LocoNetMessage releaseSlot() {
@@ -579,7 +1049,7 @@ public class LocoNetSlot {
      * Set the track status byte (location 7)
      */
     public void setTrackStatus(int status) { trk = status; }
-    
+
     /**
      * Only valid for fast-clock slot.
      *
