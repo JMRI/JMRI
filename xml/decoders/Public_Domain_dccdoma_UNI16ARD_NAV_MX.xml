@@ -14,6 +14,7 @@
 <!-- for more details.                                                      -->
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no" >
+    <version author="Petr Šídlo sidlo64@hotmail.com" version="2" lastUpdated="20180827"/>
     <version author="Petr Šídlo sidlo64@hotmail.com" version="1" lastUpdated="20180805"/>
     <!-- Accessory decoder  -->
     <!-- Description of circuit diagram https://sites.google.com/site/sidloweb/elektrika/22-uni16ard -->
@@ -77,23 +78,39 @@
         <tooltip xml:lang="cs">ROCO adresování je NMRA adresování + 4.</tooltip>
       </variable>
     
-      <variable CV="39" item="Fade" default="3">
+      <variable CV="39" item="Fade" default="6">
       	<enumVal>
       		<enumChoice choice="No effect" value="0" >
                     <choice>No effect</choice>
                     <choice xml:lang="cs">Bez efektu</choice>
                 </enumChoice>
-      		<enumChoice choice="Fast" value="1" >
-                    <choice>Fast</choice>
-                    <choice xml:lang="cs">Rychle</choice>
+      		<enumChoice choice="80 ms" value="1" >
+                    <choice>80 ms</choice>
+                    <choice xml:lang="cs">80 ms</choice>
                 </enumChoice>
-      		<enumChoice choice="Medium" value="2" >
-                    <choice>Medium</choice>
-                    <choice xml:lang="cs">Středně</choice>
+      		<enumChoice choice="160 ms" value="2" >
+                    <choice>160 ms</choice>
+                    <choice xml:lang="cs">160 ms</choice>
                 </enumChoice>
-      		<enumChoice choice="Slow" value="3" >
-                    <choice>Slow</choice>
-                    <choice xml:lang="cs">Pomalu</choice>
+      		<enumChoice choice="240 ms" value="3" >
+                    <choice>240 ms</choice>
+                    <choice xml:lang="cs">240 ms</choice>
+                </enumChoice>
+      		<enumChoice choice="320 ms" value="4" >
+                    <choice>320 ms</choice>
+                    <choice xml:lang="cs">320 ms</choice>
+                </enumChoice>
+      		<enumChoice choice="400 ms" value="5" >
+                    <choice>400 ms</choice>
+                    <choice xml:lang="cs">400 ms</choice>
+                </enumChoice>
+      		<enumChoice choice="480 ms" value="6" >
+                    <choice>480 ms</choice>
+                    <choice xml:lang="cs">480 ms</choice>
+                </enumChoice>
+      		<enumChoice choice="560 ms" value="7" >
+                    <choice>560 ms</choice>
+                    <choice xml:lang="cs">560 ms</choice>
                 </enumChoice>
       	</enumVal>
         <label>Fade:</label>
