@@ -99,6 +99,14 @@
       migrated to the newer JMRI-specific methods as time is
       available to keep our code just a tiny bit cleaner and more
       flexible.) 
+      
+      <p>
+      If you do write a method that has to be called on a particular
+      thread, please annotate it with a 
+      <a href="http://jmri.org/JavaDoc/doc/jmri/InvokeOnGuiThread.html">@InvokeOnGuiThread</a>
+      or
+      <a href="http://jmri.org/JavaDoc/doc/jmri/InvokeOnLayoutThread.html">@InvokeOnLayoutThread</a>
+      to ease later static checking.
   
 <h3>Ending Threads</h3>
 
