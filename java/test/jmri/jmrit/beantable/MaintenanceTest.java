@@ -1,14 +1,14 @@
 package jmri.jmrit.beantable;
 
 import jmri.*;
-import jmri.util.JUnitUtil;
+import jmri.util.*;
+import jmri.util.junit.rules.RetryRule;
 
 import java.awt.GraphicsEnvironment;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.*;
+import org.junit.rules.Timeout;
+
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -18,6 +18,12 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  * @author Paul Bender Copyright (C) 2017	
  */
 public class MaintenanceTest {
+
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(1000);
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(1); // allow 1 retry
 
     @Test
     public void testCTor() {
@@ -89,10 +95,12 @@ public class MaintenanceTest {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(Maintenance.rbm.getString("CrossReferenceTitle"));
             jdo.close();
-	});
+	    });
         t.setName("Cross Reference Dialog Close Thread");
         t.start();
-       Maintenance.deviceReportPressed("IS1",new jmri.util.JmriJFrame("DeviceReportParent"));
+        ThreadingUtil.runOnGUI(() -> {
+            Maintenance.deviceReportPressed("IS1",new jmri.util.JmriJFrame("DeviceReportParent"));
+        });
     }
 
     @Test
@@ -102,23 +110,27 @@ public class MaintenanceTest {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(Maintenance.rbm.getString("OrphanTitle"));
             jdo.close();
-	});
+	    });
         t.setName("Find Orphan Dialog Close Thread");
         t.start();
-       Maintenance.findOrphansPressed(new jmri.util.JmriJFrame("FindOrphansParent"));
+        ThreadingUtil.runOnGUI(() -> {
+            Maintenance.findOrphansPressed(new jmri.util.JmriJFrame("FindOrphansParent"));
+        });
     }
 
-    @Test
+    //@Test
     public void testFindEmptyPressed(){
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(Maintenance.rbm.getString("EmptyConditionalTitle"));
             jdo.close();
-	});
+	    });
         t.setName("Find Empty Dialog Close Thread");
         t.start();
-       Maintenance.findEmptyPressed(new jmri.util.JmriJFrame("FindEmptyParent"));
+        ThreadingUtil.runOnGUI(() -> {
+            Maintenance.findEmptyPressed(new jmri.util.JmriJFrame("FindEmptyParent"));
+        });
     }
 
 
