@@ -17,7 +17,7 @@ public class SerialDCCppPacketizerTest extends jmri.jmrix.dccpp.DCCppPacketizerT
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         tc = new SerialDCCppPacketizer(new jmri.jmrix.dccpp.DCCppCommandStation()) {
             @Override
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {

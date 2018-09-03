@@ -1,6 +1,5 @@
 package jmri.util;
 
-import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
 import java.util.*;
 import org.apache.log4j.*;

@@ -105,7 +105,7 @@ public class Z21XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrT
     @Override
     @Before
     public void setUp(){
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         // prepare an interface, register
         lnis = new XNetInterfaceScaffold(new RocoZ21CommandStation());
         // create and register the manager object

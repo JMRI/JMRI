@@ -22,7 +22,7 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBa
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
 
         // replace the SerialTrafficController
         memo = new GrapevineSystemConnectionMemo();

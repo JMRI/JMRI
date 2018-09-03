@@ -532,7 +532,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             if (Control.SHOW_PROPERTY) {
                 log.debug("Update train table row: {} name: {}", row, train.getName());
             }
-            if (row >= 0) {
+            if (row >= 0 && _table != null) {
                 int viewRow = _table.convertRowIndexToView(row);
                 // if there are issues with thread locking here, this needs to
                 // be refactored so the panel holding the table is listening for
