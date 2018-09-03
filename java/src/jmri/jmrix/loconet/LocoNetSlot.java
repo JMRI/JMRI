@@ -952,19 +952,6 @@ public class LocoNetSlot {
     }
 
     /**
-     * Update the status mode bits in STAT1 (D5, D4)
-     *
-     * @param status New values for STAT1 (D5, D4)
-     */
-    public void sendWriteStatus(int status) {
-        LocoNetMessage l = new LocoNetMessage(4);
-        l.setOpCode(LnConstants.OPC_SLOT_STAT1);
-        l.setElement(1, slot);
-        l.setElement(2, (stat & ~LnConstants.LOCOSTAT_MASK) | status);
-
-    }
-
-    /**
      * Create LocoNet message which dispatches this slot
      *
      * Note that the invoking method ought to invoke the slot's NotifySlotListeners
