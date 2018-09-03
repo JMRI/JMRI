@@ -71,6 +71,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
     JPanel matrixMastPanel = new JPanel();
     char[] bitString;
     char[] unLitPanelBits;
+    int numberOfActiveAspects;
 
     String emptyChars = "000000"; // size of String = MAXMATRIXBITS; add 7th 0 in order to set > 6
     char[] emptyBits = emptyChars.toCharArray();
@@ -252,7 +253,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         // check if bit sets are identical
         if (identicalBits()) {
             // error dialog
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("AspectMastBitsWarning", mastname),
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("AspectMastBitsWarning", (int) Math.sqrt(numberOfActiveAspects), numberOfActiveAspects),
                     Bundle.getMessage("WarningTitle"),
                     JOptionPane.ERROR_MESSAGE);
             log.warn("Identical bits on panel");
@@ -709,6 +710,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
      */
     private boolean identicalBits() {
         boolean identical = false;
+        numberOfActiveAspects = 0;
         Collection<String> seenBits = new HashSet<String>(); // a fast access, no duplicates Collection of bit combinations
         for (String aspect : matrixAspect.keySet()) {
             // check per aspect
@@ -717,11 +719,12 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
             } else if (seenBits.contains(String.valueOf(matrixAspect.get(aspect).trimAspectBits()))) {
                 identical = true;
                 log.debug("-found duplicate {}", String.valueOf(matrixAspect.get(aspect).trimAspectBits()));
-                break;
+                // break; // don't break, so we can count number of enabled aspects for this mast
             } else {
                 seenBits.add(String.valueOf(matrixAspect.get(aspect).trimAspectBits())); // convert back from char[] to String
                 log.debug("-added new {}; seenBits = {}", String.valueOf(matrixAspect.get(aspect).trimAspectBits()), seenBits.toString());
             }
+            ++numberOfActiveAspects;
         }
         return identical;
     }
