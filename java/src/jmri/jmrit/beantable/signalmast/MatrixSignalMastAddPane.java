@@ -565,8 +565,8 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
             MatrixAspectPanel aspectpanel = new MatrixAspectPanel(aspect, bitString); // build 1 line, picking up bitString
             matrixAspect.put(aspect, aspectpanel); // store that line
         }
-        // sort matrixAspect HashTable, which at this point is not sorted
-        // TODO
+        // refresh aspects list
+        // TODO sort matrixAspect HashTable, which at this point is not sorted
         matrixMastPanel.removeAll();
         for (String aspect : matrixAspect.keySet()) {
             matrixMastPanel.add(matrixAspect.get(aspect).getPanel());
@@ -709,19 +709,18 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
      */
     private boolean identicalBits() {
         boolean identical = false;
-        Collection<char[]> seenBits = new HashSet<char[]>(); // fast access, no duplicates Set of bit combinations
+        Collection<String> seenBits = new HashSet<String>(); // a fast access, no duplicates Collection of bit combinations
         for (String aspect : matrixAspect.keySet()) {
             // check per aspect
-            log.debug("aspect {} checked", aspect);
             if (matrixAspect.get(aspect).isAspectDisabled()) {
                 continue; // skip disabled aspects
-            } else if (seenBits.contains(matrixAspect.get(aspect).trimAspectBits())) {
+            } else if (seenBits.contains(String.valueOf(matrixAspect.get(aspect).trimAspectBits()))) {
                 identical = true;
-                log.debug("duplicate {} found", matrixAspect.get(aspect).trimAspectBits());
+                log.debug("-found duplicate {}", String.valueOf(matrixAspect.get(aspect).trimAspectBits()));
                 break;
             } else {
-                seenBits.add(matrixAspect.get(aspect).trimAspectBits());
-                log.debug("added {}", matrixAspect.get(aspect).trimAspectBits());
+                seenBits.add(String.valueOf(matrixAspect.get(aspect).trimAspectBits())); // convert back from char[] to String
+                log.debug("-added new {}; seenBits = {}", String.valueOf(matrixAspect.get(aspect).trimAspectBits()), seenBits.toString());
             }
         }
         return identical;
