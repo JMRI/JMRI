@@ -635,7 +635,7 @@ public class LocoNetSlot {
      * For slot numbers not normally associated with mobile decoders, these bits
      * may have other meanings.
      * <p>
-     * @return 
+     * @return the current speed step associated with the slot.
      */
     public int speed() {
         return spd;
@@ -654,27 +654,27 @@ public class LocoNetSlot {
      * For slot numbers not normally associated with mobile decoders, these bits
      * may have other meanings.
      * <p>
-     * @return 
+     * @return the &lt;DIRF&gt; byte value
      */
     public int dirf() {
         return dirf;
     }
 
     /**
-     * Returns the mobile decoder F5-F8 bits, as used in the DIRF bits
+     * Returns the mobile decoder F5-F8 bits, as used in the SND bits
      * of various LocoNet messages.
      * <p>
      * For slot numbers not normally associated with mobile decoders, these bits
      * may have other meanings.
      * <p>
-     * @return 
+     * @return the &lt;SND&gt; byte value
      */
     public int snd() {
         return snd;
     }
 
     /**
-     * Returns the ID associated with the slot.
+     * Returns the "Throttle ID" associated with the slot.
      * <p>
      * The returned value is a 14-bit integer comprised of ID1 as the least-significant
      * bits and ID2 as the most-significant bits.
@@ -682,13 +682,24 @@ public class LocoNetSlot {
      * For slot numbers not normally associated with mobile decoders, these bits
      * may have other meanings.
      * <p>
-     * @return 
+     * @return an integer representing the throttle ID number
      */
     public int id() {
         return id;
     }
 
     // programmer track special case accessors
+    /**
+     * Returns the programmer command associated with the slot.
+     * <p>
+     * The returned value is taken from the <PCMD> byte of programmer slot read 
+     * and write LocoNet messages.
+     * <p>
+     * For slot numbers other than the programmer slot, these bits
+     * may have other meanings.
+     * <p>
+     * @return the &lt;PCMD&gt; byte
+     */
     public int pcmd() {
         return _pcmd;
     }
@@ -855,7 +866,16 @@ public class LocoNetSlot {
     }
 
     /**
-     * Load functions 9 through 28 from LocoNet "Set Direct" message.
+     * Sets F9 through F28 (as appropriate) from data extracted from LocoNet 
+     * "OPC_IMM_PACKET" message.
+     * <p>If the pkt parameter does not contain data from an appropriate 
+     * OPC_IMM_PACKET message, the pkt is ignored and the slot object remains
+     * unchanged.
+     * <p>
+     * @param pkt is a "long" consisting of four bytes extracted from a LocoNet 
+     * "OPC_IMM_PACKET" message.
+     * <p>
+     * {@link SlotManager#getDirectDccPacket()}
      */
     public void functionMessage(long pkt) {
         // parse for which set of functions
@@ -905,6 +925,13 @@ public class LocoNetSlot {
         return l;
     }
 
+    /**
+     * Sets the object's ID value and returns a LocoNet message to inform the 
+     * command station that the throttle ID has been changed. 
+     * @param newID - the new ID number to set into the slot object
+     * @return a LocoNet message containing a "Slot Write" message to inform the
+     * command station that a specific throttle is controlling the slot.
+     */
     public LocoNetMessage writeThrottleID(int newID) {
         id = (newID & 0x17F);
         return writeSlot();
@@ -969,6 +996,13 @@ public class LocoNetSlot {
         return writeStatus(LnConstants.LOCO_COMMON);
     }
 
+    /**
+     * Creates a LocoNet "OPC_WR_SL_DATA" message containing the current state of
+     * the LocoNetSlot object.
+     * <p>
+     * @return a LocoNet message which can be used to inform the command station 
+     * of a change in the slot contents.
+     */
     public LocoNetMessage writeSlot() {
         LocoNetMessage l = new LocoNetMessage(14);
         l.setOpCode(LnConstants.OPC_WR_SL_DATA);
@@ -1009,6 +1043,11 @@ public class LocoNetSlot {
     // data members to hold contact with the slot listeners
     final private List<SlotListener> slotListeners = new ArrayList<SlotListener>();
 
+    /**
+     * Registers a slot listener if it is not already registered.
+     * <p>
+     * @param l - a slot listener
+     */
     public synchronized void addSlotListener(SlotListener l) {
         // add only if not already registered
         if (!slotListeners.contains(l)) {
@@ -1016,16 +1055,30 @@ public class LocoNetSlot {
         }
     }
 
+    /**
+     * Un-registers a slot listener.
+     * <p>
+     * @param l - a slot listener
+     */
     public synchronized void removeSlotListener(SlotListener l) {
         if (slotListeners.contains(l)) {
             slotListeners.remove(l);
         }
     }
 
+    /**
+     * Returns the timestamp when this LocoNetSlot was updated by some LocoNet 
+     * message.
+     * <p>
+     * @return last time the slot info was updated
+     */
     public long getLastUpdateTime() {
         return lastUpdateTime;
     }
 
+    /**
+     * Notifies all listeners that this slot has been changed in some way.
+     */
     public void notifySlotListeners() {
         // make a copy of the listener list to synchronized not needed for transmit
         List<SlotListener> v;
@@ -1043,19 +1096,34 @@ public class LocoNetSlot {
 
     /**
      * Get the track status byte (location 7)
+     * <p>
+     * Note that the &lt;TRK&gt; byte is not accurate on some command stations.
+     * <p>
+     * @return the effective &lt;TRK&gt; byte
      */
     public int getTrackStatus() { return trk; }
+    
     /**
      * Set the track status byte (location 7)
+     * <p>
+     * Note that setting the LocoNetSlot object's track status may result in a 
+     * change to the command station's actual track status if the slot's status 
+     * is communicated to the command station via an OPC_WR_DL_DATA LocoNet message.
+     * <p>
+     * @param status is the new track status value.
      */
     public void setTrackStatus(int status) { trk = status; }
 
     /**
-     * Only valid for fast-clock slot.
-     *
+     * Return the days value from the slot.  Only valid for fast-clock slot.
+     * <p>
+     * This method logs an error if invoked for a slot other than the fast-clock slot.
+     * <p>
      * @return "Days" value currently in fast-clock slot.
      */
     public int getFcDays() {
+        // TODO: consider throwing a LocoNetException if issued for a slot other
+        // than the "fast clock slot".
         if (getSlot() != LnConstants.FC_SLOT) {
             log.error("getFcDays invalid for slot " + getSlot());
         }
@@ -1064,8 +1132,17 @@ public class LocoNetSlot {
 
     /**
      * For fast-clock slot, set "days" value.
+     * <p>
+     * Note that the new days value is not effective until a LocoNet 
+     * message is sent which writes the fast-clock slot data.
+     * <p>
+     * This method logs an error if invoked for a slot other than the fast-clock slot.
+     * <p>
+     * @param val is the new fast-clock "days" value
      */
     public void setFcDays(int val) {
+        // TODO: consider throwing a LocoNetException if issued for a slot other
+        // than the "fast clock slot".
         if (getSlot() != LnConstants.FC_SLOT) {
             log.error("setFcDays invalid for slot " + getSlot());
         }
@@ -1073,11 +1150,15 @@ public class LocoNetSlot {
     }
 
     /**
-     * Only valid for fast-clock slot.
-     *
+     * Return the hours value from the slot.  Only valid for fast-clock slot.
+     * <p>
+     * This method logs an error if invoked for a slot other than the fast-clock slot.
+     * <p>
      * @return "Hours" value currently stored in fast clock slot.
      */
     public int getFcHours() {
+        // TODO: consider throwing a LocoNetException if issued for a slot other
+        // than the "fast clock slot".
         if (getSlot() != LnConstants.FC_SLOT) {
             log.error("getFcHours invalid for slot " + getSlot());
         }
@@ -1087,8 +1168,17 @@ public class LocoNetSlot {
 
     /**
      * For fast-clock slot, set "hours" value.
+     * <p>
+     * Note that the new hours value is not effective until a LocoNet 
+     * message is sent which writes the fast-clock slot data.
+     * <p>
+     * This method logs an error if invoked for a slot other than the fast-clock slot.
+     * <p>
+     * @param val is the new fast-clock "hours" value
      */
     public void setFcHours(int val) {
+        // TODO: consider throwing a LocoNetException if issued for a slot other
+        // than the "fast clock slot".
         if (getSlot() != LnConstants.FC_SLOT) {
             log.error("setFcHours invalid for slot " + getSlot());
         }
@@ -1096,11 +1186,15 @@ public class LocoNetSlot {
     }
 
     /**
-     * Only valid for fast-clock slot.
-     *
+     * Return the minutes value from the slot.  Only valid for fast-clock slot.
+     * <p>
+     * This method logs an error if invoked for a slot other than the fast-clock slot.
+     * <p>
      * @return Return minutes value currently stored in the fast clock slot.
      */
     public int getFcMinutes() {
+        // TODO: consider throwing a LocoNetException if issued for a slot other
+        // than the "fast clock slot".
         if (getSlot() != LnConstants.FC_SLOT) {
             log.error("getFcMinutes invalid for slot " + getSlot());
         }
@@ -1110,8 +1204,17 @@ public class LocoNetSlot {
 
     /**
      * For fast-clock slot, set "minutes" value.
+     * <p>
+     * Note that the new minutes value is not effective until a LocoNet 
+     * message is sent which writes the fast-clock slot data.
+     * <p>
+     * This method logs an error if invoked for a slot other than the fast-clock slot.
+     * <p>
+     * @param val is the new fast-clock "minutes" value
      */
     public void setFcMinutes(int val) {
+        // TODO: consider throwing a LocoNetException if issued for a slot other
+        // than the "fast clock slot".
         if (getSlot() != LnConstants.FC_SLOT) {
             log.error("setFcMinutes invalid for slot " + getSlot());
         }
@@ -1119,13 +1222,18 @@ public class LocoNetSlot {
     }
 
     /**
-     * Only valid for fast-clock slot.
-     *
+     * Return the fractional minutes value from the slot.  Only valid for fast-
+     * clock slot.
+     * <p>
+     * This method logs an error if invoked for a slot other than the fast-clock slot.
+     * <p>
      * @return Return frac_mins field which is the number of 65ms ticks until
      *         then next minute rollover. These ticks step at the current fast
      *         clock rate
      */
     public int getFcFracMins() {
+        // TODO: consider throwing a LocoNetException if issued for a slot other
+        // than the "fast clock slot".
         if (getSlot() != LnConstants.FC_SLOT) {
             log.error("getFcFracMins invalid for slot " + getSlot());
         }
@@ -1133,9 +1241,18 @@ public class LocoNetSlot {
     }
 
     /**
-     * For fast-clock slot, set "frac_mins" value.
+     * Set the "frac_mins" value.
+     * <p>
+     * Note that the new fractional minutes value is not effective until a LocoNet 
+     * message is sent which writes the fast-clock slot data.
+     * <p>
+     * This method logs an error if invoked for a slot other than the fast-clock slot.
+     * <p>
+     * @param val is the new fast-clock "fractional minutes"
      */
     public void setFcFracMins(int val) {
+        // TODO: consider throwing a LocoNetException if issued for a slot other
+        // than the "fast clock slot".
         if (getSlot() != LnConstants.FC_SLOT) {
             log.error("setFcFracMins invalid for slot " + getSlot());
         }
@@ -1145,11 +1262,15 @@ public class LocoNetSlot {
     }
 
     /**
-     * Only valid for fast-clock slot.
-     *
+     * Get the fast-clock rate.  Only valid for fast-clock slot.
+     * <p>
+     * This method logs an error if invoked for a slot other than the fast-clock slot.
+     * <p>
      * @return Rate stored in fast clock slot.
      */
     public int getFcRate() {
+        // TODO: consider throwing a LocoNetException if issued for a slot other
+        // than the "fast clock slot".
         if (getSlot() != LnConstants.FC_SLOT) {
             log.error("getFcRate invalid for slot " + getSlot());
         }
@@ -1158,8 +1279,17 @@ public class LocoNetSlot {
 
     /**
      * For fast-clock slot, set "rate" value.
+     * <p>
+     * Note that the new rate is not effective until a LocoNet message is sent 
+     * which writes the fast-clock slot data.
+     * <p>
+     * This method logs an error if invoked for a slot other than the fast-clock slot.
+     * <p>
+     * @param val is the new fast-clock rate
      */
     public void setFcRate(int val) {
+        // TODO: consider throwing a LocoNetException if issued for a slot other
+        // than the "fast clock slot".
         if (getSlot() != LnConstants.FC_SLOT) {
             log.error("setFcRate invalid for slot " + getSlot());
         }
