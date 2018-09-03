@@ -46,12 +46,231 @@ public class LocoNetSlotTest {
 
     @Test
     public void testSetSlot() throws LocoNetException{
-        int ia[]={0xE7, 0x0E, 0x01, 0x33, 0x28, 0x00, 0x00, 0x47,
+        int ia[]={0xEF, 0x0E, 0x01, 0x33, 0x28, 0x00, 0x00, 0x47,
 			0x00, 0x2B, 0x00, 0x00, 0x00, 0x60 };
         LocoNetMessage lm =new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(1);
-        t.setSlot(lm); // we are checking to make sure this does not throw an
-                       // exception.
+
+        boolean exceptionCaught = false;
+        try {
+            t.setSlot(lm); // we are checking to make sure this does not throw an
+                           // exception.
+        } catch (LocoNetException e) {
+            exceptionCaught = true;
+        }
+        Assert.assertFalse("do not expect an exception", exceptionCaught);
+        Assert.assertEquals("slot is 1", 1, t.getSlot());
+        Assert.assertEquals("Slot status is 0x30", 0x30, t.slotStatus());
+        Assert.assertEquals("Slot decoder type is 0x03", 3, t.decoderType());
+        Assert.assertEquals("Address is 5544", 5544, t.locoAddr());
+        Assert.assertEquals("Slot speed is 0", 0, t.speed());
+        Assert.assertEquals("Slot dirf is 0", 0, t.dirf());
+        Assert.assertEquals("Slot trk is 0x47", 0x47, t.getTrackStatus());
+        Assert.assertEquals("Slot status2 is 0", 0, t.ss2());
+        Assert.assertEquals("slot consist status is 0", 0, t.consistStatus());
+        Assert.assertEquals("Slot snd is 0", 0, t.snd());
+        Assert.assertEquals("slot throttle id is 0", 0, t.id());
+
+        ia[1] = 0x0f;
+        lm = new LocoNetMessage(ia);
+        try {
+            t.setSlot(lm); // we are checking to make sure this does not throw an
+                           // exception.
+        } catch (LocoNetException e) {
+            exceptionCaught = true;
+        }
+        Assert.assertFalse("do not expect an exception", exceptionCaught);
+
+        ia[1] = 0x0E;
+        ia[2] = 3;
+        lm = new LocoNetMessage(ia);
+        try {
+            t.setSlot(lm); // we are checking to make sure this does not throw an
+                           // exception.
+        } catch (LocoNetException e) {
+            exceptionCaught = true;
+        }
+        Assert.assertFalse("do not expect an exception", exceptionCaught);
+        jmri.util.JUnitAppender.assertErrorMessage("Asked to handle message not for this slot (1) EF 0E 03 33 28 00 00 47 00 2B 00 00 00 60");
+
+        ia[0] = 0xE7;
+        ia[2] = 1;
+        lm = new LocoNetMessage(ia);
+        long lastTime = t.getLastUpdateTime();
+        try {
+            t.setSlot(lm); // we are checking to make sure this does not throw an
+                           // exception.
+        } catch (LocoNetException e) {
+            exceptionCaught = true;
+        }
+        Assert.assertFalse("do not expect an exception", exceptionCaught);
+        Assert.assertNotEquals("update time was updated", lastTime, t.getLastUpdateTime());
+
+        int ib[] = {0x81, 0x00};
+        lm = new LocoNetMessage(ib);
+        try {
+            t.setSlot(lm); // we are checking to make sure this throws an
+                           // exception.
+        } catch (LocoNetException e) {
+            exceptionCaught = true;
+        }
+        Assert.assertTrue("do expect an exception", exceptionCaught);
+
+        exceptionCaught = false;
+        int ic[] = {0xb5, 0x01, 0x25, 0};
+        lm = new LocoNetMessage(ic);
+        try {
+            t.setSlot(lm); // we are checking to make sure this does not throw an
+                           // exception.
+        } catch (LocoNetException e) {
+            exceptionCaught = true;
+        }
+        Assert.assertFalse("do not expect an exception", exceptionCaught);
+        Assert.assertEquals("status updated", 0x20, t.slotStatus());
+
+        int id[] = {0xa2, 0x01, 0x35, 0x00};
+        lm = new LocoNetMessage(id);
+        try {
+            t.setSlot(lm); // we are checking to make sure this does not throw an
+                           // exception.
+        } catch (LocoNetException e) {
+            exceptionCaught = true;
+        }
+        Assert.assertFalse("do not expect an exception", exceptionCaught);
+        Assert.assertEquals("F5-F8 updated", 5, t.snd());
+
+        id[0] = 0xa0;
+        id[2] = 0x7E;
+        lm = new LocoNetMessage(id);
+        try {
+            t.setSlot(lm); // we are checking to make sure this does not throw an
+                           // exception.
+        } catch (LocoNetException e) {
+            exceptionCaught = true;
+        }
+        Assert.assertFalse("do not expect an exception", exceptionCaught);
+        Assert.assertEquals("Spd updated", 0x7e, t.speed());
+
+        id[0] = 0xa1;
+        id[2] = 0x53;
+        lm = new LocoNetMessage(id);
+        try {
+            t.setSlot(lm); // we are checking to make sure this does not throw an
+                           // exception.
+        } catch (LocoNetException e) {
+            exceptionCaught = true;
+        }
+        Assert.assertFalse("do not expect an exception", exceptionCaught);
+        Assert.assertEquals("Dirf updated", 0x13, t.dirf());
+
+        int ie[] = {0xb5, 0x01, 0x40, 0};
+        LocoNetMessage lm2 = new LocoNetMessage(ie);
+        t.setSlot(lm2);
+        Assert.assertEquals("slot consist status is ", 0x40, t.consistStatus());
+
+        id[2] = 0x08;
+        lm = new LocoNetMessage(id);
+        try {
+            t.setSlot(lm); // we are checking to make sure this does not throw an
+                           // exception.
+        } catch (LocoNetException e) {
+            exceptionCaught = true;
+        }
+        Assert.assertFalse("do not expect an exception", exceptionCaught);
+        Assert.assertEquals("Dirf updated", 0x08, t.dirf());
+
+        id[2] = 0x37;
+        lm = new LocoNetMessage(id);
+        try {
+            t.setSlot(lm); // we are checking to make sure this does not throw an
+                           // exception.
+        } catch (LocoNetException e) {
+            exceptionCaught = true;
+        }
+        Assert.assertFalse("do not expect an exception", exceptionCaught);
+        Assert.assertEquals("Dirf updated", 0x17, t.dirf());
+
+        ie[2] = 0x48;
+        lm2 = new LocoNetMessage(ie);
+        t.setSlot(lm2);
+        Assert.assertEquals("slot consist status is ", 0x48, t.consistStatus());
+
+        id[2] = 0x08;
+        lm = new LocoNetMessage(id);
+        try {
+            t.setSlot(lm); // we are checking to make sure this does not throw an
+                           // exception.
+        } catch (LocoNetException e) {
+            exceptionCaught = true;
+        }
+        Assert.assertFalse("do not expect an exception", exceptionCaught);
+        Assert.assertEquals("Dirf updated", 0x08, t.dirf());
+
+        id[2] = 0x37;
+        lm = new LocoNetMessage(id);
+        try {
+            t.setSlot(lm); // we are checking to make sure this does not throw an
+                           // exception.
+        } catch (LocoNetException e) {
+            exceptionCaught = true;
+        }
+        Assert.assertFalse("do not expect an exception", exceptionCaught);
+        Assert.assertEquals("Dirf updated", 0x17, t.dirf());
+
+        ie[2] = 0x08;
+        lm2 = new LocoNetMessage(ie);
+        t.setSlot(lm2);
+        Assert.assertEquals("slot consist status is ", 0x08, t.consistStatus());
+
+        id[2] = 0x08;
+        lm = new LocoNetMessage(id);
+        try {
+            t.setSlot(lm); // we are checking to make sure this does not throw an
+                           // exception.
+        } catch (LocoNetException e) {
+            exceptionCaught = true;
+        }
+        Assert.assertFalse("do not expect an exception", exceptionCaught);
+        Assert.assertEquals("Dirf updated", 0x08, t.dirf());
+
+        id[2] = 0x37;
+        lm = new LocoNetMessage(id);
+        try {
+            t.setSlot(lm); // we are checking to make sure this does not throw an
+                           // exception.
+        } catch (LocoNetException e) {
+            exceptionCaught = true;
+        }
+        Assert.assertFalse("do not expect an exception", exceptionCaught);
+        Assert.assertEquals("Dirf updated", 0x37, t.dirf());
+
+        ie[2] = 0x00;
+        lm2 = new LocoNetMessage(ie);
+        t.setSlot(lm2);
+        Assert.assertEquals("slot consist status is ", 0x0, t.consistStatus());
+
+        id[2] = 0x08;
+        lm = new LocoNetMessage(id);
+        try {
+            t.setSlot(lm); // we are checking to make sure this does not throw an
+                           // exception.
+        } catch (LocoNetException e) {
+            exceptionCaught = true;
+        }
+        Assert.assertFalse("do not expect an exception", exceptionCaught);
+        Assert.assertEquals("Dirf updated", 0x08, t.dirf());
+
+        id[2] = 0x37;
+        lm = new LocoNetMessage(id);
+        try {
+            t.setSlot(lm); // we are checking to make sure this does not throw an
+                           // exception.
+        } catch (LocoNetException e) {
+            exceptionCaught = true;
+        }
+        Assert.assertFalse("do not expect an exception", exceptionCaught);
+        Assert.assertEquals("Dirf updated", 0x37, t.dirf());
+
     }
 
     @Test
@@ -446,7 +665,7 @@ public class LocoNetSlotTest {
         lm = new LocoNetMessage(id);
         t.setSlot(lm);
         Assert.assertEquals("Change direction and F1 & F3 for consist-top slot", 0x22, t.dirf());
-        
+
         ic[3] = 0x4b;   // make slot consist_mid, common
         lm = new LocoNetMessage(ic);
         t.setSlot(lm);
@@ -464,7 +683,7 @@ public class LocoNetSlotTest {
         lm = new LocoNetMessage(id);
         t.setSlot(lm);
         Assert.assertEquals("Change F0, F3 but NOT direction for consist-mid slot", 0x07, t.dirf());
-        
+
         ic[3] = 0x43;   // make slot consist_sub, common
         ic[6] = 0x28;   // DIRF: reverse, F4 on
         lm = new LocoNetMessage(ic);
@@ -484,7 +703,7 @@ public class LocoNetSlotTest {
         lm = new LocoNetMessage(id);
         t.setSlot(lm);
         Assert.assertEquals("Change F0, F4-F3, F1 for consist-top slot", 0x22, t.dirf());
-        
+
         ic[6] = 0x27;   // make slot DIRF direction reversed, F3-F1 on
         lm = new LocoNetMessage(ic);
         t.setSlot(lm);
@@ -503,10 +722,10 @@ public class LocoNetSlotTest {
         lm = new LocoNetMessage(id);
         t.setSlot(lm);
         Assert.assertEquals("Change F0, F4-F1, for consist-top slot", 0x3F, t.dirf());
-        
+
     }
-    
-    
+
+
     @Test
     public void checkFunctionMessage() {
         LocoNetSlot s = new LocoNetSlot(15);
@@ -530,7 +749,7 @@ public class LocoNetSlotTest {
         Assert.assertEquals("F12 now", true, s.localF12);
         s.functionMessage(0xA0L);
         Assert.assertEquals("F12 now", false, s.localF12);
-        
+
         Assert.assertEquals("initial slot function value - F13", false, s.localF13);
         Assert.assertEquals("initial slot function value - F14", false, s.localF14);
         Assert.assertEquals("initial slot function value - F15", false, s.localF15);
@@ -604,7 +823,7 @@ public class LocoNetSlotTest {
         s.functionMessage(0XDF00L);
         Assert.assertEquals("F28 now", false, s.localF28);
     }
-    
+
     @Test
     public void checkFastClockGetSetMethods() {
         LocoNetSlot s = new LocoNetSlot(15);
@@ -629,8 +848,8 @@ public class LocoNetSlotTest {
         jmri.util.JUnitAppender.assertErrorMessage("getFcDays invalid for slot 15");
         s.getFcRate();
         jmri.util.JUnitAppender.assertErrorMessage("getFcRate invalid for slot 15");
-        
-        
+
+
 
         s = new LocoNetSlot(123);
         Assert.assertEquals("FcFracMins initial value", 0x3FFF, s.getFcFracMins());
@@ -646,14 +865,14 @@ public class LocoNetSlotTest {
         Assert.assertEquals("getFcHours", 2, s.getFcHours());
         Assert.assertEquals("getFcDays", 3, s.getFcDays());
     }
-    
+
     @Test
     public void checkSetAndGetTrackStatus() {
         LocoNetSlot s = new LocoNetSlot(19);
         Assert.assertEquals("Checking default track status",7   , s.getTrackStatus());
         for (int i = 0; i < 256; ++i) {
             s.setTrackStatus(i);
-            Assert.assertEquals("checking set/get track status for status "+i, i, s.getTrackStatus()); 
+            Assert.assertEquals("checking set/get track status for status "+i, i, s.getTrackStatus());
         }
     }
 
@@ -665,11 +884,11 @@ public class LocoNetSlotTest {
         sm = new SlotManager(lnis);
         memo = new LocoNetSystemConnectionMemo(lnis, sm);
         sm.setSystemConnectionMemo(memo);
-        
+
         LocoNetSlot s = new LocoNetSlot(10);
         Assert.assertEquals("slot number assigned correctly", 10, s.getSlot());
         LocoNetMessage m = new LocoNetMessage(14);
-        
+
         m.setOpCode(0xef);
         m.setElement(1, 0x0e);
         m.setElement(2, 0x0A);
