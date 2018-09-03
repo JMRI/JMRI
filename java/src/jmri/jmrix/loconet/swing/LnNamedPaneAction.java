@@ -30,7 +30,7 @@ public class LnNamedPaneAction extends JmriNamedPaneAction implements SystemConn
      * @param paneClass Name of the panel's class, which must be a subclass of JmriPanel. That's not
      *                  checked at compile time or when the constructor runs, but must be true
      *                  for the action to be invoked successfully.
-     * @param memo      {@link jmri.jmrix.loconet.LocoNetSystemConnectionMemo to be used by this object
+     * @param memo      {@link jmri.jmrix.loconet.LocoNetSystemConnectionMemo} to be used by this object
      */
     public LnNamedPaneAction(String s, WindowInterface wi, String paneClass, LocoNetSystemConnectionMemo memo) {
         super(s, wi, paneClass);
@@ -49,7 +49,7 @@ public class LnNamedPaneAction extends JmriNamedPaneAction implements SystemConn
      * @param paneClass Name of the panel's class, which must be a subclass of JmriPanel. That's not
      *                  checked at compile time or when the constructor runs, but must be true
      *                  for the action to be invoked successfully.
-     * @param memo      {@link jmri.jmrix.loconet.LocoNetSystemConnectionMemo to be used by this object
+     * @param memo      {@link jmri.jmrix.loconet.LocoNetSystemConnectionMemo} to be used by this object
      */
 
 

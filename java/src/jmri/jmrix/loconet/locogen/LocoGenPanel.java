@@ -262,7 +262,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
      * <p>
      * Well-formed generally means a space-separated string of hex values of
      * two characters each, as defined in
-     * {@link StringUtil.bytesFromHexString(String s)} .
+     * {@link jmri.util.StringUtil#bytesFromHexString(String s)} .
      * <p>
      * @param s - a string containing raw hex data of good form
      * @return The packet, with contents filled-in
