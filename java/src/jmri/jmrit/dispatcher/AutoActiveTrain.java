@@ -321,6 +321,10 @@ public class AutoActiveTrain implements ThrottleListener {
         if (_resumingAutomatic) {
             _resumingAutomatic = false;
             _activeTrain.setStatus(ActiveTrain.RUNNING);
+            if (getCurrentSignal() == null) {
+                // paused in block with no signal
+                setupNewCurrentSignal(null, true);
+            }
             setEngineDirection();
             setSpeedBySignal();
         } else if (InstanceManager.getDefault(DispatcherFrame.class).getAutoAllocate()) {
@@ -445,44 +449,67 @@ public class AutoActiveTrain implements ThrottleListener {
     @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC",
             justification = "OK to not sync here, no conflict expected")
     protected void handleBlockStateChange(AllocatedSection as, Block b) {
+        //Block oldPreviousBlock = _previousBlock;
         if (b.getState() == Block.OCCUPIED) {
             // Block changed to OCCUPIED - train has entered this block
-            log.trace("{}: handleBlockStateChange to OCCUPIED section {}, block {}, length {}", _activeTrain.getTrainName(),
+            log.debug("{}: handleBlockStateChange to OCCUPIED section {}, block {}, length {}", _activeTrain.getTrainName(),
                     as.getSection().getSystemName(),
                     b.getUserName(), getBlockLength(b));
-            if (b == _nextBlock) {
-                _previousBlock = _currentBlock;
-                _currentBlock = _nextBlock;
-                _nextBlock = getNextBlock(b, as);
-                if (_nextBlock != null) {
-                    if ((_currentBlock == _activeTrain.getEndBlock()) && _activeTrain.getReverseAtEnd()
-                            && (as.getSequence() == _activeTrain.getEndBlockSectionSequenceNumber())) {
-                        // entered last block of Transit, must stop and reverse - ignore signal changes till train stopped.
+            if (b == _nextBlock || _nextBlock == null) {
+                _currentBlock = b;
+                // defer setting the next/previous blocks until we know if its required and in what fashion
+                // for stopping blocks that action happens after the train has stopped.
+                // first check for entering the end point
+                if (_currentBlock == _activeTrain.getEndBlock() && as.getSequence() == _activeTrain.getEndBlockSectionSequenceNumber()) {
+                    // are we going to reverse at end
+                    if ( _activeTrain.getReverseAtEnd() ) {
                         removeCurrentSignal();
                         stopInCurrentSection(END_REVERSAL);
-                        _activeTrain.setRestart();
-                    } else if ((_currentBlock == _activeTrain.getStartBlock())
-                            && _activeTrain.getResetWhenDone() && _activeTrain.isTransitReversed()
-                            && (as.getSequence() == _activeTrain.getStartBlockSectionSequenceNumber())) {
+                    }
+                    // are we going continuously loop
+                    else if ( _activeTrain.getResetWhenDone()) {
                         // entered start block of Transit, must stop and reset for continuing - ignore signal changes till train stopped.
                         removeCurrentSignal();
                         stopInCurrentSection(BEGINNING_RESET);
-                        _activeTrain.setRestart();
-                    } else if ((_currentBlock == _activeTrain.getEndBlock())
-                            && _activeTrain.getResetWhenDone() && _activeTrain.getDelayedRestart() != ActiveTrain.NODELAY
-                            && (as.getSequence() == _activeTrain.getEndBlockSectionSequenceNumber())) {
-                        // entered start block of Transit, must stop and reset for continuing - ignore signal changes till train stopped.
+                    }
+                    // else we are ending here
+                    else {
+                        log.debug("{}: Trip end, stop in Current Section, Block= {}", _activeTrain.getTrainName(), b.getUserName());
+                        removeCurrentSignal();
+                        stopInCurrentSection(NO_TASK);
+                    }
+                }
+                // are we entering the start point
+                else if (_currentBlock == _activeTrain.getStartBlock() && as.getSequence() == _activeTrain.getStartBlockSectionSequenceNumber()) {
+                     // are we coming back from a reverse and running continiuosly
+                    if ( _activeTrain.getResetWhenDone() && _activeTrain.isTransitReversed() ) {
                         removeCurrentSignal();
                         stopInCurrentSection(BEGINNING_RESET);
-                        _activeTrain.setRestart();
-                    } else {
-                        setupNewCurrentSignal(as);
+                    }
+                    // else we are ending here
+                    else {
+                        log.debug("{}: Trip end, stop in Current Section, Block= {}", _activeTrain.getTrainName(), b.getUserName());
+                        removeCurrentSignal();
+                        stopInCurrentSection(NO_TASK);
                     }
                 } else {
-                    // reached last block in this transit
-                    removeCurrentSignal();
-                    log.trace("{}: block occupied stop in Current Section, Block= {}", _activeTrain.getTrainName(), b.getUserName());
-                    stopInCurrentSection(NO_TASK);
+                    // if we are not in first and not in last get the next block
+                    //_previousBlock = oldPreviousBlock;
+                    _nextBlock = getNextBlock(b, as);
+                    if (_nextBlock != null) {
+                        // this is a normal block/block change
+                        // set the blocks as normal
+                        _previousBlock = _currentBlock;
+                        _nextBlock = getNextBlock(b, as);
+                        log.info("Calling from Block state change - else");
+                        setupNewCurrentSignal(as, false);
+                    } else {
+                        // assume we have reached last block in this transit, for safety sake.
+                        log.warn("{}: No next Block from Block= {} Section= {}", _activeTrain.getTrainName(),
+                                b.getUserName(), as.getSectionName());
+                        removeCurrentSignal();
+                        stopInCurrentSection(NO_TASK);
+                    }
                 }
             } else if (b != _currentBlock) {
                 log.trace("{}: block going occupied {} is not _nextBlock or _currentBlock - ignored.", _activeTrain.getTrainName(), b.getUserName());
@@ -511,11 +538,13 @@ public class AutoActiveTrain implements ThrottleListener {
      * support methods
      */
     protected void setEngineDirection() {
+        boolean oldFwd = _forward;
         if (_runInReverse) {
             _forward = _activeTrain.isTransitReversed();
         } else {
             _forward = !_activeTrain.isTransitReversed();
         }
+        log.debug("flipping direction was [{}] now [{}]",_forward,oldFwd);
     }
 
     protected AllocatedSection getCurrentAllocatedSection() {
@@ -548,8 +577,9 @@ public class AutoActiveTrain implements ThrottleListener {
                 }
             }
             if (_nextBlock != null) {
-                // set up new current signal
-                setupNewCurrentSignal(as);
+                // set up new current signal, as this a beginning we allow a signal not at end of block
+                // to control the speed.
+                setupNewCurrentSignal(as,true);
             }
         }
         // if train is stopping for lack of an allocation, set flag to restart it
@@ -621,7 +651,13 @@ public class AutoActiveTrain implements ThrottleListener {
         _controllingSignalMast = null;
     }
 
-    protected synchronized void setupNewCurrentSignal(AllocatedSection as) {
+    /**
+     *
+     * @param as current section the train is in, can be null
+     * @param newTransitSetUp if true this is setting up a new train
+     */
+    protected synchronized void setupNewCurrentSignal(AllocatedSection as, boolean forceSpeedChange) {
+        log.debug("setupNewCurrentSignal Called Section[{}] forceSpeedChange[{}]", as != null ? as.getSectionName() : "null",forceSpeedChange);
         removeCurrentSignal();
         if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
             SignalHead sh = _lbManager.getFacingSignalHead(_currentBlock, _nextBlock);
@@ -654,11 +690,15 @@ public class AutoActiveTrain implements ThrottleListener {
             if (as == null) {
                 as = _currentAllocatedSection;
             }
-            // Find the signal mast at the end of the section by making sure that cB is within as and nB is not.
-            //while (as != null && as.getSection().containsBlock(nB) && nB != null) {
-            //    cB = nB;
-            //    nB = getNextBlock(nB, as);
-            //}
+            // get signal mast at current block change, if there is no signal mast we will proceed with no change in speed
+            // unless forceSpeedChange is true, such as beginning, resets of transit.
+            // previous signal mast speed unless the mast is held.
+            boolean weAreAtSpeedChangingMast=forceSpeedChange;
+            if ( !forceSpeedChange && sm == null && nB != null ) {
+                sm  = _lbManager.getFacingSignalMast(cB, nB);
+                if (sm != null) {weAreAtSpeedChangingMast=true;}
+            }
+
             while (sm == null && nB != null) {
                 sm = _lbManager.getFacingSignalMast(cB, nB);
                 if (sm == null) {
@@ -682,7 +722,9 @@ public class AutoActiveTrain implements ThrottleListener {
                 });
                 log.debug("{}: new current signalmast {}({}) for section {}", _activeTrain.getTrainName(), sm.getDisplayName(),
                         sm.getAspect(), as.getSectionName());
-                setSpeedBySignal();
+                if ( weAreAtSpeedChangingMast ) {
+                    setSpeedBySignal();
+                }
             } // Note: null signal head will result when exiting throat-to-throat blocks.
             else {
                 log.debug("{}: new current signalmast is null for section {} - sometimes OK", _activeTrain.getTrainName(),
@@ -692,10 +734,10 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     private Block getNextBlock(Block b, AllocatedSection as) {
-        if (((_currentBlock == _activeTrain.getEndBlock()) && _activeTrain.getReverseAtEnd()
-                && (as.getSequence() == _activeTrain.getEndBlockSectionSequenceNumber()))) {
-            return _previousBlock;
-        }
+        //if (((_currentBlock == _activeTrain.getEndBlock()) && _activeTrain.getReverseAtEnd()
+        //        && (as.getSequence() == _activeTrain.getEndBlockSectionSequenceNumber()))) {
+        //    return _previousBlock;
+        //}
         if ((_currentBlock == _activeTrain.getStartBlock())
                 && _activeTrain.getResetWhenDone() && _activeTrain.isTransitReversed()
                 && (as.getSequence() == _activeTrain.getStartBlockSectionSequenceNumber())) {
@@ -754,6 +796,7 @@ public class AutoActiveTrain implements ThrottleListener {
 
     // called by above or when resuming after stopped action
     protected synchronized void setSpeedBySignal() {
+        log.debug("Set Speed by Signal");
         if (_pausingActive || ((_activeTrain.getStatus() != ActiveTrain.RUNNING)
                 && (_activeTrain.getStatus() != ActiveTrain.WAITING)) || ((_controllingSignal == null)
                 && InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD)
@@ -1013,7 +1056,7 @@ public class AutoActiveTrain implements ThrottleListener {
             setStopNow();
             return;
         }
-        log.debug("{}: StopInCurrentSection called for {}", _activeTrain.getTrainName(), _currentAllocatedSection.getSectionName());
+        log.debug("{}: StopInCurrentSection called for {} task[{}] targetspeed[{}]", _activeTrain.getTrainName(), _currentAllocatedSection.getSectionName(),task,_targetSpeed);
         if ((_targetSpeed == 0.0f) || isStopping()) {
             log.debug("{}: train is already stopped or stopping.", _activeTrain.getTrainName());
             // ignore if train is already stopped or if stopping is in progress
@@ -1147,18 +1190,17 @@ public class AutoActiveTrain implements ThrottleListener {
             // train will fit, but no way to stop it reliably
             setStopNow();
         }
-        // even if no task is required it must be run if stopping by SpeedProfile
-        // as clean needs to be done when speed goes to zero
-        if (task > NO_TASK || _stoppingUsingSpeedProfile) {
-            Runnable waitForStop = new WaitForTrainToStop(task);
-            Thread tWait = new Thread(waitForStop, "Wait for stop " + getActiveTrain().getActiveTrainName());
-            tWait.start();
-        }
+        // even if no task is required it must be run
+        // as cleanup happens after train stops.
+        Runnable waitForStop = new WaitForTrainToStop(task);
+        Thread tWait = new Thread(waitForStop, "Wait for stop " + getActiveTrain().getActiveTrainName());
+        tWait.start();
     }
 
     protected synchronized void executeStopTasks(int task) {
         // clean up stopping
         cancelStopInCurrentSection();
+        log.debug("exec[{}]",task);
         switch (task) {
             case NO_TASK:
                 // clean up stop
@@ -1167,54 +1209,64 @@ public class AutoActiveTrain implements ThrottleListener {
                 /* Reset _previousBlock to be the _currentBlock if we do a continious reverse otherwise the stop in block method fails
                 to stop the loco in the correct block
                  if the first block we come to has a stopped or held signal */
-                log.debug("End Reversal");
-                _previousBlock = _currentBlock;
+                _activeTrain.setRestart();
                 _activeTrain.setTransitReversed(true);
-                AllocatedSection aSec = _activeTrain.reverseAllAllocatedSections();
+                _activeTrain.reverseAllAllocatedSections();
                 setEngineDirection();
-                if ((_nextSection != null) && !isSectionInAllocatedList(_nextSection)) {
-                    InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
-                    break;
+                _previousBlock = null;
+                _nextBlock = getNextBlock(_currentBlock,_currentAllocatedSection);
+                if (_activeTrain.getDelayedRestart() == ActiveTrain.NODELAY) {
+                    if ((_nextSection != null) && !isSectionInAllocatedList(_nextSection)) {
+                        InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
+                        break;
+                    }
+                    // a reversal can happen in mid section
+                    setupNewCurrentSignal(_currentAllocatedSection, true);
+                    setSpeedBySignal();
                 }
-                setupNewCurrentSignal(aSec);
-                setSpeedBySignal();
                 break;
             case BEGINNING_RESET:
-                log.debug("Beginning Reset");
+                _activeTrain.setRestart();
                 if (_activeTrain.getResetWhenDone()) {
                     if (_activeTrain.getReverseAtEnd()) {
                         /* Reset _previousBlock to be the _currentBlock if we do a continious
                         reverse otherwise the stop in block method fails  to stop the loco in the correct block
                          if the first block we come to has a stopped or held signal */
-                        _previousBlock = _currentBlock;
+                        // _previousBlock = _currentBlock;
                     }
                     if (_activeTrain.getDelayedRestart() == ActiveTrain.NODELAY) {
                         _activeTrain.setTransitReversed(false);
                         _activeTrain.resetAllAllocatedSections();
+                        _previousBlock = null;
+                        _nextBlock = getNextBlock(_currentBlock,_currentAllocatedSection);
                         setEngineDirection();
                         if ((_nextSection != null) && !isSectionInAllocatedList(_nextSection)) {
                             InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
                             break;
                         }
-                        setupNewCurrentSignal(null);
+                        // can be mid block
+                        setupNewCurrentSignal(null, true);
                         setSpeedBySignal();
                     } else {
                         // then active train is delayed
                         _activeTrain.setTransitReversed(false);
                         _activeTrain.resetAllAllocatedSections();
+                        _previousBlock = null;
+                        _nextBlock = getNextBlock(_currentBlock,_currentAllocatedSection);
                         setEngineDirection();
                         _activeTrain.setRestart();
                         if ((_nextSection != null) && !isSectionInAllocatedList(_nextSection)) {
                             InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
                             break;
                         }
-                        setupNewCurrentSignal(null);
+                        // can be mid block
+                        setupNewCurrentSignal(null, true);
                         setSpeedBySignal();
 
                     }
                 } else {
-                    // dispatcher cancelled auto restart while train was stopping?
-// djd debugging - may need code here
+                // dispatcher cancelled auto restart while train was stopping?
+ // djd debugging - may need code here
                 }
                 break;
             default:
@@ -1264,6 +1316,7 @@ public class AutoActiveTrain implements ThrottleListener {
 
     private synchronized void setTargetSpeedState(int speedState) {
         _autoEngineer.slowToStop(false);
+        log.debug("Speed[{}]",speedState);
         if (speedState > STOP_SPEED) {
             float speed = _speedRatio[speedState];
             if (speed > _maxSpeed) {
@@ -1574,7 +1627,7 @@ public class AutoActiveTrain implements ThrottleListener {
         }
 
         // operational instance variables and flags
-        private boolean _abort = false;
+        private volatile boolean _abort = false;
         private volatile boolean _halt = false;  // halt/resume from user's control
         private boolean _halted = false; // true if previously halted
         private boolean _slowToStop = false;
