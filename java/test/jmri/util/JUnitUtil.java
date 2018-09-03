@@ -78,29 +78,68 @@ import org.slf4j.LoggerFactory;
  */
 public class JUnitUtil {
 
-    static final int DEFAULT_RELEASETHREAD_DELAY = 50;
-    static final int WAITFOR_DELAY_STEP = 5;
-    static final int WAITFOR_MAX_DELAY = 30000; // really long, but only matters when failing, and LayoutEditor/SignalMastLogic is slow
-
-    static int count = 0;
+    /**
+     * Standard time (in mSec) to wait when releasing
+     * a thread during a test.
+     * <p>
+     * Public in case modification is needed from a test or script.
+     */
+    static final public int DEFAULT_RELEASETHREAD_DELAY = 50;
     
-    static boolean didSetUp = false;
-    static boolean didTearDown = true;
-    static String lastSetUpClassName = "<unknown>";
-    static String lastSetUpThreadName = "<unknown>";
-    static StackTraceElement[] lastSetUpStackTrace = new StackTraceElement[0];
-    static String lastTearDownClassName = "<unknown>";
-    static String lastTearDownThreadName = "<unknown>";
-    static StackTraceElement[] lastTearDownStackTrace = new StackTraceElement[0];
-    
-    static boolean printSetUpTearDownNames = true; // Boolean.getBoolean("jmri.util.JUnitUtil.printSetUpTearDownNames"); // false unless set true
+    /**
+     * Standard time step (in mSec) when looping in a waitFor operation.
+     * <p>
+     * Public in case modification is needed from a test or script.
+     */    
+    static final public int WAITFOR_DELAY_STEP = 5;
+    /**
+     * Maximum time to wait before failing a waitFor operation.
+     * The default value is really long, but that only matters when the test is failing anyway, 
+     * and some of the LayoutEditor/SignalMastLogic tests are slow. But too long will cause CI jobs
+     * to time out before this logs the error....
+     * <p>
+     * Public in case modification is needed from a test or script.
+     */    
+    static final public int WAITFOR_MAX_DELAY = 10000;
 
+    /**
+     * When true, prints each setUp method to help identify which tests include a failure.
+     * When checkSetUpTearDownSequence is also true, this also sprints on execution of tearDown.
+     * <p>
+     * Set from the jmri.util.JUnitUtil.printSetUpTearDownNames environment variable.
+     */
+    static boolean printSetUpTearDownNames = Boolean.getBoolean("jmri.util.JUnitUtil.printSetUpTearDownNames"); // false unless set true
+
+    /**
+     * When true, checks that calls to setUp and tearDown properly alterante, printing an 
+     * error message with context information on System.err if inconsistent calls are observed.
+     * <p>
+     * Set from the jmri.util.JUnitUtil.checkSetUpTearDownSequence environment variable.
+     */
     static boolean checkSetUpTearDownSequence = Boolean.getBoolean("jmri.util.JUnitUtil.checkSetUpTearDownSequence"); // false unless set true
+
+    /**
+     * Adds extensive error information to the output of checkSetUpTearDownSequence.
+     * Note: The context checking and storage required for this takes a lot of time.
+     * <p>
+     * Set from the jmri.util.JUnitUtil.checkSequenceDumpsStack environment variable.
+     */
     static boolean checkSequenceDumpsStack =    Boolean.getBoolean("jmri.util.JUnitUtil.checkSequenceDumpsStack"); // false unless set true
 
-    private static boolean isLoggingInitialized = false;
+    static private int threadCount = 0;
+    
+    static private boolean didSetUp = false;
+    static private boolean didTearDown = true;
+    static private String lastSetUpClassName = "<unknown>";
+    static private String lastSetUpThreadName = "<unknown>";
+    static private StackTraceElement[] lastSetUpStackTrace = new StackTraceElement[0];
+    static private String lastTearDownClassName = "<unknown>";
+    static private String lastTearDownThreadName = "<unknown>";
+    static private StackTraceElement[] lastTearDownStackTrace = new StackTraceElement[0];
+    
+    static private boolean isLoggingInitialized = false;
     /**
-     * SJMRI standard setUp for tests. This should be the first line in the {@code @Before}
+     * JMRI standard setUp for tests. This should be the first line in the {@code @Before}
      * annotated method.
      */
     public static void setUp() {
@@ -221,7 +260,7 @@ public class JUnitUtil {
      * {@value #DEFAULT_RELEASETHREAD_DELAY} milliseconds.
      * <p>
      * This cannot be used on the Swing or AWT event threads. For those, please
-     * use JFCUnit's flushAWT() and waitAtLeast(..)
+     * use Jemmy's wait routine or JFCUnit's flushAWT() and waitAtLeast(..)
      *
      * @param self currently ignored
      * @deprecated 4.9.1 Use the various waitFor routines instead
@@ -954,7 +993,7 @@ public class JUnitUtil {
      */
     static void checkThreads(boolean stop) {
         // now check for extra threads
-        count = 0;
+        threadCount = 0;
         Thread.getAllStackTraces().keySet().forEach((t) -> 
             {
                 if (threadsSeen.contains(t)) return;
@@ -973,7 +1012,7 @@ public class JUnitUtil {
                         )
                     )) {  
                     
-                        count++;
+                        threadCount++;
                         threadsSeen.add(t);
                         System.out.println("New thread \""+t.getName()+"\" group \""+ (t.getThreadGroup()!=null ? t.getThreadGroup().getName() : "(null)")+"\"");
                     
@@ -985,7 +1024,7 @@ public class JUnitUtil {
                         }
                 }
             });
-        if (count > 0) {
+        if (threadCount > 0) {
             //Thread.getAllStackTraces().keySet().forEach((t) -> System.err.println("  thread "+t+" "+t.getName()));
             if (stop) {
                 new Exception("Stopping by request on 1st extra thread").printStackTrace();
