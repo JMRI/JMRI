@@ -143,7 +143,7 @@ public class RaspberryPiSystemConnectionMemoTest extends jmri.jmrix.SystemConnec
         
         GpioProvider myprovider = new PiGpioProviderScaffold();
         GpioFactory.setDefaultProvider(myprovider);
-        JUnitUtil.setUp();
+
         RaspberryPiSystemConnectionMemo memo = new RaspberryPiSystemConnectionMemo();
         memo.configureManagers();
         scm = memo;
@@ -151,6 +151,7 @@ public class RaspberryPiSystemConnectionMemoTest extends jmri.jmrix.SystemConnec
 
     @After
     public void tearDown() {
+        scm = null;
         JUnitUtil.tearDown();
     }
 }

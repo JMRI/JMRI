@@ -339,7 +339,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         if (Setup.isRfidEnabled()) {
             // setup the Reader dropdown.
             readerSelector.addItem(null); // add an empty entry.
-            for (jmri.NamedBean r : jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getNamedBeanList()) {
+            for (jmri.NamedBean r : jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getNamedBeanSet()) {
                 readerSelector.addItem((Reporter) r);
             }
         }

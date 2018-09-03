@@ -210,7 +210,7 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         // infrastructure objects
         dnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
         t = new DCCppTurnout("DCCPP", 42, dnis);

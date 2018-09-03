@@ -17,7 +17,7 @@ public class SRCPTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContr
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         tc = new SRCPTrafficController();
     }
 

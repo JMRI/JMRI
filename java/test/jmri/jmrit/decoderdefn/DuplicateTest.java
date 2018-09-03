@@ -1,6 +1,5 @@
 package jmri.jmrit.decoderdefn;
 
-import apps.tests.Log4JFixture;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -78,12 +77,14 @@ public class DuplicateTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
     }
 
     @After
     public void tearDown() {
-        Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
 
     private final static Logger log = LoggerFactory.getLogger(DuplicateTest.class);

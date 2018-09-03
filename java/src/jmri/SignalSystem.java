@@ -55,7 +55,7 @@ public interface SignalSystem extends NamedBean {
      *
      * @return all aspects or an empty list
      */
-    public Enumeration<String> getAspects();
+    public Enumeration<String> getAspects();  // eventually, change to return Set<>
 
     /**
      * Get all keys currently defined on any aspect.
@@ -66,7 +66,7 @@ public interface SignalSystem extends NamedBean {
      *
      * @return all keys or an empty list
      */
-    public Enumeration<String> getKeys();
+    public Enumeration<String> getKeys(); // eventually, change to return Set<>
 
     /**
      * Is this aspect known?

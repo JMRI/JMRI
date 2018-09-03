@@ -72,7 +72,6 @@ public class MergMessageTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite(MergMessageTest.class);
         return suite;
     }
@@ -80,8 +79,8 @@ public class MergMessageTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
+        jmri.util.JUnitUtil.setUp();
         new TrafficControllerScaffold();
-        apps.tests.Log4JFixture.setUp();
     }
 
     @Override

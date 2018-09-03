@@ -98,11 +98,26 @@ public class Z21Reply extends AbstractMRReply {
            case 0x0040:
                return Bundle.getMessage("Z21XpressNetTunnelReply", getXNetReply().toMonitorString());
            case 0x00A0:
-               return Bundle.getMessage("Z21LocoNetRxReply", getLocoNetMessage().toString());
+               return Bundle.getMessage("Z21LocoNetRxReply", new jmri.jmrix.loconet.locomon.Llnmon().displayMessage(getLocoNetMessage()));
            case 0x00A1:
-               return Bundle.getMessage("Z21LocoNetTxReply", getLocoNetMessage().toString());
+               return Bundle.getMessage("Z21LocoNetTxReply", new jmri.jmrix.loconet.locomon.Llnmon().displayMessage(getLocoNetMessage()));
            case 0x00A2:
-               return Bundle.getMessage("Z21LocoNetLanReply", getLocoNetMessage().toString());
+               return Bundle.getMessage("Z21LocoNetLanReply", new jmri.jmrix.loconet.locomon.Llnmon().displayMessage(getLocoNetMessage()));
+           case 0x0088:
+               int entries = getNumRailComDataEntries();
+               String datastring = "";
+               for(int i = 0; i < entries ; i++) {
+                   jmri.DccLocoAddress address = getRailComLocoAddress(i);
+                   int rcvCount = getRailComRcvCount(i);
+                   int errorCount = getRailComErrCount(i);
+                   int speed = getRailComSpeed(i);
+                   int options = getRailComOptions(i);
+                   int temp = getRailComTemp(i);
+                   datastring += Bundle.getMessage("Z21_RAILCOM_DATA",address,rcvCount,errorCount,speed,options,temp);
+                   datastring += "\n";
+               }
+               return Bundle.getMessage("Z21_RAILCOM_DATACHANGED",entries,datastring);
+
            default:
         }
 

@@ -383,10 +383,11 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
         
 	public void setValueAt(int value, int r, int c)
         {
-            switch (c)
+            switch (c)  // leave this as a switch in case other columns get added
             {
                 case ERRORCOUNT_COLUMN :
                     metricsData.setMetricErrorValue(r,value);
+                    break;
                 default:
             }
             fireTableDataChanged();
@@ -488,10 +489,11 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
         
 	public void setValueAt(int value, int r, int c)
         {
-            switch (c)
+            switch (c)  // leave this as a switch in case other columns get added
             {
                 case DATACOUNT_COLUMN :
                     metricsData.setMetricDataValue(r,value);
+                    break;
                 default:
             }
             fireTableDataChanged();
