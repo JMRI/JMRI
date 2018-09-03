@@ -158,7 +158,7 @@ public class LocoNetSlot {
      * {@link LnConstants#CONSIST_TOP},
      * {@link LnConstants#CONSIST_MID},
      * {@link LnConstants#CONSIST_SUB}
-     * @return
+     * @return the slot "consist status", with unrelated bits zeroed
      */
     public int consistStatus() {
         return stat & LnConstants.CONSIST_MASK;
@@ -692,7 +692,7 @@ public class LocoNetSlot {
     /**
      * Returns the programmer command associated with the slot.
      * <p>
-     * The returned value is taken from the <PCMD> byte of programmer slot read
+     * The returned value is taken from the &lt;PCMD&gt; byte of programmer slot read
      * and write LocoNet messages.
      * <p>
      * For slot numbers other than the programmer slot, these bits
@@ -875,7 +875,7 @@ public class LocoNetSlot {
      * @param pkt is a "long" consisting of four bytes extracted from a LocoNet
      * "OPC_IMM_PACKET" message.
      * <p>
-     * {@link SlotManager#getDirectDccPacket()}
+     * {@link jmri.jmrix.loconet.SlotManager#getDirectDccPacket(LocoNetMessage m)}
      */
     public void functionMessage(long pkt) {
         // parse for which set of functions

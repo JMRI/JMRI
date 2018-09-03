@@ -79,7 +79,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
         m.setElement(18, LnConstants.RE_IPL_OP_SSN3_QUERY);
         return m;
     }
-    
+
     public void sendIplQueryAllDevices() {
         jmri.jmrix.loconet.LnTrafficController tc = memo.getLnTrafficController();
         tc.sendLocoNetMessage(createQueryAllIplDevicesPacket());
@@ -240,7 +240,8 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
     /**
      * Checks message m to determine if it contains a IPL Identity Report
      * message.
-     *
+     * <p>
+     * @param m - LocoNetMessage to be checked for an IPL Identity Query message
      * @return true if message is report of IPL Identity
      */
     public static final boolean isIplIdentityQueryMessage(LocoNetMessage m) {
@@ -262,7 +263,8 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
     /**
      * Checks message m to determine if it contains a IPL Identity Report
      * message.
-     *
+     * <p>
+     * @param m - LocoNet message to check for an IPL Identity Report
      * @return true if message is report of IPL Identity
      */
     public static final boolean isIplIdentityReportMessage(LocoNetMessage m) {
@@ -703,7 +705,11 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * to support IPL, while UT4D appears to support IPL. This method will
      * return "Digitrax UT4(x)" in response to appropriate Host Manufacturer
      * number and appropriate Host Device number.
-     *
+     * <p>
+     * @param hostMfr - host manufacturer number
+     * @param hostDevice - host device number
+     * @param slaveMfr - slave manufacturer number
+     * @param slaveDevice - slave device number
      * @return String containing Manufacturer name and Device model.
      */
     public static final String interpretHostManufacturerDevice(Integer hostMfr, Integer hostDevice,
@@ -783,7 +789,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
                 break;
             }
             case LnConstants.RE_IPL_MFR_RR_CIRKITS:
-                
+
                 switch (device) {
                     case LnConstants.RE_IPL_RRCIRKITS_HOST_TC64:
                         s = "RR-CirKits TC-64"; // NOI18N
@@ -832,7 +838,9 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * to support IPL, while UT4D appears to support IPL. This method will
      * return "Digitrax UT4(x)" in response to appropriate Host Manufacturer
      * number and appropriate Host Device number.
-     *
+     * <p>
+     * @param hostMfr - host manufacturer number
+     * @param hostDevice - host device number
      * @return String containing Manufacturer name and Device model.
      */
     public static final String interpretHostManufacturerDevice(Integer hostMfr, Integer hostDevice) {
@@ -845,7 +853,9 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * <p>
      * NOTE: Some IPL-capable devices may not be completely determined based
      * solely on Slave Manufacturer number and Slave Device number.
-     *
+     * <p>
+     * @param slaveMfr - slave manufacturer number
+     * @param slaveDevice - slave device number
      * @return String containing Slave Manufacturer name and Device model.
      */
     public static final String interpretSlaveManufacturerDevice(Integer slaveMfr, Integer slaveDevice) {
@@ -879,6 +889,8 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
 
     /**
      * Connect this instance's LocoNetListener to the LocoNet Traffic Controller.
+     * <p>
+     * @param t - a LocoNet Traffic Controller
      */
     public void connect(jmri.jmrix.loconet.LnTrafficController t) {
         if (t != null) {
