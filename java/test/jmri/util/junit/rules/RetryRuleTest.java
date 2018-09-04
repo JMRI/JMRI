@@ -26,7 +26,7 @@ public class RetryRuleTest {
     // because that's a failure...
     
     @Test
-    @Ignore
+    @Ignore("Ignoring a test is part of testing RetryRule")
     public void testIgnore() {
         // only Ignore saves us
         Assert.fail("always fails");
