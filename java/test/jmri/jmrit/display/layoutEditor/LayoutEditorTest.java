@@ -390,8 +390,14 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
         
         ThreadingUtil.runOnGUI(() -> {
             le.setShowHelpBar(true);
+        });
+        ThreadingUtil.runOnGUI(() -> {
             Assert.assertTrue("getShowHelpBar", le.getShowHelpBar());
+        });
+        ThreadingUtil.runOnGUI(() -> {
             le.setShowHelpBar(false);
+        });
+        ThreadingUtil.runOnGUI(() -> {
             Assert.assertFalse("getShowHelpBar", le.getShowHelpBar());
         });
     }
@@ -399,15 +405,29 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
     @Test
     public void testSetShowHelpBar() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
         ThreadingUtil.runOnGUI(() -> {
-            // toggle a couple of times
             le.setShowHelpBar(false);
+        });
+        ThreadingUtil.runOnGUI(() -> {
             Assert.assertFalse("getShowHelpBar after set", le.getShowHelpBar());
+        });
+        ThreadingUtil.runOnGUI(() -> {
             le.setShowHelpBar(true);
+         });
+        ThreadingUtil.runOnGUI(() -> {
             Assert.assertTrue("getShowHelpBar", le.getShowHelpBar());
+        });
+        ThreadingUtil.runOnGUI(() -> {
             le.setShowHelpBar(false);
+        });
+        ThreadingUtil.runOnGUI(() -> {
             Assert.assertFalse("getShowHelpBar", le.getShowHelpBar());
+        });
+        ThreadingUtil.runOnGUI(() -> {
             le.setShowHelpBar(true);
+        });
+        ThreadingUtil.runOnGUI(() -> {
             Assert.assertTrue("getShowHelpBar", le.getShowHelpBar());
         });
     }
