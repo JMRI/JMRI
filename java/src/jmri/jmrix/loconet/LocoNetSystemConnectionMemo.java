@@ -122,8 +122,10 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
      *                           operation retries?
      * @param mTurnoutExtraSpace Is the user configuration set for extra time
      *                           between turnout operations?
+     * @param mTranspondingAvailable    Is the layout configured to provide
+     *                                  transopnding reports
      */
-    public void configureCommandStation(LnCommandStationType type, boolean mTurnoutNoRetry, 
+    public void configureCommandStation(LnCommandStationType type, boolean mTurnoutNoRetry,
                                             boolean mTurnoutExtraSpace, boolean mTranspondingAvailable) {
 
         // store arguments
