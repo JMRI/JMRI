@@ -43,6 +43,13 @@ public class LocoNetSlot {
      */
     public LocoNetSlot(int slotNum) {
         slot = slotNum;
+        if ((slot == 0) || (slot > 120 && slot < 128)
+                || (slot > 247 && slot < 257)
+                || (slot > 375 && slot < 385)) {
+            systemSlot = true;
+        } else {
+            systemSlot = false;
+        }
     }
 
     /**
@@ -60,6 +67,13 @@ public class LocoNetSlot {
         // "speed" message or "dir/func" message does not give any other useful
         // information for object initialization.
         slot = l.getElement(2);
+        if ((slot == 0) || (slot > 120 && slot < 128)
+                || (slot > 247 && slot < 257)
+                || (slot > 375 && slot < 385)) {
+            systemSlot = true;
+        } else {
+            systemSlot = false;
+        }
         setSlot(l);
     }
 
@@ -715,38 +729,6 @@ public class LocoNetSlot {
 
     public int cvval() {
         return snd + (ss2 & 2) * 64;
-    }
-
-    // global track status should be reference through SlotManager
-    // create a specific slot
-    public LocoNetSlot(int slotNum) {
-        slot = slotNum;
-        if ((slot == 0) || (slot > 120 && slot < 128)
-                || (slot > 247 && slot < 257)
-                || (slot > 375 && slot < 385)) {
-            systemSlot = true;
-        } else {
-            systemSlot = false;
-        }
-    }
-
-    /**
-     * This is used only in the tests (43 times) and once in UhlenBrockSlot and therefore is not
-     * converted for long slots.
-     * @param l LocoNetMessage
-     * @throws LocoNetException
-     */
-    //TODO: Convert to expanded slots
-    public LocoNetSlot(LocoNetMessage l) throws LocoNetException {
-        slot = l.getElement(2);
-        if ((slot == 0) || (slot > 120 && slot < 128)
-                || (slot > 247 && slot < 257)
-                || (slot > 375 && slot < 385)) {
-            systemSlot = true;
-        } else {
-            systemSlot = false;
-        }
-        setSlot(l);
     }
 
     boolean localF9 = false;
