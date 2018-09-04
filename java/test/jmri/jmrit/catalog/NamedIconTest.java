@@ -17,14 +17,19 @@ import org.junit.Test;
  */
 public class NamedIconTest {
 
+    /**
+     * Test constuctor for NamedIcon
+     */
     @Test
     public void testCTor() {
         NamedIcon t = new NamedIcon("program:resources/logo.gif","logo");
         Assert.assertNotNull("exists",t);
     }
 
-    // Test that resize Affine Transform doesn't affects size. The size comes from the width and
-    // Height parameters
+    /**
+     *  Test transformImage. Confirm that resize Affine Transform doesn't affects size.
+     *  The size comes from the width and height parameters
+     */
     @Test
     public void testTransformImage() {
         NamedIcon ni = new NamedIcon("program:resources/logo.gif","logo");
@@ -37,7 +42,9 @@ public class NamedIconTest {
         Assert.assertEquals(h, ni.getIconHeight());
     }
     
-    // Test rotate method with no scaling, 45 deg.
+    /**
+     *  Test rotate method with no scaling, 45 deg rotation
+     */
     @Test
     public void testRotateNoScaling() {
         NamedIcon ni = new NamedIcon("program:resources/logo.gif","logo");
@@ -50,7 +57,9 @@ public class NamedIconTest {
         Assert.assertEquals(rectSize, ni.getIconWidth());
     }
     
-    // Test scaling, no rotation
+    /**
+     *  Test scaling, no rotation
+     */
     @Test
     public void testScaling() {
         NamedIcon ni = new NamedIcon("program:resources/logo.gif","logo");
@@ -63,8 +72,10 @@ public class NamedIconTest {
         Assert.assertEquals((int) (w * scale), ni.getIconWidth());        
     }
     
-    // Test rotate method with scaling, 270
-    // should just swap height and width and we'll scale by 2.0
+    /**
+     *  Test rotate method with scaling, 270 degrees
+     * should just swap height and width and we'll scale by 2.0
+     */
     @Test
     public void testRotate270() {
         NamedIcon ni = new NamedIcon("program:resources/logo.gif","logo");
@@ -82,8 +93,10 @@ public class NamedIconTest {
         Assert.assertEquals((int) Math.ceil(h * scale) + 1, ni.getIconWidth());
     } 
     
-    // Test setLoad and scale. 30 degrees is also simple geometry.
-    // Also test getDegrees and getScale while we're here
+    /**
+     *  Test setLoad and scale. 30 degrees is also simple geometry.
+     * Also test getDegrees and getScale while we're here
+     */
     @Test
     public void testSetLoad()
     {
@@ -107,7 +120,9 @@ public class NamedIconTest {
         Assert.assertEquals(expectedWidth, ni.getIconWidth());
     }
     
-    // Test flip method
+    /**
+     * Test flip method
+     */
     @Test
     public void testFlip() {
         NamedIcon ni = new NamedIcon("program:resources/logo.gif","logo");
@@ -118,38 +133,51 @@ public class NamedIconTest {
         ni.flip(NamedIcon.NOFLIP, comp);       
         Assert.assertEquals(w, ni.getIconWidth());
         Assert.assertEquals(h, ni.getIconHeight());
-        int [] noflipPixels = getPixels(ni);
+        int [] noflipPixels = getPixels(ni.getImage());
         
         ni.flip(NamedIcon.VERTICALFLIP, comp);
         Assert.assertEquals(w, ni.getIconWidth());
         Assert.assertEquals(h, ni.getIconHeight());
         
-        int [] flipPixels = getPixels(ni); 
-        for (int j = 0; j < h; j++) {
-            for (int i= 0; i < w; i++) {
-                Assert.assertEquals(getPixel(noflipPixels, i, j, w), getPixel(flipPixels, i, h - 1 - j, w));
+        int [] flipPixels = getPixels(ni.getImage()); 
+        for (int i = 0; i < w; i++) {
+            for (int j = 0; j < h; j++) {
+                Assert.assertEquals(noflipPixels[j * w + i], flipPixels[(h - 1 - j) * w + i]);
             }
         }
     }
     
-    // Test createRotatedImage
+    /**
+     *  Test createRotatedImage.
+     */
     @Test
     public void testCreateRotatedImage() {
         NamedIcon ni = new NamedIcon("program:resources/logo.gif","logo");
         int h = ni.getIconHeight();
         int w = ni.getIconWidth();
         JLabel comp = new JLabel();
+        Image img = ni.getImage();
         
-        Image rotImage = ni.createRotatedImage(ni.getImage(), comp, 1);
-        Assert.assertEquals(h, rotImage.getWidth(null));
-        Assert.assertEquals(w, rotImage.getHeight(null));   
-        // should check image bits here
+        Image rot1Image = ni.createRotatedImage(img, comp, 1);
+        Assert.assertEquals(w, rot1Image.getHeight(null));
+        Assert.assertEquals(h, rot1Image.getWidth(null));
+        int [] rot1Pixels = getPixels(rot1Image);
+        
+        Image rot2Image = ni.createRotatedImage(img, comp, 2);
+        Assert.assertEquals(h, rot2Image.getHeight(null));
+        Assert.assertEquals(w, rot2Image.getWidth(null));
+        int [] rot2Pixels = getPixels(rot2Image);
+
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; j++) {
+                Assert.assertEquals(getPixel(rot1Pixels, i, j, h), getPixel(rot2Pixels, j, h - 1 - i, w)); 
+            }
+        }
     }
     
-    // Test setRotation and getRotation
-    // N.B. unlike the other mutator methods on NamedIcon
-    // setRotation does NOT reset the image each time it's
-    // called. We use that behavior in the test.
+    /**
+     *  Test setRotation and getRotation
+     */
     @Test
     public void testSetRotation() {
         NamedIcon ni = new NamedIcon("program:resources/logo.gif","logo");
@@ -158,31 +186,34 @@ public class NamedIconTest {
         JLabel comp = new JLabel();
         
         Assert.assertEquals(0, ni.getRotation());
-     
+            
+        ni.setRotation(1, comp);
+        Assert.assertEquals(h, ni.getIconWidth());
+        Assert.assertEquals(w, ni.getIconHeight());
+        Assert.assertEquals(1, ni.getRotation());
+        
+        int [] rot1Pixels = getPixels(ni.getImage());
+            
         ni.setRotation(3, comp);
         Assert.assertEquals(h, ni.getIconWidth());
         Assert.assertEquals(w, ni.getIconHeight());
+        Assert.assertEquals(3, ni.getRotation());
         
-        int [] rot3Pixels = getPixels(ni);
-        
-        ni.setRotation(2, comp);
-        ni.setRotation(2, comp);
-        
-        int [] rot7Pixels = getPixels(ni);
-         
-        for (int j = 0; j < h; j++) {
-            for (int i = 0; i < w; i++) {
-//System.out.println("i = " + i + ", j = " + j);
-//                Assert.assertEquals(getPixel(rot3Pixels, i, j, h), getPixel(rot7Pixels, i, j, h));
+        int [] rot3Pixels = getPixels(ni.getImage());
+    
+        for (int i = 0; i < w; i++) {
+            for (int j = 0; j < h; j++) {
+                Assert.assertEquals(rot1Pixels[j * w + i], rot3Pixels[(h - j) * w - 1 - i]);
             }
         }
-        
-        Assert.assertEquals(2, ni.getRotation());
     }
 
-    // Helper routine to grab the pixels from an Image
-    private int [] getPixels(NamedIcon ni) {
-        Image img = ni.getImage();
+    /**
+     * Helper routine to grab the pixels from an NameIcon
+     * @param img  Image to get pixels from
+     * @return array of ints, one for each pixel
+     */
+    private int [] getPixels(Image img) {
         int w = img.getWidth(null);
         int h = img.getHeight(null);
         int[] pixels = new int[w * h];
@@ -196,7 +227,6 @@ public class NamedIconTest {
     
     // Helper routine to grab the i,j pixel 
     private int getPixel(int [] pixels, int i, int j, int width) {
-//System.out.println("i = " + i + ", j = " + j + ", width = " + width + ", cood = " + (j * width + i));
         return pixels[j * width + i];
     }
     
