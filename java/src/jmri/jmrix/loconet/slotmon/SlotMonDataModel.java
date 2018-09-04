@@ -249,6 +249,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
 
     @Override
     public boolean isCellEditable(int row, int col) {
+        LocoNetSlot s = memo.getSlotManager().slot(row);
         switch (col) {
             case ESTOPCOLUMN:
             case DISPCOLUMN:
@@ -281,12 +282,8 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case F26COLUMN:
             case F27COLUMN:
             case F28COLUMN:
-                // only loco slots (1-120 incl) to be marked writeable only, system slot are read only
-<<<<<<< HEAD
-                return ((row > 0 & row < 121) || (row > 128));
-=======
-                return ((row > 0) && (row < 121));
->>>>>>> master
+                // only loco slots to be marked writeable only, system slot are read only
+                return !s.isSystemSlot();
             default:
                 return false;
         }

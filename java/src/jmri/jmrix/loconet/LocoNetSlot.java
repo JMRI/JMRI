@@ -43,6 +43,13 @@ public class LocoNetSlot {
      */
     public LocoNetSlot(int slotNum) {
         slot = slotNum;
+        if ((slot == 0) || (slot > 120 && slot < 128)
+                || (slot > 247 && slot < 257)
+                || (slot > 375 && slot < 385)) {
+            systemSlot = true;
+        } else {
+            systemSlot = false;
+        }
     }
 
     /**
@@ -60,6 +67,13 @@ public class LocoNetSlot {
         // "speed" message or "dir/func" message does not give any other useful
         // information for object initialization.
         slot = l.getElement(2);
+        if ((slot == 0) || (slot > 120 && slot < 128)
+                || (slot > 247 && slot < 257)
+                || (slot > 375 && slot < 385)) {
+            systemSlot = true;
+        } else {
+            systemSlot = false;
+        }
         setSlot(l);
     }
 
@@ -717,38 +731,6 @@ public class LocoNetSlot {
         return snd + (ss2 & 2) * 64;
     }
 
-    // global track status should be reference through SlotManager
-    // create a specific slot
-    public LocoNetSlot(int slotNum) {
-        slot = slotNum;
-        if ((slot == 0) || (slot > 120 && slot < 128)
-                || (slot > 247 && slot < 257)
-                || (slot > 375 && slot < 385)) {
-            systemSlot = true;
-        } else {
-            systemSlot = false;
-        }
-    }
-
-    /**
-     * This is used only in the tests (43 times) and once in UhlenBrockSlot and therefore is not
-     * converted for long slots.
-     * @param l LocoNetMessage
-     * @throws LocoNetException
-     */
-    //TODO: Convert to expanded slots
-    public LocoNetSlot(LocoNetMessage l) throws LocoNetException {
-        slot = l.getElement(2);
-        if ((slot == 0) || (slot > 120 && slot < 128)
-                || (slot > 247 && slot < 257)
-                || (slot > 375 && slot < 385)) {
-            systemSlot = true;
-        } else {
-            systemSlot = false;
-        }
-        setSlot(l);
-    }
-
     boolean localF9 = false;
     boolean localF10 = false;
     boolean localF11 = false;
@@ -1074,7 +1056,7 @@ public class LocoNetSlot {
         } else {
             LocoNetMessage l = new LocoNetMessage(6);
             l.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE);
-            l.setElement(1, ((slot / 128) & 0x07) | 0b00111000 ) ;
+            l.setElement(1, ((slot / 128) & 0x03) | 0b00111000 ) ;
             l.setElement(2, slot & 0x7f);
             l.setElement(3, 0x60);
             l.setElement(4, (stat & ~LnConstants.DEC_MODE_MASK) | status);
@@ -1110,7 +1092,7 @@ public class LocoNetSlot {
         } else {
             LocoNetMessage l = new LocoNetMessage(6);
             l.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE);
-            l.setElement(1, ((slot / 128) & 0x07) | 0b00111000 ) ;
+            l.setElement(1, ((slot / 128) & 0x03) | 0b00111000 ) ;
             l.setElement(2, slot & 0x7f);
             l.setElement(3, 0x60);
             l.setElement(4, (stat & ~LnConstants.LOCOSTAT_MASK) | status);
@@ -1134,7 +1116,7 @@ public class LocoNetSlot {
         } else {
             LocoNetMessage l = new LocoNetMessage(6);
             l.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
-            l.setElement(1, ((slot / 128) & 0x07) | ((dirf &  LnConstants.DIRF_DIR ) >> 2) );
+            l.setElement(1, ((slot / 128) & 0x03) | ((dirf &  LnConstants.DIRF_DIR ) >> 2) );
             l.setElement(2, slot & 0x7f);
             l.setElement(3, (id & 0x7f));
             l.setElement(4, speed);
@@ -1160,7 +1142,7 @@ public class LocoNetSlot {
         } else {
             LocoNetMessage l = new LocoNetMessage(6);
             l.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE);
-            l.setElement(1, ((slot / 128) & 0x07) | 0b00111000 ) ;
+            l.setElement(1, ((slot / 128) & 0x03) | 0b00111000 ) ;
             l.setElement(2, slot & 0x7f);
             l.setElement(3, 0);
             l.setElement(4, 0);
@@ -1213,7 +1195,7 @@ public class LocoNetSlot {
         LocoNetMessage l = new LocoNetMessage(21);
         l.setOpCode(LnConstants.OPC_EXP_WR_SL_DATA);
         l.setElement(1, 0x15);
-        l.setElement(2, (slot / 128) & 0x07);
+        l.setElement(2, (slot / 128) & 0x03);
         l.setElement(3, slot & 0x7F);
         l.setElement(4, stat & 0x7F);
         l.setElement(6, (addr / 128) & 0x7F);

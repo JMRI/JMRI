@@ -2969,8 +2969,8 @@ public class Llnmon {
     }
 
     private String interpretOpcExpMoveSlots(LocoNetMessage l) {
-        int src = ((l.getElement(1) & 0x07) * 128) + (l.getElement(2) & 0x7f);
-        int dest = ((l.getElement(3) & 0x07) * 128) + (l.getElement(4) & 0x7f);
+        int src = ((l.getElement(1) & 0x03) * 128) + (l.getElement(2) & 0x7f);
+        int dest = ((l.getElement(3) & 0x03) * 128) + (l.getElement(4) & 0x7f);
 
         if ((src >= 0x79) && (src <= 0x7f)) {
             return "";
@@ -3087,7 +3087,7 @@ public class Llnmon {
     }
 
     private String interpretPocExpLocoSpdDirFunction(LocoNetMessage l) {
-        int slot = ((l.getElement(1) & 0x07) * 128) + (l.getElement(2) & 0x7f);
+        int slot = ((l.getElement(1) & 0x03) * 128) + (l.getElement(2) & 0x7f);
         if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK) == 0) {
             // speed and direction
             int spd = l.getElement(4);
