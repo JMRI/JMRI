@@ -181,7 +181,12 @@ public final class LnConstants {
     public final static int CONSIST_SUB = STAT1_SL_CONUP;
     public final static int CONSIST_NO = 0;
 
-    /** Encode consisting status as a string */
+    /**
+     * Encode consisting status as a string
+     * <p>
+     * @param s - consist status bits
+     * @return string contaning a description of the consisting state
+     */
     public final static String CONSIST_STAT(int s) {
         return ((s & CONSIST_MASK) == CONSIST_MID) ? "Mid Consist" // NOI18N
                 : (((s & CONSIST_MASK) == CONSIST_TOP) ? "Consist TOP" // NOI18N
@@ -203,7 +208,12 @@ public final class LnConstants {
     /** Value for locomotive use determination */
     public final static int LOCO_FREE = 0;
 
-    /**Encode loco status as a string */
+    /**
+     * Encode loco status as a string
+     * <p>
+     * @param s - integer containing loco "status"
+     * @return string containing a description of the loco "status"
+     */
     public final static String LOCO_STAT(int s) {
         return ((s & LOCOSTAT_MASK) == LOCO_IN_USE) ? "In-Use" // NOI18N
                 : (((s & LOCOSTAT_MASK) == LOCO_IDLE) ? "Idle" // NOI18N
@@ -386,7 +396,12 @@ public final class LnConstants {
     public final static int OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF_MASK = 0b00101000;
     public final static int OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON_MASK =  0b00110000;
 
-    /** Encode LocoNet Opcode as a string */
+    /**
+     * Encode LocoNet Opcode as a string
+     * <p>
+     * @param opcode - a LocoNet opcode value
+     * @return string containing the opcode "name"
+     */
     public final static String OPC_NAME(int opcode) {
         switch (opcode) {
             case OPC_GPBUSY     : return "OPC_GPBUSY"; // NOI18N
