@@ -1056,7 +1056,7 @@ public class LocoNetSlot {
         } else {
             LocoNetMessage l = new LocoNetMessage(6);
             l.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE);
-            l.setElement(1, ((slot / 128) & 0x07) | 0b00111000 ) ;
+            l.setElement(1, ((slot / 128) & 0x03) | 0b00111000 ) ;
             l.setElement(2, slot & 0x7f);
             l.setElement(3, 0x60);
             l.setElement(4, (stat & ~LnConstants.DEC_MODE_MASK) | status);
@@ -1092,7 +1092,7 @@ public class LocoNetSlot {
         } else {
             LocoNetMessage l = new LocoNetMessage(6);
             l.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE);
-            l.setElement(1, ((slot / 128) & 0x07) | 0b00111000 ) ;
+            l.setElement(1, ((slot / 128) & 0x03) | 0b00111000 ) ;
             l.setElement(2, slot & 0x7f);
             l.setElement(3, 0x60);
             l.setElement(4, (stat & ~LnConstants.LOCOSTAT_MASK) | status);
@@ -1116,7 +1116,7 @@ public class LocoNetSlot {
         } else {
             LocoNetMessage l = new LocoNetMessage(6);
             l.setOpCode(LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR);
-            l.setElement(1, ((slot / 128) & 0x07) | ((dirf &  LnConstants.DIRF_DIR ) >> 2) );
+            l.setElement(1, ((slot / 128) & 0x03) | ((dirf &  LnConstants.DIRF_DIR ) >> 2) );
             l.setElement(2, slot & 0x7f);
             l.setElement(3, (id & 0x7f));
             l.setElement(4, speed);
@@ -1142,7 +1142,7 @@ public class LocoNetSlot {
         } else {
             LocoNetMessage l = new LocoNetMessage(6);
             l.setOpCode(LnConstants.OPC_EXP_SLOT_MOVE);
-            l.setElement(1, ((slot / 128) & 0x07) | 0b00111000 ) ;
+            l.setElement(1, ((slot / 128) & 0x03) | 0b00111000 ) ;
             l.setElement(2, slot & 0x7f);
             l.setElement(3, 0);
             l.setElement(4, 0);
@@ -1195,7 +1195,7 @@ public class LocoNetSlot {
         LocoNetMessage l = new LocoNetMessage(21);
         l.setOpCode(LnConstants.OPC_EXP_WR_SL_DATA);
         l.setElement(1, 0x15);
-        l.setElement(2, (slot / 128) & 0x07);
+        l.setElement(2, (slot / 128) & 0x03);
         l.setElement(3, slot & 0x7F);
         l.setElement(4, stat & 0x7F);
         l.setElement(6, (addr / 128) & 0x7F);
