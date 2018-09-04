@@ -654,7 +654,8 @@ public class AutoActiveTrain implements ThrottleListener {
     /**
      *
      * @param as current section the train is in, can be null
-     * @param newTransitSetUp if true this is setting up a new train
+     * @param forceSpeedChange if true, the speed will be set using the signal mast
+     *        even if it is not on the immediate block boundary
      */
     protected synchronized void setupNewCurrentSignal(AllocatedSection as, boolean forceSpeedChange) {
         log.debug("setupNewCurrentSignal Called Section[{}] forceSpeedChange[{}]", as != null ? as.getSectionName() : "null",forceSpeedChange);
