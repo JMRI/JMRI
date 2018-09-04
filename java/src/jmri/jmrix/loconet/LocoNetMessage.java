@@ -82,6 +82,8 @@ public class LocoNetMessage implements Serializable {
 
     /**
      * Get a String representation of the op code in hex.
+     * <p>
+     * @return string containing a hexadecimal representation of the message OpCode
      */
     public String getOpCodeHex() {
         return "0x" + Integer.toHexString(getOpCode()); // NOI18N
@@ -89,6 +91,8 @@ public class LocoNetMessage implements Serializable {
 
     /**
      * Get length, including op code and error-detection byte.
+     * <p>
+     * @return number of bytes in the message, including the opcode and checksum
      */
     public int getNumDataElements() {
         return _nDataBytes;
@@ -164,6 +168,8 @@ public class LocoNetMessage implements Serializable {
 
     /**
      * Check whether the message has a valid parity.
+     * <p>
+     * @return true if parity is correct, else false
      */
     public boolean checkParity() {
         int len = getNumDataElements();
@@ -350,7 +356,8 @@ public class LocoNetMessage implements Serializable {
     /**
      * Check if a high bit is set, usually used to store it in some other
      * location (LocoNet does not allow the high bit to be set in data bytes).
-     *
+     * <p>
+     * @param val - value to be checked
      * @return True if the argument has the high bit set
      */
     static protected boolean highBit(int val) {
