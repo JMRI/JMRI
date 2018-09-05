@@ -1,5 +1,6 @@
 package jmri.jmrix.can.swing.send;
 
+import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
@@ -19,6 +20,8 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.cbus.CbusConstants;
+import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusAddress;
 import jmri.util.StringUtil;
@@ -42,10 +45,17 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
     JLabel jLabel1 = new JLabel();
     JButton sendButton = new JButton();
     JTextField packetTextField = new JTextField(12);
-
+    JCheckBox cbusPriorityCheckbox = new JCheckBox(Bundle.getMessage("AddCbusPriorFull"));
+    
     public CanSendPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+        JPanel cbuspriorholder = new JPanel();
+        cbuspriorholder.setBorder(BorderFactory.createTitledBorder(
+            BorderFactory.createEtchedBorder(), Bundle.getMessage("AddCbusPriority")));
+        cbuspriorholder.add(cbusPriorityCheckbox);
+        add(cbuspriorholder);          
+        
         // Handle single-packet part
         JPanel topPane = new JPanel();
         // Add a nice border
@@ -54,8 +64,8 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
         add(topPane);
 
         JPanel pane1 = new JPanel();
-        pane1.setLayout(new BoxLayout(pane1, BoxLayout.X_AXIS));
-
+        pane1.setLayout(new BoxLayout(pane1, BoxLayout.X_AXIS));      
+        
         JPanel entry = new JPanel();
         jLabel1.setText(Bundle.getMessage("FrameLabel"));
         jLabel1.setVisible(true);
@@ -129,7 +139,8 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
     JCheckBox mUseField[] = new JCheckBox[MAXSEQUENCE];
     JSpinner numberSpinner[] =  new JSpinner[MAXSEQUENCE];
     JToggleButton mRunButton = new JToggleButton(Bundle.getMessage("ButtonStart"));
-
+    static final Color[] filterColors = {Color.RED, Color.GREEN, Color.CYAN, Color.YELLOW};
+    
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
@@ -153,6 +164,9 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
          try {
             CanMessage m = createPacket(packetTextField.getText());
+            if (cbusPriorityCheckbox.isSelected()) {
+                CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
+            }
             tc.sendCanMessage(m, this);        
             log.debug("sendButtonActionPerformed: " + m);
         } catch (StringIndexOutOfBoundsException ex) {
@@ -241,11 +255,16 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
      * elapsed.
      */
     void sendNextItem() {
+        // reset all backgrounds
+        for (int i = 0; i < MAXSEQUENCE; i++) {
+            mPacketField[i].setBackground(packetTextField.getBackground()); // known unaltered textfield
+        }
         // check if still running
         if (!mRunButton.isSelected()) {
             mRunButton.setText(Bundle.getMessage("ButtonStart"));
             return;
         }
+        
         // have we run off the end?
         if (mNextSequenceElement >= MAXSEQUENCE) {
             // past the end, go back
@@ -253,9 +272,17 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
         }
         // is this one enabled?
         if (mUseField[mNextSequenceElement].isSelected()) {
+            
+            log.warn("sequence {} colour {} ",mNextSequenceElement,filterColors[mNextSequenceElement]);
+            mPacketField[mNextSequenceElement].setBackground(filterColors[mNextSequenceElement]);
+            
             try {
                 // make the packet
                 CanMessage m = createPacket(mPacketField[mNextSequenceElement].getText());
+                if (cbusPriorityCheckbox.isSelected()) {
+                    CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
+                }
+                
                 // send it
                 tc.sendCanMessage(m, this);
                 startSequenceDelay();
