@@ -309,12 +309,12 @@ public class NamedIcon extends ImageIcon {
             setImage(createRotatedImage(mDefaultImage, comp, 0));
             //mRotation = 3;
         }
-        if (d != 0) {
-            rotate(d, comp);
+        _scale = s;
+        if (Math.abs(s - 1.0) > .00001) {
+            _transformS = AffineTransform.getScaleInstance(s, s);
         }
-        if (s != 1.0) {
-            scale(s, comp);
-        }
+        rotate(d, comp);
+
     }
 
     public void transformImage(int w, int h, AffineTransform t, Component comp) {
