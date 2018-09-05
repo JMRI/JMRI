@@ -18,7 +18,7 @@ import org.junit.Test;
 public class NamedIconTest {
 
     /**
-     * Test constuctor for NamedIcon
+     * Test constructor for NamedIcon
      */
     @Test
     public void testCTor() {
@@ -43,7 +43,8 @@ public class NamedIconTest {
     }
     
     /**
-     *  Test rotate method with no scaling, 45 deg rotation
+     *  Test rotate method with no scaling, 45 deg rotation. The size
+     *  should change.
      */
     @Test
     public void testRotateNoScaling() {
@@ -74,7 +75,7 @@ public class NamedIconTest {
     
     /**
      *  Test rotate method with scaling, 270 degrees
-     * should just swap height and width and we'll scale by 2.0
+     *  should just swap height and width and we'll scale by 2.0
      */
     @Test
     public void testRotate270() {
@@ -95,7 +96,7 @@ public class NamedIconTest {
     
     /**
      *  Test setLoad and scale. 30 degrees is also simple geometry.
-     * Also test getDegrees and getScale while we're here
+     *  Also test getDegrees and getScale while we're here
      */
     @Test
     public void testSetLoad()
@@ -121,7 +122,28 @@ public class NamedIconTest {
     }
     
     /**
-     * Test flip method
+     *  Test reduceTo method.
+     *  
+     */
+    @Test
+    public void testReduceTo() {
+        NamedIcon ni = new NamedIcon("program:resources/logo.gif","logo");
+        int h = ni.getIconHeight();
+        int w = ni.getIconWidth();
+        
+        // Test that limit of one won't let you reduce the size.
+        ni.reduceTo(10, 10, 1.0);
+        Assert.assertEquals(h, ni.getIconHeight());
+        Assert.assertEquals(w, ni.getIconWidth());
+       
+        // Test that we can reduce the size
+        ni.reduceTo(w / 3, h / 2, 0.1);
+        Assert.assertEquals(w / 3, ni.getIconWidth());
+        Assert.assertEquals(h / 3, ni.getIconHeight());
+    }
+    
+    /**
+     *  Test flip method
      */
     @Test
     public void testFlip() {
@@ -148,7 +170,9 @@ public class NamedIconTest {
     }
     
     /**
-     *  Test createRotatedImage.
+     *  Test createRotatedImage. N.B, createRotatedImage forces the color
+     *  model, so we can't easily compare to the original image. Instead,
+     *  we compare the image rotated by 90 deg to the image rotated by 180 deg,
      */
     @Test
     public void testCreateRotatedImage() {
@@ -170,13 +194,14 @@ public class NamedIconTest {
 
         for (int i = 0; i < h; i++) {
             for (int j = 0; j < w; j++) {
-                Assert.assertEquals(getPixel(rot1Pixels, i, j, h), getPixel(rot2Pixels, j, h - 1 - i, w)); 
+                Assert.assertEquals(rot1Pixels[j * h + i], rot2Pixels[(h - 1 - i) * w + j]); 
             }
         }
     }
     
     /**
-     *  Test setRotation and getRotation
+     *  Test setRotation and getRotation. Since this calls createRotatedImage, we compare
+     *  the image rotated by 90 deg to the image rotated by 270 deg.
      */
     @Test
     public void testSetRotation() {
@@ -209,7 +234,7 @@ public class NamedIconTest {
     }
 
     /**
-     * Helper routine to grab the pixels from an NameIcon
+     * Helper routine to grab the pixels from an Image
      * @param img  Image to get pixels from
      * @return array of ints, one for each pixel
      */
@@ -224,12 +249,7 @@ public class NamedIconTest {
         }
         return pixels;
     }
-    
-    // Helper routine to grab the i,j pixel 
-    private int getPixel(int [] pixels, int i, int j, int width) {
-        return pixels[j * width + i];
-    }
-    
+     
     // The minimal setup for log4J
     @Before
     public void setUp() {
