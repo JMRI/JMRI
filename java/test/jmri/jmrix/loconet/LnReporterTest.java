@@ -87,7 +87,7 @@ public class LnReporterTest {
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         tc = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
     }
 

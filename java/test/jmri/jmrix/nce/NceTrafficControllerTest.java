@@ -287,13 +287,14 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         tc  = new NceTrafficController();
     }
 
     @Override
     @After
     public void tearDown() {
+        tc = null;
         JUnitUtil.tearDown();
     }
 

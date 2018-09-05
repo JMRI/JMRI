@@ -30,7 +30,7 @@ public class SignalSpeedMapTest extends TestCase {
         "Stop"
     };
 
-    SignalSpeedMap map = new SignalSpeedMap();
+    SignalSpeedMap map; // can't static init before class; use @BeforeClass when changing to JUnit4
     
     /**
      * To avoid breaking signal systems, speed definitions should
@@ -98,10 +98,12 @@ public class SignalSpeedMapTest extends TestCase {
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.JUnitUtil.initIdTagManager();
+        map = new SignalSpeedMap();
     }
 
     @Override
     protected void tearDown() throws Exception {
+        map = null;
         jmri.util.JUnitUtil.tearDown();
     }
 

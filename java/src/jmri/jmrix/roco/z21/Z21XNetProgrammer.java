@@ -67,8 +67,8 @@ public class Z21XNetProgrammer extends XNetProgrammer {
     public boolean getCanWrite(String addr) {
         if (log.isDebugEnabled()) {
             log.debug("check CV " + addr);
+            log.debug("cs Type: " + controller().getCommandStation().getCommandStationType() + " CS Version: " + controller().getCommandStation().getCommandStationSoftwareVersion());
         }
-        log.error("cs Type: " + controller().getCommandStation().getCommandStationType() + " CS Version: " + controller().getCommandStation().getCommandStationSoftwareVersion());
         if (!getCanWrite()) {
             return false; // check basic implementation first
         }

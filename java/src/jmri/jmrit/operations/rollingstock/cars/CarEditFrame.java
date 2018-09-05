@@ -297,7 +297,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
             pRfid.setLayout(new GridBagLayout());
             pRfid.setBorder(BorderFactory.createTitledBorder(Setup.getRfidLabel()));
             addItem(pRfid, rfidComboBox, 1, 0);
-            jmri.InstanceManager.getDefault(jmri.IdTagManager.class).getNamedBeanList().forEach((tag) -> rfidComboBox.addItem(tag));
+            jmri.InstanceManager.getDefault(jmri.IdTagManager.class).getNamedBeanSet().forEach((tag) -> rfidComboBox.addItem(tag));
             rfidComboBox.insertItemAt((jmri.IdTag)null,0); // must have a blank entry, for no ID tag, and make it the default.
             rfidComboBox.setSelectedIndex(0);
             pOptional.add(pRfid);

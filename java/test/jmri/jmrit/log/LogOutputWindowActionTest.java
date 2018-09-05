@@ -1,6 +1,5 @@
 package jmri.jmrit.log;
 
-import apps.tests.Log4JFixture;
 import java.util.*;
 import jmri.util.JTextPaneAppender;
 import jmri.util.JUnitUtil;

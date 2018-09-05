@@ -1,10 +1,12 @@
 package jmri.jmrit.vsdecoder;
 
-import java.nio.ByteBuffer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.nio.ByteBuffer;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
@@ -32,12 +34,6 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood Copyright (C) 2011
  * @author Klaus Killinger Copyright (C) 2017, 2018
  */
-// Usage:
-// Steam1Sound() : constructor
-// Suppressing "unused" warnings throughout. There are a dozen
-// methods, ctors and values that aren't used and don't have
-// outside access.
-@SuppressWarnings("unused")
 class Steam1Sound extends EngineSound {
 
     // Engine Sounds
@@ -51,6 +47,9 @@ class Steam1Sound extends EngineSound {
     private float driver_diameter_float;
     private int num_cylinders;
     private float exponent;
+    private int accel_rate;
+    private int decel_rate;
+    private int brake_time;
     private int decel_trigger_rpms;
     private SoundBite idle_sound;
     private SoundBite boiling_sound;
@@ -63,6 +62,10 @@ class Steam1Sound extends EngineSound {
     boolean is_looping = false;
     S1LoopThread _loopThread = null;
 
+    private javax.swing.Timer rpmTimer;
+    int accdectime;
+
+    // Constructor
     public Steam1Sound(String name) {
         super(name);
         log.debug("New Steam1Sound name(param): {}, name(val): {}", name, this.getName());
@@ -70,7 +73,7 @@ class Steam1Sound extends EngineSound {
 
     private void startThread() {
         _loopThread = new S1LoopThread(this, _soundName, top_speed,
-                driver_diameter_float, num_cylinders, exponent, decel_trigger_rpms, true);
+                driver_diameter_float, num_cylinders, decel_trigger_rpms, true);
         log.debug("Loop Thread Started.  Sound name: {}", _soundName);
     }
 
@@ -86,9 +89,18 @@ class Steam1Sound extends EngineSound {
     // Responds to "CHANGE" trigger (float)
     @Override
     public void changeThrottle(float s) {
-        // This is all we have to do.  The loop thread will handle everything else.
+        // This is all we have to do.  The loop thread will handle everything else
         if (_loopThread != null) {
             _loopThread.setThrottle(s);
+        }
+    }
+
+    // Responds to throttle function key (see EngineSound.java and EngineSoundEvent.java)
+    @Override
+    public void functionKey(String event, boolean value, String name) {
+        log.debug("throttle function key {} pressed for {}: {}", event, name, value);
+        if (_loopThread != null) {
+            _loopThread.setFunction(event, value, name);
         }
     }
 
@@ -100,6 +112,36 @@ class Steam1Sound extends EngineSound {
     // Called from thread
     public S1Notch getNotch(int n) {
         return notch_sounds.get(n);
+    }
+
+    // Called from thread
+    void initAccDecTimer() {
+        rpmTimer = newTimer(1, true, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (_loopThread != null) {
+                    rpmTimer.setDelay(accdectime); // Update delay time
+                    _loopThread.updateRpm();
+                }
+            }
+        });
+        log.debug("timer {} initialized, delay: {}", rpmTimer, accdectime);
+    }
+
+    // Called from thread
+    void startAccDecTimer() {
+        if (!rpmTimer.isRunning()) {
+            rpmTimer.start();
+            log.debug("timer {} started, delay: {}", rpmTimer, accdectime);
+        }
+    }
+
+    // Called from thread
+    void stopAccDecTimer() {
+        if (rpmTimer.isRunning()) {
+            rpmTimer.stop();
+            log.debug("timer {} stopped, delay: {}", rpmTimer, accdectime);
+        }
     }
 
     @Override
@@ -121,6 +163,9 @@ class Steam1Sound extends EngineSound {
         for (VSDSound vs : trigger_sounds.values()) {
             log.debug(" Stopping trigger sound: {}", vs.getName());
             vs.stop(); // SoundBite: Stop playing
+        }
+        if (rpmTimer != null) {
+            stopAccDecTimer();
         }
         this.stop();
     }
@@ -161,10 +206,9 @@ class Steam1Sound extends EngineSound {
         String fn, n;
         S1Notch sb;
 
-        // Handle the common stuff.
+        // Handle the common stuff
         super.setXml(e, vf);
 
-        //log.debug("Steam EngineSound: {}", e.getAttribute("name").getValue());
         _soundName = this.getName();
         log.debug("Steam1: name: {}, soundName: {}", this.getName(), _soundName);
 
@@ -177,14 +221,40 @@ class Steam1Sound extends EngineSound {
         log.debug("Number of cylinders defined: {}", num_cylinders);
 
         // Optional value
-        // Allows to adjust speed.
-        n = e.getChildText("exponent"); // Optional value.
+        // Allows to adjust speed
+        n = e.getChildText("exponent"); // Optional value
         if (n != null) {
             exponent = Float.parseFloat(n);
         } else {
-            exponent = 1.0f; // default
+            exponent = 1.0f; // Default
         }
         log.debug("exponent: {}", exponent);
+
+        // Optional value
+        // Acceleration and deceleration rate
+        n = e.getChildText("accel-rate"); // Optional value
+        if (n != null) {
+            accel_rate = Integer.parseInt(n);
+        } else {
+            accel_rate = 35; // Default
+        }
+        log.debug("accel rate: {}", accel_rate);
+
+        n = e.getChildText("decel-rate"); // Optional value
+        if (n != null) {
+            decel_rate = Integer.parseInt(n);
+        } else {
+            decel_rate = 18; // Default
+        }
+        log.debug("decel rate: {}", decel_rate);
+
+        n = e.getChildText("brake-time"); // Optional value
+        if (n != null) {
+            brake_time = Integer.parseInt(n);
+        } else {
+            brake_time = 0;  // Default
+        }
+        log.debug("brake time: {}", brake_time);
 
         // Optional value 
         // auto-start
@@ -213,7 +283,7 @@ class Steam1Sound extends EngineSound {
         log.debug("engine gain: {}", engine_gain);
 
         // Optional value
-        // Defines how many rpms in 0.5 seconds will trigger decel actions like braking.
+        // Defines how many rpms in 0.5 seconds will trigger decel actions like braking
         n = e.getChildText("decel-trigger-rpms");
         if (n != null) {
             decel_trigger_rpms = Integer.parseInt(n);
@@ -224,8 +294,8 @@ class Steam1Sound extends EngineSound {
 
         // Get the sounds.
         // Note: each sound must have equal attributes, e.g. 16-bit, 44100 Hz
-        // Get the files and create a buffer and byteBuffer for each file.
-        // For each notch there must be <num_cylinders * 2> chuff files.
+        // Get the files and create a buffer and byteBuffer for each file
+        // For each notch there must be <num_cylinders * 2> chuff files
         notch_sounds = new HashMap<>();
         int i = 0; // notch number (index)
         int j = 0; // chuff or coast number (index)
@@ -239,7 +309,7 @@ class Steam1Sound extends EngineSound {
             sb = new S1Notch();
             sb.setNotch(nn);
 
-            // Get the chuff sounds.
+            // Get the chuff sounds
             List<Element> elist = el.getChildren("notch-file");
             j = 0;
             for (Element fe : elist) {
@@ -251,9 +321,9 @@ class Steam1Sound extends EngineSound {
                         b.getSystemName(), b.getFormat());
                 sb.addChuffBuffer(b);
                 if (fmt == 0) {
-                    // Get the format of the (first) WAV file.
+                    // Get the format of the (first) WAV file
                     // Since all WAV files of the notches MUST have the same format,
-                    // I asume this format for all WAV files for now.
+                    // I asume this format for all WAV files for now
                     fmt = AudioUtil.getWavFormat(S1Notch.getWavStream(vf, fn)); 
                     log.debug("fmt: {}", fmt);
                 }
@@ -263,7 +333,7 @@ class Steam1Sound extends EngineSound {
             }
             log.debug("Number of chuff sounds for notch {} defined: {}", nn, j);
 
-            // Create a filler Buffer for queueing and a ByteBuffer for length modification.
+            // Create a filler Buffer for queueing and a ByteBuffer for length modification
             fn = el.getChildText("notchfiller-file");
             if (fn != null) {
                 log.debug("notch filler file: {}", fn);
@@ -278,10 +348,10 @@ class Steam1Sound extends EngineSound {
                 sb.setNotchFillerBuffer(null);
             }
 
-            // Coasting sound and helpers are bound to first notch only.
-            // VSDFile validation makes sure that there is at least one notch.
+            // Coasting sound and helpers are bound to first notch only
+            // VSDFile validation makes sure that there is at least one notch
             if (nn == 1) {
-                // Get the coasting sounds.
+                // Get the coasting sounds
                 j = 0;
                 List<Element> elistc = el.getChildren("coast-file");
                 for (Element fe : elistc) {
@@ -291,14 +361,14 @@ class Steam1Sound extends EngineSound {
                             "_COAST_" + j, _soundName + "_COAST_" + j);
                     log.debug("buffer created: {}, name: {}, format: {}", 
                             bc, bc.getSystemName(), bc.getFormat());
-                    sb.addCoastBuffer(bc); // WAV in Buffer for queueing.
+                    sb.addCoastBuffer(bc); // WAV in Buffer for queueing
                     ByteBuffer datac = AudioUtil.getWavData(S1Notch.getWavStream(vf, fn));
-                    sb.addCoastData(datac); // WAV data in ByteBuffer for length modification.
+                    sb.addCoastData(datac); // WAV data in ByteBuffer for length modification
                     j++;
                 }
                 log.debug("Number of coasting sounds for notch {} defined: {}", nn, j);
 
-                // Create a filler Buffer for queueing and a ByteBuffer for length modification.
+                // Create a filler Buffer for queueing and a ByteBuffer for length modification
                 fn = el.getChildText("coastfiller-file");
                 if (fn != null) {
                     log.debug("coasting filler file: {}", fn);
@@ -315,7 +385,7 @@ class Steam1Sound extends EngineSound {
 
                 // Add some helper Buffers. They are needed for creating
                 // variable sound clips in length. Ten helper buffers should
-                // serve well for that purpose. These buffers are bound to notch 1.
+                // serve well for that purpose. These buffers are bound to notch 1
                 for (int jk = 0; jk < 10; jk++) {
                     AudioBuffer bh = S1Notch.getBufferHelper(_soundName + 
                             "_BUFFERHELPER_" + jk, _soundName + "_BUFFERHELPER_" + jk);
@@ -329,18 +399,18 @@ class Steam1Sound extends EngineSound {
             sb.setBufferFmt(fmt);
             log.debug("sample format for notch {}: {}", nn, fmt);
 
-            // Store in the list.
+            // Store in the list
             notch_sounds.put(nn, sb);
             i++;
             nn++;
         }
         log.debug("Number of notches defined: {}", notch_sounds.size());
 
-        // Get the trigger sounds.
-        // Note: other than notch sounds, trigger sounds can have different attributes.
+        // Get the trigger sounds
+        // Note: other than notch sounds, trigger sounds can have different attributes
         trigger_sounds = new HashMap<>();
 
-        // Get the idle sound.
+        // Get the idle sound
         el = e.getChild("idle-sound");
         if (el != null) {
             fn = el.getChild("sound-file").getValue();
@@ -356,7 +426,7 @@ class Steam1Sound extends EngineSound {
             log.debug("trigger idle sound: {}", trigger_sounds.get("idle"));
         }
 
-        // Get the boiling sound.
+        // Get the boiling sound
         el = e.getChild("boiling-sound");
         if (el != null) {
             fn = el.getChild("sound-file").getValue();
@@ -372,7 +442,7 @@ class Steam1Sound extends EngineSound {
             log.debug("trigger boiling sound: {}", trigger_sounds.get("boiling"));
         }
 
-        // Get the brake sound.
+        // Get the brake sound
         el = e.getChild("brake-sound");
         if (el != null) {
             fn = el.getChild("sound-file").getValue();
@@ -405,7 +475,7 @@ class Steam1Sound extends EngineSound {
             log.debug("trigger pre_arrival sound : {}", trigger_sounds.get("pre_arrival"));
         }
 
-        // Kick-start the loop thread.
+        // Kick-start the loop thread
         this.startThread();
 
         // Check auto-start setting
@@ -431,10 +501,6 @@ class Steam1Sound extends EngineSound {
 
         public S1Notch() {
             this(1, null, null, null, null);
-        }
-
-        public S1Notch(int notch) {
-            this(notch, null, null, null, null);
         }
 
         public S1Notch(int notch, AudioBuffer notchfiller, AudioBuffer coastfiller, 
@@ -598,63 +664,54 @@ class Steam1Sound extends EngineSound {
 
         Steam1Sound _parent;
         S1Notch _notch;
-        S1Notch coast_notch; // Needed for coasting sounds and buffers.
-        S1Notch helper_notch; // Needed for helper buffers.
+        S1Notch coast_notch; // Needed for coasting sounds and buffers
+        S1Notch helper_notch; // Needed for helper buffers
         SoundBite _sound;
         float _throttle;
-        private SoundBite _trigger_sound;
 
         private boolean is_running = false;
         private boolean is_looping = false;
         private boolean is_dying = false;
         private boolean is_auto_coasting;
+        private boolean is_key_coasting;
         private boolean is_idling;
         private boolean is_braking;
-        private boolean is_decelerating;
         private int lastRpm;
         private long timeOfLastSpeedCheck;
         private int chuff_index;
         private int helper_index;
         private boolean waitForFiller;
+        private boolean is_half_speed;
         private int rpm_nominal; // Nominal value
         private int rpm; // Actual value
         private int _top_speed;
         private float _driver_diameter_float;
         private int _num_cylinders;
-        private float _exponent;
         private int _decel_trigger_rpms;
-        private int acc_factor;
-        private int dec_factor;
-        private int loop_acc_index;
-        private int loop_dec_index;
+        private int acc_time;
+        private int dec_time;
         private int count_pre_arrival;
         private int queue_limit;
         private int waitFiller;
         private int sbl_fill;
+        private int wait_notch;
         public static final int SLEEP_INTERVAL = 50;
 
-        public S1LoopThread(Steam1Sound p) {
-            super();
-            is_running = false;
-            is_looping = false;
-            is_dying = false;
-            _notch = null;
-            _sound = null;
-            _parent = p;
-            _throttle = 0.0f;
-        }
-
         public S1LoopThread(Steam1Sound d, String s, int ts, float dd, 
-                int nc, float e, int dtr, boolean r) {
+                int nc, int dtr, boolean r) {
             super();
             _parent = d;
+            _top_speed = ts;
+            _driver_diameter_float = dd;
+            _num_cylinders = nc;
+            _decel_trigger_rpms = dtr;
             is_running = r;
             is_looping = false;
             is_dying = false;
             is_auto_coasting = false;
+            is_key_coasting = false;
             is_idling = false;
             is_braking = false;
-            is_decelerating = false;
             waitForFiller = false;
             lastRpm = 0;
             timeOfLastSpeedCheck = 0;
@@ -662,18 +719,13 @@ class Steam1Sound extends EngineSound {
             _notch = null;
             coast_notch = null;
             helper_notch = null;
-            // Sound for queueing.
-            _sound = new SoundBite(s + "_QUEUE");
+            _sound = new SoundBite(s + "_QUEUE"); // Sound for queueing
             _sound.setGain(_parent.engine_gain); // All chuff sounds will have this gain
-            _top_speed = ts;
-            _driver_diameter_float = dd;
-            _num_cylinders = nc;
-            _exponent = e;
-            _decel_trigger_rpms = dtr;
             count_pre_arrival = 1;
             queue_limit = 2;
             waitFiller = 0;
             sbl_fill = 0;
+            wait_notch = 1;
             if (r) {
                 this.start();
             }
@@ -683,35 +735,39 @@ class Steam1Sound extends EngineSound {
             is_running = r;
         }
 
-        public boolean isRunning() {
-            return is_running;
-        }
-
         public void setThrottle(float t) {
-            // Don't do anything, if engine is not started.
-            // Another required value is a S1Notch (should have been set at engine start).
+            // Don't do anything, if engine is not started
+            // Another required value is a S1Notch (should have been set at engine start)
             if (_parent.engine_started) {
                 if (t < 0.0f) {
-                    // DO something to shut down.
+                    // DO something to shut down
                     _sound.stop();
                     is_running = false;
                     log.info("emergency Stop");
-                    return; // k: This will tear down VSD. 
-                    // probably should do something. Not sure what.
+                    //return; // klk: This will tear down VSD
+                    // probably should do something. Not sure what
+                    stopBraking();
+                    stopAutoCoasting();
+                    stopIdling();
+                    _throttle = 0.0f;
+                    log.info("Throttle set to {}", _throttle);
                 } else {
                     _throttle = t;
                 }
 
-                // Calculate the nominal speed (Revolutions Per Minute).
+                if (is_half_speed) {
+                    _throttle = _throttle / 2;
+                }
+                // Calculate the nominal speed (Revolutions Per Minute)
                 setRpmNominal(calcRPM(_throttle));
 
                 // Speeding up or slowing down?
                 if (getRpmNominal() < lastRpm) {
-                    log.debug("decelerate from {} to {}", lastRpm, getRpmNominal());
                     //
                     // Slowing down.
                     //
-                    is_decelerating = true;
+                    _parent.accdectime = dec_time;
+                    log.debug("decelerate from {} to {}", lastRpm, getRpmNominal());
 
                     if ((getRpmNominal() < 23) && is_auto_coasting && (count_pre_arrival > 0) && 
                             _parent.trigger_sounds.containsKey("pre_arrival")) {
@@ -719,40 +775,38 @@ class Steam1Sound extends EngineSound {
                         count_pre_arrival--;
                     }
 
-                    // Calculate how long it's been since we lastly checked speed.
+                    // Calculate how long it's been since we lastly checked speed
                     long currentTime = System.currentTimeMillis();
                     float timePassed = currentTime - timeOfLastSpeedCheck;
                     timeOfLastSpeedCheck = currentTime;
-                    // Prove the trigger for decelerating actions (braking, coasting).
+                    // Prove the trigger for decelerating actions (braking, coasting)
                     if (((lastRpm - getRpmNominal()) > _decel_trigger_rpms) && (timePassed < 500.0f)) {
                         log.debug("Time passed {}", timePassed);
-                        if (getRpmNominal() < 30) { // Braking sound only when speed is low (, but not to low).
+                        if (getRpmNominal() < 30) { // Braking sound only when speed is low (, but not to low)
                             if (_parent.trigger_sounds.containsKey("brake")) {
                                 _parent.trigger_sounds.get("brake").fadeIn();
                                 is_braking = true;
                                 log.debug("braking activ!");
                             }
-                        } else if (coast_notch.coast_bufs.size() > 0) {
+                        } else if (coast_notch.coast_bufs.size() > 0 && !is_key_coasting) {
                             is_auto_coasting = true;
                             log.debug("auto-coasting active");
                         }
                     }
                 } else {
-                    if (getRpmNominal() == lastRpm) {
-                        // Nothing to do.
-                    } else {
-                        //
-                        // Speeding up.
-                        //
-                        is_decelerating = false;
-                        if (is_braking) {
-                            stopBraking(); // Revoke possible brake sound.
-                        }
-                        if (is_auto_coasting) {
-                            stopAutoCoasting(); // This makes chuff sound hearable again.
-                        }
+                    //
+                    // Speeding up.
+                    //
+                    _parent.accdectime = acc_time;
+                    log.debug("accelerate from {} to {}", lastRpm, getRpmNominal());
+                    if (is_braking) {
+                        stopBraking(); // Revoke possible brake sound
+                    }
+                    if (is_auto_coasting) {
+                        stopAutoCoasting(); // This makes chuff sound hearable again
                     }
                 }
+                _parent.startAccDecTimer(); // Start, if not already running
                 lastRpm = getRpmNominal();
             }
         }
@@ -767,7 +821,7 @@ class Steam1Sound extends EngineSound {
             }
         }
 
-        public void startBoilingSound() {
+        private void startBoilingSound() {
             if (_parent.trigger_sounds.containsKey("boiling")) {
                 _parent.trigger_sounds.get("boiling").setLooped(true);
                 _parent.trigger_sounds.get("boiling").play();
@@ -790,27 +844,81 @@ class Steam1Sound extends EngineSound {
             }
         }
 
+        private void setFunction(String event, boolean is_true, String name) {
+            // This throttle function key handling differs to configurable sounds:
+            // Do something following certain conditions, when a throttle function key is pressed.
+            // Note: throttle will send initial value(s) before thread is started! 
+            log.debug("throttle function key pressed: {} is {}, function: {}", event, is_true, name);
+            if (name.equals("COAST")) {
+                // Handle key-coasting on/off.
+                log.debug("COAST key pressed");
+                // Set coasting TRUE, if COAST key is pressed. Requires sufficient coasting sounds (chuff_index will rely on that).
+                if (coast_notch == null) {
+                    coast_notch = _parent.getNotch(1); // Because of initial send of throttle key, COAST function key could be "true"
+                }
+                if (is_true && coast_notch.coast_bufs.size() > 0) {
+                    is_key_coasting = true; // When idling is active, key-coasting will start after it.
+                } else {
+                    is_key_coasting = false; // Stop the key-coasting sound
+                }
+                log.debug("is COAST: {}", is_key_coasting);
+            }
+
+            // Speed change if HALF_SPEED key is pressed
+            if (name.equals("HALF_SPEED")) {
+                log.debug("HALF_SPEED key pressed is {}", is_true);
+                if (_parent.engine_started) {
+                    if (is_true) {
+                        is_half_speed = true;
+                    } else {
+                        is_half_speed = false;
+                    }
+                }
+            }
+
+            // Set Accel/Decel off
+            if (name.equals("BRAKE_KEY")) {
+                log.debug("BRAKE_KEY pressed is {}", is_true);
+                if (_parent.engine_started) {
+                    if (is_true) {
+                        if (_parent.brake_time == 0) {
+                            acc_time = 0;
+                            dec_time = 0;
+                        } else {
+                            dec_time = _parent.brake_time;
+                        }
+                        _parent.accdectime = dec_time;
+                    } else {
+                        setupAccDec();
+                        _parent.accdectime = dec_time; // ist das noetig?
+                    }
+                }
+            }
+            // Other throttle function keys may follow ...
+        }
+
         public void startEngine() {
             _sound.unqueueBuffers();
             log.debug("thread: start engine ...");
-            coast_notch  = _parent.getNotch(1); // Coast sounds are bound to notch 1.
-            helper_notch = _parent.getNotch(1); // Helper buffers are bound to notch 1.
-            _notch = _parent.getNotch(1); // Initial value.
+            coast_notch  = _parent.getNotch(1); // Coast sounds are bound to notch 1
+            helper_notch = _parent.getNotch(1); // Helper buffers are bound to notch 1
+            _notch = _parent.getNotch(1); // Initial value
             _parent.engine_pane.setThrottle(1); // Set EnginePane (DieselPane) notch
             _sound.setReferenceDistance(_parent.engine_rd);
             setRpm(0);
             setRpmNominal(0);
-            setupAccDec(); // Setup acceleration and deceleration factors.
-            helper_index = -1; // Prepare helper buffer start. Index will be incremented before first use.
+            setupAccDec(); // Setup acceleration and deceleration factors
+            helper_index = -1; // Prepare helper buffer start. Index will be incremented before first use
             setWait(0);
             startBoilingSound();
             startIdling();
+            _parent.initAccDecTimer();
         }
 
         public void stopEngine() {
             log.debug("thread: stop engine ...");
             if (is_looping) {
-                is_looping = false; // Stop the loop player.
+                is_looping = false; // Stop the loop player
             }
             is_dying = true;
             stopBraking();
@@ -820,33 +928,32 @@ class Steam1Sound extends EngineSound {
             _throttle = 0.0f; // Clear it, just in case the engine was stopped at speed > 0
         }
 
-        public void setupAccDec() {
-            // Momentum is fix for this version.
-            acc_factor = 2; // Perfect with CV#3=35.
-            dec_factor = 1; // Perfect with CV#4=18.
-            log.debug("acc factor: {}, dec factor: {}", acc_factor, dec_factor);
-            loop_acc_index = 1; // Prepare loop counter for acceleration.
-            loop_dec_index = 1; // Prepare loop counter for deceleration.
+        private void setupAccDec() {
+            // Momentum
+            int topspeed_rpm = (int) Math.round(_top_speed * 1056 / (Math.PI * _driver_diameter_float)); // Top-speed in RPM
+            int time_factor = 896; // NMRA value in ms
+            acc_time = time_factor * _parent.accel_rate / topspeed_rpm; // NMRA CV#3
+            dec_time = time_factor * _parent.decel_rate / topspeed_rpm; // NMRA CV#4
+            _parent.accdectime = acc_time;
+            log.debug("setup acc time: {}, dec time: {}", acc_time, dec_time);
         }
 
-        public void startIdling() {
+        private void startIdling() {
             is_idling = true;
             if (_parent.trigger_sounds.containsKey("idle")) {
-                _trigger_sound = _parent.trigger_sounds.get("idle"); // Get the idle sound
-                _trigger_sound.setLooped(true);
-                if (!_trigger_sound.isPlaying()) {
-                    _trigger_sound.play();
+                _parent.trigger_sounds.get("idle").setLooped(true);
+                if (!_parent.trigger_sounds.get("idle").isPlaying()) {
+                    _parent.trigger_sounds.get("idle").play();
                 }
             }
             log.debug("start idling ...");
         }
 
-        public void stopIdling() {
+        private void stopIdling() {
             if (is_idling) {
                 is_idling = false;
                 if (_parent.trigger_sounds.containsKey("idle")) {
-                    _trigger_sound = _parent.trigger_sounds.get("idle"); // Get the idle sound
-                    _trigger_sound.fadeOut();
+                    _parent.trigger_sounds.get("idle").fadeOut();
                     log.debug("idling stopped.");
                 }
             }
@@ -864,30 +971,26 @@ class Steam1Sound extends EngineSound {
                             _sound.unqueueBuffers();
                         }
                         log.debug("run loop. Buffers queued: {}", _sound.getSource().numQueuedBuffers());
-                        if (!_notch.isInLimits(getRpm())) {
-                            log.debug("Notch change! RPM nominal: {}, RPM actual: {}", getRpmNominal(), getRpm());
-                            changeNotch();
-                        }
                         if ((_sound.getSource().numQueuedBuffers() < queue_limit) && (getWait() == 0)) {
                             AudioBuffer b;
-                            if (is_auto_coasting) {
-                                // Take the coasting sound. Yes, use same index as for chuffs.
+                            if (is_key_coasting || is_auto_coasting) {
+                                // Take the coasting sound. Yes, use same index as for chuffs
                                 b = coast_notch.coast_bufs.get(incChuffIndex());
                             } else {
-                                // Take the standard chuff sound.
+                                // Take the standard chuff sound
                                 b = _notch.chuff_bufs.get(incChuffIndex());
                             }
-                            setSound(b); // Queue the sound and, if necessary, a filler sound.
+                            setSound(b); // Queue the sound and, if necessary, a filler sound
                         }
                         if (_sound.getSource().getState() != Audio.STATE_PLAYING) {
-                            _sound.play(); // Starts the Sound. Maybe also re-starts the sound.
+                            _sound.play(); // Starts the Sound. Maybe also re-starts the sound
                             if (getRpm() > _parent.getNotch(1).getMinLimit()) {
                                 log.info("loop sound re-started. Possibly queue underrun at rpm: {}", getRpm());
                             }
                         }
                     } else {
                         // Quietly wait for the sound to get turned on again
-                        // Once we've stopped playing, kill the thread.
+                        // Once we've stopped playing, kill the thread
                         if (_sound.getSource().numProcessedBuffers() > 0) {
                             _sound.unqueueBuffers();
                         }
@@ -897,15 +1000,14 @@ class Steam1Sound extends EngineSound {
                         }
                     }
                     sleep(SLEEP_INTERVAL);
-                    updateRpm();
                     updateWait();
                 }
-                // Note: if (is_running == false) we'll exit the endless while and the Thread will die.
+                // Note: if (is_running == false) we'll exit the endless while and the Thread will die
                 return;
             } catch (InterruptedException ie) {
                 is_running = false;
                 return;
-                // probably should do something. Not sure what.
+                // probably should do something. Not sure what
             }
         }
 
@@ -914,22 +1016,22 @@ class Steam1Sound extends EngineSound {
             log.debug("changing notch ... rpm: {}, notch: {}, chuff index: {}", 
                     getRpm(), _notch.getNotch(), chuffIndex());
             if ((getRpm() > _notch.getMaxLimit()) && (new_notch < _parent.notch_sounds.size())) {
-                // Too fast. Need to go to next notch up.
+                // Too fast. Need to go to next notch up
                 new_notch++;
                 log.debug("change up. notch: {}", new_notch);
                 _notch = _parent.getNotch(new_notch);
             } else if ((getRpm() < _notch.getMinLimit()) && (new_notch > 1)) {
-                // Too slow.  Need to go to next notch down.
+                // Too slow.  Need to go to next notch down
                 new_notch--;
                 log.debug("change down. notch: {}", new_notch);
                 _notch = _parent.getNotch(new_notch);
             }
-            _parent.engine_pane.setThrottle(new_notch); // Update EnginePane (DieselPane) notch.
+            _parent.engine_pane.setThrottle(new_notch); // Update EnginePane (DieselPane) notch
             return;
         }
 
         private int getRpm() {
-            return rpm;
+            return rpm; // Actual Revolution per Minute
         }
 
         private void setRpm(int r) {
@@ -937,65 +1039,65 @@ class Steam1Sound extends EngineSound {
         }
 
         private int getRpmNominal() {
-            return rpm_nominal;
+            return rpm_nominal; // Nominal Revolution per Minute
         }
 
         private void setRpmNominal(int rn) {
             rpm_nominal = rn;
         }
 
-        public void updateRpm() {
+        private void updateRpm() {
             if (getRpmNominal() > getRpm()) {
-                loop_dec_index = 1; // Accelerating - reset the decelerate loop index before next usage.
-                if (incAccIndex() == acc_factor) {
-                    // Actual rpm should not exceed highest max-rpm defined in config.xml.
-                    if (getRpm() < _parent.getNotch(_parent.notch_sounds.size()).getMaxLimit()) {
-                        setRpm(getRpm() + 1);
-                    } else {
-                        log.debug("actual rpm not increased. Value: {}", getRpm());
-                    } 
-                    log.debug("accel - nominal RPM: {}, actual RPM: {}", getRpmNominal(), getRpm());
-                }
+                // Actual rpm should not exceed highest max-rpm defined in config.xml
+                if (getRpm() < _parent.getNotch(_parent.notch_sounds.size()).getMaxLimit()) {
+                    setRpm(getRpm() + 1);
+                } else {
+                    log.debug("actual rpm not increased. Value: {}", getRpm());
+                } 
+                log.debug("accel - nominal RPM: {}, actual RPM: {}", getRpmNominal(), getRpm());
             } else if (getRpmNominal() < getRpm()) {
-                loop_acc_index = 1; // Decelerating - reset the accelerate loop index before next usage.
-                if (incDecIndex() == dec_factor) {
-                    setRpm(getRpm() - 1);
-                    if (getRpmNominal() == 0) {
-                        setRpm(getRpm() - 1); // Decelerate faster, if throttle is already zero.
-                    }
-                    if (getRpm() < 0) {
-                        setRpm(0);
-                        loop_acc_index = 1;
-                        loop_dec_index = 1;
-                    }
-                    log.debug("decel - nominal RPM: {}, actual RPM: {}", getRpmNominal(), getRpm());
+                setRpm(getRpm() - 1);
+                if (getRpm() < 0) {
+                    setRpm(0);
                 }
+                log.debug("decel - nominal RPM: {}, actual RPM: {}", getRpmNominal(), getRpm());
+            } else {
+                _parent.stopAccDecTimer(); // Speed is unchanged, nothing to do
             }
 
+            // Start or Stop the LOOP-PLAYER
+            checkState();
+
+            // Are we in the right notch?
+            if ((getRpm() >= _parent.getNotch(1).getMinLimit()) && (!_notch.isInLimits(getRpm()))) {
+                log.debug("Notch change! Notch: {}, RPM nominal: {}, RPM actual: {}", _notch.getNotch(), getRpmNominal(), getRpm());
+                changeNotch();
+            }
+        }
+
+        private void checkState() {
             if (is_looping) {
                 if (getRpm() < _parent.getNotch(1).getMinLimit()) {
-                    is_looping = false; // Stop the loop player.
+                    is_looping = false; // Stop the loop player
                     setWait(0);
                     log.debug("change from chuff or coast to idle.");
-                    stopAutoCoasting(); // Automatic coasting is stopped here.
+                    stopAutoCoasting(); // Automatic coasting is stopped here
                     stopBraking(); 
                     startIdling();
                 }
             } else {
                 if (_parent.engine_started && (getRpm() >= _parent.getNotch(1).getMinLimit())) {
                     stopIdling();
-                    //
-                    // Now prepare to start the chuff sound (or coasting sound).
-                    //
-                    _notch = _parent.getNotch(1); // Initial notch value.
-                    chuff_index = -1; // Prepare chuff start. Index will be incremented before first usage.
+                    // Now prepare to start the chuff sound (or coasting sound)
+                    _notch = _parent.getNotch(1); // Initial notch value
+                    chuff_index = -1; // Index will be incremented before first usage
                     count_pre_arrival = 1;
-                    is_looping = true; // Start the loop player.
+                    is_looping = true; // Start the loop player
                 }
             }
 
-            if (getRpm() > 74) {
-                queue_limit = 3; // Allow more buffers to be queued on higher speed.
+            if (getRpm() > 62) {
+                queue_limit = 3; // Allow more buffers to be queued at higher speed
             } else {
                 queue_limit = 2;
             }
@@ -1015,8 +1117,8 @@ class Steam1Sound extends EngineSound {
             return waitFiller;
         }
 
-        // Place next two methods here (other than in Diesel3Sound).
-        // I want the chuffs in 1-2-3-4 series regardless the notch.
+        // Place next two methods here (other than in Diesel3Sound)
+        // I want the chuffs in 1-2-3-4 series regardless the notch
         private int chuffIndex() {
             return chuff_index;
         }
@@ -1029,24 +1131,6 @@ class Steam1Sound extends EngineSound {
             }
             log.debug("new chuff index: {}", chuffIndex());
             return chuff_index;
-        }
-
-        private int incAccIndex() {
-            loop_acc_index++;
-            // Correct for wrap.
-            if (loop_acc_index > acc_factor) {
-                loop_acc_index = 1;
-            }
-            return loop_acc_index;
-        }
-
-        private int incDecIndex() {
-            loop_dec_index++;
-            // Correct for wrap.
-            if (loop_dec_index > dec_factor) {
-                loop_dec_index = 1;
-            }
-            return loop_dec_index;
         }
 
         private int incHelperIndex() {
@@ -1064,10 +1148,6 @@ class Steam1Sound extends EngineSound {
             return (int) Math.round(_parent.speedCurve(t) * _top_speed * 1056 / (Math.PI * _driver_diameter_float));
         }
 
-        public double speedCurve(float t) {
-            return Math.pow(t, _exponent);
-        }
-
         private int calcChuffInterval(int revpm) {
             //  chuff interval will be calculated based on revolutions per minute (revpm)
             //  note: interval time includes the sound duration!
@@ -1077,54 +1157,57 @@ class Steam1Sound extends EngineSound {
         }
 
         private void setSound(AudioBuffer b) {
-            int interval = calcChuffInterval(getRpm()); // Time in msec from chuff start up to begin of next chuff.
-            int sbl = (int)SoundBite.calcLength(b); // Length of WAV file in msec.
-            // Look if a filler is pending.
+            int interval = calcChuffInterval(getRpm()); // Time in msec from chuff start up to begin of next chuff
+            int sbl = (int)SoundBite.calcLength(b); // Length of WAV file in msec
+            // Look if a filler is pending
             if (waitForFiller) { 
-                // Filler waiting time is over. Go to queue the filler sound now.
-                setFiller(sbl_fill);
+                // Filler waiting time is over. Go to queue the filler sound now
+                //  Only do this if we are in the same notch
+                if (wait_notch == _notch.getNotch()) {
+                    setFiller(sbl_fill);
+                    log.debug("wait filler set");
+                }
                 waitForFiller = false; // Done.
             }
 
             if (interval >= sbl) {
-                // Regular queueing. Whole sound clip goes to the queue. Low notches.
+                // Regular queueing. Whole sound clip goes to the queue. Low notches
                 _sound.queueBuffer(b);
                 log.debug("chuff or coast buffer queued. Interval: {}", interval);
                 setWait((sbl - SLEEP_INTERVAL * 4) / SLEEP_INTERVAL);
                 if (getWait() < 3) {
                     setWait(0);
                 } else {
-                    sbl_fill = sbl; // Base for filler length calculation.
+                    sbl_fill = sbl; // Base for filler length calculation
                     waitForFiller = true;
                 }
             } else {
-                // Need to cut the SoundBite to new length of interval.
-                // To avoid queue underrun, interval should be a bit longer than SLEEP_INTERVAL.
+                // Need to cut the SoundBite to new length of interval
+                // To avoid queue underrun, interval should be a bit longer than SLEEP_INTERVAL
                 // SLEEP_INTERVAL + 10 should be lower than interval of max_rpm (e.g. max_rpm=214 -> interval=70)
                 if (interval > (SLEEP_INTERVAL + 10)) {
-                    log.debug("need to cut sound clip from {} to length {}", 
-                            (int)SoundBite.calcLength(b), interval); 
+                    log.debug("need to cut sound clip from {} to length {}", (int)SoundBite.calcLength(b), interval); 
                     setWait((interval - SLEEP_INTERVAL * 8) / SLEEP_INTERVAL);
                     if (getWait() < 4) {
                         setWait(0);
                     }
-                    // Take <interval> ms of the buffer. Regard sample size.
+                    // Take <interval> ms of the buffer. Regard sample size
                     int bbufcount = b.getFrameSize() * (interval * b.getFrequency() / 1000);
-                    // Empty buffer (bound to the coast notch, notch = 1).
+                    // Empty buffer (bound to the coast notch, notch = 1)
                     AudioBuffer buf = helper_notch.bufs_helper.get(incHelperIndex());
                     byte[] bbytes = new byte[bbufcount];
                     ByteBuffer data;
-                    if (is_auto_coasting) {
-                        // Take coasting sound (WAV data).
+                    if (is_key_coasting || is_auto_coasting) {
+                        // Take coasting sound (WAV data)
                         data = coast_notch.coast_bufs_data.get(chuffIndex());
                     } else {
-                        // Take chuff sound (WAV data).
+                        // Take chuff sound (WAV data)
                         data = _notch.chuff_bufs_data.get(chuffIndex());
                     }
                     data.get(bbytes); // Same as: data.get(bbytes, 0, bbufcount);
                     data.rewind();
                     ByteBuffer bbuf = ByteBuffer.allocateDirect(bbufcount); // Target
-                    bbuf.order(data.order()); // Set new buffer's byte order to match source buffer.
+                    bbuf.order(data.order()); // Set new buffer's byte order to match source buffer
                     bbuf.put(bbytes); // Same as: bbuf.put(bbytes, 0, bbufcount);
                     bbuf.rewind();
                     buf.loadBuffer(bbuf, _notch.getBufferFmt(), b.getFrequency());
@@ -1136,10 +1219,10 @@ class Steam1Sound extends EngineSound {
         }
 
         private void setFiller(int lenx) {
-            // Fills time after a chuff up to the next chuff with a sound provided by the VSD file.
-            // Since the filler can be a small amount of time, it might be queued several times.
+            // Fills time after a chuff up to the next chuff with a sound provided by the VSD file
+            // Since the filler can be a small amount of time, it might be queued several times
             AudioBuffer fill_buf;
-            if (is_auto_coasting) {
+            if (is_key_coasting || is_auto_coasting) {
                 fill_buf = coast_notch.getCoastFillerBuffer();
             } else {
                 fill_buf = _notch.getNotchFillerBuffer();
@@ -1147,12 +1230,10 @@ class Steam1Sound extends EngineSound {
             if (fill_buf != null) {
                 int filler_length = (int)SoundBite.calcLength(fill_buf);
                 int interv_wo_chuff = calcChuffInterval(getRpm()) - lenx;
-                log.debug("filler length: {}, sound clip length: {}, interval: {}", 
-                        filler_length, lenx, calcChuffInterval(getRpm()));
+                log.debug("filler length: {}, sound clip length: {}, interval: {}", filler_length, lenx, calcChuffInterval(getRpm()));
                 int im = interv_wo_chuff / filler_length; // How many fill_buf do we need?
-                int imrest = interv_wo_chuff - (im * filler_length); // Calculate rest.
-                log.debug("interval without sound clip: {}, #buffers needed: {}, rest: {}", 
-                        interv_wo_chuff, im, imrest);
+                int imrest = interv_wo_chuff - (im * filler_length); // Calculate rest
+                log.debug("interval without sound clip: {}, #buffers needed: {}, rest: {}", interv_wo_chuff, im, imrest);
                 int k = 0;
                 for (int i = 0; i < im; i++) {
                     _sound.queueBuffer(fill_buf);
@@ -1160,7 +1241,7 @@ class Steam1Sound extends EngineSound {
                 }
                 log.debug("{} new buffers queued. Total buffers queued now: {}", 
                         k, _sound.getSource().numQueuedBuffers());
-                // Create a buffer to queue rest of the filling time. Ignore small sound bites.
+                // Create a buffer to queue rest of the filling time. Ignore small sound bites
                 if (imrest > (SLEEP_INTERVAL + 10)) {
                     setWait((imrest - SLEEP_INTERVAL * 4) / SLEEP_INTERVAL);
                     if (getWait() < 3) {
@@ -1168,11 +1249,11 @@ class Steam1Sound extends EngineSound {
                     }
                     int bbufcount = fill_buf.getFrameSize() * (imrest * fill_buf.getFrequency() / 1000);
                     log.debug("chuff_index: {}", chuffIndex());
-                    // Empty buffer (bound to notch = 1).
+                    // Empty buffer (bound to notch = 1)
                     AudioBuffer buf  = helper_notch.bufs_helper.get(incHelperIndex());
                     byte[] bbytes = new byte[bbufcount];
                     ByteBuffer dataf;
-                    if (is_auto_coasting) {
+                    if (is_key_coasting || is_auto_coasting) {
                         dataf = coast_notch.getCoastFillerData();
                     } else {
                         dataf = _notch.getNotchFillerData();
@@ -1180,7 +1261,7 @@ class Steam1Sound extends EngineSound {
                     dataf.get(bbytes); // Same as: data.get(bbytes, 0, bbufcount);
                     dataf.rewind();
                     ByteBuffer bbuf = ByteBuffer.allocate(bbufcount);
-                    bbuf.order(dataf.order()); // Set new buffer's byte order to match source buffer.
+                    bbuf.order(dataf.order()); // Set new buffer's byte order to match source buffer
                     bbuf.put(bbytes); // Same as: bbuf.put(bbytes, 0, bbufcount);
                     log.debug("bbuf after put: {}, order: {}", bbuf, bbuf.order());
                     bbuf.rewind();

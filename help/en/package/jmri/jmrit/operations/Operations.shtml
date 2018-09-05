@@ -2774,7 +2774,7 @@
     that the maximum number of cars in all cases is four. It is only how the cars are distributed
     that changes when entering a minimum.</p>
 
-   <p>Anther use of a "pool" is with regard to schedules. For the power user, you might find
+   <p>Another use of a "pool" is with regard to schedules. For the power user, you might find
     that a single schedule assigned to a spur doesn't quite do what you want. But if the track could
     have several schedules, it would do what is needed. By entering multiple spurs with schedules
     shared via a pool, you can create any car sequence imaginable for your industry.</p>
@@ -5350,9 +5350,15 @@
    <h2>Operations Web Access</h2>
    You can also access some of the OperationPro&trade; windows from a browser. For more information
    see <a href="http://jmri.org/help/en/html/web/">JMRI Web Access</a>.
-   
+
    <p>
-   <img src="images/WebConductor.png">
+    <img src="images/WebConductor.png">
+   </p>
+   By enabling frames found in <a href="../../../apps/TabbedPreferences.shtml">Preferences</a> Web Server, you can
+   access OperationPro&trade; windows like the <a
+    href="#SwitchList">Yardmaster</a> which shows the work for a location.
+   <p>
+    <img src="images/YardmasterWeb.png">
    </p>
 
    <p>End of OperationsPro&trade; help.</p>

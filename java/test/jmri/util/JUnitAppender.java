@@ -13,7 +13,7 @@ import org.python.jline.internal.Log;
  * Much of the interface is static to avoid lots of instance() calls, but this
  * is not a problem as there should be only one of these while tests are running
  *
- * @see apps.tests.Log4JFixture
+ * @see jmri.util.JUnitUtil
  *
  * @author	Bob Jacobsen - Copyright 2007
  */
@@ -213,6 +213,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     /**
      * Check that the next queued message was of Error severity, and has a
      * specific message.
+     * White space is ignored.
      * <P>
      * Invokes a JUnit Assert if the message doesn't match.
      *
@@ -248,6 +249,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     /**
      * If there's a next matching message of specific severity, just ignore it. Not
      * an error if not present; mismatch is an error. Skips messages of lower severity while looking for the specific one.
+     * White space is ignored.
      *
      * @param msg the message to suppress
      */
@@ -282,6 +284,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     /**
      * If there's a next matching message of Error severity, just ignore it. Not
      * an error if not present; mismatch is an error.
+     * White space is ignored.
      *
      * @param msg the message to suppress
      */
@@ -292,6 +295,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     /**
      * If there's a next matching message of Warn severity, just ignore it. Not
      * an error if not present; mismatch is an error.
+     * White space is ignored.
      *
      * @param msg the message to suppress
      */
@@ -302,6 +306,10 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     /**
      * See if a message (completely matching particular text) 
      * has been emitted yet.
+     * White space is ignored.
+     * All messages before the requested one are dropped; it
+     * the requested message hasn't been issued, this means that the
+     * message queue is cleared.
      * @param msg the message text to check for
      * @return null if not present, else the LoggingEvent for possible further checks of level, etc
      */
@@ -322,7 +330,11 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     
     /**
      * See if a message that starts with particular text
-     * has been emitted yet.
+     * has been emitted yet. 
+     * White space is ignored.
+     * All messages before the matching one are dropped; it
+     * a matching message hasn't been issued, this means that the
+     * message queue is cleared.
      * @param msg the message text to check for
      * @return null if not present, else the LoggingEvent for possible further checks of level, etc
      */
@@ -346,6 +358,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     /**
      * Check that the next queued message was of Warn severity, and has a
      * specific message.
+     * White space is ignored.
      * <P>
      * Invokes a JUnit Assert if the message doesn't match.
      *
@@ -365,6 +378,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
 
     /**
      * Assert that a specific message, of any severity, has been logged.
+     * White space is ignored.
      * <P>
      * Invokes a JUnit Assert if no matching message is found, but doesn't require it to 
      * be the next message. This allows use e.g. for debug-severity messages.
@@ -390,7 +404,11 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
             Assert.fail("Looking for message \"" + msg + "\" got \"" + evt.getMessage() + "\"");
         }
     }
-
+    
+    /**
+     * Compare two message strings, handling nulls
+     * and ignoring whitespace.
+     */
     protected static boolean compare(LoggingEvent e1, String s2) {
         if(e1==null) {
            System.err.println("Logging event null when comparing to " + s2);

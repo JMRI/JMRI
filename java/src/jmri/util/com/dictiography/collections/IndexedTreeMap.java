@@ -178,12 +178,14 @@ public class IndexedTreeMap<K, V>
      *          and whose comparator is to be used to sort this map
      * @throws NullPointerException if the specified map is null
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
+                    justification = "Exception cannot happen because stream argument was provided as null")
     public IndexedTreeMap(SortedMap<K, ? extends V> m) {
         comparator = m.comparator();
         try {
             buildFromSorted(m.size(), m.entrySet().iterator(), null, null);
-        } catch (java.io.IOException cannotHappen) {
-        } catch (ClassNotFoundException cannotHappen) {
+        } catch (java.io.IOException | ClassNotFoundException cannotHappen) {
+            // cannot happen because stream argument was provided as null
         }
     }
 
@@ -295,6 +297,8 @@ public class IndexedTreeMap<K, V>
      *                              the specified map contains a null key and this map does not
      *                              permit null keys
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
+                    justification = "Exception cannot happen because stream argument was provided as null")
     public void putAll(Map<? extends K, ? extends V> map) {
         int mapSize = map.size();
         if (size == 0 && mapSize != 0 && map instanceof SortedMap) {
@@ -304,8 +308,8 @@ public class IndexedTreeMap<K, V>
                 try {
                     buildFromSorted(mapSize, map.entrySet().iterator(),
                             null, null);
-                } catch (java.io.IOException cannotHappen) {
-                } catch (ClassNotFoundException cannotHappen) {
+                } catch (java.io.IOException | ClassNotFoundException cannotHappen) {
+                    // cannot happen because stream argument was provided as null
                 }
                 return;
             }
@@ -641,6 +645,8 @@ public class IndexedTreeMap<K, V>
      * @return a shallow copy of this map
      */
     @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
+                    justification = "Exception cannot happen because stream argument was provided as null")
     public Object clone() {
         IndexedTreeMap<K, V> clone = null;
         try {
@@ -660,8 +666,8 @@ public class IndexedTreeMap<K, V>
         // Initialize clone with our mappings
         try {
             clone.buildFromSorted(size, entrySet().iterator(), null, null);
-        } catch (java.io.IOException cannotHappen) {
-        } catch (ClassNotFoundException cannotHappen) {
+        } catch (java.io.IOException | ClassNotFoundException cannotHappen) {
+            // cannot happen because stream argument was provided as null
         }
 
         return clone;
@@ -2093,7 +2099,7 @@ public class IndexedTreeMap<K, V>
         private K fromKey, toKey;
 
         private Object readResolve() {
-            return new AscendingSubMap(IndexedTreeMap.this,
+            return new AscendingSubMap<K,V>(IndexedTreeMap.this,
                     fromStart, fromKey, true,
                     toEnd, toKey, false);
         }
@@ -2641,11 +2647,13 @@ public class IndexedTreeMap<K, V>
     /**
      * Intended to be called only from IndexedTreeSet.addAll
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
+                    justification = "Exception cannot happen because stream argument was provided as null")
     void addAllForTreeSet(SortedSet<? extends K> set, V defaultVal) {
         try {
             buildFromSorted(set.size(), set.iterator(), null, defaultVal);
-        } catch (java.io.IOException cannotHappen) {
-        } catch (ClassNotFoundException cannotHappen) {
+        } catch (java.io.IOException | ClassNotFoundException cannotHappen) {
+            // cannot happen because stream argument was provided as null
         }
     }
 

@@ -19,7 +19,6 @@ public class CanMRCommonTestBase extends TestCase {
 
     // Main entry point - this runs both CanMessage, CanReply
     static public void main(String[] args) {
-        apps.tests.AllTest.initLogging();
         String[] testCaseName = {"-noloading", CanMRCommonTestBase.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }

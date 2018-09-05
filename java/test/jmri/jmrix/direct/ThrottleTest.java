@@ -373,6 +373,7 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @After
     public void tearDown() {
+        jmri.util.JUnitAppender.suppressWarnMessage("Only single transmissions currently available");
         JUnitUtil.tearDown();
     }
 

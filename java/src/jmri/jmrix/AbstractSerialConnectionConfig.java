@@ -80,7 +80,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             @Override
             public void actionPerformed(ActionEvent e) {
                 adapter.configureBaudRate((String) baudBox.getSelectedItem());
-                p.addComboBoxLastSelection(adapter.getClass().getName() + ".baud", (String) baudBox.getSelectedItem());
+                p.setComboBoxLastSelection(adapter.getClass().getName() + ".baud", (String) baudBox.getSelectedItem());
             }
         });
 
