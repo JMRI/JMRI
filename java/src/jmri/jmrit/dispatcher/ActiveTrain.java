@@ -2,10 +2,8 @@ package jmri.jmrit.dispatcher;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import jmri.Block;
-import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Path;
@@ -226,7 +224,6 @@ public class ActiveTrain {
         mStatus = RUNNING;
         setStatus(WAITING);
         if (mAutoActiveTrain != null && InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALMAST) {
-            log.info("Calling from setStarted");
             mAutoActiveTrain.setupNewCurrentSignal(null,false);
         }
     }
@@ -1121,8 +1118,7 @@ public class ActiveTrain {
         holdAllocation = false;
         setStatus(WAITING);
         if (mAutoActiveTrain != null) {
-            log.info("Calling from restart");
-            mAutoActiveTrain.setupNewCurrentSignal(null,false);
+            mAutoActiveTrain.setupNewCurrentSignal(null,true);
         }
     }
 

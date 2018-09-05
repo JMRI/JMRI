@@ -183,7 +183,7 @@ public class ActivateTrainFrame {
         _TrainsFromUser = _dispatcher.getTrainsFromUser();
         _ActiveTrainsList = _dispatcher.getActiveTrainsList();
         // create window if needed
-        if (initiateFrame == null) {
+        //if (initiateFrame == null) {
             initiateFrame = new JmriJFrame(Bundle.getMessage("AddTrainTitle"), false, true);
             initiateFrame.addHelpMenu("package.jmri.jmrit.dispatcher.NewTrain", true);
             initiatePane = initiateFrame.getContentPane();
@@ -438,7 +438,7 @@ public class ActivateTrainFrame {
             });
             addNewTrainButton.setToolTipText(Bundle.getMessage("AddNewTrainButtonHint"));
             initiatePane.add(p7);
-        }
+        //}
         if (_TrainsFromRoster || _TrainsFromTrains) {
             trainBoxLabel.setVisible(true);
             trainSelectBox.setVisible(true);
@@ -592,7 +592,7 @@ public class ActivateTrainFrame {
     private void cancelInitiateTrain(ActionEvent e) {
         initiateFrame.setVisible(false);
         initiateFrame.dispose();  // prevent this window from being listed in the Window menu.
-        initiateFrame = null;
+//        initiateFrame = null;
         _dispatcher.newTrainDone(null);
     }
 

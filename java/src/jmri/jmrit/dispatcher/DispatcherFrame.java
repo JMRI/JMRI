@@ -1581,7 +1581,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     && (!((s == at.getEndBlockSection()) && (ar.getSectionSeqNumber() == at.getEndBlockSectionSequenceNumber())))
                     && (!(at.isAllocationReversed() && (ar.getSectionSeqNumber() == 1)))) {
                 // not at either end - determine the next section
-                int seqNum = ar.getSectionSeqNumber();
+                 int seqNum = ar.getSectionSeqNumber();
                 if (at.isAllocationReversed()) {
                     seqNum -= 1;
                 } else {
@@ -1602,6 +1602,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             } else if (at.getReverseAtEnd() && (!at.isAllocationReversed()) && (s == at.getEndBlockSection())
                     && (ar.getSectionSeqNumber() == at.getEndBlockSectionSequenceNumber())) {
                 // need to reverse Transit direction when train is in the last Section, set next section.
+                if (at.getResetWhenDone()) {
+                    if (at.getDelayedRestart() != ActiveTrain.NODELAY) {
+                        at.holdAllocation(true);
+                    }
+                }
                 nextSectionSeqNo = at.getEndBlockSectionSequenceNumber() - 1;
                 at.setAllocationReversed(true);
                 List<Section> secList = at.getTransit().getSectionListBySeq(nextSectionSeqNo);
@@ -2759,11 +2764,12 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     at.setResetWhenDone(false);
                     for (int j = restartingTrainsList.size(); j > 0; j--) {
                         if (restartingTrainsList.get(j - 1) == at) {
+                            log.info("Remove");
                             restartingTrainsList.remove(j - 1);
                             return;
                         }
                     }
-                    log.warn("[{}] Not In restart List",at.getActiveTrainName());
+                    log.info("Not In List");
                 }
             }
         }
