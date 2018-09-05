@@ -34,7 +34,7 @@ public class TablesServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String[] path = request.getRequestURI().split("/"); // NOI18N
-        String tableType = StringUtil.unescapeString(path[path.length - 1]);
+        String tableType = java.net.URLDecoder.decode(path[path.length - 1]);
 
         //print the html, using the replacement values listed to fill in the calculated stuff
         response.setHeader("Connection", "Keep-Alive"); // NOI18N

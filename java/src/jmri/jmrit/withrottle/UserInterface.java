@@ -212,7 +212,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
             @Override
             public void actionPerformed(ActionEvent e) {
                 String s = (String) ((JComboBox<String>) e.getSource()).getSelectedItem();
-                userPreferences.addComboBoxLastSelection(rosterGroupSelectorPreferencesName, s);
+                userPreferences.setComboBoxLastSelection(rosterGroupSelectorPreferencesName, s);
                 facelessServer.setSelectedRosterGroup(s);
 //              Send new selected roster group to all devices
                 for (DeviceServer device : deviceList) {
