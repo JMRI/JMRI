@@ -992,7 +992,10 @@
 <pre style="font-family: monospace;">
         new org.netbeans.jemmy.QueueTool().waitEmpty(20);
 </pre>
-            on the test thread.
+            on the test thread. The argument (in this example 20) is
+            how many milliseconds the queue has to remain empty before 
+            proceeding.  We're not sure what the best value is; see
+            <a href="https://github.com/JMRI/JMRI/issues/5321">Issue #5321</a> for some background discussion.
       </ul>
       
       <h3><a id="jfcunit" name="jfcunit">Using JFCUnit</a></h3>
