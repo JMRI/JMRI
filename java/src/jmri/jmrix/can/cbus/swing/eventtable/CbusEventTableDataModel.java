@@ -1189,7 +1189,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
      * @since 4.13.3
      * @param event int
      * @param node int
-     * @param canid int
      * @return int of row, otherwise -1
      */
     public synchronized int seeIfEventOnTable( int event, int node) {
