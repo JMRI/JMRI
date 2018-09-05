@@ -21,7 +21,7 @@ public class FollowerFrame extends jmri.util.JmriJFrame {
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         getContentPane().add(new FollowerPanel());
-        setTitle(FollowerPanel.rb.getString("TitleFollower"));  //NOI18N
+        setTitle(Bundle.getMessage("TitleFollower"));  //NOI18N
 
         // pack to cause display
         pack();

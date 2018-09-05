@@ -37,34 +37,34 @@ public class FollowerPanel extends BasePanel {
         // add output name field
         JPanel p3 = new JPanel();
 
-        label = new JLabel(rb.getString("LabelOutputName")); //NOI18N
-        label.setToolTipText(rb.getString("ToolTipFollowerOutput")); //NOI18N
+        label = new JLabel(Bundle.getMessage("LabelOutputName")); //NOI18N
+        label.setToolTipText(Bundle.getMessage("ToolTipFollowerOutput")); //NOI18N
         p3.add(label);
         outputName = new JTextField(12);
-        outputName.setToolTipText(rb.getString("ToolTipFollowerOutput")); //NOI18N
+        outputName.setToolTipText(Bundle.getMessage("ToolTipFollowerOutput")); //NOI18N
         p3.add(outputName);
         p2xs.add(p3);
 
         // add sensor name field
         p3 = new JPanel();
-        label = new JLabel(rb.getString("LabelSensorName")); //NOI18N
-        label.setToolTipText(rb.getString("ToolTipFollowerSensor")); //NOI18N
+        label = new JLabel(Bundle.getMessage("LabelSensorName")); //NOI18N
+        label.setToolTipText(Bundle.getMessage("ToolTipFollowerSensor")); //NOI18N
         p3.add(label);
         sensorName = new JTextField(12);
-        sensorName.setToolTipText(rb.getString("ToolTipFollowerSensor")); //NOI18N
+        sensorName.setToolTipText(Bundle.getMessage("ToolTipFollowerSensor")); //NOI18N
         p3.add(sensorName);
         p2xs.add(p3);
-        invert = new JCheckBox(rb.getString("ButtonInvert")); //NOI18N
-        invert.setToolTipText(rb.getString("ToolTipFollowerInvert")); //NOI18N
+        invert = new JCheckBox(Bundle.getMessage("ButtonInvert")); //NOI18N
+        invert.setToolTipText(Bundle.getMessage("ToolTipFollowerInvert")); //NOI18N
         p2xs.add(invert);
 
         // add veto name field
         p3 = new JPanel();
-        label = new JLabel(rb.getString("LabelVetoName")); //NOI18N
-        label.setToolTipText(rb.getString("ToolTipFollowerVeto")); //NOI18N
+        label = new JLabel(Bundle.getMessage("LabelVetoName")); //NOI18N
+        label.setToolTipText(Bundle.getMessage("ToolTipFollowerVeto")); //NOI18N
         p3.add(label);
         vetoName = new JTextField(12);
-        vetoName.setToolTipText(rb.getString("ToolTipFollowerVeto")); //NOI18N
+        vetoName.setToolTipText(Bundle.getMessage("ToolTipFollowerVeto")); //NOI18N
         p3.add(vetoName);
         p2xs.add(p3);
 
@@ -74,7 +74,7 @@ public class FollowerPanel extends BasePanel {
         p2xs = new JPanel();
         p2xs.setLayout(new BoxLayout(p2xs, BoxLayout.Y_AXIS));
 
-        viewButton = new JButton(rb.getString("ButtonView")); //NOI18N
+        viewButton = new JButton(Bundle.getMessage("ButtonView")); //NOI18N
         viewButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -82,7 +82,7 @@ public class FollowerPanel extends BasePanel {
             }
         });
         p2xs.add(viewButton);
-        addButton = new JButton(rb.getString("ButtonAddUpdate")); //NOI18N
+        addButton = new JButton(Bundle.getMessage("ButtonAddUpdate")); //NOI18N
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
