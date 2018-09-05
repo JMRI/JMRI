@@ -72,7 +72,6 @@ public class DecoderPro3Test {
     @After
     public void tearDown() {
         JUnitUtil.resetApplication();
-        apps.tests.Log4JFixture.tearDown();
         JUnitUtil.tearDown();
     }
 

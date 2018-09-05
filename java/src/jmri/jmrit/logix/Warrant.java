@@ -422,6 +422,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     /*
      * Engineer reports its status
      */
+    @jmri.InvokeOnLayoutThread
     protected void fireRunStatus(String property, Object old, Object status) {
         // error if not on Layout thread
         if (!ThreadingUtil.isLayoutThread()) {
@@ -665,6 +666,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         return Bundle.getMessage("atSpeed", speedType, Math.round(speed), units);
     }
 
+    @jmri.InvokeOnLayoutThread
     protected void startTracker() {
         // error if not on Layout thread
         if (!ThreadingUtil.isLayoutThread()) {
@@ -1616,10 +1618,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * Check if this is the next block of the train moving under the warrant
      * Learn mode assumes route is set and clear. Run mode update conditions.
      * <p>
-     * Must be called on GUI thread.
+     * Must be called on Layout thread.
      *
      * @param block Block in the route is going active.
      */
+    @jmri.InvokeOnLayoutThread
     protected void goingActive(OBlock block) {
         // error if not on Layout thread
         if (!ThreadingUtil.isLayoutThread()) {
@@ -1768,6 +1771,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     /**
      * @param block Block in the route is going Inactive
      */
+    @jmri.InvokeOnLayoutThread
     protected void goingInactive(OBlock block) {
         if (_runMode == MODE_NONE) {
             return;

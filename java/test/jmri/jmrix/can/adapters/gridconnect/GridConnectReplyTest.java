@@ -125,7 +125,6 @@ public class GridConnectReplyTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        apps.tests.AllTest.initLogging();
         String[] testCaseName = {"-noloading", GridConnectReplyTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }

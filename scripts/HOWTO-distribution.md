@@ -206,23 +206,24 @@ where the date at the end should be the date (and optionally time) of the last r
 ================================================================================
 ## Create the Release Branch
 
-- (MANUAL STEP FOR NOW)  Update the <version> element in pom.xml to say the current release:
-```
-    <version>4.13.2-SNAPSHOT</version>
-```
-Commit, and push back directly to master (this should be the only change, and has to be before the next step)
-```
-git commit -m"for 4.13.2" pom.xml
-git push github
-```
-
-
 - Start the release by creating a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.) (Also, you should _not_ have any modified and added (e.g. green) files showing in `git status`, which might interfere) (There's a summary of the steps involved in this at the bottom)
 
 ```
         git checkout master
         ant make-test-release-branch
 ```
+
+
+- (MANUAL STEP FOR NOW)  Update the <version> element in pom.xml to say the next release:
+```
+    <version>4.13.3-SNAPSHOT</version>
+```
+Commit, and push back directly to master (this should be the only change, and has to be before the next step)
+```
+git commit -m"for next release 4.13.3" pom.xml
+git push github
+```
+
 
 - Put the following comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note: (NOT FOR THE LAST TEST RELEASE FROM MASTER BEFORE A PRODUCTION RELEASE, see just below)
 

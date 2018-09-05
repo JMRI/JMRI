@@ -109,10 +109,9 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initDefaultUserMessagePreferences();
-        JUnitUtil.setUp();
-        JUnitUtil.resetInstanceManager();
 
         // prepare an interface, register
         jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();

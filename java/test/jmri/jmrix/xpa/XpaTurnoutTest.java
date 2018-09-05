@@ -43,7 +43,7 @@ public class XpaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase 
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         memo = new XpaSystemConnectionMemo();
         xnis = new XpaTrafficControlScaffold();
         memo.setXpaTrafficController(xnis);
@@ -52,7 +52,7 @@ public class XpaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase 
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
         memo = null;
         xnis = null;
     }

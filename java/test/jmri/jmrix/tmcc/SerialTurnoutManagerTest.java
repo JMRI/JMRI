@@ -22,7 +22,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
 
     @Override
     public void setUp(){
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
 
         // create and register the manager object
         TmccSystemConnectionMemo memo = new TmccSystemConnectionMemo("T", "TMCC Test");

@@ -423,7 +423,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             // statusBar.setForeground(Color.red); // handled when errorMassage is set to differentiate urgency
         }
 
-        pref.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem());
+        pref.setComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem());
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
