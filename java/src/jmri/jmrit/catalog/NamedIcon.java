@@ -360,7 +360,6 @@ public class NamedIcon extends ImageIcon {
      * "+getDescription()); if (s<1) { return; } scale(s/100.0, comp); }
      */
     public void scale(double scale, Component comp) {
-        setImage(mDefaultImage);
         _scale = scale;
         if (Math.abs(scale - 1.0) > .00001) {
             _transformS = AffineTransform.getScaleInstance(scale, scale);
@@ -413,10 +412,10 @@ public class NamedIcon extends ImageIcon {
                 t = AffineTransform.getTranslateInstance(0.0, -w * Math.sin(rad));
             }
         }
-        AffineTransform r = AffineTransform.getRotateInstance(rad);
         if (Math.abs(_scale - 1.0) > .00001) {
             t.preConcatenate(_transformS);
         }
+        AffineTransform r = AffineTransform.getRotateInstance(rad);
         t.concatenate(r);
         transformImage(width, heigth, t, comp);
         if (comp instanceof PositionableLabel) {
