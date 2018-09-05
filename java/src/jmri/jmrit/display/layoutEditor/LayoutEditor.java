@@ -9139,7 +9139,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * Should only be invoked on the GUI (Swing) thread
      */
-    @InvokeOnGuiThread
+    @InvokeOnGuiThread  // due to the setSelected call on a possibly-visible item
     public void setShowHelpBar(boolean state) {
         if (showHelpBar != state) {
             showHelpBar = state;

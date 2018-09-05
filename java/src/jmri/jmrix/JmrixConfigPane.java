@@ -282,7 +282,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
         modeBox.addActionListener((ActionEvent a) -> {
             if ((String) modeBox.getSelectedItem() != null) {
                 if (!((String) modeBox.getSelectedItem()).equals(NONE_SELECTED)) {
-                    p.addComboBoxLastSelection((String) manuBox.getSelectedItem(), (String) modeBox.getSelectedItem());
+                    p.setComboBoxLastSelection((String) manuBox.getSelectedItem(), (String) modeBox.getSelectedItem());
                 }
             }
             selection();

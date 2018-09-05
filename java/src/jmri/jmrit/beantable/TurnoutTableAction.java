@@ -1847,7 +1847,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             // statusBar.setForeground(Color.red); // handled when errorMassage is set, to differentiate in urgency
         }
 
-        p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem()); // store user pref
+        p.setComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem()); // store user pref
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
@@ -1930,7 +1930,8 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
      */
     @Override
     public void setMessagePreferencesDetails() {
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "duplicateUserName", Bundle.getMessage("DuplicateUserNameWarn"));
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class)
+                .setPreferenceItemDetails(getClassName(), "duplicateUserName", Bundle.getMessage("DuplicateUserNameWarn"));
         super.setMessagePreferencesDetails();
     }
 

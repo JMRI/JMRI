@@ -326,7 +326,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
             currentMast.setUserName(username);
         }
 
-        prefs.addComboBoxLastSelection(matrixBitNumSelectionCombo, (String) columnChoice.getSelectedItem()); // store bitNum pref
+        prefs.setComboBoxLastSelection(matrixBitNumSelectionCombo, (String) columnChoice.getSelectedItem()); // store bitNum pref
         
         currentMast.setAllowUnLit(allowUnLit.isSelected());
         
