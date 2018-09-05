@@ -196,7 +196,7 @@ public class NamedIcon extends ImageIcon {
 
     private String mName = null;
     private String mURL = null;
-    private Image mDefaultImage;
+    private final Image mDefaultImage;
     /*
      public Image getOriginalImage() {
      return mDefaultImage;
@@ -376,21 +376,24 @@ public class NamedIcon extends ImageIcon {
      */
     public void rotate(int degree, Component comp) {
         setImage(mDefaultImage);
-        if (Math.abs(_scale - 1.0) > .00001) {
-            int w = (int) Math.ceil(_scale * getIconWidth());
-            int h = (int) Math.ceil(_scale * getIconHeight());
-            transformImage(w, h, _transformS, comp);
-        }
+
         mRotation = 0;
         // this _always_ returns a value between 0 and 360...
         // (and yes, it does work properly for negative numbers)
         _degrees = MathUtil.wrap(degree, 0, 360);
+        
         if (_degrees == 0) {
+            if (Math.abs(_scale - 1.0) > .00001) {
+                int w = (int) Math.ceil(_scale * getIconWidth());
+                int h = (int) Math.ceil(_scale * getIconHeight());
+                transformImage(w, h, _transformS, comp);
+            }
             return;
         }
         double rad = Math.toRadians(_degrees);
-        double w = getIconWidth();
-        double h = getIconHeight();
+        double w = _scale * getIconWidth();
+        double h = _scale * getIconHeight();
+
         int width = (int) Math.ceil(Math.abs(h * Math.sin(rad)) + Math.abs(w * Math.cos(rad)));
         int heigth = (int) Math.ceil(Math.abs(h * Math.cos(rad)) + Math.abs(w * Math.sin(rad)));
         AffineTransform t;
@@ -411,6 +414,9 @@ public class NamedIcon extends ImageIcon {
             }
         }
         AffineTransform r = AffineTransform.getRotateInstance(rad);
+        if (Math.abs(_scale - 1.0) > .00001) {
+            t.preConcatenate(_transformS);
+        }
         t.concatenate(r);
         transformImage(width, heigth, t, comp);
         if (comp instanceof PositionableLabel) {
