@@ -61,6 +61,12 @@
             <authorinitials>MM</authorinitials>
             <revremark>Changes required to add new models to TSU2 file (now have some differing default values)</revremark>
         </revision>
+        <revision>
+            <revnumber>5</revnumber>
+            <date>2018-09-05</date>
+            <authorinitials>MM</authorinitials>
+            <revremark>Changes required to add new model to TSU2 file (now have some differing default values)</revremark>
+        </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
     <decoder>
