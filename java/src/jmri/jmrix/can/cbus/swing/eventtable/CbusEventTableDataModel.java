@@ -74,7 +74,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     private int[] _feedbacknode = null;
     private int[] _feedbacktimeout = null;
     private int[] _lfb = null;
-    
+    private Timer[] _mytimers = null; 
     private File _saveFile = null;
     private String _saveFileName = null;
     private boolean _saved = false;
@@ -142,7 +142,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         _feedbacknode = new int[CbusConstants.MAX_TABLE_EVENTS];
         _feedbacktimeout = new int[CbusConstants.MAX_TABLE_EVENTS];
         _lfb = new int[CbusConstants.MAX_TABLE_EVENTS];
-        
+        _mytimers = new Timer[CbusConstants.MAX_TABLE_EVENTS]; 
         // connect to the CanInterface
         tc = memo.getTrafficController();
         tc.addCanListener(this);
@@ -225,7 +225,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     }
 
     // order needs to match column list right at top of class
-    protected String[] columnToolTips = {
+    protected static String[] columnToolTips = {
         Bundle.getMessage("EventColTip"),
         Bundle.getMessage("NodeColTip"),
         Bundle.getMessage("NameColTip"),
@@ -258,7 +258,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     * Returns int of startup column widths
     * @param col int col number
     */
-    public int getPreferredWidth(int col) {
+    public static int getPreferredWidth(int col) {
         switch (col) {
             case NODE_COLUMN:
                 return new JTextField(4).getPreferredSize().width;
@@ -295,12 +295,18 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             case SESSION_TOTAL_COLUMN:
                 return new JTextField(7).getPreferredSize().width;
             case LATEST_TIMESTAMP_COLUMN:
-            return new JTextField(7).getPreferredSize().width;
+                return new JTextField(7).getPreferredSize().width;
             case LASTFEEDBACK_COLUMN:
                 return new JTextField(6).getPreferredSize().width;
             case FEEDBACKREQUIRED_COLUMN:
                 return new JTextField(5).getPreferredSize().width;
             case FEEDBACKOUTSTANDING_COLUMN:
+                return new JTextField(5).getPreferredSize().width;
+            case FEEDBACKTIMEOUT_COLUMN:
+                return new JTextField(5).getPreferredSize().width;
+            case FEEDBACKNODE_COLUMN:
+                return new JTextField(5).getPreferredSize().width;
+            case FEEDBACKEVENT_COLUMN:
                 return new JTextField(5).getPreferredSize().width;
             default:
                 return new JLabel(" <unknown> ").getPreferredSize().width; // NOI18N
@@ -319,7 +325,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
      * </p>
      * @param col int col number
      */
-    public int getColumnWidth(int col) {
+    public static int getColumnWidth(int col) {
         switch (col) {
             case CANID_COLUMN:
                 return 5;
@@ -793,18 +799,23 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 }
             };
             setValueAt(1, eventRow(nn,en), LASTFEEDBACK_COLUMN);
-            eventTimer = new Timer( delay, eventFeedbackListener);
-            eventTimer.setRepeats( false );
-            eventTimer.start();
+            _mytimers[eventRow(nn,en)] = new Timer( delay, eventFeedbackListener);
+            _mytimers[eventRow(nn,en)].setRepeats( false );
+            _mytimers[eventRow(nn,en)].start();
            // log.debug("starting timer");
         }
         
         
         private synchronized void stopTheTimer(int nn, int en) {
-          //  log.debug("stopTheTimer stopping timer for nn {} ev {}",nn,en);
-            eventTimer.stop();
-            eventTimer=null;
-            eventFeedbackListener=null;
+            // log.debug("stopTheTimer stopping timer for nn {} ev {}",nn,en);
+            try {
+                _mytimers[eventRow(nn,en)].stop();
+                _mytimers[eventRow(nn,en)]=null;
+                eventFeedbackListener=null;
+            } catch (NullPointerException e) {
+                log.warn("Trouble stopping timer : Nullpointer {} ", e);
+            }
+            
             setValueAt(0, eventRow(nn,en), FEEDBACKOUTSTANDING_COLUMN);
             setValueAt(2, eventRow(nn,en), LASTFEEDBACK_COLUMN);
             addToLog(2,Bundle.getMessage("FeedBackOK",getEventName(nn,en)));
