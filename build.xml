@@ -1162,10 +1162,9 @@
             <checks>
                 <include name="duplicate key check"/>
                 <include name="empty key check"/>
-
+                <include name="messageformat check"/>
                 <include name="unicode check"/>
                 <include name="invalid char check"/> <!-- c.f. native2ascii -->
-                <include name="messageformat check"/>
                 
                 <!-- someday want to get to these -->
                 <exclude name="placeholder check"/> <!-- Is this _global_ on name?  C.f. ConnectionName -->
