@@ -283,7 +283,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             case TOGGLE_BUTTON_COLUMN:
                 return new JTextField(8).getPreferredSize().width; 
             case STATUS_REQUEST_BUTTON_COLUMN:
-                return new JTextField(8).getPreferredSize().width;
+                return new JTextField(9).getPreferredSize().width;
             case SESSION_ON_COLUMN:
                 return new JTextField(7).getPreferredSize().width;
             case SESSION_OFF_COLUMN:
