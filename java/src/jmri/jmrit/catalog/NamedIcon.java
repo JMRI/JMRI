@@ -310,9 +310,7 @@ public class NamedIcon extends ImageIcon {
             //mRotation = 3;
         }
         _scale = s;
-        if (Math.abs(s - 1.0) > .00001) {
-            _transformS = AffineTransform.getScaleInstance(s, s);
-        }
+        _transformS = AffineTransform.getScaleInstance(s, s);
         rotate(d, comp);
 
     }
@@ -361,9 +359,7 @@ public class NamedIcon extends ImageIcon {
      */
     public void scale(double scale, Component comp) {
         _scale = scale;
-        if (Math.abs(scale - 1.0) > .00001) {
-            _transformS = AffineTransform.getScaleInstance(scale, scale);
-        }
+        _transformS = AffineTransform.getScaleInstance(scale, scale);
         rotate(_degrees, comp);
     }
 
