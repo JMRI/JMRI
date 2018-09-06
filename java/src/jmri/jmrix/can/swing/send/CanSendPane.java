@@ -273,7 +273,6 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
         // is this one enabled?
         if (mUseField[mNextSequenceElement].isSelected()) {
             
-            log.warn("sequence {} colour {} ",mNextSequenceElement,filterColors[mNextSequenceElement]);
             mPacketField[mNextSequenceElement].setBackground(filterColors[mNextSequenceElement]);
             
             try {
