@@ -57,7 +57,7 @@
         </revision>
         <revision>
             <revnumber>4</revnumber>
-            <date>2018-08-31</date>
+            <date>2018-09-05</date>
             <authorinitials>MM</authorinitials>
             <revremark>Add new model SD60E and make use of defaultItem</revremark>
         </revision>
