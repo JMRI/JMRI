@@ -85,7 +85,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     private int _defaultfeedbackdelay = 5000;
     
     final JFileChooser fileChooser = new JFileChooser(FileUtil.getUserFilesPath());
-    private Timer eventTimer;
     private ActionListener eventFeedbackListener;
     
     CanSystemConnectionMemo memo;
@@ -225,7 +224,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     }
 
     // order needs to match column list right at top of class
-    protected static String[] columnToolTips = {
+    protected String[] columnToolTips = {
         Bundle.getMessage("EventColTip"),
         Bundle.getMessage("NodeColTip"),
         Bundle.getMessage("NameColTip"),
@@ -325,7 +324,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
      * </p>
      * @param col int col number
      */
-    public static int getColumnWidth(int col) {
+    public int getColumnWidth(int col) {
         switch (col) {
             case CANID_COLUMN:
                 return 5;
