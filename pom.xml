@@ -940,7 +940,7 @@
         <dependency>
             <groupId>com.digi.xbee</groupId>
             <artifactId>xbee-java-library</artifactId>
-            <version>1.2.0</version>
+            <version>1.2.1</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
