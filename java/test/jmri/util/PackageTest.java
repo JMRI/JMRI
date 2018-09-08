@@ -6,6 +6,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         BundleTest.class,
+        CvUtilTest.class,
         FileUtilTest.class,
         JUnitAppenderTest.class,
         IntlUtilitiesTest.class,

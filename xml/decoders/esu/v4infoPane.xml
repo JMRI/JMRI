@@ -13,7 +13,7 @@
     <display item="Firmware Major Version"/>
     <display item="Firmware Minor Version"/>
     <display item="Firmware Build Number"/>
-<!--     <xi:include href="http://jmri.org/xml/decoders/esu/v4decoderInfoDisplay.xml"/> -->
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4decoderInfoDisplay.xml"/>
   </column>
   <column>
     <separator/>
@@ -48,5 +48,6 @@
       <text xml:lang="de">demnächst hier</text>
       <text xml:lang="ca">Properament</text>
     </label>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4projectInfoDisplay.xml"/>
   </column>
 </pane>
