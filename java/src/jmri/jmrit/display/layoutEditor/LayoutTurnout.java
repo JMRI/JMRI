@@ -1051,6 +1051,7 @@ public class LayoutTurnout extends LayoutTrack {
         } else {
             turnoutName = "";
             namedTurnout = null;
+            setDisableWhenOccupied(false);
         }
     }
 
@@ -1525,6 +1526,7 @@ public class LayoutTurnout extends LayoutTrack {
                 blockName = b.getId();
             } else {
                 blockName = "";
+                setDisableWhenOccupied(false);
             }
             // decrement use if block was already counted
             if ((block != null)
@@ -2599,6 +2601,9 @@ public class LayoutTurnout extends LayoutTrack {
             });
 
             cbmi = new JCheckBoxMenuItem(Bundle.getMessage("DisabledWhenOccupied"));
+            if (getTurnout() == null || getBlockName().isEmpty()) {
+                cbmi.setEnabled(false);
+            }
             cbmi.setSelected(disableWhenOccupied);
             popup.add(cbmi);
             cbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
