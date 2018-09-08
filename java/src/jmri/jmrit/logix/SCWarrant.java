@@ -583,7 +583,7 @@ public class SCWarrant extends Warrant {
             _nextSignal.removePropertyChangeListener(this);
             _nextSignal = null;
         }
-        super.stopWarrant(abort);
+        super.stopWarrant(abort, false);
     }
 
     
