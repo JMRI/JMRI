@@ -1,6 +1,5 @@
 package jmri.server.json.util;
 
-import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.DataOutputStream;
@@ -29,14 +28,16 @@ public class JsonUtilSocketServiceTest {
 
     @BeforeClass
     public static void setUpClass() {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
     }
 
     @AfterClass
     public static void tearDownClass() {
-        Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
 
     @Before

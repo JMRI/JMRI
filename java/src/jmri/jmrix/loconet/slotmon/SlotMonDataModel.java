@@ -169,7 +169,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
             case F7COLUMN:
             case F8COLUMN:
                 // only loco slots (1-120 incl) to be marked writeable only, system slot are read only
-                return (row > 0 & row < 121);
+                return ((row > 0) && (row < 121));
             default:
                 return false;
         }

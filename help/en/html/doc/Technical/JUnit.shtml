@@ -489,13 +489,8 @@
           log.error(...) message is produced that isn't matched to
           a JUnitAppender.assertWarnMessage(...) call.</p>
         </li>
-      </ol>In any case, all of your main() routines should start
-      with
-<pre style="font-family: monospace;">
-    apps.tests.Log4JFixture.initLogging();
-</pre>
-    so that they can be run independently.
-
+      </ol>
+      
       <p>Note: Our <a href="ContinuousIntegration.shtml">CI
       test</a> executables are configured to fail if any FATAL or
       ERROR messages are emitted instead of being handled. This
@@ -629,7 +624,7 @@
       or you should add code to terminate them.
       <p>
       You can check whether you've left any threads running by
-      editing the <code>java/test/apps/tests/Log4JFixture.java</code>
+      editing the <code>java/test/jmri/util/JUnitUtil.java</code> file
       and finding a line like:
 <pre style="font-family: monospace;">
         // checkThreads(false);  // true means stop on 1st extra thread
@@ -997,7 +992,10 @@
 <pre style="font-family: monospace;">
         new org.netbeans.jemmy.QueueTool().waitEmpty(20);
 </pre>
-            on the test thread.
+            on the test thread. The argument (in this example 20) is
+            how many milliseconds the queue has to remain empty before 
+            proceeding.  We're not sure what the best value is; see
+            <a href="https://github.com/JMRI/JMRI/issues/5321">Issue #5321</a> for some background discussion.
       </ul>
       
       <h3><a id="jfcunit" name="jfcunit">Using JFCUnit</a></h3>

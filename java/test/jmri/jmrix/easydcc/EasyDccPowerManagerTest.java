@@ -62,7 +62,7 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTestBase {
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         EasyDccSystemConnectionMemo memo = new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial");
         controller = new EasyDccTrafficControlScaffold(memo);
         memo.setEasyDccTrafficController(controller); // important for successful getTrafficController()

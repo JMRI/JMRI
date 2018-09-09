@@ -44,7 +44,7 @@ public class LIUSBXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketizerTest 
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         tc = new LIUSBXNetPacketizer(new jmri.jmrix.lenz.LenzCommandStation()) {
             @Override
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {

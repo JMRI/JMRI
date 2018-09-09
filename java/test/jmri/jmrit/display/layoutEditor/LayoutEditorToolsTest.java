@@ -21,7 +21,10 @@ import org.netbeans.jemmy.operators.JButtonOperator;
  * @author	Paul Bender Copyright (C) 2016
  */
 public class LayoutEditorToolsTest {
-        
+    
+    // allow 2 retries of intermittent tests
+    public jmri.util.junit.rules.RetryRule retryRule = new jmri.util.junit.rules.RetryRule(2);
+    
     private LayoutEditor le = null;
     private LayoutEditorTools let = null;
 

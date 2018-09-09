@@ -150,6 +150,18 @@
             <dd>When set true, run some extra tests; usually used during code migration,
                 where not everything is right yet but you want to be able to include
                 tests for individual running.  </dd>
+        <dt>jmri.util.JUnitUtil.printSetUpTearDownNames</dt>
+            <dd>If true, JUnit tests will print out each JUnitUtil.setUp() and JUnitUtil.teardown() call.
+                This can be useful if i.e. the CI tests are hanging, and you can't figure out which
+                test class is the problem.</dd>
+        <dt>jmri.util.JUnitUtil.checkSetUpTearDownSequence</dt>
+            <dd>If true, check for whether JUnitUtil.setUp() and JUnitUtil.teardown() follow each other
+                int the proper sequence. Print a message if not.  (This slows execution a 
+                bit due to the time needed to keep history for the message)</dd>
+        <dt>jmri.util.JUnitUtil.checkSequenceDumpsStack</dt>
+            <dd>If true, makes jmri.util.JUnitUtil.checkSetUpTearDownSequence more verbose by also
+                including the current stack trace along with the traces of the most recent setUp and 
+                tearDown calls.</dd>
       </dl>
 
       <h2 id="Linux">Linux</h2>

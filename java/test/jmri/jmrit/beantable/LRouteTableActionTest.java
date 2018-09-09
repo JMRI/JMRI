@@ -18,8 +18,7 @@ import junit.framework.TestSuite;
  *
  * @author	Pete Cressman Copyright 2009
  */
-public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase // jmri.util.SwingTestCase 
-{
+public class LRouteTableActionTest extends jmri.util.SwingTestCase {
 
     static final ResourceBundle rbx = ResourceBundle
             .getBundle("jmri.jmrit.beantable.LRouteTableBundle");
@@ -28,8 +27,9 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
     private LogixTableAction _logixTable;
 
     public void testRouteElementComparator() {
-        LRouteTableAction.RouteElement e1 = new LRouteTableAction.RouteElement("ISname1", "B", 0);
-        LRouteTableAction.RouteElement e2 = new LRouteTableAction.RouteElement("ISname2", "B", 0);
+        System.out.println("running");
+        LRouteTableAction.RouteElement e1 = new LRouteTableAction.RouteElement("ISname1", "B", LRouteTableAction.SENSOR_TYPE);
+        LRouteTableAction.RouteElement e2 = new LRouteTableAction.RouteElement("ISname2", "B", LRouteTableAction.SENSOR_TYPE);
         
         LRouteTableAction.RouteElementComparator rc = new LRouteTableAction.RouteElementComparator();
         
@@ -121,7 +121,8 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
     // The minimal setup for log4J
     @Override
     protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
         super.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
 
@@ -174,6 +175,5 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase //TestCase //
         // now close action window
         TestHelper.disposeWindow(_lRouteTable.f, this);
         super.tearDown();
-        JUnitUtil.resetInstanceManager();
     }
 }

@@ -37,7 +37,7 @@ public class XNetLightTest extends jmri.implementation.AbstractLightTestBase {
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         // prepare an interface
         xnis = new XNetInterfaceScaffold(new LenzCommandStation());
         XNetLightManager xlm = new XNetLightManager(xnis, "X");

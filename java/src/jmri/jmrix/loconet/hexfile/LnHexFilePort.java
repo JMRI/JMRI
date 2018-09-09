@@ -54,6 +54,8 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
 
     /**
      * Fill the contents from a file.
+     * <p>
+     * @param file - file to be read
      */
     public void load(File file) {
         if (log.isDebugEnabled()) {
@@ -154,6 +156,8 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
 
     /**
      * Provide a new message delay value, but don't allow it to go below 2 msec.
+     * <p>
+     * @param newDelay - delay, in milliseconds
      */
     public void setDelay(int newDelay) {
         delay = Math.max(2, newDelay);
@@ -254,6 +258,8 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
     /**
      * Get a String that says what Option 3 represents. May be an empty string,
      * but will not be null
+     * <p>
+     * @return string containing the text for "Option 3"
      */
     public String option3Name() {
         return "Turnout command handling: ";

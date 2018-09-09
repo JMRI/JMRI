@@ -1273,7 +1273,10 @@ public class Maintenance {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                _w.dispose();
+                // dispose on the GUI thread _later_
+                jmri.util.ThreadingUtil.runOnGUIEventually( ()->{ 
+                    _w.dispose();
+                });
             }
         }
         ok.addActionListener(new myListener(dialog));
@@ -1295,7 +1298,10 @@ public class Maintenance {
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         dialog.setLocationRelativeTo(parent);
         dialog.pack();
-        dialog.setVisible(true);
+        // dispose on the GUI thread _later_
+        jmri.util.ThreadingUtil.runOnGUIEventually( ()->{ 
+            dialog.setVisible(true);
+        });
     }
 
     private final static Logger log = LoggerFactory.getLogger(Maintenance.class);

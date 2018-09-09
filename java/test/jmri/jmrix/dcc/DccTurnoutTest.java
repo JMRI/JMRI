@@ -20,7 +20,7 @@ public class DccTurnoutTest extends AbstractTurnoutTestBase {
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         tcis = new CommandStationScaffold();
         InstanceManager.setDefault(CommandStation.class, tcis);
         t = new DccTurnout(4);
@@ -71,6 +71,8 @@ public class DccTurnoutTest extends AbstractTurnoutTestBase {
     // The minimal setup for log4J
     @After
     public void tearDown() {
+        tcis = null;
+        t = null;
         JUnitUtil.tearDown();
     }
 
