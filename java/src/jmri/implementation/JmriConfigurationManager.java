@@ -1,7 +1,14 @@
 package jmri.implementation;
 
+import apps.AppsBase;
+import apps.ConfigBundle;
+import apps.gui3.TabbedPreferences;
 import apps.gui3.TabbedPreferencesAction;
+import java.awt.CardLayout;
+import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -9,20 +16,35 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ServiceLoader;
+import java.util.concurrent.atomic.AtomicBoolean;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.ListSelectionModel;
 import jmri.Application;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.ShutDownManager;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.swing.DialogErrorHandler;
 import jmri.jmrit.XmlFile;
+import jmri.profile.AddProfileDialog;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.spi.PreferencesManager;
+import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
+import jmri.util.prefs.HasConnectionButUnableToConnectException;
 import jmri.util.prefs.InitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -184,11 +206,17 @@ public class JmriConfigurationManager implements ConfigureManager {
                 });
                 if (!this.initializationExceptions.isEmpty()) {
                     if (!GraphicsEnvironment.isHeadless()) {
+                        
+                        AtomicBoolean isUnableToConnect = new AtomicBoolean(false);
+                        
                         List<String> errors = new ArrayList<>();
                         this.initialized.forEach((provider) -> {
                             List<Exception> exceptions = provider.getInitializationExceptions(profile);
                             if (!exceptions.isEmpty()) {
                                 exceptions.forEach((exception) -> {
+                                    if (exception instanceof HasConnectionButUnableToConnectException) {
+                                        isUnableToConnect.set(true);
+                                    }
                                     errors.add(exception.getLocalizedMessage());
                                 });
                             } else if (this.initializationExceptions.get(provider) != null) {
@@ -201,6 +229,56 @@ public class JmriConfigurationManager implements ConfigureManager {
                         } else {
                             list = new JList<>(errors.toArray(new String[errors.size()]));
                         }
+                        
+                        List<String> errorList = errors;
+                        
+                        if (isUnableToConnect.get()) {
+                            if (errors.size() > 1) {
+                                errorList.add(0, Bundle.getMessage("InitExMessageListHeader"));
+                            }
+                            errorList.add("");
+                            errorList.add(Bundle.getMessage("InitExMessageLogs")); // NOI18N
+                            
+                            ErrorDialog dialog = new ErrorDialog(errorList);
+                            
+                            switch (dialog.result) {
+                                case NEW_PROFILE:
+                                    AddProfileDialog apd = new AddProfileDialog(null, true, false);
+                                    apd.setLocationRelativeTo(null);
+                                    apd.setVisible(true);
+                                    // Restart program
+                                    AppsBase.handleRestart();
+                                    break;
+                                    
+                                case EDIT_CONNECTIONS:
+                                    final Object waiter = new Object();
+                                    try {
+                                        while (jmri.InstanceManager.getDefault(TabbedPreferences.class).init() != TabbedPreferences.INITIALISED) {
+                                            synchronized (waiter) {
+                                                waiter.wait(50);
+                                            }
+                                        }
+//                                        SwingUtilities.updateComponentTreeUI(f);
+                                    } catch (InterruptedException ex) {
+                                        Thread.currentThread().interrupt();
+                                    }
+                                    
+                                    new ConnectionsPreferencesDialog();
+                                    
+                                    // For testing only
+                                    AppsBase.handleQuit();
+                                    
+                                    // Restart program
+                                    AppsBase.handleRestart();
+                                    break;
+                                    
+                                case EXIT_PROGRAM:
+                                default:
+                                    // Exit program
+                                    AppsBase.handleQuit();
+                            }
+                        }
+                        
                         JOptionPane.showMessageDialog(null,
                                 new Object[]{
                                     (list instanceof JList) ? Bundle.getMessage("InitExMessageListHeader") : null,
@@ -290,4 +368,252 @@ public class JmriConfigurationManager implements ConfigureManager {
         return legacy.getValidate();
     }
 
+
+
+    private static final class ErrorDialog extends JDialog {
+        
+        enum Result {
+            EXIT_PROGRAM,
+            NEW_PROFILE,
+            EDIT_CONNECTIONS,
+        }
+        
+        
+        Result result = Result.EXIT_PROGRAM;
+
+        ErrorDialog(List<String> list) {
+            super();
+            setTitle("JMRI is unable to connect");
+            setModal(true);
+            JPanel contentPanel = new JPanel();
+            contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+            JPanel panel = new JPanel();
+            panel.add(new JLabel("Errors occurred when JMRI tried to connect"));
+            contentPanel.add(panel);
+
+            JPanel marginPanel = new JPanel();
+            marginPanel.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+            marginPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(5,5,5,5));
+            contentPanel.add(marginPanel);
+            JPanel borderPanel = new JPanel();
+            borderPanel.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+            borderPanel.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.black));
+            marginPanel.add(borderPanel);
+            panel = new JPanel();
+            panel.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+            panel.setBorder(javax.swing.BorderFactory.createEmptyBorder(5,5,5,5));
+            for (String s : list) {
+                // Remove html
+                s = s.replaceAll("\\<html\\>.*\\<\\/html\\>", "");
+                JLabel label = new JLabel(s);
+                label.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+                panel.add(label);
+            }
+            borderPanel.add(panel);
+
+            panel = new JPanel();
+            JButton button = new JButton("Exit program");
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent a) {
+                    result = Result.EXIT_PROGRAM;
+                    dispose();
+                }
+            });
+            panel.add(button);
+            
+            panel.add(javax.swing.Box.createRigidArea(new Dimension(5,0)));
+            
+            button = new JButton("Start with new profile");
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent a) {
+                    result = Result.NEW_PROFILE;
+                    dispose();
+                }
+            });
+            panel.add(button);
+            
+            panel.add(javax.swing.Box.createRigidArea(new Dimension(5,0)));
+            
+            button = new JButton("Edit connections");
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent a) {
+                    result = Result.EDIT_CONNECTIONS;
+                    dispose();
+                }
+            });
+            panel.add(button);
+            
+            contentPanel.add(panel);
+            
+            setContentPane(contentPanel);
+            pack();
+            
+            // Center dialog on screen
+            setLocationRelativeTo(null);
+            setVisible(true);
+        }
+    }
+    
+    
+    
+    
+    private static final class ConnectionsPreferencesDialog extends JDialog {
+        
+        enum Result {
+            EXIT_PROGRAM,
+            NEW_PROFILE,
+            EDIT_CONNECTIONS,
+        }
+        
+        
+        Result result = Result.EXIT_PROGRAM;
+        
+        
+        ConnectionsPreferencesDialog() {
+            super();
+            setTitle("Connections preferences");
+            setModal(true);
+            
+            ConnectionsPanel contentPanel = new ConnectionsPanel();
+            
+            setContentPane(contentPanel);
+            
+            pack();
+            
+            // Center dialog on screen
+            setLocationRelativeTo(null);
+            
+            setVisible(true);
+        }
+        
+    }
+    
+    
+    private static final class ConnectionsPanel extends apps.AppConfigBase {
+        
+        /**
+         * All preferences panels.
+         */
+        private final List<PreferencesPanel> prefPanels = new ArrayList<>();
+        
+        ConnectionsPanel() {
+            
+            JList list = new JList<>();
+            JScrollPane listScroller = new JScrollPane(list);
+            listScroller.setPreferredSize(new Dimension(100, 100));
+
+            JPanel buttonpanel = new JPanel();
+            buttonpanel.setLayout(new BoxLayout(buttonpanel, BoxLayout.Y_AXIS));
+            buttonpanel.setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 3));
+            
+            buttonpanel.removeAll();
+            List<String> choices = new ArrayList();
+            choices.add("Connections");
+            list = new JList<>(choices.toArray(new String[choices.size()]));
+            listScroller = new JScrollPane(list);
+            listScroller.setPreferredSize(new Dimension(100, 100));
+
+            list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+            list.setLayoutOrientation(JList.VERTICAL);
+            buttonpanel.add(listScroller);
+            
+            
+
+            JPanel detailpanel = new JPanel();
+            detailpanel.setLayout(new CardLayout());
+            detailpanel.setBorder(BorderFactory.createEmptyBorder(6, 3, 6, 6));
+            detailpanel.setPreferredSize(new Dimension(700, 400));
+
+            JButton save = new JButton(
+                    ConfigBundle.getMessage("ButtonSave"),
+                    new ImageIcon(FileUtil.findURL("program:resources/icons/misc/gui3/SaveIcon.png", FileUtil.Location.INSTALLED)));
+            save.addActionListener((ActionEvent e) -> {
+                savePressed(invokeSaveOptions());
+            });
+
+            buttonpanel.add(save);
+            
+            setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+            
+            for (PreferencesPanel panel : ServiceLoader.load(PreferencesPanel.class)) {
+                System.out.format("Daniel: %s%n", panel.getClass().getName());
+                
+                if (panel instanceof jmri.jmrix.swing.ConnectionsPreferencesPanel) {
+                    prefPanels.add(panel);
+                    detailpanel.add(panel.getPreferencesComponent());
+                }
+            }
+            
+            add(buttonpanel);
+            add(new JSeparator(JSeparator.VERTICAL));
+            add(detailpanel);
+
+            list.setSelectedIndex(0);
+            
+            // For testing only! Must be removed!
+            Object comboBox = ((java.awt.Container)((java.awt.Container)((java.awt.Container)((java.awt.Container)((java.awt.Container)detailpanel.getComponent(0)).getComponent(0)).getComponent(0)).getComponent(0)).getComponent(3)).getComponent(0);
+            ((javax.swing.JComboBox)comboBox).setSelectedIndex(((javax.swing.JComboBox)comboBox).getSelectedIndex());
+        }
+        
+        public boolean isPreferencesValid() {
+            return prefPanels.stream().allMatch((panel) -> (panel.isPreferencesValid()));
+        }
+        
+        @Override
+        public void savePressed(boolean restartRequired) {
+            
+            ShutDownManager sdm = InstanceManager.getNullableDefault(ShutDownManager.class);
+            if (!this.isPreferencesValid() && (sdm == null || !sdm.isShuttingDown())) {
+                for (PreferencesPanel panel : prefPanels) {
+                    if (!panel.isPreferencesValid()) {
+                        switch (JOptionPane.showConfirmDialog(this,
+                                Bundle.getMessage("InvalidPreferencesMessage", panel.getTabbedPreferencesTitle()),
+                                Bundle.getMessage("InvalidPreferencesTitle"),
+                                JOptionPane.YES_NO_OPTION,
+                                JOptionPane.ERROR_MESSAGE)) {
+                            case JOptionPane.YES_OPTION:
+                                // abort save
+                                return;
+                            default:
+                                // do nothing
+                                break;
+                        }
+                    }
+                }
+            }
+            super.savePressed(restartRequired);
+        }
+
+        // package only - for TabbedPreferencesFrame
+        boolean invokeSaveOptions() {
+            boolean restartRequired = false;
+            for (PreferencesPanel panel : prefPanels) {
+                // wrapped in isDebugEnabled test to prevent overhead of assembling message
+                if (log.isDebugEnabled()) {
+                    log.debug("PreferencesPanel {} ({}) is {}.",
+                            panel.getClass().getName(),
+                            (panel.getTabbedPreferencesTitle() != null) ? panel.getTabbedPreferencesTitle() : panel.getPreferencesItemText(),
+                            (panel.isDirty()) ? "dirty" : "clean");
+                }
+                panel.savePreferences();
+                // wrapped in isDebugEnabled test to prevent overhead of assembling message
+                if (log.isDebugEnabled()) {
+                    log.debug("PreferencesPanel {} ({}) restart is {}required.",
+                            panel.getClass().getName(),
+                            (panel.getTabbedPreferencesTitle() != null) ? panel.getTabbedPreferencesTitle() : panel.getPreferencesItemText(),
+                            (panel.isRestartRequired()) ? "" : "not ");
+                }
+                if (!restartRequired) {
+                    restartRequired = panel.isRestartRequired();
+                }
+            }
+            return restartRequired;
+        }
+        
+    }
+    
 }
