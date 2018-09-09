@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrix.dccpp.DCCppListener;
 import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppPacketizer;
@@ -38,7 +39,9 @@ import jmri.jmrix.dccpp.DCCppPacketizer;
  *
  *         Based on LIUSBXNetPacketizer by Paul Bender
  */
-public class SerialDCCppPacketizer extends DCCppPacketizer {
+public final class SerialDCCppPacketizer extends DCCppPacketizer {
+    
+    @SuppressFBWarnings(value = "SC_START_IN_CTOR", justification = "with existing code structure, we do not expect this to ever be subclassed.")
 
     final DelayQueue<DCCppMessage> resendFunctions = new DelayQueue<>();
 
