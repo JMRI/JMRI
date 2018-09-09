@@ -4,12 +4,10 @@
 package jmri.jmrix.dccpp.serial;
 
 import java.util.concurrent.DelayQueue;
-import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrix.dccpp.DCCppListener;
 import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppPacketizer;
@@ -39,44 +37,13 @@ import jmri.jmrix.dccpp.DCCppPacketizer;
  *
  *         Based on LIUSBXNetPacketizer by Paul Bender
  */
-public final class SerialDCCppPacketizer extends DCCppPacketizer {
-    
-    @SuppressFBWarnings(value = "SC_START_IN_CTOR", justification = "with existing code structure, we do not expect this to ever be subclassed.")
+public class SerialDCCppPacketizer extends DCCppPacketizer {
 
     final DelayQueue<DCCppMessage> resendFunctions = new DelayQueue<>();
 
     public SerialDCCppPacketizer(final jmri.jmrix.dccpp.DCCppCommandStation pCommandStation) {
         super(pCommandStation);
         log.debug("Loading Serial Extention to DCCppPacketizer");
-
-        // this is the background thread that periodically refreshes the last
-        // known function settings
-        final Thread backgroundRefresh = new Thread() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        final DCCppMessage message = resendFunctions.poll(1, TimeUnit.MINUTES);
-
-                        if (message != null) {
-                            message.setRetries(1);
-                            sendDCCppMessage(message, null);
-
-                            // At 115200 baud only ~1k messages/s can be sent.
-                            // Be nice and don't overload the wire.
-                            sleep(1);
-                        }
-
-                        setName("SerialDCCppPacketizer.bkg_refresh (" + resendFunctions.size() + " msg)");
-                    } catch (@SuppressWarnings("unused") final InterruptedException e) {
-                        // should exit if interrupted
-                    }
-                }
-            }
-        };
-
-        backgroundRefresh.setDaemon(true);
-        backgroundRefresh.start();
     }
 
     /**
@@ -90,6 +57,57 @@ public final class SerialDCCppPacketizer extends DCCppPacketizer {
     protected int lengthOfByteStream(final jmri.jmrix.AbstractMRMessage m) {
         final int len = m.getNumDataElements() + 2;
         return len;
+    }
+
+    /**
+     * this is the background thread that periodically refreshes the last known
+     * function settings
+     */
+    private Thread backgroundRefresh = null;
+
+    private final class RefreshThread extends Thread {
+        public RefreshThread() {
+            setDaemon(true);
+            setName("SerialDCCppPacketizer.bkg_refresh");
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    final DCCppMessage message = resendFunctions.take();
+
+                    if (message != null) {
+                        message.setRetries(1);
+                        sendDCCppMessage(message, null);
+
+                        // At 115200 baud only ~1k messages/s can be sent.
+                        // Be nice and don't overload the wire.
+                        sleep(1);
+                    }
+
+                    setName("SerialDCCppPacketizer.bkg_refresh (" + resendFunctions.size() + " msg)");
+                } catch (@SuppressWarnings("unused") final InterruptedException e) {
+                    // should exit if interrupted
+                }
+            }
+        }
+    }
+
+    private void enqueueFunction(final DCCppMessage m) {
+        /**
+         * Set again the same group function value 250ms later (or more,
+         * depending on the queue depth; limited to 1kHz of calls)
+         */
+        m.delayFor(250);
+        resendFunctions.offer(m);
+
+        synchronized (this) {
+            if (backgroundRefresh == null) {
+                backgroundRefresh = new RefreshThread();
+                backgroundRefresh.start();
+            }
+        }
     }
 
     @Override
@@ -106,14 +124,8 @@ public final class SerialDCCppPacketizer extends DCCppPacketizer {
 
         super.sendDCCppMessage(m, reply);
 
-        if (isFunction) {
-            /**
-             * Set again the same group function value 250ms later (or more,
-             * depending on the queue depth; limited to 1kHz of calls)
-             */
-            m.delayFor(250);
-            resendFunctions.offer(m);
-        }
+        if (isFunction)
+            enqueueFunction(m);
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialDCCppPacketizer.class);
