@@ -343,7 +343,6 @@ public class JmriConfigurationManager implements ConfigureManager {
         enum Result {
             EXIT_PROGRAM,
             NEW_PROFILE,
-            EDIT_CONNECTIONS,
         }
         
         
@@ -356,7 +355,7 @@ public class JmriConfigurationManager implements ConfigureManager {
             JPanel contentPanel = new JPanel();
             contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
             JPanel panel = new JPanel();
-            panel.add(new JLabel("Errors occurred when JMRI tried to connect"));
+            panel.add(new JLabel(Bundle.getMessage("InitExMessageListHeader")));
             contentPanel.add(panel);
 
             JPanel marginPanel = new JPanel();
@@ -381,25 +380,19 @@ public class JmriConfigurationManager implements ConfigureManager {
             borderPanel.add(panel);
 
             panel = new JPanel();
-            JButton button = new JButton("Exit program");
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent a) {
-                    result = Result.EXIT_PROGRAM;
-                    dispose();
-                }
+            JButton button = new JButton(Bundle.getMessage("ErrorDialogButtonExitProgram"));
+            button.addActionListener((ActionEvent a) -> {
+                result = Result.EXIT_PROGRAM;
+                dispose();
             });
             panel.add(button);
             
             panel.add(javax.swing.Box.createRigidArea(new Dimension(5,0)));
             
-            button = new JButton("Start with new profile");
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent a) {
-                    result = Result.NEW_PROFILE;
-                    dispose();
-                }
+            button = new JButton(Bundle.getMessage("ErrorDialogButtonNewProfile"));
+            button.addActionListener((ActionEvent a) -> {
+                result = Result.NEW_PROFILE;
+                dispose();
             });
             panel.add(button);
             
