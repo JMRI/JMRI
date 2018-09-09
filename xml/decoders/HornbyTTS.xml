@@ -342,10 +342,6 @@
                 <decVal max="8"/>
                 <label>Door Slam</label>
             </variable>
-			<variable CV="166" default="4" item="Sound Setting 6"  tooltip="F10 Volume"  comment="Range 0-8" include="175">
-                <decVal max="8"/>
-                <label>Horn High Two Bursts</label>	
-            </variable>
             <variable CV="168" default="4" item="Sound Setting 8"  tooltip="F8 Volume"  comment="Range 0-8" include="DoG,131,133,135,137,2703,655,145">
                 <decVal max="8"/>
                 <label>Blow Down</label>
