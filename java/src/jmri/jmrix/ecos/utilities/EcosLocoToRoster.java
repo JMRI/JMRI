@@ -542,7 +542,11 @@ public class EcosLocoToRoster implements EcosListener {
         re.setDecoderModel(pDecoderFile.getModel());
         re.setDecoderFamily(pDecoderFile.getFamily());
 
-        re.setDccAddress(Integer.toString(ecosLoco.getNumber()));
+        if (ecosLoco.getNumber() == 0) {
+            re.setDccAddress(Integer.toString(ecosLoco.MFX_DCCAddressOffset+ecosLoco.getEcosObjectAsInt()));
+        } else {
+            re.setDccAddress(Integer.toString(ecosLoco.getNumber()));
+        }
         //re.setLongAddress(true);
 
         re.setRoadName("");

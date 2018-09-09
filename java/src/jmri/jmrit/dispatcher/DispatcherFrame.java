@@ -2764,12 +2764,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     at.setResetWhenDone(false);
                     for (int j = restartingTrainsList.size(); j > 0; j--) {
                         if (restartingTrainsList.get(j - 1) == at) {
-                            log.info("Remove");
                             restartingTrainsList.remove(j - 1);
                             return;
                         }
                     }
-                    log.info("Not In List");
                 }
             }
         }
