@@ -321,10 +321,7 @@ public class AutoActiveTrain implements ThrottleListener {
         if (_resumingAutomatic) {
             _resumingAutomatic = false;
             _activeTrain.setStatus(ActiveTrain.RUNNING);
-            if (getCurrentSignal() == null) {
-                // paused in block with no signal
-                setupNewCurrentSignal(null, true);
-            }
+            setupNewCurrentSignal(null, true);
             setEngineDirection();
             setSpeedBySignal();
         } else if (InstanceManager.getDefault(DispatcherFrame.class).getAutoAllocate()) {
@@ -501,7 +498,6 @@ public class AutoActiveTrain implements ThrottleListener {
                         // set the blocks as normal
                         _previousBlock = _currentBlock;
                         _nextBlock = getNextBlock(b, as);
-                        log.info("Calling from Block state change - else");
                         setupNewCurrentSignal(as, false);
                     } else {
                         // assume we have reached last block in this transit, for safety sake.
@@ -695,7 +691,7 @@ public class AutoActiveTrain implements ThrottleListener {
             // unless forceSpeedChange is true, such as beginning, resets of transit.
             // previous signal mast speed unless the mast is held.
             boolean weAreAtSpeedChangingMast=forceSpeedChange;
-            if ( !forceSpeedChange && sm == null && nB != null ) {
+            if ( !forceSpeedChange  && nB != null ) {
                 sm  = _lbManager.getFacingSignalMast(cB, nB);
                 if (sm != null) {weAreAtSpeedChangingMast=true;}
             }
@@ -826,7 +822,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     blockSpeedName = InstanceManager.getDefault(BlockManager.class).getDefaultSpeed();
                 }
                 float blockSpeed = -1.0f;
-                if (blockSpeedName != null) {
+                if (!blockSpeedName.isEmpty()) {
                     try {
                         blockSpeed = Float.valueOf(blockSpeedName);
                     } catch (NumberFormatException nx) {
@@ -1229,12 +1225,6 @@ public class AutoActiveTrain implements ThrottleListener {
             case BEGINNING_RESET:
                 _activeTrain.setRestart();
                 if (_activeTrain.getResetWhenDone()) {
-                    if (_activeTrain.getReverseAtEnd()) {
-                        /* Reset _previousBlock to be the _currentBlock if we do a continious
-                        reverse otherwise the stop in block method fails  to stop the loco in the correct block
-                         if the first block we come to has a stopped or held signal */
-                        // _previousBlock = _currentBlock;
-                    }
                     if (_activeTrain.getDelayedRestart() == ActiveTrain.NODELAY) {
                         _activeTrain.setTransitReversed(false);
                         _activeTrain.resetAllAllocatedSections();
@@ -1266,12 +1256,13 @@ public class AutoActiveTrain implements ThrottleListener {
 
                     }
                 } else {
-                // dispatcher cancelled auto restart while train was stopping?
- // djd debugging - may need code here
+                    // dispatcher cancelled auto restart while train was stopping?
+                    log.warn("[{}]resetWhenDone flag reset, likely user cancelling while processing stop",
+                            _activeTrain.getActiveTrainName());
                 }
                 break;
             default:
-                log.debug("[{}]Request to execute BEGINNING_RESET cancelled", _activeTrain.getActiveTrainName());
+                log.debug("[{}]Invalid action [{}] in executeStopTasksRequest to execute BEGINNING_RESET cancelled", _activeTrain.getActiveTrainName(),task);
                 break;
         }
     }
