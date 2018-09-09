@@ -338,7 +338,7 @@ public class SplitVariableValue extends VariableValue
                 long oldVal = (getValueFromText(oldContents) - mOffset) / mFactor;
 //            log.debug("Enter updatedTextField from exitField");
                 updatedTextField();
-                prop.firePropertyChange("Value", Long.valueOf(oldVal), Long.valueOf(newVal));
+                prop.firePropertyChange("Value", oldVal, newVal);
             }
         }
     }
@@ -403,7 +403,7 @@ public class SplitVariableValue extends VariableValue
         long newVal = (getValueFromText(_textField.getText()) - mOffset) / mFactor;
 //        log.debug("Enter updatedTextField from actionPerformed");
         updatedTextField();
-        prop.firePropertyChange("Value", null, Long.valueOf(newVal));
+        prop.firePropertyChange("Value", null, newVal);
     }
 
     /**
@@ -488,7 +488,7 @@ public class SplitVariableValue extends VariableValue
         if (oldVal != value || getState() == VariableValue.UNKNOWN) {
             actionPerformed(null);
         }
-        prop.firePropertyChange("Value", Long.valueOf(oldVal), Long.valueOf(value * mFactor + mOffset));
+        prop.firePropertyChange("Value", oldVal, value * mFactor + mOffset);
         if (log.isDebugEnabled()) {
             log.debug("Variable=" + _name + "; exit setValue " + value);
         }
@@ -528,14 +528,14 @@ public class SplitVariableValue extends VariableValue
         super.setAvailable(a);
     }
 
-    java.util.List<Component> reps = new java.util.ArrayList<Component>();
+    java.util.List<Component> reps = new java.util.ArrayList<>();
 
     private int retry = 0;
     private int _progState = 0;
     private static final int IDLE = 0;
     private static final int READING_FIRST = 1;
     private static final int WRITING_FIRST = -1;
-    private static int bitCount = Long.bitCount(~0);
+    private static final int bitCount = Long.bitCount(~0);
 
     /**
      * Notify the connected CVs of a state change from above
@@ -681,7 +681,6 @@ public class SplitVariableValue extends VariableValue
                 if (log.isDebugEnabled()) {
                     log.error("Variable=" + _name + "; Busy goes false with state IDLE");
                 }
-                return;
             } else if (_progState >= READING_FIRST) {   // reading CVs
                 if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == READ) {   // was the last read successful?
                     retry = 0;
@@ -698,26 +697,23 @@ public class SplitVariableValue extends VariableValue
                         _progState = IDLE;
                         setBusy(false);
                     }
-                    return;
                 } else {   // read failed
                     if (log.isDebugEnabled()) {
                         log.debug("Variable=" + _name + "; Busy goes false with failure READING state " + _progState);
                     }
-                    if (retry < this.RETRY_COUNT) { //have we exhausted retry count?
+                    if (retry < RETRY_COUNT) { //have we exhausted retry count?
                         retry++;
                         (cvList.get(Math.abs(_progState) - 1).thisCV).read(_status);
-                        return;
                     } else {
                         _progState = IDLE;
                         setBusy(false);
-                        if (this.RETRY_COUNT > 0) {
+                        if (RETRY_COUNT > 0) {
                             for (int i = 0; i < cvCount; i++) { // mark all CVs as unknown otherwise problems may occur
                                 cvList.get(i).thisCV.setState(AbstractValue.UNKNOWN);
                             }
                         }
 
                     }
-                    return;
                 }
             } else if (_progState <= WRITING_FIRST) {   // writing CVs
                 if ((cvList.get(Math.abs(_progState) - 1).thisCV).getState() == STORED) {   // was the last read successful?
@@ -734,19 +730,17 @@ public class SplitVariableValue extends VariableValue
                         _progState = IDLE;
                         setBusy(false);
                     }
-                    return;
                 } else {   // read failed we're done!
                     if (log.isDebugEnabled()) {
                         log.debug("Variable=" + _name + "; Busy goes false with failure WRITING state " + _progState);
                     }
                     _progState = IDLE;
                     setBusy(false);
-                    return;
                 }
-            } else {  // unexpected!
-                log.error("Variable=" + _name + "; Unexpected state found: " + _progState);
-                _progState = IDLE;
-                return;
+//            } else {  // unexpected!
+//                log.error("Variable=" + _name + "; Unexpected state found: " + _progState);
+//                _progState = IDLE;
+//                return;
             }
         } else if (e.getPropertyName().equals("State")) {
             // state change due to CV state change, so propagate that
