@@ -822,7 +822,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     blockSpeedName = InstanceManager.getDefault(BlockManager.class).getDefaultSpeed();
                 }
                 float blockSpeed = -1.0f;
-                if (blockSpeedName != null) {
+                if (!blockSpeedName.isEmpty()) {
                     try {
                         blockSpeed = Float.valueOf(blockSpeedName);
                     } catch (NumberFormatException nx) {
