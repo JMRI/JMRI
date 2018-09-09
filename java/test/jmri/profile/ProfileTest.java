@@ -42,6 +42,18 @@ public class ProfileTest {
     public void tearDown() {
     }
 
+    @Test
+    public void testProfileWithExtension() {
+        try {
+            File profileFolder = new File(folder.newFolder(Profile.PROFILE), "test" + Profile.EXTENSION);
+            Profile instance = new Profile("test", "test", profileFolder);
+            Assert.assertEquals("Name has no extension", "test", instance.getName());
+            Assert.assertEquals("Path name has extension", "test" + Profile.EXTENSION, instance.getPath().getName());
+        } catch (IOException | IllegalArgumentException ex) {
+            Assert.fail(ex.getMessage());
+        }
+    }
+    
     /**
      * Test of save method, of class Profile.
      *
