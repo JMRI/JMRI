@@ -300,6 +300,8 @@
         <li>Bob Coleman added the CTI Acela support and did a huge
         amount of work on the operations code tests.</li>
 
+        <li>Joe Comuzzi added some icon tests</li><!-- jcomuzzi -->
+        
         <li>John Crellin contributed numerous new and improved
         decoder definitions for MRC decoders and the Kato
         FL11.</li>
@@ -456,7 +458,9 @@
 
         <li>Mark Gurries, who provided loaner equipment and great
         ideas. He's currently working on decoder definitions for
-        DecoderPro <a name="H" id="H"></a></li>
+        DecoderPro </li>
+        
+        <a name="H" id="H"></a>
 
         <li>Victoria K. Hall led the legal action that held Matt
         Katzer responsible for his depredations against JMRI</li>
@@ -502,14 +506,18 @@
 
         <li>Brett Hoffman, who provided support for zero-config
         ("Bonjour"-like) networking and WiFi access to throttles.
-        <a name="I" id="I"></a></li>
+        </li>
+        
+        <a name="I" id="I"></a>
 
         <li>Osvaldo Hojvat provided definitions for several
                     <a href-"http://www.ldhtrenes.com.ar">LDH</a>
                     decoders</li>
                     
         <li>Al Huberty, who organized our first users meeting at
-        the NMRA Toronto convention <a name="J" id="J"></a></li>
+        the NMRA Toronto convention</li>
+        
+        <a name="J" id="J"></a>
 
         <li>AJ Ireland of Digitrax, who loaned equipment, answered
         questions and made valuable suggestions</li>
@@ -517,12 +525,14 @@
         <li>John Jabour, who created the excellent LocoBuffer and
         thereby made reliable LocoNet communications routine</li>
 
-        <li>Martin Jahner, who fixed the constant checkboxen</li>
-
+        <li>Brian Jackson <!-- brianjackson1 -->
+        who updated the Hornby TTS library</li>
+        
         <li>Bob Jacobsen, who wrote some of the early code and does
         packaging and user support</li>
 
-        <li>Martin Jahner, who built a replacement library for Mac
+        <li>Martin Jahner, who fixed the constant checkboxen
+        and built a replacement library for Mac
         OS X</li>
 
         <li>Jay Janzen, who debugged a RobotThrottle problem, and
@@ -551,8 +561,8 @@
         <li>Georg Kautzsch, who provided a decoder definition for
         the Uhlenbrock 67800 servo decoder.</li>
 
-        <li><!-- klk32003 -->
-        Klaus Killinger, who improved the sound support
+        <li>
+        Klaus Killinger, who improved the sound support <!-- klk32003 -->
             and has provided multiple sound projects</li>
 
         <li>Scott Kitts, who helped debug the new communications

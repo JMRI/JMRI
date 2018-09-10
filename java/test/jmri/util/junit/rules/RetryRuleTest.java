@@ -9,6 +9,7 @@ import org.junit.*;
  */
 public class RetryRuleTest {
 
+    @Rule
     public RetryRule retryRule = new RetryRule(3); // first, plus three retries
     
     @Test
@@ -18,9 +19,21 @@ public class RetryRuleTest {
 
     @Test
     public void testPassOnThirdRetry() {
-        if (count++ < 3) return;
-        Assert.fail("fail test plus first two retries, will pass on 3rd");
+        if (countPassOnThirdRetry++ < 3) {
+            Assert.fail("fail test plus first two retries, will pass on 3rd");
+        }
+        // this is the 3rd pass
     }
+    int countPassOnThirdRetry = 0;
+
+    @Test
+    public void testJemmyTimeout() {
+        if (countJemmyTimeout++ < 3) {
+            throw new org.netbeans.jemmy.TimeoutExpiredException("fail test plus first two retries, will pass on 3rd");
+        }
+        // this is the 3rd pass
+    }
+    int countJemmyTimeout = 0;
 
     // Don't have a test for handling of failure after all retries,
     // because that's a failure...
@@ -32,12 +45,10 @@ public class RetryRuleTest {
         Assert.fail("always fails");
     }
 
-    int count = 0;
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        count = 0;
     }
 
     @After
