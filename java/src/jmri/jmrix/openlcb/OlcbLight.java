@@ -63,7 +63,7 @@ public class OlcbLight extends AbstractLight {
     
     /**
      * Helper function that will be invoked after construction once the properties have been
-     * loaded. Used specifically for preventing double initialization when loading sensors from
+     * loaded. Used specifically for preventing double initialization when loading lights from
      * XML.
      */
     void finishLoad() {
