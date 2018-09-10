@@ -1,9 +1,8 @@
 package jmri.implementation;
 
 import java.net.URL;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
+
 import jmri.SignalHead;
 import jmri.SignalSystem;
 import jmri.util.FileUtil;
@@ -120,7 +119,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
                 loadImageMaps(img, name, map);
 
                 // now add the rest of the attributes
-                java.util.Hashtable<String, String> hm = new java.util.Hashtable<String, String>();
+                Hashtable<String, String> hm = new Hashtable<String, String>();
 
                 List<Element> a = l.get(i).getChildren();
 
@@ -144,7 +143,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     }
 
     static void loadImageMaps(List<Element> img, String name, DefaultSignalAppearanceMap map) {
-        java.util.Hashtable<String, String> images = new java.util.Hashtable<String, String>();
+        Hashtable<String, String> images = new Hashtable<String, String>();
         for (int j = 0; j < img.size(); j++) {
             String key = "default";
             if ((img.get(j).getAttribute("type")) != null) {
@@ -204,7 +203,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
                     //We do not have any specific images created, therefore we use the
                     //those associated with the aspect.
                     List<String> app = SMmap.getImageTypes(appearance);
-                    java.util.Hashtable<String, String> images = new java.util.Hashtable<String, String>();
+                    Hashtable<String, String> images = new Hashtable<String, String>();
                     String type = "";
                     for (int i = 0; i < app.size(); i++) {
                         type = SMmap.getImageLink(appearance, app.get(i));
@@ -216,7 +215,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
                 }
             } else {
                 loadImageMaps(img, name, SMmap);
-                java.util.Hashtable<String, String> hm = new java.util.Hashtable<String, String>();
+                Hashtable<String, String> hm = new Hashtable<String, String>();
 
                 //Register the last aspect as the default
                 String key = img.get(img.size() - 1).getName();
@@ -296,20 +295,20 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         return v;
     }
 
-    protected java.util.Hashtable<String, java.util.Hashtable<String, String>> aspectAttributeMap
-            = new java.util.Hashtable<String, java.util.Hashtable<String, String>>();
+    protected Hashtable<String, Hashtable<String, String>> aspectAttributeMap
+            = new Hashtable<String, Hashtable<String, String>>();
 
-    protected java.util.Hashtable<String, java.util.Hashtable<String, String>> aspectImageMap
-            = new java.util.Hashtable<String, java.util.Hashtable<String, String>>();
+    protected Hashtable<String, Hashtable<String, String>> aspectImageMap
+            = new Hashtable<String, Hashtable<String, String>>();
 
-    static java.util.Hashtable<String, DefaultSignalAppearanceMap> maps
-            = new jmri.util.OrderedHashtable<String, DefaultSignalAppearanceMap>();
+    static HashMap<String, DefaultSignalAppearanceMap> maps
+            = new LinkedHashMap<String, DefaultSignalAppearanceMap>();
 
-    protected java.util.Hashtable<Integer, String> specificMaps
-            = new java.util.Hashtable<Integer, String>();
+    protected Hashtable<Integer, String> specificMaps
+            = new Hashtable<Integer, String>();
 
-    protected java.util.Hashtable<String, String[]> aspectRelationshipMap
-            = new java.util.Hashtable<String, String[]>();
+    protected Hashtable<String, String[]> aspectRelationshipMap
+            = new Hashtable<String, String[]>();
 
     public void loadDefaults() {
 
@@ -362,7 +361,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     @Override
     public Enumeration<String> getAspects() {
         log.debug("list of aspects provided");
-        return table.keys();
+        return new Vector<String>(table.keySet()).elements();  // this will be greatly simplified when we can just return keySet
     }
 
     @Override
@@ -431,7 +430,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         return table.get(aspect);
     }
 
-    protected java.util.Hashtable<String, int[]> table = new jmri.util.OrderedHashtable<String, int[]>();
+    protected HashMap<String, int[]> table = new LinkedHashMap<String, int[]>();
 
     @Override
     /**

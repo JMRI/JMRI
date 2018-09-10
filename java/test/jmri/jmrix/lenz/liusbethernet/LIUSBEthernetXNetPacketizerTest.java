@@ -42,7 +42,7 @@ public class LIUSBEthernetXNetPacketizerTest extends jmri.jmrix.lenz.XNetPacketi
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         tc = new LIUSBEthernetXNetPacketizer(new jmri.jmrix.lenz.LenzCommandStation()) {
             @Override
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {

@@ -145,7 +145,8 @@ public class OperationsSwingTestCase {
 
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
 
         // Set things up outside of operations
         JUnitUtil.resetInstanceManager();

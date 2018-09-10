@@ -139,7 +139,6 @@ public class CanMessageTest extends CanMRCommonTestBase {
 
     // test suite from all defined tests
     public static Test suite() {
-        apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite(CanMessageTest.class);
         return suite;
     }
@@ -147,8 +146,8 @@ public class CanMessageTest extends CanMRCommonTestBase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
+        jmri.util.JUnitUtil.setUp();
         new TrafficControllerScaffold();
-        apps.tests.Log4JFixture.setUp();
     }
 
     @Override

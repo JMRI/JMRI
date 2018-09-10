@@ -113,7 +113,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
     */
     public char[] getBitsForAspect(String aspect) {
         if (!aspectToOutput.containsKey(aspect) || aspectToOutput.get(aspect) == null) {
-            log.error("Trying to get aspect " + aspect + " but it has not been configured");
+            log.error("Trying to get aspect {} but it has not been configured", aspect);
             return errorBits; // error flag
         }
         return aspectToOutput.get(aspect);

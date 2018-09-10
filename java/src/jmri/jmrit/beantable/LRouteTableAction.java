@@ -384,7 +384,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         //TreeSet <RouteInputElement>inputTS = new TreeSet<RouteInputElement>();
         //TreeSet <RouteOutputElement>outputTS = new TreeSet<RouteOutputElement>();
         jmri.TurnoutManager tm = InstanceManager.turnoutManagerInstance();
-        tm.getNamedBeanList().forEach((nb) -> {
+        tm.getNamedBeanSet().forEach((nb) -> {
             String userName = nb.getUserName();
             String systemName = nb.getSystemName();
             inputTS.add(new RouteInputTurnout(systemName, userName));
@@ -393,7 +393,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
 
         TreeSet<AlignElement> alignTS = new TreeSet<>(new RouteElementComparator());
         jmri.SensorManager sm = InstanceManager.sensorManagerInstance();
-        sm.getNamedBeanList().forEach((nb) -> {
+        sm.getNamedBeanSet().forEach((nb) -> {
             String userName = nb.getUserName();
             String systemName = nb.getSystemName();
             inputTS.add(new RouteInputSensor(systemName, userName));
@@ -402,14 +402,14 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         });
 
         jmri.LightManager lm = InstanceManager.lightManagerInstance();
-        lm.getNamedBeanList().forEach((nb) -> {
+        lm.getNamedBeanSet().forEach((nb) -> {
             String userName = nb.getUserName();
             String systemName = nb.getSystemName();
             inputTS.add(new RouteInputLight(systemName, userName));
             outputTS.add(new RouteOutputLight(systemName, userName));
         });
         jmri.SignalHeadManager shm = InstanceManager.getDefault(jmri.SignalHeadManager.class);
-        shm.getNamedBeanList().forEach((nb) -> {
+        shm.getNamedBeanSet().forEach((nb) -> {
             String userName = nb.getUserName();
             String systemName = nb.getSystemName();
             inputTS.add(new RouteInputSignal(systemName, userName));

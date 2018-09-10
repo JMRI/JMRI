@@ -120,9 +120,18 @@ public class VerifyWriteProgrammerFacadeTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite(VerifyWriteProgrammerFacadeTest.class);
         return suite;
+    }
+
+    @Override
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @Override
+    public void tearDown(){
+        jmri.util.JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(VerifyWriteProgrammerFacadeTest.class);

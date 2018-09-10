@@ -48,7 +48,8 @@ public class AutomationsTableFrameTest extends OperationsSwingTestCase {
     @Override
     @After
     public void tearDown() throws Exception {
-        // apps.tests.Log4JFixture.tearDown();
+        // jmri.util.JUnitUtil.tearDown();
+
         super.tearDown();
     }
 }

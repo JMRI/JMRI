@@ -1315,7 +1315,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         options.put(0x01, Bundle.getMessage("DeleteNever"));    // NOI18N
         options.put(0x02, Bundle.getMessage("DeleteAlways"));   // NOI18N
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).messageItemDetails(getClassName(), "delete", Bundle.getMessage("DeleteLogix"), options, 0x00);  // NOI18N
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "remindSaveLogix", Bundle.getMessage("HideSaveReminder"));  // NOI18N
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceItemDetails(getClassName(), "remindSaveLogix", Bundle.getMessage("HideSaveReminder"));  // NOI18N
         super.setMessagePreferencesDetails();
     }
 

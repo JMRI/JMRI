@@ -40,14 +40,15 @@ public class CVNameComparatorTest extends jmri.util.AlphanumComparatorTest {
     @Before
     @Override
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         ac = new CVNameComparator();
     }
 
     @After
     @Override
     public void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
 
 }

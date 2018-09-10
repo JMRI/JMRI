@@ -181,6 +181,9 @@ class EngineSound extends VSDSound {
         engine_started = es;
     }
 
+    public void functionKey(String e, boolean v, String n) {
+    }
+
     @Override
     public void shutdown() {
         // do nothing.

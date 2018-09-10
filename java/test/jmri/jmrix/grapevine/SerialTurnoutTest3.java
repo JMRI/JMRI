@@ -20,6 +20,9 @@ public class SerialTurnoutTest3 extends AbstractTurnoutTestBase {
     @Before
     @Override
     public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+
         // prepare an interface
         memo = new GrapevineSystemConnectionMemo();
         tcis = new SerialTrafficControlScaffold(memo);

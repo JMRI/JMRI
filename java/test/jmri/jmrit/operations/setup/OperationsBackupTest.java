@@ -130,7 +130,8 @@ public class OperationsBackupTest extends TestCase {
      */
     @Override
     protected void setUp() throws IOException {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
 
         // set the file location to temp (in the root of the build directory).
         OperationsSetupXml.setFileLocation("temp" + File.separator);
@@ -178,7 +179,8 @@ public class OperationsBackupTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
         deleteTestFiles();
     }
 

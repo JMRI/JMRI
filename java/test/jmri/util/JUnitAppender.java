@@ -13,7 +13,7 @@ import org.python.jline.internal.Log;
  * Much of the interface is static to avoid lots of instance() calls, but this
  * is not a problem as there should be only one of these while tests are running
  *
- * @see apps.tests.Log4JFixture
+ * @see jmri.util.JUnitUtil
  *
  * @author	Bob Jacobsen - Copyright 2007
  */

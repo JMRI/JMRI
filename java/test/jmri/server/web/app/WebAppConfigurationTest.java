@@ -1,6 +1,5 @@
 package jmri.server.web.app;
 
-import apps.tests.Log4JFixture;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,12 +13,14 @@ public class WebAppConfigurationTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
     }
 
     @After
     public void tearDown() {
-        Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
 
     @Test
