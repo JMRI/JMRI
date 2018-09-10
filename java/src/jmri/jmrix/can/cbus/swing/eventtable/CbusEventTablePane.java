@@ -149,27 +149,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     
     public void init() {
         
-        JTable eventTable = new JTable(eventModel) {
-            // Override JTable Header to implement table header tool tips.
-            @Override
-            protected JTableHeader createDefaultTableHeader() {
-                return new JTableHeader(columnModel) {
-                    @Override
-                    public String getToolTipText(MouseEvent e) {
-                        try {
-                            log.debug("131 gettttext");
-                            java.awt.Point p = e.getPoint();
-                            int index = columnModel.getColumnIndexAtX(p.x);
-                            int realIndex = columnModel.getColumn(index).getModelIndex();
-                            return columnToolTips[realIndex];    
-                        } catch (RuntimeException e1) {
-                            //catch null pointer exception if mouse is over an empty line
-                        }
-                        return null;
-                    }
-                };
-            }
-        };
+        JTable eventTable = new JTable(eventModel); 
 
         // Use XTableColumnModel so we can control which columns are visible
         XTableColumnModel tcm = new XTableColumnModel();
@@ -194,10 +174,10 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         ndNaColumn.setCellRenderer(getRenderer());        
         TableColumn cmntColumn = eventTableModel.getColumn(CbusEventTableDataModel.COMMENT_COLUMN);                
         cmntColumn.setCellRenderer(getRenderer());         
-        TableColumn evColumn = eventTableModel.getColumn(CbusEventTableDataModel.NODE_COLUMN);
-        evColumn.setCellRenderer(getRenderer());        
-        TableColumn ndColumn = eventTableModel.getColumn(CbusEventTableDataModel.EVENT_COLUMN);                
-        ndColumn.setCellRenderer(getRenderer());
+        TableColumn ndColumn = eventTableModel.getColumn(CbusEventTableDataModel.NODE_COLUMN);
+        ndColumn.setCellRenderer(getRenderer());        
+        TableColumn evColumn = eventTableModel.getColumn(CbusEventTableDataModel.EVENT_COLUMN);                
+        evColumn.setCellRenderer(getRenderer());
         
         TableColumn typeColumn = eventTableModel.getColumn(CbusEventTableDataModel.TYPE_COLUMN);                
         typeColumn.setCellRenderer(new TypeRenderer());
