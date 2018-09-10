@@ -27,6 +27,17 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     public void testCtor() {
         Assert.assertNotNull("exists", l);
     }
+    
+    @Override
+    @Test
+    public void testProvideName() {
+        // create
+        // olcb addresses are hex values requirng 16 digits.
+        Light t = l.provide("MLx010203040506070" + getNumToTest1() +";x010203040506070" + getNumToTest2());
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct " + t.getSystemName(), t == l.getBySystemName(getSystemName(getNumToTest1(), getNumToTest2())));
+    }
 
     @Override
     @Test
