@@ -33,6 +33,35 @@ public class SensorDebounceEditActionTest {
         t.saveDebounceItems(null);
     }
 
+    @Test
+    public void testResetAndEnable() {
+        SensorDebounceEditAction t = new SensorDebounceEditAction();
+
+        Sensor is1 = InstanceManager.sensorManagerInstance().provideSensor("IS1");
+
+        t.setBean(InstanceManager.sensorManagerInstance().getBySystemName("IS1"));
+        
+        BeanItemPanel p = t.sensorDebounce(null);
+        
+        t.enabled(false);
+        t.resetDebounceItems(null);
+        t.enabled(true);
+    }
+
+    @Test
+    public void testServiceCalls() {
+        SensorDebounceEditAction t = new SensorDebounceEditAction();
+
+        Assert.assertEquals("package.jmri.jmrit.beantable.SensorTable", t.helpTarget());
+        Assert.assertEquals("Sensor", t.getBeanType());
+        
+        t.initPanels();
+        
+        Sensor is1 = InstanceManager.sensorManagerInstance().newSensor("IS1", "user1");
+        Assert.assertEquals(is1, t.getByUserName("user1"));
+        
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() {
