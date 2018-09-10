@@ -49,8 +49,6 @@ abstract public class SerialReply extends jmri.jmrix.AbstractMRReply {
         return index;
     }
 
-    abstract public String toMonitorString();
-
     private final static Logger log = LoggerFactory.getLogger(SerialReply.class);
 
 }
