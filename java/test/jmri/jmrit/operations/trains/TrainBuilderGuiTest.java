@@ -31,6 +31,10 @@ import org.netbeans.jemmy.operators.JDialogOperator;
  */
 public class TrainBuilderGuiTest extends OperationsSwingTestCase {
 
+    // allow 2 retries of intermittent tests
+    @org.junit.Rule
+    public jmri.util.junit.rules.RetryRule retryRule = new jmri.util.junit.rules.RetryRule(2);
+
     private TrainManager tmanager;
     private LocationManager lmanager;
     private EngineManager emanager;

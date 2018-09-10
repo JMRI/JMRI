@@ -82,7 +82,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     private int _defaultFeedback= 0;
     protected int _contype=0; // event table pane console message type
     protected String _context=null; // event table pane console text
-    private int _defaultfeedbackdelay = 5000;
+    private int _defaultfeedbackdelay = 4000;
     
     final JFileChooser fileChooser = new JFileChooser(FileUtil.getUserFilesPath());
     private ActionListener eventFeedbackListener;
@@ -223,36 +223,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         }
     }
 
-    // order needs to match column list right at top of class
-    protected String[] columnToolTips = {
-        Bundle.getMessage("EventColTip"),
-        Bundle.getMessage("NodeColTip"),
-        Bundle.getMessage("NameColTip"),
-        Bundle.getMessage("CbusNodeNameTip"),
-        Bundle.getMessage("IDColTip"),
-        Bundle.getMessage("TypeColTip"),
-        Bundle.getMessage("SendOntip"),
-        Bundle.getMessage("SendOfftip"),
-        Bundle.getMessage("SendToggleTip"),
-        Bundle.getMessage("ColumnLastHeard"),
-        Bundle.getMessage("ColumnRequestStatusTip"),
-        Bundle.getMessage("CommentColTip"),
-        Bundle.getMessage("ColumnTotalSession"),
-        Bundle.getMessage("ColumnOnSession"),
-        Bundle.getMessage("ColumnOffSession"),
-        Bundle.getMessage("ColumnInSessionTip"),
-        Bundle.getMessage("ColumnOutSessionTip"),
-        Bundle.getMessage("ColumnEventDeleteTip"),
-        Bundle.getMessage("FBLastTip"),        
-        Bundle.getMessage("FBOutstandingTip"),
-        Bundle.getMessage("FBNumTip"),
-        Bundle.getMessage("FBTimeoutTip"),
-        Bundle.getMessage("FBEventTip"),
-        Bundle.getMessage("FBNodeTip")
 
-    }; // Length = number of items in array should (at least) match number of columns
-
-    
     /**
     * Returns int of startup column widths
     * @param col int col number

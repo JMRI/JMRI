@@ -118,6 +118,35 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         super();
     }
 
+    // order needs to match column list top of dtabledatamodel
+    private final String[] columnToolTips = {
+        Bundle.getMessage("EventColTip"),
+        Bundle.getMessage("NodeColTip"),
+        Bundle.getMessage("NameColTip"),
+        Bundle.getMessage("CbusNodeNameTip"),
+        Bundle.getMessage("IDColTip"),
+        Bundle.getMessage("TypeColTip"),
+        Bundle.getMessage("SendOntip"),
+        Bundle.getMessage("SendOfftip"),
+        Bundle.getMessage("SendToggleTip"),
+        Bundle.getMessage("ColumnLastHeard"),
+        Bundle.getMessage("ColumnRequestStatusTip"),
+        Bundle.getMessage("CommentColTip"),
+        Bundle.getMessage("ColumnTotalSession"),
+        Bundle.getMessage("ColumnOnSession"),
+        Bundle.getMessage("ColumnOffSession"),
+        Bundle.getMessage("ColumnInSessionTip"),
+        Bundle.getMessage("ColumnOutSessionTip"),
+        Bundle.getMessage("ColumnEventDeleteTip"),
+        Bundle.getMessage("FBLastTip"),        
+        Bundle.getMessage("FBOutstandingTip"),
+        Bundle.getMessage("FBNumTip"),
+        Bundle.getMessage("FBTimeoutTip"),
+        Bundle.getMessage("FBEventTip"),
+        Bundle.getMessage("FBNodeTip")
+
+    }; // Length = number of items in array should (at least) match number of columns
+    
     public void init() {
         
         JTable eventTable = new JTable(eventModel) {
@@ -128,10 +157,11 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
                     @Override
                     public String getToolTipText(MouseEvent e) {
                         try {
+                            log.debug("131 gettttext");
                             java.awt.Point p = e.getPoint();
                             int index = columnModel.getColumnIndexAtX(p.x);
                             int realIndex = columnModel.getColumn(index).getModelIndex();
-                            return eventModel.columnToolTips[realIndex];    
+                            return columnToolTips[realIndex];    
                         } catch (RuntimeException e1) {
                             //catch null pointer exception if mouse is over an empty line
                         }
@@ -730,7 +760,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         for (int i = 0; i < tcm.getColumnCount(false); i++) {
             TableColumn tc = tcm.getColumnByModelIndex(i);
             String columnName = table.getModel().getColumnName(i);
-            String xtTooltip = eventModel.columnToolTips[i];
+            String xtTooltip = columnToolTips[i];
             if (columnName != null && !columnName.equals("")) {
                 JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(
                     (table.getModel().getColumnName(i) + " : " + xtTooltip), 
