@@ -2245,7 +2245,8 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
     @Override
     public void setMessagePreferencesDetails() {
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "remindSaveRoute", Bundle.getMessage("HideSaveReminder"));
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class)
+                .setPreferenceItemDetails(getClassName(), "remindSaveRoute", Bundle.getMessage("HideSaveReminder"));
         super.setMessagePreferencesDetails();
     }
 

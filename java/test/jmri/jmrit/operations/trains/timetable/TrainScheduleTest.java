@@ -20,14 +20,16 @@ public class TrainScheduleTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     @After
     public void tearDown() {
         jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainScheduleTest.class);

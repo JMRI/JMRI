@@ -319,14 +319,19 @@
           A new JMRI checkout should build cleanly. If not, please
           check with the JMRIusers or jmri-developers mailings
           lists for help.</p>
-
+          <a href="images/NetBeansContextLaunch.png"><img src="images/NetBeansContextLaunch.png" height="319" width="147" align="right"></a>
           <ul>
             <li>[Run] -&gt; [Run Project (JMRI)] will compile and
             invoke DecoderPro</li>
 
             <li>You can choose other targets (i.e. PanelPro...) by
-            changing [File]-&gt;[Project Properties
-            (JMRI)]-&gt;[Build and Run]-&gt;[Run Project]</li>
+            right-clicking (or control clicking) to get the 
+            project contextual menu.  This works in 
+            various places, but most certainly on the 
+            "JMRI" icon under Projects in the left side-bar.
+            In the middle of that menu are 
+            items for launching PanelPro, launching DecoderPro
+            and doing other build steps.</li>
           </ul>
 
           <p>If you want to run the program under the NetBeans

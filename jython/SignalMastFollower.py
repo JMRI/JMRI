@@ -23,5 +23,5 @@ class SignalMastFollowerListener(java.beans.PropertyChangeListener):
 # Example of use - add a line like the following 
 # that includes system or user names for the signal mast to be repeated,
 # and the signal mast to repeat it onto. These must already exist.
-# SignalFollowerListener().set("Mast 1","Mast 1 R")
+# SignalMastFollowerListener().set("Mast 1","Mast 1 R")
  

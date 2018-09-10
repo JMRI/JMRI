@@ -21,8 +21,8 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Reports are Strings, formatted as
  * <ul>
- * <li>NNNN enter - locomotive address NNNN entered the transponding zone. Short
- *   vs long address is indicated by the NNNN value
+ *   <li>NNNN enter - locomotive address NNNN entered the transponding zone. Short
+ *                    vs long address is indicated by the NNNN value
  *   <li>NNNN exits - locomotive address NNNN left the transponding zone.
  *   <li>NNNN seen northbound - LISSY measurement
  *   <li>NNNN seen southbound - LISSY measurement
@@ -53,12 +53,6 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
         return _number;
     }
 
-    // implementing classes will typically have a function/listener to get
-    // updates from the layout, which will then call
-    //  public void firePropertyChange(String propertyName,
-    //            Object oldValue,
-    //      Object newValue)
-    // _once_ if anything has changed state (or set the commanded state directly)
     @Override
     public void message(LocoNetMessage l) {
         // check message type
@@ -143,15 +137,17 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
         super.dispose();
     }
 
-    // parseReport()
-    // Parses out a (possibly old) LnReporter-generated report string to extract info used by
-    // the public PhysicalLocationReporter methods.  Returns a Matcher that, if successful, should
-    // have the following groups defined.
-    // matcher.group(1) : the locomotive address
-    // matcher.group(2) : (enter | exit | seen)
-    // matcher.group(3) | (northbound | southbound) -- Lissy messages only
-    //
-    // NOTE: This code is dependent on the transpondingReport() and lissyReport() methods above.  If they change, the regex here must change.
+    /**
+     * Parses out a (possibly old) LnReporter-generated report string to extract info used by
+     * the public PhysicalLocationReporter methods.  Returns a Matcher that, if successful, should
+     * have the following groups defined.
+     * matcher.group(1) : the locomotive address
+     * matcher.group(2) : (enter | exit | seen)
+     * matcher.group(3) | (northbound | southbound) -- Lissy messages only
+     * <p>
+     * NOTE: This code is dependent on the transpondingReport() and lissyReport() methods.  
+     * If they change, the regex here must change.
+     */
     private Matcher parseReport(String rep) {
         if (rep == null) {
             return (null);
@@ -212,13 +208,6 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
 
     // data members
     int _number;   // LocoNet Reporter number
-
-    @SuppressWarnings("unused")
-    @Deprecated
-    private boolean myAddress(int a1, int a2) {
-        // the "+ 1" in the following converts to throttle-visible numbering
-        return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1) == _number;
-    }
 
     private final static Logger log = LoggerFactory.getLogger(LnReporter.class);
 

@@ -554,16 +554,16 @@
 			<text xml:lang="ca">Si creus que la plantilla del decóder té alguna errada, sisusplau contacta amb nosaltres</text>
         </label>
         <label>
-            <text>posting to either the JMRI or LokSound Yahoo® groups or by logging a bug report on</text>
-            <text xml:lang="it">Mettendo un post sul Gruppo di Yahoo® o inserendo un report</text>
-            <text xml:lang="de">Senden Sie ein Posting an die JMRI oder LokSound Yahoo® Gruppen oder durch das Melden eines Bug Report auf</text>
-            <text xml:lang="ca">Enviar a JMRI o grup de Yahoo de LokSound o asvisant d'un error</text>
+            <text>posting to either the JMRI or LokSound Yahoo® groups or by logging an Issue bug report on</text>
+            <text xml:lang="it">Mettendo un post sul Gruppo di Yahoo® o inserendo un report Issue</text>
+            <text xml:lang="de">Senden Sie ein Posting an die JMRI oder LokSound Yahoo® Gruppen oder durch das Melden eines Bug Report Issues auf</text>
+            <text xml:lang="ca">Enviar a JMRI o grup de Yahoo de LokSound o asvisant d'un error Issue a</text>
         </label>
         <label>
-            <text>the JMRI SourceForge page at http://sourceforge.net/p/jmri/bugs/</text>
-            <text xml:lang="it">sulla pagina di SourceForge di JMRI http://sourceforge.net/p/jmri/bugs/</text>
-            <text xml:lang="de">der JMRI SourceForge Seite unter http://sourceforge.net/p/jmri/bugs/</text>
-            <text xml:lang="ca">Pàgina de JMRI a Sourceforge http://sourceforge.net/p/jmri/bugs/</text>
+            <text>the JMRI GitHub page at https://github.com/JMRI/JMRI/issues</text>
+            <text xml:lang="it">sulla pagina di GitHub JMRI https://github.com/JMRI/JMRI/issues</text>
+            <text xml:lang="de">der JMRI GitHub Seite unter https://github.com/JMRI/JMRI/issues</text>
+            <text xml:lang="ca">Pàgina de JMRI a GitHub https://github.com/JMRI/JMRI/issues</text>
         </label>
         <label>
             <text> </text>

@@ -126,6 +126,7 @@ public class ThreadingUtil {
                 Thread.currentThread().interrupt();
             } catch (InvocationTargetException e) {
                 log.error("Error while on GUI thread", e.getCause());
+                log.error("   Came from call to runOnGUI:", e);
                 // should have been handled inside the ThreadAction
             }
         }
@@ -163,6 +164,7 @@ public class ThreadingUtil {
                 Thread.currentThread().interrupt();
             } catch (InvocationTargetException e) {
                 log.error("Error while on GUI thread", e.getCause());
+                log.error("   Came from call to runOnGUIwithReturn:", e);
                 // should have been handled inside the ThreadAction
             }
             return result.get();

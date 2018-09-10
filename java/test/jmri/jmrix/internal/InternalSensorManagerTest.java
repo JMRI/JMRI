@@ -83,7 +83,7 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         // create and register the manager object
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalSensorManager();

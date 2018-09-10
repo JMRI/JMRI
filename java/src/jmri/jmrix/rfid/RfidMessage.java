@@ -89,11 +89,4 @@ abstract public class RfidMessage extends jmri.jmrix.AbstractMRMessage {
         return responseLength;
     }
 
-    /**
-     * Returns a string representation of this message to use in a monitor
-     *
-     * @return monitor string
-     */
-    abstract public String toMonitorString();
-
 }

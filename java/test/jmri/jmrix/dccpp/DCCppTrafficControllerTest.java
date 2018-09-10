@@ -22,7 +22,7 @@ public class DCCppTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCont
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         tc = new DCCppTrafficController(new DCCppCommandStation()){
             @Override
             public void sendDCCppMessage(DCCppMessage m, DCCppListener reply){

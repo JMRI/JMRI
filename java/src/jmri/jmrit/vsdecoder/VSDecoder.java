@@ -318,6 +318,24 @@ public class VSDecoder implements PropertyChangeListener {
             } else {
                 log.warn("No existing DCC throttle found.");
             }
+
+            // Check for an existing throttle and get ENGINE throttle function key status if it exists.
+            // For all function keys used in config.xml (sound-event name="ENGINE") this will send an initial value! This could be ON or OFF.
+            if (event_list.get("ENGINE") != null) {
+                for (Trigger t : event_list.get("ENGINE").trigger_list.values()) {
+                    log.debug("ENGINE trigger  Name: {}, Event: {}, t: {}", t.getName(), t.getEventName(), t);
+                    if (t.getEventName().startsWith("F")) {
+                        log.debug("F-Key trigger found: {}, name: {}, event: {}", t, t.getName(), t.getEventName());
+                        // Don't send an initial value if trigger is ENGINE_STARTSTOP, because that would work against auto-start; BRAKE_KEY would play a sound
+                        if (!t.getName().equals("ENGINE_STARTSTOP") && !t.getName().equals("BRAKE_KEY")) {
+                            b = (Boolean) jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(config.getDccAddress(), t.getEventName());
+                            if (b != null) {
+                                this.throttlePropertyChange(new PropertyChangeEvent(this, t.getEventName(), null, b));
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         // Iterate through the list of sound events, forwarding the propertyChange event.

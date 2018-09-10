@@ -74,6 +74,9 @@ public class Z21Reporter extends jmri.implementation.AbstractRailComReporter imp
                  // set the tag report.
                  notify(tag);
              }
+             if(tags == 0){
+                 notify(null); // clear the current report if no tags.
+             }
          }
     }
 

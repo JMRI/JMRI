@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
-    private static final String NONE = "";
+    static final String NONE = "";
 
     // Train frame attributes
     private String _trainAction = TrainsTableFrame.MOVE; // Trains frame table button action
@@ -224,14 +224,22 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     }
 
     public void runStartUpScripts() {
-        for (String scriptPathName : getStartUpScripts()) {
-            try {
-                JmriScriptEngineManager.getDefault()
-                        .runScript(new File(jmri.util.FileUtil.getExternalFilename(scriptPathName)));
-            } catch (Exception e) {
-                log.error("Problem with script: {}", scriptPathName);
+        // use thread to prevent object (Train) thread lock
+        Thread scripts = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (String scriptPathName : getStartUpScripts()) {
+                    try {
+                        JmriScriptEngineManager.getDefault()
+                                .runScript(new File(jmri.util.FileUtil.getExternalFilename(scriptPathName)));
+                    } catch (Exception e) {
+                        log.error("Problem with script: {}", scriptPathName);
+                    }
+                }
             }
-        }
+        });
+        scripts.setName("Startup Scripts"); // NOI18N
+        scripts.start();
     }
 
     /**

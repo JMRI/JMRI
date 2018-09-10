@@ -1,6 +1,5 @@
 package jmri.jmrix.pi.configurexml;
 
-import apps.tests.Log4JFixture;
 import java.util.HashMap;
 import java.util.Map;
 import jmri.util.JUnitUtil;
@@ -17,14 +16,14 @@ public class RaspberryPiClassMigrationTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
+        JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
     }
 
     @After
     public void tearDown() {
         JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     @Test

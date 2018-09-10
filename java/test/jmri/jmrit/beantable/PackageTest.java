@@ -34,6 +34,7 @@ import org.junit.runners.Suite;
         MaintenanceTest.class,
         RailComTableActionTest.class,
         ReporterTableActionTest.class,
+        ReporterTableTabActionTest.class,
         SectionTableActionTest.class,
         SensorTableActionTest.class,
         SensorTableTabActionTest.class,

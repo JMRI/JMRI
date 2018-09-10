@@ -10,27 +10,23 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class AbstractMessageTest {
-
-    @Test
-    public void testCTor() {
-        AbstractMessage t = new AbstractMessage(5){
-            @Override
-            public String toString(){
-                 return "";
-            }
-        };
-        Assert.assertNotNull("exists",t);
-    }
+public class AbstractMessageTest extends AbstractMessageTestBase {
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        m = new AbstractMessage(5){
+            @Override
+            public String toString(){
+                 return "";
+            }
+        };
     }
 
     @After
     public void tearDown() {
+	m = null;
         JUnitUtil.tearDown();
     }
 

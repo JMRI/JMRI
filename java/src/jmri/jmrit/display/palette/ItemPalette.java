@@ -22,9 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import jmri.CatalogTree;
-import jmri.CatalogTreeManager;
-import jmri.InstanceManager;
+import jmri.*;
 import jmri.jmrit.catalog.CatalogTreeLeaf;
 import jmri.jmrit.catalog.CatalogTreeNode;
 import jmri.jmrit.catalog.DirectorySearcher;
@@ -495,12 +493,12 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         _tabPane = new JTabbedPane();
         _tabIndex = new HashMap<>();
 
-        ItemPanel itemPanel = new TableItemPanel(palette, "Turnout", null,
+        ItemPanel itemPanel = new TableItemPanel<Turnout>(palette, "Turnout", null,
                 PickListModel.turnoutPickModelInstance(), editor);
         addItemTab(itemPanel, "Turnout", "BeanNameTurnout");
         itemPanel.init();  // show panel on start
 
-        itemPanel = new TableItemPanel(palette, "Sensor", null,
+        itemPanel = new TableItemPanel<Sensor>(palette, "Sensor", null,
                 PickListModel.sensorPickModelInstance(), editor);
         addItemTab(itemPanel, "Sensor", "BeanNameSensor");
 
@@ -520,7 +518,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
                 PickListModel.reporterPickModelInstance(), editor);
         addItemTab(itemPanel, "Reporter", "BeanNameReporter");
 
-        itemPanel = new TableItemPanel(palette, "Light", null,
+        itemPanel = new TableItemPanel<Light>(palette, "Light", null,
                 PickListModel.lightPickModelInstance(), editor);
         addItemTab(itemPanel, "Light", "BeanNameLight");
 

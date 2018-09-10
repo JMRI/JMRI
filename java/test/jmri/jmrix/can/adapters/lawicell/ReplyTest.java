@@ -68,14 +68,12 @@ public class ReplyTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        apps.tests.AllTest.initLogging();
         String[] testCaseName = {"-noloading", ReplyTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite(ReplyTest.class);
         return suite;
     }

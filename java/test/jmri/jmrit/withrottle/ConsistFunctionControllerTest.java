@@ -40,13 +40,14 @@ public class ConsistFunctionControllerTest extends TestCase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         InstanceManager.setDefault(NamedBeanHandleManager.class, new NamedBeanHandleManager());
     }
     
     @Override
     public void tearDown() throws Exception {
         super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
 }

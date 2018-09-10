@@ -8,7 +8,7 @@
 
   <title>JMRI: MERGCBUS Console Tool</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI MERGCBUS help monitor console event long short">
+  <meta name="keywords" content="JMRI MERG CBUS help monitor console log event long short">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -28,32 +28,95 @@
      <h1>JMRI : MERGCBUS Console Tool</h1>
      
      <ul class="snav">
-      <li><a href="#logtofile">Logging to a File</a></li>
-      <li><a href="#packetstats">Packet Statistics</a></li>
-      <li><a href="#recent">Most Recently Received Packet</a></li>
-      <li><a href="#send">Send Event</a></li>
+      <li><a href="#logtofile">Logging</a></li>
+      <li><a href="#stats">Statistics</a></li>
+      <li><a href="#packet">Packets</a></li>
+      <li><a href="#cbusSend">Send Event</a></li>
+      <li><a href="#highlighter">Highlighter</a></li>
      </ul>
      
-      <a href="../../../../../../../html/hardware/can/images/MergConsoleCompact.png">
-      <img src="../../../../../../../html/hardware/can/images/MergConsoleCompact.png"
-      width="471" height="237" alt="Initial Console Tool Screen showing time stamp" align="right"></a>
-
+      <a href="../../../../../../../html/hardware/can/images/merg-cbus-console-min-631x357.png">
+      <img src="../../../../../../../html/hardware/can/images/merg-cbus-console-min-631x357.png"
+      width="400" height="226" alt="Initial Merg Cbus Console Tool Screen" align="right"></a>
+      
         <p>JMRI provides a communications monitor window so you can
         see what's happening on the communications link between the
         program and the layout MERGCBUS.</p>
     
-        <p>Once you open a MERGCBUS Monitor window, it will automatically
-        display all traffic on the link in the two sections at the
-        top of the window.<br>
+        <p>Once you open a MERGCBUS Console window, it will automatically
+        display all traffic.<br>
         The left part contains the raw CAN frames. The right part
         interprets their MERGCBUS meaning.</p>
-
+        <p>You can drag the window boundaries between these to suit your display.</p>
+        <p>The vertical scrollbar synchronises both windows.</p>
         
-        <p>Short MERGCBUS events appear in the Console with a node number of 0.</p>
+        <p>Short MERGCBUS events appear in the Console with a node number of 00.</p>
+        
+    <h3>Buttons</h3>
+        <a href="../../../../../../../html/hardware/can/images/merg-cbus-console-max-628x663.png">
+        <img src="../../../../../../../html/hardware/can/images/merg-cbus-console-max-628x663.png"
+        width="400" height="422" alt="Merg Cbus Console Tool Screen Expanded" align="right"></a>
+      
+       <dl>
+        <dt>Clear Screen</dt>
+        <dd>Erases the log area at the top of the screen.</dd>
+
+        <dt>Freeze Screen</dt>
+        <dd>Stops acquiring new information, so that the captured
+        information stops scrolling up.</dd>
+
+        <dt>Hide Events</dt>
+        <dd>Hides event accessory OPCs, including fast clock messages
+        from the console.<br>
+        Event messages will continue to be counted in the statistics.</dd>
+        
+        <dt>Hide DCC</dt>
+        <dd>Hides DCC OPCs from the console.<br>
+        DCC messages will continue to be counted in the statistics.</dd>
+       </dl>
+        
+    <h3>Checkboxes</h3>
+        <dl>
+        <dt>Timestamps</dt>
+        <dd>Normally, the program just displays the data from the
+        communication link. If you'd like each message to be
+        preceded by the time it was sent or received, check this
+        box.</dd>
+
+        <dt>Priorities</dt>
+        <dd>If you'd like each message to be preceded by the MERGCBUS
+        priorities used in sending the message, check this
+        box.</dd>
+        
+        <dt>Direction</dt>
+        <dd>Displays a visual clue to network flow.</dd>
+        
+        <dt>CanID</dt>
+        <dd>Displays the Can ID of the message sender.</dd>
+        
+        <dt>RTR</dt>
+        <dd>Displays the RTR status of the CAN message.</dd>
+
+        <dt>OPC</dt>
+        <dd>Displays the OPC of the message.</dd>
+        
+        <dt>OPC Extra</dt>
+        <dd>Displays extra information on the OPC.</dd>
+
+        <dt>Address</dt>
+        <dd>Displays the CBUS short an ID of the message.
+        <br>You can use this to enter as a CBUS hardware 
+        address for sensor inputs or turnout and light outputs.</dd>
+
+        <dt>CAN</dt>
+        <dd>Displays the CAN message as appears in left side of main console.
+        <br>Enables Including the CAN message in your log files.</dd>
+        
+        </dl>
         
         
      <h2><a name="logtofile" id="logtofile">Logging To A File</a></h2>
-     
+
         <p>Sometimes, it's helpful to capture
         what's happening. For example, you might encounter a bug
         (!!), and want to send a copy of what's happening to the
@@ -63,15 +126,19 @@
         with your computers "copy" command (e.g. ctrl-C or cmd-C),
         and then pasted into an email.</p>
     
+        <img src="../../../../../../../html/hardware/can/images/merg-cbus-console-logging-771x49.png"
+        width="771" height="49" alt="MERG CBUS Console Logging to File">
+    
         <p>If you want to capture more, you can have the window write
         a log file on your computer's disk. To do this:</p>
     
         <ol>
             <li>Click "Choose log file". A file-chooser window will
             open. Navigate to where you want to store the file, enter a
-            name for the new log file, and click "Save". Note that if
+            name for the new log file, and click "Save". 
+            <br><b>Note that if
             you pick a file that already exists, it will be
-            overwritten.</li>
+            overwritten.</b> </li>
     
             <li>When you're ready to capture the data you want, click
             "Start logging" on the monitor window.</li>
@@ -79,123 +146,107 @@
             <li>When you're done, click "Stop logging" to store the
             data and close the file.</li>
         </ol>
+        
+        <p>You can view contents of the log file by clicking on the 
+        Open Log File Button. </p>
 
-      <h3>Buttons</h3>
+        <p>If you'd like to annotate the message log with your own
+        comments, enter a comment and press ENTER or click the Add to Log
+        button.</p>
 
-       <dl>
-        <dt>Clear Screen</dt>
-
-        <dd>Erases the log area at the top of the screen.</dd>
-
-        <dt>Freeze Screen</dt>
-
-        <dd>Stops acquiring new information, so that the captured
-        information stops scrolling up.</dd>
-
-        <dt>Show timestamps</dt>
-
-        <dd>Normally, the program just displays the data from the
-        communication link. If you'd like each message to be
-        preceded by the time it was sent or received, check this
-        box.</dd>
-
-        <dt>Show priorities</dt>
-
-        <dd>If you'd like each message to be preceded by the MERGCBUS
-        priorities used in sending the message, check this
-        box.</dd>
-
-        <dt>Add Message</dt>
-
-        <dd>If you'd like to annotate the message log with your own
-        comments, Enter a comment and click the Add message
-        button.</dd>
-      </dl>
-
-    <h2><a name="packetstats" id="packetstats">Packet Statistics</a></h2>
-      <p>This part of the window shows the
-      number of packets received and transmitted and controls
-      the format of the display.</p>
-
-      <h3>Buttons</h3>
-
-      <dl>
-        <dt>Clear</dt>
-
-        <dd>Resets the packet counts to zero.</dd>
-
-        <dt>Decimal Data Entry/Display</dt>
-
-        <dd>Normally, the Console window displays data in
-        hexadecimal and treats data entered as hexadecimal. To
-        change the default to decimal, check this box.</dd>
-      </dl>
-
-    <h2><a name="recent" id="recent">Most Recently Received Packet</a></h2>
+    <h2><a name="stats" id="stats">Statistics</a></h2>
     
-    <p>This displays the most
-      recent packet received from the layout. The individual
-      elements displayed are dynamic and minor priority, the first
-      data byte which is the MERGCBUS opcode and the remaining, up to
-      seven, data bytes.</p>
+        <img src="../../../../../../../html/hardware/can/images/merg-cbus-console-statistics-608x73.png"
+        width="608" height="73" alt="MERG CBUS Console Statistics">
+    
+    
+        <p>This part of the window shows the
+        number of packets received and transmitted.</p>
 
-      <a href="../../../../../../../html/hardware/can/images/MergConsole.png">
-        <img src="../../../../../../../html/hardware/can/images/MergConsole.png"
-        width="471" height="287" alt="Expanded Console Tool Screen showing Events and other options"
-        align="right"></a>
+        <p>Clear button resets the packet counts to zero.</p>
 
-      <h3>Buttons</h3>
+    <h2><a name="packet" id="packet">Packets</a></h2>
+    
+        <img src="../../../../../../../html/hardware/can/images/merg-cbus-console-packets-810x131.png"
+        width="810" height="131" alt="MERG CBUS Console Packets">
+    
+        <p>This displays the most
+        recent packet received from the layout, along with a send packet tool.
+        <br>The individual
+        elements displayed are dynamic and minor priority, the first
+        data byte which is the MERGCBUS opcode and the remaining, up to
+        seven, data bytes.</p>
 
       <dl>
         <dt>Copy</dt>
-
         <dd>Copies the most recently received packet into the send
         packet data fields.</dd>
+
+        <dt>Send</dt>
+        <dd>Sends the packet.</dd>
+
+        <dt>Decimal Data Entry/Display</dt>
+        <dd>Normally, the packets display data in
+        hexadecimal and treats data entered as hexadecimal. To
+        change the default to decimal, check this box.</dd>
       </dl>
       
-      
-      
-      <a name="cbusSend" id="cbusSend"></a>
 
-    <h2><a name="send" id="send">Send Event</a></h2>
-      <p>At the bottom part of the Console, you can construct an Event
-      packet to be sent to the layout. For normal operation, do not
-      edit the preloaded values in the dynamic and normal priority
-      fields.<br>
-      Enter the opcode and the correct number of data bytes
-      (depending upon the opcode).</p>
+    <h2><a name="cbusSend" id="cbusSend">Send Event</a></h2>
+        <img src="../../../../../../../html/hardware/can/images/merg-cbus-console-send-event-494x59.png"
+        width="494" height="59" alt="MERG CBUS Console Send Event">    
+    
+        <p>At the bottom part of the Console, you can construct an Event
+        packet to be sent to the layout. For normal operation, do not
+        edit the preloaded values in the dynamic and normal priority
+        fields.<br>
+        Enter the opcode and the correct number of data bytes
+        (depending upon the opcode).</p>
 
-      <p>If the decimal data entry/display checkbox is not selected
-      then data entry will, by default, be treated as hexadecimal.
-      If the decimal data entry/display checkbox is selected then
-      data entry will, by default, be treated as hexadecimal.</p>
+        <p>If the decimal data entry/display checkbox is not selected
+        then data entry will, by default, be treated as hexadecimal.
+        If the decimal data entry/display checkbox is selected then
+        data entry will, by default, be treated as hexadecimal.</p>
 
-      <p>At any time, you may force data entered to be treated as
-      hexadecimal, decimal or binary by adding a "0x", "0d" or "0b"
-      prefix. For example "0x20", "0d32" and "0b00100000" all
-      donate a decimal value of 32.</p>
+        <p>At any time, you may force data entered to be treated as
+        hexadecimal, decimal or binary by adding a "0x", "0d" or "0b"
+        prefix. For example "0x20", "0d32" and "0b00100000" all
+        donate a decimal value of 32.</p>
 
-      <p>Additionally, when the decimal data entry/display checkbox
-      is not selected (hexadecimal mode), any value with three or
-      more digits will be treated as binary. When the decimal data
-      entry/display checkbox is selected (decimal mode), any value
-      with four or more digits will be treated as binary.</p>
-
-      <h3>Buttons</h3>
 
       <dl>
         <dt>Send</dt>
-
         <dd>Checks the packet entered and sends it to the layout or
         reports any error condition detected (e.g. the number of
         data bytes does not match the opcode).</dd>
 
         <dt>Clear</dt>
-
         <dd>Clears the data entry fields and preloads the priority
         values.</dd>
         
-        </dl>
+        <dt>Decimal Data Entry/Display</dt>
+        <dd>When the decimal data entry/display checkbox
+        is not selected (hexadecimal mode), any value with three or
+        more digits will be treated as binary. When the decimal data
+        entry/display checkbox is selected (decimal mode), any value
+        with four or more digits will be treated as binary.
+        </dd>
+      </dl>
+        
+        
+    <h2><a name="highlighter" id="highlighter">Event Highlighter</a></h2>        
+        
+        <img src="../../../../../../../html/hardware/can/images/merg-cbus-console-highlighter-560x340.png"
+        width="560" height="340" alt="MERG CBUS Console Event Highlighter">  
+        
+        <p>This window can be accessed from the Display options at top of the main console.</p>
+        
+        <p>It can highlight a specific node or event CBUS message, both on and off options.</p>
+        
+        <img src="../../../../../../../html/hardware/can/images/merg-cbus-console-highlighter-output-604x194.png"
+        width="604" height="194" alt="MERG CBUS Console Event Highlighter Output"> 
+
+        
         
     <h3>JMRI Help</h3>
       
