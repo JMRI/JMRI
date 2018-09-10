@@ -45,11 +45,6 @@ public class OlcbLight extends AbstractLight {
             return;
         }
         switch (v.length) {
-            case 1:
-                // momentary sensor
-                addrOn = v[0];
-                addrOff = null;
-                break;
             case 2:
                 addrOn = v[0];
                 addrOff = v[1];
@@ -124,7 +119,7 @@ public class OlcbLight extends AbstractLight {
     
     
     
-    private final static Logger log = LoggerFactory.getLogger(OlcbSensor.class);
+    private final static Logger log = LoggerFactory.getLogger(OlcbLight.class);
 
     public OlcbLight(String systemName) {
         super(systemName);

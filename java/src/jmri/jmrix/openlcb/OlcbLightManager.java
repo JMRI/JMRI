@@ -126,22 +126,16 @@ public class OlcbLightManager extends AbstractLightManager {
         String withoutPrefix = address.replace("ML", "");
         OlcbAddress a = new OlcbAddress(withoutPrefix);
         OlcbAddress[] v = a.split();
-        if (v == null || v.length != 2) {
-            //throw new IllegalArgumentException("Did not find usable system name: " + address + " to a valid Olcb light address");
-            return false;
-        }
-        /*switch () {
+        switch (v.length) {
             case 1:
                 if (address.startsWith("+") || address.startsWith("-")) {
                     return false;
                 }
-                //throw new IllegalArgumentException("can't make 2nd event from systemname " + address);
+                throw new IllegalArgumentException("can't make 2nd event from systemname " + address);
             case 2:
                 return true;
             default:
-                //throw new IllegalArgumentException("Wrong number of events in address: " + address);
-                return false;
-        }*/
-        return true;
+                throw new IllegalArgumentException("Wrong number of events in address: " + address);
+        }
     }
 }
