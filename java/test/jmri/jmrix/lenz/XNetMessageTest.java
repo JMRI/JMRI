@@ -1531,6 +1531,7 @@ public class XNetMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @After
     public void tearDown() {
+        m = msg = null;
         JUnitUtil.tearDown();
         // make sure the message timeouts and retries are set to
         // the defaults.
