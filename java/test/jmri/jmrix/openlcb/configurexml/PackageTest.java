@@ -5,6 +5,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    OlcbLightManagerXmlTest.class,
     OlcbSensorManagerXmlTest.class,
     OlcbSignalMastXmlTest.class,
     OlcbTurnoutManagerXmlTest.class,
