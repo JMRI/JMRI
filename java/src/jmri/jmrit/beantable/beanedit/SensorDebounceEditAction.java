@@ -78,12 +78,12 @@ public class SensorDebounceEditAction extends BeanEditAction {
         basic.addItem(new BeanEditItem(null, null, Bundle.getMessage("SensorDebounceText")));
         basic.addItem(new BeanEditItem(sensorDebounceGlobalCheck, Bundle.getMessage("SensorDebounceUseGlobalText"), null));
         sensorDebounceInactiveSpinner.setModel(
-                new SpinnerNumberModel(0, 0, Math.toIntExact(Sensor.MAX_DEBOUNCE), 1));  // MAX_DEBOUNCE is a Long, but limited value here is OK
+                new SpinnerNumberModel((Long)0L, (Long)0L, (Long)Sensor.MAX_DEBOUNCE, (Long)1L));  // MAX_DEBOUNCE is a Long, but limited value here is OK
 //        sensorDebounceInactiveSpinner.setValue(0); // reset from possible previous use
         sensorDebounceInactiveSpinner.setPreferredSize(new JTextField(Long.toString(Sensor.MAX_DEBOUNCE).length()+1).getPreferredSize());
         basic.addItem(new BeanEditItem(sensorDebounceInactiveSpinner, Bundle.getMessage("SensorInActiveDebounce"), Bundle.getMessage("SensorInActiveDebounceText")));
         sensorDebounceActiveSpinner.setModel(
-                new SpinnerNumberModel(0, 0, Math.toIntExact(Sensor.MAX_DEBOUNCE), 1));  // MAX_DEBOUNCE is a Long, but limited value here is OK
+                new SpinnerNumberModel((Long)0L, (Long)0L, (Long)Sensor.MAX_DEBOUNCE, (Long)1L));  // MAX_DEBOUNCE is a Long, but limited value here is OK
 //        sensorDebounceActiveSpinner.setValue(0); // reset from possible previous use
         sensorDebounceActiveSpinner.setPreferredSize(new JTextField(Long.toString(Sensor.MAX_DEBOUNCE).length()+1).getPreferredSize());
         basic.addItem(new BeanEditItem(sensorDebounceActiveSpinner, Bundle.getMessage("SensorActiveDebounce"), Bundle.getMessage("SensorActiveDebounceText")));
@@ -110,10 +110,10 @@ public class SensorDebounceEditAction extends BeanEditAction {
         }
 
         Sensor sen = (Sensor) bean;
-        long time = (Long) sensorDebounceActiveSpinner.getValue();
+        long time = (long) sensorDebounceActiveSpinner.getValue();
         sen.setSensorDebounceGoingActiveTimer(time);
 
-        time = (Long) sensorDebounceInactiveSpinner.getValue();
+        time = (long) sensorDebounceInactiveSpinner.getValue();
         sen.setSensorDebounceGoingInActiveTimer(time);
         sen.setUseDefaultTimerSettings(sensorDebounceGlobalCheck.isSelected());
     }

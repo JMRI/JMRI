@@ -9,6 +9,7 @@ import org.junit.*;
  */
 public class RetryRuleTest {
 
+    @Rule
     public RetryRule retryRule = new RetryRule(3); // first, plus three retries
     
     @Test
@@ -18,9 +19,23 @@ public class RetryRuleTest {
 
     @Test
     public void testPassOnThirdRetry() {
-        if (count++ < 3) return;
-        Assert.fail("fail test plus first two retries, will pass on 3rd");
+        if (countPassOnThirdRetry++ < 3) {
+            Assert.fail("fail test plus first two retries, will pass on 3rd");
+        }
+        // this is the 3rd pass
+        countPassOnThirdRetry = 0;
     }
+    int countPassOnThirdRetry = 0;
+
+    @Test
+    public void testJemmyTimeout() {
+        if (countJemmyTimeout++ < 3) {
+            throw new org.netbeans.jemmy.TimeoutExpiredException("fail test plus first two retries, will pass on 3rd");
+        }
+        // this is the 3rd pass
+        countJemmyTimeout = 0;
+    }
+    int countJemmyTimeout = 0;
 
     // Don't have a test for handling of failure after all retries,
     // because that's a failure...
@@ -32,16 +47,24 @@ public class RetryRuleTest {
         Assert.fail("always fails");
     }
 
-    int count = 0;
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        count = 0;
     }
 
     @After
     public void tearDown() {
+        // first test for messages
+        if (countPassOnThirdRetry != 0) {
+            jmri.util.JUnitAppender.assertWarnMessage("run  "+countPassOnThirdRetry+" failed, RetryRule repeats");
+            if (countPassOnThirdRetry == 3) countPassOnThirdRetry = 0; // done
+        }
+        if (countJemmyTimeout != 0) {
+            jmri.util.JUnitAppender.assertWarnMessage("run  "+countJemmyTimeout+" failed, RetryRule repeats");
+            if (countJemmyTimeout == 3) countPassOnThirdRetry = 0; // done
+        }
+            
         JUnitUtil.tearDown();
     }
 
