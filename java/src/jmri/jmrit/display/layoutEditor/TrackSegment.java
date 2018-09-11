@@ -3395,7 +3395,7 @@ public class TrackSegment extends LayoutTrack {
 
     public void setBridgeLineWidth(int newVal) {
         if (bridgeLineWidth != newVal) {
-            bridgeLineWidth = Math.min(1, newVal);
+            bridgeLineWidth = Math.max(1, newVal);
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3464,7 +3464,7 @@ public class TrackSegment extends LayoutTrack {
 
     public void setBumperLineWidth(int newVal) {
         if (bumperLineWidth != newVal) {
-            bumperLineWidth = Math.min(1, newVal);
+            bumperLineWidth = Math.max(1, newVal);
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3607,7 +3607,7 @@ public class TrackSegment extends LayoutTrack {
 
     public void setTunnelLineWidth(int newVal) {
         if (tunnelLineWidth != newVal) {
-            tunnelLineWidth = Math.min(1, newVal);
+            tunnelLineWidth = Math.max(1, newVal);
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
