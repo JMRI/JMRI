@@ -2,9 +2,7 @@ package jmri.jmrix.bachrus;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * SpeedoReplyTest.java
@@ -13,21 +11,19 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class SpeedoReplyTest {
-
-    @Test public void integerConstructorTest() {
-        SpeedoReply m = new SpeedoReply();
-        Assert.assertNotNull(m);
-    }
+public class SpeedoReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        m = new SpeedoReply();
     }
    
     @After
     public void tearDown() {
+	m = null;
         JUnitUtil.tearDown();
     }
 
