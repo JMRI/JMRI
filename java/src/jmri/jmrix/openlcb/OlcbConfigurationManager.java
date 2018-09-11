@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+import jmri.LightManager;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
@@ -67,6 +68,10 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
         InstanceManager.setThrottleManager(
                 getThrottleManager());
+        
+        InstanceManager.setLightManager(
+                getLightManager()
+        );
 
         if (getProgrammerManager().isAddressedModePossible()) {
             InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
@@ -143,6 +148,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (type.equals(jmri.TurnoutManager.class)) {
             return true;
         }
+        if (type.equals(jmri.LightManager.class)) {
+            return true;
+        }
         if (type.equals(AliasMap.class)) {
             return true;
         }
@@ -187,6 +195,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
         if (T.equals(jmri.TurnoutManager.class)) {
             return (T) getTurnoutManager();
+        }
+        if (T.equals(jmri.LightManager.class)) {
+            return (T) getLightManager();
         }
         if (T.equals(AliasMap.class)) {
             return (T) aliasMap;
@@ -277,10 +288,25 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (sensorManager != null) {
             InstanceManager.deregister(sensorManager, jmri.jmrix.openlcb.OlcbSensorManager.class);
         }
+        if (lightManager != null) {
+            InstanceManager.deregister(lightManager, jmri.jmrix.openlcb.OlcbLightManager.class);
+        }
         if (cf != null) {
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
         }
         InstanceManager.deregister(this, OlcbConfigurationManager.class);
+    }
+
+    protected OlcbLightManager lightManager;
+    
+    public OlcbLightManager getLightManager() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (lightManager == null) {
+            lightManager = new OlcbLightManager(adapterMemo);
+        }
+        return lightManager;
     }
 
     class SimpleNodeIdentInfoHandler extends MessageDecoder {

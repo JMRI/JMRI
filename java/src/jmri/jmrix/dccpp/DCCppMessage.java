@@ -72,6 +72,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         }
         _nDataChars = len;
         myRegex = "";
+	myMessage = new StringBuilder(len);
     }
 
     /**

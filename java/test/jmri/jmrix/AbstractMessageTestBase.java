@@ -18,7 +18,7 @@ abstract public class AbstractMessageTestBase {
     abstract public void setUp();
 
     @Test
-    public void testCTor() {
+    public void testCtor() {
         Assert.assertNotNull("exists",m);
     }
 

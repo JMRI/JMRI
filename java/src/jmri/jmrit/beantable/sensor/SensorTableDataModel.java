@@ -370,9 +370,8 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 s.setUseDefaultTimerSettings(((Boolean) value));
                 break;
             case ACTIVEDELAY:
-                Long activeDeBounce  = 0L;
                 try {
-                    activeDeBounce = Long.parseLong((String) value);
+                    Long activeDeBounce = Long.parseLong((String) value);
                     if (activeDeBounce < 0 || activeDeBounce > Sensor.MAX_DEBOUNCE) {
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceActOutOfRange") + "\n\"" + (String) value + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
                     } else {
@@ -383,9 +382,8 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 }
                 break;
             case INACTIVEDELAY:
-                Long inactiveDeBounce  = 0L;
                 try {
-                    inactiveDeBounce = Long.parseLong((String) value);
+                    Long inactiveDeBounce = Long.parseLong((String) value);
                     if (inactiveDeBounce < 0 || inactiveDeBounce > Sensor.MAX_DEBOUNCE) {
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceInActOutOfRange") + "\n\"" + Long.toString(Sensor.MAX_DEBOUNCE) + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
                     } else {
