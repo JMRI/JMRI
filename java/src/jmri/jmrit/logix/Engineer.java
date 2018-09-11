@@ -378,11 +378,14 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         }
         float newSpeed = _speedUtil.modifySpeed(_normalSpeed, endSpeedType, _isForward);
         // if already at requested speed or ramping to it return;
-        if (_ramp != null || Math.abs(newSpeed - getSpeedSetting()) < 0.002f) {
+        if (_ramp != null && (Math.abs(_ramp._endSpeed-newSpeed)<.003) || Math.abs(getSpeedSetting()-newSpeed)<.003) {
             if (log.isDebugEnabled()) 
-                log.debug("rampSpeedTo: {} already done or in progress", endSpeedType, _warrant.getDisplayName());
+                log.debug("rampSpeedTo: {} already at speed or in progress", endSpeedType, _warrant.getDisplayName());
             return;
         }
+        
+        cancelRamp(true);
+
         if (log.isDebugEnabled()) 
             log.debug("rampSpeedTo type= {}, throttle from {} to {}. warrant {}",
                 endSpeedType, getSpeedSetting(), newSpeed, _warrant.getDisplayName());
@@ -396,9 +399,18 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         }
     }
 
-    private void cancelRamp() {
+    private void cancelRamp(boolean waitUntilDone) {
         if (_ramp != null) {
             _ramp.quit();   // rampDone will be called
+        }
+        synchronized (this) {
+            while (_ramp != null) {
+                try {
+                    wait(50);
+                } catch (InterruptedException ie) {
+                    
+                }
+            }
         }
     }
 
@@ -443,7 +455,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     /**
      * Utility for unscripted speed changes.
      * Records current type and sets time ratio.
-     * EStop is set immediately (do not ramp)
      * @param speedType name of speed change type
      * @return true to continue, false to return
      */
@@ -451,44 +462,41 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (speedType == null) {
             return false;
         }
+        _speedType = speedType;
 //        log.debug("setSpeedRatio({}): throttleSetting={}, _normalSpeed={}", 
 //           speedType, _throttle.getSpeedSetting(), _normalSpeed);
-
-        if (speedType.equals(Warrant.EStop)) {
-            cancelRamp();
-            setSpeed(-0.1f);        // always do immediate EStop
-            _waitForClear = true;
-            advanceToCommandIndex(_idxCurrentCommand + 1);  // skip current command
-            return false;
-        } else if (speedType.equals(Warrant.Stop)) {
-            return true;
-        } else {
-            synchronized (this) {
-                _speedType = speedType;
-                float speedMod = _speedUtil.modifySpeed(1.0f, _speedType, _isForward);
-                if (Math.abs(1.0f - speedMod) > .0001f) {
-                    _timeRatio = 1.0f / speedMod;
-                } else {
-                    _timeRatio = 1.0f;
-                }
+        synchronized (this) {
+            float speedMod = _speedUtil.modifySpeed(1.0f, _speedType, _isForward);
+            if (Math.abs(1.0f - speedMod) > .0001f) {
+                _timeRatio = 1.0f / speedMod;
+            } else {
+                _timeRatio = 1.0f;
             }
         }
         return true;
     }
 
+    /*
+     * Do immediate speed change.
+     */
     protected void setSpeedToType(String speedType) {
         if (log.isDebugEnabled()) 
             log.debug("setSpeedToType({}) scriptSpeed= {}", speedType, _normalSpeed);
         if (!setSpeedRatio(speedType)) {
             return;
         }
-        if (speedType.equals(Warrant.Stop)) {
+        cancelRamp(true);
+        if (speedType.equals(Warrant.EStop)) {
+            setSpeed(-0.1f);        // always do immediate EStop
+            _waitForClear = true;
+            advanceToCommandIndex(_idxCurrentCommand + 1);  // skip current command
+        } else if (speedType.equals(Warrant.Stop)) {
             setSpeed(0.0f);
             _waitForClear = true;
             advanceToCommandIndex(_idxCurrentCommand + 1);  // skip current command
-            return;
+        } else {
+            setSpeed(_speedUtil.modifySpeed(_normalSpeed, speedType, _isForward));
         }
-        setSpeed(_speedUtil.modifySpeed(_normalSpeed, speedType, _isForward));
     }
 
     protected float getExpectedSpeed(String speedType) {
@@ -539,25 +547,25 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     // if a ramp is needed to restore speed, delay setting flags until ramp is done
     // ramp up will set flags false
     synchronized protected void resumeSpeedFrom(int which, String speedType) {
-        _speedType = speedType;
+        cancelRamp(true);
         switch (which) {
             case Warrant.HALT:
                 if (!_waitForClear && _normalSpeed > 0.0f) {
-                    rampSpeedTo(_speedType, 0, false);
+                    rampSpeedTo(speedType, 0, false);
                     _resumePending = true;
                 }
                 setHalt(false);                    
                 return;
             case Warrant.STOP:
                 if (!_halt && _normalSpeed > 0.0f) {
-                    rampSpeedTo(_speedType, 0, false);                   
+                    rampSpeedTo(speedType, 0, false);                   
                     _resumePending = true;
                 }
                 setWaitforClear(false);                    
                 return;
             case Warrant.RESUME:
                 if (_normalSpeed > 0.0f) {
-                    rampSpeedTo(_speedType, 0, false);                   
+                    rampSpeedTo(speedType, 0, false);                   
                     _resumePending = true;
                 }
                 setWaitforClear(false);                    
@@ -573,9 +581,11 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * Do not ramp.
      * @param eStop true for emergency stop
      */
-    synchronized public void setStop(boolean eStop) {
-        cancelRamp();
-        setHalt(true);
+    synchronized public void setStop(boolean eStop, boolean setHalt) {
+        cancelRamp(true);
+        if (setHalt) {
+            setHalt(true);
+        }
         if (eStop) {
             setSpeed(-0.1f);
         } else {
@@ -617,10 +627,10 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (abort) {
             _abort =true;            
         }
-        cancelRamp();
         if (_waitSensor != null) {
             _waitSensor.removePropertyChangeListener(this);
         }
+        cancelRamp(true);
         if (_throttle != null && _throttle.getSpeedSetting() > 0.0f) {
             _throttle.setSpeedSetting(-1.0f);
             setSpeed(0.0f);     // prevent creep after EStop - according to Jim Betz

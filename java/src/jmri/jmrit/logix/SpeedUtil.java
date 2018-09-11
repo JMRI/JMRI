@@ -387,15 +387,18 @@ public class SpeedUtil {
         return false;
     }
 
-    protected void stopRun(boolean updateSpeedProfile) {
-        if (updateSpeedProfile && _sessionProfile != null) {
-            WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
-            manager.setSpeedProfiles(_rosterId, _mergeProfile, _sessionProfile);
-        }
-        if (_throttle != null) {  // quiet
-            _throttle.setF0(false);
-            _throttle.setF1(false);
-            _throttle.setF2(false);
+    protected void stopRun(boolean abort) {
+        if (abort) {
+            if (_throttle != null) {  // quiet
+                _throttle.setF0(false);
+                _throttle.setF1(false);
+                _throttle.setF2(false);
+            }
+        } else {
+            if (_sessionProfile != null) {
+                WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
+                manager.setSpeedProfiles(_rosterId, _mergeProfile, _sessionProfile);
+            }
         }
     }
 
