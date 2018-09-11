@@ -69,6 +69,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         }
         _nDataChars = len;
         myRegex = "";
+	myMessage = new StringBuilder(len);
     }
 
     /**
