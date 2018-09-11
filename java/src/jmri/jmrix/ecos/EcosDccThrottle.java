@@ -85,8 +85,15 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
 
         ecosretry = 0;
 
+        log.debug("EcosDccThrottle constructor " + address);
+
         //We go on a hunt to find an object with the dccaddress sent by our controller.
-        objEcosLoco = objEcosLocoManager.provideByDccAddress(address.getNumber());
+        if (address.getNumber() < EcosLocoAddress.MFX_DCCAddressOffset) {
+            objEcosLoco = objEcosLocoManager.provideByDccAddress(address.getNumber());
+        } else {
+            int ecosID = address.getNumber()-EcosLocoAddress.MFX_DCCAddressOffset;
+            objEcosLoco = objEcosLocoManager.provideByEcosObject(String.valueOf(ecosID));
+        }
 
         this.objectNumber = objEcosLoco.getEcosObject();
         if (this.objectNumber == null) {

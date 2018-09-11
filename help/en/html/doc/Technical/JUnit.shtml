@@ -672,15 +672,16 @@
     <p>
         You then reference "folder" in your test code:
 <pre style="font-family: monospace;">
-        // create a file in "temp"
-        File rosterDir = folder.newFolder();
-        File backupDir = folder.newFolder();
+        // create a temporary file
+        File randomNameFile = folder.newFile();
+        // create a temporary directory
+        File randomNameDir = folder.newFolder();
 </pre>
 
     
       JUnit4 will make sure the file or folder is removed afterwards regardless of whether the 
       test succeeds or fails. For more information on this, see the 
-      <a href="http://junit.org/junit4/javadoc/latest/org/junit/rules/TemporaryFolder.html">Javadoc for TemporaryFolderTest</a>.
+      <a href="http://junit.org/junit4/javadoc/latest/org/junit/rules/TemporaryFolder.html">Javadoc for TemporaryFolder</a>.
      
      <p>
      If you're not using JUnit4, consider converting the 
@@ -992,7 +993,10 @@
 <pre style="font-family: monospace;">
         new org.netbeans.jemmy.QueueTool().waitEmpty(20);
 </pre>
-            on the test thread.
+            on the test thread. The argument (in this example 20) is
+            how many milliseconds the queue has to remain empty before 
+            proceeding.  We're not sure what the best value is; see
+            <a href="https://github.com/JMRI/JMRI/issues/5321">Issue #5321</a> for some background discussion.
       </ul>
       
       <h3><a id="jfcunit" name="jfcunit">Using JFCUnit</a></h3>
@@ -1169,6 +1173,16 @@ import org.junit.Test;
 </pre>
         </li>
 
+        <li>If you have bare <code>assert</code> calls, like
+<pre style="font-family: monospace;">
+    assertEquals(k, ind);
+</pre>
+    change them to the JUnit4 form:
+<pre style="font-family: monospace;">
+    Assert.assertEquals(k, ind);
+</pre>
+        </li>
+        
         <li>More of our Test classes have a "from here down is
         testing infrastructure" comment, followed by setup code.
         Some of that can be removed. First, remove the class

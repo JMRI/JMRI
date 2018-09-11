@@ -167,7 +167,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
 
     void setFrameLocation() {
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(prefsMgr -> {
-            if (prefsMgr.isWindowPositionSaved(windowFrameRef)) {
+            if (prefsMgr.hasProperties(windowFrameRef)) {
                 Dimension screen = getToolkit().getScreenSize();
                 if ((reuseFrameSavedPosition)
                         && (!((prefsMgr.getWindowLocation(windowFrameRef).getX() >= screen.getWidth()) || (prefsMgr
