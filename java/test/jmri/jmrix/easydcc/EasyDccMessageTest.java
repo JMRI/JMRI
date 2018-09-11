@@ -7,75 +7,76 @@
  */
 package jmri.jmrix.easydcc;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class EasyDccMessageTest extends TestCase {
+public class EasyDccMessageTest extends jmri.jmrix.AbstractMessageTestBase {
+        
+    private EasyDccMessage msg = null;
 
-    public void testCreate() {
-        EasyDccMessage m = new EasyDccMessage(1);
-        Assert.assertNotNull("exists", m);
-    }
-
+    @Test
     public void testToASCIIString() {
-        EasyDccMessage m = new EasyDccMessage(5);
-        m.setOpCode(0x50);
-        m.setElement(1, 0x20);
-        m.setElement(2, 0x32);
-        m.setElement(3, 0x36);
-        m.setElement(4, 0x31);
-        Assert.assertEquals("string compare ", "P 261", m.toString());
+        msg = new EasyDccMessage(5);
+        msg.setOpCode(0x50);
+        msg.setElement(1, 0x20);
+        msg.setElement(2, 0x32);
+        msg.setElement(3, 0x36);
+        msg.setElement(4, 0x31);
+        Assert.assertEquals("string compare ", "P 261", msg.toString());
     }
 
+    @Test
     public void testGetEnable() {
-        EasyDccMessage m = EasyDccMessage.getEnableMain();
-        Assert.assertEquals("length", 1, m.getNumDataElements());
-        Assert.assertEquals("opCode", 'E', m.getOpCode());
+        msg = EasyDccMessage.getEnableMain();
+        Assert.assertEquals("length", 1, msg.getNumDataElements());
+        Assert.assertEquals("opCode", 'E', msg.getOpCode());
     }
 
+    @Test
     public void testRecognizeEnable() {
-        EasyDccMessage m = EasyDccMessage.getEnableMain();
-        Assert.assertEquals("isEnableMain", true, m.isEnableMain());
-        Assert.assertEquals("isKillMain", false, m.isKillMain());
+        msg = EasyDccMessage.getEnableMain();
+        Assert.assertEquals("isEnableMain", true, msg.isEnableMain());
+        Assert.assertEquals("isKillMain", false, msg.isKillMain());
     }
 
+    @Test
     public void testReadPagedCV() {
-        EasyDccMessage m = EasyDccMessage.getReadPagedCV(12);
-        Assert.assertEquals("string compare ", "R 00C", m.toString());
+        msg = EasyDccMessage.getReadPagedCV(12);
+        Assert.assertEquals("string compare ", "R 00C", msg.toString());
     }
 
+    @Test
     public void testWritePagedCV() {
-        EasyDccMessage m = EasyDccMessage.getWritePagedCV(12, 126);
-        Assert.assertEquals("string compare ", "P 00C 7E", m.toString());
+        msg = EasyDccMessage.getWritePagedCV(12, 126);
+        Assert.assertEquals("string compare ", "P 00C 7E", msg.toString());
     }
 
+    @Test
     public void testReadRegister() {
-        EasyDccMessage m = EasyDccMessage.getReadRegister(2);
-        Assert.assertEquals("string compare ", "V2", m.toString());
+        msg = EasyDccMessage.getReadRegister(2);
+        Assert.assertEquals("string compare ", "V2", msg.toString());
     }
 
+    @Test
     public void testWriteRegister() {
-        EasyDccMessage m = EasyDccMessage.getWriteRegister(2, 250);
-        Assert.assertEquals("string compare ", "S2 FA", m.toString());
+        msg = EasyDccMessage.getWriteRegister(2, 250);
+        Assert.assertEquals("string compare ", "S2 FA", msg.toString());
     }
 
-    // from here down is testing infrastructure
-    public EasyDccMessageTest(String s) {
-        super(s);
+    @Override
+    @Before
+    public void setUp() {
+	JUnitUtil.setUp();
+	m = msg = new EasyDccMessage(1);
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", EasyDccMessageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(EasyDccMessageTest.class);
-        return suite;
+    @After
+    public void tearDown(){
+	m = msg = null;
+	JUnitUtil.tearDown();
     }
 
 }
