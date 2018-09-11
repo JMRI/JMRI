@@ -172,6 +172,10 @@ public class ProfileManager extends Bean {
         }
         // handle profile path
         File profileFile = new File(identifier);
+        File profileFileWithExt = new File(profileFile.getParent(), profileFile.getName() + Profile.EXTENSION);
+        if (Profile.isProfile(profileFileWithExt)) {
+            profileFile = profileFileWithExt;
+        }
         if (profileFile.exists() && profileFile.isDirectory()) {
             if (Profile.isProfile(profileFile)) {
                 try {
@@ -658,9 +662,9 @@ public class ProfileManager extends Bean {
     @Nonnull
     public Profile createDefaultProfile() throws IllegalArgumentException, IOException {
         if (this.getAllProfiles().isEmpty()) {
-            String pn = Bundle.getMessage("defaultProfileName") + Profile.EXTENSION;
+            String pn = Bundle.getMessage("defaultProfileName");
             String pid = FileUtil.sanitizeFilename(pn);
-            File pp = new File(FileUtil.getPreferencesPath() + pid);
+            File pp = new File(FileUtil.getPreferencesPath() + pid + Profile.EXTENSION);
             Profile profile = new Profile(pn, pid, pp);
             this.addProfile(profile);
             this.setAutoStartActiveProfile(true);
