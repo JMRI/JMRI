@@ -24,11 +24,11 @@ public class SensorDebounceEditActionTest {
     public void testSet() {
         SensorDebounceEditAction t = new SensorDebounceEditAction();
 
-        Sensor is1 = InstanceManager.sensorManagerInstance().provideSensor("IS1");
+        InstanceManager.sensorManagerInstance().provideSensor("IS1");
 
         t.setBean(InstanceManager.sensorManagerInstance().getBySystemName("IS1"));
         
-        BeanItemPanel p = t.sensorDebounce(null);
+        t.sensorDebounce(null);
         
         t.saveDebounceItems(null);
     }
@@ -37,11 +37,11 @@ public class SensorDebounceEditActionTest {
     public void testResetAndEnable() {
         SensorDebounceEditAction t = new SensorDebounceEditAction();
 
-        Sensor is1 = InstanceManager.sensorManagerInstance().provideSensor("IS1");
+        InstanceManager.sensorManagerInstance().provideSensor("IS1");
 
         t.setBean(InstanceManager.sensorManagerInstance().getBySystemName("IS1"));
         
-        BeanItemPanel p = t.sensorDebounce(null);
+        t.sensorDebounce(null);
         
         t.enabled(false);
         t.resetDebounceItems(null);
