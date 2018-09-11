@@ -9,12 +9,12 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Andrew Crosland Copyright (C) 2010
  */
-public class SpeedoReply {
+public class SpeedoReply extends jmri.jmrix.AbstractMRReply {
  // This should be an extension af AbstractMRReply and needs re-factoring
 
     // create a new one
     public SpeedoReply() {
-        unsolicited = false;
+	super();
     }
 
     // copy one
@@ -26,7 +26,9 @@ public class SpeedoReply {
             return;
         }
         _nDataChars = m._nDataChars;
-        unsolicited = m.unsolicited;
+	if(m.isUnsolicited()) {
+           setUnsolicited();
+	}
         for (int i = 0; i < _nDataChars; i++) {
             _dataChars[i] = m._dataChars[i];
         }
@@ -39,36 +41,6 @@ public class SpeedoReply {
         for (int i = 0; i < _nDataChars; i++) {
             _dataChars[i] = s.charAt(i);
         }
-    }
-
-    public void setOpCode(int i) {
-        _dataChars[0] = (char) i;
-    }
-
-    public int getOpCode() {
-        return _dataChars[0];
-    }
-
-    public final void setUnsolicited() {
-        unsolicited = true;
-    }
-
-    public boolean isUnsolicited() {
-        return unsolicited;
-    }
-
-    // accessors to the bulk data
-    public int getNumDataElements() {
-        return _nDataChars;
-    }
-
-    public int getElement(int n) {
-        return _dataChars[n];
-    }
-
-    public void setElement(int n, int v) {
-        _dataChars[n] = (char) v;
-        _nDataChars = Math.max(_nDataChars, n + 1);
     }
 
     public int getCount() {
@@ -97,11 +69,6 @@ public class SpeedoReply {
     // display format
     @Override
     public String toString() {
-//        String s = "";
-//        for (int i = 0; i < _nDataChars; i++) {
-//            s += _dataChars[i];
-//        }
-//        return s;
         StringBuffer buf = new StringBuffer();
         for (int i = 0; i < _nDataChars; i++) {
             buf.append(_dataChars[i]);
@@ -109,27 +76,29 @@ public class SpeedoReply {
         return buf.toString();
     }
 
-    int match(String s) {
+    @Override
+    public int match(String s) {
         // find a specific string in the reply
         String rep = new String(_dataChars, 0, _nDataChars);
         return rep.indexOf(s);
     }
 
-    int skipWhiteSpace(int index) {
-        // start at index, passing any whitespace & control characters at the start of the buffer
-        while (index < getNumDataElements() - 1
-                && ((char) getElement(index) <= ' ')) {
-            index++;
-        }
-        return index;
-    }
-
     static public final int maxSize = 32;
 
-    // contents (private)
-    private int _nDataChars;
-    private char _dataChars[] = new char[maxSize];
-    private boolean unsolicited;
+    @Override
+    public int maxSize() {
+        return maxSize;
+    }
+
+    /**
+     * skipPrefix is not used at this point in time, but is 
+     * defined as abstract in AbstractMRReply
+     */
+    @Override
+    protected int skipPrefix(int index) {
+        return -1;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(SpeedoReply.class);
 
 }
