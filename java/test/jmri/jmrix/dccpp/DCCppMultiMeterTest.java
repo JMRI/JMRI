@@ -21,12 +21,6 @@ public class DCCppMultiMeterTest extends jmri.implementation.AbstractMultiMeterT
         mm = new DCCppMultiMeter(memo);
     }
 
-    @After
-    public void tearDown() {
-        mm.dispose();
-        JUnitUtil.tearDown();
-    }
-
     // private final static Logger log = LoggerFactory.getLogger(DCCppMultiMeterTest.class);
 
 }

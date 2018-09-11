@@ -22,12 +22,6 @@ public class Z21MultiMeterTest extends jmri.implementation.AbstractMultiMeterTes
         mm = new Z21MultiMeter(memo);
     }
 
-    @After
-    public void tearDown() {
-        mm.dispose();
-        JUnitUtil.tearDown();
-    }
-
     // private final static Logger log = LoggerFactory.getLogger(DCCppMultiMeterTest.class);
 
 }

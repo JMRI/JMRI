@@ -34,7 +34,7 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
            intervalTimer = null;
         }
         intervalTask = new UpdateTask();
-        intervalTimer = new Timer("MultiMeter Update Timer");
+        intervalTimer = new Timer("MultiMeter Update Timer", true);
         // At some point this will be dynamic intervals...
         log.debug("Starting Meter Timer");
         intervalTimer.scheduleAtFixedRate(intervalTask,
