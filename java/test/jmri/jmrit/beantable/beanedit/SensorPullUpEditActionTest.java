@@ -24,11 +24,11 @@ public class SensorPullUpEditActionTest {
     public void testSet() {
         SensorPullUpEditAction t = new SensorPullUpEditAction();
 
-        Sensor is1 = InstanceManager.sensorManagerInstance().provideSensor("IS1");
+        InstanceManager.sensorManagerInstance().provideSensor("IS1");
 
         t.setBean(InstanceManager.sensorManagerInstance().getBySystemName("IS1"));
         
-        BeanItemPanel p = t.sensorPullUp(null);
+        t.sensorPullUp(null);
         
         t.savePullUpItems(null);
     }
@@ -37,11 +37,11 @@ public class SensorPullUpEditActionTest {
     public void testResetAndEnable() {
         SensorPullUpEditAction t = new SensorPullUpEditAction();
 
-        Sensor is1 = InstanceManager.sensorManagerInstance().provideSensor("IS1");
+        InstanceManager.sensorManagerInstance().provideSensor("IS1");
 
         t.setBean(InstanceManager.sensorManagerInstance().getBySystemName("IS1"));
         
-        BeanItemPanel p = t.sensorPullUp(null);
+        t.sensorPullUp(null);
         
         t.enabled(false);
         t.resetPullUpItems(null);
