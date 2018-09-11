@@ -63,8 +63,8 @@ public class Z21XNetMessageTest extends jmri.jmrix.lenz.XNetMessageTest {
         JUnitUtil.tearDown();
         // make sure the message timeouts and retries are set to
         // the defaults.
-        XNetMessage.setXNetMessageTimeout(5000); 
-        XNetMessage.setXNetMessageRetries(5); 
+        jmri.jmrix.lenz.XNetMessage.setXNetMessageTimeout(5000); 
+        jmri.jmrix.lenz.XNetMessage.setXNetMessageRetries(5); 
     }
 
     // private final static Logger log = LoggerFactory.getLogger(Z21XNetMessageTest.class);
