@@ -273,7 +273,7 @@ public class IndexedTreeMap<K, V>
      * @throws java.util.NoSuchElementException
      *          {@inheritDoc}
      */
-    public K firstKey() {
+    public K firstKey() throws NoSuchElementException {
         return key(getFirstEntry());
     }
 
@@ -281,7 +281,7 @@ public class IndexedTreeMap<K, V>
      * @throws java.util.NoSuchElementException
      *          {@inheritDoc}
      */
-    public K lastKey() {
+    public K lastKey() throws NoSuchElementException {
         return key(getLastEntry());
     }
 
@@ -1277,7 +1277,7 @@ public class IndexedTreeMap<K, V>
             return next != null;
         }
 
-        final Entry<K, V> nextEntry() {
+        final Entry<K, V> nextEntry() throws NoSuchElementException {
             Entry<K, V> e = next;
             if (e == null)
                 throw new NoSuchElementException();
@@ -1288,7 +1288,7 @@ public class IndexedTreeMap<K, V>
             return e;
         }
 
-        final Entry<K, V> prevEntry() {
+        final Entry<K, V> prevEntry() throws NoSuchElementException {
             Entry<K, V> e = next;
             if (e == null)
                 throw new NoSuchElementException();
@@ -1348,7 +1348,9 @@ public class IndexedTreeMap<K, V>
             super(first);
         }
 
-        public K next() {
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IT_NO_SUCH_ELEMENT", 
+                justification = "Seems to be a false positive")
+        public K next() throws NoSuchElementException {
             return prevEntry().key;
         }
     }
@@ -1392,7 +1394,7 @@ public class IndexedTreeMap<K, V>
      *
      * @throws NoSuchElementException if the Entry is null
      */
-    static <K> K key(Entry<K, ?> e) {
+    static <K> K key(Entry<K, ?> e) throws NoSuchElementException {
         if (e == null)
             throw new NoSuchElementException();
         return e.key;
@@ -1773,7 +1775,7 @@ public class IndexedTreeMap<K, V>
                 return next != null && next.key != fenceKey;
             }
 
-            final IndexedTreeMap.Entry<K, V> nextEntry() {
+            final IndexedTreeMap.Entry<K, V> nextEntry() throws NoSuchElementException {
                 IndexedTreeMap.Entry<K, V> e = next;
                 if (e == null || e.key == fenceKey)
                     throw new NoSuchElementException();
@@ -1784,7 +1786,7 @@ public class IndexedTreeMap<K, V>
                 return e;
             }
 
-            final IndexedTreeMap.Entry<K, V> prevEntry() {
+            final IndexedTreeMap.Entry<K, V> prevEntry() throws NoSuchElementException {
                 IndexedTreeMap.Entry<K, V> e = next;
                 if (e == null || e.key == fenceKey)
                     throw new NoSuchElementException();
@@ -1856,7 +1858,9 @@ public class IndexedTreeMap<K, V>
                 super(last, fence);
             }
 
-            public Map.Entry<K, V> next() {
+            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IT_NO_SUCH_ELEMENT", 
+                    justification = "Seems to be a false positive")
+            public Map.Entry<K, V> next() throws NoSuchElementException {
                 return prevEntry();
             }
 
@@ -1871,7 +1875,9 @@ public class IndexedTreeMap<K, V>
                 super(last, fence);
             }
 
-            public K next() {
+            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IT_NO_SUCH_ELEMENT", 
+                    justification = "Seems to be a false positive")
+            public K next() throws NoSuchElementException {
                 return prevEntry().key;
             }
 
