@@ -142,58 +142,59 @@ public class SpjFile {
         if (name == null) {
             throw new java.io.IOException("Null name during write"); // NOI18N
         }
-        OutputStream s = new java.io.BufferedOutputStream(
-                new java.io.FileOutputStream(new java.io.File(name)));
+        try (OutputStream s = new java.io.BufferedOutputStream(
+                new java.io.FileOutputStream(new java.io.File(name)))) {
 
-        // find size of output file
-        int length = Header.HEADERSIZE * h0.numHeaders();  // allow header space at start
-        for (int i = 1; i < h0.numHeaders(); i++) {
-            length += headers[i].getRecordLength();
-        }
-        byte[] buffer = new byte[length];
-        for (int i = 0; i < length; i++) {
-            buffer[i] = 0;
-        }
-
-        // start with first header
-        int index = 0;
-        index = h0.store(buffer, index);
-
-        if (index != Header.HEADERSIZE) {
-            log.error("Unexpected 1st header length: {}", index);
-        }
-
-        int datastart = index * h0.numHeaders(); //index is the length of the 1st header
-
-        // rest of the headers
-        for (int i = 1; i < h0.numHeaders(); i++) {  // header 0 already done
-            // Update header pointers.
-            headers[i].updateStart(datastart);
-            datastart += headers[i].getRecordLength();
-
-            // copy contents into output buffer
-            index = headers[i].store(buffer, index);
-        }
-
-        // copy the chunks; skip the first header, with no data
-        for (int i = 1; i < h0.numHeaders(); i++) {
-            int start = headers[i].getRecordStart();
-            int count = headers[i].getRecordLength();  // stored one long
-
-            byte[] content = headers[i].getByteArray();
-            if (count != content.length) {
-                log.error("header count {} != content length {}", count, content.length);
+            // find size of output file
+            int length = Header.HEADERSIZE * h0.numHeaders();  // allow header space at start
+            for (int i = 1; i < h0.numHeaders(); i++) {
+                length += headers[i].getRecordLength();
             }
-            for (int j = 0; j < count; j++) {
-                buffer[start + j] = content[j];
+            byte[] buffer = new byte[length];
+            for (int i = 0; i < length; i++) {
+                buffer[i] = 0;
             }
+
+            // start with first header
+            int index = 0;
+            index = h0.store(buffer, index);
+
+            if (index != Header.HEADERSIZE) {
+                log.error("Unexpected 1st header length: {}", index);
+            }
+
+            int datastart = index * h0.numHeaders(); //index is the length of the 1st header
+
+            // rest of the headers
+            for (int i = 1; i < h0.numHeaders(); i++) {  // header 0 already done
+                // Update header pointers.
+                headers[i].updateStart(datastart);
+                datastart += headers[i].getRecordLength();
+
+                // copy contents into output buffer
+                index = headers[i].store(buffer, index);
+            }
+
+            // copy the chunks; skip the first header, with no data
+            for (int i = 1; i < h0.numHeaders(); i++) {
+                int start = headers[i].getRecordStart();
+                int count = headers[i].getRecordLength();  // stored one long
+
+                byte[] content = headers[i].getByteArray();
+                if (count != content.length) {
+                    log.error("header count {} != content length {}", count, content.length);
+                }
+                for (int j = 0; j < count; j++) {
+                    buffer[start + j] = content[j];
+                }
+            }
+
+            // write out the buffer
+            s.write(buffer);
+
+            // purge buffers
+            s.close();
         }
-
-        // write out the buffer
-        s.write(buffer);
-
-        // purge buffers
-        s.close();
     }
 
     /**
