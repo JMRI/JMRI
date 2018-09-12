@@ -389,6 +389,34 @@ public abstract class AbstractMonPane extends JmriPanel {
     public String getHelpTarget() {
         return "package.jmri.jmrix.AbstractMonFrame"; // NOI18N
     }
+        
+    /**
+     *  Log an Message derived message.
+     *
+     *  @param message message object to log.
+     */
+    public void logMessage(Message message){
+	    logMessage("",message);
+    }
+
+    /**
+     *  Log an Message derived message with a prefixed label.
+     *
+     *  @param prefix label to add to the start of the message.
+     *  @param message message object to log.
+     */
+    public void logMessage(String prefix,Message message){
+        // display the raw data if requested  
+        StringBuilder raw = new StringBuilder(prefix);
+        if (rawCheckBox.isSelected()) {
+            raw.append(message.toString());
+        }
+
+        // display the decoded data
+        String text=message.toMonitorString();
+        nextLine(text + "\n", raw.toString());
+    }
+
 
     public void nextLine(String line, String raw) {
         nextLineWithTime(new Date(), line, raw);
