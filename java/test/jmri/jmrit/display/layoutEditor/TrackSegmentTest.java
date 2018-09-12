@@ -3,10 +3,10 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -16,8 +16,8 @@ import org.junit.Test;
  */
 public class TrackSegmentTest {
 
-    private LayoutEditor layoutEditor = null;
-    private TrackSegment trackSegment = null;
+    static private LayoutEditor layoutEditor = null;
+    static private TrackSegment trackSegment = null;
 
     @Test
     public void testCtor() {
@@ -66,8 +66,8 @@ public class TrackSegmentTest {
     }
 
     // from here down is testing infrastructure
-    @Before
-    public void setUp() throws Exception {
+    @BeforeClass
+    static public void setUp() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
@@ -78,8 +78,8 @@ public class TrackSegmentTest {
         }
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @AfterClass
+    static public void tearDown() throws Exception {
         JUnitUtil.dispose(layoutEditor);
         JUnitUtil.tearDown();
     }
