@@ -1423,6 +1423,8 @@ public class IndexedTreeMap<K, V>
         final boolean fromStart, toEnd;
         final boolean loInclusive, hiInclusive;
 
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT",
+                    justification = "Comparison was originally in 3rd party code")
         NavigableSubMap(IndexedTreeMap<K, V> m,
                         boolean fromStart, K lo, boolean loInclusive,
                         boolean toEnd, K hi, boolean hiInclusive) {
@@ -1431,9 +1433,9 @@ public class IndexedTreeMap<K, V>
                     throw new IllegalArgumentException("fromKey > toKey");
             } else {
                 if (!fromStart) // type check
-                    m.compare(lo, lo);
+                    m.compare(lo, lo);  // RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT here
                 if (!toEnd)
-                    m.compare(hi, hi);
+                    m.compare(hi, hi); // RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT
             }
 
             this.m = m;
