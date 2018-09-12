@@ -45,7 +45,7 @@ public class InstallFromURL extends JmriAbstractAction {
     }
 
     public InstallFromURL() {
-        super("Install TrainCrew Application");
+        super(Bundle.getMessage("TrainCrewInstallMenu"));
     }
 
     JPanel _who;
@@ -73,10 +73,10 @@ public class InstallFromURL extends JmriAbstractAction {
                 
                 log.info("Complete!");
             } catch (java.io.IOException ex) {
-                log. error("Error in transfer", ex);
+                log.error("Error in transfer", ex);
             }
         } catch (java.net.MalformedURLException ex) {
-            log. error("Invalid URL", ex);
+            log.error("Invalid URL", ex);
         }
     }
 
@@ -88,4 +88,5 @@ public class InstallFromURL extends JmriAbstractAction {
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(InstallFromURL.class);
+
 }
