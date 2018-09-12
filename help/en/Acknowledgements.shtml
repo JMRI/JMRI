@@ -293,12 +293,15 @@
 
         <li>Seth Cohen, who helped get serial sensors and NCE AIUs
         to work, and wrote the speedometer web page</li>
-
+            
         <li>Glen Colbert, who contributed the MRC AD370 decoder
         definition</li>
 
         <li>Bob Coleman added the CTI Acela support and did a huge
         amount of work on the operations code tests.</li>
+
+        <li>Jeff Collell, <!--- auctionsjeff --->
+            who added Light support for OpenLCB.<li>
 
         <li>Joe Comuzzi <!-- jcomuzzi -->
         added new icon tests</li>
@@ -442,8 +445,6 @@
         provided the DH83FX definition, and many great
         suggestions</li>
 
-        <li>Costin Grigoras added an option to start the DCC++ TCP server at startup</li>
-
         <li>Bill Gray suggested web page improvements</li>
 
         <li>Michael Greene, who corrected a bug in the SoundTraxx
@@ -452,18 +453,20 @@
         the E-Z Command and Zimo MX61_N decoders; and updated the
         Digitrax definition for new types.</li>
 
-        <li>Tom Gretton, who helped with documentation and the Groups.io migration</li><!-- tgretton -->
+        <li>Tom Gretton,  <!-- tgretton -->
+            who helped with documentation and the Groups.io migration</li>
 
         <li>Walter Griffin, who provided graphics for signals and
         CTC panels</li>
 
-        <li>Costin Grigoras, <!_-- costing -->
-        who updated the DCC++ implementation
-        to do a background refresh of the function values.</li>
+        <li>Costin Grigoras, <!-- costing -->
+            who added an option to start the DCC++ TCP server at startup
+            and updated the DCC++ implementation
+            to do a background refresh of the function values.</li>
 
         <li>Mark Gurries, who provided loaner equipment and great
-        ideas. He's currently working on decoder definitions for
-        DecoderPro </li>
+            ideas. He's currently working on decoder definitions for
+            DecoderPro </li>
         
         <a name="H" id="H"></a>
 
