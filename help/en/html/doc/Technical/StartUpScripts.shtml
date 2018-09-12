@@ -311,7 +311,7 @@
           is in a directory with the <code>.jmri</code> extension, add the following
           UTI and document type to that application's Info.plist file:</p>
       
-      <code><pre>
+      <pre>
         &lt;key&gt;UTImportedTypeDeclarations&lt;/key&gt;
         &lt;array&gt;
             &lt;dict&gt;
@@ -345,7 +345,7 @@
                 &lt;/array&gt;
             &lt;/dict&gt;
         &lt;/array&gt;
-      </pre></code>
+      </pre>
       
       <p>Note that you will want to provide icons for these documents; the example
           does not. Note also that if, and when, the JMRI applications include the
