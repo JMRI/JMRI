@@ -81,6 +81,11 @@ public class TrackSegmentTest {
     @AfterClass
     static public void tearDown() throws Exception {
         JUnitUtil.dispose(layoutEditor);
+
+        // release refereces to track segment and layout editor
+        trackSegment = null;
+        layoutEditor = null;
+        
         JUnitUtil.tearDown();
     }
 }
