@@ -22,6 +22,6 @@ public interface Message {
      */
     public default String toMonitorString(){
           return toString();
-    };
+    }
 
 }

@@ -293,14 +293,18 @@
 
         <li>Seth Cohen, who helped get serial sensors and NCE AIUs
         to work, and wrote the speedometer web page</li>
-
+            
         <li>Glen Colbert, who contributed the MRC AD370 decoder
         definition</li>
 
         <li>Bob Coleman added the CTI Acela support and did a huge
         amount of work on the operations code tests.</li>
 
-        <li>Joe Comuzzi added some icon tests</li><!-- jcomuzzi -->
+        <li>Jeff Collell, <!--- auctionsjeff --->
+            who added Light support for OpenLCB.<li>
+
+        <li>Joe Comuzzi <!-- jcomuzzi -->
+        added new icon tests</li>
         
         <li>John Crellin contributed numerous new and improved
         decoder definitions for MRC decoders and the Kato
@@ -441,8 +445,6 @@
         provided the DH83FX definition, and many great
         suggestions</li>
 
-        <li>Costin Grigoras added an option to start the DCC++ TCP server at startup</li>
-
         <li>Bill Gray suggested web page improvements</li>
 
         <li>Michael Greene, who corrected a bug in the SoundTraxx
@@ -451,14 +453,20 @@
         the E-Z Command and Zimo MX61_N decoders; and updated the
         Digitrax definition for new types.</li>
 
-        <li>Tom Gretton, who helped with documentation and the Groups.io migration</li><!-- tgretton -->
+        <li>Tom Gretton,  <!-- tgretton -->
+            who helped with documentation and the Groups.io migration</li>
 
         <li>Walter Griffin, who provided graphics for signals and
         CTC panels</li>
 
+        <li>Costin Grigoras, <!-- costing -->
+            who added an option to start the DCC++ TCP server at startup
+            and updated the DCC++ implementation
+            to do a background refresh of the function values.</li>
+
         <li>Mark Gurries, who provided loaner equipment and great
-        ideas. He's currently working on decoder definitions for
-        DecoderPro </li>
+            ideas. He's currently working on decoder definitions for
+            DecoderPro </li>
         
         <a name="H" id="H"></a>
 
@@ -913,8 +921,9 @@
         <li>Dustin Shoup, who figured out how to preserve order in
         XML files</li>
 
-        <li>Petr Šídlo, who provided a large update to the Czech
-        translations of JMRI</li><!-- sidlo64 on GitHub -->
+        <li>Petr Šídlo, <!-- sidlo64 -->
+        who provided a large update to the Czech
+        translations of JMRI</li>
 
         <li>Pekka Siiskonen, who suggested we add error numbers to
         error messages to make it easier to discuss which specific
@@ -932,7 +941,8 @@
         <li>Ted Smith, who corrected some errors in sample scripts
             and the basic two-searchlight definition</li>
 
-        <li>John Socha-Leialoha, who improved the WiThrottle
+        <li>John Socha-Leialoha, <!-- JohnSL -->
+        who improved the WiThrottle
         protocol documentation</li>
 
         <li>Alfredo Sola provides the Spanish translation</li>
