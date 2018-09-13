@@ -314,8 +314,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
                 logStream.close();
               }   
 
-            } catch (Exception ex)
-            {
+            } catch (RuntimeException | java.io.IOException ex) {
                 log.error("exception "+ex);
             }
         }
