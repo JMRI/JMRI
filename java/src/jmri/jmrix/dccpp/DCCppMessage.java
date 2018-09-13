@@ -2470,6 +2470,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      */
     @Override
     public boolean equals(final Object obj) {
+        if (obj == null) return false;
+        if (! (obj instanceof DCCppMessage)) return false;
+        
         final DCCppMessage other = (DCCppMessage) obj;
 
         final String myCmd = this.toString();
@@ -2484,6 +2487,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         return getFuncBaseByte1(this.getFuncByte1Int()) == getFuncBaseByte1(other.getFuncByte1Int());
     }
 
+    public int hashCode() {
+        return myMessage.hashCode();
+    }
+    
     /**
      * Get the function group from the first byte of the function setting call.
      * 

@@ -100,13 +100,6 @@ public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements 
         }
     }
 
-    @SuppressWarnings("unused")
-    private void checkTC() throws JmriException {
-        if (tc == null) {
-            throw new JmriException("attempt to use DCC4PC Traffic Controller after dispose");
-        }
-    }
-
     Dcc4PcTrafficController tc;
 
     public void notifyReply(Dcc4PcReply r) {
