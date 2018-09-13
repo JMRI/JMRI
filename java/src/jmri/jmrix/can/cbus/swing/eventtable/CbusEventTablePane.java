@@ -118,28 +118,38 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         super();
     }
 
+    // order needs to match column list top of dtabledatamodel
+    private final String[] columnToolTips = {
+        Bundle.getMessage("EventColTip"),
+        Bundle.getMessage("NodeColTip"),
+        Bundle.getMessage("NameColTip"),
+        Bundle.getMessage("CbusNodeNameTip"),
+        Bundle.getMessage("IDColTip"),
+        Bundle.getMessage("TypeColTip"),
+        Bundle.getMessage("SendOntip"),
+        Bundle.getMessage("SendOfftip"),
+        Bundle.getMessage("SendToggleTip"),
+        Bundle.getMessage("ColumnLastHeard"),
+        Bundle.getMessage("ColumnRequestStatusTip"),
+        Bundle.getMessage("CommentColTip"),
+        Bundle.getMessage("ColumnTotalSession"),
+        Bundle.getMessage("ColumnOnSession"),
+        Bundle.getMessage("ColumnOffSession"),
+        Bundle.getMessage("ColumnInSessionTip"),
+        Bundle.getMessage("ColumnOutSessionTip"),
+        Bundle.getMessage("ColumnEventDeleteTip"),
+        Bundle.getMessage("FBLastTip"),        
+        Bundle.getMessage("FBOutstandingTip"),
+        Bundle.getMessage("FBNumTip"),
+        Bundle.getMessage("FBTimeoutTip"),
+        Bundle.getMessage("FBEventTip"),
+        Bundle.getMessage("FBNodeTip")
+
+    }; // Length = number of items in array should (at least) match number of columns
+    
     public void init() {
         
-        JTable eventTable = new JTable(eventModel) {
-            // Override JTable Header to implement table header tool tips.
-            @Override
-            protected JTableHeader createDefaultTableHeader() {
-                return new JTableHeader(columnModel) {
-                    @Override
-                    public String getToolTipText(MouseEvent e) {
-                        try {
-                            java.awt.Point p = e.getPoint();
-                            int index = columnModel.getColumnIndexAtX(p.x);
-                            int realIndex = columnModel.getColumn(index).getModelIndex();
-                            return eventModel.columnToolTips[realIndex];    
-                        } catch (RuntimeException e1) {
-                            //catch null pointer exception if mouse is over an empty line
-                        }
-                        return null;
-                    }
-                };
-            }
-        };
+        JTable eventTable = new JTable(eventModel); 
 
         // Use XTableColumnModel so we can control which columns are visible
         XTableColumnModel tcm = new XTableColumnModel();
@@ -164,10 +174,10 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         ndNaColumn.setCellRenderer(getRenderer());        
         TableColumn cmntColumn = eventTableModel.getColumn(CbusEventTableDataModel.COMMENT_COLUMN);                
         cmntColumn.setCellRenderer(getRenderer());         
-        TableColumn evColumn = eventTableModel.getColumn(CbusEventTableDataModel.NODE_COLUMN);
-        evColumn.setCellRenderer(getRenderer());        
-        TableColumn ndColumn = eventTableModel.getColumn(CbusEventTableDataModel.EVENT_COLUMN);                
-        ndColumn.setCellRenderer(getRenderer());
+        TableColumn ndColumn = eventTableModel.getColumn(CbusEventTableDataModel.NODE_COLUMN);
+        ndColumn.setCellRenderer(getRenderer());        
+        TableColumn evColumn = eventTableModel.getColumn(CbusEventTableDataModel.EVENT_COLUMN);                
+        evColumn.setCellRenderer(getRenderer());
         
         TableColumn typeColumn = eventTableModel.getColumn(CbusEventTableDataModel.TYPE_COLUMN);                
         typeColumn.setCellRenderer(new TypeRenderer());
@@ -730,7 +740,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         for (int i = 0; i < tcm.getColumnCount(false); i++) {
             TableColumn tc = tcm.getColumnByModelIndex(i);
             String columnName = table.getModel().getColumnName(i);
-            String xtTooltip = eventModel.columnToolTips[i];
+            String xtTooltip = columnToolTips[i];
             if (columnName != null && !columnName.equals("")) {
                 JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(
                     (table.getModel().getColumnName(i) + " : " + xtTooltip), 

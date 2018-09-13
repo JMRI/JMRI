@@ -157,6 +157,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     // operational instance variables (not saved between sessions)
     public static final int UNKNOWN = Turnout.UNKNOWN;
+    public static final int INCONSISTENT = Turnout.INCONSISTENT;
     public static final int STATE_AC = 0x02;
     public static final int STATE_BD = 0x04;
     public static final int STATE_AD = 0x06;
@@ -1050,6 +1051,7 @@ public class LayoutTurnout extends LayoutTrack {
         } else {
             turnoutName = "";
             namedTurnout = null;
+            setDisableWhenOccupied(false);
         }
     }
 
@@ -1524,6 +1526,7 @@ public class LayoutTurnout extends LayoutTrack {
                 blockName = b.getId();
             } else {
                 blockName = "";
+                setDisableWhenOccupied(false);
             }
             // decrement use if block was already counted
             if ((block != null)
@@ -2598,6 +2601,9 @@ public class LayoutTurnout extends LayoutTrack {
             });
 
             cbmi = new JCheckBoxMenuItem(Bundle.getMessage("DisabledWhenOccupied"));
+            if (getTurnout() == null || getBlockName().isEmpty()) {
+                cbmi.setEnabled(false);
+            }
             cbmi.setSelected(disableWhenOccupied);
             popup.add(cbmi);
             cbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
@@ -3199,7 +3205,7 @@ public class LayoutTurnout extends LayoutTrack {
 
         int type = getTurnoutType();
         if (type == DOUBLE_XOVER) {
-            if (state != Turnout.THROWN) { // unknown or continuing path - not crossed over
+            if (state != Turnout.THROWN && state != INCONSISTENT) { // unknown or continuing path - not crossed over
                 if (isMain == mainlineA) {
                     g2.setColor(colorA);
                     g2.draw(new Line2D.Double(pA, pABM));
@@ -3229,7 +3235,7 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 }
             }
-            if (state != Turnout.CLOSED) { // unknown or diverting path - crossed over
+            if (state != Turnout.CLOSED && state != INCONSISTENT) { // unknown or diverting path - crossed over
                 if (isMain == mainlineA) {
                     g2.setColor(colorA);
                     g2.draw(new Line2D.Double(pA, pAM));
@@ -3263,13 +3269,49 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 }
             }
+            if (state == INCONSISTENT) {
+                if (isMain == mainlineA) {
+                    g2.setColor(colorA);
+                    g2.draw(new Line2D.Double(pA, pAM));
+                }
+                if (isMain == mainlineB) {
+                    g2.setColor(colorB);
+                    g2.draw(new Line2D.Double(pB, pBM));
+                }
+                if (isMain == mainlineC) {
+                    g2.setColor(colorC);
+                    g2.draw(new Line2D.Double(pC, pCM));
+                }
+                if (isMain == mainlineD) {
+                    g2.setColor(colorD);
+                    g2.draw(new Line2D.Double(pD, pDM));
+                }
+                if (!isBlock || drawUnselectedLeg) {
+                    if (isMain == mainlineA) {
+                        g2.setColor(colorA);
+                        g2.draw(new Line2D.Double(pAF, pM));
+                    }
+                    if (isMain == mainlineC) {
+                        g2.setColor(colorC);
+                        g2.draw(new Line2D.Double(pCF, pM));
+                    }
+                    if (isMain == mainlineB) {
+                        g2.setColor(colorB);
+                        g2.draw(new Line2D.Double(pBF, pM));
+                    }
+                    if (isMain == mainlineD) {
+                        g2.setColor(colorD);
+                        g2.draw(new Line2D.Double(pDF, pM));
+                    }
+                }
+            }
         } else if ((type == RH_XOVER)
                 || (type == LH_XOVER)) {    // draw (rh & lh) cross overs
             pAF = MathUtil.midPoint(pABM, pM);
             pBF = MathUtil.midPoint(pABM, pM);
             pCF = MathUtil.midPoint(pCDM, pM);
             pDF = MathUtil.midPoint(pCDM, pM);
-            if (state != Turnout.THROWN) { // unknown or continuing path - not crossed over
+            if (state != Turnout.THROWN && state != INCONSISTENT) { // unknown or continuing path - not crossed over
                 if (isMain == mainlineA) {
                     g2.setColor(colorA);
                     g2.draw(new Line2D.Double(pA, pABM));
@@ -3308,7 +3350,7 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 }
             }
-            if (state != Turnout.CLOSED) { // unknown or diverting path - crossed over
+            if (state != Turnout.CLOSED && state != INCONSISTENT) { // unknown or diverting path - crossed over
                 if (getTurnoutType() == RH_XOVER) {
                     if (isMain == mainlineA) {
                         g2.setColor(colorA);
@@ -3357,6 +3399,45 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 }
             }
+            if (state == INCONSISTENT) {
+                if (isMain == mainlineA) {
+                    g2.setColor(colorA);
+                    g2.draw(new Line2D.Double(pA, pAM));
+                }
+                if (isMain == mainlineB) {
+                    g2.setColor(colorB);
+                    g2.draw(new Line2D.Double(pB, pBM));
+                }
+                if (isMain == mainlineC) {
+                    g2.setColor(colorC);
+                    g2.draw(new Line2D.Double(pC, pCM));
+                }
+                if (isMain == mainlineD) {
+                    g2.setColor(colorD);
+                    g2.draw(new Line2D.Double(pD, pDM));
+                }
+                if (!isBlock || drawUnselectedLeg) {
+                    if (getTurnoutType() == RH_XOVER) {
+                        if (isMain == mainlineA) {
+                            g2.setColor(colorA);
+                            g2.draw(new Line2D.Double(pAF, pM));
+                        }
+                        if (isMain == mainlineC) {
+                            g2.setColor(colorC);
+                            g2.draw(new Line2D.Double(pCF, pM));
+                        }
+                    } else if (getTurnoutType() == LH_XOVER) {
+                        if (isMain == mainlineB) {
+                            g2.setColor(colorB);
+                            g2.draw(new Line2D.Double(pBF, pM));
+                        }
+                        if (isMain == mainlineD) {
+                            g2.setColor(colorD);
+                            g2.draw(new Line2D.Double(pDF, pM));
+                        }
+                    }
+                }
+            }
         } else if ((type == SINGLE_SLIP) || (type == DOUBLE_SLIP)) {
             log.error("slips should be being drawn by LayoutSlip sub-class");
         } else {    // LH, RH, or WYE Turnouts
@@ -3365,7 +3446,8 @@ public class LayoutTurnout extends LayoutTrack {
                 g2.setColor(colorA);
                 g2.draw(new Line2D.Double(pA, pM));
             }
-            if (state == UNKNOWN || continuingSense == state) { // unknown or continuing path
+
+            if (state == UNKNOWN || (continuingSense == state && state != INCONSISTENT)) { // unknown or continuing path
                 // draw center<===>B
                 if (isMain == mainlineB) {
                     g2.setColor(colorB);
@@ -3378,7 +3460,8 @@ public class LayoutTurnout extends LayoutTrack {
                     g2.draw(new Line2D.Double(MathUtil.twoThirdsPoint(pM, pB), pB));
                 }
             }
-            if (continuingSense != state) { // unknown or diverting path
+
+            if (state == UNKNOWN || (continuingSense != state && state != INCONSISTENT)) { // unknown or diverting path
                 // draw center<===>C
                 if (isMain == mainlineC) {
                     g2.setColor(colorC);
