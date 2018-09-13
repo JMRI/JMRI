@@ -459,7 +459,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * @return true to continue, false to return
      */
     private boolean setSpeedRatio(String speedType) {
-        if (speedType == null) {
+        if (speedType == null || speedType == _speedType) {
             return false;
         }
         _speedType = speedType;
@@ -544,7 +544,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         }
     }
 
-    // if a ramp is needed to restore speed, delay setting flags until ramp is done
+    /* if a ramp is needed to restore speed, delay setting flags until ramp is done
     // ramp up will set flags false
     synchronized protected void resumeSpeedFrom(int which, String speedType) {
         cancelRamp(true);
@@ -574,17 +574,20 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             default:
                 log.error("Bad parameter for resumeSpeedFrom({})", which);
         }
-    }
+    }*/
 
     /**
      * Immediate stop command from Warrant.controlRunTrain()
      * Do not ramp.
      * @param eStop true for emergency stop
+     * @param setHalt for user restart needed, otherwise some kind clear
      */
     synchronized public void setStop(boolean eStop, boolean setHalt) {
         cancelRamp(true);
         if (setHalt) {
-            setHalt(true);
+            _halt = true;
+        } else {
+            _waitForClear = true;
         }
         if (eStop) {
             setSpeed(-0.1f);
@@ -634,9 +637,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (_throttle != null && _throttle.getSpeedSetting() > 0.0f) {
             _throttle.setSpeedSetting(-1.0f);
             setSpeed(0.0f);     // prevent creep after EStop - according to Jim Betz
-            for (int i = 0; i < 10; i++) {
+/*            for (int i = 0; i < 10; i++) {
                 setFunction(i, false);
-            }
+            }*/
             _warrant.releaseThrottle(_throttle);
         }
     }
@@ -1051,7 +1054,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             _endSpeedType, speed, _endSpeed, _normalSpeed, _warrant.getDisplayName());
 
                     if (increasing) {
-//                        float scriptSpeed = _normalSpeed;
+                        _resumePending = true;
                         float scriptDist = 0;
                         float scriptSpeed = 0;
                         for (int idx = _idxCurrentCommand; idx > 0; idx--) {
