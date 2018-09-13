@@ -1206,7 +1206,7 @@ public class LayoutEditorTools {
      */
     @Deprecated
     public void setSignalHeadOnPanel(int rotation,
-            @Nullable String signalHeadName,
+            @Nonnull String signalHeadName,
             int xLoc, int yLoc) {
         setSignalHeadOnPanel((double)rotation,signalHeadName,xLoc,yLoc);
     }
@@ -1219,7 +1219,9 @@ public class LayoutEditorTools {
      * @param signalHeadName name of a signal head.
      * @param where coordinates for placing signal head on panel.
      */
-    public void setSignalHeadOnPanel(double directionDEG, @Nonnull String signalHeadName, @Nonnull Point2D where) {
+    public void setSignalHeadOnPanel(double directionDEG, 
+            @Nonnull String signalHeadName, 
+            @Nonnull Point2D where) {
         setSignalHeadOnPanel(directionDEG, signalHeadName, (int) where.getX(), (int) where.getY());
     }
 

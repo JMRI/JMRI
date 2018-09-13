@@ -543,7 +543,7 @@ public class EcosLocoToRoster implements EcosListener {
         re.setDecoderFamily(pDecoderFile.getFamily());
 
         if (ecosLoco.getNumber() == 0) {
-            re.setDccAddress(Integer.toString(ecosLoco.MFX_DCCAddressOffset+ecosLoco.getEcosObjectAsInt()));
+            re.setDccAddress(Integer.toString(EcosLocoAddress.MFX_DCCAddressOffset+ecosLoco.getEcosObjectAsInt()));
         } else {
             re.setDccAddress(Integer.toString(ecosLoco.getNumber()));
         }

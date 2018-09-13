@@ -250,9 +250,7 @@ public class StartupActionsPreferencesPanel extends JPanel implements Preference
     @Override
     public void savePreferences() {
         Profile profile = ProfileManager.getDefault().getActiveProfile();
-        if (profile != null) {
-            InstanceManager.getDefault(StartupActionsManager.class).savePreferences(profile);
-        }
+        InstanceManager.getDefault(StartupActionsManager.class).savePreferences(profile);
     }
 
     @Override
