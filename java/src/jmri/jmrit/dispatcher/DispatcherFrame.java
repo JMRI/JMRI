@@ -191,7 +191,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 return -3;
             }
             return loadTrainFromTrainInfo(info, overRideType, overRideValue);
-        } catch (Exception ex) {
+        } catch (RuntimeException ex) {
             log.error("Unexpected, uncaught exception loading traininfofile [{}]", traininfoFileName, ex);
             return -9;
         }
