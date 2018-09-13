@@ -58,7 +58,7 @@ public class Z21MonPane extends jmri.jmrix.AbstractMonPane implements Z21Listene
      */
     @Override
     public synchronized void message(Z21Message l) {
-	logMessage("packet:",l);
+	logMessage(l);
     }
 
     /**

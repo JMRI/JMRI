@@ -396,25 +396,36 @@ public abstract class AbstractMonPane extends JmriPanel {
      *  @param message message object to log.
      */
     public void logMessage(Message message){
-	    logMessage("",message);
+	    logMessage("","",message);
+    }
+
+    /**
+     *  Log an Message derived message.
+     *
+     *  @param messagePrefix text to prefix the message with.
+     *  @param message message object to log.
+     */
+    public void logMessage(String messagePrefix,Message message){
+	    logMessage(messagePrefix,"",message);
     }
 
     /**
      *  Log an Message derived message with a prefixed label.
      *
-     *  @param prefix label to add to the start of the message.
+     *  @param messagePrefix text to prefix the message with.
+     *  @param rawPrefix label to add to the start of the message.
      *  @param message message object to log.
      */
-    public void logMessage(String prefix,Message message){
+    public void logMessage(String messagePrefix,String rawPrefix,Message message){
         // display the raw data if requested  
-        StringBuilder raw = new StringBuilder(prefix);
+        StringBuilder raw = new StringBuilder(rawPrefix);
         if (rawCheckBox.isSelected()) {
             raw.append(message.toString());
         }
 
         // display the decoded data
         String text=message.toMonitorString();
-        nextLine(text + "\n", raw.toString());
+        nextLine(messagePrefix + " " + text + "\n", raw.toString());
     }
 
 
