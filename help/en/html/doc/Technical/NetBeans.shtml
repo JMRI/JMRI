@@ -332,6 +332,14 @@
             In the middle of that menu are 
             items for launching PanelPro, launching DecoderPro
             and doing other build steps.</li>
+            
+            <li>The "Debug" target is a special case.
+            Which program (PanelPro vs DecoderPro) 
+            is defined by a line near the end of the
+            nbproject/ide-targets.xml file in the 
+            JMRI source directory. Perhaps 
+            somebody can some day figure out a 
+            better way to configure that...
           </ul>
 
           <p>If you want to run the program under the NetBeans

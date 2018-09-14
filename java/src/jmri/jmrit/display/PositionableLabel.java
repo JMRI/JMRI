@@ -640,9 +640,7 @@ public class PositionableLabel extends JLabel implements Positionable {
 
     public void finishItemUpdate(DisplayFrame paletteFrame, ItemPanel itemPanel) {
         itemPanel.closeDialogs();
-        itemPanel = null;
         paletteFrame.dispose();
-        paletteFrame = null;
         invalidate();
     }
 

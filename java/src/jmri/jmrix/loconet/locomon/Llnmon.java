@@ -2666,7 +2666,8 @@ public class Llnmon {
         String reporterSystemName;
         String reporterUserName;
         String zone;
-        switch (l.getElement(2) & 0x0E) { // ignore bit 0 which seems to provide some unknown info from the BXP88
+        int bxp88Zone = 1 + (l.getElement(2) & 0x07);
+        switch (l.getElement(2) & 0x0f) { // ignore bit 0 which seems to provide some unknown info from the BXP88
             case 0x00:
                 zone = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_ZONEA");
                 break;
@@ -2707,6 +2708,8 @@ public class Llnmon {
         if ((uname != null) && (!uname.isEmpty())) {
             reporterUserName = uname;
         }
+        int bxpa1Number = 1 + l.getElement(2) + (l.getElement(1) & 0x1F) * 128;
+        int bxp88Number = 1 + (l.getElement(2)/8) + (l.getElement(1) & 0x1F) * 16;
         int section = 1 + (l.getElement(2) / 16) + (l.getElement(1) & 0x1F) * 8;
 
         String locoAddr = convertToMixed(l.getElement(4), l.getElement(3));
@@ -2714,9 +2717,15 @@ public class Llnmon {
                 ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_PRESENT")
                 : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_HELPER_IS_ABSENT");
 
-        return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_REPORT",
-                locoAddr, transpActivity, reporterSystemName,
-                reporterUserName, section, zone);
+        if ((l.getElement(2) & 0x1) == 0) {
+            return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_REPORT_WITH_BXP88",
+                    locoAddr, transpActivity, reporterSystemName,
+                    reporterUserName, section, zone, bxp88Number, bxp88Zone, bxpa1Number);
+        } else {
+            return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_TRANSP_REPORT_NOT_BDL16X",
+                    locoAddr, transpActivity, reporterSystemName,
+                    reporterUserName, bxp88Number, bxp88Zone, bxpa1Number);
+        }
     }
 
     private String interpretOpcWrSlDataOpcSlRdData(LocoNetMessage l) {

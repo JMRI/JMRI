@@ -1228,6 +1228,12 @@ import org.junit.Test;
         the useful way:  First the @Before of the super class, then
         the @Before of your class, then the test, then the @After of your class,
         and finally the @After of the superclass.
+        <p>In rare cases, you might want to use <code>@BeforeClass</code>
+            and <code>@AfterClass</code> methods to wrap the entire
+            test class.  These have to be <code>static</code>
+            and are invoked around (i.e. before and after) anything else
+            in the test class. This can be used to e.g. wrap
+            static initializers in the class under test.
         </li>
 
         <li>Finally, replace the test suite definition. JUnit3 was
