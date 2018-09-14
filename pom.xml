@@ -126,7 +126,7 @@
                         <!-- configured to fail on High priority bugs during test phase -->
                         <executions>
                             <execution>
-                                <id>failing-on-high</id>
+                                <id>failing-on-medium</id>
                                 <phase>test</phase>
                                 <goals>
                                     <goal>check</goal>
@@ -134,7 +134,7 @@
                                 <configuration>
                                     <excludeFilterFile>.spotbugs-check.xml</excludeFilterFile>
                                     <effort>Max</effort>
-                                    <threshold>Medium</threshold>
+                                    <threshold>medium</threshold>
                                     <maxHeap>1536</maxHeap>
                                     <timeout>1200000</timeout><!-- 20 minutes -->
                                 </configuration>
