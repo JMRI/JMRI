@@ -116,7 +116,7 @@
       the panel file will typically be available only for the system connection
       in which it was created.</p>
 
-      <h3>Adding an item to the table</h2>
+      <h3>Adding an item to the table</h3>
       <p>When you add an item to one of the tables, you only
             have to enter the numbers to have JMRI construct
             the complete system name.<br>
