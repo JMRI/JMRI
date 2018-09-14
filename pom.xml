@@ -132,7 +132,7 @@
                                     <goal>check</goal>
                                 </goals>
                                 <configuration>
-                                    <excludeFilterFile>.spotbugs.xml</excludeFilterFile>
+                                    <excludeFilterFile>.spotbugs-check.xml</excludeFilterFile>
                                     <effort>Max</effort>
                                     <threshold>Medium</threshold>
                                     <maxHeap>1536</maxHeap>
@@ -272,7 +272,7 @@
                 <version>3.1.6</version>
                 <!-- configured to fail on medium priority bugs (needs to be done two places)-->
                 <configuration>
-                    <excludeFilterFile>.spotbugs.xml</excludeFilterFile>
+                    <excludeFilterFile>.spotbugs-check.xml</excludeFilterFile>
                     <effort>Max</effort>
                     <threshold>Medium</threshold>
                     <maxHeap>1536</maxHeap>
