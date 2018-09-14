@@ -851,7 +851,7 @@ public class ConditionalEditBase {
                     if (m == null || m.getValue() == null) {
                         throw new NumberFormatException();
                     }
-                    validateIntensity(Integer.valueOf((String) m.getValue()).intValue());
+                    validateIntensity(Integer.parseInt((String) m.getValue()));
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null,
                             Bundle.getMessage("Error24", intReference),
@@ -1439,7 +1439,7 @@ public class ConditionalEditBase {
                 if ((nHour < 0) || (nHour > 24)) {
                     error = true;
                 }
-                nMin = Integer.valueOf(minute);
+                nMin = Integer.parseInt(minute);
                 if ((nMin < 0) || (nMin > 59)) {
                     error = true;
                 }
