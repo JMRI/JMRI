@@ -134,7 +134,7 @@
                                 <configuration>
                                     <excludeFilterFile>.spotbugs-check.xml</excludeFilterFile>
                                     <effort>Max</effort>
-                                    <threshold>medium</threshold>
+                                    <!-- <threshold>medium</threshold> -->
                                     <maxHeap>1536</maxHeap>
                                     <timeout>1200000</timeout><!-- 20 minutes -->
                                 </configuration>
