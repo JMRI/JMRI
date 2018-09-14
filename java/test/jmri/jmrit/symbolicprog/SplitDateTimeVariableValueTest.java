@@ -1,7 +1,5 @@
 package jmri.jmrit.symbolicprog;
 
-import static java.nio.charset.Charset.defaultCharset;
-
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -13,7 +11,7 @@ import jmri.util.CvUtil;
 import org.junit.Assert;
 
 /**
- * SplitTextVariableValueTest.java
+ * SplitDateTimeVariableValueTest.java
  *
  * @todo This test is completely kludged together at this stage to enable
  * further work.
@@ -21,21 +19,21 @@ import org.junit.Assert;
  * @author Bob Jacobsen Copyright 2001, 2002, 2015
  * @author Dave Heap Copyright 2018
  */
-public class SplitTextVariableValueTest extends AbstractVariableValueTestBase {
+public class SplitDateTimeVariableValueTest extends AbstractVariableValueTestBase {
 
 //    final String lowCV = "12";
     String highCV = "18";
     int pFactor = 0;
     int pOffset = 0;
     String uppermask = "";
-    String extra1 = "";
-    String extra2 = "";
-    String extra3 = "";
-    String extra4 = defaultCharset().name();
+    String extra1 = "2000-01-01T00:00:00";  // The S9.3.2 RailCom epoch
+    String extra2 = "1";
+    String extra3 = "Seconds";
+    String extra4 = "default";
 
     ProgDebugger p = new ProgDebugger();
 
-    public SplitTextVariableValueTest(String s) {
+    public SplitDateTimeVariableValueTest(String s) {
         super(s);
     }
 
@@ -63,7 +61,7 @@ public class SplitTextVariableValueTest extends AbstractVariableValueTestBase {
             cvNext.setValue(0);
             v.put(highCV, cvNext);
         }
-        return new SplitTextVariableValue(label, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, item, highCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
+        return new SplitDateTimeVariableValue(label, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, item, highCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
     }
 
     @Override
@@ -126,6 +124,18 @@ public class SplitTextVariableValueTest extends AbstractVariableValueTestBase {
 
     @Override
     public void testVariableReadOnly() {
+    }
+
+    @Override
+    public void testVariableValueStates() {
+    }
+
+    @Override
+    public void testVariableRepStateColor() {
+    }
+
+    @Override
+    public void testVariableVarChangeColorRep() {
     }
 
     @Override

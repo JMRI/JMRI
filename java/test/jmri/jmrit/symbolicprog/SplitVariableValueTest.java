@@ -240,7 +240,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
                 }
             }
         };
-        evtList = new ArrayList<java.beans.PropertyChangeEvent>();
+        evtList = new ArrayList<>();
         var.addPropertyChangeListener(listen);
 
         // set to specific value
