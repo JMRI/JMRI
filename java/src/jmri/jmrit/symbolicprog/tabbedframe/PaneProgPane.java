@@ -1889,7 +1889,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 case "int": {
                     int attribValue;
                     try {
-                        attribValue = Integer.valueOf(attribRawValue);
+                        attribValue = Integer.parseInt(attribRawValue);
                         constraint.set(globs.gridConstraints, attribValue);
                     } catch (IllegalAccessException ey) {
                         log.error("Unable to set constraint \"" + attribName + ". IllegalAccessException error thrown.");
@@ -2112,7 +2112,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * @param cs constraints on layout manager
      */
     protected void makeSoundLabel(Element e, JPanel c, GridBagLayout g, GridBagConstraints cs) {
-        String labelText = rosterEntry.getSoundLabel(Integer.valueOf(LocaleSelector.getAttribute(e, "num")));
+        String labelText = rosterEntry.getSoundLabel(Integer.parseInt(LocaleSelector.getAttribute(e, "num")));
         final JLabel l = new JLabel(labelText);
         l.setAlignmentX(1.0f);
         cs.fill = GridBagConstraints.BOTH;
