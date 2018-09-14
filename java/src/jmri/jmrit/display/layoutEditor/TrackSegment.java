@@ -2642,9 +2642,9 @@ public class TrackSegment extends LayoutTrack {
             int offset) {
         Point2D p1, p2, p3, p4, p5, p6;
         switch (arrowStyle) {
+            //$FALL-THROUGH$
             default:
                 arrowStyle = 0;
-            //$FALL-THROUGH$
             case 0: {
                 break;
             }

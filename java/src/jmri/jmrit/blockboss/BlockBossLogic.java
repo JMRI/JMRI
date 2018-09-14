@@ -173,7 +173,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
         return retVal;
     }
 
-    public NamedBeanHandle<SignalHead> getDrivenSignalNamedBean() {
+    public @Nonnull NamedBeanHandle<SignalHead> getDrivenSignalNamedBean() {
         java.util.Objects.requireNonNull(driveSignal, "driveSignal should have been null");
         return driveSignal;
     }
@@ -1277,7 +1277,7 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
             boolean found = false;
 
             if (nb instanceof SignalHead) {
-                if (getDrivenSignalNamedBean()!=null && nb.equals(getDrivenSignalNamedBean().getBean())) {
+                if (nb.equals(getDrivenSignalNamedBean().getBean())) {
                     message.append("<br><b>" + Bundle.getMessage("InUseThisSslWillBeDeleted") + "</b>");
                     throw new java.beans.PropertyVetoException(message.toString(), evt);
                 }
