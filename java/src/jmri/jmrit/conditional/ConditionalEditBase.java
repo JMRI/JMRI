@@ -220,7 +220,7 @@ public class ConditionalEditBase {
      * @param variableList The current variable list
      * @return the resulting antecedent string
      */
-    String makeAntecedent(ArrayList<ConditionalVariable> variableList) {
+    String makeAntecedent(List<ConditionalVariable> variableList) {
         StringBuilder antecedent = new StringBuilder(64);
         if (variableList.size() != 0) {
             String row = "R"; //NOI18N
@@ -281,7 +281,7 @@ public class ConditionalEditBase {
      * @param curConditional The current conditional.
      * @return false if antecedent can't be validated
      */
-    boolean validateAntecedent(int logicType, String antecedentText, ArrayList<ConditionalVariable> variableList, Conditional curConditional) {
+    boolean validateAntecedent(int logicType, String antecedentText, List<ConditionalVariable> variableList, Conditional curConditional) {
         if (logicType != Conditional.MIXED
                 || LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())
                 || antecedentText == null
@@ -726,7 +726,7 @@ public class ConditionalEditBase {
      *                conditional references
      * @param treeSet A tree set to be built from the varList data
      */
-    void loadReferenceNames(ArrayList<ConditionalVariable> varList, TreeSet<String> treeSet) {
+    void loadReferenceNames(List<ConditionalVariable> varList, TreeSet<String> treeSet) {
         treeSet.clear();
         for (ConditionalVariable var : varList) {
             if (var.getType() == Conditional.TYPE_CONDITIONAL_TRUE || var.getType() == Conditional.TYPE_CONDITIONAL_FALSE) {
