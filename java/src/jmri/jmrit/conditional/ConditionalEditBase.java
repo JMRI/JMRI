@@ -762,10 +762,10 @@ public class ConditionalEditBase {
                     // External references have to be removed before the Logix can be deleted.
                     Conditional c = x.getConditional(csName);
                     Conditional cRef = xRef.getConditional(refName);
-                    String[] msgs = new String[]{c.getUserName(), c.getSystemName(), cRef.getUserName(),
+                    Object[] msgs = new Object[]{c.getUserName(), c.getSystemName(), cRef.getUserName(),
                         cRef.getSystemName(), xRef.getUserName(), xRef.getSystemName()};
                     JOptionPane.showMessageDialog(null,
-                            Bundle.getMessage("Error11", (Object[])msgs), // NOI18N
+                            Bundle.getMessage("Error11", msgs), // NOI18N
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE); // NOI18N
                     return false;
                 }
