@@ -19,9 +19,7 @@
            <Bug pattern="SWL_SLEEP_WITH_LOCK_HELD" />
            <Bug pattern="UW_UNCOND_WAIT" />
            <Bug pattern="VO_VOLATILE_INCREMENT" />
-<!-- 
            <Bug pattern="WA_NOT_IN_LOOP" />
- -->
         </Or>
      </Match>
 
