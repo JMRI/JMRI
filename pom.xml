@@ -122,7 +122,7 @@
                     <plugin>
                         <groupId>com.github.spotbugs</groupId>
                         <artifactId>spotbugs-maven-plugin</artifactId>
-                        <version>3.1.7</version>
+                        <version>3.1.6</version>
                         <!-- configured to fail on Medium priority bugs during test phase (needs to be done two places) -->
                         <executions>
                             <execution>
@@ -269,7 +269,7 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>3.1.7</version>
+                <version>3.1.6</version>
                 <!-- configured to fail on medium priority bugs (needs to be done two places)-->
                 <configuration>
                     <excludeFilterFile>.spotbugs.xml</excludeFilterFile>
