@@ -122,8 +122,8 @@
                     <plugin>
                         <groupId>com.github.spotbugs</groupId>
                         <artifactId>spotbugs-maven-plugin</artifactId>
-                        <version>3.1.1</version>
-                        <!-- configured to fail on High priority bugs during test phase -->
+                        <version>3.1.7</version>
+                        <!-- configured to fail on Medium priority bugs during test phase -->
                         <executions>
                             <execution>
                                 <id>failing-on-high</id>
@@ -134,7 +134,7 @@
                                 <configuration>
                                     <excludeFilterFile>.spotbugs.xml</excludeFilterFile>
                                     <effort>Max</effort>
-                                    <threshold>medium</threshold>
+                                    <threshold>Medium</threshold>
                                     <maxHeap>1536</maxHeap>
                                     <timeout>1200000</timeout><!-- 20 minutes -->
                                 </configuration>
