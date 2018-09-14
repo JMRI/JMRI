@@ -126,7 +126,7 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
         String label = LocaleSelector.getAttribute(e, "label"); // Note the name variable is actually the label attribute
         log.debug("Starting to setRow \"{}\"", label);
         String cv = e.getAttribute("CV").getValue();
-        int cvVal = Integer.valueOf(e.getAttribute("default").getValue());
+        int cvVal = Integer.parseInt(e.getAttribute("default").getValue());
 
         log.debug("            CV \"{}\" value {}", cv, cvVal);
 
@@ -254,7 +254,7 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
     public void actionPerformed(ActionEvent e) {
         log.debug("action command: {}", e.getActionCommand());
         char b = e.getActionCommand().charAt(0);
-        int row = Integer.valueOf(e.getActionCommand().substring(1));
+        int row = Integer.parseInt(e.getActionCommand().substring(1));
         log.debug("event on {} row {}", b, row);
         if (b == 'W') {
             // write command

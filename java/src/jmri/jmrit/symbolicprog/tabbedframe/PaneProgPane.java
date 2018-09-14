@@ -1923,7 +1923,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     try {
                         String[] insetStrings = attribRawValue.split(",");
                         if (insetStrings.length == 4) {
-                            Insets attribValue = new Insets(Integer.valueOf(insetStrings[0]), Integer.valueOf(insetStrings[1]), Integer.valueOf(insetStrings[2]), Integer.valueOf(insetStrings[3]));
+                            Insets attribValue = new Insets(Integer.parseInt(insetStrings[0]), Integer.parseInt(insetStrings[1]), Integer.parseInt(insetStrings[2]), Integer.parseInt(insetStrings[3]));
                             constraint.set(globs.gridConstraints, attribValue);
                         } else {
                             log.error("Invalid value \"" + attribRawValue + "\" for attribute \"" + attribName + "\"");
