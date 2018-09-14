@@ -39,7 +39,7 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
             try {
                 initComponents((NceSystemConnectionMemo) context);
             } catch (Exception e) {
-                //log.error("BoosterProg initContext failed");
+                log.warn("BoosterProg initContext", e);
             }
         }
     }
@@ -241,4 +241,6 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
             releaseProgrammer();
         }
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BoosterProgPanel.class);
 }
