@@ -45,7 +45,9 @@
       <p>We also use two additioanl CI engines to test every change
       entered into our GitHub code repository.</p>
 
-      <h2>Travis CI</h2>We use <a href=
+      <a name="travis" id="travis">
+      <h2>Travis CI</h2>
+      We use <a href=
       "https://travis-ci.org/">Travis CI</a> to do integration/test
       builds on Linux for every pull into our main <a href=
       "http://github.com/JMRI">GitHub</a> repositories.
@@ -72,7 +74,9 @@
       brackets, but not the quotes) anywhere in the commit message
       if so desired.</p>
 
-      <h2>AppVeyor CI</h2>We use <a href=
+      <a name="appveyor" id="travis">
+      <h2>AppVeyor CI</h2>
+      We use <a href=
       "http://www.appveyor.com">AppVeyor CI</a> to do
       integration/test builds on Windows for every pull into our
       main <a href="http://github.com/JMRI">GitHub</a>
@@ -92,7 +96,9 @@
       commits to your own fork of the JMRI repositories, it's a bit
       complicated to do it within the AppVeyor security model.</p>
 
-      <h2 id="jenkins">Jenkins</h2>JMRI uses the <a href=
+      <a name="jenkins" id="travis">
+      <h2 id="jenkins">Jenkins</h2>
+      JMRI uses the <a href=
       "http://jenkins-ci.org/">Jenkins</a> continuous integration
       engine for integration and test builds. This includes keeping
       our <a href="WebSite.shtml">web site</a> up to date as
