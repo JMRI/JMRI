@@ -1,29 +1,33 @@
 package jmri.implementation;
 
 import jmri.*;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Test the DefaultConditional implementation class
  *
  * @author Bob Jacobsen Copyright (C) 2015
  */
-public class DefaultConditionalTest extends NamedBeanTest {
+public class DefaultConditionalTest {
 
     /**
      * Operate parent NamedBeanTest tests.
      */
-    @Override
-    protected NamedBean createInstance() {
-        return new DefaultConditional("IXIC 0");
+    @Test
+    public void createInstance() {
+        new DefaultConditional("IXIC 0");
     }
 
+    @Test
     public void testCtor() {
         Assert.assertNotNull("exists",new DefaultConditional("IXIC 1"));
     }
 
+    @Test
     public void testBasicBeanOperations() {
         Conditional ix1 = new DefaultConditional("IXIC 2");
 
@@ -33,19 +37,15 @@ public class DefaultConditionalTest extends NamedBeanTest {
         Assert.assertTrue("object not equals reverse", !ix2.equals(ix1));
 
         Assert.assertTrue("hash not equals", ix1.hashCode() != ix2.hashCode());
-
     }
 
+    
     // from here down is testing infrastructure
-    public DefaultConditionalTest(String s) {
-        super(s);
-    }
 
     // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
-        super.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalLightManager();
@@ -53,21 +53,9 @@ public class DefaultConditionalTest extends NamedBeanTest {
         jmri.util.JUnitUtil.initIdTagManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {DefaultConditionalTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DefaultConditionalTest.class);
-        return suite;
     }
 
 }
