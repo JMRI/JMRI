@@ -26,12 +26,12 @@ public class CbusMessage {
      * @return CBUS message converted from response to normal.
      */
     public static CanReply opcRangeToStl(CanReply msg){
-        int opc = CbusMessage.getOpcode(msg);
+        int opc = getOpcode(msg);
         // log.debug(" about to check opc {} ",opc);
-        if (opc==CbusConstants.CBUS_ARON) { msg.setElement(0, CbusConstants.CBUS_ACON);}
-        if (opc==CbusConstants.CBUS_AROF) { msg.setElement(0, CbusConstants.CBUS_ACOF);}
-        if (opc==CbusConstants.CBUS_ARSON) { msg.setElement(0, CbusConstants.CBUS_ASON);}
-        if (opc==CbusConstants.CBUS_ARSOF) { msg.setElement(0, CbusConstants.CBUS_ASOF);}
+        if (opc==CbusConstants.CBUS_ARON) { msg.setElement(0, CbusConstants.CBUS_ACON); }
+        else if (opc==CbusConstants.CBUS_AROF) { msg.setElement(0, CbusConstants.CBUS_ACOF); }
+        else if (opc==CbusConstants.CBUS_ARSON) { msg.setElement(0, CbusConstants.CBUS_ASON); }
+        else if (opc==CbusConstants.CBUS_ARSOF) { msg.setElement(0, CbusConstants.CBUS_ASOF); }
         return msg;
     }
     
