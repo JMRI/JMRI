@@ -256,7 +256,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
         public void run() {
             int opCode;
             if (protocol) {
-                ArrayList<Integer> message = new ArrayList<>();
+                ArrayList<Integer> message;
                 while (true) {
                     try {
                         int firstByte = readByteProtected(istream) & 0xFF;

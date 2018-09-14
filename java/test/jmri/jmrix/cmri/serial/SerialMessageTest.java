@@ -1,68 +1,59 @@
 package jmri.jmrix.cmri.serial;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
+import org.junit.*;
 
 /**
  * JUnit tests for the SerialMessage class.
  *
  * @author	Bob Jacobsen Copyright 2003
  */
-public class SerialMessageTest extends TestCase {
+public class SerialMessageTest extends jmri.jmrix.AbstractMessageTestBase{
+	
+    private SerialMessage msg = null;
 
-    public void testCreate() {
-        SerialMessage m = new SerialMessage(1);
-        Assert.assertNotNull("exists", m);
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+    	m = msg = new SerialMessage(1);
+    }
+
+    @After
+    public void tearDown(){
+	m = msg = null;
+	JUnitUtil.tearDown();
     }
 
     public void testToBinaryString() {
-        SerialMessage m = new SerialMessage(4);
-        m.setOpCode(0x81);
-        m.setElement(1, 0x02);
-        m.setElement(2, 0xA2);
-        m.setElement(3, 0x00);
-        m.setBinary(true);
-        Assert.assertEquals("string compare ", "81 02 A2 00", m.toString());
+        msg = new SerialMessage(4);
+        msg.setOpCode(0x81);
+        msg.setElement(1, 0x02);
+        msg.setElement(2, 0xA2);
+        msg.setElement(3, 0x00);
+        msg.setBinary(true);
+        Assert.assertEquals("string compare ", "81 02 A2 00", msg.toString());
     }
 
     public void testBytesToString() {
-        SerialMessage m = new SerialMessage(4);
-        m.setOpCode(0x81);
-        m.setElement(1, (byte) 0x02);
-        m.setElement(2, (byte) 0xA2);
-        m.setElement(3, (byte) 0x00);
-        m.setBinary(true);
-        Assert.assertEquals("string compare ", "81 02 A2 00", m.toString());
+        msg = new SerialMessage(4);
+        msg.setOpCode(0x81);
+        msg.setElement(1, (byte) 0x02);
+        msg.setElement(2, (byte) 0xA2);
+        msg.setElement(3, (byte) 0x00);
+        msg.setBinary(true);
+        Assert.assertEquals("string compare ", "81 02 A2 00", msg.toString());
     }
 
     public void testToASCIIString() {
-        SerialMessage m = new SerialMessage(5);
-        m.setOpCode(0x54);
-        m.setElement(1, 0x20);
-        m.setElement(2, 0x32);
-        m.setElement(3, 0x84);
-        m.setElement(4, 0x05);
-        m.setBinary(false);
-        Assert.assertEquals("string compare ", "54 20 32 84 05", m.toString());
-    }
-
-    // from here down is testing infrastructure
-    public SerialMessageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SerialMessageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SerialMessageTest.class);
-        return suite;
+        msg = new SerialMessage(5);
+        msg.setOpCode(0x54);
+        msg.setElement(1, 0x20);
+        msg.setElement(2, 0x32);
+        msg.setElement(3, 0x84);
+        msg.setElement(4, 0x05);
+        msg.setBinary(false);
+        Assert.assertEquals("string compare ", "54 20 32 84 05", msg.toString());
     }
 
 }
