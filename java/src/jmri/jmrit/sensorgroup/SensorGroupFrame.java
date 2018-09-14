@@ -285,7 +285,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                     if (c == null) {
                         log.error("Conditional \"" + name + "\" expected but NOT found in Logix " + logix.getSystemName());
                     } else {
-                        ArrayList<ConditionalVariable> variableList = c.getCopyOfStateVariables();
+                        List<ConditionalVariable> variableList = c.getCopyOfStateVariables();
                         for (int k = 0; k < variableList.size(); k++) {
                             String sensor = variableList.get(k).getName();
                             if (sensor != null) {

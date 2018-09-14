@@ -569,7 +569,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
     void getControlsAndActions(String cSysName) {
         Conditional c = _conditionalManager.getBySystemName(cSysName);
         if (c != null) {
-            ArrayList<ConditionalAction> actionList = c.getCopyOfActions();
+            List<ConditionalAction> actionList = c.getCopyOfActions();
             boolean onChange = false;
             for (int k = 0; k < actionList.size(); k++) {
                 ConditionalAction action = actionList.get(k);
@@ -629,7 +629,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                     }
                 }
             }
-            ArrayList<ConditionalVariable> varList = c.getCopyOfStateVariables();
+            List<ConditionalVariable> varList = c.getCopyOfStateVariables();
             for (int k = 0; k < varList.size(); k++) {
                 ConditionalVariable variable = varList.get(k);
                 int testState = variable.getType();
@@ -717,7 +717,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         Conditional c = _conditionalManager.getBySystemName(cSysName);
         if (c != null) {
             AlignElement element = null;
-            ArrayList<ConditionalAction> actionList = c.getCopyOfActions();
+            List<ConditionalAction> actionList = c.getCopyOfActions();
             for (int k = 0; k < actionList.size(); k++) {
                 ConditionalAction action = actionList.get(k);
                 if (action.getType() != Conditional.ACTION_SET_SENSOR) {
@@ -751,7 +751,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             }
             // the action elements are identified in getControlsAndActions().
             //  Just identify the type of sensing
-            ArrayList<ConditionalVariable> varList = c.getCopyOfStateVariables();
+            List<ConditionalVariable> varList = c.getCopyOfStateVariables();
             int atype = 0;
             for (int k = 0; k < varList.size(); k++) {
                 ConditionalVariable variable = varList.get(k);
@@ -815,7 +815,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             _lock = true;
             // Verify conditional is what we think it is
             ArrayList<RouteOutputElement> tList = makeTurnoutLockList();
-            ArrayList<ConditionalAction> actionList = c.getCopyOfActions();
+            List<ConditionalAction> actionList = c.getCopyOfActions();
             if (actionList.size() != tList.size()) {
                 JOptionPane.showMessageDialog(
                         _addFrame, java.text.MessageFormat.format(rbx.getString("LockWarn1"),
