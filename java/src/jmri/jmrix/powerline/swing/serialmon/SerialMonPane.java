@@ -72,12 +72,12 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements SerialL
 
     @Override
     public synchronized void message(SerialMessage l) {  // receive a message and log it
-        nextLine(l.toMonitorString(), l.toString());
+        logMessage(l);
     }
 
     @Override
     public synchronized void reply(SerialReply l) {  // receive a reply message and log it
-        nextLine(l.toMonitorString(), l.toString());
+        logMessage(l);
     }
 
     /**

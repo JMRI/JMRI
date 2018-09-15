@@ -66,15 +66,33 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
      * Get a hex string representation of this MarklinReply.
      *
      * @return the hex string
+     * @deprecated since 4.13.4. use toString instead.
      */
+    @Deprecated
     public String toHexString() {
+        return toString();
+    }
 
+    /*
+     * {@inhertDoc}
+     */
+    @Override
+    public String toString(){
         StringBuilder buf = new StringBuilder();
         buf.append("0x").append(Integer.toHexString(_dataChars[0]));
         for (int i = 1; i < _nDataChars; i++) {
             buf.append(", 0x").append(Integer.toHexString(_dataChars[i]));
         }
         return buf.toString();
+    }
+
+    /*
+     * {@inhertDoc}
+     */
+    @Override
+    public String toMonitorString(){
+	    // eventually, the MarklinMon class should probably be integrated here.
+	    return jmri.jmrix.marklin.swing.monitor.MarklinMon.displayReply(this);
     }
 
     public boolean isResponse() {
