@@ -5,8 +5,6 @@ import jmri.jmrix.roco.z21.Z21Message;
 import jmri.jmrix.roco.z21.Z21Reply;
 import jmri.jmrix.roco.z21.Z21SystemConnectionMemo;
 import jmri.jmrix.roco.z21.Z21TrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Panel displaying (and logging) Z21 messages derived from Z21MonFrame.
@@ -73,7 +71,5 @@ public class Z21MonPane extends jmri.jmrix.AbstractMonPane implements Z21Listene
                     getDefault(Z21SystemConnectionMemo.class));
         }
     }
-
-    // private final static Logger log = LoggerFactory.getLogger(Z21MonPane.class);
 
 }
