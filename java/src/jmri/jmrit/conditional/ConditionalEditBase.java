@@ -831,7 +831,7 @@ public class ConditionalEditBase {
             return false;
         }
         try {
-            return validateIntensity(Integer.valueOf(intReference).intValue());
+            return validateIntensity(Integer.parseInt(intReference));
         } catch (NumberFormatException e) {
             String intRef = intReference;
             if (intReference.length() > 1 && intReference.charAt(0) == '@') {
@@ -896,7 +896,7 @@ public class ConditionalEditBase {
             return false;
         }
         try {
-            return validateTime(actionType, Float.valueOf(ref).floatValue());
+            return validateTime(actionType, Float.parseFloat(ref));
             // return true if ref is decimal within allowed range
         } catch (NumberFormatException e) {
             String memRef = ref;
@@ -917,7 +917,7 @@ public class ConditionalEditBase {
                     if (m == null || m.getValue() == null) {
                         throw new NumberFormatException();
                     }
-                    validateTime(actionType, Float.valueOf((String) m.getValue()).floatValue());
+                    validateTime(actionType, Float.parseFloat((String) m.getValue()));
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null,
                             Bundle.getMessage("Error24", memRef),
@@ -1435,7 +1435,7 @@ public class ConditionalEditBase {
         }
         if (!error) {
             try {
-                nHour = Integer.valueOf(hour);
+                nHour = Integer.parseInt(hour);
                 if ((nHour < 0) || (nHour > 24)) {
                     error = true;
                 }

@@ -24,7 +24,7 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetLis
     // XNet-specific methods
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
-        int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
+        int addr = Integer.parseInt(systemName.substring(prefix.length() + 1));
         Turnout t = new Z21XNetTurnout(prefix, addr, tc);
         t.setUserName(userName);
         return t;

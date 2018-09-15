@@ -370,7 +370,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
     int decodeCvNum(String CV) {
         try {
-            return Integer.valueOf(CV).intValue();
+            return Integer.parseInt(CV);
         } catch (java.lang.NumberFormatException e) {
             return 0;
         }

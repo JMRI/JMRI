@@ -70,7 +70,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
 
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
-        int number = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
+        int number = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
 
         Sensor s = new NceSensor(systemName);
         s.setUserName(userName);

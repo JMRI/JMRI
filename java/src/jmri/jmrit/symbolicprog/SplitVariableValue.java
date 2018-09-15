@@ -210,7 +210,7 @@ public class SplitVariableValue extends VariableValue
         if (log.isDebugEnabled()) {
             log.debug("CV " + getCvNum() + "," + getSecondCvNum() + " actionPerformed");
         }
-        int newVal = ((Integer.valueOf(_value.getText()).intValue()) - mOffset) / mFactor;
+        int newVal = ((Integer.parseInt(_value.getText())) - mOffset) / mFactor;
         updatedTextField();
         prop.firePropertyChange("Value", null, Integer.valueOf(newVal));
     }

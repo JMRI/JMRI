@@ -28,7 +28,7 @@ public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
     @Override
     public Light createNewLight(String systemName, String userName) {
         Light t;
-        int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
+        int addr = Integer.parseInt(systemName.substring(prefix.length() + 1));
         t = new JMRIClientLight(addr, memo);
         t.setUserName(userName);
         return t;
