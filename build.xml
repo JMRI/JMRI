@@ -790,7 +790,7 @@
 
     <target name="tests-warnings-check"
             description="compile test sources with warning generation on and fail if any warnings; requires Ant 1.8 and ecj.jar"
-            depends="check-ant-requirements, clean, init, copyfiles, warnings-ci">
+            depends="check-ant-requirements, clean, init, copyfiles, warnings-check">
         <ecj-compile javac.source="${test}" javac.target="${testtarget}" javac.classpath="test.class.path">
             <javac-options>
                 <compilerarg value="@${basedir}/java/ecj.warning.options-ci"/>
