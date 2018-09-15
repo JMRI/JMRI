@@ -146,6 +146,14 @@ public class DefaultConditionalTest {
                 = { new ConditionalVariableStatic(Conditional.FALSE) };
         List<ConditionalVariable> conditionalVariablesList_False = Arrays.asList(conditionalVariables_False);
         
+        ConditionalVariable[] conditionalVariables_NotTrue
+                = { new ConditionalVariableStatic(Conditional.TRUE, true) };
+        List<ConditionalVariable> conditionalVariablesList_NotTrue = Arrays.asList(conditionalVariables_NotTrue);
+        
+        ConditionalVariable[] conditionalVariables_NotFalse
+                = { new ConditionalVariableStatic(Conditional.FALSE, true) };
+        List<ConditionalVariable> conditionalVariablesList_NotFalse = Arrays.asList(conditionalVariables_NotFalse);
+        
         ConditionalVariable[] conditionalVariables_TrueTrueTrue
                 = { new ConditionalVariableStatic(Conditional.TRUE)
                         , new ConditionalVariableStatic(Conditional.TRUE)
@@ -189,6 +197,8 @@ public class DefaultConditionalTest {
         
         testCalculate(Conditional.TRUE, "R1", conditionalVariablesList_True, "");
         testCalculate(Conditional.FALSE, "R1", conditionalVariablesList_False, "");
+        testCalculate(Conditional.FALSE, "R1", conditionalVariablesList_NotTrue, "");
+        testCalculate(Conditional.TRUE, "R1", conditionalVariablesList_NotFalse, "");
         testCalculate(Conditional.FALSE, "R2", conditionalVariablesList_True,
                 "IXIC 1 parseCalculation error antecedent= R2, ex= java.lang.ArrayIndexOutOfBoundsException: 1");
         
@@ -279,12 +289,18 @@ public class DefaultConditionalTest {
         
         ConditionalVariableStatic(int state) {
             super();
-            super.setState(state);
+            setState(state);
+        }
+        
+        ConditionalVariableStatic(int state, boolean not) {
+            super();
+            setState(state);
+            setNegation(not);
         }
         
         @Override
         public boolean evaluate() {
-            return this.getState() == Conditional.TRUE;
+            return getState() == Conditional.TRUE;
         }
         
     }
