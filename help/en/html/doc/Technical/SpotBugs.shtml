@@ -217,72 +217,6 @@ scanning through the code.
         </li>
       </ul>
 
-      <h3>Suppressed Warnings</h3>We have turned off the routine
-      SpotBugs checking of certain kinds of conditions:
-
-      <dl>
-        <dt><a href=
-               "http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#ri-class-implements-same-interface-as-superclass-ri-redundant-interfaces">
-                RI_REDUNDANT_INTERFACES</a></dt>
-
-        <dd>This flags cases where a class implements an interface,
-        and also inherits from a superclass that already implements
-        that interface. This is redundant and untidy, but it can't
-        cause the code to malfunction. We have enough of them that
-        we've turned off the warning, and will come back to it some
-        later time.</dd>
-
-        <dt><a href=
-               "http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#sic-could-be-refactored-into-a-named-static-inner-class-sic-inner-should-be-static-anon">
-                SIC_INNER_SHOULD_BE_STATIC_ANON</a>, <a href=
-                    "http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#sic-could-be-refactored-into-a-static-inner-class-sic-inner-should-be-static-needs-this">
-                    SIC_INNER_SHOULD_BE_STATIC_NEEDS_THIS</a></dt>
-
-        <dd>Static, as opposed to non-static, inner classes
-        (classes defined within another class) take less space
-        because they don't maintain references to the containing
-        object. This warning suggests moving an anonymous (defined
-        in-line to the code) inner class to a regular (defined not
-        in-line) class so it can be made static. Although probably
-        a small improvement, it's a bit of work for a small
-        improvement. We have enough of them that we've turned off
-        the warning, and will come back to it some later time.</dd>
-
-        <dt><a href=
-               "http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#pzla-consider-returning-a-zero-length-array-rather-than-null-pzla-prefer-zero-length-arrays">
-                PZLA_PREFER_ZERO_LENGTH_ARRAYS</a></dt>
-
-        <dd>What should a method that returns an array of values do
-        when there aren't any? Returning "null", as opposed to an
-        empty array, requires all the calling code to handle a
-        special case. In many cases, returning an empty array makes
-        the code simpler. But for existing code, that
-        simplification is marginal. As this is a design issue, but
-        it crops up a lot, we've suppressed these for now just to
-        focus on more pressing problems.</dd>
-
-        <dt>Malicious Code</dt>
-
-        <dd>This is a class of warnings centered around the idea
-        that data and code methods shouldn't be too visible,
-        especially when static. This is true, but JMRI isn't a
-        hardened library that's being released into a world of
-        people trying to break it, as these changes are a lower
-        priority.</dd>
-
-        <dt>Nm</dt>
-
-        <dd>The convention is that class names start with a capital
-        letter, and method names (data and code) with a small
-        letter.</dd>
-
-        <dt>Se,SvVI</dt>
-
-        <dd>This is a large class of warnings associated with Java
-        serialization. JMRI doesn't used serialization, and is
-        unlikely to do so in the future, so we suppress these to
-        raise the average quality of the issued warnings.</dd>
-      </dl>
 
       <h3>Running SpotBugs</h3>
       
@@ -293,6 +227,8 @@ scanning through the code.
       <a href="ContinuousIntegration.shtml#jenkins">Jenkins</a>
       as part of the 
       <a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/lastBuild/findbugsResult/">daily builds</a>.
+      If new errors appear during CI, the job will (usually) fail.  You can look at
+      the Jenkins output to see where there are existing errors to work on.
       
       <p>
       To run it locally:
@@ -339,7 +275,67 @@ scanning through the code.
       <p>Simon White added FindBugs support to our Ant-based build
       chain during the development of JMRI 2.5.5.</p>
 
-    
+      <h4>Suppressed Warnings</h4>
+      We have turned off the routine
+      SpotBugs checking of certain kinds of conditions:
+
+      <dl>
+        <dt><a href=
+               "http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#ri-class-implements-same-interface-as-superclass-ri-redundant-interfaces">
+                RI_REDUNDANT_INTERFACES</a></dt>
+
+        <dd>This flags cases where a class implements an interface,
+        and also inherits from a superclass that already implements
+        that interface. This is redundant and untidy, but it can't
+        cause the code to malfunction. We have enough of them that
+        we've turned off the warning, and will come back to it some
+        later time.</dd>
+
+        <dt><a href=
+               "http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#sic-could-be-refactored-into-a-named-static-inner-class-sic-inner-should-be-static-anon">
+                SIC_INNER_SHOULD_BE_STATIC_ANON</a>, <a href=
+                    "http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#sic-could-be-refactored-into-a-static-inner-class-sic-inner-should-be-static-needs-this">
+                    SIC_INNER_SHOULD_BE_STATIC_NEEDS_THIS</a></dt>
+
+        <dd>Static, as opposed to non-static, inner classes
+        (classes defined within another class) take less space
+        because they don't maintain references to the containing
+        object. This warning suggests moving an anonymous (defined
+        in-line to the code) inner class to a regular (defined not
+        in-line) class so it can be made static. Although probably
+        a small improvement, it's a bit of work for a small
+        improvement. We have enough of them that we've turned off
+        the warning, and will come back to it some later time.</dd>
+
+        <dt>
+            <a href="https://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#dm-consider-using-locale-parameterized-version-of-invoked-method-dm-convert-case">DM_CONVERT_CASE</a>,
+            <a href="https://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#dm-reliance-on-default-encoding-dm-default-encoding">DM_DEFAULT_ENCODING</a>,
+            </dt>
+
+        <dd>These cover aspects of handling characters in non-Western
+        languages. Most of our String handling doesn't have anything to do
+        with this, so it would be a huge number of annotations for
+        only a small amount of I18N gain.  Perhaps we'll revisit these
+        later.</dd>
+
+        <dt>Malicious Code</dt>
+
+        <dd>This is a class of warnings centered around the idea
+        that data and code methods shouldn't be too visible,
+        especially when static. This is true, but JMRI isn't a
+        hardened library that's being released into a world of
+        people trying to break it, as these changes are a lower
+        priority.</dd>
+
+        <dt>Se,SvVI</dt>
+
+        <dd>This is a large class of warnings associated with Java
+        serialization. JMRI doesn't used serialization, and is
+        unlikely to do so in the future, so we suppress these to
+        raise the average quality of the issued warnings.</dd>
+      </dl>
+
+     <h4>Status and Counts</h4>
       <p>Running this on JMRI 2.5.4 produced the following:</p>
 
       <table border="1">
@@ -367,32 +363,7 @@ scanning through the code.
       <p>If you are checking code in to the JMRI repository, please
       check the CI server and make sure that your changes do not
       introduce new errors.</p>
-      
-      <p>Our default .spotbugs.xml turns off specific items:
-      <table border="1">
-        <tr><th>Warning</th><th>Number<br/>Suppressed<br/>JMRI 4.13.3</th></tr>
-        <tr><td>PZLA_PREFER_ZERO_LENGTH_ARRAYS</td><td align="right">62</td></tr>
-            <tr><td span="2" align="right">"It is often a better design to return a length zero array rather than a null reference to indicate that there are no results (i.e., an empty list of results). 
-            This way, no explicit check for null is needed by clients of the method."</td></tr>
-        <tr><td>RI_REDUNDANT_INTERFACES</td><td align="right">148</td></tr>
-        <tr><td>DM_BOXED_PRIMITIVE_FOR_PARSING</td><td align="right">124</td></tr>
-            <tr><td span="2" align="right">"A boxed primitive is created from a String, just to extract the unboxed primitive value. 
-            It is more efficient to just call the static parseXXX method."</td></tr>
-        <tr><td>SIC_INNER_SHOULD_BE_STATIC_ANON</td><td align="right">10</td></tr>
-            <tr><td span="2" align="right">These might be worth doing to limit object scope or annotate away</td></tr>
-        <tr><td>SIC_INNER_SHOULD_BE_STATIC_NEEDS_THIS</td><td align="right">174</td></tr>
-            <tr><td span="2" align="right">Seems to miss point of anonymous classes...</td></tr>
-        <tr><td>DM_CONVERT_CASE</td><td align="right">221</td></tr>
-        <tr><td>DM_DEFAULT_ENCODING</td><td align="right">64</td></tr>
-        <tr><td>WMI_WRONG_MAP_ITERATOR</td><td align="right">63</td></tr>
-            <tr><td span="2" align="right">"makes inefficient use of keySet iterator instead of entrySet iterator"</td></tr>
-       </table>
-     
-      plus the entire MALICIOUS_CODE category, and the Se,SnVI serialization items.
-        
-      
-      
-      
+            
        <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
