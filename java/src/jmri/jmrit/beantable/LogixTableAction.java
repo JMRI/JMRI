@@ -1411,7 +1411,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
      *                conditional references
      * @param treeSet A tree set to be built from the varList data
      */
-    void loadReferenceNames(ArrayList<ConditionalVariable> varList, TreeSet<String> treeSet) {
+    void loadReferenceNames(List<ConditionalVariable> varList, TreeSet<String> treeSet) {
         treeSet.clear();
         for (ConditionalVariable var : varList) {
             if (var.getType() == Conditional.TYPE_CONDITIONAL_TRUE || var.getType() == Conditional.TYPE_CONDITIONAL_FALSE) {
@@ -1796,8 +1796,8 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
                 operand,
                 tStr;
 
-        ArrayList<ConditionalVariable> variableList;
-        ArrayList<ConditionalAction> actionList;
+        List<ConditionalVariable> variableList;
+        List<ConditionalAction> actionList;
         ConditionalVariable variable;
         ConditionalAction action;
         String _antecedent = null;

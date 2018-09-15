@@ -3,7 +3,7 @@ package jmri;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A Conditional is layout control logic, consisting of a logical expression and
@@ -571,14 +571,14 @@ public interface Conditional extends NamedBean {
      *
      * @param arrayList the actions
      */
-    public void setAction(ArrayList<ConditionalAction> arrayList);
+    public void setAction(List<ConditionalAction> arrayList);
 
     /**
      * Make deep clone of actions
      *
      * @return a list of copies of actionss
      */
-    public ArrayList<ConditionalAction> getCopyOfActions();
+    public List<ConditionalAction> getCopyOfActions();
 
     /**
      * Set State Variables for this Conditional. Each state variable will
@@ -588,14 +588,14 @@ public interface Conditional extends NamedBean {
      *
      * @param arrayList the list of variables
      */
-    public void setStateVariables(ArrayList<ConditionalVariable> arrayList);
+    public void setStateVariables(List<ConditionalVariable> arrayList);
 
     /**
      * Make deep clone of variables
      *
      * @return a list containing copies of variables
      */
-    public ArrayList<ConditionalVariable> getCopyOfStateVariables();
+    public List<ConditionalVariable> getCopyOfStateVariables();
 
     /**
      * Calculate this Conditional, triggering either or both actions if the user
@@ -616,7 +616,7 @@ public interface Conditional extends NamedBean {
      * @param variableList list of variables
      * @return true if well formed; false otherwise
      */
-    public String validateAntecedent(String ant, ArrayList<ConditionalVariable> variableList);
+    public String validateAntecedent(String ant, List<ConditionalVariable> variableList);
 
     /**
      * Stop a sensor timer if one is actively delaying setting of the specified

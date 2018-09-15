@@ -13,6 +13,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -156,8 +157,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
     // ------------ Current conditional components ------------
     Conditional _curConditional;
-    ArrayList<ConditionalVariable> _variableList;   // Current Variable List
-    ArrayList<ConditionalAction> _actionList;       // Current Action List
+    List<ConditionalVariable> _variableList;   // Current Variable List
+    List<ConditionalAction> _actionList;       // Current Action List
     ConditionalVariable _curVariable;               // Current Variable
     ConditionalAction _curAction;                   // Current Action
     int _curVariableItem = 0;
@@ -930,7 +931,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             if (refList != null) {
                 for (String ref : refList) {
                     Conditional cRef = _conditionalManager.getBySystemName(ref);
-                    ArrayList<ConditionalVariable> varList = cRef.getCopyOfStateVariables();
+                    List<ConditionalVariable> varList = cRef.getCopyOfStateVariables();
                     int idx = 0;
                     for (ConditionalVariable var : varList) {
                         // Find the affected conditional variable
