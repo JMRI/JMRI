@@ -65,7 +65,7 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetLis
         if ( null == t ) {
            // need to create a new one, and send the message on 
            // to the newly created object.
-           ((Z21XNetTurnout) provideTurnout(s)).initmessage(l);
+           ((Z21XNetTurnout) provideTurnout(s)).initMessageZ21(l);
         } else {
            // The turnout exists, forward this message to the 
            // turnout
