@@ -130,7 +130,7 @@ public class SerialAddress {
             // here if 'B' not found, name must be CLnnxxx format
             int num;
             try {
-                num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
+                num = Integer.parseInt(systemName.substring(prefix.length() + 1));
             } catch (Exception e) {
                 log.error("illegal character in number field of system name: {}", systemName);
                 return (0);
@@ -202,7 +202,7 @@ public class SerialAddress {
             }
             int num;
             try {
-                num = Integer.valueOf(s).intValue();
+                num = Integer.parseInt(s);
             } catch (Exception e) {
                 log.warn("invalid character in node address field of system name: {}", systemName);
                 return NameValidity.INVALID;
@@ -299,7 +299,7 @@ public class SerialAddress {
                     + Integer.toString(bitNum);
         } else {
             // This is a OiLnnnBxxxx address, convert to num-style
-            int nAddress = Integer.valueOf(s).intValue();
+            int nAddress = Integer.parseInt(s);
             int bitNum = Integer.parseInt(systemName.substring(k, systemName.length()));
             if (bitNum > 999) {
                 // bit number is out-of-range for a CLnnnxxx address
@@ -350,7 +350,7 @@ public class SerialAddress {
             nName = prefix + type + Integer.toString((nAddress * 1000) + bitNum);
         } else {
             // This is a OiLnnnBxxxx address
-            int nAddress = Integer.valueOf(s).intValue();
+            int nAddress = Integer.parseInt(s);
             int bitNum = Integer.parseInt(systemName.substring(k, systemName.length()));
             nName = prefix + type + Integer.toString(nAddress) + "B"
                     + Integer.toString(bitNum);

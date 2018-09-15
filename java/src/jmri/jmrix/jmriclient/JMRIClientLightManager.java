@@ -42,7 +42,7 @@ public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
     public NameValidity validSystemNameFormat(String systemName) {
         return ((systemName.startsWith(prefix + "l")
                 || systemName.startsWith(prefix + "L"))
-                && Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue() > 0) ? NameValidity.VALID : NameValidity.INVALID;
+                && Integer.parseInt(systemName.substring(prefix.length() + 1)) > 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
     /**

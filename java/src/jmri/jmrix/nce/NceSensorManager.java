@@ -356,8 +356,8 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
             // Yes we should, added check for valid AIU and pin ranges DBoudreau 2/13/2013
             int seperator = curAddress.indexOf(":");
             try {
-                aiucab = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
-                pin = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
+                aiucab = Integer.parseInt(curAddress.substring(0, seperator));
+                pin = Integer.parseInt(curAddress.substring(seperator + 1));
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert " + curAddress + " into the cab and pin format of nn:xx");
                 throw new JmriException("Hardware Address passed should be a number");
