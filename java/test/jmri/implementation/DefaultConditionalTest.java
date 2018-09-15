@@ -119,6 +119,8 @@ public class DefaultConditionalTest {
         testValidate(EXPECT_FAILURE, "R1 and R2 and R3", conditionalVariablesList_True);
         testValidate(EXPECT_FAILURE, "R1", conditionalVariablesList_TrueTrueTrue);
         testValidate(EXPECT_SUCCESS, "R1 and R2 and R3", conditionalVariablesList_TrueTrueTrue);
+        
+        // Test uppercase and lowercase
         testValidate(EXPECT_SUCCESS, "R2 AND R1 or R3", conditionalVariablesList_TrueTrueTrue);
         
         // Test several items and parenthese
@@ -128,6 +130,14 @@ public class DefaultConditionalTest {
         testValidate(EXPECT_FAILURE, "R1 (and R3 and) not R2", conditionalVariablesList_TrueTrueTrue);
         testValidate(EXPECT_FAILURE, "(R1 and R3) and not R2)", conditionalVariablesList_TrueTrueTrue);
         testValidate(EXPECT_SUCCESS, "(R1 and (R3) and not R2)", conditionalVariablesList_TrueTrueTrue);
+        
+        // Test invalid combinations
+        testValidate(EXPECT_FAILURE, "R1 and or R3 and R2", conditionalVariablesList_TrueTrueTrue);
+        testValidate(EXPECT_FAILURE, "R1 or or R3 and R2", conditionalVariablesList_TrueTrueTrue);
+        testValidate(EXPECT_FAILURE, "R1 or and R3 and R2", conditionalVariablesList_TrueTrueTrue);
+        testValidate(EXPECT_FAILURE, "R1 not R3 and R2", conditionalVariablesList_TrueTrueTrue);
+        testValidate(EXPECT_FAILURE, "and R1 not R3 and R2", conditionalVariablesList_TrueTrueTrue);
+        testValidate(EXPECT_FAILURE, "R1 or R3 and R2 or", conditionalVariablesList_TrueTrueTrue);
     }
     
     @Test
@@ -172,42 +182,29 @@ public class DefaultConditionalTest {
                         , new ConditionalVariableStatic(Conditional.FALSE) };
         List<ConditionalVariable> conditionalVariablesList_TrueTrueFalse = Arrays.asList(conditionalVariables_TrueTrueFalse);
         
-        ConditionalVariable[] conditionalVariables_FalseTrueTrue
-                = {new ConditionalVariableStatic(Conditional.FALSE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE) };
-        List<ConditionalVariable> conditionalVariablesList_FalseTrueTrue = Arrays.asList(conditionalVariables_FalseTrueTrue);
-        
-        ConditionalVariable[] conditionalVariables_TrueFalseTrue
-                = {new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.FALSE)
-                        , new ConditionalVariableStatic(Conditional.TRUE) };
-        List<ConditionalVariable> conditionalVariablesList_TrueFalseTrue = Arrays.asList(conditionalVariables_TrueFalseTrue);
-        
-        ConditionalVariable[] conditionalVariables_FalseTrueFalse
-                = {new ConditionalVariableStatic(Conditional.FALSE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.FALSE) };
-        List<ConditionalVariable> conditionalVariablesList_FalseTrueFalse = Arrays.asList(conditionalVariables_FalseTrueFalse);
-        
         
         // Test empty antecedent string
         testCalculate(Conditional.FALSE, "", conditionalVariablesList_Empty,
                 "IXIC 1 parseCalculation error antecedent= , ex= java.lang.StringIndexOutOfBoundsException: String index out of range: 0");
         
+        // Test single condition
         testCalculate(Conditional.TRUE, "R1", conditionalVariablesList_True, "");
         testCalculate(Conditional.FALSE, "R1", conditionalVariablesList_False, "");
+        
+        // Test single condition with variables that has the flag "not" set
         testCalculate(Conditional.FALSE, "R1", conditionalVariablesList_NotTrue, "");
         testCalculate(Conditional.TRUE, "R1", conditionalVariablesList_NotFalse, "");
         testCalculate(Conditional.FALSE, "R2", conditionalVariablesList_True,
                 "IXIC 1 parseCalculation error antecedent= R2, ex= java.lang.ArrayIndexOutOfBoundsException: 1");
         
+        // Test single item but wrong item (R2 instead of R1)
+        testCalculate(Conditional.FALSE, "R2)", conditionalVariablesList_True,
+                "IXIC 1 parseCalculation error antecedent= R2), ex= java.lang.ArrayIndexOutOfBoundsException: 1");
+        
         // Test parentheses
         testCalculate(Conditional.TRUE, "([{R1)}]", conditionalVariablesList_True, "");
         testCalculate(Conditional.FALSE, "(R2", conditionalVariablesList_True,
                 "IXIC 1 parseCalculation error antecedent= (R2, ex= java.lang.ArrayIndexOutOfBoundsException: 1");
-        testCalculate(Conditional.FALSE, "R2)", conditionalVariablesList_True,
-                "IXIC 1 parseCalculation error antecedent= R2), ex= java.lang.ArrayIndexOutOfBoundsException: 1");
         
         // Test several items
         testCalculate(Conditional.FALSE, "R1 and R2 and R3", conditionalVariablesList_True,
@@ -217,6 +214,20 @@ public class DefaultConditionalTest {
         testCalculate(Conditional.TRUE, "R3", conditionalVariablesList_TrueTrueTrue, "");
         testCalculate(Conditional.TRUE, "R1 and R2 and R3", conditionalVariablesList_TrueTrueTrue, "");
         testCalculate(Conditional.TRUE, "R2 AND R1 or R3", conditionalVariablesList_TrueTrueTrue, "");
+        
+        // Test invalid combinations of and, or, not
+        testCalculate(Conditional.FALSE, "R1 and or R3 and R2", conditionalVariablesList_TrueTrueTrue,
+                "IXIC 1 parseCalculation error antecedent= R1 and or R3 and R2, ex= jmri.JmriException: Unexpected operator or characters < ORR3ANDR2 >");
+        testCalculate(Conditional.FALSE, "R1 or or R3 and R2", conditionalVariablesList_TrueTrueTrue,
+                "IXIC 1 parseCalculation error antecedent= R1 or or R3 and R2, ex= jmri.JmriException: Unexpected operator or characters < ORR3ANDR2 >");
+        testCalculate(Conditional.FALSE, "R1 or and R3 and R2", conditionalVariablesList_TrueTrueTrue,
+                "IXIC 1 parseCalculation error antecedent= R1 or and R3 and R2, ex= jmri.JmriException: Unexpected operator or characters < ANDR3ANDR2 >");
+        testCalculate(Conditional.FALSE, "R1 not R3 and R2", conditionalVariablesList_TrueTrueTrue,
+                "IXIC 1 parseCalculation error antecedent= R1 not R3 and R2, ex= jmri.JmriException: Could not find expected operator < NOTR3ANDR2 >");
+        testCalculate(Conditional.FALSE, "and R1 not R3 and R2", conditionalVariablesList_TrueTrueTrue,
+                "IXIC 1 parseCalculation error antecedent= and R1 not R3 and R2, ex= jmri.JmriException: Unexpected operator or characters < ANDR1NOTR3ANDR2 >");
+        testCalculate(Conditional.FALSE, "R1 or R3 and R2 or", conditionalVariablesList_TrueTrueTrue,
+                "IXIC 1 parseCalculation error antecedent= R1 or R3 and R2 or, ex= java.lang.StringIndexOutOfBoundsException: String index out of range: 14");
         
         // Test several items and parenthese
         testCalculate(Conditional.TRUE, "(R1 and R3) and R2", conditionalVariablesList_TrueTrueTrue, "");
