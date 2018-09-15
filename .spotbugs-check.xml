@@ -40,7 +40,6 @@
            <Bug pattern="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE" />
            <Bug pattern="DB_DUPLICATE_SWITCH_CLAUSES" />
            <Bug pattern="DLS_DEAD_LOCAL_STORE" />           
-           <Bug pattern="FE_FLOATING_POINT_EQUALITY" />
            <Bug pattern="IA_AMBIGUOUS_INVOCATION_OF_INHERITED_OR_OUTER_METHOD" />
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
            <Bug pattern="LI_LAZY_INIT_STATIC" />
