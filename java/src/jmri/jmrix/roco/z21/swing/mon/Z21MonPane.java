@@ -74,6 +74,6 @@ public class Z21MonPane extends jmri.jmrix.AbstractMonPane implements Z21Listene
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21MonPane.class);
+    // private final static Logger log = LoggerFactory.getLogger(Z21MonPane.class);
 
 }
