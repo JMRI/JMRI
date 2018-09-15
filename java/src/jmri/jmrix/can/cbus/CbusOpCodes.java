@@ -238,14 +238,14 @@ public class CbusOpCodes {
         Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2"); // NOI18N
         
         result.put(CbusConstants.CBUS_EVULN, Bundle.getMessage("CBUS_EVULN") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2 " + Bundle.getMessage("OPC_EN") + ":,%2"); // NOI18N
+        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2"); // NOI18N
         
         result.put(CbusConstants.CBUS_NVSET, Bundle.getMessage("CBUS_NVSET") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2 " + Bundle.getMessage("OPC_NV") + ":,%1, " + 
+        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_NV") + ":,%1, " + 
         Bundle.getMessage("OPC_VL") + ":,%1"); // NOI18N
         
         result.put(CbusConstants.CBUS_NVANS, Bundle.getMessage("CBUS_NVANS") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2 " + Bundle.getMessage("OPC_NV") + ":,%1 " + 
+        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_NV") + ":,%1, " + 
         Bundle.getMessage("OPC_VL") + ":,%1"); // NOI18N
         
         result.put(CbusConstants.CBUS_ASON, Bundle.getMessage("CBUS_ASON") + " " + 
