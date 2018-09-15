@@ -738,6 +738,7 @@
         <attribute name="javac.target" default="${target}"/>
         <attribute name="javac.deprecation" default="${deprecation}"/>
         <attribute name="javac.classpath" default="compile.class.path"/>
+        <element name="javac-options" optional="yes"/>
         <sequential>
             <mkdir dir="@{javac.target}"/> <!-- ensure destdir exists -->
             <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
@@ -750,7 +751,7 @@
                 <compilerclasspath>
                     <pathelement path="${libdir}/ecj.jar"/>
                 </compilerclasspath>
-                <compilerarg value="@${basedir}/java/ecj.warning.options"/>
+                <javac-options/>
                 <classpath refid="@{javac.classpath}"/>
             </javac>
         </sequential>
@@ -759,13 +760,41 @@
     <target name="warnings"
             description="compile source with warning generation on, omitting tests; requires Ant 1.8 and ecj.jar"
             depends="check-ant-requirements, clean, init, copyfiles, compile-generated-source">
-        <ecj-compile javac.source="${source}"/>
+        <ecj-compile javac.source="${source}">
+            <javac-options>
+                <compilerarg value="@${basedir}/java/ecj.warning.options"/>
+            </javac-options>
+        </ecj-compile>
+    </target>
+
+    <target name="warnings-ci"
+            description="compile source with warning generation on and fail if any warnings, omitting tests; requires Ant 1.8 and ecj.jar"
+            depends="check-ant-requirements, clean, init, copyfiles, compile-generated-source">
+        <ecj-compile javac.source="${source}">
+            <javac-options>
+                <compilerarg value="@${basedir}/java/ecj.warning.options-ci"/>
+            </javac-options>
+        </ecj-compile>
     </target>
 
     <target name="tests-warnings"
             description="compile test sources with warning generation on; requires Ant 1.8 and ecj.jar"
             depends="check-ant-requirements, clean, init, copyfiles, warnings">
-        <ecj-compile javac.source="${test}" javac.target="${testtarget}" javac.classpath="test.class.path"/>
+        <ecj-compile javac.source="${test}" javac.target="${testtarget}" javac.classpath="test.class.path">
+            <javac-options>
+                <compilerarg value="@${basedir}/java/ecj.warning.options"/>
+            </javac-options>
+        </ecj-compile>
+    </target>
+
+    <target name="tests-warnings-ci"
+            description="compile test sources with warning generation on and fail if any warnings; requires Ant 1.8 and ecj.jar"
+            depends="check-ant-requirements, clean, init, copyfiles, warnings-ci">
+        <ecj-compile javac.source="${test}" javac.target="${testtarget}" javac.classpath="test.class.path">
+            <javac-options>
+                <compilerarg value="@${basedir}/java/ecj.warning.options-ci"/>
+            </javac-options>
+        </ecj-compile>
     </target>
 
     <!-- end of program build targets -->
@@ -1975,13 +2004,47 @@
         </spotbugs>
     </target>
 
-    <target name="spotbugs-ci" depends="dist" description="generate SpotBugs report. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
+    <target name="spotbugs-check" depends="dist" description="generate SpotBugs check-only report. Specify SpotBugs install with local.properties file or &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; on command line." >
+        <spotbugs home="${spotbugs.home}"
+                  output="html"
+                  outputFile="${jartarget}/spotbugs-check.html"
+                  jvmargs="-Xmx1536m"
+                  timeout="12000000"
+                  excludeFilter=".spotbugs.xml"
+
+                  effort="max"
+                  reportLevel="low"
+                  >
+            <sourcePath path="${source}/"/>
+            <class location="${jartarget}/jmri.jar"/>
+            <auxClasspath refid="compile.class.path" />
+        </spotbugs>
+    </target>
+
+    <target name="spotbugs-ci" depends="dist" description="generate SpotBugs CI report. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
         <spotbugs home="${spotbugs.home}"
                   output="xml:withMessages"
                   outputFile="spotbugs.xml"
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
                   excludeFilter=".spotbugs.xml"
+
+                  effort="max"
+                  reportLevel="low"
+                  >
+            <sourcePath path="${source}/"/>
+            <class location="${jartarget}/jmri.jar"/>
+            <auxClasspath refid="compile.class.path" />
+        </spotbugs>
+    </target>
+
+    <target name="spotbugs-check-ci" depends="dist" description="generate SpotBugs CI check-only report. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
+        <spotbugs home="${spotbugs.home}"
+                  output="xml:withMessages"
+                  outputFile="spotbugs.xml"
+                  jvmargs="-Xmx1536m"
+                  timeout="12000000"
+                  excludeFilter=".spotbugs-check.xml"
 
                   effort="max"
                   reportLevel="low"
