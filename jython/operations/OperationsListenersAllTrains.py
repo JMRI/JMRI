@@ -23,7 +23,7 @@ class MyListener(PropertyChangeListener):
     # Get the train and show if it was built.
     # And if not built if it has been terminated.
     trainId = event.source.getId()
-    tm = jmri.jmrit.operations.trains.TrainManager.instance()
+    tm = jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
     train = tm.getTrainById(trainId)
     if (train.isBuilt() == True):
         print "Train", train.getName(), "is built"
@@ -42,7 +42,7 @@ class MyListener(PropertyChangeListener):
 class listenAllTrains(jmri.jmrit.automat.AbstractAutomaton) :
   def init(self):
     # get the train manager
-    self.tm = jmri.jmrit.operations.trains.TrainManager.instance()
+    self.tm = jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
     print "Listen to all trains in operations"
     return
 
