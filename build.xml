@@ -50,7 +50,7 @@
     <!--    # or                                                                         -->
     <!--    nsis.home=C:/Program Files/NSIS/                                             -->
     <!--                                                                                 -->
-    <!-- This file should NEVER be checked-in to Git, it is in the .gitignore file       -->
+    <!-- The local.properties file should NEVER be checked-in to Git, it is in the .gitignore file       -->
     <!--                                                                                 -->
     <property file="local.properties"/>
 
@@ -623,7 +623,7 @@
                    deprecation="@{javac.deprecation}"
                    debug="${java.debugging}">
                 <classpath refid="@{javac.classpath}"/>
-                <compilerarg value="-Xlint:-unchecked"/>
+                <compilerarg value="-Xlint:unchecked"/>
                 <compilerarg value="-Xpkginfo:always"/>  <!-- compile all package-info.java to avoid empty-file warnings -->
                 <compilerarg value="-Xmaxerrs"/><compilerarg value="1000"/><!-- change from default 100 errors -->
             </javac>
@@ -663,7 +663,8 @@
                deprecation="on"
                debug="${java.debugging}">
             <classpath refid="compile.class.path"/>
-            <compilerarg value="-Xlint:-unchecked"/>
+            <compilerarg value="-Xlint:unchecked"/>
+            <compilerarg value="-Xpkginfo:always"/>  <!-- compile all package-info.java to avoid empty-file warnings -->
             <compilerarg value="-Xmaxwarns"/><compilerarg value="2000"/><!-- change from default 100 warnings -->
         </javac>
     </target>
@@ -2091,7 +2092,7 @@
 
             <!-- select the check to run -->
             <compilerarg line="-processor NullnessChecker"/>
-            <compilerarg value="-Xlint:-unchecked"/>
+            <compilerarg value="-Xlint:unchecked"/>
             <!-- compilerarg line="-processor org.checkerframework.checker.lock.LockChecker"/-->
             <!-- compilerarg line="-processor org.checkerframework.checker.guieffect.GuiEffectChecker"/-->
 
