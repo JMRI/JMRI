@@ -2011,7 +2011,7 @@
                   outputFile="${jartarget}/spotbugs-check.html"
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
-                  excludeFilter=".spotbugs.xml"
+                  excludeFilter=".spotbugs-check.xml"
 
                   effort="max"
                   reportLevel="low"
