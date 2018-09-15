@@ -72,10 +72,11 @@ public class Profile implements Comparable<Profile> {
      * load a single profile with a given id.
      *
      * @param name Name of the profile. Will not be used to enforce uniqueness
-     *             constraints. It is recommended this end in {@value #EXTENSION}
+     *             constraints.
      * @param id   Id of the profile. Will be prepended to a random String to
      *             enforce uniqueness constraints.
-     * @param path Location to store the profile
+     * @param path Location to store the profile; {@value #EXTENSION} will be
+     *             appended to this path if needed.
      * @throws java.io.IOException If unable to create the profile at path
      */
     public Profile(@Nonnull String name, @Nonnull String id, @Nonnull File path) throws IOException, IllegalArgumentException {
