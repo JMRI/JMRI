@@ -275,6 +275,24 @@ public class DefaultConditionalTest {
         ix1.setStateVariables(conditionalVariablesList_FalseFalseFalse);
         Assert.assertTrue("calculate() returns NamedBean.FALSE", ix1.calculate(false, null) == Conditional.FALSE);
     }
+    
+    @Test
+    public void testTriggers() {
+        // Test enabled == false --> No action
+        // Test _triggerActionsOnChange == false --> No action
+        // Test newState == _currentState --> No action
+        
+        // Test wantsToTrigger(evt)
+        
+        // Test takeActionIfNeeded()
+        // Test currentState == TRUE && option == ACTION_OPTION_ON_CHANGE_TO_TRUE
+        // Test currentState != TRUE && option == ACTION_OPTION_ON_CHANGE_TO_TRUE
+        // Test currentState == FALSE && option == ACTION_OPTION_ON_CHANGE_TO_FALSE
+        // Test currentState != FALSE && option == ACTION_OPTION_ON_CHANGE_TO_FALSE
+        // Test option == ACTION_OPTION_ON_CHANGE
+        
+        // Test every type. Conditional.ACTION_NONE, ...
+    }
 
     
     // from here down is testing infrastructure
