@@ -179,6 +179,18 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
         _isRtr = b;
     }
 
+    @Override
+    public String toMonitorString() {
+        StringBuffer buf = new StringBuffer();
+        buf.append("(" + Integer.toHexString(getHeader())
+                + (isExtended() ? " ext)" : ")"));
+        for (int i = 0; i < getNumDataElements(); i++) 
+        {
+            buf.append(" " + jmri.util.StringUtil.twoHexFromInt(getElement(i)));
+        }
+	return buf.toString();
+    }
+
     // contents (package access)
     int _header;
     boolean _isExtended;
