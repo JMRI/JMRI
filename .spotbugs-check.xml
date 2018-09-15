@@ -38,7 +38,6 @@
         <Or>
            <Bug pattern="BC_UNCONFIRMED_CAST" />
            <Bug pattern="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE" />
-           <Bug pattern="CI_CONFUSED_INHERITANCE" />
            <Bug pattern="DB_DUPLICATE_SWITCH_CLAUSES" />
            <Bug pattern="DLS_DEAD_LOCAL_STORE" />           
            <Bug pattern="FE_FLOATING_POINT_EQUALITY" />
