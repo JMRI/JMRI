@@ -138,6 +138,26 @@ public class NceReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
+    public void testPollToString() {
+        msg.setBinary(true);
+        msg.setElement(0, 0x12);
+        msg.setElement(1, 0x34);
+        msg.setElement(2, 0x01);
+        msg.setElement(3, 0x02);
+        Assert.assertEquals("string value","12 34 01 02", msg.toString());
+    }
+
+    @Test
+    public void testPollToMonitorString() {
+        msg.setBinary(true);
+        msg.setElement(0, 0x12);
+        msg.setElement(1, 0x34);
+        msg.setElement(2, 0x01);
+        msg.setElement(3, 0x02);
+        Assert.assertEquals("monitor string value","Reply: 12 34 01 02\n", msg.toMonitorString());
+    }
+
+    @Test
     public void testValue1() {
         // value when just the string comes back
         msg.setBinary(false);

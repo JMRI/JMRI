@@ -1,6 +1,7 @@
 package jmri.jmrit.conditional;
 
 import java.util.ArrayList;
+import java.util.List;
 import jmri.Conditional;
 import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
@@ -54,7 +55,7 @@ public class CreateTestObjects {
         cdl.setStateVariables(variableList);
 
         // Create actions
-        ArrayList<ConditionalAction> actionList = ((DefaultConditional) cdl).getActionList();
+        List<ConditionalAction> actionList = ((DefaultConditional) cdl).getActionList();
 
 //       <conditionalAction option="1" type="9" systemName="Reset" data="4" delay="0" string="" />
         ConditionalAction act1 = new DefaultConditionalAction();

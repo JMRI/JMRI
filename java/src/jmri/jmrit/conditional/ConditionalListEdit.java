@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -188,14 +189,14 @@ public class ConditionalListEdit extends ConditionalEditBase {
     JPanel _textPanel;
 
     // ------------ Current Variable Information ------------
-    ArrayList<ConditionalVariable> _variableList;
+    List<ConditionalVariable> _variableList;
     ConditionalVariable _curVariable;
     int _curVariableRowNumber;
     int _curVariableItem = 0;
     TreeSet<String> _oldTargetNames = new TreeSet<String>();
 
     // ------------ Current Action Information ------------
-    ArrayList<ConditionalAction> _actionList;
+    List<ConditionalAction> _actionList;
     ConditionalAction _curAction;
     int _curActionRowNumber;
     int _curActionItem = 0;
@@ -4292,7 +4293,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     if (refList != null) {
                         for (String ref : refList) {
                             Conditional cRef = _conditionalManager.getBySystemName(ref);
-                            ArrayList<ConditionalVariable> varList = cRef.getCopyOfStateVariables();
+                            List<ConditionalVariable> varList = cRef.getCopyOfStateVariables();
                             for (ConditionalVariable var : varList) {
                                 // Find the affected conditional variable
                                 if (var.getName().equals(sName)) {

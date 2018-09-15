@@ -10,22 +10,26 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
+ * Z21MonPaneTest.java
+ * <p>
+ * Description:	tests for the jmri.jmrix.roco.z21.swing.mon.Z21MonPane class
  *
- * @author Paul Bender Copyright (C) 2017
+ * @author	Paul Bender Copyright (C) 2014,2016
  */
-public class Z21MonActionTest {
+public class Z21MonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     private Z21SystemConnectionMemo memo = null;
     private Z21InterfaceScaffold tc = null; 
 
     @Test
-    public void testCTor() {
-        Z21MonAction t = new Z21MonAction();
-        Assert.assertNotNull("exists", t);
+    public void testDefault() {
+        jmri.util.swing.JmriNamedPaneAction f = new Z21MonPane.Default();
+        Assert.assertNotNull(f);
     }
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -35,15 +39,18 @@ public class Z21MonActionTest {
         memo.setTrafficController(tc);
         memo.setRocoZ21CommandStation(new RocoZ21CommandStation());
         jmri.InstanceManager.store(memo, jmri.jmrix.roco.z21.Z21SystemConnectionMemo.class);
+        // pane for AbstractMonPaneTestBase; panel for JmriPanelTest 
+        panel = pane = new Z21MonPane();
+        helpTarget = "package.jmri.jmrix.AbstractMonFrame";
+        title = Bundle.getMessage("Z21TrafficTitle");
     }
 
     @After
+    @Override
     public void tearDown() {
-        jmri.InstanceManager.deregister(memo, jmri.jmrix.roco.z21.Z21SystemConnectionMemo.class);
         memo=null;
         tc=null;
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Z21MonActionTest.class);
 }
