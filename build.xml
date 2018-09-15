@@ -768,7 +768,7 @@
         </ecj-compile>
     </target>
 
-    <target name="warnings-ci"
+    <target name="warnings-check"
             description="compile source with warning generation on and fail if any warnings, omitting tests; requires Ant 1.8 and ecj.jar"
             depends="check-ant-requirements, clean, init, copyfiles, compile-generated-source">
         <ecj-compile javac.source="${source}">
@@ -788,7 +788,7 @@
         </ecj-compile>
     </target>
 
-    <target name="tests-warnings-ci"
+    <target name="tests-warnings-check"
             description="compile test sources with warning generation on and fail if any warnings; requires Ant 1.8 and ecj.jar"
             depends="check-ant-requirements, clean, init, copyfiles, warnings-ci">
         <ecj-compile javac.source="${test}" javac.target="${testtarget}" javac.classpath="test.class.path">
