@@ -1,6 +1,14 @@
 <FindBugsFilter>
 
-    <!-- what follows should be kept in sync with the bottom part of .spotbugs-check.xml -->
+    <!-- The following section is used to suppress notifications about
+          specific bugs and categories that we don't think are
+          worth the effort -->
+         
+    <!-- what follows should be kept in sync with .spotbugs-check.xml -->
+
+    <!-- This is used to suppress notifications about
+          specific bugs and categories that we don't think are
+          worth the effort -->
 
      <Match>
        <!-- Minor clarity issue -->

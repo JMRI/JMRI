@@ -1,10 +1,10 @@
 <FindBugsFilter>
 
-    <!-- This is used to fail CI if any medium or high bugs appear.
-         For high, this fails on any.  For medium, we accept 
-         certain categories where we haven't cleared medium yet -->
+    <!-- This first section is used to fail CI if any unexpected bugs appear.
+         We accept certain types of bugs at certain levels until we get them
+         all cleared out. -->
          
-    <!-- Suppress high bugs which we _don't_ want to fail as get them removed -->
+    <!-- Suppress high bugs which we _don't_ want to fail CI until we can get them removed -->
      <Match>
         <Confidence value="1" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
         <Or>
@@ -12,7 +12,7 @@
         </Or>
      </Match>
 
-    <!-- Suppress medium bugs which we _don't_ want to fail as get them removed -->
+    <!-- Suppress medium bugs which we _don't_ want to fail CI until we can get them removed -->
      <Match>
         <Confidence value="2" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
         <Or>
@@ -33,7 +33,7 @@
         </Or>
      </Match>
 
-    <!-- Suppress low priority bugs which we _don't_ want to fail as get them removed -->
+    <!-- Suppress low priority bugs which we _don't_ want to fail CI until we can get them removed -->
      <Match>
         <Confidence value="3" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
         <Or>
@@ -44,23 +44,31 @@
            <Bug pattern="DLS_DEAD_LOCAL_STORE" />           
            <Bug pattern="FE_FLOATING_POINT_EQUALITY" />
            <Bug pattern="IA_AMBIGUOUS_INVOCATION_OF_INHERITED_OR_OUTER_METHOD" />
+           <Bug pattern="IS2_INCONSISTENT_SYNC" />
            <Bug pattern="LI_LAZY_INIT_STATIC" />
            <Bug pattern="NO_NOTIFY_NOT_NOTIFYALL" />
            <Bug pattern="NP_LOAD_OF_KNOWN_NULL_VALUE" />
            <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
+           <Bug pattern="PZLA_PREFER_ZERO_LENGTH_ARRAYS" />
            <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE" />
            <Bug pattern="RV_CHECK_FOR_POSITIVE_INDEXOF" />
            <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
            <Bug pattern="UCF_USELESS_CONTROL_FLOW" />
            <Bug pattern="UC_USELESS_CONDITION" />
+           <Bug pattern="UW_UNCOND_WAIT" />
            <Bug pattern="UPM_UNCALLED_PRIVATE_METHOD" />
            <Bug pattern="URF_UNREAD_FIELD" />
            <Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" />
+           <Bug pattern="WA_NOT_IN_LOOP" />
         </Or>
      </Match>
 
 
     <!-- what follows should be kept in sync with .spotbugs.xml -->
+
+    <!-- The following section is used to suppress notifications about
+          specific bugs and categories that we don't think are
+          worth the effort -->
 
      <Match>
        <!-- Minor clarity issue -->
