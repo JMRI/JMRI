@@ -181,7 +181,7 @@ public class SerialAddress {
             // This is a OiLnnnxxx address
             int num;
             try {
-                num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
+                num = Integer.parseInt(systemName.substring(prefix.length() + 1));
             } catch (Exception e) {
                 log.warn("invalid character in number field system name: {}", systemName);
                 return NameValidity.INVALID;
@@ -292,7 +292,7 @@ public class SerialAddress {
         }
         if (noB) {
             // This is a OiLnnnxxx address, convert to B-style
-            int num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
+            int num = Integer.parseInt(systemName.substring(prefix.length() + 1));
             int nAddress = num / 1000;
             int bitNum = num - (nAddress * 1000);
             altName = prefix + systemName.charAt(prefix.length()) + Integer.toString(nAddress) + "B"
@@ -344,7 +344,7 @@ public class SerialAddress {
         char type = systemName.charAt(prefix.length());
         if (noB) {
             // This is a OiLnnnxxx address
-            int num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
+            int num = Integer.parseInt(systemName.substring(prefix.length() + 1));
             int nAddress = num / 1000;
             int bitNum = num - (nAddress * 1000);
             nName = prefix + type + Integer.toString((nAddress * 1000) + bitNum);
