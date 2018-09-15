@@ -274,6 +274,8 @@ public class EcosLocoToRoster implements EcosListener {
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "CF_USELESS_CONTROL_FLOW", 
+        justification = "TODO fill out the actions in these clauses")
     public void reply(EcosReply m) {
         int startval;
         int endval;

@@ -310,7 +310,6 @@ public final class ImageIndexEditor extends JmriJFrame {
         }
     }
 
-    @SuppressWarnings("unchecked")
     int countSubNodes(CatalogTreeNode node) {
         int cnt = 0;
         Enumeration<CatalogTreeNode> e = node.children();
@@ -321,7 +320,6 @@ public final class ImageIndexEditor extends JmriJFrame {
         return cnt;
     }
 
-    @SuppressWarnings("unchecked")
     private int countIcons(CatalogTreeNode node) {
         int cnt = 0;
         Enumeration<CatalogTreeNode> e = node.children();
