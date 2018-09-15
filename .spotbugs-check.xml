@@ -23,7 +23,6 @@
            <Bug pattern="PZLA_PREFER_ZERO_LENGTH_ARRAYS" />
            <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE" />
            <Bug pattern="SC_START_IN_CTOR" />
-           <Bug pattern="SF_SWITCH_FALLTHROUGH" />
            <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
            <Bug pattern="SWL_SLEEP_WITH_LOCK_HELD" />
            <Bug pattern="UW_UNCOND_WAIT" />
