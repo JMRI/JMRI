@@ -150,7 +150,6 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
         renameBean(systemName, userName, bean);
     }
 
-    @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
     @CheckReturnValue
     public <T extends NamedBean> boolean inUse(@Nonnull String name, @Nonnull T bean) {
         NamedBeanHandle<T> temp = new NamedBeanHandle<>(name, bean);

@@ -290,7 +290,6 @@ public class DecoratorPanel extends JPanel implements ChangeListener {
         _samplePanel.add(Box.createHorizontalStrut(STRUT));
     }
 
-    @SuppressWarnings("unchecked")
     private void makeFontPanels() {
         ActionListener fontAction = ((ActionEvent event) -> {
             fontChange(); // callback
