@@ -85,6 +85,7 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
      * turnout with respect to whether or not a feedback request was sent.
      * This is used only when the turnout is created by on layout feedback.
      */
+    @SuppressWarnings({"hidding","super"});
     synchronized void initmessage(XNetReply l) {
         int oldState = internalState;
         message(l);
