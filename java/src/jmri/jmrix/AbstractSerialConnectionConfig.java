@@ -66,7 +66,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
     protected boolean init = false;
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void checkInitDone() {
         if (log.isDebugEnabled()) {
@@ -619,7 +618,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         }
     }
 
-    @SuppressWarnings({"unchecked", "UseOfObsoleteCollectionType"})
+    @SuppressWarnings("UseOfObsoleteCollectionType")
     protected Vector<String> getPortNames() {
         //reloadDriver(); // Refresh the list of communication ports
         // first, check that the comm package can be opened and ports seen

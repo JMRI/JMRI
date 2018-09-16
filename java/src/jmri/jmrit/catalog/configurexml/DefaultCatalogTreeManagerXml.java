@@ -155,7 +155,6 @@ public class DefaultCatalogTreeManagerXml extends XmlFile {
             element.addContent(el);
         }
         parent.addContent(element);
-        @SuppressWarnings("unchecked") // is node.children actually of <Element> type?
         Enumeration<CatalogTreeNode> e = node.children();
         while (e.hasMoreElements()) {
             CatalogTreeNode n = e.nextElement();

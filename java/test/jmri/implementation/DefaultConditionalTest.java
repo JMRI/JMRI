@@ -141,6 +141,7 @@ public class DefaultConditionalTest {
     }
     
     @Test
+    @SuppressWarnings("unused") // test building in progress
     public void testCalculate() {
         ConditionalVariable[] conditionalVariables_Empty
                 = { new ConditionalVariableStatic(Conditional.TRUE)

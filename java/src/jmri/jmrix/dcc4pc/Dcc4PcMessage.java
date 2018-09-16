@@ -88,8 +88,16 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
         _dataChars[n] = v;
     }
 
+    /*
+     * @deprecated since 4.13.4 use toString() instead.
+     */
+    @Deprecated
     public String toHexString() {
+	    return toString();
+    }
 
+    @Override
+    public String toString() {
         StringBuilder buf = new StringBuilder();
         buf.append("0x");
         buf.append(Integer.toHexString(0xFF & _dataChars[0]));

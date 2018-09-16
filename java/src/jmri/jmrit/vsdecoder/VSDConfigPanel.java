@@ -103,7 +103,6 @@ public class VSDConfigPanel extends JmriPanel {
     //
     // Read the addressTextBox and broadcast the new address to
     // any listeners.
-    @SuppressWarnings("cast")
     protected void updateAddress() {
         // Simulates the clicking of the address Set button
         VSDecoder dec = main_pane.getDecoder();
