@@ -42,6 +42,7 @@ public class DefaultConditionalTest {
     }
     
     @Test
+    @SuppressWarnings("unused") // test building in progress
     public void testCalculate() {
         Conditional ix1 = new DefaultConditional("IXIC 1");
         Assert.assertTrue("calculate() returns NamedBean.UNKNOWN", ix1.calculate(false, null) == NamedBean.UNKNOWN);
