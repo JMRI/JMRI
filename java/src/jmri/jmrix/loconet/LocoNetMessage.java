@@ -21,7 +21,19 @@ import jmri.jmrix.AbstractMessage;
  * Note that many specific message types are created elsewhere. In general, if
  * more than one tool will need to use a particular format, it's useful to
  * refactor it to here.
- * <p>
+ * <hr>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under 
+ * the terms of version 2 of the GNU General Public License as published 
+ * by the Free Software Foundation. See the "COPYING" file for a copy
+ * of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * for more details.
+ * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
