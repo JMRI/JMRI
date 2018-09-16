@@ -19,12 +19,12 @@ public class ConditionalVariableTest {
         // These tests ensures that the values of the constants stay the same
         // if that change is done.
         
-        Assert.assertTrue(ConditionalVariable.NUM_COMPARE_OPERATIONS == 5);
-        Assert.assertTrue(ConditionalVariable.LESS_THAN == 1);
-        Assert.assertTrue(ConditionalVariable.LESS_THAN_OR_EQUAL == 2);
-        Assert.assertTrue(ConditionalVariable.EQUAL == 3);
-        Assert.assertTrue(ConditionalVariable.GREATER_THAN_OR_EQUAL == 4);
-        Assert.assertTrue(ConditionalVariable.GREATER_THAN == 5);
+        Assert.assertEquals(ConditionalVariable.NUM_COMPARE_OPERATIONS, 5);
+        Assert.assertEquals(ConditionalVariable.LESS_THAN, 1);
+        Assert.assertEquals(ConditionalVariable.LESS_THAN_OR_EQUAL, 2);
+        Assert.assertEquals(ConditionalVariable.EQUAL, 3);
+        Assert.assertEquals(ConditionalVariable.GREATER_THAN_OR_EQUAL, 4);
+        Assert.assertEquals(ConditionalVariable.GREATER_THAN, 5);
     }
     
     @Test
