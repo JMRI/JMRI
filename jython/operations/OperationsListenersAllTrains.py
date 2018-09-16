@@ -5,6 +5,8 @@
 # Author: Daniel Boudreau, copyright 2010, 2012
 # Part of the JMRI distribution
 
+import java
+import java.beans
 import java.beans.PropertyChangeListener as PropertyChangeListener
 import jmri
 

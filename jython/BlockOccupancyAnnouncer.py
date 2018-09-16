@@ -8,6 +8,7 @@
 # Part of the JMRI distribution
 
 import java
+import java.beans
 import jmri
 
 # Define routine to map status numbers to text
