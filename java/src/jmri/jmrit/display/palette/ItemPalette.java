@@ -22,6 +22,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.tree.TreeNode;
+
 import jmri.*;
 import jmri.jmrit.catalog.CatalogTreeLeaf;
 import jmri.jmrit.catalog.CatalogTreeNode;
@@ -236,9 +238,9 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         CatalogTree tree = manager.getBySystemName("NXPI");
         if (tree != null) {
             CatalogTreeNode root = tree.getRoot();
-            Enumeration<CatalogTreeNode> e = root.children();
+            Enumeration<TreeNode> e = root.children();
             while (e.hasMoreElements()) {
-                CatalogTreeNode node = e.nextElement();
+                CatalogTreeNode node = (CatalogTreeNode)e.nextElement();
                 String typeName = (String) node.getUserObject();
                 // detect this is a 4 level map collection.
                 // not very elegant (i.e. extensible), but maybe all that's needed.
@@ -269,9 +271,9 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
             loadIndicatorFamilyMap(CatalogTreeNode node, Editor ed) {
         HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyMap
                 = new HashMap<>();
-        Enumeration<CatalogTreeNode> ee = node.children();
+        Enumeration<TreeNode> ee = node.children();
         while (ee.hasMoreElements()) {
-            CatalogTreeNode famNode = ee.nextElement();
+            CatalogTreeNode famNode = (CatalogTreeNode)ee.nextElement();
             String name = (String) famNode.getUserObject();
             familyMap.put(name, loadFamilyMap(famNode, ed));
             Thread.yield();
@@ -282,9 +284,9 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     static HashMap<String, HashMap<String, NamedIcon>> loadFamilyMap(CatalogTreeNode node, Editor ed) {
         HashMap<String, HashMap<String, NamedIcon>> familyMap
                 = new HashMap<>();
-        Enumeration<CatalogTreeNode> ee = node.children();
+        Enumeration<TreeNode> ee = node.children();
         while (ee.hasMoreElements()) {
-            CatalogTreeNode famNode = ee.nextElement();
+            CatalogTreeNode famNode = (CatalogTreeNode)ee.nextElement();
             String familyName = (String) famNode.getUserObject();
             HashMap<String, NamedIcon> iconMap = new HashMap<>();
             List<CatalogTreeLeaf> list = famNode.getLeaves();

@@ -10,6 +10,7 @@
 
 import jmri
 import java
+import java.beans
 
 # First, define the listener class.  This gets messages
 # from the reporter, uses them to keep track of the decoders
