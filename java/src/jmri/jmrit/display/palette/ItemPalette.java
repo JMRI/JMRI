@@ -236,7 +236,6 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         CatalogTree tree = manager.getBySystemName("NXPI");
         if (tree != null) {
             CatalogTreeNode root = tree.getRoot();
-            @SuppressWarnings("unchecked") // root.children() is still unchecked in JDOM2
             Enumeration<CatalogTreeNode> e = root.children();
             while (e.hasMoreElements()) {
                 CatalogTreeNode node = e.nextElement();
@@ -270,7 +269,6 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
             loadIndicatorFamilyMap(CatalogTreeNode node, Editor ed) {
         HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyMap
                 = new HashMap<>();
-        @SuppressWarnings("unchecked") // node.children() is still unchecked in JDOM2
         Enumeration<CatalogTreeNode> ee = node.children();
         while (ee.hasMoreElements()) {
             CatalogTreeNode famNode = ee.nextElement();
@@ -284,7 +282,6 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     static HashMap<String, HashMap<String, NamedIcon>> loadFamilyMap(CatalogTreeNode node, Editor ed) {
         HashMap<String, HashMap<String, NamedIcon>> familyMap
                 = new HashMap<>();
-        @SuppressWarnings("unchecked") // node.children() is still unchecked in JDOM2
         Enumeration<CatalogTreeNode> ee = node.children();
         while (ee.hasMoreElements()) {
             CatalogTreeNode famNode = ee.nextElement();

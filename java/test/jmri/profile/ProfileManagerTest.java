@@ -29,7 +29,6 @@ public class ProfileManagerTest {
     }
 
     @Test
-    @SuppressWarnings("null")
     public void testSetActiveProfile_Profile() throws IOException {
         ProfileManager pm = new ProfileManager();
         // expect this to throw exception because profile is null
@@ -55,7 +54,6 @@ public class ProfileManagerTest {
     }
 
     @Test
-    @SuppressWarnings("null")
     public void testSetActiveProfile_String() throws IOException {
         ProfileManager pm = new ProfileManager();
         // expect this to throw exception because identifier is null

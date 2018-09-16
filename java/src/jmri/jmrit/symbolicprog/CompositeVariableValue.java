@@ -104,7 +104,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
         Setting(String varName, VariableValue variable, String value) {
             this.varName = varName;
             this.variable = variable;
-            this.value = Integer.valueOf(value).intValue();
+            this.value = Integer.parseInt(value);
             if (log.isDebugEnabled()) {
                 log.debug("    cTor Setting " + varName + " = " + value);
             }

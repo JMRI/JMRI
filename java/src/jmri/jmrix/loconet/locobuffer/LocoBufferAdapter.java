@@ -69,7 +69,6 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
 
-    @SuppressWarnings("unchecked")
     @Override
     public Vector<String> getPortNames() {
         // first, check that the comm package can be opened and ports seen

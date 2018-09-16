@@ -252,7 +252,6 @@ public class CatalogPanel extends JPanel {
     /**
      * Recursively add the branch nodes to the display tree.
      */
-    @SuppressWarnings("unchecked")
     private void addTreeBranch(CatalogTreeNode node) {
         if (log.isDebugEnabled()) {
             log.debug("addTreeBranch called for node= {}, has {} children.",
@@ -269,7 +268,6 @@ public class CatalogPanel extends JPanel {
     /**
      * Clone the node and adds to parent.
      */
-    @SuppressWarnings("unchecked")
     private void addNode(CatalogTreeNode parent, CatalogTreeNode n) {
         CatalogTreeNode node = new CatalogTreeNode((String) n.getUserObject());
         node.setLeaves(n.getLeaves());
@@ -303,7 +301,6 @@ public class CatalogPanel extends JPanel {
      * Find the corresponding node in a CatalogTreeManager tree with a displayed
      * node.
      */
-    @SuppressWarnings("unchecked")
     private CatalogTreeNode match(CatalogTreeNode cRoot, TreeNode[] nodes, int idx) {
         if (idx == nodes.length) {
             return cRoot;
@@ -343,7 +340,6 @@ public class CatalogPanel extends JPanel {
      * @param parent the parent of name
      * @return true if the node was inserted
      */
-    @SuppressWarnings("unchecked")
     protected boolean insertNodeIntoModel(String name, CatalogTreeNode parent) {
         if (!nameOK(parent, name)) {
             return false;
