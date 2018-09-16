@@ -22,13 +22,13 @@ public class LocoNetMessageTest {
         Assert.assertEquals("length", 3, m.getNumDataElements());
         m = new LocoNetMessage(2);
         Assert.assertEquals("length", 2, m.getNumDataElements());
-        m = new LocoNetMessage(1);
+        new LocoNetMessage(1);
         jmri.util.JUnitAppender.assertErrorMessage("LocoNetMessage does not allow object creation if length is less than 2.");
 
-        m = new LocoNetMessage(0);
+        new LocoNetMessage(0);
         jmri.util.JUnitAppender.assertErrorMessage("LocoNetMessage does not allow object creation if length is less than 2.");
 
-        m = new LocoNetMessage(-1);
+        new LocoNetMessage(-1);
         jmri.util.JUnitAppender.assertErrorMessage("LocoNetMessage does not allow object creation if length is less than 2.");
 
     }
@@ -41,11 +41,11 @@ public class LocoNetMessageTest {
         Assert.assertEquals("second value", 12, m.getElement(1));
         Assert.assertEquals("third value", 13, m.getElement(2));
         Assert.assertEquals("fourth value", 14, m.getElement(3));
-        m = new LocoNetMessage(new int[] {0x85});
+        new LocoNetMessage(new int[] {0x85});
         jmri.util.JUnitAppender.assertErrorMessage("Cannot create a LocoNet message of length shorter than two.");
 
         byte[] t1 = new byte[]{(byte) 0x81};
-        m = new LocoNetMessage(t1);
+        new LocoNetMessage(t1);
         jmri.util.JUnitAppender.assertErrorMessage("Cannot create a LocoNet message of length shorter than two.");
 
 
@@ -413,10 +413,10 @@ public class LocoNetMessageTest {
         m.getElement(-1);
         jmri.util.JUnitAppender.assertErrorMessage("reference element -1 in message of 20 elements: 21 20 1F 1E 1D 1C 1B 1A 19 18 17 16 15 14 13 12 11 10 0F 0E");
 
-        int result = m.getElement(21);
+        m.getElement(21);
         jmri.util.JUnitAppender.assertErrorMessage("reference element 21 in message of 20 elements: 21 20 1F 1E 1D 1C 1B 1A 19 18 17 16 15 14 13 12 11 10 0F 0E");
 
-        result = m.getElement(20);
+        m.getElement(20);
         jmri.util.JUnitAppender.assertErrorMessage("reference element 20 in message of 20 elements: 21 20 1F 1E 1D 1C 1B 1A 19 18 17 16 15 14 13 12 11 10 0F 0E");
 
         for (int i = 0; i < 20; ++i) {
