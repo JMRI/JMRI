@@ -283,7 +283,10 @@ public class DefaultConditionalTest {
         // Test newState == _currentState --> No action
         
         // Test wantsToTrigger(evt)
-        
+    }
+    
+    @Test
+    public void testAction() {
         // Test takeActionIfNeeded()
         // Test currentState == TRUE && option == ACTION_OPTION_ON_CHANGE_TO_TRUE
         // Test currentState != TRUE && option == ACTION_OPTION_ON_CHANGE_TO_TRUE
