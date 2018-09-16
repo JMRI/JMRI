@@ -43,6 +43,26 @@ public class LocoNetSlot {
      */
     public LocoNetSlot(int slotNum) {
         slot = slotNum;
+        Dcs240Slot = false;
+        if ((slot == 0) || (slot > 120 && slot < 128)
+                || (slot > 247 && slot < 257)
+                || (slot > 375 && slot < 385)) {
+            systemSlot = true;
+        } else {
+            systemSlot = false;
+        }
+    }
+
+    /**
+     * Create a slot based solely on a slot number.  The remainder of the slot is
+     * left un-initialized.
+     * <p>
+     * @param slotNum - slot number to be assigned to the new LocoNetSlot object
+     * @param isDCS240 - if dcs240 slot, regardless of slotnumber, then true
+     */
+    public LocoNetSlot(int slotNum, boolean isDcs240) {
+        slot = slotNum;
+        Dcs240Slot = isDcs240;
         if ((slot == 0) || (slot > 120 && slot < 128)
                 || (slot > 247 && slot < 257)
                 || (slot > 375 && slot < 385)) {
@@ -66,6 +86,7 @@ public class LocoNetSlot {
         // report messages, since a LocoNetSlot object constructed from a LocoNet
         // "speed" message or "dir/func" message does not give any other useful
         // information for object initialization.
+        Dcs240Slot = false;
         slot = l.getElement(2);
         if ((slot == 0) || (slot > 120 && slot < 128)
                 || (slot > 247 && slot < 257)
@@ -1047,7 +1068,7 @@ public class LocoNetSlot {
      * @return Formatted LocoNet message to change value.
      */
     public LocoNetMessage writeMode(int status) {
-        if (slot < 128 ) {
+        if (!Dcs240Slot ) {
             LocoNetMessage l = new LocoNetMessage(4);
             l.setOpCode(LnConstants.OPC_SLOT_STAT1);
             l.setElement(1, slot);
@@ -1083,7 +1104,7 @@ public class LocoNetSlot {
      * @return Formatted LocoNet message to change value.
      */
     public LocoNetMessage writeStatus(int status) {
-        if (slot < 128 ) {
+        if (!Dcs240Slot ) {
             LocoNetMessage l = new LocoNetMessage(4);
             l.setOpCode(LnConstants.OPC_SLOT_STAT1);
             l.setElement(1, slot);
@@ -1133,7 +1154,7 @@ public class LocoNetSlot {
      * @return LocoNet message which "dispatches" the slot
     */
     public LocoNetMessage dispatchSlot() {
-        if (slot < 128) {
+        if (!Dcs240Slot) {
             LocoNetMessage l = new LocoNetMessage(4);
             l.setOpCode(LnConstants.OPC_MOVE_SLOTS);
             l.setElement(1, slot);
@@ -1174,7 +1195,7 @@ public class LocoNetSlot {
      * of a change in the slot contents.
      */
     public LocoNetMessage writeSlot() {
-        if (slot < 128) {
+        if (!Dcs240Slot) {
             LocoNetMessage l = new LocoNetMessage(14);
             l.setOpCode(LnConstants.OPC_WR_SL_DATA);
             l.setElement(1, 0x0E);
@@ -1208,6 +1229,7 @@ public class LocoNetSlot {
 
     // data values to echo slot contents
     final private int slot;   // <SLOT#> is the number of the slot that was read.
+    final private boolean Dcs240Slot; 
     final private boolean systemSlot;
     private int stat; // <STAT> is the status of the slot
     private int addr; // full address of the loco, made from

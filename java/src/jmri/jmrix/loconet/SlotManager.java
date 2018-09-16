@@ -96,7 +96,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // initialize slot array
         _slots = new LocoNetSlot[numSlots];
         for (int i = 0; i < numSlots; i++) {
-            _slots[i] = new LocoNetSlot(i);
+            _slots[i] = new LocoNetSlot(i,extendedSlots);
         }
     }
 
