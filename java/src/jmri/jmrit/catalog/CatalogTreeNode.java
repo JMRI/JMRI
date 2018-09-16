@@ -2,7 +2,7 @@ package jmri.jmrit.catalog;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
-import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -109,7 +109,7 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Enumeration<CatalogTreeNode> children() {
+    public Enumeration<TreeNode> children() {  // for JDK 9 typing
         return super.children();
     }
 
