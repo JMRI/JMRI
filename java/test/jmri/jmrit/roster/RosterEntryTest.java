@@ -3,9 +3,10 @@ package jmri.jmrit.roster;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.*;
+
 import jmri.InstanceManager;
-import jmri.util.FileUtil;
-import jmri.util.JUnitUtil;
+import jmri.util.*;
 
 import org.jdom2.JDOMException;
 import org.junit.*;
@@ -137,13 +138,44 @@ public class RosterEntryTest {
     }
 
     @Test
-    public void testModifyDate() {
+    public void testModifyDateUnparseable() {
         RosterEntry r = new RosterEntry("file here");
 
         r.setId("test Id");
         r.setDateUpdated("unparseable date");
         
         jmri.util.JUnitAppender.assertWarnMessage("Unable to parse \"unparseable date\" as a date in roster entry \"test Id\"."); 
+    }
+
+    @Test
+    public void testDateFormatISO() {
+        RosterEntry r = new RosterEntry("file here");
+
+        r.setId("test Id");
+        r.setDateUpdated("2018-03-05T02:34:55Z");
+        
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog()); 
+        Assert.assertEquals("2018-03-05T02:34:55Z", r.getDateUpdated().toString());
+    }
+
+    @Test
+    public void testDateFormatTraditional() throws java.text.ParseException {
+        RosterEntry r = new RosterEntry("file here");
+
+        r.setId("test Id");
+        
+        TimeZone tz = TimeZone.getDefault();
+        try {
+            TimeZone.setDefault(TimeZone.getTimeZone("GMT-7"));
+            r.setDateUpdated("Mar 2, 2016 9:57:04 AM"); // this is in local time
+        } finally {
+            TimeZone.setDefault(tz);
+        }
+        
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog()); 
+        
+        // convert that same local time in ISO format and compare
+        Assert.assertEquals("2016-03-02T16:57:04Z", r.getDateUpdated());
     }
 
     @Test
