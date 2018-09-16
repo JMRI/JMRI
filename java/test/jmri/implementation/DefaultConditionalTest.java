@@ -277,6 +277,7 @@ public class DefaultConditionalTest {
     }
     
     @Test
+    @Ignore
     public void testTriggers() {
         // Test enabled == false --> No action
         // Test _triggerActionsOnChange == false --> No action
@@ -286,6 +287,7 @@ public class DefaultConditionalTest {
     }
     
     @Test
+    @Ignore
     public void testAction() {
         // Test takeActionIfNeeded()
         // Test currentState == TRUE && option == ACTION_OPTION_ON_CHANGE_TO_TRUE
