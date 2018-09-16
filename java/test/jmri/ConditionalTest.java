@@ -194,6 +194,50 @@ public class ConditionalTest {
         Assert.assertTrue(Conditional.ITEM_TYPE_LAST_ACTION == 14);
     }
     
+    @Test
+    public void testArrays() {
+        // These arrays has @SuppressFBWarnings so it might be good to refactor the code,
+        // for example by using enums.
+        
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_NONE] == Conditional.TYPE_NONE);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_SENSOR_ACTIVE] == Conditional.ITEM_TYPE_SENSOR);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_SENSOR_INACTIVE] == Conditional.ITEM_TYPE_SENSOR);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_TURNOUT_THROWN] == Conditional.ITEM_TYPE_TURNOUT);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_TURNOUT_CLOSED] == Conditional.ITEM_TYPE_TURNOUT);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_CONDITIONAL_TRUE] == Conditional.ITEM_TYPE_CONDITIONAL);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_CONDITIONAL_FALSE] == Conditional.ITEM_TYPE_CONDITIONAL);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_LIGHT_ON] == Conditional.ITEM_TYPE_LIGHT);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_LIGHT_OFF] == Conditional.ITEM_TYPE_LIGHT);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_MEMORY_EQUALS] == Conditional.ITEM_TYPE_MEMORY);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_FAST_CLOCK_RANGE] == Conditional.ITEM_TYPE_CLOCK);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_HEAD_RED] == Conditional.ITEM_TYPE_SIGNALHEAD);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_HEAD_YELLOW] == Conditional.ITEM_TYPE_SIGNALHEAD);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_HEAD_GREEN] == Conditional.ITEM_TYPE_SIGNALHEAD);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_HEAD_DARK] == Conditional.ITEM_TYPE_SIGNALHEAD);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_HEAD_FLASHRED] == Conditional.ITEM_TYPE_SIGNALHEAD);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW] == Conditional.ITEM_TYPE_SIGNALHEAD);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN] == Conditional.ITEM_TYPE_SIGNALHEAD);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_HEAD_LIT] == Conditional.ITEM_TYPE_SIGNALHEAD);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_HEAD_HELD] == Conditional.ITEM_TYPE_SIGNALHEAD);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_MEMORY_COMPARE] == Conditional.ITEM_TYPE_MEMORY);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_HEAD_LUNAR] == Conditional.ITEM_TYPE_SIGNALHEAD);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_HEAD_FLASHLUNAR] == Conditional.ITEM_TYPE_SIGNALHEAD);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_MEMORY_EQUALS_INSENSITIVE] == Conditional.ITEM_TYPE_MEMORY);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE] == Conditional.ITEM_TYPE_MEMORY);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_ROUTE_FREE] == Conditional.ITEM_TYPE_WARRANT);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_ROUTE_OCCUPIED] == Conditional.ITEM_TYPE_WARRANT);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_ROUTE_ALLOCATED] == Conditional.ITEM_TYPE_WARRANT);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_ROUTE_SET] == Conditional.ITEM_TYPE_WARRANT);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_TRAIN_RUNNING] == Conditional.ITEM_TYPE_WARRANT);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS] == Conditional.ITEM_TYPE_SIGNALMAST);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_MAST_LIT] == Conditional.ITEM_TYPE_SIGNALMAST);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_MAST_HELD] == Conditional.ITEM_TYPE_SIGNALMAST);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS] == Conditional.ITEM_TYPE_SIGNALHEAD);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_BLOCK_STATUS_EQUALS] == Conditional.ITEM_TYPE_OBLOCK);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_ENTRYEXIT_ACTIVE] == Conditional.ITEM_TYPE_ENTRYEXIT);
+        Assert.assertTrue(Conditional.TEST_TO_ITEM[Conditional.TYPE_ENTRYEXIT_INACTIVE] == Conditional.ITEM_TYPE_ENTRYEXIT);
+    }
+    
     // from here down is testing infrastructure
 
     // The minimal setup for log4J
