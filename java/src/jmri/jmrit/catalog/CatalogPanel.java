@@ -258,9 +258,9 @@ public class CatalogPanel extends JPanel {
                     node.toString(), node.getChildCount());
         }
         CatalogTreeNode root = (CatalogTreeNode) _model.getRoot();
-        Enumeration<CatalogTreeNode> e = node.children();
+        Enumeration<TreeNode> e = node.children();
         while (e.hasMoreElements()) {
-            CatalogTreeNode n = e.nextElement();
+            CatalogTreeNode n = (CatalogTreeNode)e.nextElement();
             addNode(root, n);
         }
     }
@@ -272,9 +272,9 @@ public class CatalogPanel extends JPanel {
         CatalogTreeNode node = new CatalogTreeNode((String) n.getUserObject());
         node.setLeaves(n.getLeaves());
         parent.add(node);
-        Enumeration<CatalogTreeNode> e = n.children();
+        Enumeration<TreeNode> e = n.children();
         while (e.hasMoreElements()) {
-            CatalogTreeNode nChild = e.nextElement();
+            CatalogTreeNode nChild = (CatalogTreeNode)e.nextElement();
             addNode(node, nChild);
         }
     }
@@ -305,10 +305,10 @@ public class CatalogPanel extends JPanel {
         if (idx == nodes.length) {
             return cRoot;
         }
-        Enumeration<CatalogTreeNode> e = cRoot.children();
+        Enumeration<TreeNode> e = cRoot.children();
         CatalogTreeNode result = null;
         while (e.hasMoreElements()) {
-            CatalogTreeNode cNode = e.nextElement();
+            CatalogTreeNode cNode = (CatalogTreeNode)e.nextElement();
             if (nodes[idx].toString().equals(cNode.toString())) {
                 result = match(cNode, nodes, idx + 1);
                 break;
@@ -345,9 +345,9 @@ public class CatalogPanel extends JPanel {
             return false;
         }
         int index = 0;
-        Enumeration<CatalogTreeNode> e = parent.children();
+        Enumeration<TreeNode> e = parent.children();
         while (e.hasMoreElements()) {
-            CatalogTreeNode n = e.nextElement();
+            CatalogTreeNode n = (CatalogTreeNode)e.nextElement();
             if (name.compareTo(n.toString()) < 0) {
                 break;
             }
