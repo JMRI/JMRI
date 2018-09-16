@@ -7,6 +7,7 @@
 
 import jmri
 import java
+import java.beans
 
 import jmri.Light.ON         as ON
 import jmri.Light.OFF        as OFF

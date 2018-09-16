@@ -46,7 +46,7 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
-        int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
+        int addr = Integer.parseInt(systemName.substring(prefix.length() + 1));
         t = new EasyDccTurnout(prefix, addr, _memo);
         t.setUserName(userName);
 
@@ -82,8 +82,8 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
         // name must be in the ETnnnnn format (E is user configurable)
         int num = 0;
         try {
-            num = Integer.valueOf(systemName.substring(
-                    getSystemPrefix().length() + 1, systemName.length())).intValue();
+            num = Integer.parseInt(systemName.substring(
+                    getSystemPrefix().length() + 1, systemName.length()));
         } catch (Exception e) {
             log.debug("invalid character in number field of system name: {}", systemName);
             return (0);

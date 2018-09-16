@@ -134,7 +134,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             try {
                 if (timer.getChild("goingActive") != null) {
                     String active = timer.getChild("goingActive").getText();
-                    goingActive = Long.valueOf(active);
+                    goingActive = Long.parseLong(active);
                     tm.setDefaultSensorDebounceGoingActive(goingActive);
                 }
             } catch (NumberFormatException ex) {
@@ -144,7 +144,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             try {
                 if (timer.getChild("goingInActive") != null) {
                     String inActive = timer.getChild("goingInActive").getText();
-                    goingInActive = Long.valueOf(inActive);
+                    goingInActive = Long.parseLong(inActive);
                     tm.setDefaultSensorDebounceGoingInActive(goingInActive);
                 }
             } catch (NumberFormatException ex) {
@@ -195,7 +195,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                 try {
                     if (timer.getChild("goingActive") != null) {
                         String active = timer.getChild("goingActive").getText();
-                        s.setSensorDebounceGoingActiveTimer(Long.valueOf(active));
+                        s.setSensorDebounceGoingActiveTimer(Long.parseLong(active));
                     }
                 } catch (NumberFormatException ex) {
                     log.error(ex.toString());
@@ -204,7 +204,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                 try {
                     if (timer.getChild("goingInActive") != null) {
                         String inActive = timer.getChild("goingInActive").getText();
-                        s.setSensorDebounceGoingInActiveTimer(Long.valueOf(inActive));
+                        s.setSensorDebounceGoingInActiveTimer(Long.parseLong(inActive));
                     }
                 } catch (NumberFormatException ex) {
                     log.error(ex.toString());

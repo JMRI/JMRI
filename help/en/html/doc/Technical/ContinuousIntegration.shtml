@@ -45,7 +45,9 @@
       <p>We also use two additioanl CI engines to test every change
       entered into our GitHub code repository.</p>
 
-      <h2>Travis CI</h2>We use <a href=
+      <a name="travis" id="travis"></a>
+      <h2>Travis CI</h2>
+      We use <a href=
       "https://travis-ci.org/">Travis CI</a> to do integration/test
       builds on Linux for every pull into our main <a href=
       "http://github.com/JMRI">GitHub</a> repositories.
@@ -72,16 +74,19 @@
       brackets, but not the quotes) anywhere in the commit message
       if so desired.</p>
 
-      <h2>AppVeyor CI</h2>We use <a href=
-      "http://www.appveyor.com">AppVeyor CI</a> to do
+      <a name="appveyor" id="appveyor"></a>
+      <h2>AppVeyor CI</h2>
+      We use 
+      <a href="http://www.appveyor.com">AppVeyor CI</a>
+      to do
       integration/test builds on Windows for every pull into our
       main <a href="http://github.com/JMRI">GitHub</a>
       repositories.
 
       <p>AppVeyor will build any branch that contains a
       appveyor.yml file. The build history for the main JMRI
-      repository is at <a href=
-      "https://ci.appveyor.com/project/JMRI/jmri">https://ci.appveyor.com/project/JMRI/jmri</a>.</p>
+      repository is at
+      <a href="https://ci.appveyor.com/project/JMRI/jmri">https://ci.appveyor.com/project/JMRI/jmri</a>.</p>
 
       <p>AppVeyor normally runs the property-files checks (for
       duplicate targets and other errors), followed by building the
@@ -92,7 +97,9 @@
       commits to your own fork of the JMRI repositories, it's a bit
       complicated to do it within the AppVeyor security model.</p>
 
-      <h2 id="jenkins">Jenkins</h2>JMRI uses the <a href=
+      <a name="jenkins" id="jenkins"></a>
+      <h2>Jenkins</h2>
+      JMRI uses the <a href=
       "http://jenkins-ci.org/">Jenkins</a> continuous integration
       engine for integration and test builds. This includes keeping
       our <a href="WebSite.shtml">web site</a> up to date as
@@ -152,8 +159,6 @@
       "http://en.wikipedia.org/wiki/Fork_(software_development)">"fork"</a>
       of the Hudson code and supports the same <a href=
       "http://en.wikipedia.org/wiki/API">API</a>.</p>
-
-      <h3>Integration</h3>
 
       <p>Integration into NetBeans is achieved by executing the
       following steps:</p>

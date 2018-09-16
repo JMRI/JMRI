@@ -16,6 +16,25 @@ import org.slf4j.LoggerFactory;
 public class CbusMessage {
     /* Methods that take a CanMessage as argument */
 
+    
+    /**
+     * Return a CBUS Message for use in sensors, turnouts + light
+     * If a response event, set to normal event
+     * In future, this may also translate extended messages down to normal messages.
+     *
+     * @param msg CbusMessage to be coverted to normal opc
+     * @return CBUS message converted from response to normal.
+     */
+    public static CanReply opcRangeToStl(CanReply msg){
+        int opc = getOpcode(msg);
+        // log.debug(" about to check opc {} ",opc);
+        if (opc==CbusConstants.CBUS_ARON) { msg.setElement(0, CbusConstants.CBUS_ACON); }
+        else if (opc==CbusConstants.CBUS_AROF) { msg.setElement(0, CbusConstants.CBUS_ACOF); }
+        else if (opc==CbusConstants.CBUS_ARSON) { msg.setElement(0, CbusConstants.CBUS_ASON); }
+        else if (opc==CbusConstants.CBUS_ARSOF) { msg.setElement(0, CbusConstants.CBUS_ASOF); }
+        return msg;
+    }
+    
     public static int getId(CanMessage m) {
         if (m.isExtended()) {
             return m.getHeader() & 0x1FFFFFF;

@@ -10,7 +10,9 @@ junit*.properties
 findbugs.xml
 findbugs.html
 spotbugs.xml
+spotbugs-check.xml
 spotbugs.html
+spotbugs-check.html
 jacoco.exec
 jmri-fb.html
 coveragereport

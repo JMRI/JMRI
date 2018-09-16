@@ -68,8 +68,6 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
     @Override
     public synchronized void message(DCCppMessage l) {
         // display the raw data if requested  
-        String text = l.toMonitorString();
-
 	logMessage("","TX: ",l);
     }
 
