@@ -34,7 +34,7 @@ public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
-        int addr = Integer.valueOf(systemName.substring(_memo.getSystemPrefix().length() + 1)).intValue();
+        int addr = Integer.parseInt(systemName.substring(_memo.getSystemPrefix().length() + 1));
         t = new SRCPTurnout(addr, _memo);
         t.setUserName(userName);
 

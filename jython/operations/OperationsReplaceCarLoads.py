@@ -55,11 +55,11 @@ class loadCars(jmri.jmrit.automat.AbstractAutomaton):
   def handle(self):
 
     # get the car manager
-    cm = jmri.jmrit.operations.rollingstock.cars.CarManager.instance()
+    cm = jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarManager)
 
     # the following code checks the values entered
     # first check the location and tracks
-    lm = jmri.jmrit.operations.locations.LocationManager.instance()
+    lm = jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
     testLocation = lm.getLocationByName(self.locationName)
     if (testLocation == None):
       print "Location (", self.locationName, ") does not exist"
@@ -71,13 +71,13 @@ class loadCars(jmri.jmrit.automat.AbstractAutomaton):
         return False        # done error!
 
     # check car type entered
-    ct = jmri.jmrit.operations.rollingstock.cars.CarTypes.instance()
+    ct = jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarTypes)
     if (ct.containsName(self.carTypeName) == False):
       print "Car type(", self.carTypeName, ") not found"
       return False
 
     # check car loads entered
-    clm = jmri.jmrit.operations.rollingstock.cars.CarLoads.instance()
+    clm = jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarLoads)
     for i in range(0, len(self.carLoadNames)):
       if (clm.containsName(self.carTypeName, self.carLoadNames[i]) == False):
         print "Car load (", self.carLoadNames[i], ") not found for car type (", self.carTypeName, ")"

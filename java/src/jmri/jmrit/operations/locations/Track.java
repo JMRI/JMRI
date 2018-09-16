@@ -2423,7 +2423,6 @@ public class Track {
         }
         // new way of reading car types using elements added in 3.3.1
         if (e.getChild(Xml.TYPES) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> carTypes = e.getChild(Xml.TYPES).getChildren(Xml.CAR_TYPE);
             String[] types = new String[carTypes.size()];
             for (int i = 0; i < carTypes.size(); i++) {
@@ -2433,7 +2432,6 @@ public class Track {
                 }
             }
             setTypeNames(types);
-            @SuppressWarnings("unchecked")
             List<Element> locoTypes = e.getChild(Xml.TYPES).getChildren(Xml.LOCO_TYPE);
             types = new String[locoTypes.size()];
             for (int i = 0; i < locoTypes.size(); i++) {
@@ -2457,7 +2455,6 @@ public class Track {
         }
         // new way of reading car loads using elements
         if (e.getChild(Xml.CAR_LOADS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> carLoads = e.getChild(Xml.CAR_LOADS).getChildren(Xml.CAR_LOAD);
             String[] loads = new String[carLoads.size()];
             for (int i = 0; i < carLoads.size(); i++) {
@@ -2479,7 +2476,6 @@ public class Track {
         }
         // new way of reading car loads using elements
         if (e.getChild(Xml.CAR_SHIP_LOADS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> carLoads = e.getChild(Xml.CAR_SHIP_LOADS).getChildren(Xml.CAR_LOAD);
             String[] loads = new String[carLoads.size()];
             for (int i = 0; i < carLoads.size(); i++) {
@@ -2492,7 +2488,6 @@ public class Track {
         }
         // new way of reading drop ids using elements
         if (e.getChild(Xml.DROP_IDS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> dropIds = e.getChild(Xml.DROP_IDS).getChildren(Xml.DROP_ID);
             String[] ids = new String[dropIds.size()];
             for (int i = 0; i < dropIds.size(); i++) {
@@ -2517,7 +2512,6 @@ public class Track {
 
         // new way of reading pick up ids using elements
         if (e.getChild(Xml.PICKUP_IDS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> pickupIds = e.getChild(Xml.PICKUP_IDS).getChildren(Xml.PICKUP_ID);
             String[] ids = new String[pickupIds.size()];
             for (int i = 0; i < pickupIds.size(); i++) {
@@ -2542,7 +2536,6 @@ public class Track {
 
         // new way of reading car roads using elements
         if (e.getChild(Xml.CAR_ROADS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> carRoads = e.getChild(Xml.CAR_ROADS).getChildren(Xml.CAR_ROAD);
             String[] roads = new String[carRoads.size()];
             for (int i = 0; i < carRoads.size(); i++) {
@@ -2646,7 +2639,6 @@ public class Track {
             _destinationOption = a.getValue();
         }
         if (e.getChild(Xml.DESTINATIONS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> eDestinations = e.getChild(Xml.DESTINATIONS).getChildren(Xml.DESTINATION);
             for (Element eDestination : eDestinations) {
                 if ((a = eDestination.getAttribute(Xml.ID)) != null) {

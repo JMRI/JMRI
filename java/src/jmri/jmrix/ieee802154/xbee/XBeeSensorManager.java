@@ -210,7 +210,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
             //Address format passed is in the form of encoderAddress:input or L:light address
             int seperator = systemName.indexOf(":");
             try {
-                input = Integer.valueOf(systemName.substring(seperator + 1)).intValue();
+                input = Integer.parseInt(systemName.substring(seperator + 1));
             } catch (NumberFormatException ex) {
                 log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
                 return -1;
