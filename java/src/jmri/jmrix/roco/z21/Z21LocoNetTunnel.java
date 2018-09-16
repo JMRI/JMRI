@@ -53,6 +53,12 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
             return;
         }
 
+        // start a thread to read from the input pipe.
+        sourceThread = new Thread(this);
+        sourceThread.setName("z21.Z21LocoNetTunnel sourceThread");
+        sourceThread.setDaemon(true);
+        sourceThread.start();
+
         // Then use those pipes as the input and output pipes for
         // a new LnStreamPortController object.
         LocoNetSystemConnectionMemo lnMemo = new LocoNetSystemConnectionMemo();
@@ -63,12 +69,6 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
 
         // start the LocoNet configuration.
         lsc.configure();
-
-        // start a thread to read from the input pipe.
-        sourceThread = new Thread(this);
-        sourceThread.setName("z21.Z21LocoNetTunnel sourceThread");
-        sourceThread.setDaemon(true);
-        sourceThread.start();
     }
 
     @Override

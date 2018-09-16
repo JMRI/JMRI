@@ -52,6 +52,12 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
             return;
         }
 
+        // start a thread to read from the input pipe.
+        sourceThread = new Thread(this);
+        sourceThread.setName("z21.Z21XpressNetTunnel sourceThread");
+        sourceThread.setDaemon(true);
+        sourceThread.start();
+
         // Then use those pipes as the input and output pipes for
         // a new XNetStreamPortController object.
         setStreamPortController(new Z21XNetStreamPortController(pin, pout, "None"));
@@ -61,13 +67,6 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
 
         // start the XpressNet configuration.
         xsc.configure();
-
-        // start a thread to read from the input pipe.
-        sourceThread = new Thread(this);
-        sourceThread.setName("z21.Z21XpressNetTunnel sourceThread");
-        sourceThread.setDaemon(true);
-        sourceThread.start();
-
     }
 
     @Override
