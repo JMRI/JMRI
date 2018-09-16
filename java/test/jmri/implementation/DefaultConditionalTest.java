@@ -88,10 +88,7 @@ public class DefaultConditionalTest {
     
     @Test
     public void testValidate() {
-        ConditionalVariable[] conditionalVariables_Empty
-                = { new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE) };
+        ConditionalVariable[] conditionalVariables_Empty = { };
         List<ConditionalVariable> conditionalVariablesList_Empty = Arrays.asList(conditionalVariables_Empty);
         
         ConditionalVariable[] conditionalVariables_True
@@ -143,10 +140,7 @@ public class DefaultConditionalTest {
     @Test
     @SuppressWarnings("unused") // test building in progress
     public void testCalculate() {
-        ConditionalVariable[] conditionalVariables_Empty
-                = { new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE) };
+        ConditionalVariable[] conditionalVariables_Empty = { };
         List<ConditionalVariable> conditionalVariablesList_Empty = Arrays.asList(conditionalVariables_Empty);
         
         ConditionalVariable[] conditionalVariables_True
@@ -185,6 +179,7 @@ public class DefaultConditionalTest {
         
         
         // Test empty antecedent string
+        testCalculate(NamedBean.UNKNOWN, "", conditionalVariablesList_Empty, "");
         testCalculate(Conditional.FALSE, "", conditionalVariablesList_Empty,
                 "IXIC 1 parseCalculation error antecedent= , ex= java.lang.StringIndexOutOfBoundsException");
         
