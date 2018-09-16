@@ -390,7 +390,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * @return a human readable representation of the message.
      */
     public String toMonitorString(){
-          return "LocoNetMessage monitor: "+toString(); // NOI18N
+          return toString(); // NOI18N
     }
 
     /**

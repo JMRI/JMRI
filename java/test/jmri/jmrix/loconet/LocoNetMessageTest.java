@@ -319,7 +319,7 @@ public class LocoNetMessageTest {
     @Test
     public void testToMonitorString() {
         LocoNetMessage m = new LocoNetMessage(new int[] {0xB2, 0x15, 0x63, 0x72});
-        Assert.assertEquals("LocoNetMessage monitor: B2 15 63 72", m.toMonitorString());
+        Assert.assertEquals("B2 15 63 72", m.toMonitorString());
     }
 
     @Test
