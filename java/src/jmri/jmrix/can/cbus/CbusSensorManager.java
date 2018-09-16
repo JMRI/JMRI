@@ -51,7 +51,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
             throw e;
         }
         try {
-            if (Integer.valueOf(addr).intValue() > 0 && !addr.startsWith("+")) {
+            if (Integer.parseInt(addr) > 0 && !addr.startsWith("+")) {
                 // accept unsigned positive integer, prefix "+"
                 addr = "+" + addr;
             }
@@ -76,7 +76,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
         // prefix + as service to user
         int unsigned = 0;
         try {
-            unsigned = Integer.valueOf(curAddress).intValue(); // on unsigned integer, will add "+" next
+            unsigned = Integer.parseInt(curAddress); // on unsigned integer, will add "+" next
         } catch (NumberFormatException ex) {
             // already warned
         }
@@ -128,7 +128,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
             case 1:
                 int unsigned = 0;
                 try {
-                    unsigned = Integer.valueOf(address).intValue(); // accept unsigned integer, will add "+" upon creation
+                    unsigned = Integer.parseInt(address); // accept unsigned integer, will add "+" upon creation
                 } catch (NumberFormatException ex) {
                     log.debug("Unable to convert {} into Cbus format +nn", address);
                 }

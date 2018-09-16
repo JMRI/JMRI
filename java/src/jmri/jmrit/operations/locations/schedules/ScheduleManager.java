@@ -329,7 +329,6 @@ public class ScheduleManager implements InstanceManagerAutoDefault, InstanceMana
 
     public void load(Element root) {
         if (root.getChild(Xml.SCHEDULES) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> eSchedules = root.getChild(Xml.SCHEDULES).getChildren(Xml.SCHEDULE);
             log.debug("readFile sees {} schedules", eSchedules.size());
             for (Element eSchedule : eSchedules) {

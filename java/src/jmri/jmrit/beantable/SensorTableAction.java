@@ -400,7 +400,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         }
 
         try {
-            long goingInActive = Long.valueOf(inActiveField.getText());
+            long goingInActive = Long.parseLong(inActiveField.getText());
             senManager.setDefaultSensorDebounceGoingInActive(goingInActive);
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(_who, Bundle.getMessage("SensorDebounceActError") + "\n\"" + inActiveField.getText() + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);

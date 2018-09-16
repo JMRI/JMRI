@@ -775,6 +775,8 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * @return true if message is an IPL device report indicating a UR92
      *         present, else return false.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE", 
+                justification = "False positive on the implied local variable in numUr92++")
     private boolean handleMessageIplResult(LocoNetMessage m) {
         if (LnIPLImplementation.isIplUr92IdentityReportMessage(m)) {
             numUr92++;

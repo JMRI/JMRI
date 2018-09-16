@@ -394,7 +394,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             set = true;
         }
         // check for matching child
-        @SuppressWarnings("unchecked")
         List<Element> elements = e.getChildren("defaultItem");
         for (Element defaultItem : elements) {
             if (_df != null && DecoderFile.isIncluded(defaultItem, _df.getProductID(), _df.getModel(), _df.getFamily(), "", "")) {
@@ -418,7 +417,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             String choice = LocaleSelector.getAttribute(choiceElement, "choice");
             v1.addChoice(choice);
             // for each choice, capture the settings
-            @SuppressWarnings("unchecked")
             List<Element> lSetting = choiceElement.getChildren("compositeSetting");
             for (int n = 0; n < lSetting.size(); n++) {
                 Element settingElement = lSetting.get(n);

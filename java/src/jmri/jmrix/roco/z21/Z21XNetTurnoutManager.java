@@ -24,7 +24,7 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetLis
     // XNet-specific methods
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
-        int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
+        int addr = Integer.parseInt(systemName.substring(prefix.length() + 1));
         Turnout t = new Z21XNetTurnout(prefix, addr, tc);
         t.setUserName(userName);
         return t;
@@ -59,6 +59,19 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetLis
         }
     }
 
+    @Override
+    protected void forwardMessageToTurnout(String s, XNetReply l){
+        Z21XNetTurnout t = (Z21XNetTurnout) getBySystemName(s);
+        if ( null == t ) {
+           // need to create a new one, and send the message on 
+           // to the newly created object.
+           ((Z21XNetTurnout) provideTurnout(s)).initMessageZ21(l);
+        } else {
+           // The turnout exists, forward this message to the 
+           // turnout
+           t.message(l);
+        }
+    }
     private final static Logger log = LoggerFactory.getLogger(Z21XNetTurnoutManager.class);
 
 }
