@@ -34,6 +34,7 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
     /**
      * Build a new LocoNet tunnel.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SC_START_IN_CTOR", justification="done at end, waits for data")
     public Z21LocoNetTunnel(Z21SystemConnectionMemo memo) {
         // save the SystemConnectionMemo.
         _memo = memo;
@@ -52,11 +53,6 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
             return;
         }
 
-        // start a thread to read from the input pipe.
-        sourceThread = new Thread(this);
-        sourceThread.setName("z21.Z21LocoNetTunnel sourceThread");
-        sourceThread.start();
-
         // Then use those pipes as the input and output pipes for
         // a new LnStreamPortController object.
         LocoNetSystemConnectionMemo lnMemo = new LocoNetSystemConnectionMemo();
@@ -67,6 +63,12 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
 
         // start the LocoNet configuration.
         lsc.configure();
+
+        // start a thread to read from the input pipe.
+        sourceThread = new Thread(this);
+        sourceThread.setName("z21.Z21LocoNetTunnel sourceThread");
+        sourceThread.setDaemon(true);
+        sourceThread.start();
     }
 
     @Override

@@ -33,6 +33,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
     /**
      * Build a new XpressNet tunnel.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SC_START_IN_CTOR", justification="done at end, waits for data")
     public Z21XPressNetTunnel(Z21SystemConnectionMemo memo) {
         // save the SystemConnectionMemo.
         _memo = memo;
@@ -51,11 +52,6 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
             return;
         }
 
-        // start a thread to read from the input pipe.
-        sourceThread = new Thread(this);
-        sourceThread.setName("z21.Z21XpressNetTunnel sourceThread");
-        sourceThread.start();
-
         // Then use those pipes as the input and output pipes for
         // a new XNetStreamPortController object.
         setStreamPortController(new Z21XNetStreamPortController(pin, pout, "None"));
@@ -65,6 +61,13 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
 
         // start the XpressNet configuration.
         xsc.configure();
+
+        // start a thread to read from the input pipe.
+        sourceThread = new Thread(this);
+        sourceThread.setName("z21.Z21XpressNetTunnel sourceThread");
+        sourceThread.setDaemon(true);
+        sourceThread.start();
+
     }
 
     @Override
