@@ -180,6 +180,8 @@ public class DefaultConditionalTest {
         
         // Test empty antecedent string
         testCalculate(NamedBean.UNKNOWN, "", conditionalVariablesList_Empty, "");
+        testCalculate(Conditional.FALSE, "", conditionalVariablesList_True,
+                "IXIC 1 parseCalculation error antecedent= , ex= java.lang.StringIndexOutOfBoundsException: String index out of range: 0");
         
         // Test single condition
         testCalculate(Conditional.TRUE, "R1", conditionalVariablesList_True, "");
