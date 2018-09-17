@@ -33,7 +33,7 @@ abstract public class AbstractConsistManagerTestBase {
     @Test
     public void testConsists() {
         DccLocoAddress locoAddress_12 = new DccLocoAddress(12, false);
-        DccLocoAddress locoAddress_345 = new DccLocoAddress(345, false);
+        DccLocoAddress locoAddress_34 = new DccLocoAddress(34, false);
         
         Assert.assertNotNull("AbstractConsistManager constructor return", cm);
         // Test create new consist
@@ -41,7 +41,7 @@ abstract public class AbstractConsistManagerTestBase {
         // Test getting an existing consist
         Assert.assertTrue("consist address is 12", cm.getConsist(locoAddress_12).getConsistAddress().getNumber() == 12);
         // Add another consist
-        Assert.assertTrue("consist address is 345", cm.getConsist(locoAddress_345).getConsistAddress().getNumber() == 345);
+        Assert.assertTrue("consist address is 345", cm.getConsist(locoAddress_34).getConsistAddress().getNumber() == 34);
         // Get list
         Assert.assertTrue("consist list has two elements", cm.getConsistList().size() == 2);
     }
