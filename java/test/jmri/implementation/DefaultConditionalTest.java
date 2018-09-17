@@ -609,6 +609,15 @@ public class DefaultConditionalTest {
         Assert.assertFalse("logix has been disabled", x.getEnabled());
         
         // Test ACTION_PLAY_SOUND
+        testConditionalAction = getConditionalAction(Conditional.ACTION_PLAY_SOUND, myMemory);
+        testConditionalAction._deviceName = x.getUserName();
+        testConditionalAction._actionString = "MySound.wav";
+        MySound sound = new MySound();
+        testConditionalAction.setSound(sound);
+        ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
+        ix1.calculate(true, null);
+        Assert.assertTrue("sound has played", sound.hasPlayed);
+        
         // Test ACTION_RUN_SCRIPT
         // Test ACTION_DELAYED_TURNOUT
         // Test ACTION_LOCK_TURNOUT
@@ -855,11 +864,6 @@ public class DefaultConditionalTest {
         }
 
         @Override
-        public Sound getSound() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
         public NamedBeanHandle<?> getNamedBean() {
             if (_namedBean != null) {
                 return new NamedBeanHandle<>("Bean", _namedBean);
@@ -897,6 +901,21 @@ public class DefaultConditionalTest {
         @Override
         public String getBeanType() {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+    }
+    
+    
+    private class MySound extends Sound {
+        
+        boolean hasPlayed = false;
+        
+        MySound() {
+            super("program:resources/sounds/bell_stroke.wav");
+        }
+        
+        @Override
+        public void play() {
+            hasPlayed = true;
         }
     }
     
