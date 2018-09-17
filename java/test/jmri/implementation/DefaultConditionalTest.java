@@ -353,7 +353,7 @@ public class DefaultConditionalTest {
         NamedBean namedBeanTestSystemName = new MyNamedBean("MyName", "AAA");
         NamedBean namedBeanTestUserName = new MyNamedBean("AAA", "MyName");
         
-        MyMemory myMemory = new MyMemory("MySystemName", "MemoryValue");
+        Memory myMemory = InstanceManager.getDefault(MemoryManager.class).newMemory("MySystemName", "MemoryValue");
         
         // Test that trigger is not checked if enabled == false
         Conditional ix1 = new DefaultConditional("IXIC 1");
@@ -568,7 +568,7 @@ public class DefaultConditionalTest {
         // Test ACTION_DELAYED_SENSOR
         // Test ACTION_SET_LIGHT
         // Test ACTION_SET_MEMORY
-        MyMemory myMemory = new MyMemory("MySystemName", "MemoryValue");
+        Memory myMemory = InstanceManager.getDefault(MemoryManager.class).newMemory("MySystemName", "MemoryValue");
         testConditionalAction = getConditionalAction(Conditional.ACTION_SET_MEMORY, myMemory);
         testConditionalAction._actionString = "NewValue";
         DefaultConditional ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
@@ -576,6 +576,8 @@ public class DefaultConditionalTest {
         Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
         
         // Test ACTION_ENABLE_LOGIX
+//        x = InstanceManager.getDefault(jmri.LogixManager.class).getLogix(devName);
+        
         // Test ACTION_DISABLE_LOGIX
         // Test ACTION_PLAY_SOUND
         // Test ACTION_RUN_SCRIPT
@@ -593,7 +595,6 @@ public class DefaultConditionalTest {
         // Test copy to memory by system name
         Memory destMemory = InstanceManager.getDefault(MemoryManager.class).newMemory("SomeSystemName", "SomeUserName");
         destMemory.setValue("OtherValue");
-        myMemory = new MyMemory("MySystemName", "MemoryValue");
         myMemory.setValue("MemoryValue");
         testConditionalAction = getConditionalAction(Conditional.ACTION_COPY_MEMORY, myMemory);
         testConditionalAction._actionString = destMemory.getSystemName();
@@ -603,7 +604,6 @@ public class DefaultConditionalTest {
         
         // Test copy to memory by user name
         destMemory.setValue("OtherValue");
-        myMemory = new MyMemory("MySystemName", "MemoryValue");
         myMemory.setValue("MemoryValue");
         testConditionalAction = getConditionalAction(Conditional.ACTION_COPY_MEMORY, myMemory);
         testConditionalAction._actionString = destMemory.getUserName();
@@ -869,25 +869,6 @@ public class DefaultConditionalTest {
         public String getBeanType() {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
-    }
-    
-    
-    private class MyMemory extends AbstractMemory {
-    
-        MyMemory(String systemName, String value) {
-            super(systemName);
-        }
-    
-        @Override
-        public void setState(int s) throws JmriException {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public int getState() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-        
     }
     
 }
