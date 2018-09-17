@@ -1,11 +1,5 @@
 package jmri.jmrix.srcp.swing.srcpmon;
 
-import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
-import jmri.jmrix.srcp.SRCPSystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Swing action to create and register a SRCPMonFrame object
  *

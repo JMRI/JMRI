@@ -82,16 +82,13 @@ public class DefaultConditionalTest {
         }
         
         if (! errorMessage.isEmpty()) {
-            jmri.util.JUnitAppender.assertErrorMessage(errorMessage);
+            jmri.util.JUnitAppender.assertErrorMessageStartsWith(errorMessage);
         }
     }
     
     @Test
     public void testValidate() {
-        ConditionalVariable[] conditionalVariables_Empty
-                = { new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE) };
+        ConditionalVariable[] conditionalVariables_Empty = { };
         List<ConditionalVariable> conditionalVariablesList_Empty = Arrays.asList(conditionalVariables_Empty);
         
         ConditionalVariable[] conditionalVariables_True
@@ -143,10 +140,7 @@ public class DefaultConditionalTest {
     @Test
     @SuppressWarnings("unused") // test building in progress
     public void testCalculate() {
-        ConditionalVariable[] conditionalVariables_Empty
-                = { new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE) };
+        ConditionalVariable[] conditionalVariables_Empty = { };
         List<ConditionalVariable> conditionalVariablesList_Empty = Arrays.asList(conditionalVariables_Empty);
         
         ConditionalVariable[] conditionalVariables_True
@@ -185,8 +179,9 @@ public class DefaultConditionalTest {
         
         
         // Test empty antecedent string
-        testCalculate(Conditional.FALSE, "", conditionalVariablesList_Empty,
-                "IXIC 1 parseCalculation error antecedent= , ex= java.lang.StringIndexOutOfBoundsException: String index out of range: 0");
+        testCalculate(NamedBean.UNKNOWN, "", conditionalVariablesList_Empty, "");
+        testCalculate(Conditional.FALSE, "", conditionalVariablesList_True,
+                "IXIC 1 parseCalculation error antecedent= , ex= java.lang.StringIndexOutOfBoundsException");
         
         // Test single condition
         testCalculate(Conditional.TRUE, "R1", conditionalVariablesList_True, "");
@@ -196,20 +191,20 @@ public class DefaultConditionalTest {
         testCalculate(Conditional.FALSE, "R1", conditionalVariablesList_NotTrue, "");
         testCalculate(Conditional.TRUE, "R1", conditionalVariablesList_NotFalse, "");
         testCalculate(Conditional.FALSE, "R2", conditionalVariablesList_True,
-                "IXIC 1 parseCalculation error antecedent= R2, ex= java.lang.ArrayIndexOutOfBoundsException: 1");
+                "IXIC 1 parseCalculation error antecedent= R2, ex= java.lang.ArrayIndexOutOfBoundsException");
         
         // Test single item but wrong item (R2 instead of R1)
         testCalculate(Conditional.FALSE, "R2)", conditionalVariablesList_True,
-                "IXIC 1 parseCalculation error antecedent= R2), ex= java.lang.ArrayIndexOutOfBoundsException: 1");
+                "IXIC 1 parseCalculation error antecedent= R2), ex= java.lang.ArrayIndexOutOfBoundsException");
         
         // Test parentheses
         testCalculate(Conditional.TRUE, "([{R1)}]", conditionalVariablesList_True, "");
         testCalculate(Conditional.FALSE, "(R2", conditionalVariablesList_True,
-                "IXIC 1 parseCalculation error antecedent= (R2, ex= java.lang.ArrayIndexOutOfBoundsException: 1");
+                "IXIC 1 parseCalculation error antecedent= (R2, ex= java.lang.ArrayIndexOutOfBoundsException");
         
         // Test several items
         testCalculate(Conditional.FALSE, "R1 and R2 and R3", conditionalVariablesList_True,
-                "IXIC 1 parseCalculation error antecedent= R1 and R2 and R3, ex= java.lang.ArrayIndexOutOfBoundsException: 1");
+                "IXIC 1 parseCalculation error antecedent= R1 and R2 and R3, ex= java.lang.ArrayIndexOutOfBoundsException");
         testCalculate(Conditional.TRUE, "R1", conditionalVariablesList_TrueTrueTrue, "");
         testCalculate(Conditional.TRUE, "R2", conditionalVariablesList_TrueTrueTrue, "");
         testCalculate(Conditional.TRUE, "R3", conditionalVariablesList_TrueTrueTrue, "");
@@ -228,7 +223,7 @@ public class DefaultConditionalTest {
         testCalculate(Conditional.FALSE, "and R1 not R3 and R2", conditionalVariablesList_TrueTrueTrue,
                 "IXIC 1 parseCalculation error antecedent= and R1 not R3 and R2, ex= jmri.JmriException: Unexpected operator or characters < ANDR1NOTR3ANDR2 >");
         testCalculate(Conditional.FALSE, "R1 or R3 and R2 or", conditionalVariablesList_TrueTrueTrue,
-                "IXIC 1 parseCalculation error antecedent= R1 or R3 and R2 or, ex= java.lang.StringIndexOutOfBoundsException: String index out of range: 14");
+                "IXIC 1 parseCalculation error antecedent= R1 or R3 and R2 or, ex= java.lang.StringIndexOutOfBoundsException");
         
         // Test several items and parenthese
         testCalculate(Conditional.TRUE, "(R1 and R3) and R2", conditionalVariablesList_TrueTrueTrue, "");

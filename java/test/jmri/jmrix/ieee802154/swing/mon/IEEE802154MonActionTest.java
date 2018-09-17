@@ -16,25 +16,25 @@ import org.junit.Test;
  */
 public class IEEE802154MonActionTest {
 
-    @Test
-    public void testStringCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        IEEE802154MonAction action = new IEEE802154MonAction("IEEE 802.15.4 test Action", new IEEE802154SystemConnectionMemo());
-        Assert.assertNotNull("exists", action);
-    }
+    private IEEE802154SystemConnectionMemo memo = null;
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        IEEE802154MonAction action = new IEEE802154MonAction( new IEEE802154SystemConnectionMemo());
+        IEEE802154MonAction action = new IEEE802154MonAction();
         Assert.assertNotNull("exists", action);
     }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        memo = new IEEE802154SystemConnectionMemo();
+        jmri.InstanceManager.setDefault(IEEE802154SystemConnectionMemo.class,memo);
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+	memo = null;
+    	JUnitUtil.tearDown();    
+    }
 }
