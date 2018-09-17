@@ -1,7 +1,12 @@
 package jmri.implementation;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyVetoException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import jmri.*;
 import org.junit.After;
 import org.junit.Assert;
@@ -32,6 +37,16 @@ public class DefaultConditionalTest {
         Assert.assertNotNull("exists",new DefaultConditional("IXIC 1"));
     }
 
+    @Test
+    public void testBasics() {
+        Conditional ix1 = new DefaultConditional("IXIC 1");
+        Assert.assertEquals("Conditional", ix1.getBeanType());
+        
+        // Check that a non existent item in a table results in -1
+        int[] table = { 1, 2, 3 };
+        Assert.assertEquals(-1, DefaultConditional.getIndexInTable(table, 5));
+    }
+    
     @Test
     public void testBasicBeanOperations() {
         Conditional ix1 = new DefaultConditional("IXIC 2");
@@ -177,11 +192,36 @@ public class DefaultConditionalTest {
                         , new ConditionalVariableStatic(Conditional.FALSE) };
         List<ConditionalVariable> conditionalVariablesList_TrueTrueFalse = Arrays.asList(conditionalVariables_TrueTrueFalse);
         
+        // Test with two digit variable numbers
+        ConditionalVariable[] conditionalVariables_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse
+                = {new ConditionalVariableStatic(Conditional.TRUE)
+                        , new ConditionalVariableStatic(Conditional.TRUE)
+                        , new ConditionalVariableStatic(Conditional.FALSE)
+                        , new ConditionalVariableStatic(Conditional.TRUE)
+                        , new ConditionalVariableStatic(Conditional.TRUE)
+                        , new ConditionalVariableStatic(Conditional.FALSE)
+                        , new ConditionalVariableStatic(Conditional.TRUE)
+                        , new ConditionalVariableStatic(Conditional.TRUE)
+                        , new ConditionalVariableStatic(Conditional.FALSE)
+                        , new ConditionalVariableStatic(Conditional.TRUE)
+                        , new ConditionalVariableStatic(Conditional.TRUE)
+                        , new ConditionalVariableStatic(Conditional.FALSE) };
+        List<ConditionalVariable> conditionalVariablesList_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse =
+                Arrays.asList(conditionalVariables_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse);
+        
         
         // Test empty antecedent string
         testCalculate(NamedBean.UNKNOWN, "", conditionalVariablesList_Empty, "");
         testCalculate(Conditional.FALSE, "", conditionalVariablesList_True,
                 "IXIC 1 parseCalculation error antecedent= , ex= java.lang.StringIndexOutOfBoundsException");
+        
+        // Test illegal number
+        testCalculate(Conditional.FALSE, "R#", conditionalVariablesList_True,
+                "IXIC 1 parseCalculation error antecedent= R#, ex= java.lang.NumberFormatException");
+        testCalculate(Conditional.FALSE, "R-", conditionalVariablesList_True,
+                "IXIC 1 parseCalculation error antecedent= R-, ex= java.lang.NumberFormatException");
+        testCalculate(Conditional.FALSE, "Ra", conditionalVariablesList_True,
+                "IXIC 1 parseCalculation error antecedent= Ra, ex= java.lang.NumberFormatException");
         
         // Test single condition
         testCalculate(Conditional.TRUE, "R1", conditionalVariablesList_True, "");
@@ -196,6 +236,16 @@ public class DefaultConditionalTest {
         // Test single item but wrong item (R2 instead of R1)
         testCalculate(Conditional.FALSE, "R2)", conditionalVariablesList_True,
                 "IXIC 1 parseCalculation error antecedent= R2), ex= java.lang.ArrayIndexOutOfBoundsException");
+        
+        // Test two digit variable numbers
+        testCalculate(Conditional.TRUE, "R3 and R12 or R5 and R10",
+                conditionalVariablesList_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse, "");
+        testCalculate(Conditional.FALSE, "R3 and (R12 or R5) and R10",
+                conditionalVariablesList_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse, "");
+        testCalculate(Conditional.FALSE, "R12 and R10",
+                conditionalVariablesList_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse, "");
+        testCalculate(Conditional.TRUE, "R12 or R10",
+                conditionalVariablesList_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse, "");
         
         // Test parentheses
         testCalculate(Conditional.TRUE, "([{R1)}]", conditionalVariablesList_True, "");
@@ -270,11 +320,75 @@ public class DefaultConditionalTest {
         ix1.setLogicType(Conditional.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_FalseFalseFalse);
         Assert.assertTrue("calculate() returns NamedBean.FALSE", ix1.calculate(false, null) == Conditional.FALSE);
+        
+        
+        // Test wrong logic
+        ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(0xFFF, "");    // This logix does not exists
+        ix1.setStateVariables(conditionalVariablesList_TrueTrueTrue);
+        Assert.assertTrue("calculate() returns NamedBean.TRUE", ix1.calculate(false, null) == Conditional.TRUE);
+        jmri.util.JUnitAppender.assertWarnMessage("Conditional IXIC 1 fell through switch in calculate");
+/*        
+        // Test TriggerOnChange == false
+        ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setStateVariables(conditionalVariablesList_FalseFalseFalse);
+        ix1.setTriggerOnChange(false);
+        Assert.assertTrue("calculate() returns NamedBean.FALSE", ix1.calculate(false, null) == Conditional.FALSE);
+*/
     }
     
+    
+    private class MyNamedBean extends AbstractNamedBean {
+
+        public MyNamedBean(String systemName, String userName) {
+            super(systemName);
+            setUserName(userName);
+        }
+
+        @Override
+        public void setState(int s) throws JmriException {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public int getState() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public String getBeanType() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+    }
+    
+    
     @Test
-    @Ignore
     public void testTriggers() {
+        ConditionalVariable[] conditionalVariables_True
+                = { new ConditionalVariableStatic(Conditional.TRUE) };
+        List<ConditionalVariable> conditionalVariablesList_True = Arrays.asList(conditionalVariables_True);
+        
+        NamedBean namedBean = new MyNamedBean("MySystemName", "MyUserName");
+        
+        // Test invalid event source object
+        Conditional ix1 = new DefaultConditional("IXIC 1");
+//        ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setStateVariables(conditionalVariablesList_True);
+        int result = ix1.calculate(true, new java.beans.PropertyChangeEvent(new Object(), "PropertyName", "OldValue", "NewValue"));
+        Assert.assertTrue("calculate() returns NamedBean.TRUE", result == Conditional.TRUE);
+        jmri.util.JUnitAppender.assertErrorMessageStartsWith("IXIC 1 PropertyChangeEvent source of unexpected type: java.beans.PropertyChangeEvent");
+        
+        // Test event
+        ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setStateVariables(conditionalVariablesList_True);
+        result = ix1.calculate(true, new java.beans.PropertyChangeEvent(namedBean, "PropertyName", "OldValue", "NewValue"));
+        Assert.assertTrue("calculate() returns NamedBean.TRUE", result == Conditional.TRUE);
+        
+        
+        
         // Test enabled == false --> No action
         // Test _triggerActionsOnChange == false --> No action
         // Test newState == _currentState --> No action
