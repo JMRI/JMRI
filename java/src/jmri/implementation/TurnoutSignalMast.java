@@ -151,9 +151,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
                 }
                 // set all Heads to state
             } else {
-                for (Map.Entry<String, TurnoutAspect> entry : turnouts.entrySet()) {
-                    String appearances = entry.getKey();
-                    TurnoutAspect aspect = entry.getValue();
+                for (TurnoutAspect aspect : turnouts.values()) {
                     int setState = Turnout.CLOSED;
                     if (aspect.getTurnoutState() == Turnout.CLOSED) {
                         setState = Turnout.THROWN;
