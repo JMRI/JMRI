@@ -100,16 +100,16 @@ abstract public class AbstractConsistManagerTestBase {
     }
 
     @Test
+    public void testIsCommandStationConsistPossible(){
+       // default is false, override if necessary
+       Assert.assertFalse("CS Consist Possible",cm.isCommandStationConsistPossible());
+    }
+
+    @Test
     public void testCsConsistNeedsSeperateAddress(){
         Assume.assumeTrue(cm.isCommandStationConsistPossible());
         // default is false, override if necessary
         Assert.assertFalse("CS Consist Needs Seperate Address",cm.csConsistNeedsSeperateAddress()); 
-    }
-
-    @Test
-    public void testIsCommandStationConsistPossible(){
-       // default is false, override if necessary
-       Assert.assertFalse("CS Consist Possible",cm.isCommandStationConsistPossible());
     }
 
     // private final static Logger log = LoggerFactory.getLogger(AbstractConsistManagerTestBase.class);
