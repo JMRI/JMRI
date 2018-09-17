@@ -109,7 +109,7 @@ abstract public class AbstractConsistManagerTestBase {
     public void testCsConsistNeedsSeperateAddress(){
        Assume.assumeTrue(cm.isCommandStationConsistPossible());
        // default is false, override if necessary
-       Assert.assertFalse("CS Consist Needs Seperate Address",cm.csConsistNeedsSeperateAddress()); 
+       Assert.assertFalse("CS Consist Needs Seperate Address",cm.csConsistNeedsSeperateAddress());
     }
 
     // private final static Logger log = LoggerFactory.getLogger(AbstractConsistManagerTestBase.class);
