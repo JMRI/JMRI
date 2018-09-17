@@ -31,10 +31,7 @@ abstract public class AbstractConsistManagerTestBase {
     }
 
     @Test
-    public void testCtor() {
-        
-        AtomicBoolean listenerHasTrigged = new AtomicBoolean(false);
-        
+    public void testManager() {
         DccLocoAddress locoAddress_12 = new DccLocoAddress(12, false);
         DccLocoAddress locoAddress_345 = new DccLocoAddress(345, false);
         
@@ -47,15 +44,25 @@ abstract public class AbstractConsistManagerTestBase {
         Assert.assertTrue("consist address is 345", cm.getConsist(locoAddress_345).getConsistAddress().getNumber() == 345);
         // Get list
         Assert.assertTrue("consist list has two elements", cm.getConsistList().size() == 2);
+        
         // Test update from layout
         cm.requestUpdateFromLayout();
+    }
+    
+    @Test
+    public void testListener() {
+        AtomicBoolean listenerHasTrigged = new AtomicBoolean(false);
+        
         // Test notify listeners
         cm.addConsistListListener(() -> {
             listenerHasTrigged.set(true);
         });
         cm.notifyConsistListChanged();
         Assert.assertTrue("listener has trigged", listenerHasTrigged.get());
-        
+    }
+    
+    @Test
+    public void testDecodeErrorCode() {
         // Test decodeErrorCode
         Assert.assertEquals("Not Implemented ", cm.decodeErrorCode(ConsistListener.NotImplemented));
         Assert.assertEquals("Operation Completed Successfully ", cm.decodeErrorCode(ConsistListener.OPERATION_SUCCESS));
