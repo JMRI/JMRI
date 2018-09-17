@@ -329,14 +329,6 @@ public class DefaultConditionalTest {
         ix1.setStateVariables(conditionalVariablesList_TrueTrueTrue);
         Assert.assertTrue("calculate() returns NamedBean.TRUE", ix1.calculate(false, null) == Conditional.TRUE);
         jmri.util.JUnitAppender.assertWarnMessage("Conditional IXIC 1 fell through switch in calculate");
-/*        
-        // Test TriggerOnChange == false
-        ix1 = new DefaultConditional("IXIC 1");
-        ix1.setLogicType(Conditional.ALL_OR, "");
-        ix1.setStateVariables(conditionalVariablesList_FalseFalseFalse);
-        ix1.setTriggerOnChange(false);
-        Assert.assertTrue("calculate() returns NamedBean.FALSE", ix1.calculate(false, null) == Conditional.FALSE);
-*/
     }
     
     
@@ -363,8 +355,27 @@ public class DefaultConditionalTest {
         
         MyMemory myMemory = new MyMemory("MySystemName", "MemoryValue");
         
-        // Test invalid event source object
+        // Test that trigger is not checked if enabled == false
         Conditional ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
+        PropertyChangeEvent event = new PropertyChangeEvent(new Object(), "PropertyName", "OldValue", "NewValue") {
+            @Override
+            public Object getSource() {
+                throw new RuntimeException();
+            }
+        };
+        boolean success = false;
+        try {
+            ix1.calculate(false, event);
+            success = true;
+        } catch (RuntimeException ex) {
+            // Do nothing
+        }
+        Assert.assertTrue("trigger has not been checked", success);
+        
+        // Test invalid event source object
+        ix1 = new DefaultConditional("IXIC 1");
         ix1.setLogicType(Conditional.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_True);
         int result = ix1.calculate(true, new PropertyChangeEvent(new Object(), "PropertyName", "OldValue", "NewValue"));
