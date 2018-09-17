@@ -3,6 +3,7 @@ package jmri.implementation;
 import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.Consist;
 import jmri.ConsistListListener;
+import jmri.ConsistListener;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import org.junit.After;
@@ -44,6 +45,19 @@ public class AbstractConsistManagerTest {
         });
         consistManager.notifyConsistListChanged();
         Assert.assertTrue("listener has trigged", listenerHasTrigged.get());
+        
+        // Test decodeErrorCode
+        Assert.assertEquals("Not Implemented ", consistManager.decodeErrorCode(ConsistListener.NotImplemented));
+        Assert.assertEquals("Operation Completed Successfully ", consistManager.decodeErrorCode(ConsistListener.OPERATION_SUCCESS));
+        Assert.assertEquals("Consist Error ", consistManager.decodeErrorCode(ConsistListener.CONSIST_ERROR));
+        Assert.assertEquals("Address not controled by this device.", consistManager.decodeErrorCode(ConsistListener.LOCO_NOT_OPERATED));
+        Assert.assertEquals("Locomotive already consisted", consistManager.decodeErrorCode(ConsistListener.ALREADY_CONSISTED));
+        Assert.assertEquals("Locomotive Not Consisted ", consistManager.decodeErrorCode(ConsistListener.NOT_CONSISTED));
+        Assert.assertEquals("Speed Not Zero ", consistManager.decodeErrorCode(ConsistListener.NONZERO_SPEED));
+        Assert.assertEquals("Address Not Conist Address ", consistManager.decodeErrorCode(ConsistListener.NOT_CONSIST_ADDR));
+        Assert.assertEquals("Delete Error ", consistManager.decodeErrorCode(ConsistListener.DELETE_ERROR));
+        Assert.assertEquals("Stack Full ", consistManager.decodeErrorCode(ConsistListener.STACK_FULL));
+        Assert.assertEquals("Unknown Status Code: 61440", consistManager.decodeErrorCode(0xF000));
     }
 
     @Before
