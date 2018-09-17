@@ -702,7 +702,8 @@ public class DefaultConditionalTest {
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initMemoryManager();
+        jmri.util.JUnitUtil.initDebugThrottleManager();;
+        jmri.util.JUnitUtil.initLogixManager();
         jmri.util.JUnitUtil.initIdTagManager();
     }
 
