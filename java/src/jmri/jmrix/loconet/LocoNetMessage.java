@@ -2,6 +2,7 @@ package jmri.jmrix.loconet;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrix.AbstractMessage;
@@ -24,14 +25,14 @@ import jmri.jmrix.AbstractMessage;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
@@ -62,7 +63,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
         _nDataChars = 0;
         _dataChars = new int[1];
         log.error("LocoNetMessage does not allow a constructor with no argument"); // NOI18N
-        
+
     }
 
     /**
@@ -101,7 +102,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
     /**
      * Create a message with specified contents.
      * <p>
-     * This method logs an error and returns if the contents are too short to 
+     * This method logs an error and returns if the contents are too short to
      * represent a valid LocoNet message.
      * <p>
      * @param contents The array of contents for the message. The error check
@@ -122,7 +123,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
     }
 
     /**
-     * Create a message with specified contents.  Each element is forced into an 
+     * Create a message with specified contents.  Each element is forced into an
      * 8-bit value.
      * <p>
      * This method logs an error and returns if the message length is too short
@@ -146,7 +147,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
     }
 
     public LocoNetMessage(LocoNetMessage original) {
-        Objects.requireNonNull(original, 
+        Objects.requireNonNull(original,
                 "Unable to create message by copying a null message"); // NOI18N
 
         _nDataChars = original.getNumDataElements();
@@ -312,7 +313,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
     public int[] getPeerXfrData() {
         if (getOpCode() != LnConstants.OPC_PEER_XFER) {
             log.error("getPeerXfrData called with wrong opcode {}", // NOI18N
-                    getOpCode()); 
+                    getOpCode());
         }
         if (getElement(1) != 0x10) {
             log.error("getPeerXfrData called with wrong secondary code {}", // NOI18N
@@ -390,7 +391,14 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * @return a human readable representation of the message.
      */
     public String toMonitorString(){
-          return toString(); // NOI18N
+          return toMonitorString("L"); // NOI18N
+    }
+
+        /*
+     * @return a human readable representation of the message.
+     */
+    public String toMonitorString(@Nonnull String prefix){
+          return new jmri.jmrix.loconet.locomon.Llnmon(prefix).displayMessage(this);
     }
 
     /**
@@ -529,7 +537,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f)) + 1;
     }
 
-    
+
     // Hex char array for toString conversion
     static char[] hexChars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
