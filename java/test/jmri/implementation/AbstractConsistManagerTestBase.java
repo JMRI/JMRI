@@ -44,9 +44,6 @@ abstract public class AbstractConsistManagerTestBase {
         Assert.assertTrue("consist address is 345", cm.getConsist(locoAddress_345).getConsistAddress().getNumber() == 345);
         // Get list
         Assert.assertTrue("consist list has two elements", cm.getConsistList().size() == 2);
-        
-        // Test update from layout
-        cm.requestUpdateFromLayout();
     }
     
     @Test
