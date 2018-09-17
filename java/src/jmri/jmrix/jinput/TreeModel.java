@@ -242,6 +242,8 @@ public final class TreeModel extends DefaultTreeModel {
     /**
      * @return true for success
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_NO_DEFAULT",
+                    justification = "This is due to a documented false-positive source")
     boolean loadSystem() {
         // Get a list of the controllers JInput knows about and can interact with
         log.debug("start looking for controllers");

@@ -194,7 +194,7 @@ public class CbusOpCodes {
         Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_PA") + ":,%1"); // NOI18N
         
         result.put(CbusConstants.CBUS_NUMEV, Bundle.getMessage("CBUS_NUMEV") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("CBUSEVENTS") + ":,%1"); // NOI18N
+        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("CbusEvents") + ":,%1"); // NOI18N
         
         result.put(CbusConstants.CBUS_CANID, Bundle.getMessage("CBUS_CANID") + " " + 
         Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("CanID") + ":,%1"); // NOI18N
@@ -238,14 +238,14 @@ public class CbusOpCodes {
         Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2"); // NOI18N
         
         result.put(CbusConstants.CBUS_EVULN, Bundle.getMessage("CBUS_EVULN") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2 " + Bundle.getMessage("OPC_EN") + ":,%2"); // NOI18N
+        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2"); // NOI18N
         
         result.put(CbusConstants.CBUS_NVSET, Bundle.getMessage("CBUS_NVSET") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2 " + Bundle.getMessage("OPC_NV") + ":,%1, " + 
+        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_NV") + ":,%1, " + 
         Bundle.getMessage("OPC_VL") + ":,%1"); // NOI18N
         
         result.put(CbusConstants.CBUS_NVANS, Bundle.getMessage("CBUS_NVANS") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2 " + Bundle.getMessage("OPC_NV") + ":,%1 " + 
+        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_NV") + ":,%1, " + 
         Bundle.getMessage("OPC_VL") + ":,%1"); // NOI18N
         
         result.put(CbusConstants.CBUS_ASON, Bundle.getMessage("CBUS_ASON") + " " + 
@@ -679,8 +679,9 @@ public class CbusOpCodes {
         result.add(CbusConstants.CBUS_AROF);
         result.add(CbusConstants.CBUS_ASON);
         result.add(CbusConstants.CBUS_ASOF);
-        result.add(CbusConstants.CBUS_ARSOF);
+        result.add(CbusConstants.CBUS_ASRQ);
         result.add(CbusConstants.CBUS_ARSON);
+        result.add(CbusConstants.CBUS_ARSOF);
         
         result.add(CbusConstants.CBUS_ACON1);
         result.add(CbusConstants.CBUS_ACOF1);
@@ -717,6 +718,74 @@ public class CbusOpCodes {
         return Collections.unmodifiableSet(result);
     }
 
+    
+    
+    /**
+     * Set of CBUS event opcodes excluding requests + fastclock
+     */
+    public static final Set<Integer> eventNotRequestOpCodes = createEventNROPC();
+
+    /**
+     * Test if CBUS opcode represents a JMRI event table event
+     * Event codes excluding request codes + fastclock
+     * @param opc CBUS op code
+     * @return True if opcode represents an event
+     */
+    public static boolean isEventNotRequest(int opc) {
+        return eventNotRequestOpCodes.contains(opc);
+    }
+
+    /*
+     * Populate hashset with list of event opcodes
+     * Excludes fastclock + response requests.
+     */
+    private static Set<Integer> createEventNROPC() {
+        Set<Integer> result = new HashSet<>();
+
+        result.add(CbusConstants.CBUS_ACON);
+        result.add(CbusConstants.CBUS_ACOF);
+        result.add(CbusConstants.CBUS_ARON);
+        result.add(CbusConstants.CBUS_AROF);
+        result.add(CbusConstants.CBUS_ASON);
+        result.add(CbusConstants.CBUS_ASOF);
+        result.add(CbusConstants.CBUS_ARSON);
+        result.add(CbusConstants.CBUS_ARSOF);
+        
+        result.add(CbusConstants.CBUS_ACON1);
+        result.add(CbusConstants.CBUS_ACOF1);
+        result.add(CbusConstants.CBUS_ARON1);
+        result.add(CbusConstants.CBUS_AROF1);
+        result.add(CbusConstants.CBUS_ASON1);
+        result.add(CbusConstants.CBUS_ASOF1);
+        result.add(CbusConstants.CBUS_ARSON1);
+        result.add(CbusConstants.CBUS_ARSOF1);
+        
+        result.add(CbusConstants.CBUS_ACON2);
+        result.add(CbusConstants.CBUS_ACOF2);
+        result.add(CbusConstants.CBUS_ARON2);
+        result.add(CbusConstants.CBUS_AROF2);        
+        result.add(CbusConstants.CBUS_ASON2);        
+        result.add(CbusConstants.CBUS_ASOF2);
+        result.add(CbusConstants.CBUS_ARSON2);
+        result.add(CbusConstants.CBUS_ARSOF2);
+        
+        result.add(CbusConstants.CBUS_ACON3);
+        result.add(CbusConstants.CBUS_ACOF3);
+        result.add(CbusConstants.CBUS_ARON3);
+        result.add(CbusConstants.CBUS_AROF3);
+        result.add(CbusConstants.CBUS_ACDAT);
+        result.add(CbusConstants.CBUS_ARDAT);
+        result.add(CbusConstants.CBUS_ASON3);
+        result.add(CbusConstants.CBUS_ASOF3);
+        result.add(CbusConstants.CBUS_DDES);
+        result.add(CbusConstants.CBUS_DDRS);
+        result.add(CbusConstants.CBUS_ARSON3);
+        result.add(CbusConstants.CBUS_ARSOF3);
+        
+        return Collections.unmodifiableSet(result);
+    }
+    
+    
     
     /**
      * Set of CBUS DCC opcodes
@@ -787,6 +856,85 @@ public class CbusOpCodes {
     
     
     /**
+     * Set of CBUS ON event opcodes
+     */
+    public static final Set<Integer> onEvOpcodes = createOnEv();
+
+    /**
+     * Test if CBUS opcode represents an on event
+     *
+     * @param opc CBUS op code
+     * @return True if opcode represents an on event
+     */
+    public static boolean isOnEvent(int opc) {
+        return onEvOpcodes.contains(opc);
+    }
+
+    /*
+     * Populate hashset with list of on opcodes
+     */
+    private static Set<Integer> createOnEv() {
+        Set<Integer> result = new HashSet<>();
+        // Opcodes with 4 data
+        result.add(CbusConstants.CBUS_ACON);
+        result.add(CbusConstants.CBUS_ARON);
+        result.add(CbusConstants.CBUS_ASON);
+        result.add(CbusConstants.CBUS_ARSON);
+
+        // Opcodes with 5 data
+        result.add(CbusConstants.CBUS_ACON1);
+        result.add(CbusConstants.CBUS_ARON1);
+        result.add(CbusConstants.CBUS_ASON1);
+        result.add(CbusConstants.CBUS_ARSON1);
+
+        // Opcodes with 6 data
+        result.add(CbusConstants.CBUS_ACON2);
+        result.add(CbusConstants.CBUS_ARON2);
+        result.add(CbusConstants.CBUS_ASON2);
+        result.add(CbusConstants.CBUS_ARSON2);
+
+        // Opcodes with 7 data
+        result.add(CbusConstants.CBUS_ACON3);
+        result.add(CbusConstants.CBUS_ARON3);
+        result.add(CbusConstants.CBUS_ASON3);
+        result.add(CbusConstants.CBUS_ARSON3);
+
+        return Collections.unmodifiableSet(result);
+    }
+    
+
+
+    /**
+     * Set of CBUS event request opcodes
+     */
+    public static final Set<Integer> evRequestOpcodes = createRequests();
+
+    /**
+     * Test if CBUS opcode represents an event request
+     * excludes node data requests RQDAT + RQDDS
+     * @param opc CBUS op code
+     * @return True if opcode represents a short event
+     */
+    public static boolean isEventRequest(int opc) {
+        return evRequestOpcodes.contains(opc);
+    }
+
+    /*
+     * Populate hashset with list of event requests
+     */
+    private static Set<Integer> createRequests() {
+        Set<Integer> result = new HashSet<>();
+        // Opcodes with 4 data
+        result.add(CbusConstants.CBUS_AREQ);
+        result.add(CbusConstants.CBUS_ASRQ);
+
+        return Collections.unmodifiableSet(result);
+    }
+
+    
+
+    
+    /**
      * Set of CBUS short event opcodes
      */
     public static final Set<Integer> shortOpcodes = createShort();
@@ -834,6 +982,5 @@ public class CbusOpCodes {
         return Collections.unmodifiableSet(result);
     }
 
-    
     
 }

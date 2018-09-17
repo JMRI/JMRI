@@ -27,6 +27,8 @@
 from java.awt import Color
 import jmri
 import java
+import java.awt
+import java.beans
 
 debug = False
 

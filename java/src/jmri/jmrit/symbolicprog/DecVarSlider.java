@@ -27,7 +27,7 @@ public class DecVarSlider extends JSlider implements ChangeListener {
             setOpaque(true);
         }
         // set the original value
-        setValue(Integer.valueOf(_var.getValueString()).intValue());
+        setValue(Integer.parseInt(_var.getValueString()));
         // listen for changes here
         addChangeListener(this);
         // listen for changes to associated variable
@@ -66,7 +66,7 @@ public class DecVarSlider extends JSlider implements ChangeListener {
             }
         }
         if (e.getPropertyName().equals("Value")) {
-            int newValue = Integer.valueOf(((JTextField) _var.getCommonRep()).getText()).intValue();
+            int newValue = Integer.parseInt(((JTextField) _var.getCommonRep()).getText());
             setValue(newValue);
         }
     }

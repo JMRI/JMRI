@@ -419,7 +419,6 @@ public class DecoderIndexFile extends XmlFile {
         }
     }
 
-    @SuppressWarnings("unchecked")
     void readMfgSection(Element decoderIndex) {
         Element mfgList = decoderIndex.getChild("mfgList");
         if (mfgList != null) {
@@ -458,7 +457,6 @@ public class DecoderIndexFile extends XmlFile {
         }
     }
 
-    @SuppressWarnings("unchecked")
     void readFamilySection(Element decoderIndex) {
         Element familyList = decoderIndex.getChild("familyList");
         if (familyList != null) {
@@ -475,7 +473,6 @@ public class DecoderIndexFile extends XmlFile {
         }
     }
 
-    @SuppressWarnings("unchecked")
     void readFamily(Element family) {
         Attribute attr;
         String filename = family.getAttribute("file").getValue();

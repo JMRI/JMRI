@@ -36,9 +36,6 @@ public class EcosSensor extends AbstractSensor {
     public void requestUpdateFromLayout() {
     }
 
-    static String[] modeNames = null;
-    static int[] modeValues = null;
-
     public int getObject() {
         return objectNumber;
     }

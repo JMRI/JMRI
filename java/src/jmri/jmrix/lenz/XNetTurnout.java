@@ -518,7 +518,6 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
      *
      *  @param l an {@link XNetReply} message
      */
-    @SuppressWarnings("unused")
     synchronized private void handleExactModeFeedback(XNetReply reply) {
         // We have three cases to check if CommandedState does
         // not equal KnownState, otherwise, we only want to check to

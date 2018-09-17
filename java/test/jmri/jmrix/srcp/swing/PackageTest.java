@@ -8,7 +8,8 @@ import org.junit.runners.Suite;
     jmri.jmrix.srcp.swing.srcpmon.PackageTest.class,
     jmri.jmrix.srcp.swing.packetgen.PackageTest.class,
     SRCPComponentFactoryTest.class,
-    SystemMenuTest.class
+    SystemMenuTest.class,
+    BundleTest.class
 })
 
 /**

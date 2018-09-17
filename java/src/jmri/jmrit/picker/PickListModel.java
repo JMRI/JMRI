@@ -315,7 +315,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
              */
             @Override
             public void changeSelection(int row, int col, boolean toggle, boolean extend) {
-                if (this.getValueAt(row, col) != null) {
+                if (super.getValueAt(row, col) != null) {
                     super.changeSelection(row, col, toggle, extend);
                 }
             }

@@ -34,7 +34,7 @@ Les fichiers d'aide sont situ&#233;s dans le r&#233;pertoire "help"
 dans le r&#233;pertoire de distribution JMRI.
 
 <p>
-La copie maÃ®tre de ceux-ci est stock&#233;e dans notre r&#233;pertoire comme le r&#233;pertoire "help" 
+La copie maître de ceux-ci est stock&#233;e dans notre r&#233;pertoire comme le r&#233;pertoire "help" 
 dans le r&#233;f&#233;rentiel de code JMRI.
 Cela signifie que pour obtenir votre propre copie locale, il suffit de suivres les &#233;tapes 
 sur la page <a href="getgitcode.shtml">obtention du code</a>
@@ -202,7 +202,8 @@ et une &#233;tape "ant" dans le r&#233;pertoire fait les fichiers webtoc.shtml e
 vous pouvez aussi utiliser l'outil JHelpDev pour ajouter des articles &#225; la table des mati&#232;res 
 et &#225; l'index si vous voulez.
 Il y a plus d'infos sur comment le faire sur le 
-<a href="http://jhelpdev.sourceforge.net/">site web JHelpDev</a>.Rappelez-vous d'ex&#233;cuter "ant" apr&#232;s chaque ajout pour actualiser les versions web.
+<a href="http://jhelpdev.sourceforge.net/">site web JHelpDev</a>. Rappelez-vous d'ex&#233;cuter "ant" apr&#232;s
+chaque ajout pour actualiser les versions web.
 
 <a name="site" id="site"></a><h2> Mise &#224; jour du site JMRI.org </h2>
 Des changements pour les pages d'aide qui sont v&#233;rifi&#233;es devrait appara&#238;tre automatiquement sur le site JMRI.org

@@ -69,7 +69,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr;
         try {
-            addr = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
+            addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         } catch (java.lang.NumberFormatException e) {
             log.error("failed to convert systemName '{}' to a turnout address", systemName);
             return null;
@@ -520,6 +520,8 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UCF_USELESS_CONTROL_FLOW", 
+        justification = "OK to compare floats, as even tiny differences should trigger update")
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if ((e.getPropertyName().equals("length")) && (!addingTurnouts)) {
             final EcosPreferences p = adaptermemo.getPreferenceManager();

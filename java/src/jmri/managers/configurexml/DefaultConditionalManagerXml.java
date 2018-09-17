@@ -123,7 +123,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     elem.addContent(vElem);
                 }
                 // save action information
-                ArrayList<ConditionalAction> actionList = c.getCopyOfActions();
+                List<ConditionalAction> actionList = c.getCopyOfActions();
                 /*               	if (numCond>1190) {
                  partTime = System.currentTimeMillis() - partTime;
                  System.out.println("time to for getCopyOfActions "+partTime+"ms. numActions= "+actionList.size());
@@ -344,7 +344,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
             //if (conditionalActionList.size() == 0) {
             //    log.warn("No actions found for conditional "+sysName);
             //}
-            ArrayList<ConditionalAction> actionList = ((DefaultConditional)c).getActionList();
+            List<ConditionalAction> actionList = ((DefaultConditional)c).getActionList();
             org.jdom2.Attribute attr = null;
             for (int n = 0; n < conditionalActionList.size(); n++) {
                 ConditionalAction action = new DefaultConditionalAction();
