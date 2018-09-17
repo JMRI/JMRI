@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     PacketGenFrameTest.class,
-    PacketGenActionTest.class
+    PacketGenActionTest.class,
+    BundleTest.class
 })
 
 /**
