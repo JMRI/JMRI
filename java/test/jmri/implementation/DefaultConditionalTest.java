@@ -2,12 +2,9 @@ package jmri.implementation;
 
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import javax.swing.Timer;
 import jmri.*;
 import jmri.jmrit.Sound;
@@ -369,7 +366,7 @@ public class DefaultConditionalTest {
         Conditional ix1 = new DefaultConditional("IXIC 1");
         ix1.setLogicType(Conditional.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_True);
-        int result = ix1.calculate(true, new java.beans.PropertyChangeEvent(new Object(), "PropertyName", "OldValue", "NewValue"));
+        int result = ix1.calculate(true, new PropertyChangeEvent(new Object(), "PropertyName", "OldValue", "NewValue"));
         Assert.assertTrue("calculate() returns NamedBean.TRUE", result == Conditional.TRUE);
         jmri.util.JUnitAppender.assertErrorMessageStartsWith("IXIC 1 PropertyChangeEvent source of unexpected type: java.beans.PropertyChangeEvent");
         
@@ -380,7 +377,7 @@ public class DefaultConditionalTest {
         ix1.setAction(conditionalActionList);
         testConditionalAction._namedBean = myMemory;
         myMemory.setValue("TestValue1");
-        ix1.calculate(true, new java.beans.PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue", "NewValue"));
+        ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue", "NewValue"));
         Assert.assertTrue("action has not been executed", "TestValue1".equals(myMemory.getValue()));
         jmri.util.JUnitAppender.assertErrorMessageStartsWith("IXIC 1 - invalid memory name in action - ");
         
@@ -394,7 +391,7 @@ public class DefaultConditionalTest {
         myMemory.setValue("TestValue1");
         testConditionalAction._deviceName = "MyDeviceName";
         testConditionalAction._actionString = "NewValue3";
-        ix1.calculate(true, new java.beans.PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
+        ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
         System.out.format("Memory value: %s%n", myMemory.getValue());
         Assert.assertFalse("action has been executed", "NewValue".equals(myMemory.getValue()));
         
