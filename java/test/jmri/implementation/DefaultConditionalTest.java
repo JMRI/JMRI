@@ -745,11 +745,8 @@ public class DefaultConditionalTest {
     
     private class MyMemory extends AbstractMemory {
     
-        String _value;
-        
         MyMemory(String systemName, String value) {
             super(systemName);
-            this._value = value;
         }
     
         @Override
