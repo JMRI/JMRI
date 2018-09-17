@@ -1,8 +1,13 @@
 package jmri.implementation;
 
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.swing.Timer;
 import jmri.*;
+import jmri.jmrit.Sound;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,6 +18,7 @@ import org.junit.Test;
  * Test the DefaultConditional implementation class
  *
  * @author Bob Jacobsen Copyright (C) 2015
+ * @author Daniel Bergqvist Copyright (C) 2018
  */
 public class DefaultConditionalTest {
     
@@ -32,6 +38,16 @@ public class DefaultConditionalTest {
         Assert.assertNotNull("exists",new DefaultConditional("IXIC 1"));
     }
 
+    @Test
+    public void testBasics() {
+        Conditional ix1 = new DefaultConditional("IXIC 1");
+        Assert.assertEquals("Conditional", ix1.getBeanType());
+        
+        // Check that a non existent item in a table results in -1
+        int[] table = { 1, 2, 3 };
+        Assert.assertEquals(-1, DefaultConditional.getIndexInTable(table, 5));
+    }
+    
     @Test
     public void testBasicBeanOperations() {
         Conditional ix1 = new DefaultConditional("IXIC 2");
@@ -177,11 +193,36 @@ public class DefaultConditionalTest {
                         , new ConditionalVariableStatic(Conditional.FALSE) };
         List<ConditionalVariable> conditionalVariablesList_TrueTrueFalse = Arrays.asList(conditionalVariables_TrueTrueFalse);
         
+        // Test with two digit variable numbers
+        ConditionalVariable[] conditionalVariables_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse
+                = {new ConditionalVariableStatic(Conditional.TRUE)
+                        , new ConditionalVariableStatic(Conditional.TRUE)
+                        , new ConditionalVariableStatic(Conditional.FALSE)
+                        , new ConditionalVariableStatic(Conditional.TRUE)
+                        , new ConditionalVariableStatic(Conditional.TRUE)
+                        , new ConditionalVariableStatic(Conditional.FALSE)
+                        , new ConditionalVariableStatic(Conditional.TRUE)
+                        , new ConditionalVariableStatic(Conditional.TRUE)
+                        , new ConditionalVariableStatic(Conditional.FALSE)
+                        , new ConditionalVariableStatic(Conditional.TRUE)
+                        , new ConditionalVariableStatic(Conditional.TRUE)
+                        , new ConditionalVariableStatic(Conditional.FALSE) };
+        List<ConditionalVariable> conditionalVariablesList_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse =
+                Arrays.asList(conditionalVariables_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse);
+        
         
         // Test empty antecedent string
         testCalculate(NamedBean.UNKNOWN, "", conditionalVariablesList_Empty, "");
         testCalculate(Conditional.FALSE, "", conditionalVariablesList_True,
                 "IXIC 1 parseCalculation error antecedent= , ex= java.lang.StringIndexOutOfBoundsException");
+        
+        // Test illegal number
+        testCalculate(Conditional.FALSE, "R#", conditionalVariablesList_True,
+                "IXIC 1 parseCalculation error antecedent= R#, ex= java.lang.NumberFormatException");
+        testCalculate(Conditional.FALSE, "R-", conditionalVariablesList_True,
+                "IXIC 1 parseCalculation error antecedent= R-, ex= java.lang.NumberFormatException");
+        testCalculate(Conditional.FALSE, "Ra", conditionalVariablesList_True,
+                "IXIC 1 parseCalculation error antecedent= Ra, ex= java.lang.NumberFormatException");
         
         // Test single condition
         testCalculate(Conditional.TRUE, "R1", conditionalVariablesList_True, "");
@@ -196,6 +237,16 @@ public class DefaultConditionalTest {
         // Test single item but wrong item (R2 instead of R1)
         testCalculate(Conditional.FALSE, "R2)", conditionalVariablesList_True,
                 "IXIC 1 parseCalculation error antecedent= R2), ex= java.lang.ArrayIndexOutOfBoundsException");
+        
+        // Test two digit variable numbers
+        testCalculate(Conditional.TRUE, "R3 and R12 or R5 and R10",
+                conditionalVariablesList_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse, "");
+        testCalculate(Conditional.FALSE, "R3 and (R12 or R5) and R10",
+                conditionalVariablesList_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse, "");
+        testCalculate(Conditional.FALSE, "R12 and R10",
+                conditionalVariablesList_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse, "");
+        testCalculate(Conditional.TRUE, "R12 or R10",
+                conditionalVariablesList_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse, "");
         
         // Test parentheses
         testCalculate(Conditional.TRUE, "([{R1)}]", conditionalVariablesList_True, "");
@@ -270,16 +321,195 @@ public class DefaultConditionalTest {
         ix1.setLogicType(Conditional.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_FalseFalseFalse);
         Assert.assertTrue("calculate() returns NamedBean.FALSE", ix1.calculate(false, null) == Conditional.FALSE);
+        
+        
+        // Test wrong logic
+        ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(0xFFF, "");    // This logix does not exists
+        ix1.setStateVariables(conditionalVariablesList_TrueTrueTrue);
+        Assert.assertTrue("calculate() returns NamedBean.TRUE", ix1.calculate(false, null) == Conditional.TRUE);
+        jmri.util.JUnitAppender.assertWarnMessage("Conditional IXIC 1 fell through switch in calculate");
+/*        
+        // Test TriggerOnChange == false
+        ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setStateVariables(conditionalVariablesList_FalseFalseFalse);
+        ix1.setTriggerOnChange(false);
+        Assert.assertTrue("calculate() returns NamedBean.FALSE", ix1.calculate(false, null) == Conditional.FALSE);
+*/
     }
     
+    
     @Test
-    @Ignore
     public void testTriggers() {
-        // Test enabled == false --> No action
-        // Test _triggerActionsOnChange == false --> No action
-        // Test newState == _currentState --> No action
+        ConditionalVariable[] conditionalVariables_True
+                = { new ConditionalVariableStatic(Conditional.TRUE) };
+        List<ConditionalVariable> conditionalVariablesList_True = Arrays.asList(conditionalVariables_True);
         
-        // Test wantsToTrigger(evt)
+        ConditionalVariable[] conditionalVariables_TrueWithTrigger
+                = { new ConditionalVariableStatic(Conditional.TRUE, "MyName", true) };
+        List<ConditionalVariable> conditionalVariablesList_TrueWithTrigger = Arrays.asList(conditionalVariables_TrueWithTrigger);
+        
+        ConditionalVariable[] conditionalVariables_TrueWithNotTrigger
+                = { new ConditionalVariableStatic(Conditional.TRUE, "MyName", false) };
+        List<ConditionalVariable> conditionalVariablesList_TrueWithNotTrigger = Arrays.asList(conditionalVariables_TrueWithNotTrigger);
+        
+        TestConditionalAction testConditionalAction = new TestConditionalAction();
+        List<ConditionalAction> conditionalActionList = new ArrayList<>();
+        conditionalActionList.add(testConditionalAction);
+        
+        NamedBean namedBeanTestSystemName = new MyNamedBean("MyName", "AAA");
+        NamedBean namedBeanTestUserName = new MyNamedBean("AAA", "MyName");
+        
+        MyMemory myMemory = new MyMemory("MySystemName", "MemoryValue");
+        
+        // Test invalid event source object
+        Conditional ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setStateVariables(conditionalVariablesList_True);
+        int result = ix1.calculate(true, new PropertyChangeEvent(new Object(), "PropertyName", "OldValue", "NewValue"));
+        Assert.assertTrue("calculate() returns NamedBean.TRUE", result == Conditional.TRUE);
+        jmri.util.JUnitAppender.assertErrorMessageStartsWith("IXIC 1 PropertyChangeEvent source of unexpected type: java.beans.PropertyChangeEvent");
+        
+        // Test trigger event with bad device name
+        ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
+        ix1.setAction(conditionalActionList);
+        testConditionalAction._namedBean = myMemory;
+        myMemory.setValue("InitialValue");
+        testConditionalAction._deviceName = null;
+        ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue", "NewValue"));
+        Assert.assertTrue("action has not been executed", "InitialValue".equals(myMemory.getValue()));
+        jmri.util.JUnitAppender.assertErrorMessageStartsWith("IXIC 1 - invalid memory name in action - ");
+        
+        // Test trigger event with system name.
+        // This action wants to trigger the event.
+        ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
+        ix1.setAction(conditionalActionList);
+        testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
+        testConditionalAction._namedBean = myMemory;
+        myMemory.setValue("InitialValue");
+        testConditionalAction._deviceName = "MyDeviceName";
+        testConditionalAction._actionString = "NewValue";
+        ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
+        Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
+        
+        // Test trigger event with user name.
+        // This action wants to trigger the event.
+        ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
+        ix1.setAction(conditionalActionList);
+        testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
+        testConditionalAction._namedBean = myMemory;
+        myMemory.setValue("InitialValue");
+        testConditionalAction._deviceName = "MyDeviceName";
+        testConditionalAction._actionString = "NewValue";
+        ix1.calculate(true, new PropertyChangeEvent(namedBeanTestUserName, "MyName", "OldValue1", "NewValue2"));
+        Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
+        
+        // Test trigger event with bad system and user name.
+        // This action wants to trigger the event.
+        ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
+        ix1.setAction(conditionalActionList);
+        testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
+        testConditionalAction._namedBean = myMemory;
+        myMemory.setValue("InitialValue");
+        testConditionalAction._deviceName = "MyDeviceName";
+        testConditionalAction._actionString = "NewValue";
+        ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyOtherName", "OldValue1", "NewValue2"));
+        Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
+        
+        // Test not trigger event.
+        // This action does not want to trigger the event.
+        ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setStateVariables(conditionalVariablesList_TrueWithNotTrigger);
+        ix1.setAction(conditionalActionList);
+        testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
+        testConditionalAction._namedBean = myMemory;
+        myMemory.setValue("InitialValue");
+        testConditionalAction._deviceName = "MyDeviceName";
+        testConditionalAction._actionString = "NewValue";
+        ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
+        Assert.assertTrue("action has not been executed", "InitialValue".equals(myMemory.getValue()));
+        
+        // Test trigger event on change.
+        // _triggerActionsOnChange == true
+        // This action want to trigger the event.
+        ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
+        ix1.setAction(conditionalActionList);
+        ix1.setTriggerOnChange(true);
+        testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
+        testConditionalAction._namedBean = myMemory;
+        myMemory.setValue("InitialValue");
+        testConditionalAction._deviceName = "MyDeviceName";
+        testConditionalAction._actionString = "NewValue";
+        // Calculate changes state from NamedBean.UNKNOWN to Conditional.TRUE
+        ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
+        Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
+        
+        // Test trigger event on change.
+        // _triggerActionsOnChange == true
+        // This action want to trigger the event.
+        ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
+        ix1.setAction(conditionalActionList);
+        ix1.setTriggerOnChange(true);
+        testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
+        testConditionalAction._namedBean = myMemory;
+        myMemory.setValue("InitialValue");
+        testConditionalAction._deviceName = "MyDeviceName";
+        testConditionalAction._actionString = "NewValue";
+        // Use calculate to set state to Conditional.TRUE
+        ix1.calculate(false, null);
+        // Calculate doesn't change state since the state already is Conditional.TRUE
+        ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
+        Assert.assertTrue("action has not been executed", "InitialValue".equals(myMemory.getValue()));
+        
+        // Test trigger event on change.
+        // _triggerActionsOnChange == false
+        // This action want to trigger the event.
+        ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
+        ix1.setAction(conditionalActionList);
+        ix1.setTriggerOnChange(false);
+        testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
+        testConditionalAction._namedBean = myMemory;
+        myMemory.setValue("InitialValue");
+        testConditionalAction._deviceName = "MyDeviceName";
+        testConditionalAction._actionString = "NewValue";
+        // Calculate changes state from NamedBean.UNKNOWN to Conditional.TRUE
+        ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
+        Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
+        
+        // Test trigger event on change.
+        // _triggerActionsOnChange == false
+        // This action want to trigger the event.
+        ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
+        ix1.setAction(conditionalActionList);
+        ix1.setTriggerOnChange(false);
+        testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
+        testConditionalAction._namedBean = myMemory;
+        myMemory.setValue("InitialValue");
+        testConditionalAction._deviceName = "MyDeviceName";
+        testConditionalAction._actionString = "NewValue";
+        // Use calculate to set state to Conditional.TRUE
+        ix1.calculate(false, null);
+        // Calculate doesn't change state since the state already is Conditional.TRUE
+        ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
+        Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
     }
     
     @Test
@@ -328,9 +558,205 @@ public class DefaultConditionalTest {
             setNegation(not);
         }
         
+        ConditionalVariableStatic(int state, String name, boolean trigger) {
+            super();
+            setName(name);
+            setState(state);
+            setTriggerActions(trigger);
+        }
+        
         @Override
         public boolean evaluate() {
             return getState() == Conditional.TRUE;
+        }
+        
+    }
+    
+    
+    private class TestConditionalAction extends DefaultConditionalAction {
+        
+        int _type = Conditional.ACTION_NONE;
+        int _option = Conditional.ACTION_OPTION_ON_CHANGE;
+        String _deviceName = null;
+        NamedBean _namedBean = null;
+        String _actionString = null;
+
+        @Override
+        public int getActionData() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public String getActionDataString() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public String getActionString() {
+            return _actionString;
+        }
+
+        @Override
+        public String getDeviceName() {
+            return _deviceName;
+        }
+
+        @Override
+        public int getOption() {
+            return _option;
+        }
+
+        @Override
+        public String getOptionString(boolean type) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public int getType() {
+            return _type;
+        }
+
+        @Override
+        public String getTypeString() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void setActionData(String actionData) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void setActionData(int actionData) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void setActionString(String actionString) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void setDeviceName(String deviceName) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void setOption(int option) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void setType(String type) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void setType(int type) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public String description(boolean triggerType) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public Timer getTimer() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void setTimer(Timer timer) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public boolean isTimerActive() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void startTimer() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void stopTimer() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public ActionListener getListener() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void setListener(ActionListener listener) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public Sound getSound() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public NamedBeanHandle<?> getNamedBean() {
+            if (_namedBean != null) {
+                return new NamedBeanHandle<>("Bean", _namedBean);
+            } else {
+                return null;
+            }
+        }
+
+        @Override
+        public NamedBean getBean() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+    
+    }
+    
+    
+    
+    private class MyNamedBean extends AbstractNamedBean {
+
+        public MyNamedBean(String systemName, String userName) {
+            super(systemName);
+            setUserName(userName);
+        }
+
+        @Override
+        public void setState(int s) throws JmriException {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public int getState() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public String getBeanType() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+    }
+    
+    
+    private class MyMemory extends AbstractMemory {
+    
+        MyMemory(String systemName, String value) {
+            super(systemName);
+        }
+    
+        @Override
+        public void setState(int s) throws JmriException {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public int getState() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
         
     }
