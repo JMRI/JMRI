@@ -523,9 +523,126 @@ public class DefaultConditionalTest {
         Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
     }
     
+    
+    private DefaultConditional getConditional(List<ConditionalVariable> conditionalVariablesList, ConditionalAction conditionalAction) {
+        List<ConditionalAction> conditionalActionList = new ArrayList<>();
+        conditionalActionList.add(conditionalAction);
+        
+        DefaultConditional ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setStateVariables(conditionalVariablesList);
+        ix1.setAction(conditionalActionList);
+        return ix1;
+    }
+    
+    private TestConditionalAction getConditionalAction(int type, NamedBean namedBean) {
+        TestConditionalAction testConditionalAction = new TestConditionalAction();
+        testConditionalAction._type = type;
+        testConditionalAction._namedBean = namedBean;
+        testConditionalAction._deviceName = "MyDeviceName";
+        return testConditionalAction;
+    }
+    
     @Test
-    @Ignore
     public void testAction() {
+        NamedBean namedBeanTestSystemName = new MyNamedBean("MyName", "AAA");
+        
+        ConditionalVariable[] conditionalVariables_True
+                = { new ConditionalVariableStatic(Conditional.TRUE) };
+        List<ConditionalVariable> conditionalVariablesList_True = Arrays.asList(conditionalVariables_True);
+        
+        TestConditionalAction testConditionalAction;
+        
+        
+        
+        // Test ACTION_NONE
+        
+        // Test ACTION_SET_TURNOUT
+        // Test ACTION_SET_SIGNAL_APPEARANCE
+        // Test ACTION_SET_SIGNAL_HELD
+        // Test ACTION_CLEAR_SIGNAL_HELD
+        // Test ACTION_SET_SIGNAL_DARK
+        // Test ACTION_SET_SIGNAL_LIT
+        // Test ACTION_TRIGGER_ROUTE
+        // Test ACTION_SET_SENSOR
+        // Test ACTION_DELAYED_SENSOR
+        // Test ACTION_SET_LIGHT
+        // Test ACTION_SET_MEMORY
+        MyMemory myMemory = new MyMemory("MySystemName", "MemoryValue");
+        testConditionalAction = getConditionalAction(Conditional.ACTION_SET_MEMORY, myMemory);
+        testConditionalAction._actionString = "NewValue";
+        DefaultConditional ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
+        ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
+        Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
+        
+        // Test ACTION_ENABLE_LOGIX
+        // Test ACTION_DISABLE_LOGIX
+        // Test ACTION_PLAY_SOUND
+        // Test ACTION_RUN_SCRIPT
+        // Test ACTION_DELAYED_TURNOUT
+        // Test ACTION_LOCK_TURNOUT
+        // Test ACTION_RESET_DELAYED_SENSOR
+        // Test ACTION_CANCEL_SENSOR_TIMERS
+        // Test ACTION_RESET_DELAYED_TURNOUT
+        // Test ACTION_CANCEL_TURNOUT_TIMERS
+        // Test ACTION_SET_FAST_CLOCK_TIME
+        // Test ACTION_START_FAST_CLOCK
+        // Test ACTION_STOP_FAST_CLOCK
+        
+        // Test ACTION_COPY_MEMORY
+        // Test copy to memory by system name
+        Memory destMemory = InstanceManager.getDefault(MemoryManager.class).newMemory("SomeSystemName", "SomeUserName");
+        destMemory.setValue("OtherValue");
+        myMemory = new MyMemory("MySystemName", "MemoryValue");
+        myMemory.setValue("MemoryValue");
+        testConditionalAction = getConditionalAction(Conditional.ACTION_COPY_MEMORY, myMemory);
+        testConditionalAction._actionString = destMemory.getSystemName();
+        ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
+        ix1.calculate(true, null);
+        Assert.assertTrue("memory has been copied", myMemory.getValue().equals(destMemory.getValue()));
+        
+        // Test copy to memory by user name
+        destMemory.setValue("OtherValue");
+        myMemory = new MyMemory("MySystemName", "MemoryValue");
+        myMemory.setValue("MemoryValue");
+        testConditionalAction = getConditionalAction(Conditional.ACTION_COPY_MEMORY, myMemory);
+        testConditionalAction._actionString = destMemory.getUserName();
+        ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
+        ix1.calculate(true, null);
+        Assert.assertTrue("memory has been copied", myMemory.getValue().equals(destMemory.getValue()));
+        
+        // Test ACTION_SET_LIGHT_INTENSITY
+        // Test ACTION_SET_LIGHT_TRANSITION_TIME
+        // Test ACTION_CONTROL_AUDIO
+        // Test ACTION_JYTHON_COMMAND
+        // Test ACTION_ALLOCATE_WARRANT_ROUTE
+        // Test ACTION_DEALLOCATE_WARRANT_ROUTE
+        // Test ACTION_SET_ROUTE_TURNOUTS
+        // Test ACTION_AUTO_RUN_WARRANT
+        // Test ACTION_CONTROL_TRAIN
+        // Test ACTION_SET_TRAIN_ID
+        // Test ACTION_SET_SIGNALMAST_ASPECT
+        // Test ACTION_THROTTLE_FACTOR
+        // Test ACTION_SET_SIGNALMAST_HELD
+        // Test ACTION_CLEAR_SIGNALMAST_HELD
+        // Test ACTION_SET_SIGNALMAST_DARK
+        // Test ACTION_SET_SIGNALMAST_LIT
+        // Test ACTION_SET_BLOCK_ERROR
+        // Test ACTION_CLEAR_BLOCK_ERROR
+        // Test ACTION_DEALLOCATE_BLOCK
+        // Test ACTION_SET_BLOCK_OUT_OF_SERVICE
+        // Test ACTION_SET_BLOCK_IN_SERVICE
+        // Test ACTION_MANUAL_RUN_WARRANT
+        // Test ACTION_SET_TRAIN_NAME
+        // Test ACTION_SET_BLOCK_VALUE
+        // Test ACTION_SET_NXPAIR_ENABLED
+        // Test ACTION_SET_NXPAIR_DISABLED
+        // Test ACTION_SET_NXPAIR_SEGMENT
+       
+        
+        
+        
+        
         // Test takeActionIfNeeded()
         // Test currentState == TRUE && option == ACTION_OPTION_ON_CHANGE_TO_TRUE
         // Test currentState != TRUE && option == ACTION_OPTION_ON_CHANGE_TO_TRUE
@@ -547,6 +664,7 @@ public class DefaultConditionalTest {
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
+        jmri.util.JUnitUtil.initMemoryManager();
         jmri.util.JUnitUtil.initIdTagManager();
     }
 
