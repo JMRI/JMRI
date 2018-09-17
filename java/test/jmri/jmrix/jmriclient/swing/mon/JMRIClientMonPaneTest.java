@@ -10,19 +10,18 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test simple functioning of JMRIClientMonAction
+ * Test simple functioning of JMRIClientMonPane
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class JMRIClientMonActionTest {
-	
+public class JMRIClientMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
+
     private JMRIClientSystemConnectionMemo memo = null;
 
     @Test
-    public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        JMRIClientMonAction action = new JMRIClientMonAction();
-        Assert.assertNotNull("exists", action);
+    public void testDefault() {
+        jmri.util.swing.JmriNamedPaneAction f = new JMRIClientMonPane.Default();
+        Assert.assertNotNull(f);
     }
 
     @Before
@@ -30,11 +29,18 @@ public class JMRIClientMonActionTest {
         JUnitUtil.setUp();
         memo = new JMRIClientSystemConnectionMemo();
         jmri.InstanceManager.setDefault(JMRIClientSystemConnectionMemo.class,memo);
+                // pane for AbstractMonPaneTestBase; panel for JmriPanelTest 
+        panel = pane = new JMRIClientMonPane();
+        helpTarget = "package.jmri.jmrix.AbstractMonFrame";
+        title = Bundle.getMessage("MenuItemJmriClientCommandMonitorTitle");
     }
 
     @After
     public void tearDown() {
 	memo = null;
+	panel = pane = null;
+	helpTarget = null;
+	title = null;
     	JUnitUtil.tearDown();
     }
 }
