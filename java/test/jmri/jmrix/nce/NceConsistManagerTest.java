@@ -18,8 +18,7 @@ public class NceConsistManagerTest extends jmri.implementation.AbstractConsistMa
     private NceSystemConnectionMemo memo = null;
 
     @Override
-    @Ignore
-    // Causes error message reading consist memory
+    @Ignore("Causes error message reading consist memory")
     @Test
     public void testGetConsist() {
         // getConsist with a valid address should always return
@@ -31,8 +30,7 @@ public class NceConsistManagerTest extends jmri.implementation.AbstractConsistMa
     }
 
     @Test
-    @Ignore
-    // This test gives the error message below:
+    @Ignore("This test gives the error message below")
     // Time out reading NCE command station consist memory [Read Consist 12] jmri.jmrix.nce.NceConsist.readConsistMemory()
     // 12 is one of the loco number used in the test.
     @Override
