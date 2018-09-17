@@ -10,6 +10,7 @@ import jmri.*;
 import jmri.jmrit.Sound;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -608,16 +609,6 @@ public class DefaultConditionalTest {
         ix1.calculate(true, null);
         Assert.assertFalse("logix has been disabled", x.getEnabled());
         
-        // Test ACTION_PLAY_SOUND
-        testConditionalAction = getConditionalAction(Conditional.ACTION_PLAY_SOUND, myMemory);
-        testConditionalAction._deviceName = x.getUserName();
-        testConditionalAction._actionString = "MySound.wav";
-        MySound sound = new MySound();
-        testConditionalAction.setSound(sound);
-        ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
-        ix1.calculate(true, null);
-        Assert.assertTrue("sound has played", sound.hasPlayed);
-        
         // Test ACTION_RUN_SCRIPT
         // Test ACTION_DELAYED_TURNOUT
         // Test ACTION_LOCK_TURNOUT
@@ -689,6 +680,30 @@ public class DefaultConditionalTest {
         // Test option == ACTION_OPTION_ON_CHANGE
         
         // Test every type. Conditional.ACTION_NONE, ...
+    }
+    
+    @Test
+    public void testActionPlaySound() {
+        ConditionalVariable[] conditionalVariables_True
+                = { new ConditionalVariableStatic(Conditional.TRUE) };
+        List<ConditionalVariable> conditionalVariablesList_True = Arrays.asList(conditionalVariables_True);
+        
+        TestConditionalAction testConditionalAction;
+        
+        // Test ACTION_PLAY_SOUND
+        try {
+            javax.sound.sampled.AudioSystem.getClip();
+        } catch (IllegalArgumentException | javax.sound.sampled.LineUnavailableException ex) {
+            Assume.assumeNoException("Unable to initialize AudioSystem", ex);
+        }
+        Memory myMemory = InstanceManager.getDefault(MemoryManager.class).newMemory("MySystemName2", "MemoryValue2");
+        testConditionalAction = getConditionalAction(Conditional.ACTION_PLAY_SOUND, myMemory);
+        testConditionalAction._actionString = "MySound.wav";
+        MySound sound = new MySound();
+        testConditionalAction.setSound(sound);
+        Conditional ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
+        ix1.calculate(true, null);
+        Assert.assertTrue("sound has played", sound.hasPlayed);
     }
 
     
