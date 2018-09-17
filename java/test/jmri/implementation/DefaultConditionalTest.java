@@ -18,6 +18,7 @@ import org.junit.Test;
  * Test the DefaultConditional implementation class
  *
  * @author Bob Jacobsen Copyright (C) 2015
+ * @author Daniel Bergqvist Copyright (C) 2018
  */
 public class DefaultConditionalTest {
     
@@ -376,32 +377,139 @@ public class DefaultConditionalTest {
         ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
         ix1.setAction(conditionalActionList);
         testConditionalAction._namedBean = myMemory;
-        myMemory.setValue("TestValue1");
+        myMemory.setValue("InitialValue");
+        testConditionalAction._deviceName = null;
         ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue", "NewValue"));
-        Assert.assertTrue("action has not been executed", "TestValue1".equals(myMemory.getValue()));
+        Assert.assertTrue("action has not been executed", "InitialValue".equals(myMemory.getValue()));
         jmri.util.JUnitAppender.assertErrorMessageStartsWith("IXIC 1 - invalid memory name in action - ");
         
-        // Test trigger event
+        // Test trigger event with system name.
+        // This action wants to trigger the event.
         ix1 = new DefaultConditional("IXIC 1");
         ix1.setLogicType(Conditional.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
         ix1.setAction(conditionalActionList);
         testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
         testConditionalAction._namedBean = myMemory;
-        myMemory.setValue("TestValue1");
+        myMemory.setValue("InitialValue");
         testConditionalAction._deviceName = "MyDeviceName";
-        testConditionalAction._actionString = "NewValue3";
+        testConditionalAction._actionString = "NewValue";
         ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
-        System.out.format("Memory value: %s%n", myMemory.getValue());
-        Assert.assertFalse("action has been executed", "NewValue".equals(myMemory.getValue()));
+        Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
         
+        // Test trigger event with user name.
+        // This action wants to trigger the event.
+        ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
+        ix1.setAction(conditionalActionList);
+        testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
+        testConditionalAction._namedBean = myMemory;
+        myMemory.setValue("InitialValue");
+        testConditionalAction._deviceName = "MyDeviceName";
+        testConditionalAction._actionString = "NewValue";
+        ix1.calculate(true, new PropertyChangeEvent(namedBeanTestUserName, "MyName", "OldValue1", "NewValue2"));
+        Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
         
+        // Test trigger event with bad system and user name.
+        // This action wants to trigger the event.
+        ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
+        ix1.setAction(conditionalActionList);
+        testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
+        testConditionalAction._namedBean = myMemory;
+        myMemory.setValue("InitialValue");
+        testConditionalAction._deviceName = "MyDeviceName";
+        testConditionalAction._actionString = "NewValue";
+        ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyOtherName", "OldValue1", "NewValue2"));
+        Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
         
-        // Test enabled == false --> No action
-        // Test _triggerActionsOnChange == false --> No action
-        // Test newState == _currentState --> No action
+        // Test not trigger event.
+        // This action does not want to trigger the event.
+        ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setStateVariables(conditionalVariablesList_TrueWithNotTrigger);
+        ix1.setAction(conditionalActionList);
+        testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
+        testConditionalAction._namedBean = myMemory;
+        myMemory.setValue("InitialValue");
+        testConditionalAction._deviceName = "MyDeviceName";
+        testConditionalAction._actionString = "NewValue";
+        ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
+        Assert.assertTrue("action has not been executed", "InitialValue".equals(myMemory.getValue()));
         
-        // Test wantsToTrigger(evt)
+        // Test trigger event on change.
+        // _triggerActionsOnChange == true
+        // This action want to trigger the event.
+        ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
+        ix1.setAction(conditionalActionList);
+        ix1.setTriggerOnChange(true);
+        testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
+        testConditionalAction._namedBean = myMemory;
+        myMemory.setValue("InitialValue");
+        testConditionalAction._deviceName = "MyDeviceName";
+        testConditionalAction._actionString = "NewValue";
+        // Calculate changes state from NamedBean.UNKNOWN to Conditional.TRUE
+        ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
+        Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
+        
+        // Test trigger event on change.
+        // _triggerActionsOnChange == true
+        // This action want to trigger the event.
+        ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
+        ix1.setAction(conditionalActionList);
+        ix1.setTriggerOnChange(true);
+        testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
+        testConditionalAction._namedBean = myMemory;
+        myMemory.setValue("InitialValue");
+        testConditionalAction._deviceName = "MyDeviceName";
+        testConditionalAction._actionString = "NewValue";
+        // Use calculate to set state to Conditional.TRUE
+        ix1.calculate(false, null);
+        // Calculate doesn't change state since the state already is Conditional.TRUE
+        ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
+        Assert.assertTrue("action has not been executed", "InitialValue".equals(myMemory.getValue()));
+        
+        // Test trigger event on change.
+        // _triggerActionsOnChange == false
+        // This action want to trigger the event.
+        ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
+        ix1.setAction(conditionalActionList);
+        ix1.setTriggerOnChange(false);
+        testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
+        testConditionalAction._namedBean = myMemory;
+        myMemory.setValue("InitialValue");
+        testConditionalAction._deviceName = "MyDeviceName";
+        testConditionalAction._actionString = "NewValue";
+        // Calculate changes state from NamedBean.UNKNOWN to Conditional.TRUE
+        ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
+        Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
+        
+        // Test trigger event on change.
+        // _triggerActionsOnChange == false
+        // This action want to trigger the event.
+        ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
+        ix1.setAction(conditionalActionList);
+        ix1.setTriggerOnChange(false);
+        testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
+        testConditionalAction._namedBean = myMemory;
+        myMemory.setValue("InitialValue");
+        testConditionalAction._deviceName = "MyDeviceName";
+        testConditionalAction._actionString = "NewValue";
+        // Use calculate to set state to Conditional.TRUE
+        ix1.calculate(false, null);
+        // Calculate doesn't change state since the state already is Conditional.TRUE
+        ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
+        Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
     }
     
     @Test
