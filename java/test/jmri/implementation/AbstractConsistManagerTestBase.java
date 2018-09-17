@@ -1,5 +1,7 @@
 package jmri.implementation;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+import jmri.ConsistListener;
 import jmri.DccLocoAddress;
 import org.junit.After;
 import org.junit.Assert;
@@ -26,6 +28,46 @@ abstract public class AbstractConsistManagerTestBase {
     @Test
     public void testCTor() {
         Assert.assertNotNull("exists",cm);
+    }
+
+    @Test
+    public void testCtor() {
+        
+        AtomicBoolean listenerHasTrigged = new AtomicBoolean(false);
+        
+        DccLocoAddress locoAddress_12 = new DccLocoAddress(12, false);
+        DccLocoAddress locoAddress_345 = new DccLocoAddress(345, false);
+        
+        Assert.assertNotNull("AbstractConsistManager constructor return", cm);
+        // Test create new consist
+        Assert.assertTrue("consist address is 12", cm.getConsist(locoAddress_12).getConsistAddress().getNumber() == 12);
+        // Test getting an existing consist
+        Assert.assertTrue("consist address is 12", cm.getConsist(locoAddress_12).getConsistAddress().getNumber() == 12);
+        // Add another consist
+        Assert.assertTrue("consist address is 345", cm.getConsist(locoAddress_345).getConsistAddress().getNumber() == 345);
+        // Get list
+        Assert.assertTrue("consist list has two elements", cm.getConsistList().size() == 2);
+        // Test update from layout
+        cm.requestUpdateFromLayout();
+        // Test notify listeners
+        cm.addConsistListListener(() -> {
+            listenerHasTrigged.set(true);
+        });
+        cm.notifyConsistListChanged();
+        Assert.assertTrue("listener has trigged", listenerHasTrigged.get());
+        
+        // Test decodeErrorCode
+        Assert.assertEquals("Not Implemented ", cm.decodeErrorCode(ConsistListener.NotImplemented));
+        Assert.assertEquals("Operation Completed Successfully ", cm.decodeErrorCode(ConsistListener.OPERATION_SUCCESS));
+        Assert.assertEquals("Consist Error ", cm.decodeErrorCode(ConsistListener.CONSIST_ERROR));
+        Assert.assertEquals("Address not controled by this device.", cm.decodeErrorCode(ConsistListener.LOCO_NOT_OPERATED));
+        Assert.assertEquals("Locomotive already consisted", cm.decodeErrorCode(ConsistListener.ALREADY_CONSISTED));
+        Assert.assertEquals("Locomotive Not Consisted ", cm.decodeErrorCode(ConsistListener.NOT_CONSISTED));
+        Assert.assertEquals("Speed Not Zero ", cm.decodeErrorCode(ConsistListener.NONZERO_SPEED));
+        Assert.assertEquals("Address Not Conist Address ", cm.decodeErrorCode(ConsistListener.NOT_CONSIST_ADDR));
+        Assert.assertEquals("Delete Error ", cm.decodeErrorCode(ConsistListener.DELETE_ERROR));
+        Assert.assertEquals("Stack Full ", cm.decodeErrorCode(ConsistListener.STACK_FULL));
+        Assert.assertEquals("Unknown Status Code: 61440", cm.decodeErrorCode(0xF000));
     }
 
     @Test
