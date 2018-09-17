@@ -17,10 +17,6 @@ abstract public class AbstractConsistManagerTestBase {
 
     protected jmri.ConsistManager cm = null;
     
-    // Some tests may not work correctly. For example, JsonConsistManagerTest
-    // doesn't work correctly if variable 'manager' is null.
-    protected boolean ignoreTests = false;
-
     // implementing classes should set cm to a valid value in setUp and 
     // cleanup in tearDown.
     @Before
@@ -36,8 +32,6 @@ abstract public class AbstractConsistManagerTestBase {
 
     @Test
     public void testConsists() {
-        Assume.assumeFalse(ignoreTests);
-        
         DccLocoAddress locoAddress_12 = new DccLocoAddress(12, false);
         DccLocoAddress locoAddress_34 = new DccLocoAddress(34, false);
         
@@ -66,8 +60,6 @@ abstract public class AbstractConsistManagerTestBase {
     
     @Test
     public void testDecodeErrorCode() {
-        Assume.assumeFalse(ignoreTests);
-        
         // Test decodeErrorCode
         Assert.assertEquals("Not Implemented ", cm.decodeErrorCode(ConsistListener.NotImplemented));
         Assert.assertEquals("Operation Completed Successfully ", cm.decodeErrorCode(ConsistListener.OPERATION_SUCCESS));
