@@ -545,8 +545,6 @@ public class DefaultConditionalTest {
     
     @Test
     public void testAction() {
-        NamedBean namedBeanTestSystemName = new MyNamedBean("MyName", "AAA");
-        
         ConditionalVariable[] conditionalVariables_True
                 = { new ConditionalVariableStatic(Conditional.TRUE) };
         List<ConditionalVariable> conditionalVariablesList_True = Arrays.asList(conditionalVariables_True);
@@ -572,11 +570,26 @@ public class DefaultConditionalTest {
         testConditionalAction = getConditionalAction(Conditional.ACTION_SET_MEMORY, myMemory);
         testConditionalAction._actionString = "NewValue";
         DefaultConditional ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
-        ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
-        Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
+        ix1.calculate(true, null);
+        Assert.assertTrue("memory has been set", "NewValue".equals(myMemory.getValue()));
         
         // Test ACTION_ENABLE_LOGIX
-//        x = InstanceManager.getDefault(jmri.LogixManager.class).getLogix(devName);
+        // Test system name
+        Logix x = InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("MySystemName", "MyUserName");
+        x.setEnabled(false);
+        testConditionalAction = getConditionalAction(Conditional.ACTION_ENABLE_LOGIX, myMemory);
+        testConditionalAction._deviceName = x.getSystemName();
+        ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
+        ix1.calculate(true, null);
+        Assert.assertTrue("logix has been enabled", x.getEnabled());
+        
+        // Test user name
+        x.setEnabled(false);
+        testConditionalAction = getConditionalAction(Conditional.ACTION_ENABLE_LOGIX, myMemory);
+        testConditionalAction._deviceName = x.getUserName();
+        ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
+        ix1.calculate(true, null);
+        Assert.assertTrue("logix has been enabled", x.getEnabled());
         
         // Test ACTION_DISABLE_LOGIX
         // Test ACTION_PLAY_SOUND
