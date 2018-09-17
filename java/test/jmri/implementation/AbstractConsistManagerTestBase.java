@@ -31,7 +31,7 @@ abstract public class AbstractConsistManagerTestBase {
     }
 
     @Test
-    public void testManager() {
+    public void testConsists() {
         DccLocoAddress locoAddress_12 = new DccLocoAddress(12, false);
         DccLocoAddress locoAddress_345 = new DccLocoAddress(345, false);
         
