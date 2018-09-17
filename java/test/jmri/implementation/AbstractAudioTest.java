@@ -41,7 +41,7 @@ public class AbstractAudioTest {
         // Test AbstractAudio.roundDecimal()
         // The test of jmri.Audio.DECIMAL_PLACES is only a "heads up" for the tests below.
         // If jmri.Audio.DECIMAL_PLACES is changed, the tests below must be changed too.
-        Assert.assertTrue("test DECIMAL_PLACES", jmri.Audio.DECIMAL_PLACES == 2);
+        Assert.assertEquals(2, Math.round(jmri.Audio.DECIMAL_PLACES));
         Assert.assertTrue("test roundDecimal()", AbstractAudio.roundDecimal((float) 10.5555555) > 10.559);
         Assert.assertTrue("test roundDecimal()", AbstractAudio.roundDecimal((float) 10.5555555) < 10.561);
     }
@@ -77,6 +77,6 @@ public class AbstractAudioTest {
         protected void cleanup() {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
-    };
+    }
     
 }
