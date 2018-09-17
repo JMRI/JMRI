@@ -592,6 +592,22 @@ public class DefaultConditionalTest {
         Assert.assertTrue("logix has been enabled", x.getEnabled());
         
         // Test ACTION_DISABLE_LOGIX
+        // Test system name
+        x.setEnabled(true);
+        testConditionalAction = getConditionalAction(Conditional.ACTION_DISABLE_LOGIX, myMemory);
+        testConditionalAction._deviceName = x.getSystemName();
+        ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
+        ix1.calculate(true, null);
+        Assert.assertFalse("logix has been disabled", x.getEnabled());
+        
+        // Test user name
+        x.setEnabled(true);
+        testConditionalAction = getConditionalAction(Conditional.ACTION_DISABLE_LOGIX, myMemory);
+        testConditionalAction._deviceName = x.getUserName();
+        ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
+        ix1.calculate(true, null);
+        Assert.assertFalse("logix has been disabled", x.getEnabled());
+        
         // Test ACTION_PLAY_SOUND
         // Test ACTION_RUN_SCRIPT
         // Test ACTION_DELAYED_TURNOUT
