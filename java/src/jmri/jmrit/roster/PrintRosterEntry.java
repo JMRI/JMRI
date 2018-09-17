@@ -58,8 +58,7 @@ public class PrintRosterEntry implements PaneContainer {
         _rMPane = new RosterMediaPane(rosterEntry);
         _parent = parent;
         JLabel progStatus = new JLabel(Bundle.getMessage("StateIdle"));
-        jmri.Programmer mProgrammer = null;
-        ResetTableModel resetModel = new ResetTableModel(progStatus, mProgrammer);
+        ResetTableModel resetModel = new ResetTableModel(progStatus, null);  // no programmer
 
         log.debug("Try PrintRosterEntry {} from file {}", _rosterEntry.getDisplayName(), filename);
         XmlFile pf = new XmlFile() {
@@ -81,7 +80,7 @@ public class PrintRosterEntry implements PaneContainer {
             return;
         }
 
-        CvTableModel cvModel = new CvTableModel(progStatus, mProgrammer);
+        CvTableModel cvModel = new CvTableModel(progStatus, null); // no programmer
 
         VariableTableModel variableModel = new VariableTableModel(progStatus, new String[]{"Name", "Value"}, cvModel); // NOI18N
 
