@@ -12,14 +12,14 @@ import org.junit.Test;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
+ * JMRI is free software; you can redistribute it and/or modify it under
+ * the terms of version 2 of the GNU General Public License as published
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
@@ -319,7 +319,43 @@ public class LocoNetMessageTest {
     @Test
     public void testToMonitorString() {
         LocoNetMessage m = new LocoNetMessage(new int[] {0xB2, 0x15, 0x63, 0x72});
-        Assert.assertEquals("B2 15 63 72", m.toMonitorString());
+        Assert.assertEquals("no LocoNet Sensor Manager installed yet", "Sensor LS812 () is Low.  (BDL16 # 51, DS12; DS54/DS64 # 102, SwiB/S2).\n", m.toMonitorString());
+
+        m = new LocoNetMessage(new int[] {0xb2, 0x1E, 0x47, 0x00});
+
+        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
+        LnTurnoutManager lntm = new LnTurnoutManager(lnis, lnis, "L", false);
+        LnTurnoutManager lntm2 = new LnTurnoutManager(lnis, lnis, "L2", false);
+        LnSensorManager lnsm = new LnSensorManager(lnis, "L");
+        LnSensorManager lnsm2 = new LnSensorManager(lnis, "L2");
+
+        jmri.InstanceManager.setTurnoutManager(lntm);
+        jmri.InstanceManager.setTurnoutManager(lntm2);
+        jmri.InstanceManager.setSensorManager(lnsm);
+        jmri.InstanceManager.setSensorManager(lnsm2);
+
+        LnSensor s1 = (LnSensor) lnsm.provideSensor("LS1853");
+        LnSensor s2 = (LnSensor) lnsm2.provideSensor("L2S1853");
+        Assert.assertEquals("Sensor LS1853 () is Low.  (BDL16 # 116, DS13; DS54/DS64 # 232, AuxC/A3).\n", m.toMonitorString());
+        Assert.assertEquals("Sensor LS1853 () is Low.  (BDL16 # 116, DS13; DS54/DS64 # 232, AuxC/A3).\n", m.toMonitorString("L"));
+        Assert.assertEquals("Sensor L2S1853 () is Low.  (BDL16 # 116, DS13; DS54/DS64 # 232, AuxC/A3).\n", m.toMonitorString("L2"));
+
+        s1.setUserName("grime");
+
+        Assert.assertEquals("Sensor LS1853 (grime) is Low.  (BDL16 # 116, DS13; DS54/DS64 # 232, AuxC/A3).\n", m.toMonitorString());
+        Assert.assertEquals("Sensor LS1853 (grime) is Low.  (BDL16 # 116, DS13; DS54/DS64 # 232, AuxC/A3).\n", m.toMonitorString("L"));
+        Assert.assertEquals("Sensor L2S1853 () is Low.  (BDL16 # 116, DS13; DS54/DS64 # 232, AuxC/A3).\n", m.toMonitorString("L2"));
+
+        s2.setUserName("brightly");
+
+        Assert.assertEquals("Sensor LS1853 (grime) is Low.  (BDL16 # 116, DS13; DS54/DS64 # 232, AuxC/A3).\n", m.toMonitorString());
+        Assert.assertEquals("Sensor LS1853 (grime) is Low.  (BDL16 # 116, DS13; DS54/DS64 # 232, AuxC/A3).\n", m.toMonitorString("L"));
+        Assert.assertEquals("Sensor L2S1853 (brightly) is Low.  (BDL16 # 116, DS13; DS54/DS64 # 232, AuxC/A3).\n", m.toMonitorString("L2"));
+
+        lntm.dispose();
+
+
+
     }
 
     @Test
@@ -476,7 +512,7 @@ public class LocoNetMessageTest {
         m.setElement(-1, 3);
         jmri.util.JUnitAppender.assertErrorMessage(
             "reference element -1 in message of 20 elements: 38 38 50 FF 38 38 38 38 38 38 38 38 38 38 38 38 38 38 38 38");
-        
+
         m.setElement(21, 45);
         Assert.assertEquals(0x50, m.getElement(2));
         jmri.util.JUnitAppender.assertErrorMessage(
@@ -502,7 +538,7 @@ public class LocoNetMessageTest {
         LocoNetMessage m3 = new LocoNetMessage(new int[] {0x97});
         Assert.assertEquals(0x98, m3.hashCode());
         jmri.util.JUnitAppender.assertErrorMessage("Cannot create a LocoNet message of length shorter than two.");
-        
+
         LocoNetMessage m4 = new LocoNetMessage(new int[] {});
         Assert.assertEquals(0x0, m4.hashCode());
         jmri.util.JUnitAppender.assertErrorMessage("Cannot create a LocoNet message of length shorter than two.");
@@ -550,18 +586,18 @@ public class LocoNetMessageTest {
         Assert.assertTrue(m.checkParity());
         m.setElement(5, 0x23);
         Assert.assertFalse(m.checkParity());
-        
+
         a = new int[] {0xD3, 0x2, 0x4, 0x8, 0x20, 0};
         m = new LocoNetMessage(a);
         Assert.assertFalse(m.checkParity());
         m.setElement(5, 2);
         Assert.assertTrue(m.checkParity());
-        
+
         m = new LocoNetMessage(new int[] {0x89, 0x53, 0x3c, 0x12});
         Assert.assertFalse(m.checkParity());
         m.setElement(3, 0x19);
         Assert.assertTrue(m.checkParity());
-        
+
     }
 
     @Before
