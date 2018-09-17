@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
@@ -7,7 +8,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import javax.swing.Timer;
 import jmri.*;
+import jmri.jmrit.Sound;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -369,23 +372,55 @@ public class DefaultConditionalTest {
                 = { new ConditionalVariableStatic(Conditional.TRUE) };
         List<ConditionalVariable> conditionalVariablesList_True = Arrays.asList(conditionalVariables_True);
         
-        NamedBean namedBean = new MyNamedBean("MySystemName", "MyUserName");
+        ConditionalVariable[] conditionalVariables_TrueWithTrigger
+                = { new ConditionalVariableStatic(Conditional.TRUE, "MyName", true) };
+        List<ConditionalVariable> conditionalVariablesList_TrueWithTrigger = Arrays.asList(conditionalVariables_TrueWithTrigger);
+        
+        ConditionalVariable[] conditionalVariables_TrueWithNotTrigger
+                = { new ConditionalVariableStatic(Conditional.TRUE, "MyName", false) };
+        List<ConditionalVariable> conditionalVariablesList_TrueWithNotTrigger = Arrays.asList(conditionalVariables_TrueWithNotTrigger);
+        
+        TestConditionalAction testConditionalAction = new TestConditionalAction();
+        List<ConditionalAction> conditionalActionList = new ArrayList<>();
+        conditionalActionList.add(testConditionalAction);
+        
+        NamedBean namedBeanTestSystemName = new MyNamedBean("MyName", "AAA");
+        NamedBean namedBeanTestUserName = new MyNamedBean("AAA", "MyName");
+        
+        MyMemory myMemory = new MyMemory("MySystemName", "MemoryValue");
         
         // Test invalid event source object
         Conditional ix1 = new DefaultConditional("IXIC 1");
-//        ix1 = new DefaultConditional("IXIC 1");
         ix1.setLogicType(Conditional.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_True);
         int result = ix1.calculate(true, new java.beans.PropertyChangeEvent(new Object(), "PropertyName", "OldValue", "NewValue"));
         Assert.assertTrue("calculate() returns NamedBean.TRUE", result == Conditional.TRUE);
         jmri.util.JUnitAppender.assertErrorMessageStartsWith("IXIC 1 PropertyChangeEvent source of unexpected type: java.beans.PropertyChangeEvent");
         
-        // Test event
+        // Test trigger event with bad device name
         ix1 = new DefaultConditional("IXIC 1");
         ix1.setLogicType(Conditional.ALL_OR, "");
-        ix1.setStateVariables(conditionalVariablesList_True);
-        result = ix1.calculate(true, new java.beans.PropertyChangeEvent(namedBean, "PropertyName", "OldValue", "NewValue"));
-        Assert.assertTrue("calculate() returns NamedBean.TRUE", result == Conditional.TRUE);
+        ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
+        ix1.setAction(conditionalActionList);
+        testConditionalAction._namedBean = myMemory;
+        myMemory.setValue("TestValue1");
+        ix1.calculate(true, new java.beans.PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue", "NewValue"));
+        Assert.assertTrue("action has not been executed", "TestValue1".equals(myMemory.getValue()));
+        jmri.util.JUnitAppender.assertErrorMessageStartsWith("IXIC 1 - invalid memory name in action - ");
+        
+        // Test trigger event
+        ix1 = new DefaultConditional("IXIC 1");
+        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
+        ix1.setAction(conditionalActionList);
+        testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
+        testConditionalAction._namedBean = myMemory;
+        myMemory.setValue("TestValue1");
+        testConditionalAction._deviceName = "MyDeviceName";
+        testConditionalAction._actionString = "NewValue3";
+        ix1.calculate(true, new java.beans.PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
+        System.out.format("Memory value: %s%n", myMemory.getValue());
+        Assert.assertFalse("action has been executed", "NewValue".equals(myMemory.getValue()));
         
         
         
@@ -442,9 +477,184 @@ public class DefaultConditionalTest {
             setNegation(not);
         }
         
+        ConditionalVariableStatic(int state, String name, boolean trigger) {
+            super();
+            setName(name);
+            setState(state);
+            setTriggerActions(trigger);
+        }
+        
         @Override
         public boolean evaluate() {
             return getState() == Conditional.TRUE;
+        }
+        
+    }
+    
+    
+    private class TestConditionalAction extends DefaultConditionalAction {
+        
+        int _type = Conditional.ACTION_NONE;
+        int _option = Conditional.ACTION_OPTION_ON_CHANGE;
+        String _deviceName = null;
+        NamedBean _namedBean = null;
+        String _actionString = null;
+
+        @Override
+        public int getActionData() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public String getActionDataString() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public String getActionString() {
+            return _actionString;
+        }
+
+        @Override
+        public String getDeviceName() {
+            return _deviceName;
+        }
+
+        @Override
+        public int getOption() {
+            return _option;
+        }
+
+        @Override
+        public String getOptionString(boolean type) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public int getType() {
+            return _type;
+        }
+
+        @Override
+        public String getTypeString() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void setActionData(String actionData) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void setActionData(int actionData) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void setActionString(String actionString) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void setDeviceName(String deviceName) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void setOption(int option) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void setType(String type) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void setType(int type) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public String description(boolean triggerType) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public Timer getTimer() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void setTimer(Timer timer) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public boolean isTimerActive() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void startTimer() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void stopTimer() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public ActionListener getListener() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void setListener(ActionListener listener) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public Sound getSound() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public NamedBeanHandle<?> getNamedBean() {
+            if (_namedBean != null) {
+                return new NamedBeanHandle<>("Bean", _namedBean);
+            } else {
+                return null;
+            }
+        }
+
+        @Override
+        public NamedBean getBean() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+    
+    }
+    
+    
+    
+    private class MyMemory extends AbstractMemory {
+    
+        String _value;
+        
+        MyMemory(String systemName, String value) {
+            super(systemName);
+            this._value = value;
+        }
+    
+        @Override
+        public void setState(int s) throws JmriException {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public int getState() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
         
     }
