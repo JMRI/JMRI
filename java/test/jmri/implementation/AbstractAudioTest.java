@@ -18,8 +18,13 @@ public class AbstractAudioTest {
     public void testCtor() {
         
         MyAbstractAudio audio = new MyAbstractAudio();
-        
         Assert.assertNotNull("AbstractAudio constructor return", audio);
+    }
+    
+    @Test
+    public void testState() {
+        MyAbstractAudio audio = new MyAbstractAudio();
+        
         Assert.assertTrue("state is initial", audio.getState() == jmri.Audio.STATE_INITIAL);
         audio.setState(jmri.Audio.STATE_PLAYING);
         Assert.assertTrue("state is playing", audio.getState() == jmri.Audio.STATE_PLAYING);
@@ -29,7 +34,10 @@ public class AbstractAudioTest {
                 "jmri.implementation.AbstractAudioTest$MyAbstractAudio (MYSYSTEMNAME)".equals(audio.toString()));
         
         Assert.assertTrue("getBeanType() matches", "Audio".equals(audio.getBeanType()));
-        
+    }
+    
+    @Test
+    public void testRoundDecimal() {
         // Test AbstractAudio.roundDecimal()
         Assert.assertTrue("test roundDecimal()", AbstractAudio.roundDecimal((float) 10.5555555, 1) > 10.59);
         Assert.assertTrue("test roundDecimal()", AbstractAudio.roundDecimal((float) 10.5555555, 1) < 10.61);
