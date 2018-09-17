@@ -31,6 +31,9 @@ public class JsonConsistManagerTest extends jmri.implementation.AbstractConsistM
     public void setUp() {
         JUnitUtil.setUp();
         cm = new JsonConsistManager();
+        if (! ((JsonConsistManager)cm).isConsistManager()) {
+            ignoreTests = true;
+        }
     }
 
     @After
