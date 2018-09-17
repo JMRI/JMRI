@@ -342,30 +342,6 @@ public class DefaultConditionalTest {
     }
     
     
-    private class MyNamedBean extends AbstractNamedBean {
-
-        public MyNamedBean(String systemName, String userName) {
-            super(systemName);
-            setUserName(userName);
-        }
-
-        @Override
-        public void setState(int s) throws JmriException {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public int getState() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public String getBeanType() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-    }
-    
-    
     @Test
     public void testTriggers() {
         ConditionalVariable[] conditionalVariables_True
@@ -636,6 +612,30 @@ public class DefaultConditionalTest {
     
     }
     
+    
+    
+    private class MyNamedBean extends AbstractNamedBean {
+
+        public MyNamedBean(String systemName, String userName) {
+            super(systemName);
+            setUserName(userName);
+        }
+
+        @Override
+        public void setState(int s) throws JmriException {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public int getState() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public String getBeanType() {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+    }
     
     
     private class MyMemory extends AbstractMemory {
