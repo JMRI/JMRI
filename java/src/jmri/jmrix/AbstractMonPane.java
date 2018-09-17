@@ -596,13 +596,7 @@ public abstract class AbstractMonPane extends JmriPanel {
             try {
                 logStream = new PrintStream(new FileOutputStream(logFile));
             } catch (java.io.FileNotFoundException ex) {
-                if (logStream != null) {
-                    synchronized (logStream) {
-                        logStream.flush();
-                        logStream.close();
-                    }
-                    logStream = null;
-                }
+                stopLogButtonActionPerformed(null);
                 log.error("startLogButtonActionPerformed: FileOutputStream cannot open the file '{}'.  Exception: {}", logFileChooser.getSelectedFile().getName(), ex.getMessage());
                 JOptionPane.showMessageDialog(this,
                         (Bundle.getMessage("ErrorCannotOpenFileForWriting",
