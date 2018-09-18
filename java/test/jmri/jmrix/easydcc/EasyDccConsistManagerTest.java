@@ -104,7 +104,8 @@ public class EasyDccConsistManagerTest extends jmri.implementation.AbstractConsi
     }
 
     @Test
-    public void tesCsConsistNeedsSeperateAddress(){
+    @Override
+    public void testCsConsistNeedsSeperateAddress(){
        Assume.assumeTrue(cm.isCommandStationConsistPossible());
        // EasyDCC requires an address for CS consists.
        Assert.assertTrue("CS Consist Needs Seperate Address",cm.csConsistNeedsSeperateAddress());
