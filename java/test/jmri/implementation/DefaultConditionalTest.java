@@ -228,6 +228,8 @@ public class DefaultConditionalTest {
         // Test single condition
         testCalculate(Conditional.TRUE, "R1", conditionalVariablesList_True, "");
         testCalculate(Conditional.FALSE, "R1", conditionalVariablesList_False, "");
+        testCalculate(Conditional.FALSE, "not R1", conditionalVariablesList_True, "");
+        testCalculate(Conditional.TRUE, "not R1", conditionalVariablesList_False, "");
         
         // Test single condition with variables that has the flag "not" set
         testCalculate(Conditional.FALSE, "R1", conditionalVariablesList_NotTrue, "");
