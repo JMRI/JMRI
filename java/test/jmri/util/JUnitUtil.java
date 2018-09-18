@@ -26,7 +26,7 @@ import jmri.managers.DefaultMemoryManager;
 import jmri.managers.DefaultRailComManager;
 import jmri.managers.DefaultSignalMastLogicManager;
 import jmri.managers.DefaultSignalMastManager;
-import jmri.managers.InternalReporterManager;
+import jmri.jmrix.internal.InternalReporterManager;
 import jmri.jmrix.internal.InternalSensorManager;
 import jmri.managers.TestUserPreferencesManager;
 import jmri.profile.NullProfile;
