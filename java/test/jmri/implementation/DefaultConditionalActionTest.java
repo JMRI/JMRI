@@ -234,6 +234,9 @@ public class DefaultConditionalActionTest {
         
         ix1.setType("Set NX Pair Segment Active / Inactive");
         Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_NXPAIR_SEGMENT);
+        
+        ix1.setType("This is a bad string");
+        jmri.util.JUnitAppender.assertWarnMessage("Unexpected parameter to stringToActionType(This is a bad string)");
     }
     
     @Test
