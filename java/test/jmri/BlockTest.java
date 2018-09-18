@@ -97,8 +97,10 @@ public class BlockTest {
         count = 0;
         Block b = new Block("SystemName");
         Sensor s = sm.provideSensor("IS12");
+        s.setState(jmri.Sensor.UNKNOWN);
         
-        Assert.assertEquals("Initial state", Block.UNKNOWN, b.getState());
+        Assert.assertEquals("Initial state", Block.UNDETECTED, b.getState()); // state until sensor is set
+        
         b.setSensor("IS12");
         s.setState(jmri.Sensor.ACTIVE);
         Assert.assertEquals("State with sensor active", Block.OCCUPIED, s.getState());
