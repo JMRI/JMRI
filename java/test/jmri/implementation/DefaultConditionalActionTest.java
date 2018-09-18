@@ -284,7 +284,6 @@ public class DefaultConditionalActionTest {
         bean = InstanceManager.getDefault(RouteManager.class).newRoute(deviceName);
         ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_TRIGGER_ROUTE, deviceName, 4, "5");
         Assert.assertTrue("getActionBean() returns correct bean", ix1.getBean().equals(bean));
-        
     }
     
 
