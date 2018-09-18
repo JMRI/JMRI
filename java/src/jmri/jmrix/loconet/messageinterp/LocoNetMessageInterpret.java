@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  * Copyright 2001 Ron W. Auld. Use of these parts is by direct permission of the
  * author.
  * <p>
- * This class is derived from and replaces JMRI's 
+ * This class is derived from and replaces JMRI's
  * jmri.jmrix.loconet.locomon.Llnmon.java .
  * <p>
  * Many major comment blocks here are quotes from the Digitrax LocoNet(r) OPCODE
@@ -72,11 +72,11 @@ public class LocoNetMessageInterpret {
      * by the individual bytes of the message (in hexadecimal).
      *
      * @param l Message to parse
-     * @param turnoutPrefix "System Name+ prefix which designates the connection's 
+     * @param turnoutPrefix "System Name+ prefix which designates the connection's
      *          Turnouts, such as "LT"
-     * @param sensorPrefix "System Name+ prefix which designates the connection's 
+     * @param sensorPrefix "System Name+ prefix which designates the connection's
      *          Turnouts, such as "LS"
-     * @param reporterPrefix "System Name+ prefix which designates the connection's 
+     * @param reporterPrefix "System Name+ prefix which designates the connection's
      *          Turnouts, such as "LR"
      * @return String representation of the interpretation of the message
      */
@@ -1732,7 +1732,7 @@ public class LocoNetMessageInterpret {
                 if (reporter != null) {
                     uname = reporter.getUserName();
                 }
-                
+
                 if ((uname != null) && (!uname.isEmpty())) {
                     return Bundle.getMessage("LN_MSG_TRANSP_REPORT_KNOWN_REPORTER_USERNAME",
                             locoAddr,
@@ -2312,7 +2312,7 @@ public class LocoNetMessageInterpret {
                 sensorUserName = uname;
             }
         }
-        
+
         int sensorid = (SENSOR_ADR(in1, in2) - 1) * 2
                 + ((in2 & LnConstants.OPC_INPUT_REP_SW) != 0 ? 2 : 1);
 
@@ -4302,5 +4302,5 @@ public class LocoNetMessageInterpret {
 
     private final static Logger log = LoggerFactory.getLogger(LocoNetMessageInterpret.class);
 
-    
+
 }

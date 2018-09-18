@@ -34,36 +34,36 @@ public class LocoNetMessageInterpretTest {
         jmri.InstanceManager.setReporterManager(lnrm);
 
         l = new LocoNetMessage(new int[] {0xD0, 0x01, 0x20, 0x08, 0x20, 0x26});
-        Assert.assertEquals("out A", 
+        Assert.assertEquals("out A",
                 "Transponder address 1056 absent at LR161 () "+
                         "(BDL16x Board ID 11 RX4 zone A or "+
                         "BXP88 Board ID 21 section 1 or "+
-                        "the BXPA1 Board ID 161 section).\n", 
+                        "the BXPA1 Board ID 161 section).\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x21, 0x20, 0x08, 0x20, 0x04});
-        Assert.assertEquals(" in A", 
+        Assert.assertEquals(" in A",
                 "Transponder address 1056 present at LR161 () "+
                         "(BDL16x Board ID 11 RX4 zone A or "+
                         "BXP88 Board ID 21 section 1 or "+
-                        "the BXPA1 Board ID 161 section).\n", 
+                        "the BXPA1 Board ID 161 section).\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x21, 0x22, 0x08, 0x20, 0x24});
-        Assert.assertEquals(" in B", 
+        Assert.assertEquals(" in B",
                 "Transponder address 1056 present at LR163 () "+
                         "(BDL16x Board ID 11 RX4 zone B or "+
                         "BXP88 Board ID 21 section 3 or "+
-                        "the BXPA1 Board ID 163 section).\n", 
+                        "the BXPA1 Board ID 163 section).\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x21, 0x24, 0x7d, 0x70, 0x04});
-        Assert.assertEquals(" in C", 
+        Assert.assertEquals(" in C",
                 "Transponder address 112 (short, or \"B2\") "+
                         "(or long address 16112) present at LR165 () "+
                         "(BDL16x Board ID 11 RX4 zone C or "+
                         "BXP88 Board ID 21 section 5 or "+
-                        "the BXPA1 Board ID 165 section).\n", 
+                        "the BXPA1 Board ID 165 section).\n",
                         LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xD0, 0x21, 0x26, 0x08, 0x20, 0x04});
@@ -211,7 +211,7 @@ public class LocoNetMessageInterpretTest {
                 "Transponder Find report: address 4 (short) present at LR31 (Friendly Name H) "+
                 "(BDL16x Board 2 RX4 zone H).\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
-        
+
         l = new LocoNetMessage(new int[] {0xD0, 0x20, 0x00, 0x00, 0x01, 0x04});
         Assert.assertEquals("one in A/1",
                 "Transponder address 1 (short) present at LR1 () "+
@@ -2417,7 +2417,7 @@ public class LocoNetMessageInterpretTest {
                 "Transponder address 3 (short) (or long address 16003) present at LR19 () "+
                         "(BDL16x Board ID 2 RX4 zone B or "+
                         "BXP88 Board ID 3 section 3 or "+
-                        "the BXPA1 Board ID 19 section).\n", 
+                        "the BXPA1 Board ID 19 section).\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xB2, 0x0B, 0x70, 0x36});
@@ -6571,5 +6571,5 @@ public class LocoNetMessageInterpretTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-    
+
 }
