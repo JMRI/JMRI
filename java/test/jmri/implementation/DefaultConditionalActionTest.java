@@ -70,6 +70,173 @@ public class DefaultConditionalActionTest {
     }
     
     @Test
+    public void testSetType() {
+        final String deviceName = "3";
+        final String actionStr = "5";
+        
+        ConditionalAction ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_TURNOUT, deviceName, Turnout.THROWN, actionStr);
+        
+        ix1.setType("None");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_NONE);
+        
+        ix1.setType("Set Turnout");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_TURNOUT);
+        
+        ix1.setType("Set Signal Head Appearance");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_SIGNAL_APPEARANCE);
+        
+        ix1.setType("Set Signal Head Held");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_SIGNAL_HELD);
+        
+        ix1.setType("Clear Signal Head Held");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_CLEAR_SIGNAL_HELD);
+        
+        ix1.setType("Set Signal Head Dark");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_SIGNAL_DARK);
+        
+        ix1.setType("Set Signal Head Lit");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_SIGNAL_LIT);
+        
+        ix1.setType("Trigger Route");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_TRIGGER_ROUTE);
+        
+        ix1.setType("Set Sensor");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_SENSOR);
+        
+        ix1.setType("Delayed Set Sensor");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_DELAYED_SENSOR);
+        
+        ix1.setType("Set Light");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_LIGHT);
+        
+        ix1.setType("Set Memory");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_MEMORY);
+        
+        ix1.setType("Enable Logix");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_ENABLE_LOGIX);
+        
+        ix1.setType("Disable Logix");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_DISABLE_LOGIX);
+        
+        ix1.setType("Play Sound File");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_PLAY_SOUND);
+        
+        ix1.setType("Run Script");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_RUN_SCRIPT);
+        
+        ix1.setType("Delayed Set Turnout");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_DELAYED_TURNOUT);
+        
+        ix1.setType("Turnout Lock");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_LOCK_TURNOUT);
+        
+        ix1.setType("Reset Delayed Set Sensor");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_RESET_DELAYED_SENSOR);
+        
+        ix1.setType("Cancel Timers for Sensor");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_CANCEL_SENSOR_TIMERS);
+        
+        ix1.setType("Reset Delayed Set Turnout");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_RESET_DELAYED_TURNOUT);
+        
+        ix1.setType("Cancel Timers for Turnout");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_CANCEL_TURNOUT_TIMERS);
+        
+        ix1.setType("Set Fast Clock Time");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_FAST_CLOCK_TIME);
+        
+        ix1.setType("Start Fast Clock");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_START_FAST_CLOCK);
+        
+        ix1.setType("Stop Fast Clock");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_STOP_FAST_CLOCK);
+        
+        ix1.setType("Copy Memory To Memory");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_COPY_MEMORY);
+        
+        ix1.setType("Set Light Intensity");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_LIGHT_INTENSITY);
+        
+        ix1.setType("Set Light Transition Time");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_LIGHT_TRANSITION_TIME);
+        
+        ix1.setType("Control Audio object");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_CONTROL_AUDIO);
+        
+        ix1.setType("Execute Jython Command");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_JYTHON_COMMAND);
+        
+        ix1.setType("Allocate Warrant Route");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_ALLOCATE_WARRANT_ROUTE);
+        
+        ix1.setType("Deallocate Warrant");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_DEALLOCATE_WARRANT_ROUTE);
+        
+        ix1.setType("Set Route Turnouts");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_ROUTE_TURNOUTS);
+        
+        ix1.setType("Auto Run Train");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_AUTO_RUN_WARRANT);
+        
+        ix1.setType("Manually Run Train");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_MANUAL_RUN_WARRANT);
+        
+        ix1.setType("Control Auto Train");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_CONTROL_TRAIN);
+        
+        ix1.setType("Set Train ID");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_TRAIN_ID);
+        
+        ix1.setType("Set Train Name");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_TRAIN_NAME);
+        
+        ix1.setType("Set Signal Mast Aspect");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_SIGNALMAST_ASPECT);
+        
+        ix1.setType("Set Throttle Factor");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_THROTTLE_FACTOR);
+        
+        ix1.setType("Set Signal Mast Held");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_SIGNALMAST_HELD);
+        
+        ix1.setType("Clear Signal Mast Held");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_CLEAR_SIGNALMAST_HELD);
+        
+        ix1.setType("Set Signal Mast Dark");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_SIGNALMAST_DARK);
+        
+        ix1.setType("Clear Signal Mast Dark");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_SIGNALMAST_LIT);
+        
+        ix1.setType("Set Block Value");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_BLOCK_VALUE);
+        
+        ix1.setType("Set Block Error");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_BLOCK_ERROR);
+        
+        ix1.setType("Clear Block Error");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_CLEAR_BLOCK_ERROR);
+        
+        ix1.setType("Deallocate Block");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_DEALLOCATE_BLOCK);
+        
+        ix1.setType("Set Block OutOfService");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_BLOCK_OUT_OF_SERVICE);
+        
+        ix1.setType("Clear Block OutOfService");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_BLOCK_IN_SERVICE);
+        
+        ix1.setType("Set NX Pair Enabled");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_NXPAIR_ENABLED);
+        
+        ix1.setType("Set NX Pair Disabled");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_NXPAIR_DISABLED);
+        
+        ix1.setType("Set NX Pair Segment Active / Inactive");
+        Assert.assertTrue("setType() sets correct value", ix1.getType() == ACTION_SET_NXPAIR_SEGMENT);
+    }
+    
+    @Test
     public void testGetActionBean() {
         ConditionalAction ix1;
         NamedBean bean;
