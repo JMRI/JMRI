@@ -17,7 +17,6 @@ import org.junit.runners.Suite;
 	DefaultUserMessagePreferencesXmlTest.class,
 	InternalLightManagerXmlTest.class,
 	InternalReporterManagerXmlTest.class,
-	InternalSensorManagerXmlTest.class,
 	InternalTurnoutManagerXmlTest.class,
 	ManagerDefaultSelectorXmlTest.class,
 	ProxyTurnoutManagerXmlTest.class

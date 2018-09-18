@@ -9,7 +9,7 @@ import jmri.Light;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrix.AbstractMRMessage;
-import jmri.managers.InternalSensorManager;
+import jmri.jmrix.internal.InternalSensorManager;
 import jmri.managers.InternalTurnoutManager;
 import jmri.util.JUnitUtil;
 import junit.framework.Test;

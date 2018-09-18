@@ -1,6 +1,8 @@
 package jmri;
 
+import jmri.jmrix.internal.InternalSensorManager;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -68,7 +70,7 @@ public class BlockTest {
 
     @Test
     public void testSensorInvoke() throws JmriException {
-        SensorManager sm = new jmri.managers.InternalSensorManager();
+        SensorManager sm = new InternalSensorManager();
         count = 0;
         Block b = new Block("SystemName") {
             @Override
@@ -91,7 +93,7 @@ public class BlockTest {
 
     @Test
     public void testSensorSequence() throws JmriException {
-        SensorManager sm = new jmri.managers.InternalSensorManager();
+        SensorManager sm = new InternalSensorManager();
         count = 0;
         Block b = new Block("SystemName");
         Sensor s = sm.provideSensor("IS12");
@@ -120,7 +122,7 @@ public class BlockTest {
     // test going active with only one neighbor
     @Test
     public void testFirstGoActive() throws JmriException {
-        SensorManager sm = new jmri.managers.InternalSensorManager();
+        SensorManager sm = new InternalSensorManager();
 
         Block b1 = new Block("SystemName1");
 
@@ -144,7 +146,7 @@ public class BlockTest {
     // b2 is between b1 and b3. b1 contains a train
     @Test
     public void testOneOfTwoGoesActive() throws JmriException {
-        SensorManager sm = new jmri.managers.InternalSensorManager();
+        SensorManager sm = new InternalSensorManager();
 
         Block b1 = new Block("SystemName1");
         Block b2 = new Block("SystemName2");
@@ -187,7 +189,7 @@ public class BlockTest {
     // b2 is between b1 and b3. 
     @Test
     public void testTwoOfTwoGoesActive() throws JmriException {
-        SensorManager sm = new jmri.managers.InternalSensorManager();
+        SensorManager sm = new InternalSensorManager();
 
         Block b1 = new Block("SystemName1");
         Block b2 = new Block("SystemName2");
@@ -233,7 +235,7 @@ public class BlockTest {
     // b2 is between b1 and b3. 
     @Test
     public void testTwoOfTwoGoesActiveCombination() throws JmriException {
-        SensorManager sm = new jmri.managers.InternalSensorManager();
+        SensorManager sm = new InternalSensorManager();
 
         Block b1 = new Block("SystemName1");
         Block b2 = new Block("SystemName2");

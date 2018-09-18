@@ -18,7 +18,7 @@ public class NamedBeanHandleManagerTest extends TestCase {
     }
 
     public void testNameBeanManager() throws JmriException {
-        SensorManager sm = new jmri.managers.InternalSensorManager();
+        SensorManager sm = new jmri.jmrix.internal.InternalSensorManager();
         TurnoutManager tm = new jmri.managers.InternalTurnoutManager();
         MemoryManager mm = jmri.InstanceManager.memoryManagerInstance();
 

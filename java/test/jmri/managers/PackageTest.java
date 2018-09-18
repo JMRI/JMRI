@@ -11,7 +11,6 @@ import org.junit.runners.Suite;
     LogixSystemTest.class,
     DefaultSignalSystemManagerTest.class,
     InternalLightManagerTest.class,
-    InternalSensorManagerTest.class,
     ProxyLightManagerTest.class,
     ProxySensorManagerTest.class,
     ProxyTurnoutManagerTest.class,
