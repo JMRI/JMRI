@@ -293,7 +293,6 @@ public class DefaultConditionalActionTest {
     @Before
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalLightManager();
