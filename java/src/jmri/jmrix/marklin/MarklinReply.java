@@ -62,17 +62,6 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
         return !isResponse();
     }
 
-    /**
-     * Get a hex string representation of this MarklinReply.
-     *
-     * @return the hex string
-     * @deprecated since 4.13.4. use toString instead.
-     */
-    @Deprecated
-    public String toHexString() {
-        return toString();
-    }
-
     /*
      * {@inhertDoc}
      */
