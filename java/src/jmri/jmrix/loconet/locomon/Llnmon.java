@@ -22,8 +22,8 @@ import org.slf4j.LoggerFactory;
  * A utility class for formatting LocoNet packets into human-readable text.
  * <p>
  * Rather than using this formatter class, use 
- * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString(prefix)} (preferred) or
- * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString()}
+ * {@link LocoNetMessage#toMonitorString(String)} (preferred) or 
+ * {@link LocoNetMessage#toMonitorString()}
  * for each individual LocoNet message instead.
  * <p>
  * Much of this file is a Java-recoding of the display.c file from the llnmon
@@ -62,8 +62,8 @@ import org.slf4j.LoggerFactory;
  * @author Randall Wood Copyright 2016
  * <p>
  * @deprecated since 4.13.5; use the 
- * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString(prefix)} (preferred) or
- * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString()}
+ * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
+ * {@link LocoNetMessage#toMonitorString()}
  * for each individual LocoNet message instead of creating a formatter.
  */
 public class Llnmon {
@@ -114,8 +114,8 @@ public class Llnmon {
      * @param memo the system connection memo
      * <p>
      * @deprecated since 4.13.5; use the 
-     * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString(prefix)} (preferred) or
-     * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString()}
+     * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
+     * {@link LocoNetMessage#toMonitorString()}
      * for each individual LocoNet message instead of creating a formatter.
      */
     @Deprecated
@@ -132,8 +132,8 @@ public class Llnmon {
      * @param reporterManager reporter manager
      * <p>
      * @deprecated since 4.13.5; use the 
-     * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString(prefix)} (preferred) or
-     * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString()}
+     * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
+     * {@link LocoNetMessage#toMonitorString()}
      * for each individual LocoNet message instead of creating a formatter.
      */
     @Deprecated
@@ -152,8 +152,8 @@ public class Llnmon {
      * @param prefix - system connection prefix (i.e. "L")
      * <p>
      * @deprecated since 4.13.5; use the 
-     * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString(prefix)} (preferred) or
-     * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString()}
+     * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
+     * {@link LocoNetMessage#toMonitorString()}
      * for each individual LocoNet message instead of creating a formatter.
      */
     @Deprecated
@@ -1200,7 +1200,7 @@ public class Llnmon {
     /**
      * Create a string representation of a LocoNet buffer. The
      * string may be more than one line, and is terminated with a newline.
-     *
+     *<p>
      * @param l the message
      * @return The created string representation.
      */
@@ -1222,11 +1222,10 @@ public class Llnmon {
     /**
      * Set the LocoNet turnout manager used to find turnout "user names" from
      * turnout "system names"
-     *
+     *<p>
      * @param turnoutManager the manager
-     * @deprecated since 4.13.5; use the 
-     * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString(prefix)} (preferred) or
-     * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString()}
+     * @deprecated since 4.13.5; use the {@link LocoNetMessage#toMonitorString(String)} (preferred) 
+     * or {@link LocoNetMessage#toMonitorString()}
      * for each individual LocoNet message instead of creating a formatter and 
      * using this method.
      */
@@ -1238,11 +1237,11 @@ public class Llnmon {
     /**
      * Set the LocoNet sensor manager used to find sensor "user names" from
      * sensor "system names".
-     *
+     *<p>
      * @param sensorManager the manager
      * @deprecated since 4.13.5; use the 
-     * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString(prefix)} (preferred) or
-     * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString()}
+     * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
+     * {@link LocoNetMessage#toMonitorString()}
      * for each individual LocoNet message instead of creating a formatter and 
      * using this method.
      */
@@ -1254,11 +1253,11 @@ public class Llnmon {
     /**
      * Set the LocoNet reporter manager used to find reported "user names" from
      * reporter "system names".
-     *
+     *<p>
      * @param reporterManager the manager
      * @deprecated since 4.13.5; use the 
-     * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString(prefix)} (preferred) or
-     * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString()}
+     * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
+     * {@link LocoNetMessage#toMonitorString()}
      * for each individual LocoNet message instead of creating a formatter and 
      * using this method.
      */

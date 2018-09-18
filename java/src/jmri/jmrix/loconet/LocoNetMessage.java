@@ -43,7 +43,6 @@ import jmri.jmrix.loconet.messageinterp.LocoNetMessageInterpret;
  * <p>
  * @author Bob Jacobsen Copyright (C) 2001
  * @author B. Milhaupt Copyright (C) 2018
- *  <p>
  * @see jmri.jmrix.nce.NceMessage
  * @see jmri.jmrix.AbstractMessage
  */
