@@ -69,9 +69,9 @@ public class NceLightManager extends AbstractLightManager {
         // name must be in the NLnnnnn format (N is user configurable)
         int num = 0;
         try {
-            num = Integer.valueOf(systemName.substring(
+            num = Integer.parseInt(systemName.substring(
                     getSystemPrefix().length() + 1, systemName.length())
-            ).intValue();
+                  );
         } catch (Exception e) {
             log.debug("illegal character in number field of system name: " + systemName);
             return (0);

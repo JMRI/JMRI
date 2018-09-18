@@ -352,7 +352,7 @@ public interface NamedBean extends Comparable<NamedBean> {
     /**
      * Provide a comparison between the system names of two beans.
      * This provides a implementation for e.g. {@link java.util.Comparator}.
-     * @return 0 if the names are the same, -1 if the first argument orders before
+     * Returns 0 if the names are the same, -1 if the first argument orders before
      * the second argument's name, +1 if the first argument's name  orders after the second argument's name.
      * The comparison is alphanumeric on the system prefix, then alphabetic on the
      * type letter, then system-specific comparison on the two suffix parts

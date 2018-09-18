@@ -1372,7 +1372,6 @@ public class Location implements java.beans.PropertyChangeListener {
         }
         // new way of reading car types using elements added in 3.3.1
         if (e.getChild(Xml.TYPES) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> carTypes = e.getChild(Xml.TYPES).getChildren(Xml.CAR_TYPE);
             String[] types = new String[carTypes.size()];
             for (int i = 0; i < carTypes.size(); i++) {
@@ -1382,7 +1381,6 @@ public class Location implements java.beans.PropertyChangeListener {
                 }
             }
             setTypeNames(types);
-            @SuppressWarnings("unchecked")
             List<Element> locoTypes = e.getChild(Xml.TYPES).getChildren(Xml.LOCO_TYPE);
             types = new String[locoTypes.size()];
             for (int i = 0; i < locoTypes.size(); i++) {
@@ -1400,14 +1398,12 @@ public class Location implements java.beans.PropertyChangeListener {
         }
         // early version of operations called tracks "secondary"
         if (e.getChildren(Xml.SECONDARY) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> eTracks = e.getChildren(Xml.SECONDARY);
             for (Element eTrack : eTracks) {
                 register(new Track(eTrack, this));
             }
         }
         if (e.getChildren(Xml.TRACK) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> eTracks = e.getChildren(Xml.TRACK);
             log.debug("location ({}) has {} tracks", getName(), eTracks.size());
             for (Element eTrack : eTracks) {

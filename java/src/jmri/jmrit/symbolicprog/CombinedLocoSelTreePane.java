@@ -341,9 +341,9 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
      * All".
      */
     public void resetSelections() {
-        Enumeration<DecoderTreeNode> e = dRoot.breadthFirstEnumeration();
+        Enumeration<TreeNode> e = dRoot.breadthFirstEnumeration();
         while (e.hasMoreElements()) {
-            e.nextElement().setIdentified(false);
+            ((DecoderTreeNode)e.nextElement()).setIdentified(false);
         }
         setShowMatchedOnly(false);
         selectedPath = new ArrayList<>();
@@ -387,9 +387,9 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         }
 
         // set everybody not identified
-        Enumeration<DecoderTreeNode> e = dRoot.breadthFirstEnumeration();
+        Enumeration<TreeNode> e = dRoot.breadthFirstEnumeration();
         while (e.hasMoreElements()) { // loop over the tree
-            DecoderTreeNode node = e.nextElement();
+            DecoderTreeNode node = ((DecoderTreeNode)e.nextElement());
             node.setIdentified(false);
         }
 
@@ -405,7 +405,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
             String findModel = f.getModel();
 
             while (e.hasMoreElements()) { // loop over the tree & find node
-                DecoderTreeNode node = e.nextElement();
+                DecoderTreeNode node = ((DecoderTreeNode)e.nextElement());
                 // never match show=NO nodes
                 if (node.getShowable() == DecoderFile.Showable.NO) {
                     continue;
@@ -468,12 +468,12 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         // find this mfg to select it
         dTree.clearSelection();
 
-        Enumeration<DecoderTreeNode> e = dRoot.breadthFirstEnumeration();
+        Enumeration<TreeNode> e = dRoot.breadthFirstEnumeration();
 
         ArrayList<DecoderTreeNode> selected = new ArrayList<>();
         selectedPath = new ArrayList<>();
         while (e.hasMoreElements()) {
-            DecoderTreeNode node = e.nextElement();
+            DecoderTreeNode node = (DecoderTreeNode)e.nextElement();
             if (node.getParent() != null && node.getParent().toString().equals("Root")) {
                 if (node.toString().equals(pMfg)) {
                     TreePath path = new TreePath(node.getPath());
@@ -491,10 +491,10 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         for (DecoderTreeNode node : selected) {
             node.setIdentified(true);
 
-            Enumeration<DecoderTreeNode> es = dRoot.breadthFirstEnumeration();
+            Enumeration<TreeNode> es = dRoot.breadthFirstEnumeration();
 
             while (es.hasMoreElements()) {
-                es.nextElement().setIdentified(true);
+                ((DecoderTreeNode)es.nextElement()).setIdentified(true);
             }
         }
         if (showMatched.isSelected()) {
@@ -541,10 +541,10 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
         // close the entire GUI (not currently done, users want left open)
         //collapseAll();
         // find this one to select it
-        Enumeration<DecoderTreeNode> e = dRoot.breadthFirstEnumeration();
+        Enumeration<TreeNode> e = dRoot.breadthFirstEnumeration();
 
         while (e.hasMoreElements()) {
-            DecoderTreeNode node = e.nextElement();
+            DecoderTreeNode node = (DecoderTreeNode)e.nextElement();
             DecoderTreeNode parentNode = (DecoderTreeNode) node.getParent();
             if (node.toString().equals(modelString)
                     && parentNode.toString().equals(familyString)) {
@@ -651,7 +651,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
 
         @Override
         @SuppressWarnings("unchecked") // required because super.breadthFirstEnumeration not fully typed
-        public Enumeration<DecoderTreeNode> breadthFirstEnumeration() {
+        public Enumeration<TreeNode> breadthFirstEnumeration() { // JDK 9 typing
             return super.breadthFirstEnumeration();
         }
 

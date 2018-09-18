@@ -19,6 +19,10 @@ import sys
 import thread
 
 import java
+import java.awt
+import java.awt.event
+import java.beans
+import java.util
 import jmri
 import java.beans.PropertyChangeListener as PropertyChangeListener
 import java.util.Calendar as Calendar

@@ -149,6 +149,18 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
     }
 
     @Override
+    public String toMonitorString() {
+        StringBuffer buf = new StringBuffer();
+        buf.append("(" + Integer.toHexString(getHeader())
+                + (isExtended() ? " ext)" : ")"));
+        for (int i = 0; i < getNumDataElements(); i++)
+        {
+            buf.append(" " + jmri.util.StringUtil.twoHexFromInt(getElement(i)));
+        }
+	return buf.toString();
+    }
+
+    @Override
     public boolean replyExpected() {
         return false;
     }

@@ -36,7 +36,6 @@ public class NameCheckAction extends AbstractAction {
 
     JPanel _who;
 
-    @SuppressWarnings("unchecked")
     @Override
     public void actionPerformed(ActionEvent e) {
         if (fci == null) {

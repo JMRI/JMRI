@@ -1219,8 +1219,8 @@ public class LayoutEditorTools {
      * @param signalHeadName name of a signal head.
      * @param where coordinates for placing signal head on panel.
      */
-    public void setSignalHeadOnPanel(double directionDEG, 
-            @Nonnull String signalHeadName, 
+    public void setSignalHeadOnPanel(double directionDEG,
+            @Nonnull String signalHeadName,
             @Nonnull Point2D where) {
         setSignalHeadOnPanel(directionDEG, signalHeadName, (int) where.getX(), (int) where.getY());
     }
@@ -2318,7 +2318,7 @@ public class LayoutEditorTools {
             }
             boundary = null;
             for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
-                if (p.getType() == PositionablePoint.ANCHOR) {
+                if (p.getType() == PositionablePoint.ANCHOR || p.getType() == PositionablePoint.EDGE_CONNECTOR) {
                     LayoutBlock bA = null;
                     LayoutBlock bB = null;
                     if (p.getConnect1() != null) {
@@ -5812,11 +5812,11 @@ public class LayoutEditorTools {
             if (!continuing) {
                 type = Conditional.TYPE_TURNOUT_CLOSED;
             }
-            ArrayList<ConditionalVariable> variableList = c.getCopyOfStateVariables();
+            List<ConditionalVariable> variableList = c.getCopyOfStateVariables();
             variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND,
                     type, turnoutName, true));
             c.setStateVariables(variableList);
-            ArrayList<ConditionalAction> actionList = c.getCopyOfActions();
+            List<ConditionalAction> actionList = c.getCopyOfActions();
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
                     Conditional.ACTION_SET_SENSOR, sensorName,
                     Sensor.ACTIVE, ""));
