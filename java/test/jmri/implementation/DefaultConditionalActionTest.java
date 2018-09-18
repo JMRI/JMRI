@@ -10,6 +10,7 @@ import jmri.Light;
 import jmri.LightManager;
 import jmri.MemoryManager;
 import jmri.NamedBean;
+import jmri.Route;
 import jmri.SensorManager;
 import jmri.SignalHeadManager;
 import jmri.SignalMastManager;
@@ -19,6 +20,7 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
 import org.junit.After;
 import org.junit.Assert;
@@ -329,6 +331,135 @@ public class DefaultConditionalActionTest {
         
         DefaultConditionalAction.stringToActionData("This is a bad string");
         jmri.util.JUnitAppender.assertWarnMessage("Unexpected parameter to stringToActionData(This is a bad string)");
+    }
+    
+    @Test
+    public void testGetActionDataString() {
+        DefaultConditionalAction.getActionDataString(0, 0);
+        
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Closed".equals(DefaultConditionalAction.getActionDataString(ACTION_SET_TURNOUT, Turnout.CLOSED)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Thrown".equals(DefaultConditionalAction.getActionDataString(ACTION_SET_TURNOUT, Turnout.THROWN)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Toggle".equals(DefaultConditionalAction.getActionDataString(ACTION_SET_TURNOUT, Route.TOGGLE)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Closed".equals(DefaultConditionalAction.getActionDataString(ACTION_DELAYED_TURNOUT, Turnout.CLOSED)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Thrown".equals(DefaultConditionalAction.getActionDataString(ACTION_DELAYED_TURNOUT, Turnout.THROWN)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Toggle".equals(DefaultConditionalAction.getActionDataString(ACTION_DELAYED_TURNOUT, Route.TOGGLE)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Closed".equals(DefaultConditionalAction.getActionDataString(ACTION_RESET_DELAYED_TURNOUT, Turnout.CLOSED)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Thrown".equals(DefaultConditionalAction.getActionDataString(ACTION_RESET_DELAYED_TURNOUT, Turnout.THROWN)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Toggle".equals(DefaultConditionalAction.getActionDataString(ACTION_RESET_DELAYED_TURNOUT, Route.TOGGLE)));
+        // Test invalid data
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "".equals(DefaultConditionalAction.getActionDataString(ACTION_SET_TURNOUT, 0)));
+        
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Red".equals(DefaultConditionalAction.getActionDataString(ACTION_SET_SIGNAL_APPEARANCE, SignalHead.RED)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Yellow".equals(DefaultConditionalAction.getActionDataString(ACTION_SET_SIGNAL_APPEARANCE, SignalHead.YELLOW)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Green".equals(DefaultConditionalAction.getActionDataString(ACTION_SET_SIGNAL_APPEARANCE, SignalHead.GREEN)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Dark".equals(DefaultConditionalAction.getActionDataString(ACTION_SET_SIGNAL_APPEARANCE, SignalHead.DARK)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Flashing Red".equals(DefaultConditionalAction.getActionDataString(ACTION_SET_SIGNAL_APPEARANCE, SignalHead.FLASHRED)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Flashing Yellow".equals(DefaultConditionalAction.getActionDataString(ACTION_SET_SIGNAL_APPEARANCE, SignalHead.FLASHYELLOW)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Flashing Green".equals(DefaultConditionalAction.getActionDataString(ACTION_SET_SIGNAL_APPEARANCE, SignalHead.FLASHGREEN)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Lunar".equals(DefaultConditionalAction.getActionDataString(ACTION_SET_SIGNAL_APPEARANCE, SignalHead.LUNAR)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Flashing Lunar".equals(DefaultConditionalAction.getActionDataString(ACTION_SET_SIGNAL_APPEARANCE, SignalHead.FLASHLUNAR)));
+        // Test invalid data
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "".equals(DefaultConditionalAction.getActionDataString(ACTION_SET_SIGNAL_APPEARANCE, -1)));
+        
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Active".equals(DefaultConditionalAction.getActionDataString(ACTION_SET_SENSOR, Sensor.ACTIVE)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Inactive".equals(DefaultConditionalAction.getActionDataString(ACTION_SET_SENSOR, Sensor.INACTIVE)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Toggle".equals(DefaultConditionalAction.getActionDataString(ACTION_SET_SENSOR, Route.TOGGLE)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Active".equals(DefaultConditionalAction.getActionDataString(ACTION_DELAYED_SENSOR, Sensor.ACTIVE)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Inactive".equals(DefaultConditionalAction.getActionDataString(ACTION_DELAYED_SENSOR, Sensor.INACTIVE)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Toggle".equals(DefaultConditionalAction.getActionDataString(ACTION_DELAYED_SENSOR, Route.TOGGLE)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Active".equals(DefaultConditionalAction.getActionDataString(ACTION_RESET_DELAYED_SENSOR, Sensor.ACTIVE)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Inactive".equals(DefaultConditionalAction.getActionDataString(ACTION_RESET_DELAYED_SENSOR, Sensor.INACTIVE)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Toggle".equals(DefaultConditionalAction.getActionDataString(ACTION_RESET_DELAYED_SENSOR, Route.TOGGLE)));
+        // Test invalid data
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "".equals(DefaultConditionalAction.getActionDataString(ACTION_SET_SENSOR, 0)));
+        
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "On".equals(DefaultConditionalAction.getActionDataString(ACTION_SET_LIGHT, Light.ON)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Off".equals(DefaultConditionalAction.getActionDataString(ACTION_SET_LIGHT, Light.OFF)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Toggle".equals(DefaultConditionalAction.getActionDataString(ACTION_SET_LIGHT, Route.TOGGLE)));
+        // Test invalid data
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "".equals(DefaultConditionalAction.getActionDataString(ACTION_SET_LIGHT, 0)));
+        
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Unlock".equals(DefaultConditionalAction.getActionDataString(ACTION_LOCK_TURNOUT, Turnout.UNLOCKED)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Lock".equals(DefaultConditionalAction.getActionDataString(ACTION_LOCK_TURNOUT, Turnout.LOCKED)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Toggle".equals(DefaultConditionalAction.getActionDataString(ACTION_LOCK_TURNOUT, Route.TOGGLE)));
+        // Test invalid data
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "".equals(DefaultConditionalAction.getActionDataString(ACTION_LOCK_TURNOUT, -1)));
+        
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Play".equals(DefaultConditionalAction.getActionDataString(ACTION_CONTROL_AUDIO, Audio.CMD_PLAY)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Stop".equals(DefaultConditionalAction.getActionDataString(ACTION_CONTROL_AUDIO, Audio.CMD_STOP)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Toggle Play".equals(DefaultConditionalAction.getActionDataString(ACTION_CONTROL_AUDIO, Audio.CMD_PLAY_TOGGLE)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Pause".equals(DefaultConditionalAction.getActionDataString(ACTION_CONTROL_AUDIO, Audio.CMD_PAUSE)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Resume".equals(DefaultConditionalAction.getActionDataString(ACTION_CONTROL_AUDIO, Audio.CMD_RESUME)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Toggle Pause".equals(DefaultConditionalAction.getActionDataString(ACTION_CONTROL_AUDIO, Audio.CMD_PAUSE_TOGGLE)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Rewind".equals(DefaultConditionalAction.getActionDataString(ACTION_CONTROL_AUDIO, Audio.CMD_REWIND)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Fade-in".equals(DefaultConditionalAction.getActionDataString(ACTION_CONTROL_AUDIO, Audio.CMD_FADE_IN)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Fade-out".equals(DefaultConditionalAction.getActionDataString(ACTION_CONTROL_AUDIO, Audio.CMD_FADE_OUT)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Reset Position".equals(DefaultConditionalAction.getActionDataString(ACTION_CONTROL_AUDIO, Audio.CMD_RESET_POSITION)));
+        // Test invalid data
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "".equals(DefaultConditionalAction.getActionDataString(ACTION_CONTROL_AUDIO, 0)));
+        jmri.util.JUnitAppender.assertWarnMessage("Unhandled Audio operation command: 0");
+        
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Halt".equals(DefaultConditionalAction.getActionDataString(ACTION_CONTROL_TRAIN, Warrant.HALT)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Resume".equals(DefaultConditionalAction.getActionDataString(ACTION_CONTROL_TRAIN, Warrant.RESUME)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Abort".equals(DefaultConditionalAction.getActionDataString(ACTION_CONTROL_TRAIN, Warrant.ABORT)));
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "Abort".equals(DefaultConditionalAction.getActionDataString(ACTION_CONTROL_TRAIN, -1)));
+        
+        // Test invalid type
+        Assert.assertTrue("getActionDataString() returns correct value",
+                "".equals(DefaultConditionalAction.getActionDataString(-1, -1)));
     }
     
     @Test
