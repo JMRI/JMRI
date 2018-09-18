@@ -21,6 +21,11 @@ import org.slf4j.LoggerFactory;
 /**
  * A utility class for formatting LocoNet packets into human-readable text.
  * <p>
+ * Rather than using this formatter class, use 
+ * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString(prefix)} (preferred) or
+ * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString()}
+ * for each individual LocoNet message instead.
+ * <p>
  * Much of this file is a Java-recoding of the display.c file from the llnmon
  * package of John Jabour. Some of the conversions involve explicit decoding of
  * structs defined in loconet.h in that same package. Those parts are (C)
@@ -55,6 +60,11 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright 2001, 2002, 2003
  * @author B. Milhaupt Copyright 2015, 2016, 2018
  * @author Randall Wood Copyright 2016
+ * <p>
+ * @deprecated since 4.13.5; use the 
+ * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString(prefix)} (preferred) or
+ * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString()}
+ * for each individual LocoNet message instead of creating a formatter.
  */
 public class Llnmon {
 
@@ -80,14 +90,16 @@ public class Llnmon {
 
 
     /**
-     * Create a LocoNet Message Formatter. When using this constructor, {@link #setLocoNetReporterManager(jmri.ReporterManager)
+     * Create a LocoNet Message Formatter.
+     * <p>
+     * When using this constructor, {@link #setLocoNetReporterManager(jmri.ReporterManager)
      * }, {@link #setLocoNetSensorManager(jmri.SensorManager) }, and {@link #setLocoNetTurnoutManager(jmri.TurnoutManager)
      * } may need to be called manually to set the correct device managers.
-     *
+     * <p>
      * @deprecated since 4.5.6; use
      * {@link #Llnmon(jmri.jmrix.loconet.LocoNetSystemConnectionMemo)} or
      * {@link #Llnmon(jmri.TurnoutManager, jmri.SensorManager, jmri.ReporterManager)}
-     * instead
+     * instead.
      */
     @Deprecated
     public Llnmon() {
@@ -100,7 +112,13 @@ public class Llnmon {
      * included in messages with the system names.
      *
      * @param memo the system connection memo
+     * <p>
+     * @deprecated since 4.13.5; use the 
+     * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString(prefix)} (preferred) or
+     * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString()}
+     * for each individual LocoNet message instead of creating a formatter.
      */
+    @Deprecated
     public Llnmon(LocoNetSystemConnectionMemo memo) {
         this(memo.getSystemPrefix()); // set default managers
     }
@@ -108,17 +126,37 @@ public class Llnmon {
     /**
      * Create a LocoNet Message Formatter. The managers allow the user names of
      * managed devices to be included in messages with the system names.
-     *
+     * <p>
      * @param turnoutManager  turnout manager
      * @param sensorManager   sensor manager
      * @param reporterManager reporter manager
+     * <p>
+     * @deprecated since 4.13.5; use the 
+     * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString(prefix)} (preferred) or
+     * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString()}
+     * for each individual LocoNet message instead of creating a formatter.
      */
-    public Llnmon(@Nonnull TurnoutManager turnoutManager, @Nonnull SensorManager sensorManager, @Nonnull ReporterManager reporterManager) {
+    @Deprecated
+    public Llnmon(@Nonnull TurnoutManager turnoutManager, 
+            @Nonnull SensorManager sensorManager, 
+            @Nonnull ReporterManager reporterManager) {
         this(turnoutManager.getSystemPrefix());
         this.setLocoNetSensorManager(sensorManager); // a hack to set the sensor prefix
         this.setLocoNetReporterManager(reporterManager);  // a hack to set the reporter prefix
     }
 
+    /**
+     * Create a LocoNet Message Formatter. The managers allow the user names of
+     * managed devices to be included in messages with the system names.
+     * <p>
+     * @param prefix - system connection prefix (i.e. "L")
+     * <p>
+     * @deprecated since 4.13.5; use the 
+     * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString(prefix)} (preferred) or
+     * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString()}
+     * for each individual LocoNet message instead of creating a formatter.
+     */
+    @Deprecated
     public Llnmon(@Nonnull String prefix) {
         turnoutPrefix = prefix+"T";
         sensorPrefix = prefix+"S";
@@ -1186,7 +1224,13 @@ public class Llnmon {
      * turnout "system names"
      *
      * @param turnoutManager the manager
+     * @deprecated since 4.13.5; use the 
+     * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString(prefix)} (preferred) or
+     * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString()}
+     * for each individual LocoNet message instead of creating a formatter and 
+     * using this method.
      */
+    @Deprecated
     public final void setLocoNetTurnoutManager(@Nonnull TurnoutManager turnoutManager) {
         turnoutPrefix = turnoutManager.getSystemPrefix()+"T";
     }
@@ -1196,7 +1240,13 @@ public class Llnmon {
      * sensor "system names".
      *
      * @param sensorManager the manager
+     * @deprecated since 4.13.5; use the 
+     * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString(prefix)} (preferred) or
+     * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString()}
+     * for each individual LocoNet message instead of creating a formatter and 
+     * using this method.
      */
+    @Deprecated
     public final void setLocoNetSensorManager(@Nonnull SensorManager sensorManager) {
         sensorPrefix = sensorManager.getSystemPrefix()+"S";
     }
@@ -1206,7 +1256,13 @@ public class Llnmon {
      * reporter "system names".
      *
      * @param reporterManager the manager
+     * @deprecated since 4.13.5; use the 
+     * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString(prefix)} (preferred) or
+     * {@link jmri.jmrix.loconet.LocoNetMessage.toMontorString()}
+     * for each individual LocoNet message instead of creating a formatter and 
+     * using this method.
      */
+    @Deprecated
     public final void setLocoNetReporterManager(@Nonnull ReporterManager reporterManager) {
         reporterPrefix = reporterManager.getSystemPrefix()+"R";
     }
