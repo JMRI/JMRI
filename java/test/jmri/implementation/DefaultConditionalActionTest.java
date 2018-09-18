@@ -2,9 +2,11 @@ package jmri.implementation;
 
 import static jmri.Conditional.*;
 
+import jmri.Audio;
 import jmri.Conditional;
 import jmri.ConditionalAction;
 import jmri.InstanceManager;
+import jmri.Light;
 import jmri.LightManager;
 import jmri.MemoryManager;
 import jmri.NamedBean;
@@ -13,6 +15,7 @@ import jmri.SignalHeadManager;
 import jmri.SignalMastManager;
 import jmri.TurnoutManager;
 import jmri.RouteManager;
+import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.jmrit.logix.OBlockManager;
@@ -49,6 +52,8 @@ public class DefaultConditionalActionTest {
         ConditionalAction ix7 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_TURNOUT, deviceName, Turnout.THROWN,"0");
 
         ConditionalAction ix8 = new DefaultConditionalAction(0, Conditional.ACTION_NONE, null, Turnout.THROWN, actionStr);
+        
+        Assert.assertFalse(ix1.equals(null));
         
         Assert.assertTrue(ix1.equals(ix1));
         Assert.assertTrue(ix1.equals(ix2));
@@ -237,6 +242,93 @@ public class DefaultConditionalActionTest {
         
         ix1.setType("This is a bad string");
         jmri.util.JUnitAppender.assertWarnMessage("Unexpected parameter to stringToActionType(This is a bad string)");
+    }
+    
+    @Test
+    public void testStringToActionData() {
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Closed") == Turnout.CLOSED);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Thrown") == Turnout.THROWN);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Active") == Sensor.ACTIVE);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Inactive") == Sensor.INACTIVE);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("On") == Light.ON);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Off") == Light.OFF);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Unlock") == Turnout.UNLOCKED);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Lock") == Turnout.LOCKED);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Red") == SignalHead.RED);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Yellow") == SignalHead.YELLOW);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Green") == SignalHead.GREEN);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Dark") == SignalHead.DARK);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Flashing Red") == SignalHead.FLASHRED);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Flashing Yellow") == SignalHead.FLASHYELLOW);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Flashing Green") == SignalHead.FLASHGREEN);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Lunar") == SignalHead.LUNAR);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Flashing Lunar") == SignalHead.FLASHLUNAR);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Play") == Audio.CMD_PLAY);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Stop") == Audio.CMD_STOP);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Toggle Play") == Audio.CMD_PLAY_TOGGLE);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Pause") == Audio.CMD_PAUSE);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Resume") == Audio.CMD_RESUME);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Toggle Pause") == Audio.CMD_PAUSE_TOGGLE);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Rewind") == Audio.CMD_REWIND);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Fade-in") == Audio.CMD_FADE_IN);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Fade-out") == Audio.CMD_FADE_OUT);
+        
+        Assert.assertTrue("stringToActionData() returns correct value",
+                DefaultConditionalAction.stringToActionData("Reset Position") == Audio.CMD_RESET_POSITION);
+        
+        DefaultConditionalAction.stringToActionData("This is a bad string");
+        jmri.util.JUnitAppender.assertWarnMessage("Unexpected parameter to stringToActionData(This is a bad string)");
     }
     
     @Test
