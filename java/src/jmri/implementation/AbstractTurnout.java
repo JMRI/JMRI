@@ -639,7 +639,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     private NamedBeanHandle<Sensor> _secondNamedSensor;
 
     @Override
-    public void provideFirstFeedbackSensor(@Nonnull String pName) throws jmri.JmriException, IllegalArgumentException {
+    public void provideFirstFeedbackSensor(String pName) throws jmri.JmriException, IllegalArgumentException {
         if (InstanceManager.getNullableDefault(SensorManager.class) != null) {
             if (pName == null || pName.equals("")) {
                 provideFirstFeedbackNamedSensor(null);
@@ -653,7 +653,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
     }
 
-    public void provideFirstFeedbackNamedSensor(@Nonnull NamedBeanHandle<Sensor> s) {
+    public void provideFirstFeedbackNamedSensor(NamedBeanHandle<Sensor> s) {
         // remove existing if any
         Sensor temp = getFirstSensor();
         if (temp != null) {
@@ -685,7 +685,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     @Override
-    public void provideSecondFeedbackSensor(@Nonnull String pName) throws jmri.JmriException, IllegalArgumentException {
+    public void provideSecondFeedbackSensor(String pName) throws jmri.JmriException, IllegalArgumentException {
         if (InstanceManager.getNullableDefault(SensorManager.class) != null) {
             if (pName == null || pName.equals("")) {
                 provideSecondFeedbackNamedSensor(null);
@@ -699,7 +699,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
     }
 
-    public void provideSecondFeedbackNamedSensor(@Nonnull NamedBeanHandle<Sensor> s) {
+    public void provideSecondFeedbackNamedSensor(NamedBeanHandle<Sensor> s) {
         // remove existing if any
         Sensor temp = getSecondSensor();
         if (temp != null) {
