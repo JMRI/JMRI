@@ -97,7 +97,8 @@ public class BlockTest {
         count = 0;
         Block b = new Block("SystemName");
         Sensor s = sm.provideSensor("IS12");
-        Assert.assertEquals("Initial state", Block.UNKNOWN, s.getState());
+        
+        Assert.assertEquals("Initial state", Block.UNKNOWN, b.getState());
         b.setSensor("IS12");
         s.setState(jmri.Sensor.ACTIVE);
         Assert.assertEquals("State with sensor active", Block.OCCUPIED, s.getState());
@@ -363,6 +364,8 @@ public class BlockTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalTurnoutManager();
     }
 
     @After
