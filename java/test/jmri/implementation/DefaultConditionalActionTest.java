@@ -13,6 +13,8 @@ import jmri.SignalHeadManager;
 import jmri.SignalMastManager;
 import jmri.TurnoutManager;
 import jmri.RouteManager;
+import jmri.SignalHead;
+import jmri.Turnout;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
 import org.junit.After;
@@ -34,18 +36,20 @@ public class DefaultConditionalActionTest {
 
     @Test
     public void testBasicBeanOperations() {
-        ConditionalAction ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE,ACTION_SET_TURNOUT,"3",4,"5");
-        ConditionalAction ix2 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE,ACTION_SET_TURNOUT,"3",4,"5");
-
-        ConditionalAction ix3 = new DefaultConditionalAction(0,ACTION_SET_TURNOUT,"3",4,"5");
-        ConditionalAction ix4 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE,0,"3",4,"5");
-        ConditionalAction ix5 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE,ACTION_SET_TURNOUT,"0",4,"5");
-        ConditionalAction ix6 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE,ACTION_SET_TURNOUT,"3",0,"5");
-        ConditionalAction ix7 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE,ACTION_SET_TURNOUT,"3",4,"0");
-
-        ConditionalAction ix8 = new DefaultConditionalAction(0,Conditional.ACTION_NONE,null,4,"5");
+        final String deviceName = "3";
+        final String actionStr = "5";
         
-        Assert.assertTrue(!ix1.equals(null));
+        ConditionalAction ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_TURNOUT, deviceName, Turnout.THROWN, actionStr);
+        ConditionalAction ix2 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_TURNOUT, deviceName, Turnout.THROWN, actionStr);
+
+        ConditionalAction ix3 = new DefaultConditionalAction(0, ACTION_SET_TURNOUT, deviceName, Turnout.THROWN, actionStr);
+        ConditionalAction ix4 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, 0, deviceName, Turnout.THROWN, actionStr);
+        ConditionalAction ix5 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_TURNOUT, "0", Turnout.THROWN, actionStr);
+        ConditionalAction ix6 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_TURNOUT, deviceName, 0, actionStr);
+        ConditionalAction ix7 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_TURNOUT, deviceName, Turnout.THROWN,"0");
+
+        ConditionalAction ix8 = new DefaultConditionalAction(0, Conditional.ACTION_NONE, null, Turnout.THROWN, actionStr);
+        
         Assert.assertTrue(ix1.equals(ix1));
         Assert.assertTrue(ix1.equals(ix2));
 
@@ -69,47 +73,53 @@ public class DefaultConditionalActionTest {
     public void testGetActionBean() {
         ConditionalAction ix1;
         NamedBean bean;
-        String devName = "3";
+        String deviceName = "3";
         
-        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_SENSOR, devName,4,"5");
-        bean = InstanceManager.getDefault(SensorManager.class).provideSensor(devName);
+        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_SENSOR, deviceName, 4, "5");
+        bean = InstanceManager.getDefault(SensorManager.class).provideSensor(deviceName);
         Assert.assertTrue("getActionBean() returns correct bean", ix1.getBean().equals(bean));
         
-        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_TURNOUT, devName,4,"5");
-        bean = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(devName);
+        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_TURNOUT, deviceName, 4, "5");
+        bean = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(deviceName);
         Assert.assertTrue("getActionBean() returns correct bean", ix1.getBean().equals(bean));
         
-        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_MEMORY, devName,4,"5");
-        bean = InstanceManager.getDefault(MemoryManager.class).provideMemory(devName);
+        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_MEMORY, deviceName, 4, "5");
+        bean = InstanceManager.getDefault(MemoryManager.class).provideMemory(deviceName);
         Assert.assertTrue("getActionBean() returns correct bean", ix1.getBean().equals(bean));
         
-        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_LIGHT, devName,4,"5");
-        bean = InstanceManager.getDefault(LightManager.class).getLight(devName);
-//DANIEL        Assert.assertTrue("getActionBean() returns correct bean", ix1.getBean().equals(bean));
+        bean = InstanceManager.getDefault(LightManager.class).provideLight(deviceName);
+        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_LIGHT, bean.getSystemName(), 4, "5");
+        Assert.assertTrue("getActionBean() returns correct bean", ix1.getBean().equals(bean));
         
-//DANIEL        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_SIGNALMAST_HELD, devName,4,"5");
-//DANIEL        bean = InstanceManager.getDefault(SignalMastManager.class).provideSignalMast(devName);
-//DANIEL        Assert.assertTrue("getActionBean() returns correct bean", ix1.getBean().equals(bean));
+        // Note that the signal head IH1 created here are also used to test the signal mast.
+        SignalHead signalHead = new VirtualSignalHead("IH1");
+        InstanceManager.getDefault(SignalHeadManager.class).register(signalHead);
+        bean = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead("IH1");
+        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_SIGNAL_APPEARANCE, "IH1", 4, "5");
+        Assert.assertTrue("getActionBean() returns correct bean", ix1.getBean().equals(bean));
         
-        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_SIGNAL_APPEARANCE, devName,4,"5");
-        bean = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(devName);
-//DANIEL        Assert.assertTrue("getActionBean() returns correct bean", ix1.getBean().equals(bean));
+        // The signal head IH1 created above is also used here in signal mast IF$shsm:AAR-1946:CPL(IH1)
+        bean = InstanceManager.getDefault(SignalMastManager.class).provideSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
+        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_SIGNALMAST_HELD, "IF$shsm:AAR-1946:CPL(IH1)", 4, "5");
+        Assert.assertTrue("getActionBean() returns correct bean", ix1.getBean().equals(bean));
         
-        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_MANUAL_RUN_WARRANT, devName,4,"5");
-        bean = InstanceManager.getDefault(WarrantManager.class).getWarrant(devName);
-//DANIEL        Assert.assertTrue("getActionBean() returns correct bean", ix1.getBean().equals(bean));
+        bean = InstanceManager.getDefault(WarrantManager.class).provideWarrant("IW3");
+        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_MANUAL_RUN_WARRANT, "IW3", 4, "5");
+        Assert.assertTrue("getActionBean() returns correct bean", ix1.getBean().equals(bean));
         
-        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_BLOCK_VALUE, devName,4,"5");
-        bean = InstanceManager.getDefault(OBlockManager.class).getOBlock(devName);
-//DANIEL        Assert.assertTrue("getActionBean() returns correct bean", ix1.getBean().equals(bean));
+        bean = InstanceManager.getDefault(OBlockManager.class).provideOBlock("OB3");
+        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_BLOCK_VALUE, "OB3", 4, "5");
+        Assert.assertTrue("getActionBean() returns correct bean", ix1.getBean().equals(bean));
         
-        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_NXPAIR_ENABLED, devName,4,"5");
-        bean = InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
-//DANIEL        Assert.assertTrue("getActionBean() returns correct bean", ix1.getBean().equals(bean));
+        // This test fails unless commented.
+        // How to create an EntryExitPair?
+        bean = InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(deviceName);
+        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_NXPAIR_ENABLED, deviceName, 4, "5");
+//        Assert.assertTrue("getActionBean() returns correct bean", ix1.getBean().equals(bean));
         
-        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_TRIGGER_ROUTE, devName,4,"5");
-        bean = InstanceManager.getDefault(RouteManager.class).getRoute(devName);
-//DANIEL        Assert.assertTrue("getActionBean() returns correct bean", ix1.getBean().equals(bean));
+        bean = InstanceManager.getDefault(RouteManager.class).newRoute(deviceName);
+        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_TRIGGER_ROUTE, deviceName, 4, "5");
+        Assert.assertTrue("getActionBean() returns correct bean", ix1.getBean().equals(bean));
     }
     
 
