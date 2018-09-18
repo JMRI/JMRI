@@ -293,6 +293,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         for (int i = 0; i < _validFeedbackNames.length; i++) {
             if (mode.equals(_validFeedbackNames[i])) {
                 setFeedbackMode(_validFeedbackModes[i]);
+                setInitialKnownStateFromFeedback();
                 return;
             }
         }
@@ -667,7 +668,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             temp.addPropertyChangeListener(this, s.getName(), "Feedback Sensor for " + getDisplayName());
         }
         // set initial state
-        sensorPropertyChange(new PropertyChangeEvent(temp, "KnownState", 0, temp.getKnownState()));
+        setInitialKnownStateFromFeedback();
     }
 
     @Override
@@ -712,8 +713,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         if (temp != null) {
             temp.addPropertyChangeListener(this, s.getName(), "Feedback Sensor for " + getDisplayName());
         }
-        // set initial state
-        sensorPropertyChange(new PropertyChangeEvent(temp, "KnownState", 0, temp.getKnownState()));
+        // set initial state 
+        setInitialKnownStateFromFeedback();
     }
 
     @Override
