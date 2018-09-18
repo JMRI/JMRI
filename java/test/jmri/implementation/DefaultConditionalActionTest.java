@@ -281,15 +281,10 @@ public class DefaultConditionalActionTest {
         ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_BLOCK_VALUE, "OB3", 4, "5");
         Assert.assertTrue("getActionBean() returns correct bean", ix1.getBean().equals(bean));
         
-        // This test fails unless commented.
-        // How to create an EntryExitPair?
-        bean = InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(deviceName);
-        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_NXPAIR_ENABLED, deviceName, 4, "5");
-//        Assert.assertTrue("getActionBean() returns correct bean", ix1.getBean().equals(bean));
-        
         bean = InstanceManager.getDefault(RouteManager.class).newRoute(deviceName);
         ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_TRIGGER_ROUTE, deviceName, 4, "5");
         Assert.assertTrue("getActionBean() returns correct bean", ix1.getBean().equals(bean));
+        
     }
     
 
