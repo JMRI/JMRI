@@ -250,6 +250,8 @@ public class DefaultConditionalTest {
                 conditionalVariablesList_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse, "");
         testCalculate(Conditional.TRUE, "R12 or R10",
                 conditionalVariablesList_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse, "");
+        testCalculate(Conditional.FALSE, "not (R12 or R10)",
+                conditionalVariablesList_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse, "");
         
         // Test parentheses
         testCalculate(Conditional.TRUE, "([{R1)}]", conditionalVariablesList_True, "");
