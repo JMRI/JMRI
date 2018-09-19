@@ -63,6 +63,7 @@ public class ConsistToolFrameTest {
 	//cs.pushDeleteButton();  // is this pressing the right delete button?
         //Assert.assertTrue("Consists List empty after delete",InstanceManager.getDefault(ConsistManager.class).getConsistList().isEmpty());
 	cs.requestClose();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
     }
 
     @Test
@@ -84,6 +85,7 @@ public class ConsistToolFrameTest {
 	cs.pushDeleteButton();  
         Assert.assertTrue("Consists List empty after delete",InstanceManager.getDefault(ConsistManager.class).getConsistList().isEmpty());
 	cs.requestClose();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
     }
 
     @Test
@@ -109,6 +111,7 @@ public class ConsistToolFrameTest {
 	Assert.assertNotEquals("12 position after reverse",jmri.Consist.POSITION_LEAD,c.getPosition(addr12));
 	Assert.assertEquals("13 position after reverse",jmri.Consist.POSITION_LEAD,c.getPosition(addr13));
 	cs.requestClose();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
     }
 
     @Test
@@ -126,7 +129,9 @@ public class ConsistToolFrameTest {
         JFrameOperator jfo = new JFrameOperator("12(S)");
 	// need to verify throttle is setup with two addresses.
 	jfo.requestClose();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
 	cs.requestClose();
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
     }
 
     @Before
