@@ -15,10 +15,6 @@ import org.junit.runners.Suite;
 	DefaultSignalMastLogicManagerXmlTest.class,
 	DefaultSignalMastManagerXmlTest.class,
 	DefaultUserMessagePreferencesXmlTest.class,
-	InternalLightManagerXmlTest.class,
-	InternalReporterManagerXmlTest.class,
-	InternalSensorManagerXmlTest.class,
-	InternalTurnoutManagerXmlTest.class,
 	ManagerDefaultSelectorXmlTest.class,
 	ProxyTurnoutManagerXmlTest.class
 })
