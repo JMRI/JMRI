@@ -14,6 +14,7 @@ import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Test simple functioning of ConsistToolFrame
