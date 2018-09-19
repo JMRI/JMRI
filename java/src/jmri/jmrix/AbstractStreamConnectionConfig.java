@@ -41,8 +41,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
     }
 
     /**
-     * Ctor for a functional object with no prexisting adapter. Expect that the
-     * subclass setInstance() will fill the adapter member.
+     * Ctor for a functional object with no prexisting adapter. 
      */
     public AbstractStreamConnectionConfig() {
         adapter = null;
@@ -132,13 +131,6 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
     }
 
     protected jmri.jmrix.AbstractStreamPortController adapter = null;
-
-    /**
-     * Load the adapter with an appropriate object
-     * <i>unless</I> its already been set.
-     */
-    @Override
-    abstract protected void setInstance();
 
     /**
      * {@inheritDoc}

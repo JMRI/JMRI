@@ -71,11 +71,6 @@ public class SRCPPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
     public void testStateOff(){
     }
 
-    @Test 
-    public void testDefaultCtor() {
-        Assert.assertNotNull(new SRCPPowerManager());
-    }
-
     // The minimal setup for log4J
     @Before
     @Override
