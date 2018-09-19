@@ -304,8 +304,6 @@ public class ConditionalVariableTest {
     
     @Test
     public void testEvaluate() throws JmriException {
-        NamedBean bean;
-        NamedBean otherBean;
         String deviceName = "3";
         String otherDeviceName = "4";
         
@@ -341,7 +339,6 @@ public class ConditionalVariableTest {
         
         
         Light light = InstanceManager.getDefault(LightManager.class).provideLight(deviceName);
-        otherBean = InstanceManager.getDefault(LightManager.class).provideLight(otherDeviceName);
         cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_LIGHT_ON, deviceName, false);
         light.setState(Light.ON);
         Assert.assertTrue("evaluate() returns true", cv.evaluate());
