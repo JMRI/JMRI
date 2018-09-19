@@ -305,7 +305,6 @@ public class ConditionalVariableTest {
     @Test
     public void testEvaluate() throws JmriException {
         String deviceName = "3";
-        String otherDeviceName = "4";
         
         Sensor sensor = InstanceManager.getDefault(SensorManager.class).provideSensor(deviceName);
         ConditionalVariable cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, ITEM_TYPE_SENSOR, deviceName, false);
