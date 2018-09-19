@@ -155,6 +155,90 @@ public class ConditionalVariableTest {
         Assert.assertTrue("state is FALSE", cv.getState() == Conditional.FALSE);
     }
     
+    @Test
+    public void testGetTestTypeString() {
+        String deviceName = "3";
+        InstanceManager.getDefault(MemoryManager.class).provideMemory(deviceName);
+        ConditionalVariable cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_MEMORY_EQUALS, deviceName, false);
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Memory Compare to Value (Case Sensitive)".equals(cv.getTestTypeString()));
+        
+        Assert.assertTrue("Sensor Active",
+                "Sensor Active".equals(ConditionalVariable.getTestTypeString(TYPE_SENSOR_ACTIVE)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Sensor Inactive".equals(ConditionalVariable.getTestTypeString(TYPE_SENSOR_INACTIVE)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Turnout Thrown".equals(ConditionalVariable.getTestTypeString(TYPE_TURNOUT_THROWN)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Turnout Closed".equals(ConditionalVariable.getTestTypeString(TYPE_TURNOUT_CLOSED)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Conditional True".equals(ConditionalVariable.getTestTypeString(TYPE_CONDITIONAL_TRUE)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Conditional False".equals(ConditionalVariable.getTestTypeString(TYPE_CONDITIONAL_FALSE)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Light On".equals(ConditionalVariable.getTestTypeString(TYPE_LIGHT_ON)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Light Off".equals(ConditionalVariable.getTestTypeString(TYPE_LIGHT_OFF)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Memory Compare to Value (Case Sensitive)".equals(ConditionalVariable.getTestTypeString(TYPE_MEMORY_EQUALS)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Memory Compare to Memory (Case Sensitive)".equals(ConditionalVariable.getTestTypeString(TYPE_MEMORY_COMPARE)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Fast Clock Range".equals(ConditionalVariable.getTestTypeString(TYPE_FAST_CLOCK_RANGE)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Red".equals(ConditionalVariable.getTestTypeString(TYPE_SIGNAL_HEAD_RED)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Yellow".equals(ConditionalVariable.getTestTypeString(TYPE_SIGNAL_HEAD_YELLOW)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Green".equals(ConditionalVariable.getTestTypeString(TYPE_SIGNAL_HEAD_GREEN)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Dark".equals(ConditionalVariable.getTestTypeString(TYPE_SIGNAL_HEAD_DARK)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Flashing Red".equals(ConditionalVariable.getTestTypeString(TYPE_SIGNAL_HEAD_FLASHRED)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Flashing Yellow".equals(ConditionalVariable.getTestTypeString(TYPE_SIGNAL_HEAD_FLASHYELLOW)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Flashing Green".equals(ConditionalVariable.getTestTypeString(TYPE_SIGNAL_HEAD_FLASHGREEN)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Lit".equals(ConditionalVariable.getTestTypeString(TYPE_SIGNAL_HEAD_LIT)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Held".equals(ConditionalVariable.getTestTypeString(TYPE_SIGNAL_HEAD_HELD)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Lunar".equals(ConditionalVariable.getTestTypeString(TYPE_SIGNAL_HEAD_LUNAR)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Flashing Lunar".equals(ConditionalVariable.getTestTypeString(TYPE_SIGNAL_HEAD_FLASHLUNAR)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Memory Compare to Value (Case Insensitive)".equals(ConditionalVariable.getTestTypeString(TYPE_MEMORY_EQUALS_INSENSITIVE)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Memory Compare to Memory (Case Insensitive)".equals(ConditionalVariable.getTestTypeString(TYPE_MEMORY_COMPARE_INSENSITIVE)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Free".equals(ConditionalVariable.getTestTypeString(TYPE_ROUTE_FREE)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Occupied".equals(ConditionalVariable.getTestTypeString(TYPE_ROUTE_OCCUPIED)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Allocated".equals(ConditionalVariable.getTestTypeString(TYPE_ROUTE_ALLOCATED)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Set".equals(ConditionalVariable.getTestTypeString(TYPE_ROUTE_SET)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Running".equals(ConditionalVariable.getTestTypeString(TYPE_TRAIN_RUNNING)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Signal Mast Aspect equals".equals(ConditionalVariable.getTestTypeString(TYPE_SIGNAL_MAST_ASPECT_EQUALS)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Signal Head Appearance equals".equals(ConditionalVariable.getTestTypeString(TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Lit".equals(ConditionalVariable.getTestTypeString(TYPE_SIGNAL_MAST_LIT)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Held".equals(ConditionalVariable.getTestTypeString(TYPE_SIGNAL_MAST_HELD)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Active".equals(ConditionalVariable.getTestTypeString(TYPE_ENTRYEXIT_ACTIVE)));
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Inactive".equals(ConditionalVariable.getTestTypeString(TYPE_ENTRYEXIT_INACTIVE)));
+        
+        // Test invalid value
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "(None)".equals(ConditionalVariable.getTestTypeString(-1)));
+    }
+    
     
     // from here down is testing infrastructure
 
