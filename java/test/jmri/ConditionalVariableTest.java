@@ -156,6 +156,51 @@ public class ConditionalVariableTest {
     }
     
     @Test
+    public void testGetOpernString() {
+        String deviceName = "3";
+        InstanceManager.getDefault(MemoryManager.class).provideMemory(deviceName);
+        ConditionalVariable cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_MEMORY_EQUALS, deviceName, false);
+        Assert.assertTrue("getTestTypeString() returns correct value",
+                "Memory Compare to Value (Case Sensitive)".equals(cv.getTestTypeString()));
+        
+        cv.setNegation(false);
+        cv.setOpern(OPERATOR_AND);
+        Assert.assertTrue("getOpernString() returns correct value",
+                "AND".equals(cv.getOpernString()));
+        Assert.assertFalse("isNegated() returns false", cv.isNegated());
+        
+        cv.setNegation(false);
+        cv.setOpern(OPERATOR_NOT);
+        Assert.assertTrue("getOpernString() returns correct value",
+                "".equals(cv.getOpernString()));
+        Assert.assertTrue("isNegated() returns true", cv.isNegated());
+        
+        cv.setNegation(false);
+        cv.setOpern(OPERATOR_AND_NOT);
+        Assert.assertTrue("getOpernString() returns correct value",
+                "AND".equals(cv.getOpernString()));
+        Assert.assertTrue("isNegated() returns true", cv.isNegated());
+        
+        cv.setNegation(false);
+        cv.setOpern(OPERATOR_NONE);
+        Assert.assertTrue("getOpernString() returns correct value",
+                "".equals(cv.getOpernString()));
+        Assert.assertFalse("isNegated() returns false", cv.isNegated());
+        
+        cv.setNegation(false);
+        cv.setOpern(OPERATOR_OR);
+        Assert.assertTrue("getOpernString() returns correct value",
+                "OR".equals(cv.getOpernString()));
+        Assert.assertFalse("isNegated() returns false", cv.isNegated());
+        
+        cv.setNegation(false);
+        cv.setOpern(OPERATOR_OR_NOT);
+        Assert.assertTrue("getOpernString() returns correct value",
+                "".equals(cv.getOpernString()));
+        Assert.assertFalse("isNegated() returns false", cv.isNegated());
+    }
+    
+    @Test
     public void testGetTestTypeString() {
         String deviceName = "3";
         InstanceManager.getDefault(MemoryManager.class).provideMemory(deviceName);
