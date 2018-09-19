@@ -239,6 +239,22 @@ public class ConditionalVariableTest {
                 "(None)".equals(ConditionalVariable.getTestTypeString(-1)));
     }
     
+    @Test
+    public void testGetCompareOperationString() {
+        Assert.assertTrue("getCompareOperationString() returns correct value",
+                "Less Than".equals(ConditionalVariable.getCompareOperationString(ConditionalVariable.LESS_THAN)));
+        Assert.assertTrue("getCompareOperationString() returns correct value",
+                "Less Than Or Equal".equals(ConditionalVariable.getCompareOperationString(ConditionalVariable.LESS_THAN_OR_EQUAL)));
+        Assert.assertTrue("getCompareOperationString() returns correct value",
+                "Equal".equals(ConditionalVariable.getCompareOperationString(0)));
+        Assert.assertTrue("getCompareOperationString() returns correct value",
+                "Equal".equals(ConditionalVariable.getCompareOperationString(ConditionalVariable.EQUAL)));
+        Assert.assertTrue("getCompareOperationString() returns correct value",
+                "Greater Than Or Equal".equals(ConditionalVariable.getCompareOperationString(ConditionalVariable.GREATER_THAN_OR_EQUAL)));
+        Assert.assertTrue("getCompareOperationString() returns correct value",
+                "Greater Than".equals(ConditionalVariable.getCompareOperationString(ConditionalVariable.GREATER_THAN)));
+    }
+    
     
     // from here down is testing infrastructure
 
