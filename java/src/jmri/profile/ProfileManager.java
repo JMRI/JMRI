@@ -96,22 +96,6 @@ public class ProfileManager extends Bean {
      * InstanceManager is configured.
      *
      * @return the default ProfileManager.
-     * @deprecated since 3.11.8. Use {@link #getDefault()} instead.
-     */
-    @Deprecated
-    @Nonnull
-    public static ProfileManager defaultManager() {
-        return ProfileManager.getDefault();
-    }
-
-    /**
-     * Get the default {@link ProfileManager}.
-     * <p>
-     * The default ProfileManager needs to be loaded before the InstanceManager
-     * since user interaction with the ProfileManager may change how the
-     * InstanceManager is configured.
-     *
-     * @return the default ProfileManager.
      * @since 3.11.8
      */
     @Nonnull
