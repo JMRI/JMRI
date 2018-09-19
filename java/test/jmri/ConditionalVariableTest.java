@@ -554,6 +554,117 @@ public class ConditionalVariableTest {
         Assert.assertTrue("evaluate() returns true", cv.compare("Ccc", "aaa", true));
     }
     
+    @Test
+    public void testGetItemTypeString() {
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Sensor".equals(ConditionalVariable.getItemTypeString(ITEM_TYPE_SENSOR)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Turnout".equals(ConditionalVariable.getItemTypeString(ITEM_TYPE_TURNOUT)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Light".equals(ConditionalVariable.getItemTypeString(ITEM_TYPE_LIGHT)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Signal Head".equals(ConditionalVariable.getItemTypeString(ITEM_TYPE_SIGNALHEAD)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Signal Mast".equals(ConditionalVariable.getItemTypeString(ITEM_TYPE_SIGNALMAST)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Memory".equals(ConditionalVariable.getItemTypeString(ITEM_TYPE_MEMORY)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Conditional".equals(ConditionalVariable.getItemTypeString(ITEM_TYPE_CONDITIONAL)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Warrant".equals(ConditionalVariable.getItemTypeString(ITEM_TYPE_WARRANT)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Fast Clock".equals(ConditionalVariable.getItemTypeString(ITEM_TYPE_CLOCK)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Occupancy Block".equals(ConditionalVariable.getItemTypeString(ITEM_TYPE_OBLOCK)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Entry Exit".equals(ConditionalVariable.getItemTypeString(ITEM_TYPE_ENTRYEXIT)));
+        
+        // Test wrong value
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "".equals(ConditionalVariable.getItemTypeString(-1)));
+    }
+    
+    @Test
+    public void testDescribeState() {
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "".equals(ConditionalVariable.describeState(TYPE_NONE)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Active".equals(ConditionalVariable.describeState(TYPE_SENSOR_ACTIVE)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Inactive".equals(ConditionalVariable.describeState(TYPE_SENSOR_INACTIVE)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Thrown".equals(ConditionalVariable.describeState(TYPE_TURNOUT_THROWN)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Closed".equals(ConditionalVariable.describeState(TYPE_TURNOUT_CLOSED)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "True".equals(ConditionalVariable.describeState(TYPE_CONDITIONAL_TRUE)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "False".equals(ConditionalVariable.describeState(TYPE_CONDITIONAL_FALSE)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "On".equals(ConditionalVariable.describeState(TYPE_LIGHT_ON)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Off".equals(ConditionalVariable.describeState(TYPE_LIGHT_OFF)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "(case sensitive) Value".equals(ConditionalVariable.describeState(TYPE_MEMORY_EQUALS)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "(case sensitive) Memory".equals(ConditionalVariable.describeState(TYPE_MEMORY_COMPARE)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "".equals(ConditionalVariable.describeState(TYPE_FAST_CLOCK_RANGE)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Red".equals(ConditionalVariable.describeState(TYPE_SIGNAL_HEAD_RED)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Yellow".equals(ConditionalVariable.describeState(TYPE_SIGNAL_HEAD_YELLOW)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Green".equals(ConditionalVariable.describeState(TYPE_SIGNAL_HEAD_GREEN)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Dark".equals(ConditionalVariable.describeState(TYPE_SIGNAL_HEAD_DARK)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Flashing Red".equals(ConditionalVariable.describeState(TYPE_SIGNAL_HEAD_FLASHRED)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Flashing Yellow".equals(ConditionalVariable.describeState(TYPE_SIGNAL_HEAD_FLASHYELLOW)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Flashing Green".equals(ConditionalVariable.describeState(TYPE_SIGNAL_HEAD_FLASHGREEN)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Held".equals(ConditionalVariable.describeState(TYPE_SIGNAL_HEAD_HELD)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Lunar".equals(ConditionalVariable.describeState(TYPE_SIGNAL_HEAD_LUNAR)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Flashing Lunar".equals(ConditionalVariable.describeState(TYPE_SIGNAL_HEAD_FLASHLUNAR)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Lit".equals(ConditionalVariable.describeState(TYPE_SIGNAL_HEAD_LIT)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "(case insensitive) Value".equals(ConditionalVariable.describeState(TYPE_MEMORY_EQUALS_INSENSITIVE)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "(case insensitive) Memory".equals(ConditionalVariable.describeState(TYPE_MEMORY_COMPARE_INSENSITIVE)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Route Free".equals(ConditionalVariable.describeState(TYPE_ROUTE_FREE)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Route Occupied".equals(ConditionalVariable.describeState(TYPE_ROUTE_OCCUPIED)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Route Allocated".equals(ConditionalVariable.describeState(TYPE_ROUTE_ALLOCATED)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Route Set".equals(ConditionalVariable.describeState(TYPE_ROUTE_SET)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Train Running".equals(ConditionalVariable.describeState(TYPE_TRAIN_RUNNING)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Signal Mast Aspect equals".equals(ConditionalVariable.describeState(TYPE_SIGNAL_MAST_ASPECT_EQUALS)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Signal Head Appearance equals".equals(ConditionalVariable.describeState(TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Lit".equals(ConditionalVariable.describeState(TYPE_SIGNAL_MAST_LIT)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Held".equals(ConditionalVariable.describeState(TYPE_SIGNAL_MAST_HELD)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Active".equals(ConditionalVariable.describeState(TYPE_ENTRYEXIT_ACTIVE)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "Inactive".equals(ConditionalVariable.describeState(TYPE_ENTRYEXIT_INACTIVE)));
+        
+        // Test invalid value
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "<none>".equals(ConditionalVariable.describeState(-1)));
+        jmri.util.JUnitAppender.assertWarnMessage("Unhandled condition type: -1");
+    }
+    
     
     // from here down is testing infrastructure
 
