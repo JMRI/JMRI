@@ -21,48 +21,79 @@ public class ConditionalVariableTest {
     @Test
     public void testCtor() {
         NamedBean bean;
+        NamedBean otherBean;
         String deviceName = "3";
+        String otherDeviceName = "4";
         
         bean = InstanceManager.getDefault(SensorManager.class).provideSensor(deviceName);
+        otherBean = InstanceManager.getDefault(SensorManager.class).provideSensor(otherDeviceName);
         ConditionalVariable cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, ITEM_TYPE_SENSOR, deviceName, false);
         Assert.assertTrue("getNamedBean() returns correct bean", bean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
+        cv.setName(otherDeviceName);
+        Assert.assertTrue("setName() sets correct bean", otherBean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
         
         bean = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(deviceName);
+        otherBean = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(otherDeviceName);
         cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_TURNOUT_THROWN, deviceName, false);
         Assert.assertTrue("getNamedBean() returns correct bean", bean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
+        cv.setName(otherDeviceName);
+        Assert.assertTrue("setName() sets correct bean", otherBean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
         
         bean = InstanceManager.getDefault(MemoryManager.class).provideMemory(deviceName);
+        otherBean = InstanceManager.getDefault(MemoryManager.class).provideMemory(otherDeviceName);
         cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_MEMORY_EQUALS, deviceName, false);
         Assert.assertTrue("getNamedBean() returns correct bean", bean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
+        cv.setName(otherDeviceName);
+        Assert.assertTrue("setName() sets correct bean", otherBean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
         
         bean = InstanceManager.getDefault(LightManager.class).provideLight(deviceName);
+        otherBean = InstanceManager.getDefault(LightManager.class).provideLight(otherDeviceName);
         cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_LIGHT_ON, deviceName, false);
         Assert.assertTrue("getNamedBean() returns correct bean", bean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
+        cv.setName(otherBean.getSystemName());
+        Assert.assertTrue("setName() sets correct bean", otherBean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
         
         // Note that the signal head IH1 created here are also used to test the signal mast.
-        SignalHead signalHead = new VirtualSignalHead("IH1");
-        InstanceManager.getDefault(SignalHeadManager.class).register(signalHead);
+        SignalHead signalHeadIH1 = new VirtualSignalHead("IH1");
+        SignalHead signalHeadIH2 = new VirtualSignalHead("IH2");
+        InstanceManager.getDefault(SignalHeadManager.class).register(signalHeadIH1);
+        InstanceManager.getDefault(SignalHeadManager.class).register(signalHeadIH2);
         bean = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead("IH1");
+        otherBean = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead("IH2");
         cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_SIGNAL_HEAD_RED, "IH1", false);
         Assert.assertTrue("getNamedBean() returns correct bean", bean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
+        cv.setName("IH2");
+        Assert.assertTrue("setName() sets correct bean", otherBean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
         
         // The signal head IH1 created above is also used here in signal mast IF$shsm:AAR-1946:CPL(IH1)
         bean = InstanceManager.getDefault(SignalMastManager.class).provideSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
+        otherBean = InstanceManager.getDefault(SignalMastManager.class).provideSignalMast("IF$shsm:AAR-1946:CPL(IH2)");
         cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_SIGNAL_MAST_ASPECT_EQUALS, "IF$shsm:AAR-1946:CPL(IH1)", false);
         Assert.assertTrue("getNamedBean() returns correct bean", bean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
+        cv.setName("IF$shsm:AAR-1946:CPL(IH1)");
+        Assert.assertTrue("setName() sets correct bean", bean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
         
         InstanceManager.getDefault(LogixManager.class).createNewLogix("IX:AUTO:0002");
         bean = InstanceManager.getDefault(ConditionalManager.class).createNewConditional("IX:AUTO:0001C1", "Conditional");
+        otherBean = InstanceManager.getDefault(ConditionalManager.class).createNewConditional("IX:AUTO:0001C2", "Conditional");
         cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_CONDITIONAL_TRUE, "IX:AUTO:0001C1", false);
         Assert.assertTrue("getNamedBean() returns correct bean", bean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
+        cv.setName("IX:AUTO:0001C2");
+        Assert.assertTrue("setName() sets correct bean", otherBean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
         
         bean = InstanceManager.getDefault(WarrantManager.class).provideWarrant("IW3");
+        otherBean = InstanceManager.getDefault(WarrantManager.class).provideWarrant("IW4");
         cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_ROUTE_OCCUPIED, "IW3", false);
         Assert.assertTrue("getNamedBean() returns correct bean", bean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
+        cv.setName("IW4");
+        Assert.assertTrue("setName() sets correct bean", otherBean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
         
         bean = InstanceManager.getDefault(OBlockManager.class).provideOBlock("OB3");
+        otherBean = InstanceManager.getDefault(OBlockManager.class).provideOBlock("OB4");
         cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_BLOCK_STATUS_EQUALS, "OB3", false);
         Assert.assertTrue("getNamedBean() returns correct bean", bean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
+        cv.setName("OB4");
+        Assert.assertTrue("setName() sets correct bean", otherBean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
     }
     
     @Test
@@ -87,7 +118,12 @@ public class ConditionalVariableTest {
         Assert.assertTrue("identity", c1.equals(c1));
         Assert.assertFalse("object equals, not content equals", c1.equals(c2));
     }
-
+    
+//    @Test
+//    public void testSetName() {
+        
+//    }
+    
     
     // from here down is testing infrastructure
 
