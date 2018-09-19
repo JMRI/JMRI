@@ -70,8 +70,8 @@ public class ConditionalVariableTest {
         otherBean = InstanceManager.getDefault(SignalMastManager.class).provideSignalMast("IF$shsm:AAR-1946:CPL(IH2)");
         cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_SIGNAL_MAST_ASPECT_EQUALS, "IF$shsm:AAR-1946:CPL(IH1)", false);
         Assert.assertTrue("getNamedBean() returns correct bean", bean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
-        cv.setName("IF$shsm:AAR-1946:CPL(IH1)");
-        Assert.assertTrue("setName() sets correct bean", bean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
+        cv.setName("IF$shsm:AAR-1946:CPL(IH2)");
+        Assert.assertTrue("setName() sets correct bean", otherBean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
         
         InstanceManager.getDefault(LogixManager.class).createNewLogix("IX:AUTO:0002");
         bean = InstanceManager.getDefault(ConditionalManager.class).createNewConditional("IX:AUTO:0001C1", "Conditional");
@@ -119,10 +119,25 @@ public class ConditionalVariableTest {
         Assert.assertFalse("object equals, not content equals", c1.equals(c2));
     }
     
-//    @Test
-//    public void testSetName() {
+    @Test
+    public void testDataString() {
+        NamedBean bean;
+        NamedBean otherBean;
+        String deviceName = "3";
+        String otherDeviceName = "4";
         
-//    }
+        bean = InstanceManager.getDefault(MemoryManager.class).provideMemory(deviceName);
+        bean.setUserName("BeanUserName");
+        otherBean = InstanceManager.getDefault(MemoryManager.class).provideMemory(otherDeviceName);
+        otherBean.setUserName("OtherBeanUserName");
+        ConditionalVariable cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_MEMORY_EQUALS, deviceName, false);
+        Assert.assertTrue("getDataString() returns empty string", "".equals(cv.getDataString()));
+        Assert.assertTrue("getNamedBeanData() returns null", cv.getNamedBeanData() == null);
+        cv.setDataString(otherBean.getUserName());
+        cv.setName(otherDeviceName);
+        Assert.assertTrue("getDataString() returns correct string", otherBean.getUserName().equals(cv.getDataString()));
+        Assert.assertTrue("getNamedBeanData() returns correct bean", otherBean.equals(cv.getNamedBeanData()));
+    }
     
     
     // from here down is testing infrastructure
