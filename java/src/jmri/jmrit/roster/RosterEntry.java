@@ -114,27 +114,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected Date dateModified = null;
     protected int _maxSpeedPCT = 100;
 
-    /**
-     * @return the default owner
-     * @deprecated since 4.1.4 use
-     * {@link jmri.jmrit.roster.RosterConfigManager#getDefaultOwner()} instead
-     */
-    @Deprecated
-    public static String getDefaultOwner() {
-        return InstanceManager.getDefault(RosterConfigManager.class).getDefaultOwner();
-    }
-
-    /**
-     * @param n the default owner
-     * @deprecated since 4.1.4 use
-     * {@link jmri.jmrit.roster.RosterConfigManager#setDefaultOwner(java.lang.String)}
-     * instead
-     */
-    @Deprecated
-    public static void setDefaultOwner(String n) {
-        InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(n);
-    }
-
     public final static int MAXFNNUM = 28;
 
     public int getMAXFNNUM() {
