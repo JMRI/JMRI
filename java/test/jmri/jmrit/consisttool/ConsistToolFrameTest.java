@@ -120,6 +120,7 @@ public class ConsistToolFrameTest {
     }
 
     @Test
+    @Ignore("This test is currently causing issues on the CI servers")
     public void testThrottle() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ConsistToolFrame frame = new ConsistToolFrame();
