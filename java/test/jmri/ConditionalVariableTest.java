@@ -139,6 +139,22 @@ public class ConditionalVariableTest {
         Assert.assertTrue("getNamedBeanData() returns correct bean", otherBean.equals(cv.getNamedBeanData()));
     }
     
+    @Test
+    public void testState() {
+        String deviceName = "3";
+        InstanceManager.getDefault(MemoryManager.class).provideMemory(deviceName);
+        ConditionalVariable cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_MEMORY_EQUALS, deviceName, false);
+        Assert.assertTrue("state is unknown", cv.getState() == NamedBean.UNKNOWN);
+        cv.setState(Conditional.TRUE);
+        Assert.assertTrue("state is TRUE", cv.getState() == Conditional.TRUE);
+        cv.setState(Conditional.FALSE);
+        Assert.assertTrue("state is FALSE", cv.getState() == Conditional.FALSE);
+        cv.setState(true);
+        Assert.assertTrue("state is TRUE", cv.getState() == Conditional.TRUE);
+        cv.setState(false);
+        Assert.assertTrue("state is FALSE", cv.getState() == Conditional.FALSE);
+    }
+    
     
     // from here down is testing infrastructure
 
