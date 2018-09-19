@@ -3,7 +3,9 @@ package jmri;
 import static jmri.Conditional.*;
 
 import jmri.implementation.VirtualSignalHead;
+import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
 import org.junit.After;
 import org.junit.Assert;
@@ -298,6 +300,187 @@ public class ConditionalVariableTest {
                 "Greater Than Or Equal".equals(ConditionalVariable.getCompareOperationString(ConditionalVariable.GREATER_THAN_OR_EQUAL)));
         Assert.assertTrue("getCompareOperationString() returns correct value",
                 "Greater Than".equals(ConditionalVariable.getCompareOperationString(ConditionalVariable.GREATER_THAN)));
+    }
+    
+    @Test
+    public void testEvaluate() throws JmriException {
+        NamedBean bean;
+        NamedBean otherBean;
+        String deviceName = "3";
+        String otherDeviceName = "4";
+        
+        Sensor sensor = InstanceManager.getDefault(SensorManager.class).provideSensor(deviceName);
+        ConditionalVariable cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, ITEM_TYPE_SENSOR, deviceName, false);
+        sensor.setState(Sensor.ACTIVE);
+        Assert.assertTrue("evaluate() returns true", cv.evaluate());
+        sensor.setState(Sensor.INACTIVE);
+        Assert.assertFalse("evaluate() returns false", cv.evaluate());
+        
+        
+        Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(deviceName);
+        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_TURNOUT_THROWN, deviceName, false);
+        turnout.setState(Turnout.THROWN);
+        Assert.assertTrue("evaluate() returns true", cv.evaluate());
+        turnout.setState(Turnout.CLOSED);
+        Assert.assertFalse("evaluate() returns false", cv.evaluate());
+        
+        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_TURNOUT_CLOSED, deviceName, false);
+        turnout.setState(Turnout.THROWN);
+        Assert.assertFalse("evaluate() returns false", cv.evaluate());
+        turnout.setState(Turnout.CLOSED);
+        Assert.assertTrue("evaluate() returns true", cv.evaluate());
+        
+        
+        // This is not yet implemented. The code below is only a non working sketch.
+//        Memory memory = InstanceManager.getDefault(MemoryManager.class).provideMemory(deviceName);
+//        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_MEMORY_EQUALS, deviceName, false);
+//        memory.setState(Sensor.ACTIVE);
+//        Assert.assertTrue("evaluate() returns true", cv.evaluate());
+//        memory.setState(Sensor.INACTIVE);
+//        Assert.assertFalse("evaluate() returns false", cv.evaluate());
+        
+        
+        Light light = InstanceManager.getDefault(LightManager.class).provideLight(deviceName);
+        otherBean = InstanceManager.getDefault(LightManager.class).provideLight(otherDeviceName);
+        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_LIGHT_ON, deviceName, false);
+        light.setState(Light.ON);
+        Assert.assertTrue("evaluate() returns true", cv.evaluate());
+        light.setState(Light.OFF);
+        Assert.assertFalse("evaluate() returns false", cv.evaluate());
+        
+        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_LIGHT_OFF, deviceName, false);
+        light.setState(Light.ON);
+        Assert.assertFalse("evaluate() returns false", cv.evaluate());
+        light.setState(Light.OFF);
+        Assert.assertTrue("evaluate() returns true", cv.evaluate());
+        
+        
+        // Note that the signal head IH1 created here are also used to test the signal mast.
+        SignalHead signalHeadIH1 = new VirtualSignalHead("IH1");
+        InstanceManager.getDefault(SignalHeadManager.class).register(signalHeadIH1);
+        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_SIGNAL_HEAD_RED, "IH1", false);
+        
+        cv.setType(TYPE_SIGNAL_HEAD_RED);
+        signalHeadIH1.setAppearance(SignalHead.RED);
+        Assert.assertTrue("evaluate() returns true", cv.evaluate());
+        signalHeadIH1.setAppearance(SignalHead.DARK);
+        Assert.assertFalse("evaluate() returns false", cv.evaluate());
+        
+        cv.setType(TYPE_SIGNAL_HEAD_YELLOW);
+        signalHeadIH1.setAppearance(SignalHead.YELLOW);
+        Assert.assertTrue("evaluate() returns true", cv.evaluate());
+        signalHeadIH1.setAppearance(SignalHead.DARK);
+        Assert.assertFalse("evaluate() returns false", cv.evaluate());
+        
+        cv.setType(TYPE_SIGNAL_HEAD_GREEN);
+        signalHeadIH1.setAppearance(SignalHead.GREEN);
+        Assert.assertTrue("evaluate() returns true", cv.evaluate());
+        signalHeadIH1.setAppearance(SignalHead.DARK);
+        Assert.assertFalse("evaluate() returns false", cv.evaluate());
+        
+        cv.setType(TYPE_SIGNAL_HEAD_DARK);
+        signalHeadIH1.setAppearance(SignalHead.DARK);
+        Assert.assertTrue("evaluate() returns true", cv.evaluate());
+        signalHeadIH1.setAppearance(SignalHead.GREEN);
+        Assert.assertFalse("evaluate() returns false", cv.evaluate());
+        
+        cv.setType(TYPE_SIGNAL_HEAD_FLASHRED);
+        signalHeadIH1.setAppearance(SignalHead.FLASHRED);
+        Assert.assertTrue("evaluate() returns true", cv.evaluate());
+        signalHeadIH1.setAppearance(SignalHead.DARK);
+        Assert.assertFalse("evaluate() returns false", cv.evaluate());
+        
+        cv.setType(TYPE_SIGNAL_HEAD_FLASHYELLOW);
+        signalHeadIH1.setAppearance(SignalHead.FLASHYELLOW);
+        Assert.assertTrue("evaluate() returns true", cv.evaluate());
+        signalHeadIH1.setAppearance(SignalHead.DARK);
+        Assert.assertFalse("evaluate() returns false", cv.evaluate());
+        
+        cv.setType(TYPE_SIGNAL_HEAD_FLASHGREEN);
+        signalHeadIH1.setAppearance(SignalHead.FLASHGREEN);
+        Assert.assertTrue("evaluate() returns true", cv.evaluate());
+        signalHeadIH1.setAppearance(SignalHead.DARK);
+        Assert.assertFalse("evaluate() returns false", cv.evaluate());
+        
+        cv.setType(TYPE_SIGNAL_HEAD_LUNAR);
+        signalHeadIH1.setAppearance(SignalHead.LUNAR);
+        Assert.assertTrue("evaluate() returns true", cv.evaluate());
+        signalHeadIH1.setAppearance(SignalHead.DARK);
+        Assert.assertFalse("evaluate() returns false", cv.evaluate());
+        
+        cv.setType(TYPE_SIGNAL_HEAD_FLASHLUNAR);
+        signalHeadIH1.setAppearance(SignalHead.FLASHLUNAR);
+        Assert.assertTrue("evaluate() returns true", cv.evaluate());
+        signalHeadIH1.setAppearance(SignalHead.DARK);
+        Assert.assertFalse("evaluate() returns false", cv.evaluate());
+        
+        cv.setType(TYPE_SIGNAL_HEAD_LIT);
+        signalHeadIH1.setLit(true);
+        Assert.assertTrue("evaluate() returns true", cv.evaluate());
+        signalHeadIH1.setLit(false);
+        Assert.assertFalse("evaluate() returns false", cv.evaluate());
+        
+        cv.setType(TYPE_SIGNAL_HEAD_HELD);
+        signalHeadIH1.setHeld(true);
+        Assert.assertTrue("evaluate() returns true", cv.evaluate());
+        signalHeadIH1.setHeld(false);
+        Assert.assertFalse("evaluate() returns false", cv.evaluate());
+        
+        
+        // The signal head IH1 created above is also used here in signal mast IF$shsm:AAR-1946:CPL(IH1)
+        SignalMast signalMast = InstanceManager.getDefault(SignalMastManager.class).provideSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
+        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_SIGNAL_MAST_ASPECT_EQUALS, "IF$shsm:AAR-1946:CPL(IH1)", false);
+        
+        cv.setDataString("Clear");
+        cv.setType(TYPE_SIGNAL_MAST_ASPECT_EQUALS);
+        // The null check is only to ensure that the evaluate() tests aspect == null
+        Assert.assertTrue("aspect is null", signalMast.getAspect() == null);
+        Assert.assertFalse("evaluate() returns false", cv.evaluate());
+        signalMast.setAspect("Clear");
+        Assert.assertTrue("evaluate() returns true", cv.evaluate());
+        signalMast.setAspect("Approach");
+        Assert.assertFalse("evaluate() returns false", cv.evaluate());
+        
+        cv.setType(TYPE_SIGNAL_MAST_LIT);
+        signalMast.setLit(true);
+        Assert.assertTrue("evaluate() returns true", cv.evaluate());
+        signalMast.setLit(false);
+        Assert.assertFalse("evaluate() returns false", cv.evaluate());
+        
+        cv.setType(TYPE_SIGNAL_MAST_HELD);
+        signalMast.setHeld(true);
+        Assert.assertTrue("evaluate() returns true", cv.evaluate());
+        signalMast.setHeld(false);
+        Assert.assertFalse("evaluate() returns false", cv.evaluate());
+        
+        
+        InstanceManager.getDefault(LogixManager.class).createNewLogix("IX:AUTO:0002");
+        Conditional conditional = InstanceManager.getDefault(ConditionalManager.class).createNewConditional("IX:AUTO:0001C1", "Conditional");
+        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_CONDITIONAL_TRUE, "IX:AUTO:0001C1", false);
+        conditional.setState(Conditional.TRUE);
+        Assert.assertTrue("evaluate() returns true", cv.evaluate());
+        conditional.setState(Conditional.FALSE);
+        Assert.assertFalse("evaluate() returns false", cv.evaluate());
+        
+        
+        // This is not yet implemented. The code below is only a non working sketch.
+//        Warrant warrant = InstanceManager.getDefault(WarrantManager.class).provideWarrant("IW3");
+//        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_ROUTE_OCCUPIED, "IW3", false);
+//        cv.setType(TYPE_ROUTE_FREE);
+//        warrant.setState(Sensor.ACTIVE);
+//        Assert.assertTrue("evaluate() returns true", cv.evaluate());
+//        warrant.setState(Sensor.INACTIVE);
+//        Assert.assertFalse("evaluate() returns false", cv.evaluate());
+        
+        
+        // This is not yet implemented. The code below is only a non working sketch.
+//        OBlock oblock = InstanceManager.getDefault(OBlockManager.class).provideOBlock("OB3");
+//        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_BLOCK_STATUS_EQUALS, "OB3", false);
+//        cv.setDataString("TRUE");
+//        oblock.setState(Sensor.ACTIVE);
+//        Assert.assertTrue("evaluate() returns true", cv.evaluate());
+//        oblock.setState(Sensor.INACTIVE);
+//        Assert.assertFalse("evaluate() returns false", cv.evaluate());
     }
     
     
