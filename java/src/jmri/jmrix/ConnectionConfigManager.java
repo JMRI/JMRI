@@ -27,7 +27,7 @@ import jmri.profile.ProfileUtils;
 import jmri.spi.PreferencesManager;
 import jmri.util.jdom.JDOMUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
-import jmri.util.prefs.InitializationException;
+import jmri.util.prefs.HasConnectionButUnableToConnectException;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.openide.util.lookup.ServiceProvider;
@@ -53,7 +53,7 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
     private final static Logger log = LoggerFactory.getLogger(ConnectionConfigManager.class);
 
     @Override
-    public void initialize(Profile profile) throws InitializationException {
+    public void initialize(Profile profile) throws HasConnectionButUnableToConnectException {
         if (!isInitialized(profile)) {
             log.debug("Initializing...");
             Element sharedConnections = null;
@@ -107,7 +107,7 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
                             log.error("Unable to create {} for {}, load returned false", className, shared);
                             String english = Bundle.getMessage(Locale.ENGLISH, "ErrorSingleConnection", userName, systemName); // NOI18N
                             String localized = Bundle.getMessage("ErrorSingleConnection", userName, systemName); // NOI18N
-                            this.addInitializationException(profile, new InitializationException(english, localized));
+                            this.addInitializationException(profile, new HasConnectionButUnableToConnectException(english, localized));
                         }
                         handler.exceptions.forEach((exception) -> {
                             this.addInitializationException(profile, exception);
@@ -116,27 +116,27 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
                         log.error("Unable to create {} for {}", className, shared, ex);
                         String english = Bundle.getMessage(Locale.ENGLISH, "ErrorSingleConnection", userName, systemName); // NOI18N
                         String localized = Bundle.getMessage("ErrorSingleConnection", userName, systemName); // NOI18N
-                        this.addInitializationException(profile, new InitializationException(english, localized, ex));
+                        this.addInitializationException(profile, new HasConnectionButUnableToConnectException(english, localized, ex));
                     } catch (RuntimeException | jmri.configurexml.JmriConfigureXmlException ex) {
                         log.error("Unable to load {} into {}", shared, className, ex);
                         String english = Bundle.getMessage(Locale.ENGLISH, "ErrorSingleConnection", userName, systemName); // NOI18N
                         String localized = Bundle.getMessage("ErrorSingleConnection", userName, systemName); // NOI18N
-                        this.addInitializationException(profile, new InitializationException(english, localized, ex));
+                        this.addInitializationException(profile, new HasConnectionButUnableToConnectException(english, localized, ex));
                     }
                 }
             }
             setInitialized(profile, true);
             List<Exception> exceptions = this.getInitializationExceptions(profile);
             if (exceptions.size() == 1) {
-                if (exceptions.get(0) instanceof InitializationException) {
-                    throw (InitializationException) exceptions.get(0);
+                if (exceptions.get(0) instanceof HasConnectionButUnableToConnectException) {
+                    throw (HasConnectionButUnableToConnectException) exceptions.get(0);
                 } else {
-                    throw new InitializationException(exceptions.get(0));
+                    throw new HasConnectionButUnableToConnectException(exceptions.get(0));
                 }
             } else if (exceptions.size() > 1) {
                 String english = Bundle.getMessage(Locale.ENGLISH, "ErrorMultipleConnections"); // NOI18N
                 String localized = Bundle.getMessage("ErrorMultipleConnections"); // NOI18N
-                throw new InitializationException(english, localized);
+                throw new HasConnectionButUnableToConnectException(english, localized);
             }
             log.debug("Initialized...");
         }
@@ -412,7 +412,7 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
 
     private static class ConnectionConfigManagerErrorHandler extends ErrorHandler {
 
-        ArrayList<InitializationException> exceptions = new ArrayList<>();
+        ArrayList<HasConnectionButUnableToConnectException> exceptions = new ArrayList<>();
 
         public ConnectionConfigManagerErrorHandler() {
             super();
@@ -427,9 +427,9 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
         // how to handle that, but since it doesn't all we can do is log it
         public void handle(ErrorMemo memo) {
             if (memo.exception != null) {
-                this.exceptions.add(new InitializationException(memo.description, Bundle.getMessage("ErrorSubException", memo.description), memo.exception));
+                this.exceptions.add(new HasConnectionButUnableToConnectException(memo.description, Bundle.getMessage("ErrorSubException", memo.description), memo.exception));
             } else {
-                this.exceptions.add(new InitializationException(memo.description, Bundle.getMessage("ErrorSubException", memo.description) + memo.description));
+                this.exceptions.add(new HasConnectionButUnableToConnectException(memo.description, Bundle.getMessage("ErrorSubException", memo.description) + memo.description));
             }
         }
     }
