@@ -11,7 +11,9 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
@@ -20,6 +22,9 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  * @author	Paul Bender Copyright (C) 2015,2016
  */
 public class ConsistToolFrameTest {
+
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
     public void testCtor() {
@@ -135,10 +140,10 @@ public class ConsistToolFrameTest {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws java.io.IOException {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-	JUnitUtil.initDebugThrottleManager();
+        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
+
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
     }
 
