@@ -112,6 +112,23 @@ abstract public class AbstractConsistManagerTestBase {
        Assert.assertFalse("CS Consist Needs Seperate Address",cm.csConsistNeedsSeperateAddress());
     }
 
+    @Test
+    public void testShouldRequestUpdateFromLayout(){
+       Assume.assumeTrue(cm instanceof AbstractConsistManager);
+       // default is true, override if necessary
+       Assert.assertTrue("Sould Request Update From Layout",((AbstractConsistManager)cm).shouldRequestUpdateFromLayout());
+    }
+
+    @Test
+    public void testRequestUpdateFromLayout(){
+       Assume.assumeTrue(cm instanceof AbstractConsistManager);
+       Assume.assumeTrue(((AbstractConsistManager)cm).shouldRequestUpdateFromLayout());
+       // this test just calls the method, so checks for exceptions.
+       // derived classes should override and check the expected message
+       // sequence
+       ((AbstractConsistManager)cm).requestUpdateFromLayout();
+    }
+
     // private final static Logger log = LoggerFactory.getLogger(AbstractConsistManagerTestBase.class);
 
 }
