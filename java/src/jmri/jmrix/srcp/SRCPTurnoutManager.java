@@ -46,6 +46,6 @@ public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPTurnout.class);
+    // private final static Logger log = LoggerFactory.getLogger(SRCPTurnout.class);
 
 }

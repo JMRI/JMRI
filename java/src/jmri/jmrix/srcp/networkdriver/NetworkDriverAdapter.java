@@ -42,6 +42,6 @@ public class NetworkDriverAdapter extends SRCPPortController implements jmri.jmr
     // private control members
     private boolean opened = false;
 
-    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);
+    // private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);
 
 }
