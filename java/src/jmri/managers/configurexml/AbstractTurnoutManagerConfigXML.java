@@ -240,17 +240,8 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             // Load common parts
             loadCommon(t, elem);
 
-            // now add feedback if needed
+            // now configure feedback if needed
             Attribute a;
-            a = elem.getAttribute("feedback");
-            if (a != null) {
-                try {
-                    t.setFeedbackMode(a.getValue());
-                } catch (IllegalArgumentException e) {
-                    log.error("Can not set feedback mode: '" + a.getValue() + "' for turnout: '" + sysName + "' user name: '" + (userName == null ? "" : userName) + "'");
-                    result = false;
-                }
-            }
             a = elem.getAttribute("sensor1");
             if (a != null) {
                 try {
@@ -264,6 +255,15 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                 try {
                     t.provideSecondFeedbackSensor(a.getValue());
                 } catch (jmri.JmriException e) {
+                    result = false;
+                }
+            }
+            a = elem.getAttribute("feedback");
+            if (a != null) {
+                try {
+                    t.setFeedbackMode(a.getValue());
+                } catch (IllegalArgumentException e) {
+                    log.error("Can not set feedback mode: '" + a.getValue() + "' for turnout: '" + sysName + "' user name: '" + (userName == null ? "" : userName) + "'");
                     result = false;
                 }
             }

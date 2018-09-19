@@ -317,7 +317,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
             if (mLastSentMessage.isForChildBoard()) {
                 if (log.isDebugEnabled()) {
                     log.debug("This is a message for a child board " + ((Dcc4PcReply) msg).toHexString());
-                    log.debug("Originate " + (mLastMessage).toHexString());
+                    log.debug("Originate " + mLastMessage.toString());
                 }
                 if ((mLastSentMessage.getNumDataElements() - 1) == msg.getElement(1)) {
                     log.debug("message lengths match");

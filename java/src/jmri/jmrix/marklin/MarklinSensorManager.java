@@ -212,7 +212,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
                     return;
                 }
                 log.error("state not found " + ms.getDisplayName() + " " + r.getElement(9) + " " + r.getElement(10));
-                log.error(r.toHexString());
+                log.error(r.toString());
             } else {
                 int s88Module = r.getElement(9);
                 if (_tmarklin.containsKey(s88Module)) {

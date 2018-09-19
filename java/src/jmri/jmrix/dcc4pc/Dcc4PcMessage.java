@@ -83,19 +83,13 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
         return childBoard;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setElement(int n, int v) {
         _dataChars[n] = v;
     }
 
-    /*
-     * @deprecated since 4.13.4 use toString() instead.
-     */
-    @Deprecated
-    public String toHexString() {
-	    return toString();
-    }
-
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         StringBuilder buf = new StringBuilder();

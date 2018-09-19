@@ -216,9 +216,9 @@ public abstract class AbstractTurnoutTestBase {
     public void testTwoSensorFeedback() throws jmri.JmriException {
         Sensor s1 = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS1");
         Sensor s2 = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS2");
-        t.setFeedbackMode(Turnout.TWOSENSOR); 
         t.provideFirstFeedbackSensor("IS1");
         t.provideSecondFeedbackSensor("IS2");
+        t.setFeedbackMode(Turnout.TWOSENSOR); 
         Assert.assertEquals("known state for TWOSENSOR feedback (UNKNOWN,UNKNOWN)",Turnout.UNKNOWN,t.getKnownState());
 
         s1.setKnownState(Sensor.ACTIVE);
