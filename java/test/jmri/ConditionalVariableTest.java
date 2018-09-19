@@ -1,6 +1,7 @@
 package jmri;
 
 import static jmri.Conditional.*;
+import static jmri.ConditionalVariable.*;
 
 import jmri.implementation.VirtualSignalHead;
 import jmri.jmrit.logix.OBlock;
@@ -477,6 +478,80 @@ public class ConditionalVariableTest {
 //        Assert.assertTrue("evaluate() returns true", cv.evaluate());
 //        oblock.setState(Sensor.INACTIVE);
 //        Assert.assertFalse("evaluate() returns false", cv.evaluate());
+    }
+    
+    @Test
+    public void testCompare() {
+        String deviceName = "3";
+        InstanceManager.getDefault(SensorManager.class).provideSensor(deviceName);
+        ConditionalVariable cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, ITEM_TYPE_SENSOR, deviceName, false);
+        
+        Assert.assertTrue("evaluate() returns true", cv.compare(null, null, false));
+        Assert.assertFalse("evaluate() returns false", cv.compare("10", null, false));
+        Assert.assertFalse("evaluate() returns false", cv.compare(null, "20", false));
+        
+        cv.setNum1(LESS_THAN);
+        Assert.assertTrue("evaluate() returns true", cv.compare("10", "20", false));
+        Assert.assertFalse("evaluate() returns false", cv.compare("15", "15", false));
+        Assert.assertFalse("evaluate() returns false", cv.compare("20", "10", false));
+        
+        cv.setNum1(LESS_THAN_OR_EQUAL);
+        Assert.assertTrue("evaluate() returns true", cv.compare("10", "20", false));
+        Assert.assertTrue("evaluate() returns true", cv.compare("15", "15", false));
+        Assert.assertFalse("evaluate() returns false", cv.compare("20", "10", false));
+        
+        cv.setNum1(EQUAL);
+        Assert.assertFalse("evaluate() returns false", cv.compare("10", "20", false));
+        Assert.assertTrue("evaluate() returns true", cv.compare("15", "15", false));
+        Assert.assertFalse("evaluate() returns false", cv.compare("20", "10", false));
+        
+        cv.setNum1(GREATER_THAN_OR_EQUAL);
+        Assert.assertFalse("evaluate() returns false", cv.compare("10", "20", false));
+        Assert.assertTrue("evaluate() returns true", cv.compare("15", "15", false));
+        Assert.assertTrue("evaluate() returns true", cv.compare("20", "10", false));
+        
+        cv.setNum1(GREATER_THAN);
+        Assert.assertFalse("evaluate() returns false", cv.compare("10", "20", false));
+        Assert.assertFalse("evaluate() returns false", cv.compare("15", "15", false));
+        Assert.assertTrue("evaluate() returns true", cv.compare("20", "10", false));
+        
+        
+        cv.setNum1(LESS_THAN);
+        Assert.assertTrue("evaluate() returns true", cv.compare("aaa", "ccc", false));
+        Assert.assertFalse("evaluate() returns false", cv.compare("bbb", "bbb", false));
+        Assert.assertFalse("evaluate() returns false", cv.compare("ccc", "aaa", false));
+        
+        cv.setNum1(LESS_THAN_OR_EQUAL);
+        Assert.assertTrue("evaluate() returns true", cv.compare("aaa", "ccc", false));
+        Assert.assertTrue("evaluate() returns true", cv.compare("bbb", "bbb", false));
+        Assert.assertFalse("evaluate() returns false", cv.compare("ccc", "aaa", false));
+        
+        cv.setNum1(EQUAL);
+        Assert.assertFalse("evaluate() returns false", cv.compare("aaa", "ccc", false));
+        Assert.assertTrue("evaluate() returns true", cv.compare("bbb", "bbb", false));
+        Assert.assertFalse("evaluate() returns false", cv.compare("ccc", "aaa", false));
+        
+        cv.setNum1(GREATER_THAN_OR_EQUAL);
+        Assert.assertFalse("evaluate() returns false", cv.compare("aaa", "ccc", false));
+        Assert.assertTrue("evaluate() returns true", cv.compare("bbb", "bbb", false));
+        Assert.assertTrue("evaluate() returns true", cv.compare("ccc", "aaa", false));
+        
+        cv.setNum1(GREATER_THAN);
+        Assert.assertFalse("evaluate() returns false", cv.compare("aaa", "ccc", false));
+        Assert.assertFalse("evaluate() returns false", cv.compare("bbb", "bbb", false));
+        Assert.assertTrue("evaluate() returns true", cv.compare("ccc", "aaa", false));
+        
+        // Test case
+        cv.setNum1(GREATER_THAN);
+        Assert.assertTrue("evaluate() returns true", cv.compare("aaa", "Ccc", false));
+        Assert.assertTrue("evaluate() returns true", cv.compare("bbb", "Bbb", false));
+        Assert.assertFalse("evaluate() returns false", cv.compare("Ccc", "aaa", false));
+        
+        // Test case
+        cv.setNum1(GREATER_THAN);
+        Assert.assertFalse("evaluate() returns false", cv.compare("aaa", "Ccc", true));
+        Assert.assertFalse("evaluate() returns false", cv.compare("bbb", "Bbb", true));
+        Assert.assertTrue("evaluate() returns true", cv.compare("Ccc", "aaa", true));
     }
     
     
