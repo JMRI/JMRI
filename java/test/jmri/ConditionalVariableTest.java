@@ -23,14 +23,73 @@ public class ConditionalVariableTest {
 
     @Test
     public void testCtor() {
+        
         NamedBean bean;
         NamedBean otherBean;
         String deviceName = "3";
         String otherDeviceName = "4";
         
+        // Start with testing the exception handling in the constructor
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initInternalTurnoutManagerThrowException();
+        jmri.util.JUnitUtil.initLightManagerThrowException();
+        jmri.util.JUnitUtil.initMemoryManagerThrowException();
+        jmri.util.JUnitUtil.initInternalSensorManagerThrowException();
+        jmri.util.JUnitUtil.initSignalHeadManagerThrowException();
+        jmri.util.JUnitUtil.initSignalMastManagerThrowException();
+        jmri.util.JUnitUtil.initWarrantManagerThrowException();
+        jmri.util.JUnitUtil.initOBlockManagerThrowException();
+        
+        ConditionalVariable cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, ITEM_TYPE_SENSOR, deviceName, false);
+        Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
+        jmri.util.JUnitAppender.assertErrorMessage("invalid sensor name= \"3\" in state variable");
+        
+        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_TURNOUT_THROWN, deviceName, false);
+        Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
+        jmri.util.JUnitAppender.assertErrorMessage("invalid turnout name= \"3\" in state variable");
+        
+        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_MEMORY_EQUALS, deviceName, false);
+        Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
+        jmri.util.JUnitAppender.assertErrorMessage("invalid memory name= \"3\" in state variable");
+        
+        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_LIGHT_ON, deviceName, false);
+        Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
+        jmri.util.JUnitAppender.assertErrorMessage("invalid light name= \"3\" in state variable");
+        
+        // Note that the signal head IH1 created here are also used to test the signal mast.
+        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_SIGNAL_HEAD_RED, "IH1", false);
+        Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
+        jmri.util.JUnitAppender.assertWarnMessage("could not provide \"IH1\" in constructor");
+        
+        // The signal head IH1 created above is also used here in signal mast IF$shsm:AAR-1946:CPL(IH1)
+        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_SIGNAL_MAST_ASPECT_EQUALS, "IF$shsm:AAR-1946:CPL(IH1)", false);
+        Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
+        jmri.util.JUnitAppender.assertErrorMessage("invalid signalmast name= \"IF$shsm:AAR-1946:CPL(IH1)\" in state variable");
+        
+        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_CONDITIONAL_TRUE, "IX:AUTO:0001C1", false);
+        Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
+        jmri.util.JUnitAppender.assertErrorMessage("invalid conditional; name= \"IX:AUTO:0001C1\" in state variable");
+        
+        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_ROUTE_OCCUPIED, "IW3", false);
+        Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
+        jmri.util.JUnitAppender.assertWarnMessage("could not provide \"IW3\" in constructor");
+        
+        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_BLOCK_STATUS_EQUALS, "OB3", false);
+        Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
+        jmri.util.JUnitAppender.assertWarnMessage("could not provide \"OB3\" in constructor");
+        
+        
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        jmri.util.JUnitUtil.initInternalLightManager();
+        jmri.util.JUnitUtil.initInternalSensorManager();
+        jmri.util.JUnitUtil.initDebugThrottleManager();
+        jmri.util.JUnitUtil.initLogixManager();
+        jmri.util.JUnitUtil.initIdTagManager();
+        
         bean = InstanceManager.getDefault(SensorManager.class).provideSensor(deviceName);
         otherBean = InstanceManager.getDefault(SensorManager.class).provideSensor(otherDeviceName);
-        ConditionalVariable cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, ITEM_TYPE_SENSOR, deviceName, false);
+        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, ITEM_TYPE_SENSOR, deviceName, false);
         Assert.assertTrue("getNamedBean() returns correct bean", bean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
         cv.setName(otherDeviceName);
         Assert.assertTrue("setName() sets correct bean", otherBean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));

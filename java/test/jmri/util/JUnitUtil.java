@@ -33,6 +33,14 @@ import jmri.profile.NullProfile;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.progdebugger.DebugProgrammerManager;
+import jmri.util.managers.InternalLightManagerThrowException;
+import jmri.util.managers.MemoryManagerThrowException;
+import jmri.util.managers.OBlockManagerThrowException;
+import jmri.util.managers.SensorManagerThrowException;
+import jmri.util.managers.SignalHeadManagerThrowException;
+import jmri.util.managers.SignalMastManagerThrowException;
+import jmri.util.managers.TurnoutManagerThrowException;
+import jmri.util.managers.WarrantManagerThrowException;
 import jmri.util.prefs.JmriConfigurationProvider;
 import jmri.util.prefs.JmriPreferencesProvider;
 import jmri.util.prefs.JmriUserInterfaceConfigurationProvider;
@@ -694,6 +702,38 @@ public class JUnitUtil {
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.CONDITIONALS);
         }
+    }
+
+    public static void initInternalTurnoutManagerThrowException() {
+        InstanceManager.setDefault(TurnoutManager.class, new TurnoutManagerThrowException());
+    }
+
+    public static void initInternalSensorManagerThrowException() {
+        InstanceManager.setDefault(SensorManager.class, new SensorManagerThrowException());
+    }
+
+    public static void initLightManagerThrowException() {
+        InstanceManager.setDefault(LightManager.class, new InternalLightManagerThrowException());
+    }
+
+    public static void initMemoryManagerThrowException() {
+        InstanceManager.setDefault(MemoryManager.class, new MemoryManagerThrowException());
+    }
+
+    public static void initSignalHeadManagerThrowException() {
+        InstanceManager.setDefault(SignalHeadManager.class, new SignalHeadManagerThrowException());
+    }
+
+    public static void initSignalMastManagerThrowException() {
+        InstanceManager.setDefault(SignalMastManager.class, new SignalMastManagerThrowException());
+    }
+
+    public static void initWarrantManagerThrowException() {
+        InstanceManager.setDefault(WarrantManager.class, new WarrantManagerThrowException());
+    }
+
+    public static void initOBlockManagerThrowException() {
+        InstanceManager.setDefault(OBlockManager.class, new OBlockManagerThrowException());
     }
 
     /**
