@@ -74,11 +74,6 @@ public class Llnmon {
     private boolean showOpCode = false;
 
     /**
-     * Most recent track status value.
-     */
-    private int trackStatus = -1;
-
-    /**
      * Global flag to indicate the message was not fully parsed, so the hex
      * should be included.
      */
@@ -2758,10 +2753,6 @@ public class Llnmon {
         }
 
         int track_stat = l.getElement(7);
-        /* check track status value and display */
-        if (trackStatus != track_stat) {
-            trackStatus = track_stat;
-        }
 
         switch (slot) {
             case LnConstants.FC_SLOT:
@@ -3914,7 +3905,7 @@ public class Llnmon {
          * normal slot read/write message - see info above *
          * ************************************************
          */
-        trackStatus = l.getElement(7); // track status
+        int trackStatus = l.getElement(7); // track status
         int stat = l.getElement(3); // slot status
         int adr = l.getElement(4); // loco address
         int spd = l.getElement(5); // command speed
