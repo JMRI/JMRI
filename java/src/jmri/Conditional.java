@@ -306,7 +306,7 @@ public interface Conditional extends NamedBean {
         ITEM_TYPE_OBLOCK, // TYPE_BLOCK_STATUS_EQUALS = 34
         ITEM_TYPE_ENTRYEXIT, // TYPE_ENTRYEXIT_ACTIVE = 35
         ITEM_TYPE_ENTRYEXIT // TYPE_ENTRYEXIT_INACTIVE = 36
-};
+    };
 
     // Map SignalHead comboBox items to SignalHead Conditional variable types
     @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
