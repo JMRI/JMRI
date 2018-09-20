@@ -23,6 +23,7 @@ public class InternalReporterManagerTest extends jmri.managers.AbstractReporterM
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         // create and register the manager object
         l = new InternalReporterManager();
     }

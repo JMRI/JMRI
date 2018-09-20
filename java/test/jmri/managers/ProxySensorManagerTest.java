@@ -4,6 +4,7 @@ import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import jmri.*;
+import jmri.jmrix.internal.InternalSensorManager;
 import jmri.util.JUnitUtil;
 
 import junit.framework.Test;
@@ -67,7 +68,6 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
         Assert.assertTrue("user name correct ", tk == l.getByUserName("mine"));
         Assert.assertTrue("system name correct ", tk == l.getBySystemName("KS1"));
     }
-
 
     public void testDefaultSystemName() {
         // create
@@ -556,7 +556,6 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
         lastEvent1 = -1;
         lastType = -1;
         lastCall = null;
-
     }
 
     @Override

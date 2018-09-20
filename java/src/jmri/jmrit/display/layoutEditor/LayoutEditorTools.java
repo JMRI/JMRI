@@ -1219,8 +1219,8 @@ public class LayoutEditorTools {
      * @param signalHeadName name of a signal head.
      * @param where coordinates for placing signal head on panel.
      */
-    public void setSignalHeadOnPanel(double directionDEG, 
-            @Nonnull String signalHeadName, 
+    public void setSignalHeadOnPanel(double directionDEG,
+            @Nonnull String signalHeadName,
             @Nonnull Point2D where) {
         setSignalHeadOnPanel(directionDEG, signalHeadName, (int) where.getX(), (int) where.getY());
     }
@@ -2318,7 +2318,7 @@ public class LayoutEditorTools {
             }
             boundary = null;
             for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
-                if (p.getType() == PositionablePoint.ANCHOR) {
+                if (p.getType() == PositionablePoint.ANCHOR || p.getType() == PositionablePoint.EDGE_CONNECTOR) {
                     LayoutBlock bA = null;
                     LayoutBlock bB = null;
                     if (p.getConnect1() != null) {
