@@ -277,6 +277,8 @@ public class ConditionalVariable {
             //Once all refactored, we should probably register an error if the bean is returned null.
             if (bean != null) {
                 _namedBean = nbhm.getNamedBeanHandle(_name, bean);
+            } else {
+                log.warn("Did not have or create \"{}\" in setName. namedBean is unchanged", _name);
             }
 
         } catch (IllegalArgumentException ex) {
