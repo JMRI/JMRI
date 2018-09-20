@@ -1,14 +1,18 @@
 package jmri.jmrit.consisttool;
 
+import java.awt.Component;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import jmri.DccLocoAddress;
 import jmri.jmrit.DccLocoAddressSelector;
 import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
+import org.netbeans.jemmy.ComponentChooser;
 
 /*
  *  Helper class for operating the Consist Tool Frame.
@@ -57,7 +61,24 @@ public class ConsistToolScaffold extends JFrameOperator {
 
    // push the buttons at the bottom.
    public void pushDeleteButton(){
-        new JButtonOperator(this,Bundle.getMessage("ButtonDelete")).push();
+        JButtonOperator jbo = new JButtonOperator(this, new ComponentChooser() {
+            public boolean checkComponent(Component comp) {
+                String tooltip = ((JButton)comp).getToolTipText();
+                if(tooltip!=null) {
+                    return tooltip.equals(Bundle.getMessage("DeleteButtonToolTip"));
+                } else {
+                    return false;
+                }
+            }
+            public String getDescription() {
+                return "tooltip for delete button";
+            }
+        }
+        );
+	jbo.push();
+	// and dismiss the dialog that appears by pressing OK.
+	JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("QuestionTitle"));
+        new JButtonOperator(jdo,Bundle.getMessage("ButtonYes")).push();
    }
 
    public void pushThrottleButton(){

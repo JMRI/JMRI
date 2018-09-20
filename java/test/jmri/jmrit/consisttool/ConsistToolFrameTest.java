@@ -5,6 +5,7 @@ import jmri.Consist;
 import jmri.ConsistManager;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+import jmri.LocoAddress;
 import jmri.jmrit.throttle.ThrottleOperator;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -65,31 +66,12 @@ public class ConsistToolFrameTest {
 	cs.setLocoAddressValue("12");
 	cs.pushAddButton();
 	// check to see if a conist was added
-        Assert.assertFalse("Consists List has one entry",InstanceManager.getDefault(ConsistManager.class).getConsistList().isEmpty());
-	//cs.pushDeleteButton();  // is this pressing the right delete button?
-        //Assert.assertTrue("Consists List empty after delete",InstanceManager.getDefault(ConsistManager.class).getConsistList().isEmpty());
-	cs.requestClose();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
-    }
-
-    @Test
-    @Ignore("need to check if the delete button found is the one at the bottom or the one in the data table")
-    public void testAddAndDelete() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ConsistToolFrame frame = new ConsistToolFrame();
-	frame.setVisible(true);
-        Assert.assertTrue("Consists List empty",InstanceManager.getDefault(ConsistManager.class).getConsistList().isEmpty());
-	// get a ConsistToolScaffold
-	ConsistToolScaffold cs = new ConsistToolScaffold();
-        // set up a consist.
-	cs.setConsistAddressValue("1");
-	cs.setLocoAddressValue("12");
-	cs.pushAddButton();
-	// check to see if a conist was added
-        Assert.assertFalse("Consists List has one entry",InstanceManager.getDefault(ConsistManager.class).getConsistList().isEmpty());
-	// delee the consist
+	DccLocoAddress conAddr = new DccLocoAddress(1,false);
+        Assert.assertFalse("Consists has at least one entry",InstanceManager.getDefault(ConsistManager.class).getConsistList().isEmpty());
+        Assert.assertTrue("Consists exists after add",InstanceManager.getDefault(ConsistManager.class).getConsistList().contains(conAddr));
+	// delete the consist
 	cs.pushDeleteButton();  
-        Assert.assertTrue("Consists List empty after delete",InstanceManager.getDefault(ConsistManager.class).getConsistList().isEmpty());
+        Assert.assertFalse("Consists removed after delete",InstanceManager.getDefault(ConsistManager.class).getConsistList().contains(conAddr));
 	cs.requestClose();
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
     }
@@ -116,6 +98,9 @@ public class ConsistToolFrameTest {
         cs.pushReverseButton();
 	Assert.assertNotEquals("12 position after reverse",jmri.Consist.POSITION_LEAD,c.getPosition(addr12));
 	Assert.assertEquals("13 position after reverse",jmri.Consist.POSITION_LEAD,c.getPosition(addr13));
+	// delete the consist
+	cs.pushDeleteButton();  
+        Assert.assertFalse("Consists removed after delete",InstanceManager.getDefault(ConsistManager.class).getConsistList().contains(conAddr));
 	cs.requestClose();
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
     }
@@ -143,7 +128,6 @@ public class ConsistToolFrameTest {
 			to.getConsistAddressValue());
         to.pushReleaseButton();
 	to.requestClose();
-
 
 	new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
 	cs.requestClose();
