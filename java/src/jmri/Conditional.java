@@ -53,13 +53,52 @@ public interface Conditional extends NamedBean {
     public static final int ALL_OR = 0x02;
     public static final int MIXED = 0x03;
 
-    // state variable definitions
+    public enum Operator {
+        NONE,
+        AND,
+        OR;
+        
+        // This method is used by DefaultConditionalManagerXml.store() for backward compatibility
+        public static int getIntValue(Operator oper, boolean not) {
+            if (not) {
+                switch (oper) {
+                    case NONE: return OPERATOR_NOT;     // backward compatibility
+                    case AND: return OPERATOR_AND_NOT;  // backward compatibility
+                    case OR: return 6;
+                    default: throw new IllegalArgumentException(String.format("operator %s is unknown", oper.name()));
+                }
+            } else {
+                switch (oper) {
+                    case NONE: return OPERATOR_NONE;
+                    case AND: return OPERATOR_AND;
+                    case OR: return OPERATOR_OR;
+                    default: throw new IllegalArgumentException(String.format("operator %s is unknown", oper.name()));
+                }
+            }
+        }
+        
+        // This method is used by DefaultConditionalManagerXml.loadConditionals() for backward compatibility
+        public static Operator getOperatorFromIntValue(int opern) {
+            switch (opern) {
+                case OPERATOR_AND: return Operator.AND;
+                case OPERATOR_NOT: return Operator.NONE;
+                case OPERATOR_AND_NOT: return Operator.AND;
+                case OPERATOR_NONE: return Operator.NONE;
+                case OPERATOR_OR: return Operator.OR;
+                default: throw new IllegalArgumentException(String.format("operator %d is unknown", opern));
+            }
+        }
+    }
+    
+    // state variable definitions. Keep these since they are needed
+    // for backward compatibility in DefaultConditionalManagerXml.
+    // But they are not used elsewhere.
     public static final int OPERATOR_AND = 1;
     public static final int OPERATOR_NOT = 2;
     public static final int OPERATOR_AND_NOT = 3;
     public static final int OPERATOR_NONE = 4;
     public static final int OPERATOR_OR = 5;
-    public static final int OPERATOR_OR_NOT = 6;
+    
     // state variable types
     public static final int TYPE_NONE = 0;
     public static final int TYPE_SENSOR_ACTIVE = 1;

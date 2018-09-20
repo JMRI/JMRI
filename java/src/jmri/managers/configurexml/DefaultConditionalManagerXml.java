@@ -98,7 +98,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 for (int k = 0; k < variableList.size(); k++) {
                     ConditionalVariable variable = variableList.get(k);
                     Element vElem = new Element("conditionalStateVariable");  // NOI18N
-                    int oper = variable.getOpern();
+                    int oper = Conditional.Operator.getIntValue(variable.getOpern(), variable.isNegated());
                     if (oper == Conditional.OPERATOR_AND && variable.isNegated()) {
                         oper = Conditional.OPERATOR_AND_NOT;    // backward compatibility
                     } else if (oper == Conditional.OPERATOR_NONE && variable.isNegated()) {
@@ -298,7 +298,8 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                         variable.setNegation(true);
                         oper = Conditional.OPERATOR_NONE;
                     }
-                    variable.setOpern(oper);
+                    Conditional.Operator operator = Conditional.Operator.getOperatorFromIntValue(oper);
+                    variable.setOpern(operator);
                 }
                 if (conditionalVarList.get(n).getAttribute("negated") != null) {  // NOI18N
                     if ("yes".equals(conditionalVarList.get(n)
