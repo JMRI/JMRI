@@ -556,8 +556,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 return i;
             case LnConstants.OPC_EXP_RD_SL_DATA:
             case LnConstants.OPC_EXP_WR_SL_DATA:
-                i = ( (m.getElement(2) & 0x03 ) *128) + m.getElement(3);
-                return i;
+                //only certain lengths get passed to slot
+                if (m.getElement(1) == 21) {
+                    i = ( (m.getElement(2) & 0x03 ) *128) + m.getElement(3);
+                    return i;
+                }
+                //$FALL-THROUGH$
             default:
                 // nothing here for us
                 return i;
