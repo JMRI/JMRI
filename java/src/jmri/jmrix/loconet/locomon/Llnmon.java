@@ -2752,8 +2752,6 @@ public class Llnmon {
             mode = Bundle.getMessage("LN_MSG_SLOT_HELPER_ACCESS_TYPE_RESPONSE");
         }
 
-        int track_stat = l.getElement(7);
-
         switch (slot) {
             case LnConstants.FC_SLOT:
                 String result;
