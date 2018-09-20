@@ -5,6 +5,7 @@ import jmri.Consist;
 import jmri.ConsistManager;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+import jmri.jmrit.throttle.ThrottleOperator;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -120,7 +121,6 @@ public class ConsistToolFrameTest {
     }
 
     @Test
-    @Ignore("This test is currently causing issues on the CI servers")
     public void testThrottle() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ConsistToolFrame frame = new ConsistToolFrame();
@@ -131,11 +131,15 @@ public class ConsistToolFrameTest {
 	cs.setConsistAddressValue("1");
 	cs.setLocoAddressValue("12");
 	cs.pushAddButton();
-        cs.pushThrottleButton();
-        JFrameOperator jfo = new JFrameOperator("12(S)");
+	cs.pushThrottleButton();
 	// need to verify throttle is setup with two addresses.
-	jfo.requestClose();
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+
+	ThrottleOperator to = new ThrottleOperator("12(S)");
+        to.pushReleaseButton();
+	to.requestClose();
+
+
+	new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
 	cs.requestClose();
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
     }
@@ -144,7 +148,7 @@ public class ConsistToolFrameTest {
     public void setUp() throws java.io.IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager( new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
-
+        JUnitUtil.initDebugThrottleManager();
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
     }
 
