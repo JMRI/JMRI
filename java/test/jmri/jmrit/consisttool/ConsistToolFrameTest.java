@@ -1,6 +1,7 @@
 package jmri.jmrit.consisttool;
 
 import java.awt.GraphicsEnvironment;
+import java.lang.reflect.Field;
 import jmri.Consist;
 import jmri.ConsistManager;
 import jmri.DccLocoAddress;
@@ -137,13 +138,22 @@ public class ConsistToolFrameTest {
     @Before
     public void setUp() throws java.io.IOException {
         JUnitUtil.setUp();
-        InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
         JUnitUtil.resetProfileManager( new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
+        InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
         JUnitUtil.initDebugThrottleManager();
     }
 
     @After
     public void tearDown() {
+       // use reflection to reset the static file location.
+       try {
+            Class<?> c = ConsistFile.class;
+            java.lang.reflect.Field f = c.getDeclaredField("fileLocation");
+            f.setAccessible(true);
+            f.set(new String(), null);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
+            Assert.fail("Failed to reset ConsistFile static fileLocation " + x);
+        }
         JUnitUtil.tearDown();
     }
 
