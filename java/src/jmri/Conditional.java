@@ -64,7 +64,7 @@ public interface Conditional extends NamedBean {
                 switch (oper) {
                     case NONE: return OPERATOR_NOT;     // backward compatibility
                     case AND: return OPERATOR_AND_NOT;  // backward compatibility
-                    case OR: return 6;
+                    case OR: return OPERATOR_OR;
                     default: throw new IllegalArgumentException(String.format("operator %s is unknown", oper.name()));
                 }
             } else {
