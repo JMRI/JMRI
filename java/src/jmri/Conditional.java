@@ -96,9 +96,21 @@ public interface Conditional extends NamedBean {
     // But they are not used elsewhere.
     public static final int OPERATOR_AND = 1;
     public static final int OPERATOR_NOT = 2;
-    public static final int OPERATOR_AND_NOT = 3;
     public static final int OPERATOR_NONE = 4;
+    /**
+     * @deprecated since 4.13.4; It is not stored in the XML file since 4.13.4.
+     */
+    @Deprecated
+    public static final int OPERATOR_AND_NOT = 3;
+    /**
+     * @deprecated since 4.13.4; It is not stored in the XML file since 4.13.4.
+     */
+    @Deprecated
     public static final int OPERATOR_OR = 5;
+    /**
+     * @deprecated since 4.13.4; It is not stored in the XML file since 4.13.4.
+     */
+    @Deprecated
     public static final int OPERATOR_OR_NOT = 6;
     
     // state variable types

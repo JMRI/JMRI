@@ -99,11 +99,6 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     ConditionalVariable variable = variableList.get(k);
                     Element vElem = new Element("conditionalStateVariable");  // NOI18N
                     int oper = variable.getOpern().getIntValue(variable.isNegated());
-                    if (oper == Conditional.OPERATOR_AND && variable.isNegated()) {
-                        oper = Conditional.OPERATOR_AND_NOT;    // backward compatibility
-                    } else if (oper == Conditional.OPERATOR_NONE && variable.isNegated()) {
-                        oper = Conditional.OPERATOR_NOT;        // backward compatibility
-                    }
                     vElem.setAttribute("operator", Integer.toString(oper));  // NOI18N
                     if (variable.isNegated()) {
                         vElem.setAttribute("negated", "yes");  // NOI18N
