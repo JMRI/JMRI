@@ -85,6 +85,7 @@ public interface Conditional extends NamedBean {
                 case OPERATOR_AND_NOT: return Operator.AND;
                 case OPERATOR_NONE: return Operator.NONE;
                 case OPERATOR_OR: return Operator.OR;
+                case OPERATOR_OR_NOT: return Operator.OR;
                 default: throw new IllegalArgumentException(String.format("operator %d is unknown", opern));
             }
         }
@@ -98,6 +99,7 @@ public interface Conditional extends NamedBean {
     public static final int OPERATOR_AND_NOT = 3;
     public static final int OPERATOR_NONE = 4;
     public static final int OPERATOR_OR = 5;
+    public static final int OPERATOR_OR_NOT = 6;
     
     // state variable types
     public static final int TYPE_NONE = 0;
