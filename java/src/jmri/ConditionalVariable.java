@@ -267,7 +267,7 @@ public class ConditionalVariable {
             if (bean != null) {
                 _namedBean = nbhm.getNamedBeanHandle(_name, bean);
             } else {
-                log.warn("Did not have or create \"{}\" in setName. namedBean is unchanged", _name);
+                log.debug("Did not have or create \"{}\" in setName. namedBean is unchanged", _name);
             }
 
         } catch (IllegalArgumentException ex) {
