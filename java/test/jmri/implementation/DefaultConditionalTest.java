@@ -346,14 +346,10 @@ public class DefaultConditionalTest {
         ConditionalVariable[] conditionalVariables_TrueWithTrigger
                 = { new ConditionalVariableStatic(Conditional.TRUE, "MyName", true) };
         List<ConditionalVariable> conditionalVariablesList_TrueWithTrigger = Arrays.asList(conditionalVariables_TrueWithTrigger);
-        // ConditionalVariable.setName() gives a warning, but this test doesn't care.
-        jmri.util.JUnitAppender.assertWarnMessage("Did not have or create \"MyName\" in setName. namedBean is unchanged");
         
         ConditionalVariable[] conditionalVariables_TrueWithNotTrigger
                 = { new ConditionalVariableStatic(Conditional.TRUE, "MyName", false) };
         List<ConditionalVariable> conditionalVariablesList_TrueWithNotTrigger = Arrays.asList(conditionalVariables_TrueWithNotTrigger);
-        // ConditionalVariable.setName() gives a warning, but this test doesn't care.
-        jmri.util.JUnitAppender.assertWarnMessage("Did not have or create \"MyName\" in setName. namedBean is unchanged");
         
         TestConditionalAction testConditionalAction = new TestConditionalAction();
         List<ConditionalAction> conditionalActionList = new ArrayList<>();
@@ -401,8 +397,6 @@ public class DefaultConditionalTest {
         testConditionalAction._deviceName = null;
         ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue", "NewValue"));
         Assert.assertTrue("action has not been executed", "InitialValue".equals(myMemory.getValue()));
-        // ConditionalVariable.setName() gives a warning, but this test doesn't care.
-        jmri.util.JUnitAppender.assertWarnMessage("Did not have or create \"MyName\" in setName. namedBean is unchanged");
         jmri.util.JUnitAppender.assertErrorMessageStartsWith("IXIC 1 - invalid memory name in action - ");
         
         // Test trigger event with system name.
@@ -418,8 +412,6 @@ public class DefaultConditionalTest {
         testConditionalAction._actionString = "NewValue";
         ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
         Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
-        // ConditionalVariable.setName() gives a warning, but this test doesn't care.
-        jmri.util.JUnitAppender.assertWarnMessage("Did not have or create \"MyName\" in setName. namedBean is unchanged");
         
         // Test trigger event with user name.
         // This action wants to trigger the event.
@@ -434,9 +426,6 @@ public class DefaultConditionalTest {
         testConditionalAction._actionString = "NewValue";
         ix1.calculate(true, new PropertyChangeEvent(namedBeanTestUserName, "MyName", "OldValue1", "NewValue2"));
         Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
-        // ConditionalVariable.setName() is called twice and gives a warning each time, but this test doesn't care.
-        jmri.util.JUnitAppender.assertWarnMessage("Did not have or create \"MyName\" in setName. namedBean is unchanged");
-        jmri.util.JUnitAppender.assertWarnMessage("Did not have or create \"MyName\" in setName. namedBean is unchanged");
         
         // Test trigger event with bad system and user name.
         // This action wants to trigger the event.
@@ -451,8 +440,6 @@ public class DefaultConditionalTest {
         testConditionalAction._actionString = "NewValue";
         ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyOtherName", "OldValue1", "NewValue2"));
         Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
-        // ConditionalVariable.setName() gives a warning, but this test doesn't care.
-        jmri.util.JUnitAppender.assertWarnMessage("Did not have or create \"MyName\" in setName. namedBean is unchanged");
         
         // Test not trigger event.
         // This action does not want to trigger the event.
@@ -467,8 +454,6 @@ public class DefaultConditionalTest {
         testConditionalAction._actionString = "NewValue";
         ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
         Assert.assertTrue("action has not been executed", "InitialValue".equals(myMemory.getValue()));
-        // ConditionalVariable.setName() gives a warning, but this test doesn't care.
-        jmri.util.JUnitAppender.assertWarnMessage("Did not have or create \"MyName\" in setName. namedBean is unchanged");
         
         // Test trigger event on change.
         // _triggerActionsOnChange == true
@@ -486,8 +471,6 @@ public class DefaultConditionalTest {
         // Calculate changes state from NamedBean.UNKNOWN to Conditional.TRUE
         ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
         Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
-        // ConditionalVariable.setName() gives a warning, but this test doesn't care.
-        jmri.util.JUnitAppender.assertWarnMessage("Did not have or create \"MyName\" in setName. namedBean is unchanged");
         
         // Test trigger event on change.
         // _triggerActionsOnChange == true
@@ -507,8 +490,6 @@ public class DefaultConditionalTest {
         // Calculate doesn't change state since the state already is Conditional.TRUE
         ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
         Assert.assertTrue("action has not been executed", "InitialValue".equals(myMemory.getValue()));
-        // ConditionalVariable.setName() gives a warning, but this test doesn't care.
-        jmri.util.JUnitAppender.assertWarnMessage("Did not have or create \"MyName\" in setName. namedBean is unchanged");
         
         // Test trigger event on change.
         // _triggerActionsOnChange == false
@@ -526,8 +507,6 @@ public class DefaultConditionalTest {
         // Calculate changes state from NamedBean.UNKNOWN to Conditional.TRUE
         ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
         Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
-        // ConditionalVariable.setName() gives a warning, but this test doesn't care.
-        jmri.util.JUnitAppender.assertWarnMessage("Did not have or create \"MyName\" in setName. namedBean is unchanged");
         
         // Test trigger event on change.
         // _triggerActionsOnChange == false
@@ -547,8 +526,6 @@ public class DefaultConditionalTest {
         // Calculate doesn't change state since the state already is Conditional.TRUE
         ix1.calculate(true, new PropertyChangeEvent(namedBeanTestSystemName, "MyName", "OldValue1", "NewValue2"));
         Assert.assertTrue("action has been executed", "NewValue".equals(myMemory.getValue()));
-        // ConditionalVariable.setName() gives a warning, but this test doesn't care.
-        jmri.util.JUnitAppender.assertWarnMessage("Did not have or create \"MyName\" in setName. namedBean is unchanged");
     }
     
     

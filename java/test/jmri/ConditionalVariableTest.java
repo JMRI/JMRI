@@ -99,7 +99,6 @@ public class ConditionalVariableTest {
         Assert.assertTrue("setName() sets correct bean", otherBean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
         // Test a bad device name
         cv.setName("A bad device name");
-        jmri.util.JUnitAppender.assertWarnMessage("Did not have or create \"A bad device name\" in setName. namedBean is unchanged");
         // setName should not change the bean if called with wrong name. For example, it should not set the bean to null.
         Assert.assertTrue("getName() still has correct bean", otherBean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
     }
