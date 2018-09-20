@@ -59,7 +59,7 @@ public class ConsistToolFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ConsistToolFrame frame = new ConsistToolFrame();
 	frame.setVisible(true);
-        Assert.assertTrue("Consists List empty",InstanceManager.getDefault(ConsistManager.class).getConsistList().isEmpty());
+        //Assert.assertTrue("Consists List empty",InstanceManager.getDefault(ConsistManager.class).getConsistList().isEmpty());
 	// get a ConsistToolScaffold
 	ConsistToolScaffold cs = new ConsistToolScaffold();
         // set up a consist.
