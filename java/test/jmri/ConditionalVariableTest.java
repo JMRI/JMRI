@@ -205,7 +205,7 @@ public class ConditionalVariableTest {
         cv.setOpern(Operator.OR);
         Assert.assertTrue("getOpernString() returns correct value",
                 "OR".equals(cv.getOpernString()));
-        Assert.assertFalse("isNegated() returns false", cv.isNegated());
+        Assert.assertTrue("isNegated() returns true", cv.isNegated());
     }
     
     @Test
