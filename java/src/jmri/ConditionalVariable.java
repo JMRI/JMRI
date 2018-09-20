@@ -76,7 +76,7 @@ public class ConditionalVariable {
      * @param opern the boolean operator for this ConditionalVariable
      * @param type the type this ConditionalVariable operates on (Turnout, Sensor, ...)
      * @param name the device name
-     * @param trigger
+     * @param trigger true if actions should be performed if triggered
      */
     public ConditionalVariable(boolean not, int opern, int type, String name, boolean trigger) {
         _not = not;
