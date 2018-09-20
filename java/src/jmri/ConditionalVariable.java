@@ -72,10 +72,16 @@ public class ConditionalVariable {
 
     /**
      * Create a ConditionalVariable with a set of given properties.
+     * @param not true if the ConditionalVariable should be negated
+     * @param opern the boolean operator for this ConditionalVariable
+     * @param type the type this ConditionalVariable operates on (Turnout, Sensor, ...)
+     * @param name the device name
+     * @param trigger
      */
     public ConditionalVariable(boolean not, int opern, int type, String name, boolean trigger) {
         _not = not;
-        _opern = opern;
+        // setOpern does some checks of opern
+        setOpern(opern);
         _type = type;
         _name = name;
         _triggersActions = trigger;
@@ -188,7 +194,7 @@ public class ConditionalVariable {
         return _opern;
     }
 
-    public void setOpern(int opern) {
+    public final void setOpern(int opern) {
         switch (opern) {
             case Conditional.OPERATOR_AND_NOT:
                 _opern = Conditional.OPERATOR_AND;
