@@ -238,7 +238,6 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     // generateReply is the heart of the simulation.  It translates an
     // incoming DCCppMessage into an outgoing DCCppReply.
-    @SuppressWarnings("fallthrough")
     private DCCppReply generateReply(DCCppMessage msg) {
         String s, r;
         Pattern p;

@@ -920,7 +920,6 @@ abstract public class AbstractMRTrafficController {
      * Dummy routine, to be filled by protocols that have to skip some
      * start-of-message characters.
      */
-    @SuppressWarnings("unused")
     protected void waitForStartOfReply(DataInputStream istream) throws IOException {
     }
 

@@ -87,7 +87,7 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
                     }
 
                     setName("SerialDCCppPacketizer.bkg_refresh (" + resendFunctions.size() + " msg)");
-                } catch (@SuppressWarnings("unused") final InterruptedException e) {
+                } catch (final InterruptedException e) {
                     // should exit if interrupted
                 }
             }

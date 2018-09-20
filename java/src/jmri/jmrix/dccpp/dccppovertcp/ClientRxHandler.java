@@ -49,7 +49,6 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
         start();
     }
 
-    @SuppressWarnings("null")
     @Override
     public void run() {
     

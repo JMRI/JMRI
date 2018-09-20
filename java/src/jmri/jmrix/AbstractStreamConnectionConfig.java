@@ -49,7 +49,6 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
 
     protected boolean init = false;
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void checkInitDone() {
         log.debug("init called for {}", name());

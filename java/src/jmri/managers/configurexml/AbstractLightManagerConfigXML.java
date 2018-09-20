@@ -124,7 +124,6 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
      *
      * @param lights Element containing the Light elements to load.
      */
-    @SuppressWarnings("unchecked")
     public boolean loadLights(Element lights) {
         boolean result = true;
         List<Element> lightList = lights.getChildren("light");
