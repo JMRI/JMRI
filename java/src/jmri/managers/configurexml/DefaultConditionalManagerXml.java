@@ -286,13 +286,6 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 } else {
                     int oper = Integer.parseInt(conditionalVarList.get(n)
                             .getAttribute("operator").getValue());  // NOI18N
-                    if (oper == Conditional.OPERATOR_AND_NOT) {
-                        variable.setNegation(true);
-                        oper = Conditional.OPERATOR_AND;
-                    } else if (oper == Conditional.OPERATOR_NOT) {
-                        variable.setNegation(true);
-                        oper = Conditional.OPERATOR_NONE;
-                    }
                     Conditional.Operator operator = Conditional.Operator.getOperatorFromIntValue(oper);
                     variable.setOpern(operator);
                 }
