@@ -59,21 +59,12 @@ public interface Conditional extends NamedBean {
         OR;
         
         // This method is used by DefaultConditionalManagerXml.store() for backward compatibility
-        public int getIntValue(boolean not) {
-            if (not) {
-                switch (this) {
-                    case NONE: return OPERATOR_NOT;     // backward compatibility
-                    case AND: return OPERATOR_AND_NOT;  // backward compatibility
-                    case OR: return OPERATOR_OR;
-                    default: throw new IllegalArgumentException(String.format("operator %s is unknown", this.name()));
-                }
-            } else {
-                switch (this) {
-                    case NONE: return OPERATOR_NONE;
-                    case AND: return OPERATOR_AND;
-                    case OR: return OPERATOR_OR;
-                    default: throw new IllegalArgumentException(String.format("operator %s is unknown", this.name()));
-                }
+        public int getIntValue() {
+            switch (this) {
+                case NONE: return OPERATOR_NONE;
+                case AND: return OPERATOR_AND;
+                case OR: return OPERATOR_OR;
+                default: throw new IllegalArgumentException(String.format("operator %s is unknown", this.name()));
             }
         }
         

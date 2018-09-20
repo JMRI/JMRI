@@ -98,7 +98,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 for (int k = 0; k < variableList.size(); k++) {
                     ConditionalVariable variable = variableList.get(k);
                     Element vElem = new Element("conditionalStateVariable");  // NOI18N
-                    int oper = variable.getOpern().getIntValue(variable.isNegated());
+                    int oper = variable.getOpern().getIntValue();
                     vElem.setAttribute("operator", Integer.toString(oper));  // NOI18N
                     if (variable.isNegated()) {
                         vElem.setAttribute("negated", "yes");  // NOI18N
