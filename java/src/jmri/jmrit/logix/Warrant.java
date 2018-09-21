@@ -678,6 +678,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     }
 
     synchronized public void stopWarrant(boolean abort) {
+        stopWarrant(abort, true);
+    }
+    synchronized public void stopWarrant(boolean abort, boolean turnOffFunctions) {
         _delayStart = false;
         if (_protectSignal != null) {
             _protectSignal.removePropertyChangeListener(this);
@@ -694,8 +697,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             _student = null;
         }
         if (_engineer != null) {
-            _speedUtil.stopRun(!abort); // don't write speed profile measurements
-            _engineer.stopRun(abort); // release throttle
+            _speedUtil.stopRun(!abort, turnOffFunctions); // don't write speed profile measurements
+            _engineer.stopRun(abort, turnOffFunctions); // release throttle
             _engineer = null;
         }
         deAllocate();
