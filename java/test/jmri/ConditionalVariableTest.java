@@ -40,41 +40,41 @@ public class ConditionalVariableTest {
         jmri.util.JUnitUtil.initWarrantManagerThrowException();
         jmri.util.JUnitUtil.initOBlockManagerThrowException();
         
-        ConditionalVariable cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, ITEM_TYPE_SENSOR, deviceName, false);
+        ConditionalVariable cv = new ConditionalVariable(false, Conditional.Operator.AND, ITEM_TYPE_SENSOR, deviceName, false);
         Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
         jmri.util.JUnitAppender.assertErrorMessage("invalid sensor name= \"3\" in state variable");
         
-        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_TURNOUT_THROWN, deviceName, false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, TYPE_TURNOUT_THROWN, deviceName, false);
         Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
         jmri.util.JUnitAppender.assertErrorMessage("invalid turnout name= \"3\" in state variable");
         
-        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_MEMORY_EQUALS, deviceName, false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, TYPE_MEMORY_EQUALS, deviceName, false);
         Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
         jmri.util.JUnitAppender.assertErrorMessage("invalid memory name= \"3\" in state variable");
         
-        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_LIGHT_ON, deviceName, false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, TYPE_LIGHT_ON, deviceName, false);
         Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
         jmri.util.JUnitAppender.assertErrorMessage("invalid light name= \"3\" in state variable");
         
         // Note that the signal head IH1 created here are also used to test the signal mast.
-        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_SIGNAL_HEAD_RED, "IH1", false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, TYPE_SIGNAL_HEAD_RED, "IH1", false);
         Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
         jmri.util.JUnitAppender.assertWarnMessage("could not provide \"IH1\" in constructor");
         
         // The signal head IH1 created above is also used here in signal mast IF$shsm:AAR-1946:CPL(IH1)
-        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_SIGNAL_MAST_ASPECT_EQUALS, "IF$shsm:AAR-1946:CPL(IH1)", false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, TYPE_SIGNAL_MAST_ASPECT_EQUALS, "IF$shsm:AAR-1946:CPL(IH1)", false);
         Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
         jmri.util.JUnitAppender.assertErrorMessage("invalid signalmast name= \"IF$shsm:AAR-1946:CPL(IH1)\" in state variable");
         
-        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_CONDITIONAL_TRUE, "IX:AUTO:0001C1", false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, TYPE_CONDITIONAL_TRUE, "IX:AUTO:0001C1", false);
         Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
         jmri.util.JUnitAppender.assertErrorMessage("invalid conditional; name= \"IX:AUTO:0001C1\" in state variable");
         
-        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_ROUTE_OCCUPIED, "IW3", false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, TYPE_ROUTE_OCCUPIED, "IW3", false);
         Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
         jmri.util.JUnitAppender.assertWarnMessage("could not provide \"IW3\" in constructor");
         
-        cv = new ConditionalVariable(false, Conditional.OPERATOR_AND, TYPE_BLOCK_STATUS_EQUALS, "OB3", false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, TYPE_BLOCK_STATUS_EQUALS, "OB3", false);
         Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
         jmri.util.JUnitAppender.assertWarnMessage("could not provide \"OB3\" in constructor");
         
