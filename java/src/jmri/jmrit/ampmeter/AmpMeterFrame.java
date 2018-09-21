@@ -187,7 +187,6 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
     public void dispose() {
         meter.disable();
         meter.removePropertyChangeListener(this);
-        meter.removeDataUpdateListener(this);
         super.dispose();
     }
 
