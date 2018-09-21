@@ -65,9 +65,9 @@
 
 			The "Proton" version of Eclipse released in the summer of 2018
 			requires a Maven project update after downloading the JMRI source
-			files. To do this, right click “jmri […]” in the Package Explorer,
-			then in the menu, select “Maven” and in the sub menu “Update project
-			…”. After the update is complete, do a project clean to rebuild the
+			files. To do this, right click "jmri [...]" in the Package Explorer,
+			then in the menu, select "Maven" and in the sub menu "Update project
+			...". After the update is complete, do a project clean to rebuild the
 			source files.
 
 
