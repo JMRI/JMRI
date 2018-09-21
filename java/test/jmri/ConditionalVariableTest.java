@@ -665,6 +665,51 @@ public class ConditionalVariableTest {
         jmri.util.JUnitAppender.assertWarnMessage("Unhandled condition type: -1");
     }
     
+    @Test
+    public void testGetCompareSymbols() {
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "<".equals(ConditionalVariable.getCompareSymbols(LESS_THAN)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "<=".equals(ConditionalVariable.getCompareSymbols(LESS_THAN_OR_EQUAL)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                "=".equals(ConditionalVariable.getCompareSymbols(EQUAL)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                ">=".equals(ConditionalVariable.getCompareSymbols(GREATER_THAN_OR_EQUAL)));
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                ">".equals(ConditionalVariable.getCompareSymbols(GREATER_THAN)));
+    }
+    
+    @Test
+    public void testStringToVariableTest() {
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                ConditionalVariable.stringToVariableTest("Red") == TYPE_SIGNAL_HEAD_RED);
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                ConditionalVariable.stringToVariableTest("Yellow") == TYPE_SIGNAL_HEAD_YELLOW);
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                ConditionalVariable.stringToVariableTest("Green") == TYPE_SIGNAL_HEAD_GREEN);
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                ConditionalVariable.stringToVariableTest("Dark") == TYPE_SIGNAL_HEAD_DARK);
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                ConditionalVariable.stringToVariableTest("Flashing Red") == TYPE_SIGNAL_HEAD_FLASHRED);
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                ConditionalVariable.stringToVariableTest("Flashing Yellow") == TYPE_SIGNAL_HEAD_FLASHYELLOW);
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                ConditionalVariable.stringToVariableTest("Flashing Green") == TYPE_SIGNAL_HEAD_FLASHGREEN);
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                ConditionalVariable.stringToVariableTest("Lunar") == TYPE_SIGNAL_HEAD_LUNAR);
+        Assert.assertTrue("getItemTypeString() returns correct value",
+                ConditionalVariable.stringToVariableTest("Flashing Lunar") == TYPE_SIGNAL_HEAD_FLASHLUNAR);
+        
+        // Check bad string. This gives a warning message.
+        Assert.assertTrue("getItemTypeString() returns -1 for wrong string",
+                ConditionalVariable.stringToVariableTest("Bad signal head") == -1);
+        jmri.util.JUnitAppender.assertWarnMessage("Unexpected parameter to stringToVariableTest(Bad signal head)");
+        
+        // Check empty string. This doesn't give any warning.
+        Assert.assertTrue("getItemTypeString() returns -1 for wrong string",
+                ConditionalVariable.stringToVariableTest("") == -1);
+    }
+    
     
     // from here down is testing infrastructure
 
