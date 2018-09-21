@@ -206,7 +206,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
 
         // readline is deprecated, but there are no problems
         // with multi-byte characters here.
-        @SuppressWarnings({"deprecation", "null"})
+        @SuppressWarnings("deprecation")
         @Override
         public void run() {
 

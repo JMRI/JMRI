@@ -15,26 +15,6 @@ import org.slf4j.LoggerFactory;
 public abstract class LnTrafficController implements LocoNetInterface {
 
     /**
-     * Get the LnTrafficController instance to use.
-     *
-     * @return The registered LnTrafficController instance for general use, if
-     *         need be creating one.
-     * @deprecated 2.13.4 - does not work with multi-system support, needs to have other classes migrated and then be removed
-     */
-    @Deprecated
-    static public LnTrafficController instance() {
-        return null;
-    }
-
-    @SuppressFBWarnings(value = "MS_PKGPROTECT")
-    // SpotBugs wants this package protected, but we're removing it when multi-connection
-    // migration is complete
-    /**
-     * @deprecated 2.13.4
-     */
-    static protected LnTrafficController self = null;
-
-    /**
      * Reference to the system connection memo.
      */
     LocoNetSystemConnectionMemo memo = null;

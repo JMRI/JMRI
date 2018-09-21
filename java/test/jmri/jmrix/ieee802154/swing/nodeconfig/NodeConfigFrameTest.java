@@ -50,9 +50,6 @@ public class NodeConfigFrameTest {
 
         tc = new IEEE802154TrafficController() {
             @Override
-            public void setInstance() {
-            }
-            @Override
             protected jmri.jmrix.AbstractMRReply newReply() {
                 return null;
             }

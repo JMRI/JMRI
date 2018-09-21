@@ -153,12 +153,6 @@ abstract public class RfidTrafficController extends AbstractMRTrafficController 
         return null;
     }
 
-    @Deprecated
-    @Override
-    protected void setInstance() {
-//        self = this;
-    }
-
     boolean sendInterlock = false; // send the 00 interlock when CRC received
     boolean expectLength = false;  // next byte is length of read
     boolean countingBytes = false; // counting remainingBytes into reply buffer
