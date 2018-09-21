@@ -231,10 +231,10 @@ public class ConditionalEditBase {
             for (int i = 1; i < variableList.size(); i++) {
                 ConditionalVariable variable = variableList.get(i);
                 switch (variable.getOpern()) {
-                    case Conditional.OPERATOR_AND:
+                    case AND:
                         antecedent.append(" and ");
                         break;
-                    case Conditional.OPERATOR_OR:
+                    case OR:
                         antecedent.append(" or ");
                         break;
                     default:

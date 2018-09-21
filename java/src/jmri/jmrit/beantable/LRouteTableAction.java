@@ -33,6 +33,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import jmri.Conditional;
+import jmri.Conditional.Operator;
 import jmri.ConditionalAction;
 import jmri.ConditionalManager;
 import jmri.ConditionalVariable;
@@ -680,8 +681,8 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                         }
                         continue;
                 }
-                int opern = variable.getOpern();
-                if (k != 0 && (opern == Conditional.OPERATOR_AND || opern == Conditional.OPERATOR_AND_NOT)) {
+                Operator opern = variable.getOpern();
+                if (k != 0 && (opern == Conditional.Operator.AND)) {
                     // guess this is a VETO
                     testState += VETO;
                 } else if (onChange) {
@@ -1483,9 +1484,9 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                     name = elt.getSysName();
                 }
                 //int opern = newRouteType ? Conditional.OPERATOR_AND : Conditional.OPERATOR_OR;
-                int opern = Conditional.OPERATOR_AND;
+                Operator opern = Conditional.Operator.AND;
                 if (i == 0) {
-                    opern = Conditional.OPERATOR_NONE;
+                    opern = Conditional.Operator.NONE;
                 }
                 int state = elt.getState();
                 if (VETO < state) {
@@ -1504,9 +1505,9 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                 if (name == null || name.length() == 0) {
                     name = elt.getSysName();
                 }
-                int opern = _newRouteType ? Conditional.OPERATOR_OR : Conditional.OPERATOR_AND;
+                Operator opern = _newRouteType ? Conditional.Operator.OR : Conditional.Operator.AND;
                 if (i == 0) {
-                    opern = Conditional.OPERATOR_NONE;
+                    opern = Conditional.Operator.NONE;
                 }
                 int type = elt.getState();
                 if (VETO > type) {
@@ -1540,7 +1541,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                 return;
             }
         } else {
-            oneTriggerList.add(new ConditionalVariable(false, Conditional.OPERATOR_NONE,
+            oneTriggerList.add(new ConditionalVariable(false, Conditional.Operator.NONE,
                     Conditional.TYPE_NONE, LOGIX_INITIALIZER, true));
         }
         if (log.isDebugEnabled()) {
@@ -1735,7 +1736,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                     if (eltName == null || eltName.length() == 0) {
                         eltName = elt.getSysName();
                     }
-                    vList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND,
+                    vList.add(new ConditionalVariable(false, Conditional.Operator.AND,
                             varType, eltName, true));
                 }
             }
