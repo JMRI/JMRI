@@ -15,10 +15,6 @@
 <!--#include virtual="/Sidebar.shtml" --> <!-- select the local or global Sidebar file -->
 <div id="mainContent">
 
-	    <!-- ------------- -->
-	    <!-- Page Contents --> <!-- Required -->
-	    <!-- ------------- -->
-
 	    <h1>CI Status</h1>
 		
 		<table>
@@ -26,18 +22,18 @@
 		Development:</td><td>
 		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/Builds/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/SpotBugs'></a>
 		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/Deprecations/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/SpotBugs'></a>
-        <a href='http://jmri.tagadab.com/jenkins/job/Development/job/HTML%20Scan/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/HTML Scan'></a>
+        <a href='http://jmri.tagadab.com/jenkins/job/Development/job/HTML%20Scan/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/HTML%20Scan'></a>
 		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/SpotBugs'></a>
 		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/Packages/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/SpotBugs'></a>
         <a href='http://jmri.tagadab.com/jenkins/job/Development/job/Separate_Tests/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/Separate_Tests'></a>
 		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/SpotBugs'></a>
 		</td></tr><tr><td align="right">
 		Version Checks:</td><td>
-		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/VersionChecks/job/JDK%2010.0.1/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/VersionChecks/JDK 10.0.1'></a>
-		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/VersionChecks/job/JDK%209.0.4/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/VersionChecks/JDK 9.0.4'></a>
-		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/VersionChecks/job/JRE%2010.0.1/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/VersionChecks/JRE 10.0.1'></a>
-		<a href='http://jmri.tagadab.com/jenkins/job/Development/VersionChecks/JRE 8u181'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/VersionChecks/JRE 8u181'></a>
-		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/VersionChecks/job/JRE%209.0.4/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/VersionChecks/JRE 9.0.4'></a>
+		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/VersionChecks/job/JDK%2010.0.1/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/VersionChecks/JDK%2010.0.1'></a>
+		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/VersionChecks/job/JDK%209.0.4/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/VersionChecks/JDK%209.0.4'></a>
+		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/VersionChecks/job/JRE%2010.0.1/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/VersionChecks/JRE%2010.0.1'></a>
+		<a href='http://jmri.tagadab.com/jenkins/job/Development/VersionChecks/JRE%208u181'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/VersionChecks/JRE%208u181'></a>
+		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/VersionChecks/job/JRE%209.0.4/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/VersionChecks/JRE%209.0.4'></a>
 		</td></tr><tr><td align="right">
 		Web Site:</td><td>
 		<a href='http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=WebSite/generate-website'></a>
@@ -101,6 +97,5 @@
 <!--#include virtual="/Footer.shtml" -->
 
 </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody, was opened by Sidebar -->
 </body>
 </html>
