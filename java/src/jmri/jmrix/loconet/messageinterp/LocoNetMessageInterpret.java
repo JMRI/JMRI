@@ -603,81 +603,11 @@ public class LocoNetMessageInterpret {
 
             case LnConstants.OPC_ALM_WRITE:
             case LnConstants.OPC_ALM_READ: {
-                if (l.getElement(1) == 0x10) {
-
-                    if ((l.getElement(2) == 0)
-                            && (l.getElement(3) == 0)
-                            && (l.getElement(6) == 0)) {
-                        return Bundle.getMessage("LN_MSG_QUERY_ALIAS_INFO");
-                    } else if ((l.getElement(2) == 0)
-                            && (l.getElement(3) == 0)
-                            && (l.getElement(6) == 0x0b)) {
-                        return Bundle.getMessage("LN_MSG_ALIAS_INFO_REPORT", l.getElement(4) * 2);
-                    } else if ((l.getElement(2) == 0)
-                            && (l.getElement(6) == 0xf)
-                            && (l.getElement(14) == 0)) {
-                        // Alias read and write messages
-                        String message;
-                        if (l.getElement(3) == 0x2) {
-                            if (l.getOpCode() == LnConstants.OPC_ALM_WRITE) {
-                                return Bundle.getMessage("LN_MSG_QUERY_ALIAS", l.getElement(4));
-                            } else {
-                                message = "LN_MSG_REPORT_ALIAS_2_ALIASES";
-                            }
-                        } else {
-                            break;
-                        }
-                        String longAddr = convertToMixed(l.getElement(7), l.getElement(8));
-                        int shortAddr = l.getElement(9);
-                        String longAddr2 = convertToMixed(l.getElement(11), l.getElement(12));
-                        int shortAddr2 = l.getElement(13);
-                        int pair = l.getElement(4);
-
-                        return Bundle.getMessage(message, pair,
-                                longAddr, shortAddr, longAddr2, shortAddr2);
-                    } else if ((l.getElement(2) == 0)
-                            && (l.getElement(3) == 0x43)) {
-                        String longAddr = convertToMixed(l.getElement(7), l.getElement(8));
-                        int shortAddr = l.getElement(9);
-                        String longAddr2 = convertToMixed(l.getElement(11), l.getElement(12));
-                        int shortAddr2 = l.getElement(13);
-                        int pair = l.getElement(4);
-                        return Bundle.getMessage("LN_MSG_SET_ALIAS_2_ALIASES",
-                                pair, longAddr, shortAddr, longAddr2, shortAddr2);
-                    } else if ((l.getElement(2) == 0)
-                            && (l.getElement(6) == 0)
-                            && (l.getElement(14) == 0)) {
-                        return Bundle.getMessage("LN_MSG_QUERY_ALIAS", l.getElement(4));
-                    }
-
+                result = interpretAlm(l);
+                if (result.length() > 0) {
+                    return result;
                 }
-                return Bundle.getMessage(
-                        ((l.getElement(0) == LnConstants.OPC_ALM_WRITE)
-                        ? "LN_MSG_ALM_WRITE"
-                        : "LN_MSG_ALM_WRITE_REPLY"),
-                        l.getElement(2),
-                        l.getElement(3),
-                        getAlmTaskType(l.getElement(3)),
-                        l.getElement(4),
-                        l.getElement(5),
-                        l.getElement(6),
-                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                StringUtil.twoHexFromInt(l.getElement(7))),
-                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                StringUtil.twoHexFromInt(l.getElement(8))),
-                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                StringUtil.twoHexFromInt(l.getElement(9))),
-                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                StringUtil.twoHexFromInt(l.getElement(10))),
-                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                StringUtil.twoHexFromInt(l.getElement(11))),
-                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                StringUtil.twoHexFromInt(l.getElement(12))),
-                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                StringUtil.twoHexFromInt(l.getElement(13))),
-                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                StringUtil.twoHexFromInt(l.getElement(14))));
-
+                break;
             }
 
             /*
@@ -4294,6 +4224,163 @@ public class LocoNetMessageInterpret {
             default:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_SLAVE_UNKNOWN", slaveNum);
         }
+    }
+    
+    /**
+     * Interpret messages with Opcode of OPC_ALM_READ, OPC_ALM_WRITE
+     * <p>
+     * @param l LocoNet Message to interpret
+     * @return String containing interpreted message or empty string if
+     *      message is not interpretable.
+     */
+    public static String interpretAlm(LocoNetMessage l) {
+        if ((l.getOpCode() != LnConstants.OPC_ALM_READ) &&
+                (l.getOpCode() != LnConstants.OPC_ALM_WRITE)) {
+            return "";
+        }
+        if (l.getElement(1) == 0x10) {
+            switch (l.getElement(2)) {
+                case 0:
+                    if ((l.getElement(3) == 0)
+                            && (l.getElement(6) == 0)) {
+                        return Bundle.getMessage("LN_MSG_QUERY_ALIAS_INFO");
+                    } else if ((l.getElement(3) == 0)
+                            && (l.getElement(6) == 0x0b)) {
+                        return Bundle.getMessage("LN_MSG_ALIAS_INFO_REPORT", l.getElement(4) * 2);
+                    } else if ((l.getElement(6) == 0xf)
+                            && (l.getElement(14) == 0)) {
+                        // Alias read and write messages
+                        String message;
+                        if (l.getElement(3) == 0x2) {
+                            if (l.getOpCode() == LnConstants.OPC_ALM_WRITE) {
+                                return Bundle.getMessage("LN_MSG_QUERY_ALIAS", l.getElement(4));
+                            } else {
+                                message = "LN_MSG_REPORT_ALIAS_2_ALIASES";
+                            }
+                        } else {
+                            break;
+                        }
+                        String longAddr = convertToMixed(l.getElement(7), l.getElement(8));
+                        int shortAddr = l.getElement(9);
+                        String longAddr2 = convertToMixed(l.getElement(11), l.getElement(12));
+                        int shortAddr2 = l.getElement(13);
+                        int pair = l.getElement(4);
+
+                        return Bundle.getMessage(message, pair,
+                                longAddr, shortAddr, longAddr2, shortAddr2);
+                    } else if ((l.getElement(3) == 0x43)) {
+                        String longAddr = convertToMixed(l.getElement(7), l.getElement(8));
+                        int shortAddr = l.getElement(9);
+                        String longAddr2 = convertToMixed(l.getElement(11), l.getElement(12));
+                        int shortAddr2 = l.getElement(13);
+                        int pair = l.getElement(4);
+                        return Bundle.getMessage("LN_MSG_SET_ALIAS_2_ALIASES",
+                                pair, longAddr, shortAddr, longAddr2, shortAddr2);
+                    } else if ((l.getElement(6) == 0)
+                            && (l.getElement(14) == 0)) {
+                        return Bundle.getMessage("LN_MSG_QUERY_ALIAS", l.getElement(4));
+                    }
+                    break;
+                case 1:
+                    if ((l.getElement(2) == 1) &&
+                            ((l.getElement(3) & 0x7E) == 0x2)
+                            // ((l.getElement(6) & 0x7E) == 0x2) &&  // sometimes 0x00, sometimes 0x0F, not sure why
+                            ) {
+                            // appears to be related to command-station routes
+                            int turnoutGroup;
+                            int altTurnoutGroup;
+                            int routeNum;
+                            int altRouteNum;
+                            routeNum = 1 + (((l.getElement(4) + l.getElement(5)*128)/2) & 0x1f);
+                            turnoutGroup = 1 + ((l.getElement(4) & 0x1)<< 2);
+                            altRouteNum = 1 + (((l.getElement(4) + l.getElement(5)*128)/4) & 0x3F);
+                            altTurnoutGroup = 1 + ((l.getElement(4) & 0x3) << 2);
+                            if ((l.getOpCode() == LnConstants.OPC_ALM_WRITE) && 
+                                    ((l.getElement(3) & 0x1) == 0)) {
+                                return Bundle.getMessage("LN_MSG_CMD_STN_ROUTE_QUERY",
+                                        routeNum,
+                                        turnoutGroup, turnoutGroup + 3,
+                                        altRouteNum,
+                                        altTurnoutGroup, altTurnoutGroup + 3);
+                            }
+                            String turnA, turnB, turnC, turnD;
+                            String statA, statB, statC, statD;
+                            if ((l.getElement(7) == 0x7f) && (l.getElement(8) == 0x7f)) {
+                                turnA = "Unused";
+                                statA = "";
+                            } else {
+                                turnA = Integer.toString(1 + l.getElement(7) + ((l.getElement(8) & 0x0f) << 7));
+                                statA = (l.getElement(8) & 0x20) == 0x20 ?"c":"t";
+                            }
+
+                            if ((l.getElement(9) == 0x7f) && (l.getElement(10) == 0x7f)) {
+                                turnB = "Unused";
+                                statB = "";
+                            } else {
+                                turnB = Integer.toString(1 + l.getElement(9) + ((l.getElement(10) & 0x0f) << 7));
+                                statB = (l.getElement(10) & 0x20) == 0x20 ?"c":"t";
+                            }
+
+                            if ((l.getElement(11) == 0x7f) && (l.getElement(12) == 0x7f)) {
+                                turnC = "Unused";
+                                statC = "";
+                            } else {
+                                turnC = Integer.toString(1 + l.getElement(11) + ((l.getElement(12) & 0x0f) << 7));
+                                statC = (l.getElement(12) & 0x20) == 0x20 ?"c":"t";
+                            }
+
+                            if ((l.getElement(13) == 0x7f) && (l.getElement(14) == 0x7f)) {
+                                turnD = "Unused";
+                                statD = "";
+                            } else {
+                                turnD = Integer.toString(1 + l.getElement(13) + ((l.getElement(14) & 0x0f) << 7));
+                                statD = (l.getElement(14) & 0x20) == 0x20 ?"c":"t";
+                            }
+
+                            return Bundle.getMessage((l.getOpCode() == 
+                                        LnConstants.OPC_ALM_WRITE)?
+                                            "LN_MSG_CMD_STN_ROUTE_WRITE":
+                                            "LN_MSG_CMD_STN_ROUTE_REPORT", 
+                                    routeNum ,
+                                    turnoutGroup, turnoutGroup+3,
+                                    altRouteNum, altTurnoutGroup, altTurnoutGroup+3,
+                                    turnA, statA, turnB, statB,
+                                    turnC, statC, turnD, statD);
+
+                    }
+
+                    return "routes unknown\n";
+                default:
+                    return Bundle.getMessage(
+                            ((l.getElement(0) == LnConstants.OPC_ALM_WRITE)
+                            ? "LN_MSG_ALM_WRITE"
+                            : "LN_MSG_ALM_WRITE_REPLY"),
+                            l.getElement(2),
+                            l.getElement(3),
+                            getAlmTaskType(l.getElement(3)),
+                            l.getElement(4),
+                            l.getElement(5),
+                            l.getElement(6),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(l.getElement(7))),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(l.getElement(8))),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(l.getElement(9))),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(l.getElement(10))),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(l.getElement(11))),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(l.getElement(12))),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(l.getElement(13))),
+                            Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(l.getElement(14))));
+            }
+        }
+        return "";
+
     }
 
     private static final String ds54sensors[] = {"AuxA", "SwiA", "AuxB", "SwiB", "AuxC", "SwiC", "AuxD", "SwiD"};    // NOI18N
