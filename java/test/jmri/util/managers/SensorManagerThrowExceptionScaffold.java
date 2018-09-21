@@ -2,52 +2,55 @@ package jmri.util.managers;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import jmri.Turnout;
-import jmri.jmrix.internal.InternalTurnoutManager;
+import jmri.Sensor;
+import jmri.jmrix.internal.InternalSensorManager;
 
 /**
  * This manager always throws an IllegalArgumentException from provide and get methods.
  * It is used for testing exception handling in tests.
+ * 
+ * The class name ends with 'Scaffold' to exclude it from the coverage statistics,
+ * since it is part of the testing infrastructure.
  */
-public class TurnoutManagerThrowException extends InternalTurnoutManager {
+public class SensorManagerThrowExceptionScaffold extends InternalSensorManager {
 
-    public TurnoutManagerThrowException() {
+    public SensorManagerThrowExceptionScaffold() {
         super("I");
     }
     
     /** {@inheritDoc} */
     @Override
-    protected Turnout createNewTurnout(String systemName, String userName) {
+    protected Sensor createNewSensor(String systemName, String userName) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
     /** {@inheritDoc} */
     @Override
-    public Turnout provideTurnout(@Nonnull String name) {
+    public Sensor provideSensor(@Nonnull String name) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
     /** {@inheritDoc} */
     @Override
-    public Turnout getTurnout(@Nonnull String name) {
+    public Sensor getSensor(@Nonnull String name) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
     /** {@inheritDoc} */
     @Override
-    public Turnout getBySystemName(@Nonnull String name) {
+    public Sensor getBySystemName(@Nonnull String name) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
     /** {@inheritDoc} */
     @Override
-    public Turnout getByUserName(String key) {
+    public Sensor getByUserName(String key) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
     /** {@inheritDoc} */
     @Override
-    public Turnout newTurnout(@Nonnull String systemName, @Nullable String userName) {
+    public Sensor newSensor(@Nonnull String systemName, @Nullable String userName) {
         throw new IllegalArgumentException("Illegal argument");
     }
     

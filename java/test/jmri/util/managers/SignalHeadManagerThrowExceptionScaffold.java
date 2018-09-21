@@ -1,17 +1,18 @@
 package jmri.util.managers;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import jmri.SignalHead;
 import jmri.managers.AbstractSignalHeadManager;
 
 /**
  * This manager always throws an IllegalArgumentException from provide and get methods.
  * It is used for testing exception handling in tests.
+ * 
+ * The class name ends with 'Scaffold' to exclude it from the coverage statistics,
+ * since it is part of the testing infrastructure.
  */
-public class SignalHeadManagerThrowException extends AbstractSignalHeadManager {
+public class SignalHeadManagerThrowExceptionScaffold extends AbstractSignalHeadManager {
 
-    public SignalHeadManagerThrowException() {
+    public SignalHeadManagerThrowExceptionScaffold() {
         super();
     }
     

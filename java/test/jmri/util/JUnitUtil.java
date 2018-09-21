@@ -33,14 +33,14 @@ import jmri.profile.NullProfile;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.progdebugger.DebugProgrammerManager;
-import jmri.util.managers.InternalLightManagerThrowException;
-import jmri.util.managers.MemoryManagerThrowException;
-import jmri.util.managers.OBlockManagerThrowException;
-import jmri.util.managers.SensorManagerThrowException;
-import jmri.util.managers.SignalHeadManagerThrowException;
-import jmri.util.managers.SignalMastManagerThrowException;
-import jmri.util.managers.TurnoutManagerThrowException;
-import jmri.util.managers.WarrantManagerThrowException;
+import jmri.util.managers.InternalLightManagerThrowExceptionScaffold;
+import jmri.util.managers.MemoryManagerThrowExceptionScaffold;
+import jmri.util.managers.OBlockManagerThrowExceptionScaffold;
+import jmri.util.managers.SensorManagerThrowExceptionScaffold;
+import jmri.util.managers.SignalHeadManagerThrowExceptionScaffold;
+import jmri.util.managers.SignalMastManagerThrowExceptionScaffold;
+import jmri.util.managers.TurnoutManagerThrowExceptionScaffold;
+import jmri.util.managers.WarrantManagerThrowExceptionScaffold;
 import jmri.util.prefs.JmriConfigurationProvider;
 import jmri.util.prefs.JmriPreferencesProvider;
 import jmri.util.prefs.JmriUserInterfaceConfigurationProvider;
@@ -705,35 +705,35 @@ public class JUnitUtil {
     }
 
     public static void initInternalTurnoutManagerThrowException() {
-        InstanceManager.setDefault(TurnoutManager.class, new TurnoutManagerThrowException());
+        InstanceManager.setDefault(TurnoutManager.class, new TurnoutManagerThrowExceptionScaffold());
     }
 
     public static void initInternalSensorManagerThrowException() {
-        InstanceManager.setDefault(SensorManager.class, new SensorManagerThrowException());
+        InstanceManager.setDefault(SensorManager.class, new SensorManagerThrowExceptionScaffold());
     }
 
     public static void initLightManagerThrowException() {
-        InstanceManager.setDefault(LightManager.class, new InternalLightManagerThrowException());
+        InstanceManager.setDefault(LightManager.class, new InternalLightManagerThrowExceptionScaffold());
     }
 
     public static void initMemoryManagerThrowException() {
-        InstanceManager.setDefault(MemoryManager.class, new MemoryManagerThrowException());
+        InstanceManager.setDefault(MemoryManager.class, new MemoryManagerThrowExceptionScaffold());
     }
 
     public static void initSignalHeadManagerThrowException() {
-        InstanceManager.setDefault(SignalHeadManager.class, new SignalHeadManagerThrowException());
+        InstanceManager.setDefault(SignalHeadManager.class, new SignalHeadManagerThrowExceptionScaffold());
     }
 
     public static void initSignalMastManagerThrowException() {
-        InstanceManager.setDefault(SignalMastManager.class, new SignalMastManagerThrowException());
+        InstanceManager.setDefault(SignalMastManager.class, new SignalMastManagerThrowExceptionScaffold());
     }
 
     public static void initWarrantManagerThrowException() {
-        InstanceManager.setDefault(WarrantManager.class, new WarrantManagerThrowException());
+        InstanceManager.setDefault(WarrantManager.class, new WarrantManagerThrowExceptionScaffold());
     }
 
     public static void initOBlockManagerThrowException() {
-        InstanceManager.setDefault(OBlockManager.class, new OBlockManagerThrowException());
+        InstanceManager.setDefault(OBlockManager.class, new OBlockManagerThrowExceptionScaffold());
     }
 
     /**

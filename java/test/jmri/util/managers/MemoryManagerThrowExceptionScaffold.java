@@ -1,58 +1,56 @@
 package jmri.util.managers;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import jmri.Light;
-import jmri.jmrix.internal.InternalLightManager;
+import jmri.Memory;
+import jmri.managers.DefaultMemoryManager;
 
 /**
  * This manager always throws an IllegalArgumentException from provide and get methods.
  * It is used for testing exception handling in tests.
+ * 
+ * The class name ends with 'Scaffold' to exclude it from the coverage statistics,
+ * since it is part of the testing infrastructure.
  */
-public class InternalLightManagerThrowException extends InternalLightManager {
+public class MemoryManagerThrowExceptionScaffold extends DefaultMemoryManager {
 
-    public InternalLightManagerThrowException() {
+    public MemoryManagerThrowExceptionScaffold() {
         super();
     }
     
     /** {@inheritDoc} */
     @Override
-    protected Light createNewLight(String systemName, String userName) {
+    protected Memory createNewMemory(String systemName, String userName) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
     /** {@inheritDoc} */
     @Override
-    @Nonnull
-    public Light provideLight(@Nonnull String name) {
+    public Memory provideMemory(@Nonnull String name) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
     /** {@inheritDoc} */
     @Override
-    @CheckForNull
-    public Light getLight(@Nonnull String name) {
+    public Memory getMemory(@Nonnull String name) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
     /** {@inheritDoc} */
     @Override
-    @CheckForNull
-    public Light getBySystemName(@Nonnull String name) {
+    public Memory getBySystemName(@Nonnull String name) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
     /** {@inheritDoc} */
     @Override
-    @CheckForNull
-    public Light getByUserName(String key) {
+    public Memory getByUserName(String key) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
     /** {@inheritDoc} */
     @Override
-    public Light newLight(@Nonnull String systemName, @CheckForNull String userName) {
+    public Memory newMemory(@Nonnull String systemName, @Nullable String userName) {
         throw new IllegalArgumentException("Illegal argument");
     }
     

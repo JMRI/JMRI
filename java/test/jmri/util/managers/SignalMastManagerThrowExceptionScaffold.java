@@ -1,17 +1,19 @@
 package jmri.util.managers;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import jmri.SignalMast;
 import jmri.managers.DefaultSignalMastManager;
 
 /**
  * This manager always throws an IllegalArgumentException from provide and get methods.
  * It is used for testing exception handling in tests.
+ * 
+ * The class name ends with 'Scaffold' to exclude it from the coverage statistics,
+ * since it is part of the testing infrastructure.
  */
-public class SignalMastManagerThrowException extends DefaultSignalMastManager {
+public class SignalMastManagerThrowExceptionScaffold extends DefaultSignalMastManager {
 
-    public SignalMastManagerThrowException() {
+    public SignalMastManagerThrowExceptionScaffold() {
         super();
     }
     
