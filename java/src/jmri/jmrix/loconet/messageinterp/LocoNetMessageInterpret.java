@@ -4225,7 +4225,7 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_SLAVE_UNKNOWN", slaveNum);
         }
     }
-    
+
     /**
      * Interpret messages with Opcode of OPC_ALM_READ, OPC_ALM_WRITE
      * <p>
@@ -4295,7 +4295,7 @@ public class LocoNetMessageInterpret {
                             turnoutGroup = 1 + ((l.getElement(4) & 0x1)<< 2);
                             altRouteNum = 1 + (((l.getElement(4) + l.getElement(5)*128)/4) & 0x3F);
                             altTurnoutGroup = 1 + ((l.getElement(4) & 0x3) << 2);
-                            if ((l.getOpCode() == LnConstants.OPC_ALM_WRITE) && 
+                            if ((l.getOpCode() == LnConstants.OPC_ALM_WRITE) &&
                                     ((l.getElement(3) & 0x1) == 0)) {
                                 return Bundle.getMessage("LN_MSG_CMD_STN_ROUTE_QUERY",
                                         routeNum,
@@ -4337,10 +4337,10 @@ public class LocoNetMessageInterpret {
                                 statD = (l.getElement(14) & 0x20) == 0x20 ?"c":"t";
                             }
 
-                            return Bundle.getMessage((l.getOpCode() == 
+                            return Bundle.getMessage((l.getOpCode() ==
                                         LnConstants.OPC_ALM_WRITE)?
                                             "LN_MSG_CMD_STN_ROUTE_WRITE":
-                                            "LN_MSG_CMD_STN_ROUTE_REPORT", 
+                                            "LN_MSG_CMD_STN_ROUTE_REPORT",
                                     routeNum ,
                                     turnoutGroup, turnoutGroup+3,
                                     altRouteNum, altTurnoutGroup, altTurnoutGroup+3,

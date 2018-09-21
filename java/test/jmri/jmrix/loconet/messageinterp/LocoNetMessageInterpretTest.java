@@ -455,7 +455,7 @@ public class LocoNetMessageInterpretTest {
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
     }
-    
+
     @Test
     public void testRoutes() {
         LocoNetMessage l;
@@ -466,11 +466,11 @@ public class LocoNetMessageInterpretTest {
         l = new LocoNetMessage(new int[] {0xEE, 0x10, 1, 2, 1, 0, 0x0, 0,0,0,0,0,0,0,0x7f,0});
         Assert.assertEquals("Query DCS100/200 Route 1 entries 5-8 or DCS210/240 Route 1 entries 5-8.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "", "", ""));
-        
+
         l = new LocoNetMessage(new int[] {0xEE, 0x10, 1, 2, 2, 0, 0x0, 0,0,0,0,0,0,0,0x7f,0});
         Assert.assertEquals("Query DCS100/200 Route 2 entries 1-4 or DCS210/240 Route 1 entries 9-12.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "", "", ""));
-        
+
         l = new LocoNetMessage(new int[] {0xEE, 0x10, 1, 2, 3, 0, 0x0, 0,0,0,0,0,0,0,0x7f,0});
         Assert.assertEquals("Query DCS100/200 Route 2 entries 5-8 or DCS210/240 Route 1 entries 13-16.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "", "", ""));
@@ -478,7 +478,7 @@ public class LocoNetMessageInterpretTest {
         l = new LocoNetMessage(new int[] {0xEE, 0x10, 0x01, 0x02, 0x20, 0x00, 0x0, 0xF, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7, 0xF, 0x2D});
         Assert.assertEquals("Query DCS100/200 Route 17 entries 1-4 or DCS210/240 Route 9 entries 1-4.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
-        
+
         l = new LocoNetMessage(new int[] {0xEE, 0x10, 0x01, 0x02, 0x78, 0x01, 0x0F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x74});
         Assert.assertEquals("Query DCS100/200 Route 29 entries 1-4 or DCS210/240 Route 63 entries 1-4.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
@@ -501,36 +501,36 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xEE, 0x10, 0x01, 0x03, 0x7F, 0x01, 0x0F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x74});
         Assert.assertEquals("Write DCS100/200 Route 32 entries 5-8 or DCS210/240 Route 64 entries 13-16 with Unused, Unused, Unused, Unused.\n",
-                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));    
-        
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
         l = new LocoNetMessage(new int[] {0xE6, 0x10, 0x01, 0x03, 0x7F, 0x01, 0x0F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x74});
         Assert.assertEquals("Report DCS100/200 Route 32 entries 5-8 or DCS210/240 Route 64 entries 13-16 with Unused, Unused, Unused, Unused.\n",
-                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));    
-        
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
         l = new LocoNetMessage(new int[] {0xE6, 0x10, 0x01, 0x02, 0x7F, 0x01, 0x0F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x74});
         Assert.assertEquals("Report DCS100/200 Route 32 entries 5-8 or DCS210/240 Route 64 entries 13-16 with Unused, Unused, Unused, Unused.\n",
-                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));    
-        
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
         l = new LocoNetMessage(new int[] {0xE6, 0x10, 0x01, 0x02, 0x02, 0x00, 0x0F, 0x0C, 0x20, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F, 0x2B});
         Assert.assertEquals("Report DCS100/200 Route 2 entries 1-4 or DCS210/240 Route 1 entries 9-12 with 13c, Unused, Unused, Unused.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
-        
+
         l = new LocoNetMessage(new int[] {0xE6 ,0x10 ,0x01 ,0x02 ,0x02 ,0x00 ,0x0F ,0x0C ,0x20 ,0x7F ,0x10 ,0x00 ,0x31 ,0x7F ,0x7F ,0x75});
         Assert.assertEquals("Report DCS100/200 Route 2 entries 1-4 or DCS210/240 Route 1 entries 9-12 with 13c, 128t, 129c, Unused.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
-        
+
         l = new LocoNetMessage(new int[] {0xE6 ,0x10 ,0x01 ,0x02 ,0x02 ,0x00 ,0x0F ,0x0C ,0x20 ,0x7F ,0x10 ,0x00 ,0x31 ,0x7F ,0x7F ,0x75});
         Assert.assertEquals("Report DCS100/200 Route 2 entries 1-4 or DCS210/240 Route 1 entries 9-12 with 13c, 128t, 129c, Unused.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
-        
+
         l = new LocoNetMessage(new int[] {0xE6 ,0x10 ,0x01 ,0x03 ,0x02 ,0x00 ,0x0F ,0x0C ,0x20 ,0x7F ,0x10 ,0x00 ,0x31 ,0x00 ,0x34 ,0x48});
         Assert.assertEquals("Report DCS100/200 Route 2 entries 1-4 or DCS210/240 Route 1 entries 9-12 with 13c, 128t, 129c, 513c.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
-        
+
         l = new LocoNetMessage(new int[] {0xE6 ,0x10 ,0x01 ,0x03 ,0x02 ,0x00 ,0x0F ,0x0C ,0x10 ,0x7F ,0x10 ,0x00 ,0x31 ,0x00 ,0x34 ,0x48});
         Assert.assertEquals("Report DCS100/200 Route 2 entries 1-4 or DCS210/240 Route 1 entries 9-12 with 13t, 128t, 129c, 513c.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
-        
+
         l = new LocoNetMessage(new int[] {0xE6 ,0x10 ,0x01 ,0x03 ,0x02 ,0x00 ,0x0F ,0x0C ,0x10 ,0x7F ,0x30 ,0x00 ,0x31 ,0x00 ,0x34 ,0x48});
         Assert.assertEquals("Report DCS100/200 Route 2 entries 1-4 or DCS210/240 Route 1 entries 9-12 with 13t, 128c, 129c, 513c.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
