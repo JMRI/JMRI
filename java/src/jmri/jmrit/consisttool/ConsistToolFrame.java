@@ -85,6 +85,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
 
         adrSelector.setVisible(true);
         adrSelector.setToolTipText(Bundle.getMessage("AddressSelectorToolTip"));
+        textAdrLabel.setLabelFor(adrSelector);
 
         initializeConsistBox();
 
@@ -156,6 +157,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
 
         locoSelector.setToolTipText(Bundle.getMessage("LocoSelectorToolTip"));
         locoSelector.setVisible(true);
+        textLocoLabel.setLabelFor(locoSelector);
 
         locoSelector.addKeyListener(new KeyListener() {
             @Override
