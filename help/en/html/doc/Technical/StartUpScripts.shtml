@@ -271,17 +271,95 @@
       <h2 id="macosx">macOS</h2>
 
       JMRI distributions for macOS contain application bundles for each of the
-      main applications: DecoderPro, PanelPro, etc. These provide familiar
+      main applications: DecoderPro, PanelPro, and SoundPro. These provide familiar
       application icons for the user.
 
-      <p>To register the bundles with macOS, they need to be
-      copied from the distributed disk image onto the user's disk
-      drive.</p>
+      <p>The applications are registered with macOS when copied from the
+          distributed disk image onto the user's disk drive, however, no mechanism
+          within the JMRI applications takes advantage of this registration.</p>
 
-      <h3>Script Details</h3>Each bundle has a startup bash shell
-      script in the Contents/MacOSX directory what does the actual
-      startup. This is the same script as used for Linux, see
-      please see <a href="#linux">that section</a> for details.
+      <h3>Script Details</h3>
+      
+      <p>Each bundle has a startup bash shell script in the Contents/MacOSX
+          directory that performs the actual startup. This is the same script as
+          used for Linux, see <a href="#linux">that section</a> for details.</p>
+      
+      <h3>Uniform Type Identifiers</h3>
+      
+      <p><a href="https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/understanding_utis/understand_utis_intro/understand_utis_intro.html#//apple_ref/doc/uid/TP40001319">Uniform Type Identifiers</a>
+          (UTIs) are a mechanism that iOS, macOS, and tvOS use to identify file
+          and URL types to ensure that the correct application is used to open a
+          file or handle a URL. UTIs allow these operating systems to support
+          Packages, or directories that are represented to a user as a single file,
+          and Bundles, which are Packages with executable content.</p>
+      
+      <p><a href="https://developer.apple.com/library/archive/documentation/Security/Conceptual/AppSandboxDesignGuide/AppSandboxInDepth/AppSandboxInDepth.html#//apple_ref/doc/uid/TP40011183-CH3-SW16">Application Sandboxes</a>
+          are a security and privacy control in iOS and macOS that limit
+          applications to accessing data the user has explictly granted the application
+          access to, or is contained within the sandbox. In iOS, users can only
+          grant access to files, while in macOS, users can grant access to files
+          and directories. When requesting access, applications request the operating
+          system prompt the user to grant access to file types identified by UTI.</p>
+
+      <p>Since the JMRI applications are not subject to application sandboxes,
+          JMRI applications do not export any UTIs that would allow other applications
+          subject to sandboxes to request permission from the user to view or edit
+          JMRI Configuration Profiles.</p>
+      
+      <p>To allow other macOS applications or any iOS app to request permission
+          from a user to view or edit a JMRI Configuration Profile if the Profile
+          is in a directory with the <code>.jmri</code> extension, add the following
+          UTI and document type to that application's Info.plist file:</p>
+      
+      <pre>
+        &lt;key&gt;UTImportedTypeDeclarations&lt;/key&gt;
+        &lt;array&gt;
+            &lt;dict&gt;
+                &lt;key&gt;UTTypeConformsTo&lt;/key&gt;
+                &lt;array&gt;
+                    &lt;string&gt;com.apple.package&lt;/string&gt;
+                &lt;/array&gt;
+                &lt;key&gt;UTTypeIconFiles&lt;/key&gt;
+                &lt;array/&gt;
+                &lt;key&gt;UTTypeIdentifier&lt;/key&gt;
+                &lt;string&gt;org.jmri.profile&lt;/string&gt;
+                &lt;key&gt;UTTypeDescription&lt;/key&gt;
+                &lt;string&gt;JMRI Configuration Profile&lt;/string&gt;
+                &lt;key&gt;UTTypeTagSpecification&lt;/key&gt;
+                &lt;dict&gt;
+                    &lt;key&gt;public.filename-extension&lt;/key&gt;
+                    &lt;string&gt;jmri&lt;/string&gt;
+                &lt;/dict&gt;
+            &lt;/dict&gt;
+        &lt;/array&gt;
+        &lt;key&gt;CFBundleDocumentTypes&lt;/key&gt;
+        &lt;array&gt;
+            &lt;dict&gt;
+                &lt;key&gt;CFBundleTypeName&lt;/key&gt;
+                &lt;string&gt;JMRI Configuration Profile&lt;/string&gt;
+                &lt;key&gt;CFBundleTypeIconFiles&lt;/key&gt;
+                &lt;array/&gt;
+                &lt;key&gt;LSItemContentTypes&lt;/key&gt;
+                &lt;array&gt;
+                    &lt;string&gt;org.jmri.profile&lt;/string&gt;
+                &lt;/array&gt;
+            &lt;/dict&gt;
+        &lt;/array&gt;
+      </pre>
+      
+      <p>Note that you will want to provide icons for these documents; the example
+          does not. Note also that if, and when, the JMRI applications include the
+          UTIs, they need to <em>export</em> the UTIs instead of <em>importing</em>
+          the UTIs, as other non-JMRI applications should.</p>
+      
+      <p>Note that a UTI is only present for Configuration Profiles, not for Rosters
+          or User Files, since most users store those within a Configuration Profile.
+          Rosters also have a structure that is not conducive to defining a UTI for it
+          (the roster index (<code>roster.xml</code>) is stored adjacent to the
+          <code>roster</code> directory that contains the individual roster entries,
+          images, and icons. User files are, if not contained within a Configuration
+          Profile, in an arbitrary directory, and likely would need individual
+          access from different applications for editing outside of JMRI.</p>
 
       <h2 id="windows">Windows</h2>
       Upto and including JMRI version 2.3.2, the

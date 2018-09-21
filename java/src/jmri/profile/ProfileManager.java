@@ -156,6 +156,10 @@ public class ProfileManager extends Bean {
         }
         // handle profile path
         File profileFile = new File(identifier);
+        File profileFileWithExt = new File(profileFile.getParent(), profileFile.getName() + Profile.EXTENSION);
+        if (Profile.isProfile(profileFileWithExt)) {
+            profileFile = profileFileWithExt;
+        }
         if (profileFile.exists() && profileFile.isDirectory()) {
             if (Profile.isProfile(profileFile)) {
                 try {
@@ -489,6 +493,11 @@ public class ProfileManager extends Bean {
                 try {
                     Profile p = new Profile(pp);
                     this.addProfile(p);
+                    // update catalog if profile directory in catalog does not
+                    // end in .jmri, but actual profile directory does
+                    if (!p.getPath().equals(pp)) {
+                        reWrite = true;
+                    }
                 } catch (FileNotFoundException ex) {
                     log.info("Cataloged profile \"{}\" not in expected location\nSearching for it in {}", e.getAttributeValue(Profile.ID), pp.getParentFile());
                     this.findProfiles(pp.getParentFile());
@@ -614,7 +623,7 @@ public class ProfileManager extends Bean {
      * @return true if the app should start without user interaction
      */
     public boolean isAutoStartActiveProfile() {
-        return (this.getActiveProfile() != null && autoStartActiveProfile);
+        return (this.hasActiveProfile() && autoStartActiveProfile);
     }
 
     /**
@@ -639,7 +648,7 @@ public class ProfileManager extends Bean {
         if (this.getAllProfiles().isEmpty()) {
             String pn = Bundle.getMessage("defaultProfileName");
             String pid = FileUtil.sanitizeFilename(pn);
-            File pp = new File(FileUtil.getPreferencesPath() + pid);
+            File pp = new File(FileUtil.getPreferencesPath() + pid + Profile.EXTENSION);
             Profile profile = new Profile(pn, pid, pp);
             this.addProfile(profile);
             this.setAutoStartActiveProfile(true);
@@ -664,7 +673,7 @@ public class ProfileManager extends Bean {
     @Nonnull
     public Profile migrateConfigToProfile(@Nonnull File config, @Nonnull String name) throws IllegalArgumentException, IOException {
         String pid = FileUtil.sanitizeFilename(name);
-        File pp = new File(FileUtil.getPreferencesPath(), pid);
+        File pp = new File(FileUtil.getPreferencesPath(), pid + Profile.EXTENSION);
         Profile profile = new Profile(name, pid, pp);
         FileUtil.copy(config, new File(profile.getPath(), Profile.CONFIG_FILENAME));
         FileUtil.copy(new File(config.getParentFile(), "UserPrefs" + config.getName()), new File(profile.getPath(), "UserPrefs" + Profile.CONFIG_FILENAME)); // NOI18N
