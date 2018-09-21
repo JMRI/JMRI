@@ -42,9 +42,9 @@ public class TablesServlet extends HttpServlet {
         response.getWriter().print(String.format(request.getLocale(),
                 FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Tables.html"))),
                 Bundle.getMessage(request.getLocale(), "TablesTitle"),               //page title is parm 1
-                ServletUtil.getInstance().getNavBar(request.getLocale(), "/tables"), //navbar is parm 2
-                ServletUtil.getInstance().getRailroadName(false),                   //railroad name is parm 3
-                ServletUtil.getInstance().getFooter(request.getLocale(), "/tables"), //footer is parm 4
+                ServletUtil.getDefault().getNavBar(request.getLocale(), "/tables"), //navbar is parm 2
+                ServletUtil.getDefault().getRailroadName(false),                   //railroad name is parm 3
+                ServletUtil.getDefault().getFooter(request.getLocale(), "/tables"), //footer is parm 4
                 tableType //tableType is parm 5
         ));
     }
