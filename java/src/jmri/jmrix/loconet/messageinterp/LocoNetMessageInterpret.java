@@ -1,4 +1,10 @@
-package jmri.jmrix.loconet.locomon;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package jmri.jmrix.loconet.messageinterp;
+
 
 import java.time.LocalTime;
 import javax.annotation.Nonnull;
@@ -12,7 +18,6 @@ import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
 import jmri.util.StringUtil;
 import org.slf4j.Logger;
@@ -21,10 +26,9 @@ import org.slf4j.LoggerFactory;
 /**
  * A utility class for formatting LocoNet packets into human-readable text.
  * <p>
- * Rather than using this formatter class, use 
- * {@link LocoNetMessage#toMonitorString(String)} (preferred) or 
- * {@link LocoNetMessage#toMonitorString()}
- * for each individual LocoNet message instead.
+ * Note that the formatted strings end in a \n, and may contain more than one
+ * line separated by \n. Someday this should be converted to proper Java line
+ * handling.
  * <p>
  * Much of this file is a Java-recoding of the display.c file from the llnmon
  * package of John Jabour. Some of the conversions involve explicit decoding of
@@ -32,7 +36,10 @@ import org.slf4j.LoggerFactory;
  * Copyright 2001 Ron W. Auld. Use of these parts is by direct permission of the
  * author.
  * <p>
- * Most major comment blocks here are quotes from the Digitrax LocoNet(r) OPCODE
+ * This class is derived from and replaces JMRI's
+ * jmri.jmrix.loconet.locomon.Llnmon.java .
+ * <p>
+ * Many major comment blocks here are quotes from the Digitrax LocoNet(r) OPCODE
  * SUMMARY: found in the LocoNet(r) Personal Edition 1.
  * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
@@ -40,12 +47,6 @@ import org.slf4j.LoggerFactory;
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <p>
- * Note that the formatted strings end in a \n, and may contain more than one
- * line separated by \n. Someday this should be converted to proper Java line
- * handling, but for now it has to be handled in locomon, the sole user of this.
- * (It could be handled by moving the code from locomon into the display member
- * here)
  * <p>
  * Reverse engineering of OPC_MULTI_SENSE was provided by Al Silverstein, used
  * with permission.
@@ -56,477 +57,34 @@ import org.slf4j.LoggerFactory;
  * Reverse-engineering of device-specific OpSw messages, throttle text message,
  * and throttle semaphore message was provided by B. Milhaupt, used with
  * permission.
- *
+ * <p>
  * @author Bob Jacobsen Copyright 2001, 2002, 2003
  * @author B. Milhaupt Copyright 2015, 2016, 2018
  * @author Randall Wood Copyright 2016
- * <p>
- * @deprecated since 4.13.5; use the 
- * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
- * {@link LocoNetMessage#toMonitorString()}
- * for each individual LocoNet message instead of creating a formatter.
  */
-public class Llnmon {
+public class LocoNetMessageInterpret {
 
     /**
-     * Flag that determines if we print LocoNet opcodes.
-     */
-    private boolean showOpCode = false;
-
-    /**
-     * Global flag to indicate the message was not fully parsed, so the hex
-     * should be included.
-     */
-    protected boolean forceHex = false;
-
-    private String turnoutPrefix;
-    private String sensorPrefix;
-    private String reporterPrefix;
-
-
-    /**
-     * Create a LocoNet Message Formatter.
+     * Format the message into a text string.
      * <p>
-     * When using this constructor, {@link #setLocoNetReporterManager(jmri.ReporterManager)
-     * }, {@link #setLocoNetSensorManager(jmri.SensorManager) }, and {@link #setLocoNetTurnoutManager(jmri.TurnoutManager)
-     * } may need to be called manually to set the correct device managers.
-     * <p>
-     * @deprecated since 4.5.6; use
-     * {@link #Llnmon(jmri.jmrix.loconet.LocoNetSystemConnectionMemo)} or
-     * {@link #Llnmon(jmri.TurnoutManager, jmri.SensorManager, jmri.ReporterManager)}
-     * instead.
-     */
-    @Deprecated
-    public Llnmon() {
-        this("L");
-    }
-
-    /**
-     * Create a LocoNet Message Formatter. Use the system connection memo to get
-     * the correct managers to allow the user names of managed devices to be
-     * included in messages with the system names.
-     *
-     * @param memo the system connection memo
-     * <p>
-     * @deprecated since 4.13.5; use the 
-     * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
-     * {@link LocoNetMessage#toMonitorString()}
-     * for each individual LocoNet message instead of creating a formatter.
-     */
-    @Deprecated
-    public Llnmon(LocoNetSystemConnectionMemo memo) {
-        this(memo.getSystemPrefix()); // set default managers
-    }
-
-    /**
-     * Create a LocoNet Message Formatter. The managers allow the user names of
-     * managed devices to be included in messages with the system names.
-     * <p>
-     * @param turnoutManager  turnout manager
-     * @param sensorManager   sensor manager
-     * @param reporterManager reporter manager
-     * <p>
-     * @deprecated since 4.13.5; use the 
-     * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
-     * {@link LocoNetMessage#toMonitorString()}
-     * for each individual LocoNet message instead of creating a formatter.
-     */
-    @Deprecated
-    public Llnmon(@Nonnull TurnoutManager turnoutManager, 
-            @Nonnull SensorManager sensorManager, 
-            @Nonnull ReporterManager reporterManager) {
-        this(turnoutManager.getSystemPrefix());
-        this.setLocoNetSensorManager(sensorManager); // a hack to set the sensor prefix
-        this.setLocoNetReporterManager(reporterManager);  // a hack to set the reporter prefix
-    }
-
-    /**
-     * Create a LocoNet Message Formatter. The managers allow the user names of
-     * managed devices to be included in messages with the system names.
-     * <p>
-     * @param prefix - system connection prefix (i.e. "L")
-     * <p>
-     * @deprecated since 4.13.5; use the 
-     * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
-     * {@link LocoNetMessage#toMonitorString()}
-     * for each individual LocoNet message instead of creating a formatter.
-     */
-    @Deprecated
-    public Llnmon(@Nonnull String prefix) {
-        turnoutPrefix = prefix+"T";
-        sensorPrefix = prefix+"S";
-        reporterPrefix = prefix+"R";
-
-    }
-
-    /**
-     * Convert bytes from LocoNet packet into a locomotive address.
-     *
-     * @param a1 Byte containing the upper bits.
-     * @param a2 Byte containing the lower bits.
-     * @return a locomotive address in the range of 0-16383
-     */
-    static private int LOCO_ADR(int a1, int a2) {
-        return (((a1 & 0x7f) * 128) + (a2 & 0x7f));
-    }
-
-    /**
-     * Convert bytes from LocoNet packet into a 1-based address for a sensor or
-     * turnout.
-     *
-     * @param a1 Byte containing the upper bits
-     * @param a2 Byte containing the lower bits
-     * @return 1-4096 address
-     */
-    static private int SENSOR_ADR(int a1, int a2) {
-        return (((a2 & 0x0f) * 128) + (a1 & 0x7f)) + 1;
-    }
-
-    /*
-     * Take an int and convert it to a dotted version number
-     * as used by the LocoIO protocol.
-     * Example:  123 => 1.2.3
-     */
-    /**
-     * Take the LocoIO version number and convert to human friendly format, like
-     * "1.4.8" or "9.1".
-     *
-     * @param val The LocoIO version.
-     * @return String with human readable format
-     */
-    public static String dotme(int val) {
-        if ((val >= 0) && (val < 10)) {
-            return Bundle.getMessage("LN_MSG_LOCOIO_HELPER_FIRMWARE_REV_DOTTED_ONE_DIGIT", val);
-        } else if ((val >= 10) && (val < 100)) {
-            return Bundle.getMessage("LN_MSG_LOCOIO_HELPER_FIRMWARE_REV_DOTTED_TWO_DIGITS", val / 10, val % 10);
-        } else if ((val >= 100) && (val < 1000)) {
-            int hundreds = val / 100;
-            int tens = (val - (hundreds * 100)) / 10;
-            int ones = val % 10;
-            return Bundle.getMessage("LN_MSG_LOCOIO_HELPER_FIRMWARE_REV_DOTTED_THREE_DIGITS", hundreds, tens, ones);
-        }
-        return Bundle.getMessage("LN_MSG_LOCOIO_HELPER_FIRMWARE_REV_OUT_OF_RANGE", val);
-    }
-
-    /**
-     * Convert throttle ID to a human friendly format.
-     *
-     * @param id1 Byte #1 of the ID
-     * @param id2 Byte #2 of the ID
-     * @return String with human friendly format, without the influence of
-     *         Locale
-     */
-    private String idString(int id1, int id2) {
-        /* the decimalIdValueWithoutLocale_SpecificFormatting variable
-        is used to generate a string representation of the ID value
-        without any local-specific formatting.  In other words, in a
-        us_EN locale, we want "14385", not "14,385".
-         */
-        String decimalIdValueWithoutLocale_SpecificFormatting
-                = Integer.toString(((id2 & 0x7F) * 128 + (id1 & 0x7F)));
-
-        String s = Bundle.getMessage("LN_MSG_THROTTLE_ID",
-                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                        StringUtil.twoHexFromInt(id2 & 0x7F)),
-                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                        StringUtil.twoHexFromInt(id1 & 0x7F)),
-                decimalIdValueWithoutLocale_SpecificFormatting);
-        return s;
-    }
-
-    /**
-     * Create a string representation of the loco address in
-     * addressLow & addressHigh in a form appropriate for the type of address (2
-     * or 4 digit) using the Digitrax 'mixed mode' if necessary.
-     * <p>
-     * "Mixed mode" is used by DT100 and DT200 throttles to display loco
-     * addresses between 100 and 127 as a two-digit displayable value, where the
-     * left digit is either 'a', 'b', or 'c', (for addresses in the 10x, 11x,
-     * and 12x ranges, respectively), and the right digit is the "x" from the
-     * ranges above.
-     *
-     * @param addressLow  the least-significant 7 bits of the loco address
-     * @param addressHigh the most-significant 7 bits of the loco address
-     * @return a String containing the address, using Digitrax 'mixed mode'
-     *         representation of the loco address, if appropriate
-     */
-    private static String convertToMixed(int addressLow, int addressHigh) {
-        // if we have a 2 digit decoder address, proceed accordingly
-        switch (addressHigh) {
-            case 0x7d:
-                log.debug("addressLow / 10 = {}", addressLow / 10);
-                switch (addressLow) {
-                    case 100: case 101: case 102: case 103: case 104: case 105:
-                    case 106: case 107: case 108: case 109:
-                        // N (short, alternately 'An') (or long address NN)
-                        return Bundle.getMessage("LN_MSG_HELPER_IS_ALTERNATE_SHORT_AND_LONG_ADDRESS_Ax",
-                                addressLow,
-                                addressLow-100,
-                                String.valueOf(LOCO_ADR(addressHigh, addressLow)));
-                                // Note: .toString intentionally used here to remove the "internationalized"
-                                // presentation of integers, which, in US English, adds a "," between
-                                // the thousands digit and the hundreds digit.  This comma is undesired
-                                // in this application.
-                    case 110: case 111: case 112: case 113: case 114: case 115:
-                    case 116: case 117: case 118: case 119:
-                        // N (short, alternately 'Bn') (or long address NN)
-                        return Bundle.getMessage("LN_MSG_HELPER_IS_ALTERNATE_SHORT_AND_LONG_ADDRESS_Bx",
-                                addressLow,
-                                addressLow-110,
-                                String.valueOf(LOCO_ADR(addressHigh, addressLow)));
-                                // Note: .toString intentionally used here to remove the "internationalized"
-                                // presentation of integers, which, in US English, adds a "," between
-                                // the thousands digit and the hundreds digit.  This comma is undesired
-                                // in this application.
-                    case 120: case 121: case 122: case 123: case 124: case 125:
-                    case 126: case 127:
-                        // N (short, alternately 'Cn') (or long address NN)
-                        return Bundle.getMessage("LN_MSG_HELPER_IS_ALTERNATE_SHORT_AND_LONG_ADDRESS_Cx",
-                                addressLow,
-                                addressLow-120,
-                                String.valueOf(LOCO_ADR(addressHigh, addressLow)));
-                                // Note: .toString intentionally used here to remove the "internationalized"
-                                // presentation of integers, which, in US English, adds a "," between
-                                // the thousands digit and the hundreds digit.  This comma is undesired
-                                // in this application.
-                    default:
-                        // N (short) (or long address NN)
-                        return Bundle.getMessage("LN_MSG_HELPER_IS_SHORT_AND_LONG_ADDRESS",
-                                addressLow,
-                                String.valueOf(LOCO_ADR(addressHigh, addressLow)));
-                                // Note: .toString intentionally used here to remove the "internationalized"
-                                // presentation of integers, which, in US English, adds a "," between
-                                // the thousands digit and the hundreds digit.  This comma is undesired
-                                // in this application.
-                }
-
-            case 0x00:
-            case 0x7f:
-                switch (addressLow) {
-                    case 100: case 101: case 102: case 103: case 104: case 105:
-                    case 106: case 107: case 108: case 109:
-                        // N (short, alternately 'An')
-                        return Bundle.getMessage("LN_MSG_HELPER_IS_ALTERNATE_SHORT_ADDRESS_Ax",
-                                addressLow,
-                                addressLow-100);
-                    case 110: case 111: case 112: case 113: case 114: case 115:
-                    case 116: case 117: case 118: case 119:
-                        // N (short, alternately 'Bn')
-                        return Bundle.getMessage("LN_MSG_HELPER_IS_ALTERNATE_SHORT_ADDRESS_Bx",
-                                addressLow,
-                                addressLow-110);
-                    case 120: case 121: case 122: case 123: case 124: case 125:
-                    case 126: case 127:
-                        // N (short, alternately 'Cn')
-                        return Bundle.getMessage("LN_MSG_HELPER_IS_ALTERNATE_SHORT_ADDRESS_Cx",
-                                addressLow,
-                                addressLow-120);
-                    default:
-                        // N (short)
-                        return Bundle.getMessage("LN_MSG_HELPER_IS_SHORT_ADDRESS",
-                                addressLow);
-                }
-            default:
-                // return the full 4 digit address
-                return String.valueOf(LOCO_ADR(addressHigh, addressLow));
-                // Note: .toString intentionally used here to remove the "internationalized"
-                // presentation of integers, which, in US English, adds a "," between
-                // the thousands digit and the hundreds digit.  This comma is undesired
-                // in this application.
-        }
-    }
-
-    private String trackStatusByteToString(int trackStatusByte) {
-        return Bundle.getMessage("LN_MSG_SLOT_HELPER_TRK_STAT",
-                (((trackStatusByte & LnConstants.GTRK_MLOK1) != 0)
-                        ? Bundle.getMessage("LN_MSG_SLOT_HELPER_TRK_STATUS_LN1_1")
-                        : Bundle.getMessage("LN_MSG_SLOT_HELPER_TRK_STATUS_DT200")),
-                (((trackStatusByte & LnConstants.GTRK_POWER) != 0)
-                        ? Bundle.getMessage("LN_MSG_SLOT_HELPER_TRK_STATUS_TRK_PWR_ON")
-                        : Bundle.getMessage("LN_MSG_SLOT_HELPER_TRK_STATUS_TRK_PWR_OFF")),
-                (((trackStatusByte & LnConstants.GTRK_IDLE) != 0)
-                        ? Bundle.getMessage("LN_MSG_SLOT_HELPER_TRK_STATUS_TRK_PWR_RUNNING")
-                        : Bundle.getMessage("LN_MSG_SLOT_HELPER_TRK_STATUS_TRK_PWR_PAUSED")),
-                (((trackStatusByte & LnConstants.GTRK_PROG_BUSY) != 0)
-                        ? Bundle.getMessage("LN_MSG_SLOT_HELPER_TRK_STATUS_PRG_BUSY")
-                        : Bundle.getMessage("LN_MSG_SLOT_HELPER_TRK_STATUS_PRG_AVAILABLE"))
-        );
-    }
-
-    /**
-     * Return a string which is formatted by a bundle Resource Name.
-     *
-     * @param hour   - fast-clock hour
-     * @param minute - fast-clock minute
-     * @return a formatted string containing the time
-     */
-    private String fcTimeToString(int hour, int minute) {
-        return Bundle.getMessage("LN_MSG_SLOT_HELPER_FC_TIME",
-                LocalTime.of(hour, minute).toString());
-    }
-
-    protected String[] interpretF0_F4toStrings(int dirf) {
-        String[] s = new String[5];
-
-        s[0] = (((dirf & LnConstants.DIRF_F0) == LnConstants.DIRF_F0)
-                ? Bundle.getMessage("LN_MSG_FUNC_ON")
-                : Bundle.getMessage("LN_MSG_FUNC_OFF"));
-        s[1] = (((dirf & LnConstants.DIRF_F1) == LnConstants.DIRF_F1)
-                ? Bundle.getMessage("LN_MSG_FUNC_ON")
-                : Bundle.getMessage("LN_MSG_FUNC_OFF"));
-        s[2] = (((dirf & LnConstants.DIRF_F2) == LnConstants.DIRF_F2)
-                ? Bundle.getMessage("LN_MSG_FUNC_ON")
-                : Bundle.getMessage("LN_MSG_FUNC_OFF"));
-        s[3] = (((dirf & LnConstants.DIRF_F3) == LnConstants.DIRF_F3)
-                ? Bundle.getMessage("LN_MSG_FUNC_ON")
-                : Bundle.getMessage("LN_MSG_FUNC_OFF"));
-        s[4] = (((dirf & LnConstants.DIRF_F4) == LnConstants.DIRF_F4)
-                ? Bundle.getMessage("LN_MSG_FUNC_ON")
-                : Bundle.getMessage("LN_MSG_FUNC_OFF"));
-        return s;
-    }
-
-    protected String directionOfTravelString(boolean isForward) {
-        return Bundle.getMessage(isForward ? "LN_MSG_DIRECTION_FWD"
-                : "LN_MSG_DIRECTION_REV");
-    }
-
-    protected String[] interpretF5_F8toStrings(int snd) {
-        String[] s = new String[4];
-
-        s[0] = (((snd & LnConstants.SND_F5) == LnConstants.SND_F5)
-                ? Bundle.getMessage("LN_MSG_FUNC_ON")
-                : Bundle.getMessage("LN_MSG_FUNC_OFF"));
-
-        s[1] = (((snd & LnConstants.SND_F6) == LnConstants.SND_F6)
-                ? Bundle.getMessage("LN_MSG_FUNC_ON")
-                : Bundle.getMessage("LN_MSG_FUNC_OFF"));
-
-        s[2] = (((snd & LnConstants.SND_F7) == LnConstants.SND_F7)
-                ? Bundle.getMessage("LN_MSG_FUNC_ON")
-                : Bundle.getMessage("LN_MSG_FUNC_OFF"));
-
-        s[3] = (((snd & LnConstants.SND_F8) == LnConstants.SND_F8)
-                ? Bundle.getMessage("LN_MSG_FUNC_ON")
-                : Bundle.getMessage("LN_MSG_FUNC_OFF"));
-
-        return s;
-    }
-
-    private String figureAddressIncludingAliasing(int adr, int adr2, int ss2, int id1, int id2) {
-
-        /*
-         * Build loco address string. String will be a simple
-         * number, unless the address is between 100 and 127
-         * (inclusive), where a Digitrax "mixed mode" version
-         * of the address will be appended.
-         */
-        String mixedAdrStr = convertToMixed(adr, adr2);
-
-        /*
-         * If the address is a command station "alias" condition,
-         * then note it in the string.
-         */
-        if (adr2 == 0x7f) {
-            if ((ss2 & LnConstants.STAT2_ALIAS_MASK) == LnConstants.STAT2_ID_IS_ALIAS) {
-                /* this is an aliased address and we have the alias */
-                return Bundle.getMessage("LN_MSG_LOCO_ADDR_HELPER_ALIAS_2_DIGIT_WITH_KNOWN_4_DIGIT",
-                        Integer.toString(LOCO_ADR(id2, id1)), mixedAdrStr);
-            } else {
-                /* this is an aliased address and we don't have the alias */
-                return Bundle.getMessage("LN_MSG_LOCO_ADDR_HELPER_ALIAS_2_DIGIT_WITH_UNKNOWN_4_DIGIT",
-                        mixedAdrStr);
-            }
-        } else {
-            /* a regular address which is not an alias */
-            return mixedAdrStr;
-        }
-    }
-
-    private String getAlmTaskType(int taskTypeByte) {
-        if (taskTypeByte == 2) {
-            return Bundle.getMessage("LN_MSG_ALM_HELPER_TASK_TYPE_RD");
-        } else if (taskTypeByte == 3) {
-            return Bundle.getMessage("LN_MSG_ALM_HELPER_TASK_TYPE_WR");
-        } else if (taskTypeByte == 0) {
-            return Bundle.getMessage("LN_MSG_ALM_HELPER_TASK_TYPE_ID");
-        } else {
-            return Bundle.getMessage("LN_MSG_ALM_HELPER_TASK_TYPE_UNKONWN",
-                    taskTypeByte);
-        }
-    }
-
-    public static String getDeviceNameFromIPLInfo(int manuf, int type) {
-        if (manuf != LnConstants.RE_IPL_MFR_DIGITRAX) {
-            return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_UNDEFINED_MFG_PROD",
-                    manuf, type);
-        }
-        switch (type) {
-            case LnConstants.RE_IPL_DIGITRAX_HOST_ALL:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_ALLDEVICES");
-            case LnConstants.RE_IPL_DIGITRAX_HOST_LNRP:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_LNRP");
-            case LnConstants.RE_IPL_DIGITRAX_HOST_UT4:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UT4");
-            case LnConstants.RE_IPL_DIGITRAX_HOST_WTL12:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_WTL12");
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS210");
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS240");
-            case LnConstants.RE_IPL_DIGITRAX_HOST_PR3:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_PR3");
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DT402:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DT402");
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DT500:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DT500");
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS51:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS51");
-            case LnConstants.RE_IPL_DIGITRAX_HOST_UR92:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UR92");
-            case LnConstants.RE_IPL_DIGITRAX_HOST_PR4:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_PR4");
-            case LnConstants.RE_IPL_DIGITRAX_HOST_LNWI:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_LNWI");
-            case LnConstants.RE_IPL_DIGITRAX_HOST_BXP88:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_BXP88");
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DB210:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DB210");
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DB210OPTO:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DB210OPTO");
-            case LnConstants.RE_IPL_DIGITRAX_HOST_DB220:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DB220");
-
-            default:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UNKNOWN", type);
-        }
-    }
-
-    public static String getSlaveNameFromIPLInfo(int manuf, int slaveNum) {
-        if (manuf != LnConstants.RE_IPL_MFR_DIGITRAX) {
-            return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_UNDEFINED_MFG_PROD",
-                    manuf, slaveNum);
-        }
-        switch (slaveNum) {
-            case LnConstants.RE_IPL_DIGITRAX_SLAVE_ALL:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_SLAVE_ALLDEVICES");
-            case LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_SLAVE_RF24");
-            default:
-                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_SLAVE_UNKNOWN", slaveNum);
-        }
-    }
-
-    /**
-     * Format the message into a text string. If forceHex is set upon return,
-     * the message was not fully parsed.
+     * Where the code is unable to determine a correct interpretation, the returned
+     * string contains a message indicating that the message is not decoded followed
+     * by the individual bytes of the message (in hexadecimal).
      *
      * @param l Message to parse
-     * @return String representation
+     * @param turnoutPrefix "System Name+ prefix which designates the connection's
+     *          Turnouts, such as "LT"
+     * @param sensorPrefix "System Name+ prefix which designates the connection's
+     *          Turnouts, such as "LS"
+     * @param reporterPrefix "System Name+ prefix which designates the connection's
+     *          Turnouts, such as "LR"
+     * @return String representation of the interpretation of the message
      */
-    protected String format(LocoNetMessage l) {
+    public static String interpretMessage(LocoNetMessage l, String turnoutPrefix, String sensorPrefix, String reporterPrefix) {
+
         String result;
 
+        result = "";
         /*
          * 2 Byte MESSAGE OPCODES
          * ; FORMAT = <OPC>,<CKSUM>
@@ -623,7 +181,7 @@ public class Llnmon {
              * Page 8 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_SW_ACK: {
-                result = interpretOpcSwAck(l);
+                result = interpretOpcSwAck(l, turnoutPrefix);
                 if (result.length() > 0) {
                     return result;
                 }
@@ -638,7 +196,7 @@ public class Llnmon {
              * Page 8 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_SW_STATE: {
-                result = interpretOpcSwState(l);
+                result = interpretOpcSwState(l, turnoutPrefix);
                 if (result.length() > 0) {
                     return result;
                 }
@@ -789,7 +347,7 @@ public class Llnmon {
              * Page 9 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_INPUT_REP: {
-                result = interpretOpcInputRep(l);
+                result = interpretOpcInputRep(l, sensorPrefix);
                 if (result.length() > 0) {
                     return result;
                 }
@@ -828,7 +386,7 @@ public class Llnmon {
              * Page 9 of LocoNet Personal Edition v1.0.
              */
             case LnConstants.OPC_SW_REP: {
-                result = interpretOpcSwRep(l);
+                result = interpretOpcSwRep(l, turnoutPrefix);
                 if (result.length() > 0) {
                     return result;
                 }
@@ -856,7 +414,7 @@ public class Llnmon {
              * Page 13 special form LocoNet interrogate.
              */
             case LnConstants.OPC_SW_REQ: {
-                result = interpretOpcSwReq(l);
+                result = interpretOpcSwReq(l, turnoutPrefix);
                 if (result.length() > 0) {
                     return result;
                 }
@@ -947,7 +505,7 @@ public class Llnmon {
              * performed by Al Silverstein, and corrections added by B. Milhaupt.
              */
             case LnConstants.OPC_MULTI_SENSE: {
-                result = interpretOpcMultiSense(l);
+                result = interpretOpcMultiSense(l, reporterPrefix);
                 if (result.length() > 0) {
                     return result;
                 }
@@ -1136,7 +694,7 @@ public class Llnmon {
              * B. Milhaupt.
              */
             case LnConstants.OPC_PEER_XFER: {
-                result = interpretOpcPeerXfer(l);
+                result = interpretOpcPeerXfer(l, reporterPrefix);
                 if (result.length() > 0) {
                     return result;
                 }
@@ -1188,80 +746,12 @@ public class Llnmon {
             default:
                 break;
         } // end switch over opcode type
-        forceHex = true;
-        return Bundle.getMessage("LN_MSG_UNKNOWN_MESSAGE");
+        return Bundle.getMessage("LN_MSG_UNKNOWN_MESSAGE") +
+                Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO", l.toString());
     }
 
-    /**
-     * Create a string representation of a LocoNet buffer. The
-     * string may be more than one line, and is terminated with a newline.
-     *<p>
-     * @param l the message
-     * @return The created string representation.
-     */
-    public String displayMessage(LocoNetMessage l) {
 
-        forceHex = false;
-        String s = format(l);
-        if (forceHex) {
-            s += Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO",
-                    l.toString());
-        }
-        if (showOpCode) {
-            s = Bundle.getMessage("LN_MONITOR_MESSAGE_PREPEND_OPCODE_INFO",
-                    LnConstants.OPC_NAME(l.getOpCode()), s);
-        }
-        return s;
-    }
-
-    /**
-     * Set the LocoNet turnout manager used to find turnout "user names" from
-     * turnout "system names"
-     *<p>
-     * @param turnoutManager the manager
-     * @deprecated since 4.13.5; use the {@link LocoNetMessage#toMonitorString(String)} (preferred) 
-     * or {@link LocoNetMessage#toMonitorString()}
-     * for each individual LocoNet message instead of creating a formatter and 
-     * using this method.
-     */
-    @Deprecated
-    public final void setLocoNetTurnoutManager(@Nonnull TurnoutManager turnoutManager) {
-        turnoutPrefix = turnoutManager.getSystemPrefix()+"T";
-    }
-
-    /**
-     * Set the LocoNet sensor manager used to find sensor "user names" from
-     * sensor "system names".
-     *<p>
-     * @param sensorManager the manager
-     * @deprecated since 4.13.5; use the 
-     * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
-     * {@link LocoNetMessage#toMonitorString()}
-     * for each individual LocoNet message instead of creating a formatter and 
-     * using this method.
-     */
-    @Deprecated
-    public final void setLocoNetSensorManager(@Nonnull SensorManager sensorManager) {
-        sensorPrefix = sensorManager.getSystemPrefix()+"S";
-    }
-
-    /**
-     * Set the LocoNet reporter manager used to find reported "user names" from
-     * reporter "system names".
-     *<p>
-     * @param reporterManager the manager
-     * @deprecated since 4.13.5; use the 
-     * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
-     * {@link LocoNetMessage#toMonitorString()}
-     * for each individual LocoNet message instead of creating a formatter and 
-     * using this method.
-     */
-    @Deprecated
-    public final void setLocoNetReporterManager(@Nonnull ReporterManager reporterManager) {
-        reporterPrefix = reporterManager.getSystemPrefix()+"R";
-    }
-
-    private String interpretOpcPeerXfer20_1(LocoNetMessage l) {
+    private static String interpretOpcPeerXfer20_1(LocoNetMessage l) {
         switch (l.getElement(3)) {
             case 0x08: {
                 return Bundle.getMessage("LN_MSG_DUPLEX_RECEIVER_QUERY");
@@ -1276,7 +766,7 @@ public class Llnmon {
         return "";
     }
 
-    private String interpretOpcPeerXfer20_2(LocoNetMessage l) {
+    private static String interpretOpcPeerXfer20_2(LocoNetMessage l) {
         switch (l.getElement(3)) {
             case 0x00: {
                 int channel = l.getElement(5) | ((l.getElement(4) & 0x01) << 7);
@@ -1300,7 +790,7 @@ public class Llnmon {
         return "";
     }
 
-    private String interpretOpcPeerXfer20_3(LocoNetMessage l) {
+    private static String interpretOpcPeerXfer20_3(LocoNetMessage l) {
         // Characters appear to be 8 bit values, but transmitted over a 7 bit
         // encoding, so high order bits are stashed in element 4 and 9.
         char[] groupNameArray = {(char) (l.getElement(5) | ((l.getElement(4) & 0x01) << 7)),
@@ -1350,7 +840,7 @@ public class Llnmon {
         return "";
     }
 
-    private String interpretOpcPeerXfer20_4(LocoNetMessage l) {
+    private static String interpretOpcPeerXfer20_4(LocoNetMessage l) {
         // The MSB is stuffed elsewhere again...
         int id = l.getElement(5) | ((l.getElement(4) & 0x01) << 7);
 
@@ -1371,7 +861,7 @@ public class Llnmon {
         return "";
     }
 
-    private String interpretOpcPeerXfer20_7(LocoNetMessage l) {
+    private static String interpretOpcPeerXfer20_7(LocoNetMessage l) {
         if (l.getElement(3) == 0x08) {
             return Bundle.getMessage("LN_MSG_DUPLEX_PASSWORD_QUERY");
         }
@@ -1414,7 +904,7 @@ public class Llnmon {
         return "";
     }
 
-    private String interpretOpcPeerXfer20_10(LocoNetMessage l) {
+    private static String interpretOpcPeerXfer20_10(LocoNetMessage l) {
         switch (l.getElement(3)) {
             case 0x08: {
                 return Bundle.getMessage("LN_MSG_DUPLEX_CHANNEL_SCAN_QUERY", l.getElement(5));
@@ -1433,7 +923,7 @@ public class Llnmon {
         return "";
     }
 
-    private String interpretOpcPeerXfer20_8(LocoNetMessage l) {
+    private static String interpretOpcPeerXfer20_8(LocoNetMessage l) {
         /**
          * **********************************************************************************
          * IPL-capable device ping - OPC_RE_IPL (Device Ping Operations) * The
@@ -1563,7 +1053,7 @@ public class Llnmon {
         return "";
     }
 
-    private String interpretOpcPeerXfer20_0f(LocoNetMessage l) {
+    private static String interpretOpcPeerXfer20_0f(LocoNetMessage l) {
         String device;
 
         switch (l.getElement(3)) {
@@ -1662,7 +1152,7 @@ public class Llnmon {
         return "";
     }
 
-    private String interpretOpcPeerXfer20(LocoNetMessage l) {
+    private static String interpretOpcPeerXfer20(LocoNetMessage l) {
         // Duplex Radio Management
         // DigiIPL messages
         // LocoIO, LocoServo, LocoBuffer, LocoBooster configuration messages
@@ -1743,7 +1233,7 @@ public class Llnmon {
         return "";
     }
 
-    private String interpretOpcPeerXfer20Sub10(LocoNetMessage l) {
+    private static String interpretOpcPeerXfer20Sub10(LocoNetMessage l) {
         /**
          * **********************************************************************************
          * IPL device identity report - RE_IPL_IDENTITY_OPERATION (Device
@@ -1866,7 +1356,7 @@ public class Llnmon {
                 slaveInfo);
     }
 
-    private String interpretOpcPeerXfer16(LocoNetMessage l) {
+    private static String interpretOpcPeerXfer16(LocoNetMessage l) {
         /*
          * SRC=7F is THROTTLE msg xfer
          *  ; <DSTL><DSTH> encode ID#,
@@ -2014,7 +1504,7 @@ public class Llnmon {
         return "";
     }
 
-    private String interpretSV1Message(LocoNetMessage l) {
+    private static String interpretSV1Message(LocoNetMessage l) {
         int d[] = l.getPeerXfrData();
         if ((l.getElement(4) != 1)
                 || ((l.getElement(5) & 0x70) != 0)
@@ -2035,7 +1525,7 @@ public class Llnmon {
         return "";
     }
 
-    private String interpretSV0Message(LocoNetMessage l) {
+    private static String interpretSV0Message(LocoNetMessage l) {
         int dst_h = l.getElement(4);
         int pxct1 = l.getElement(5);
         int pxct2 = l.getElement(10);
@@ -2072,7 +1562,7 @@ public class Llnmon {
                 + ((d[2] != 0) ? " Firmware rev " + dotme(d[2]) : "") + ".\n";
     }
 
-    private String interpretSV2Message(LocoNetMessage l) {
+    private static String interpretSV2Message(LocoNetMessage l) {
         // (New Designs)
         String svReply = "";
         LnSv2MessageContents svmc = null;
@@ -2096,7 +1586,7 @@ public class Llnmon {
         return svReply;
     }
 
-    private String interpretOpcPeerXfer10(LocoNetMessage l) {
+    private static String interpretOpcPeerXfer10(LocoNetMessage l) {
         // throttle status
         int tcntrl = l.getElement(2);
         String stat;
@@ -2134,7 +1624,7 @@ public class Llnmon {
                         StringUtil.twoHexFromInt(l.getElement(8))));
     }
 
-    private String interpretOpcPeerXfer9(LocoNetMessage l) {
+    private static String interpretOpcPeerXfer9(LocoNetMessage l, String reporterPrefix) {
         /*
          * Transponding "find" query and report messages.
          * Information reverse-engineered by B. Milhaupt and used with permission */
@@ -2236,9 +1726,13 @@ public class Llnmon {
                 String reporterSystemName = reporterPrefix
                         + ((l.getElement(5) & 0x1F) * 128 + l.getElement(6) + 1);
 
-                Reporter reporter = InstanceManager.getDefault(ReporterManager.class).provideReporter(reporterSystemName);
+                Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getReporter(reporterSystemName);
 
-                String uname = reporter.getUserName();
+                String uname = "";
+                if (reporter != null) {
+                    uname = reporter.getUserName();
+                }
+
                 if ((uname != null) && (!uname.isEmpty())) {
                     return Bundle.getMessage("LN_MSG_TRANSP_REPORT_KNOWN_REPORTER_USERNAME",
                             locoAddr,
@@ -2260,7 +1754,7 @@ public class Llnmon {
         return "";
     }
 
-    private String interpretOpcPeerXfer7(LocoNetMessage l) {
+    private static String interpretOpcPeerXfer7(LocoNetMessage l) {
         // This might be Uhlenbrock IB-COM start/stop programming track
         if (l.getElement(2) == 0x01 && l.getElement(3) == 0x49 && l.getElement(4) == 0x42) {
             switch (l.getElement(5)) {
@@ -2277,7 +1771,7 @@ public class Llnmon {
         return "";
     }
 
-    private String interpretOpcPeerXfer(LocoNetMessage l) {
+    private static String interpretOpcPeerXfer(LocoNetMessage l, String reporterPrefix) {
         String result = "";
         // The first byte seems to determine the type of message.
         switch (l.getElement(1)) {
@@ -2304,7 +1798,7 @@ public class Llnmon {
                 break;
             }
             case 0x09: { // l.getZElement(1)
-                result = interpretOpcPeerXfer9(l);
+                result = interpretOpcPeerXfer9(l, reporterPrefix);
                 if (result.length() > 0) {
                     return result;
                 }
@@ -2325,7 +1819,7 @@ public class Llnmon {
 
     }
 
-    private String interpretLongAck(LocoNetMessage l) {
+    private static String interpretLongAck(LocoNetMessage l) {
         int opcode = l.getElement(1);
         int ack1 = l.getElement(2);
 
@@ -2346,10 +1840,11 @@ public class Llnmon {
                     case 0x7f:
                         return Bundle.getMessage("LN_MSG_LONG_ACK_SW_ACK_ACCEPT");
                     default:
-                        forceHex = true;
                         return Bundle.getMessage("LN_MSG_LONG_ACK_SW_ACK_UNKNOWN",
                                 Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                        StringUtil.twoHexFromInt(ack1)));
+                                        StringUtil.twoHexFromInt(ack1)))+
+                                        Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO", l.toString());
+
                 }
             case (LnConstants.OPC_SW_REQ):
                 // response for OPC_SW_REQ
@@ -2371,10 +1866,11 @@ public class Llnmon {
                     case 0x7f:
                         return Bundle.getMessage("LN_MSG_LONG_ACK_WR_SL_NOT_IMPL");
                     default:
-                        forceHex = true;
                         return Bundle.getMessage("LN_MSG_LONG_ACK_WR_SL_UNKNOWN",
                                 Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                        StringUtil.twoHexFromInt(ack1)));
+                                        StringUtil.twoHexFromInt(ack1)))+
+                                Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO", l.toString());
+
                 }
 
             case (LnConstants.OPC_SW_STATE):
@@ -2394,10 +1890,11 @@ public class Llnmon {
                     case 0x7f:
                         return Bundle.getMessage("LN_MSG_LONG_ACK_MOVE_SL_ACCEPT");
                     default:
-                        forceHex = true;
                         return Bundle.getMessage("LN_MSG_LONG_ACK_MOVE_SL_UNKNOWN",
                                 Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                        StringUtil.twoHexFromInt(ack1)));
+                                        StringUtil.twoHexFromInt(ack1)))+
+                                Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO", l.toString());
+
                 }
 
             case LnConstants.OPC_IMM_PACKET:
@@ -2410,10 +1907,11 @@ public class Llnmon {
                     return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_UHL_PROG");
 
                 } else {
-                    forceHex = true;
                     return Bundle.getMessage("LN_MSG_LONG_ACK_OPC_IMM_UNKNOWN",
                             Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
-                                    StringUtil.twoHexFromInt(ack1)));
+                                    StringUtil.twoHexFromInt(ack1)))+
+                                Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO", l.toString());
+
                 }
 
             case LnConstants.OPC_IMM_PACKET_2:
@@ -2449,7 +1947,7 @@ public class Llnmon {
         return "";
     }
 
-    private String interpretPm4xPowerEvent(LocoNetMessage l) {
+    private static String interpretPm4xPowerEvent(LocoNetMessage l) {
         int pCMD = (l.getElement(3) & 0xF0);
 
         if ((pCMD == 0x30) || (pCMD == 0x10)) {
@@ -2516,7 +2014,7 @@ public class Llnmon {
         return "";
     }
 
-    private String interpretOpSws(LocoNetMessage l) {
+    private static String interpretOpSws(LocoNetMessage l) {
         int pCMD = (l.getElement(3) & 0xF0);
         if (pCMD == 0x70) {
             // programming
@@ -2566,7 +2064,7 @@ public class Llnmon {
         return "";
     }
 
-    private String interpretDeviceType(LocoNetMessage l) {
+    private static String interpretDeviceType(LocoNetMessage l) {
         int pCMD = (l.getElement(3) & 0xF0);
         if (pCMD == 0x00) {
             /**
@@ -2635,7 +2133,7 @@ public class Llnmon {
         return "";
     }
 
-    private String interpretOpcMultiSense(LocoNetMessage l) {
+    private static String interpretOpcMultiSense(LocoNetMessage l, String reporterPrefix) {
         int type = l.getElement(1) & LnConstants.OPC_MULTI_SENSE_MSG;
         switch (type) {
             case LnConstants.OPC_MULTI_SENSE_POWER:
@@ -2657,7 +2155,7 @@ public class Llnmon {
 
             case LnConstants.OPC_MULTI_SENSE_PRESENT:
             case LnConstants.OPC_MULTI_SENSE_ABSENT:
-                result = interpretOpcMultiSenseTranspPresence(l);
+                result = interpretOpcMultiSenseTranspPresence(l, reporterPrefix);
                 if (result.length() > 0) {
                     return result;
                 }
@@ -2668,7 +2166,7 @@ public class Llnmon {
         return "";
     }
 
-    private String interpretOpcMultiSenseTranspPresence(LocoNetMessage l) {
+    private static String interpretOpcMultiSenseTranspPresence(LocoNetMessage l, String reporterPrefix) {
         // Transponding Event
         // get system and user names
         String reporterSystemName;
@@ -2710,11 +2208,13 @@ public class Llnmon {
         reporterSystemName = reporterPrefix
                 + ((l.getElement(1) & 0x1F) * 128 + l.getElement(2) + 1);
 
-                Reporter reporter = InstanceManager.getDefault(ReporterManager.class).provideReporter(reporterSystemName);
+        Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getReporter(reporterSystemName);
         reporterUserName = "";
-        String uname = reporter.getUserName();
-        if ((uname != null) && (!uname.isEmpty())) {
-            reporterUserName = uname;
+        if (reporter != null) {
+            String uname = reporter.getUserName();
+            if ((uname != null) && (!uname.isEmpty())) {
+                reporterUserName = uname;
+            }
         }
         int bxpa1Number = 1 + l.getElement(2) + (l.getElement(1) & 0x1F) * 128;
         int bxp88Number = 1 + (l.getElement(2)/8) + (l.getElement(1) & 0x1F) * 16;
@@ -2736,7 +2236,7 @@ public class Llnmon {
         }
     }
 
-    private String interpretOpcWrSlDataOpcSlRdData(LocoNetMessage l) {
+    private static String interpretOpcWrSlDataOpcSlRdData(LocoNetMessage l) {
         int slot = l.getElement(2); // slot number for this request
         String mode;
         int command = l.getElement(0);
@@ -2797,19 +2297,22 @@ public class Llnmon {
         return "";
     }
 
-    private String interpretOpcInputRep(LocoNetMessage l) {
+    private static String interpretOpcInputRep(LocoNetMessage l, String sensorPrefix) {
         int in1 = l.getElement(1);
         int in2 = l.getElement(2);
         int contactNum = ((SENSOR_ADR(in1, in2) - 1) * 2 + ((in2 & LnConstants.OPC_INPUT_REP_SW) != 0 ? 2 : 1));
         // get system and user names
         String sensorSystemName = sensorPrefix + contactNum;
         String sensorUserName = "";
-        Sensor sensor = InstanceManager.getDefault(SensorManager.class).provideSensor(sensorSystemName);
+        Sensor sensor = InstanceManager.getDefault(SensorManager.class).getSensor(sensorSystemName);
         sensorUserName = "";
-        String uname = sensor.getUserName();
-        if ((uname != null) && (!uname.isEmpty())) {
-            sensorUserName = uname;
+        if (sensor != null) {
+            String uname = sensor.getUserName();
+            if ((uname != null) && (!uname.isEmpty())) {
+                sensorUserName = uname;
+            }
         }
+
         int sensorid = (SENSOR_ADR(in1, in2) - 1) * 2
                 + ((in2 & LnConstants.OPC_INPUT_REP_SW) != 0 ? 2 : 1);
 
@@ -2843,7 +2346,7 @@ public class Llnmon {
                 otherBoardsNames, otherBoardsInputs);
     }
 
-    private String interpretOpcSwRep(LocoNetMessage l) {
+    private static String interpretOpcSwRep(LocoNetMessage l, String turnoutPrefix) {
         int sn1 = l.getElement(1);
         int sn2 = l.getElement(2);
         // get system and user names
@@ -2851,13 +2354,16 @@ public class Llnmon {
 
         String turnoutSystemName = turnoutPrefix
                 + SENSOR_ADR(sn1, sn2);
-        Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(turnoutSystemName);
+        Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnoutSystemName);
 
-        String uname = turnout.getUserName();
-        if ((uname != null) && (!uname.isEmpty())) {
-            turnoutUserName = uname;
-        } else {
-            turnoutUserName = "";
+        String uname = "";
+        if (turnout != null) {
+            uname = turnout.getUserName();
+            if ((uname != null) && (!uname.isEmpty())) {
+                turnoutUserName = uname;
+            } else {
+                turnoutUserName = "";
+            }
         }
 
         if ((sn2 & LnConstants.OPC_SW_REP_INPUTS) != 0) {
@@ -2880,7 +2386,7 @@ public class Llnmon {
                         : "LN_MSG_SENSOR_SW_OUTPUT_STATE_OFF")));
     }
 
-    private String interpretOpcSwAck(LocoNetMessage l) {
+    private static String interpretOpcSwAck(LocoNetMessage l, String turnoutPrefix) {
         int sw2 = l.getElement(2);
         if ((sw2 & 0x40) == 0x40) {
             return "";
@@ -2890,13 +2396,16 @@ public class Llnmon {
 
         String turnoutSystemName = turnoutPrefix
                 + SENSOR_ADR(l.getElement(1), l.getElement(2));
-        Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(turnoutSystemName);
+        Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnoutSystemName);
 
-        String uname = turnout.getUserName();
-        if ((uname != null) && (!uname.isEmpty())) {
-            turnoutUserName = uname;
-        } else {
-            turnoutUserName = "";
+        String uname = "";
+        if (turnout != null) {
+            uname = turnout.getUserName();
+            if ((uname != null) && (!uname.isEmpty())) {
+                turnoutUserName = uname;
+            } else {
+                turnoutUserName = "";
+            }
         }
 
         String pointsDirection = ((sw2 & LnConstants.OPC_SW_ACK_CLOSED) != 0
@@ -2909,7 +2418,7 @@ public class Llnmon {
                 turnoutUserName, pointsDirection, outputState);
     }
 
-    private String interpretOpcSwState(LocoNetMessage l) {
+    private static String interpretOpcSwState(LocoNetMessage l, String turnoutPrefix) {
         // get system and user names
         if ((l.getElement(2) & 0x40) != 0x00) {
             return "";
@@ -2917,20 +2426,24 @@ public class Llnmon {
         String turnoutUserName = "";
         String turnoutSystemName = turnoutPrefix
                 + SENSOR_ADR(l.getElement(1), l.getElement(2));
-        Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(turnoutSystemName);
+        Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnoutSystemName);
 
-        String uname = turnout.getUserName();
-        if ((uname != null) && (!uname.isEmpty())) {
-            turnoutUserName = uname;
-        } else {
-            turnoutUserName = "";
+        String uname = "";
+        if (turnout != null) {
+            uname = turnout.getUserName();
+            if ((uname != null) && (!uname.isEmpty())) {
+                turnoutUserName = uname;
+            } else {
+                turnoutUserName = "";
+            }
         }
+
 
         return Bundle.getMessage("LN_MSG_SW_STATE", turnoutSystemName,
                 turnoutUserName);
     }
 
-    private String interpretOpcRqSlData(LocoNetMessage l) {
+    private static String interpretOpcRqSlData(LocoNetMessage l) {
         int slot = l.getElement(1) + 128 * l.getElement(2);
 
         switch (slot) {
@@ -2953,7 +2466,7 @@ public class Llnmon {
         return "";
     }
 
-    private String interpretOpcMoveSlots(LocoNetMessage l) {
+    private static String interpretOpcMoveSlots(LocoNetMessage l) {
         int src = l.getElement(1);
         int dest = l.getElement(2);
         if ((src >= 0x79) && (src <= 0x7f)) {
@@ -2983,7 +2496,7 @@ public class Llnmon {
         }
     }
 
-    private String interpretOpcConsistFunc(LocoNetMessage l) {
+    private static String interpretOpcConsistFunc(LocoNetMessage l) {
         int slot = l.getElement(1);
         int dirf = l.getElement(2);
         if ((dirf & 0x40) == 0x40) {
@@ -2994,7 +2507,7 @@ public class Llnmon {
                 interpretDIRF(dirf));
     }
 
-    private String interpretOpcLocoSnd(LocoNetMessage l) {
+    private static String interpretOpcLocoSnd(LocoNetMessage l) {
         int slot = l.getElement(1);
         int snd = l.getElement(2);
         return Bundle.getMessage("LN_MSG_OPC_LOCO_SND",
@@ -3010,7 +2523,7 @@ public class Llnmon {
 
     }
 
-    protected String interpretDIRF(int dirf) {
+    protected static String interpretDIRF(int dirf) {
         if ((dirf & 0x40) == 0x40) {
             return "";
         }
@@ -3022,7 +2535,7 @@ public class Llnmon {
 
     }
 
-    private String interpretOpcLocoDirf(LocoNetMessage l) {
+    private static String interpretOpcLocoDirf(LocoNetMessage l) {
         int slot = l.getElement(1);
         int dirf = l.getElement(2);
 
@@ -3035,7 +2548,7 @@ public class Llnmon {
                 slot, dirFinfo);
     }
 
-    private String interpretOpcLocoSpd(LocoNetMessage l) {
+    private static String interpretOpcLocoSpd(LocoNetMessage l) {
         int slot = l.getElement(1);
         int spd = l.getElement(2);
 
@@ -3047,7 +2560,7 @@ public class Llnmon {
 
     }
 
-    private String interpretOpcPanelQuery(LocoNetMessage l) {
+    private static String interpretOpcPanelQuery(LocoNetMessage l) {
         switch (l.getElement(1)) {
             case 0x00: {
                 return Bundle.getMessage("LN_MSG_OPC_DF_TETHERLESS_QUERY");
@@ -3067,7 +2580,7 @@ public class Llnmon {
         return "";
     }
 
-    private String interpretOpcSwReq(LocoNetMessage l) {
+    private static String interpretOpcSwReq(LocoNetMessage l, String turnoutPrefix) {
         int sw1 = l.getElement(1);
         int sw2 = l.getElement(2);
         if ((sw2 & 0x40) == 0x40) {
@@ -3083,13 +2596,16 @@ public class Llnmon {
 
             String turnoutSystemName = turnoutPrefix
                     + SENSOR_ADR(l.getElement(1), l.getElement(2));
-            Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(turnoutSystemName);
+            Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnoutSystemName);
 
-            String uname = turnout.getUserName();
-            if ((uname != null) && (!uname.isEmpty())) {
-                turnoutUserName = uname;
-            } else {
-                turnoutUserName = "";
+            String uname = "";
+            if (turnout != null) {
+                uname = turnout.getUserName();
+                if ((uname != null) && (!uname.isEmpty())) {
+                    turnoutUserName = uname;
+                } else {
+                    turnoutUserName = "";
+                }
             }
 
             String pointsDirection = ((sw2 & LnConstants.OPC_SW_ACK_CLOSED) != 0
@@ -3166,7 +2682,7 @@ public class Llnmon {
         }
     }
 
-    private String interpretFastClockSlot(LocoNetMessage l, String mode, int id1, int id2) {
+    private static String interpretFastClockSlot(LocoNetMessage l, String mode, int id1, int id2) {
         /**
          * FAST Clock: The system FAST clock and parameters are implemented in
          * Slot#123 <7B>. Use <EF> to write new clock information, Slot read of
@@ -3248,7 +2764,7 @@ public class Llnmon {
                 trackStatusByteToString(track_stat));
     }
 
-    private String interpretProgSlot(LocoNetMessage l, String mode, int id1, int id2, int command) {
+    private static String interpretProgSlot(LocoNetMessage l, String mode, int id1, int id2, int command) {
         /**
          * ********************************************************************************************
          * Programmer track: * ================= * The programmer track is
@@ -3488,35 +3004,30 @@ public class Llnmon {
              * and will have the resulting status byte.
              */
             String responseMessage = "(ODD BEHAVIOR - Default value not overwritten - report to developers!"; // NOI18N
-            forceHex = true;
+            String hexMessage = "";
             if (pstat != 0) {
                 if ((pstat & LnConstants.PSTAT_USER_ABORTED) != 0) {
                     responseMessage = Bundle.getMessage("LN_MSG_SLOT_PROG_HELPER_RESPONSE_USER_ABORT");
-                    forceHex = false;
                 } else if ((pstat & LnConstants.PSTAT_READ_FAIL) != 0) {
                     responseMessage = Bundle.getMessage("LN_MSG_SLOT_PROG_HELPER_RESPONSE_NO_READ_COMPARE_ACK_DETECT");
-                    forceHex = false;
                 } else if ((pstat & LnConstants.PSTAT_WRITE_FAIL) != 0) {
                     responseMessage = Bundle.getMessage("LN_MSG_SLOT_PROG_HELPER_RESPONSE_NO_WRITE_ACK_DETECT");
-                    forceHex = false;
                 } else if ((pstat & LnConstants.PSTAT_NO_DECODER) != 0) {
                     responseMessage = Bundle.getMessage("LN_MSG_SLOT_PROG_HELPER_RESPONSE_NO_LOCO_ON_PROGRAMMING_TRACK");
-                    forceHex = false;
                 } else if ((pstat & 0xF0) != 0) {
                     if ((pstat & 0xF0) == 0x10) {
                         // response from transponding decoder
                         responseMessage = Bundle.getMessage("LN_MSG_SLOT_PROG_HELPER_RESPONSE_SUCCESS_VIA_RX4_BDL16X");
-                        forceHex = false;
 
                     } else {
                         responseMessage = Bundle.getMessage("LN_MSG_SLOT_PROG_HELPER_RESPONSE_UNDECODED",
                                 Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                         StringUtil.twoHexFromInt(pstat)));
+                        hexMessage = Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO", l.toString());
                     }
                 }
             } else {
                 responseMessage = Bundle.getMessage("LN_MSG_SLOT_PROG_HELPER_RESPONSE_SUCCEEDED");
-                forceHex = false;
             }
 
             switch ((pcmd & (LnConstants.PCMD_MODE_MASK | LnConstants.PCMD_RW))) {
@@ -3527,7 +3038,7 @@ public class Llnmon {
                                     cvNumber, cvData,
                                     Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                             StringUtil.twoHexFromInt(cvData)),
-                                    StringUtil.to8Bits(cvData, true)));
+                                    StringUtil.to8Bits(cvData, true)))+hexMessage;
                 case LnConstants.PAGED_ON_SRVC_TRK | LnConstants.PCMD_RW:
                     return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_PAGED_WR",
                             responseMessage,
@@ -3535,7 +3046,7 @@ public class Llnmon {
                                     cvNumber, cvData,
                                     Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                             StringUtil.twoHexFromInt(cvData)),
-                                    StringUtil.to8Bits(cvData, true)));
+                                    StringUtil.to8Bits(cvData, true)))+hexMessage;
                 case LnConstants.DIR_BYTE_ON_SRVC_TRK:
                     return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_DIR_BYTE_RD",
                             responseMessage,
@@ -3543,7 +3054,7 @@ public class Llnmon {
                                     cvNumber, cvData,
                                     Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                             StringUtil.twoHexFromInt(cvData)),
-                                    StringUtil.to8Bits(cvData, true)));
+                                    StringUtil.to8Bits(cvData, true)))+hexMessage;
                 case LnConstants.DIR_BYTE_ON_SRVC_TRK | LnConstants.PCMD_RW:
                     return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_DIR_BYTE_WR",
                             responseMessage,
@@ -3552,7 +3063,7 @@ public class Llnmon {
                                     cvData,
                                     Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                             StringUtil.twoHexFromInt(cvData)),
-                                    StringUtil.to8Bits(cvData, true)));
+                                    StringUtil.to8Bits(cvData, true)))+hexMessage;
                 case LnConstants.DIR_BIT_ON_SRVC_TRK:
                     return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_DIR_BIT_RD",
                             responseMessage,
@@ -3560,7 +3071,7 @@ public class Llnmon {
                                     cvNumber, cvData,
                                     Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                             StringUtil.twoHexFromInt(cvData)),
-                                    StringUtil.to8Bits(cvData, true)));
+                                    StringUtil.to8Bits(cvData, true)))+hexMessage;
                 case LnConstants.DIR_BIT_ON_SRVC_TRK | LnConstants.PCMD_RW:
                     return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_DIR_BIT_WR",
                             responseMessage,
@@ -3568,7 +3079,7 @@ public class Llnmon {
                                     cvNumber, cvData,
                                     Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                             StringUtil.twoHexFromInt(cvData)),
-                                    StringUtil.to8Bits(cvData, true)));
+                                    StringUtil.to8Bits(cvData, true)))+hexMessage;
                 case LnConstants.REG_BYTE_RW_ON_SRVC_TRK:
                 case LnConstants.REG_BYTE_RW_ON_SRVC_TRK | LnConstants.PCMD_BYTE_MODE:
                     return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_REG_BYTE_RD",
@@ -3577,7 +3088,7 @@ public class Llnmon {
                                     cvNumber, cvData,
                                     Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                             StringUtil.twoHexFromInt(cvData)),
-                                    StringUtil.to8Bits(cvData, true)));
+                                    StringUtil.to8Bits(cvData, true)))+hexMessage;
                 case LnConstants.REG_BYTE_RW_ON_SRVC_TRK | LnConstants.PCMD_RW:
                 case LnConstants.REG_BYTE_RW_ON_SRVC_TRK | LnConstants.PCMD_BYTE_MODE | LnConstants.PCMD_RW:
                     return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_REG_BYTE_WR",
@@ -3586,7 +3097,7 @@ public class Llnmon {
                                     cvNumber, cvData,
                                     Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                             StringUtil.twoHexFromInt(cvData)),
-                                    StringUtil.to8Bits(cvData, true)));
+                                    StringUtil.to8Bits(cvData, true)))+hexMessage;
                 case LnConstants.SRVC_TRK_RESERVED:
                 case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_BYTE_MODE:
                     return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_RD_RESERVED",
@@ -3595,7 +3106,7 @@ public class Llnmon {
                                     cvNumber, cvData,
                                     Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                             StringUtil.twoHexFromInt(cvData)),
-                                    StringUtil.to8Bits(cvData, true)));
+                                    StringUtil.to8Bits(cvData, true)))+hexMessage;
                 case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_RW:
                 case LnConstants.SRVC_TRK_RESERVED | LnConstants.PCMD_BYTE_MODE | LnConstants.PCMD_RW:
                     return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_SRVC_TRK_WR_RESERVED",
@@ -3604,7 +3115,7 @@ public class Llnmon {
                                     cvNumber, cvData,
                                     Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                             StringUtil.twoHexFromInt(cvData)),
-                                    StringUtil.to8Bits(cvData, true)));
+                                    StringUtil.to8Bits(cvData, true)))+hexMessage;
                 case LnConstants.OPS_BYTE_NO_FEEDBACK:
                     return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_OPS_BYTE_RD_NO_FEEDBACK",
                             responseMessage,
@@ -3613,7 +3124,7 @@ public class Llnmon {
                                     cvNumber, cvData,
                                     Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                             StringUtil.twoHexFromInt(cvData)),
-                                    StringUtil.to8Bits(cvData, true)));
+                                    StringUtil.to8Bits(cvData, true)))+hexMessage;
                 case LnConstants.OPS_BYTE_NO_FEEDBACK | LnConstants.PCMD_RW:
                     return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_OPS_BYTE_WR_NO_FEEDBACK",
                             responseMessage,
@@ -3622,7 +3133,7 @@ public class Llnmon {
                                     cvNumber, cvData,
                                     Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                             StringUtil.twoHexFromInt(cvData)),
-                                    StringUtil.to8Bits(cvData, true)));
+                                    StringUtil.to8Bits(cvData, true)))+hexMessage;
                 case LnConstants.OPS_BYTE_FEEDBACK:
                     return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_OPS_BYTE_RD_FEEDBACK",
                             responseMessage,
@@ -3631,7 +3142,7 @@ public class Llnmon {
                                     cvNumber, cvData,
                                     Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                             StringUtil.twoHexFromInt(cvData)),
-                                    StringUtil.to8Bits(cvData, true)));
+                                    StringUtil.to8Bits(cvData, true)))+hexMessage;
                 case LnConstants.OPS_BYTE_FEEDBACK | LnConstants.PCMD_RW:
                     return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_OPS_BYTE_WR_FEEDBACK",
                             responseMessage,
@@ -3640,7 +3151,7 @@ public class Llnmon {
                                     cvNumber, cvData,
                                     Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                             StringUtil.twoHexFromInt(cvData)),
-                                    StringUtil.to8Bits(cvData, true)));
+                                    StringUtil.to8Bits(cvData, true)))+hexMessage;
                 case LnConstants.OPS_BIT_NO_FEEDBACK:
                     return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_OPS_BIT_RD_NO_FEEDBACK",
                             responseMessage,
@@ -3649,7 +3160,7 @@ public class Llnmon {
                                     cvNumber, cvData,
                                     Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                             StringUtil.twoHexFromInt(cvData)),
-                                    StringUtil.to8Bits(cvData, true)));
+                                    StringUtil.to8Bits(cvData, true)))+hexMessage;
                 case LnConstants.OPS_BIT_NO_FEEDBACK | LnConstants.PCMD_RW:
                     return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_OPS_BIT_WR_NO_FEEDBACK",
                             responseMessage,
@@ -3658,7 +3169,7 @@ public class Llnmon {
                                     cvNumber, cvData,
                                     Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                             StringUtil.twoHexFromInt(cvData)),
-                                    StringUtil.to8Bits(cvData, true)));
+                                    StringUtil.to8Bits(cvData, true)))+hexMessage;
                 case LnConstants.OPS_BIT_FEEDBACK:
                     return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_OPS_BIT_RD_FEEDBACK",
                             responseMessage,
@@ -3667,7 +3178,7 @@ public class Llnmon {
                                     cvNumber, cvData,
                                     Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                             StringUtil.twoHexFromInt(cvData)),
-                                    StringUtil.to8Bits(cvData, true)));
+                                    StringUtil.to8Bits(cvData, true)))+hexMessage;
                 case LnConstants.OPS_BIT_FEEDBACK | LnConstants.PCMD_RW:
                     return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_OPS_BIT_WR_FEEDBACK",
                             responseMessage,
@@ -3676,7 +3187,7 @@ public class Llnmon {
                                     cvNumber, cvData,
                                     Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                             StringUtil.twoHexFromInt(cvData)),
-                                    StringUtil.to8Bits(cvData, true)));
+                                    StringUtil.to8Bits(cvData, true)))+hexMessage;
                 case 0:
                     return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_UHLENBROCK_RD",
                             responseMessage,
@@ -3684,7 +3195,7 @@ public class Llnmon {
                                     cvNumber, cvData,
                                     Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                             StringUtil.twoHexFromInt(cvData)),
-                                    StringUtil.to8Bits(cvData, true)));
+                                    StringUtil.to8Bits(cvData, true)))+hexMessage;
                 case LnConstants.PCMD_RW:
                     return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_UHLENBROCK_WR",
                             responseMessage,
@@ -3692,7 +3203,7 @@ public class Llnmon {
                                     cvNumber, cvData,
                                     Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                             StringUtil.twoHexFromInt(cvData)),
-                                    StringUtil.to8Bits(cvData, true)));
+                                    StringUtil.to8Bits(cvData, true)))+hexMessage;
                 default:
                     return Bundle.getMessage("LN_MSG_SLOT_PROG_MODE_RESPONSE_UNKNOWN",
                             pcmd,
@@ -3703,12 +3214,12 @@ public class Llnmon {
                                     cvNumber, cvData,
                                     Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                             StringUtil.twoHexFromInt(cvData)),
-                                    StringUtil.to8Bits(cvData, true)));
+                                    StringUtil.to8Bits(cvData, true)))+hexMessage;
             }
         }
     }
 
-    private String interpretCmdStnCfgSlotRdWr(LocoNetMessage l, int command) {
+    private static String interpretCmdStnCfgSlotRdWr(LocoNetMessage l, int command) {
 
         /**
          * ************************************************
@@ -3806,7 +3317,7 @@ public class Llnmon {
 
     }
 
-    private String interpretCmdStnExtCfgSlotRdWr(LocoNetMessage l, int command) {
+    private static String interpretCmdStnExtCfgSlotRdWr(LocoNetMessage l, int command) {
     /*
      * ************************************************
      * Extended Configuration slot, holding op switches
@@ -3896,7 +3407,7 @@ public class Llnmon {
                 opswGroup5, opswGroup6, opswGroup7, opswGroup8);
     }
 
-    private String interpretStandardSlotRdWr(LocoNetMessage l, int id1, int id2, int command, int slot) {
+    private static String interpretStandardSlotRdWr(LocoNetMessage l, int id1, int id2, int command, int slot) {
 
         /**
          * ************************************************
@@ -3943,7 +3454,7 @@ public class Llnmon {
                         idString(id1, id2)));
     }
 
-    private String interpretOpcPanelResponse(LocoNetMessage l) {
+    private static String interpretOpcPanelResponse(LocoNetMessage l) {
         switch (l.getElement(1)) {
             case 0x12: {
                 // Bit 3 (0x08 in hex) is set by every UR-92 we've ever captured.
@@ -3969,7 +3480,7 @@ public class Llnmon {
         }
     }
 
-    private String interpretOpcLissyUpdate(LocoNetMessage l) {
+    private static String interpretOpcLissyUpdate(LocoNetMessage l) {
         /*
          * OPC_LISSY_UPDATE   0xE4
          *
@@ -4036,8 +3547,8 @@ public class Llnmon {
                                 : "LN_MSG_SE_REPORT_HELPER_UNOCCUPIED"));
             case 0x09:
                 if (l.getElement(4) == 0x00) {
-                    forceHex = true;
-                    return Bundle.getMessage("LN_MSG_UNRECOGNIZED_SIG_STATE_REPORT_MAY_BE_FROM_CML_HW");
+                    return Bundle.getMessage("LN_MSG_UNRECOGNIZED_SIG_STATE_REPORT_MAY_BE_FROM_CML_HW")+
+                                Bundle.getMessage("LN_MONITOR_MESSGAGE_RAW_HEX_INFO", l.toString());
                 }
                 break;
             default:
@@ -4046,7 +3557,7 @@ public class Llnmon {
         return "";
     }
 
-    private String interpretOpcImmPacket(LocoNetMessage l) {
+    private static String interpretOpcImmPacket(LocoNetMessage l) {
         /*
          * OPC_IMM_PACKET   0xED   ;SEND n-byte packet immediate LACK
          *                         ; Follow on message: LACK
@@ -4305,7 +3816,7 @@ public class Llnmon {
         return ""; // not an understood message.
     }
 
-    private String interpretOpcPr3Mode(LocoNetMessage l) {
+    private static String interpretOpcPr3Mode(LocoNetMessage l) {
         /*
          * Sets the operating mode of the PR3 device, if present.
          *
@@ -4337,7 +3848,7 @@ public class Llnmon {
         return "";
     }
 
-    private String interpretIb2Special(LocoNetMessage l) {
+    private static String interpretIb2Special(LocoNetMessage l) {
         // Intellibox function control message for mobile decoder F0-F28 (IB-I) and F13-F28 (IB-II)
         if ((l.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN)
                 && ((l.getElement(3) == LnConstants.RE_IB1_SPECIAL_F5_F11_TOKEN)
@@ -4415,7 +3926,7 @@ public class Llnmon {
         return "";
     }
 
-    private String interpretIb2F9_to_F12(LocoNetMessage l) {
+    private static String interpretIb2F9_to_F12(LocoNetMessage l) {
         // Intellibox-II function control message for mobile decoder F9 thru F12.
         int slot = l.getElement(1);
         int funcs = l.getElement(2);
@@ -4427,10 +3938,369 @@ public class Llnmon {
                 Bundle.getMessage(((funcs & LnConstants.RE_IB2_F12_MASK) != 0 ? "LN_MSG_FUNC_ON" : "LN_MSG_FUNC_OFF")));
     }
 
+    /**
+     * Convert bytes from LocoNet packet into a locomotive address.
+     *
+     * @param a1 Byte containing the upper bits.
+     * @param a2 Byte containing the lower bits.
+     * @return a locomotive address in the range of 0-16383
+     */
+    static private int LOCO_ADR(int a1, int a2) {
+        return (((a1 & 0x7f) * 128) + (a2 & 0x7f));
+    }
+
+    /**
+     * Convert bytes from LocoNet packet into a 1-based address for a sensor or
+     * turnout.
+     *
+     * @param a1 Byte containing the upper bits
+     * @param a2 Byte containing the lower bits
+     * @return 1-4096 address
+     */
+    static private int SENSOR_ADR(int a1, int a2) {
+        return (((a2 & 0x0f) * 128) + (a1 & 0x7f)) + 1;
+    }
+
+    /*
+     * Take an int and convert it to a dotted version number
+     * as used by the LocoIO protocol.
+     * Example:  123 => 1.2.3
+     */
+    /**
+     * Take the LocoIO version number and convert to human friendly format, like
+     * "1.4.8" or "9.1".
+     *
+     * @param val The LocoIO version.
+     * @return String with human readable format
+     */
+    public static String dotme(int val) {
+        if ((val >= 0) && (val < 10)) {
+            return Bundle.getMessage("LN_MSG_LOCOIO_HELPER_FIRMWARE_REV_DOTTED_ONE_DIGIT", val);
+        } else if ((val >= 10) && (val < 100)) {
+            return Bundle.getMessage("LN_MSG_LOCOIO_HELPER_FIRMWARE_REV_DOTTED_TWO_DIGITS", val / 10, val % 10);
+        } else if ((val >= 100) && (val < 1000)) {
+            int hundreds = val / 100;
+            int tens = (val - (hundreds * 100)) / 10;
+            int ones = val % 10;
+            return Bundle.getMessage("LN_MSG_LOCOIO_HELPER_FIRMWARE_REV_DOTTED_THREE_DIGITS", hundreds, tens, ones);
+        }
+        return Bundle.getMessage("LN_MSG_LOCOIO_HELPER_FIRMWARE_REV_OUT_OF_RANGE", val);
+    }
+
+    /**
+     * Convert throttle ID to a human friendly format.
+     *
+     * @param id1 Byte #1 of the ID
+     * @param id2 Byte #2 of the ID
+     * @return String with human friendly format, without the influence of
+     *         Locale
+     */
+    private static String idString(int id1, int id2) {
+        /* the decimalIdValueWithoutLocale_SpecificFormatting variable
+        is used to generate a string representation of the ID value
+        without any local-specific formatting.  In other words, in a
+        us_EN locale, we want "14385", not "14,385".
+         */
+        String decimalIdValueWithoutLocale_SpecificFormatting
+                = Integer.toString(((id2 & 0x7F) * 128 + (id1 & 0x7F)));
+
+        String s = Bundle.getMessage("LN_MSG_THROTTLE_ID",
+                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                        StringUtil.twoHexFromInt(id2 & 0x7F)),
+                Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                        StringUtil.twoHexFromInt(id1 & 0x7F)),
+                decimalIdValueWithoutLocale_SpecificFormatting);
+        return s;
+    }
+
+    /**
+     * Create a string representation of the loco address in
+     * addressLow & addressHigh in a form appropriate for the type of address (2
+     * or 4 digit) using the Digitrax 'mixed mode' if necessary.
+     * <p>
+     * "Mixed mode" is used by DT100 and DT200 throttles to display loco
+     * addresses between 100 and 127 as a two-digit displayable value, where the
+     * left digit is either 'a', 'b', or 'c', (for addresses in the 10x, 11x,
+     * and 12x ranges, respectively), and the right digit is the "x" from the
+     * ranges above.
+     *
+     * @param addressLow  the least-significant 7 bits of the loco address
+     * @param addressHigh the most-significant 7 bits of the loco address
+     * @return a String containing the address, using Digitrax 'mixed mode'
+     *         representation of the loco address, if appropriate
+     */
+    private static String convertToMixed(int addressLow, int addressHigh) {
+        // if we have a 2 digit decoder address, proceed accordingly
+        switch (addressHigh) {
+            case 0x7d:
+                log.debug("addressLow / 10 = {}", addressLow / 10);
+                switch (addressLow) {
+                    case 100: case 101: case 102: case 103: case 104: case 105:
+                    case 106: case 107: case 108: case 109:
+                        // N (short, alternately 'An') (or long address NN)
+                        return Bundle.getMessage("LN_MSG_HELPER_IS_ALTERNATE_SHORT_AND_LONG_ADDRESS_Ax",
+                                addressLow,
+                                addressLow-100,
+                                String.valueOf(LOCO_ADR(addressHigh, addressLow)));
+                                // Note: .toString intentionally used here to remove the "internationalized"
+                                // presentation of integers, which, in US English, adds a "," between
+                                // the thousands digit and the hundreds digit.  This comma is undesired
+                                // in this application.
+                    case 110: case 111: case 112: case 113: case 114: case 115:
+                    case 116: case 117: case 118: case 119:
+                        // N (short, alternately 'Bn') (or long address NN)
+                        return Bundle.getMessage("LN_MSG_HELPER_IS_ALTERNATE_SHORT_AND_LONG_ADDRESS_Bx",
+                                addressLow,
+                                addressLow-110,
+                                String.valueOf(LOCO_ADR(addressHigh, addressLow)));
+                                // Note: .toString intentionally used here to remove the "internationalized"
+                                // presentation of integers, which, in US English, adds a "," between
+                                // the thousands digit and the hundreds digit.  This comma is undesired
+                                // in this application.
+                    case 120: case 121: case 122: case 123: case 124: case 125:
+                    case 126: case 127:
+                        // N (short, alternately 'Cn') (or long address NN)
+                        return Bundle.getMessage("LN_MSG_HELPER_IS_ALTERNATE_SHORT_AND_LONG_ADDRESS_Cx",
+                                addressLow,
+                                addressLow-120,
+                                String.valueOf(LOCO_ADR(addressHigh, addressLow)));
+                                // Note: .toString intentionally used here to remove the "internationalized"
+                                // presentation of integers, which, in US English, adds a "," between
+                                // the thousands digit and the hundreds digit.  This comma is undesired
+                                // in this application.
+                    default:
+                        // N (short) (or long address NN)
+                        return Bundle.getMessage("LN_MSG_HELPER_IS_SHORT_AND_LONG_ADDRESS",
+                                addressLow,
+                                String.valueOf(LOCO_ADR(addressHigh, addressLow)));
+                                // Note: .toString intentionally used here to remove the "internationalized"
+                                // presentation of integers, which, in US English, adds a "," between
+                                // the thousands digit and the hundreds digit.  This comma is undesired
+                                // in this application.
+                }
+
+            case 0x00:
+            case 0x7f:
+                switch (addressLow) {
+                    case 100: case 101: case 102: case 103: case 104: case 105:
+                    case 106: case 107: case 108: case 109:
+                        // N (short, alternately 'An')
+                        return Bundle.getMessage("LN_MSG_HELPER_IS_ALTERNATE_SHORT_ADDRESS_Ax",
+                                addressLow,
+                                addressLow-100);
+                    case 110: case 111: case 112: case 113: case 114: case 115:
+                    case 116: case 117: case 118: case 119:
+                        // N (short, alternately 'Bn')
+                        return Bundle.getMessage("LN_MSG_HELPER_IS_ALTERNATE_SHORT_ADDRESS_Bx",
+                                addressLow,
+                                addressLow-110);
+                    case 120: case 121: case 122: case 123: case 124: case 125:
+                    case 126: case 127:
+                        // N (short, alternately 'Cn')
+                        return Bundle.getMessage("LN_MSG_HELPER_IS_ALTERNATE_SHORT_ADDRESS_Cx",
+                                addressLow,
+                                addressLow-120);
+                    default:
+                        // N (short)
+                        return Bundle.getMessage("LN_MSG_HELPER_IS_SHORT_ADDRESS",
+                                addressLow);
+                }
+            default:
+                // return the full 4 digit address
+                return String.valueOf(LOCO_ADR(addressHigh, addressLow));
+                // Note: .toString intentionally used here to remove the "internationalized"
+                // presentation of integers, which, in US English, adds a "," between
+                // the thousands digit and the hundreds digit.  This comma is undesired
+                // in this application.
+        }
+    }
+
+    private static String trackStatusByteToString(int trackStatusByte) {
+        return Bundle.getMessage("LN_MSG_SLOT_HELPER_TRK_STAT",
+                (((trackStatusByte & LnConstants.GTRK_MLOK1) != 0)
+                        ? Bundle.getMessage("LN_MSG_SLOT_HELPER_TRK_STATUS_LN1_1")
+                        : Bundle.getMessage("LN_MSG_SLOT_HELPER_TRK_STATUS_DT200")),
+                (((trackStatusByte & LnConstants.GTRK_POWER) != 0)
+                        ? Bundle.getMessage("LN_MSG_SLOT_HELPER_TRK_STATUS_TRK_PWR_ON")
+                        : Bundle.getMessage("LN_MSG_SLOT_HELPER_TRK_STATUS_TRK_PWR_OFF")),
+                (((trackStatusByte & LnConstants.GTRK_IDLE) != 0)
+                        ? Bundle.getMessage("LN_MSG_SLOT_HELPER_TRK_STATUS_TRK_PWR_RUNNING")
+                        : Bundle.getMessage("LN_MSG_SLOT_HELPER_TRK_STATUS_TRK_PWR_PAUSED")),
+                (((trackStatusByte & LnConstants.GTRK_PROG_BUSY) != 0)
+                        ? Bundle.getMessage("LN_MSG_SLOT_HELPER_TRK_STATUS_PRG_BUSY")
+                        : Bundle.getMessage("LN_MSG_SLOT_HELPER_TRK_STATUS_PRG_AVAILABLE"))
+        );
+    }
+
+    /**
+     * Return a string which is formatted by a bundle Resource Name.
+     *
+     * @param hour   - fast-clock hour
+     * @param minute - fast-clock minute
+     * @return a formatted string containing the time
+     */
+    private static String fcTimeToString(int hour, int minute) {
+        return Bundle.getMessage("LN_MSG_SLOT_HELPER_FC_TIME",
+                LocalTime.of(hour, minute).toString());
+    }
+
+    protected static String[] interpretF0_F4toStrings(int dirf) {
+        String[] s = new String[5];
+
+        s[0] = (((dirf & LnConstants.DIRF_F0) == LnConstants.DIRF_F0)
+                ? Bundle.getMessage("LN_MSG_FUNC_ON")
+                : Bundle.getMessage("LN_MSG_FUNC_OFF"));
+        s[1] = (((dirf & LnConstants.DIRF_F1) == LnConstants.DIRF_F1)
+                ? Bundle.getMessage("LN_MSG_FUNC_ON")
+                : Bundle.getMessage("LN_MSG_FUNC_OFF"));
+        s[2] = (((dirf & LnConstants.DIRF_F2) == LnConstants.DIRF_F2)
+                ? Bundle.getMessage("LN_MSG_FUNC_ON")
+                : Bundle.getMessage("LN_MSG_FUNC_OFF"));
+        s[3] = (((dirf & LnConstants.DIRF_F3) == LnConstants.DIRF_F3)
+                ? Bundle.getMessage("LN_MSG_FUNC_ON")
+                : Bundle.getMessage("LN_MSG_FUNC_OFF"));
+        s[4] = (((dirf & LnConstants.DIRF_F4) == LnConstants.DIRF_F4)
+                ? Bundle.getMessage("LN_MSG_FUNC_ON")
+                : Bundle.getMessage("LN_MSG_FUNC_OFF"));
+        return s;
+    }
+
+    protected static String directionOfTravelString(boolean isForward) {
+        return Bundle.getMessage(isForward ? "LN_MSG_DIRECTION_FWD"
+                : "LN_MSG_DIRECTION_REV");
+    }
+
+    protected static String[] interpretF5_F8toStrings(int snd) {
+        String[] s = new String[4];
+
+        s[0] = (((snd & LnConstants.SND_F5) == LnConstants.SND_F5)
+                ? Bundle.getMessage("LN_MSG_FUNC_ON")
+                : Bundle.getMessage("LN_MSG_FUNC_OFF"));
+
+        s[1] = (((snd & LnConstants.SND_F6) == LnConstants.SND_F6)
+                ? Bundle.getMessage("LN_MSG_FUNC_ON")
+                : Bundle.getMessage("LN_MSG_FUNC_OFF"));
+
+        s[2] = (((snd & LnConstants.SND_F7) == LnConstants.SND_F7)
+                ? Bundle.getMessage("LN_MSG_FUNC_ON")
+                : Bundle.getMessage("LN_MSG_FUNC_OFF"));
+
+        s[3] = (((snd & LnConstants.SND_F8) == LnConstants.SND_F8)
+                ? Bundle.getMessage("LN_MSG_FUNC_ON")
+                : Bundle.getMessage("LN_MSG_FUNC_OFF"));
+
+        return s;
+    }
+
+    private static String figureAddressIncludingAliasing(int adr, int adr2, int ss2, int id1, int id2) {
+
+        /*
+         * Build loco address string. String will be a simple
+         * number, unless the address is between 100 and 127
+         * (inclusive), where a Digitrax "mixed mode" version
+         * of the address will be appended.
+         */
+        String mixedAdrStr = convertToMixed(adr, adr2);
+
+        /*
+         * If the address is a command station "alias" condition,
+         * then note it in the string.
+         */
+        if (adr2 == 0x7f) {
+            if ((ss2 & LnConstants.STAT2_ALIAS_MASK) == LnConstants.STAT2_ID_IS_ALIAS) {
+                /* this is an aliased address and we have the alias */
+                return Bundle.getMessage("LN_MSG_LOCO_ADDR_HELPER_ALIAS_2_DIGIT_WITH_KNOWN_4_DIGIT",
+                        Integer.toString(LOCO_ADR(id2, id1)), mixedAdrStr);
+            } else {
+                /* this is an aliased address and we don't have the alias */
+                return Bundle.getMessage("LN_MSG_LOCO_ADDR_HELPER_ALIAS_2_DIGIT_WITH_UNKNOWN_4_DIGIT",
+                        mixedAdrStr);
+            }
+        } else {
+            /* a regular address which is not an alias */
+            return mixedAdrStr;
+        }
+    }
+
+    private static String getAlmTaskType(int taskTypeByte) {
+        if (taskTypeByte == 2) {
+            return Bundle.getMessage("LN_MSG_ALM_HELPER_TASK_TYPE_RD");
+        } else if (taskTypeByte == 3) {
+            return Bundle.getMessage("LN_MSG_ALM_HELPER_TASK_TYPE_WR");
+        } else if (taskTypeByte == 0) {
+            return Bundle.getMessage("LN_MSG_ALM_HELPER_TASK_TYPE_ID");
+        } else {
+            return Bundle.getMessage("LN_MSG_ALM_HELPER_TASK_TYPE_UNKONWN",
+                    taskTypeByte);
+        }
+    }
+
+    public static String getDeviceNameFromIPLInfo(int manuf, int type) {
+        if (manuf != LnConstants.RE_IPL_MFR_DIGITRAX) {
+            return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_UNDEFINED_MFG_PROD",
+                    manuf, type);
+        }
+        switch (type) {
+            case LnConstants.RE_IPL_DIGITRAX_HOST_ALL:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_ALLDEVICES");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_LNRP:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_LNRP");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_UT4:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UT4");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_WTL12:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_WTL12");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS210");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS240");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_PR3:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_PR3");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DT402:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DT402");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DT500:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DT500");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS51:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DCS51");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_UR92:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UR92");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_PR4:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_PR4");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_LNWI:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_LNWI");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_BXP88:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_BXP88");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DB210:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DB210");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DB210OPTO:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DB210OPTO");
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DB220:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_DB220");
+
+            default:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UNKNOWN", type);
+        }
+    }
+
+    public static String getSlaveNameFromIPLInfo(int manuf, int slaveNum) {
+        if (manuf != LnConstants.RE_IPL_MFR_DIGITRAX) {
+            return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_UNDEFINED_MFG_PROD",
+                    manuf, slaveNum);
+        }
+        switch (slaveNum) {
+            case LnConstants.RE_IPL_DIGITRAX_SLAVE_ALL:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_SLAVE_ALLDEVICES");
+            case LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_SLAVE_RF24");
+            default:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_SLAVE_UNKNOWN", slaveNum);
+        }
+    }
+
     private static final String ds54sensors[] = {"AuxA", "SwiA", "AuxB", "SwiB", "AuxC", "SwiC", "AuxD", "SwiD"};    // NOI18N
     private static final String ds64sensors[] = {"A1", "S1", "A2", "S2", "A3", "S3", "A4", "S4"};                    // NOI18N
     private static final String se8csensors[] = {"DS01", "DS02", "DS03", "DS04", "DS05", "DS06", "DS07", "DS08"};    // NOI18N
 
-    private final static Logger log = LoggerFactory.getLogger(Llnmon.class);
+    private final static Logger log = LoggerFactory.getLogger(LocoNetMessageInterpret.class);
+
 
 }

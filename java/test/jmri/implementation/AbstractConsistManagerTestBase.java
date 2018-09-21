@@ -3,6 +3,7 @@ package jmri.implementation;
 import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
+import jmri.LocoAddress;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -127,6 +128,24 @@ abstract public class AbstractConsistManagerTestBase {
        // derived classes should override and check the expected message
        // sequence
        ((AbstractConsistManager)cm).requestUpdateFromLayout();
+    }
+
+    @Test(expected=java.lang.IllegalArgumentException.class)
+    public void testGetConsistLocoAddress(){
+        // getConsist with a LocoAddress object typically throws an error
+	// (There are no current impemenations for non-DCC systems)
+        LocoAddress addr = new LocoAddress(){
+	    @Override
+	    public int getNumber(){
+                return 42;
+	    }
+
+	    @Override
+            public Protocol getProtocol(){
+                return jmri.LocoAddress.Protocol.M4;
+	    }
+	};
+        cm.getConsist(addr);
     }
 
     // private final static Logger log = LoggerFactory.getLogger(AbstractConsistManagerTestBase.class);
