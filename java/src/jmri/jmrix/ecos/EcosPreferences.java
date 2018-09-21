@@ -53,9 +53,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
     ShutDownTask ecosPreferencesShutDownTask = null;
 
     public static final int ASK = 0x00; // ie always ask the question
-    @SuppressWarnings("unused")
     public static final int NO = 0x01; //ie never do the operation
-    @SuppressWarnings("unused")
     public static final int YES = 0x02; //ie always perform the operation
 
     private boolean _changeMade = false;

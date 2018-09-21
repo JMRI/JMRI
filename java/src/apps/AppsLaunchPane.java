@@ -65,14 +65,6 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
     }
 
     /**
-     * @deprecated since 4.5.1
-     */
-    @Deprecated
-    protected final void addToActionModel() {
-        // StartupActionModelUtil populates itself, so do nothing
-    }
-
-    /**
      * Prepare the JPanel to contain buttons in the startup GUI. Since it's
      * possible to add buttons via the preferences, this space may have
      * additional buttons appended to it later. The default implementation here

@@ -65,11 +65,11 @@ public class OsIndicator implements Constants {
 
         // Load variable into the Conditional
         List<ConditionalVariable> variableList = c.getCopyOfStateVariables();
-        variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_NONE,
+        variableList.add(new ConditionalVariable(false, Conditional.Operator.NONE,
                 Conditional.TYPE_SENSOR_INACTIVE,
                 osSensor, true));
         if (!lock.equals("")) {
-            variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND,
+            variableList.add(new ConditionalVariable(false, Conditional.Operator.AND,
                     Conditional.TYPE_SENSOR_INACTIVE,
                     lock, true));
         }

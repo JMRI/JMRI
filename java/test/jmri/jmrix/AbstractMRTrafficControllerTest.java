@@ -59,8 +59,7 @@ public class AbstractMRTrafficControllerTest {
         JUnitUtil.setUp(); 
         JUnitUtil.resetInstanceManager();
         tc = new AbstractMRTrafficController(){
-           @Override
-           protected void setInstance() {}
+
            @Override
            protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m){
            }

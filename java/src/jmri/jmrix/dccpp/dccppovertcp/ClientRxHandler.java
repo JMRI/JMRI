@@ -49,10 +49,11 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
         start();
     }
 
-    @SuppressWarnings("null")
     @Override
     public void run() {
-
+    
+        DCCppSystemConnectionMemo memo = InstanceManager.getDefault(DCCppSystemConnectionMemo.class);
+        
         try {
             txThread = new Thread(new ClientTxHandler(this));
             txThread.setDaemon(true);
@@ -62,9 +63,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
             inStream = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             outStream = clientSocket.getOutputStream();
 
-            DCCppSystemConnectionMemo memo = InstanceManager.getDefault(DCCppSystemConnectionMemo.class);
             memo.getDCCppTrafficController().addDCCppListener(~0, this);
-            //DCCppTrafficController.instance().addDCCppListener(~0, this);
 
             txThread.start();
 
@@ -114,8 +113,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
                         continue;
                     }
 
-                    // TODO: Bad practice to use instance().
-                    DCCppTrafficController.instance().sendDCCppMessage(msg, null);
+                    memo.getDCCppTrafficController().sendDCCppMessage(msg, null);
                     // Keep the message we just sent so we can ACK it when we hear
                     // the echo from the LocoBuffer
                     lastSentMessage = msg;
@@ -124,8 +122,8 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
         } catch (IOException ex) {
             log.debug("ClientRxHandler: IO Exception: ", ex);
         }
-        // TODO: Bad practice to use instance();
-        DCCppTrafficController.instance().removeDCCppListener(~0, this);
+
+        memo.getDCCppTrafficController().removeDCCppListener(~0, this);
         txThread.interrupt();
 
         txThread = null;

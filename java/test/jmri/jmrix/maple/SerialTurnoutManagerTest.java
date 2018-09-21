@@ -60,7 +60,6 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         // replace the SerialTrafficController
         SerialTrafficController t = new SerialTrafficController() {
             SerialTrafficController test() {
-                setInstance();
                 return this;
             }
         }.test();

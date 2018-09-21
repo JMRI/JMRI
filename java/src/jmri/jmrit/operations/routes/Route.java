@@ -467,7 +467,6 @@ public class Route implements java.beans.PropertyChangeListener {
             _comment = a.getValue();
         }
         if (e.getChildren(Xml.LOCATION) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> eRouteLocations = e.getChildren(Xml.LOCATION);
             log.debug("route: ({}) has {} locations", getName(), eRouteLocations.size());
             for (Element eRouteLocation : eRouteLocations) {

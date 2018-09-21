@@ -18,7 +18,6 @@ public class SpeedoReply extends jmri.jmrix.AbstractMRReply {
     }
 
     // copy one
-    @SuppressWarnings("null")
     public SpeedoReply(SpeedoReply m) {
         this();
         if (m == null) {

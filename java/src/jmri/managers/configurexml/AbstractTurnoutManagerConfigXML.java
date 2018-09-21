@@ -173,7 +173,6 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
      * @param perNode Element containing per-node Turnout data.
      * @return true if succeeded
      */
-    @SuppressWarnings("unchecked")
     public boolean loadTurnouts(Element shared, Element perNode) {
         boolean result = true;
         List<Element> operationList = shared.getChildren("operations");

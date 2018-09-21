@@ -630,7 +630,6 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
     /**
      * Private class to serve as TableModel for Sensors
      */
-    @SuppressWarnings("unused")
     private static class SensorTableModel extends DCCppTableModel {
 
         public SensorTableModel() {
@@ -669,7 +668,6 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
     /**
      * Private class to serve as TableModel for Reporters and Ops Locations
      */
-    @SuppressWarnings("unused")
     private static class TurnoutTableModel extends DCCppTableModel {
 
         public TurnoutTableModel() {
@@ -707,7 +705,6 @@ public class ConfigBaseStationFrame extends JmriJFrame implements DCCppListener 
     /**
      * Private class to serve as TableModel for Reporters and Ops Locations
      */
-    @SuppressWarnings("unused")
     private static class OutputTableModel extends DCCppTableModel {
 
         public OutputTableModel() {

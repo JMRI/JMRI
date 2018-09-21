@@ -839,7 +839,6 @@ public class RosterSpeedProfile {
         e.addContent(d);
     }
 
-    @SuppressWarnings({"unchecked"})
     public void load(Element e) {
         try {
             setOverRunTimeForward(Float.parseFloat(e.getChild("overRunTimeForward").getText()));
