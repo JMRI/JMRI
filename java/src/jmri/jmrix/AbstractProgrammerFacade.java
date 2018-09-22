@@ -46,7 +46,7 @@ public abstract class AbstractProgrammerFacade implements Programmer {
      * jmri.ProgListener)
      * @see jmri.Programmer#writeCV(int, int, jmri.ProgListener) 
      */
-    @Deprecated
+    @Deprecated // 4.1.1
     @Override
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         prog.writeCV(CV, val, p);
@@ -65,7 +65,7 @@ public abstract class AbstractProgrammerFacade implements Programmer {
      * jmri.ProgListener)
      * @see jmri.Programmer#readCV(int, jmri.ProgListener)
      */
-    @Deprecated
+    @Deprecated // 4.1.1
     @Override
     public void readCV(int CV, ProgListener p) throws ProgrammerException {
         prog.readCV(CV, p);
@@ -87,7 +87,7 @@ public abstract class AbstractProgrammerFacade implements Programmer {
      * jmri.ProgListener) instead.
      */
     @Override
-    @Deprecated
+    @Deprecated // 4.1.1
     public final void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
         prog.confirmCV(CV, val, p);
     }

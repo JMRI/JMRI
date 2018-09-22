@@ -83,6 +83,7 @@ public class Z21XNetProgrammer extends XNetProgrammer {
      * Programming interface.
      */
     @Override
+    @Deprecated // 4.1.1
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (getMode().equals(ProgrammingMode.DIRECTBITMODE)
                 || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
@@ -107,6 +108,7 @@ public class Z21XNetProgrammer extends XNetProgrammer {
     }
 
     @Override
+    @Deprecated // 4.1.1
     synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (getMode().equals(ProgrammingMode.DIRECTBITMODE)
                 || getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
