@@ -460,8 +460,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         functionButton[26].setKeyCode(0xF00D);
         functionButton[27].setKeyCode(0xF00E);
         functionButton[28].setKeyCode(0xF00F);
-        // Make F2 (Horn) momentary
-        functionButton[2].setIsLockable(false);
 
         alt1Button.setVisible(true);
         alt2Button.setVisible(true);
