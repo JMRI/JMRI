@@ -176,7 +176,7 @@
         <li>Over time, remove all JMRI uses of these deprecated classes and/or methods
             until the deprecations report is clean. 
             You can either compile locally
-            with <code>ant ci-deprecations</code> to check this, or look at the
+            with <code>ci-compile-deprecations</code> to check this, or look at the
             <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Deprecations/lastBuild/warnings4Result/">Jenkins CI report</a>
             (click the Types tab) to check the JMRI/JMRI master branch.
             Don't forget to also migrate the 
