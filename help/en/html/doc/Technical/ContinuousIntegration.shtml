@@ -40,7 +40,9 @@
       "#jenkins">Jenkins</a> jobs that routinely build the code,
       run checks, and creates downloadable installers. That means
       that we can and do put changes into our users hands very
-      quickly.</p>
+      quickly. There's a 
+      <a href="CI-status.shtml">CI status page</a>
+      that shows the combined status of that.</p>
 
       <p>We also use two additioanl CI engines to test every change
       entered into our GitHub code repository.</p>
