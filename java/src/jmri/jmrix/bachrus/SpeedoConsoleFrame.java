@@ -1299,7 +1299,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
     protected void startRead(int cv) {
         try {
-            prog.readCV(cv, this);
+            prog.readCV(String.valueOf(cv), this);
         } catch (ProgrammerException e) {
             log.error("Exception reading CV " + cv + " " + e);
         }

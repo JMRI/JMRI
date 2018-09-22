@@ -49,6 +49,7 @@ public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
 
     // programming interface
     @Override
+    @Deprecated // 4.1.1
     public synchronized void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
@@ -79,6 +80,7 @@ public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
     }
 
     @Override
+    @Deprecated // 4.1.1
     public synchronized void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);

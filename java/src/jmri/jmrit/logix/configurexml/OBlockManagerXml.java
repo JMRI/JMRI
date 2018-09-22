@@ -261,9 +261,8 @@ public class OBlockManagerXml // extends XmlFile
         }
         // Build data structure for blocks to know with whom they share turnouts.
         // check whether any turnouts are shared between two blocks;
-        String[] sysNames = _manager.getSystemNameArray();
-        for (int i = 0; i < sysNames.length; i++) {
-            WarrantTableAction.checkSharedTurnouts(_manager.getOBlock(sysNames[i]));
+        for (OBlock oblock : _manager.getNamedBeanSet()) {
+            WarrantTableAction.checkSharedTurnouts(oblock);
         }
         return true;
     }

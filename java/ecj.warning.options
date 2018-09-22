@@ -51,7 +51,7 @@
 -warn:-paramAssign
 -warn:-unnecessaryElse
 
--warn:-dep-ann
+-warn:+dep-ann
 -warn:+deprecation
 -warn:-allDeprecation
 
