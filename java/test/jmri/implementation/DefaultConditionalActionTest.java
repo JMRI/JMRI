@@ -42,6 +42,7 @@ public class DefaultConditionalActionTest {
     @Test
     public void testBasicBeanOperations() {
         final String deviceName = "3";
+        final String otherDeviceName = "8";
         final String actionStr = "5";
         
         ConditionalAction ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_TURNOUT, deviceName, Turnout.THROWN, actionStr);
@@ -51,9 +52,11 @@ public class DefaultConditionalActionTest {
         ConditionalAction ix4 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, 0, deviceName, Turnout.THROWN, actionStr);
         ConditionalAction ix5 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_TURNOUT, "0", Turnout.THROWN, actionStr);
         ConditionalAction ix6 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_TURNOUT, deviceName, 0, actionStr);
-        ConditionalAction ix7 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_TURNOUT, deviceName, Turnout.THROWN,"0");
+        ConditionalAction ix7 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_TURNOUT, deviceName, Turnout.THROWN, "0");
+        ConditionalAction ix8 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_TURNOUT, otherDeviceName, Turnout.THROWN, "0");
+        ConditionalAction ix9 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_TURNOUT, deviceName, Turnout.THROWN, "1");
 
-        ConditionalAction ix8 = new DefaultConditionalAction(0, Conditional.ACTION_NONE, null, Turnout.THROWN, actionStr);
+        ConditionalAction ix10 = new DefaultConditionalAction(0, Conditional.ACTION_NONE, null, Turnout.THROWN, actionStr);
         
         Assert.assertFalse(ix1.equals(null));
         
@@ -65,13 +68,15 @@ public class DefaultConditionalActionTest {
         Assert.assertTrue(!ix1.equals(ix5));
         Assert.assertTrue(!ix1.equals(ix6));
         Assert.assertTrue(!ix1.equals(ix7));
+        Assert.assertTrue(!ix1.equals(ix8));
+        Assert.assertTrue(!ix1.equals(ix9));
 
         // Test equal with different class
         Assert.assertTrue(!ix1.equals(new Object()));
         
         // Test deviceName == null
-        Assert.assertTrue(!ix1.equals(ix8));
-        Assert.assertTrue(!ix8.equals(ix1));
+        Assert.assertTrue(!ix1.equals(ix10));
+        Assert.assertTrue(!ix10.equals(ix1));
         
         Assert.assertTrue(ix1.hashCode() == ix2.hashCode());
     }
