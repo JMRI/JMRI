@@ -13,7 +13,9 @@ There are two APIs, *PreferencesManager* and *PreferencesPanel* that implement t
 
 Most preferences are stored together within a single *Profile*. There are two spaces within a *Profile*, the **shared** space and the **private** space.
 
-A profile has a location, a name, and an identity. The identity is formed of two parts, a "safe" version of the name that can be used in file or directory names, and a random number (8 hexidecimal digits) to ensure uniqueness.
+A Profile has a location, a name, and an identity. The identity is formed of two parts, a "safe" version of the name that can be used in file or directory names, and a random number (8 hexidecimal digits) to ensure uniqueness.
+
+It is recommended that Profile locations have the extension `.jmri` to allow Profiles to be assigned a Uniform Type Identifier (UTI) in iOS and macOS. JMRI applications default to including the extension in the Profile location when creating one, but use of this extension is not enforced. See [Startup Scripts](StartUpScripts.shtml) for more details on UTIs and their use.
 
 ### Shared
 

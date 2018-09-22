@@ -568,7 +568,6 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
     public void load(Element root) {
         // new format using elements starting version 3.3.1
         if (root.getChild(Xml.NEW_KERNELS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> eKernels = root.getChild(Xml.NEW_KERNELS).getChildren(Xml.KERNEL);
             log.debug("Car manager sees {} kernels", eKernels.size());
             Attribute a;
@@ -590,7 +589,6 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         }
 
         if (root.getChild(Xml.CARS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> eCars = root.getChild(Xml.CARS).getChildren(Xml.CAR);
             log.debug("readFile sees {} cars", eCars.size());
             for (Element eCar : eCars) {

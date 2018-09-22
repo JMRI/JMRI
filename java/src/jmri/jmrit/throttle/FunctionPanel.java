@@ -621,7 +621,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      *
      * @param e The Element for this object.
      */
-    @SuppressWarnings("unchecked")
     public void setXml(Element e) {
         Element window = e.getChild("window");
         WindowPreferences.setPreferences(this, window);

@@ -255,7 +255,6 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      * @return a single Secsi message to confirm the requested operation, or a series
      * of messages for each (fictitious) node/pin/state. To ignore certain commands, return null.
      */
-    @SuppressWarnings("fallthrough")
     private SerialReply generateReply(SerialMessage msg) {
         int nodeaddr = msg.getAddr();
         log.debug("Generate Reply to message for node {} (string = {})", nodeaddr, msg.toString());

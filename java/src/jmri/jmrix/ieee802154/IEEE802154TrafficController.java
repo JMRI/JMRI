@@ -44,17 +44,6 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
     }
 
     /**
-     * instance use of the traffic controller is no longer used for multiple
-     * connections
-     * @deprecated since version 3.6
-     */
-    @Override
-    @Deprecated
-    public void setInstance() {
-        log.debug("Deprecated Method setInstance called");
-    }
-
-    /**
      * Get a message of a specific length for filling in.
      * <p>
      * This is a default, null implementation, which must be overridden in an
