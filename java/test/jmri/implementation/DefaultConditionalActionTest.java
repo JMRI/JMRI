@@ -468,6 +468,84 @@ public class DefaultConditionalActionTest {
         NamedBean bean;
         String deviceName = "3";
         
+        // Start with testing the exception handling in getActionBean()
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initInternalTurnoutManagerThrowException();
+        jmri.util.JUnitUtil.initLightManagerThrowException();
+        jmri.util.JUnitUtil.initMemoryManagerThrowException();
+        jmri.util.JUnitUtil.initInternalSensorManagerThrowException();
+        jmri.util.JUnitUtil.initSignalHeadManagerThrowException();
+        jmri.util.JUnitUtil.initSignalMastManagerThrowException();
+        jmri.util.JUnitUtil.initWarrantManagerThrowException();
+        jmri.util.JUnitUtil.initOBlockManagerThrowException();
+        jmri.util.JUnitUtil.initRouteManagerThrowException();
+        
+        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_SENSOR, deviceName, 4, "5");
+        jmri.util.JUnitAppender.assertErrorMessage("invalid sensor name= \"3\" in conditional action");
+        // getBean() tries to set the bean if bean == null. This generates a new error message.
+        Assert.assertTrue("getActionBean() returns null", ix1.getBean() == null);
+        jmri.util.JUnitAppender.assertErrorMessage("invalid sensor name= \"3\" in conditional action");
+        
+        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_TURNOUT, deviceName, 4, "5");
+        jmri.util.JUnitAppender.assertErrorMessage("invalid turnout name= \"3\" in conditional action");
+        // getBean() tries to set the bean if bean == null. This generates a new error message.
+        Assert.assertTrue("getActionBean() returns null", ix1.getBean() == null);
+        jmri.util.JUnitAppender.assertErrorMessage("invalid turnout name= \"3\" in conditional action");
+        
+        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_MEMORY, deviceName, 4, "5");
+        jmri.util.JUnitAppender.assertErrorMessage("invalid memory name= \"3\" in conditional action");
+        // getBean() tries to set the bean if bean == null. This generates a new error message.
+        Assert.assertTrue("getActionBean() returns null", ix1.getBean() == null);
+        jmri.util.JUnitAppender.assertErrorMessage("invalid memory name= \"3\" in conditional action");
+        
+        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_LIGHT, deviceName, 4, "5");
+        jmri.util.JUnitAppender.assertErrorMessage("invalid light name= \"3\" in conditional action");
+        // getBean() tries to set the bean if bean == null. This generates a new error message.
+        Assert.assertTrue("getActionBean() returns null", ix1.getBean() == null);
+        jmri.util.JUnitAppender.assertErrorMessage("invalid light name= \"3\" in conditional action");
+        
+        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_SIGNAL_APPEARANCE, "IH1", 4, "5");
+        jmri.util.JUnitAppender.assertErrorMessage("invalid signal head name= \"IH1\" in conditional action");
+        // getBean() tries to set the bean if bean == null. This generates a new error message.
+        Assert.assertTrue("getActionBean() returns null", ix1.getBean() == null);
+        jmri.util.JUnitAppender.assertErrorMessage("invalid signal head name= \"IH1\" in conditional action");
+        
+        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_SIGNALMAST_HELD, "IF$shsm:AAR-1946:CPL(IH1)", 4, "5");
+        jmri.util.JUnitAppender.assertErrorMessage("invalid signal mast name= \"IF$shsm:AAR-1946:CPL(IH1)\" in conditional action");
+        // getBean() tries to set the bean if bean == null. This generates a new error message.
+        Assert.assertTrue("getActionBean() returns null", ix1.getBean() == null);
+        jmri.util.JUnitAppender.assertErrorMessage("invalid signal mast name= \"IF$shsm:AAR-1946:CPL(IH1)\" in conditional action");
+        
+        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_MANUAL_RUN_WARRANT, "IW3", 4, "5");
+        jmri.util.JUnitAppender.assertErrorMessage("invalid Warrant name= \"IW3\" in conditional action");
+        // getBean() tries to set the bean if bean == null. This generates a new error message.
+        Assert.assertTrue("getActionBean() returns null", ix1.getBean() == null);
+        jmri.util.JUnitAppender.assertErrorMessage("invalid Warrant name= \"IW3\" in conditional action");
+        
+        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_BLOCK_VALUE, "OB3", 4, "5");
+        jmri.util.JUnitAppender.assertErrorMessage("invalid OBlock name= \"OB3\" in conditional action");
+        // getBean() tries to set the bean if bean == null. This generates a new error message.
+        Assert.assertTrue("getActionBean() returns null", ix1.getBean() == null);
+        jmri.util.JUnitAppender.assertErrorMessage("invalid OBlock name= \"OB3\" in conditional action");
+        
+        ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_TRIGGER_ROUTE, deviceName, 4, "5");
+        jmri.util.JUnitAppender.assertErrorMessage("invalid Route name= \"3\" in conditional action");
+        // getBean() tries to set the bean if bean == null. This generates a new error message.
+        Assert.assertTrue("getActionBean() returns null", ix1.getBean() == null);
+        jmri.util.JUnitAppender.assertErrorMessage("invalid Route name= \"3\" in conditional action");
+        
+        
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        jmri.util.JUnitUtil.initInternalLightManager();
+        jmri.util.JUnitUtil.initInternalSensorManager();
+        jmri.util.JUnitUtil.initDefaultSignalMastManager();
+        jmri.util.JUnitUtil.initSignalMastLogicManager();
+        jmri.util.JUnitUtil.initWarrantManager();
+        jmri.util.JUnitUtil.initOBlockManager();
+        jmri.util.JUnitUtil.initRouteManager();
+        jmri.util.JUnitUtil.initIdTagManager();
+        
         ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_SENSOR, deviceName, 4, "5");
         bean = InstanceManager.getDefault(SensorManager.class).provideSensor(deviceName);
         Assert.assertTrue("getActionBean() returns correct bean", ix1.getBean().equals(bean));

@@ -36,6 +36,7 @@ import jmri.progdebugger.DebugProgrammerManager;
 import jmri.util.managers.InternalLightManagerThrowExceptionScaffold;
 import jmri.util.managers.MemoryManagerThrowExceptionScaffold;
 import jmri.util.managers.OBlockManagerThrowExceptionScaffold;
+import jmri.util.managers.RouteManagerThrowExceptionScaffold;
 import jmri.util.managers.SensorManagerThrowExceptionScaffold;
 import jmri.util.managers.SignalHeadManagerThrowExceptionScaffold;
 import jmri.util.managers.SignalMastManagerThrowExceptionScaffold;
@@ -734,6 +735,10 @@ public class JUnitUtil {
 
     public static void initOBlockManagerThrowException() {
         InstanceManager.setDefault(OBlockManager.class, new OBlockManagerThrowExceptionScaffold());
+    }
+
+    public static void initRouteManagerThrowException() {
+        InstanceManager.setDefault(RouteManager.class, new RouteManagerThrowExceptionScaffold());
     }
 
     /**
