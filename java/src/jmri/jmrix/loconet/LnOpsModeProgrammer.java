@@ -49,13 +49,13 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
      * Forward a write request to an ops-mode write operation.
      */
     @Override
-    @Deprecated
+    @Deprecated // 4.1.1
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         mSlotMgr.writeCVOpsMode(CV, val, p, mAddress, mLongAddr);
     }
 
     @Override
-    @Deprecated
+    @Deprecated // 4.1.1
     public void readCV(int CV, ProgListener p) throws ProgrammerException {
         mSlotMgr.readCVOpsMode(CV, p, mAddress, mLongAddr);
     }
@@ -224,8 +224,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     }
 
     @Override
-    @Deprecated
-    @SuppressWarnings("deprecation") // parent Programmer method deprecated, will remove at same time
+    @Deprecated // 4.1.1
     public final void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
         confirmCV(""+CV, val, p);
     }

@@ -43,6 +43,7 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
 
     // programming interface
     @Override
+    @Deprecated // 4.1.1
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         log.debug("writeCV {} listens {}", CV, p);
         useProgrammer(p);
@@ -85,6 +86,7 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
     }
 
     @Override
+    @Deprecated // 4.1.1
     synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         log.debug("readCV {} listens {}", CV, p);
 

@@ -168,7 +168,6 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         return;
     }
 
-    @SuppressWarnings("deprecation")
     void update() {
         float val = meter.getCurrent(); // should be a value between 0-99%
 
