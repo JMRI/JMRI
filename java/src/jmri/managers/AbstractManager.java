@@ -322,7 +322,9 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
+    @Deprecated  // will be removed when Manager method is removed due to @Override
     public String[] getSystemNameArray() {
+        jmri.util.Log4JUtil.warnOnce(log, "InstanceManager.getSystemNameArray() is deprecated");
         if (cachedSystemNameArray == null) {
             cachedSystemNameArray = getSystemNameList().toArray(new String[_beans.size()]);
         }
@@ -332,6 +334,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     
     /** {@inheritDoc} */
     @Override
+    @Deprecated  // will be removed when Manager method is removed due to @Override
     public List<String> getSystemNameList() {
         if (cachedSystemNameList == null) {
             cachedSystemNameList = new ArrayList<>();
@@ -345,6 +348,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
+    @Deprecated  // will be removed when Manager method is removed due to @Override
     public List<String> getSystemNameAddedOrderList() {
         return Collections.unmodifiableList(_originalOrderList);
     }
@@ -352,6 +356,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
+    @Deprecated  // will be removed when Manager method is removed due to @Override
     public List<E> getNamedBeanList() {
         if (cachedNamedBeanList == null) {
             cachedNamedBeanList = new ArrayList<>(_beans);
