@@ -305,7 +305,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             }
 
             // bump user name
-            if ((uName != null) && !uName.isEmpty()) {
+            if (!uName.isEmpty()) {
                 uName = nextName(uName);
             }
             // end of for loop creating rangeBox of Sensors

@@ -15,9 +15,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
-
 import java.util.Set;
-
 import javax.imageio.ImageIO;
 import javax.swing.AbstractCellEditor;
 import javax.swing.BoxLayout;
@@ -39,7 +37,6 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
-
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
@@ -49,7 +46,6 @@ import jmri.Reporter;
 import jmri.Sensor;
 import jmri.implementation.SignalSpeedMap;
 import jmri.util.JmriJFrame;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1013,7 +1009,6 @@ public class BlockTableAction extends AbstractTableAction<Block> {
 
         // Add some entry pattern checking, before assembling sName and handing it to the blockManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameBlock"));
-        StringBuilder b;
 
         for (int x = 0; x < numberOfBlocks; x++) {
             if (x != 0) { // start at 2nd Block
