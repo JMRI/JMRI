@@ -1145,8 +1145,6 @@ public class IndexedTreeMap<K, V>
 
     static final class KeySet<E> extends AbstractSet<E> implements NavigableSet<E> {
         private final NavigableMap<E, Object> m;
-
-        @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
         KeySet(NavigableMap<E, Object> map) {
             m = map;
         }

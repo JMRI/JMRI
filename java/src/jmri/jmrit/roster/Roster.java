@@ -919,21 +919,6 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * <p>
      * Uses writeFile(String), a protected method that can write to a specific
      * location.
-     *
-     * @deprecated Since 4.0 Use Roster.getDefault().writeRoster() instead
-     * @see #writeRoster()
-     */
-    @Deprecated
-    public static void writeRosterFile() {
-        Roster.getDefault().writeRoster();
-    }
-
-    /**
-     * Store the roster in the default place, including making a backup if
-     * needed.
-     * <p>
-     * Uses writeFile(String), a protected method that can write to a specific
-     * location.
      */
     public void writeRoster() {
         this.makeBackupFile(this.getRosterIndexPath());
@@ -1123,18 +1108,6 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      */
     public static String getRosterGroupProperty(String name) {
         return ROSTER_GROUP_PREFIX + name;
-    }
-
-    /**
-     * Returns the constant used to denote a roster group as a
-     * {@link jmri.jmrit.roster.RosterEntry} attribute.
-     *
-     * @return the value of {@link #ROSTER_GROUP_PREFIX}
-     * @deprecated since 3.11.7 use {@link #ROSTER_GROUP_PREFIX} instead.
-     */
-    @Deprecated
-    public String getRosterGroupPrefix() {
-        return ROSTER_GROUP_PREFIX;
     }
 
     /**

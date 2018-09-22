@@ -38,9 +38,6 @@ public class PacketGenActionTest {
         IEEE802154SystemConnectionMemo memo = new IEEE802154SystemConnectionMemo();
         new IEEE802154TrafficController(){
             @Override
-            public void setInstance() {
-            }
-            @Override
             protected jmri.jmrix.AbstractMRReply newReply() {
                 return null;
             }
@@ -59,9 +56,6 @@ public class PacketGenActionTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         IEEE802154SystemConnectionMemo memo = new IEEE802154SystemConnectionMemo();
         new IEEE802154TrafficController(){
-            @Override
-            public void setInstance() {
-            }
             @Override
             protected jmri.jmrix.AbstractMRReply newReply() {
                 return null;

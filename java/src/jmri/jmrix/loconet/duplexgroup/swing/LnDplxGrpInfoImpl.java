@@ -176,8 +176,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * @return true if and only if sGroupPassword is a valid Duplex Group
      *         Password.
      */
-    // TODO: This warning is suppressed for now, but there is no way currently to set limitPasswordToNumericCharacters to true
-    @SuppressWarnings("unused")
+    // TODO: There is no way currently to set limitPasswordToNumericCharacters to true
     public static final boolean validateGroupPassword(String sGroupPassword) {
         // force the value to uppercase
         if (sGroupPassword.length() == 0) {

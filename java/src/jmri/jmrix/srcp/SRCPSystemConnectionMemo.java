@@ -94,7 +94,6 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public <T> T get(Class<?> T) {
         return null; // nothing, by default
     }
