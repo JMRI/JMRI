@@ -38,12 +38,8 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.NamedBean;
-import jmri.Turnout;
+import jmri.*;
 import jmri.jmrit.display.layoutEditor.LayoutTurntable.RayTrack;
-// import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
 import jmri.util.swing.JmriBeanComboBox;
@@ -70,6 +66,7 @@ public class LayoutTrackEditors {
     /*=================*\
     | Edit Layout Track |
     \*=================*/
+    @InvokeOnGuiThread
     protected void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
         sensorList.clear();
         if (layoutTrack instanceof PositionablePoint) {
@@ -120,6 +117,7 @@ public class LayoutTrackEditors {
      * for a default manager type class.
      * @since 4.11.2
      */
+    @InvokeOnGuiThread
     void showSensorMessage() {
         if (sensorList.isEmpty()) {
             return;
@@ -175,6 +173,7 @@ public class LayoutTrackEditors {
     /**
      * Edit a Track Segment.
      */
+    @InvokeOnGuiThread
     protected void editTrackSegment(@Nonnull TrackSegment trackSegment) {
         this.trackSegment = trackSegment;
         sensorList.clear();
@@ -306,6 +305,7 @@ public class LayoutTrackEditors {
 
     }   // editTrackSegment
 
+    @InvokeOnGuiThread
     private void editTrackSegmentEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editTrackSegmentBlockNameComboBox.getUserName();
@@ -333,6 +333,7 @@ public class LayoutTrackEditors {
         editTrackSegmentNeedsRedraw = true;
     }   // editTrackSegmentEditBlockPressed
 
+    @InvokeOnGuiThread
     private void editTracksegmentDonePressed(ActionEvent a) {
         // set dashed
         boolean oldDashed = trackSegment.isDashed();
@@ -388,6 +389,7 @@ public class LayoutTrackEditors {
         layoutEditor.setDirty();
     }   // editTracksegmentDonePressed
 
+    @InvokeOnGuiThread
     private void editTrackSegmentCancelPressed(ActionEvent a) {
         editTrackSegmentOpen = false;
         editTrackSegmentFrame.setVisible(false);
@@ -1005,11 +1007,12 @@ public class LayoutTrackEditors {
                         JmriBeanComboBox jbcb = (JmriBeanComboBox) o;
                         jmri.Manager m = jbcb.getManager();
                         if (m != null) {
-                            String[] systemNames = m.getSystemNameArray();
-                            for (int idx = 0; idx < systemNames.length; idx++) {
-                                String systemName = systemNames[idx];
-                                jbcb.setItemEnabled(idx, layoutEditor.validatePhysicalTurnout(systemName, null));
-                            }
+                            int idx = 0;
+                            for (Object obj : m.getNamedBeanSet()) {
+                                NamedBean bean = (NamedBean) obj;  // entire class needs more attention to typing
+                                String systemName = bean.getSystemName();
+                                jbcb.setItemEnabled(idx++, layoutEditor.validatePhysicalTurnout(systemName, null));
+                            }                        
                         }
                     }
                 }
