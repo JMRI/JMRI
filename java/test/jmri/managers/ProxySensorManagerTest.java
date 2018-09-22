@@ -4,6 +4,7 @@ import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import jmri.*;
+import jmri.jmrix.internal.InternalSensorManager;
 import jmri.util.JUnitUtil;
 
 import junit.framework.Test;
@@ -67,7 +68,6 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
         Assert.assertTrue("user name correct ", tk == l.getByUserName("mine"));
         Assert.assertTrue("system name correct ", tk == l.getBySystemName("KS1"));
     }
-
 
     public void testDefaultSystemName() {
         // create
@@ -333,6 +333,7 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
         List<Sensor> beanList = l.getNamedBeanList();
         SortedSet<Sensor> beanSet = l.getNamedBeanSet();
         String[] sortedArray = l.getSystemNameArray();
+        jmri.util.JUnitAppender.suppressWarnMessage("Manager#getSystemNameArray() is deprecated");
         List<String> orderedList = l.getSystemNameAddedOrderList();
         
         Assert.assertEquals("sorted list length", 2, sortedList.size());
@@ -391,6 +392,7 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
         beanList = l.getNamedBeanList();
         beanSet = l.getNamedBeanSet();
         sortedArray = l.getSystemNameArray();
+        jmri.util.JUnitAppender.suppressWarnMessage("Manager#getSystemNameArray() is deprecated");
         
         Assert.assertEquals("ordered list length", 4, orderedList.size());
         Assert.assertEquals("ordered list 1st", "IS4", orderedList.get(0));
@@ -538,7 +540,7 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         // create and register the manager object
         l = new ProxySensorManager();
         // initially has three systems: IS, JS, KS
@@ -556,7 +558,6 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
         lastEvent1 = -1;
         lastType = -1;
         lastCall = null;
-
     }
 
     @Override

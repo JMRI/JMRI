@@ -138,6 +138,7 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initShutDownManager();
     }
 

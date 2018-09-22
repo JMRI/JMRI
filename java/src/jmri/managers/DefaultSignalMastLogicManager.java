@@ -292,7 +292,6 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         return NameValidity.VALID;
     }
 
-
     /**
      * Enforces, and as a user convenience converts to, the standard form for a system name
      * for the NamedBeans handled by this manager.
@@ -316,12 +315,14 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
 
     /** {@inheritDoc} */
     @Override
+    @Deprecated  // will be removed when Manager method is removed due to @Override
     public String[] getSystemNameArray() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     /** {@inheritDoc} */
     @Override
+    @Deprecated  // will be removed when Manager method is removed due to @Override
     public List<String> getSystemNameList() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -334,6 +335,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
 
     /** {@inheritDoc} */
     @Override
+    @Deprecated  // will be removed when Manager method is removed due to @Override
     public List<SignalMastLogic> getNamedBeanList() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -501,7 +503,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         Hashtable<NamedBean, List<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(null, SignalMast.class, LayoutBlockConnectivityTools.MASTTOMAST);
         Enumeration<NamedBean> en = validPaths.keys();
         firePropertyChange("autoGenerateUpdate", null, ("Found " + validPaths.size() + " masts as sources for logic"));
-        for (NamedBean nb : InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBeanList()) {
+        for (NamedBean nb : InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBeanSet()) {
             nb.removeProperty("intermediateSignal");
         }
         while (en.hasMoreElements()) {

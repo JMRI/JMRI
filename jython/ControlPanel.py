@@ -13,6 +13,7 @@
 import jmri
 
 import java
+import java.awt
 import javax.swing
 
 # create a frame to hold the button(s), put button in it, and display

@@ -848,17 +848,25 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     }
 
     void applyPressed() {
+        SignalHead head = sh; // temp used here for SignalHead being operated on
+
         // check signal head exists
-        if (sh == null && InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(outSignalHeadComboBox.getDisplayName()) == null) {
-            setTitle(Bundle.getMessage("Simple_Signal_Logic"));
-            statusBar.setText(Bundle.getMessage("HeadXNotDefined", outSignalHeadComboBox.getDisplayName()));
-            // JOptionPane.showMessageDialog(this, Bundle.getMessage("HeadXNotDefined", outSignalHeadComboBox.getDisplayName()));
-            return;
-        }
-        SignalHead head = sh;
-        if (sh == null) {
-            head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(outSignalHeadComboBox.getDisplayName());
-            statusBar.setText(Bundle.getMessage("StatusSslCreated", outSignalHeadComboBox.getDisplayName()));
+        if (head == null) {
+            if (InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(outSignalHeadComboBox.getDisplayName()) == null) {
+                setTitle(Bundle.getMessage("Simple_Signal_Logic"));
+                statusBar.setText(Bundle.getMessage("HeadXNotDefined", outSignalHeadComboBox.getDisplayName()));
+                // JOptionPane.showMessageDialog(this, Bundle.getMessage("HeadXNotDefined", outSignalHeadComboBox.getDisplayName()));
+                return;
+            } else {
+                head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(outSignalHeadComboBox.getDisplayName());
+                if (head == null) {
+                    // getting selected signal head failed for some reason
+                    log.error("Could not create the Simple Signal Logic for {} because SignalHead could not be found", outSignalHeadComboBox.getDisplayName());
+                    statusBar.setText(Bundle.getMessage("ApplyErrorDialog"));
+                    return;
+                }
+                statusBar.setText(Bundle.getMessage("StatusSslCreated", outSignalHeadComboBox.getDisplayName()));
+            }
         } else {
             statusBar.setText(Bundle.getMessage("StatusSslUpdated", outSignalHeadComboBox.getDisplayName()));
         }

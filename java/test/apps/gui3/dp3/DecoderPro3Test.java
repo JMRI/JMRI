@@ -64,6 +64,7 @@ public class DecoderPro3Test {
     // The minimal setup for log4J
     @Before
     public void setUp() {
+        JUnitUtil.setUp();
         JUnitUtil.resetApplication();
         JUnitUtil.resetProfileManager();
     }
@@ -71,7 +72,7 @@ public class DecoderPro3Test {
     @After
     public void tearDown() {
         JUnitUtil.resetApplication();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

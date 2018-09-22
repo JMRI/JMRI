@@ -20,7 +20,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
 
     protected boolean isAvailable;  // Flag  stating if the throttle is in 
     // use or not.
-    protected java.util.Timer statusTimer; // Timer used for status
+    static protected java.util.Timer statusTimer; // Shared Timer used for status
     protected java.util.TimerTask statusTask; // Timer Task used to 
     // periodically get 
     // current status of the 
@@ -1539,7 +1539,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
         };
         if( statusTimer==null) {
-            statusTimer = new java.util.Timer("XPressNet Throttle Status Timer");
+            statusTimer = new java.util.Timer("XPressNet Throttle Status Timer", true);
         }
         statusTimer.schedule(statusTask, statTimeoutValue, statTimeoutValue);
     }

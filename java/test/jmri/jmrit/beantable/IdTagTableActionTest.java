@@ -45,6 +45,7 @@ public class IdTagTableActionTest extends AbstractTableActionBase {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initShutDownManager();
+        helpTarget = "package.jmri.jmrit.beantable.IdTagTable"; 
         a = new IdTagTableAction();
     }
 

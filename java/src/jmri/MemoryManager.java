@@ -145,13 +145,4 @@ public interface MemoryManager extends Manager<Memory> {
     @Nonnull
     public Memory newMemory(@Nonnull String userName);
 
-    /**
-     * Get a list of system names of all Memory objects.
-     *
-     * {@inheritDoc}
-     */
-    @Nonnull
-    @Override
-    public List<String> getSystemNameList();
-
 }

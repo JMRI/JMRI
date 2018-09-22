@@ -1315,7 +1315,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         options.put(0x01, Bundle.getMessage("DeleteNever"));    // NOI18N
         options.put(0x02, Bundle.getMessage("DeleteAlways"));   // NOI18N
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).messageItemDetails(getClassName(), "delete", Bundle.getMessage("DeleteLogix"), options, 0x00);  // NOI18N
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "remindSaveLogix", Bundle.getMessage("HideSaveReminder"));  // NOI18N
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceItemDetails(getClassName(), "remindSaveLogix", Bundle.getMessage("HideSaveReminder"));  // NOI18N
         super.setMessagePreferencesDetails();
     }
 
@@ -1411,7 +1411,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
      *                conditional references
      * @param treeSet A tree set to be built from the varList data
      */
-    void loadReferenceNames(ArrayList<ConditionalVariable> varList, TreeSet<String> treeSet) {
+    void loadReferenceNames(List<ConditionalVariable> varList, TreeSet<String> treeSet) {
         treeSet.clear();
         for (ConditionalVariable var : varList) {
             if (var.getType() == Conditional.TYPE_CONDITIONAL_TRUE || var.getType() == Conditional.TYPE_CONDITIONAL_FALSE) {
@@ -1796,8 +1796,8 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
                 operand,
                 tStr;
 
-        ArrayList<ConditionalVariable> variableList;
-        ArrayList<ConditionalAction> actionList;
+        List<ConditionalVariable> variableList;
+        List<ConditionalAction> actionList;
         ConditionalVariable variable;
         ConditionalAction action;
         String _antecedent = null;

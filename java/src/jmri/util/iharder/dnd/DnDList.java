@@ -189,7 +189,6 @@ public class DnDList<E>
         }
     }   // end drop
 
-    @SuppressWarnings("unused") // FIXME: Why is this logger hidden way down here and unused?
     private final static Logger log = LoggerFactory.getLogger(DnDList.class);
 
 }   // end class DnDList

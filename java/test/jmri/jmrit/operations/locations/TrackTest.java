@@ -1,4 +1,3 @@
-//TrackTest.java
 package jmri.jmrit.operations.locations;
 
 import jmri.InstanceManager;

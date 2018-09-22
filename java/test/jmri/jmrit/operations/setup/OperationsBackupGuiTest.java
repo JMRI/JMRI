@@ -1,4 +1,3 @@
-//OperationsBackupGuiTest.java
 package jmri.jmrit.operations.setup;
 
 import java.awt.Frame;

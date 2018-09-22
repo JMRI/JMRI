@@ -190,15 +190,11 @@ public class OPath extends jmri.Path {
         for (int i = 0; i < list.size(); i++) {
             BeanSetting bs = list.get(i);
             Turnout t = (Turnout) bs.getBean();
-            if (t == null) {
-                log.error("Invalid turnout on path {}", toString());
-            } else {
-                if (set) {
-                    t.setCommandedState(bs.getSetting());
-                }
-                if (lockState > 0) {
-                    t.setLocked(lockState, lock);
-                }
+            if (set) {
+                t.setCommandedState(bs.getSetting());
+            }
+            if (lockState > 0) {
+                t.setLocked(lockState, lock);
             }
         }
     }

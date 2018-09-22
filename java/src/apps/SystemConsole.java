@@ -213,8 +213,18 @@ public final class SystemConsole extends JTextArea {
         JScrollPane scroll = new JScrollPane(console);
         frame.add(scroll, BorderLayout.CENTER);
 
-        // Add button to allow copy to clipboard
+
         JPanel p = new JPanel();
+        
+        // Add button to clear display
+        JButton clear = new JButton(Bundle.getMessage("ButtonClear"));
+        clear.addActionListener((ActionEvent event) -> {
+            console.setText("");
+        });
+        clear.setToolTipText(Bundle.getMessage("ButtonClearTip"));
+        p.add(clear);        
+        
+        // Add button to allow copy to clipboard        
         JButton copy = new JButton(Bundle.getMessage("ButtonCopyClip"));
         copy.addActionListener((ActionEvent event) -> {
             StringSelection text = new StringSelection(console.getText());

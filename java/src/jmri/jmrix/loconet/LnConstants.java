@@ -181,7 +181,12 @@ public final class LnConstants {
     public final static int CONSIST_SUB = STAT1_SL_CONUP;
     public final static int CONSIST_NO = 0;
 
-    /** Encode consisting status as a string */
+    /**
+     * Encode consisting status as a string
+     * <p>
+     * @param s - consist status bits
+     * @return string contaning a description of the consisting state
+     */
     public final static String CONSIST_STAT(int s) {
         return ((s & CONSIST_MASK) == CONSIST_MID) ? "Mid Consist" // NOI18N
                 : (((s & CONSIST_MASK) == CONSIST_TOP) ? "Consist TOP" // NOI18N
@@ -203,7 +208,12 @@ public final class LnConstants {
     /** Value for locomotive use determination */
     public final static int LOCO_FREE = 0;
 
-    /**Encode loco status as a string */
+    /**
+     * Encode loco status as a string
+     * <p>
+     * @param s - integer containing loco "status"
+     * @return string containing a description of the loco "status"
+     */
     public final static String LOCO_STAT(int s) {
         return ((s & LOCOSTAT_MASK) == LOCO_IN_USE) ? "In-Use" // NOI18N
                 : (((s & LOCOSTAT_MASK) == LOCO_IDLE) ? "Idle" // NOI18N
@@ -372,7 +382,12 @@ public final class LnConstants {
     public final static int OPC_MASK = 0x7f;  /* mask for acknowledge opcodes */
 
 
-    /** Encode LocoNet Opcode as a string */
+    /**
+     * Encode LocoNet Opcode as a string
+     * <p>
+     * @param opcode - a LocoNet opcode value
+     * @return string containing the opcode "name"
+     */
     public final static String OPC_NAME(int opcode) {
         switch (opcode) {
             case OPC_GPBUSY     : return "OPC_GPBUSY"; // NOI18N
@@ -477,6 +492,7 @@ public final class LnConstants {
     public final static int RE_IPL_DIGITRAX_HOST_DT402 = 0x2A;
     public final static int RE_IPL_DIGITRAX_HOST_DT500 = 0x32;
     public final static int RE_IPL_DIGITRAX_HOST_DCS51 = 0x33;
+    public final static int RE_IPL_DIGITRAX_HOST_BXPA1 = 0x51;
     public final static int RE_IPL_DIGITRAX_HOST_UR92 = 0x5C;
     public final static int RE_IPL_DIGITRAX_HOST_BXP88 = 0x58;
     public final static int RE_IPL_DIGITRAX_HOST_LNWI = 0x63;
@@ -496,6 +512,13 @@ public final class LnConstants {
 // Below data is assumed, based on firmware files available from RR-Cirkits web site
     public final static int RE_IPL_MFR_RR_CIRKITS = 87;
     public final static int RE_IPL_RRCIRKITS_HOST_TC64 = 11;
+    public final static int RE_IPL_RRCIRKITS_HOST_LNCP = 12;
+    public final static int RE_IPL_RRCIRKITS_HOST_SIGNALMAN = 21;
+    public final static int RE_IPL_RRCIRKITS_HOST_TOWERMAN = 22;
+    public final static int RE_IPL_RRCIRKITS_HOST_WATCHMAN = 23;
+    public final static int RE_IPL_RRCIRKITS_HOST_TC64_MKII = 24;
+    public final static int RE_IPL_RRCIRKITS_HOST_MOTORMAN = 25;
+    public final static int RE_IPL_RRCIRKITS_HOST_MOTORMAN_II = 28;
     public final static int RE_IPL_RRCIRKITS_SLAVE_ALL = 00;
 
 // Constants associated with OPC_PEER_XFR for Duplex operations

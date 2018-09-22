@@ -6,6 +6,7 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.TrafficController;
+import jmri.jmrix.can.cbus.CbusMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -109,11 +110,13 @@ public class CbusSensor extends AbstractSensor implements CanListener {
     }
 
     /**
-     * Track layout status from messages being received from CAN
+     * Event status from messages being received from CAN
      *
      */
     @Override
     public void reply(CanReply f) {
+        // convert response events to normal
+        f = CbusMessage.opcRangeToStl(f);
         if (addrActive.match(f)) {
             setOwnState(Sensor.ACTIVE);
         } else if (addrInactive.match(f)) {

@@ -14,11 +14,12 @@ import org.junit.rules.TemporaryFolder;
 import org.junit.rules.Timeout;
 import jmri.InstanceManager;
 import jmri.managers.DefaultShutDownManager;
-import jmri.util.junit.rules.RetryRule;
 
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitAppender;
+import jmri.util.junit.rules.RetryRule;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,14 +32,17 @@ import org.slf4j.LoggerFactory;
  */
 public class DecoderProTest {
 
+    static final int RELEASETIME = 3000;  // mSec
+    static final int TESTMAXTIME = 20;    // seconds - not too long, so job doesn't hang
+
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Rule
-    public Timeout globalTimeout = Timeout.seconds(90); // 90 second timeout for methods in this test class.
+    public Timeout globalTimeout = Timeout.seconds(TESTMAXTIME);
 
     @Rule
-    public RetryRule retryRule = new RetryRule(3); // allow 3 retries
+    public RetryRule retryRule = new RetryRule(1); // allow 1 retry
 
     @Test
     public void testLaunchLocoNet() throws IOException {
@@ -68,7 +72,7 @@ public class DecoderProTest {
 
         } finally {
             // wait for threads, etc
-            jmri.util.JUnitUtil.releaseThread(this, 5000);
+            jmri.util.JUnitUtil.releaseThread(this, RELEASETIME);
         }
     }
 
@@ -98,7 +102,7 @@ public class DecoderProTest {
 
         } finally {
             // wait for threads, etc
-            jmri.util.JUnitUtil.releaseThread(this, 5000);
+            jmri.util.JUnitUtil.releaseThread(this, RELEASETIME);
         }
     }
 
@@ -128,7 +132,7 @@ public class DecoderProTest {
 
         } finally {
             // wait for threads, etc
-            jmri.util.JUnitUtil.releaseThread(this, 5000);
+            jmri.util.JUnitUtil.releaseThread(this, RELEASETIME);
         }
     }
 
@@ -159,7 +163,7 @@ public class DecoderProTest {
 
         } finally {
             // wait for threads, etc
-            jmri.util.JUnitUtil.releaseThread(this, 5000);
+            jmri.util.JUnitUtil.releaseThread(this, RELEASETIME);
         }
     }
 
@@ -190,7 +194,7 @@ public class DecoderProTest {
 
         } finally {
             // wait for threads, etc
-            jmri.util.JUnitUtil.releaseThread(this, 5000);
+            jmri.util.JUnitUtil.releaseThread(this, RELEASETIME);
         }
     }
      

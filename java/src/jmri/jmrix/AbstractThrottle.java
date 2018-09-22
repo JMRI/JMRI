@@ -1387,7 +1387,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         String currentDurationString = re.getAttribute("OperatingDuration");
         long currentDuration = 0;
         try {
-            currentDuration = Long.valueOf(currentDurationString);
+            currentDuration = Long.parseLong(currentDurationString);
         } catch (NumberFormatException e) {
             log.warn("current stored duration is not a valid number \"" + currentDurationString + " \"");
         }

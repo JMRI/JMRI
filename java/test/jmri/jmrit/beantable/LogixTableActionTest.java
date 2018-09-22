@@ -4,12 +4,13 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import jmri.InstanceManager;
 import jmri.Logix;
-import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
+import jmri.util.*;
+import jmri.util.junit.rules.*;
+
+import org.junit.*;
+import org.junit.rules.*;
+
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
@@ -23,6 +24,12 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
 * @author Dave Sand Copyright (C) 2017
  */
 public class LogixTableActionTest extends AbstractTableActionBase {
+
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
     @Test
     public void testCtor() {
@@ -164,7 +171,7 @@ public class LogixTableActionTest extends AbstractTableActionBase {
     }
 
     @Test
-    public void testDeleteLogix() {
+    public void testDeleteLogix() throws InterruptedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LogixTableAction lgxTable = (LogixTableAction) a;
 
@@ -173,21 +180,23 @@ public class LogixTableActionTest extends AbstractTableActionBase {
         Assert.assertNotNull("Found Logix Frame", lgxFrame);  // NOI18N
 
         // Delete IX102, respond No
-        createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"));  // NOI18N
+        Thread t1 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"));  // NOI18N
         lgxTable.deletePressed("IX102");  // NOI18N
+        t1.join();
         Logix chk102 = jmri.InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName("IX102");  // NOI18N
         Assert.assertNotNull("Verify IX102 Not Deleted", chk102);  // NOI18N
 
         // Delete IX103, respond Yes
-        createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"));  // NOI18N
+        Thread t2 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"));  // NOI18N
         lgxTable.deletePressed("IX103");  // NOI18N
+        t2.join();
         Logix chk103 = jmri.InstanceManager.getDefault(jmri.LogixManager.class).getBySystemName("IX103");  // NOI18N
         Assert.assertNull("Verify IX103 Is Deleted", chk103);  // NOI18N
 
         JUnitUtil.dispose(lgxFrame);
     }
 
-    void createModalDialogOperatorThread(String dialogTitle, String buttonText) {
+    Thread createModalDialogOperatorThread(String dialogTitle, String buttonText) {
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(dialogTitle);
@@ -196,6 +205,7 @@ public class LogixTableActionTest extends AbstractTableActionBase {
         });
         t.setName(dialogTitle + " Close Dialog Thread");
         t.start();
+        return t;
     }
 
     @Before
@@ -211,6 +221,7 @@ public class LogixTableActionTest extends AbstractTableActionBase {
         InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("IX103", "Logix 103");
         InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("IX104", "Logix 104");
 
+        helpTarget = "package.jmri.jmrit.beantable.LogixTable"; 
         a = new LogixTableAction();
     }
 

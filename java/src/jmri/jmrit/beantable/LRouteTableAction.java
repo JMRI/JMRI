@@ -33,6 +33,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import jmri.Conditional;
+import jmri.Conditional.Operator;
 import jmri.ConditionalAction;
 import jmri.ConditionalManager;
 import jmri.ConditionalVariable;
@@ -384,7 +385,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         //TreeSet <RouteInputElement>inputTS = new TreeSet<RouteInputElement>();
         //TreeSet <RouteOutputElement>outputTS = new TreeSet<RouteOutputElement>();
         jmri.TurnoutManager tm = InstanceManager.turnoutManagerInstance();
-        tm.getNamedBeanList().forEach((nb) -> {
+        tm.getNamedBeanSet().forEach((nb) -> {
             String userName = nb.getUserName();
             String systemName = nb.getSystemName();
             inputTS.add(new RouteInputTurnout(systemName, userName));
@@ -393,7 +394,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
 
         TreeSet<AlignElement> alignTS = new TreeSet<>(new RouteElementComparator());
         jmri.SensorManager sm = InstanceManager.sensorManagerInstance();
-        sm.getNamedBeanList().forEach((nb) -> {
+        sm.getNamedBeanSet().forEach((nb) -> {
             String userName = nb.getUserName();
             String systemName = nb.getSystemName();
             inputTS.add(new RouteInputSensor(systemName, userName));
@@ -402,14 +403,14 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         });
 
         jmri.LightManager lm = InstanceManager.lightManagerInstance();
-        lm.getNamedBeanList().forEach((nb) -> {
+        lm.getNamedBeanSet().forEach((nb) -> {
             String userName = nb.getUserName();
             String systemName = nb.getSystemName();
             inputTS.add(new RouteInputLight(systemName, userName));
             outputTS.add(new RouteOutputLight(systemName, userName));
         });
         jmri.SignalHeadManager shm = InstanceManager.getDefault(jmri.SignalHeadManager.class);
-        shm.getNamedBeanList().forEach((nb) -> {
+        shm.getNamedBeanSet().forEach((nb) -> {
             String userName = nb.getUserName();
             String systemName = nb.getSystemName();
             inputTS.add(new RouteInputSignal(systemName, userName));
@@ -569,7 +570,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
     void getControlsAndActions(String cSysName) {
         Conditional c = _conditionalManager.getBySystemName(cSysName);
         if (c != null) {
-            ArrayList<ConditionalAction> actionList = c.getCopyOfActions();
+            List<ConditionalAction> actionList = c.getCopyOfActions();
             boolean onChange = false;
             for (int k = 0; k < actionList.size(); k++) {
                 ConditionalAction action = actionList.get(k);
@@ -629,7 +630,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                     }
                 }
             }
-            ArrayList<ConditionalVariable> varList = c.getCopyOfStateVariables();
+            List<ConditionalVariable> varList = c.getCopyOfStateVariables();
             for (int k = 0; k < varList.size(); k++) {
                 ConditionalVariable variable = varList.get(k);
                 int testState = variable.getType();
@@ -680,8 +681,8 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                         }
                         continue;
                 }
-                int opern = variable.getOpern();
-                if (k != 0 && (opern == Conditional.OPERATOR_AND || opern == Conditional.OPERATOR_AND_NOT)) {
+                Operator opern = variable.getOpern();
+                if (k != 0 && (opern == Conditional.Operator.AND)) {
                     // guess this is a VETO
                     testState += VETO;
                 } else if (onChange) {
@@ -717,7 +718,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         Conditional c = _conditionalManager.getBySystemName(cSysName);
         if (c != null) {
             AlignElement element = null;
-            ArrayList<ConditionalAction> actionList = c.getCopyOfActions();
+            List<ConditionalAction> actionList = c.getCopyOfActions();
             for (int k = 0; k < actionList.size(); k++) {
                 ConditionalAction action = actionList.get(k);
                 if (action.getType() != Conditional.ACTION_SET_SENSOR) {
@@ -751,7 +752,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             }
             // the action elements are identified in getControlsAndActions().
             //  Just identify the type of sensing
-            ArrayList<ConditionalVariable> varList = c.getCopyOfStateVariables();
+            List<ConditionalVariable> varList = c.getCopyOfStateVariables();
             int atype = 0;
             for (int k = 0; k < varList.size(); k++) {
                 ConditionalVariable variable = varList.get(k);
@@ -815,7 +816,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             _lock = true;
             // Verify conditional is what we think it is
             ArrayList<RouteOutputElement> tList = makeTurnoutLockList();
-            ArrayList<ConditionalAction> actionList = c.getCopyOfActions();
+            List<ConditionalAction> actionList = c.getCopyOfActions();
             if (actionList.size() != tList.size()) {
                 JOptionPane.showMessageDialog(
                         _addFrame, java.text.MessageFormat.format(rbx.getString("LockWarn1"),
@@ -1483,9 +1484,9 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                     name = elt.getSysName();
                 }
                 //int opern = newRouteType ? Conditional.OPERATOR_AND : Conditional.OPERATOR_OR;
-                int opern = Conditional.OPERATOR_AND;
+                Operator opern = Conditional.Operator.AND;
                 if (i == 0) {
-                    opern = Conditional.OPERATOR_NONE;
+                    opern = Conditional.Operator.NONE;
                 }
                 int state = elt.getState();
                 if (VETO < state) {
@@ -1504,9 +1505,9 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                 if (name == null || name.length() == 0) {
                     name = elt.getSysName();
                 }
-                int opern = _newRouteType ? Conditional.OPERATOR_OR : Conditional.OPERATOR_AND;
+                Operator opern = _newRouteType ? Conditional.Operator.OR : Conditional.Operator.AND;
                 if (i == 0) {
-                    opern = Conditional.OPERATOR_NONE;
+                    opern = Conditional.Operator.NONE;
                 }
                 int type = elt.getState();
                 if (VETO > type) {
@@ -1540,7 +1541,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                 return;
             }
         } else {
-            oneTriggerList.add(new ConditionalVariable(false, Conditional.OPERATOR_NONE,
+            oneTriggerList.add(new ConditionalVariable(false, Conditional.Operator.NONE,
                     Conditional.TYPE_NONE, LOGIX_INITIALIZER, true));
         }
         if (log.isDebugEnabled()) {
@@ -1735,7 +1736,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                     if (eltName == null || eltName.length() == 0) {
                         eltName = elt.getSysName();
                     }
-                    vList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND,
+                    vList.add(new ConditionalVariable(false, Conditional.Operator.AND,
                             varType, eltName, true));
                 }
             }

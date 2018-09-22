@@ -26,6 +26,7 @@ public class TrainManifestOptionFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

@@ -422,6 +422,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     /*
      * Engineer reports its status
      */
+    @jmri.InvokeOnLayoutThread
     protected void fireRunStatus(String property, Object old, Object status) {
         // error if not on Layout thread
         if (!ThreadingUtil.isLayoutThread()) {
@@ -665,6 +666,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         return Bundle.getMessage("atSpeed", speedType, Math.round(speed), units);
     }
 
+    @jmri.InvokeOnLayoutThread
     protected void startTracker() {
         // error if not on Layout thread
         if (!ThreadingUtil.isLayoutThread()) {
@@ -676,6 +678,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     }
 
     synchronized public void stopWarrant(boolean abort) {
+        stopWarrant(abort, true);
+    }
+    synchronized public void stopWarrant(boolean abort, boolean turnOffFunctions) {
         _delayStart = false;
         if (_protectSignal != null) {
             _protectSignal.removePropertyChangeListener(this);
@@ -692,8 +697,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             _student = null;
         }
         if (_engineer != null) {
-            _speedUtil.stopRun(!abort); // don't write speed profile measurements
-            _engineer.stopRun(abort); // release throttle
+            _speedUtil.stopRun(!abort, turnOffFunctions); // don't write speed profile measurements
+            _engineer.stopRun(abort, turnOffFunctions); // release throttle
             _engineer = null;
         }
         deAllocate();
@@ -1468,7 +1473,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                         }
                         wait(20);
                         time += 20;
-                    };
+                    }
                     _message = msg;
                 }
                 catch (Exception e) {
@@ -1616,10 +1621,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * Check if this is the next block of the train moving under the warrant
      * Learn mode assumes route is set and clear. Run mode update conditions.
      * <p>
-     * Must be called on GUI thread.
+     * Must be called on Layout thread.
      *
      * @param block Block in the route is going active.
      */
+    @jmri.InvokeOnLayoutThread
     protected void goingActive(OBlock block) {
         // error if not on Layout thread
         if (!ThreadingUtil.isLayoutThread()) {
@@ -1669,8 +1675,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 // Train can still be moving after throttle set to 0. Block 
                 // boundaries can be crossed.  This is due to momentum 'gliding'
                 // for any nonE-Stop or by choosing ramping to a stop.
-                if (runState != WAIT_FOR_CLEAR && runState != HALT && 
-                        runState != STOP_PENDING && runState != RAMP_HALT) {
+                // spotbugs knows runState != HALT here
+                if (runState != WAIT_FOR_CLEAR && runState != STOP_PENDING && runState != RAMP_HALT) {
                     // Apparently NOT already stopped or just about to be.
                     // Therefore, assume a Rogue has just entered.
                     setStoppingBlock(block);
@@ -1768,6 +1774,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     /**
      * @param block Block in the route is going Inactive
      */
+    @jmri.InvokeOnLayoutThread
     protected void goingInactive(OBlock block) {
         if (_runMode == MODE_NONE) {
             return;
@@ -2362,7 +2369,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         float prevSpeed = waitSpeed;
         long waitTime = 0; // time to wait after entering the block before starting ramp
         long speedTime = 0; // time running at a given speed until next speed change
-        float prevRampLen = rampLen;
         float dist = 0;
         boolean increasing = true;
         boolean hasSpeed = (throttleSpeed > 0.0001f);
@@ -2386,7 +2392,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 speedTime += ts.getTime() * timeRatio;
                 if (cmd.equals("SPEED")) {
                     nextThrottle = Float.parseFloat(ts.getValue()); // new speed
-                    prevRampLen = rampLen;
+                    float prevRampLen = rampLen;
                     // calculate a new ramp length starting from speed nextThrottle (modified for speedType)
                     rampLen = _speedUtil.rampLengthForRampDown(throttleSpeed, _curSpeedType, speedType, isForward);
                     rampLen += signalDistAdj;
@@ -2450,6 +2456,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             }
             _engineer.rampSpeedTo(speedType, endBlockIdx, true);
         } else {
+            // don't understand SpotBugs warning here - call to cancelDelayRamp() done above
             _delayCommand = new CommandDelay(speedType, waitTime, endBlockIdx, true);
             _delayCommand.start();
             //_delayCommand.execute();

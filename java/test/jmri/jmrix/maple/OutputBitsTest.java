@@ -71,8 +71,7 @@ public class OutputBitsTest extends TestCase {
 
     @Override
     protected void setUp() {
-        // The minimal setup for log4J
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         SerialTrafficControlScaffold tc = new SerialTrafficControlScaffold();
         obit = new OutputBits(tc);
     }

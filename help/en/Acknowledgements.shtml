@@ -293,13 +293,19 @@
 
         <li>Seth Cohen, who helped get serial sensors and NCE AIUs
         to work, and wrote the speedometer web page</li>
-
+            
         <li>Glen Colbert, who contributed the MRC AD370 decoder
         definition</li>
 
         <li>Bob Coleman added the CTI Acela support and did a huge
         amount of work on the operations code tests.</li>
 
+        <li>Jeff Collell, <!--- auctionsjeff --->
+            who added Light support for OpenLCB.<li>
+
+        <li>Joe Comuzzi <!-- jcomuzzi -->
+        added new icon tests</li>
+        
         <li>John Crellin contributed numerous new and improved
         decoder definitions for MRC decoders and the Kato
         FL11.</li>
@@ -439,8 +445,6 @@
         provided the DH83FX definition, and many great
         suggestions</li>
 
-        <li>Costin Grigoras added an option to start the DCC++ TCP server at startup</li>
-
         <li>Bill Gray suggested web page improvements</li>
 
         <li>Michael Greene, who corrected a bug in the SoundTraxx
@@ -449,14 +453,25 @@
         the E-Z Command and Zimo MX61_N decoders; and updated the
         Digitrax definition for new types.</li>
 
-        <li>Tom Gretton, who helped with documentation and the Groups.io migration</li><!-- tgretton -->
+        <li>Tom Gretton,  <!-- tgretton -->
+            who helped with documentation and the Groups.io migration</li>
 
         <li>Walter Griffin, who provided graphics for signals and
         CTC panels</li>
 
+        <li>Costin Grigoras, <!-- costing -->
+            who added an option to start the DCC++ TCP server at startup
+            and updated the DCC++ implementation
+            to do a background refresh of the function values.</li>
+
+        <li>Jerry Grochow, <!-- jerryg2003 -->
+            who helped with the scripting documentation</li>
+            
         <li>Mark Gurries, who provided loaner equipment and great
-        ideas. He's currently working on decoder definitions for
-        DecoderPro <a name="H" id="H"></a></li>
+            ideas. He's currently working on decoder definitions for
+            DecoderPro </li>
+        
+        <a name="H" id="H"></a>
 
         <li>Victoria K. Hall led the legal action that held Matt
         Katzer responsible for his depredations against JMRI</li>
@@ -502,14 +517,18 @@
 
         <li>Brett Hoffman, who provided support for zero-config
         ("Bonjour"-like) networking and WiFi access to throttles.
-        <a name="I" id="I"></a></li>
+        </li>
+        
+        <a name="I" id="I"></a>
 
         <li>Osvaldo Hojvat provided definitions for several
                     <a href-"http://www.ldhtrenes.com.ar">LDH</a>
                     decoders</li>
                     
         <li>Al Huberty, who organized our first users meeting at
-        the NMRA Toronto convention <a name="J" id="J"></a></li>
+        the NMRA Toronto convention</li>
+        
+        <a name="J" id="J"></a>
 
         <li>AJ Ireland of Digitrax, who loaned equipment, answered
         questions and made valuable suggestions</li>
@@ -517,12 +536,14 @@
         <li>John Jabour, who created the excellent LocoBuffer and
         thereby made reliable LocoNet communications routine</li>
 
-        <li>Martin Jahner, who fixed the constant checkboxen</li>
-
+        <li>Brian Jackson <!-- brianjackson1 -->
+        who updated the Hornby TTS library</li>
+        
         <li>Bob Jacobsen, who wrote some of the early code and does
         packaging and user support</li>
 
-        <li>Martin Jahner, who built a replacement library for Mac
+        <li>Martin Jahner, who fixed the constant checkboxen
+        and built a replacement library for Mac
         OS X</li>
 
         <li>Jay Janzen, who debugged a RobotThrottle problem, and
@@ -551,8 +572,8 @@
         <li>Georg Kautzsch, who provided a decoder definition for
         the Uhlenbrock 67800 servo decoder.</li>
 
-        <li><!-- klk32003 -->
-        Klaus Killinger, who improved the sound support
+        <li>
+        Klaus Killinger, who improved the sound support <!-- klk32003 -->
             and has provided multiple sound projects</li>
 
         <li>Scott Kitts, who helped debug the new communications
@@ -609,7 +630,8 @@
         <li>Alain Le Marchand, who provided a number of decoder
         definitions and updates</li><!-- GitHub: AlanUS -->
 
-        <li>Karl Johan Lisby, who made large improvements to the
+        <li>Karl Johan Lisby, <!-- kjlisby  -->
+        who made large improvements to the
         Uhlenbrock Intellibox support and contributed the Signal
         Controlled Warrant support</li>
 
@@ -903,8 +925,9 @@
         <li>Dustin Shoup, who figured out how to preserve order in
         XML files</li>
 
-        <li>Petr Šídlo, who provided a large update to the Czech
-        translations of JMRI</li><!-- sidlo64 on GitHub -->
+        <li>Petr Šídlo, <!-- sidlo64 -->
+        who provided a large update to the Czech
+        translations of JMRI</li>
 
         <li>Pekka Siiskonen, who suggested we add error numbers to
         error messages to make it easier to discuss which specific
@@ -919,7 +942,11 @@
         <li>Don Smith, who ran down some NCE decoder
         information</li>
 
-        <li>John Socha-Leialoha, who improved the WiThrottle
+        <li>Ted Smith, who corrected some errors in sample scripts
+            and the basic two-searchlight definition</li>
+
+        <li>John Socha-Leialoha, <!-- JohnSL -->
+        who improved the WiThrottle
         protocol documentation</li>
 
         <li>Alfredo Sola provides the Spanish translation</li>

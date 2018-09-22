@@ -91,6 +91,7 @@ public class SignalHeadTableActionTest extends AbstractTableActionBase {
         JUnitUtil.initDefaultUserMessagePreferences();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSignalHeadManager();
+        helpTarget = "package.jmri.jmrit.beantable.SignalHeadTable"; 
         a = new SignalHeadTableAction();
     }
 

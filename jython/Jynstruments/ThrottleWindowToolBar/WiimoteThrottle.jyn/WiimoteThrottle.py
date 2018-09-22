@@ -38,6 +38,10 @@ valueSpeedIncrement = 0.01
 delay4double = 500 # delay for double tap on button (ms)
 
 import java
+import java.awt
+import java.awt.event
+import java.beans
+import java.util
 import jmri
 import jmri.jmrit.jython.Jynstrument as Jynstrument
 import java.beans.PropertyChangeListener as PropertyChangeListener
@@ -161,13 +165,13 @@ class WiimoteThrottle(Jynstrument, PropertyChangeListener, AddressListener, WiiD
         pass
     def combinedInputReceived(self, evt):
         pass
-    def	extensionConnected(self, extension):
+    def extensionConnected(self, extension):
         pass          
-    def	extensionDisconnected(self, extension):
+    def extensionDisconnected(self, extension):
         pass          
     def extensionInputReceived(self, evt):
         pass
-    def	extensionPartiallyInserted(self):
+    def extensionPartiallyInserted(self):
         pass
     def extensionUnknown(self):
         pass

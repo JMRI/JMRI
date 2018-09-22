@@ -505,6 +505,16 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
         previewButton.setEnabled(!enable);
         printButton.setEnabled(!enable);
         resetButton.setEnabled(!enable);
+        csvGenerateButton.setEnabled(!enable);
+        runButton.setEnabled(!enable);
+        // disable the following, and turn then back on if needed
+        printChangesButton.setEnabled(false);
+        csvChangeButton.setEnabled(false);
+        runChangeButton.setEnabled(false);
+        updateButton.setEnabled(false);
+        if (!enable) {
+            enableChangeButtons();
+        }
     }
 
     private void enableChangeButtons() {

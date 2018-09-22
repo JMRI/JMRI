@@ -44,9 +44,6 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
 
     /**
      * Get a message of zero length.
-     *
-     * This is a default, null implementation, which must be overridden in an
-     * adapter-specific subclass.
      */
     @Override
     protected AbstractMRReply newReply() {
@@ -208,15 +205,17 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
 
     @Override
     public void packetReceived(XBeePacket response) {
-
+	// because of the XBee library architecture, we don't
+	// do anything here with the responses.
         log.debug("packetReceived called with {}",response);
-        dispatchResponse(response);
     }
 
     // XBee IModemStatusReceiveListener interface methods
 
     @Override
     public void modemStatusEventReceived(ModemStatusEvent modemStatusEvent){
+	// because of the XBee library architecture, we don't
+	// do anything here with the responses.
        log.debug("modemStatusEventReceived called with event {} ", modemStatusEvent);
     }
 
@@ -224,36 +223,9 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
 
     @Override
     public void dataReceived(com.digi.xbee.api.models.XBeeMessage xbm){
-       log.debug("dataReceived called with message {} ", xbm);
-    }
-
-    private void dispatchResponse(XBeePacket response){
-        XBeeReply reply = new XBeeReply(response);
-
-        // message is complete, dispatch it
-        replyInDispatch = true;
-        if (log.isDebugEnabled()) {
-            log.debug("dispatch reply of length " + reply.getNumDataElements()
-                    + " contains " + reply.toString() + " state " + mCurrentState);
-        }
-
-        // forward the message to the registered recipients,
-        // which includes the communications monitor
-        // return a notification via the Swing event queue to ensure proper thread
-        /*Runnable r = new RcvNotifier(reply, mLastSender, this);
-        try {
-            log.debug("invoking dispatch thread");
-            javax.swing.SwingUtilities.invokeAndWait(r);
-            log.debug("dispatch thread complete");
-        } catch (Exception e) {
-            log.error("Unexpected exception in invokeAndWait:", e);
-        }*/
-        if (log.isDebugEnabled()) {
-            log.debug("dispatch thread invoked");
-        }
-
-        replyInDispatch = false;
-        log.debug("Dispatch Complete");
+        // because of the XBee library architecture, we don't
+	// do anything here with the responses.
+        log.debug("dataReceived called with message {} ", xbm);
     }
 
     /*
@@ -309,7 +281,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
     }
 
     /**
-     * Forward a reply to all registered IEEE802154Interface listeners.
+     * Forward a reply to all registered XBeeInterface listeners.
      */
     @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply r) {

@@ -61,12 +61,14 @@ public class AudioTableActionTest extends AbstractTableActionBase {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        a = new AudioTableAction();
+        helpTarget = "package.jmri.jmrit.beantable.AudioTable";
+	    a = new AudioTableAction();
     }
 
     @After
     @Override
     public void tearDown() {
+        jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
         JUnitUtil.tearDown();
         a = null;
     }

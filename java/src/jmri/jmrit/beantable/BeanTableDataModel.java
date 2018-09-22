@@ -114,7 +114,11 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         sysNameList = getManager().getSystemNameList();
         // and add them back in
         for (int i = 0; i < sysNameList.size(); i++) {
-            getBySystemName(sysNameList.get(i)).addPropertyChangeListener(this, null, "Table View");
+            // if object has been deleted, it's not here; ignore it
+            T b = getBySystemName(sysNameList.get(i));
+            if (b != null) {
+                b.addPropertyChangeListener(this, null, "Table View");
+            }
         }
     }
 

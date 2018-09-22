@@ -28,7 +28,6 @@ public class XmlConfig extends XmlFile {
         dumpNode(root, depth);
     }
 
-    @SuppressWarnings("unchecked")
     static void dumpNode(Element node, int depth) {
         int leader;
         for (leader = 0; leader < depth; leader++) {

@@ -345,11 +345,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     /**
      * Set the Speed Control selection method
      *
-     * TODO: move to private
-     *
-     * @deprecated You should not directly manipulate the UI. Use a throttle
-     * object instead.
-     *
      * @param displaySlider integer value. possible values: SLIDERDISPLAY = use
      *                      speed slider display STEPDISPLAY = use speed step
      *                      display

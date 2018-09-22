@@ -5,12 +5,12 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import jmri.Manager;
+import jmri.*;
 import jmri.jmrit.beantable.AbstractTableAction;
 import jmri.jmrit.beantable.AbstractTableTabAction;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 
-public class EcosLocoTableTabAction extends AbstractTableTabAction {
+public class EcosLocoTableTabAction extends AbstractTableTabAction<NamedBean> {  // there is no specific subtype of NamedBean here, see EcosLocoAddressManager
 
     public EcosLocoTableTabAction(String s) {
         super(s);
@@ -30,7 +30,7 @@ public class EcosLocoTableTabAction extends AbstractTableTabAction {
             for (EcosSystemConnectionMemo eMemo : list) {
                 //We only want to add connections that have an active loco address manager
                 if (eMemo.getLocoAddressManager() != null) {
-                    TabbedTableItem itemModel = new TabbedTableItem(eMemo.getUserName(), true, eMemo.getLocoAddressManager(), getNewTableAction(eMemo.getUserName(), eMemo));
+                    TabbedTableItem<NamedBean> itemModel = new TabbedTableItem<>(eMemo.getUserName(), true, eMemo.getLocoAddressManager(), getNewTableAction(eMemo.getUserName(), eMemo));
                     tabbedTableArray.add(itemModel);
                 }
             }
@@ -57,28 +57,28 @@ public class EcosLocoTableTabAction extends AbstractTableTabAction {
     }
 
     @Override
-    protected AbstractTableAction getNewTableAction(String choice) {
+    protected AbstractTableAction<NamedBean> getNewTableAction(String choice) {
         return null;
     }
 
-    protected AbstractTableAction getNewTableAction(String choice, EcosSystemConnectionMemo eMemo) {
+    protected AbstractTableAction<NamedBean> getNewTableAction(String choice, EcosSystemConnectionMemo eMemo) {
         return new EcosLocoTableAction(choice, eMemo);
     }
 
     @Override
-    protected Manager getManager() {
+    protected Manager<NamedBean> getManager() {
         return null;
     }
 
     @Override
-    public void addToFrame(jmri.jmrit.beantable.BeanTableFrame f) {
+    public void addToFrame(jmri.jmrit.beantable.BeanTableFrame<NamedBean> f) {
         if (tabbedTableArray.size() > 1) {
             super.addToFrame(f);
         }
     }
 
     @Override
-    public void setMenuBar(jmri.jmrit.beantable.BeanTableFrame f) {
+    public void setMenuBar(jmri.jmrit.beantable.BeanTableFrame<NamedBean> f) {
         if (tabbedTableArray.size() > 1) {
             super.setMenuBar(f);
         }

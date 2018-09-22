@@ -1,6 +1,5 @@
 package jmri.configurexml;
 
-import apps.tests.Log4JFixture;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -110,18 +109,15 @@ public class SchemaTestBase {
     }
 
     @Before
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         this.validate = XmlFile.getDefaultValidate();
     }
 
-    @BeforeClass
-    public static void preClassInit() throws Exception {
-        Log4JFixture.setUp(); // setup logging early so static methods can log
-    }
-
     @After
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() throws Exception {
         XmlFile.setDefaultValidate(this.validate);
         JUnitUtil.tearDown();

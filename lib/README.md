@@ -304,10 +304,10 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - From FindBugs 3.0.0 from http://findbugs.sourceforge.net
 - Only needed at compile/build time, not runtime
 
-##### spotbugs-annotations-3.1.1.jar
-- From SpotBugs 3.1.1
+##### spotbugs-annotations.jar
+- From SpotBugs 3.1.7
 - Only needed at compile/build time, not runtime
-- http://repo1.maven.org/maven2/com/github/spotbugs/spotbugs-annotations/3.1.1/
+- http://repo1.maven.org/maven2/com/github/spotbugs/spotbugs-annotations/3.1.7/
 
 ##### UmlGraph-5.7
 - from http://www.umlgraph.org/download.html

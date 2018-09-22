@@ -21,8 +21,6 @@ import jmri.profile.Profile;
 import jmri.util.FileUtil;
 import jmri.util.OrderedProperties;
 import jmri.util.node.NodeIdentity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides instances of {@link java.util.prefs.Preferences} backed by a
@@ -53,9 +51,7 @@ public final class JmriPreferencesProvider {
 
     private static final HashMap<File, JmriPreferencesProvider> SHARED_PROVIDERS = new HashMap<>();
     private static final HashMap<File, JmriPreferencesProvider> PRIVATE_PROVIDERS = new HashMap<>();
-    //private static final String INVALID_KEY_CHARACTERS = "_.";
-    private static final Logger log = LoggerFactory.getLogger(JmriPreferencesProvider.class);
-
+ 
     /**
      * Get the JmriPreferencesProvider for the specified profile path. Use of
      *
@@ -128,6 +124,7 @@ public final class JmriPreferencesProvider {
      * non-existent package or class.
      */
     @Nonnull
+    @Deprecated
     public static Preferences getPreferences(@Nullable final Profile project, @Nullable final String pkg, final boolean shared) {
         if (project != null) {
             return findProvider(project.getPath(), shared).getPreferences(pkg);
@@ -154,6 +151,7 @@ public final class JmriPreferencesProvider {
      * is preferred and recommended unless being used to during the construction
      * of a Profile object.
      */
+    @Deprecated
     public static Preferences getPreferences(@Nullable final File path, @Nullable final Class<?> clazz, final boolean shared) {
         return findProvider(path, shared).getPreferences(clazz);
     }
@@ -261,11 +259,13 @@ public final class JmriPreferencesProvider {
             if (!this.shared) {
                 File nodeDir = new File(dir, NodeIdentity.identity());
                 if (!nodeDir.exists()) {
-                    NodeIdentity.copyFormerIdentity(dir, nodeDir);
+                    boolean success = NodeIdentity.copyFormerIdentity(dir, nodeDir);
+                    if (! success) log.debug("copyFormerIdentity({}, {}) did not copy", dir, nodeDir);
                 }
                 dir = new File(dir, NodeIdentity.identity());
-                }
             }
+        }
+        log.debug("createDirectory(\"{}\")", dir);
         FileUtil.createDirectory(dir);
         return dir;
     }
@@ -285,9 +285,7 @@ public final class JmriPreferencesProvider {
     }
 
     private class JmriPreferences extends AbstractPreferences {
-
-        private final Logger log = LoggerFactory.getLogger(JmriPreferences.class);
-
+    
         private Map<String, String> root;
         private Map<String, JmriPreferences> children;
         private boolean isRemoved = false;
@@ -466,6 +464,8 @@ public final class JmriPreferencesProvider {
                 }
             }
         }
+        private final  org.slf4j.Logger log =  org.slf4j.LoggerFactory.getLogger(JmriPreferences.class);
     }
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriPreferencesProvider.class);
 }

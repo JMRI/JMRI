@@ -50,7 +50,7 @@
     <!--    # or                                                                         -->
     <!--    nsis.home=C:/Program Files/NSIS/                                             -->
     <!--                                                                                 -->
-    <!-- This file should NEVER be checked-in to Git, it is in the .gitignore file       -->
+    <!-- The local.properties file should NEVER be checked-in to Git, it is in the .gitignore file       -->
     <!--                                                                                 -->
     <property file="local.properties"/>
 
@@ -199,7 +199,7 @@
         <pathelement location="${libdir}/slf4j-api-1.7.25.jar"/>
         <pathelement location="${libdir}/slf4j-log4j12-1.7.25.jar"/>
         <pathelement location="${libdir}/jul-to-slf4j-1.7.25.jar"/>
-        <pathelement location="${libdir}/xbee-java-library-1.2.0.jar"/>
+        <pathelement location="${libdir}/xbee-java-library-1.2.1.jar"/>
         <pathelement location="${libdir}/pi4j-core.jar"/>
         <pathelement location="${libdir}/pi4j-device.jar"/>
         <pathelement location="${libdir}/pi4j-gpio-extension.jar"/>
@@ -246,7 +246,7 @@
         <!-- SpotBugs annotations -->
         <pathelement location="${libdir}/jcip-annotations-1.0.jar"/>
         <pathelement location="${libdir}/jsr305.jar"/>
-        <pathelement location="${libdir}/spotbugs-annotations-3.1.1.jar"/>
+        <pathelement location="${libdir}/spotbugs-annotations.jar"/>
         <!-- ServiceProvider annotations -->
         <pathelement location="${libdir}/org-openide-util-lookup-RELEASE82.jar"/>
     </path>
@@ -623,8 +623,8 @@
                    deprecation="@{javac.deprecation}"
                    debug="${java.debugging}">
                 <classpath refid="@{javac.classpath}"/>
-                <compilerarg value="-Xlint:-unchecked"/>  <!-- off during 1.8 migration -->
-                <compilerarg value="-Xpkginfo:always"/>  <!-- reduce warning messages during normal compile -->
+                <compilerarg value="-Xlint:unchecked"/>
+                <compilerarg value="-Xpkginfo:always"/>  <!-- compile all package-info.java to avoid empty-file warnings -->
                 <compilerarg value="-Xmaxerrs"/><compilerarg value="1000"/><!-- change from default 100 errors -->
             </javac>
         </sequential>
@@ -663,7 +663,8 @@
                deprecation="on"
                debug="${java.debugging}">
             <classpath refid="compile.class.path"/>
-            <compilerarg value="-Xlint:-unchecked"/>
+            <compilerarg value="-Xlint:unchecked"/>
+            <compilerarg value="-Xpkginfo:always"/>  <!-- compile all package-info.java to avoid empty-file warnings -->
             <compilerarg value="-Xmaxwarns"/><compilerarg value="2000"/><!-- change from default 100 warnings -->
         </javac>
     </target>
@@ -738,6 +739,7 @@
         <attribute name="javac.target" default="${target}"/>
         <attribute name="javac.deprecation" default="${deprecation}"/>
         <attribute name="javac.classpath" default="compile.class.path"/>
+        <element name="javac-options" optional="yes"/>
         <sequential>
             <mkdir dir="@{javac.target}"/> <!-- ensure destdir exists -->
             <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
@@ -750,7 +752,7 @@
                 <compilerclasspath>
                     <pathelement path="${libdir}/ecj.jar"/>
                 </compilerclasspath>
-                <compilerarg value="@${basedir}/java/ecj.warning.options"/>
+                <javac-options/>
                 <classpath refid="@{javac.classpath}"/>
             </javac>
         </sequential>
@@ -759,13 +761,41 @@
     <target name="warnings"
             description="compile source with warning generation on, omitting tests; requires Ant 1.8 and ecj.jar"
             depends="check-ant-requirements, clean, init, copyfiles, compile-generated-source">
-        <ecj-compile javac.source="${source}"/>
+        <ecj-compile javac.source="${source}">
+            <javac-options>
+                <compilerarg value="@${basedir}/java/ecj.warning.options"/>
+            </javac-options>
+        </ecj-compile>
+    </target>
+
+    <target name="warnings-check"
+            description="compile source with warning generation on and fail if any warnings, omitting tests; requires Ant 1.8 and ecj.jar"
+            depends="check-ant-requirements, clean, init, copyfiles, compile-generated-source">
+        <ecj-compile javac.source="${source}">
+            <javac-options>
+                <compilerarg value="@${basedir}/java/ecj.warning.options-ci"/>
+            </javac-options>
+        </ecj-compile>
     </target>
 
     <target name="tests-warnings"
             description="compile test sources with warning generation on; requires Ant 1.8 and ecj.jar"
             depends="check-ant-requirements, clean, init, copyfiles, warnings">
-        <ecj-compile javac.source="${test}" javac.target="${testtarget}" javac.classpath="test.class.path"/>
+        <ecj-compile javac.source="${test}" javac.target="${testtarget}" javac.classpath="test.class.path">
+            <javac-options>
+                <compilerarg value="@${basedir}/java/ecj.warning.options"/>
+            </javac-options>
+        </ecj-compile>
+    </target>
+
+    <target name="tests-warnings-check"
+            description="compile test sources with warning generation on and fail if any warnings; requires Ant 1.8 and ecj.jar"
+            depends="check-ant-requirements, clean, init, copyfiles, warnings-check">
+        <ecj-compile javac.source="${test}" javac.target="${testtarget}" javac.classpath="test.class.path">
+            <javac-options>
+                <compilerarg value="@${basedir}/java/ecj.warning.options-ci"/>
+            </javac-options>
+        </ecj-compile>
     </target>
 
     <!-- end of program build targets -->
@@ -1155,20 +1185,24 @@
     <!-- See http://rscbundlecheck.sourceforge.net/ -->
     <target name="checkPropertiesFiles" description="check all JMRI properties files for duplicate properties in same file" >
         <taskdef classpath="${libdir}/rscbundlecheck.jar" resource="task.properties"/>
-        <resourceCheck failonerror="true">
+        <resourceCheck failonerror="true" verbose="false">
             <fileset dir="${source}">
                 <include name="**/*.properties"/>
             </fileset>
             <checks>
                 <include name="duplicate key check"/>
-                <exclude name="unicode check"/>
+                <include name="empty key check"/>
+                <include name="messageformat check"/>
+                <include name="unicode check"/>
+                <include name="invalid char check"/> <!-- c.f. native2ascii -->
+                
+                <!-- someday want to get to these -->
+                <exclude name="placeholder check"/> <!-- Is this _global_ on name?  C.f. ConnectionName -->
                 <exclude name="upper lower check"/>
-                <exclude name="line end check"/>
-                <exclude name="empty key check"/>
-                <exclude name="placeholder check"/>
+                <exclude name="line end check"/> <!-- replace trailing spaces with \s - see "Checkstyle" discussion previously -->
+                
+                <!-- our usage may be inconsistent with these, needs further thought -->
                 <exclude name="empty value check"/>
-                <exclude name="invalid char check"/>
-                <exclude name="messageformat check"/>
                 <exclude name="cross bundle check"/>
             </checks>
         </resourceCheck>
@@ -1971,13 +2005,47 @@
         </spotbugs>
     </target>
 
-    <target name="spotbugs-ci" depends="dist" description="generate SpotBugs report. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
+    <target name="spotbugs-check" depends="dist" description="generate SpotBugs check-only report. Specify SpotBugs install with local.properties file or &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; on command line." >
+        <spotbugs home="${spotbugs.home}"
+                  output="html"
+                  outputFile="${jartarget}/spotbugs-check.html"
+                  jvmargs="-Xmx1536m"
+                  timeout="12000000"
+                  excludeFilter=".spotbugs-check.xml"
+
+                  effort="max"
+                  reportLevel="low"
+                  >
+            <sourcePath path="${source}/"/>
+            <class location="${jartarget}/jmri.jar"/>
+            <auxClasspath refid="compile.class.path" />
+        </spotbugs>
+    </target>
+
+    <target name="spotbugs-ci" depends="dist" description="generate SpotBugs CI report. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
         <spotbugs home="${spotbugs.home}"
                   output="xml:withMessages"
                   outputFile="spotbugs.xml"
                   jvmargs="-Xmx1536m"
                   timeout="12000000"
                   excludeFilter=".spotbugs.xml"
+
+                  effort="max"
+                  reportLevel="low"
+                  >
+            <sourcePath path="${source}/"/>
+            <class location="${jartarget}/jmri.jar"/>
+            <auxClasspath refid="compile.class.path" />
+        </spotbugs>
+    </target>
+
+    <target name="spotbugs-check-ci" depends="dist" description="generate SpotBugs CI check-only report. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
+        <spotbugs home="${spotbugs.home}"
+                  output="xml:withMessages"
+                  outputFile="spotbugs.xml"
+                  jvmargs="-Xmx1536m"
+                  timeout="12000000"
+                  excludeFilter=".spotbugs-check.xml"
 
                   effort="max"
                   reportLevel="low"
@@ -2024,10 +2092,10 @@
 
             <!-- select the check to run -->
             <compilerarg line="-processor NullnessChecker"/>
+            <compilerarg value="-Xlint:unchecked"/>
             <!-- compilerarg line="-processor org.checkerframework.checker.lock.LockChecker"/-->
             <!-- compilerarg line="-processor org.checkerframework.checker.guieffect.GuiEffectChecker"/-->
 
-            <compilerarg value="-Xlint:-unchecked"/>  <!-- off during 1.8 migration -->
           </jsr308.javac>
     </target>
 
@@ -2267,6 +2335,8 @@
                     <filter token="COPYRIGHT_YEAR" value="${jmri.copyright.year}"/>
                 </filterset>
             </copy>
+            <move file="${dist.apps}/@{script.name}.app/Contents/InfoTemplate.plist"
+                  tofile="${dist.apps}/@{script.name}.app/Contents/Info.plist"/>
             <copy tofile="${dist.apps}/@{script.name}.app/Contents/Resources/@{script.name}.icns">
                 <first>
                     <restrict>

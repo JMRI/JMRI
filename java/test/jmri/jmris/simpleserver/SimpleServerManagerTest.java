@@ -38,7 +38,7 @@ public class SimpleServerManagerTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         super.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
     }
@@ -46,7 +46,8 @@ public class SimpleServerManagerTest extends TestCase {
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
 
 }

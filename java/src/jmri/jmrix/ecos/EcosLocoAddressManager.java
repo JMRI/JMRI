@@ -15,8 +15,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import jmri.ConfigureManager;
-import jmri.ShutDownTask;
+import jmri.*;
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -32,7 +31,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson
  */
-public class EcosLocoAddressManager extends jmri.managers.AbstractManager implements java.beans.PropertyChangeListener, EcosListener, jmri.Manager {
+public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedBean> implements java.beans.PropertyChangeListener, EcosListener {
 
     private Hashtable<String, EcosLocoAddress> _tecos = new Hashtable<String, EcosLocoAddress>();   // stores known Ecos Object ids to DCC
     private Hashtable<Integer, EcosLocoAddress> _tdcc = new Hashtable<Integer, EcosLocoAddress>();  // stores known DCC Address to Ecos Object ids
@@ -82,11 +81,14 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
     }
 
     @Override
+    @Deprecated  // will be removed when Manager method is removed due to @Override
     public String[] getSystemNameArray() {
+        jmri.util.Log4JUtil.warnOnce(log, "Manager#getSystemNameArray() is deprecated");
         return new String[0];
     }
 
     @Override
+    @Deprecated  // will be removed when Manager method is removed due to @Override
     public List<String> getSystemNameList() {
         return new ArrayList<String>();
     }

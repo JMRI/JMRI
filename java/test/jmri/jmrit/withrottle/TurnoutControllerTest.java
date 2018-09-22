@@ -38,7 +38,7 @@ public class TurnoutControllerTest extends TestCase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
     }
     
     @Override

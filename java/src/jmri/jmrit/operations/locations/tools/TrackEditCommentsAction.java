@@ -1,4 +1,3 @@
-//TrackEditCommentsAction.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.event.ActionEvent;

@@ -388,7 +388,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     /**
      * Checks a LocoNet message to see if it encodes a DCC "direct function" packet.
-     *
+     * <p>
+     * @param m - a LocoNet Message
      * @return the loco address if the LocoNet message encodes a "direct function" packet,
      * else returns -1
      */
@@ -990,6 +991,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
     @Override
+    @Deprecated // 4.1.1
     public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         lopsa = 0;
         hopsa = 0;
@@ -1201,6 +1203,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
     @Override
+    @Deprecated // 4.1.1
     public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         lopsa = 0;
         hopsa = 0;
@@ -1521,7 +1524,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     boolean transpondingAvailable = false;
     public void setTranspondingAvailable(boolean val) { transpondingAvailable = val; }
     public boolean getTranspondingAvailable() { return transpondingAvailable; }
-    
+
     /**
      * Get the memo.
      *

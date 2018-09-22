@@ -269,7 +269,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     }
 
     // FIXME: Why does the if statement in this method include a direct false?
-    @SuppressWarnings("unused")
     @Override
     public void initComponents() {
         prefs = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
@@ -1300,7 +1299,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
     protected void startRead(int cv) {
         try {
-            prog.readCV(cv, this);
+            prog.readCV(String.valueOf(cv), this);
         } catch (ProgrammerException e) {
             log.error("Exception reading CV " + cv + " " + e);
         }

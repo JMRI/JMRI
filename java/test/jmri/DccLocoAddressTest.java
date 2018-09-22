@@ -159,7 +159,6 @@ public class DccLocoAddressTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite(DccLocoAddressTest.class);
         return suite;
     }

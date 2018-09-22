@@ -139,6 +139,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase {
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        helpTarget = "package.jmri.jmrit.beantable.TurnoutTable"; 
         a = new TurnoutTableAction();
     }
 

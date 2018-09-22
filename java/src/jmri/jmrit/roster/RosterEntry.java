@@ -8,15 +8,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.Math;
-import java.text.DateFormat;
-import java.text.ParseException;
+import java.text.*;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.StringTokenizer;
-import java.util.TreeMap;
-import java.util.Vector;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.ImageIcon;
@@ -117,27 +113,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected String _dateUpdated = "";
     protected Date dateModified = null;
     protected int _maxSpeedPCT = 100;
-
-    /**
-     * @return the default owner
-     * @deprecated since 4.1.4 use
-     * {@link jmri.jmrit.roster.RosterConfigManager#getDefaultOwner()} instead
-     */
-    @Deprecated
-    public static String getDefaultOwner() {
-        return InstanceManager.getDefault(RosterConfigManager.class).getDefaultOwner();
-    }
-
-    /**
-     * @param n the default owner
-     * @deprecated since 4.1.4 use
-     * {@link jmri.jmrit.roster.RosterConfigManager#setDefaultOwner(java.lang.String)}
-     * instead
-     */
-    @Deprecated
-    public static void setDefaultOwner(String n) {
-        InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(n);
-    }
 
     public final static int MAXFNNUM = 28;
 
@@ -535,12 +510,18 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public void setDateModified(@Nonnull String date) throws ParseException {
         try {
             // parse using ISO 8601 date format(s)
-            this.setDateModified(new ISO8601DateFormat().parse(date));
+            setDateModified(new ISO8601DateFormat().parse(date));
         } catch (ParseException ex) {
-            log.debug("ParseException in setDateModified");
-            // parse using defaults since thats how it was saved if saved
+            log.debug("ParseException in setDateModified ISO attempt: \"{}\"", date);
+            // next, try parse using defaults since thats how it was saved if saved
             // by earlier versions of JMRI
-            this.setDateModified(DateFormat.getDateTimeInstance().parse(date));
+            try {
+                setDateModified(DateFormat.getDateTimeInstance().parse(date));
+            } catch (ParseException ex2) {
+                // then try with a specific format to handle e.g. "Apr 1, 2016 9:13:36 AM"
+                DateFormat customFmt = new SimpleDateFormat ("MMM dd, yyyy hh:mm:ss a");
+                setDateModified(customFmt.parse(date));
+            }
         } catch (IllegalArgumentException ex2) {
             // warn that there's perhaps something wrong with the classpath
             log.error("IllegalArgumentException in RosterEntry.setDateModified - this may indicate a problem with the classpath, specifically multiple copies of the 'jackson` library. See release notes" );

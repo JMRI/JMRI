@@ -11,6 +11,7 @@
 # Part of the JMRI distribution
 
 import jmri
+import java.beans
 
 # define a helper function
 def decodeJmriFilename(name) :

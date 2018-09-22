@@ -67,6 +67,7 @@ public class FirstTimeStartUpWizardTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
+        JUnitUtil.setUp();
         JUnitUtil.resetApplication();
         JUnitUtil.resetProfileManager();
     }
@@ -74,7 +75,7 @@ public class FirstTimeStartUpWizardTest {
     @After
     public void tearDown() {
         JUnitUtil.resetApplication();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(FirstTimeStartUpWizardTest.class);

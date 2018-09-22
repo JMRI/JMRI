@@ -162,16 +162,6 @@ public interface LightManager extends ProvidingManager<Light> {
     public String convertSystemNameToAlternate(@Nonnull String systemName);
 
     /**
-     * Get a list of all Light system names.
-     *
-     * @return a list of all system names
-     */
-    @CheckReturnValue
-    @Nonnull
-    @Override
-    public List<String> getSystemNameList();
-
-    /**
      * Activate the control mechanism for each Light controlled by this
      * LightManager. Note that some Lights don't require any activation. The
      * activateLight method in AbstractLight.java determines what needs to be

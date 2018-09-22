@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.13.2-SNAPSHOT</version>
+    <version>4.13.4-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -122,8 +122,8 @@
                     <plugin>
                         <groupId>com.github.spotbugs</groupId>
                         <artifactId>spotbugs-maven-plugin</artifactId>
-                        <version>3.1.1</version>
-                        <!-- configured to fail on High priority bugs during test phase -->
+                        <version>3.1.6</version>
+                        <!-- configured to fail on Medium priority bugs during test phase (needs to be done two places) -->
                         <executions>
                             <execution>
                                 <id>failing-on-high</id>
@@ -132,9 +132,9 @@
                                     <goal>check</goal>
                                 </goals>
                                 <configuration>
-                                    <excludeFilterFile>.spotbugs.xml</excludeFilterFile>
+                                    <excludeFilterFile>.spotbugs-check.xml</excludeFilterFile>
                                     <effort>Max</effort>
-                                    <threshold>High</threshold>
+                                    <threshold>Low</threshold>
                                     <maxHeap>1536</maxHeap>
                                     <timeout>1200000</timeout><!-- 20 minutes -->
                                 </configuration>
@@ -269,12 +269,12 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>3.1.1</version>
-                <!-- configured to fail on High priority bugs -->
+                <version>3.1.6</version>
+                <!-- configured to fail on medium priority bugs (needs to be done two places)-->
                 <configuration>
-                    <excludeFilterFile>.spotbugs.xml</excludeFilterFile>
+                    <excludeFilterFile>.spotbugs-check.xml</excludeFilterFile>
                     <effort>Max</effort>
-                    <threshold>High</threshold>
+                    <threshold>Low</threshold>
                     <maxHeap>1536</maxHeap>
                     <timeout>1200000</timeout><!-- 20 minutes -->
                 </configuration>
@@ -456,9 +456,9 @@
                     <bottom><![CDATA[<i>Copyright &copy; ${project.inceptionYear}&#x2013;{currentYear} JMRI Community.
                     <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
-                       <br>Site hosted by:
-                       <a href="http://sourceforge.net/projects/jmri">
-                       <img src="https://sourceforge.net/sflogo.php?type=13&group_id=26788" border="0" alt="JMRI Model Railroad Interface at SourceForge.net"/></a>
+                       <br>Site hosted by: <br/>
+                        <a href="http://www.tagadab.com/">
+                        <img src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab logo"/></a>
                 ]]>
                     </bottom>
                     <links>
@@ -928,7 +928,7 @@
         <dependency>
             <groupId>com.github.spotbugs</groupId>
             <artifactId>spotbugs-annotations</artifactId>
-            <version>3.1.1</version>
+            <version>3.1.7</version>
         </dependency>
         <!--
         <dependency>
@@ -940,7 +940,7 @@
         <dependency>
             <groupId>com.digi.xbee</groupId>
             <artifactId>xbee-java-library</artifactId>
-            <version>1.2.0</version>
+            <version>1.2.1</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>

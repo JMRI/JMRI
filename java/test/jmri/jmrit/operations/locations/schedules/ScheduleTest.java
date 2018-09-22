@@ -1,4 +1,3 @@
-//ScheduleTest.java
 package jmri.jmrit.operations.locations.schedules;
 
 import jmri.jmrit.operations.OperationsTestCase;

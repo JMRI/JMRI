@@ -69,10 +69,6 @@ public abstract class LayoutTrack {
 
     // package-private
     static Color defaultTrackColor = Color.black;
-    //TODO: Add accessor methods
-    //TODO: Should these be 1)Global, 2)Per-layout, 3)Per-Block or 4)Per-Track?
-    static Color defaultBallastColor = Color.gray;
-    static Color defaultTieColor = new Color(122, 74, 50);
 
     /**
      * constructor method

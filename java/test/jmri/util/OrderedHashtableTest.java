@@ -163,6 +163,15 @@ public class OrderedHashtableTest extends TestCase {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    @Override
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+    @Override
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
+    }
+
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(OrderedHashtableTest.class);

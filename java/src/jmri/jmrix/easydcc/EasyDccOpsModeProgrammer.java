@@ -34,6 +34,7 @@ public class EasyDccOpsModeProgrammer extends EasyDccProgrammer implements Addre
      * Forward a write request to an ops-mode write operation.
      */
     @Override
+    @Deprecated // 4.1.1
     public synchronized void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         log.debug("write CV={} val={}", CV, val);
         // create the message and fill it,
@@ -65,6 +66,7 @@ public class EasyDccOpsModeProgrammer extends EasyDccProgrammer implements Addre
     }
 
     @Override
+    @Deprecated // 4.1.1
     public synchronized void readCV(int CV, ProgListener p) throws ProgrammerException {
         log.debug("read CV={}", CV);
         log.error("readCV not available in this protocol");

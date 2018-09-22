@@ -676,6 +676,7 @@ public final class InstanceManager {
      * @deprecated Since 4.11.4, use
      * {@link #store(java.lang.Object, java.lang.Class)} directly.
      */
+    @Deprecated
     static public void setConsistManager(ConsistManager p) {
         store(p, ConsistManager.class);
     }

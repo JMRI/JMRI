@@ -437,7 +437,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
                     return updateLabel((String) value, row);
                 }
 
-                public JLabel updateLabel(String value, int row) {
+            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "CF_USELESS_CONTROL_FLOW", 
+                justification = "OK to compare floats, as even tiny differences should trigger update")
+            public JLabel updateLabel(String value, int row) {
                     if (iconHeight > 0) { // if necessary, increase row height;
                         //table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5)); // TODO adjust table row height for Lights
                     }

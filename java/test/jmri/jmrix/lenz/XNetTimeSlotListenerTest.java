@@ -60,7 +60,7 @@ public class XNetTimeSlotListenerTest {
     @Before
     public void setUp(){
 
-       apps.tests.Log4JFixture.setUp();
+       jmri.util.JUnitUtil.setUp();
 
        p = new XNetSimulatorPortController(){
            @Override
@@ -85,7 +85,7 @@ public class XNetTimeSlotListenerTest {
     public void tearDown(){
        p=null;
        tsl=null;
-       apps.tests.Log4JFixture.tearDown();
+       jmri.util.JUnitUtil.tearDown();
     }
 
 }

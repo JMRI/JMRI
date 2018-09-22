@@ -257,21 +257,32 @@
       releases in Fall 2015 started the requirement for Java 8,
       also known as Java 1.8.
       This has continued through the following release series.
-      The June 2018 release, notionally JMRI 4.12 will
-      remain with Java 8, but may involve other updates.
+      The December 2018 release, notionally JMRI 4.14 will
+      remain with Java 8, but may involve other library updates.
+      This includes doing development, test and production release
+      builds using Java 1.8.0_72.
       
       <p>The next long-term-support Java release will be
-      Java 11 in Fall of 2018.  Oracle intendes to 
+      Java 11 in Fall of 2018.  Oracle intends to 
       <a href="https://blogs.oracle.com/java-platform-group/a-quick-summary-on-the-new-java-se-subscription">align their Java and the OpenJDK at that point</a>.
       Because some people will
       need to have that on their computers for other purposes, 
-      we intend to support JMRI running on Oracle Java 8 through 11
+      we intend to support JMRI building and/or running on Oracle Java 8 through 11
       and OpenJDK version 11
-      by JMRI 4.14 in December 2018.
+      by JMRI 4.14 in December 2018. 
       
       <p>
       At some point, the Java version required by JMRI has to move forward.
-      We don't know what that point is, but the earliest it will be is Fall 2019.
+      For example, Oracle 
+      <a href="http://www.oracle.com/technetwork/java/javase/javaclientroadmapupdate2018mar-4414431.pdf">has announced</a> that they'll stop providing standalone JRE installers 
+      by the end of 2020, by which time JMRI distributions will have to contain
+      the Java runtime components or it won't be possible to run JMRI on newly-bought PCs. 
+      That in turn might require tools like
+      jlink from Java 9 or later.
+
+      <p>
+      While we don't know yet when JMRI will have to move past Java 1.8, 
+      we do know that the earliest Java 1.9 or later will be required for users is Fall 2019.
       Allowing for migration and
       development time, and depending on development plans, JMRI's December 2019 release
       might require Java 11 (in which case it would be called JMRI 5.1)
@@ -285,7 +296,7 @@
       For example, it's remotely possible that JMRI will require Java 11
       to compile and build distributions, which would still be able to
       work on Java 8.  We prefer to do that to keep older hardware working,
-      but we can't always possible.
+      but it's not always possible.
 
       <p>
       There are also smaller migration issues. These don't directly
@@ -305,7 +316,7 @@
         for generating multiple documentation forms is also being
         considered.</li>
 
-        <li>Our use of JUnit has been migrated to the 
+        <li>Our use of JUnit has been partially migrated to the 
         <a href="http://junit.org">JUnit 4 release</a>, 
         currently 4.12.
         Among other improvements, this can allow use of the Java

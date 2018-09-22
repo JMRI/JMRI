@@ -429,14 +429,23 @@ public interface Manager<E extends NamedBean> {
         return i;
     }
 
-    @Deprecated
+    @Deprecated  // as part of name migration, Issue #4670
     static Set<String> legacyNameSet = Collections.synchronizedSet(new HashSet<String>(200)); // want fast search and insert
-    @Deprecated
+    @Deprecated  // as part of name migration, Issue #4670
     static ShutDownTask legacyReportTask = new jmri.implementation.AbstractShutDownTask("Legacy Name List"){
                             public boolean execute() {
+                                if (legacyNameSet.size() == 0) return true;
+                                
                                 org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Manager.class);
                                 log.warn("The following legacy names need to be migrated:");
                                 for (String name : legacyNameSet) log.warn("    {}", name);
+                                
+                                // now create the legacy.csv file
+                                try (java.io.PrintWriter writer = new java.io.PrintWriter(jmri.util.FileUtil.getUserFilesPath()+java.io.File.separator+"legacy_bean_names.csv");) {
+                                    for (String name : legacyNameSet) writer.println(name);
+                                } catch (java.io.IOException e) {
+                                    log.error("Failed to write legacy name file", e);
+                                }
                                 return true;
                             }
                 };
