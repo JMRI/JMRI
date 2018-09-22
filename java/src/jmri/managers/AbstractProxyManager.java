@@ -467,6 +467,8 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     @Deprecated  // will be removed when Manager method is removed due to @Override
     public String[] getSystemNameArray() {
         jmri.util.Log4JUtil.warnOnce(log, "Manager#getSystemNameArray() is deprecated");
+        if (log.isTraceEnabled()) log.trace("Manager#getSystemNameArray() called", new Exception("traceback"));
+        
         List<E> list = getNamedBeanList();
         String[] retval = new String[list.size()];
         int i = 0;

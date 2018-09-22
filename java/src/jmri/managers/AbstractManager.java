@@ -325,6 +325,8 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     @Deprecated  // will be removed when Manager method is removed due to @Override
     public String[] getSystemNameArray() {
         jmri.util.Log4JUtil.warnOnce(log, "Manager#getSystemNameArray() is deprecated");
+        if (log.isTraceEnabled()) log.trace("Manager#getSystemNameArray() called", new Exception("traceback"));
+
         if (cachedSystemNameArray == null) {
             cachedSystemNameArray = getSystemNameList().toArray(new String[_beans.size()]);
         }
