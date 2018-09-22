@@ -103,24 +103,27 @@ public class ThrottleOperator extends JFrameOperator {
         new JButtonOperator(this,Function).push();
    }
 
-   public JButton getFunctionButton(String Function){
-	JButton retval = (JButton) findSubComponent(
+   public FunctionButton getFunctionButton(int function){
+	FunctionButton retval = (FunctionButton) findSubComponent(
 	       new ComponentChooser() { 
                   @Override
        	          public boolean checkComponent(Component c) { 
-		      if (c instanceof JButton )
-			   if((JButton)c).getText().equals(Function); 
-			   return true; 
-		      else return false; 
+		      if (c instanceof FunctionButton ) {
+			   if(((FunctionButton)c).getIdentity()==function){ 
+			      return true; 
+			   } else {
+                              return false;
+                           }
+		      } else {
+			return false;
+                      }
 	          } 
                   @Override
 	          public String getDescription() { 
 		      return "Find Function Button"; 
 	          }
 	});
-	ap.setCurrentAddress(addr);
-   }
-
+        return retval;
    }
 
 }
