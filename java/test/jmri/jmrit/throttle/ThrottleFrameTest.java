@@ -58,6 +58,33 @@ public class ThrottleFrameTest {
 
     }
 
+    @Test
+    public void testInitialFunctionStatus() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ThrottleWindow frame = new ThrottleWindow();
+        ThrottleFrame panel = new ThrottleFrame(frame);
+	panel.toFront();
+
+	//ThrottleOperator to = new ThrottleOperator(panel.getTitle());
+	ThrottleOperator to = new ThrottleOperator("Throttle");
+
+        to.setAddressValue(new DccLocoAddress(42,false));
+
+
+        for(int i = 0; i<=28; i++){
+           FunctionButton f = to.getFunctionButton(i);
+	   Assert.assertFalse("Function F" +i + " off",f.isSelected());
+	   Assert.assertTrue("Function F" +i + " continuous",f.getIsLockable());
+	}
+
+
+        to.pushReleaseButton();	
+	to.requestClose();
+        // the throttle list frame gets created above, but needs to be shown to be disposed
+        InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
+        JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();
