@@ -35,6 +35,7 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
      * Forward a write request to an ops-mode write operation
      */
     @Override
+    @Deprecated // 4.1.1
     synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         log.debug("write CV=" + CV + " val=" + val);
 
@@ -58,6 +59,7 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
     }
 
     @Override
+    @Deprecated // 4.1.1
     synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {
         log.error("readCV not available in this protocol");
         throw new ProgrammerException();

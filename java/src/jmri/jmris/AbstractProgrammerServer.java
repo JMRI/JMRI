@@ -55,7 +55,7 @@ abstract public class AbstractProgrammerServer implements jmri.ProgListener {
         lastCV = CV;
         try {
             p.setMode(mode); // need to check if mode is available
-            p.writeCV(CV, value, this);
+            p.writeCV(String.valueOf(CV), value, this);
         } catch (jmri.ProgrammerException ex) {
             //Send failure Status.
             try {
@@ -78,7 +78,7 @@ abstract public class AbstractProgrammerServer implements jmri.ProgListener {
         lastCV = CV;
         try {
             p.setMode(mode); // need to check if mode is available
-            p.readCV(CV, this);
+            p.readCV(String.valueOf(CV), this);
         } catch (jmri.ProgrammerException ex) {
             //Send failure Status.
             try {

@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
  */
 public class SensorTableModel extends BeanTableModel implements PropertyChangeListener {
 
+    // Rework this to use the ordered index from the manager
+    
     String[] _sysNameList;
     Boolean[] _includedSensors;
 
@@ -26,8 +28,8 @@ public class SensorTableModel extends BeanTableModel implements PropertyChangeLi
     private void init() {
         _sysNameList = getManager().getSystemNameArray();
 
-        _includedSensors = new Boolean[_sysNameList.length];
-        for (int i = 0; i < _sysNameList.length; i++) {
+        _includedSensors = new Boolean[getManager().getObjectCount()];
+        for (int i = 0; i < _includedSensors.length; i++) {
             _includedSensors[i] = Boolean.FALSE;
         }
     }

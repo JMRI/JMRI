@@ -49,6 +49,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
 
     // programming interface
     @Override
+    @Deprecated // 4.1.1
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " mode " + getMode() + " listens " + p);
@@ -64,6 +65,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     }
 
     @Override
+    @Deprecated // 4.1.1
     synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " mode " + getMode() + " listens " + p);
