@@ -178,12 +178,14 @@ public class IndexedTreeMap<K, V>
      *          and whose comparator is to be used to sort this map
      * @throws NullPointerException if the specified map is null
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
+                    justification = "Exception cannot happen because stream argument was provided as null")
     public IndexedTreeMap(SortedMap<K, ? extends V> m) {
         comparator = m.comparator();
         try {
             buildFromSorted(m.size(), m.entrySet().iterator(), null, null);
-        } catch (java.io.IOException cannotHappen) {
-        } catch (ClassNotFoundException cannotHappen) {
+        } catch (java.io.IOException | ClassNotFoundException cannotHappen) {
+            // cannot happen because stream argument was provided as null
         }
     }
 
@@ -271,7 +273,7 @@ public class IndexedTreeMap<K, V>
      * @throws java.util.NoSuchElementException
      *          {@inheritDoc}
      */
-    public K firstKey() {
+    public K firstKey() throws NoSuchElementException {
         return key(getFirstEntry());
     }
 
@@ -279,7 +281,7 @@ public class IndexedTreeMap<K, V>
      * @throws java.util.NoSuchElementException
      *          {@inheritDoc}
      */
-    public K lastKey() {
+    public K lastKey() throws NoSuchElementException {
         return key(getLastEntry());
     }
 
@@ -295,6 +297,8 @@ public class IndexedTreeMap<K, V>
      *                              the specified map contains a null key and this map does not
      *                              permit null keys
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
+                    justification = "Exception cannot happen because stream argument was provided as null")
     public void putAll(Map<? extends K, ? extends V> map) {
         int mapSize = map.size();
         if (size == 0 && mapSize != 0 && map instanceof SortedMap) {
@@ -304,8 +308,8 @@ public class IndexedTreeMap<K, V>
                 try {
                     buildFromSorted(mapSize, map.entrySet().iterator(),
                             null, null);
-                } catch (java.io.IOException cannotHappen) {
-                } catch (ClassNotFoundException cannotHappen) {
+                } catch (java.io.IOException | ClassNotFoundException cannotHappen) {
+                    // cannot happen because stream argument was provided as null
                 }
                 return;
             }
@@ -641,6 +645,8 @@ public class IndexedTreeMap<K, V>
      * @return a shallow copy of this map
      */
     @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
+                    justification = "Exception cannot happen because stream argument was provided as null")
     public Object clone() {
         IndexedTreeMap<K, V> clone = null;
         try {
@@ -660,8 +666,8 @@ public class IndexedTreeMap<K, V>
         // Initialize clone with our mappings
         try {
             clone.buildFromSorted(size, entrySet().iterator(), null, null);
-        } catch (java.io.IOException cannotHappen) {
-        } catch (ClassNotFoundException cannotHappen) {
+        } catch (java.io.IOException | ClassNotFoundException cannotHappen) {
+            // cannot happen because stream argument was provided as null
         }
 
         return clone;
@@ -1139,8 +1145,6 @@ public class IndexedTreeMap<K, V>
 
     static final class KeySet<E> extends AbstractSet<E> implements NavigableSet<E> {
         private final NavigableMap<E, Object> m;
-
-        @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
         KeySet(NavigableMap<E, Object> map) {
             m = map;
         }
@@ -1271,7 +1275,7 @@ public class IndexedTreeMap<K, V>
             return next != null;
         }
 
-        final Entry<K, V> nextEntry() {
+        final Entry<K, V> nextEntry() throws NoSuchElementException {
             Entry<K, V> e = next;
             if (e == null)
                 throw new NoSuchElementException();
@@ -1282,7 +1286,7 @@ public class IndexedTreeMap<K, V>
             return e;
         }
 
-        final Entry<K, V> prevEntry() {
+        final Entry<K, V> prevEntry() throws NoSuchElementException {
             Entry<K, V> e = next;
             if (e == null)
                 throw new NoSuchElementException();
@@ -1342,7 +1346,9 @@ public class IndexedTreeMap<K, V>
             super(first);
         }
 
-        public K next() {
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IT_NO_SUCH_ELEMENT", 
+                justification = "Seems to be a false positive")
+        public K next() throws NoSuchElementException {
             return prevEntry().key;
         }
     }
@@ -1386,7 +1392,7 @@ public class IndexedTreeMap<K, V>
      *
      * @throws NoSuchElementException if the Entry is null
      */
-    static <K> K key(Entry<K, ?> e) {
+    static <K> K key(Entry<K, ?> e) throws NoSuchElementException {
         if (e == null)
             throw new NoSuchElementException();
         return e.key;
@@ -1417,6 +1423,8 @@ public class IndexedTreeMap<K, V>
         final boolean fromStart, toEnd;
         final boolean loInclusive, hiInclusive;
 
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT",
+                    justification = "Comparison was originally in 3rd party code")
         NavigableSubMap(IndexedTreeMap<K, V> m,
                         boolean fromStart, K lo, boolean loInclusive,
                         boolean toEnd, K hi, boolean hiInclusive) {
@@ -1425,9 +1433,9 @@ public class IndexedTreeMap<K, V>
                     throw new IllegalArgumentException("fromKey > toKey");
             } else {
                 if (!fromStart) // type check
-                    m.compare(lo, lo);
+                    m.compare(lo, lo);  // RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT here
                 if (!toEnd)
-                    m.compare(hi, hi);
+                    m.compare(hi, hi); // RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT
             }
 
             this.m = m;
@@ -1765,7 +1773,7 @@ public class IndexedTreeMap<K, V>
                 return next != null && next.key != fenceKey;
             }
 
-            final IndexedTreeMap.Entry<K, V> nextEntry() {
+            final IndexedTreeMap.Entry<K, V> nextEntry() throws NoSuchElementException {
                 IndexedTreeMap.Entry<K, V> e = next;
                 if (e == null || e.key == fenceKey)
                     throw new NoSuchElementException();
@@ -1776,7 +1784,7 @@ public class IndexedTreeMap<K, V>
                 return e;
             }
 
-            final IndexedTreeMap.Entry<K, V> prevEntry() {
+            final IndexedTreeMap.Entry<K, V> prevEntry() throws NoSuchElementException {
                 IndexedTreeMap.Entry<K, V> e = next;
                 if (e == null || e.key == fenceKey)
                     throw new NoSuchElementException();
@@ -1848,7 +1856,9 @@ public class IndexedTreeMap<K, V>
                 super(last, fence);
             }
 
-            public Map.Entry<K, V> next() {
+            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IT_NO_SUCH_ELEMENT", 
+                    justification = "Seems to be a false positive")
+            public Map.Entry<K, V> next() throws NoSuchElementException {
                 return prevEntry();
             }
 
@@ -1863,7 +1873,9 @@ public class IndexedTreeMap<K, V>
                 super(last, fence);
             }
 
-            public K next() {
+            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IT_NO_SUCH_ELEMENT", 
+                    justification = "Seems to be a false positive")
+            public K next() throws NoSuchElementException {
                 return prevEntry().key;
             }
 
@@ -2093,7 +2105,7 @@ public class IndexedTreeMap<K, V>
         private K fromKey, toKey;
 
         private Object readResolve() {
-            return new AscendingSubMap(IndexedTreeMap.this,
+            return new AscendingSubMap<K,V>(IndexedTreeMap.this,
                     fromStart, fromKey, true,
                     toEnd, toKey, false);
         }
@@ -2641,11 +2653,13 @@ public class IndexedTreeMap<K, V>
     /**
      * Intended to be called only from IndexedTreeSet.addAll
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
+                    justification = "Exception cannot happen because stream argument was provided as null")
     void addAllForTreeSet(SortedSet<? extends K> set, V defaultVal) {
         try {
             buildFromSorted(set.size(), set.iterator(), null, defaultVal);
-        } catch (java.io.IOException cannotHappen) {
-        } catch (ClassNotFoundException cannotHappen) {
+        } catch (java.io.IOException | ClassNotFoundException cannotHappen) {
+            // cannot happen because stream argument was provided as null
         }
     }
 

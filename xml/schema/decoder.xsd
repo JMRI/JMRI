@@ -16,11 +16,7 @@
 <!-- for more details.                                                      -->
 
 
-    <!-- not yet in proper Venetian blind form -->
-    <!-- needs to share the pane type with programmer definition -->
-
-    <!-- needs more attribute restrictions -->
-    <!-- needs attribute defaults -->
+<!-- This schema was obsoleted by xml/schema/decoder-4-13-3.xsd -->
 
 <xs:schema xmlns:xi="http://www.w3.org/2001/XInclude"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
@@ -328,10 +324,15 @@
               </xs:complexType>
             </xs:element>
             <xs:element name="output" minOccurs="0" maxOccurs="unbounded" >
+              <xs:annotation><xs:documentation>
+                Can represent either an electrical output, i.e. a wire to a light,
+                or some other kind of output, i.e. a sound,
+                or even internal state operations, e.g. "Switch to alternating lights".
+              </xs:documentation></xs:annotation>
               <xs:complexType>
                 <xs:sequence>
                   <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
-                    <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
+                    <xs:annotation><xs:documentation>Multiple elements provide internationalized label text</xs:documentation></xs:annotation>
                     <xs:complexType mixed="true">
                         <xs:attribute ref="xml:lang" default=""/>
                     </xs:complexType>
@@ -362,6 +363,9 @@
               </xs:unique>
             </xs:element>
             <xs:element name="size" minOccurs="0" maxOccurs="1" >
+              <xs:annotation><xs:documentation>
+                Describes the physical size of the package, for reference.
+              </xs:documentation></xs:annotation>
               <xs:complexType>
                 <xs:attribute name="length" type="xs:string" />
                 <xs:attribute name="width" type="xs:string" />
@@ -379,6 +383,9 @@
               </xs:complexType>
             </xs:element>
             <xs:element name="protocols" minOccurs="0" maxOccurs="1" >
+              <xs:annotation><xs:documentation>
+                Lists communication protocols this decoder will respond to.
+              </xs:documentation></xs:annotation>
               <xs:complexType>
               <xs:sequence>
                 <xs:element name="protocol" minOccurs="1" maxOccurs="unbounded">
@@ -390,6 +397,9 @@
                       <xs:enumeration value="mfx"/>
                       <xs:enumeration value="m4"/>
                       <xs:enumeration value="openlcb"/>
+                      <xs:enumeration value="other">
+                        <xs:annotation><xs:documentation>Intended only as a temporary for new protocols until schema can be updated.</xs:documentation></xs:annotation>
+                      </xs:enumeration>
                     </xs:restriction>
                   </xs:simpleType>
                 </xs:element>
@@ -405,23 +415,39 @@
           </xs:attribute>
           <xs:attribute name="options" type="xs:string" />
           <xs:attribute name="comment" type="xs:string" />
-          <xs:attribute name="numFns" type="xs:int" />
-          <xs:attribute name="numOuts" type="xs:int" />
+          <xs:attribute name="numFns" type="xs:int">
+              <xs:annotation><xs:documentation>
+              This is a legacy attribute that limits the total number of function mapping lines displayed. 
+              It is no longer required as there are many optional variations as well as
+              the original F0F, F0R &amp; F1-F28.
+              Hence the JMRI code now automatically suppresses unused lines.
+              </xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="numOuts" type="xs:int" >
+              <xs:annotation><xs:documentation>
+              Number of physical outputs (wires) on the decoder.
+              For example, a decoder with three wires and two sounds would have this as 3.
+              It does not affect the number of columns displayed,
+              the JMRI code shows all used columns.
+              </xs:documentation></xs:annotation>
+          </xs:attribute>
           <xs:attribute name="lowVersionID" type="xs:int" />
           <xs:attribute name="highVersionID" type="xs:int" />
           <xs:attribute name="productID" type="xs:string" >
-            <xs:annotation><xs:documentation>For a decoder definition which
+            <xs:annotation><xs:documentation>
+                For a decoder definition which
                 describes a device implementing the LocoNet SV2 messaging protocol,
                 this value is used to match a "discovered" device
-                to an appropriate decoder definition</xs:documentation>
-            </xs:annotation>
+                to an appropriate decoder definition
+            </xs:documentation></xs:annotation>
           </xs:attribute>
           <xs:attribute name="developerID" type="xs:int" default="-1" >
-            <xs:annotation><xs:documentation>For a decoder definition which
+            <xs:annotation><xs:documentation>
+                For a decoder definition which
                 describes a device implementing the LocoNet SV2 messaging protocol,
                 this value is used to match a "discovered" device
-                to an appropriate decoder definition</xs:documentation>
-            </xs:annotation>
+                to an appropriate decoder definition
+            </xs:documentation></xs:annotation>
           </xs:attribute>
           <xs:attribute name="maxInputVolts" type="xs:string" />
           <xs:attribute name="maxMotorCurrent" type="xs:string" />
@@ -458,10 +484,27 @@
               </xs:restriction>
             </xs:simpleType>
           </xs:attribute>
-          <xs:attribute name="extFnsNmraF13" type="yesNoType" />
-          <xs:attribute name="extFnsNmraBSC" type="yesNoType" />
-          <xs:attribute name="extFnsMRC" type="yesNoType" />
-          <xs:attribute name="extFnsESU" type="yesNoType" />
+          <xs:attribute name="extFnsNmraF13" type="yesNoType" >
+            <xs:annotation><xs:documentation>
+                Functions 13 and up are implemented via NMRA-standard function DCC packets
+            </xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="extFnsMRC" type="yesNoType" >
+            <xs:annotation><xs:documentation>
+                Functions 13 and up are implemented via MRC's non-standard use of DCC packets
+            </xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="extFnsESU" type="yesNoType" >
+            <xs:annotation><xs:documentation>
+                The decoder implement's ESU's function mapping instead of the NMRA's.
+            </xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="extFnsNmraBSC" type="yesNoType" >
+            <xs:annotation><xs:documentation>
+                The decoder will respond to Binary State Control DCC packets. This is uncommon.
+            </xs:documentation></xs:annotation>
+          </xs:attribute>
+
           <xs:attribute name="replacementModel" type="xs:string" default="">
             <xs:annotation><xs:documentation>Update Decoders will replace the current model with the one in this attribute if non-blank</xs:documentation></xs:annotation>
           </xs:attribute>
@@ -476,7 +519,7 @@
       <xs:element name="soundlabels" type="soundlabelsType" minOccurs="0" maxOccurs="1"/>
 
       <xs:element name="comment" minOccurs="0" maxOccurs="unbounded">
-        <xs:annotation><xs:documentation>Provide internationalized comment text</xs:documentation></xs:annotation>
+        <xs:annotation><xs:documentation>Multiple elements provide internationalized comment text</xs:documentation></xs:annotation>
       </xs:element>
 
     </xs:sequence>
@@ -573,7 +616,7 @@
             <xs:complexType>
               <xs:sequence minOccurs="0" maxOccurs="unbounded">
                   <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
-                    <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
+                    <xs:annotation><xs:documentation>Multiple elements provide internationalized label text</xs:documentation></xs:annotation>
                     <xs:complexType mixed="true">
                         <xs:attribute ref="xml:lang" default=""/>
                     </xs:complexType>
@@ -730,20 +773,22 @@
                 </xs:choice>
                 <xs:sequence minOccurs="0" maxOccurs="unbounded">
                   <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
-                    <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
+                    <xs:annotation><xs:documentation>Multiple elements provide internationalized label text</xs:documentation></xs:annotation>
                     <xs:complexType mixed="true">
                         <xs:attribute ref="xml:lang" default=""/>
                     </xs:complexType>
                   </xs:element>
                   <xs:element name="comment" minOccurs="0" maxOccurs="unbounded">
-                    <xs:annotation><xs:documentation>Provide internationalized comment text</xs:documentation></xs:annotation>
+                    <xs:annotation><xs:documentation>Multiple elements provide internationalized comment text</xs:documentation></xs:annotation>
                   </xs:element>
                   <xs:element name="tooltip" minOccurs="0" maxOccurs="unbounded">
-                    <xs:annotation><xs:documentation>Provide internationalized tooltip text</xs:documentation></xs:annotation>
+                    <xs:annotation><xs:documentation>Multiple elements provide internationalized tooltip text</xs:documentation></xs:annotation>
                   </xs:element>
                 </xs:sequence>
               </xs:sequence>
-              <xs:attribute name="label" type="xs:string"/>
+              <xs:attribute name="label" type="xs:string">
+                <xs:annotation><xs:documentation>Deprecated, use the label element instead.</xs:documentation></xs:annotation>
+              </xs:attribute>
               <xs:attribute name="CV" type="cvNameType"/>
               <xs:attribute name="mask" type="maskType" default="VVVVVVVV" />
               <xs:attribute name="readOnly" type="yesNoType" default="no" />
@@ -753,10 +798,16 @@
               <xs:attribute name="default" type="xs:string"/>
               <xs:attribute name="comment" type="xs:string"/>
               <xs:attribute name="item" type="xs:string"/><!-- should be use="required" !!! -->
-              <xs:attribute name="minFn" type="xs:int"/>
-              <xs:attribute name="minOut" type="xs:int"/>
+              <xs:attribute name="minFn" type="xs:int">
+                  <xs:annotation><xs:documentation>Only present if the decoder has at least minFn functions defined in numFn</xs:documentation></xs:annotation>
+              </xs:attribute>
+              <xs:attribute name="minOut" type="xs:int">
+                  <xs:annotation><xs:documentation>Only present if the decoder has at least minOut functions defined in numOut</xs:documentation></xs:annotation>
+              </xs:attribute>
               <xs:attribute name="inOptions" type="xs:string"/>
-              <xs:attribute name="tooltip" type="xs:string"/>
+              <xs:attribute name="tooltip" type="xs:string">
+                <xs:annotation><xs:documentation>Deprecated, use the tooltip element instead.</xs:documentation></xs:annotation>
+              </xs:attribute>
               <xs:attribute name="include" type="xs:string" default=""/>
               <xs:attribute name="exclude" type="xs:string" default=""/>
             </xs:complexType>
@@ -791,15 +842,19 @@
               </xs:documentation></xs:annotation>
             </xs:element>
             <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
-              <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
+              <xs:annotation><xs:documentation>Multiple elements provide internationalized label text</xs:documentation></xs:annotation>
               <xs:complexType mixed="true">
                 <xs:attribute ref="xml:lang" default=""/>
               </xs:complexType>
             </xs:element>
           </xs:sequence>
-          <xs:attribute name="label" type="xs:string"/>
+          <xs:attribute name="label" type="xs:string">
+              <xs:annotation><xs:documentation>Deprecated, use the label element instead.</xs:documentation></xs:annotation>
+          </xs:attribute>
           <xs:attribute name="CV" type="cvNameType"/>
-          <xs:attribute name="default" type="xs:string"/>
+          <xs:attribute name="default" type="xs:string">
+              <xs:annotation><xs:documentation>Value to be written to CV to perform this reset.</xs:documentation></xs:annotation>
+          </xs:attribute>
           <xs:attribute name="comment" type="xs:string"/>
           <xs:attribute name="item" type="xs:string"/>
           <xs:attribute ref="xml:base" />
@@ -820,9 +875,24 @@
     A variable containing a fixed set of choices is defined, each choice corresponding to a specific value
     </xs:documentation></xs:annotation>
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1" />
-      <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1">
+              <xs:annotation><xs:documentation>
+              DocBook element(s) providing copyright information in standard form.
+              For use in subfiles.
+              </xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) describing the authors in standard form.
+          For use in subfiles.
+          </xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" >
+        <xs:annotation><xs:documentation>
+        DocBook element(s) describing the revision history in standard form.
+        For use in subfiles.
+        </xs:documentation></xs:annotation>
+      </xs:element>
       <xs:element type="EnumChoiceType" name="enumChoice" minOccurs="0" maxOccurs="unbounded" />
       <xs:element type="EnumChoiceGroupType" name="enumChoiceGroup" minOccurs="0" maxOccurs="unbounded" />
       <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
@@ -837,7 +907,7 @@
     intermediate enumChoiceGroup elements)
     </xs:documentation></xs:annotation>
           <xs:sequence minOccurs="0" maxOccurs="unbounded">
-            <xs:annotation><xs:documentation>Provide an internationalized choice text</xs:documentation></xs:annotation>
+            <xs:annotation><xs:documentation>Multiple elements provide internationalized choice text</xs:documentation></xs:annotation>
             <xs:element name="choice" minOccurs="1" maxOccurs="unbounded" />
             <xs:element name="comment" minOccurs="0" maxOccurs="unbounded" />
           </xs:sequence>
@@ -858,9 +928,24 @@
     indicate the presence of intermediate tree nodes.
     </xs:documentation></xs:annotation>
       <xs:sequence minOccurs="1" maxOccurs="1">
-        <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1" />
-        <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" />
-        <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1">
+              <xs:annotation><xs:documentation>
+              DocBook element(s) providing copyright information in standard form.
+              For use in subfiles.
+              </xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) describing the authors in standard form.
+          For use in subfiles.
+          </xs:documentation></xs:annotation>
+        </xs:element>
+        <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) describing the revision history in standard form.
+          For use in subfiles.
+          </xs:documentation></xs:annotation>
+        </xs:element>
         <xs:element name="name" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation><xs:documentation>User-visible name for this group, can be repeated for I18N</xs:documentation></xs:annotation>
         </xs:element>
@@ -872,23 +957,6 @@
     <xs:attribute ref="xml:base" />
     <xs:attribute name="include" type="xs:string"/>
     <xs:attribute name="exclude" type="xs:string"/>
-    <xs:attribute name="comment" type="xs:string"/>
-  </xs:complexType>
-
-  <xs:complexType name="IEnumValType">
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element name="ienumChoice" minOccurs="0" maxOccurs="unbounded" >
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="choice" minOccurs="0" maxOccurs="unbounded"/>
-          </xs:sequence>
-          <xs:attribute name="choice" type="xs:string"/>
-          <xs:attribute name="value" type="xs:int"/>
-          <xs:attribute name="include" type="xs:string"/>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-    <xs:attribute ref="xml:base" />
     <xs:attribute name="comment" type="xs:string"/>
   </xs:complexType>
 

@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * <i>default.lcf</i> is used, following the above search order to find it.
  * </dd>
  * <dt>jmri.log.path</dt><dd>The directory for storing logs. If not specified,
- * logs are stored in the JMRI settings directory.</dd>
+ * logs are stored in the JMRI preferences directory.</dd>
  * </dl>
  *
  * @author Bob Jacobsen Copyright 2009, 2010
@@ -55,7 +55,7 @@ public class Log4JUtil {
             loggerMap = new HashMap<>();
             warnedOnce.put(log, loggerMap);
         } else {
-            if (loggerMap.get(msg) == Boolean.TRUE) return false;
+            if (Boolean.TRUE.equals(loggerMap.get(msg))) return false;
         }
         loggerMap.put(msg, Boolean.TRUE);
         log.warn(msg, args);
@@ -171,7 +171,7 @@ public class Log4JUtil {
      * Configure Log4J using the specified properties file.
      * <p>
      * This method sets the system property <i>jmri.log.path</i> to the JMRI
-     * settings directory if not specified.
+     * preferences directory if not specified.
      *
      * @see jmri.util.FileUtil#getPreferencesPath()
      */

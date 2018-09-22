@@ -220,7 +220,7 @@ public class ConditionalEditBase {
      * @param variableList The current variable list
      * @return the resulting antecedent string
      */
-    String makeAntecedent(ArrayList<ConditionalVariable> variableList) {
+    String makeAntecedent(List<ConditionalVariable> variableList) {
         StringBuilder antecedent = new StringBuilder(64);
         if (variableList.size() != 0) {
             String row = "R"; //NOI18N
@@ -231,10 +231,10 @@ public class ConditionalEditBase {
             for (int i = 1; i < variableList.size(); i++) {
                 ConditionalVariable variable = variableList.get(i);
                 switch (variable.getOpern()) {
-                    case Conditional.OPERATOR_AND:
+                    case AND:
                         antecedent.append(" and ");
                         break;
-                    case Conditional.OPERATOR_OR:
+                    case OR:
                         antecedent.append(" or ");
                         break;
                     default:
@@ -281,7 +281,7 @@ public class ConditionalEditBase {
      * @param curConditional The current conditional.
      * @return false if antecedent can't be validated
      */
-    boolean validateAntecedent(int logicType, String antecedentText, ArrayList<ConditionalVariable> variableList, Conditional curConditional) {
+    boolean validateAntecedent(int logicType, String antecedentText, List<ConditionalVariable> variableList, Conditional curConditional) {
         if (logicType != Conditional.MIXED
                 || LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())
                 || antecedentText == null
@@ -726,7 +726,7 @@ public class ConditionalEditBase {
      *                conditional references
      * @param treeSet A tree set to be built from the varList data
      */
-    void loadReferenceNames(ArrayList<ConditionalVariable> varList, TreeSet<String> treeSet) {
+    void loadReferenceNames(List<ConditionalVariable> varList, TreeSet<String> treeSet) {
         treeSet.clear();
         for (ConditionalVariable var : varList) {
             if (var.getType() == Conditional.TYPE_CONDITIONAL_TRUE || var.getType() == Conditional.TYPE_CONDITIONAL_FALSE) {
@@ -762,10 +762,10 @@ public class ConditionalEditBase {
                     // External references have to be removed before the Logix can be deleted.
                     Conditional c = x.getConditional(csName);
                     Conditional cRef = xRef.getConditional(refName);
-                    String[] msgs = new String[]{c.getUserName(), c.getSystemName(), cRef.getUserName(),
+                    Object[] msgs = new Object[]{c.getUserName(), c.getSystemName(), cRef.getUserName(),
                         cRef.getSystemName(), xRef.getUserName(), xRef.getSystemName()};
                     JOptionPane.showMessageDialog(null,
-                            Bundle.getMessage("Error11", (Object[])msgs), // NOI18N
+                            Bundle.getMessage("Error11", msgs), // NOI18N
                             Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE); // NOI18N
                     return false;
                 }
@@ -831,7 +831,7 @@ public class ConditionalEditBase {
             return false;
         }
         try {
-            return validateIntensity(Integer.valueOf(intReference).intValue());
+            return validateIntensity(Integer.parseInt(intReference));
         } catch (NumberFormatException e) {
             String intRef = intReference;
             if (intReference.length() > 1 && intReference.charAt(0) == '@') {
@@ -851,7 +851,7 @@ public class ConditionalEditBase {
                     if (m == null || m.getValue() == null) {
                         throw new NumberFormatException();
                     }
-                    validateIntensity(Integer.valueOf((String) m.getValue()).intValue());
+                    validateIntensity(Integer.parseInt((String) m.getValue()));
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null,
                             Bundle.getMessage("Error24", intReference),
@@ -896,7 +896,7 @@ public class ConditionalEditBase {
             return false;
         }
         try {
-            return validateTime(actionType, Float.valueOf(ref).floatValue());
+            return validateTime(actionType, Float.parseFloat(ref));
             // return true if ref is decimal within allowed range
         } catch (NumberFormatException e) {
             String memRef = ref;
@@ -917,7 +917,7 @@ public class ConditionalEditBase {
                     if (m == null || m.getValue() == null) {
                         throw new NumberFormatException();
                     }
-                    validateTime(actionType, Float.valueOf((String) m.getValue()).floatValue());
+                    validateTime(actionType, Float.parseFloat((String) m.getValue()));
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null,
                             Bundle.getMessage("Error24", memRef),
@@ -1435,11 +1435,11 @@ public class ConditionalEditBase {
         }
         if (!error) {
             try {
-                nHour = Integer.valueOf(hour);
+                nHour = Integer.parseInt(hour);
                 if ((nHour < 0) || (nHour > 24)) {
                     error = true;
                 }
-                nMin = Integer.valueOf(minute);
+                nMin = Integer.parseInt(minute);
                 if ((nMin < 0) || (nMin > 59)) {
                     error = true;
                 }

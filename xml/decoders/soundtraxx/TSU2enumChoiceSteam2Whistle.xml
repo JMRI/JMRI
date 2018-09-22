@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2016 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new include file for SoundTraxx Tsunami2                   -->
+<enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2016</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Michael</firstname>
+        <surname>Mosher</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+      <revision>
+        <revnumber>1</revnumber>
+        <date>2018-08-14</date>
+        <authorinitials>MM</authorinitials>
+        <revremark>New file, from initial TS2 Steam file.</revremark>
+      </revision>
+    </revhistory>
+    <enumChoice>
+      <choice>ATSF Step Top 6-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Baldwin 3-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Baldwin Single-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Baldwin Flat Top 3-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>B&amp;O Step Top 3-Chime    </choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>B&amp;M Step Top 5-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>C&amp;O Flat Top Single-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>C&amp;S No.74 (Road)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>C&amp;S No.74 (Yard)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>C&amp;S No. 801</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Crosby 5" Flat Top 3-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Crosby 6" Flat Top 3-Chime (Road)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Crosby 6" Flat Top 3-Chime (Yard)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>D&amp;RGW Flat Top Single-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>C-19 No.340 (Road)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>C-19 No.340 (Yard)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>D&amp;RGW K-27 No.463 (Road)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>D&amp;RGW K-27 No.463 (Yard)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>D&amp;RGW Flat Top 3-Chime K-28 No.473</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>D&amp;RGW Step Top 5-Chime K-36 No.487</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Nathan Step Top 5-Chime D&amp;RGW No.488</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Powell Round Top 3-Chime D&amp;RGW No.489</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>K-36 No.489 (Broken Chime)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>K-37 No.497</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Frisco No.1522 3-Chime Steamboat</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Hancock Step Top 3-chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Hancock Flat Top 3-Chime UP No.4018</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Hancock Flat Top 3-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Hancock Short Bell 3-Chime (Road)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Hancock Short Bell 3-Chime (Yard)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Illinois Central 3-Chime Steamboat</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Lehigh Valley Single-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Lima Step Top 5-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Lunkenheimer Flat Top 3-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>L&amp;N Passenger 3-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>L&amp;N Freight 3-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Milwaukee Road Step Top 6-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Nathan Step Top 5-Chime (Road)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Nathan Step Top 5-Chime (Yard)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Nathan Step Top 5-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>N&amp;W Step Top 3-Chime No.611</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>N&amp;W Flat Top Single-Chime No.1218</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>PRR Round Top 3-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>PRR Flat Top Single-Chime Banshee</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Reading Flat Top 6-Chime (1)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Reading Flat Top 6-Chime (2)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Southern Railway 8 in Flat Top Single-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Southern Railway Iron Top 3-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Southern Railway Flat Top 3-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Southern Pacific Step Top 6-Chime (1)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Southern Pacific Step Top 6-chime (2)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Southern Pacific GS-4 No. 4449 Whistle</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>SP GS-AC Classes A200 Airhorn</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Hancock 3-Chime Union Pacific No.3985</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>USRA Step Top 6-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Westside Lumber Co. 5-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Westside Lumber Co. 6-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Heisler</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Round Top Single-Chime Peanut</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Wabco E2 Airhorn</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>ATSF Single-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>British Rail Single-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>LNER A4 3-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Western Pacific 5-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>ALCO Step Top 5-Chime (Road)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>ALCO Step Top 5-Chime (Yard)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Frisco Step Top 6-Chime (Road)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Frisco Step Top 6-Chime (Yard)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>CB&amp;Q Step Top 3-Chime Cut Down</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Bell Field Bowl 3-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Star Brass 3-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Nathan Step Top 6-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>SP Step Top 6-Chime (Road)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>SP Step Top Desert 5-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Canadian 6-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>W&amp;LE Step Top 5-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Replica 6-Chime Long Bell</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>T&amp;P Step Top 5-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>ATSF 6-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Southern 3-Chime Brass (Road)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Crosby 3-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Hancock Short Bell 3-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>Hancock Step Top 3-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>CB&amp;Q Step Top 3-Chime (Road)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>CB&amp;Q Step Top 3-Chime (Yard)</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>N&amp;W Flat Top Single-Chime Hooter</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>ATSF Flat Top 3-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>D&amp;RGW 8" Single-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>CN Flat Top 3-Chime</choice>
+    </enumChoice>
+    <enumChoice>
+      <choice>ACL Round Top 3-Chime</choice>
+    </enumChoice>
+</enumChoiceGroup>

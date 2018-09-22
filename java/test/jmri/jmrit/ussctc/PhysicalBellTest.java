@@ -34,10 +34,10 @@ public class PhysicalBellTest {
     @org.junit.Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initShutDownManager();
-        JUnitUtil.resetProfileManager();
         
         layoutTurnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1"); layoutTurnout.setUserName("Bell output");
     }

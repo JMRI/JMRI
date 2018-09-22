@@ -2,6 +2,7 @@ package jmri.jmrit.operations.trains.tools;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.trains.TrainsTableFrame;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -30,6 +31,9 @@ public class PrintTrainsActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+
+        JUnitOperationsUtil.resetOperationsManager();
     }
 
     @After

@@ -34,6 +34,9 @@ public class TestConsistManager extends jmri.implementation.AbstractConsistManag
            @Override
            protected void removeFromAdvancedConsist(DccLocoAddress LocoAddress){
            }
+           @Override
+           public void dispose(){
+           }
         };
         consistTable.put(address, consist);
         return consist;

@@ -29,6 +29,7 @@ public class CopyRosterGroupActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

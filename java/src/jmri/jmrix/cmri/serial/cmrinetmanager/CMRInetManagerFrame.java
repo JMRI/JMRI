@@ -1,5 +1,3 @@
-//serial.cmrinetmanager
-
 package jmri.jmrix.cmri.serial.cmrinetmanager;
 
 import java.awt.*;
@@ -182,6 +180,11 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
 					haltpollButtonActionPerformed(e);
 				}
 			});
+         SerialTrafficController stc = _memo.getTrafficController();
+         if (stc.getPollNetwork())
+             haltPollButton.setText(Bundle.getMessage("HaltPollButtonText"));
+         else
+             haltPollButton.setText(Bundle.getMessage("ResumePollButtonText"));
 	panel3.add(haltPollButton);
 
         // --------------------------

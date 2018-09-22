@@ -263,7 +263,6 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
      * Based on SPROG information from A. Crosland.
      * @see jmri.jmrix.sprog.SprogReply#value()
      */
-    @SuppressWarnings("fallthrough")
     private SprogReply generateReply(SprogMessage msg) {
         log.debug("Generate Reply to message type {} (string = {})", msg.toString().charAt(0), msg.toString());
 

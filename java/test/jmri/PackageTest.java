@@ -16,6 +16,7 @@ import org.junit.runners.Suite;
     LightTest.class,
     ManagerTest.class,
     NmraPacketTest.class,
+    ConditionalTest.class,
     ConditionalVariableTest.class,
     PathTest.class,
     PathLengthTest.class,

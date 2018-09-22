@@ -6,7 +6,6 @@ import java.awt.GridBagLayout;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
@@ -21,8 +20,6 @@ import jmri.jmrix.nce.NceTrafficController;
  *
  */
 public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
-
-    private static final int REPLY_LEN = 1;
 
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel(Bundle.getMessage("Macro"));
@@ -95,6 +92,7 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
                 .getMaximumSize().width, packetTextField.getPreferredSize().height));
 
         setLayout(new GridBagLayout());
+        setPreferredSize(new Dimension(300, 100));
 
         addItem(jLabel1, 0, 0);
         addItem(packetTextField, 2, 0);
@@ -139,7 +137,7 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
 
     @Override
     public void reply(NceReply r) {
-        if (r.getNumDataElements() == REPLY_LEN) {
+        if (r.getNumDataElements() == NceMessage.REPLY_1) {
 
             int recChar = r.getElement(0);
             if (recChar == '!') {
@@ -173,23 +171,23 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
             // We need to send this version of macro command to cause turnout
             // state to change in NCE CS
             NceMessage m = new NceMessage(5);
-            m.setElement(0, NceBinaryCommand.ACC_CMD);   // Macro cmd
+            m.setElement(0, NceMessage.SEND_ACC_SIG_MACRO_CMD);   // Macro cmd
             m.setElement(1, 0x00);   // addr_h
             m.setElement(2, 0x01);   // addr_l
             m.setElement(3, 0x01);   // Macro cmd
             m.setElement(4, macroNum);  // Macro #
             m.setBinary(true);
-            m.setReplyLen(REPLY_LEN);
+            m.setReplyLen(NceMessage.REPLY_1);
             return m;
 
         } else {
 
             // NCE responds with okay (!) if macro exist, (0) if not
             NceMessage m = new NceMessage(2);
-            m.setElement(0, NceBinaryCommand.MACRO_CMD);   // Macro cmd
+            m.setElement(0, NceMessage.MACRO_CMD);   // Macro cmd
             m.setElement(1, macroNum);  // Macro #
             m.setBinary(true);
-            m.setReplyLen(REPLY_LEN);
+            m.setReplyLen(NceMessage.REPLY_1);
             return m;
         }
     }
@@ -207,12 +205,12 @@ public class NceMacroGenPanel extends jmri.jmrix.nce.swing.NcePanel implements j
             return null;
         }
 
-        // NCE responds with okay (!) if macro exist, (0) if not
+        // NCE responds with okay (!) if macro exist, ('0') if not
         NceMessage m = new NceMessage(2);
-        m.setElement(0, NceBinaryCommand.MACRO_CMD); // Macro cmd
+        m.setElement(0, NceMessage.MACRO_CMD); // Macro cmd
         m.setElement(1, macroNum); // Macro #
         m.setBinary(true);
-        m.setReplyLen(REPLY_LEN);
+        m.setReplyLen(NceMessage.REPLY_1);
         return m;
     }
 

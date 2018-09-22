@@ -28,7 +28,7 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements DataLis
             title = "";
         }
         return java.text.MessageFormat.format(rb.getString("TitleMonitor"),
-                (Object[]) new String[]{title});
+                new Object[]{title});
     }
 
     @Override

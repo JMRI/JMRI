@@ -26,6 +26,7 @@ public class VSDecoderManagerTest {
 
     @After
     public void tearDown() {
+        jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
         JUnitUtil.tearDown();
     }
 

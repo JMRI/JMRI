@@ -36,7 +36,10 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase {
     @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        a = new SignalMastLogicTableAction();
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+        helpTarget = "package.jmri.jmrit.beantable.SignalMastLogicTable"; 
+        a = new SignalMastLogicTableAction();
     }
 
     @Override

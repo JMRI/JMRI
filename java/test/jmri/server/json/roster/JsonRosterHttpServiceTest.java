@@ -30,12 +30,15 @@ public class JsonRosterHttpServiceTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
 
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         InstanceManager.setDefault(Roster.class, new Roster("java/test/jmri/server/json/roster/data/roster.xml"));
     }
 
     @After
-    public void tearDown() throws Exception {        JUnitUtil.tearDown();    }
+    public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
+    }
 
     /**
      * Tests only that this does not throw an error with a valid call, and

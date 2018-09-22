@@ -124,6 +124,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                     }
                 } catch (InterruptedException ie) {
                     log.error("At time wait {}", ie.toString());
+                    Thread.currentThread().interrupt();
                 } catch (java.lang.IllegalArgumentException iae) {
                     log.error("At time wait {}", iae.toString());
                 }
@@ -144,7 +145,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             log.debug("Wait for train to enter \"{}\". Warrant {}",
                                 _warrant.getBlockAt(_syncIdx).getDisplayName(), _warrant.getDisplayName());
                         ThreadingUtil.runOnLayoutEventually(() -> {
-                            _warrant.fireRunStatus("Command", _idxCurrentCommand - 1, _idxCurrentCommand);
+                            _warrant.fireRunStatus("WaitForSync", _idxCurrentCommand - 1, _idxCurrentCommand);
                         });
                         wait();
                     } catch (InterruptedException ie) {
@@ -613,6 +614,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * @param abort not normal shutdown
      */
     public void stopRun(boolean abort) {
+        stopRun(abort,true);
+    }
+    public void stopRun(boolean abort, boolean turnOffFunctions) {
         if (abort) {
             _abort =true;            
         }
@@ -623,8 +627,10 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (_throttle != null && _throttle.getSpeedSetting() > 0.0f) {
             _throttle.setSpeedSetting(-1.0f);
             setSpeed(0.0f);     // prevent creep after EStop - according to Jim Betz
-            for (int i = 0; i < 10; i++) {
-                setFunction(i, false);
+            if (turnOffFunctions) {
+                for (int i = 0; i < 10; i++) {
+                    setFunction(i, false);
+                }
             }
             _warrant.releaseThrottle(_throttle);
         }
@@ -833,8 +839,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 } else if ("INACTIVE".equals(action)) {
                     s.setKnownState(jmri.Sensor.INACTIVE);
                 }
-                ThreadingUtil.runOnLayoutEventually(() -> {
-                    _warrant.fireRunStatus("SensorCommand", true, s.getDisplayName());
+                ThreadingUtil.runOnLayout(() -> {
+                    _warrant.fireRunStatus("SensorSetCommand", act, s.getDisplayName());
                 });
             } catch (jmri.JmriException e) {
                 log.warn("Exception setting sensor " + sensorName + " in action");
@@ -876,13 +882,18 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 while (_waitForSensor) {
                     try {
                         ThreadingUtil.runOnLayoutEventually(() -> {
-                            _warrant.fireRunStatus("SensorCommand", false, _waitSensor.getDisplayName());
-                        });
+                              _warrant.fireRunStatus("SensorWaitCommand", act, _waitSensor.getDisplayName());
+                      });
                         wait();
-                        clearSensor();
+                        String name =  _waitSensor.getDisplayName();    // save name, _waitSensor will be null 'eventually' 
+                        ThreadingUtil.runOnLayoutEventually(() -> {
+                            _warrant.fireRunStatus("SensorWaitCommand", null, name);
+                        });
                     } catch (InterruptedException ie) {
                         log.error("Engineer interrupted at _waitForSensor " + ie);
-                        break;
+                        Thread.currentThread().interrupt();
+                    } finally {
+                        clearSensor();
                     }
                 }
             }
@@ -912,9 +923,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 && ((Number) evt.getNewValue()).intValue() == _sensorWaitState)) {
             synchronized (this) {
                 if (!_halt && !_waitForClear) {
-                    clearSensor();
                     this.notifyAll();
-
                 }
             }
         }
@@ -946,25 +955,38 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             ts.setValue(Integer.toString(num));
         }
         String msg;
+        java.awt.Color color = WarrantTableModel.myGreen;
         WarrantTableFrame f = WarrantTableFrame.getDefault();
         if (_warrant.equals(warrant)) {
             _idxCurrentCommand = 0;
-            warrant.startupWarrant();
-            msg = "Launching warrant \"" + _warrant.getDisplayName() + "\" again.";
-        } else {
-            if (_speedUtil.getDccAddress().equals(_speedUtil.getDccAddress())) {
+            OBlock block = _warrant.getBlockAt(0);
+            if (block.equals(_warrant.getCurrentBlockOrder().getBlock())) {
+                warrant.startupWarrant();
+                msg = Bundle.getMessage("reLaunch", _warrant.getDisplayName(), (num<0 ? "unlimited" : num));
+            } else {
+                msg = Bundle.getMessage("warnStart",  _warrant.getTrainName(), block.getDisplayName());
+                color = java.awt.Color.red;
+            }
+        } else {    //_warrant.getCurrentOrderIndex()
+            if (_warrant.getSpeedUtil().getDccAddress().equals(warrant.getSpeedUtil().getDccAddress())) {
+                // same train is continuing on linked warrant
                 OBlock block = warrant.getfirstOrder().getBlock();
-                block.deAllocate(_warrant);     // insure w can start
+                block.deAllocate(_warrant);     // insure warrant can start
             }
             msg = f.runTrain(warrant, Warrant.MODE_RUN);
             if (msg != null) {
-                warrant.stopWarrant(true);
+                msg = Bundle.getMessage("UnableToAllocate",
+                        warrant.getDisplayName()) + msg;
+                color = java.awt.Color.red;
             } else {
-                msg = "Launching warrant \"" + warrant.getDisplayName() +
-                        "\" from warrant \"" + _warrant.getDisplayName() + "\".";
+                msg = Bundle.getMessage("linkedLaunch", warrant.getDisplayName(), _warrant.getDisplayName());
             }
         }
-        f.setStatusText(msg, java.awt.Color.red, true);
+        final String m = msg;
+        java.awt.Color c = color;
+        ThreadingUtil.runOnLayout(()->{
+            f.setStatusText(m, c, true);
+        });
         if (log.isDebugEnabled()) log.debug(msg);
     }
 

@@ -746,7 +746,6 @@ public class ThrottleWindow extends JmriJFrame {
         return me;
     }
 
-    @SuppressWarnings("unchecked")
     public void setXml(Element e) {
         if (e.getAttribute("title") != null) {
             setTitle(e.getAttribute("title").getValue());

@@ -34,9 +34,9 @@ public class PM4Panel extends AbstractBoardProgPanel {
     }
 
     public PM4Panel(int boardNum) {
-        super(boardNum);
+        super(boardNum, false, "PM4x");
 
-        appendLine(provideAddressing("PM4x"));  // add read/write buttons, address // NOI18N
+        appendLine(provideAddressing());  // add read/write buttons, address // NOI18N
 
         JPanel panec = new JPanel();
         panec.setLayout(new FlowLayout());
@@ -88,7 +88,9 @@ public class PM4Panel extends AbstractBoardProgPanel {
         appendLine(provideStatusLine());
         setStatus(Bundle.getMessage("Status1"));
 
-        setTypeWord(0x70);  // configure PM4 message type
+        setTypeWord(0x70); // configure PM4 message type
+
+        panelToScroll();
 
     }
 

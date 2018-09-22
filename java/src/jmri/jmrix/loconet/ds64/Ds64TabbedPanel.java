@@ -374,7 +374,8 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                 localSensorType.setSelectedIndex(opsw[21] ? 1 : 0);
                 break;
             default:
-                log.warn("Unhandled state code: {}", state);
+                // we are only interested in the states above. Ignore the rest
+                log.debug("Unhandled state code: {}", state);
                 break;
         }
         updateUI();
@@ -1032,6 +1033,8 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE", 
+                justification = "False positive on the implied local variable in indexToRead++")
     private int determineNextStateForRead() {
         switch (indexToRead) {
             case 1: {
@@ -2666,6 +2669,9 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         responseTimer.addActionListener(routeResetResponseTimerListener);
         commandType.setToolTipText(Bundle.getMessage("ToolTipLabelAcceptedSwitchCommandTypes"));
         updateBasicOpSwTab();
+
+        panelToScroll();
+
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE", justification = "Cannot catch an exception without grabbing the exception, but we don't do anything with the exception details.")

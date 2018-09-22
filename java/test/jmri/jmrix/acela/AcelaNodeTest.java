@@ -9,8 +9,6 @@ import jmri.Light;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrix.AbstractMRMessage;
-import jmri.managers.InternalSensorManager;
-import jmri.managers.InternalTurnoutManager;
 import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -179,7 +177,7 @@ public class AcelaNodeTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
 
         tcis = new AcelaTrafficControlScaffold();
 
@@ -216,10 +214,7 @@ public class AcelaNodeTest extends TestCase {
 
         jmri.util.JUnitUtil.resetInstanceManager();
 
-        InstanceManager.setTurnoutManager(new InternalTurnoutManager());
         t1 = InstanceManager.turnoutManagerInstance().newTurnout("IT99", "99");
-
-        InstanceManager.setSensorManager(new InternalSensorManager());
         s1 = InstanceManager.sensorManagerInstance().newSensor("IS98", "98");
 
     }

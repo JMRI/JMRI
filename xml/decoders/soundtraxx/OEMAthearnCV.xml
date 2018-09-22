@@ -667,24 +667,6 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
         <label>FX3 Phase Selection</label>
     </variable>
-    <variable item="Headlight F0(f) Forward Directional Control" CV="57" mask="XXXXXXXV" default="1" minOut="1" tooltip="Check to enable F0(f) function output in Forward direction">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Headlight F0(f) Forward Directional Control</label>
-    </variable>
-    <variable item="Backup Light F0(r) Forward Directional Control" CV="57" mask="XXXXXXVX" default="0" minOut="2" tooltip="Check to enable F0(r) function output in Forward direction">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Backup Light F0(r) Forward Directional Control</label>
-    </variable>
-    <variable item="FX5 Forward Directional Control" CV="57" mask="XXXXXVXX" default="1" minOut="3" tooltip="Check to enable FX3 function output in Forward direction">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>FX3 Forward Directional Control</label>
-    </variable>
-    <variable item="None1 Forward Directional Control" CV="57" mask="XVXXXXXX" default="0" >
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-    </variable>
-    <variable item="None2 Forward Directional Control" CV="57" mask="VXXXXXXX" default="0" >
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-    </variable>
     <!-- End Lighting Configuration -->
     <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim128.xml"/>
@@ -769,10 +751,6 @@
     <variable CV="140" mask="VVVVVVVV" item="Sound Setting 13" default="70" tooltip="Sets the volume of the brakes releasing">
         <decVal/>
         <label>Independent Brake Release Volume</label>
-    </variable>
-    <variable CV="143" mask="VVVVVVVV" item="Sound Setting 16" default="16" tooltip="Sets the volume of the air reservoir poppet valve releasing">
-        <decVal/>
-        <label>Poppet Valve Volume</label>
     </variable>
     <variable CV="148" mask="VVVVVVVV" item="Sound Setting 21" default="70" tooltip="Sets the volume of the emergency brake application">
         <decVal/>
@@ -923,10 +901,6 @@
     </variable>
     <!-- Equalizer Controls follow -->
     <!-- Individual Cut/Boost Controls follow -->
-    <variable item="62 Hz Cut/Boost" CV="226" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 128 = 0dB (Flat) : 255 = +12dB (Boost)">
-        <decVal/>
-        <label>62 Hz Cut/Boost</label>
-    </variable>
     <variable item="Analog Mode Function Status - F13" CV="241" mask="XXXXXXXV" default="0" minFn="13">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label xml:lang="it">Stato Funzioni in analogico - F13</label>
@@ -1166,61 +1140,6 @@
         <label xml:lang="fr">Adresse d'Unité Multiple active pour F28</label>
         <label xml:lang="de">Verbundadresse aktiv für F28</label>
         <label>Consist Address Active For F28</label>
-    </variable>
-    <variable CV="247" mask="XXXXXXXV" item="Consist Automatic Effects - FWDD" default="0">
-        <enumVal>
-            <enumChoice>
-                <choice>Effect Function Controlled</choice>
-            </enumChoice>
-            <enumChoice>
-                <choice>Effect Active moving forward</choice>
-            </enumChoice>
-        </enumVal>
-        <tooltip>Sets the status of automatic effects when moving in forward direction</tooltip>
-    </variable>
-    <variable CV="247" mask="XXXXXXVX" item="Consist Automatic Effects - REVD" default="0">
-        <enumVal>
-            <enumChoice>
-                <choice>Effect Function Controlled</choice>
-            </enumChoice>
-            <enumChoice>
-                <choice>Effect Active moving reverse</choice>
-            </enumChoice>
-        </enumVal>
-        <tooltip>Sets the status of automatic effects when moving in reverse direction</tooltip>
-    </variable>
-    <variable CV="247" mask="XXXXXVXX" item="Consist Automatic Effects - FWDS" default="0">
-        <enumVal>
-            <enumChoice>
-                <choice>Effect Function Controlled</choice>
-            </enumChoice>
-            <enumChoice>
-                <choice>Effect Active stopped forward</choice>
-            </enumChoice>
-        </enumVal>
-        <tooltip>Sets the status of automatic effects when stopped in forward direction</tooltip>
-    </variable>
-    <variable CV="247" mask="XXXXVXXX" item="Consist Automatic Effects - REVS" default="0">
-        <enumVal>
-            <enumChoice>
-                <choice>Effect Function Controlled</choice>
-            </enumChoice>
-            <enumChoice>
-                <choice>Effect Active stopped reverse</choice>
-            </enumChoice>
-        </enumVal>
-        <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
-    </variable>
-    <variable CV="247" mask="XXXVXXXX" item="Consist Automatic Effects - ESTP" default="1">
-        <enumVal>
-            <enumChoice>
-                <choice>E-Brake sound FX enabled</choice>
-            </enumChoice>
-            <enumChoice>
-                <choice>ESTP effects enabled</choice>
-            </enumChoice>
-        </enumVal>
-        <tooltip>&lt;html&gt;Sets the status of automatic effects when in emergency stop.&lt;br&gt; Emergency Stop (ESTP) effects defined on Function Map&lt;/html&gt;</tooltip>
     </variable>
     <variable CV="253" item="Customer Code" readOnly="yes">
         <decVal/>

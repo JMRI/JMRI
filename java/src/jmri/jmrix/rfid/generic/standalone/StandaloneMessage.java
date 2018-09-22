@@ -28,9 +28,4 @@ public class StandaloneMessage extends RfidMessage {
         super(m, l);
     }
 
-    @Override
-    public String toMonitorString() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
 }

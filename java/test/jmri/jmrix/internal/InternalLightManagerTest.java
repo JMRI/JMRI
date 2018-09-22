@@ -54,22 +54,17 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
 
     @Test
     public void testIsVariableLight() {
-        // create and register the manager object
-        InternalLightManager alm = new InternalLightManager();
-        jmri.InstanceManager.setLightManager(alm);
-
         // ask for a Light, and check type
         LightManager lm = jmri.InstanceManager.lightManagerInstance();
 
         Assert.assertTrue(lm.newLight("IL21", "my name").isIntensityVariable());
-
     }
 
     // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         // create and register the manager object
         l = new InternalLightManager();
         jmri.InstanceManager.setLightManager(l);

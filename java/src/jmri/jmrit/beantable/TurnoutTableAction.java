@@ -1161,7 +1161,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
      * @param cb the JComboBox
      */
     public static void updateAutomationBox(Turnout t, JComboBox<String> cb) {
-        TurnoutOperation[] ops = TurnoutOperationManager.getInstance().getTurnoutOperations();
+        TurnoutOperation[] ops = InstanceManager.getDefault(TurnoutOperationManager.class).getTurnoutOperations();
         cb.removeAllItems();
         Vector<String> strings = new Vector<String>(20);
         Vector<String> defStrings = new Vector<String>(20);
@@ -1228,7 +1228,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 break;
             default:  // named operation
                 t.setInhibitOperation(false);
-                t.setTurnoutOperation(TurnoutOperationManager.getInstance().
+                t.setTurnoutOperation(InstanceManager.getDefault(TurnoutOperationManager.class).
                         getOperation(((String) cb.getSelectedItem())));
                 break;
         }
@@ -1245,7 +1245,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         beanEdit.actionPerformed(null);
     }
 
-    private static boolean editingOps = false;
+    private static java.util.concurrent.atomic.AtomicBoolean editingOps = new java.util.concurrent.atomic.AtomicBoolean(false);
 
     /**
      * Pop up a TurnoutOperationConfig for the turnout.
@@ -1254,11 +1254,10 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
      * @param box JComboBox that triggered the edit
      */
     protected void editTurnoutOperation(Turnout t, JComboBox<String> box) {
-        if (!editingOps) { // don't open a second edit ops pane
-            editingOps = true;
+        if (!editingOps.getAndSet(true)) { // don't open a second edit ops pane
             TurnoutOperation op = t.getTurnoutOperation();
             if (op == null) {
-                TurnoutOperation proto = TurnoutOperationManager.getInstance().getMatchingOperationAlways(t);
+                TurnoutOperation proto = InstanceManager.getDefault(TurnoutOperationManager.class).getMatchingOperationAlways(t);
                 if (proto != null) {
                     op = proto.makeNonce(t);
                     t.setTurnoutOperation(op);
@@ -1333,7 +1332,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                             myOp = null;
                         }
                         self.setVisible(false);
-                        editingOps = false;
+                        editingOps.set(false);
                     }
                 });
                 JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
@@ -1341,7 +1340,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         self.setVisible(false);
-                        editingOps = false;
+                        editingOps.set(false);
                     }
                 });
                 buttonBox.add(Box.createHorizontalGlue());
@@ -1355,7 +1354,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 this.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
-                        editingOps = false; // reset Editmarker
+                        editingOps.set(false);
                     }
                 });
             } else {
@@ -1447,7 +1446,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
      * Add the check boxes to show/hide extra columns to the Turnout table
      * frame.
      * <p>
-     * Keep contents synchrinized with
+     * Keep contents synchronized with
      * {@link #addToPanel(AbstractTableTabAction)}
      *
      * @param f a Turnout table frame
@@ -1455,12 +1454,12 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
     @Override
     public void addToFrame(BeanTableFrame f) {
         f.addToBottomBox(doAutomationBox, this.getClass().getName());
-        doAutomationBox.setSelected(TurnoutOperationManager.getInstance().getDoOperations());
+        doAutomationBox.setSelected(InstanceManager.getDefault(TurnoutOperationManager.class).getDoOperations());
         doAutomationBox.setToolTipText(Bundle.getMessage("TurnoutDoAutomationBoxTooltip"));
         doAutomationBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TurnoutOperationManager.getInstance().setDoOperations(doAutomationBox.isSelected());
+                InstanceManager.getDefault(TurnoutOperationManager.class).setDoOperations(doAutomationBox.isSelected());
             }
         });
         f.addToBottomBox(showFeedbackBox, this.getClass().getName());
@@ -1507,19 +1506,19 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
      * @param f a Turnout table action
      */
     @Override
-    public void addToPanel(AbstractTableTabAction f) {
+    public void addToPanel(AbstractTableTabAction<Turnout> f) {
         String systemPrefix = ConnectionNameFromSystemName.getConnectionName(turnManager.getSystemPrefix());
         if (turnManager.getClass().getName().contains("ProxyTurnoutManager")) {
             systemPrefix = "All"; // NOI18N
         }
 
         f.addToBottomBox(doAutomationBox, systemPrefix);
-        doAutomationBox.setSelected(TurnoutOperationManager.getInstance().getDoOperations());
+        doAutomationBox.setSelected(InstanceManager.getDefault(TurnoutOperationManager.class).getDoOperations());
         doAutomationBox.setToolTipText(Bundle.getMessage("TurnoutDoAutomationBoxTooltip"));
         doAutomationBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TurnoutOperationManager.getInstance().setDoOperations(doAutomationBox.isSelected());
+                InstanceManager.getDefault(TurnoutOperationManager.class).setDoOperations(doAutomationBox.isSelected());
             }
         });
         f.addToBottomBox(showFeedbackBox, systemPrefix);
@@ -1848,7 +1847,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             // statusBar.setForeground(Color.red); // handled when errorMassage is set, to differentiate in urgency
         }
 
-        p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem()); // store user pref
+        p.setComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem()); // store user pref
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
@@ -1931,7 +1930,8 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
      */
     @Override
     public void setMessagePreferencesDetails() {
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "duplicateUserName", Bundle.getMessage("DuplicateUserNameWarn"));
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class)
+                .setPreferenceItemDetails(getClassName(), "duplicateUserName", Bundle.getMessage("DuplicateUserNameWarn"));
         super.setMessagePreferencesDetails();
     }
 

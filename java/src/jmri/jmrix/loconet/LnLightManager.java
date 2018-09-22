@@ -68,9 +68,9 @@ public class LnLightManager extends AbstractLightManager {
         // name must be in the LLnnnnn format (first L (system prefix) is user configurable)
         int num = 0;
         try {
-            num = Integer.valueOf(systemName.substring(
+            num = Integer.parseInt(systemName.substring(
                     getSystemPrefix().length() + 1, systemName.length())
-            ).intValue();
+                  );
         } catch (Exception e) {
             log.warn("invalid character in number field of system name: " + systemName);
             return (0);

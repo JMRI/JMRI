@@ -104,7 +104,7 @@
 	<classpathentry kind="lib" path="lib/byte-buddy-1.7.10.jar"/>
 	<classpathentry kind="lib" path="lib/purejavacomm-1.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/jemmy-2.3.1.1-RELEASE802.jar"/>
-	<classpathentry kind="lib" path="lib/xbee-java-library-1.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/xbee-java-library-1.2.1.jar"/>
 	<classpathentry kind="lib" path="lib/libusb4java-1.2.0-linux-arm.jar"/>
 	<classpathentry kind="lib" path="lib/libusb4java-1.2.0-linux-x86.jar"/>
 	<classpathentry kind="lib" path="lib/libusb4java-1.2.0-linux-x86_64.jar"/>
@@ -134,5 +134,6 @@
 	<classpathentry kind="lib" path="lib/typetools-0.5.0.jar"/>
 	<classpathentry kind="lib" path="lib/webdrivermanager-2.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/mqtt-client-0.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/jsplitbutton-1.3.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

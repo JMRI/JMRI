@@ -9,6 +9,7 @@
 #
 
 import java
+import java.beans
 import jmri
 
 class XlateCurve (java.beans.PropertyChangeListener) :
@@ -52,7 +53,7 @@ class XlateCurve (java.beans.PropertyChangeListener) :
         self.inObject.addPropertyChangeListener(self)
         #self.setName("XlateCurve(" + self.inObjectName + ", " + self.outObjectName + ")")
         return(0)
-		
+        
     def enable(self, state) :
         if ((len(self.inPoints) >= 2) and (self.inObject <> None) and (self.outObject <> None)) :
             if (state == True) :

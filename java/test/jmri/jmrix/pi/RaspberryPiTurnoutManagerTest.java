@@ -106,7 +106,7 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
     @Override
     @Before
     public void setUp() {
-       apps.tests.Log4JFixture.setUp();
+       JUnitUtil.setUp();
        GpioProvider myprovider = new PiGpioProviderScaffold();
        GpioFactory.setDefaultProvider(myprovider);
        jmri.util.JUnitUtil.resetInstanceManager();
@@ -115,7 +115,8 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.clearShutDownManager();
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.tearDown();
     }
 

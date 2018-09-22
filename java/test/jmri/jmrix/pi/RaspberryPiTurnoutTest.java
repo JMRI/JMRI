@@ -12,25 +12,33 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class RaspberryPiTurnoutTest {
+public class RaspberryPiTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
-    @Test
-    public void testCTor() {
-        RaspberryPiTurnout t = new RaspberryPiTurnout("PiT2");
-        Assert.assertNotNull("exists",t);
-    }
+    @Override
+    public int numListeners() { return 0; }
+
+    @Override
+    public void checkThrownMsgSent() throws InterruptedException {}
+
+    @Override
+    public void checkClosedMsgSent() throws InterruptedException {}
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         GpioProvider myprovider = new PiGpioProviderScaffold();
         GpioFactory.setDefaultProvider(myprovider);
         jmri.util.JUnitUtil.resetInstanceManager();
+        t = new RaspberryPiTurnout("PiT2"){
+            @Override
+            protected void forwardCommandChangeToLayout(int s){}
+        };
     }
 
     @After
     public void tearDown() {
+	t.dispose();
         JUnitUtil.tearDown();
     }
 

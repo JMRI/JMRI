@@ -1,4 +1,3 @@
-//OperationsFrame.java
 package jmri.jmrit.operations;
 
 import java.awt.Container;

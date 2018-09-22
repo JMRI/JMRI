@@ -23,6 +23,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.rollingstock.engines.tools.EngineAttributeEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import org.slf4j.Logger;
@@ -232,7 +233,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
             pRfid.setLayout(new GridBagLayout());
             pRfid.setBorder(BorderFactory.createTitledBorder(Setup.getRfidLabel()));
             addItem(pRfid, rfidComboBox, 1, 0);
-            jmri.InstanceManager.getDefault(jmri.IdTagManager.class).getNamedBeanList()
+            jmri.InstanceManager.getDefault(jmri.IdTagManager.class).getNamedBeanSet()
                     .forEach((tag) -> rfidComboBox.addItem(tag));
             rfidComboBox.insertItemAt((jmri.IdTag)null,0); // must have a blank in the list, for the default.
             rfidComboBox.setSelectedIndex(0);

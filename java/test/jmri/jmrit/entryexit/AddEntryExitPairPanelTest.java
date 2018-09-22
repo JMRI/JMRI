@@ -77,14 +77,16 @@ public class AddEntryExitPairPanelTest {
     public static void setUp() throws Exception {
         JUnitUtil.setUp();
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        tools = new EntryExitTestTools();
-        panels = tools.getPanels();
+        jmri.util.JUnitUtil.resetProfileManager();
+
+        panels = EntryExitTestTools.getPanels();
         Assert.assertEquals("Get LE panels", 2, panels.size());  // NOI18N
     }
 
     @AfterClass
     public static void tearDown() {
         panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
+        panels = null;
         JUnitUtil.tearDown();
     }
 

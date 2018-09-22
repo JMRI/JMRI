@@ -103,12 +103,4 @@ public class JMRIClientTrafficController extends AbstractMRTrafficController
             return false;
         }
     }
-
-    @Override
-    @Deprecated
-    protected void setInstance() { /*do nothing*/ }
-
-    public JMRIClientTrafficController instance() {
-        return this;
-    }
 }

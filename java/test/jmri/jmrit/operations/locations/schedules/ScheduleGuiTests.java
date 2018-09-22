@@ -3,7 +3,6 @@ package jmri.jmrit.operations.locations.schedules;
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
-import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.util.JUnitUtil;
@@ -67,22 +66,6 @@ public class ScheduleGuiTests extends OperationsSwingTestCase {
         JUnitUtil.dispose(f);
     }
 
-    private void loadLocations() {
-        // create 5 locations
-        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
-        Location l1 = lManager.newLocation("Test Loc E");
-        l1.addTrack("Test Track", Track.SPUR);
-        Location l2 = lManager.newLocation("Test Loc D");
-        l2.setLength(1002);
-        Location l3 = lManager.newLocation("Test Loc C");
-        l3.setLength(1003);
-        Location l4 = lManager.newLocation("Test Loc B");
-        l4.setLength(1004);
-        Location l5 = lManager.newLocation("Test Loc A");
-        l5.setLength(1005);
-
-    }
-
     // Ensure minimal setup for log4J
     @Override
     @Before
@@ -90,6 +73,7 @@ public class ScheduleGuiTests extends OperationsSwingTestCase {
         super.setUp();
 
         loadLocations();
+        
     }
 
     @Override

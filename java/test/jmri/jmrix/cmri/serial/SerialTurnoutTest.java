@@ -3,9 +3,7 @@ package jmri.jmrix.cmri.serial;
 import jmri.implementation.AbstractTurnoutTestBase;
 import jmri.*;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Tests for the jmri.jmrix.cmri.serial.SerialTurnout class
@@ -26,7 +24,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         
         // prepare an interface
@@ -39,6 +37,11 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
         
         t = memo.getTurnoutManager().provideTurnout("4");
         Assert.assertNotNull("turnout exists", t);
+    }
+
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
     }
 
     int startingNumListeners; // number at creation, before tests start allocating them.

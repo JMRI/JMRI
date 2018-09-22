@@ -1,5 +1,3 @@
-// SerialFilterAction.java
-
 package jmri.jmrix.cmri.serial.serialmon;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
@@ -41,6 +39,3 @@ public class SerialFilterAction extends AbstractAction {
 	private final static Logger log = LoggerFactory.getLogger(SerialFilterAction.class);
 
 }
-
-
-/* @(#)SerialFilterAction.java */

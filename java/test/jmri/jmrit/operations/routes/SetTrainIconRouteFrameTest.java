@@ -35,6 +35,7 @@ public class SetTrainIconRouteFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         JUnitOperationsUtil.resetOperationsManager();
         JUnitOperationsUtil.initOperationsData();
     }

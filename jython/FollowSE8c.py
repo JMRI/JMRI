@@ -18,6 +18,7 @@
 
 import jmri
 import java
+import java.beans
 
 class FollowSE8c(java.beans.PropertyChangeListener):
   def set(self, signalHeadName, lowTurnoutName, highTurnoutName) :

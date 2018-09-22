@@ -22,15 +22,77 @@ import org.slf4j.LoggerFactory;
  * A third thread is registered by the constructor as a shutdown hook. It
  * triggers the necessary cleanup code
  * <p>
- * "Mode" refers to the state of the command station communications.<br>
- * "State" refers to the internal state machine used to control the mode, e.g.
- * to send commands to change mode.<br>
- * "Idle" is a special case, where there is no communications in process, and
- * the port is waiting to do something.
+ * The internal state machine handles changes of mode, automatic retry of 
+ * certain messages, time outs, and sending poll messages when otherwise idle.
+ * <p>
+ * "Mode" refers to the state of the command station communications. "Normal" 
+ * and "Programming" are the two modes, used if the command station requires
+ * messages to go back and forth between them. <br>
  *
+ * <img src="doc-files/AbstractMRTrafficController-StateDiagram.png" alt="UML State diagram">
+ * 
+ * <P>
+ * The key methods for the basic operation are:
+ * <UL>
+ * <li>If needed for formatting outbound messages, {@link #addHeaderToOutput(byte[], AbstractMRMessage)} and {@link #addTrailerToOutput(byte[], int, AbstractMRMessage)}
+ * <li> {@link #newReply()} creates an empty reply message (of the proper concrete type) to fill with incoming data
+ * <li>The {@link #endOfMessage(AbstractMRReply) } method is used to parse incoming messages. If it needs
+ *      information on e.g. the last message sent, that can be stored in member variables
+ *      by {@link #forwardToPort(AbstractMRMessage, AbstractMRListener)}.
+ *  <li>{@link #forwardMessage(AbstractMRListener, AbstractMRMessage)} and {@link #forwardReply(AbstractMRListener, AbstractMRReply) } handle forwarding of specific types of objects
+ * </ul>
+ * <p>
+ * If your command station requires messages to go in and out of 
+ * "programming mode", those should be provided by 
+ * {@link #enterProgMode()} and {@link #enterNormalMode()}.
+ * <p>
+ * If you want to poll for information when the line is otherwise idle,
+ * implement {@link #pollMessage()} and {@link #pollReplyHandler()}.
+ * 
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Paul Bender Copyright (C) 2004-2010
  */
+
+/*
+@startuml jmri/jmrix/doc-files/AbstractMRTrafficController-StateDiagram.png
+
+    [*] --> IDLESTATE
+    IDLESTATE --> NOTIFIEDSTATE : sendMessage()
+    NOTIFIEDSTATE --> IDLESTATE : queue empty
+    
+    NOTIFIEDSTATE --> WAITMSGREPLYSTATE : transmitLoop()\nwake, send message
+    
+    WAITMSGREPLYSTATE --> WAITREPLYINPROGMODESTATE : transmitLoop()\nnot in PROGRAMINGMODE,\nmsg for PROGRAMINGMODE
+    WAITMSGREPLYSTATE --> WAITREPLYINNORMMODESTATE : transmitLoop()\nnot in NORMALMODE,\nmsg for NORMALMODE
+    
+    WAITMSGREPLYSTATE --> NOTIFIEDSTATE : handleOneIncomingReply()
+
+    WAITREPLYINPROGMODESTATE --> OKSENDMSGSTATE : handleOneIncomingReply()\nentered PROGRAMINGMODE
+    WAITREPLYINNORMMODESTATE --> OKSENDMSGSTATE : handleOneIncomingReply()\nentered NORMALMODE
+    OKSENDMSGSTATE --> WAITMSGREPLYSTATE : send original pended message
+    
+    IDLESTATE --> POLLSTATE : transmitLoop()\nno work
+    POLLSTATE --> WAITMSGREPLYSTATE : transmitLoop()\npoll msg exists, send it
+    POLLSTATE --> IDLESTATE : transmitLoop()\nno poll msg to send
+    
+    WAITMSGREPLYSTATE --> AUTORETRYSTATE : handleOneIncomingReply()\nwhen tagged as error reply
+    AUTORETRYSTATE --> IDLESTATE : to drive a repeat of a message 
+
+NOTIFIEDSTATE : Transmit thread wakes up and processes
+POLLSTATE : Transient while deciding to send poll
+OKSENDMSGSTATE : Transient while deciding to send\noriginal message after mode change
+AUTORETRYSTATE : Transient while deciding to resend auto-retry message
+WAITREPLYINPROGMODESTATE : Sent request to go to programming mode,\nwaiting reply
+WAITREPLYINNORMMODESTATE : Sent request to go to normal mode,\nwaiting reply
+WAITMSGREPLYSTATE : Have sent message, waiting a\nresponse from layout
+
+Note left of AUTORETRYSTATE : This state handles timeout of\nmessages marked for autoretry
+Note left of OKSENDMSGSTATE : Transient internal state\nwill transition when going back\nto send message that\nwas deferred for mode change.
+
+@enduml
+ */
+
+
 abstract public class AbstractMRTrafficController {
 
     private Thread shutdownHook = null; // retain shutdown hook for 
@@ -44,7 +106,6 @@ abstract public class AbstractMRTrafficController {
         mCurrentMode = NORMALMODE;
         mCurrentState = IDLESTATE;
         allowUnexpectedReply = false;
-        setInstance();
 
         // We use a shutdown hook here to make sure the connection is left
         // in a clean state prior to exiting.  This is required on systems
@@ -64,11 +125,6 @@ abstract public class AbstractMRTrafficController {
     protected boolean getSynchronizeRx() {
         return synchronizeRx;
     }
-
-    /**
-     * Set the instance variable.
-     */
-    abstract protected void setInstance();
 
     // The methods to implement the abstract Interface
 
@@ -483,6 +539,7 @@ abstract public class AbstractMRTrafficController {
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
+                if (threadStopRequest) return; // don't log an error if closing.
                 String[] packages = this.getClass().getName().split("\\.");
                 String name = (packages.length>=2 ? packages[packages.length-2]+"." :"")
                         +(packages.length>=1 ? packages[packages.length-1] :"");
@@ -827,7 +884,7 @@ abstract public class AbstractMRTrafficController {
             }
         }
         if (!threadStopRequest) { // if e.g. unexpected end
-            ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(controller.getUserName(), controller.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
             log.error("Exit from rcv loop in {}", this.getClass().toString());
             recovery(); // see if you can restart
         }
@@ -849,7 +906,7 @@ abstract public class AbstractMRTrafficController {
      */
     protected void reportReceiveLoopException(Exception e) {
         log.error("run: Exception: {} in {}", e.toString(), this.getClass().toString(), e);
-        jmri.jmrix.ConnectionStatus.instance().setConnectionState(controller.getCurrentPortName(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
+        jmri.jmrix.ConnectionStatus.instance().setConnectionState(controller.getUserName(), controller.getCurrentPortName(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
         if (controller instanceof AbstractNetworkPortController) {
             portWarnTCP(e);
         }
@@ -863,7 +920,6 @@ abstract public class AbstractMRTrafficController {
      * Dummy routine, to be filled by protocols that have to skip some
      * start-of-message characters.
      */
-    @SuppressWarnings("unused")
     protected void waitForStartOfReply(DataInputStream istream) throws IOException {
     }
 

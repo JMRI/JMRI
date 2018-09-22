@@ -61,9 +61,12 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
             throw new IllegalArgumentException("name cannot be empty in getNamedBeanHandle");
         }
         NamedBeanHandle<T> temp = new NamedBeanHandle<>(name, bean);
-
-        if (! namedBeanHandles.contains(temp)) namedBeanHandles.add(temp);
-
+        for (NamedBeanHandle<T> h : namedBeanHandles) {
+            if (temp.equals(h)) {
+                return h;
+            }
+        }
+        namedBeanHandles.add(temp);
         return temp;
     }
 
@@ -147,7 +150,6 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
         renameBean(systemName, userName, bean);
     }
 
-    @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
     @CheckReturnValue
     public <T extends NamedBean> boolean inUse(@Nonnull String name, @Nonnull T bean) {
         NamedBeanHandle<T> temp = new NamedBeanHandle<>(name, bean);

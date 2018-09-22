@@ -136,11 +136,15 @@ public class EngineSoundEvent extends SoundEvent implements PropertyChangeListen
             ((EngineSound) parent.getSound("ENGINE")).handleSpeedChange((Float) event.getNewValue(), engine_pane);
         } else if (event.getPropertyName().startsWith("F")) {
             String ev = event.getPropertyName();
+            boolean val = (Boolean) event.getNewValue();
             for (Trigger t : trigger_list.values()) {
                 log.debug("trigger name: {}, event: {}, target: {}", t.getName(), t.getEventName(), t.getTargetName());
                 if (ev.equals(t.getEventName())) {
                     if (t.getName().equals("ENGINE_STARTSTOP")) {
                         getEnginePane().startButtonClick();
+                    } else {
+                        ((EngineSound) parent.getSound("ENGINE")).functionKey(ev, val, t.getName());
+                        log.debug("event {} is {}", ev, val);
                     }
                 }
             }

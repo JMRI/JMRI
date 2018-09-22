@@ -23,7 +23,7 @@
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header" -->
+</head><!--#include virtual="/Header.shtml" -->
 
 <body>
   <div id="mBody">
@@ -66,18 +66,27 @@
             <li><a href="#HandlingLogOutput">Handling Log4J Output
             From Tests</a></li>
 
-            <li><a href="#RunningListeners">Running
+            <li><a href="#ResetInstMgr">Resetting the
+            InstanceManager</a> and other Managers</li>
+
+            <li><a href="#RunningListeners">Working with
             Listeners</a></li>
 
             <li><a href="#threads">Working with Threads</a></li>
-
-            <li><a href="#ResetInstMgr">Resetting the
-            InstanceManager</a></li>
 
             <li><a href="#io">Testing I/O</a></li>
 
             <li><a href="#tempFileCreation">Temporary File Creation
             in Tests</a></li>
+
+            <li><a href="#J4rules">JUnit4 Rules</a></li>
+            <li style="list-style: none">
+                <ul>
+                <li><a href="#TimeoutRule">Timeout rule</a>
+                <li><a href="#RetryRule">RetryRule</a>
+                </ul>
+            </li>
+
           </ul>
         </li>
 
@@ -89,9 +98,7 @@
             <li><a href="#jfcunit">Using JFCUnit</a></li>
           </ul>
         </li>
-      </ul>
 
-      <ul>
         <li><a href="#testScriptCode">Testing Script Code</a></li>
 
         <li style="list-style: none">
@@ -100,13 +107,9 @@
             sample scripts</a></li>
           </ul>
         </li>
-      </ul>
 
-      <ul>
         <li><a href="#issues">Issues</a></li>
-      </ul>
 
-      <ul>
         <li><a href="#junit4">Migrating to JUnit4</a></li>
       </ul>
 
@@ -120,16 +123,27 @@
       change.
 
       <p>For more information on JUnit, see <a href=
-      "http://www.junit.org">the JUnit home page</a>. A very
+      "http://www.junit.org">the JUnit home page</a>. 
+      We now use JUnit version 4 (JUnit4), although
+      a lot of JMRI code originally had tests
+      written in the previous version, JUnit3.
+      For instructions on how to convert existing JUnit3
+      tests to JUnit4, see the 
+      "<a href="#junit4">Migrating to JUnit4</a>" section below.
+      <p>
+      A very
       interesting example of test-based development is available
       from <a href=
       "http://www.objectmentor.com/publications/xpepisode.htm">Robert
       Martin</a>'s book.</p>
 
-      <p>Some of the classes have JUnit tests available. It's good
-      to add JUnit tests as you make changes (test your new
+      <p>All of the JMRI classes have JUnit tests available; we 
+      have decided that our 
+      <a href="ContinuousIntegration.shtml">Continuous Integration system</a>
+      will insist on that. It's good
+      to add JUnit tests as you make changes to classes (they test your new
       functionality to make sure that it is working, and keeps
-      working), when you have to figure out what somebody's code
+      working as other people change it later), when you have to figure out what somebody's code
       does (the test documents exactly what should happen!), and
       when you track down a bug (make sure it doesn't come
       back).</p>
@@ -305,6 +319,30 @@
 </pre>
 
      <p>
+     Note that you should be invoking
+     <code>jmri.util.JUnitUtil.setUp()</code>
+     and
+     <code>jmri.util.JUnitUtil.tearDown()</code>
+     as above. Some older tests use calls to
+     <code>apps.tests.Log4JFixture.setUp()</code>
+     and
+     <code>apps.tests.Log4JFixture.tearDown()</code>;
+     these should be replaced by the corresponding calls
+     to the <code>JUnitUtil</code> methods.
+     
+     <p>In addition, the tearDown() method should set all member variable 
+            references to null.  This is because JUnit4 keeps the test class
+            objects around until <em>all</em> the tests are complete, so any
+            memory you allocate in one class can't be garbage collected until all 
+            the tests are done.  Setting the references to null allows the objects
+            to be collected. (If the allocated objects have a dispose() method
+            or similar, you should call that too). You should <u>not</u>
+            <a href="#ResetInstMgr">reset the InstanceManager</a>
+            or other managers in the tearDown
+            method; any necessary manager resets will be done automatically, 
+            and duplicating those wastes test time.
+
+     <p>
      You may also choose to copy an existing test file and make
      modifications to suite the needs of your new class. Please
      make sure you're copying a file in the new JUnit4 format,
@@ -419,7 +457,7 @@
         <li>All the test classes should include common code in
         their setUp() and tearDown() code to ensure that log4j is
         properly initiated, and that the custom appender is told
-        when a test is beginning and ending.
+        when a test is beginning and ending. 
 
 <pre style="font-family: monospace;">
     // The minimal setup for log4J
@@ -433,13 +471,6 @@
     }
 </pre>
         </li>
-        <li>In addition, the tearDown() method should set all member variable 
-            references to null.  This is because JUnit4 keeps the test class
-            objects around until <em>all</em> the tests are complete, so any
-            memory you allocate in one class can't be garbage collected until all 
-            the tests are done.  Setting the references to null allows the objects
-            to be collected. (If the allocated objects have a dispose() method
-            or similar, you should call that too)
 
         <li>When a test is deliberately invoking a message, it
         should then use the check to see that the message was
@@ -458,13 +489,8 @@
           log.error(...) message is produced that isn't matched to
           a JUnitAppender.assertWarnMessage(...) call.</p>
         </li>
-      </ol>In any case, all of your main() routines should start
-      with
-<pre style="font-family: monospace;">
-    apps.tests.Log4JFixture.initLogging();
-</pre>
-    so that they can be run independently.
-
+      </ol>
+      
       <p>Note: Our <a href="ContinuousIntegration.shtml">CI
       test</a> executables are configured to fail if any FATAL or
       ERROR messages are emitted instead of being handled. This
@@ -473,26 +499,34 @@
       won't be able to merge your code into the common repository
       until those are handled.</p>
 
-      <h3><a name="ResetInstMgr" id="ResetInstMgr">Resetting the
-      InstanceManager</a></h3>If you are testing code that is going
+      <h3><a name="ResetInstMgr" id="ResetInstMgr">Resetting the InstanceManager</a></h3>
+      If you are testing code that is going
       to reference the InstanceManager, you should clear and reset
       it to ensure you get reproducible results.
 
-      <p>Depending on what managers your code uses, your
-      <code>setUp()</code> implementation should start with:</p>
+      <p>Depending on what managers your code needs, your
+      <code>setUp()</code> implementation could start with:</p>
 
 <pre style="font-family: monospace;">
     super.setUp(); // Note: skip this line when using <a href="#super">JUnit4</a>
     jmri.util.JUnitUtil.setUp();
     jmri.util.JUnitUtil.resetInstanceManager();
+    jmri.util.JUnitUtil.resetProfileManager();
+    jmri.util.JUnitUtil.initConfigureManager();
+    jmri.util.JUnitUtil.initShutDownManager();
+
+    jmri.util.JUnitUtil.initDebugCommandStation();
+    
     jmri.util.JUnitUtil.initInternalTurnoutManager();
     jmri.util.JUnitUtil.initInternalLightManager();
     jmri.util.JUnitUtil.initInternalSensorManager();
     jmri.util.JUnitUtil.initReporterManager();
 </pre>
-    (You can omit the initialization managers you don't need) See
-    the jmri.util.JUnitUtil class for the full list of available ones,
-    and please add more if you need one that's not there yet.
+    (You can omit the initialization managers not needed for your tests) 
+    See the 
+    <a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/util/JUnitUtil.java">jmri.util.JUnitUtil</a>
+    class for the full list of available ones,
+    and please add more if you need ones that are not in JUnitUtil yet.
 
       <p>Your <code>tearDown()</code> should end with:</p>
 <pre style="font-family: monospace;">
@@ -590,7 +624,7 @@
       or you should add code to terminate them.
       <p>
       You can check whether you've left any threads running by
-      editing the <code>java/test/apps/tests/Log4JFixture.java</code>
+      editing the <code>java/test/jmri/util/JUnitUtil.java</code> file
       and finding a line like:
 <pre style="font-family: monospace;">
         // checkThreads(false);  // true means stop on 1st extra thread
@@ -598,7 +632,8 @@
       Uncomment that, compile and run your tests.  It will report
       any threads you've left running.
 
-      <h3><a id="io" name="io"></a>Testing I/O</h3>Some test
+      <h3><a id="io" name="io"></a>Testing I/O</h3>
+      Some test
       environments don't automatically flush I/O operations such as
       streams during testing. If you're testing something that does
       I/O, for example a TrafficController, you'll need to add
@@ -619,11 +654,10 @@
       build</a> environment. And the temporary files should not
       become part of the JMRI code repository.
 
-      <p>Here are some ideas which can help avoid these types of
-      problems.</p>
+      This section discusses ways to avoid these types of
+      problems.
       
-      <ul>
-        <li>
+      <p>
         If you need a temporary file or directory, and your test
         uses JUnit4, you can use a Rule to create a file or directory
         before each test runs.
@@ -638,18 +672,24 @@
     <p>
         You then reference "folder" in your test code:
 <pre style="font-family: monospace;">
-        // create a file in "temp"
-        File rosterDir = folder.newFolder();
-        File backupDir = folder.newFolder();
+        // create a temporary file
+        File randomNameFile = folder.newFile();
+        // create a temporary directory
+        File randomNameDir = folder.newFolder();
 </pre>
 
     
-      JUnit will make sure the file or folder is removed afterwards regardless of whether the 
+      JUnit4 will make sure the file or folder is removed afterwards regardless of whether the 
       test succeeds or fails. For more information on this, see the 
-      <a href="http://junit.org/junit4/javadoc/latest/org/junit/rules/TemporaryFolder.html">Javadoc for TemporaryFolderTest"</a>.
+      <a href="http://junit.org/junit4/javadoc/latest/org/junit/rules/TemporaryFolder.html">Javadoc for TemporaryFolder</a>.
      
-
-        <li>(Pre-JUnit4 only; use the above if using JUnit 4)
+     <p>
+     If you're not using JUnit4, consider converting the 
+     test class (see below) and use the technique above.
+     But if you can't do that, and have to stick with JUnit3:
+     
+     <ul>
+        <li>
         Place the temporary file(s) in the "temp" directory
         which is a sub- directory of the jmri run-time directory.
         This directory is used by some testcases and is already
@@ -724,10 +764,7 @@
     will work reliably within the <a href=
     "ContinuousIntegration.shtml">continuous integration build</a>
     environment.
-        </li>
-      </ul>
-
-      <p>The above issues were identified via one testcase which
+    An issue was identified with one test case which
       executed properly on a Windows-based PC for both the
       "alltest" and "headlesstest" ant target, regardless of how
       many times it was run. In the <a href=
@@ -737,8 +774,78 @@
       integration environment execution of "headlesstest". Once the
       test was modified based on the temporary file recommendations
       shown here, the test became stable over multiple continuous
-      integration executions of "headlesstest".</p>
+      integration executions of "headlesstest".
+        </li>
+      </ul>
 
+
+      <h3>
+      <a name="J4rules" id="J4rules">JUnit Rules</a></h3>
+      
+      JUNit4 added the concept of 
+      "<a href="https://github.com/junit-team/junit4/wiki/rules">Rules</a>" 
+      that can modify the execution of tests. They work at the class or test
+      level to modify the context JUnit4 uses for running the classes tests.
+      Generally, you start by creating one:
+<pre style="font-family: monospace;">
+    @Rule
+    public final TemporaryFolder tempFolder = new TemporaryFolder();
+</pre>   
+      <p>
+      Some standard JUnit4 rules you might find useful:
+      <ul>
+      <li><a href="https://github.com/junit-team/junit4/wiki/rules#temporaryfolder-rule">TemporaryFolder</a>
+        - work with temporary files and folders, ensuring
+        they're cleaned up at the end. See the
+        <a href="#tempFileCreation">above section</a> for more on using that.
+      <li><a href="https://github.com/junit-team/junit4/wiki/rules#expectedexception-rules">ExpectedException</a>
+        - handles test methods that are expected to throw exceptions
+    
+      </ul>
+      
+      <h4>
+      <a name="TimeoutRule" id="TimeoutRule">Timeout - limit duration</a></h4>
+      
+      The <a href="https://github.com/junit-team/junit4/wiki/rules#timeout-rule">Timeout rule</a>
+      imposes a timeout on all test methods in a class.
+      
+<pre style="font-family: monospace;">
+    @Rule
+    public org.junit.rules.Timeout globalTimeout = org.junit.rules.Timeout.seconds(10);
+</pre>   
+
+      <p>
+      Note that you can also add a timeout option to an individual test via an
+      argument to the @Test annotation. For example,
+<pre style="font-family: monospace;">
+    @Test(timeout=2000)
+</pre>   
+      will put a 2 second (2,000 milliseconds) timeout on that test. If you use
+      both the rule and the option, the option will control the behavior.
+      
+      <h4>
+      <a name="RetryRule" id="RetryRule">RetryRule - run test several times</a></h4>
+      
+      JMRI has 
+      <code><a href="https://github.com/JMRI/JMRI/tree/master/java/test/jmri/util/junit/rules/RetryRule.java">jmri.util.junit.rules.RetryRule</a></code>
+      which can rerun a test multiple times until
+      it reaches a limit or finally passes. Although it's
+      better to write reliable tests, this can be a way 
+      to make the CI system more reliable while you 
+      try to find out why a test isn't reliable.
+      <p>
+      For a working example, see
+      <a href="https://github.com/JMRI/JMRI/tree/master/java/test/jmri/jmrit/logix/LearnWarrantTest.java">java/test/jmri/jmrit/logix/LearnWarrantTest.java</a>
+      <p>
+      Briefly, you just add the lines 
+<pre style="font-family: monospace;">
+    import jmri.util.junit.rules.RetryRule;
+    
+    @Rule
+    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
+</pre>   
+      to your test class.  This will modify how JUnit4 
+      handles errors during all of the tests in that class.
 
 
       <h2><a id="testSwingCode" name="testSwingCode"></a>Testing
@@ -759,11 +866,8 @@
       builds</a>, it's important that tests needing access to the screen start
       with:</p>
       <pre><code>Assume.assumeFalse(GraphicsEnvironment.isHeadless());</code></pre>
-      or
-      <pre><code>if (GraphicsEnvironment.isHeadless()) { return; }</code></pre><br>
-      if the Assume statement throws an exception.
 
-      <p>This will run the myTest suite of tests only when a
+      <p>This will run the test only when a
       display is available.</p>
 
       <p>GUI tests should close windows when they're done, and in
@@ -794,11 +898,10 @@
 
       <h3><a id="jemmy" name="jemmy">Using Jemmy</a></h3>
 
-      Recently, e.g. 2016, some tests have been developed
+      Recently, e.g. since 2016, some tests have been developed
       using the
-      <a href="http://wiki.netbeans.org/Jemmy">jemmy</a> tool.  See e.g. the Speedometer tests
-      <a href="https://github.com/JMRI/JMRI/tree/master/java/test/jmri/jmrit/speedometer">Speedometer tests</a>
-      for an example.
+      <a href="http://wiki.netbeans.org/Jemmy">jemmy</a> tool.  See e.g. the 
+      <a href="http://wiki.netbeans.org/Jemmy_Samples">samples on the NetBeans pages</a>.
       
       <p>
       For more information on Jemmy, please see the 
@@ -819,6 +922,25 @@
       <li>If an item contains its own text (Buttons, for example), it is recommended you use the text to search for a component.</li>
       <li>If an item does not contain its own description, but the GUI contains a JLabel describing that component, be certain the JLabel's LabelFor property is set.  A Jemmy JLabelOperator can then be used to find the label, and retrieve the object.</li>
       </ul>
+
+      <h4>Example of Closing a Dialog Box</h4>
+      If you want to test a method that pops a have a JDialog box with a title (in top bar of the dialog window)
+      of "Foo Warning" and an "OK" button to close it, put this in your JUnit test:
+<pre style="font-family: monospace;">
+        new Thread(() -> {
+            // constructor for d will wait until the dialog is visible
+            JDialogOperator d = new JDialogOperator("Foo Warning");
+            JButtonOperator bo = new JButtonOperator(d,"OK");
+            jmri.util.ThreadingUtil.runOnGUI(() -> {bo.push();});
+        }).start();
+        showTheDialog();
+</pre>
+      The thread is started before your code runs and starts Jemmy looking for the 
+      Dialog box.  Once it appears, Jemmy will push the "OK" button.  You 
+      can't put the Jemmy calls in advance: They'll wait forever for the dialog 
+      to appear, and never proceed to your code to show the dialog.  And you
+      can't put them after the call, because your call won't exist until somebody
+      presses "OK".
       
       <a id="jemmytimeout" name="jemmytimeout"></a>
       <h4>Jemmy timeouts</h4>
@@ -871,16 +993,21 @@
 <pre style="font-family: monospace;">
         new org.netbeans.jemmy.QueueTool().waitEmpty(20);
 </pre>
-            on the test thread.
+            on the test thread. The argument (in this example 20) is
+            how many milliseconds the queue has to remain empty before 
+            proceeding.  We're not sure what the best value is; see
+            <a href="https://github.com/JMRI/JMRI/issues/5321">Issue #5321</a> for some background discussion.
       </ul>
       
       <h3><a id="jfcunit" name="jfcunit">Using JFCUnit</a></h3>
 
-      <p><a href="http://jfcunit.sourceforge.net/">JFCUnit</a> to control
+      <p>You should not write new test classes using JFCUnit.  Use
+      <a href="#jemmy">Jemmy</a>
+      instead.  This section is to document test classes we already have.
+      
+      <p>The <a href="http://jfcunit.sourceforge.net/">JFCUnit</a> library can control
       interactions with Swing objects.
-      </p>
-
-      <p>For a very simple example of the use of JFCUnit, see the
+      For a very simple example of the use of JFCUnit, see the
       <a href=
       "https://github.com/JMRI/JMRI/blob/master/java/test/jmri/util/SwingTestCaseTest.java">
       test/jmri/util/SwingTestCaseTest.java</a> file.</p>
@@ -1046,6 +1173,16 @@ import org.junit.Test;
 </pre>
         </li>
 
+        <li>If you have bare <code>assert</code> calls, like
+<pre style="font-family: monospace;">
+    assertEquals(k, ind);
+</pre>
+    change them to the JUnit4 form:
+<pre style="font-family: monospace;">
+    Assert.assertEquals(k, ind);
+</pre>
+        </li>
+        
         <li>More of our Test classes have a "from here down is
         testing infrastructure" comment, followed by setup code.
         Some of that can be removed. First, remove the class
@@ -1068,7 +1205,7 @@ import org.junit.Test;
 </pre>
         </li>
 
-        <li>Finally, annotate the <code>setUp()</code> and
+        <li>Annotate the <code>setUp()</code> and
         <code>tearDown()</code> methods. Note: They have to be
         "public" methods, not "protected" or "private". They should
         end up looking like (plus your own content, of course):
@@ -1083,9 +1220,20 @@ import org.junit.Test;
           jmri.util.JUnitUtil.tearDown();
     }
 </pre>
-        <a name="super">Make sure no more references to the <code>super.</code></a>
+        <p><a name="super">Make sure no more references to the <code>super.</code></a>
         method remain in either setUp() or tearDown().
         Just remove those lines.
+        <p>A note on nesting:  If you have @Before and/or @After in both
+        a class and one its superclasses, they will be reliably invoked in 
+        the useful way:  First the @Before of the super class, then
+        the @Before of your class, then the test, then the @After of your class,
+        and finally the @After of the superclass.
+        <p>In rare cases, you might want to use <code>@BeforeClass</code>
+            and <code>@AfterClass</code> methods to wrap the entire
+            test class.  These have to be <code>static</code>
+            and are invoked around (i.e. before and after) anything else
+            in the test class. This can be used to e.g. wrap
+            static initializers in the class under test.
         </li>
 
         <li>Finally, replace the test suite definition. JUnit3 was
@@ -1126,7 +1274,7 @@ import org.junit.Test;
       <p>That's it! You've successfully migrated to native
       JUnit4.</p>
 
-        <!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

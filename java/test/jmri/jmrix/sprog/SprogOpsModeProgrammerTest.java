@@ -11,21 +11,15 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class SprogOpsModeProgrammerTest {
+public class SprogOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
 
     private SprogTrafficControlScaffold stcs = null;
-    private SprogOpsModeProgrammer op = null;
     private SprogSystemConnectionMemo m = null;
-
-    @Test
-    public void testCtor(){
-       Assert.assertNotNull("exists",op);
-    }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         // prepare an interface
         jmri.util.JUnitUtil.resetInstanceManager();
 
@@ -34,13 +28,14 @@ public class SprogOpsModeProgrammerTest {
         m.setSprogTrafficController(stcs);
         m.configureCommandStation();
 
-        op = new SprogOpsModeProgrammer(2,false,m);
+        programmer = new SprogOpsModeProgrammer(2,false,m);
     }
 
     @After
     public void tearDown() {
         m.getSlotThread().interrupt();
         stcs.dispose();
+        programmer = null;
         JUnitUtil.tearDown();
     }
 

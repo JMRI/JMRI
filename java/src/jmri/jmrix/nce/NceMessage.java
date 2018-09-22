@@ -33,36 +33,78 @@ import org.slf4j.LoggerFactory;
  * @author kcameron Copyright (C) 2014
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
+ 
+    protected static final jmri.jmrix.nce.ncemon.NceMonBinary nceMon = new jmri.jmrix.nce.ncemon.NceMonBinary();
 
-    public static final int NOP_CMD = 0x80;    //NCE NOP command
-    public static final int ENTER_PROG_CMD = 0x9E;  //NCE enter programming track mode command
-    public static final int EXIT_PROG_CMD = 0x9F;  //NCE exit programming track mode command
+    public static final int NOP_CMD = 0x80; //NCE NOP command
+    public static final int ASSIGN_CAB_CMD = 0x81; // NCE Assign loco to cab command, NCE-USB no
+    public static final int READ_CLOCK_CMD = 0x82; // NCE read clock command, NCE-USB no
+    public static final int STOP_CLOCK_CMD = 0x83; // NCE stop clock command, NCE-USB no
+    public static final int START_CLOCK_CMD = 0x84; // NCE start clock command, NCE-USB no
+    public static final int SET_CLOCK_CMD = 0x85; // NCE set clock command, NCE-USB no
+    public static final int CLOCK_1224_CMD = 0x86; // NCE change clock 12/24 command, NCE-USB no
+    public static final int CLOCK_RATIO_CMD = 0x87; // NCE set clock ratio command, NCE-USB no
+    public static final int DEQUEUE_CMD = 0x88; // NCE dequeue packets based on loco addr, NCE-USB no
+
+    public static final int READ_AUI4_CMD = 0x8A; // NCE read status of AUI yy, returns four bytes, NCE-USB no
+
+    public static final int DUMMY_CMD = 0x8C; // NCE Dummy instruction, NCE-USB yes
+    public static final int SPEED_MODE_CMD = 0x8D; // NCE set speed mode, NCE-USB no
+    public static final int WRITE_N_CMD = 0x8E; // NCE write up to 16 bytes of memory command, NCE-USB no
+    public static final int READ16_CMD = 0x8F; // NCE read 16 bytes of memory command, NCE-USB no
+    public static final int DISPLAY3_CMD = 0x90; // NCE write 16 char to cab display line 3, NCE-USB no
+    public static final int DISPLAY4_CMD = 0x91; // NCE write 16 char to cab display line 4, NCE-USB no
+    public static final int DISPLAY2_CMD = 0x92; // NCE write 8 char to cab display line 2 right, NCE-USB no
+    public static final int QUEUE3_TMP_CMD = 0x93; // NCE queue 3 bytes to temp queue, NCE-USB no
+    public static final int QUEUE4_TMP_CMD = 0x94; // NCE queue 4 bytes to temp queue, NCE-USB no
+    public static final int QUEUE5_TMP_CMD = 0x95; // NCE queue 5 bytes to temp queue, NCE-USB no
+    public static final int QUEUE6_TMP_CMD = 0x96; // NCE queue 6 bytes to temp queue, NCE-USB no
+    public static final int WRITE1_CMD = 0x97; // NCE write 1 bytes of memory command, NCE-USB no
+    public static final int WRITE2_CMD = 0x98; // NCE write 2 bytes of memory command, NCE-USB no
+    public static final int WRITE4_CMD = 0x99; // NCE write 4 bytes of memory command, NCE-USB no
+    public static final int WRITE8_CMD = 0x9A; // NCE write 8 bytes of memory command, NCE-USB no
+    public static final int READ_AUI2_CMD = 0x9B; // NCE read status of AUI yy, returns two bytes, NCE-USB >= 1.65
+    public static final int MACRO_CMD = 0x9C; // NCE execute macro n, NCE-USB yes
+    public static final int READ1_CMD = 0x9D; // NCE read 1 byte of memory command, NCE-USB no
+    public static final int ENTER_PROG_CMD = 0x9E; //NCE enter programming track mode command
+    public static final int EXIT_PROG_CMD = 0x9F; //NCE exit programming track mode command
     public static final int WRITE_PAGED_CV_CMD = 0xA0; //NCE write CV paged command
     public static final int READ_PAGED_CV_CMD = 0xA1; //NCE read CV paged command
-    public static final int WRITE_REG_CMD = 0xA6;  //NCE write register command
-    public static final int READ_REG_CMD = 0xA7;  //NCE read register command
+    public static final int LOCO_CMD = 0xA2; // NCE loco control command, NCE-USB yes
+    public static final int QUEUE3_TRK_CMD = 0xA3; // NCE queue 3 bytes to track queue, NCE-USB no
+    public static final int QUEUE4_TRK_CMD = 0xA4; // NCE queue 4 bytes to track queue, NCE-USB no
+    public static final int QUEUE5_TRK_CMD = 0xA5; // NCE queue 5 bytes to track queue, NCE-USB no
+    public static final int WRITE_REG_CMD = 0xA6; //NCE write register command
+    public static final int READ_REG_CMD = 0xA7; //NCE read register command
     public static final int WRITE_DIR_CV_CMD = 0xA8; //NCE write CV direct command
-    public static final int READ_DIR_CV_CMD = 0xA9;  //NCE read CV direct command
+    public static final int READ_DIR_CV_CMD = 0xA9; //NCE read CV direct command
+    public static final int SW_REV_CMD = 0xAA; // NCE get EPROM revision cmd, Reply Format: VV.MM.mm, NCE-USB yes
+    public static final int RESET_SOFT_CMD = 0xAB; // NCE soft reset command, NCE-USB no
+    public static final int RESET_HARD_CMD = 0xAC; // NCE hard reset command, NCE-USB no
     public static final int SEND_ACC_SIG_MACRO_CMD = 0xAD; // NCE send NMRA aspect command
+    public static final int OPS_PROG_LOCO_CMD = 0xAE;   // NCE ops mode program loco, NCE-USB yes
+    public static final int OPS_PROG_ACCY_CMD = 0xAF;   // NCE ops mode program accessories, NCE-USB yes
+    public static final int FACTORY_TEST_CMD = 0xB0;    // NCE factory test, NCE-USB yes
+    public static final int USB_SET_CAB_CMD = 0xB1;     // NCE set cab address in USB, NCE-USB yes
+    public static final int USB_MEM_POINTER_CMD = 0xB3; // NCE set memory context pointer, NCE-USB >= 1.65
+    public static final int USB_MEM_WRITE_CMD = 0xB4;   // NCE write memory, NCE-USB >= 1.65
+    public static final int USB_MEM_READ_CMD = 0xB5;    // NCE read memory, NCE-USB >= 1.65
 
     // The following commands are not supported by the NCE USB  
-    public static final int ENABLE_MAIN_CMD = 0x89;  //NCE enable main track, kill programming command
-    public static final int KILL_MAIN_CMD = 0x8B;  //NCE kill main track, enable programming command
-    public static final int SENDn_BYTES_CMD = 0x90;  //NCE send 3 to 6 bytes (0x9n, n = 3-6) command
+    public static final int ENABLE_MAIN_CMD = 0x89; //NCE enable main track, kill programming command
+    public static final int KILL_MAIN_CMD = 0x8B; //NCE kill main track, enable programming command
+    public static final int SENDn_BYTES_CMD = 0x90; //NCE send 3 to 6 bytes (0x9n, n = 3-6) command
     public static final int QUEUEn_BYTES_CMD = 0xA0; //NCE queue 3 to 6 bytes (0xAn, n = 3-6) command
-
-    // The following command are only NCE USB commands
-    public static final int WRITE_ACC_SIG_OP_CV_CMD = 0xAF; //NCE USB write accessory CV
 
     // some constants
     protected static final int NCE_PAGED_CV_TIMEOUT = 20000;
     protected static final int NCE_DIRECT_CV_TIMEOUT = 10000;
-    protected static final int SHORT_TIMEOUT = 10000;    // worst case is when loading the first panel
+    protected static final int SHORT_TIMEOUT = 10000; // worst case is when loading the first panel
 
-    public static final int REPLY_1 = 1;   // reply length of 1 byte
-    public static final int REPLY_2 = 2;   // reply length of 2 byte
-    public static final int REPLY_4 = 4;   // reply length of 4 byte
-    public static final int REPLY_16 = 16;   // reply length of 16 bytes 
+    public static final int REPLY_1 = 1; // reply length of 1 byte
+    public static final int REPLY_2 = 2; // reply length of 2 byte
+    public static final int REPLY_4 = 4; // reply length of 4 byte
+    public static final int REPLY_16 = 16; // reply length of 16 bytes 
 
     public NceMessage() {
         super();
@@ -90,6 +132,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * Set the number of characters expected back from the command station. Used
      * in binary mode, where there's no end-of-reply string to look for.
+     * 
      * @param len length of expected reply
      */
     public void setReplyLen(int len) {
@@ -145,7 +188,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         NceMessage m = new NceMessage(1);
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_1999) {
             m.setBinary(true);
-            m.setReplyLen(1);
+            m.setReplyLen(REPLY_1);
             m.setOpCode(KILL_MAIN_CMD);
         } else {
             m.setBinary(false);
@@ -163,16 +206,16 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     @Nonnull
     public static NceMessage getProgMode(@Nonnull NceTrafficController tc) {
         // test if supported on current connection
-        if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE
-                && (tc.getCmdGroups() & NceTrafficController.CMDS_PROGTRACK) != NceTrafficController.CMDS_PROGTRACK) {
+        if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE &&
+                (tc.getCmdGroups() & NceTrafficController.CMDS_PROGTRACK) != NceTrafficController.CMDS_PROGTRACK) {
             log.error("attempt to send unsupported binary command ENTER_PROG_CMD to NCE USB");
-//   return null;
+            //   return null;
         }
         NceMessage m = new NceMessage(1);
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
             tc.setNceProgMode(true);
             m.setBinary(true);
-            m.setReplyLen(1);
+            m.setReplyLen(REPLY_1);
             m.setOpCode(ENTER_PROG_CMD);
             m.setTimeout(SHORT_TIMEOUT);
         } else {
@@ -204,16 +247,16 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
                 return null;
             }
             // not supported by USB connected to SB3 or PH
-            if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3
-                    || tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5
-                    || tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN
-                    || tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE) {
+            if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3 ||
+                    tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5 ||
+                    tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN ||
+                    tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE) {
                 log.error("attempt to send unsupported binary command EXIT_PROG_CMD to NCE USB");
-//       return null;
+                //       return null;
             }
             tc.setNceProgMode(false);
             m.setBinary(true);
-            m.setReplyLen(1);
+            m.setReplyLen(REPLY_1);
             m.setOpCode(EXIT_PROG_CMD);
             m.setTimeout(SHORT_TIMEOUT);
         } else {
@@ -234,15 +277,15 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     @Nonnull
     public static NceMessage getReadPagedCV(@Nonnull NceTrafficController tc, int cv) {
         // test if supported on current connection
-        if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE
-                && (tc.getCmdGroups() & NceTrafficController.CMDS_PROGTRACK) != NceTrafficController.CMDS_PROGTRACK) {
+        if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE &&
+                (tc.getCmdGroups() & NceTrafficController.CMDS_PROGTRACK) != NceTrafficController.CMDS_PROGTRACK) {
             log.error("attempt to send unsupported binary command READ_PAGED_CV_CMD to NCE USB");
-//   return null;
+            //   return null;
         }
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
             NceMessage m = new NceMessage(3);
             m.setBinary(true);
-            m.setReplyLen(2);
+            m.setReplyLen(REPLY_2);
             m.setOpCode(READ_PAGED_CV_CMD);
             m.setElement(1, (cv >> 8));
             m.setElement(2, (cv & 0x0FF));
@@ -263,23 +306,23 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     /**
      * Write paged mode CV to programming track.
      *
-     * @param tc  controller for the associated connection
-     * @param cv  CV to write
+     * @param tc controller for the associated connection
+     * @param cv CV to write
      * @param val value to write to cv
      * @return a new message to write a CV
      */
     @Nonnull
     public static NceMessage getWritePagedCV(@Nonnull NceTrafficController tc, int cv, int val) {
         // test if supported on current connection
-        if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE
-                && (tc.getCmdGroups() & NceTrafficController.CMDS_PROGTRACK) != NceTrafficController.CMDS_PROGTRACK) {
+        if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE &&
+                (tc.getCmdGroups() & NceTrafficController.CMDS_PROGTRACK) != NceTrafficController.CMDS_PROGTRACK) {
             log.error("attempt to send unsupported binary command WRITE_PAGED_CV_CMD to NCE USB");
-//   return null;
+            //   return null;
         }
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
             NceMessage m = new NceMessage(4);
             m.setBinary(true);
-            m.setReplyLen(1);
+            m.setReplyLen(REPLY_1);
             m.setOpCode(WRITE_PAGED_CV_CMD);
             m.setElement(1, cv >> 8);
             m.setElement(2, cv & 0xFF);
@@ -303,10 +346,10 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     @CheckForNull
     public static NceMessage getReadRegister(@Nonnull NceTrafficController tc, int reg) {
         // not supported by USB connected to SB3 or PH
-        if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3
-                || tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5
-                || tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN
-                || tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE) {
+        if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3 ||
+                tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5 ||
+                tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN ||
+                tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE) {
             log.error("attempt to send unsupported binary command READ_REG_CMD to NCE USB");
             return null;
         }
@@ -316,7 +359,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
             NceMessage m = new NceMessage(2);
             m.setBinary(true);
-            m.setReplyLen(2);
+            m.setReplyLen(REPLY_2);
             m.setOpCode(READ_REG_CMD);
             m.setElement(1, reg);
             m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
@@ -336,10 +379,10 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
     public static NceMessage getWriteRegister(NceTrafficController tc, int reg, int val) {
         // not supported by USB connected to SB3 or PH
-        if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3
-                || tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5
-                || tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN
-                || tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE) {
+        if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3 ||
+                tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5 ||
+                tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN ||
+                tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE) {
             log.error("attempt to send unsupported binary command WRITE_REG_CMD to NCE USB");
             return null;
         }
@@ -349,7 +392,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
             NceMessage m = new NceMessage(3);
             m.setBinary(true);
-            m.setReplyLen(1);
+            m.setReplyLen(REPLY_1);
             m.setOpCode(WRITE_REG_CMD);
             m.setElement(1, reg);
             m.setElement(2, val);
@@ -372,10 +415,10 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
     public static NceMessage getReadDirectCV(NceTrafficController tc, int cv) {
         // not supported by USB connected to SB3 or PH
-        if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3
-                || tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5
-                || tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN
-                || tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE) {
+        if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3 ||
+                tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5 ||
+                tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN ||
+                tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE) {
             log.error("attempt to send unsupported binary command READ_DIR_CV_CMD to NCE USB");
             return null;
         }
@@ -385,7 +428,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         }
         NceMessage m = new NceMessage(3);
         m.setBinary(true);
-        m.setReplyLen(2);
+        m.setReplyLen(REPLY_2);
         m.setOpCode(READ_DIR_CV_CMD);
         m.setElement(1, (cv >> 8));
         m.setElement(2, (cv & 0x0FF));
@@ -396,10 +439,10 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
     public static NceMessage getWriteDirectCV(NceTrafficController tc, int cv, int val) {
         // not supported by USB connected to SB3 or PH
-        if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3
-                || tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5
-                || tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN
-                || tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE) {
+        if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3 ||
+                tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5 ||
+                tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN ||
+                tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE) {
             log.error("attempt to send unsupported binary command WRITE_DIR_CV_CMD to NCE USB");
             return null;
         }
@@ -408,7 +451,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         }
         NceMessage m = new NceMessage(4);
         m.setBinary(true);
-        m.setReplyLen(1);
+        m.setReplyLen(REPLY_1);
         m.setOpCode(WRITE_DIR_CV_CMD);
         m.setElement(1, cv >> 8);
         m.setElement(2, cv & 0xFF);
@@ -426,13 +469,16 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     public static NceMessage sendPacketMessage(NceTrafficController tc, byte[] bytes, int retries) {
         // this command isn't supported by the NCE USB
         if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
-            log.error("attempt to send unsupported sendPacketMessage to NCE USB cmd: 0x" + Integer.toHexString(SENDn_BYTES_CMD + bytes.length));
+            log.error("attempt to send unsupported sendPacketMessage to NCE USB cmd: 0x" +
+                    Integer.toHexString(SENDn_BYTES_CMD + bytes.length));
             return null;
         }
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_1999) {
             if (bytes.length < 3 || bytes.length > 6) {
-                log.error("Send of NCE track packet too short or long:" + Integer.toString(bytes.length)
-                        + " packet:" + Arrays.toString(bytes));
+                log.error("Send of NCE track packet too short or long:" +
+                        Integer.toString(bytes.length) +
+                        " packet:" +
+                        Arrays.toString(bytes));
             }
             NceMessage m = new NceMessage(2 + bytes.length);
             m.setBinary(true);
@@ -441,7 +487,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             int i = 0; // counter to make it easier to format the message
 
             m.setElement(i++, SENDn_BYTES_CMD + bytes.length);
-            m.setElement(i++, retries);        // send this many retries. 
+            m.setElement(i++, retries); // send this many retries. 
             for (int j = 0; j < bytes.length; j++) {
                 m.setElement(i++, bytes[j] & 0xFF);
             }
@@ -451,7 +497,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             m.setBinary(false);
             int i = 0; // counter to make it easier to format the message
 
-            m.setElement(i++, 'S');  // "S C02 " means sent it twice
+            m.setElement(i++, 'S'); // "S C02 " means sent it twice
             m.setElement(i++, ' ');
             m.setElement(i++, 'C');
             m.setElement(i++, '0');
@@ -476,7 +522,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         }
         NceMessage m = new NceMessage(bytes.length);
         m.setBinary(true);
-        m.setReplyLen(1);
+        m.setReplyLen(REPLY_1);
         m.setTimeout(SHORT_TIMEOUT);
         for (int j = 0; j < bytes.length; j++) {
             m.setElement(j, bytes[j] & 0xFF);
@@ -511,12 +557,14 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         }
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_1999) {
             if (bytes.length < 3 || bytes.length > 6) {
-                log.error("Queue of NCE track packet too long:" + Integer.toString(bytes.length)
-                        + " packet :" + Arrays.toString(bytes));
+                log.error("Queue of NCE track packet too long:" +
+                        Integer.toString(bytes.length) +
+                        " packet :" +
+                        Arrays.toString(bytes));
             }
             NceMessage m = new NceMessage(1 + bytes.length);
             m.setBinary(true);
-            m.setReplyLen(1);
+            m.setReplyLen(REPLY_1);
             int i = 0; // counter to make it easier to format the message
 
             m.setElement(i++, QUEUEn_BYTES_CMD + bytes.length);
@@ -529,7 +577,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
             m.setBinary(false);
             int i = 0; // counter to make it easier to format the message
 
-            m.setElement(i++, 'Q');  // "S C02 " means sent it twice
+            m.setElement(i++, 'Q'); // "S C02 " means sent it twice
 
             for (int j = 0; j < bytes.length; j++) {
                 m.setElement(i++, ' ');
@@ -546,7 +594,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         }
         NceMessage m = new NceMessage(5);
         m.setBinary(true);
-        m.setReplyLen(1);
+        m.setReplyLen(REPLY_1);
         m.setTimeout(SHORT_TIMEOUT);
         m.setOpCode(SEND_ACC_SIG_MACRO_CMD);
         m.setElement(1, (addr >> 8) & 0xFF);
@@ -559,7 +607,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     public static NceMessage createAccDecoderPktOpsMode(NceTrafficController tc, int accyAddr, int cvAddr, int cvData) {
         NceMessage m = new NceMessage(6);
         m.setBinary(true);
-        m.setReplyLen(1);
+        m.setReplyLen(REPLY_1);
         m.setTimeout(SHORT_TIMEOUT);
         byte[] mess = NceBinaryCommand.usbOpsModeAccy(accyAddr, cvAddr, cvData);
         m.setOpCode(mess[0]);
@@ -569,6 +617,14 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         m.setElement(4, mess[4]);
         m.setElement(5, mess[5]);
         return m;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toMonitorString(){
+	    return nceMon.displayMessage(this);
     }
 
     private final static Logger log = LoggerFactory.getLogger(NceMessage.class);

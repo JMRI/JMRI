@@ -489,6 +489,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      * set's Comparator, or by the elements' natural ordering if
      * the set has no Comparator).
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DMI_NONSERIALIZABLE_OBJECT_WRITTEN", justification = "serialization in 3rd party code")
     private void writeObject(java.io.ObjectOutputStream s)
             throws java.io.IOException {
         // Write out any hidden stuff
@@ -555,7 +556,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
             if (e.weight != e.sumup()) {
                 throw new Exception("Weight is incorrect:" + e.weight + "!=" + e.sumup() + " for " + e.key);
             }
-            e = ((IndexedTreeMap) m).successor(e);
+            e = IndexedTreeMap.successor(e);
         }
     }
 }

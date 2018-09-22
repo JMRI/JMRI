@@ -41,7 +41,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     private Vector<JButton> _writeButtons = new Vector<>();
     private Vector<JButton> _readButtons = new Vector<>();
     private JLabel _status = null;
-    private transient volatile DecoderFile _df = null;
+    protected transient volatile DecoderFile _df = null;
 
     /**
      * Define the columns; values understood are: "Name", "Value", "Range",
@@ -381,18 +381,28 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     }
 
     /**
-     * If there's a "default" attribute, set that value to start.
+     * If there's a "default" attribute, or matching defaultItem element, set that value to start.
      *
      * @return true if the value was set
      */
-    protected boolean setDefaultValue(Element e, VariableValue v) {
+    boolean setDefaultValue(Element e, VariableValue v) {
         Attribute a;
+        boolean set = false;
         if ((a = e.getAttribute("default")) != null) {
             String val = a.getValue();
             v.setIntValue(Integer.parseInt(val));
-            return true;
+            set = true;
         }
-        return false;
+        // check for matching child
+        List<Element> elements = e.getChildren("defaultItem");
+        for (Element defaultItem : elements) {
+            if (_df != null && DecoderFile.isIncluded(defaultItem, _df.getProductID(), _df.getModel(), _df.getFamily(), "", "")) {
+                log.debug("element included by productID={} model={} family={}", _df.getProductID(), _df.getModel(), _df.getFamily());
+                v.setIntValue(Integer.parseInt(defaultItem.getAttribute("default").getValue()));
+                return true;
+            }
+        }
+        return set;
     }
 
     protected VariableValue processCompositeVal(Element child, String name, String comment, boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly, String CV, String mask, String item) {
@@ -407,7 +417,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             String choice = LocaleSelector.getAttribute(choiceElement, "choice");
             v1.addChoice(choice);
             // for each choice, capture the settings
-            @SuppressWarnings("unchecked")
             List<Element> lSetting = choiceElement.getChildren("compositeSetting");
             for (int n = 0; n < lSetting.size(); n++) {
                 Element settingElement = lSetting.get(n);

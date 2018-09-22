@@ -150,7 +150,6 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
      * @param perNodeTransits Per-node Element containing the Transit elements
      *                        to load.
      */
-    @SuppressWarnings("null")
     public void loadTransits(Element sharedTransits, Element perNodeTransits) {
         List<Element> transitList = sharedTransits.getChildren("transit");
         if (log.isDebugEnabled()) {

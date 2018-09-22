@@ -76,6 +76,8 @@
     <li><a href="#demo">Operations Demo Files</a></li>
 
     <li><a href="#QuickStartHelp">Quick Start Help</a></li>
+    
+    <li><a href="#TroubleShooting">Trouble Shooting</a></li>
 
     <li><a href="#Settings">Settings</a>
 
@@ -146,6 +148,8 @@
         <li><a href="#EditCarType">Edit Car Type</a></li>
 
         <li><a href="#ShowCars">Show Cars</a></li>
+        
+        <li><a href="#PrintLocation">Print or Preview</a></li>
        </ul></li>
 
       <li><a href="#Yards">Yards</a>
@@ -207,12 +211,16 @@
         <li><a href="#TrackDestinations">Track Destinations</a></li>
 
         <li><a href="#ChangeTrackType">Change Track Type</a></li>
+        
+        <li><a href="#ShowTrainsServicingThisTrack">Show Trains Servicing this track</a></li>
        </ul></li>
 
       <li><a href="#LocationsTools">Locations Tools</a>
 
        <ul>
         <li><a href="#CopyLocation">Copy Location</a></li>
+        
+        <li><a href="#CopyTrack">Copy Track</a></li>
 
         <li><a href="#LocationSchedules">Schedules</a></li>
 
@@ -221,6 +229,8 @@
         <li><a href="#ModifyLocationsByCarLoad">Modify Locations and Tracks by Car Load</a></li>
 
         <li><a href="#ShowCarsLocations">Show Cars</a></li>
+        
+        <li><a href="#PrintLocation">Print or Preview</a></li>
        </ul></li>
      </ul></li>
 
@@ -388,24 +398,22 @@
    for later reference.
 
    <p>
-    After playing with the demo files, you can <a href="#ResetDatabase">reset the database</a> and
-    begin entering your own data. We strongly recommend that you get your trains to build to your
-    liking without the use of staging tracks, classification/interchange tracks, and especially
-    schedules and custom loads. We find that users attempting to use the advanced features before
-    they understand how the program works tend to need a lot of help getting the car movement they
-    desire. So start off small and get your trains to build correctly, read the <a href="#BuildReports">build reports</a> in the
-    very detailed mode for your trains, even if they build to your liking. You need to get
-    proficient with the build reports before you begin using the more advanced features of the
-    OperationsPro&trade;. Once you get your trains to build correctly, you can add staging tracks if
-    you've designed staging into your layout. The other three advanced features are completely
-    optional and aren't needed for good car movement. The next track type to experiment with could
-    be classification/interchange tracks. Once you get classification/interchange tracks to work
-    correctly, you could then introduce schedules for your industries and custom loads for your
-    cars. If you do decide to use schedules, the first thing to understand is that you don't need
-    schedules for all of your industries. So again start off small and only do a couple of
-    industries and see what the results are. Adding schedules can not increase car movement, and in
-    most cases will reduce car movement! So our advice is start off using the basic features of the
-    program and later once you get good car movement, try the more advanced features.
+    After playing with the demo files, you can <a href="#ResetDatabase">reset the database</a> and begin entering your
+    own data. We strongly recommend that you get your trains to build to your liking without the use of staging tracks,
+    classification/interchange tracks, and especially schedules and custom loads. We find that users attempting to use
+    the advanced features before they understand how the program works tend to need a lot of help getting the car
+    movement they desire. So start off small and get your trains to build correctly, read the <a href="#BuildReports">build
+     reports</a> in the very detailed mode for your trains, even if they build to your liking. You need to get proficient
+    with the build reports before you begin using the more advanced features of the OperationsPro&trade;. Once you get
+    your trains to build correctly, you can add staging tracks if you've designed staging into your layout. The other
+    three advanced features are completely optional and aren't needed for good car movement. The next track type to
+    experiment with could be <a href="#Interchange">Classification/Interchange Tracks</a>. Once you get
+    classification/interchange tracks to work correctly, you could then introduce <a href="#Schedules">Schedules</a> for
+    your industries and custom loads for your cars. If you do decide to use schedules, the first thing to understand is
+    that you don't need schedules for all of your industries. So again start off small and only do a couple of
+    industries and see what the results are. Adding schedules can not increase car movement, and in most cases will
+    reduce car movement! So our advice is start off using the basic features of the program and later once you get good
+    car movement, try the more advanced features.
    </p>
 
    <p>One question that comes up often, is whether to enter the arrival and departure tracks
@@ -446,6 +454,7 @@
    
   <a name="OperationFiles" id="OperationFiles"></a>
    <h3>Operations Files</h3>
+   <p>
    OperationsPro&trade; uses up to six XML files to store the operations database. You can find
    these files by selecting from the main menu bar, Help-&gt;Locations..., a new window should
    appear showing where your JMRI user files are. The operation files are stored in a directory
@@ -456,7 +465,8 @@
    "OperationsEngineRoster.xml" file is created when you enter your first locomotive into
    OperationsPro&trade;. The back up files are created when you make a change to one of the
    operation files.
-
+   </p>
+   
    <table>
     <tr>
      <td>File Name</td>
@@ -646,8 +656,8 @@
     You should now be well on your way with regards to JMRI operations. Each window in
     OperationsPro&trade; has a "Help" item on the menu bar which will direct you to the section in
     this document that covers that window's capabilities. Help is also available at the <a
-     href="http://groups.yahoo.com/group/jmriusers/">JMRI users</a> which is part of the Yahoo
-    groups. Another good source for help is a series of articles written by David Haynes <a
+     href="https://groups.io/g/jmriusers">JMRI users</a> which is part of the Groups.io. 
+     Another good source for help is a series of articles written by David Haynes <a
      href="http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf">
      http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf</a>. And finally under the
     "Tools" item on the menu bar, you will find many useful functions, like the ability to print the
@@ -660,6 +670,38 @@
     modelers. To use British terminologies, change the JMRI Display Locale to English (United
     Kingdom). With British terminology, trains travel Up/Down and East/West, and some British
     railway names and wagon types are provided to get you started.</p>
+
+   <a name="TroubleShooting" id="TroubleShooting"></a>
+   <h2>Trouble Shooting</h2>
+
+   The best tool for trouble shooting train build problems is the
+   <a href="#BuildReports">Train Build Report</a>.
+
+   <p>
+    If you want to determine which trains can service a location or track, use the the <a
+     href="#ShowTrainsServicingThisLocation">Show Trains Servicing this Location</a> or <a
+     href="#ShowTrainsServicingThisTrack">Show Trains Servicing this track</a> tools. The "Show trains Serving this
+    track" tool can be found under "Tools" in the edit track window. The tool also allows you to see how a specific car
+    type will be serviced.
+   </p>
+
+   <p>
+    There are several <a href="#PrintLocation">Print or Preview</a> options under <a href="#LocationTools">Location
+     Tools</a> that can be very useful. The first is "Print Location Details". This option will list each track for a
+    location, and then details which car types, loads, roads, and trains can service that track. The "Track Analysis"
+    option lists each car type, and then shows which tracks can service that car type. The analysis includes the total
+    length of each car type, and then the percentage of track that can be consumed by that car type. To check for track
+    configuration issues, select "Track Error Analysis" option. This option will check each track and determine if
+    there's a train that will service the car types selected for that track.
+   </p>
+
+   <p>
+   To understand which car types a train can service, and which tracks will accept those car types, use the 
+   <a href="#TrainShowCarTypesServiced">Show Car Types Serviced</a> tool.</p>
+   
+   <p>
+   If you decide to use schedules, the <a href="#ShowSchedulesByCarTypeAndLoad">Show Schedules by Car Type and Load</a>
+   tool can show you which car types and loads will be serviced by your spurs.</p>
 
    <a name="Settings" id="Settings"></a>
    <h2>Settings</h2>
@@ -679,12 +721,11 @@
     href="#TrainManifestOptions">Train Manifest Options</a> for details.
 
    <p>
-    When you close the "Settings" window you will be prompted to make whatever railroad name you've
-    entered to be the JMRI railroad name. You should answer "Yes" to the dialog window, this way all
-    of the other applications in JMRI will reference the same railroad name. To change the railroad
-    name once you've done this, you will need to go to the <a
-     href="../../../apps/TabbedPreferences.shtml">JMRI: Preferences Pane</a> found under
-    "Edit-&gt;Preferences..." from the main menu bar.
+    When you close the "Settings" window you will be prompted to make whatever railroad name you've entered to be the
+    JMRI railroad name. You should answer "Yes" to the dialog window, this way all of the other applications in JMRI
+    will reference the same railroad name. You can also change the railroad name by going to the <a
+     href="../../../apps/TabbedPreferences.shtml">JMRI: Preferences Pane</a> found under "Edit-&gt;Preferences..." from
+    the main menu bar.
    </p>
 
    <h4>Train Directions</h4>
@@ -1383,7 +1424,7 @@
 
    <p>
     You can find some examples of custom manifests at <a
-     href="http://groups.yahoo.com/group/jmriusers/files/Operations">http://groups.yahoo.com/group/jmriusers/files/Operations.</a>
+     href="https://groups.io/g/jmriusers/files/Operations">https://groups.io/g/jmriusers/files/Operations</a>.
    </p>
 
    <a name="GenerateCsvSwitchLists" id="GenerateCsvSwitchLists"></a>
@@ -1505,7 +1546,7 @@
    called "manifestBackups" located in the "operations" directory. You can review your old Manifest
    using the
    <a href="#PrintSavedTrainManifests">Print or Preview Saved Train Manifests</a> under tools in the <a href="#Trains">Trains</a>
-   window.
+   or <a href="#TrainEdit">Edit Train</a> windows.
    <p>The program will also store a copy of each train's build report in a directory called
     "buildStatusBackups" also located in the "operations" directory.</p>
     
@@ -1880,16 +1921,17 @@
 
    <a name="LocationTools" id="LocationTools"></a>
    <h3>Location Tools</h3>
+   
+   From the "Tools" menu found in "Edit Location" window you can access several useful functions.
+   The first is "Copy Track".
 
    <a name="CopyTrack" id="CopyTrack"></a>
    <h4>Copy Track</h4>
-   From the "Tools" menu found in "Edit Location" window you can access several useful functions.
-   The first is "Copy Track". From the copy track window, you can select any existing track and
-   create a new track with the same attributes as the existing one. You can also transfer all of the
-   rolling stock from the existing track to the new track, and if you wish, delete the original
-   track. Select the operations you want and then press the "Copy" button to create a new track,
-   move cars and locos, and delete the original track. If you're pleased with the results, press the
-   "Save" button to make your copy permanent.
+   The copy track tool allows you to select an existing track and create a new track with the same attributes as the
+   original. You can also transfer all of the rolling stock from the original track to the new track, and if you
+   wish, delete the copied track. Select the operations you want and then press the "Copy" button to create a new
+   track, move cars and locos, and delete the original track. If you're pleased with the results, press the "Save"
+   button to make your copy permanent.
 
    <p>When using the copy track feature, it is recommended that you reset or terminate any built
     trains as the copy track will not transfer rolling stock from a track that has a scheduled pick
@@ -2732,7 +2774,7 @@
     that the maximum number of cars in all cases is four. It is only how the cars are distributed
     that changes when entering a minimum.</p>
 
-   <p>Anther use of a "pool" is with regard to schedules. For the power user, you might find
+   <p>Another use of a "pool" is with regard to schedules. For the power user, you might find
     that a single schedule assigned to a spur doesn't quite do what you want. But if the track could
     have several schedules, it would do what is needed. By entering multiple spurs with schedules
     shared via a pool, you can create any car sequence imaginable for your industry.</p>
@@ -2839,6 +2881,8 @@
    If you want to change the track type to a spur, interchange or yard, in the edit track window,
    select Tools-&gt;Change Track Type. Select the desired track type and press "Save".
 
+
+   <a name="ShowTrainsServicingThisTrack" id="ShowTrainsServicingThisTrack"></a>
    <h4>Show Trains Servicing this Track</h4>
    This tool will show which trains can service the track being editing. If you only want to see
    trains that can can actually work the track, deselect the "Show all Trains" checkbox. You can
@@ -2863,6 +2907,9 @@
     location's tracks, select the checkbox "Move Rolling Stock to New Track". You can also delete
     all of the tracks at the location being copied, but you must also select the "Move Rolling Stock
     to New Track" option.</p>
+    
+    <h4>Copy Track</h4>
+    See <a href="#CopyTrack">Copy Track</a> under Location tools.
 
    <a name="LocationSchedules" id="LocationSchedules"></a>
    <h4>Schedules</h4>
@@ -2901,8 +2948,35 @@
    enabled. <a name="ShowCarsLocations" id="ShowCarsLocations"></a>
 
    <h4>Show Cars</h4>
-   <p>To only see cars that have a location assigned to them, select "Show Cars" from the
-    "Tools" menu.</p>
+   <p>To only see cars that have a location assigned to them, select "Show Cars" from the "Tools" menu.</p>
+   
+   <a name="PrintLocation" id="PrintLocation"></a>
+   <h4>Print or Preview</h4>
+   This tool provides several options with regards to printing or previewing your locations.
+
+   <ul>
+    <li>Print Locations
+     <p>Prints the information found in the Locations window.</p>
+    </li>
+    <li>Print Schedules
+     <p>Lists the schedules and the information found in the edit schedule window.</p>
+    </li>
+    <li>Print Comments
+     <p>Prints the location comments</p>
+    </li>
+    <li>Print Location Details
+     <p>This option will list each track for a location, and details which car types, loads, roads, and trains
+      can service that track.</p>
+    </li>
+    <li>Print Track Analysis
+     <p>Lists each car type, and shows which tracks can service that car type. The analysis includes the total
+      length of each car type, and then the percentage of track that can be consumed by that car type.</p>
+    </li>
+    <li>Print Track Error Analysis
+     <p>This option will check each track and determine if there's a train that will service the car types selected
+      for that track.</p>
+    </li>
+   </ul>
 
    <a name="Cars" id="Cars"></a>
    <h2>Cars</h2>
@@ -4724,8 +4798,8 @@
    <h4>Setup Excel Program (Manifest Creator)</h4>
    The ability to configure an Excel program to create custom manifests can be found under Trains
    -&gt; Tools. Dan Foltz who is a JMRI user/programmer has developed the "Manifest Creator" and
-   "Switch List Creator". You can find a copies of the programs at the <a
-    href="http://groups.yahoo.com/neo/groups/jmriusers/files/Operations"> Yahoo.com JMRI users
+   "Switch List Creator". You can find a copies of the programs at <a
+    href="https://groups.io/g/jmriusers/files/Operations">  JMRI users
     files Operations.</a> Place the program "MC4JMRI.xls" or "SWC4JMRI.xlsm" along with any other files
    needed in the JMRI/operations/csvManifest directory. You can of course create your own program
    and also install it in the csvManifest directory.
@@ -5059,7 +5133,7 @@
     An alternative to using the Manifests provided by OperationsPro&trade; is to create a <a
      href="#ManifestOptions">custom Manifest</a>. Shown below is a train Manifest (LS) and switch
     list for locations Lakeview and Bakersfield using <a
-     href="http://groups.yahoo.com/group/jmriusers/files/Operations">Dan Foltz's Switch List
+     href="https://groups.io/g/jmriusers/files/Operations">Dan Foltz's Switch List
      Creator version 1.2 (SLC4JMRI.xlsm)</a>. This particular custom format allows you to use a half
     sheet of paper for your crew. Note that the <a href="#CarTypes">Car Types</a> was changed in the
     <a href="#Settings">Settings</a> window from "Descriptive" to "AAR Codes" before using Dan's
@@ -5276,9 +5350,15 @@
    <h2>Operations Web Access</h2>
    You can also access some of the OperationPro&trade; windows from a browser. For more information
    see <a href="http://jmri.org/help/en/html/web/">JMRI Web Access</a>.
-   
+
    <p>
-   <img src="images/WebConductor.png">
+    <img src="images/WebConductor.png">
+   </p>
+   By enabling frames found in <a href="../../../apps/TabbedPreferences.shtml">Preferences</a> Web Server, you can
+   access OperationPro&trade; windows like the <a
+    href="#SwitchList">Yardmaster</a> which shows the work for a location.
+   <p>
+    <img src="images/YardmasterWeb.png">
    </p>
 
    <p>End of OperationsPro&trade; help.</p>

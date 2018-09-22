@@ -1154,7 +1154,7 @@ public final class MathUtil {
         GeneralPath path = new GeneralPath();
         bezier1st = true;
         if (p.length == 4) {    // draw cubic bezier?
-            result = MathUtil.plotBezier(path, p[0], p[1], p[2], p[3], 0, displacement);
+            result = plotBezier(path, p[0], p[1], p[2], p[3], 0, displacement);
         } else {    // (nope)
             result = plotBezier(path, p, 0, displacement);
         }

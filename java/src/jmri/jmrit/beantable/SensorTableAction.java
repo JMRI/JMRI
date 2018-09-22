@@ -400,7 +400,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         }
 
         try {
-            long goingInActive = Long.valueOf(inActiveField.getText());
+            long goingInActive = Long.parseLong(inActiveField.getText());
             senManager.setDefaultSensorDebounceGoingInActive(goingInActive);
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(_who, Bundle.getMessage("SensorDebounceActError") + "\n\"" + inActiveField.getText() + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
@@ -411,7 +411,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
     protected void setDefaultState(JFrame _who) {
         String[] sensorStates = new String[]{Bundle.getMessage("BeanStateUnknown"), Bundle.getMessage("SensorStateInactive"), Bundle.getMessage("SensorStateActive"), Bundle.getMessage("BeanStateInconsistent")};
         JComboBox<String> stateCombo = new JComboBox<>(sensorStates);
-        switch (jmri.managers.InternalSensorManager.getDefaultStateForNewSensors()) {
+        switch (jmri.jmrix.internal.InternalSensorManager.getDefaultStateForNewSensors()) {
             case jmri.Sensor.ACTIVE:
                 stateCombo.setSelectedItem(Bundle.getMessage("SensorStateActive"));
                 break;
@@ -441,7 +441,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             defaultState = jmri.Sensor.INCONSISTENT;
         }
 
-        jmri.managers.InternalSensorManager.setDefaultStateForNewSensors(defaultState);
+        jmri.jmrix.internal.InternalSensorManager.setDefaultStateForNewSensors(defaultState);
 
     }
 
@@ -555,7 +555,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
      * {@inheritDoc}
      */
     @Override
-    public void addToPanel(AbstractTableTabAction f) {
+    public void addToPanel(AbstractTableTabAction<Sensor> f) {
         String systemPrefix = ConnectionNameFromSystemName.getConnectionName(senManager.getSystemPrefix());
 
         if (senManager.getClass().getName().contains("ProxySensorManager")) {

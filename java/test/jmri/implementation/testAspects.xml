@@ -14,6 +14,22 @@
       <holder>JMRI</holder>
     </copyright>
 
+    <authorgroup xmlns="http://docbook.org/ns/docbook" >
+        <author>
+            <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
+            <email>jake@physics.berkeley.edu</email>
+        </author>    
+    </authorgroup>
+
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2009-12-21</date>
+            <authorinitials>RGJ</authorinitials>
+            <revremark>Initial version</revremark>
+        </revision>    
+    </revhistory>
+
     <aspects>
 
     </aspects>

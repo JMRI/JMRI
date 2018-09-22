@@ -26,7 +26,7 @@ public class PathTest extends TestCase {
     public void testLoad() {
         Path p = new Path();
 
-        TurnoutManager sm = new jmri.managers.InternalTurnoutManager();
+        TurnoutManager sm = jmri.InstanceManager.turnoutManagerInstance();
         Turnout s = sm.provideTurnout("IT12");
 
         p.addSetting(new BeanSetting(s, "IT12", Turnout.CLOSED));
@@ -36,7 +36,7 @@ public class PathTest extends TestCase {
     }
 
     public void testEquals() {
-        TurnoutManager sm = new jmri.managers.InternalTurnoutManager();
+        TurnoutManager sm = jmri.InstanceManager.turnoutManagerInstance();
         Turnout s1 = sm.provideTurnout("IT12");
         Turnout s2 = sm.provideTurnout("IT14");
         
@@ -84,7 +84,7 @@ public class PathTest extends TestCase {
     public void testCheck() throws JmriException {
         Path p = new Path();
 
-        TurnoutManager sm = new jmri.managers.InternalTurnoutManager();
+        TurnoutManager sm = jmri.InstanceManager.turnoutManagerInstance();
         Turnout s = sm.provideTurnout("IT12");
 
         p.addSetting(new BeanSetting(s, "IT12", Turnout.CLOSED));
@@ -145,7 +145,15 @@ public class PathTest extends TestCase {
 
     @Override
     protected void setUp() {
+        jmri.util.JUnitUtil.setUp();
+        
+        jmri.util.JUnitUtil.resetInstanceManager();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
+    }
+
+    @Override
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

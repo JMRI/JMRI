@@ -162,17 +162,16 @@ public class ColorUtilTest extends TestCase {
 
     // from here down is infrastructure
 
-    // The minimal setup for log4J
     @Override
     protected void setUp() throws Exception {
-       apps.tests.Log4JFixture.setUp();
+       jmri.util.JUnitUtil.setUp();
        super.setUp();
     }
 
     @Override
     protected void tearDown() throws Exception {
        super.tearDown();
-       apps.tests.Log4JFixture.tearDown();
+       jmri.util.JUnitUtil.tearDown();
     }
 
     public ColorUtilTest(String s) {
@@ -181,7 +180,6 @@ public class ColorUtilTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        apps.tests.Log4JFixture.initLogging();
         String[] testCaseName = {"-noloading", ColorUtilTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }

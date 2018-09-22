@@ -200,11 +200,7 @@ public class XBeeTrafficControllerTest extends jmri.jmrix.ieee802154.IEEE802154T
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new XBeeTrafficController() {
-            @Override
-            public void setInstance() {
-            }
-        };
+        tc = new XBeeTrafficController();
     }
 
     @After

@@ -230,7 +230,6 @@ public class AutomationManager implements InstanceManagerAutoDefault, PropertyCh
      */
     public void load(Element root) {
         if (root.getChild(Xml.AUTOMATIONS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> eAutomations = root.getChild(Xml.AUTOMATIONS).getChildren(Xml.AUTOMATION);
             log.debug("readFile sees {} automations", eAutomations.size());
             for (Element eAutomation : eAutomations) {

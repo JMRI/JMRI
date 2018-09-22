@@ -3,6 +3,7 @@ package jmri.jmrix.pi;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioProvider;
 import jmri.Sensor;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -116,17 +117,18 @@ public class RaspberryPiSensorManagerTest extends jmri.managers.AbstractSensorMg
     @Override
     @Before
     public void setUp() {
-       apps.tests.Log4JFixture.setUp();
+       JUnitUtil.setUp();
        GpioProvider myprovider = new PiGpioProviderScaffold();
        GpioFactory.setDefaultProvider(myprovider);
-       jmri.util.JUnitUtil.resetInstanceManager();
+       JUnitUtil.resetInstanceManager();
        l = new RaspberryPiSensorManager("Pi");
     }
 
     @After
     public void tearDown() {
-       jmri.util.JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.clearShutDownManager();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
     }
 
 }

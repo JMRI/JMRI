@@ -20,7 +20,8 @@ public class OperationsTestCase extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
 
         // Set things up outside of operations
         JUnitUtil.resetInstanceManager();
@@ -31,6 +32,7 @@ public class OperationsTestCase extends TestCase {
         JUnitUtil.initIdTagManager();
         JUnitUtil.initShutDownManager();
         JUnitUtil.resetProfileManager();
+        
         JUnitOperationsUtil.resetOperationsManager();
     }
 

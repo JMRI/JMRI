@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (c) 2010, 2011
  * @author Egbert Broerse 2017
  */
-public class SignalMastItemPanel extends TableItemPanel implements ListSelectionListener {
+public class SignalMastItemPanel extends TableItemPanel<SignalMast> implements ListSelectionListener {
 
     SignalMast _mast;
     private HashMap<String, NamedIcon> _iconMastMap;
@@ -195,7 +195,8 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             _family = null;
             return;
         }
-        NamedBean bean = _model.getBeanAt(row);
+        NamedBean bean = _model.getBySystemName((String) _table.getValueAt(row, 0));
+
 
         if (bean == null) {
             log.debug("getIconMap: NamedBean is null at row {}", row);
@@ -254,7 +255,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         if (map != null) {
             _iconMastMap = map;
         } else {
-            log.warn("Family \"{}\" for type \"{}\" for not found in Catalog.", _family, _itemType);                
+            log.warn("Family \"{}\" for type \"{}\" for not found in Catalog.", _family, _itemType);
         }
         if (!_suppressDragging) {
             makeDragIconPanel(0);
@@ -270,12 +271,12 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         if (log.isDebugEnabled()) {
             log.debug("showIcons for= {}, {}", _itemType, _family);
         }
-        boolean isPalette = (_paletteFrame instanceof ItemPalette); 
+        boolean isPalette = (_paletteFrame instanceof ItemPalette);
         Dimension totalDim;
         if (isPalette) {
             totalDim = ItemPalette._tabPane.getSize();
         } else {
-            totalDim = _paletteFrame.getSize();            
+            totalDim = _paletteFrame.getSize();
         }
         Dimension oldDim = getSize();
         _iconPanel.setVisible(true);
@@ -288,7 +289,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             _dragIconPanel.invalidate();
             _blurb.setVisible(false);
             _blurb.invalidate();
-            
+
         }
         reSizeDisplay(isPalette, oldDim, totalDim);
         _showIconsButton.setText(Bundle.getMessage("HideIcons"));
@@ -299,12 +300,12 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         if (log.isDebugEnabled()) {
             log.debug("hideIcons for= {}, {}", _itemType, _family);
         }
-        boolean isPalette = (_paletteFrame instanceof ItemPalette); 
+        boolean isPalette = (_paletteFrame instanceof ItemPalette);
         Dimension totalDim;
         if (isPalette) {
             totalDim = ItemPalette._tabPane.getSize();
         } else {
-            totalDim = _paletteFrame.getSize();            
+            totalDim = _paletteFrame.getSize();
         }
         Dimension oldDim = getSize();
         _iconPanel.setVisible(false);
@@ -335,6 +336,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         }
         int row = _table.getSelectedRow();
         log.debug("Table valueChanged: row= {}", row);
+
         // update the family icons
         _iconPanel.removeAll();
         if (row >= 0) {

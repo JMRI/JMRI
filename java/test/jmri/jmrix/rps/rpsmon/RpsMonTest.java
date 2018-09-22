@@ -33,6 +33,8 @@ public class RpsMonTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+
         memo = new RpsSystemConnectionMemo();
 
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();

@@ -77,6 +77,8 @@ public class SimpleTimebaseTest extends TestCase {
     // set the time based on an instant.
     public void testSetTimeInstant() {
         SimpleTimebase p = new SimpleTimebase();
+        p.setRun(false); // prevent clock ticking during test
+
         Instant now = Instant.now();
         
         p.setTime(now);
@@ -110,5 +112,15 @@ public class SimpleTimebaseTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite(SimpleTimebaseTest.class);
         return suite;
+    }
+
+    @Override
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @Override
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
     }
 }

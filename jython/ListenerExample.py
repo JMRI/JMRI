@@ -5,6 +5,7 @@
 # Part of the JMRI distribution
 
 import java
+import java.beans
 import jmri
 
 # First, define the listener.  This one just prints some

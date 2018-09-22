@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
-    private static final String NONE = "";
+    static final String NONE = "";
 
     // Train frame attributes
     private String _trainAction = TrainsTableFrame.MOVE; // Trains frame table button action
@@ -224,14 +224,22 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     }
 
     public void runStartUpScripts() {
-        for (String scriptPathName : getStartUpScripts()) {
-            try {
-                JmriScriptEngineManager.getDefault()
-                        .runScript(new File(jmri.util.FileUtil.getExternalFilename(scriptPathName)));
-            } catch (Exception e) {
-                log.error("Problem with script: {}", scriptPathName);
+        // use thread to prevent object (Train) thread lock
+        Thread scripts = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (String scriptPathName : getStartUpScripts()) {
+                    try {
+                        JmriScriptEngineManager.getDefault()
+                                .runScript(new File(jmri.util.FileUtil.getExternalFilename(scriptPathName)));
+                    } catch (Exception e) {
+                        log.error("Problem with script: {}", scriptPathName);
+                    }
+                }
             }
-        }
+        });
+        scripts.setName("Startup Scripts"); // NOI18N
+        scripts.start();
     }
 
     /**
@@ -715,8 +723,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     }
 
     /**
-     * Makes a copy of an existing train. Only the train's description isn't
-     * copied.
+     * Makes a copy of an existing train.
      *
      * @param train     the train to copy
      * @param trainName the name of the new train
@@ -1019,14 +1026,12 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
             }
             // check for scripts
             if (options.getChild(Xml.SCRIPTS) != null) {
-                @SuppressWarnings("unchecked")
                 List<Element> lm = options.getChild(Xml.SCRIPTS).getChildren(Xml.START_UP);
                 for (Element es : lm) {
                     if ((a = es.getAttribute(Xml.NAME)) != null) {
                         addStartUpScript(a.getValue());
                     }
                 }
-                @SuppressWarnings("unchecked")
                 List<Element> lt = options.getChild(Xml.SCRIPTS).getChildren(Xml.SHUT_DOWN);
                 for (Element es : lt) {
                     if ((a = es.getAttribute(Xml.NAME)) != null) {
@@ -1036,7 +1041,6 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
             }
         }
         if (root.getChild(Xml.TRAINS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> eTrains = root.getChild(Xml.TRAINS).getChildren(Xml.TRAIN);
             log.debug("readFile sees {} trains", eTrains.size());
             for (Element eTrain : eTrains) {
