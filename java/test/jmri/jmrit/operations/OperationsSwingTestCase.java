@@ -32,46 +32,6 @@ import org.junit.Before;
  */
 public class OperationsSwingTestCase {
 
-    /**
-     * @deprecated since 4.13.4.  Use version in jmri.util.swing.JemmyUtil directly instead
-     */
-    @Deprecated
-    protected void pressDialogButton(JmriJFrame f, String buttonName) {
-        JemmyUtil.pressDialogButton(f,buttonName);
-    }
-
-    /**
-     * @deprecated since 4.13.4.  Use version in jmri.util.swing.JemmyUtil directly instead
-     */
-    @Deprecated
-    protected void pressDialogButton(JmriJFrame f, String dialogTitle, String buttonName) {
-        JemmyUtil.pressDialogButton(f,dialogTitle,buttonName);
-    }
-
-    /**
-     * @deprecated since 4.13.4.  Use version in jmri.util.swing.JemmyUtil directly instead
-     */
-    @Deprecated
-    protected void enterClickAndLeave(JButton comp) {
-	JemmyUtil.enterClickAndLeave(comp);
-    }
-
-    /**
-     * @deprecated since 4.13.4.  Use version in jmri.util.swing.JemmyUtil directly instead
-     */
-    @Deprecated
-    protected void enterClickAndLeave(JCheckBox comp) {
-	JemmyUtil.enterClickAndLeave(comp);
-    }
-
-    /**
-     * @deprecated since 4.13.4.  Use version in jmri.util.swing.JemmyUtil directly instead
-     */
-    @Deprecated
-    protected void enterClickAndLeave(JRadioButton comp) {
-	JemmyUtil.enterClickAndLeave(comp);
-    }
-    
     public void loadTrain(Location l) {
         Assert.assertNotNull("Test Loc", l);
         TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
