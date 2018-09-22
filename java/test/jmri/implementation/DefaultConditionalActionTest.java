@@ -463,6 +463,19 @@ public class DefaultConditionalActionTest {
     }
     
     @Test
+    public void testSetActionData() {
+        final String deviceName = "3";
+        final String actionStr = "5";
+        
+        ConditionalAction ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_TURNOUT, deviceName, Turnout.THROWN, actionStr);
+        Assert.assertTrue("getActionData() gets correct value", ix1.getActionData() == Turnout.THROWN);
+        ix1.setActionData(Turnout.CLOSED);
+        Assert.assertTrue("getActionData() gets correct value", ix1.getActionData() == Turnout.CLOSED);
+        ix1.setActionData("Thrown");
+        Assert.assertTrue("getActionData() gets correct value", ix1.getActionData() == Turnout.THROWN);
+    }
+    
+    @Test
     public void testGetActionBean() {
         ConditionalAction ix1;
         NamedBean bean;
