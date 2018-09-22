@@ -70,6 +70,24 @@ public class ThrottleOperator extends JFrameOperator {
 	return ap.getConsistAddress();
    }
 
+   // set the address value.
+   public void setAddressValue(DccLocoAddress addr){
+	AddressPanel ap = (AddressPanel) findSubComponent(
+	       new ComponentChooser() { 
+                  @Override
+       	          public boolean checkComponent(Component c) { 
+		      if (c instanceof AddressPanel ) 
+			   return true; 
+		      else return false; 
+	          } 
+                  @Override
+	          public String getDescription() { 
+		      return "Find AddressSelector"; 
+	          }
+	});
+	ap.setCurrentAddress(addr);
+   }
+
    public void pushSetButton(){
         new JButtonOperator(this,Bundle.getMessage("ButtonSet")).push();
    }
