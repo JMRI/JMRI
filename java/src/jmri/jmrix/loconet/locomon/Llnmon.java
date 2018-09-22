@@ -4074,7 +4074,7 @@ public class Llnmon {
          * extended slot read/write message               *
          * ************************************************
          */
-        trackStatus = l.getElement(7); // track status
+        int trackStatus = l.getElement(7); // track status
         int id1 =  l.getElement(19);
         int id2 = l.getElement(18);
         int command = l.getOpCode();
