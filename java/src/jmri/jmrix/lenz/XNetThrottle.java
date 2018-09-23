@@ -68,10 +68,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         //       this.isForward=true;
         setIsAvailable(false);
 
-        f0Momentary = f1Momentary = f2Momentary = f3Momentary = f4Momentary
-                = f5Momentary = f6Momentary = f7Momentary = f8Momentary = f9Momentary
-                = f10Momentary = f11Momentary = f12Momentary = false;
-
         requestList = new LinkedBlockingQueue<RequestMessage>();
         sendStatusInformationRequest();
         if (log.isDebugEnabled()) {
