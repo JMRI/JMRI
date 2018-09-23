@@ -4,11 +4,13 @@ import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.DccLocoAddress;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -17,6 +19,9 @@ import org.junit.Test;
  * @author	Paul Bender Copyright (C) 2016
  */
 public class ThrottleFrameTest {
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
 
     @Test
     public void testCtor() {
