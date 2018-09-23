@@ -5,6 +5,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -29,7 +30,7 @@ public class AutomationsTableFrameTest extends OperationsSwingTestCase {
         // now create the add automation frame
         f.addButton.doClick();
         // the following fails on a 13" laptop
-        //enterClickAndLeave(f.addButton);
+        //JemmyUtil.enterClickAndLeave(f.addButton);
         addAutomationFrame = JmriJFrame.getFrame(Bundle.getMessage("TitleAutomationAdd"));
         Assert.assertNotNull(addAutomationFrame);
 

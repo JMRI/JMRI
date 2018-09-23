@@ -8,6 +8,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Pool;
 import jmri.jmrit.operations.locations.Track;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -193,7 +194,7 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
 
         // CLicking the Add button should add the new pool to the
         // collection.
-        enterClickAndLeave(f.addButton);
+        JemmyUtil.enterClickAndLeave(f.addButton);
 
         // Here the track's location should have a pool collection with one
         // item.
@@ -202,14 +203,14 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals("Pool size", 1, count);
 
         // Try to add the same one again, and the count should remain at 1
-        enterClickAndLeave(f.addButton);
+        JemmyUtil.enterClickAndLeave(f.addButton);
 
         count = t.getLocation().getPoolsByNameList().size();
         Assert.assertEquals("Pool size", 1, count);
 
         // Add a different name and it should go to 2
         f.trackPoolNameTextField.setText("Test Pool 2");
-        enterClickAndLeave(f.addButton);
+        JemmyUtil.enterClickAndLeave(f.addButton);
 
         count = t.getLocation().getPoolsByNameList().size();
         Assert.assertEquals("Pool size", 2, count);
@@ -244,7 +245,7 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals("ComboBox selection", desiredPool, f.comboBoxPools.getSelectedItem());
 
         // Now click the Save button and the Track should be updated with the selected Pool
-        enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
         Assert.assertEquals("Updated Track Pool", desiredPool, t.getPool());
 
         f.setVisible(true);
@@ -278,7 +279,7 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
         f.trackMinLengthTextField.setText("23");
 
         // Now click the Save button and the Track should be updated with the selected Pool
-        enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
         //Assert.assertEquals("Updated Track Pool", desiredPool, t.getPool());
         Assert.assertEquals("Updated min track length", 23, t.getMinimumLength());
 
@@ -317,7 +318,7 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
     //
     // // create add location frame by clicking add button
     // // f.addButton.doClick();
-    // enterClickAndLeave(f.addButton);
+    // JemmyUtil.enterClickAndLeave(f.addButton);
     //
     // // confirm location add frame creation
     // JmriJFrame lef = JmriJFrame.getFrame("Add Location");

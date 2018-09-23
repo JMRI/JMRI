@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.rollingstock.cars.tools.CarLoadEditFrame;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -23,7 +24,7 @@ public class CarLoadEditFrameTest extends OperationsSwingTestCase {
         CarLoadEditFrame f = new CarLoadEditFrame();
         f.initComponents("Boxcar", "");
         f.addTextBox.setText("New Load");
-        enterClickAndLeave(f.addButton);
+        JemmyUtil.enterClickAndLeave(f.addButton);
         // new load should appear at start of list
         Assert.assertEquals("new load", "New Load", f.loadComboBox.getItemAt(0));
         JUnitUtil.dispose(f);

@@ -47,6 +47,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
     // programming interface
 
     @Override
+    @Deprecated // 4.1.1
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
@@ -74,6 +75,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
     }
 
     @Override
+    @Deprecated // 4.1.1
     synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
