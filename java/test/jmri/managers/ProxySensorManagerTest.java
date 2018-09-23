@@ -333,6 +333,7 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
         List<Sensor> beanList = l.getNamedBeanList();
         SortedSet<Sensor> beanSet = l.getNamedBeanSet();
         String[] sortedArray = l.getSystemNameArray();
+        jmri.util.JUnitAppender.suppressWarnMessage("Manager#getSystemNameArray() is deprecated");
         List<String> orderedList = l.getSystemNameAddedOrderList();
         
         Assert.assertEquals("sorted list length", 2, sortedList.size());
@@ -391,6 +392,7 @@ public class ProxySensorManagerTest extends TestCase implements Manager.ManagerD
         beanList = l.getNamedBeanList();
         beanSet = l.getNamedBeanSet();
         sortedArray = l.getSystemNameArray();
+        jmri.util.JUnitAppender.suppressWarnMessage("Manager#getSystemNameArray() is deprecated");
         
         Assert.assertEquals("ordered list length", 4, orderedList.size());
         Assert.assertEquals("ordered list 1st", "IS4", orderedList.get(0));

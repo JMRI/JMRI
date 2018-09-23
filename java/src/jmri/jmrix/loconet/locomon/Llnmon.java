@@ -66,6 +66,7 @@ import org.slf4j.LoggerFactory;
  * {@link LocoNetMessage#toMonitorString()}
  * for each individual LocoNet message instead of creating a formatter.
  */
+@Deprecated
 public class Llnmon {
 
     /**

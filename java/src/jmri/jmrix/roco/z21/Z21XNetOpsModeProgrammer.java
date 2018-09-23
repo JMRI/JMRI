@@ -50,6 +50,7 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
      * Send an ops-mode write request to the Xpressnet.
      */
     @Override
+    @Deprecated // 4.1.1
     synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         XNetMessage msg = XNetMessage.getWriteOpsModeCVMsg(mAddressHigh, mAddressLow, CV, val);
         msg.setBroadcastReply(); // reply comes through a loconet message.
@@ -65,6 +66,7 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
     }
 
     @Override
+    @Deprecated // 4.1.1
     synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {
         XNetMessage msg = XNetMessage.getVerifyOpsModeCVMsg(mAddressHigh, mAddressLow, CV, value);
         /* we need to save the programer so we can send messages

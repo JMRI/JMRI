@@ -149,7 +149,7 @@ public class ConditionalVariable {
                 case Conditional.ITEM_TYPE_CONDITIONAL:
                     Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getConditional(_name);
                     if (c == null) {
-                        log.error("invalid conditiona; name= \"" + _name + "\" in state variable");
+                        log.error("invalid conditional; name= \"" + _name + "\" in state variable");
                         return;
                     }
                     _namedBean = nbhm.getNamedBeanHandle(_name, c);

@@ -33,6 +33,15 @@ import jmri.profile.NullProfile;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.progdebugger.DebugProgrammerManager;
+import jmri.util.managers.InternalLightManagerThrowExceptionScaffold;
+import jmri.util.managers.MemoryManagerThrowExceptionScaffold;
+import jmri.util.managers.OBlockManagerThrowExceptionScaffold;
+import jmri.util.managers.RouteManagerThrowExceptionScaffold;
+import jmri.util.managers.SensorManagerThrowExceptionScaffold;
+import jmri.util.managers.SignalHeadManagerThrowExceptionScaffold;
+import jmri.util.managers.SignalMastManagerThrowExceptionScaffold;
+import jmri.util.managers.TurnoutManagerThrowExceptionScaffold;
+import jmri.util.managers.WarrantManagerThrowExceptionScaffold;
 import jmri.util.prefs.JmriConfigurationProvider;
 import jmri.util.prefs.JmriPreferencesProvider;
 import jmri.util.prefs.JmriUserInterfaceConfigurationProvider;
@@ -694,6 +703,42 @@ public class JUnitUtil {
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.CONDITIONALS);
         }
+    }
+
+    public static void initInternalTurnoutManagerThrowException() {
+        InstanceManager.setDefault(TurnoutManager.class, new TurnoutManagerThrowExceptionScaffold());
+    }
+
+    public static void initInternalSensorManagerThrowException() {
+        InstanceManager.setDefault(SensorManager.class, new SensorManagerThrowExceptionScaffold());
+    }
+
+    public static void initLightManagerThrowException() {
+        InstanceManager.setDefault(LightManager.class, new InternalLightManagerThrowExceptionScaffold());
+    }
+
+    public static void initMemoryManagerThrowException() {
+        InstanceManager.setDefault(MemoryManager.class, new MemoryManagerThrowExceptionScaffold());
+    }
+
+    public static void initSignalHeadManagerThrowException() {
+        InstanceManager.setDefault(SignalHeadManager.class, new SignalHeadManagerThrowExceptionScaffold());
+    }
+
+    public static void initSignalMastManagerThrowException() {
+        InstanceManager.setDefault(SignalMastManager.class, new SignalMastManagerThrowExceptionScaffold());
+    }
+
+    public static void initWarrantManagerThrowException() {
+        InstanceManager.setDefault(WarrantManager.class, new WarrantManagerThrowExceptionScaffold());
+    }
+
+    public static void initOBlockManagerThrowException() {
+        InstanceManager.setDefault(OBlockManager.class, new OBlockManagerThrowExceptionScaffold());
+    }
+
+    public static void initRouteManagerThrowException() {
+        InstanceManager.setDefault(RouteManager.class, new RouteManagerThrowExceptionScaffold());
     }
 
     /**
