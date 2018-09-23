@@ -40,6 +40,11 @@ public class SimpleTimebaseTest extends TestCase {
         p.dispose();
     }
 
+    public void testGetBeanType() {
+        SimpleTimebase p = new SimpleTimebase();
+        Assert.assertEquals("Time", p.getBeanType());
+    }
+    
     public void testSetStartTime() {
         SimpleTimebase p = new SimpleTimebase();
         p.setRun(false); // prevent clock ticking during test
@@ -66,11 +71,17 @@ public class SimpleTimebaseTest extends TestCase {
     public void testSetTimeDate() {
         SimpleTimebase p = new SimpleTimebase();
         p.setRun(false); // prevent clock ticking during test
+        Assert.assertFalse(p.getRun());
 
         Date now = new Date();
 
         p.setTime(now);
+        Assert.assertFalse(p.getRun());  // still
         Assert.assertEquals("Time Set",now.toString(),p.getTime().toString());
+        
+        p.setRun(true);       
+        Assert.assertTrue(p.getRun());
+
         p.dispose();
     }
 
@@ -86,6 +97,18 @@ public class SimpleTimebaseTest extends TestCase {
         p.dispose();
     }
 
+    public void testSetGetRate() {
+        SimpleTimebase p = new SimpleTimebase();
+        p.setRun(false); // prevent clock ticking during test
+
+        Assert.assertEquals(1.0, p.getRate(), 0.01);
+        
+        p.setRate(2.0);
+        Assert.assertEquals(2.0, p.getRate(), 0.01);        
+        Assert.assertFalse(p.getRun());  // still
+        
+    }
+    
     /* 	public void testShortDelay() { */
     /* 		SimpleTimebase p = new SimpleTimebase(); */
     /* 		Date now = new Date(); */
