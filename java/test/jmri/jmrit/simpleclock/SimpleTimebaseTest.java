@@ -1,5 +1,6 @@
 package jmri.jmrit.simpleclock;
 
+import java.beans.*;
 import java.time.Instant;
 import java.util.Date;
 import junit.framework.Test;
@@ -107,6 +108,29 @@ public class SimpleTimebaseTest extends TestCase {
         Assert.assertEquals(2.0, p.getRate(), 0.01);        
         Assert.assertFalse(p.getRun());  // still
         
+    }
+    
+    double seenNewMinutes;
+    double seenOldMinutes;
+    
+    public void testSetSendsUpdate() {
+        SimpleTimebase p = new SimpleTimebase();
+        p.setRun(false); // prevent clock ticking during test
+
+        seenNewMinutes = -1;
+        seenOldMinutes = -1;
+        p.addMinuteChangeListener(new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent e) {
+                seenOldMinutes = (Double) e.getOldValue();
+                seenNewMinutes = (Double) e.getNewValue();
+            }
+        });
+
+        Date date = p.getTime();
+        Date tenMinLater = new Date(10*60*1000L+date.getTime());
+        
+        p.setTime(tenMinLater);
+        Assert.assertEquals(seenOldMinutes + 10.0, seenNewMinutes, 0.01);
     }
     
     /* 	public void testShortDelay() { */
