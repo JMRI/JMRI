@@ -489,7 +489,6 @@ public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         Assert.assertEquals(expResult, result);
     }
 
-
     private LocoNetInterfaceScaffold lnis;
     private SlotManager slotmanager;
     private LocoNetSystemConnectionMemo memo = null;
