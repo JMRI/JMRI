@@ -3,11 +3,9 @@ package jmri.implementation;
 import apps.AppsBase;
 import apps.gui3.EditConnectionPreferencesDialog;
 import apps.gui3.TabbedPreferencesAction;
-import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -255,6 +253,7 @@ public class JmriConfigurationManager implements ConfigureManager {
                                 case RESTART_PROGRAM:
                                     // Restart program
                                     AppsBase.handleRestart();
+                                    break;
                                     
                                 case EXIT_PROGRAM:
                                 default:
