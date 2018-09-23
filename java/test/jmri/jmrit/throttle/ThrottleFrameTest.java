@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.DccLocoAddress;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -36,8 +37,7 @@ public class ThrottleFrameTest {
         ThrottleFrame panel = new ThrottleFrame(frame);
 	panel.toFront();
 
-	//ThrottleOperator to = new ThrottleOperator(panel.getTitle());
-	ThrottleOperator to = new ThrottleOperator("Throttle");
+	ThrottleOperator to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
 
         to.setAddressValue(new DccLocoAddress(42,false));
 
@@ -65,8 +65,7 @@ public class ThrottleFrameTest {
         ThrottleFrame panel = new ThrottleFrame(frame);
 	panel.toFront();
 
-	//ThrottleOperator to = new ThrottleOperator(panel.getTitle());
-	ThrottleOperator to = new ThrottleOperator("Throttle");
+	ThrottleOperator to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
 
         to.setAddressValue(new DccLocoAddress(42,false));
 
@@ -77,6 +76,65 @@ public class ThrottleFrameTest {
 	   Assert.assertTrue("Function F" +i + " continuous",f.getIsLockable());
 	}
 
+
+        to.pushReleaseButton();	
+	to.requestClose();
+        // the throttle list frame gets created above, but needs to be shown to be disposed
+        InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
+        JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
+    }
+
+    @Test
+    public void testToggleMomentaryStatus() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ThrottleWindow frame = new ThrottleWindow();
+        ThrottleFrame panel = new ThrottleFrame(frame);
+        frame.setExtendedState( frame.getExtendedState()|java.awt.Frame.MAXIMIZED_BOTH );
+	panel.toFront();
+
+	ThrottleOperator to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
+
+        to.setAddressValue(new DccLocoAddress(42,false));
+
+
+        // only check through function 15, since
+	// we have to click an additional button to get F16+ showing.
+        for(int i = 0; i<=15; i++){
+           FunctionButton f = to.getFunctionButton(i);
+	   Assert.assertTrue("Function F" +i + " continuous",f.getIsLockable());
+	   to.toggleFunctionMomentary(i);
+           new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+	   Assert.assertFalse("Function F" +i + " momentary",f.getIsLockable());
+	}
+
+        to.pushReleaseButton();	
+	to.requestClose();
+        // the throttle list frame gets created above, but needs to be shown to be disposed
+        InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
+        JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
+    }
+
+    @Test
+    public void testToggleOnOffStatus() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ThrottleWindow frame = new ThrottleWindow();
+        ThrottleFrame panel = new ThrottleFrame(frame);
+        frame.setExtendedState( frame.getExtendedState()|java.awt.Frame.MAXIMIZED_BOTH );
+	panel.toFront();
+
+	ThrottleOperator to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
+
+        to.setAddressValue(new DccLocoAddress(42,false));
+
+        // only check through function 15, since
+	// we have to click an additional button to get F16+ showing.
+        for(int i = 0; i<=15; i++){
+           FunctionButton f = to.getFunctionButton(i);
+	   Assert.assertFalse("Function F" +i + " off",f.isSelected());
+           JemmyUtil.enterClickAndLeave(f); 
+           new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+	   Assert.assertTrue("Function F" +i + " on",f.isSelected());
+	}
 
         to.pushReleaseButton();	
 	to.requestClose();

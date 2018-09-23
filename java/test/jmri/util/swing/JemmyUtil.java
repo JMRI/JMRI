@@ -3,12 +3,14 @@ package jmri.util.swing;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
+import javax.swing.JToggleButton;
 import jmri.util.JmriJFrame;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
+import org.netbeans.jemmy.operators.JToggleButtonOperator;
 import org.netbeans.jemmy.util.NameComponentChooser;
 
 /**
@@ -49,5 +51,10 @@ public class JemmyUtil {
     static public void enterClickAndLeave(JRadioButton comp) {
         JRadioButtonOperator jbo = new JRadioButtonOperator(comp);
         jbo.doClick();
+    }
+
+    static public void enterClickAndLeave(JToggleButton comp) {
+        JToggleButtonOperator jtbo = new JToggleButtonOperator(comp);
+        jtbo.doClick();
     }
 }
