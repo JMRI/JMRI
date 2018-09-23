@@ -10,6 +10,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -90,6 +91,7 @@ public class ThrottleFrameTest {
     }
 
     @Test
+    @Ignore("test fails to find popup menu on travis")
     public void testToggleMomentaryStatus() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThrottleWindow frame = new ThrottleWindow();
