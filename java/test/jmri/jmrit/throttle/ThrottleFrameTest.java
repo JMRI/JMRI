@@ -97,9 +97,9 @@ public class ThrottleFrameTest {
         to.setAddressValue(new DccLocoAddress(42,false));
 
 
-        // only check through function 15, since
-	// we have to click an additional button to get F16+ showing.
-        for(int i = 0; i<=15; i++){
+        // only check through function 5, since all the buttons
+	// are the same class.
+        for(int i = 0; i<=5; i++){
            FunctionButton f = to.getFunctionButton(i);
 	   Assert.assertTrue("Function F" +i + " continuous",f.getIsLockable());
 	   to.toggleFunctionMomentary(i);
@@ -126,9 +126,9 @@ public class ThrottleFrameTest {
 
         to.setAddressValue(new DccLocoAddress(42,false));
 
-        // only check through function 15, since
-	// we have to click an additional button to get F16+ showing.
-        for(int i = 0; i<=15; i++){
+        // only check through function 5, since all the buttons
+	// are the same class.
+        for(int i = 0; i<=5; i++){
            FunctionButton f = to.getFunctionButton(i);
 	   Assert.assertFalse("Function F" +i + " off",f.isSelected());
            JemmyUtil.enterClickAndLeave(f); 
