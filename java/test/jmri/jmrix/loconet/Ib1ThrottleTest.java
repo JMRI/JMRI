@@ -406,6 +406,7 @@ public class Ib1ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * Test of getF2Momentary method, of class AbstractThrottle.
      */
     @Test
+    @Override
     public void testGetF2Momentary() {
         boolean expResult = true;
         boolean result = instance.getF2Momentary();

@@ -4,6 +4,7 @@ import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assume;
 import org.junit.Before;
@@ -101,7 +102,7 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     // // properly
     // f.initComponents();
     //
-    // enterClickAndLeave(f.backupButton);
+    // JemmyUtil.enterClickAndLeave(f.backupButton);
     //
     // // Make sure the Backup frame was created.
     // BackupFrame bf = (BackupFrame) findFrameByClassName("BackupFrame");
@@ -117,7 +118,7 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     // Assert.assertEquals("Suggested set name", setName, dialogSetName);
     //
     // // Now click the Backup button to make the backup
-    // enterClickAndLeave(bf.backupButton);
+    // JemmyUtil.enterClickAndLeave(bf.backupButton);
     //
     // // This will use the Test backup file names.
     // tester.verifyBackupSetAgainst(operationsRoot, "", defaultBackupRoot,
@@ -132,7 +133,7 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     // // properly
     // f.initComponents();
     //
-    // enterClickAndLeave(f.backupButton);
+    // JemmyUtil.enterClickAndLeave(f.backupButton);
     //
     // // Make sure the Backup frame was created.
     // BackupFrame bf = (BackupFrame) findFrameByClassName("BackupFrame");
@@ -148,7 +149,7 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     // Assert.assertEquals("Provided set name", setName, dialogSetName);
     //
     // // Now click the Backup button to make the backup
-    // enterClickAndLeave(bf.backupButton);
+    // JemmyUtil.enterClickAndLeave(bf.backupButton);
     //
     // // This will use the Test backup file names.
     // tester.verifyBackupSetAgainst(operationsRoot, "", defaultBackupRoot,
@@ -169,7 +170,7 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     // // properly
     // f.initComponents();
     //
-    // enterClickAndLeave(f.restoreButton);
+    // JemmyUtil.enterClickAndLeave(f.restoreButton);
     //
     // // Make sure the Restore frame was created.
     // RestoreFrame rf = (RestoreFrame) findFrameByClassName("RestoreFrame");
@@ -184,7 +185,7 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     // tester.deleteTestFiles();
     //
     // // Click the Restore button to do the actual restore
-    // enterClickAndLeave(rf.restoreButton);
+    // JemmyUtil.enterClickAndLeave(rf.restoreButton);
     //
     // // Now verify that the files were restored OK
     // tester.verifyBackupSetAgainst(defaultBackupRoot, setName, operationsRoot,
@@ -219,7 +220,7 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     // // properly
     // f.initComponents();
     //
-    // enterClickAndLeave(f.restoreButton);
+    // JemmyUtil.enterClickAndLeave(f.restoreButton);
     //
     // // Make sure the Restore frame was created.
     // RestoreFrame rf = (RestoreFrame) findFrameByClassName("RestoreFrame");
@@ -246,7 +247,7 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     //
     // rf.backupSetsComboBox.setSelectedIndex(2);
     //
-    // enterClickAndLeave(rf.restoreButton);
+    // JemmyUtil.enterClickAndLeave(rf.restoreButton);
     //
     // // Now verify that the files were restored OK
     // tester.verifyBackupSetAgainst(defaultBackupRoot, setName3,

@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -95,7 +96,7 @@ public class LocationsTableFrameTest extends OperationsSwingTestCase {
         // create add location frame by clicking add button
         f.addButton.doClick();
         // the following fails on 13" laptops
-        //enterClickAndLeave(f.addButton);
+        //JemmyUtil.enterClickAndLeave(f.addButton);
 
         // confirm location add frame creation
         JUnitUtil.waitFor(() -> {
