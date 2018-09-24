@@ -188,7 +188,7 @@ public class ThrottleOperator extends JFrameOperator {
         FunctionButton fb = getFunctionButton(function);
         JToggleButtonOperator jbo = new JToggleButtonOperator(fb);
         jbo.clickForPopup();
-        JPopupMenuOperator jpmo = new JPopupMenuOperator(this);
+        JPopupMenuOperator jpmo = new JPopupMenuOperator();
 	jpmo.pushMenu(Bundle.getMessage("MenuItemProperties"));
    }
 
