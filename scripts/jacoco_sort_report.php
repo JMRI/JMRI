@@ -27,7 +27,27 @@ libxml_use_internal_errors(true);
 
 $url = 'http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastStableBuild/jacoco/';
 
-if (isset($_REQUEST['package'])) {
+// Is the script run from the command line?
+if ($argc > 0) {
+
+	if ($argc == 2) {	// Package list
+		parse_page($argv[1], '', false);
+
+	} elseif ($argc == 3) {	// Class list
+		parse_page($argv[1], $argv[2], true);
+
+	} else {	// Wrong number of arguments
+		echo "\n";
+		echo "jacoco_sort_report.php <filename>\n";
+		echo "jacoco_sort_report.php <filename> <package>\n";
+		echo "\n";
+		echo "Examples:\n";
+		echo "jacoco_sort_report.php index.html\n";
+		echo "jacoco_sort_report.php apps.DecoderPro/index.html apps.DecoderPro\n";
+		echo "\n";
+	}
+
+} elseif (isset($_REQUEST['package'])) {
 	$packageName = $_REQUEST['package'];
 
 	if (preg_match('/^(\w+\.)*\w+$/', $packageName) == 1) {
@@ -230,27 +250,27 @@ function parse_page_prim($page, $url, $package, $isClassList)
 			$aElement = $tableRowElement->childNodes->item(0)->childNodes->item(0);
 
 			$instructionElement = $tableRowElement->childNodes->item(1)->childNodes->item(1)->childNodes->item(0)->childNodes->item(0)->childNodes->item(0);
-			$instructionArray = split(" ", $instructionElement->nodeValue);
+			$instructionArray = explode(" ", $instructionElement->nodeValue);
 			$coverageInfo->numMissedInstructions = $instructionArray[1];
 
 			$branchElement = $tableRowElement->childNodes->item(3)->childNodes->item(1)->childNodes->item(0)->childNodes->item(0)->childNodes->item(0);
-			$branchArray = split(" ", $branchElement->nodeValue);
+			$branchArray = explode(" ", $branchElement->nodeValue);
 			$coverageInfo->numMissedBranches = $branchArray[1];
 
 			$complexityElement = $tableRowElement->childNodes->item(5)->childNodes->item(1)->childNodes->item(0)->childNodes->item(0)->childNodes->item(0);
-			$complexityArray = split(" ", $complexityElement->nodeValue);
+			$complexityArray = explode(" ", $complexityElement->nodeValue);
 			$coverageInfo->numMissedComplexities = $complexityArray[1];
 
 			$linesElement = $tableRowElement->childNodes->item(7)->childNodes->item(1)->childNodes->item(0)->childNodes->item(0)->childNodes->item(0);
-			$linesArray = split(" ", $linesElement->nodeValue);
+			$linesArray = explode(" ", $linesElement->nodeValue);
 			$coverageInfo->numMissedLines = $linesArray[1];
 
 			$methodElement = $tableRowElement->childNodes->item(9)->childNodes->item(1)->childNodes->item(0)->childNodes->item(0)->childNodes->item(0);
-			$methodArray = split(" ", $methodElement->nodeValue);
+			$methodArray = explode(" ", $methodElement->nodeValue);
 			$coverageInfo->numMissedMethods = $methodArray[1];
 
 			$classElement = $tableRowElement->childNodes->item(11)->childNodes->item(1)->childNodes->item(0)->childNodes->item(0)->childNodes->item(0);
-			$classArray = split(" ", $classElement->nodeValue);
+			$classArray = explode(" ", $classElement->nodeValue);
 			$coverageInfo->numMissedClasses = $classArray[1];
 
 			$coverageInfo->numMissedLinesTotal = $coverageInfo->numMissedLines;
