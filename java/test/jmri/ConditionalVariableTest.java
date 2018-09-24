@@ -186,6 +186,38 @@ public class ConditionalVariableTest {
     }
     
     @Test
+    public void testEnumOperator() {
+        // OPERATOR_NONE = 4;
+        Assert.assertTrue("Operator.getIntValue() returns correct value", Operator.NONE.getIntValue() == 4);
+        // OPERATOR_AND = 1;
+        Assert.assertTrue("Operator.getIntValue() returns correct value", Operator.AND.getIntValue() == 1);
+        // OPERATOR_OR = 5;
+        Assert.assertTrue("Operator.getIntValue() returns correct value", Operator.OR.getIntValue() == 5);
+        
+        // OPERATOR_AND = 1;
+        Assert.assertTrue("Operator.getOperatorFromIntValue() returns correct value", Operator.getOperatorFromIntValue(1) == Operator.AND);
+        // OPERATOR_NOT = 2;
+        Assert.assertTrue("Operator.getOperatorFromIntValue() returns correct value", Operator.getOperatorFromIntValue(2) == Operator.NONE);
+        // OPERATOR_AND_NOT = 3;
+        Assert.assertTrue("Operator.getOperatorFromIntValue() returns correct value", Operator.getOperatorFromIntValue(3) == Operator.AND);
+        // OPERATOR_NONE = 4;
+        Assert.assertTrue("Operator.getOperatorFromIntValue() returns correct value", Operator.getOperatorFromIntValue(4) == Operator.NONE);
+        // OPERATOR_OR = 5;
+        Assert.assertTrue("Operator.getOperatorFromIntValue() returns correct value", Operator.getOperatorFromIntValue(5) == Operator.OR);
+        // OPERATOR_OR_NOT = 6;
+        Assert.assertTrue("Operator.getOperatorFromIntValue() returns correct value", Operator.getOperatorFromIntValue(6) == Operator.OR);
+        
+        // Test illegal operator
+        boolean exceptionThrown = false;
+        try {
+            Operator.getOperatorFromIntValue(-1);
+        } catch (java.lang.IllegalArgumentException ex) {
+            exceptionThrown = true;
+        }
+        Assert.assertTrue("Operator.getOperatorFromIntValue(-1) throws IllegalArgumentException", exceptionThrown);
+    }
+    
+    @Test
     public void testConstants() {
         // It might be a good idea to change constants into enums.
         // These tests ensures that the values of the constants stay the same
