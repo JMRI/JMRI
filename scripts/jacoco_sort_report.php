@@ -4,7 +4,7 @@
 
 // Author: Daniel Bergqvist
 
-
+// See the parallel version in the scripts/ directory of a JMRI/JMRI checkout
 
 // Set to true to show the DOM tree instead of the html page.
 // Useful if the original Jacoco page is changed and the script
