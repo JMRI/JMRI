@@ -315,5 +315,4 @@ function parse_page($url, $package, $isClassList)
 }
 
 
-
 ?>
