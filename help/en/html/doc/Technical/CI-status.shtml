@@ -97,6 +97,7 @@
         </td></tr>
         </table>        
 
+        <b><a href="jacoco_sort_report.php">JaCoCo Coverage Report</a></b>
 <!--#include virtual="/Footer.shtml" -->
 
 </div><!-- closes #mainContent-->
