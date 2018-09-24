@@ -28,7 +28,7 @@ public class FunctionPanelTest {
         FunctionPanel frame = new FunctionPanel(); // not a panel despite class name
         FunctionButton fba[] = frame.getFunctionButtons();
 	Assert.assertNotNull("Function Button Array exists",fba);
-	Assert.assertEquals("Function Button Array has right length",28,fba);
+	Assert.assertEquals("Function Button Array has right length",29,fba.length);
     }
 
     @Before
