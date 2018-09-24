@@ -22,9 +22,27 @@ public class FunctionButtonTest {
     }
 
     @Test
+    public void testGetIconPath() {
+        FunctionButton panel = new FunctionButton();
+        Assert.assertEquals("no Icon", "", panel.getIconPath() );
+    }
+
+    @Test
+    public void testIsImageOK() {
+        FunctionButton panel = new FunctionButton();
+        Assert.assertFalse("no image", panel.isImageOK() );
+    }
+
+    @Test
     public void testGetSelectedIconPath() {
         FunctionButton panel = new FunctionButton();
         Assert.assertEquals("no Icon", "", panel.getSelectedIconPath() );
+    }
+  
+    @Test
+    public void testIsSelectedImageOK() {
+        FunctionButton panel = new FunctionButton();
+        Assert.assertFalse("no image", panel.isSelectedImageOK() );
     }
 
     @Before
