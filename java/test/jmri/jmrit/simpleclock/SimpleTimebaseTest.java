@@ -128,8 +128,12 @@ public class SimpleTimebaseTest extends TestCase {
 
         Date date = p.getTime();
         Date tenMinLater = new Date(10*60*1000L+date.getTime());
-        
+
         p.setTime(tenMinLater);
+
+        // minutes wrap at 60
+        if (seenNewMinutes < seenOldMinutes) seenNewMinutes += 60.;
+        
         Assert.assertEquals(seenOldMinutes + 10.0, seenNewMinutes, 0.01);
     }
     
