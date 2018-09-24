@@ -12,7 +12,7 @@
 <body>
 <!--#include virtual="/Header.shtml" -->
 
-<!--#include virtual="/Sidebar.shtml" --> <!-- select the local or global Sidebar file -->
+<!--#include virtual="Sidebar.shtml" --> <!-- select the local or global Sidebar file -->
 <div id="mainContent">
 
 	    <h1>CI Status</h1>
@@ -57,6 +57,8 @@
         </a>
         </td></tr>
         
+        <!-- the following are commented out until we understand how to specify incrememtal in the URL --->
+<!-- 
 		<tr><td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/">SpotBugs</a> (Incremental)<br>
         <a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/1956/findbugsResult/">
             <img src="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/findbugs/trendGraph/png?url=FIXED">
@@ -68,6 +70,7 @@
             <img src="http://jmri.tagadab.com/jenkins/job/Development/job/Deprecations/warnings4/trendGraph/png?url=FIXED">
         </a>
         </td></tr>
+ -->
 
         <tr><td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/">Builds</a> - Unit Test Results<br>
         <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/lastBuild/testReport/">
