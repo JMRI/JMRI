@@ -46,7 +46,7 @@
 		<table>
 
 		<tr><td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/">SpotBugs</a><br>
-        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/1956/findbugsResult/">
+        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/lastBuild/findbugsResult/">
             <img src="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/findbugs/trendGraph/png?url=PRIORITY">
         </a>
 		</td>
@@ -60,7 +60,7 @@
         <!-- the following are commented out until we understand how to specify incrememtal in the URL -->
 <!-- 
 		<tr><td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/">SpotBugs</a> (Incremental)<br>
-        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/1956/findbugsResult/">
+        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/lastBuild/findbugsResult/">
             <img src="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/findbugs/trendGraph/png?url=FIXED">
         </a>
 		</td>
