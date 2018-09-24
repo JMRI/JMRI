@@ -383,14 +383,16 @@ public class PrintLocationsAction extends AbstractAction {
                         padOutString(Bundle.getMessage("Random"), Bundle.getMessage("Random").length() + 1) +
                         padOutString(Bundle.getMessage("Delivery"), Bundle.getMessage("Delivery").length() + 1) +
                         padOutString(Bundle.getMessage("Road"), crs.getMaxNameLength() + 1) +
-                        Bundle.getMessage("Pickup") +
+                        padOutString(Bundle.getMessage("Pickup"), Bundle.getMessage("Delivery").length() + 1) +
+                        Bundle.getMessage("Wait") +
                         NEW_LINE;
                 writer.write(s);
                 s = padOutString("", cts.getMaxNameLength() + 1) +
                         padOutString(si.getRandom(), Bundle.getMessage("Random").length() + 1) +
                         padOutString(setoutDay, Bundle.getMessage("Delivery").length() + 1) +
                         padOutString(si.getRoadName(), crs.getMaxNameLength() + 1) +
-                        pickupDay +
+                        padOutString(pickupDay, Bundle.getMessage("Delivery").length() + 1) +
+                        si.getWait() +
                         NEW_LINE;
                 writer.write(s);
             }
