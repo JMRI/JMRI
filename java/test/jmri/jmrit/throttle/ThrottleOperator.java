@@ -3,6 +3,7 @@ package jmri.jmrit.throttle;
 import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import jmri.DccLocoAddress;
 import jmri.jmrit.DccLocoAddressSelector;
 import jmri.util.swing.JemmyUtil;
@@ -17,6 +18,7 @@ import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
 import org.netbeans.jemmy.operators.JToggleButtonOperator;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
+import org.netbeans.jemmy.util.NameComponentChooser;
 
 /*
  *  Helper class for operating the Throttle Frame.
@@ -104,8 +106,59 @@ public class ThrottleOperator extends JFrameOperator {
    }
 
    // Function panel operations
+   public JInternalFrameOperator getFunctionPanelOperator(){
+       return new JInternalFrameOperator(this, 
+		       Bundle.getMessage("ThrottleMenuViewFunctionPanel"));
+   }
+
    public void pushFunctionButton(String Function){
-        new JButtonOperator(this,Function).push();
+        new JButtonOperator(getFunctionPanelOperator(),Function).push();
+   }
+
+   public void pushAlt1Button(){
+	JToggleButton alt1Button = (JToggleButton) findSubComponent(
+	       new ComponentChooser() { 
+                  @Override
+       	          public boolean checkComponent(Component c) { 
+		      if (c instanceof JToggleButton ) {
+			   if(((JToggleButton)c).getText().equals("*")){ 
+			      return true; 
+			   } else {
+                              return false;
+                           }
+		      } else {
+			return false;
+                      }
+	          } 
+                  @Override
+	          public String getDescription() { 
+		      return "Find Function Button"; 
+	          }
+	});
+	JemmyUtil.enterClickAndLeave(alt1Button);
+   }
+
+   public void pushAlt2Button(){
+	JToggleButton alt1Button = (JToggleButton) findSubComponent(
+	       new ComponentChooser() { 
+                  @Override
+       	          public boolean checkComponent(Component c) { 
+		      if (c instanceof JToggleButton ) {
+			   if(((JToggleButton)c).getText().equals("#")){ 
+			      return true; 
+			   } else {
+                              return false;
+                           }
+		      } else {
+			return false;
+                      }
+	          } 
+                  @Override
+	          public String getDescription() { 
+		      return "Find Function Button"; 
+	          }
+	});
+	JemmyUtil.enterClickAndLeave(alt1Button);
    }
 
    public FunctionButton getFunctionButton(int function){
@@ -146,6 +199,5 @@ public class ThrottleOperator extends JFrameOperator {
         (new JButtonOperator(jdo,Bundle.getMessage("ButtonOK"))).doClick();
         
    }
-
 
 }

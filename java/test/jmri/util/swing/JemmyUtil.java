@@ -24,7 +24,6 @@ public class JemmyUtil {
         JFrameOperator jfo = new JFrameOperator(f);
         JDialogOperator jdo = new JDialogOperator(jfo, 1); // wait for the first dialog.
         NameComponentChooser bChooser = new NameComponentChooser(buttonName);
-        //JButtonOperator jbo = new JButtonOperator(jdo,buttonName);
         JButtonOperator jbo = new JButtonOperator(jdo, bChooser);
         // Click button
         jbo.push();

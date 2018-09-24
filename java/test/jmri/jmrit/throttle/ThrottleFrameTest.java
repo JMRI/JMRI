@@ -91,7 +91,7 @@ public class ThrottleFrameTest {
     }
 
     @Test
-    @Ignore("test fails to find popup menu on travis")
+    @Ignore("Works locally (Linux) and on Appveyor (Windows).  Unable to find popup after click on Travis")
     public void testToggleMomentaryStatus() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThrottleWindow frame = new ThrottleWindow();
@@ -142,6 +142,60 @@ public class ThrottleFrameTest {
            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
 	   Assert.assertTrue("Function F" +i + " on",f.isSelected());
 	}
+
+        to.pushReleaseButton();	
+	to.requestClose();
+        // the throttle list frame gets created above, but needs to be shown to be disposed
+        InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
+        JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
+    }
+
+    @Test
+    public void testToggleOnOffStatusAltFunctions() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ThrottleWindow frame = new ThrottleWindow();
+        ThrottleFrame panel = new ThrottleFrame(frame);
+        frame.setExtendedState( frame.getExtendedState()|java.awt.Frame.MAXIMIZED_BOTH );
+	panel.toFront();
+
+	ThrottleOperator to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
+
+        to.setAddressValue(new DccLocoAddress(42,false));
+
+        to.pushAlt1Button();
+
+        // only check functions 20 through 25, since all the buttons
+	// are the same class.
+        for(int i = 20; i<=25; i++){
+           FunctionButton f = to.getFunctionButton(i);
+	   Assert.assertFalse("Function F" +i + " off",f.isSelected());
+           JemmyUtil.enterClickAndLeave(f); 
+           new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+	   Assert.assertTrue("Function F" +i + " on",f.isSelected());
+	}
+
+        to.pushReleaseButton();	
+	to.requestClose();
+        // the throttle list frame gets created above, but needs to be shown to be disposed
+        InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
+        JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
+    }
+
+    @Test
+    public void testToggleAlt2() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ThrottleWindow frame = new ThrottleWindow();
+        ThrottleFrame panel = new ThrottleFrame(frame);
+        frame.setExtendedState( frame.getExtendedState()|java.awt.Frame.MAXIMIZED_BOTH );
+	panel.toFront();
+
+	ThrottleOperator to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
+
+        to.setAddressValue(new DccLocoAddress(42,false));
+
+	// the alt2 ("#") button doesn't currently do anything, but
+	// we can toggle it to make sure it doesn't throw an exception.
+        to.pushAlt1Button();
 
         to.pushReleaseButton();	
 	to.requestClose();
