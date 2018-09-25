@@ -73,7 +73,7 @@
 
         <tr><td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/">JaCoCo</a><br>
         <a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/">
-            <img src="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/jacoco/graph?width=640&height=240">
+            <img src="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/jacoco/graph">
         </a>
         </td><td align="center">
             <b><a href="jacoco_sort_report.php">JaCoCo Sortable Coverage Report</a></b>
