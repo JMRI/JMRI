@@ -27,8 +27,8 @@
       width="691" height="469" alt="Merg Node Configuration Tool screenshot"
       align="right">
 
-        <p>This is a catch-all generic tool for Node Variable and Node Event editing, 
-        other tools may be more appropriate for full module configuration.</p>
+        <p>This is a generic tool for Node Variable and Node Event editing.</p>
+        <p><strong>Other tools may be more appropriate for full module configuration.</strong></p>
         <p>JMRI does not save node configuration changes, this is all saved on the module.</p>
         <p>It is sensible to make regular backups of your module configurations using appropriate software.</p>
         <p>You are advised not to use this tool at the same time as any other node configuration tool.</p>

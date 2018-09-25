@@ -1144,6 +1144,12 @@ public class CbusOpCodes {
         result.put(52, "CANMIO_OUT"); // NOI18N
         result.put(53, "CANBIP_OUT"); // NOI18N
         result.put(54, "CANASTOP"); // NOI18N
+        result.put(55, "CANCSB"); // NOI18N
+        result.put(56, "CANMAGOT"); // NOI18N
+        result.put(57, "CANACE16CMIO"); // NOI18N
+        result.put(58, "CANPiNODE"); // NOI18N
+        result.put(59, "CANDISP"); // NOI18N
+        result.put(60, "CANCOMPUTE"); // NOI18N
         
         result.put(253, "CANUSB"); // NOI18N
         result.put(254, "EMPTY"); // NOI18N
@@ -1272,6 +1278,12 @@ public class CbusOpCodes {
         result.put(52, "16MHz 25k80 version of CANACC8");
         result.put(53, "16MHz 25k80 version of CANACC5");
         result.put(54, "DCC stop generator");
+        result.put(55, "CANCMD with on board 3A booster");
+        result.put(56, "Magnet on Track detector");
+        result.put(57, "16 input equivaent to CANACE8C");
+        result.put(58, "CBUS module based on Raspberry Pi");
+        result.put(59, "25K80 version of CANLED64");
+        result.put(60, "Event processing engine");
         
         result.put(253, "USB interface");
         result.put(254, "Empty module, bootloader only");
@@ -1392,6 +1404,12 @@ public class CbusOpCodes {
         result.put(52, "https://www.merg.org.uk/merg_wiki/doku.php?id=cbus:canmio"); // NOI18N
         // result.put(53, "CANBIP_OUT"); // NOI18N
         result.put(54, "https://www.merg.org.uk/merg_wiki/doku.php?id=cbus:canastop"); // NOI18N
+        result.put(55, "https://www.merg.org.uk/merg_wiki/doku.php?id=cbus:cancsb"); // NOI18N
+        // result.put(56, "CANMAGOT"); // NOI18N
+        // result.put(57, "CANACE16CMIO"); // NOI18N
+        // result.put(58, "CANPiNODE"); // NOI18N
+        result.put(59, "https://www.merg.org.uk/merg_wiki/doku.php?id=cbus:candisp"); // NOI18N
+        result.put(60, "https://www.merg.org.uk/merg_wiki/doku.php?id=cbus:cancompute"); // NOI18N
         
         // result.put(253, "CANUSB"); // NOI18N
         // result.put(254, "EMPTY"); // NOI18N
