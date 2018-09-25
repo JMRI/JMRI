@@ -173,7 +173,7 @@ public class SplitVariableValue extends VariableValue
 
     /**
      * There are multiple masks for the CVs accessed by this variable.
-     *
+     * <p>
      * Returns the default mask for compatibility.
      * <p>
      * Actual individual masks are added in
@@ -302,20 +302,16 @@ public class SplitVariableValue extends VariableValue
 
         long newVal = 0;
         for (int i = 0; i < intVals.length; i++) {
-//            log.debug("intVals[" + i + "]=" + intVals[i] + ";offsetVal=" + offsetVal(cvList.get(i).cvMask) + ";startOffset=" + cvList.get(i).startOffset);
-            newVal = newVal + ((long) (intVals[i] << cvList.get(i).startOffset));
+            newVal = newVal | (((long) intVals[i]) << cvList.get(i).startOffset);
+            log.debug("Variable={}; i={}; newVal={}", _name, i, getTextFromValue(newVal));
         }
-        if (log.isDebugEnabled()) {
-            log.debug("Variable=" + _name + "; set value to " + newVal);
-        }
+        log.debug("Variable={}; set value to {}", _name, newVal);
         setValue(newVal);  // check for duplicate is done inside setValue
-        if (log.isDebugEnabled()) {
-            log.debug("Variable=" + _name + "; in property change after setValue call");
-        }
+        log.debug("Variable={}; in property change after setValue call", _name);
     }
 
     /**
-     * saves contents of _textField to oldContents
+     * Saves contents of _textField to oldContents.
      */
     void enterField() {
         oldContents = _textField.getText();
