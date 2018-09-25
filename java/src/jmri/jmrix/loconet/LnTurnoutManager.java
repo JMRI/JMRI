@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet;
 
-import javax.annotation.*;
 import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +54,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
     LocoNetInterface fastcontroller;
     LocoNetInterface throttledcontroller;
     boolean mTurnoutNoRetry;
-    private String prefix;
+    private final String prefix;
 
     @Override
     public String getSystemPrefix() {
@@ -70,7 +69,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
         super.dispose();
     }
 
-    protected boolean _binaryOutput = true;
+    protected boolean _binaryOutput = false;
     protected boolean _useOffSwReqAsConfirmation = false;
 
     public void setUhlenbrockMonitoring() {

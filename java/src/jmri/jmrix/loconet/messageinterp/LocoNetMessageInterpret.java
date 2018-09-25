@@ -7,7 +7,6 @@ package jmri.jmrix.loconet.messageinterp;
 
 
 import java.time.LocalTime;
-import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.NmraPacket;
 import jmri.Reporter;
@@ -160,6 +159,12 @@ public class LocoNetMessageInterpret {
                         locoAddress);
             }
 
+            case LnConstants.OPC_EXP_REQ_SLOT: {
+                String locoAddress = convertToMixed(l.getElement(2), l.getElement(1));
+                return Bundle.getMessage("LN_MSG_REQ_EXP_SLOT_FOR_ADDR",
+                        locoAddress);
+            }
+
             /*
              * OPC_SW_ACK       0xBD   ; REQ SWITCH WITH acknowledge function (not DT200)
              *                         ; Follow on message: LACK
@@ -245,6 +250,14 @@ public class LocoNetMessageInterpret {
                 }
                 break;
             }
+
+//            case LnConstants.OPC_EXP_SLOT_MOVE: {
+//                result = interpretOpcExpMoveSlots(l);
+//                if (result.length() > 0) {
+//                    return result;
+//                }
+//                break;
+//            }
 
             /*
              * OPC_LINK_SLOTS   0xB9   ; LINK slot ARG1 to slot ARG2=
@@ -460,6 +473,14 @@ public class LocoNetMessageInterpret {
                 break;
             }
 
+            case LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR: {
+                result = interpretPocExpLocoSpdDirFunction(l);
+                if (result.length() > 0) {
+                    return result;
+                }
+                break;
+            }
+
             /*
              * OPC_PANEL_QUERY 0xDF messages used by throttles to discover
              * panels
@@ -663,13 +684,18 @@ public class LocoNetMessageInterpret {
                 break;
             }
 
+//          TODO: put this back for intelibox cmd station.
+//            it conflicts with loconet speed/dire etc.
             case LnConstants.RE_OPC_IB2_SPECIAL: { // 0xD4
                 result = interpretIb2Special(l);
                 if (result.length() > 0) {
                     return result;
                 }
+                result = interpretOpcExpMoveSlots(l);
+                if (result.length() > 0) {
+                    return result;
+                }
                 break;
-
             }//  case LnConstants.RE_OPC_IB2_SPECIAL: { //0xD4
 
             //$FALL-THROUGH$
@@ -4378,9 +4404,160 @@ public class LocoNetMessageInterpret {
                             Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                     StringUtil.twoHexFromInt(l.getElement(14))));
             }
+        } else if (l.getElement(1) == 0x15) {
+            int slot = ( (l.getElement(2) & 0x07 ) *128) + l.getElement(3); // slot number for this request
+
+            String result = interpretExtendedSlotRdWr(l, slot) ;
+            if (result.length() > 0) {
+                return result;
+            }
         }
         return "";
 
+    }
+    private static String interpretOpcExpMoveSlots(LocoNetMessage l) {
+        int src = ((l.getElement(1) & 0x03) * 128) + (l.getElement(2) & 0x7f);
+        int dest = ((l.getElement(3) & 0x03) * 128) + (l.getElement(4) & 0x7f);
+
+        if ((src >= 0x79) && (src <= 0x7f)) {
+            return "";
+        }
+        if ((dest >= 0x79) && (dest <= 0x7f)) {
+            return "";
+        }
+
+        boolean isSettingStatus = ((l.getElement(3) & 0b01110000) == 0b01100000);
+        if (isSettingStatus) {
+            int stat = l.getElement(4);
+            return Bundle.getMessage("LN_MSG_OPC_EXP_SET_STATUS",
+                    src,
+                    LnConstants.CONSIST_STAT(stat),
+                    LnConstants.LOCO_STAT(stat),
+                    LnConstants.DEC_MODE(stat));
+        }
+        boolean isUnconsisting = ((l.getElement(3) & 0b01110000) == 0b01010000);
+        if (isUnconsisting) {
+            // source and dest same, returns slot contents
+            int stat = l.getElement(4);
+            return Bundle.getMessage("LN_MSG_OPC_EXP_UNCONSISTING",
+                    src);
+        }
+        boolean isConsisting = ((l.getElement(3) & 0b01110000) == 0b01000000);
+        if (isConsisting) {
+            //add dest to src, returns dest slot contents
+            int stat = l.getElement(4);
+            return Bundle.getMessage("LN_MSG_OPC_EXP_CONSISTING",
+                    src,dest);
+        }
+       /* check special cases */
+        if (src == 0) {
+            /* DISPATCH GET */
+            // maybe
+            return Bundle.getMessage("LN_MSG_MOVE_SL_GET_DISP");
+        } else if (src == dest) {
+            /* IN USE */
+            // correct
+            return Bundle.getMessage("LN_MSG_MOVE_SL_NULL_MOVE", src);
+        } else if (dest == 0) {
+            /* DISPATCH PUT */
+
+            return Bundle.getMessage("LN_MSG_MOVE_SL_DISPATCH_PUT", src);
+        } else {
+            /* general move */
+
+            return Bundle.getMessage("LN_MSG_MOVE_SL_MOVE", src, dest);
+        }
+    }
+
+    private static String interpretPocExpLocoSpdDirFunction(LocoNetMessage l) {
+        int slot = ((l.getElement(1) & 0x03) * 128) + (l.getElement(2) & 0x7f);
+        if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK) == 0) {
+            // speed and direction
+            int spd = l.getElement(4);
+            String direction = Bundle.getMessage((l.getElement(1) & 0b00001000) != 0
+                    ? "LN_MSG_DIRECTION_REV" : "LN_MSG_DIRECTION_FWD");
+            String throttleID = Integer.toHexString(l.getElement(3));
+            return Bundle.getMessage("LN_MSG_OPC_EXP_SPEED_DIRECTION", slot, spd, direction, throttleID);
+        }
+        // Build a string for the functions on off
+        String[] fn = new String[8];
+        for (int bitIndex = 0; bitIndex < 8; bitIndex++) {
+            fn[bitIndex] = (l.getElement(4) >> (7 - bitIndex) & 1) == 1 ? Bundle.getMessage("LN_MSG_FUNC_ON")
+                    : Bundle.getMessage("LN_MSG_FUNC_OFF");
+        }
+        if ((l.getElement(1) &
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F0F6_MASK) {
+            return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F0_F6", slot, fn[3], fn[7], fn[6], fn[5], fn[4], fn[2],
+                    fn[1]);
+        } else if ((l.getElement(1) &
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F7F13_MASK) {
+            return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F7_F13", slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
+                    fn[1]);
+        } else if ((l.getElement(1) &
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F14F20_MASK) {
+            return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F14_20",slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
+                    fn[1]);
+        } else if ((l.getElement(1) &
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF_MASK) {
+            return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F21_F28",slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
+                    fn[1], Bundle.getMessage("LN_MSG_FUNC_OFF"));
+        } else if ((l.getElement(1) &
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON_MASK) {
+            return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F21_F28", slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
+                    fn[1], Bundle.getMessage("LN_MSG_FUNC_ON"));
+        }
+        return "";
+    }
+
+    private static String interpretExtendedSlotRdWr(LocoNetMessage l, int slot) {
+        /**
+         * ************************************************
+         * extended slot read/write message               *
+         * ************************************************
+         */
+        int trackStatus = l.getElement(7); // track status
+        int id1 =  l.getElement(19);
+        int id2 = l.getElement(18);
+        int command = l.getOpCode();
+        int stat = l.getElement(4); // slot status
+        //int adr = l.getElement(5) + 128 * l.getElement(6); // loco address
+        int adr = l.getElement(5);
+        int spd = l.getElement(8); // command speed
+        int dirf = l.getElement(10) & 0b00111111; // direction and F0-F4 bits
+        String[] dirf0_4 = interpretF0_F4toStrings(dirf);
+        int ss2 = l.getElement(18); // slot status 2 (tells how to use
+        // ID1/ID2 & ADV Consist)
+        int adr2 = l.getElement(6); // loco address high
+        int snd = l.getElement(10); // Sound 1-4 / F5-F8
+        String[] sndf5_8 = interpretF5_F8toStrings(snd);
+        int id = l.getElement(18) + 256 * l.getElement(19);
+
+        String locoAdrStr = figureAddressIncludingAliasing(adr, adr2, ss2, id1, id2);
+        return Bundle.getMessage(((command == 0xEE)
+                ? "LN_MSG_SLOT_LOCO_INFO_WRITE"
+                : "LN_MSG_SLOT_LOCO_INFO_READ"),
+                slot,
+                locoAdrStr,
+                LnConstants.CONSIST_STAT(stat),
+                LnConstants.LOCO_STAT(stat),
+                LnConstants.DEC_MODE(stat),
+                directionOfTravelString((dirf & LnConstants.DIRF_DIR) == 0),
+                spd, // needs re-interpretation for some cases of slot consisting state
+                dirf0_4[0],
+                dirf0_4[1],
+                dirf0_4[2],
+                dirf0_4[3],
+                dirf0_4[4],
+                sndf5_8[0],
+                sndf5_8[1],
+                sndf5_8[2],
+                sndf5_8[3],
+                trackStatusByteToString(trackStatus),
+                Bundle.getMessage("LN_MSG_SLOT_HELPER_SS2_SIMPLE",
+                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                StringUtil.twoHexFromInt(ss2))),
+                Bundle.getMessage("LN_MSG_SLOT_HELPER_ID1_ID2_AS_THROTTLE_ID",
+                        idString(id1, id2)));
     }
 
     private static final String ds54sensors[] = {"AuxA", "SwiA", "AuxB", "SwiB", "AuxC", "SwiC", "AuxD", "SwiD"};    // NOI18N

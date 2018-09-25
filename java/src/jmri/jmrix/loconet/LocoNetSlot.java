@@ -3,7 +3,6 @@ package jmri.jmrix.loconet;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.List;
-import jmri.jmrix.loconet.locomon.Bundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +42,7 @@ public class LocoNetSlot {
      */
     public LocoNetSlot(int slotNum) {
         slot = slotNum;
-        Dcs240Slot = false;
+        loconetProtocol = LnConstants.LOCONETPROTOCOL_UNKNOWN;
         if ((slot == 0) || (slot > 120 && slot < 128)
                 || (slot > 247 && slot < 257)
                 || (slot > 375 && slot < 385)) {
@@ -58,11 +57,11 @@ public class LocoNetSlot {
      * left un-initialized.
      * <p>
      * @param slotNum - slot number to be assigned to the new LocoNetSlot object
-     * @param isDCS240 - if dcs240 slot, regardless of slotnumber, then true
+     * @param inLoconetProtocol - can be 0 = unknown, 1 = version 1.1, 2 = Expandedslot
      */
-    public LocoNetSlot(int slotNum, boolean isDcs240) {
+    public LocoNetSlot(int slotNum, int inLoconetProtocol) {
         slot = slotNum;
-        Dcs240Slot = isDcs240;
+        loconetProtocol = inLoconetProtocol;
         if ((slot == 0) || (slot > 120 && slot < 128)
                 || (slot > 247 && slot < 257)
                 || (slot > 375 && slot < 385)) {
@@ -86,7 +85,7 @@ public class LocoNetSlot {
         // report messages, since a LocoNetSlot object constructed from a LocoNet
         // "speed" message or "dir/func" message does not give any other useful
         // information for object initialization.
-        Dcs240Slot = false;
+        loconetProtocol = LnConstants.LOCONETPROTOCOL_UNKNOWN;
         slot = l.getElement(2);
         if ((slot == 0) || (slot > 120 && slot < 128)
                 || (slot > 247 && slot < 257)
@@ -839,17 +838,17 @@ public class LocoNetSlot {
                 stat = l.getElement(4);
                 addr = l.getElement(5) + 128 * l.getElement(6);
                 spd = l.getElement(8);
-                //dirf = dirf & 0b11011111;
-                //if ((l.getElement(2) & 0b00001000) != 0) {
-                //    dirf = dirf | 0b00100000;
-                //}
+                if ((l.getElement(7) & 0b01000000) == 0b01000000) {
+                    loconetProtocol = LnConstants.LOCONETPROTOCOL_TWO;
+                } else {
+                    loconetProtocol = LnConstants.LOCONETPROTOCOL_ONE;
+                }
                 dirf = l.getElement(10) & 0b00111111;
                 id = l.getElement(18) + 256 * l.getElement(19);
-                //dirf = dirf & 0b11100000;
-                //dirf = dirf | (l.getElement(10) & 0b00011111);
                 snd = snd & 0b11111100;
                 snd = snd |  ( (l.getElement(11) & 0b01100000) >> 5) ;
                 snd = l.getElement(11) & 0b00001111;
+                trk = l.getElement(7);
                 localF9  = ((l.getElement(11) & 0b00010000 ) != 0);
                 localF10 = ((l.getElement(11) & 0b00100000 ) != 0);
                 localF11 = ((l.getElement(11) & 0b01000000 ) != 0);
@@ -907,6 +906,11 @@ public class LocoNetSlot {
                 if (slot != l.getElement(2)) {
                     log.error("Asked to handle message not for this slot ("
                             + slot + ") " + l);
+                }
+                if ((l.getElement(7) & 0b01000000) == 0b01000000) {
+                    loconetProtocol = LnConstants.LOCONETPROTOCOL_TWO;
+                } else {
+                    loconetProtocol = LnConstants.LOCONETPROTOCOL_ONE;
                 }
                 stat = l.getElement(3);
                 _pcmd = l.getElement(4);
@@ -1068,7 +1072,7 @@ public class LocoNetSlot {
      * @return Formatted LocoNet message to change value.
      */
     public LocoNetMessage writeMode(int status) {
-        if (!Dcs240Slot ) {
+        if (loconetProtocol != LnConstants.LOCONETPROTOCOL_TWO ) {
             LocoNetMessage l = new LocoNetMessage(4);
             l.setOpCode(LnConstants.OPC_SLOT_STAT1);
             l.setElement(1, slot);
@@ -1093,7 +1097,7 @@ public class LocoNetSlot {
      * command station that a specific throttle is controlling the slot.
      */
     public LocoNetMessage writeThrottleID(int newID) {
-        id = (newID & 0x7f7f);
+        id = (newID & 0x17F);
         return writeSlot();
     }
 
@@ -1104,7 +1108,7 @@ public class LocoNetSlot {
      * @return Formatted LocoNet message to change value.
      */
     public LocoNetMessage writeStatus(int status) {
-        if (!Dcs240Slot ) {
+        if (loconetProtocol != LnConstants.LOCONETPROTOCOL_TWO ) {
             LocoNetMessage l = new LocoNetMessage(4);
             l.setOpCode(LnConstants.OPC_SLOT_STAT1);
             l.setElement(1, slot);
@@ -1128,7 +1132,7 @@ public class LocoNetSlot {
      * @return Formatted LocoNet message to change value.
      */
     public LocoNetMessage writeSpeed(int speed) {
-        if (slot  < 128) {
+        if (loconetProtocol != LnConstants.LOCONETPROTOCOL_TWO) {
             LocoNetMessage l = new LocoNetMessage(4);
             l.setOpCode(LnConstants.OPC_LOCO_SPD);
             l.setElement(1, slot );
@@ -1154,7 +1158,7 @@ public class LocoNetSlot {
      * @return LocoNet message which "dispatches" the slot
     */
     public LocoNetMessage dispatchSlot() {
-        if (!Dcs240Slot) {
+        if (loconetProtocol != LnConstants.LOCONETPROTOCOL_TWO) {
             LocoNetMessage l = new LocoNetMessage(4);
             l.setOpCode(LnConstants.OPC_MOVE_SLOTS);
             l.setElement(1, slot);
@@ -1169,6 +1173,29 @@ public class LocoNetSlot {
             l.setElement(4, 0);
             return l;
         }
+    }
+
+    /**
+     * Create a message to perform a null move on this slot.
+     * @return correct LocoNetMessage for protocol being used.
+     */
+    public LocoNetMessage writeNullMove() {
+        if (loconetProtocol != LnConstants.LOCONETPROTOCOL_TWO) {
+            // perform the null slot move for low numbered slots
+            LocoNetMessage msg = new LocoNetMessage(4);
+            msg.setOpCode(LnConstants.OPC_MOVE_SLOTS);
+            msg.setElement(1, slot);
+            msg.setElement(2, slot);
+            return (msg);
+        }
+        // or the null move for higher numbered slots
+        LocoNetMessage msg = new LocoNetMessage(6);
+        msg.setOpCode(0xd4);
+        msg.setElement(1, (slot / 128) | 0b00111000);
+        msg.setElement(2, slot & 0b01111111);
+        msg.setElement(3, (slot / 128) & 0b00000111);
+        msg.setElement(4, slot & 0b01111111);
+        return msg;
     }
 
     /**
@@ -1195,7 +1222,7 @@ public class LocoNetSlot {
      * of a change in the slot contents.
      */
     public LocoNetMessage writeSlot() {
-        if (!Dcs240Slot) {
+        if (loconetProtocol != LnConstants.LOCONETPROTOCOL_TWO) {
             LocoNetMessage l = new LocoNetMessage(14);
             l.setOpCode(LnConstants.OPC_WR_SL_DATA);
             l.setElement(1, 0x0E);
@@ -1209,8 +1236,8 @@ public class LocoNetSlot {
             l.setElement(8, ss2 & 0x7F);
             // item 9 is add2
             l.setElement(10, snd & 0x7F);
-            l.setElement(12, id & 0x7F); // loco id is specified as to 2 byte hex the wrong way round.... 
-            l.setElement(11, (id / 256) & 0x7F); // loco id is specified as to 2 byte hex
+            l.setElement(11, id & 0x7F);  
+            l.setElement(12, (id / 128) & 0x7F); 
             return l;
         }
         LocoNetMessage l = new LocoNetMessage(21);
@@ -1221,16 +1248,16 @@ public class LocoNetSlot {
         l.setElement(4, stat & 0x7F);
         l.setElement(6, (addr / 128) & 0x7F);
         l.setElement(5, addr & 0x7F);
-        l.setElement(7, 0x47);
-        l.setElement(19, (id / 256) & 0x7F); // loco id is specified as to 2 byte hex the wrong way round....
-        l.setElement(18, id & 0x7F); // loco id is specified as to 2 byte hex
+        l.setElement(7, ( trk | 0x40 ) & 0x7F);  // track power status and Expanded slot protocol
+        l.setElement(18, id & 0x7F); 
+        l.setElement(19, (id / 128) & 0x7F); 
         return l;
     }
 
     // data values to echo slot contents
     final private int slot;   // <SLOT#> is the number of the slot that was read.
-    final private boolean Dcs240Slot; 
-    final private boolean systemSlot;
+    private int loconetProtocol; // protocol used by the slot.
+    final private boolean systemSlot; // is it a system slot
     private int stat; // <STAT> is the status of the slot
     private int addr; // full address of the loco, made from
     //    <ADDR> is the low 7 (0-6) bits of the Loco address

@@ -58,7 +58,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
     /*
      * NUM_SLOTS fixed for Uhlenbrock
      */
-    private final int NUM_SLOTS = 128;
+    // private final int NUM_SLOTS = 128;
     /**
      * Provide Uhlenbrock-specific slot implementation
      */
@@ -66,7 +66,7 @@ public class UhlenbrockSlotManager extends SlotManager implements LocoNetListene
     protected void loadSlots() {
         // initialize slot array
         // TODO does UhlenBrock support extended slots?
-        for (int i = 0; i < NUM_SLOTS; i++) {
+        for (int i = 0; i < getNumSlots(); i++) {
             _slots[i] = new UhlenbrockSlot(i);
         }
     }
