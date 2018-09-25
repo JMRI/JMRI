@@ -193,6 +193,6 @@ public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
         return suite;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SplitHexVariableValueTest.class);
+//    private final static Logger log = LoggerFactory.getLogger(SplitHexVariableValueTest.class);
 
 }
