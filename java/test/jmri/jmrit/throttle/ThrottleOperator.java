@@ -42,8 +42,7 @@ public class ThrottleOperator extends JFrameOperator {
 		       Bundle.getMessage("ThrottleMenuViewAddressPanel"));
    }
 
-   // get the address value.
-   public DccLocoAddress getAddressValue(){
+   private AddressPanel getAddressPanel(){
 	AddressPanel ap = (AddressPanel) findSubComponent(
 	       new ComponentChooser() { 
                   @Override
@@ -57,43 +56,31 @@ public class ThrottleOperator extends JFrameOperator {
 		      return "Find AddressSelector"; 
 	          }
 	});
+	return ap;
+   }
+
+   // get the address value.
+   public DccLocoAddress getAddressValue(){
+	AddressPanel ap = getAddressPanel();
 	return ap.getCurrentAddress();
    }
 
    // get the consist address value.
    public DccLocoAddress getConsistAddressValue(){
-	AddressPanel ap = (AddressPanel) findSubComponent(
-	       new ComponentChooser() { 
-                  @Override
-       	          public boolean checkComponent(Component c) { 
-		      if (c instanceof AddressPanel ) 
-			   return true; 
-		      else return false; 
-	          } 
-                  @Override
-	          public String getDescription() { 
-		      return "Find AddressSelector"; 
-	          }
-	});
+	AddressPanel ap = getAddressPanel();
 	return ap.getConsistAddress();
    }
 
    // set the address value.
    public void setAddressValue(DccLocoAddress addr){
-	AddressPanel ap = (AddressPanel) findSubComponent(
-	       new ComponentChooser() { 
-                  @Override
-       	          public boolean checkComponent(Component c) { 
-		      if (c instanceof AddressPanel ) 
-			   return true; 
-		      else return false; 
-	          } 
-                  @Override
-	          public String getDescription() { 
-		      return "Find AddressSelector"; 
-	          }
-	});
+	AddressPanel ap = getAddressPanel();
 	ap.setCurrentAddress(addr);
+   }
+
+   // get the consist address value.
+   public jmri.Throttle getAttachedThrottle(){
+	AddressPanel ap = getAddressPanel();
+	return ap.getThrottle();
    }
 
    public void pushSetButton(){
@@ -215,6 +202,11 @@ public class ThrottleOperator extends JFrameOperator {
    public void pushEStopButton(){
         new JButtonOperator(getControlPanelOperator(),
 			Bundle.getMessage("ButtonStop")).push();
+   }
+
+   public void pushIdleButton(){
+        new JButtonOperator(getControlPanelOperator(),
+			Bundle.getMessage("ButtonIdle")).push();
    }
 
    public void pushForwardButton(){

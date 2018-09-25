@@ -23,27 +23,20 @@ public class ThrottleFrameTest {
 
     @Rule
     public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
+        
+    private ThrottleWindow frame = null;
+    private ThrottleFrame panel = null;
+    private ThrottleOperator to = null;
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ThrottleWindow frame = new ThrottleWindow();
-        ThrottleFrame panel = new ThrottleFrame(frame);
         Assert.assertNotNull("exists", panel);
-        JUnitUtil.dispose(frame);
-        // the throttle list frame gets created above, but needs to be shown to be disposed
-        InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
-        JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
     }
 
     @Test
     public void testSetAndReleaseAddress() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ThrottleWindow frame = new ThrottleWindow();
-        ThrottleFrame panel = new ThrottleFrame(frame);
-	panel.toFront();
-
-	ThrottleOperator to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
 
         to.setAddressValue(new DccLocoAddress(42,false));
 
@@ -57,21 +50,11 @@ public class ThrottleFrameTest {
 		 to.getAddressValue());
 
         to.pushReleaseButton();	
-	to.requestClose();
-        // the throttle list frame gets created above, but needs to be shown to be disposed
-        InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
-        JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
-
     }
 
     @Test
     public void testInitialFunctionStatus() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ThrottleWindow frame = new ThrottleWindow();
-        ThrottleFrame panel = new ThrottleFrame(frame);
-	panel.toFront();
-
-	ThrottleOperator to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
 
         to.setAddressValue(new DccLocoAddress(42,false));
 
@@ -84,22 +67,12 @@ public class ThrottleFrameTest {
 
 
         to.pushReleaseButton();	
-	to.requestClose();
-        // the throttle list frame gets created above, but needs to be shown to be disposed
-        InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
-        JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
     }
 
     @Test
     @Ignore("Works locally (Linux) and on Appveyor (Windows).  Unable to find popup after click on Travis")
     public void testToggleMomentaryStatus() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ThrottleWindow frame = new ThrottleWindow();
-        ThrottleFrame panel = new ThrottleFrame(frame);
-        frame.setExtendedState( frame.getExtendedState()|java.awt.Frame.MAXIMIZED_BOTH );
-	panel.toFront();
-
-	ThrottleOperator to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
 
         to.setAddressValue(new DccLocoAddress(42,false));
 
@@ -115,21 +88,13 @@ public class ThrottleFrameTest {
 	}
 
         to.pushReleaseButton();	
-	to.requestClose();
-        // the throttle list frame gets created above, but needs to be shown to be disposed
-        InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
-        JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
     }
 
     @Test
     public void testToggleOnOffStatus() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ThrottleWindow frame = new ThrottleWindow();
-        ThrottleFrame panel = new ThrottleFrame(frame);
         frame.setExtendedState( frame.getExtendedState()|java.awt.Frame.MAXIMIZED_BOTH );
 	panel.toFront();
-
-	ThrottleOperator to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
 
         to.setAddressValue(new DccLocoAddress(42,false));
 
@@ -144,21 +109,11 @@ public class ThrottleFrameTest {
 	}
 
         to.pushReleaseButton();	
-	to.requestClose();
-        // the throttle list frame gets created above, but needs to be shown to be disposed
-        InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
-        JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
     }
 
     @Test
     public void testToggleOnOffStatusAltFunctions() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ThrottleWindow frame = new ThrottleWindow();
-        ThrottleFrame panel = new ThrottleFrame(frame);
-        frame.setExtendedState( frame.getExtendedState()|java.awt.Frame.MAXIMIZED_BOTH );
-	panel.toFront();
-
-	ThrottleOperator to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
 
         to.setAddressValue(new DccLocoAddress(42,false));
 
@@ -175,21 +130,11 @@ public class ThrottleFrameTest {
 	}
 
         to.pushReleaseButton();	
-	to.requestClose();
-        // the throttle list frame gets created above, but needs to be shown to be disposed
-        InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
-        JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
     }
 
     @Test
     public void testToggleAlt2() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ThrottleWindow frame = new ThrottleWindow();
-        ThrottleFrame panel = new ThrottleFrame(frame);
-        frame.setExtendedState( frame.getExtendedState()|java.awt.Frame.MAXIMIZED_BOTH );
-	panel.toFront();
-
-	ThrottleOperator to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
 
         to.setAddressValue(new DccLocoAddress(42,false));
 
@@ -198,10 +143,6 @@ public class ThrottleFrameTest {
         to.pushAlt1Button();
 
         to.pushReleaseButton();	
-	to.requestClose();
-        // the throttle list frame gets created above, but needs to be shown to be disposed
-        InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
-        JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
     }
 
     // Tests for Control (Speed and Direction) panel.
@@ -209,82 +150,72 @@ public class ThrottleFrameTest {
     @Test
     public void testStopButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ThrottleWindow frame = new ThrottleWindow();
-        ThrottleFrame panel = new ThrottleFrame(frame);
-        frame.setExtendedState( frame.getExtendedState()|java.awt.Frame.MAXIMIZED_BOTH );
-	panel.toFront();
-
-	ThrottleOperator to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
 
         to.setAddressValue(new DccLocoAddress(42,false));
 
         to.pushStopButton();
 	// should verify the throttle is set to stop.
         Assert.assertEquals("Speed set to Stop",0,to.getSpeedSliderValue());
+        Assert.assertTrue("Throttle Speed Stop",to.getAttachedThrottle().getSpeedSetting()<0);
 
+        to.setSpeedSlider(28);
 
         to.pushReleaseButton();	
-	to.requestClose();
-        // the throttle list frame gets created above, but needs to be shown to be disposed
-        InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
-        JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
     }
 
     @Test
     public void testEStopButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ThrottleWindow frame = new ThrottleWindow();
-        ThrottleFrame panel = new ThrottleFrame(frame);
         frame.setExtendedState( frame.getExtendedState()|java.awt.Frame.MAXIMIZED_BOTH );
 	panel.toFront();
 
-	ThrottleOperator to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
-
         to.setAddressValue(new DccLocoAddress(42,false));
+        to.setSpeedSlider(28);
 
         to.pushEStopButton();
 	// should verify the throttle is set to stop.
-        Assert.assertEquals("Speed set to Stop",0,to.getSpeedSliderValue());
+        Assert.assertEquals("Speed set to EStop",0,to.getSpeedSliderValue());
+        Assert.assertTrue("Throttle Speed EStop",to.getAttachedThrottle().getSpeedSetting()<0);
 
         to.pushReleaseButton();	
-	to.requestClose();
-        // the throttle list frame gets created above, but needs to be shown to be disposed
-        InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
-        JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
     }
+
+    @Test
+    public void testIdleButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        to.setAddressValue(new DccLocoAddress(42,false));
+        to.setSpeedSlider(28);
+
+        to.pushIdleButton();
+	// should verify the throttle is set to Idle.
+        Assert.assertEquals("Speed set to Stop",0,to.getSpeedSliderValue());
+        Assert.assertEquals("Throttle Speed Idle",0.0,to.getAttachedThrottle().getSpeedSetting(),0.005);
+
+
+        to.pushReleaseButton();	
+    }
+
 
     @Test
     public void testSliderMaximumSpeed() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ThrottleWindow frame = new ThrottleWindow();
-        ThrottleFrame panel = new ThrottleFrame(frame);
         frame.setExtendedState( frame.getExtendedState()|java.awt.Frame.MAXIMIZED_BOTH );
 	panel.toFront();
-
-	ThrottleOperator to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
 
         to.setAddressValue(new DccLocoAddress(42,false));
 
         to.speedSliderMaximum();
 
         Assert.assertEquals("Speed set to Maximum",126,to.getSpeedSliderValue());
+        Assert.assertEquals("Throttle Speed Maximum",1.0,to.getAttachedThrottle().getSpeedSetting(),0.005);
 
         to.pushReleaseButton();	
-	to.requestClose();
-        // the throttle list frame gets created above, but needs to be shown to be disposed
-        InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
-        JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
     }
 
     @Test
     public void testSliderMinimumSpeed() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ThrottleWindow frame = new ThrottleWindow();
-        ThrottleFrame panel = new ThrottleFrame(frame);
-        frame.setExtendedState( frame.getExtendedState()|java.awt.Frame.MAXIMIZED_BOTH );
-	panel.toFront();
-
-	ThrottleOperator to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
 
         to.setAddressValue(new DccLocoAddress(42,false));
 
@@ -294,62 +225,59 @@ public class ThrottleFrameTest {
         Assert.assertEquals("Speed set to Minimum",1,to.getSpeedSliderValue());
 
         to.pushReleaseButton();	
-	to.requestClose();
-        // the throttle list frame gets created above, but needs to be shown to be disposed
-        InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
-        JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
     } 
 
     @Test
     public void testForwardButtonPress() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ThrottleWindow frame = new ThrottleWindow();
-        ThrottleFrame panel = new ThrottleFrame(frame);
-        frame.setExtendedState( frame.getExtendedState()|java.awt.Frame.MAXIMIZED_BOTH );
-	panel.toFront();
-
-	ThrottleOperator to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
 
         to.setAddressValue(new DccLocoAddress(42,false));
 
         to.pushForwardButton();	// need to verify this took effect.	
+        Assert.assertTrue("Forward Direction",to.getAttachedThrottle().getIsForward());
 
         to.pushReleaseButton();	
-	to.requestClose();
-        // the throttle list frame gets created above, but needs to be shown to be disposed
-        InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
     }
 
     @Test
     public void testReverseButtonPress() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ThrottleWindow frame = new ThrottleWindow();
-        ThrottleFrame panel = new ThrottleFrame(frame);
-        frame.setExtendedState( frame.getExtendedState()|java.awt.Frame.MAXIMIZED_BOTH );
-	panel.toFront();
-
-	ThrottleOperator to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
 
         to.setAddressValue(new DccLocoAddress(42,false));
 
         to.pushReverseButton(); // need to verify this took effect.	
-
+        Assert.assertFalse("Reverse Direction",to.getAttachedThrottle().getIsForward());
         to.pushReleaseButton();	
-	to.requestClose();
-        // the throttle list frame gets created above, but needs to be shown to be disposed
-        InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
     }
-
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initDebugThrottleManager();
+        
+	if(!GraphicsEnvironment.isHeadless()){
+           frame = new ThrottleWindow();
+           panel = new ThrottleFrame(frame);
+           frame.setExtendedState( frame.getExtendedState()|java.awt.Frame.MAXIMIZED_BOTH );
+	   panel.toFront();
+           to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
+	}
     }
 
     @After
     public void tearDown() {
-    	JUnitUtil.tearDown();
+	if(!GraphicsEnvironment.isHeadless()){
+	   to.requestClose();
+           new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+           JUnitUtil.dispose(frame);
+           // the throttle list frame gets created above, but needs to be shown to be disposed
+           InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
+           JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
+        }
+        panel = null;
+	frame = null;
+	to = null;
+	JUnitUtil.tearDown();
     }
 }
