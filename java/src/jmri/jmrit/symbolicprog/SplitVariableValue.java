@@ -733,15 +733,10 @@ public class SplitVariableValue extends VariableValue
                     _progState = IDLE;
                     setBusy(false);
                 }
-//            } else {  // unexpected!
-//                log.error("Variable=" + _name + "; Unexpected state found: " + _progState);
-//                _progState = IDLE;
-//                return;
             }
         } else if (e.getPropertyName().equals("State")) {
-            // state change due to CV state change, so propagate that
             log.debug("state change due to CV state change, so propagate that");
-            int varState = getState();// AbstractValue.SAME;
+            int varState = getState(); // AbstractValue.SAME;
             log.debug(_name + " state was " + varState);
             for (int i = 0; i < cvCount; i++) {
                 int state = cvList.get(i).thisCV.getState();
@@ -750,9 +745,6 @@ public class SplitVariableValue extends VariableValue
                 } else if (priorityValue(state) > priorityValue(varState)) {
                     varState = AbstractValue.UNKNOWN; // or should it be = state ?
                 }
-//                if (priorityValue(state) > priorityValue(varState)) {
-//                    varState = state;
-//                }
             }
             setState(varState);
             log.debug(_name + " state set to " + varState);
@@ -764,12 +756,10 @@ public class SplitVariableValue extends VariableValue
 
             for (int i = 0; i < cvCount; i++) {
                 intVals[i] = (cvList.get(i).thisCV.getValue() & maskVal(cvList.get(i).cvMask)) >>> offsetVal(cvList.get(i).cvMask);
-//                log.debug("intVals[" + i + "]=" + intVals[i]);
             }
 
             updateVariableValue(intVals);
 
-            // state change due to CV value change, so propagate that
             log.debug("state change due to CV value change, so propagate that");
             int varState = AbstractValue.SAME;
             for (int i = 0; i < cvCount; i++) {
