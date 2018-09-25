@@ -18,6 +18,7 @@ import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
 import org.netbeans.jemmy.operators.JToggleButtonOperator;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
+import org.netbeans.jemmy.operators.JSliderOperator;
 import org.netbeans.jemmy.util.NameComponentChooser;
 
 /*
@@ -199,5 +200,52 @@ public class ThrottleOperator extends JFrameOperator {
         (new JButtonOperator(jdo,Bundle.getMessage("ButtonOK"))).doClick();
         
    }
+
+   // Control (Speed and Direction) panel operations
+   public JInternalFrameOperator getControlPanelOperator(){
+       return new JInternalFrameOperator(this, 
+		       Bundle.getMessage("ThrottleMenuViewControlPanel"));
+   }
+
+   public void pushStopButton(){
+        new JButtonOperator(getControlPanelOperator(),
+			Bundle.getMessage("ButtonStop")).push();
+   }
+
+   public void pushEStopButton(){
+        new JButtonOperator(getControlPanelOperator(),
+			Bundle.getMessage("ButtonStop")).push();
+   }
+
+   public void pushForwardButton(){
+        new JRadioButtonOperator(getControlPanelOperator(),
+			Bundle.getMessage("ButtonForward")).push();
+   }
+
+   public void pushReverseButton(){
+        new JRadioButtonOperator(getControlPanelOperator(),
+			Bundle.getMessage("ButtonReverse")).push();
+   }
+
+   public int getSpeedSliderValue(){
+        return new JSliderOperator(getControlPanelOperator()).getValue();
+   }
+
+   public void setSpeedSlider(int i){
+        new JSliderOperator(getControlPanelOperator()).setValue(i);
+   }
+
+   public void slideSpeedSlider(int i){
+        new JSliderOperator(getControlPanelOperator()).scrollToValue(i);
+   }
+
+   public void speedSliderMaximum(){
+        new JSliderOperator(getControlPanelOperator()).scrollToMaximum();
+   }
+
+   public void speedSliderMinimum(){
+        new JSliderOperator(getControlPanelOperator()).scrollToMinimum();
+   }
+
 
 }
