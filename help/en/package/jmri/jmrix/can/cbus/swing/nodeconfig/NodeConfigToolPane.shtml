@@ -5,8 +5,8 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <meta name="keywords" content="JMRI help MERGCBUS NODE CONFIG TOOL configuration">
-  <title>JMRI: MERGCBUS Node Config Tool</title><!-- Style -->
+  <meta name="keywords" content="JMRI help MERG CBUS NODE CONFIG TOOL configuration variable">
+  <title>JMRI: MERG CBUS Node Config Tool</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -22,33 +22,136 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-     <h1>JMRI: MERGCBUS Node Configuration Tool</h1>
-      <a href="../../../../../../../html/hardware/can/images/MergNodeConfig.png">
-      <img src="../../../../../../../html/hardware/can/images/MergNodeConfig.png"
-      width="315" height="188" alt="Merg Node Configuration Tool screenshot"
-      align="right"></a>
+     <h1>JMRI: MERG CBUS Node Configuration Tool</h1>
+      <img src="../../../../../../../html/hardware/can/images/cbus-node-config-generic-nv-691x469.png"
+      width="691" height="469" alt="Merg Node Configuration Tool screenshot"
+      align="right">
 
-      <p>NV : Node Variable</p>
-      <p>Node : Each MERGCBUS module in FLIM operation has a node number.</p>
-
-      <p>The MERGCBUS Node Configuration tool programs
-      Variables in a module using the modules' Node number.</p>
-
-      <h3>Node Number</h3>
-      <p>Using the number spinner or keyboard, enter the numerical Node number
-        of the board and click [Set].</p>
-
-     <h3>Set Node Variable</h3>
-      <p>Using the number spinner or keyboard, enter the numerical Variable number.
-      Next, you may click the [Read] button to ask the Node you just set to provide
-      the value stored in the given Variable.<br>
-      Change or enter e new value for (the contents of) the variable an click [Write].</p>
-
-     <h3>JMRI Help</h3>
+        <p>This is a catch-all generic tool for Node Variable and Node Event editing, 
+        other tools may be more appropriate for full module configuration.</p>
+        <p>JMRI does not save node configuration changes, this is all saved on the module.</p>
+        <p>It is sensible to make regular backups of your module configurations using appropriate software.</p>
+        <p>You are advised not to use this tool at the same time as any other node configuration tool.</p>
+        <p>At the bottom of the main window is a config console where information relating to the current task is displayed, 
+        this is set to cover the main window on startup.</p>
+        <p>You can monitor full network activity in the MERG CBUS Console Log.</p>
       
-      <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the MERGCBUS Node Configuration Tool window.</p>
+    <h3>Node Selection</h3>
+        <p>Selecting the Refresh button at the top of the screen will request each node on the CBUS network to report back.</p>
+        <p>This node list is added to the dropdown menu at the top of the screen.</p>
+        <p>Each node which reports itself is sent a message to take it out of any existing learn event mode.</p>
+        <p>A message identifying nodes in setup mode, ie requesting a node number will also be sent to the network.</p>
+        <p>Select the node you wish to configure, then press Select Node.</p>
       
-      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI MERGCBUS Support page</a>.</p>
+        <p>Additional information may be displayed, including firmware version,
+        and if available a module specific web support link which will open in your browser.</p>
+        <p>The NV screen will show in the main window unless the event screen was displayed previously.</p>
+        <p>When a node is selected, you can switch the main screen between Node Variables to Events.</p>
+
+
+    <h3>Node Variables</h3>
+     
+        <p>These are displayed in a list form, the mouseover tooltips can give extra information.</p>
+     
+        <p>NV1: 10   ( Node Variable 1 is set at 10 decimal)</p>
+        <p>(a) 0000 1010 ( hexdecimal + binary forms of the variable )</p>
+        <p>Binary values are shown as a split value purely for readability.</p>
+        <p>New: Decimal Value ( Spinner box allows entry for values between 0 and 255. 
+        <br>When changed from existing value, the background colour highlights. )</p>
+     
+        <p>The new hex and binary values are shown to the right hand side.</p>
+
+        <p>To write the new NV's, the Write NV's button is enabled when a variable has been changed.</p>
+        
+        <p>Click on this button for a confirmation before writing.</p>
+        
+        
+    <h3>Node Events</h3>
+        <img src="../../../../../../../html/hardware/can/images/cbus-node-config-ev-list-931x472.png"
+      width="931" height="472" alt="Merg cbus Node Configuration Tool Event List">
+        
+      
+        <h4>Editing / New Node Events</h4>
+        
+        <img src="../../../../../../../html/hardware/can/images/cbus-node-config-edit-ev-321x388.png"
+      width="321" height="388" alt="Merg cbus Node Configuration Tool Event Edit" align="right">
+      
+      <p>Click on the Edit button in the event list, or the new event button to bring up the edit event window.</p>
+      <p>The event and node combination are set at the top of the list</p>
+      <p>The number of variables per event will depend on the module event settings and firmware.</p>
+      
+      <p>The hex and binary values are shown on the right hand side of each event variable.</p>
+      
+      <p>Click on edit or new event to save this to the module.</p>
+              <img src="../../../../../../../html/hardware/can/images/cbus-node-config-edit-ev-confirm-449x127.png"
+      width="449" height="127" alt="Merg cbus Node Configuration Tool Event Edit Confirm" >
+      
+      
+      
+      <p>If deleting an event from the module you will be asked to confirm this.</p>
+      
+      
+      
+    <h3>Node Number</h3>
+        
+        <p>Node Number : Each module in FLIM operation has a node number.</p>
+        
+        <p>A node number is requested by the holding down the FLiM button on a module.</p>
+        
+        <p>While the JMRI MERG CBUS Node Config Tool is running, it will listen for modules requesting a node number.</p>
+        
+        <p>On hearing a node number request, an allocation popup window will be displayed.</p>
+        
+        <img src="../../../../../../../html/hardware/can/images/cbus-node-config-qnn_278x151.png"
+        width="278" height="151" alt="Merg CBUS Node Configuration Request Node Number">
+
+        <p>Using the number spinner or keyboard, enter the numerical Node number
+        you would like for the module.</p>   
+        
+        <p>It is suggested that you allocate node numbers above 256, the maximum non-reserved number is 65,533</p>
+        
+        <p>If a reserved OpCode is used, background will turn yellow with explanation.</p>      
+        <p>If an existing node number being used is selected, background will turn red.</p>
+    
+        <p>If a node releases its Node Number, a notification is displayed 
+        with an option to refresh the node list.</p>
+      
+    <h3>Supported Operation Codes</h3>
+      
+      <ul>
+      <li>NERD</li>
+      <li>RQEVN</li>
+      <li>NVSET</li>
+      <li>NVRD</li>
+      <li>RQNP</li>
+      <li>QNN</li>
+      <li>RQNPN</li>
+      <li>REVAL</li>
+      <li>EVULN</li>
+      <li>EVLRN</li>
+      <li>NNLRN</li>
+      <li>SNN</li>
+      <li>RQNN</li>
+      <li>NNREL</li>
+      <li>NNACK</li>
+      <li>PARAMS</li>
+      <li>WRACK</li>
+      <li>CMDER</li>
+      <li>PNN</li>
+      <li>NVANS</li>
+      <li>NUMEV</li>
+      <li>PARAN</li>
+      <li>ENRSP</li>
+      <li>NEVAL</li>
+      </ul>
+      
+    <h3>JMRI Help</h3>
+      
+      <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the MERG CBUS Node Configuration Tool window.</p>
+      
+      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI MERG CBUS Support page</a>.</p>
+      
+      <p><a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.java">MERG CBUS Node Config Tool Source Code on Github</a></p>
       
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
