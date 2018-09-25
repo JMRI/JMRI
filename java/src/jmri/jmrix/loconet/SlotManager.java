@@ -183,7 +183,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * command station switches
      */
     private final int SLOTS_OTHER = 128;
-    private final int SLOTS_DCS240 = 233;
+    private final int SLOTS_DCS240 = 433;
     private int numSlots = SLOTS_DCS240;         // This is the largest number so far it will reset after the commandstation is known value. 
     /**
      * The network protocol. 
