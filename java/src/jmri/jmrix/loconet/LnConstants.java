@@ -382,6 +382,11 @@ public final class LnConstants {
     public final static int OPC_ALM_WRITE = 0xee; // Undocumented name
     public final static int OPC_MASK = 0x7f;  /* mask for acknowledge opcodes */
 
+    /* protocol level */
+    public final static int LOCONETPROTOCOL_UNKNOWN = 0;
+    public final static int LOCONETPROTOCOL_ONE = 1;
+    public final static int LOCONETPROTOCOL_TWO = 2;
+
     /* Expanded slot codes */
     public final static int OPC_EXP_REQ_SLOT = 0xbe;
     public final static int OPC_EXP_SLOT_MOVE = 0xd4;

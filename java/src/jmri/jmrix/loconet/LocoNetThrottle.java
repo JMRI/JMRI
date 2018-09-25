@@ -124,24 +124,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         // listen for changes
         slot.addSlotListener(this);
 
-        if ( slot.getSlot() < 128 ) {
-            // perform the null slot move for low numbered slots
-            LocoNetMessage msg = new LocoNetMessage(4);
-            msg.setOpCode(LnConstants.OPC_MOVE_SLOTS);
-            msg.setElement(1, slot.getSlot());
-            msg.setElement(2, slot.getSlot());
-            network.sendLocoNetMessage(msg);
-        } else {
-            // or the null move for higher numbered slots
-            LocoNetMessage msg = new LocoNetMessage(6);
-            msg.setOpCode(0xd4);
-            msg.setElement(1, (slot.getSlot() / 128) | 0b00111000 );
-            msg.setElement(2, slot.getSlot() & 0b01111111);
-            msg.setElement(3, (slot.getSlot() / 128) & 0b00000111 );
-            msg.setElement(4, slot.getSlot() & 0b01111111);
-            network.sendLocoNetMessage(msg);
-        }
-
+        network.sendLocoNetMessage(slot.writeNullMove());
+        
         // start periodically sending the speed, to keep this
         // attached
         startRefresh();
@@ -1053,9 +1037,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
         if(!isInitialized && slot.slotStatus() == LnConstants.LOCO_IN_USE){
            log.debug("Attempting to update slot with this JMRI instance's throttle id ({})", throttleManager.getThrottleID());
-           //if (slot.getSlot() < 128) {
-               network.sendLocoNetMessage(slot.writeThrottleID(throttleManager.getThrottleID()));
-           //}
+           network.sendLocoNetMessage(slot.writeThrottleID(throttleManager.getThrottleID()));
            isInitialized = true;
         }
 

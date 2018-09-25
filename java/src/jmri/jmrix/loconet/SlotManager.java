@@ -64,13 +64,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         LONG_TIMEOUT = 180000;  // Fleischmann command stations take forever
         SHORT_TIMEOUT = 8000;   // DCS240 reads
 
-// cannot load slots, or checkstale slots till command station set
-/*        if ( getCommandStationType().equals(LnCommandStationType.COMMAND_STATION_DCS240))  {
-            numSlots = 450;
-            extendedSlots = true;
-        };
         loadSlots();
-*/
+
         // listen to the LocoNet
         tc.addLocoNetListener(~0, this);
 
@@ -94,9 +89,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     protected void loadSlots() {
         // initialize slot array
-        _slots = new LocoNetSlot[numSlots];
         for (int i = 0; i < numSlots; i++) {
-            _slots[i] = new LocoNetSlot(i);
+            _slots[i] = new LocoNetSlot(i,getLoconetProtocol());
         }
     }
 
@@ -188,16 +182,36 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     /*
      * command station switches
      */
-    private int numSlots = 128;
+    private final int SLOTS_OTHER = 128;
     private final int SLOTS_DCS240 = 433;
-    private boolean extendedSlots = false;
+    private int numSlots = SLOTS_DCS240;         // This is the largest number so far it will reset after the commandstation is known value. 
+    /**
+     * The network protocol. 
+     */
+    private int loconetProtocol = LnConstants.LOCONETPROTOCOL_UNKNOWN;    // defaults to unknown
+
+    /**
+     * 
+     * @param value the loconet protocol supported
+     */
+    public void setLoconet2Supported(int value) {
+        loconetProtocol = value;
+    }
+
+    /**
+     * 
+     * @return the loconet protocol supported
+     */
+    public int getLoconetProtocol() {
+        return loconetProtocol;
+    }
 
     /**
      * Information on slot state is stored in an array of LocoNetSlot objects.
      * This is declared final because we never need to modify the array itself,
      * just its contents.
      */
-    protected LocoNetSlot _slots[] = null;
+    protected LocoNetSlot _slots[] = new LocoNetSlot[getNumSlots()]; ;
 
     /**
      * Access the information in a specific slot. Note that this is a mutable
@@ -238,7 +252,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         // send info request
         LocoNetMessage m = new LocoNetMessage(4);
-        if (!extendedSlots ) {
+        if (loconetProtocol != 2 ) {
             m.setOpCode(LnConstants.OPC_LOCO_ADR);  // OPC_LOCO_ADR
         } else {
             m.setOpCode(LnConstants.OPC_EXP_REQ_SLOT); //  Extended slot
@@ -259,17 +273,20 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * This is intended to be called from the staleSlotCheckTimer
      */
     private void checkStaleSlots() {
-        long staleTimeout = System.currentTimeMillis() - 90000;  // 90 seconds ago
+        long staleTimeout = System.currentTimeMillis() - 90000; // 90 seconds ago
         LocoNetSlot slot;
 
         // We will just check the normal loco slots 1 to numSlots exclude systemslots
         for (int i = 1; i < numSlots; i++) {
-          slot = _slots[i];
-          if (!slot.isSystemSlot()) {
-            if ((slot.slotStatus() == LnConstants.LOCO_IN_USE)
-                    && (slot.getLastUpdateTime() <= staleTimeout)) {
-                sendReadSlot(i);
-            }
+            try {
+                slot = _slots[i];
+                if (!slot.isSystemSlot()) {
+                    if ((slot.slotStatus() == LnConstants.LOCO_IN_USE) && (slot.getLastUpdateTime() <= staleTimeout)) {
+                        sendReadSlot(i);
+                    }
+                }
+            } catch (Exception ex) {
+                log.warn("Erro slot[{}]", i);
             }
         }
     }
@@ -359,6 +376,19 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             immedPacket = m;
         } else {
             immedPacket = null;
+        }
+        // detect protocol if not yet set
+        if (getLoconetProtocol() == LnConstants.LOCONETPROTOCOL_UNKNOWN) {
+            if ((m.getOpCode() == LnConstants.OPC_EXP_RD_SL_DATA && m.getNumDataElements() == 21) ||
+                    (m.getOpCode() == LnConstants.OPC_SL_RD_DATA)) {
+                if ((m.getElement(7) & 0b01000000) == 0b01000000) {
+                    log.info("Setting protocol Loconet 2");
+                    setLoconet2Supported(LnConstants.LOCONETPROTOCOL_TWO);
+                } else {
+                    log.info("Setting protocol Loconet 1");
+                    setLoconet2Supported(LnConstants.LOCONETPROTOCOL_ONE);
+                }
+            }
         }
 
         // slot specific message?
@@ -552,16 +582,15 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
             case LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR:
             case LnConstants.OPC_EXP_SLOT_MOVE:
-                i = ( ( m.getElement(1) & 0x03 ) *128) + m.getElement(2);
+                i = ( (m.getElement(1) & 0x03 ) *128) + m.getElement(2);
                 return i;
             case LnConstants.OPC_EXP_RD_SL_DATA:
             case LnConstants.OPC_EXP_WR_SL_DATA:
                 //only certain lengths get passed to slot
                 if (m.getElement(1) == 21) {
                     i = ( (m.getElement(2) & 0x03 ) *128) + m.getElement(3);
-                    return i;
                 }
-                //$FALL-THROUGH$
+                return i;
             default:
                 // nothing here for us
                 return i;
@@ -901,10 +930,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         mCanRead = value.getCanRead();
         mProgEndSequence = value.getProgPowersOff();
         if (getCommandStationType().equals(LnCommandStationType.COMMAND_STATION_DCS240)) {
-            numSlots = SLOTS_DCS240;  // base 128 then 400 extended
-            extendedSlots = true;
+            numSlots = SLOTS_DCS240;
+        } else {
+            numSlots = SLOTS_OTHER;
         }
-        loadSlots();
     }
 
     LocoNetThrottledTransmitter throttledTransmitter = null;
