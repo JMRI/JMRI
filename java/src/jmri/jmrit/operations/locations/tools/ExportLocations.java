@@ -14,7 +14,11 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +32,9 @@ public class ExportLocations extends XmlFile {
 
     static final String ESC = "\""; // escape character NOI18N
     private String del = ","; // delimiter
+
+    TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
+    RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
 
     public void setDeliminter(String delimiter) {
         del = delimiter;
@@ -87,6 +94,8 @@ public class ExportLocations extends XmlFile {
                 del +
                 Bundle.getMessage("Length") +
                 del +
+                Bundle.getMessage("RollingStock") +
+                del +
                 Bundle.getMessage("RoadOption") +
                 del +
                 Bundle.getMessage("Roads") +
@@ -99,51 +108,119 @@ public class ExportLocations extends XmlFile {
                 del +
                 Bundle.getMessage("Ships") +
                 del +
+                Bundle.getMessage("SetOutRestrictions") +
+                del +
+                Bundle.getMessage("Restrictions") +
+                del +
+                Bundle.getMessage("PickUpRestrictions") +
+                del +
+                Bundle.getMessage("Restrictions") +
+                del +
                 Bundle.getMessage("ScheduleName") +
                 del +
                 Bundle.getMessage("AlternateTrack");
 
         fileOut.println(header);
 
-        String line = "";
-        String locationName;
-        String trackName;
-        String roadNames;
-        String loadNames;
-        String shipNames;
-        String alternateTrackName;
-
         List<Location> locations = InstanceManager.getDefault(LocationManager.class).getLocationsByNameList();
-
         for (Location location : locations) {
-            locationName = location.getName();
+            String locationName = location.getName();
             if (locationName.contains(del)) {
                 locationName = ESC + locationName + ESC;
             }
             for (Track track : location.getTrackByNameList(null)) {
-                trackName = track.getName();
+                String trackName = track.getName();
                 if (trackName.contains(del)) {
                     trackName = ESC + trackName + ESC;
                 }
-                roadNames = "";
+
+                StringBuffer rollingStockNames = new StringBuffer();
+                for (String rollingStockName : track.getTypeNames()) {
+                    rollingStockNames.append(rollingStockName + "; ");
+                }
+
+                StringBuffer roadNames = new StringBuffer();
                 if (!track.getRoadOption().equals(Track.ALL_ROADS)) {
                     for (String roadName : track.getRoadNames()) {
-                        roadNames = roadNames + roadName + "; ";
+                        roadNames.append(roadName + "; ");
                     }
                 }
-                loadNames = "";
+
+                StringBuffer loadNames = new StringBuffer();
                 if (!track.getLoadOption().equals(Track.ALL_LOADS)) {
                     for (String loadName : track.getLoadNames()) {
-                        loadNames = loadNames + loadName + "; ";
+                        loadNames.append(loadNames + loadName + "; ");
                     }
                 }
-                shipNames = "";
+
+                StringBuffer shipNames = new StringBuffer();
                 if (!track.getShipLoadOption().equals(Track.ALL_LOADS)) {
                     for (String shipName : track.getShipLoadNames()) {
-                        shipNames = shipNames + shipName + "; ";
+                        shipNames.append(shipNames + shipName + "; ");
                     }
                 }
-                alternateTrackName = "";
+
+                String setOutRestriction = Bundle.getMessage("None");
+                if (track.getDropOption().equals(Track.TRAINS)) {
+                    setOutRestriction = Bundle.getMessage("Trains");
+                } else if (track.getDropOption().equals(Track.ROUTES)) {
+                    setOutRestriction = Bundle.getMessage("Routes");
+                } else if (track.getDropOption().equals(Track.EXCLUDE_TRAINS)) {
+                    setOutRestriction = Bundle.getMessage("ExcludeTrains");
+                } else if (track.getDropOption().equals(Track.EXCLUDE_ROUTES)) {
+                    setOutRestriction = Bundle.getMessage("ExcludeRoutes");
+                }
+
+                StringBuffer setOutRestrictions = new StringBuffer();
+                if (track.getDropOption().equals(Track.TRAINS) || track.getDropOption().equals(Track.EXCLUDE_TRAINS)) {
+                    for (String id : track.getDropIds()) {
+                        Train train = trainManager.getTrainById(id);
+                        if (train != null) {
+                            setOutRestrictions.append(train.getName() + "; ");
+                        }
+                    }
+                }
+                if (track.getDropOption().equals(Track.ROUTES) || track.getDropOption().equals(Track.EXCLUDE_ROUTES)) {
+                    for (String id : track.getDropIds()) {
+                        Route route = routeManager.getRouteById(id);
+                        if (route != null) {
+                            setOutRestrictions.append(route.getName() + "; ");
+                        }
+                    }
+                }
+
+                String pickUpRestriction = Bundle.getMessage("None");
+                if (track.getPickupOption().equals(Track.TRAINS)) {
+                    pickUpRestriction = Bundle.getMessage("Trains");
+                } else if (track.getPickupOption().equals(Track.ROUTES)) {
+                    pickUpRestriction = Bundle.getMessage("Routes");
+                } else if (track.getPickupOption().equals(Track.EXCLUDE_TRAINS)) {
+                    pickUpRestriction = Bundle.getMessage("ExcludeTrains");
+                } else if (track.getPickupOption().equals(Track.EXCLUDE_ROUTES)) {
+                    pickUpRestriction = Bundle.getMessage("ExcludeRoutes");
+                }
+
+                StringBuffer pickUpRestrictions = new StringBuffer();
+                if (track.getPickupOption().equals(Track.TRAINS) ||
+                        track.getPickupOption().equals(Track.EXCLUDE_TRAINS)) {
+                    for (String id : track.getPickupIds()) {
+                        Train train = trainManager.getTrainById(id);
+                        if (train != null) {
+                            pickUpRestrictions.append(train.getName() + "; ");
+                        }
+                    }
+                }
+                if (track.getPickupOption().equals(Track.ROUTES) ||
+                        track.getPickupOption().equals(Track.EXCLUDE_ROUTES)) {
+                    for (String id : track.getPickupIds()) {
+                        Route route = routeManager.getRouteById(id);
+                        if (route != null) {
+                            pickUpRestrictions.append(route.getName() + "; ");
+                        }
+                    }
+                }
+
+                String alternateTrackName = "";
                 if (track.getAlternateTrack() != null) {
                     alternateTrackName = track.getAlternateTrack().getName();
                 }
@@ -151,7 +228,7 @@ public class ExportLocations extends XmlFile {
                     alternateTrackName = Bundle.getMessage("ButtonYes");
                 }
 
-                line = locationName +
+                String line = locationName +
                         del +
                         trackName +
                         del +
@@ -159,22 +236,32 @@ public class ExportLocations extends XmlFile {
                         del +
                         track.getLength() +
                         del +
+                        rollingStockNames.toString() +
+                        del +
                         track.getRoadOptionString() +
                         del +
-                        roadNames +
+                        roadNames.toString() +
                         del +
                         track.getLoadOptionString() +
                         del +
-                        loadNames +
+                        loadNames.toString() +
                         del +
                         track.getShipLoadOptionString() +
                         del +
-                        shipNames +
+                        shipNames.toString() +
+                        del +
+                        setOutRestriction +
+                        del +
+                        setOutRestrictions.toString() +
+                        del +
+                        pickUpRestriction +
+                        del +
+                        pickUpRestrictions.toString() +
                         del +
                         track.getScheduleName() +
                         del +
                         alternateTrackName;
-                
+
                 fileOut.println(line);
             }
 
