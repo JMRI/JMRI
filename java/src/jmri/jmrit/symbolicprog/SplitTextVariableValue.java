@@ -1,12 +1,9 @@
 // SplitTextVariableValue.java
 package jmri.jmrit.symbolicprog;
 
-import static java.nio.charset.Charset.defaultCharset;
-
 import java.awt.event.ActionEvent;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
-import java.util.logging.Level;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -32,12 +29,10 @@ import org.slf4j.LoggerFactory;
  * byte. The default is "0" (a null byte).
  * </li>
  * <li>
- * A {@code charSet} attribute can be used to change the character set used
- * to encode or decode the text string.
- * Valid values are any Java-supported
- * {@link java.nio.charset.Charset} name.
- * If not specified, the default character set
- * of this Java virtual machine is used.
+ * A {@code charSet} attribute can be used to change the character set used to
+ * encode or decode the text string. Valid values are any Java-supported
+ * {@link java.nio.charset.Charset} name. If not specified, the default
+ * character set of this Java virtual machine is used.
  * </li>
  * </ul>
  *
@@ -186,8 +181,7 @@ public class SplitTextVariableValue extends SplitVariableValue {
      * Contains byte-value specific code.
      * <br><br>
      * Calculates new value for _textField and invokes
-     * {@link #setValue(String) setValue(newVal)} to make
-     * and notify the change
+     * {@link #setValue(String) setValue(newVal)} to make and notify the change
      *
      * @param intVals array of new CV values
      */
@@ -204,9 +198,9 @@ public class SplitTextVariableValue extends SplitVariableValue {
         if (log.isDebugEnabled()) {
             log.debug("Variable=" + _name + "; set value to " + newVal);
         }
-        log.debug("setValue(newVal)to {}",newVal);
+        log.debug("setValue(newVal)to {}", newVal);
         setValue(newVal);  // check for duplicate is done inside setValue
-        log.debug("done setValue(newVal)to {}",newVal);
+        log.debug("done setValue(newVal)to {}", newVal);
         if (log.isDebugEnabled()) {
             log.debug("Variable=" + _name + "; in property change after setValueFromString call");
         }
@@ -226,9 +220,9 @@ public class SplitTextVariableValue extends SplitVariableValue {
             _textField.setText(oldVal); // if mismatch, restore old value
             return;                     // & return without triggering property change
         }
-        if (_textField != null && !oldVal.equals(newVal)) {
+        if (!oldVal.equals(newVal)) {
             log.debug("Value changed from '{}' to '{}", oldVal, newVal);
-            // special care needed if _textField is shrinking 
+            // special care needed if _textField is shrinking
             _fieldShrink = (newVal.length() < oldVal.length());
             log.debug("_fieldShrink=" + _fieldShrink);
             updatedTextField();

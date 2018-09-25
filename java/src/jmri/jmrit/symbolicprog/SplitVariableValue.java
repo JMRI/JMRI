@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class SplitVariableValue extends VariableValue
-        implements ActionListener, PropertyChangeListener, FocusListener {
+        implements ActionListener, FocusListener {
 
     private static final int RETRY_COUNT = 2;
 
@@ -838,9 +838,9 @@ public class SplitVariableValue extends VariableValue
     }
 
     /**
-     * class to hold CV parameters for CVs used
+     * Class to hold CV parameters for CVs used.
      */
-    class CvItem {
+    static class CvItem {
 
         // class fields
         String cvName;
