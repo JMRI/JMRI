@@ -3,11 +3,14 @@ package jmri.implementation;
 import static jmri.Conditional.*;
 
 import jmri.Audio;
+import jmri.Block;
 import jmri.Conditional;
 import jmri.ConditionalAction;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
+import jmri.Logix;
+import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.NamedBean;
 import jmri.Route;
@@ -17,8 +20,11 @@ import jmri.SignalMastManager;
 import jmri.TurnoutManager;
 import jmri.RouteManager;
 import jmri.Sensor;
+import jmri.Signal;
 import jmri.SignalHead;
+import jmri.SignalMast;
 import jmri.Turnout;
+import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
@@ -603,6 +609,314 @@ public class DefaultConditionalActionTest {
         bean = InstanceManager.getDefault(RouteManager.class).newRoute(deviceName);
         ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_TRIGGER_ROUTE, deviceName, 4, "5");
         Assert.assertTrue("getActionBean() returns correct bean", ix1.getBean().equals(bean));
+    }
+    
+    @Test
+    public void testDescription() {
+        final String deviceName = "3";
+        final String actionStr = "5";
+        
+        ConditionalAction ix1 = new DefaultConditionalAction(ACTION_OPTION_ON_CHANGE_TO_TRUE, ACTION_SET_TURNOUT, deviceName, Turnout.THROWN, actionStr);
+        
+        ix1.setType(Conditional.ACTION_CANCEL_TURNOUT_TIMERS);
+        ix1.setActionData(Turnout.INDIRECT);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Cancel Timers for Turnout, \"3\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Cancel Timers for Turnout, \"3\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_SET_SIGNAL_HELD);
+        ix1.setActionData(SignalHead.YELLOW);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Set Signal Head Held, \"3\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Set Signal Head Held, \"3\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_CLEAR_SIGNAL_HELD);
+        ix1.setActionData(SignalHead.YELLOW);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Clear Signal Head Held, \"3\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Clear Signal Head Held, \"3\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_SET_SIGNAL_DARK);
+        ix1.setActionData(SignalHead.YELLOW);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Set Signal Head Dark, \"3\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Set Signal Head Dark, \"3\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_SET_SIGNAL_LIT);
+        ix1.setActionData(SignalHead.YELLOW);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Set Signal Head Lit, \"3\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Set Signal Head Lit, \"3\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_TRIGGER_ROUTE);
+        ix1.setActionData(Route.ONTHROWN);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Trigger Route, \"3\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Trigger Route, \"3\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_CANCEL_SENSOR_TIMERS);
+        ix1.setActionData(Sensor.INACTIVE);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Cancel Timers for Sensor, \"3\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Cancel Timers for Sensor, \"3\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_SET_MEMORY);
+        ix1.setActionData(Memory.INCONSISTENT);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Set Memory, \"3\". to 5.".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Set Memory, \"3\". to 5.".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_ENABLE_LOGIX);
+        ix1.setActionData(Logix.LISTENER_TYPE_CONDITIONAL);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Enable Logix, \"3\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Enable Logix, \"3\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_DISABLE_LOGIX);
+        ix1.setActionData(Logix.LISTENER_TYPE_CONDITIONAL);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Disable Logix, \"3\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Disable Logix, \"3\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_COPY_MEMORY);
+        ix1.setActionData(Memory.INCONSISTENT);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Copy Memory To Memory, \"3\". to 5.".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Copy Memory To Memory, \"3\". to 5.".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_SET_LIGHT_INTENSITY);
+        ix1.setActionData(Light.TIMED_ON_CONTROL);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Set Light Intensity, \"3\". to 5. to 4.".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Set Light Intensity, \"3\". to 5. to 4.".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_SET_LIGHT_TRANSITION_TIME);
+        ix1.setActionData(Light.TIMED_ON_CONTROL);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Set Light Transition Time, \"3\". to 5. to 4.".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Set Light Transition Time, \"3\". to 5. to 4.".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_ALLOCATE_WARRANT_ROUTE);
+        ix1.setActionData(Warrant.RETRY);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Allocate Warrant Route, \"3\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Allocate Warrant Route, \"3\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_DEALLOCATE_WARRANT_ROUTE);
+        ix1.setActionData(Warrant.RETRY);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Deallocate Warrant, \"3\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Deallocate Warrant, \"3\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_SET_SIGNALMAST_HELD);
+        ix1.setActionData(SignalMast.INCONSISTENT);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Set Signal Mast Held, \"3\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Set Signal Mast Held, \"3\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_CLEAR_SIGNALMAST_HELD);
+        ix1.setActionData(SignalMast.INCONSISTENT);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Clear Signal Mast Held, \"3\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Clear Signal Mast Held, \"3\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_SET_SIGNALMAST_DARK);
+        ix1.setActionData(SignalMast.INCONSISTENT);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Set Signal Mast Dark, \"3\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Set Signal Mast Dark, \"3\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_SET_SIGNALMAST_LIT);
+        ix1.setActionData(SignalMast.INCONSISTENT);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Clear Signal Mast Dark, \"3\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Clear Signal Mast Dark, \"3\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_SET_BLOCK_ERROR);
+        ix1.setActionData(Block.INCONSISTENT);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Set Block Error, \"3\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Set Block Error, \"3\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_CLEAR_BLOCK_ERROR);
+        ix1.setActionData(Block.INCONSISTENT);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Clear Block Error, \"3\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Clear Block Error, \"3\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_DEALLOCATE_BLOCK);
+        ix1.setActionData(Block.INCONSISTENT);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Deallocate Block, \"3\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Deallocate Block, \"3\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_SET_BLOCK_OUT_OF_SERVICE);
+        ix1.setActionData(Block.INCONSISTENT);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Set Block OutOfService, \"3\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Set Block OutOfService, \"3\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_SET_BLOCK_IN_SERVICE);
+        ix1.setActionData(Block.INCONSISTENT);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Clear Block OutOfService, \"3\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Clear Block OutOfService, \"3\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_SET_NXPAIR_ENABLED);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Set NX Pair Enabled, \"null\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Set NX Pair Enabled, \"null\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_SET_NXPAIR_DISABLED);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Set NX Pair Disabled, \"null\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Set NX Pair Disabled, \"null\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_SET_NXPAIR_SEGMENT);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Set NX Pair Segment Active / Inactive, \"null\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Set NX Pair Segment Active / Inactive, \"null\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_SET_ROUTE_TURNOUTS);
+        ix1.setActionData(Route.INCONSISTENT);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Set Route Turnouts on Warrant, \"3\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Set Route Turnouts on Warrant, \"3\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_AUTO_RUN_WARRANT);
+        ix1.setActionData(Warrant.INCONSISTENT);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Auto Run Train on Warrant, \"3\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Auto Run Train on Warrant, \"3\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_MANUAL_RUN_WARRANT);
+        ix1.setActionData(Warrant.INCONSISTENT);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Manually Run Train on Warrant, \"3\".".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Manually Run Train on Warrant, \"3\".".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_SET_SENSOR);
+        ix1.setActionData(Sensor.INACTIVE);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Set Sensor, \"3\" to Inactive".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Set Sensor, \"3\" to Inactive".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_SET_TURNOUT);
+        ix1.setActionData(Turnout.THROWN);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Set Turnout, \"3\" to Thrown".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Set Turnout, \"3\" to Thrown".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_SET_LIGHT);
+        ix1.setActionData(Light.OFF);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Set Light, \"3\" to Off".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Set Light, \"3\" to Off".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_LOCK_TURNOUT);
+        ix1.setActionData(Turnout.LOCKED);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Turnout Lock, \"3\" to Lock".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Turnout Lock, \"3\" to Lock".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_RESET_DELAYED_SENSOR);
+        ix1.setActionData(Sensor.INACTIVE);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Reset Delayed Set Sensor, \"3\" to Inactive, after 5 seconds.".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Reset Delayed Set Sensor, \"3\" to Inactive, after 5 seconds.".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_SET_SIGNAL_APPEARANCE);
+        ix1.setActionData(SignalHead.YELLOW);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Set Signal Head Appearance, \"3\" to Yellow".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Set Signal Head Appearance, \"3\" to Yellow".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_RESET_DELAYED_TURNOUT);
+        ix1.setActionData(Turnout.THROWN);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Reset Delayed Set Turnout, \"3\" to Thrown, after 5 seconds.".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Reset Delayed Set Turnout, \"3\" to Thrown, after 5 seconds.".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_DELAYED_TURNOUT);
+        ix1.setActionData(Turnout.THROWN);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Delayed Set Turnout, \"3\" to Thrown, after 5 seconds.".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Delayed Set Turnout, \"3\" to Thrown, after 5 seconds.".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_DELAYED_SENSOR);
+        ix1.setActionData(Sensor.INACTIVE);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Delayed Set Sensor, \"3\" to Inactive, after 5 seconds.".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Delayed Set Sensor, \"3\" to Inactive, after 5 seconds.".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_CONTROL_AUDIO);
+        ix1.setActionData(Audio.CMD_PLAY);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Control Audio object, \"3\" to Play".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Control Audio object, \"3\" to Play".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_SET_SIGNALMAST_ASPECT);
+        ix1.setActionData(SignalMast.INCONSISTENT);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Set Signal Mast Aspect, \"3\" to 5".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Set Signal Mast Aspect, \"3\" to 5".equals(ix1.description(true)));
+        
+        ix1.setType(Conditional.ACTION_CONTROL_TRAIN);
+        ix1.setActionData(Warrant.INCONSISTENT);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, Control Auto Train on Warrant \"3\" to Abort".equals(ix1.description(false)));
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, Control Auto Train on Warrant \"3\" to Abort".equals(ix1.description(true)));
+        
+        ix1.setType(-1);
+        ix1.setActionData(NamedBean.INCONSISTENT);
+        Assert.assertTrue("description() returns correct value",
+                "When Triggered True, ".equals(ix1.description(false)));
+        jmri.util.JUnitAppender.assertWarnMessage("Unexpected parameter to getActionTypeString(-1)");
+        Assert.assertTrue("description() returns correct value",
+                "On Change To True, ".equals(ix1.description(true)));
+        jmri.util.JUnitAppender.assertWarnMessage("Unexpected parameter to getActionTypeString(-1)");
     }
     
 
