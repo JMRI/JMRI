@@ -19,6 +19,7 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
 import org.netbeans.jemmy.operators.JToggleButtonOperator;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
 import org.netbeans.jemmy.operators.JSliderOperator;
+import org.netbeans.jemmy.operators.JSpinnerOperator;
 import org.netbeans.jemmy.util.NameComponentChooser;
 
 /*
@@ -237,6 +238,33 @@ public class ThrottleOperator extends JFrameOperator {
 
    public void speedSliderMinimum(){
         new JSliderOperator(getControlPanelOperator()).scrollToMinimum();
+   }
+
+   public void openControlPanelPopupMenu(){
+        JInternalFrameOperator jifo  = getControlPanelOperator();
+        jifo.clickForPopup();
+        JPopupMenuOperator jpmo = new JPopupMenuOperator();
+	jpmo.pushMenu(Bundle.getMessage("ControlPanelProperties"));
+   }
+
+   public void setSpeedStepDisplay(){
+	openControlPanelPopupMenu();
+        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("TitleEditSpeedControlPanel"));
+        (new JRadioButtonOperator(jdo,Bundle.getMessage("ButtonDisplaySpeedSteps"))).doClick();
+        (new JButtonOperator(jdo,Bundle.getMessage("ButtonOK"))).doClick();
+        
+   }
+
+   public void setSpeedSpinner(int i){
+        new JSpinnerOperator(getControlPanelOperator()).setValue(i);
+   }
+
+   public void speedSpinnerMaximum(){
+        new JSpinnerOperator(getControlPanelOperator()).scrollToMaximum();
+   }
+
+   public void speedSpinnerMinimum(){
+        new JSpinnerOperator(getControlPanelOperator()).scrollToMinimum();
    }
 
 
