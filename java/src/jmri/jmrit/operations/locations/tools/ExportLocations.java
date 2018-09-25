@@ -118,7 +118,17 @@ public class ExportLocations extends XmlFile {
                 del +
                 Bundle.getMessage("ScheduleName") +
                 del +
-                Bundle.getMessage("AlternateTrack");
+                Bundle.getMessage("ScheduleMode") +
+                del +
+                Bundle.getMessage("AlternateTrack") +
+                del +
+                Bundle.getMessage("Comment") +
+                del +
+                Bundle.getMessage("CommentBoth") +
+                del +
+                Bundle.getMessage("CommentPickup") +
+                del +
+                Bundle.getMessage("CommentSetout");
 
         fileOut.println(header);
 
@@ -149,14 +159,14 @@ public class ExportLocations extends XmlFile {
                 StringBuffer loadNames = new StringBuffer();
                 if (!track.getLoadOption().equals(Track.ALL_LOADS)) {
                     for (String loadName : track.getLoadNames()) {
-                        loadNames.append(loadNames + loadName + "; ");
+                        loadNames.append(loadName + "; ");
                     }
                 }
 
                 StringBuffer shipNames = new StringBuffer();
                 if (!track.getShipLoadOption().equals(Track.ALL_LOADS)) {
                     for (String shipName : track.getShipLoadNames()) {
-                        shipNames.append(shipNames + shipName + "; ");
+                        shipNames.append(shipName + "; ");
                     }
                 }
 
@@ -260,7 +270,18 @@ public class ExportLocations extends XmlFile {
                         del +
                         track.getScheduleName() +
                         del +
-                        alternateTrackName;
+                        (track.getScheduleMode() == Track.MATCH ? Bundle.getMessage("Match")
+                                : Bundle.getMessage("Sequential")) +
+                        del +
+                        alternateTrackName +
+                        del +
+                        ESC + track.getComment() + ESC +
+                        del +
+                        ESC + track.getCommentBoth() + ESC +
+                        del +
+                        ESC + track.getCommentPickup() + ESC +
+                        del +
+                        ESC + track.getCommentSetout() + ESC;
 
                 fileOut.println(line);
             }
