@@ -58,6 +58,6 @@ public class SplitHexVariableValue extends SplitVariableValue {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SplitHexVariableValue.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(SplitHexVariableValue.class.getName());
 
 }

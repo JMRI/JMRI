@@ -443,7 +443,7 @@ public class SplitVariableValue extends VariableValue
 
     @Override
     public void setIntValue(int i) {
-        setValue((long) i);
+        setValue(i);
     }
 
     @Override
