@@ -7,13 +7,12 @@
     </title>
 
 <!--#include virtual="/Style.shtml" -->
-</head>
+</head><!--#include virtual="/Header.shtml" -->
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-
-<!--#include virtual="Sidebar.shtml" --> <!-- select the local or global Sidebar file -->
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" --> <!-- select the local or global Sidebar file -->
+    <div id="mainContent">
 
 	    <h1>CI Status</h1>
 		
@@ -101,5 +100,7 @@
 <!--#include virtual="/Footer.shtml" -->
 
 </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody -->
+
 </body>
 </html>
