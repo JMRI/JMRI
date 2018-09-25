@@ -221,7 +221,9 @@ public class ThrottleFrameTest {
         to.pushStopButton();
 	// should verify the throttle is set to stop.
         Assert.assertEquals("Speed set to Stop",0,to.getSpeedSliderValue());
+        Assert.assertTrue("Throttle Speed Stop",to.getAttachedThrottle().getSpeedSetting()<0);
 
+        to.setSpeedSlider(28);
 
         to.pushReleaseButton();	
 	to.requestClose();
@@ -241,10 +243,12 @@ public class ThrottleFrameTest {
 	ThrottleOperator to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
 
         to.setAddressValue(new DccLocoAddress(42,false));
+        to.setSpeedSlider(28);
 
         to.pushEStopButton();
 	// should verify the throttle is set to stop.
-        Assert.assertEquals("Speed set to Stop",0,to.getSpeedSliderValue());
+        Assert.assertEquals("Speed set to EStop",0,to.getSpeedSliderValue());
+        Assert.assertTrue("Throttle Speed EStop",to.getAttachedThrottle().getSpeedSetting()<0);
 
         to.pushReleaseButton();	
 	to.requestClose();
@@ -252,6 +256,33 @@ public class ThrottleFrameTest {
         InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
         JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
     }
+
+    @Test
+    public void testIdleButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ThrottleWindow frame = new ThrottleWindow();
+        ThrottleFrame panel = new ThrottleFrame(frame);
+        frame.setExtendedState( frame.getExtendedState()|java.awt.Frame.MAXIMIZED_BOTH );
+	panel.toFront();
+
+	ThrottleOperator to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
+
+        to.setAddressValue(new DccLocoAddress(42,false));
+        to.setSpeedSlider(28);
+
+        to.pushIdleButton();
+	// should verify the throttle is set to Idle.
+        Assert.assertEquals("Speed set to Stop",0,to.getSpeedSliderValue());
+        Assert.assertEquals("Throttle Speed Idle",0.0,to.getAttachedThrottle().getSpeedSetting(),0.005);
+
+
+        to.pushReleaseButton();	
+	to.requestClose();
+        // the throttle list frame gets created above, but needs to be shown to be disposed
+        InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
+        JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
+    }
+
 
     @Test
     public void testSliderMaximumSpeed() {
@@ -268,6 +299,7 @@ public class ThrottleFrameTest {
         to.speedSliderMaximum();
 
         Assert.assertEquals("Speed set to Maximum",126,to.getSpeedSliderValue());
+        Assert.assertEquals("Throttle Speed Maximum",1.0,to.getAttachedThrottle().getSpeedSetting(),0.005);
 
         to.pushReleaseButton();	
 	to.requestClose();
@@ -313,6 +345,7 @@ public class ThrottleFrameTest {
         to.setAddressValue(new DccLocoAddress(42,false));
 
         to.pushForwardButton();	// need to verify this took effect.	
+        Assert.assertTrue("Forward Direction",to.getAttachedThrottle().getIsForward());
 
         to.pushReleaseButton();	
 	to.requestClose();
@@ -333,13 +366,12 @@ public class ThrottleFrameTest {
         to.setAddressValue(new DccLocoAddress(42,false));
 
         to.pushReverseButton(); // need to verify this took effect.	
-
+        Assert.assertFalse("Reverse Direction",to.getAttachedThrottle().getIsForward());
         to.pushReleaseButton();	
 	to.requestClose();
         // the throttle list frame gets created above, but needs to be shown to be disposed
         InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
     }
-
 
     @Before
     public void setUp() {
