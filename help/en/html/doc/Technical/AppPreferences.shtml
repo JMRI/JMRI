@@ -23,7 +23,7 @@
 
     <body>
         <div id="mBody">
-            <!--#include virtual="Sidebar" -->
+            <!--#include virtual="Sidebar.shtml" -->
 
             <div id="mainContent">
                 <!-- created by pasting output of pandoc  -@-from=markdown -@-to=html AppPreferences.txt into
