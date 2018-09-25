@@ -12,9 +12,7 @@ import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.locations.tools.ExportLocations;
-import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.jmrit.operations.trains.TrainManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,9 +26,6 @@ public class ExportSchedules extends XmlFile {
 
     static final String ESC = "\""; // escape character NOI18N
     private String del = ","; // delimiter
-
-    TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
-    RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
 
     public void setDeliminter(String delimiter) {
         del = delimiter;
