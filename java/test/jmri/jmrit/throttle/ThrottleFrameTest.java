@@ -300,6 +300,47 @@ public class ThrottleFrameTest {
         JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
     } 
 
+    @Test
+    public void testForwardButtonPress() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ThrottleWindow frame = new ThrottleWindow();
+        ThrottleFrame panel = new ThrottleFrame(frame);
+        frame.setExtendedState( frame.getExtendedState()|java.awt.Frame.MAXIMIZED_BOTH );
+	panel.toFront();
+
+	ThrottleOperator to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
+
+        to.setAddressValue(new DccLocoAddress(42,false));
+
+        to.pushForwardButton();	// need to verify this took effect.	
+
+        to.pushReleaseButton();	
+	to.requestClose();
+        // the throttle list frame gets created above, but needs to be shown to be disposed
+        InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
+    }
+
+    @Test
+    public void testReverseButtonPress() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ThrottleWindow frame = new ThrottleWindow();
+        ThrottleFrame panel = new ThrottleFrame(frame);
+        frame.setExtendedState( frame.getExtendedState()|java.awt.Frame.MAXIMIZED_BOTH );
+	panel.toFront();
+
+	ThrottleOperator to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
+
+        to.setAddressValue(new DccLocoAddress(42,false));
+
+        to.pushReverseButton(); // need to verify this took effect.	
+
+        to.pushReleaseButton();	
+	to.requestClose();
+        // the throttle list frame gets created above, but needs to be shown to be disposed
+        InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
+    }
+
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();

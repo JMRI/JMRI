@@ -217,6 +217,16 @@ public class ThrottleOperator extends JFrameOperator {
 			Bundle.getMessage("ButtonStop")).push();
    }
 
+   public void pushForwardButton(){
+        new JRadioButtonOperator(getControlPanelOperator(),
+			Bundle.getMessage("ButtonForward")).push();
+   }
+
+   public void pushReverseButton(){
+        new JRadioButtonOperator(getControlPanelOperator(),
+			Bundle.getMessage("ButtonReverse")).push();
+   }
+
    public int getSpeedSliderValue(){
         return new JSliderOperator(getControlPanelOperator()).getValue();
    }
