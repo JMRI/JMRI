@@ -196,12 +196,9 @@ public class ThrottleFrameTest {
         to.pushReleaseButton();	
     }
 
-
     @Test
     public void testSliderMaximumSpeed() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        frame.setExtendedState( frame.getExtendedState()|java.awt.Frame.MAXIMIZED_BOTH );
-	panel.toFront();
 
         to.setAddressValue(new DccLocoAddress(42,false));
 
@@ -247,6 +244,45 @@ public class ThrottleFrameTest {
 
         to.pushReverseButton(); // need to verify this took effect.	
         Assert.assertFalse("Reverse Direction",to.getAttachedThrottle().getIsForward());
+        to.pushReleaseButton();	
+    }
+
+    @Test
+    public void testChangeToSpeedStepMode() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        to.setAddressValue(new DccLocoAddress(42,false));
+
+        to.setSpeedStepDisplay();	
+
+        to.pushReleaseButton();	
+    }
+
+    @Test
+    public void testSpinnerMaximumSpeed() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        to.setAddressValue(new DccLocoAddress(42,false));
+        to.setSpeedStepDisplay();	
+
+        to.speedSpinnerMaximum();
+
+        Assert.assertEquals("Throttle Speed Maximum",1.0,to.getAttachedThrottle().getSpeedSetting(),0.005);
+
+        to.pushReleaseButton();	
+    }
+
+    @Test
+    public void testSpinnerMinimumSpeed() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        to.setAddressValue(new DccLocoAddress(42,false));
+        to.setSpeedStepDisplay();	
+
+        to.setSpeedSpinner(28);
+        to.speedSpinnerMinimum();
+        Assert.assertEquals("Throttle Speed Minimum",0.0,to.getAttachedThrottle().getSpeedSetting(),0.005);
+
         to.pushReleaseButton();	
     }
 
