@@ -1116,22 +1116,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         if (_track != null) {
             loadOption.setText(_track.getLoadOptionString());
             shipLoadOption.setText(_track.getShipLoadOptionString());
-
-//            if (_track.getShipLoadOption().equals(Track.INCLUDE_LOADS)) {
-//                shipLoadOption.setText(Bundle.getMessage("ShipOnly") +
-//                        " " +
-//                        _track.getShipLoadNames().length +
-//                        " " +
-//                        Bundle.getMessage("Loads"));
-//            } else if (_track.getShipLoadOption().equals(Track.EXCLUDE_LOADS)) {
-//                shipLoadOption.setText(Bundle.getMessage("Exclude") +
-//                        " " +
-//                        _track.getShipLoadNames().length +
-//                        " " +
-//                        Bundle.getMessage("Loads"));
-//            } else {
-//                shipLoadOption.setText(Bundle.getMessage("ShipAll"));
-//            }
         }
     }
 
