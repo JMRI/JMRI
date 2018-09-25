@@ -42,7 +42,7 @@
 		</td></tr>
 		</table>
 		
-		<table>
+	<table>
 
 		<tr><td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/">SpotBugs</a><br>
         <a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/lastBuild/findbugsResult/">
@@ -71,6 +71,14 @@
         </td></tr>
  -->
 
+        <tr><td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/">JaCoCo</a><br>
+        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/">
+            <img src="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/jacoco/graph?width=640&height=240">
+        </a>
+        </td><td align="center">
+            <b><a href="jacoco_sort_report.php">JaCoCo Sortable Coverage Report</a></b>
+        </td></tr>
+
         <tr><td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/">Builds</a> - Unit Test Results<br>
         <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/lastBuild/testReport/">
             <img src="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/test/trend">
@@ -94,9 +102,9 @@
             <img src="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/warnings42/trendGraph/png?url=PRIORITY">
         </a>
         </td></tr>
-        </table>        
 
-        <b><a href="jacoco_sort_report.php">JaCoCo Coverage Report</a></b>
+    </table>        
+        
 <!--#include virtual="/Footer.shtml" -->
 
 </div><!-- closes #mainContent-->
