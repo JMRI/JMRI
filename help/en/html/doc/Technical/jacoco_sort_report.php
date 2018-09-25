@@ -28,7 +28,7 @@ libxml_use_internal_errors(true);
 $url = 'http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastStableBuild/jacoco/';
 
 // Is the script run from the command line?
-if ($argc > 0) {
+if (isset($argc) && ($argc > 0)) {
 
 	if ($argc == 2) {	// Package list
 		parse_page($argv[1], '', false);
