@@ -95,6 +95,8 @@ public class PowerPane extends jmri.util.swing.JmriPanel
                     onOffStatus.setText(Bundle.getMessage("StatusOn"));
                 } else if (listening.getPower() == PowerManager.OFF) {
                     onOffStatus.setText(Bundle.getMessage("StatusOff"));
+                } else if (listening.getPower() == PowerManager.IDLE) {
+                    onOffStatus.setText(Bundle.getMessage("StatusIdle"));
                 } else if (listening.getPower() == PowerManager.UNKNOWN) {
                     onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
                 } else {

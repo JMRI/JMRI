@@ -51,6 +51,8 @@ public interface PowerManager {
     public void addPropertyChangeListener(@CheckForNull PropertyChangeListener p);
 
     public void removePropertyChangeListener(PropertyChangeListener p);
+    
+    public boolean implementsIdle();
 
     @CheckReturnValue
     @Nonnull public String getUserName();
