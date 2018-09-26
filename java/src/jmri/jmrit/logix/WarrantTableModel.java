@@ -538,6 +538,8 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         s = Warrant.ABORT;
                     } else if (setting.equals(WarrantTableFrame.ramp)) {
                         s = Warrant.RAMP_HALT;
+                    } else if (setting.equals("Debug")) {
+                        s = Warrant.DEBUG;
                     }
                     w.controlRunTrain(s);
                 }
@@ -718,8 +720,8 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         _frame.setStatusText(Bundle.getMessage("RampHalt",
                                 bean.getTrainName(), bean.getCurrentBlockName()), myGreen, true);
                     } else  {
-                        String s = (bean.isWaitingForSignal() ? 
-                                Bundle.getMessage("Signal") : Bundle.getMessage("Occupancy"));
+                        String s = (bean.isWaitingForSignal() ? Bundle.getMessage("Signal") : 
+                                (bean.isWaitingForClear() ? Bundle.getMessage("Occupancy"):Bundle.getMessage("Halt")));
                         _frame.setStatusText(Bundle.getMessage("RampWaitForClear", 
                                 bean.getTrainName(), bean.getCurrentBlockName(), s), myGreen, true);
                     }

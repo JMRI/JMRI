@@ -20,7 +20,7 @@ public class EngineerTest {
         jmri.DccThrottle throttle = new jmri.jmrix.debugthrottle.DebugThrottle(addr,memo);
         Engineer t = new Engineer(warrant,throttle);
         Assert.assertNotNull("exists",t);
-        t.dispose();
+        t.stopRun(false);
     }
 
     // The minimal setup for log4J
