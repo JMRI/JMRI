@@ -53,21 +53,16 @@ public class ThrottleFrameTest {
     }
 
     @Test
-    public void testSetAndDispose() {
+    public void testSetWithoutRelease() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         to.setAddressValue(new DccLocoAddress(42,false));
 
-	// the setAddressValue above is currently triggering the set 
-	// programatically.  We need a method in the operator which
-	// either types the address or picks it from the roster list.
-	// once replaces the line above, this comment can be removed
-	// and the next line can be uncommented.
-        //to.pushSetButton();
         Assert.assertEquals("address set",new DccLocoAddress(42,false),
 		 to.getAddressValue());
-
-        frame.dispose();	
+        // don't release the throttle here.  When the frame is disposed,
+	// the throttle will still be attached, which causes a different code
+	// path to be executed. 
     }
 
     @Test
