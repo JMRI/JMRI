@@ -35,6 +35,7 @@ public interface PowerManager {
     static final int UNKNOWN = NamedBean.UNKNOWN;
     static final int ON = 0x02;
     static final int OFF = 0x04;
+    static final int IDLE = 0x08; // not supported by some connection types
 
     static final String POWER = "Power"; // NOI18N
 

@@ -111,6 +111,9 @@ public class LnPowerManager
         } else if (m.getOpCode() == LnConstants.OPC_GPOFF) {
             power = OFF;
             firePropertyChange("Power", null, null); // NOI18N
+        } else if (m.getOpCode() == LnConstants.OPC_IDLE) {
+            power = IDLE;
+            firePropertyChange("Power", null, null); // NOI18N
         } else if (m.getOpCode() == LnConstants.OPC_SL_RD_DATA) {
             // grab the track status any time that a slot read of a "normal" slot passes thru.
             // Ignore "reserved" and "master control" slots in slot numbers 120-127
