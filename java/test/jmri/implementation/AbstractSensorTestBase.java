@@ -162,6 +162,11 @@ public abstract class AbstractSensorTestBase {
        Assert.assertEquals("Pull Direction",jmri.Sensor.PullResistance.PULL_OFF,t.getPullResistance());
     }
 
+    @Test
+    public void testGetBeanType(){
+         Assert.assertEquals("bean type",t.getBeanType(),Bundle.getMessage("BeanNameSensor"));
+    }
+
     // Test outgoing status request
     @Test
     public void testXNetSensorStatusRequest() {
