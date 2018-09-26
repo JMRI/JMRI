@@ -402,6 +402,16 @@ public class Ib2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSendFunctionGroup5() {
     }
 
+    /**
+     * Test of getF2Momentary method, of class AbstractThrottle.
+     */
+    @Test
+    @Override
+    public void testGetF2Momentary() {
+        boolean expResult = true;
+        boolean result = instance.getF2Momentary();
+        Assert.assertEquals(expResult, result);
+    }
 
     // The minimal setup for log4J
     @Before

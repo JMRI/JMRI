@@ -105,27 +105,6 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         return Dcc4PcMessage.getExitProgMode();
     }
 
-    /**
-     * static function returning the Dcc4PcTrafficController instance to use.
-     *
-     * @return The registered Dcc4PcTrafficController instance for general use,
-     *         if need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public Dcc4PcTrafficController instance() {
-        return self;
-    }
-
-    //This can be removed once multi-connection is complete
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Override
-    @Deprecated
-    public void setInstance() {
-    }
-
     @Override
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
     }

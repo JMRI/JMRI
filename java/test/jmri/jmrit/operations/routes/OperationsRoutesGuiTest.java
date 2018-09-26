@@ -7,6 +7,7 @@ import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -39,7 +40,7 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         // create add route frame
         f.addButton.doClick();
         // the following fails on a 13" laptop
-        //enterClickAndLeave(f.addButton);
+        //JemmyUtil.enterClickAndLeave(f.addButton);
         // confirm panel creation
         JmriJFrame ref = JmriJFrame.getFrame(Bundle.getMessage("TitleRouteAdd"));
         Assert.assertNotNull("route edit frame", ref);
@@ -60,7 +61,7 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
 
         f.routeNameTextField.setText("New Test Route");
         f.commentTextField.setText("New Text Route Comment");
-        enterClickAndLeave(f.addRouteButton);
+        JemmyUtil.enterClickAndLeave(f.addRouteButton);
 
         loadRoutes();
 
@@ -75,23 +76,23 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc B"));
         //f.addLocationButton.doClick();
-        enterClickAndLeave(f.addLocationButton);
+        JemmyUtil.enterClickAndLeave(f.addLocationButton);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc D"));
         //f.addLocationButton.doClick();
-        enterClickAndLeave(f.addLocationButton);
+        JemmyUtil.enterClickAndLeave(f.addLocationButton);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc A"));
         //f.addLocationButton.doClick();
-        enterClickAndLeave(f.addLocationButton);
+        JemmyUtil.enterClickAndLeave(f.addLocationButton);
 
         // put the next two locations at the start of the route
         //f.addLocAtTop.doClick();
-        enterClickAndLeave(f.addLocAtTop);
+        JemmyUtil.enterClickAndLeave(f.addLocAtTop);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc C"));
         //f.addLocationButton.doClick();
-        enterClickAndLeave(f.addLocationButton);
+        JemmyUtil.enterClickAndLeave(f.addLocationButton);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc E"));
         //f.addLocationButton.doClick();
-        enterClickAndLeave(f.addLocationButton);
+        JemmyUtil.enterClickAndLeave(f.addLocationButton);
 
         // confirm that the route sequence is correct
         List<RouteLocation> routeLocations = newRoute.getLocationsBySequenceList();
@@ -103,15 +104,15 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
 
         f.routeNameTextField.setText("Newer Test Route");
         //f.saveRouteButton.doClick();
-        enterClickAndLeave(f.saveRouteButton);
+        JemmyUtil.enterClickAndLeave(f.saveRouteButton);
 
         Assert.assertEquals("changed route name", "Newer Test Route", newRoute.getName());
 
         // test delete button
         //f.deleteRouteButton.doClick();
-        enterClickAndLeave(f.deleteRouteButton);
+        JemmyUtil.enterClickAndLeave(f.deleteRouteButton);
         // click "Yes" in the confirm popup
-        pressDialogButton(f, Bundle.getMessage("DeleteRoute?"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("DeleteRoute?"), Bundle.getMessage("ButtonYes"));
 
         Assert.assertEquals("should be 5 routes", 5, rManager.getRoutesByNameList().size());
 

@@ -527,10 +527,10 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
             final EcosPreferences p = adaptermemo.getPreferenceManager();
             EcosTurnout et;
             String[] ecoslist = this.getEcosObjectArray();
-            String[] jmrilist = getSystemNameArray();
-            for (int i = 0; i < jmrilist.length; i++) {
-                if (jmrilist[i].startsWith(prefix + "T")) {
-                    et = (EcosTurnout) getBySystemName(jmrilist[i]);
+            
+             for (Turnout turnout : getNamedBeanSet()) {
+                if (turnout.getSystemName().startsWith(prefix + "T")) {
+                    et = (EcosTurnout) turnout;
                     if (et.getObject() == 0) {
                         //We do not support this yet at there are many parameters
                         // when creating a turnout on the ecos.

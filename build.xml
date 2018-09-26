@@ -2335,6 +2335,8 @@
                     <filter token="COPYRIGHT_YEAR" value="${jmri.copyright.year}"/>
                 </filterset>
             </copy>
+            <move file="${dist.apps}/@{script.name}.app/Contents/InfoTemplate.plist"
+                  tofile="${dist.apps}/@{script.name}.app/Contents/Info.plist"/>
             <copy tofile="${dist.apps}/@{script.name}.app/Contents/Resources/@{script.name}.icns">
                 <first>
                     <restrict>

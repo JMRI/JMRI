@@ -175,7 +175,6 @@ public class RollingStockAttribute {
     public void load(Element root, String eNames, String eName, String oldName) {
         // new format using elements starting version 3.3.1
         if (root.getChild(eNames) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> l = root.getChild(eNames).getChildren(eName);
             Attribute a;
             String[] names = new String[l.size()];

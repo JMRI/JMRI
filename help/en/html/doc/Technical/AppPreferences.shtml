@@ -23,7 +23,7 @@
 
     <body>
         <div id="mBody">
-            <!--#include virtual="Sidebar" -->
+            <!--#include virtual="Sidebar.shtml" -->
 
             <div id="mainContent">
                 <!-- created by pasting output of pandoc  -@-from=markdown -@-to=html AppPreferences.txt into
@@ -38,7 +38,8 @@
                 <h1 id="preference-spaces">Preference Spaces</h1>
                 <h2 id="the-current-profile">The Current Profile</h2>
                 <p>Most preferences are stored together within a single <em>Profile</em>. There are two spaces within a <em>Profile</em>, the <strong>shared</strong> space and the <strong>private</strong> space.</p>
-                <p>A profile has a location, a name, and an identity. The identity is formed of two parts, a "safe" version of the name that can be used in file or directory names, and a random number (8 hexidecimal digits) to ensure uniqueness.</p>
+                <p>A Profile has a location, a name, and an identity. The identity is formed of two parts, a "safe" version of the name that can be used in file or directory names, and a random number (8 hexidecimal digits) to ensure uniqueness.</p>
+                <p>It is recommended that Profile locations have the extension <code>.jmri</code> to allow Profiles to be assigned a Uniform Type Identifier (UTI) in iOS and macOS. JMRI applications default to including the extension in the Profile location when creating one, but use of this extension is not enforced. See <a href="StartUpScripts.shtml">Startup Scripts</a> for more details on UTIs and their use.</p>
                 <h3 id="shared">Shared</h3>
                 <p>Shared preferences are preferences within a single profile that are shared across multiple computers running that profile. An example of a shared preference is the use of the LocoNet connection "LocoNet".</p>
                 <p>Shared preferences are stored in the root of the <code>profile</code> directory within the Profile.</p>

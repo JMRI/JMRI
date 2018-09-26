@@ -96,8 +96,8 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     private String textForSearch = "";
     private double _splitratio = 0.95;
     static private int MAX_LINES = 500; // tablefeedback screen log size
-    protected static TextAreaFIFO tablefeedback = new TextAreaFIFO(MAX_LINES);
-    protected JScrollPane scrolltablefeedback = new JScrollPane (tablefeedback);    
+    private static TextAreaFIFO tablefeedback = new TextAreaFIFO(MAX_LINES);
+    private JScrollPane scrolltablefeedback = new JScrollPane (tablefeedback);    
     private DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss:SSS dd/MM/yy");
     public static final Color VERY_LIGHT_RED = new Color(255,176,173);
     public static final Color VERY_LIGHT_GREEN = new Color(165,255,164);

@@ -12,7 +12,7 @@
 
 <body>
 	<div id="mBody">
-		<!--#include virtual="Sidebar" -->
+		<!--#include virtual="Sidebar.shtml" -->
 
 		<div id="mainContent">
 			<h1>JMRI Code: Building with Eclipse</h1>
@@ -160,6 +160,12 @@
 			described below with only two targets selected, "realclean" followed
 			by "panelpro". If the Ant build succeeds, you should see the program
 			launch the main PanelPro panel.
+			
+			<p>We also recommend that you deselect
+			"Scrub output folders when cleaning projects" found under
+			Window->Preferences->Java->Building->Output folder. This keeps the
+			META-INT files in place after they are created by the Ant build.</p>
+			
 			
 			<p>Afterwards refresh the project, and then do a project clean. The clean should
 			fire off a build and hopefully cleanup the errors.</p>

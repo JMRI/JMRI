@@ -817,6 +817,26 @@ public class Track {
     public String getRoadOption() {
         return _roadOption;
     }
+    
+    public String getRoadOptionString() {
+        String s;
+        if (getRoadOption().equals(Track.INCLUDE_ROADS)) {
+            s = Bundle.getMessage("AcceptOnly") +
+                    " " +
+                    getRoadNames().length +
+                    " " +
+                    Bundle.getMessage("Roads");
+        } else if (getRoadOption().equals(Track.EXCLUDE_ROADS)) {
+            s = Bundle.getMessage("Exclude") +
+                    " " +
+                    getRoadNames().length +
+                    " " +
+                    Bundle.getMessage("Roads");
+        } else {
+            s = Bundle.getMessage("AcceptsAllRoads");
+        }
+        return s;
+    }
 
     /**
      * Set the road option for this track.
@@ -892,6 +912,26 @@ public class Track {
      */
     public String getLoadOption() {
         return _loadOption;
+    }
+    
+    public String getLoadOptionString() {
+        String s;
+        if (getLoadOption().equals(Track.INCLUDE_LOADS)) {
+            s = Bundle.getMessage("AcceptOnly") +
+                    " " +
+                    getLoadNames().length +
+                    " " +
+                    Bundle.getMessage("Loads");
+        } else if (getLoadOption().equals(Track.EXCLUDE_LOADS)) {
+            s = Bundle.getMessage("Exclude") +
+                    " " +
+                    getLoadNames().length +
+                    " " +
+                    Bundle.getMessage("Loads");
+        } else {
+            s = Bundle.getMessage("AcceptsAllLoads");
+        }
+        return s;
     }
 
     /**
@@ -1015,6 +1055,26 @@ public class Track {
      */
     public String getShipLoadOption() {
         return _shipLoadOption;
+    }
+    
+    public String getShipLoadOptionString() {
+        String s;
+        if (getShipLoadOption().equals(Track.INCLUDE_LOADS)) {
+            s = Bundle.getMessage("ShipOnly") +
+                    " " +
+                    getShipLoadNames().length +
+                    " " +
+                    Bundle.getMessage("Loads");
+        } else if (getShipLoadOption().equals(Track.EXCLUDE_LOADS)) {
+            s = Bundle.getMessage("Exclude") +
+                    " " +
+                    getShipLoadNames().length +
+                    " " +
+                    Bundle.getMessage("Loads");
+        } else {
+            s = Bundle.getMessage("ShipAll");
+        }
+        return s;
     }
 
     /**
