@@ -37,11 +37,12 @@ public class LayoutEditorExtendedTest {
         InstanceManager manualInstanceManager = getNewInstanceManager();
         
         jmri.util.JUnitUtil.setInstanceManager(layoutEditorInstanceManager);
-        Turnout turnoutLayoutManager = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(turnoutDeviceName);
-        turnoutLayoutManager.setState(Turnout.THROWN);
+        Turnout layoutManagerTurnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(turnoutDeviceName);
+        layoutManagerTurnout.setState(Turnout.THROWN);
+        
         jmri.util.JUnitUtil.setInstanceManager(manualInstanceManager);
-        Turnout turnoutManual = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(turnoutDeviceName);
-        turnoutManual.setState(Turnout.CLOSED);
+        Turnout manualTurnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(turnoutDeviceName);
+        manualTurnout.setState(Turnout.CLOSED);
         
         jmri.util.JUnitUtil.setInstanceManager(layoutEditorInstanceManager);
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(turnoutDeviceName);
@@ -49,7 +50,28 @@ public class LayoutEditorExtendedTest {
         
         jmri.util.JUnitUtil.setInstanceManager(manualInstanceManager);
         turnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(turnoutDeviceName);
-        Assert.assertTrue("Turnout is thrown", turnout.getState() == Turnout.THROWN);
+        Assert.assertFalse("Turnout is thrown", turnout.getState() == Turnout.THROWN);
+        
+        // Verify that the beans don't match each other in both instance managers
+        Assert.assertFalse("the beans differ in the instance managers",
+                jmri.util.JUnitUtil.verifyInstanceManagerBeansAreEqual(
+                        layoutEditorInstanceManager,
+                        manualInstanceManager)
+                );
+        jmri.util.JUnitAppender.assertErrorMessage(
+                "InstanceManagerA has item IT3 with state 4 and InstanceManagerB has item IT3 with state 2 but they differ in state");
+        
+        jmri.util.JUnitUtil.setInstanceManager(layoutEditorInstanceManager);
+        turnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(turnoutDeviceName);
+        turnout.setState(Turnout.CLOSED);
+        Assert.assertTrue("Turnout is closed", turnout.getState() == Turnout.CLOSED);
+        
+        // Verify that the beans match each other in both instance managers
+        Assert.assertTrue("the beans in both instance managers are equal",
+                jmri.util.JUnitUtil.verifyInstanceManagerBeansAreEqual(
+                        layoutEditorInstanceManager,
+                        manualInstanceManager)
+                );
     }
     
     // from here down is testing infrastructure

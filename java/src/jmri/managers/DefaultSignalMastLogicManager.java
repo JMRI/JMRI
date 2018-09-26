@@ -330,7 +330,11 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     /** {@inheritDoc} */
     @Override
     public SortedSet<SignalMastLogic> getNamedBeanSet(){
-        throw new UnsupportedOperationException("Not supported yet.");
+        TreeSet<SignalMastLogic> beanList = new TreeSet<>(new jmri.util.NamedBeanComparator());
+        for (SignalMastLogic e : signalMastLogic) {
+            beanList.add(e);
+        }
+        return beanList;
     }
 
     /** {@inheritDoc} */

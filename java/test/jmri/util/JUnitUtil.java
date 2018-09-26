@@ -532,7 +532,124 @@ public class JUnitUtil {
             return state == bean.getState();
         }, "setAndWait " + bean.getSystemName() + ": " + state);
     }
-
+    
+    
+    static private class InstanceManagerItemComparator implements Comparator<Object> 
+    { 
+        // Used for sorting in ascending order of
+        // roll number
+        @Override
+        public int compare(Object a, Object b)
+        {
+            NamedBean beanA = (NamedBean)a;
+            NamedBean beanB = (NamedBean)b;
+            
+            // Same class?
+            if (beanA.getClass().getName().equals(
+                    beanB.getClass().getName())) {
+                
+                // Different system name?
+                if (! beanA.getSystemName().equals(beanB.getSystemName())) {
+                    return beanA.getSystemName().compareTo(beanB.getSystemName());
+                    
+                // Different user name?
+                } else if (! beanA.getDisplayName().equals(beanB.getDisplayName())) {
+                    return beanA.getDisplayName().compareTo(beanB.getDisplayName());
+                } else {
+                    // Compare state
+                    if (beanA.getState() == beanB.getState()) {
+                        return 0;
+                    } else {
+                        return (beanA.getState() < beanB.getState()) ? -1 : 1;
+                    }
+                }
+            } else {
+                return beanA.getClass().getName().compareTo(
+                        beanB.getClass().getName());
+            }
+        }
+    }
+    
+    /**
+     * This method verifies that all the items in both of the instance managers
+     * are equal. See the method setInstanceManager().
+     * @param instanceManagerA one of the instance managers
+     * @param instanceManagerB one of the instance managers
+     * @return true if the items match in both instance managers
+     */
+    public static boolean verifyInstanceManagerBeansAreEqual(
+            InstanceManager instanceManagerA,
+            InstanceManager instanceManagerB) {
+        
+        boolean isEqual = true;
+        
+        InstanceManagerItemComparator instanceManagerNamedBeanComparator
+                = new InstanceManagerItemComparator();
+        
+        List<Object> instancesA = instanceManagerA.getAllInstances();
+        instancesA.sort(instanceManagerNamedBeanComparator);
+        
+        List<Object> instancesB = instanceManagerB.getAllInstances();
+        instancesB.sort(instanceManagerNamedBeanComparator);
+        
+        int instanceAIndex = 0;
+        int instanceBIndex = 0;
+        while ((instanceAIndex < instancesA.size())
+                || (instanceBIndex < instancesB.size())) {
+            
+            NamedBean beanA = null;
+            NamedBean beanB = null;
+            if (instanceAIndex < instancesA.size()) {
+                beanA = (NamedBean)instancesA.get(instanceAIndex);
+            }
+            if (instanceBIndex < instancesB.size()) {
+                beanB = (NamedBean)instancesB.get(instanceBIndex);
+            }
+            
+            if ((beanA != null) && (beanB != null)) {
+                int compare = beanA.getClass().getName().compareTo(beanB.getClass().getName());
+                if (compare == 0) {
+                    compare = beanA.getSystemName().compareTo(beanB.getSystemName());
+                }
+                if (compare == 0) {
+                    compare = beanA.getDisplayName().compareTo(beanB.getDisplayName());
+                }
+                
+                if (compare < 0) {
+                    log.error("InstanceManagerA has item {} which is missing in instanceManagerB",
+                            beanA.toString());  // NOI18N
+                    isEqual = false;
+                    instanceAIndex++;
+                } else if (compare > 0) {
+                    log.error("InstanceManagerB has item {} which is missing in instanceManagerA",
+                            beanB.toString());  // NOI18N
+                    isEqual = false;
+                    instanceBIndex++;
+                } else if (beanA.getState() != beanB.getState()) {
+                    log.error("InstanceManagerA has item {} with state {} and InstanceManagerB has item {} with state {} but they differ in state",
+                            beanA.toString(), beanA.getState(), beanB.toString(), beanB.getState());  // NOI18N
+                    isEqual = false;
+                    instanceAIndex++;
+                    instanceBIndex++;
+                } else {
+                    // Items are equal
+                    instanceAIndex++;
+                    instanceBIndex++;
+                }
+            } else if (beanA != null) {
+                log.error("InstanceManagerA has item {} which is missing in instanceManagerB", beanA.toString());  // NOI18N
+                isEqual = false;
+                instanceAIndex++;
+            } else {
+                log.error("InstanceManagerB has item {} which is missing in instanceManagerA", beanB.toString());  // NOI18N
+                isEqual = false;
+                instanceBIndex++;
+            }
+        }
+        
+        return isEqual;
+    }
+    
     /**
      * This method allows a test to use two different instance managers and
      * switch between them. It is useful for testing complex features like
