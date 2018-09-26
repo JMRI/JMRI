@@ -53,6 +53,19 @@ public class ThrottleFrameTest {
     }
 
     @Test
+    public void testSetWithoutRelease() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        to.setAddressValue(new DccLocoAddress(42,false));
+
+        Assert.assertEquals("address set",new DccLocoAddress(42,false),
+		 to.getAddressValue());
+        // don't release the throttle here.  When the frame is disposed,
+	// the throttle will still be attached, which causes a different code
+	// path to be executed. 
+    }
+
+    @Test
     public void testInitialFunctionStatus() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
