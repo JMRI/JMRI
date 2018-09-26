@@ -53,6 +53,24 @@ public class ThrottleFrameTest {
     }
 
     @Test
+    public void testSetAndDispose() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        to.setAddressValue(new DccLocoAddress(42,false));
+
+	// the setAddressValue above is currently triggering the set 
+	// programatically.  We need a method in the operator which
+	// either types the address or picks it from the roster list.
+	// once replaces the line above, this comment can be removed
+	// and the next line can be uncommented.
+        //to.pushSetButton();
+        Assert.assertEquals("address set",new DccLocoAddress(42,false),
+		 to.getAddressValue());
+
+        frame.dispose();	
+    }
+
+    @Test
     public void testInitialFunctionStatus() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
