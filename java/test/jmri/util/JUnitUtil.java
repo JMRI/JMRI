@@ -533,6 +533,41 @@ public class JUnitUtil {
         }, "setAndWait " + bean.getSystemName() + ": " + state);
     }
 
+    /**
+     * This method allows a test to use two different instance managers and
+     * switch between them. It is useful for testing complex features like
+     * the LayoutManager.
+     * @param instanceManager the instance manager to set
+     */
+    public static void setInstanceManager(InstanceManager instanceManager) {
+        Class<?>[] instanceManagerSubClasses = InstanceManager.class.getDeclaredClasses();
+        Class<?> instanceManager_LazyInstanceManagerClass = null;
+        
+        for (Class<?> subClass : instanceManagerSubClasses) {
+            if ("jmri.InstanceManager$LazyInstanceManager".equals(subClass.getName())) {
+                instanceManager_LazyInstanceManagerClass = subClass;
+            }
+        }
+        
+        if (instanceManager_LazyInstanceManagerClass == null) {
+            throw new RuntimeException("Cannot find private internal class 'InstanceManager.LazyInstanceManager'");
+        }
+        
+        try {
+            Field instanceManagerField = instanceManager_LazyInstanceManagerClass.getDeclaredField("instanceManager");
+            instanceManagerField.setAccessible(true);
+            instanceManagerField.set(instanceManager_LazyInstanceManagerClass, instanceManager);
+        } catch (NoSuchFieldException ex) {
+            throw new RuntimeException(
+                    "Cannot find private field 'instanceManager' in private internal class 'InstanceManager.LazyInstanceManager'",
+                    ex);
+        } catch (IllegalAccessException ex) {
+            throw new RuntimeException(
+                    "Cannot access private field 'instanceManager' in private internal class 'InstanceManager.LazyInstanceManager'",
+                    ex);
+        }
+    }
+    
     public static void resetInstanceManager() {
         // clear all instances from the static InstanceManager
         InstanceManager.getDefault().clearAll();
