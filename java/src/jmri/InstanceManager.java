@@ -772,14 +772,13 @@ public final class InstanceManager {
     }
 
     /**
-     * Get a list of all registered objects of type T.
+     * Get a list of all named beans from the managers.
      *
-     * @return a list of all registered instances with the manager or an empty
-     *         list
+     * @return a list of all named beans from the managers or an empty list
      */
     @SuppressWarnings("unchecked") // the cast here is protected by the structure of the managerLists
     @Nonnull
-    public List<Object> getAllInstances() {
+    public List<Object> getAllNamedBeansFromManagers() {
         log.trace("Get list of all instances");
         
         List<Object> list = new ArrayList<>();

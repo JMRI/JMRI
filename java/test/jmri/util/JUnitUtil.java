@@ -586,10 +586,10 @@ public class JUnitUtil {
         InstanceManagerItemComparator instanceManagerNamedBeanComparator
                 = new InstanceManagerItemComparator();
         
-        List<Object> instancesA = instanceManagerA.getAllInstances();
+        List<Object> instancesA = instanceManagerA.getAllNamedBeansFromManagers();
         instancesA.sort(instanceManagerNamedBeanComparator);
         
-        List<Object> instancesB = instanceManagerB.getAllInstances();
+        List<Object> instancesB = instanceManagerB.getAllNamedBeansFromManagers();
         instancesB.sort(instanceManagerNamedBeanComparator);
         
         int instanceAIndex = 0;

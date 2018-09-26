@@ -23,7 +23,7 @@ public class JUnitUtilTest {
 
     @Test
     // Test JUnitUtil.verifyInstanceManagerBeansAreEqual
-    public void testVerifyInstanceManagerItemsIsEqual() throws JmriException {
+    public void testVerifyInstanceManagerBeansAreEqual() throws JmriException {
         
         String turnoutDeviceName = "3";
         
