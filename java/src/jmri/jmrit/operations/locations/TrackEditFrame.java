@@ -1108,57 +1108,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
     private void updateRoadOption() {
         if (_track != null) {
-            if (_track.getRoadOption().equals(Track.INCLUDE_ROADS)) {
-                roadOption.setText(Bundle.getMessage("AcceptOnly") +
-                        " " +
-                        _track.getRoadNames().length +
-                        " " +
-                        Bundle.getMessage("Roads"));
-            } else if (_track.getRoadOption().equals(Track.EXCLUDE_ROADS)) {
-                roadOption.setText(Bundle.getMessage("Exclude") +
-                        " " +
-                        _track.getRoadNames().length +
-                        " " +
-                        Bundle.getMessage("Roads"));
-            } else {
-                roadOption.setText(Bundle.getMessage("AcceptsAllRoads"));
-            }
+            roadOption.setText(_track.getRoadOptionString());
         }
     }
 
     private void updateLoadOption() {
         if (_track != null) {
-            if (_track.getLoadOption().equals(Track.INCLUDE_LOADS)) {
-                loadOption.setText(Bundle.getMessage("AcceptOnly") +
-                        " " +
-                        _track.getLoadNames().length +
-                        " " +
-                        Bundle.getMessage("Loads"));
-            } else if (_track.getLoadOption().equals(Track.EXCLUDE_LOADS)) {
-                loadOption.setText(Bundle.getMessage("Exclude") +
-                        " " +
-                        _track.getLoadNames().length +
-                        " " +
-                        Bundle.getMessage("Loads"));
-            } else {
-                loadOption.setText(Bundle.getMessage("AcceptsAllLoads"));
-            }
-
-            if (_track.getShipLoadOption().equals(Track.INCLUDE_LOADS)) {
-                shipLoadOption.setText(Bundle.getMessage("ShipOnly") +
-                        " " +
-                        _track.getShipLoadNames().length +
-                        " " +
-                        Bundle.getMessage("Loads"));
-            } else if (_track.getShipLoadOption().equals(Track.EXCLUDE_LOADS)) {
-                shipLoadOption.setText(Bundle.getMessage("Exclude") +
-                        " " +
-                        _track.getShipLoadNames().length +
-                        " " +
-                        Bundle.getMessage("Loads"));
-            } else {
-                shipLoadOption.setText(Bundle.getMessage("ShipAll"));
-            }
+            loadOption.setText(_track.getLoadOptionString());
+            shipLoadOption.setText(_track.getShipLoadOptionString());
         }
     }
 

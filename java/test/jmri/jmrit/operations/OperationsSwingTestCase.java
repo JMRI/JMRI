@@ -1,8 +1,5 @@
 package jmri.jmrit.operations;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JRadioButton;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -17,8 +14,6 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
-import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
