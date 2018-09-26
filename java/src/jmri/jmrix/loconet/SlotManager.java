@@ -991,6 +991,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
     @Override
+    @Deprecated // 4.1.1
     public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         lopsa = 0;
         hopsa = 0;
@@ -1202,6 +1203,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
     @Override
+    @Deprecated // 4.1.1
     public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         lopsa = 0;
         hopsa = 0;

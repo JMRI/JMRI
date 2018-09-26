@@ -31,7 +31,6 @@ public class SensorGroupConditional extends DefaultConditional {
         super(systemName, userName);
     }
 
-    @SuppressWarnings("null")
     @Override
     public int calculate(boolean enabled, PropertyChangeEvent evt) {
         int currentState = super.calculate(false, evt);

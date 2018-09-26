@@ -46,6 +46,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
      * Send an ops-mode write request to the XPressnet.
      */
     @Override
+    @Deprecated // 4.1.1
     synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         rcTag.setExpectedCv(cv);
         progListener = p;
@@ -53,6 +54,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
     }
 
     @Override
+    @Deprecated // 4.1.1
     synchronized public void readCV(int cv, ProgListener p) throws ProgrammerException {
         rcTag.addPropertyChangeListener(this);
         rcTag.setExpectedCv(cv);

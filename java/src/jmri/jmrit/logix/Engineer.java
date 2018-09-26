@@ -614,6 +614,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * @param abort not normal shutdown
      */
     public void stopRun(boolean abort) {
+        stopRun(abort,true);
+    }
+    public void stopRun(boolean abort, boolean turnOffFunctions) {
         if (abort) {
             _abort =true;            
         }
@@ -624,8 +627,10 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (_throttle != null && _throttle.getSpeedSetting() > 0.0f) {
             _throttle.setSpeedSetting(-1.0f);
             setSpeed(0.0f);     // prevent creep after EStop - according to Jim Betz
-            for (int i = 0; i < 10; i++) {
-                setFunction(i, false);
+            if (turnOffFunctions) {
+                for (int i = 0; i < 10; i++) {
+                    setFunction(i, false);
+                }
             }
             _warrant.releaseThrottle(_throttle);
         }

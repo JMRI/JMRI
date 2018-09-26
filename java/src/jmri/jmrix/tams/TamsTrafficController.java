@@ -67,8 +67,6 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
         return adaptermemo.getSystemPrefix();
     }
     
-
-    
     // The methods to implement the TamsInterface
     @Override
     public synchronized void addTamsListener(TamsListener l) {
@@ -293,11 +291,6 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     @Override
     protected TamsMessage enterNormalMode() {
         return null;
-    }
-
-    //This can be removed once multi-connection is complete
-    @Override
-    public void setInstance() {
     }
 
     @SuppressFBWarnings(value = "MS_PKGPROTECT")

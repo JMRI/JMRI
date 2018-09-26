@@ -161,6 +161,7 @@ public class SerialDriverAdapter extends EasyDccPortController implements jmri.j
     /**
      * @deprecated JMRI Since 4.9.5 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public SerialDriverAdapter instance() {
         return null;
     }

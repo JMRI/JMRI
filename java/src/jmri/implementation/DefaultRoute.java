@@ -1211,6 +1211,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
      * @deprecated Since 4.3.6; will become protected in the future.
      */
     // Mark protected instead of public when removing 
+    @Deprecated
     public boolean isRouteBusy() {
         return busy;
     }

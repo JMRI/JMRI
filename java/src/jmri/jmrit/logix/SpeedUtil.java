@@ -388,14 +388,19 @@ public class SpeedUtil {
     }
 
     protected void stopRun(boolean updateSpeedProfile) {
+        stopRun(updateSpeedProfile, true);
+    }
+    protected void stopRun(boolean updateSpeedProfile, boolean turnOffFunctions) {
         if (updateSpeedProfile && _sessionProfile != null) {
             WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
             manager.setSpeedProfiles(_rosterId, _mergeProfile, _sessionProfile);
         }
-        if (_throttle != null) {  // quiet
-            _throttle.setF0(false);
-            _throttle.setF1(false);
-            _throttle.setF2(false);
+        if (turnOffFunctions) {
+            if (_throttle != null) {  // quiet
+                _throttle.setF0(false);
+                _throttle.setF1(false);
+                _throttle.setF2(false);
+            }
         }
     }
 

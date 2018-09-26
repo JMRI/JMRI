@@ -6,6 +6,7 @@ import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -39,14 +40,14 @@ public class TrainsByCarTypeFrameTest extends OperationsSwingTestCase{
         f.initComponents("Boxcar");
 
         // remove Boxcar from trains
-        enterClickAndLeave(f.clearButton);
-        enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeave(f.clearButton);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
 
         Assert.assertFalse("accepts Boxcar 2", t.acceptsTypeName("Boxcar"));
 
         // now add Boxcar to trains
-        enterClickAndLeave(f.setButton);
-        enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeave(f.setButton);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
 
         Assert.assertTrue("accepts Boxcar 3", t.acceptsTypeName("Boxcar"));
 

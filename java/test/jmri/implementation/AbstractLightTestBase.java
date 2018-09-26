@@ -94,4 +94,9 @@ public abstract class AbstractLightTestBase {
         checkOnMsgSent();
     }
 
+    @Test
+    public void testGetBeanType(){
+         Assert.assertEquals("bean type",t.getBeanType(),Bundle.getMessage("BeanNameLight"));
+    }
+
 }

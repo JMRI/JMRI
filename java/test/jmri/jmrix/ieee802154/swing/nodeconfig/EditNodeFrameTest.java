@@ -24,9 +24,6 @@ public class EditNodeFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
         IEEE802154TrafficController tc = new IEEE802154TrafficController() {
             @Override
-            public void setInstance() {
-            }
-            @Override
             protected AbstractMRReply newReply() {
                 return null;
             }

@@ -284,7 +284,6 @@ public class RouteManager implements InstanceManagerAutoDefault, InstanceManager
     public void load(Element root) {
         // decode type, invoke proper processing routine if a decoder file
         if (root.getChild(Xml.ROUTES) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> eRoutes = root.getChild(Xml.ROUTES).getChildren(Xml.ROUTE);
             log.debug("readFile sees {} routes", eRoutes.size());
             for (Element eRoute : eRoutes) {

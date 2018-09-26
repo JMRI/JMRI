@@ -93,7 +93,7 @@ public class LocoFile extends XmlFile {
                     cvModel.addCV(name, false, false, false);
                     cvObject = cvModel.allCvMap().get(name);
                 }
-                cvObject.setValue(Integer.valueOf(value).intValue());
+                cvObject.setValue(Integer.parseInt(value));
                 cvObject.setState(CvValue.FROMFILE);
             }
         } else {
