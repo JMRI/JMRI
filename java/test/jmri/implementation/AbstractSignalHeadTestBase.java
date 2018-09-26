@@ -132,7 +132,7 @@ public abstract class AbstractSignalHeadTestBase {
     @Test
     public void testGetBeanType(){
          SignalHead s = getHeadToTest();
-         Assert.assertEquals("bean type",s.getBeanType(),Bundle.getMessage("BeanNameSignalHead:"));
+         Assert.assertEquals("bean type",s.getBeanType(),Bundle.getMessage("BeanNameSignalHead"));
     }
 
 }
