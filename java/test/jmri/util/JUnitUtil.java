@@ -640,7 +640,7 @@ public class JUnitUtil {
                 log.error("InstanceManagerA has item {} which is missing in instanceManagerB", beanA.toString());  // NOI18N
                 isEqual = false;
                 instanceAIndex++;
-            } else {
+            } else if (beanB != null) {
                 log.error("InstanceManagerB has item {} which is missing in instanceManagerA", beanB.toString());  // NOI18N
                 isEqual = false;
                 instanceBIndex++;
