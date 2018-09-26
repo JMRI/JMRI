@@ -906,7 +906,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      */
     public boolean controlRunTrain(int idx) {
         if (idx < 0) {
-            log.error("controlRunTrain BAD command num= {}", idx);
             return false;
         }
         boolean ret = false;
@@ -2341,12 +2340,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             }
             // Continue, look ahead for possible speed decrease.
         }
-
-/*        if (runState != STOP_PENDING && runState != RAMP_HALT) { // already checked WAIT_FOR_CLEAR, HALT, RAMP_HALT above
-            // Cancel any delayed speed changes currently in progress.
-            cancelDelayRamp();
-            _engineer.rampSpeedTo(currentType, 0, false);   // restore speed, if needed
-        }*/
 
         //look ahead for a speed change slower than the current speed
         // Note: blkOrder still is blkOrder = getBlockOrderAt(_idxCurrentOrder);
