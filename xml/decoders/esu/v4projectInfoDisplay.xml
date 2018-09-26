@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<group xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <grid gridx="NEXT" gridy="CURRENT">
+    <griditem gridx="0" gridy="NEXT" gridwidth="REMAINDER" anchor="LINE_START">
+      <display item="Project Loco Name"/>
+    </griditem>
+    <griditem gridx="0" gridy="NEXT" gridwidth="REMAINDER" anchor="LINE_START">
+      <display item="Project Loco Type"/>
+    </griditem>
+  </grid>
+</group>

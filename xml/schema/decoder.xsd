@@ -732,10 +732,10 @@
                   </xs:element>
                   <xs:element name="splitVal" >
                     <xs:annotation><xs:documentation>
-                    A decimal value, but stored across two CVs using some simple calculations
+                    A decimal value, but stored across multiple CVs using some simple calculations
                     </xs:documentation></xs:annotation>
                     <xs:complexType>
-                      <xs:attribute name="highCV" type="cvNameType" use="required" />
+                      <xs:attribute name="highCV" type="cvNameType" />
                       <xs:attribute name="min" type="xs:int" default="0"/>
                       <xs:attribute name="max" type="xs:int" default="255"/>
                       <xs:attribute name="default" type="xs:int"/>
@@ -743,6 +743,59 @@
                       <xs:attribute name="offset" type="xs:int" default="0"/>
                       <xs:attribute name="comment" type="xs:string"/>
                       <xs:attribute name="upperMask" type="maskType" default="VVVVVVVV" />
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="splitHexVal" >
+                    <xs:annotation><xs:documentation>
+                    A hexidecimal value, but stored across four CVs using some simple calculations
+                    </xs:documentation></xs:annotation>
+                    <xs:complexType>
+                      <xs:attribute name="highCV" type="cvNameType" />
+                      <xs:attribute name="min" type="xs:int" default="0"/>
+                      <xs:attribute name="max" type="xs:int" default="255"/>
+                      <xs:attribute name="default" type="xs:int"/>
+                      <xs:attribute name="factor" type="xs:int" default="1"/>
+                      <xs:attribute name="offset" type="xs:int" default="0"/>
+                      <xs:attribute name="comment" type="xs:string"/>
+                      <xs:attribute name="case" type="caseType" default="default" />
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="splitTextVal" >
+                    <xs:annotation><xs:documentation>
+                    A hexidecimal value, but stored across four CVs using some simple calculations
+                    </xs:documentation></xs:annotation>
+                    <xs:complexType>
+                      <xs:attribute name="highCV" type="cvNameType" />
+                      <xs:attribute name="min" type="xs:int" default="0"/>
+                      <xs:attribute name="max" type="xs:int" default="255"/>
+                      <xs:attribute name="default" type="xs:int"/>
+                      <xs:attribute name="factor" type="xs:int" default="1"/>
+                      <xs:attribute name="offset" type="xs:int" default="0"/>
+                      <xs:attribute name="comment" type="xs:string"/>
+                      <xs:attribute name="upperMask" type="maskType" default="VVVVVVVV" />
+                      <xs:attribute name="match" type="xs:string"/>
+                      <xs:attribute name="termByte" type="unsignedByteOrBlankType"/>
+                      <xs:attribute name="padByte" type="unsignedByteOrBlankType"/>
+                      <xs:attribute name="charSet" type="xs:string"/>
+                    </xs:complexType>
+                  </xs:element>
+                  <xs:element name="splitDateTimeVal" >
+                    <xs:annotation><xs:documentation>
+                    A date and time value, stored across multiple CVs,
+                    The attribute "base" is required and is the epoch (reference date) for this value
+                    , stored in the format "YYYY-MM-DDThh:mm:ss"
+                    </xs:documentation></xs:annotation>
+                    <xs:complexType>
+                      <xs:attribute name="highCV" type="cvNameType" />
+                      <xs:attribute name="min" type="xs:int" default="0"/>
+                      <xs:attribute name="max" type="xs:int" default="255"/>
+                      <xs:attribute name="default" type="xs:int"/>
+                      <xs:attribute name="comment" type="xs:string"/>
+                      <xs:attribute name="upperMask" type="maskType" default="VVVVVVVV" />
+                      <xs:attribute name="base" type="xs:dateTime" use="required"/>
+                      <xs:attribute name="factor" type="xs:int" default="1"/>
+                      <xs:attribute name="unit" type="temporalUnitsType" default="Seconds"/>
+                      <xs:attribute name="display" type="temporalDisplayType" default="default"/>
                     </xs:complexType>
                   </xs:element>
                   <xs:element name="compositeVal" >
@@ -1000,5 +1053,68 @@
       <xs:enumeration value="LOCONETCSOPSWMODE"/>
     </xs:restriction>
   </xs:simpleType>
+
+  <xs:simpleType name="temporalUnitsType">
+    <xs:annotation>
+      <xs:documentation>
+        Content limited to the temporal units (plural form) that can be manipulated in the LocalDateTime class.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Nanos"/>
+      <xs:enumeration value="Micros"/>
+      <xs:enumeration value="Millis"/>
+      <xs:enumeration value="Seconds"/>
+      <xs:enumeration value="Minutes"/>
+      <xs:enumeration value="Hours"/>
+      <xs:enumeration value="HalfDays"/>
+      <xs:enumeration value="Days"/>
+      <xs:enumeration value="Weeks"/>
+      <xs:enumeration value="Months"/>
+      <xs:enumeration value="Years"/>
+      <xs:enumeration value="Decades"/>
+      <xs:enumeration value="Centuries"/>
+      <xs:enumeration value="Millennia"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="temporalDisplayType">
+    <xs:annotation>
+      <xs:documentation>
+        Content limited to the display options available in splitDateTimeVal.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="dateOnly"/>
+      <xs:enumeration value="timeOnly"/>
+      <xs:enumeration value="default"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="caseType">
+    <xs:annotation>
+        <xs:documentation>
+          General definition of case that's either "upper", "lower" or "default".
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="upper"/>
+      <xs:enumeration value="lower"/>
+      <xs:enumeration value="default"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="unsignedByteOrBlankType">
+    <xs:annotation>
+        <xs:documentation>
+          Allows for:
+            an unsigned byte value ("0" to "255" with optional leading zeros)
+            or an empty string ("").
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+        <xs:pattern value="(\d{0,2}|[0-1]\d{2}|2[0-4]\d|25[0-5])"/>
+    </xs:restriction>
+    </xs:simpleType>
 
 </xs:schema>

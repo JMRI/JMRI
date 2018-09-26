@@ -699,8 +699,8 @@
         <label>Firmware Major Version</label>
     </variable>
     <!-- Decoder & Project Information -->
-    <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4decoderInfoCVs.xml"/> -->
-    <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4projectInfoCVs.xml"/> -->
+      <xi:include href="http://jmri.org/xml/decoders/esu/v4decoderInfoCVs.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/esu/v4projectInfoCVs.xml"/>
     <!-- Function Outputs -->
     <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutCVs.xml"/>
     <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testCVs.xml"/> -->
