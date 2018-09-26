@@ -200,8 +200,9 @@
           i.e. to select one of several possible connections to act on.
         </dd>
 
-        <dt><a href="http://jmri.org/JavaDoc/doc/apps/startup/StartupModelFactory.html">StartupModelFactory</a></dt>
-        <a href="images/StartUpModelExample.png"><img src="images/StartUpModelExample.png" align="right" height="182" width="197"></a>
+        <dt><a href="http://jmri.org/JavaDoc/doc/apps/startup/StartupModelFactory.html">StartupModelFactory</a>
+            <a href="images/StartUpModelExample.png"><img src="images/StartUpModelExample.png" align="right" height="182" width="197"></a>
+            </dt>
         <dd>Startup Models provide a mechanism to define optional items to be 
           automatically run during the startup process itself. 
           They can take user-specified arguments.
