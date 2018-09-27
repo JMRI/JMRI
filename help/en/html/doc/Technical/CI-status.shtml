@@ -7,13 +7,12 @@
     </title>
 
 <!--#include virtual="/Style.shtml" -->
-</head>
+</head><!--#include virtual="/Header.shtml" -->
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-
-<!--#include virtual="Sidebar.shtml" --> <!-- select the local or global Sidebar file -->
-<div id="mainContent">
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" --> <!-- select the local or global Sidebar file -->
+    <div id="mainContent">
 
 	    <h1>CI Status</h1>
 		
@@ -43,10 +42,10 @@
 		</td></tr>
 		</table>
 		
-		<table>
+	<table>
 
 		<tr><td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/">SpotBugs</a><br>
-        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/1956/findbugsResult/">
+        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/lastBuild/findbugsResult/">
             <img src="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/findbugs/trendGraph/png?url=PRIORITY">
         </a>
 		</td>
@@ -60,7 +59,7 @@
         <!-- the following are commented out until we understand how to specify incrememtal in the URL -->
 <!-- 
 		<tr><td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/">SpotBugs</a> (Incremental)<br>
-        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/1956/findbugsResult/">
+        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/lastBuild/findbugsResult/">
             <img src="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/findbugs/trendGraph/png?url=FIXED">
         </a>
 		</td>
@@ -71,6 +70,14 @@
         </a>
         </td></tr>
  -->
+
+        <tr><td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/">JaCoCo</a><br>
+        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/">
+            <img src="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/jacoco/graph">
+        </a>
+        </td><td align="center">
+            <b><a href="jacoco_sort_report.php">JaCoCo Sortable Coverage Report</a></b>
+        </td></tr>
 
         <tr><td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/">Builds</a> - Unit Test Results<br>
         <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/lastBuild/testReport/">
@@ -95,10 +102,13 @@
             <img src="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/warnings42/trendGraph/png?url=PRIORITY">
         </a>
         </td></tr>
-        </table>        
 
+    </table>        
+        
 <!--#include virtual="/Footer.shtml" -->
 
 </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody -->
+
 </body>
 </html>

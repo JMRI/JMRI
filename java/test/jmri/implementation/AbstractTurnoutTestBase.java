@@ -243,4 +243,10 @@ public abstract class AbstractTurnoutTestBase {
         Assert.assertEquals("state changed by TWOSENSOR feedback (Active,Active)", Turnout.INCONSISTENT, t.getKnownState());
     }
 
+
+    @Test
+    public void testGetBeanType(){
+         Assert.assertEquals("bean type",t.getBeanType(),Bundle.getMessage("BeanNameTurnout"));
+    }
+
 }
