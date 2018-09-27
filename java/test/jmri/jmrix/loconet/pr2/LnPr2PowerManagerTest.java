@@ -66,6 +66,16 @@ public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
     }
 
     @Override
+    protected void hearIdle() {
+        return;
+    }
+
+    @Override
+    protected void sendIdleReply() {
+        return;
+    }
+
+    @Override
     protected int numListeners() {
         return controller.numListeners();
     }
@@ -87,6 +97,12 @@ public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
         Assert.assertEquals(LnConstants.OPC_WR_SL_DATA,controller.outbound.elementAt(index).getOpCode());
         return LnConstants.OPC_WR_SL_DATA
                 == controller.outbound.elementAt(index).getOpCode();
+    }
+
+    @Override
+    protected boolean outboundIdleOK(int index) {
+        // IDLE unimplemented on PR2 interface, so return TRUE
+        return true;
     }
 
     @Test

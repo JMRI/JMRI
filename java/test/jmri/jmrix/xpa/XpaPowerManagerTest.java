@@ -34,6 +34,15 @@ public class XpaPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase
     }
 
     @Override
+    protected void sendIdleReply() {
+        ((XpaPowerManager) p).reply(new XpaMessage("ATDT0;"));
+    }
+
+    @Override
+    protected void hearIdle() {
+    }
+
+    @Override
     protected int numListeners() {
         return tc.numListeners();
     }
@@ -50,6 +59,11 @@ public class XpaPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase
 
     @Override
     protected boolean outboundOffOK(int index) {
+        return ((tc.outbound.get(index))).toString().equals("ATDT0;");
+    }
+
+    @Override
+    protected boolean outboundIdleOK(int index) {
         return ((tc.outbound.get(index))).toString().equals("ATDT0;");
     }
 

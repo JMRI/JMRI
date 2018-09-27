@@ -35,6 +35,17 @@ public class NcePowerManagerTest extends AbstractPowerManagerTestBase {
     }
 
     @Override
+    protected void sendIdleReply() {
+        NceReply l = new NceReply(controller);
+        controller.sendTestReply(l);
+    }
+
+    @Override
+    protected void hearIdle() {
+        // this does nothing, as there is no unsolicited on
+    }
+
+    @Override
     protected int numListeners() {
         return controller.numListeners();
     }
@@ -51,6 +62,11 @@ public class NcePowerManagerTest extends AbstractPowerManagerTestBase {
 
     @Override
     protected boolean outboundOffOK(int index) {
+        return controller.outbound.elementAt(index).isKillMain();
+    }
+
+    @Override
+    protected boolean outboundIdleOK(int index) {
         return controller.outbound.elementAt(index).isKillMain();
     }
 

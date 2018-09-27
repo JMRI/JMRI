@@ -3,7 +3,6 @@ package jmri.jmrix.loconet;
 import jmri.JmriException;
 import jmri.jmrix.AbstractPowerManagerTestBase;
 import jmri.util.JUnitUtil;
-import jmri.PowerManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -85,6 +84,13 @@ public class LnPowerManagerTest extends AbstractPowerManagerTestBase {
                 == controller.outbound.elementAt(index).getOpCode();
     }
 
+    @Override
+    @Test
+    public void testImplementsIdle() {
+        // LocoNet implements IDLE power state
+        Assert.assertTrue(p.implementsIdle());
+    }
+
     // setup a default interface
     @Before
     @Override
@@ -103,25 +109,6 @@ public class LnPowerManagerTest extends AbstractPowerManagerTestBase {
         memo = null;
         controller = null;
         JUnitUtil.tearDown();
-    }
-
-    @Test
-    public void testSetIdle() throws JmriException{
-        int initialSent = outboundSize();
-        p.setPower(PowerManager.IDLE);
-        // check one message sent, correct form, unknown state
-        Assert.assertEquals("messages sent", initialSent + 1, outboundSize());
-        Assert.assertTrue("message type OK", outboundIdleOK(initialSent));
-        Assert.assertEquals("state before reply ", PowerManager.UNKNOWN, p.getPower());
-        // arrange for reply
-        sendIdleReply();
-        Assert.assertEquals("state after reply ", PowerManager.IDLE, p.getPower());
-    }
-
-    @Override
-    @Test
-    public void testImplementsIdle() {
-        Assert.assertTrue(p.implementsIdle());
     }
 
     LocoNetInterfaceScaffold controller;  // holds dummy for testing
