@@ -99,7 +99,6 @@ public class OperationsSwingTestCase {
         l5.setLength(1005);
     }
 
-
     @Before
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
