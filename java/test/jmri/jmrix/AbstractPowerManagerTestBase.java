@@ -92,6 +92,22 @@ public abstract class AbstractPowerManagerTestBase {
     }
 
     @Test
+    public void testSetPowerIdle() throws JmriException {
+        if (p.implementsIdle()) {
+            Assert.assertTrue("LocoNet implements IDLE", p.implementsIdle());
+            int initialSent = outboundSize();
+            p.setPower(PowerManager.IDLE);
+            // check one message sent, correct form, unknown state
+            Assert.assertEquals("messages sent", initialSent + 1, outboundSize());
+            Assert.assertTrue("message type OK", outboundIdleOK(initialSent));
+            Assert.assertEquals("state before reply ", PowerManager.UNKNOWN, p.getPower());
+            // arrange for reply
+            sendIdleReply();
+            Assert.assertEquals("state after reply ", PowerManager.IDLE, p.getPower());
+        }
+    }
+
+    @Test
     public void testStateOn() throws JmriException {
         hearOn();
         Assert.assertEquals("power state", PowerManager.ON, p.getPower());
@@ -101,6 +117,14 @@ public abstract class AbstractPowerManagerTestBase {
     public void testStateOff() throws JmriException {
         hearOff();
         Assert.assertEquals("power state", PowerManager.OFF, p.getPower());
+    }
+
+    @Test
+    public void testStateIdle() throws JmriException {
+        if (p.implementsIdle()) {
+            hearIdle();
+            Assert.assertEquals("power state", PowerManager.IDLE, p.getPower());
+        }
     }
 
     @Test
