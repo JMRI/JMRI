@@ -21,6 +21,52 @@ import jmri.TurnoutManager;
  */
 public class JUnitUtilTest {
 
+    private InstanceManager getNewInstanceManager() {
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        jmri.util.JUnitUtil.initInternalLightManager();
+        jmri.util.JUnitUtil.initInternalSensorManager();
+        jmri.util.JUnitUtil.initDebugThrottleManager();
+        jmri.util.JUnitUtil.initLogixManager();
+        jmri.util.JUnitUtil.initIdTagManager();
+        
+        InstanceManager instanceManager = InstanceManager.getDefault();
+        
+        System.out.format("--------------------------------%n");
+        System.out.format("Num managers: %d%n", instanceManager.getAllManagers().size());
+        for (Class<?> type : instanceManager.getAllManagers()) {
+            System.out.format("%s%n", type.getName());
+        }
+        
+        return instanceManager;
+    }
+    
+    @Test
+    public void testNumManagers() {
+        InstanceManager instanceManager;
+        
+        instanceManager = getNewInstanceManager();
+        // We now have all 21 managers
+        Assert.assertTrue("we have 21 managers", instanceManager.getAllManagers().size() == 21);
+        
+        instanceManager = getNewInstanceManager();
+        // jmri.jmrit.logix.WarrantPreferences is missing
+        Assert.assertTrue("we have 20 managers", instanceManager.getAllManagers().size() == 20);
+        
+        instanceManager = getNewInstanceManager();
+        // jmri.implementation.SignalSpeedMap is missing
+        Assert.assertTrue("we have 19 managers", instanceManager.getAllManagers().size() == 19);
+        
+        instanceManager = getNewInstanceManager();
+        // Same as previous
+        Assert.assertTrue("we have 19 managers", instanceManager.getAllManagers().size() == 19);
+        
+        instanceManager = getNewInstanceManager();
+        // Same as previous
+        Assert.assertTrue("we have 19 managers", instanceManager.getAllManagers().size() == 19);
+    }
+    
+    @Ignore
     @Test
     public void thisTestWorks() throws JmriException {
         
