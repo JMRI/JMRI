@@ -8,14 +8,20 @@ import javax.annotation.Nonnull;
 /**
  * Provide controls for layout power.
  * <P>
- * The PowerManager handles two states:
+ * The PowerManager handles three states:
  * <UL>
  * <LI>On/Off which controls electrical power to the track
- * <LI>Started/Stopped which controls the sending of packets to the layout
+ * <LI>an optional "Idle" state, where track power is alive but track-connected
+ *     decoders may be un-controllable
  * </UL>
  * A layout may not have control over these, in which case attempts to change
  * them should return an exception. If the state cannot be sensed, that should
  * also return an exception.
+ * <p>
+ * Some connections, including some LocoNet-based connections, implement the "Idle"
+ * state.  For these LocoNet-based connections, when the Power state is "Idle", the
+ * track power is alive and the command station is broadcasting "stop" to all mobile
+ * decoders. Other systems may implement different interpretation of the "Idle" state.
  *
  * <hr>
  * This file is part of JMRI.
