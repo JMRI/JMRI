@@ -17,6 +17,7 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import org.slf4j.Logger;
@@ -35,6 +36,7 @@ public class ExportLocations extends XmlFile {
 
     TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
     RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
+    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     public void setDeliminter(String delimiter) {
         del = delimiter;
@@ -94,7 +96,11 @@ public class ExportLocations extends XmlFile {
                 del +
                 Bundle.getMessage("Length") +
                 del +
+                Bundle.getMessage("ServicedByTrains") +
+                del +
                 Bundle.getMessage("RollingStock") +
+                del +
+                Bundle.getMessage("ServiceOrder") +
                 del +
                 Bundle.getMessage("RoadOption") +
                 del +
@@ -122,6 +128,18 @@ public class ExportLocations extends XmlFile {
                 del +
                 Bundle.getMessage("AlternateTrack") +
                 del +
+                Bundle.getMessage("PoolName") +
+                del +
+                Bundle.getMessage("Minimum") +
+                del +
+                Bundle.getMessage("TitleTrackBlockingOrder") +
+                del +
+                Bundle.getMessage("MenuItemPlannedPickups") +
+                del +
+                Bundle.getMessage("MenuItemDestinations") +
+                del +
+                Bundle.getMessage("Destinations") +
+                del +
                 Bundle.getMessage("Comment") +
                 del +
                 Bundle.getMessage("CommentBoth") +
@@ -132,16 +150,17 @@ public class ExportLocations extends XmlFile {
 
         fileOut.println(header);
 
-        List<Location> locations = InstanceManager.getDefault(LocationManager.class).getLocationsByNameList();
+        List<Location> locations = locationManager.getLocationsByNameList();
         for (Location location : locations) {
-            String locationName = location.getName();
-            if (locationName.contains(del)) {
-                locationName = ESC + locationName + ESC;
-            }
             for (Track track : location.getTrackByNameList(null)) {
-                String trackName = track.getName();
-                if (trackName.contains(del)) {
-                    trackName = ESC + trackName + ESC;
+
+                StringBuffer trainDirections = new StringBuffer();
+                String[] directions = Setup.getDirectionStrings(
+                        Setup.getTrainDirection() & location.getTrainDirections() & track.getTrainDirections());
+                for (String dir : directions) {
+                    if (dir != null) {
+                        trainDirections.append(dir + "; ");
+                    }
                 }
 
                 StringBuffer rollingStockNames = new StringBuffer();
@@ -238,15 +257,31 @@ public class ExportLocations extends XmlFile {
                     alternateTrackName = Bundle.getMessage("ButtonYes");
                 }
 
-                String line = locationName +
+                StringBuffer destinationNames = new StringBuffer();
+                for (String id : track.getDestinationIds()) {
+                    Location destination = locationManager.getLocationById(id);
+                    if (destination != null) {
+                        destinationNames.append(destination.getName() + "; ");
+                    }
+                }
+
+                String line = ESC +
+                        location.getName() +
+                        ESC +
                         del +
-                        trackName +
+                        ESC +
+                        track.getName() +
+                        ESC +
                         del +
                         track.getTrackTypeName() +
                         del +
                         track.getLength() +
                         del +
+                        trainDirections.toString() +
+                        del +
                         rollingStockNames.toString() +
+                        del +
+                        track.getServiceOrder() +
                         del +
                         track.getRoadOptionString() +
                         del +
@@ -275,17 +310,39 @@ public class ExportLocations extends XmlFile {
                         del +
                         alternateTrackName +
                         del +
-                        ESC + track.getComment() + ESC +
+                        track.getPoolName() +
                         del +
-                        ESC + track.getCommentBoth() + ESC +
+                        track.getMinimumLength() +
                         del +
-                        ESC + track.getCommentPickup() + ESC +
+                        track.getBlockingOrder() +
                         del +
-                        ESC + track.getCommentSetout() + ESC;
+                        track.getIgnoreUsedLengthPercentage() +
+                        del +
+                        (track.getDestinationOption().equals(Track.ALL_DESTINATIONS) ? Bundle.getMessage("All")
+                                : Bundle.getMessage("Include")) +
+                        del +
+                        ESC +
+                        destinationNames.toString() +
+                        ESC +
+                        del +
+                        ESC +
+                        track.getComment() +
+                        ESC +
+                        del +
+                        ESC +
+                        track.getCommentBoth() +
+                        ESC +
+                        del +
+                        ESC +
+                        track.getCommentPickup() +
+                        ESC +
+                        del +
+                        ESC +
+                        track.getCommentSetout() +
+                        ESC;
 
                 fileOut.println(line);
             }
-
         }
         fileOut.flush();
         fileOut.close();

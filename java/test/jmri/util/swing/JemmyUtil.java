@@ -28,6 +28,13 @@ public class JemmyUtil {
         // Click button
         jbo.push();
     }
+    
+    static public void pressDialogButton(String dialogTitle, String buttonName) {
+        JDialogOperator jdo = new JDialogOperator(dialogTitle); // wait for the first dialog.
+        JButtonOperator jbo = new JButtonOperator(jdo, buttonName);
+        // Click button
+        jbo.push();
+    }
 
     static public void pressDialogButton(JmriJFrame f, String dialogTitle, String buttonName) {
         JFrameOperator jfo = new JFrameOperator(f);
