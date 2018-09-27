@@ -1129,12 +1129,13 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         Dimension screen = frame.getToolkit().getScreenSize();
         Dimension size = frame.getSize();
 
-        Point p = InstanceManager.getDefault(UserPreferencesManager.class).getWindowLocation(containedPane.getClass().getName());
-        if (p != null) {
-            frame.setLocation(p);
-        } else {
-            frame.setLocation((screen.width - size.width) / 2, (screen.height - size.height) / 2);
-        }
+        // first set a default position and size
+        frame.setLocation((screen.width - size.width) / 2, (screen.height - size.height) / 2);
+        
+        // then attempt set from stored preference
+        frame.setFrameLocation();
+        
+        // and finally show
         frame.setVisible(true);
     }
 
