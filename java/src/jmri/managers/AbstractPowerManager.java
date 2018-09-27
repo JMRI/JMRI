@@ -78,6 +78,7 @@ abstract public class AbstractPowerManager implements PowerManager {
      * <p>
      * @return true if IDLE power state is supported by the connection, else false
      */
+    @Override
     public boolean implementsIdle() {
         return false;   // assume "IDLE" state is not supported by the connection
     }
