@@ -279,38 +279,56 @@ public class ExportLocations extends XmlFile {
                         del +
                         trainDirections.toString() +
                         del +
+                        ESC +
                         rollingStockNames.toString() +
+                        ESC +
                         del +
                         track.getServiceOrder() +
                         del +
                         track.getRoadOptionString() +
                         del +
+                        ESC +
                         roadNames.toString() +
+                        ESC +
                         del +
                         track.getLoadOptionString() +
                         del +
+                        ESC +
                         loadNames.toString() +
+                        ESC +
                         del +
                         track.getShipLoadOptionString() +
                         del +
+                        ESC +
                         shipNames.toString() +
+                        ESC +
                         del +
                         setOutRestriction +
                         del +
+                        ESC +
                         setOutRestrictions.toString() +
+                        ESC +
                         del +
                         pickUpRestriction +
                         del +
+                        ESC +
                         pickUpRestrictions.toString() +
+                        ESC +
                         del +
+                        ESC +
                         track.getScheduleName() +
+                        ESC +
                         del +
                         (track.getScheduleMode() == Track.MATCH ? Bundle.getMessage("Match")
                                 : Bundle.getMessage("Sequential")) +
                         del +
+                        ESC +
                         alternateTrackName +
+                        ESC +
                         del +
+                        ESC +
                         track.getPoolName() +
+                        ESC +
                         del +
                         track.getMinimumLength() +
                         del +
