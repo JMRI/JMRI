@@ -642,10 +642,10 @@ public class JUnitUtil {
             NamedBean beanA = null;
             NamedBean beanB = null;
             if (instanceAIndex < instanceListA.size()) {
-                beanA = (NamedBean)instanceListA.get(instanceAIndex);
+                beanA = instanceListA.get(instanceAIndex);
             }
             if (instanceBIndex < instanceListB.size()) {
-                beanB = (NamedBean)instanceListB.get(instanceBIndex);
+                beanB = instanceListB.get(instanceBIndex);
             }
             
             if ((beanA != null) && (beanB != null)) {
