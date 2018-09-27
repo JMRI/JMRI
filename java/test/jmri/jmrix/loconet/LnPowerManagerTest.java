@@ -1,9 +1,13 @@
 package jmri.jmrix.loconet;
 
+import jmri.JmriException;
 import jmri.jmrix.AbstractPowerManagerTestBase;
 import jmri.util.JUnitUtil;
+import jmri.PowerManager;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Jmri package LnPowerManager.
@@ -42,6 +46,18 @@ public class LnPowerManagerTest extends AbstractPowerManagerTestBase {
     }
 
     @Override
+    protected void hearIdle() {
+        LocoNetMessage l = new LocoNetMessage(2);
+        l.setOpCode(LnConstants.OPC_IDLE);
+        controller.sendTestMessage(l);
+    }
+
+    @Override
+    protected void sendIdleReply() {
+        hearIdle();
+    }
+
+    @Override
     protected int numListeners() {
         return controller.numListeners();
     }
@@ -63,6 +79,12 @@ public class LnPowerManagerTest extends AbstractPowerManagerTestBase {
                 == controller.outbound.elementAt(index).getOpCode();
     }
 
+    @Override
+    protected boolean outboundIdleOK(int index) {
+        return LnConstants.OPC_IDLE
+                == controller.outbound.elementAt(index).getOpCode();
+    }
+
     // setup a default interface
     @Before
     @Override
@@ -81,6 +103,25 @@ public class LnPowerManagerTest extends AbstractPowerManagerTestBase {
         memo = null;
         controller = null;
         JUnitUtil.tearDown();
+    }
+
+    @Test
+    public void testSetIdle() throws JmriException{
+        int initialSent = outboundSize();
+        p.setPower(PowerManager.IDLE);
+        // check one message sent, correct form, unknown state
+        Assert.assertEquals("messages sent", initialSent + 1, outboundSize());
+        Assert.assertTrue("message type OK", outboundIdleOK(initialSent));
+        Assert.assertEquals("state before reply ", PowerManager.UNKNOWN, p.getPower());
+        // arrange for reply
+        sendIdleReply();
+        Assert.assertEquals("state after reply ", PowerManager.IDLE, p.getPower());
+    }
+
+    @Override
+    @Test
+    public void testImplementsIdle() {
+        Assert.assertTrue(p.implementsIdle());
     }
 
     LocoNetInterfaceScaffold controller;  // holds dummy for testing

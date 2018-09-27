@@ -27,9 +27,13 @@ public abstract class AbstractPowerManagerTestBase {
 
     protected abstract void hearOff();
 
+    protected abstract void hearIdle();
+
     protected abstract void sendOnReply();	  // get a reply to On command from layout
 
     protected abstract void sendOffReply();   // get a reply to Off command from layout
+    
+    protected abstract void sendIdleReply();
 
     protected abstract int numListeners();
 
@@ -38,6 +42,8 @@ public abstract class AbstractPowerManagerTestBase {
     protected abstract boolean outboundOnOK(int index);
 
     protected abstract boolean outboundOffOK(int index);
+
+    protected abstract boolean outboundIdleOK(int index);
 
     protected PowerManager p = null;	// holds objects under test
 
@@ -145,6 +151,13 @@ public abstract class AbstractPowerManagerTestBase {
             return;
         }
         Assert.fail("Should have thrown exception after dispose()");
+    }
+
+    @Test
+    public void testImplementsIdle() {
+        // assumes that Idle is not implemented; override this test for cases
+        // where idle is implemented.
+        Assert.assertFalse(p.implementsIdle());
     }
 
 }
