@@ -52,7 +52,10 @@ public interface PowerManager {
 
     public void removePropertyChangeListener(PropertyChangeListener p);
     
-    public boolean implementsIdle();
+    public default boolean implementsIdle() {
+        // By default the Power Manager does not implement the IDLE power state
+        return false;
+    }
 
     @CheckReturnValue
     @Nonnull public String getUserName();
