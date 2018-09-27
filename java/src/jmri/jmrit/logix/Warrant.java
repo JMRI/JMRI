@@ -938,6 +938,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     if (_debug) {
                         debugInfo();
                     }
+                    break;
                 default:
             }
             return ret;
@@ -1498,11 +1499,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 getBlockOrderAt(_idxCurrentOrder).setPath(this);
                 _engineer.rampSpeedTo(_curSpeedType, 0, false);
                 _engineer.setWaitforClear(false);       // start ramp before clearing engineer
-                return true;
             }
+            if (log.isDebugEnabled())
+                log.debug("Warrant \"{}\" Cleared _stoppingBlock= \"{}\". runState= {}",
+                    getDisplayName(), blockName, RUN_STATE[runState]);
+            return true;
         }
-        log.debug("Warrant \"{}\" Cleared _stoppingBlock= \"{}\". runState= {}",
-                getDisplayName(), blockName, RUN_STATE[runState]);
         return false;
     }
 
