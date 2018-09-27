@@ -53,5 +53,10 @@ public class DefaultPowerManager implements PowerManager {
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
+    
+    @Override
+    public boolean implementsIdle() {
+        return false;
+    }
 
 }
