@@ -535,12 +535,18 @@ public class JUnitUtil {
     
     
     /**
-     * Get a set of all named beans from the managers.
+     * Get a set of all named beans from managers that inherits from jmri.Manager,
+     * like Turnouts, Sensors, Memories, etc.
+     * Note that this method only returns named beans from those managers that
+     * inherit jmri.Manager, not from other types of managers.
      *
-     * @return a set of all named beans from the managers or an empty set
+     * @param instanceManager the instance manager that has the named beans
+     * @return a set of the named beans from the managers or an empty set
      */
     @Nonnull
-    private static Set<NamedBean> getAllNamedBeansFromManagers(InstanceManager instanceManager) {
+    private static Set<NamedBean> getAllNamedBeansFromManagerManagers(
+            InstanceManager instanceManager) {
+        
         log.trace("Get list of all instances");
         
         Set<NamedBean> set = new HashSet<>();
@@ -550,20 +556,6 @@ public class JUnitUtil {
                     if (manager instanceof jmri.Manager) {
                         Manager<?> mngr = (Manager<?>)manager;
                         set.addAll(mngr.getNamedBeanSet());
-                    } else if (manager instanceof jmri.TurnoutOperationManager) {
-                        // Ignore this
-                    } else if (manager instanceof ThrottleManager) {
-                        // Ignore this
-                    } else if (manager instanceof UserPreferencesManager) {
-                        // Ignore this
-                    } else if (manager instanceof jmri.jmrix.SystemConnectionMemoManager) {
-                        // Ignore this
-                    } else if (manager instanceof jmri.jmrix.internal.InternalSystemConnectionMemo) {
-                        // Ignore this
-                    } else if (manager instanceof apps.startup.StartupActionModelUtil) {
-                        // Ignore this
-                    } else {
-                        throw new RuntimeException("Unknown manager: "+manager.getClass().getName());
                     }
                 }
             }
@@ -624,12 +616,12 @@ public class JUnitUtil {
         InstanceManagerItemComparator instanceManagerNamedBeanComparator
                 = new InstanceManagerItemComparator();
         
-        Set<NamedBean> instanceSetA = getAllNamedBeansFromManagers(instanceManagerA);
+        Set<NamedBean> instanceSetA = getAllNamedBeansFromManagerManagers(instanceManagerA);
         List<NamedBean> instanceListA = new ArrayList<>();
         instanceListA.addAll(instanceSetA);
         instanceListA.sort(instanceManagerNamedBeanComparator);
         
-        Set<NamedBean> instanceSetB = getAllNamedBeansFromManagers(instanceManagerB);
+        Set<NamedBean> instanceSetB = getAllNamedBeansFromManagerManagers(instanceManagerB);
         List<NamedBean> instanceListB = new ArrayList<>();
         instanceListB.addAll(instanceSetB);
         instanceListB.sort(instanceManagerNamedBeanComparator);
