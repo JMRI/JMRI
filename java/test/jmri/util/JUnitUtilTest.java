@@ -23,11 +23,32 @@ public class JUnitUtilTest {
 
     private InstanceManager getNewInstanceManager() {
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.resetProfileManager();
+        jmri.util.JUnitUtil.initConfigureManager();
+        jmri.util.JUnitUtil.initShutDownManager();
+        jmri.util.JUnitUtil.initDebugCommandStation();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
+        jmri.util.JUnitUtil.initReporterManager();
         jmri.util.JUnitUtil.initDebugThrottleManager();
-        jmri.util.JUnitUtil.initLogixManager();
+        jmri.util.JUnitUtil.resetTurnoutOperationManager();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        jmri.util.JUnitUtil.initRouteManager();
+        jmri.util.JUnitUtil.initMemoryManager();
+        jmri.util.JUnitUtil.initReporterManager();
+        jmri.util.JUnitUtil.initOBlockManager();
+        jmri.util.JUnitUtil.initWarrantManager();
+        jmri.util.JUnitUtil.initSignalMastLogicManager();
+        jmri.util.JUnitUtil.initLayoutBlockManager();
+        jmri.util.JUnitUtil.initSectionManager();
+        jmri.util.JUnitUtil.initInternalSignalHeadManager();
+        jmri.util.JUnitUtil.initDefaultSignalMastManager();
+        jmri.util.JUnitUtil.initDebugProgrammerManager();
+        jmri.util.JUnitUtil.initDebugPowerManager();
+        jmri.util.JUnitUtil.initRailComManager();
+        jmri.util.JUnitUtil.initConditionalManager();
+        jmri.util.JUnitUtil.initLogixManager(); // Logix sist?
         jmri.util.JUnitUtil.initIdTagManager();
         
         InstanceManager instanceManager = InstanceManager.getDefault();
@@ -46,24 +67,24 @@ public class JUnitUtilTest {
         InstanceManager instanceManager;
         
         instanceManager = getNewInstanceManager();
-        // We now have all 21 managers
-        Assert.assertTrue("we have 21 managers", instanceManager.getAllManagers().size() == 21);
+        // We now have all 42 managers
+        Assert.assertTrue("we have 42 managers", instanceManager.getAllManagers().size() == 42);
         
         instanceManager = getNewInstanceManager();
-        // jmri.jmrit.logix.WarrantPreferences is missing
-        Assert.assertTrue("we have 20 managers", instanceManager.getAllManagers().size() == 20);
+        // We still have all 42 managers
+        Assert.assertTrue("we have 42 managers", instanceManager.getAllManagers().size() == 42);
         
         instanceManager = getNewInstanceManager();
         // jmri.implementation.SignalSpeedMap is missing
-        Assert.assertTrue("we have 19 managers", instanceManager.getAllManagers().size() == 19);
+        Assert.assertTrue("we have 41 managers", instanceManager.getAllManagers().size() == 41);
         
         instanceManager = getNewInstanceManager();
         // Same as previous
-        Assert.assertTrue("we have 19 managers", instanceManager.getAllManagers().size() == 19);
+        Assert.assertTrue("we have 41 managers", instanceManager.getAllManagers().size() == 41);
         
         instanceManager = getNewInstanceManager();
         // Same as previous
-        Assert.assertTrue("we have 19 managers", instanceManager.getAllManagers().size() == 19);
+        Assert.assertTrue("we have 41 managers", instanceManager.getAllManagers().size() == 41);
     }
     
     @Ignore
