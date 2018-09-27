@@ -772,40 +772,17 @@ public final class InstanceManager {
     }
 
     /**
-     * Get a list of all named beans from the managers.
+     * Get a list of all the managers.
      *
-     * @return a list of all named beans from the managers or an empty list
+     * @return a list of all the managers or an empty list
      */
-    @SuppressWarnings("unchecked") // the cast here is protected by the structure of the managerLists
     @Nonnull
-    public List<Object> getAllNamedBeansFromManagers() {
-        log.trace("Get list of all instances");
+    public List<Class<?>> getAllManagers() {
+        log.trace("Get list of all managers");
         
-        List<Object> list = new ArrayList<>();
-        for (Class<?> type : managerLists.keySet()) {
-            synchronized (type) {
-                for (Object manager : managerLists.get(type)) {
-                    if (manager instanceof jmri.Manager) {
-                        Manager<?> mngr = (Manager<?>)manager;
-                        list.addAll(mngr.getNamedBeanSet());
-                    } else if (manager instanceof jmri.TurnoutOperationManager) {
-                        // Ignore this
-                    } else if (manager instanceof ThrottleManager) {
-                        // Ignore this
-                    } else if (manager instanceof UserPreferencesManager) {
-                        // Ignore this
-                    } else if (manager instanceof jmri.jmrix.SystemConnectionMemoManager) {
-                        // Ignore this
-                    } else if (manager instanceof jmri.jmrix.internal.InternalSystemConnectionMemo) {
-                        // Ignore this
-                    } else if (manager instanceof apps.startup.StartupActionModelUtil) {
-                        // Ignore this
-                    } else {
-                        throw new RuntimeException("Unknown manager: "+manager.getClass().getName());
-                    }
-                }
-            }
-        }
+        List<Class<?>> list = new ArrayList<>();
+        
+        list.addAll(managerLists.keySet());
         
         return list;
     }

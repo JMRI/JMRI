@@ -534,6 +534,44 @@ public class JUnitUtil {
     }
     
     
+    /**
+     * Get a set of all named beans from the managers.
+     *
+     * @return a set of all named beans from the managers or an empty set
+     */
+    @Nonnull
+    private static Set<NamedBean> getAllNamedBeansFromManagers(InstanceManager instanceManager) {
+        log.trace("Get list of all instances");
+        
+        Set<NamedBean> set = new HashSet<>();
+        for (Class<?> type : instanceManager.getAllManagers()) {
+            synchronized (type) {
+                for (Object manager : instanceManager.getInstances(type)) {
+                    if (manager instanceof jmri.Manager) {
+                        Manager<?> mngr = (Manager<?>)manager;
+                        set.addAll(mngr.getNamedBeanSet());
+                    } else if (manager instanceof jmri.TurnoutOperationManager) {
+                        // Ignore this
+                    } else if (manager instanceof ThrottleManager) {
+                        // Ignore this
+                    } else if (manager instanceof UserPreferencesManager) {
+                        // Ignore this
+                    } else if (manager instanceof jmri.jmrix.SystemConnectionMemoManager) {
+                        // Ignore this
+                    } else if (manager instanceof jmri.jmrix.internal.InternalSystemConnectionMemo) {
+                        // Ignore this
+                    } else if (manager instanceof apps.startup.StartupActionModelUtil) {
+                        // Ignore this
+                    } else {
+                        throw new RuntimeException("Unknown manager: "+manager.getClass().getName());
+                    }
+                }
+            }
+        }
+        
+        return set;
+    }
+
     static private class InstanceManagerItemComparator implements Comparator<Object> 
     { 
         // Used for sorting in ascending order of
@@ -586,24 +624,28 @@ public class JUnitUtil {
         InstanceManagerItemComparator instanceManagerNamedBeanComparator
                 = new InstanceManagerItemComparator();
         
-        List<Object> instancesA = instanceManagerA.getAllNamedBeansFromManagers();
-        instancesA.sort(instanceManagerNamedBeanComparator);
+        Set<NamedBean> instanceSetA = getAllNamedBeansFromManagers(instanceManagerA);
+        List<NamedBean> instanceListA = new ArrayList<>();
+        instanceListA.addAll(instanceSetA);
+        instanceListA.sort(instanceManagerNamedBeanComparator);
         
-        List<Object> instancesB = instanceManagerB.getAllNamedBeansFromManagers();
-        instancesB.sort(instanceManagerNamedBeanComparator);
+        Set<NamedBean> instanceSetB = getAllNamedBeansFromManagers(instanceManagerB);
+        List<NamedBean> instanceListB = new ArrayList<>();
+        instanceListB.addAll(instanceSetB);
+        instanceListB.sort(instanceManagerNamedBeanComparator);
         
         int instanceAIndex = 0;
         int instanceBIndex = 0;
-        while ((instanceAIndex < instancesA.size())
-                || (instanceBIndex < instancesB.size())) {
+        while ((instanceAIndex < instanceListA.size())
+                || (instanceBIndex < instanceListB.size())) {
             
             NamedBean beanA = null;
             NamedBean beanB = null;
-            if (instanceAIndex < instancesA.size()) {
-                beanA = (NamedBean)instancesA.get(instanceAIndex);
+            if (instanceAIndex < instanceListA.size()) {
+                beanA = (NamedBean)instanceListA.get(instanceAIndex);
             }
-            if (instanceBIndex < instancesB.size()) {
-                beanB = (NamedBean)instancesB.get(instanceBIndex);
+            if (instanceBIndex < instanceListB.size()) {
+                beanB = (NamedBean)instanceListB.get(instanceBIndex);
             }
             
             if ((beanA != null) && (beanB != null)) {
