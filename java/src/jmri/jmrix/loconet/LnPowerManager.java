@@ -50,6 +50,11 @@ public class LnPowerManager
             LocoNetMessage l = new LocoNetMessage(2);
             l.setOpCode(LnConstants.OPC_GPOFF);
             tc.sendLocoNetMessage(l);
+        } else if (v == IDLE) {
+            // send OPC_IDLE
+            LocoNetMessage l = new LocoNetMessage(2);
+            l.setOpCode(LnConstants.OPC_IDLE);
+            tc.sendLocoNetMessage(l);
         }
 
         firePropertyChange("Power", null, null); // NOI18N
@@ -74,6 +79,10 @@ public class LnPowerManager
         return (power == UNKNOWN);
     }
 
+    public boolean isPowerIdle() {
+        return (power == IDLE);
+    }
+
     // to free resources when no longer used
     @Override
     public void dispose() {
@@ -87,7 +96,7 @@ public class LnPowerManager
                 thread = null;
             }
         }
-    
+
         if (tc != null) {
             tc.removeLocoNetListener(~0, this);
         }
@@ -118,10 +127,23 @@ public class LnPowerManager
             // grab the track status any time that a slot read of a "normal" slot passes thru.
             // Ignore "reserved" and "master control" slots in slot numbers 120-127
             if ((m.getElement(1) == 0x0E) && (m.getElement(2) < 120)) {
-                int slotTrackStatus
-                        = ((m.getElement(7) & LnConstants.GTRK_POWER) == LnConstants.GTRK_POWER) ? ON : OFF;
+                int slotTrackStatus;
+                switch (m.getElement(7) & (0x03)) {
+                    case LnConstants.GTRK_POWER:
+                        slotTrackStatus = IDLE;
+                        break;
+                    case (LnConstants.GTRK_POWER + LnConstants.GTRK_IDLE):
+                        slotTrackStatus = ON;
+                        break;
+                    case LnConstants.GTRK_IDLE:
+                        slotTrackStatus = OFF;
+                        break;
+                    default:
+                        slotTrackStatus = UNKNOWN;
+                        break;
+                }
                 if (power != slotTrackStatus) {
-                    // fire a property change only if slot status is DIFFERENT 
+                    // fire a property change only if slot status is DIFFERENT
                     // from current local status
                     power = slotTrackStatus; // update local track status from slot info
                     firePropertyChange("Power", null, null); // NOI18N
@@ -143,7 +165,7 @@ public class LnPowerManager
     }
 
     volatile LnTrackStatusUpdateThread thread;
-    
+
     /**
      * Class providing a thread to delay, then query slot 0. The LnPowerManager
      * can use the resulting OPC_SL_RD_DATA message to update its view of the
@@ -199,6 +221,15 @@ public class LnPowerManager
             }
             log.debug("LnTrackStatusUpdate sent");
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     * @return
+     */
+    @Override
+    public boolean implementsIdle() {
+        return true;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnPowerManager.class);
