@@ -18,7 +18,7 @@ public class EngineerTest {
         jmri.DccLocoAddress addr = new jmri.DccLocoAddress(5,false);
         jmri.jmrix.SystemConnectionMemo memo = new jmri.jmrix.internal.InternalSystemConnectionMemo();
         jmri.DccThrottle throttle = new jmri.jmrix.debugthrottle.DebugThrottle(addr,memo);
-        Engineer t = new Engineer(warrant,throttle);
+        Engineer t = new Engineer(warrant,null);
         Assert.assertNotNull("exists",t);
         t.stopRun(false, true);
     }
