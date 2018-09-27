@@ -118,6 +118,15 @@ public class NcePowerManager implements PowerManager, NceListener {
         }
     }
 
+    /**
+     * Returns false to indicate it does not implement an "IDLE" power state.
+     * @return false
+     */
+    @Override
+    public boolean implementsIdle() {
+        return false;
+    }
+
 }
 
 

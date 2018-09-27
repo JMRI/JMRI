@@ -105,5 +105,15 @@ public class MarklinPowerManager implements PowerManager, MarklinListener {
     public void message(MarklinMessage m) {
         // messages are ignored
     }
+
+    /**
+     * Returns false to indicate it does not implement an "IDLE" power state.
+     * @return false
+     */
+    @Override
+    public boolean implementsIdle() {
+        return false;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(MarklinPowerManager.class);
 }

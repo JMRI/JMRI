@@ -125,6 +125,15 @@ public class SRCPPowerManager implements PowerManager, SRCPListener {
         }
     }
 
+    /**
+     * Returns false to indicate it does not implement an "IDLE" power state.
+     * @return false
+     */
+    @Override
+    public boolean implementsIdle() {
+        return false;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(SRCPPowerManager.class);
 
 }

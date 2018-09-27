@@ -111,4 +111,13 @@ public class EasyDccPowerManager implements PowerManager, EasyDccListener {
         }
     }
 
+    /**
+     * Returns false to indicate it does not implement an "IDLE" power state.
+     * @return false
+     */
+    @Override
+    public boolean implementsIdle() {
+        return false;
+    }
+
 }

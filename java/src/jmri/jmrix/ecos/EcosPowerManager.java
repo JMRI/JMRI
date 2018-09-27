@@ -112,4 +112,13 @@ public class EcosPowerManager implements PowerManager, EcosListener {
 
     private final static Logger log = LoggerFactory.getLogger(EcosPowerManager.class);
 
+    /**
+     * Returns false to indicate it does not implement an "IDLE" power state.
+     * @return false
+     */
+    @Override
+    public boolean implementsIdle() {
+        return false;
+    }
+
 }
