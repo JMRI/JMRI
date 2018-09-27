@@ -5,6 +5,7 @@ import javax.swing.JComboBox;
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -105,7 +106,7 @@ public class OperationsSetupFrameTest extends OperationsSwingTestCase {
         (new JButtonOperator(jfo,Bundle.getMessage("ButtonSave"))).push();
 
         // dialog window should appear regarding train lengths
-        pressDialogButton(f,java.text.MessageFormat.format(
+        JemmyUtil.pressDialogButton(f,java.text.MessageFormat.format(
                     Bundle.getMessage("MaxTrainLengthIncreased"), new Object[]{1234,"feet"}), "OK");
         // dialog window should appear regarding railroad name
         /*pressDialogButton(f,java.text.MessageFormat.format(Bundle

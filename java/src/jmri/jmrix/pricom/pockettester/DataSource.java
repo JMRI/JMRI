@@ -303,7 +303,6 @@ public class DataSource extends jmri.util.JmriJFrame {
         super.dispose();
     }
 
-    @SuppressWarnings("unchecked")
     public Vector<String> getPortNames() {
         // first, check that the comm package can be opened and ports seen
         portNameVector = new Vector<String>();

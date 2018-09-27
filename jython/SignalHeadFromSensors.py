@@ -15,6 +15,7 @@
 
 import jmri
 import java
+import java.beans
 
 # Define the listener. 
 class SignalSensorListener(java.beans.PropertyChangeListener):

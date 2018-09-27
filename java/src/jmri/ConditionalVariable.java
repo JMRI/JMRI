@@ -2,6 +2,7 @@ package jmri;
 
 import java.util.Date;
 import java.util.ResourceBundle;
+import jmri.Conditional.Operator;
 import jmri.jmrit.beantable.LogixTableAction;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
@@ -46,7 +47,7 @@ public class ConditionalVariable {
     // as the default operator immediately to the left of this variable in the antecedent statement.
     // It may be over written by the antecedent statement in the Conditional to which this variable
     // belongs.
-    private int _opern = Conditional.OPERATOR_NONE;
+    private Operator _opern = Operator.NONE;
     private int _type = Conditional.TYPE_NONE;
     private String _name = "";
     private String _dataString = "";
@@ -72,9 +73,15 @@ public class ConditionalVariable {
 
     /**
      * Create a ConditionalVariable with a set of given properties.
+     * @param not true if the ConditionalVariable should be negated
+     * @param opern the boolean operator for this ConditionalVariable
+     * @param type the type this ConditionalVariable operates on (Turnout, Sensor, ...)
+     * @param name the device name
+     * @param trigger true if actions should be performed if triggered
      */
-    public ConditionalVariable(boolean not, int opern, int type, String name, boolean trigger) {
+    public ConditionalVariable(boolean not, Operator opern, int type, String name, boolean trigger) {
         _not = not;
+        // setOpern does some checks of opern
         _opern = opern;
         _type = type;
         _name = name;
@@ -142,7 +149,7 @@ public class ConditionalVariable {
                 case Conditional.ITEM_TYPE_CONDITIONAL:
                     Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getConditional(_name);
                     if (c == null) {
-                        log.error("invalid conditiona; name= \"" + _name + "\" in state variable");
+                        log.error("invalid conditional; name= \"" + _name + "\" in state variable");
                         return;
                     }
                     _namedBean = nbhm.getNamedBeanHandle(_name, c);
@@ -184,24 +191,12 @@ public class ConditionalVariable {
         _not = not;
     }
 
-    public int getOpern() {
+    public Operator getOpern() {
         return _opern;
     }
 
-    public void setOpern(int opern) {
-        switch (opern) {
-            case Conditional.OPERATOR_AND_NOT:
-                _opern = Conditional.OPERATOR_AND;
-                _not = true;
-                break;
-            case Conditional.OPERATOR_NOT:
-                _opern = Conditional.OPERATOR_NONE;
-                _not = true;
-                break;
-            default:
-                _opern = opern;
-                break;
-        }
+    public final void setOpern(Operator opern) {
+        _opern = opern;
     }
 
     public int getType() {
@@ -271,6 +266,8 @@ public class ConditionalVariable {
             //Once all refactored, we should probably register an error if the bean is returned null.
             if (bean != null) {
                 _namedBean = nbhm.getNamedBeanHandle(_name, bean);
+            } else {
+                log.debug("Did not have or create \"{}\" in setName. namedBean is unchanged", _name);
             }
 
         } catch (IllegalArgumentException ex) {
@@ -396,15 +393,11 @@ public class ConditionalVariable {
      */
     public String getOpernString() {
         switch (_opern) {
-            case Conditional.OPERATOR_AND:
+            case AND:
                 return Bundle.getMessage("LogicAND"); // NOI18N
-            case Conditional.OPERATOR_NOT:
-                return Bundle.getMessage("LogicNOT"); // NOI18N
-            case Conditional.OPERATOR_AND_NOT:
-                return Bundle.getMessage("LogicAND"); // NOI18N
-            case Conditional.OPERATOR_NONE:
+            case NONE:
                 return "";
-            case Conditional.OPERATOR_OR:
+            case OR:
                 return Bundle.getMessage("LogicOR"); // NOI18N
             default:
                 return "";

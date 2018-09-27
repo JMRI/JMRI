@@ -86,7 +86,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
     public Turnout createNewTurnout(String systemName, String userName) throws IllegalArgumentException {
         int addr;
         try {
-            addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
+            addr = Integer.parseInt(systemName.substring(prefix.length() + 1));
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Can't convert " +  // NOI18N
                     systemName.substring(prefix.length() + 1) +
@@ -208,9 +208,9 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
         // name must be in the LTnnnnn format (L is user configurable)
         int num = 0;
         try {
-            num = Integer.valueOf(systemName.substring(
+            num = Integer.parseInt(systemName.substring(
                     prefix.length() + 1, systemName.length())
-            ).intValue();
+                  );
         } catch (Exception e) {
             log.debug("invalid character in number field of system name: {}", systemName);
             return (0);

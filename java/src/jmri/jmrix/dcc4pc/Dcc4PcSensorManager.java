@@ -79,7 +79,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             systemName = systemName.substring(indexOfSplit);
             int boardNo;
             try {
-                boardNo = Integer.valueOf(systemName);
+                boardNo = Integer.parseInt(systemName);
             } catch (NumberFormatException ex) {
                 log.error("Unable to find the board address from system name {}", systemName);
                 return;
@@ -103,14 +103,14 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
             // Address format passed is in the form of board:channel or T:turnout address
             int seperator = curAddress.indexOf(":");
             try {
-                board = Integer.valueOf(curAddress.substring(0, seperator));
+                board = Integer.parseInt(curAddress.substring(0, seperator));
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert {} into the cab and channel format of nn:xx", curAddress);
                 throw new JmriException("Hardware Address passed should be a number");
             }
 
             try {
-                channel = Integer.valueOf(curAddress.substring(seperator + 1));
+                channel = Integer.parseInt(curAddress.substring(seperator + 1));
                 if ((channel > 16) || (channel < 1)) {
                     log.error("Channel number is out of range");
                     throw new JmriException("Channel number should be in the range of 1 to 16");

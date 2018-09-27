@@ -633,11 +633,10 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         return Warrant.RUNNING;
     }
 
-    /**
-     * End running warrant.
-     * @param abort not normal shutdown
-     */
-    public void stopRun(boolean abort) {
+    public void stopRun(boolean abort, boolean turnOffFunctions) {
+        if (abort) {
+            _abort =true;            
+        }
         if (_waitSensor != null) {
             _waitSensor.removePropertyChangeListener(this);
         }
@@ -650,7 +649,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 setSpeed(0.0f);     // prevent creep after EStop - according to Jim Betz
             }
             if (abort) {
-                _abort =true;            
                 _throttle.setF0(false);
                 _throttle.setF1(false);
                 _throttle.setF2(false);

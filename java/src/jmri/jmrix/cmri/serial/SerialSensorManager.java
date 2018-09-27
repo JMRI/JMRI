@@ -168,8 +168,8 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
             //Address format passed is in the form node:address
             int seperator = curAddress.indexOf(":");
             try {
-                nAddress = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
-                bitNum = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
+                nAddress = Integer.parseInt(curAddress.substring(0, seperator));
+                bitNum = Integer.parseInt(curAddress.substring(seperator + 1));
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert {} Hardware Address to a number", curAddress);
                 throw new JmriException("Unable to convert " + curAddress + " to a valid Hardware Address");

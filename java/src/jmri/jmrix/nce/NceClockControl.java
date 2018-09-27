@@ -141,7 +141,6 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     }
 
     // TODO: Why does this if statement contain a direct false? FIXME!
-    @SuppressWarnings("unused")
     @Override
     public void reply(NceReply r) {
         if (false && log.isDebugEnabled()) {

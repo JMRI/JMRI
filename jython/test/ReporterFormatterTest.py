@@ -1,4 +1,6 @@
 # Test the ReporterFormatter.py script
+import java
+import java.beans
 
 # First, check syntax
 execfile("jython/ReporterFormatter.py")

@@ -28,12 +28,6 @@ abstract public class AbstractCanTrafficController
         allowUnexpectedReply = true;
     }
 
-    @Override
-    @Deprecated
-    protected void setInstance() {
-
-    }
-
     // The methods to implement the CAN Interface
     @Override
     public synchronized void addCanListener(CanListener l) {

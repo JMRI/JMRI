@@ -25,12 +25,6 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         allowUnexpectedReply = true;
     }
 
-    // set the instance variable
-    @Override
-    protected void setInstance() {
-    } // do nothing; do we still need the
-    // instance variable?
-
     /**
      * Implement this to forward a specific message type to a protocol-specific
      * listener interface. This puts the casting into the concrete class.

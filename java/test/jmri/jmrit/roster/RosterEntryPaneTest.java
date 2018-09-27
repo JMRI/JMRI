@@ -1,17 +1,14 @@
 package jmri.jmrit.roster;
 
 import jmri.InstanceManager;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import org.junit.*;
 
 /**
  * Tests for the jmrit.roster.RosterEntryPane class.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
   */
-public class RosterEntryPaneTest extends TestCase {
+public class RosterEntryPaneTest {
 
     // statics for test objects
     org.jdom2.Element eOld = null;
@@ -19,7 +16,7 @@ public class RosterEntryPaneTest extends TestCase {
     RosterEntry rOld = null;
     RosterEntry rNew = null;
 
-    @Override
+    @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
@@ -65,11 +62,12 @@ public class RosterEntryPaneTest extends TestCase {
         };
     }
 
-    @Override
+    @After
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
 
+    @Test
     public void testCreate() {
         RosterEntryPane p = new RosterEntryPane(rOld);
 
@@ -92,6 +90,7 @@ public class RosterEntryPaneTest extends TestCase {
 
     }
 
+    @Test
     public void testGuiChanged1() {
         RosterEntryPane p = new RosterEntryPane(rOld);
 
@@ -105,6 +104,7 @@ public class RosterEntryPaneTest extends TestCase {
 
     }
 
+    @Test
     public void testGuiChanged2() {
         RosterEntryPane p = new RosterEntryPane(rOld);
 
@@ -118,6 +118,7 @@ public class RosterEntryPaneTest extends TestCase {
 
     }
 
+    @Test
     public void testGuiChanged3() {
 
         RosterEntryPane p = new RosterEntryPane(rNew);
@@ -132,6 +133,7 @@ public class RosterEntryPaneTest extends TestCase {
 
     }
 
+    @Test
     public void testGuiChanged4() {
         RosterEntryPane p = new RosterEntryPane(rNew);
         // copy to a new entry
@@ -145,6 +147,7 @@ public class RosterEntryPaneTest extends TestCase {
 
     }
 
+    @Test
     public void testGuiChanged5() {
         RosterEntryPane p = new RosterEntryPane(rNew);
         // copy to a new entry
@@ -159,6 +162,7 @@ public class RosterEntryPaneTest extends TestCase {
 
     }
 
+    @Test
     public void testNotDuplicate() {
         RosterEntryPane p = new RosterEntryPane(rNew);
         // reset Roster
@@ -167,6 +171,7 @@ public class RosterEntryPaneTest extends TestCase {
         Assert.assertTrue(!p.checkDuplicate());
     }
 
+    @Test
     public void testIsDuplicate() {
         RosterEntryPane p = new RosterEntryPane(rNew);
         // reset Roster
@@ -177,6 +182,7 @@ public class RosterEntryPaneTest extends TestCase {
         Assert.assertTrue(!p.checkDuplicate());
     }
 
+    @Test
     public void testRenamedDuplicate() {
         RosterEntryPane p = new RosterEntryPane(rOld);
         // reset Roster
@@ -190,22 +196,4 @@ public class RosterEntryPaneTest extends TestCase {
 
         Assert.assertTrue(p.checkDuplicate());
     }
-
-    // from here down is testing infrastructure
-    public RosterEntryPaneTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {RosterEntryPaneTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(RosterEntryPaneTest.class);
-        return suite;
-    }
-
 }

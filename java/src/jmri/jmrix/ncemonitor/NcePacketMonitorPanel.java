@@ -509,7 +509,6 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
         super.dispose();
     }
 
-    @SuppressWarnings("unchecked")
     public Vector<String> getPortNames() {
         // first, check that the comm package can be opened and ports seen
         portNameVector = new Vector<String>();

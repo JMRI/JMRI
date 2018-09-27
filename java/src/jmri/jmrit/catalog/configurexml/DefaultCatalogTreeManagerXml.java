@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
-import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.*;
 import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
@@ -56,9 +56,9 @@ public class DefaultCatalogTreeManagerXml extends XmlFile {
                 log.debug("enumerateTree called for root= {}, has {} children", root, root.getChildCount());
 
                 @SuppressWarnings("unchecked") // root.depthFirstEnumeration isn't fully typed in JDOM2
-                Enumeration<CatalogTreeNode> e = root.depthFirstEnumeration();
+                Enumeration<TreeNode> e = root.depthFirstEnumeration();
                 while (e.hasMoreElements()) {
-                    CatalogTreeNode n = e.nextElement();
+                    CatalogTreeNode n = (CatalogTreeNode)e.nextElement();
                     log.debug("nodeName= {} has {} leaves and {} subnodes.", n.getUserObject(), n.getLeaves().size(), n.getChildCount());
                 }
             }
@@ -155,10 +155,9 @@ public class DefaultCatalogTreeManagerXml extends XmlFile {
             element.addContent(el);
         }
         parent.addContent(element);
-        @SuppressWarnings("unchecked") // is node.children actually of <Element> type?
-        Enumeration<CatalogTreeNode> e = node.children();
+        Enumeration<TreeNode> e = node.children();
         while (e.hasMoreElements()) {
-            CatalogTreeNode n = e.nextElement();
+            CatalogTreeNode n = (CatalogTreeNode) e.nextElement();
             storeNode(element, n);
         }
     }

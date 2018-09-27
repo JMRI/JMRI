@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Tests for {@link jmri.beans.Beans} static methods.
+ * Tests for {@link jmri.profile.ProfileUtils} methods.
  *
  * @author Randall Wood
  */

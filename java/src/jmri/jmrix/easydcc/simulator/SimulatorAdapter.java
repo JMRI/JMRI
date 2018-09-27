@@ -245,7 +245,6 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
      *
      * As yet, not all messages receive a meaningful reply. TODO: Throttle, Program
      */
-    @SuppressWarnings("fallthrough")
     private EasyDccReply generateReply(EasyDccMessage msg) {
         log.debug("Generate Reply to message type {} (string = {})", msg.toString().charAt(0), msg.toString());
 

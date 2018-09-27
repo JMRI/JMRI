@@ -12,6 +12,7 @@ import org.junit.runners.Suite;
     TabbedPreferencesFrameTest.class,
     TabbedPreferencesProfileActionTest.class,
     TabbedPreferencesTest.class,
+    EditConnectionPreferencesDialogTest.class,
     apps.gui3.paned.PackageTest.class,
     FirstTimeStartUpWizardTest.class,
     FirstTimeStartUpWizardActionTest.class,})

@@ -257,13 +257,6 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         return null;
     }
 
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
-    @Override
-    @Deprecated
-    protected void setInstance() {
-    }
-
     @Override
     protected AbstractMRReply newReply() {
         return new SerialReply();

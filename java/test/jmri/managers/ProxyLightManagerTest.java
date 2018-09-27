@@ -4,6 +4,7 @@ import java.beans.PropertyChangeListener;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
+import jmri.jmrix.internal.InternalLightManager;
 import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;

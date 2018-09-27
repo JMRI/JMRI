@@ -276,7 +276,6 @@ public class TrainScheduleManager implements InstanceManagerAutoDefault, Instanc
     public void load(Element root) {
         Element e = root.getChild(Xml.SCHEDULES);
         if (e != null) {
-            @SuppressWarnings("unchecked")
             List<Element> eSchedules = root.getChild(Xml.SCHEDULES).getChildren(Xml.SCHEDULE);
             log.debug("TrainScheduleManager sees {} train schedules", eSchedules.size());
             for (Element eSchedule : eSchedules) {

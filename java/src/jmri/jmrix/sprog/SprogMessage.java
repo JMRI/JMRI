@@ -101,7 +101,6 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // copy one
-    @SuppressWarnings("null")
     public SprogMessage(SprogMessage m) {
         if (m == null) {
             log.error("copy ctor of null message");

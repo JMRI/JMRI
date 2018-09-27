@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -32,16 +33,16 @@ public class TrainsScheduleEditFrameTest extends OperationsSwingTestCase {
         Assert.assertNotNull("frame exists", f);
 
         f.addTextBox.setText("A New Day");
-        enterClickAndLeave(f.addButton);
+        JemmyUtil.enterClickAndLeave(f.addButton);
 
         Assert.assertNotNull("Train schedule manager exists", tsm);
         Assert.assertNotNull("A new Day schedule exists", tsm.getScheduleByName("A New Day"));
 
-        enterClickAndLeave(f.deleteButton);
+        JemmyUtil.enterClickAndLeave(f.deleteButton);
 
         Assert.assertNull("A new Day schedule does not exist", tsm.getScheduleByName("A New Day"));
 
-        enterClickAndLeave(f.replaceButton);
+        JemmyUtil.enterClickAndLeave(f.replaceButton);
 
         Assert.assertNotNull("A new Day schedule exists", tsm.getScheduleByName("A New Day"));
 

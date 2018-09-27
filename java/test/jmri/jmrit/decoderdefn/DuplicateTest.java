@@ -41,7 +41,6 @@ public class DuplicateTest {
 
     ArrayList<String> models = new ArrayList<>();
 
-    @SuppressWarnings("unchecked")
     boolean check(File file) throws JDOMException, IOException {
         Element root = readFile(file);
 

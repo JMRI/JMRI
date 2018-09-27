@@ -247,7 +247,7 @@ public class HexFileFrame extends JmriJFrame {
     public void delayFieldActionPerformed(java.awt.event.ActionEvent e) {
         // if the hex file has been started, change its delay
         if (port != null) {
-            port.setDelay(Integer.valueOf(delayField.getText()).intValue());
+            port.setDelay(Integer.parseInt(delayField.getText()));
         }
     }
 
