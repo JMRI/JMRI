@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author Bob Jacobsen Copyright (C) 2001
+ * @author B. Milhaupt Copyright (C) 
  */
 public class LnPowerManager
         extends jmri.managers.AbstractPowerManager
@@ -34,7 +35,7 @@ public class LnPowerManager
     }
 
     protected int power = UNKNOWN;
-
+    
     @Override
     public void setPower(int v) throws JmriException {
         power = UNKNOWN;
@@ -50,7 +51,7 @@ public class LnPowerManager
             LocoNetMessage l = new LocoNetMessage(2);
             l.setOpCode(LnConstants.OPC_GPOFF);
             tc.sendLocoNetMessage(l);
-        } else if (v == IDLE) {
+        } else if ((v == IDLE) && (implementsIdle())) {
             // send OPC_IDLE
             LocoNetMessage l = new LocoNetMessage(2);
             l.setOpCode(LnConstants.OPC_IDLE);
@@ -224,12 +225,33 @@ public class LnPowerManager
     }
 
     /**
-     * {@inheritDoc}
-     * @return
+     * Returns whether command station supports IDLE funcitonality
+     * <p>
+     * @return true if connection's command station supports IDLE state, else false
      */
     @Override
     public boolean implementsIdle() {
-        return true;
+        boolean supportsIdleState = false;
+        if (tc == null) {
+            log.error("TC is null in LnPowerManager");
+        }
+        if (tc.memo == null) {
+            log.error("TC.Memo is null in LnPowerManager");
+        }
+        LnCommandStationType cmdStationType = tc.memo.getSlotManager().getCommandStationType();
+        switch (cmdStationType) {
+            case COMMAND_STATION_DB150:
+            case COMMAND_STATION_DCS100:
+            case COMMAND_STATION_DCS240:
+            case COMMAND_STATION_DCS210:
+            case COMMAND_STATION_DCS200:
+                supportsIdleState = true;
+                break;
+            default:
+                supportsIdleState = false;
+                
+        }
+        return supportsIdleState;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnPowerManager.class);
