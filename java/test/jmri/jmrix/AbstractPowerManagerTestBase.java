@@ -99,7 +99,7 @@ public abstract class AbstractPowerManagerTestBase {
             p.setPower(PowerManager.IDLE);
             // check one message sent, correct form, unknown state
             Assert.assertEquals("messages sent", initialSent + 1, outboundSize());
-            Assert.assertTrue("message type OK", outboundIdleOK(initialSent));
+            Assert.assertTrue("message type IDLE O.K.", outboundIdleOK(initialSent));
             Assert.assertEquals("state before reply ", PowerManager.UNKNOWN, p.getPower());
             // arrange for reply
             sendIdleReply();
