@@ -1552,8 +1552,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     }
                     _message = msg;
                 }
-                catch (Exception e) {
-                   // ignore
+                catch (InterruptedException ie) { // ignore
                 }
             }
         };

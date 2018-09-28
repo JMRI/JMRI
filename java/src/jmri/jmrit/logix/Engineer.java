@@ -424,10 +424,12 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                     wait(20);
                     time += 20;
                 }
-                catch (Exception e) { // ignore
+                catch (InterruptedException ie) { // ignore
                 }
             }
-            log.error("Can't cancel ramp! _ramp Thread.State= {}", _ramp.getState());
+            if (!_ramp.ready) {
+                log.error("Can't cancel ramp! _ramp Thread.State= {}", _ramp.getState());
+            }
             _warrant.debugInfo();
         }
     }
@@ -1083,6 +1085,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                     _speedUtil.modifySpeed(_normalSpeed, _speedType, _isForward), speed);
 
             boolean increasing = _endSpeed >= speed;
+            if (_endSpeed <= 0) {
+                _stopPending = true;                    
+            }
             float throttleIncrement = _speedUtil.getRampThrottleIncrement(); // from Preferences
             int timeIncrement = _speedUtil.getRampTimeIncrement();
 
@@ -1170,9 +1175,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                         while (tempSpeed + throttleIncrement <= speed) {
                             tempSpeed += throttleIncrement;
                             throttleIncrement *= NXFrame.INCRE_RATE;
-                        }
-                        if (_endSpeed <= 0) {
-                            _stopPending = true;                    
                         }
                         while (speed > _endSpeed) {
                             if (stop) {
