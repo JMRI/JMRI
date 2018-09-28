@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @author B. Milhaupt Copyright (C) 
+ * @author B. Milhaupt Copyright (C)
  */
 public class LnPowerManager
         extends jmri.managers.AbstractPowerManager
@@ -35,7 +35,7 @@ public class LnPowerManager
     }
 
     protected int power = UNKNOWN;
-    
+
     @Override
     public void setPower(int v) throws JmriException {
         power = UNKNOWN;
@@ -234,9 +234,11 @@ public class LnPowerManager
         boolean supportsIdleState = false;
         if (tc == null) {
             log.error("TC is null in LnPowerManager");
+            return false;
         }
         if (tc.memo == null) {
             log.error("TC.Memo is null in LnPowerManager");
+            return false;
         }
         LnCommandStationType cmdStationType = tc.memo.getSlotManager().getCommandStationType();
         switch (cmdStationType) {
@@ -249,7 +251,7 @@ public class LnPowerManager
                 break;
             default:
                 supportsIdleState = false;
-                
+
         }
         return supportsIdleState;
     }
