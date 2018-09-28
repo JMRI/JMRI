@@ -184,9 +184,19 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
 
     @Override
     synchronized protected void timeout() {
-        progState = NOTPROGRAMMING;
-        stopTimer();
-        progListener.programmingOpReply(value, jmri.ProgListener.FailedTimeout);
+        if (progState != NOTPROGRAMMING) {
+            // we're programming, time to stop
+            if (log.isDebugEnabled()) {
+                log.debug("timeout!");
+            }
+            // perhaps no loco present? Fail back to end of programming
+            progState = NOTPROGRAMMING;
+            if (getCanRead()) {
+                progListener.programmingOpReply(value, jmri.ProgListener.FailedTimeout);
+            } else {
+                progListener.programmingOpReply(value, jmri.ProgListener.OK);
+            }
+        }
     }
 
     // initialize logging
