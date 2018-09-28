@@ -22,10 +22,6 @@ public class CvUtil {
 
     public static final String HTML_CLOSE_TAG = "</html>";
     public static final String HTML_OPEN_TAG = "<html>";
-    /**
-     * Some CV read operations benefit from allowing retries.
-     */
-//    public static final int RETRY_COUNT = 2;
 
     /**
      *

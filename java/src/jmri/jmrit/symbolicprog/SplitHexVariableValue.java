@@ -1,4 +1,3 @@
-// SplitHexVariableValue.java
 package jmri.jmrit.symbolicprog;
 
 import java.util.HashMap;
@@ -24,7 +23,6 @@ public class SplitHexVariableValue extends SplitVariableValue {
             HashMap<String, CvValue> v, JLabel status, String stdname,
             String pSecondCV, int pFactor, int pOffset, String uppermask, String extra1, String extra2, String extra3, String extra4) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, stdname, pSecondCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
-//        log.debug("CV=" + cvNum + ";" + "SplitHexVariableValue constructor");
     }
 
     String _case;

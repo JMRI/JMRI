@@ -1,4 +1,3 @@
-// SplitDateTimeVariableValue.java
 package jmri.jmrit.symbolicprog;
 
 import java.time.LocalDateTime;
