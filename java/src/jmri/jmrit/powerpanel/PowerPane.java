@@ -79,6 +79,14 @@ public class PowerPane extends jmri.util.swing.JmriPanel
                 idleButtonPushed();
             }
         });
+        
+        if ((selectMenu != null) && (selectMenu.getManager() != null)) {
+            idleButton.setVisible(selectMenu.getManager().implementsIdle());
+        } else {
+            // assume IDLE not supported if no manager or selectMenu
+            idleButton.setVisible(false);
+        }
+        idleButton.setToolTipText(Bundle.getMessage("ToolTipIdleButton"));
 
         // general GUI config
         setLayout(new jmri.util.javaworld.GridLayout2(3, 2, 6, 0)); // r, c, hgap , vgap
