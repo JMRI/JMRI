@@ -101,8 +101,7 @@ public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
 
     @Override
     protected boolean outboundIdleOK(int index) {
-        // IDLE unimplemented on PR2 interface, so return TRUE
-        return true;
+        return false;
     }
 
     @Test
