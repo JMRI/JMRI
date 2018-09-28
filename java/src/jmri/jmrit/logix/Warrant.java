@@ -970,8 +970,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                         } else if (runState == WAIT_FOR_CLEAR || runState == HALT) {
                             // However user knows if condition may have cleared due to overrun.
                             _message = allocateFromIndex(_idxCurrentOrder);
-                            int idxBlockOrder = _idxCurrentOrder;
-                            String speedType = getSpeedTypeForBlock(idxBlockOrder);
                             // This is user's decision to reset and override wait flags
                             if (_engineer.getRamp().ready) {   // do not allow when ramping
                                 _engineer.setHalt(false);
