@@ -111,33 +111,47 @@ public class ExportSchedules extends XmlFile {
 
         List<Schedule> schedules = InstanceManager.getDefault(ScheduleManager.class).getSchedulesByNameList();
         for (Schedule schedule : schedules) {
-            String scheduleName = schedule.getName();
-            if (scheduleName.contains(del)) {
-                scheduleName = ESC + scheduleName + ESC;
-            }
             for (ScheduleItem scheduleItem : schedule.getItemsBySequenceList()) {
 
-                String line = scheduleName +
+                String line = ESC +
+                        schedule.getName() +
+                        ESC +
                         del +
                         scheduleItem.getId() +
                         del +
+                        ESC +
                         scheduleItem.getTypeName() +
+                        ESC +
                         del +
                         scheduleItem.getRandom() +
                         del +
+                        ESC +
                         scheduleItem.getSetoutTrainScheduleName() +
+                        ESC +
                         del +
+                        ESC +
                         scheduleItem.getRoadName() +
+                        ESC +
                         del +
+                        ESC +
                         scheduleItem.getReceiveLoadName() +
+                        ESC +
                         del +
+                        ESC +
                         scheduleItem.getShipLoadName() +
+                        ESC +
                         del +
+                        ESC +
                         scheduleItem.getDestinationName() +
+                        ESC +
                         del +
+                        ESC +
                         scheduleItem.getDestinationTrackName() +
+                        ESC +
                         del +
+                        ESC +
                         scheduleItem.getPickupTrainScheduleName() +
+                        ESC +
                         del +
                         scheduleItem.getCount() +
                         del +
@@ -145,7 +159,9 @@ public class ExportSchedules extends XmlFile {
                         del +
                         scheduleItem.getHits() +
                         del +
-                        schedule.getComment();
+                        ESC +
+                        schedule.getComment() +
+                        ESC;
 
                 fileOut.println(line);
             }
