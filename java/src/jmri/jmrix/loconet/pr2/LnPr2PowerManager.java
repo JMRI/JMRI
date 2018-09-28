@@ -143,7 +143,7 @@ public class LnPr2PowerManager extends LnPowerManager {
     }
     
     /**
-     * Returns false to indicate it does not implement an "IDLE" power state.
+     * Returns false to indicate PR2 does not implement an "IDLE" power state.
      * @return false
      */
     @Override
