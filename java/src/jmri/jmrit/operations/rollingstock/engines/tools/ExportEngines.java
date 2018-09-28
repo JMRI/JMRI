@@ -19,9 +19,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Exports the Engine roster into a comma delimitated file (CSV).
- * Order stored: Number, Road, Model, Length, Owner, Built, Location,
- * -, Track, Consist, Moves, Last, Value, HP, Weight, Type, Comment, Misc.
+ * Exports the Engine roster into a comma delimitated file (CSV). Order stored:
+ * Number, Road, Model, Length, Owner, Built, Location, -, Track, Consist,
+ * Moves, Last, Value, HP, Weight, Type, Comment, Misc.
  *
  * @author Daniel Boudreau Copyright (C) 2010
  *
@@ -88,15 +88,6 @@ public class ExportEngines extends XmlFile {
 
         EngineManager manager = InstanceManager.getDefault(EngineManager.class);
         List<Engine> engineList = manager.getByNumberList();
-        String line = "";
-        // check for delimiter in the following Engine fields
-        String engineModel;
-        String engineLocationName;
-        String engineTrackName;
-        String engineConsistName;
-        // assume delimiter in the value field
-        String value;
-        String comment;
 
         // create header
         String header = Bundle.getMessage("Number") +
@@ -116,13 +107,13 @@ public class ExportEngines extends XmlFile {
                 "-" +
                 del +
                 Bundle.getMessage("Track") +
-                del +              
+                del +
                 Bundle.getMessage("Consist") +
                 del +
                 Bundle.getMessage("Moves") +
                 del +
                 Bundle.getMessage("Last") +
-                del + 
+                del +
                 Setup.getValueLabel() +
                 del +
                 Bundle.getMessage("HP") +
@@ -138,61 +129,59 @@ public class ExportEngines extends XmlFile {
 
         // store engine number, road, model, length, owner, built date, location - track
         for (Engine engine : engineList) {
-            engineModel = engine.getModel();
-            if (engineModel.contains(del)) {
-                engineModel = ESC + engine.getModel() + ESC;
-            }
-            engineLocationName = engine.getLocationName();
-            if (engineLocationName.contains(del)) {
-                engineLocationName = ESC + engine.getLocationName() + ESC;
-            }
-            engineTrackName = engine.getTrackName();
-            if (engineTrackName.contains(del)) {
-                engineTrackName = ESC + engine.getTrackName() + ESC;
-            }
-            engineConsistName = engine.getConsistName();
-            if (engineConsistName.contains(del)) {
-                engineConsistName= ESC + engine.getConsistName() + ESC;
-            }
-            value = engine.getValue();
-            if (value.contains(del)) {
-                value = ESC + engine.getValue() + ESC;
-            }
-            comment = engine.getComment();
-            if (comment.contains(del)) {
-                comment = ESC + engine.getComment() + ESC;
-            }
-            line = engine.getNumber() +
+            String line = ESC +
+                    engine.getNumber() +
+                    ESC +
                     del +
+                    ESC +
                     engine.getRoadName() +
+                    ESC +
                     del +
-                    engineModel +
+                    ESC +
+                    engine.getModel() +
+                    ESC +
                     del +
                     engine.getLength() +
                     del +
+                    ESC +
                     engine.getOwner() +
+                    ESC +
                     del +
+                    ESC +
                     engine.getBuilt() +
+                    ESC +
                     del +
-                    engineLocationName +
-                    ",-," +
-                    engineTrackName +
+                    ESC +
+                    engine.getLocationName() +
+                    ESC +
                     del +
-                    engineConsistName +
+                    "-" +
+                    del +
+                    ESC +
+                    engine.getTrackName() +
+                    ESC +
+                    del +
+                    ESC +
+                    engine.getConsistName() +
+                    ESC +
                     del +
                     engine.getMoves() +
                     del +
                     engine.getLastDate() +
                     del +
-                    value +
+                    engine.getValue() +
                     del +
                     engine.getHp() +
                     del +
                     engine.getWeightTons() +
                     del +
+                    ESC +
                     engine.getTypeName() +
+                    ESC +
                     del +
-                    comment +
+                    ESC +
+                    engine.getComment() +
+                    ESC +
                     del +
                     (engine.isOutOfService() ? Bundle.getMessage("OutOfService") : "");
             fileOut.println(line);

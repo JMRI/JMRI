@@ -17,6 +17,12 @@ public class AbstractRailComReporterTest {
         Assert.assertNotNull("exists",t);
     }
 
+    @Test
+    public void testGetBeanType(){
+         AbstractRailComReporter t = new AbstractRailComReporter("IR1");
+         Assert.assertEquals("bean type",t.getBeanType(),Bundle.getMessage("BeanNameReporter"));
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

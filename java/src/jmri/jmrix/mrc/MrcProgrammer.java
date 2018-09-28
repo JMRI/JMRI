@@ -76,6 +76,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
 
     // programming interface
     @Override
+    @Deprecated // 4.1.1
     public synchronized void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         log.debug("writeCV {} listens {}", CV, p); //IN18N
         useProgrammer(p);
@@ -103,6 +104,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
     }
 
     @Override
+    @Deprecated // 4.1.1
     public synchronized void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         log.debug("readCV {} listens {}", CV, p); //IN18N
         useProgrammer(p);
