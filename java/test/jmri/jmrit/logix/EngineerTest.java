@@ -15,10 +15,10 @@ public class EngineerTest {
     @Test
     public void testCTor() {
         Warrant warrant = new Warrant("IW0", "AllTestWarrant");
-        jmri.DccLocoAddress addr = new jmri.DccLocoAddress(5,false);
-        jmri.jmrix.SystemConnectionMemo memo = new jmri.jmrix.internal.InternalSystemConnectionMemo();
-        jmri.DccThrottle throttle = new jmri.jmrix.debugthrottle.DebugThrottle(addr,memo);
-        Engineer t = new Engineer(warrant,null);
+//        jmri.DccLocoAddress addr = new jmri.DccLocoAddress(5,false);
+//        jmri.jmrix.SystemConnectionMemo memo = new jmri.jmrix.internal.InternalSystemConnectionMemo();
+//        jmri.DccThrottle throttle = new jmri.jmrix.debugthrottle.DebugThrottle(addr,memo);
+        Engineer t = new Engineer(warrant, null);
         Assert.assertNotNull("exists",t);
         t.stopRun(false, true);
     }
