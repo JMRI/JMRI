@@ -14,6 +14,9 @@ import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * This class test the jmri.util.JUnitUtil class in the 'test' tree
  * 
@@ -62,11 +65,13 @@ public class JUnitUtilTest {
         return instanceManager;
     }
     
+    @Ignore
     @Test
     public void testNumManagers() {
         InstanceManager instanceManager;
         
         instanceManager = getNewInstanceManager();
+        
         // We now have all 42 managers
         Assert.assertTrue("we have 42 managers", instanceManager.getAllManagers().size() == 42);
         
@@ -85,6 +90,44 @@ public class JUnitUtilTest {
         instanceManager = getNewInstanceManager();
         // Same as previous
         Assert.assertTrue("we have 41 managers", instanceManager.getAllManagers().size() == 41);
+    }
+    
+    private void createSignalSpeedMapManager() {
+        try {
+            InstanceManager.getDefault(jmri.implementation.SignalSpeedMap.class);
+        } catch (Exception ex) {
+            log.error("InstanceManager.getDefault(jmri.implementation.SignalSpeedMap.class) throws exception %s%n", ex.getMessage());
+        }
+    }
+    
+    @Test
+    public void testNumManagers2() {
+        InstanceManager instanceManager;
+        
+        instanceManager = getNewInstanceManager();
+        createSignalSpeedMapManager();
+        // We now have all 42 managers
+        Assert.assertTrue("we have 42 managers", instanceManager.getAllManagers().size() == 42);
+        
+        instanceManager = getNewInstanceManager();
+        createSignalSpeedMapManager();
+        // We still have all 42 managers
+        Assert.assertTrue("we have 42 managers", instanceManager.getAllManagers().size() == 42);
+        
+        instanceManager = getNewInstanceManager();
+        createSignalSpeedMapManager();
+        // jmri.implementation.SignalSpeedMap is missing
+        Assert.assertTrue("we have 42 managers", instanceManager.getAllManagers().size() == 42);
+        
+        instanceManager = getNewInstanceManager();
+        createSignalSpeedMapManager();
+        // Same as previous
+        Assert.assertTrue("we have 42 managers", instanceManager.getAllManagers().size() == 42);
+        
+        instanceManager = getNewInstanceManager();
+        createSignalSpeedMapManager();
+        // Same as previous
+        Assert.assertTrue("we have 42 managers", instanceManager.getAllManagers().size() == 42);
     }
     
     @Ignore
@@ -329,5 +372,7 @@ public class JUnitUtilTest {
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }
+    
+    private final static Logger log = LoggerFactory.getLogger(JUnitUtilTest.class);
     
 }
