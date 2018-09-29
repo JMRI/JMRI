@@ -189,7 +189,7 @@ public class MemoryTableAction extends AbstractTableAction<Memory> {
             sysNameField.setToolTipText(Bundle.getMessage("SysNameToolTip", "M")); // override tooltip with bean specific letter
         }
         sysNameField.setBackground(Color.white);
-        // reset statusBarLabel text
+        // reset status bar label text
         statusBarLabel.setText(Bundle.getMessage("AddBeanStatusEnter"));
         statusBarLabel.setForeground(Color.gray);
         if (p.getSimplePreferenceState(systemNameAuto)) {
