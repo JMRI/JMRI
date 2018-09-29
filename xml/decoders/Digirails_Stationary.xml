@@ -5193,7 +5193,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         </grid>
             </row>
         </column>
- </pane>
+    </pane>
 
     <pane include="4024">
         <name>Servos</name>

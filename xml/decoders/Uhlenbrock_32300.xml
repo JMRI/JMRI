@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2014 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,13 +13,12 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Alain Le Marchand" version="1.0" lastUpdated="20140805"/>
-  <!--   Initial Version 1.0
-  Created from Uhlenbrock_32100.xml version 2.0
-  This decoder XML is meant to be used with the "Custom", "Advanced", "Comprehensive"
+  <!--   Initial Version 1.0 created from Uhlenbrock_32100.xml version 2.0 -->
+  <version author="Egbert Broerse" version="1.1" lastUpdated="20180929"/>
+  <!--   Version 1.1 added Sound programing of IntellisSound3 decoders 363x -->
+  <!-- This decoder XML is meant to be used with the "Custom", "Advanced", "Comprehensive"
   programmer formats as no SUSI variables have standard NMRA analogues.
-
-  Minimal JMRI version 3.8
-  -->
+  Minimal JMRI version 3.8 -->
   <decoder>
     <family name="IntelliSound 3 Module" mfg="Uhlenbrock Elektronik" comment="Auxiliary Sound module for all locomotive decoders with SUSI connector">
       <model model="32300" comment="IntelliSound 3-Module">
@@ -28,6 +26,12 @@
       </model>
       <model model="32304" comment="IntelliSound 3-Module with Sound">
         <size length="17.8" width="11.0" height="4.7" units="mm"/>
+      </model>
+      <model model="36320" numOuts="9" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="NMRAmedium" productID="36320" comment="IntelliSound 3 with PluX22 plug (definition for Sound only)">
+        <size length="30" width="15" height="4.8" units="mm"/> <!-- Sound Functions Only, use 76560 for Function Decoder programming -->
+      </model>
+      <model model="36360" numOuts="9" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="PluX22" productID="36360" comment="IntelliSound 3 with PluX22 plug (definition for Sound only)">
+        <size length="30" width="15" height="4.8" units="mm"/> <!-- Sound Functions Only, use 76560 for Function Decoder programming -->
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes">
@@ -40,7 +44,7 @@
 	</programming>
     <variables>
       <variable item="SUSI-range" CV="897.0" default="1" tooltip="Will not read/write properly if multiple SUSI modules attached">
-        <!-- Note: this is a normal CV, without no need to specify the index. However, setting the index allows resetting it to zero -->
+        <!-- Note: this is a normal CV, with no need to specify the index. However, setting the index allows resetting it to zero -->
         <enumVal>
           <enumChoice choice="Range I (CVs 900-939)" value="1">
             <choice>Range I (CVs 900-939)</choice>

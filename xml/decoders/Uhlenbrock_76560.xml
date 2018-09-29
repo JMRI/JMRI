@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2014 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,7 +13,9 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <version author="Alain Le Marchand" version="1" lastUpdated="20140511"/>
-  <!-- Version 1 - Created from Uhlenbrock_76400.xml v2 (Alain Le Marchand) -->
+    <!-- Version 1 - Created from Uhlenbrock_76400.xml v2 (Alain Le Marchand) -->
+    <version author="Egbert Broerse" version="2" lastUpdated="20180929"/>
+    <!-- Version 2 - Added Uhlenbrock 363x decoder models (functions only; for Sound use 32300 IntelliSound3 Module decoder definition), Dutch translation -->
   <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
 <decoder>
     <family name="Multi-Protocol Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="9" comment="Decoders not sorted (necessarily) in numerical order">
@@ -31,7 +32,37 @@
         <output name="Shunting" label="mode"/>
         <output name="Start/brake" label="inertia"/>
         <size length="22" width="15" height="3.8" units="mm"/>
-      </model>	  
+      </model>
+      <model model="36320" numOuts="9" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="NMRAmedium" productID="36320" comment="IntelliSound 3 with PluX22 plug and RailCom(R)">
+        <!-- Only for Function Decoder programming, choose 32300 to configure Sound -->
+        <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+        <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+        <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+        <output name="4" label=". A2 ." connection="solder" maxcurrent="400 mA"/>
+        <output name="5" label=". A3 ." connection="solder" maxcurrent="400 mA"/>
+        <output name="6" label=". A4 ." connection="solder" maxcurrent="400 mA"/>
+        <output name="7" label=". A5 ." connection="solder" maxcurrent="400 mA"/>
+        <output name="8" label=". A6 ." connection="solder" maxcurrent="400 mA"/>
+        <output name="9" label=". A7 ." connection="solder" maxcurrent="400 mA"/>
+        <output name="Shunting" label="mode"/>
+        <output name="Start/brake" label="inertia"/>
+        <size length="30" width="15" height="4.8" units="mm"/>
+      </model>
+      <model model="36360" numOuts="9" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="PluX22" productID="36360" comment="IntelliSound 3 with PluX22 plug and RailCom(R)">
+        <!-- Only for Function Decoder programming, choose 32300 to configure Sound -->
+        <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+        <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+        <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+        <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+        <output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA"/>
+        <output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
+        <output name="7" label=". A5 ." connection="plug" maxcurrent="400 mA"/>
+        <output name="8" label=". A6 ." connection="plug" maxcurrent="400 mA"/>
+        <output name="9" label=". A7 ." connection="plug" maxcurrent="400 mA"/>
+        <output name="Shunting" label="mode"/>
+        <output name="Start/brake" label="inertia"/>
+        <size length="30" width="15" height="4.8" units="mm"/>
+      </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
@@ -43,6 +74,7 @@
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
+        <label xml:lang="nl">Versie van decoder: </label>
       </variable>
       <variable item="Manufacturer" CV="8" readOnly="yes" default="85">
         <decVal/>
@@ -50,6 +82,7 @@
         <label xml:lang="it">ID Costruttore: </label>
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
+        <label xml:lang="nl">Fabrikant-ID: </label>
       </variable>
       <!-- CV12 - see below with CV49 -->
       <variable item="Analog Mode Function Status - FL" CV="13" default="1" mask="XXXXXXXV">
@@ -105,12 +138,14 @@
         <decVal max="63"/>
         <label>Speed Correction Forward</label>
         <label xml:lang="de">Geschw.-korrektur vorwärts</label>
+        <label xml:lang="nl">Snelheidscorr. vooruit</label>
         <tooltip>Factor = Value/128</tooltip>
       </variable>
       <variable item="Reverse Trim" CV="48" default="32">
         <decVal max="63"/>
         <label>Speed Correction Reverse</label>
         <label xml:lang="de">Geschw.-korrektur rückwärts</label>
+        <label xml:lang="nl">Snelheidscorr. achteruit</label>
         <tooltip>Factor = Value/128</tooltip>
       </variable>	  
       <!-- CV49 Uhlenbrock decoder configuration - common bits -->
@@ -153,7 +188,7 @@
         <label>Repetition rate</label>
         <label xml:lang="de">Wiederholrate der Motorregelung</label>
         <tooltip>Lower if the locomotive does not run smoothly - Value * 53 micro.s</tooltip>
-        <tooltip xml:lang="de">verkleinern, wenn Lok ungleichmäßig läuft - Wert * 53 micro.s</tooltip>
+        <tooltip xml:lang="de">verkleinern, wenn Lok ungleichmäßig läuft - Wert * 53 micro.S</tooltip>
       </variable>	  
       <variable item="EMF Static Config" CV="54" default="20">
         <decVal max="63"/>
@@ -213,6 +248,7 @@
         <speedTableVal/>
         <label>Speed Table</label>
         <label xml:lang="de">Geschwindigkeitskennlinie</label>
+        <label xml:lang="nl">Snelheidsgrafiek</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv107.108indepOutputs.xml"/>
       <variable item="Function F0F check 1" CV="109" mask="XXXXXXXV">
@@ -400,9 +436,23 @@
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="59" default="1">
-         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+        <label xml:lang="nl">Zet alle CV's terug naar fabrieksinstelling</label>
       </factReset>
     </resets>
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneUhlenbrock.xml"/>
+  <pane include="36320,36360">
+    <name>Sound</name>
+    <name xml:lang="nl">Geluid</name>
+    <column>
+      <label>
+        <text>&lt;html&gt;&lt;strong&gt;This decoder definition only supports Function Decoder programming.&lt;br/&gt;
+          Manually choose the Uhlenbrock 32300 IntelliSound3 Module definition to configure the Sound capabilities.&lt;/strong&gt;&lt;/html&gt;</text>
+        <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Deze decoderdefinitie ondersteunt enkel het programmeren van functies in de locdecoder.&lt;br/&gt;
+          Kies handmatig de Uhlenbrock 32300 IntelliSound3 Module definitie om de Sound-functies te programmeren.&lt;/strong&gt;&lt;/html&gt;</text>
+      </label>
+    </column>
+  </pane>
+  <!-- End of 363x Sound (ReadMe) Pane-->
 </decoder-config>

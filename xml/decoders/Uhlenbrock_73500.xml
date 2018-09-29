@@ -146,7 +146,7 @@
             <choice>Analog operation</choice>
           </enumChoice>
         </enumVal>
-        <label>Analog/Digitalswitch</label>
+        <label>Analog/Digital switch</label>
       </variable>
       <variable item="End braking speed" CV="52" default="30" tooltip="Valid when CV49 Bit 2=1 and Bit 7=1">
         <decVal/>
