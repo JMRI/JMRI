@@ -107,7 +107,9 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
                 new jmri.util.WaitHandler(this,250);
                 progState = NOTPROGRAMMING;
                 stopTimer();
-                progListener.programmingOpReply(value, jmri.ProgListener.OK);
+                if(progListener!=null){
+                   progListener.programmingOpReply(value, jmri.ProgListener.OK);
+                }
             } else if (l.getElement(0) == Z21Constants.LAN_X_CV_RESULT_XHEADER
                     && l.getElement(1) == Z21Constants.LAN_X_CV_RESULT_DB0) {
                 // valid operation response, but does it belong to us?
@@ -120,7 +122,9 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
                 stopTimer();
                 // if this was a read, we cached the value earlier.  If its a
                 // write, we're to return the original write value
-                progListener.programmingOpReply(value, jmri.ProgListener.OK);
+                if(progListener!=null){
+                   progListener.programmingOpReply(value, jmri.ProgListener.OK);
+                }
                 return;
             } else {
                 /* this is an error */
@@ -132,18 +136,24 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
                     // "data byte not found", e.g. no reply
                     progState = NOTPROGRAMMING;
                     stopTimer();
-                    progListener.programmingOpReply(value, jmri.ProgListener.NoLocoDetected);
+                    if(progListener!=null){
+                       progListener.programmingOpReply(value, jmri.ProgListener.NoLocoDetected);
+                    }
                     return;
                 } else if (l.getElement(0) == XNetConstants.CS_INFO
                         && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
                     progState = NOTPROGRAMMING;
                     stopTimer();
-                    progListener.programmingOpReply(value, jmri.ProgListener.NotImplemented);
+                    if(progListener!=null){
+                       progListener.programmingOpReply(value, jmri.ProgListener.NotImplemented);
+                    }
                 } else {
                     /* this is an unknown error */
                     progState = NOTPROGRAMMING;
                     stopTimer();
-                    progListener.programmingOpReply(value, jmri.ProgListener.UnknownError);
+                    if(progListener!=null){
+                       progListener.programmingOpReply(value, jmri.ProgListener.UnknownError);
+                    }
                 }
             }
         }
@@ -202,7 +212,9 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
             progState = NOTPROGRAMMING;
             stopTimer();
             log.debug("sending code {} val {} to programmer",code,val);
-            progListener.programmingOpReply(val, code);
+            if(progListener!=null){
+               progListener.programmingOpReply(val, code);
+            }
         }
     }
 

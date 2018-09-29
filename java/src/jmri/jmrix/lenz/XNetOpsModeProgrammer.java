@@ -133,7 +133,9 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
                 new jmri.util.WaitHandler(this,250);
                 progState = NOTPROGRAMMING;
                 stopTimer();
-                progListener.programmingOpReply(value, jmri.ProgListener.OK);
+                if(progListener!=null){
+                   progListener.programmingOpReply(value, jmri.ProgListener.OK);
+                }
             } else {
                 /* this is an error */
                 if (l.isRetransmittableErrorMsg()) {
@@ -143,12 +145,16 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
                         && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
                     progState = NOTPROGRAMMING;
                     stopTimer();
-                    progListener.programmingOpReply(value, jmri.ProgListener.NotImplemented);
+                    if(progListener!=null){
+                       progListener.programmingOpReply(value, jmri.ProgListener.NotImplemented);
+                    }
                 } else {
                     /* this is an unknown error */
                     progState = NOTPROGRAMMING;
                     stopTimer();
-                    progListener.programmingOpReply(value, jmri.ProgListener.UnknownError);
+                    if(progListener!=null){
+                       progListener.programmingOpReply(value, jmri.ProgListener.UnknownError);
+                    }
                 }
             }
         }
@@ -186,9 +192,21 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
 
     @Override
     synchronized protected void timeout() {
-        progState = NOTPROGRAMMING;
-        stopTimer();
-        progListener.programmingOpReply(value, jmri.ProgListener.FailedTimeout);
+        if (progState != NOTPROGRAMMING) {
+            // we're programming, time to stop
+            if (log.isDebugEnabled()) {
+                log.debug("timeout!");
+            }
+            // perhaps no loco present? Fail back to end of programming
+            progState = NOTPROGRAMMING;
+            if(progListener!=null){
+               if (getCanRead()) {
+                   progListener.programmingOpReply(value, jmri.ProgListener.FailedTimeout);
+               } else {
+                   progListener.programmingOpReply(value, jmri.ProgListener.OK);
+               }
+            }
+        }
     }
 
     // initialize logging
