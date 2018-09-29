@@ -443,16 +443,15 @@
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneUhlenbrock.xml"/>
   <pane include="36320,36360">
-    <name>Sound</name>
-    <name xml:lang="nl">Geluid</name>
+    <name>IntelliSound</name>
     <column>
       <label>
-        <text>&lt;html&gt;&lt;strong&gt;This decoder definition only supports Function Decoder programming.&lt;br/&gt;
-          Manually choose the Uhlenbrock 32300 IntelliSound3 Module definition to configure the Sound capabilities.&lt;/strong&gt;&lt;/html&gt;</text>
-        <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Deze decoderdefinitie ondersteunt enkel het programmeren van functies in de locdecoder.&lt;br/&gt;
-          Kies handmatig de Uhlenbrock 32300 IntelliSound3 Module definitie om de Sound-functies te programmeren.&lt;/strong&gt;&lt;/html&gt;</text>
+        <text>&lt;html&gt;&lt;strong&gt;This decoder definition only supports Function Decoder programming of 363x decoders.&lt;/strong&gt;&lt;br/&gt;
+          Manually choose the Uhlenbrock 32300 IntelliSound3 Module definition to configure its Sound capabilities.&lt;/html&gt;</text>
+        <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Deze decoderdefinitie ondersteunt enkel het programmeren van functies in de 363x decoder.&lt;/strong&gt;&lt;br/&gt;
+          Kies handmatig de Uhlenbrock 32300 IntelliSound3 Module definitie om de Sound-functies te programmeren.&lt;/html&gt;</text>
       </label>
     </column>
   </pane>
-  <!-- End of 363x Sound (ReadMe) Pane-->
+  <!-- End of 363x IntelliSound (ReadMe) Pane-->
 </decoder-config>
