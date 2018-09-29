@@ -60,7 +60,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
 
     static private int CAN = 0;
     static private int CBUS = 1;
-    static private int MAX_LINES = 500;
+    static private int MAX_LINES = 5000;
 
     transient private int _sent=0;
     transient private int _rcvd=0;
@@ -478,7 +478,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
 
         eventsCountField.setToolTipText(Bundle.getMessage("eventsCountFieldTip"));
         eventsCountField.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), Bundle.getMessage("eventsCountField")));
+                BorderFactory.createEtchedBorder(), Bundle.getMessage("CbusEvents")));
 
         dccCountField.setToolTipText(Bundle.getMessage("dccCountFieldTip"));
         dccCountField.setBorder(BorderFactory.createTitledBorder(
@@ -829,12 +829,12 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         // display the timestamp if requested
         if (timeCheckBox.isSelected()) {
            // sbCan.append(df.format(new Date()));
-            sbCbus.append(df.format(new Date()));
+            sbCbus.append(df.format(new Date()) + " ");
         }
 
         // display CBUS the priorities if requested
         if (priCheckBox.isSelected()) {
-            sbCbus.append((" " + priorities));
+            sbCbus.append((priorities) + " ");
         }
 
         if (filterIndex >= 0) {
@@ -1203,8 +1203,10 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
 
         String xopc="";
         if (showOpcExtraCheckBox.isSelected()) {
-            String cbusopc = "CTIP_" + decodeopc(m, m.isExtended(), m.getHeader());
-            xopc = Bundle.getMessage(cbusopc)+ " ";
+            if (!m.isExtended()) {
+                String cbusopc = "CTIP_" + decodeopc(m, m.isExtended(), m.getHeader());
+                xopc = Bundle.getMessage(cbusopc)+ " ";
+            }
         }
         
         
