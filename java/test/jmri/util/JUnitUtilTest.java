@@ -385,6 +385,11 @@ public class JUnitUtilTest {
     @Before
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
+        
+        // Reset the instance manager twice to ensure other tests in other
+        // test classes don't interfere with this test.
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.resetInstanceManager();
     }
     
     @After
