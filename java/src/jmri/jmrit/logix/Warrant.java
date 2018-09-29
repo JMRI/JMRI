@@ -971,7 +971,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                             // However user knows if condition may have cleared due to overrun.
                             _message = allocateFromIndex(_idxCurrentOrder);
                             // This is user's decision to reset and override wait flags
-                            if (_engineer.getRamp().ready) {   // do not allow when ramping
+                            Engineer.ThrottleRamp ramp = _engineer.getRamp();
+                            if (ramp == null || ramp.ready) {   // do not allow when ramping
                                 _engineer.setHalt(false);
                                 _engineer.setWaitforClear(false);
                             }
@@ -1066,8 +1067,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             info.append("\tEngineer Thread.State= ");
             info.append(_engineer.getState()); info.append("\n\t");
             Engineer.ThrottleRamp ramp = _engineer.getRamp();
-            info.append("Ramp Thread.State= "); info.append(ramp.getState());
-            info.append(", ready= "); info.append(ramp.ready);
+            if (ramp != null) {
+                info.append("Ramp Thread.State= "); info.append(ramp.getState());
+                info.append(", ready= "); info.append(ramp.ready);
+            } else {
+                info.append("No ramp");
+            }
         } else {
             info.append("No engineer");
         }
