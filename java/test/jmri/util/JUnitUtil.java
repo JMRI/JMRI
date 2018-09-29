@@ -13,6 +13,7 @@ import apps.gui.GuiLafPreferencesManager;
 
 import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
+import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
@@ -711,20 +712,15 @@ public class JUnitUtil {
         
         boolean isEqual = true;
         
-        System.out.format("=========================================%n");
-        
         // Verify that the both instance managers has the same number of managers of each type
         List<String> managerListA = new ArrayList<>();
         for (Class<?> type : instanceManagerA.getAllManagers()) {
-            System.out.format("%s%n", type.getName());
             managerListA.add(type.getName());
         }
         java.util.Collections.sort(managerListA);
 
-        System.out.format("-----------------------------------------%n");
         List<String> managerListB = new ArrayList<>();
         for (Class<?> type : instanceManagerB.getAllManagers()) {
-            System.out.format("%s%n", type.getName());
             managerListB.add(type.getName());
         }
         java.util.Collections.sort(managerListB);
@@ -1028,6 +1024,11 @@ public class JUnitUtil {
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.LOGIXS);
         }
+    }
+
+    public static void initSignalSpeedMap() {
+        // now done automatically by InstanceManager's autoinit
+        InstanceManager.getDefault(SignalSpeedMap.class);
     }
 
     public static void initConditionalManager() {

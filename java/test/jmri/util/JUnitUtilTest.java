@@ -1,5 +1,8 @@
 package jmri.util;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -23,177 +26,191 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Bergqvist Copyright (C) 2018
  */
 public class JUnitUtilTest {
+    
+    /**
+     * Enum used to select which managers to initialize.
+     */
+    enum Mngr {
+        CONFIGURE,
+        SHUTDOWN,
+        COMMAND_STATION,
+        TURNOUT,
+        LIGHT,
+        SENSOR,
+        REPORTER,
+        THROTTLE,
+        TURNOUT_OPERATION,
+        USER_MESSAGES_PREF,
+        ROUTE,
+        MEMORY,
+        OBLOCK,
+        WARRANT,
+        SIGNAL_MAST_LOGIC,
+        LAYOUT_BLOCK,
+        SECTION,
+        SIGNAL_HEAD,
+        SIGNAL_MAST,
+        PROGRAMMER,
+        POWER,
+        RAILCOM,
+        CONDITIONAL,
+        SIGNAL_SPEED_MAP,
+        LOGIX,
+        ID_TAG,
+    }
 
+    /**
+     * Get a new instance manager.
+     * This method initializes all the instance managers getNewInstanceManager(Mngr[])
+     * knows about.
+     * The instance manager and the profile manager is always initialized by
+     * this method.
+     * @return a new instance manager
+     */
     private InstanceManager getNewInstanceManager() {
+        return getNewInstanceManager(null);
+    }
+    
+    /**
+     * Get a new instance manager.
+     * The instance manager and the profile manager is always initialized by
+     * this method.
+     * @return a new instance manager
+     */
+    private InstanceManager getNewInstanceManager(Mngr[] managersToInit) {
+        boolean initAllManagers;
+        Set<Mngr> managersToInitSet;
+        
+        if (managersToInit == null) {
+            initAllManagers = true;
+            managersToInitSet = new HashSet<>();
+        } else {
+            initAllManagers = false;
+            managersToInitSet = new HashSet<>(Arrays.asList(managersToInit));
+        }
+        
+        // Always reset the instance manager
         jmri.util.JUnitUtil.resetInstanceManager();
+        
+        // Reset the instance manager twice since managers may still be left
+        // after the first reset.
+        jmri.util.JUnitUtil.resetInstanceManager();
+        
+        // Always reset the profile manager
         jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initConfigureManager();
-        jmri.util.JUnitUtil.initShutDownManager();
-        jmri.util.JUnitUtil.initDebugCommandStation();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initReporterManager();
-        jmri.util.JUnitUtil.initDebugThrottleManager();
-        jmri.util.JUnitUtil.resetTurnoutOperationManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        jmri.util.JUnitUtil.initRouteManager();
-        jmri.util.JUnitUtil.initMemoryManager();
-        jmri.util.JUnitUtil.initReporterManager();
-        jmri.util.JUnitUtil.initOBlockManager();
-        jmri.util.JUnitUtil.initWarrantManager();
-        jmri.util.JUnitUtil.initSignalMastLogicManager();
-        jmri.util.JUnitUtil.initLayoutBlockManager();
-        jmri.util.JUnitUtil.initSectionManager();
-        jmri.util.JUnitUtil.initInternalSignalHeadManager();
-        jmri.util.JUnitUtil.initDefaultSignalMastManager();
-        jmri.util.JUnitUtil.initDebugProgrammerManager();
-        jmri.util.JUnitUtil.initDebugPowerManager();
-        jmri.util.JUnitUtil.initRailComManager();
-        jmri.util.JUnitUtil.initConditionalManager();
-        jmri.util.JUnitUtil.initLogixManager(); // Logix sist?
-        jmri.util.JUnitUtil.initIdTagManager();
+        
+        if (initAllManagers || managersToInitSet.contains(Mngr.CONFIGURE)) {
+            jmri.util.JUnitUtil.initConfigureManager();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.SHUTDOWN)) {
+            jmri.util.JUnitUtil.initShutDownManager();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.COMMAND_STATION)) {
+            jmri.util.JUnitUtil.initDebugCommandStation();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.TURNOUT)) {
+            jmri.util.JUnitUtil.initInternalTurnoutManager();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.LIGHT)) {
+            jmri.util.JUnitUtil.initInternalLightManager();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.SENSOR)) {
+            jmri.util.JUnitUtil.initInternalSensorManager();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.REPORTER)) {
+            jmri.util.JUnitUtil.initReporterManager();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.THROTTLE)) {
+            jmri.util.JUnitUtil.initDebugThrottleManager();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.TURNOUT_OPERATION)) {
+            jmri.util.JUnitUtil.resetTurnoutOperationManager();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.USER_MESSAGES_PREF)) {
+            jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.ROUTE)) {
+            jmri.util.JUnitUtil.initRouteManager();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.MEMORY)) {
+            jmri.util.JUnitUtil.initMemoryManager();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.OBLOCK)) {
+            jmri.util.JUnitUtil.initOBlockManager();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.WARRANT)) {
+            jmri.util.JUnitUtil.initWarrantManager();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.SIGNAL_MAST_LOGIC)) {
+            jmri.util.JUnitUtil.initSignalMastLogicManager();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.LAYOUT_BLOCK)) {
+            jmri.util.JUnitUtil.initLayoutBlockManager();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.SECTION)) {
+            jmri.util.JUnitUtil.initSectionManager();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.SIGNAL_HEAD)) {
+            jmri.util.JUnitUtil.initInternalSignalHeadManager();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.SIGNAL_MAST)) {
+            jmri.util.JUnitUtil.initDefaultSignalMastManager();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.PROGRAMMER)) {
+            jmri.util.JUnitUtil.initDebugProgrammerManager();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.POWER)) {
+            jmri.util.JUnitUtil.initDebugPowerManager();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.RAILCOM)) {
+            jmri.util.JUnitUtil.initRailComManager();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.CONDITIONAL)) {
+            jmri.util.JUnitUtil.initConditionalManager();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.SIGNAL_SPEED_MAP)) {
+            jmri.util.JUnitUtil.initSignalSpeedMap();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.LOGIX)) {
+            jmri.util.JUnitUtil.initLogixManager();
+        }
+        if (initAllManagers || managersToInitSet.contains(Mngr.ID_TAG)) {
+            jmri.util.JUnitUtil.initIdTagManager();
+        }
         
         InstanceManager instanceManager = InstanceManager.getDefault();
-        
-        System.out.format("--------------------------------%n");
-        System.out.format("Num managers: %d%n", instanceManager.getAllManagers().size());
-        for (Class<?> type : instanceManager.getAllManagers()) {
-            System.out.format("%s%n", type.getName());
-        }
         
         return instanceManager;
     }
     
-    @Ignore
     @Test
     public void testNumManagers() {
         InstanceManager instanceManager;
         
-        instanceManager = getNewInstanceManager();
+        instanceManager = getNewInstanceManager(new Mngr[]{});
+        // We now have all 1 manager
+        Assert.assertTrue("we have 1 managers", instanceManager.getAllManagers().size() == 1);
         
+        instanceManager = getNewInstanceManager(new Mngr[]{
+            Mngr.TURNOUT, Mngr.LIGHT, Mngr.SENSOR, Mngr.REPORTER, Mngr.TURNOUT_OPERATION,
+            Mngr.ROUTE, Mngr.MEMORY, Mngr.OBLOCK, Mngr.WARRANT, Mngr.SIGNAL_MAST_LOGIC,
+            Mngr.LAYOUT_BLOCK, Mngr.SECTION, Mngr.SIGNAL_HEAD, Mngr.SIGNAL_MAST
+        });
+        // We now have all 16 managers
+        Assert.assertTrue("we have 16 managers", instanceManager.getAllManagers().size() == 16);
+        
+        instanceManager = getNewInstanceManager();
         // We now have all 42 managers
         Assert.assertTrue("we have 42 managers", instanceManager.getAllManagers().size() == 42);
         
-        instanceManager = getNewInstanceManager();
-        // We still have all 42 managers
-        Assert.assertTrue("we have 42 managers", instanceManager.getAllManagers().size() == 42);
-        
-        instanceManager = getNewInstanceManager();
-        // jmri.implementation.SignalSpeedMap is missing
-        Assert.assertTrue("we have 41 managers", instanceManager.getAllManagers().size() == 41);
-        
-        instanceManager = getNewInstanceManager();
-        // Same as previous
-        Assert.assertTrue("we have 41 managers", instanceManager.getAllManagers().size() == 41);
-        
-        instanceManager = getNewInstanceManager();
-        // Same as previous
-        Assert.assertTrue("we have 41 managers", instanceManager.getAllManagers().size() == 41);
+        instanceManager = getNewInstanceManager(new Mngr[]{});
+        // We now have 1 manager
+        Assert.assertTrue("we have 1 manager", instanceManager.getAllManagers().size() == 1);
     }
     
-    private void createSignalSpeedMapManager() {
-        try {
-            InstanceManager.getDefault(jmri.implementation.SignalSpeedMap.class);
-        } catch (Exception ex) {
-            log.error("InstanceManager.getDefault(jmri.implementation.SignalSpeedMap.class) throws exception %s%n", ex.getMessage());
-        }
-    }
-    
-    @Test
-    public void testNumManagers2() {
-        InstanceManager instanceManager;
-        
-        instanceManager = getNewInstanceManager();
-        createSignalSpeedMapManager();
-        // We now have all 42 managers
-        Assert.assertTrue("we have 42 managers", instanceManager.getAllManagers().size() == 42);
-        
-        instanceManager = getNewInstanceManager();
-        createSignalSpeedMapManager();
-        // We still have all 42 managers
-        Assert.assertTrue("we have 42 managers", instanceManager.getAllManagers().size() == 42);
-        
-        instanceManager = getNewInstanceManager();
-        createSignalSpeedMapManager();
-        // jmri.implementation.SignalSpeedMap is missing
-        Assert.assertTrue("we have 42 managers", instanceManager.getAllManagers().size() == 42);
-        
-        instanceManager = getNewInstanceManager();
-        createSignalSpeedMapManager();
-        // Same as previous
-        Assert.assertTrue("we have 42 managers", instanceManager.getAllManagers().size() == 42);
-        
-        instanceManager = getNewInstanceManager();
-        createSignalSpeedMapManager();
-        // Same as previous
-        Assert.assertTrue("we have 42 managers", instanceManager.getAllManagers().size() == 42);
-    }
-    
-    @Ignore
-    @Test
-    public void thisTestWorks() throws JmriException {
-        
-        // Get a new instance manager
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initDebugThrottleManager();
-//        jmri.util.JUnitUtil.initLogixManager();
-        InstanceManager layoutEditorInstanceManager = InstanceManager.getDefault();
-        
-        // Get another new instance manager
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initDebugThrottleManager();
-//        jmri.util.JUnitUtil.initLogixManager();
-        InstanceManager manualInstanceManager = InstanceManager.getDefault();
-        
-        // Verify that both instance managers has the same number of managers of each type
-        Assert.assertTrue("there are the same number managers of each type in both instance managers",
-                jmri.util.JUnitUtil.verifyInstanceManagersHasSameNumberOfManangersOfEachType(
-                        layoutEditorInstanceManager,
-                        manualInstanceManager)
-                );
-    }
-    
-    @Ignore
-    @Test
-    public void thisTestFails() throws JmriException {
-        
-        // Get a new instance manager
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initDebugThrottleManager();
-        jmri.util.JUnitUtil.initLogixManager();
-        InstanceManager layoutEditorInstanceManager = InstanceManager.getDefault();
-        
-        // Get another new instance manager
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initDebugThrottleManager();
-        jmri.util.JUnitUtil.initLogixManager();
-        InstanceManager manualInstanceManager = InstanceManager.getDefault();
-        
-        // Verify that both instance managers has the same number of managers of each type
-        Assert.assertTrue("there are the same number managers of each type in both instance managers",
-                jmri.util.JUnitUtil.verifyInstanceManagersHasSameNumberOfManangersOfEachType(
-                        layoutEditorInstanceManager,
-                        manualInstanceManager)
-                );
-    }
-    
-    @Ignore
     @Test
     // Test JUnitUtil.verifyInstanceManagersAreEqual
-    public void testSameNumberOfManagersOfEachType__AAA() throws JmriException {
+    public void testSameNumberOfManagersOfEachType() throws JmriException {
         
         // Get a new instance manager
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -201,6 +218,7 @@ public class JUnitUtilTest {
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.JUnitUtil.initDebugThrottleManager();
+        jmri.util.JUnitUtil.initSignalSpeedMap();
         jmri.util.JUnitUtil.initLogixManager();
         jmri.util.JUnitUtil.initIdTagManager();
         InstanceManager layoutEditorInstanceManager = InstanceManager.getDefault();
@@ -213,6 +231,7 @@ public class JUnitUtilTest {
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initDebugThrottleManager();
+        jmri.util.JUnitUtil.initSignalSpeedMap();
         jmri.util.JUnitUtil.initLogixManager();
         jmri.util.JUnitUtil.initIdTagManager();
         InstanceManager manualInstanceManager = InstanceManager.getDefault();
