@@ -196,6 +196,7 @@ public class JUnitUtilTest {
             Mngr.ROUTE, Mngr.MEMORY, Mngr.OBLOCK, Mngr.WARRANT, Mngr.SIGNAL_MAST_LOGIC,
             Mngr.LAYOUT_BLOCK, Mngr.SECTION, Mngr.SIGNAL_HEAD, Mngr.SIGNAL_MAST
         });
+        System.out.format("Num managers: %d%n", instanceManager.getAllManagers().size());
         // We now have all 16 managers
         Assert.assertTrue("we have 16 managers", instanceManager.getAllManagers().size() == 16);
         
