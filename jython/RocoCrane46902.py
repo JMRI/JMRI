@@ -22,6 +22,7 @@
 
 import jmri
 import java
+import java.awt
 import javax.swing
 
 class RocoCrane(jmri.jmrit.automat.AbstractAutomaton) :

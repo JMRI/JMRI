@@ -22,8 +22,6 @@ public class RetryRuleTest {
         if (countPassOnThirdRetry++ < 3) {
             Assert.fail("fail test plus first two retries, will pass on 3rd");
         }
-        // this is the 3rd pass
-        countPassOnThirdRetry = 0;
     }
     int countPassOnThirdRetry = 0;
 
@@ -32,8 +30,6 @@ public class RetryRuleTest {
         if (countJemmyTimeout++ < 3) {
             throw new org.netbeans.jemmy.TimeoutExpiredException("fail test plus first two retries, will pass on 3rd");
         }
-        // this is the 3rd pass
-        countJemmyTimeout = 0;
     }
     int countJemmyTimeout = 0;
 
@@ -55,16 +51,19 @@ public class RetryRuleTest {
 
     @After
     public void tearDown() {
-        // first test for messages
+        // test for messages
+        if (countPassOnThirdRetry == 4) countPassOnThirdRetry = 0; // done
         if (countPassOnThirdRetry != 0) {
             jmri.util.JUnitAppender.assertWarnMessage("run  "+countPassOnThirdRetry+" failed, RetryRule repeats");
-            if (countPassOnThirdRetry == 3) countPassOnThirdRetry = 0; // done
         }
+
+        if (countJemmyTimeout == 4) countJemmyTimeout = 0; // done
         if (countJemmyTimeout != 0) {
             jmri.util.JUnitAppender.assertWarnMessage("run  "+countJemmyTimeout+" failed, RetryRule repeats");
-            if (countJemmyTimeout == 3) countPassOnThirdRetry = 0; // done
         }
-            
+        
+        jmri.util.JUnitAppender.suppressWarnMessage("run  3 failed, RetryRule repeats");
+        
         JUnitUtil.tearDown();
     }
 

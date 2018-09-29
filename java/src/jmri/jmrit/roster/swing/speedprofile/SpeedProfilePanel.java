@@ -1079,7 +1079,6 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
 
         // First read configuration
         if (root.getChild("configuration") != null) {
-            @SuppressWarnings("unchecked")
             List<Element> l = root.getChild("configuration").getChildren();
             if (log.isDebugEnabled()) {
                 log.debug("readFile sees {} configurations", l.size());
@@ -1100,7 +1099,6 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         }
         // Now read sensor information
         if (root.getChild("sensors") != null) {
-            @SuppressWarnings("unchecked")
             List<Element> l = root.getChild("sensors").getChildren("sensor");
             if (log.isDebugEnabled()) {
                 log.debug("readFile sees {} sensors", l.size());
@@ -1125,7 +1123,6 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
             }
         }
         if (root.getChild("steps") != null) {
-            @SuppressWarnings("unchecked")
             List<Element> l = root.getChild("steps").getChildren();
             for (int i = 0; i < l.size(); i++) {
                 Element e = l.get(i);

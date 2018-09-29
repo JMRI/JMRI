@@ -34,8 +34,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -366,31 +364,22 @@ public class PrintLocationsAction extends AbstractAction {
                         si.getDestinationTrackName() +
                         NEW_LINE;
                 writer.write(s);
-                TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class)
-                        .getScheduleById(si.getSetoutTrainScheduleId());
-                String setoutDay = "";
-                if (sch != null) {
-                    setoutDay = sch.getName();
-                }
-                sch = InstanceManager.getDefault(TrainScheduleManager.class)
-                        .getScheduleById(si.getPickupTrainScheduleId());
-                String pickupDay = "";
-                if (sch != null) {
-                    pickupDay = sch.getName();
-                }
 
                 s = padOutString("", cts.getMaxNameLength() + 1) +
                         padOutString(Bundle.getMessage("Random"), Bundle.getMessage("Random").length() + 1) +
                         padOutString(Bundle.getMessage("Delivery"), Bundle.getMessage("Delivery").length() + 1) +
                         padOutString(Bundle.getMessage("Road"), crs.getMaxNameLength() + 1) +
-                        Bundle.getMessage("Pickup") +
+                        padOutString(Bundle.getMessage("Pickup"), Bundle.getMessage("Delivery").length() + 1) +
+                        Bundle.getMessage("Wait") +
                         NEW_LINE;
                 writer.write(s);
+                
                 s = padOutString("", cts.getMaxNameLength() + 1) +
                         padOutString(si.getRandom(), Bundle.getMessage("Random").length() + 1) +
-                        padOutString(setoutDay, Bundle.getMessage("Delivery").length() + 1) +
+                        padOutString(si.getSetoutTrainScheduleName(), Bundle.getMessage("Delivery").length() + 1) +
                         padOutString(si.getRoadName(), crs.getMaxNameLength() + 1) +
-                        pickupDay +
+                        padOutString(si.getPickupTrainScheduleName(), Bundle.getMessage("Delivery").length() + 1) +
+                        si.getWait() +
                         NEW_LINE;
                 writer.write(s);
             }

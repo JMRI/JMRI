@@ -42,7 +42,6 @@ public class SprogReply extends AbstractMRReply {
      *
      * @param m the SprogReply to copy
      */
-    @SuppressWarnings("null")
     public SprogReply(SprogReply m) {
         this();
         if (m == null) {

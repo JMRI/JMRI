@@ -171,7 +171,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     public String getColumnName(int col) { // not in any order
         switch (col) {
             case CANID_COLUMN:
-                return Bundle.getMessage("ColumnID");
+                return Bundle.getMessage("CanID");
             case NODE_COLUMN:
                 return Bundle.getMessage("CbusNode");
             case NODENAME_COLUMN:

@@ -21,7 +21,7 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
 
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
-        int addr = Integer.valueOf(systemName.substring(2)).intValue();
+        int addr = Integer.parseInt(systemName.substring(2));
         Turnout t = new EliteXNetTurnout(prefix, addr, tc);
         t.setUserName(userName);
         return t;

@@ -274,6 +274,8 @@ public class EcosLocoToRoster implements EcosListener {
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "CF_USELESS_CONTROL_FLOW", 
+        justification = "TODO fill out the actions in these clauses")
     public void reply(EcosReply m) {
         int startval;
         int endval;
@@ -817,9 +819,9 @@ public class EcosLocoToRoster implements EcosListener {
         String msg = "Found mfg " + pMfgID + " (" + pMfg + ") version " + pModelID + "; no such decoder defined";
         log.warn(msg);
         dTree.clearSelection();
-        Enumeration<DefaultMutableTreeNode> e = dRoot.breadthFirstEnumeration();
+        Enumeration<TreeNode> e = dRoot.breadthFirstEnumeration();
         while (e.hasMoreElements()) {
-            DefaultMutableTreeNode node = e.nextElement();
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode)e.nextElement();
             if (node.toString().equals(pMfg)) {
                 TreePath path = new TreePath(node.getPath());
                 dTree.expandPath(path);
@@ -867,9 +869,9 @@ public class EcosLocoToRoster implements EcosListener {
             String findFamily = f.getFamily();
             String findModel = f.getModel();
 
-            Enumeration<DefaultMutableTreeNode> e = dRoot.breadthFirstEnumeration();
+            Enumeration<TreeNode> e = dRoot.breadthFirstEnumeration();
             while (e.hasMoreElements()) {
-                DefaultMutableTreeNode node = e.nextElement();
+                DefaultMutableTreeNode node = (DefaultMutableTreeNode)e.nextElement();
 
                 // convert path to comparison string
                 TreeNode[] list = node.getPath();

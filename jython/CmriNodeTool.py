@@ -7,6 +7,7 @@
 # Part of the JMRI distribution
 
 import java
+import java.awt
 import jmri
 import javax.swing
 

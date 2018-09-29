@@ -118,7 +118,7 @@ public class XBeeLightManager extends AbstractLightManager {
             //Address format passed is in the form of encoderAddress:input or L:light address
             int seperator = systemName.indexOf(":");
             try {
-                input = Integer.valueOf(systemName.substring(seperator + 1)).intValue();
+                input = Integer.parseInt(systemName.substring(seperator + 1));
             } catch (NumberFormatException ex) {
                 log.debug("Unable to convert {} into the XBee node and pin format of nn:xx", systemName);
                 return -1;

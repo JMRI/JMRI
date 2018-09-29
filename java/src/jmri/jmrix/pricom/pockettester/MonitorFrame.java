@@ -7,7 +7,7 @@ package jmri.jmrix.pricom.pockettester;
  * For more info on the product, see http://www.pricom.com
  *
  * @author	Bob Jacobsen Copyright (C) 2005
-  */
+ */
 public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements DataListener {
 
     public MonitorFrame() {
@@ -25,7 +25,7 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements DataLis
             title = "";
         }
         return java.text.MessageFormat.format(Bundle.getMessage("TitleMonitor"),
-                (Object[]) new String[]{title});
+                new Object[]{title});
     }
 
     @Override

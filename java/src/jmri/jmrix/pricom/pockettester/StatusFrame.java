@@ -115,7 +115,7 @@ public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
     protected String convertValue(String val, String format) {
         if (format.equals("address")) {
             // long or short address format
-            int address = Integer.valueOf(val).intValue();
+            int address = Integer.parseInt(val);
             if (address >= 0x8000) {
                 return "" + (address - 0x8000) + " (long)";
             } else {

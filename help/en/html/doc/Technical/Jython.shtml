@@ -27,7 +27,7 @@
 
 <body>
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
       <h1>Jython access to JMRI Tools</h1>

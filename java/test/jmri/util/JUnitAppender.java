@@ -247,6 +247,42 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     }
 
     /**
+     * Check that the next queued message was of Error severity, and has a
+     * specific message.
+     * White space is ignored.
+     * <P>
+     * Invokes a JUnit Assert if the message doesn't match.
+     *
+     * @param msg the message to assert exists
+     */
+    public static void assertErrorMessageStartsWith(String msg) {
+        if (list.isEmpty()) {
+            Assert.fail("No message present: " + msg);
+            return;
+        }
+
+        LoggingEvent evt = list.remove(0);
+
+        // next piece of code appears three times, should be refactored away during Log4J 2 migration
+        while ((evt.getLevel() == Level.INFO) || (evt.getLevel() == Level.DEBUG) || (evt.getLevel() == Level.TRACE)) { // better in Log4J 2
+            if (list.isEmpty()) {
+                Assert.fail("Only debug/info messages present: " + msg);
+                return;
+            }
+            evt = list.remove(0);
+        }
+
+        // check the remaining message, if any
+        if (evt.getLevel() != Level.ERROR) {
+            Assert.fail("Level mismatch when looking for ERROR message: \"" + msg + "\" found \"" + (String) evt.getMessage() + "\"");
+        }
+
+        if (!compareStartsWith(evt, msg)) {
+            Assert.fail("Looking for ERROR message \"" + msg + "\" got \"" + evt.getMessage() + "\"");
+        }
+    }
+
+    /**
      * If there's a next matching message of specific severity, just ignore it. Not
      * an error if not present; mismatch is an error. Skips messages of lower severity while looking for the specific one.
      * White space is ignored.
@@ -419,6 +455,22 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
         }
         String s1 = e1.getMessage().toString();
         return StringUtils.deleteWhitespace(s1).equals(StringUtils.deleteWhitespace(s2));
+    }
+
+    /**
+     * Compare two message strings, handling nulls
+     * and ignoring whitespace.
+     */
+    protected static boolean compareStartsWith(LoggingEvent e1, String s2) {
+        if(e1==null) {
+           System.err.println("Logging event null when comparing to " + s2);
+           return s2==null;
+        } else if(e1.getMessage()==null) {
+           System.err.println("Logging event has null message when comparing to " + s2);
+           return s2==null;
+        }
+        String s1 = e1.getMessage().toString();
+        return StringUtils.deleteWhitespace(s1).startsWith(StringUtils.deleteWhitespace(s2));
     }
 
     public static JUnitAppender instance() {

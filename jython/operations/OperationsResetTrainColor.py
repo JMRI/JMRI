@@ -8,6 +8,8 @@
 # Part of the JMRI distribution
 #
 
+import java
+import java.beans
 import java.beans.PropertyChangeListener as PropertyChangeListener
 import jmri
     
@@ -22,7 +24,7 @@ class ColorResetTrains(jmri.jmrit.automat.AbstractAutomaton) :
     ColorResetTrains.resetColor = "Orange"
     
     # get the train manager
-    self.trainManager = jmri.jmrit.operations.trains.TrainManager.instance()   
+    self.trainManager = jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)   
     count = 0
     
     for name in self.trainNames:

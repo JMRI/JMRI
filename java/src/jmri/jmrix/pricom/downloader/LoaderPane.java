@@ -389,7 +389,6 @@ public class LoaderPane extends javax.swing.JPanel {
         //opened = false;
     }
 
-    @SuppressWarnings("unchecked")
     public Vector<String> getPortNames() {
         // first, check that the comm package can be opened and ports seen
         portNameVector = new Vector<String>();

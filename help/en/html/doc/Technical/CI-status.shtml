@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+
+    <title>
+ 	JMRI: CI Status
+    </title>
+
+<!--#include virtual="/Style.shtml" -->
+</head><!--#include virtual="/Header.shtml" -->
+
+<body>
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" --> <!-- select the local or global Sidebar file -->
+    <div id="mainContent">
+
+	    <h1>CI Status</h1>
+		
+		<table>
+		<tr><td align="right">
+		Development:</td><td>
+		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/Builds/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/SpotBugs'></a>
+		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/Deprecations/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/SpotBugs'></a>
+        <a href='http://jmri.tagadab.com/jenkins/job/Development/job/HTML%20Scan/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/HTML%20Scan'></a>
+		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/SpotBugs'></a>
+		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/Packages/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/SpotBugs'></a>
+        <a href='http://jmri.tagadab.com/jenkins/job/Development/job/Separate_Tests/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/Separate_Tests'></a>
+		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/SpotBugs'></a>
+		</td></tr><tr><td align="right">
+		Version Checks:</td><td>
+		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/VersionChecks/job/JDK%2010.0.1/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/VersionChecks/JDK%2010.0.1'></a>
+		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/VersionChecks/job/JDK%209.0.4/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/VersionChecks/JDK%209.0.4'></a>
+		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/VersionChecks/job/JRE%2010.0.1/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/VersionChecks/JRE%2010.0.1'></a>
+		<a href='http://jmri.tagadab.com/jenkins/job/Development/VersionChecks/JRE%208u181'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/VersionChecks/JRE%208u181'></a>
+		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/VersionChecks/job/JRE%209.0.4/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/VersionChecks/JRE%209.0.4'></a>
+		</td></tr><tr><td align="right">
+		Web Site:</td><td>
+		<a href='http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=WebSite/generate-website'></a>
+		<a href='http://jmri.tagadab.com/jenkins/job/WebSite/job/JMRI_repository/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=WebSite/JMRI_repository'></a>
+		<a href='http://jmri.tagadab.com/jenkins/job/WebSite/job/website_repository/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=WebSite/website_repository'></a>
+		<a href='http://jmri.tagadab.com/jenkins/job/WebSite/job/website-legal_repository/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=WebSite/website-legal_repository'></a>
+		</td></tr>
+		</table>
+		
+	<table>
+
+		<tr><td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/">SpotBugs</a><br>
+        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/lastBuild/findbugsResult/">
+            <img src="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/findbugs/trendGraph/png?url=PRIORITY">
+        </a>
+		</td>
+		
+		<td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/Deprecations/">Deprecations</a><br>
+        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Deprecations/lastBuild/warnings4Result/">
+            <img src="http://jmri.tagadab.com/jenkins/job/Development/job/Deprecations/warnings4/trendGraph/png?url=PRIORITY">
+        </a>
+        </td></tr>
+        
+        <!-- the following are commented out until we understand how to specify incrememtal in the URL -->
+<!-- 
+		<tr><td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/">SpotBugs</a> (Incremental)<br>
+        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/lastBuild/findbugsResult/">
+            <img src="http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/findbugs/trendGraph/png?url=FIXED">
+        </a>
+		</td>
+		
+		<td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/Deprecations/">Deprecations</a>  (Incremental)<br>
+        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Deprecations/lastBuild/warnings4Result/">
+            <img src="http://jmri.tagadab.com/jenkins/job/Development/job/Deprecations/warnings4/trendGraph/png?url=FIXED">
+        </a>
+        </td></tr>
+ -->
+
+        <tr><td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/">JaCoCo</a><br>
+        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/">
+            <img src="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/jacoco/graph">
+        </a>
+        </td><td align="center">
+            <b><a href="jacoco_sort_report.php">JaCoCo Sortable Coverage Report</a></b>
+        </td></tr>
+
+        <tr><td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/">Builds</a> - Unit Test Results<br>
+        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/lastBuild/testReport/">
+            <img src="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/test/trend">
+        </a>
+        </td>
+
+        <td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/">Builds</a> - Regular Java warnings<br>
+        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/lastBuild/warnings10Result/NORMAL/">
+            <img src="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/warnings10/trendGraph/png?url=PRIORITY">
+        </a>
+        </td></tr>
+
+        <tr><td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/">Builds</a> - ECJ Java warnings<br>
+        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/lastBuild/warnings25Result/NORMAL/">
+            <img src="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/warnings25/trendGraph/png?url=PRIORITY">
+        </a>
+        </td>
+
+        <td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/">Builds</a> - Javadoc results<br>
+        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/lastBuild/warnings42Result/NORMAL/">
+            <img src="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/warnings42/trendGraph/png?url=PRIORITY">
+        </a>
+        </td></tr>
+
+    </table>        
+        
+<!--#include virtual="/Footer.shtml" -->
+
+</div><!-- closes #mainContent-->
+</div> <!-- closes #mBody -->
+
+</body>
+</html>

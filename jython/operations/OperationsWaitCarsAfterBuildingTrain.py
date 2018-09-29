@@ -28,8 +28,8 @@ class WaitCars(jmri.jmrit.automat.AbstractAutomaton):
   def handle(self):
 
     # get the train and car managers
-    tm = jmri.jmrit.operations.trains.TrainManager.instance()
-    cm = jmri.jmrit.operations.rollingstock.cars.CarManager.instance()
+    tm = jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
+    cm = jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarManager)
 
     # the following code checks the values entered
     train = tm.getTrainByName(self.trainName)

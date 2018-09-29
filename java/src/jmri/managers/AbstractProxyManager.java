@@ -462,9 +462,13 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     }
 
     /** {@inheritDoc} */
-    @Override
     @Nonnull
+    @Override
+    @Deprecated  // will be removed when Manager method is removed due to @Override
     public String[] getSystemNameArray() {
+        jmri.util.Log4JUtil.warnOnce(log, "Manager#getSystemNameArray() is deprecated");
+        if (log.isTraceEnabled()) log.trace("Manager#getSystemNameArray() called", new Exception("traceback"));
+        
         List<E> list = getNamedBeanList();
         String[] retval = new String[list.size()];
         int i = 0;
@@ -473,8 +477,9 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     }
 
     /** {@inheritDoc} */
-    @Override
     @Nonnull
+    @Override
+    @Deprecated  // will be removed when Manager method is removed due to @Override
     public List<String> getSystemNameList() {
         List<E> list = getNamedBeanList();
         ArrayList<String> retval = new ArrayList<>(list.size());
@@ -493,6 +498,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
 
     /** {@inheritDoc} */
     @Override
+    @Deprecated  // will be removed when Manager method is removed due to @Override
     public List<String> getSystemNameAddedOrderList() {
         addedOrderList = new ArrayList<>();  // need to start maintaining it
         updateOrderList();
@@ -501,6 +507,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
 
     /** {@inheritDoc} */
     @Override
+    @Deprecated  // will be removed when Manager method is removed due to @Override
     @Nonnull
     public List<E> getNamedBeanList() {
         // by doing this in order by manager and from each managers ordered sets, its finally in order

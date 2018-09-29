@@ -21,7 +21,7 @@ public class PacketGenAction extends AbstractAction {
     }
 
     public PacketGenAction(SRCPSystemConnectionMemo memo) {
-        this("Generate SRCP message",memo);
+        this(Bundle.getMessage("MenuItemSendSRCPCommand"),memo);
     }
 
     @Override

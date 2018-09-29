@@ -1,11 +1,15 @@
 package jmri.jmrix.lenz;
 
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.Timer;
+
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.Throttle;
 import jmri.jmrix.AbstractThrottle;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,14 +22,12 @@ import org.slf4j.LoggerFactory;
  */
 public class XNetThrottle extends AbstractThrottle implements XNetListener {
 
-    protected boolean isAvailable;  // Flag  stating if the throttle is in 
-    // use or not.
-    protected java.util.Timer statusTimer; // Timer used for status
-    protected java.util.TimerTask statusTask; // Timer Task used to 
-    // periodically get 
-    // current status of the 
-    // throttle when throttle 
-    // not available.
+    protected boolean isAvailable;  // Flag  stating if the throttle is in use or not.
+
+    static protected AtomicReference<Timer> statusTimer = new AtomicReference<>(); // Shared Timer used for status
+
+    protected java.util.TimerTask statusTask;   // Timer Task used to periodically get current
+                                                // status of the throttle when throttle not available.
     protected static final int statTimeoutValue = 1000; // Interval to check the 
     protected XNetTrafficController tc = null;
 
@@ -65,10 +67,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         this.speedStepMode = DccThrottle.SpeedStepMode128;
         //       this.isForward=true;
         setIsAvailable(false);
-
-        f0Momentary = f1Momentary = f2Momentary = f3Momentary = f4Momentary
-                = f5Momentary = f6Momentary = f7Momentary = f8Momentary = f9Momentary
-                = f10Momentary = f11Momentary = f12Momentary = false;
 
         requestList = new LinkedBlockingQueue<RequestMessage>();
         sendStatusInformationRequest();
@@ -1526,6 +1524,13 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         if (log.isDebugEnabled()) {
             log.debug("Status Timer Started");
         }
+
+        // atomically make sure there's a timer available
+        statusTimer.updateAndGet(timer -> {
+            if (timer == null) return new java.util.Timer("XPressNet Throttle Status Timer", true);
+            else return timer;
+        });
+        
         if (statusTask != null) {
             statusTask.cancel();
             statusTask = null;
@@ -1538,10 +1543,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
                 sendStatusInformationRequest();
             }
         };
-        if( statusTimer==null) {
-            statusTimer = new java.util.Timer("XPressNet Throttle Status Timer");
-        }
-        statusTimer.schedule(statusTask, statTimeoutValue, statTimeoutValue);
+        
+        statusTimer.get().schedule(statusTask, statTimeoutValue, statTimeoutValue);
     }
 
     /**
