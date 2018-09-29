@@ -844,7 +844,7 @@ public class LocoNetSlot {
                     loconetProtocol = LnConstants.LOCONETPROTOCOL_ONE;
                 }
                 dirf = l.getElement(10) & 0b00111111;
-                id = l.getElement(18) + 256 * l.getElement(19);
+                id = l.getElement(18) + 128 * l.getElement(19);
                 snd = snd & 0b11111100;
                 snd = snd |  ( (l.getElement(11) & 0b01100000) >> 5) ;
                 snd = l.getElement(11) & 0b00001111;
@@ -881,17 +881,15 @@ public class LocoNetSlot {
                         stat = l.getElement(4);
                     } else if ((l.getElement(3) & 0b01110000) == 0b01010000) {
                         // unconsisting returns slot contents so do nothing to this slot
-                        //TODO set dest slot to top/mid etc
-
                     } else if ((l.getElement(3) & 0b01110000) == 0b01000000) {
                         //consisting do something?
-                        //TODO
+                        //TODO consisting
                     } else if (src == 0 && dest == 0) {
                         stat = stat & ~LnConstants.LOCO_IN_USE;
                         log.info("set idle");
                     } else {
                         // a real move slot
-                        // should read both slots
+                        // TODO: deal with at slot manager level.
                     }
                 }
                 notifySlotListeners();
@@ -907,11 +905,10 @@ public class LocoNetSlot {
                     log.error("Asked to handle message not for this slot ("
                             + slot + ") " + l);
                 }
-                if ((l.getElement(7) & 0b01000000) == 0b01000000) {
-                    loconetProtocol = LnConstants.LOCONETPROTOCOL_TWO;
-                } else {
-                    loconetProtocol = LnConstants.LOCONETPROTOCOL_ONE;
-                }
+                
+                // a loconet type 1 slot read or write sets slot protocol to LOCONETPROTOCOL_ONE
+                loconetProtocol = LnConstants.LOCONETPROTOCOL_ONE;
+                
                 stat = l.getElement(3);
                 _pcmd = l.getElement(4);
                 addr = l.getElement(4) + 128 * l.getElement(9);
@@ -1249,6 +1246,36 @@ public class LocoNetSlot {
         l.setElement(6, (addr / 128) & 0x7F);
         l.setElement(5, addr & 0x7F);
         l.setElement(7, ( trk | 0x40 ) & 0x7F);  // track power status and Expanded slot protocol
+        l.setElement(8, spd & 0x7F);
+        l.setElement(9, (isF12() ? 0b00010000 : 0x00 )
+                | (isF20() ? 0b00100000 : 0x00)
+                | (isF28() ? 0b01000000 : 0x00));
+        l.setElement(10, ( isF0() ? 0b00010000 : 0x00)
+                | (isF1() ? 0b00000001 : 0x00)
+                | (isF2() ? 0b00000010 : 0x00)
+                | (isF3() ? 0b00000100 : 0x00)
+                | (isF4() ? 0b00001000 : 0x00));
+        l.setElement(11, ( isF5() ? 0b00000001 : 0x00)
+                | ( isF6() ? 0b00000010 : 0x00)
+                | ( isF7() ? 0b00000100 : 0x00)
+                | ( isF8() ? 0b00001000 : 0x00)
+                | ( isF9() ? 0b00010000 : 0x00)
+                | (isF10() ? 0b00100000 : 0x00)
+                | (isF11() ? 0b01000000 : 0x00));
+        l.setElement(12,( isF13() ? 0b00000001 : 0x00)
+                | (isF14() ? 0b00000010 : 0x00)
+                | (isF15() ? 0b00000100 : 0x00)
+                | (isF16() ? 0b00001000 : 0x00)
+                | (isF17() ? 0b00010000 : 0x00)
+                | (isF18() ? 0b00100000 : 0x00)
+                | (isF19() ? 0b01000000 : 0x00));
+        l.setElement(13,( isF21() ? 0b00000001 : 0x00)
+                | (isF22() ? 0b00000010 : 0x00)
+                | (isF23() ? 0b00000100 : 0x00)
+                | (isF24() ? 0b00001000 : 0x00)
+                | (isF25() ? 0b00010000 : 0x00)
+                | (isF26() ? 0b00100000 : 0x00)
+                | (isF27() ? 0b01000000 : 0x00));
         l.setElement(18, id & 0x7F); 
         l.setElement(19, (id / 128) & 0x7F); 
         return l;

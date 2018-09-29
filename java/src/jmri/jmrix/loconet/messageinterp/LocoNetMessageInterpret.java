@@ -4495,7 +4495,7 @@ public class LocoNetMessageInterpret {
                     fn[1]);
         } else if ((l.getElement(1) &
                 LnConstants.OPC_EXP_SEND_SUB_CODE_MASK) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F14F20_MASK) {
-            return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F14_20",slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
+            return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F14_F20",slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
                     fn[1]);
         } else if ((l.getElement(1) &
                 LnConstants.OPC_EXP_SEND_SUB_CODE_MASK) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF_MASK) {
