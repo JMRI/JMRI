@@ -142,6 +142,16 @@ public class LnPr2PowerManager extends LnPowerManager {
         }
     }
     
+    /**
+     * PR2 does not support OPC_IDLE, so returns false
+     * <p>
+     * @return false, always
+     */
+    @Override
+    public boolean implementsIdle() {
+        return false;
+    }
+
     // timer support to send updates & keep power alive
     javax.swing.Timer timer = null;
 }
