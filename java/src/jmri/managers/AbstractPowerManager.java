@@ -74,16 +74,6 @@ abstract public class AbstractPowerManager implements PowerManager {
     }
     
     /**
-     * Check connection's support for IDLE power state.
-     * <p>
-     * @return true if IDLE power state is supported by the connection, else false
-     */
-    @Override
-    public boolean implementsIdle() {
-        return false;   // assume "IDLE" state is not supported by the connection
-    }
-
-    /**
      * Returns the amount of time since the layout was last powered up,
      * in milliseconds. If the layout has not been powered up as far as
      * JMRI knows it returns a very long time indeed.
