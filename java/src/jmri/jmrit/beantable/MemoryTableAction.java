@@ -246,11 +246,11 @@ public class MemoryTableAction extends AbstractTableAction<Memory> {
             if (uName != null && !uName.isEmpty() && jmri.InstanceManager.memoryManagerInstance().getByUserName(uName) != null && !p.getPreferenceState(getClassName(), "duplicateUserName")) {
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", uName), getClassName(), "duplicateUserName", false, true);
-                uName = null; // new Memory objects always receive a valid system name using the next free index, but uName names must not be in use so use none in that case
                 // show in status bar
                 errorMessage = Bundle.getMessage("ErrorDuplicateUserName", uName);
                 statusBarLabel.setText(errorMessage);
                 statusBarLabel.setForeground(Color.red);
+                uName = null; // new Memory objects always receive a valid system name using the next free index, but uName names must not be in use so use none in that case
             }
             if (sName != null && !sName.isEmpty() && jmri.InstanceManager.memoryManagerInstance().getBySystemName(sName) != null && !p.getPreferenceState(getClassName(), "duplicateSystemName")) {
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
