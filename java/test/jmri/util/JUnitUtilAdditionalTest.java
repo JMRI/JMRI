@@ -179,8 +179,6 @@ public class JUnitUtilAdditionalTest {
         
         for (Mngr m : Mngr.values()) {
             
-            System.out.format("%n%nTest manager %s%n", m.name());
-            
             // Reset the instance manager twice to ensure other tests don't
             // interfere with this test.
             jmri.util.JUnitUtil.resetInstanceManager();
@@ -207,6 +205,9 @@ public class JUnitUtilAdditionalTest {
 //                log.error("JUnitUtil.resetInstanceManager() doesn't do a complete reset after {}. Num remaining managers: {}", m.name(), InstanceManager.getDefault().getAllManagers().size());
                 log.warn("JUnitUtil.resetInstanceManager() doesn't do a complete reset after {}. Num remaining managers: {}", m.name(), InstanceManager.getDefault().getAllManagers().size());
                 System.out.format("JUnitUtil.resetInstanceManager() doesn't do a complete reset after %s. Num remaining managers: %d%n", m.name(), InstanceManager.getDefault().getAllManagers().size());
+                for (Class<?> manager : InstanceManager.getDefault().getAllManagers()) {
+                    System.out.format("Remaining manager: %s%n", manager.getName());
+                }
                 failedManagers.add(m);
             } else {
 //                System.out.format("resetInstanceManager() do a complete reset after %s%n", m.name());
