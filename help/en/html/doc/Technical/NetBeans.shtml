@@ -8,6 +8,7 @@
 
   <title>JMRI: Building with NetBeans</title>
     <meta name="author" content="Bob Jacobsen">
+    <meta name="author" content="B. Milhaupt">
   <meta name="keywords" content="JMRI technical code NetBeans">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -36,11 +37,14 @@
       <h1>JMRI Code: Building with NetBeans</h1>
 
     <div class="toc">
-      <ul>
         <li><a href="#intro">Introduction</a></li>
 
         <li><a href="#installing">Getting and Installing
         NetBeans</a></li>
+        <ul>
+        <li><a href="#windowsUsers">Important note for Windows users</a></li>
+        <li><a href="#heap">Java "Heap" and "low memory" notifications</a></li>
+        </ul>
 
         <li><a href="#checkout">Checking out code</a></li>
 
@@ -60,6 +64,8 @@
 
         <li><a href="#compileIndividualFile">NetBeans and compiling
         individual files</a></li>
+	<li><a href="#fetch">Loading a Specific Branch from 
+	GitHub</a></li>
 
         <li><a href="#patch">Making a Patch File</a></li>
       </ul><a href="#SeeAlso">See Also</a>
@@ -102,7 +108,7 @@
       software repositories - search your package manager for
       NetBeans.</p>
 
-      <h3>Important note for Windows users</h3>
+      <h3><a id="windowsUsers" name="windowsUsers"></a>Important note for Windows users</h3>
 
       <p>Due to different handling of Line Endings characters
       (<code>LF / CR LF</code>) between Windows and other systems -
@@ -181,6 +187,23 @@
       line-endings to the configured form and saves the file. If
       "CANCEL" is selected, the file will be saved WITHOUT changing
       any line-endings.</p>
+
+      <h3><a id="heap" name="heap"></a>Java "Heap" size and "low memory" notifications.</h3>
+
+      <p>Netbeans may provide notification of "Low Memory" situations 
+      when perfroming some operations, including running certain JMRI
+      "targets" within the build.xml file.  Netbeans can become 
+      <strong>very</strong> sluggish when it encounters these low memory 
+      conditions.  This can happen regardless of the amount of memory 
+      your machine has, unless you take steps to re-configure Netbeans.</p>
+
+      <p>By default, Netbeans uses a strategy to allocate a given 
+      amount of "Heap" space which is insufficient for projects
+      which are as large as JMRI.  JMRI developers who use Netbeans are 
+      encouraged to increase the Netbeans default Heap allocation which
+      is made when Netbeans is launched.  This is generally done via
+      a change to the "netbeans.conf" file.  See <a href="http://wiki.netbeans.org/FaqSettingHeapSize">
+      FaqSettingHeapSize</a> for details.</p>
 
       <h2><a id="gituse" name="gituse"></a>Using NetBeans with
       JMRI's Git Code Repository</h2>
@@ -419,7 +442,7 @@
           JMRI branches, whichever branch you add the catalog from,
           that branch's schema is what is used.</p>
 
-          <h2><a id="spotbugs" name="spotbugs">Running
+          <h2><a id="SpotBugs" name="SpotBugs">Running
                   SpotBugs</a></h2>
 
           <p>The SpotBugs tool is a static code analysis tool which
@@ -490,22 +513,6 @@
           from within NetBeans generally does not suffer from the
           shortcomings of the configuration information found in
           the files in the project's nbproject/ directory.</p>
-
-          <h2><a id="SeeAlso" name="SeeAlso">See Also</a></h2>
-
-          <ul>
-            <li><a href="http://netbeans.org/">The NetBeans.org
-            Integrated Development Environment web site</a></li>
-
-            <li><a href="http://subversion.apache.org/">The
-            Apache.org Subversion project web site</a></li>
-
-            <li><a href="http://sourceforge.net/projects/nsis">The
-            NSIS project web site</a></li>
-
-            <li><a href="https://spotbugs.github.io">The
-                    SpotBugs web site</a></li>
-          </ul>
 
         <h2><a id="fetch" name="fetch"></a>Loading a Specific Branch from GitHub</h2>
         
@@ -581,6 +588,22 @@
             <li>After it finishes calculating the diffs, the file
             you selected will contain the patches, along with an
             information header.</li>
+          </ul>
+
+          <h2><a id="SeeAlso" name="SeeAlso">See Also</a></h2>
+
+          <ul>
+            <li><a href="http://netbeans.org/">The NetBeans.org
+            Integrated Development Environment web site</a></li>
+
+            <li><a href="http://subversion.apache.org/">The
+            Apache.org Subversion project web site</a></li>
+
+            <li><a href="http://sourceforge.net/projects/nsis">The
+            NSIS project web site</a></li>
+
+            <li><a href="https://spotbugs.github.io">The
+                    SpotBugs web site</a></li>
           </ul>
 
 
