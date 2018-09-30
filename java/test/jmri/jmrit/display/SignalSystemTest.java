@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import java.util.Locale;
 import java.awt.GraphicsEnvironment;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -174,6 +175,14 @@ public class SignalSystemTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        
+        // set the locale to US English
+        // This is required since the test else gives this error message in the
+        // when running the test on a computer with a locale that JMRI is not
+        // translated to:
+        // "JavaHelp: File help/sv/JmriHelp_sv.hs not found, dropping to default"
+        Locale.setDefault(Locale.ENGLISH);
+        
         jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
