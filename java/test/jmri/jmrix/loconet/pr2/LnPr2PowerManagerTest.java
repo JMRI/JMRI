@@ -139,6 +139,19 @@ public class LnPr2PowerManagerTest extends AbstractPowerManagerTestBase {
     @Ignore("test in parent class fails for some reason")
     public void testStateOff() throws JmriException {
     }
+    
+    @Test
+    @Override
+    public void testImplementsIdle() {
+        if (p.implementsIdle()) {
+            hearIdle();
+            try {
+                Assert.assertEquals("power state", PowerManager.IDLE, p.getPower());
+            } catch (JmriException e) {
+                Assert.fail("JmriJException occured invoking p.getPower()");
+            }
+        }
+    }
 
     // setup a default interface
     @Before
