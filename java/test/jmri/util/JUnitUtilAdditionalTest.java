@@ -228,7 +228,9 @@ public class JUnitUtilAdditionalTest {
         
         jmri.util.JUnitUtil.initIdTagManager();
         
+        InstanceManager.printStackTrace = true;
         jmri.util.JUnitUtil.resetInstanceManager();
+        InstanceManager.printStackTrace = false;
         
         if (InstanceManager.getDefault().getAllManagers().size() != 1) {
             log.warn("JUnitUtil.resetInstanceManager() doesn't do a complete reset after IdTag. Num remaining managers: {}", InstanceManager.getDefault().getAllManagers().size());

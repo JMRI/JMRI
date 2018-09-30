@@ -224,7 +224,7 @@ public class JUnitUtilTest {
         jmri.util.JUnitUtil.initDebugThrottleManager();
         jmri.util.JUnitUtil.initSignalSpeedMap();
         jmri.util.JUnitUtil.initLogixManager();
-        jmri.util.JUnitUtil.initIdTagManager();
+//        jmri.util.JUnitUtil.initIdTagManager();
         InstanceManager layoutEditorInstanceManager = InstanceManager.getDefault();
         
         // Get another new instance manager
@@ -237,7 +237,7 @@ public class JUnitUtilTest {
         jmri.util.JUnitUtil.initDebugThrottleManager();
         jmri.util.JUnitUtil.initSignalSpeedMap();
         jmri.util.JUnitUtil.initLogixManager();
-        jmri.util.JUnitUtil.initIdTagManager();
+//        jmri.util.JUnitUtil.initIdTagManager();
         InstanceManager manualInstanceManager = InstanceManager.getDefault();
         
         // Verify that both instance managers has the same number of managers of each type
@@ -262,7 +262,7 @@ public class JUnitUtilTest {
         jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.JUnitUtil.initDebugThrottleManager();
         jmri.util.JUnitUtil.initLogixManager();
-        jmri.util.JUnitUtil.initIdTagManager();
+//        jmri.util.JUnitUtil.initIdTagManager();
         InstanceManager layoutEditorInstanceManager = InstanceManager.getDefault();
         
         
@@ -275,7 +275,7 @@ public class JUnitUtilTest {
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initDebugThrottleManager();
         jmri.util.JUnitUtil.initLogixManager();
-        jmri.util.JUnitUtil.initIdTagManager();
+//        jmri.util.JUnitUtil.initIdTagManager();
         InstanceManager manualInstanceManager = InstanceManager.getDefault();
         
         
