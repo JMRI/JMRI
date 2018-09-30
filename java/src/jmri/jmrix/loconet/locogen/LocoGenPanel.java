@@ -184,8 +184,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         memo.getLnTrafficController().sendLocoNetMessage(createPacket(packetTextField.getText()));
     }
 
-    private ArrayList<DccThrottle> throttles = new ArrayList<>();
-    private Thread abrty;
+    private final ArrayList<DccThrottle> throttles = new ArrayList<>();
     private int throttleAddr = 300;
     private int ac = 0;
     public void addThrottlesActionPerformed(java.awt.event.ActionEvent e) {
@@ -204,11 +203,9 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
                 log.warn("Throttle for locomotive address {} could not be setup.", throttleAddr);
             }
             throttleAddr+=1;
-            // try{Thread.sleep(20);} catch (Exception e2) {log.info("Ahh");}
             count++;
         }
         firstThrottleAddress.setValue(throttleAddr);
-        //try{Thread.sleep(2000);} catch (Exception e2) {log.info("Ahh2");}
         log.info("Start 300 Current[{}] Size[{}] nonnull[{}] ergo Throttles Good[{}",throttleAddr, throttles.size(),ac,throttleAddr-300 );
     }
 

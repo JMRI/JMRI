@@ -4438,14 +4438,12 @@ public class LocoNetMessageInterpret {
         boolean isUnconsisting = ((l.getElement(3) & 0b01110000) == 0b01010000);
         if (isUnconsisting) {
             // source and dest same, returns slot contents
-            int stat = l.getElement(4);
             return Bundle.getMessage("LN_MSG_OPC_EXP_UNCONSISTING",
                     src);
         }
         boolean isConsisting = ((l.getElement(3) & 0b01110000) == 0b01000000);
         if (isConsisting) {
             //add dest to src, returns dest slot contents
-            int stat = l.getElement(4);
             return Bundle.getMessage("LN_MSG_OPC_EXP_CONSISTING",
                     src,dest);
         }
@@ -4530,7 +4528,6 @@ public class LocoNetMessageInterpret {
         int adr2 = l.getElement(6); // loco address high
         int snd = l.getElement(10); // Sound 1-4 / F5-F8
         String[] sndf5_8 = interpretF5_F8toStrings(snd);
-        int id = l.getElement(18) + 256 * l.getElement(19);
 
         String locoAdrStr = figureAddressIncludingAliasing(adr, adr2, ss2, id1, id2);
         return Bundle.getMessage(((command == 0xEE)
