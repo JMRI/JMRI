@@ -43,12 +43,17 @@
 
         <li><a href="Python.shtml">The language itself</a></li>
 
-        <li><a href="Examples.shtml">Examples</a></li>
+        <li><a href="Examples.shtml">Example Scripts (List)</a></li>
+        
+        <li><a href="ex_set_turnouts.shtml">Example Script: Setting the Default State of Turnouts</a></li>
 
         <li><a href="FAQ.shtml">Frequently asked questions</a></li>
 
         <li><a href="Jynstruments.shtml">Modifying the GUI with Jynstruments</a></li>
       </ol>
+      
+      <p>See also the help section on <a href="Python.shtml">Python and JMRI.</a></p> 
+      
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
