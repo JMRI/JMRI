@@ -161,15 +161,6 @@ public class XNetPowerManager implements PowerManager, XNetListener {
         }
     }
 
-    /**
-     * Returns false to indicate it does not implement an "IDLE" power state.
-     * @return false
-     */
-    @Override
-    public boolean implementsIdle() {
-        return false;
-    }
-
     // Initialize logging information
     private final static Logger log = LoggerFactory.getLogger(XNetPowerManager.class);
 

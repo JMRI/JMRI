@@ -114,13 +114,4 @@ public class CbusPowerManager implements PowerManager, CanListener {
         // do nothing
     }
 
-    /**
-     * Returns false to indicate it does not implement an "IDLE" power state.
-     * @return false
-     */
-    @Override
-    public boolean implementsIdle() {
-        return false;
-    }
-
 }

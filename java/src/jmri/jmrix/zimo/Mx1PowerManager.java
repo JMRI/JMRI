@@ -133,15 +133,6 @@ public class Mx1PowerManager implements PowerManager, Mx1Listener {
         }
     }
 
-    /**
-     * Returns false to indicate it does not implement an "IDLE" power state.
-     * @return false
-     */
-    @Override
-    public boolean implementsIdle() {
-        return false;
-    }
-
 }
 
 
