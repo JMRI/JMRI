@@ -136,6 +136,8 @@
         <label xml:lang="de">Geschw.-korrektur rückwärts</label>
         <label xml:lang="nl">Snelheidscorr. achteruit</label>
         <tooltip>Factor = Value/128</tooltip>
+        <tooltip xml:lang="de">Factor = Wert/128</tooltip>
+        <tooltip xml:lang="nl">Factor = Waarde/128</tooltip>
       </variable>	  
       <!-- CV49 Uhlenbrock decoder configuration - common bits -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv49common.xml"/>
@@ -161,10 +163,12 @@
           <enumChoice choice="divided by 2">
             <choice>divided by 2</choice>
             <choice xml:lang="de">dividiert durch 2</choice>
+            <choice xml:lang="nl">gedeeld door 2</choice>
           </enumChoice>
           <enumChoice choice="divided by 3">
             <choice>divided by 3</choice>
             <choice xml:lang="de">dividiert durch 3</choice>
+            <choice xml:lang="nl">gedeeld door 3</choice>
           </enumChoice>
         </enumVal>
         <label>Voltage divider load regulation EMF</label>
