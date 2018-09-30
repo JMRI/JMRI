@@ -36,17 +36,6 @@ public class SprogPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBa
     protected void hearOff() {
        stc.sendTestReply(new SprogReply("-"));
     }
-    
-    @Override
-    protected void sendIdleReply() {
-        return;
-    }
-
-    @Override
-    protected void hearIdle() {
-        return;
-    }
-
     @Override
     protected int numListeners() {
         return stc.numListeners();
@@ -65,11 +54,6 @@ public class SprogPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBa
     @Override
     protected boolean outboundOffOK(int index) {
         return ((stc.outbound.elementAt(index))).toString().equals("-");
-    }
-
-    @Override
-    protected boolean outboundIdleOK(int index) {
-        return true;
     }
 
     @Test
