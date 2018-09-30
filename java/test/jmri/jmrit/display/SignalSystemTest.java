@@ -153,7 +153,7 @@ public class SignalSystemTest {
         checkAspect("IF$vsm:UP-2008:SL-3L2($0250)", "Approach");
 
         // clean up messages from file
-        jmri.util.JUnitAppender.assertErrorMessage("No facing block found for source mast IF$vsm:BNSF-1996:SL-2A($0100)");
+        jmri.util.JUnitAppender.assertErrorMessage("No facing block found for source mast IF$vsm:BNSF-1996:SL-2A($0010)");
         jmri.util.JUnitAppender.clearBacklog();
         jmri.util.JUnitAppender.verifyNoBacklog();
         log.info("suppressing multiple \"No facing block found ...\" messages from AA1UPtest.xml file");
