@@ -823,10 +823,15 @@ public final class InstanceManager {
         // replace the instance manager, so future calls will invoke the new one
         LazyInstanceManager.instanceManager = new InstanceManager();
         
+        // Start debugging
+        InstanceManager.printStackTraceInstanceManager = LazyInstanceManager.instanceManager;
         // continue to clean up this one
         new HashSet<>(managerLists.keySet()).forEach((type) -> {
             clear(type);
         });
+        // Stop debugging
+        InstanceManager.printStackTraceInstanceManager = null;
+        
         managerLists.keySet().forEach((type) -> {
             if (getInitializationState(type) != InitializationState.NOTSET) {
                 log.warn("list of {} was reinitialized during clearAll", type, new Exception());
@@ -869,6 +874,9 @@ public final class InstanceManager {
         public static InstanceManager instanceManager = new InstanceManager();
     }
 
+    public static boolean printStackTrace = false;
+    public static InstanceManager printStackTraceInstanceManager = null;
+    
     /**
      * Get the default instance of the InstanceManager. This is used for
      * verifying the source of events fired by the InstanceManager.
@@ -878,6 +886,13 @@ public final class InstanceManager {
      */
     @Nonnull
     public static InstanceManager getDefault() {
+        if (printStackTrace && (printStackTraceInstanceManager == LazyInstanceManager.instanceManager)) {
+            try {
+                throw new Exception();
+            } catch (Exception e) {
+                e.printStackTrace(System.out);
+            }
+        }
         return LazyInstanceManager.instanceManager;
     }
 
