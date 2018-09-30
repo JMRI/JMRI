@@ -27,35 +27,41 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Bob Jacobsen Copyright (C) 2014
+ * @author B. Milhaupt Copyright (C) 2018
  */
 @javax.annotation.concurrent.Immutable
 public enum LnCommandStationType {
 
-    //  enum value                 name                         canRead progEndOp   ThrottleManager      SlotManager
-    COMMAND_STATION_DCS100("DCS100 (Chief)", true, false, "LnThrottleManager", "SlotManager"), // NOI18N
-    COMMAND_STATION_DCS240("DCS240 (Advanced Command Station)", true, false, "LnThrottleManager", "SlotManager"), // NOI18N
-    COMMAND_STATION_DCS210("DCS210 (Evolution Command Station)", true, false, "LnThrottleManager", "SlotManager"), // NOI18N
-    COMMAND_STATION_DCS200("DCS200", true, false, "LnThrottleManager", "SlotManager"), // NOI18N
-    COMMAND_STATION_DCS050("DCS50 (Zephyr)", true, false, "LnThrottleManager", "SlotManager"), // NOI18N
-    COMMAND_STATION_DCS051("DCS51 (Zephyr Xtra)", true, false, "LnThrottleManager", "SlotManager"), // NOI18N
-    COMMAND_STATION_DB150("DB150 (Empire Builder)", false, true, "LnThrottleManager", "SlotManager"), // NOI18N
-    COMMAND_STATION_LBPS("LocoBuffer (PS)", true, false, "LnThrottleManager", "SlotManager"), // NOI18N
-    COMMAND_STATION_MM("Mix-Master", false, true, "LnThrottleManager", "SlotManager"), // NOI18N
-    COMMAND_STATION_IBX_TYPE_1("Intellibox-I", true, true, "Ib1ThrottleManager", "SlotManager"), // NOI18N
-    COMMAND_STATION_IBX_TYPE_2("Intellibox-II", true, true, "Ib2ThrottleManager", "UhlenbrockSlotManager"), // NOI18N
+    //  enum value(name, canRead, progEndOp, ThrottleManager, SlotManager, supportsIdle
+    COMMAND_STATION_DCS100("DCS100 (Chief)", true, false, "LnThrottleManager", "SlotManager", true), // NOI18N
+    COMMAND_STATION_DCS240("DCS240 (Advanced Command Station)", true, false, "LnThrottleManager", "SlotManager", true), // NOI18N
+    COMMAND_STATION_DCS210("DCS210 (Evolution Command Station)", true, false, "LnThrottleManager", "SlotManager", true), // NOI18N
+    COMMAND_STATION_DCS200("DCS200", true, false, "LnThrottleManager", "SlotManager", true), // NOI18N
+    COMMAND_STATION_DCS050("DCS50 (Zephyr)", true, false, "LnThrottleManager", "SlotManager", false), // NOI18N
+    COMMAND_STATION_DCS051("DCS51 (Zephyr Xtra)", true, false, "LnThrottleManager", "SlotManager", false), // NOI18N
+    COMMAND_STATION_DB150("DB150 (Empire Builder)", false, true, "LnThrottleManager", "SlotManager", true), // NOI18N
 
-    COMMAND_STATION_PR3_ALONE("PR3 standalone programmer", true, false, "LnThrottleManager", "SlotManager"), // NOI18N
-    COMMAND_STATION_PR2_ALONE("PR2 standalone programmer", true, false, "LnThrottleManager", "SlotManager"), // NOI18N
-    COMMAND_STATION_STANDALONE("Stand-alone LocoNet", false, false, "LnThrottleManager", "SlotManager");  // NOI18N
+    // the following command stations are assumed to not support "OPC_IDLE"
+    COMMAND_STATION_LBPS("LocoBuffer (PS)", true, false, "LnThrottleManager", "SlotManager", false), // NOI18N
+    COMMAND_STATION_MM("Mix-Master", false, true, "LnThrottleManager", "SlotManager", false), // NOI18N
+    COMMAND_STATION_IBX_TYPE_1("Intellibox-I", true, true, "Ib1ThrottleManager", "SlotManager", false), // NOI18N
+    COMMAND_STATION_IBX_TYPE_2("Intellibox-II", true, true, "Ib2ThrottleManager", "UhlenbrockSlotManager", false), // NOI18N
+
+    // the following command stations are known to not support "OPC_IDLE"
+    COMMAND_STATION_PR3_ALONE("PR3 standalone programmer", true, false, "LnThrottleManager", "SlotManager", false), // NOI18N
+    COMMAND_STATION_PR2_ALONE("PR2 standalone programmer", true, false, "LnThrottleManager", "SlotManager", false), // NOI18N
+    COMMAND_STATION_STANDALONE("Stand-alone LocoNet", false, false, "LnThrottleManager", "SlotManager", false);  // NOI18N
 
     // Note that the convention is that the first word (space-separated token) of the name is the
     // name of a configuration file for loconet.cmdstnconfig
-    LnCommandStationType(String name, boolean canRead, boolean progEndOp, String throttleClassName, String slotManagerClassName) {
+    LnCommandStationType(String name, boolean canRead, boolean progEndOp,
+            String throttleClassName, String slotManagerClassName, boolean supportsIdle) {
         this.name = name;
         this.canRead = canRead;
         this.progEndOp = progEndOp;
         this.throttleClassName = throttleClassName;
         this.slotManagerClassName = slotManagerClassName;
+        this.supportsIdle = supportsIdle;
     }
 
     final String name;
@@ -63,6 +69,7 @@ public enum LnCommandStationType {
     final boolean progEndOp;
     final String throttleClassName;
     final String slotManagerClassName;
+    final boolean supportsIdle;
 
     public String getName() {
         return name;
@@ -154,6 +161,15 @@ public enum LnCommandStationType {
             log.error("Invocation error while creating slotmanager object from type {} in enum element {}", slotManagerClassName, name, e4);
         }
         return null;
+    }
+
+    /**
+     * Returns command station's support for OPC_IDLE
+     * <p>
+     * @return true if OPC_IDLE forces broadcast of "stop", else false
+     */
+    public boolean getImplementsIdle() {
+        return supportsIdle;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnCommandStationType.class);
