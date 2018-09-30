@@ -78,8 +78,10 @@ public class ExportCars extends XmlFile {
                     true); // NOI18N
         } catch (IOException e) {
             log.error("Can not open export cars CSV file: {}", file.getName());
-            JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ExportedCarsToFile"), new Object[]{
-                    0, defaultOperationsFilename()}), Bundle.getMessage("ExportFailed"),
+            JOptionPane.showMessageDialog(null,
+                    MessageFormat.format(Bundle.getMessage("ExportedCarsToFile"), new Object[]{
+                            0, defaultOperationsFilename()}),
+                    Bundle.getMessage("ExportFailed"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -126,7 +128,7 @@ public class ExportCars extends XmlFile {
                 Bundle.getMessage("Pickup") +
                 del +
                 Bundle.getMessage("Last") +
-                del +               
+                del +
                 Bundle.getMessage("RWELocation") +
                 del +
                 "-" +
@@ -150,108 +152,115 @@ public class ExportCars extends XmlFile {
                 Bundle.getMessage("Track");
         fileOut.println(header);
 
-        String line = "";
-        String carType;
-        String carLoad;
-        String carKernel;
-        String carLocationName;
-        String carTrackName;
-        String value;
-        String comment;
-        String miscellaneous;
-        String extensions;
-
-        // store car number, road, type, length, weight, color, owner, built date, location and track
+        // store car number, road, type, length, weight, color, owner, built date, location and track name
         for (Car car : _carList) {
-            carType = car.getTypeName();
-            if (carType.contains(del)) {
-                carType = ESC + car.getTypeName() + ESC;
-            }
-            carLoad = car.getLoadName();
-            if (carLoad.contains(del)) {
-                carLoad = ESC + car.getLoadName() + ESC;
-            }
-            carKernel = car.getKernelName();
-            if (carKernel.contains(del)) {
-                carKernel = ESC + car.getKernelName() + ESC;
-            }
-            carLocationName = car.getLocationName();
-            if (carLocationName.contains(del)) {
-                carLocationName = ESC + car.getLocationName() + ESC;
-            }
-            carTrackName = car.getTrackName();
-            if (carTrackName.contains(del)) {
-                carTrackName = ESC + car.getTrackName() + ESC;
-            }
-            value = car.getValue();
-            if (value.contains(del)) {
-                value = ESC + car.getValue() + ESC;
-            }
-            comment = car.getComment();
-            if (comment.contains(del)) {
-                comment = ESC + car.getComment() + ESC;
-            }
-            miscellaneous = "";
-            if (car.isOutOfService()) {
-                miscellaneous = Bundle.getMessage("OutOfService");
-            }
-            extensions = car.getTypeExtensions();
-            line = car.getNumber() +
+            String line = 
+                    ESC +
+                    car.getNumber() +
+                    ESC +
                     del +
+                    ESC +
                     car.getRoadName() +
+                    ESC +
                     del +
-                    carType +
+                    ESC +
+                    car.getTypeName() +
+                    ESC +
                     del +
                     car.getLength() +
                     del +
                     car.getWeight() +
                     del +
+                    ESC +
                     car.getColor() +
+                    ESC +
                     del +
+                    ESC +
                     car.getOwner() +
+                    ESC +
                     del +
+                    ESC +
                     car.getBuilt() +
+                    ESC +
                     del +
-                    carLocationName +
-                    ",-," +
-                    carTrackName +
+                    ESC +
+                    car.getLocationName() +
+                    ESC +
                     del +
-                    carLoad +
+                    "-" +
                     del +
-                    carKernel +
+                    ESC +
+                    car.getTrackName() +
+                    ESC +
+                    del +
+                    ESC +
+                    car.getLoadName() +
+                    ESC +
+                    del +
+                    ESC +
+                    car.getKernelName() +
+                    ESC +
                     del +
                     car.getMoves() +
                     del +
-                    value +
+                    ESC +
+                    car.getValue() +
+                    ESC +
                     del +
-                    comment +
+                    ESC +
+                    car.getComment() +
+                    ESC +
                     del +
-                    miscellaneous +
+                    (car.isOutOfService() ? Bundle.getMessage("OutOfService") : "") +
                     del +
-                    extensions +
+                    car.getTypeExtensions() +
                     del +
                     car.getWait() +
                     del +
+                    ESC +
                     car.getPickupScheduleName() +
+                    ESC +
                     del +
                     car.getLastDate() +
                     del +
+                    ESC +
                     car.getReturnWhenEmptyDestinationName() +
-                    ",-," +
+                    ESC +
+                    del +
+                    "-" +
+                    del +
+                    ESC +
                     car.getReturnWhenEmptyDestTrackName() +
+                    ESC +
                     del +
+                    ESC +
                     car.getReturnWhenEmptyLoadName() +
+                    ESC +
                     del +
+                    ESC +
                     car.getTrainName() +
+                    ESC +
                     del +
+                    ESC +
                     car.getDestinationName() +
-                    ",-," +
-                    car.getDestinationTrackName() +
+                    ESC +
                     del +
+                    "-" +
+                    del +
+                    ESC +
+                    car.getDestinationTrackName() +
+                    ESC +
+                    del +
+                    ESC +
                     car.getFinalDestinationName() +
-                    ",-," +
-                    car.getFinalDestinationTrackName();     
-                    
+                    ESC +
+                    del +
+                    "-" +
+                    del +
+                    ESC +
+                    car.getFinalDestinationTrackName() +
+                    ESC;
+
             fileOut.println(line);
         }
         fileOut.flush();
