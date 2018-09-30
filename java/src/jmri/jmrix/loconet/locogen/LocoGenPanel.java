@@ -234,12 +234,6 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
             log.error("Null Throttle returned");
             return;
         }
-        for( DccThrottle item : throttles) {
-            if (item == null ) {
-                item=t;
-                return;
-            }
-        }
         ac = 0;
         for( DccThrottle item : throttles) {
             if (item != null ) {
