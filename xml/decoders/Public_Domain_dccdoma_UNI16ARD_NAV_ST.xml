@@ -14,7 +14,9 @@
 <!-- for more details.                                                      -->
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no" >
+    <version author="Petr Šídlo sidlo64@hotmail.com" version="3" lastUpdated="20180930"/>
     <version author="Petr Šídlo sidlo64@hotmail.com" version="2" lastUpdated="20180805"/>
+    <version author="Petr Šídlo sidlo64@hotmail.com" version="1" lastUpdated="20180408"/>
     <!-- Accessory decoder  -->
     <!-- Description of circuit diagram https://sites.google.com/site/sidloweb/elektrika/22-uni16ard -->
     <!-- Program description https://sites.google.com/site/sidloweb/elektrika/24-uni16ard-nav -->
@@ -24,7 +26,7 @@
     <decoder>
 
         <family name="dccdoma.cz" mfg="Public-domain and DIY" >
-            <model model="UNI16ARD-NAV" lowVersionID="41" highVersionID="49" productID="16843010" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
+            <model model="UNI16ARD-NAV-ST" lowVersionID="41" highVersionID="49" productID="16843010" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
         </family>
     
         <programming direct="yes" paged="yes" register="no" ops="no" />
@@ -112,31 +114,6 @@
         <tooltip xml:lang="cs">Změna návěsti po příkazu se stavem pouze + nebo obojí stav + i -.</tooltip>
       </variable>
     
-      <variable item="Fade" CV="39" default="3">
-      	<enumVal>
-      		<enumChoice choice="No effect" value="0" >
-                    <choice>No effect</choice>
-                    <choice xml:lang="cs">Bez efektu</choice>
-                </enumChoice>
-      		<enumChoice choice="Fast" value="1" >
-                    <choice>Fast</choice>
-                    <choice xml:lang="cs">Rychle</choice>
-                </enumChoice>
-      		<enumChoice choice="Medium" value="2" >
-                    <choice>Medium</choice>
-                    <choice xml:lang="cs">Středně</choice>
-                </enumChoice>
-      		<enumChoice choice="Slow" value="3" >
-                    <choice>Slow</choice>
-                    <choice xml:lang="cs">Pomalu</choice>
-                </enumChoice>
-      	</enumVal>
-        <label>Fade:</label>
-        <label xml:lang="cs">Rychlost stmívání/rozsvěcení:</label>
-        <tooltip>Speed of dimming/lighting of signal lights.</tooltip>
-        <tooltip xml:lang="cs">Rychlost efektu stmívání/rozsvěcení návěstních světel.</tooltip>
-      </variable>
-    
       <variable CV="36" item="Signal Tower Address" default="4095" >
         <splitVal highCV="37" upperMask="XXXXVVVV" factor="1" offset="0" min="1" max="4095" />
         <label>Signal Tower Address:</label>
@@ -145,6 +122,47 @@
         <tooltip xml:lang="cs">Segment adresa stavědla. Maximální použitelná hodnota je 1996. Hodnota vyšší než 2048 vypne funkci stavědlo.</tooltip>
       </variable>
       
+      <variable CV="39" item="Fade" default="6">
+      	<enumVal>
+      		<enumChoice choice="No effect" value="0" >
+                    <choice>No effect</choice>
+                    <choice xml:lang="cs">Bez efektu</choice>
+                </enumChoice>
+      		<enumChoice choice="80 ms" value="1" >
+                    <choice>80 ms</choice>
+                    <choice xml:lang="cs">80 ms</choice>
+                </enumChoice>
+      		<enumChoice choice="160 ms" value="2" >
+                    <choice>160 ms</choice>
+                    <choice xml:lang="cs">160 ms</choice>
+                </enumChoice>
+      		<enumChoice choice="240 ms" value="3" >
+                    <choice>240 ms</choice>
+                    <choice xml:lang="cs">240 ms</choice>
+                </enumChoice>
+      		<enumChoice choice="320 ms" value="4" >
+                    <choice>320 ms</choice>
+                    <choice xml:lang="cs">320 ms</choice>
+                </enumChoice>
+      		<enumChoice choice="400 ms" value="5" >
+                    <choice>400 ms</choice>
+                    <choice xml:lang="cs">400 ms</choice>
+                </enumChoice>
+      		<enumChoice choice="480 ms" value="6" >
+                    <choice>480 ms</choice>
+                    <choice xml:lang="cs">480 ms</choice>
+                </enumChoice>
+      		<enumChoice choice="560 ms" value="7" >
+                    <choice>560 ms</choice>
+                    <choice xml:lang="cs">560 ms</choice>
+                </enumChoice>
+      	</enumVal>
+        <label>Fade:</label>
+        <label xml:lang="cs">Rychlost stmívání/rozsvěcení:</label>
+        <tooltip>Speed of dimming/lighting of signal lights.</tooltip>
+        <tooltip xml:lang="cs">Rychlost efektu stmívání/rozsvěcení návěstních světel.</tooltip>
+      </variable>
+    
       <variable CV="47" item="ProductID1" readOnly="yes" default="1" >
         <decVal/>
         <label>Product ID #1</label>
