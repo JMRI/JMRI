@@ -701,7 +701,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             _protectSignal = null;
             _idxProtectSignal = -1;
         }
-        clearStoppingBlock();
         if (_shareTOBlock != null) {
             _shareTOBlock.removePropertyChangeListener(this);
             _shareTOBlock = null;
