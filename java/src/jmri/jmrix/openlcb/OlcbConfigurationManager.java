@@ -3,8 +3,11 @@ package jmri.jmrix.openlcb;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.time.Clock;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import jmri.ClockControl;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.LightManager;
@@ -91,6 +94,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
         iface.registerMessageListener(new SimpleNodeIdentInfoHandler());
 
+        clockControl = new OlcbClockControl(iface, false);
+        InstanceManager.setDefault(ClockControl.class, clockControl);
+
         aliasMap = new AliasMap();
         tc.addCanListener(new CanListener() {
             @Override
@@ -116,6 +122,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     TrafficController tc;
     NodeID nodeID;
     LoaderClient loaderClient;
+    OlcbClockControl clockControl;
 
     OlcbInterface getInterface() {
         return olcbCanInterface.getInterface();
@@ -178,6 +185,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (type.equals(CanInterface.class)) {
             return true;
         }
+        if (type.equals(ClockControl.class)) {
+            return true;
+        }
         return false; // nothing, by default
     }
 
@@ -228,6 +238,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
         if (T.equals(CanInterface.class)) {
             return (T) olcbCanInterface;
+        }
+        if (T.equals(ClockControl.class)) {
+            return (T) clockControl;
         }
         return null; // nothing, by default
     }
@@ -295,6 +308,11 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
         }
         InstanceManager.deregister(this, OlcbConfigurationManager.class);
+
+        clockControl.dispose();
+        if (clockControl != null) {
+            InstanceManager.deregister(clockControl, ClockControl.class);
+        }
     }
 
     protected OlcbLightManager lightManager;
