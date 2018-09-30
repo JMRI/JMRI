@@ -273,7 +273,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
     JComboBox<String> prefixBox = new JComboBox<String>();
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
     JSpinner numberToAddSpinner = new JSpinner(rangeSpinner);
-    JCheckBox rangeBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
+    JCheckBox rangeCheckBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     JButton addButton;
     PropertyChangeListener colorChangeListener;
@@ -352,7 +352,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             hardwareAddressTextField.addPropertyChangeListener(colorChangeListener);
             // create panel
             addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameTextField, prefixBox,
-                    numberToAddSpinner, rangeBox, addButton, cancelListener, rangeListener, statusBarLabel));
+                    numberToAddSpinner, rangeCheckBox, addButton, cancelListener, rangeListener, statusBarLabel));
             // tooltip for hardwareAddressTextField will be assigned next by canAddRange()
             canAddRange(null);
         }
@@ -380,7 +380,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
 
         int numberOfReporters = 1;
 
-        if (rangeBox.isSelected()) {
+        if (rangeCheckBox.isSelected()) {
             numberOfReporters = (Integer) numberToAddSpinner.getValue();
         }
         if (numberOfReporters >= 65) { // limited by JSpinnerModel to 100
@@ -444,7 +444,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             }
 
             // add first and last names to statusMessage user feedback string
-            // only mention first and last of rangeBox added
+            // only mention first and last of rangeCheckBox added
             if (x == 0 || x == numberOfReporters - 1) {
                 statusMessage = statusMessage + " " + rName + " (" + uName + ")";
             }
@@ -457,7 +457,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 uName = nextName(uName);
             }
 
-            // end of for loop creating rangeBox of Reporters
+            // end of for loop creating rangeCheckBox of Reporters
         }
         // provide feedback to uName
         if (errorMessage == null) {
@@ -478,13 +478,13 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
     private String addEntryToolTip;
 
     /**
-     * Activate Add a rangeBox option if manager accepts adding more than 1
-     * Reporter and set a manager specific tooltip on the AddNewHardwareDevice
-     * pane.
+     * Activate Add a rangeCheckBox option if manager accepts adding more than 1
+ Reporter and set a manager specific tooltip on the AddNewHardwareDevice
+ pane.
      */
     private void canAddRange(ActionEvent e) {
-        rangeBox.setEnabled(false);
-        rangeBox.setSelected(false);
+        rangeCheckBox.setEnabled(false);
+        rangeCheckBox.setSelected(false);
         connectionChoice = (String) prefixBox.getSelectedItem(); // store in Field for CheckedTextField
         if (connectionChoice == null) {
             // Tab All or first time opening, default tooltip
@@ -496,7 +496,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (Manager<Reporter> mgr : managerList) {
                 if (mgr.getSystemPrefix().equals(systemPrefix) && ((ReporterManager) mgr).allowMultipleAdditions(systemPrefix)) {
-                    rangeBox.setEnabled(true);
+                    rangeCheckBox.setEnabled(true);
                     // get tooltip from ProxyReporterManager
                     addEntryToolTip = mgr.getEntryToolTip();
                     log.debug("R add box set");
@@ -504,7 +504,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 }
             }
         } else if (reportManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()))) {
-            rangeBox.setEnabled(true);
+            rangeCheckBox.setEnabled(true);
             log.debug("R add box enabled2");
             // get tooltip from sensor manager
             addEntryToolTip = reportManager.getEntryToolTip();
