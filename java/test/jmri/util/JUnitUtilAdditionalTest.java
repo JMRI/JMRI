@@ -189,8 +189,6 @@ public class JUnitUtilAdditionalTest {
             
             getNewInstanceManager(new Mngr[]{m});
             
-//            System.out.format("Num managers for %s: %d%n", m.name(), InstanceManager.getDefault().getAllManagers().size());
-//            String message = String.format("we have %d managers for manager %s", m.getNumManagers(), m.name());
             // We now have all N managers
             
             if (InstanceManager.getDefault().getAllManagers().size() != m.getNumManagers()) {
@@ -199,20 +197,14 @@ public class JUnitUtilAdditionalTest {
 //            Assert.assertTrue(message, InstanceManager.getDefault().getAllManagers().size() == m.getNumManagers());
             
             jmri.util.JUnitUtil.resetInstanceManager();
-//            System.out.format("Num managers after reset for %s: %d%n", m.name(), InstanceManager.getDefault().getAllManagers().size());
             
             if (InstanceManager.getDefault().getAllManagers().size() != 1) {
 //                log.error("JUnitUtil.resetInstanceManager() doesn't do a complete reset after {}. Num remaining managers: {}", m.name(), InstanceManager.getDefault().getAllManagers().size());
                 log.warn("JUnitUtil.resetInstanceManager() doesn't do a complete reset after {}. Num remaining managers: {}", m.name(), InstanceManager.getDefault().getAllManagers().size());
-                System.out.format("JUnitUtil.resetInstanceManager() doesn't do a complete reset after %s. Num remaining managers: %d%n", m.name(), InstanceManager.getDefault().getAllManagers().size());
                 for (Class<?> manager : InstanceManager.getDefault().getAllManagers()) {
-                    System.out.format("Remaining manager: %s%n", manager.getName());
+                    log.warn("Remaining manager: {}", manager.getName());
                 }
                 failedManagers.add(m);
-            } else {
-//                System.out.format("resetInstanceManager() do a complete reset after %s%n", m.name());
-//                log.info("resetInstanceManager() do a complete reset after {}", m.name());
-                log.warn("resetInstanceManager() do a complete reset after {}", m.name());
             }
         }
         
@@ -225,6 +217,24 @@ public class JUnitUtilAdditionalTest {
         if (sb.length() > 0) {
 //            log.error("Failing managers: {}", sb.toString());
             log.warn("Failing managers: {}", sb.toString());
+        }
+    }
+    
+    @Test
+    public void testIdTagManager() {
+        // Reset the instance manager twice to be sure.
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        
+        jmri.util.JUnitUtil.initIdTagManager();
+        
+        jmri.util.JUnitUtil.resetInstanceManager();
+        
+        if (InstanceManager.getDefault().getAllManagers().size() != 1) {
+            log.warn("JUnitUtil.resetInstanceManager() doesn't do a complete reset after IdTag. Num remaining managers: {}", InstanceManager.getDefault().getAllManagers().size());
+            for (Class<?> manager : InstanceManager.getDefault().getAllManagers()) {
+                log.warn("Remaining manager: {}", manager.getName());
+            }
         }
     }
     
