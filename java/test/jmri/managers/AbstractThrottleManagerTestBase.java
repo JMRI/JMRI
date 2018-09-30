@@ -1,7 +1,9 @@
 package jmri.managers;
 
 import jmri.LocoAddress;
+import jmri.DccLocoAddress;
 import jmri.DccThrottle;
+import jmri.Throttle;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
 import org.junit.After;
@@ -103,6 +105,77 @@ public abstract class AbstractThrottleManagerTestBase {
     @Test
     public void getAddressProtocolTypes() {
         Assert.assertNotNull(tm.getAddressProtocolTypes());
+    }
+
+    @Test
+    public void testGetAddressNullValue() {
+        Assert.assertNull("null address value",tm.getAddress(null,""));
+    }
+
+    @Test
+    public void testGetAddressNullProtocol() {
+        Assert.assertNull("null protocol",tm.getAddress("42",(String)null));
+    }
+
+    @Test
+    public void testGetAddressShort() {
+        Assert.assertNotNull("short address value",tm.getAddress("42",LocoAddress.Protocol.DCC));
+    }
+
+    @Test
+    public void testGetAddressLong() {
+        Assert.assertNotNull("long address value",tm.getAddress("4200",LocoAddress.Protocol.DCC));
+    }
+
+    @Test
+    public void testGetAddressShortString() {
+        Assert.assertNotNull("short address value from strings",tm.getAddress("42","DCC"));
+    }
+
+    @Test
+    public void testGetAddressLongString() {
+        Assert.assertNotNull("long address value from strings",tm.getAddress("4200","DCC"));
+    }
+
+
+    @Test
+    public void testGetThrottleInfo() {
+        DccLocoAddress addr = new DccLocoAddress(42,false);
+        ThrottleListener throtListen = new ThrottleListen(); 
+        tm.requestThrottle(addr,throtListen);
+        Assert.assertNotNull("is forward",tm.getThrottleInfo(addr,"IsForward"));
+        Assert.assertNotNull("speed setting",tm.getThrottleInfo(addr,"SpeedSetting"));
+        Assert.assertNotNull("speed increment",tm.getThrottleInfo(addr,"SpeedIncrement"));
+        Assert.assertNotNull("speed step mode",tm.getThrottleInfo(addr,"SpeedStepMode"));
+        Assert.assertNotNull("F0",tm.getThrottleInfo(addr,Throttle.F0));
+        Assert.assertNotNull("F1",tm.getThrottleInfo(addr,Throttle.F1));
+        Assert.assertNotNull("F2",tm.getThrottleInfo(addr,Throttle.F2));
+        Assert.assertNotNull("F3",tm.getThrottleInfo(addr,Throttle.F3));
+        Assert.assertNotNull("F4",tm.getThrottleInfo(addr,Throttle.F4));
+        Assert.assertNotNull("F5",tm.getThrottleInfo(addr,Throttle.F5));
+        Assert.assertNotNull("F6",tm.getThrottleInfo(addr,Throttle.F6));
+        Assert.assertNotNull("F7",tm.getThrottleInfo(addr,Throttle.F7));
+        Assert.assertNotNull("F8",tm.getThrottleInfo(addr,Throttle.F8));
+        Assert.assertNotNull("F9",tm.getThrottleInfo(addr,Throttle.F9));
+        Assert.assertNotNull("F10",tm.getThrottleInfo(addr,Throttle.F10));
+        Assert.assertNotNull("F11",tm.getThrottleInfo(addr,Throttle.F11));
+        Assert.assertNotNull("F12",tm.getThrottleInfo(addr,Throttle.F12));
+        Assert.assertNotNull("F13",tm.getThrottleInfo(addr,Throttle.F13));
+        Assert.assertNotNull("F14",tm.getThrottleInfo(addr,Throttle.F14));
+        Assert.assertNotNull("F15",tm.getThrottleInfo(addr,Throttle.F15));
+        Assert.assertNotNull("F16",tm.getThrottleInfo(addr,Throttle.F16));
+        Assert.assertNotNull("F17",tm.getThrottleInfo(addr,Throttle.F17));
+        Assert.assertNotNull("F18",tm.getThrottleInfo(addr,Throttle.F18));
+        Assert.assertNotNull("F19",tm.getThrottleInfo(addr,Throttle.F19));
+        Assert.assertNotNull("F20",tm.getThrottleInfo(addr,Throttle.F20));
+        Assert.assertNotNull("F21",tm.getThrottleInfo(addr,Throttle.F21));
+        Assert.assertNotNull("F22",tm.getThrottleInfo(addr,Throttle.F22));
+        Assert.assertNotNull("F23",tm.getThrottleInfo(addr,Throttle.F23));
+        Assert.assertNotNull("F24",tm.getThrottleInfo(addr,Throttle.F24));
+        Assert.assertNotNull("F25",tm.getThrottleInfo(addr,Throttle.F25));
+        Assert.assertNotNull("F26",tm.getThrottleInfo(addr,Throttle.F26));
+        Assert.assertNotNull("F27",tm.getThrottleInfo(addr,Throttle.F27));
+        Assert.assertNotNull("F28",tm.getThrottleInfo(addr,Throttle.F28));
     }
 
 

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrix.pricom.pockettester.MonitorFrame
  *
  * @author	Bob Jacobsen Copyright (C) 2002,2004
-  */
+ */
 public abstract class MonitorAction extends AbstractAction {
 
     public MonitorAction(String s) {
@@ -20,9 +20,7 @@ public abstract class MonitorAction extends AbstractAction {
     }
 
     public MonitorAction() {
-        java.util.ResourceBundle rb
-                = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
-        putValue(javax.swing.Action.NAME, rb.getString("ActionMonitor"));
+        putValue(javax.swing.Action.NAME, Bundle.getMessage("ActionMonitor"));
     }
 
     @Override
