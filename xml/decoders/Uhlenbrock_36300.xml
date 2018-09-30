@@ -422,7 +422,7 @@
         <label>Smoke gen. control PWM - Idle</label>
         <label xml:lang="de">Rauchgen. PWM-Leerlauf</label>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/v3SusiSoundVars.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/soundVars7outputs.xml"/>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="59" default="1">
@@ -432,5 +432,6 @@
     </resets>
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneUhlenbrock.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/v3SusiSoundPane.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/soundPane7outputs.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/fmapPane7outputs.xml"/>
 </decoder-config>

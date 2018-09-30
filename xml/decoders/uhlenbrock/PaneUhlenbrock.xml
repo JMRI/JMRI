@@ -21,7 +21,8 @@
     <separator/>
     <label>
       <text>Uhlenbrock configuration</text>
-      <text xml:lang="de">Uhlenbrock Konfiguration</text>		
+      <text xml:lang="de">Uhlenbrock Konfiguration</text>
+      <text xml:lang="nl">Uhlenbrock Configuratie</text>
     </label>
     <label>
       <text> </text>
