@@ -19,9 +19,7 @@ public abstract class StatusAction extends AbstractAction {
     }
 
     public StatusAction() {
-        java.util.ResourceBundle rb
-                = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
-        putValue(javax.swing.Action.NAME, rb.getString("ActionStatus"));
+        putValue(javax.swing.Action.NAME, Bundle.getMessage("ActionStatus"));
     }
 
     @Override
