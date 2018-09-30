@@ -143,9 +143,8 @@ public class LnPr2PowerManager extends LnPowerManager {
     }
     
     /**
-     * PR2 does not support OPC_IDLE, so returns false
-     * <p>
-     * @return false, always
+     * Returns false to indicate PR2 does not implement an "IDLE" power state.
+     * @return false
      */
     @Override
     public boolean implementsIdle() {
