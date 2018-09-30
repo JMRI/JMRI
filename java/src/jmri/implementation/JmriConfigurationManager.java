@@ -3,11 +3,9 @@ package jmri.implementation;
 import apps.AppsBase;
 import apps.gui3.EditConnectionPreferencesDialog;
 import apps.gui3.TabbedPreferencesAction;
-import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -252,6 +250,11 @@ public class JmriConfigurationManager implements ConfigureManager {
                                         break;
                                     }
                                     
+                                case RESTART_PROGRAM:
+                                    // Restart program
+                                    AppsBase.handleRestart();
+                                    break;
+                                    
                                 case EXIT_PROGRAM:
                                 default:
                                     // Exit program
@@ -354,6 +357,7 @@ public class JmriConfigurationManager implements ConfigureManager {
         
         enum Result {
             EXIT_PROGRAM,
+            RESTART_PROGRAM,
             NEW_PROFILE,
             EDIT_CONNECTIONS,
         }
@@ -400,7 +404,12 @@ public class JmriConfigurationManager implements ConfigureManager {
             });
             panel.add(button);
             
-            panel.add(javax.swing.Box.createRigidArea(new Dimension(5,0)));
+            button = new JButton(Bundle.getMessage("ErrorDialogButtonRestartProgram"));
+            button.addActionListener((ActionEvent a) -> {
+                result = Result.RESTART_PROGRAM;
+                dispose();
+            });
+            panel.add(button);
             
             button = new JButton(Bundle.getMessage("ErrorDialogButtonNewProfile"));
             button.addActionListener((ActionEvent a) -> {
@@ -410,12 +419,9 @@ public class JmriConfigurationManager implements ConfigureManager {
             panel.add(button);
             
             button = new JButton(Bundle.getMessage("ErrorDialogButtonEditConnections"));
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent a) {
-                    result = Result.EDIT_CONNECTIONS;
-                    dispose();
-                }
+            button.addActionListener((ActionEvent a) -> {
+                result = Result.EDIT_CONNECTIONS;
+                dispose();
             });
             panel.add(button);
             

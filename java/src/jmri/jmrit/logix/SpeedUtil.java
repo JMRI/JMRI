@@ -388,19 +388,9 @@ public class SpeedUtil {
     }
 
     protected void stopRun(boolean updateSpeedProfile) {
-        stopRun(updateSpeedProfile, true);
-    }
-    protected void stopRun(boolean updateSpeedProfile, boolean turnOffFunctions) {
         if (updateSpeedProfile && _sessionProfile != null) {
             WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
             manager.setSpeedProfiles(_rosterId, _mergeProfile, _sessionProfile);
-        }
-        if (turnOffFunctions) {
-            if (_throttle != null) {  // quiet
-                _throttle.setF0(false);
-                _throttle.setF1(false);
-                _throttle.setF2(false);
-            }
         }
     }
 
@@ -567,6 +557,32 @@ public class SpeedUtil {
         }
         return (distance/speed);
     }
+
+    /**
+     * get time to ramp up/down from/to speed 0 and travel no farther than given distance.
+     * @param rampLen ramp length
+     * @return time
+     *
+    protected float timeOfRampDistance(float rampLen, boolean isForward) {
+        float time = 0.0f;
+        float dist = 0.0f;
+        float deltaTime = getRampTimeIncrement();
+        float deltaThrottle = getRampThrottleIncrement();
+        float momentumTime = getMomentumTime(deltaThrottle, isForward);
+        float speed = deltaThrottle;
+
+        while (dist <= rampLen) {
+            float d = getTrackSpeed(speed + deltaThrottle/2, isForward) * momentumTime;
+            if (deltaTime > momentumTime) {
+                d += getTrackSpeed(speed + deltaThrottle, isForward) * (deltaTime - momentumTime);
+            }
+            speed += deltaThrottle;
+            dist += d;
+            time += deltaTime;
+        }
+        time -= deltaTime;  // back out time when dist exceeded
+        return time;
+    }*/
 
     /**
      * Get ramp length needed to change speed using the WarrantPreference deltas for 
