@@ -67,7 +67,6 @@ abstract public class AbstractTimeServerTestBase {
        confirmTimeStarted();
        a.stopTime();
        confirmTimeStopped();
-       a.dispose();
     }
 
     /**

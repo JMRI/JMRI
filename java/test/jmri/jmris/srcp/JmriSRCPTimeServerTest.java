@@ -61,6 +61,7 @@ public class JmriSRCPTimeServerTest extends jmri.jmris.AbstractTimeServerTestBas
     @After
     @Override
     public void tearDown(){
+        a.dispose();
         a = null;
         sb = null;
         jmri.util.JUnitUtil.resetInstanceManager();
