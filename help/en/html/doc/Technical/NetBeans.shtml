@@ -37,6 +37,7 @@
       <h1>JMRI Code: Building with NetBeans</h1>
 
     <div class="toc">
+    <ul>
         <li><a href="#intro">Introduction</a></li>
 
         <li><a href="#installing">Getting and Installing
