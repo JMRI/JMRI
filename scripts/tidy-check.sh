@@ -9,7 +9,7 @@ else
 fi
 
 # first, scan for whether there's an issue (omitting known fragment files)
-find ${WHERE} ! -name Sidebar.shtml -name \*html -exec echo Filename: {} \;  ! -exec tidy -eq -access 0 {} \; 2>&1 | grep -v '<table> lacks "summary" attribute' | grep -v '<img> lacks "alt" attribute' | awk -f scripts/tidy.awk | grep Warning 1>&2
+find ${WHERE} -name \*html ! -name Sidebar.shtml -exec echo Filename: {} \;  ! -exec tidy -eq -access 0 {} \; 2>&1 | grep -v '<table> lacks "summary" attribute' | grep -v '<img> lacks "alt" attribute' | awk -f scripts/tidy.awk | grep Warning 1>&2
 
 # swap return code from grep
 if [ $? -eq 0 ]; then
