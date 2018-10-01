@@ -49,150 +49,150 @@ public class CvUtilTest {
     }
 
     /**
-     * Test of expandCVlist method, of class CvUtil.
+     * Test of expandCvList method, of class CvUtil.
      */
     @Test
-    public void testExpandCVlist() {
-//        System.out.println("expandCVlist");
+    public void testExpandCvList() {
+//        System.out.println("expandCvList");
         String cvString;
         List<String> expResult;
         List<String> result;
 
         cvString = "abc";
         expResult = new ArrayList<>(Arrays.asList());
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "a(bc";
         expResult = new ArrayList<>(Arrays.asList("abc"));
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "ab)c";
         expResult = new ArrayList<>(Arrays.asList("abc"));
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "a(b)c";
         expResult = new ArrayList<>(Arrays.asList("abc"));
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "127";
         expResult = new ArrayList<>(Arrays.asList());
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "CV0.255.256";
         expResult = new ArrayList<>(Arrays.asList());
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "";
         expResult = new ArrayList<>(Arrays.asList());
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "25.3.250:4";
         expResult = new ArrayList<>(Arrays.asList("25.3.250", "25.3.251", "25.3.252", "25.3.253"));
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "98-103";
         expResult = new ArrayList<>(Arrays.asList("98", "99", "100", "101", "102", "103"));
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "25.3.2(5:4)0";
         expResult = new ArrayList<>(Arrays.asList("25.3.250", "25.3.260", "25.3.270", "25.3.280"));
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "16.3(1-7).25";
         expResult = new ArrayList<>(Arrays.asList("16.31.25", "16.32.25", "16.33.25", "16.34.25", "16.35.25", "16.36.25", "16.37.25"));
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "1,5,7";
         expResult = new ArrayList<>(Arrays.asList("1", "5", "7"));
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "16.3.25(1,2,5,7)";
         expResult = new ArrayList<>(Arrays.asList("16.3.251", "16.3.252", "16.3.255", "16.3.257"));
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "16.3.25(1-7)";
         expResult = new ArrayList<>(Arrays.asList("16.3.251", "16.3.252", "16.3.253", "16.3.254", "16.3.255", "16.3.256", "16.3.257"));
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "16.3-7.254";
         expResult = new ArrayList<>(Arrays.asList("16.3.254", "16.4.254", "16.5.254", "16.6.254", "16.7.254"));
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "T3CV3-7.254";
         expResult = new ArrayList<>(Arrays.asList("T3CV3.254", "T3CV4.254", "T3CV5.254", "T3CV6.254", "T3CV7.254"));
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "16.7-0.254";
         expResult = new ArrayList<>(Arrays.asList("16.7.254", "16.6.254", "16.5.254", "16.4.254", "16.3.254", "16.2.254", "16.1.254", "16.0.254"));
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "16.23-20.254";
         expResult = new ArrayList<>(Arrays.asList("16.23.254", "16.22.254", "16.21.254", "16.20.254"));
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "16.3.25(4-0)";
         expResult = new ArrayList<>(Arrays.asList("16.3.254", "16.3.253", "16.3.252", "16.3.251", "16.3.250"));
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "16.3.2(53-48)";
         expResult = new ArrayList<>(Arrays.asList("16.3.253", "16.3.252", "16.3.251", "16.3.250", "16.3.249", "16.3.248"));
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "T3CV25(4-0).5";
         expResult = new ArrayList<>(Arrays.asList("T3CV254.5", "T3CV253.5", "T3CV252.5", "T3CV251.5", "T3CV250.5"));
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "25.3.250:1";
         expResult = new ArrayList<>(Arrays.asList("25.3.250"));
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "25.3.250:-1";
         expResult = new ArrayList<>(Arrays.asList("25.3.250"));
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "25.3.250:0";
         expResult = new ArrayList<>(Arrays.asList("25.3.250"));
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "25.3.250:-4";
         expResult = new ArrayList<>(Arrays.asList("25.3.250", "25.3.249", "25.3.248", "25.3.247"));
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
 
         cvString = "25.3-4.250:4";
         expResult = new ArrayList<>(Arrays.asList());
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
         // make sure an error message is generated.
         jmri.util.JUnitAppender.assertErrorMessage("Invalid string '" + cvString + "'");
 
         cvString = "a(b(c)d)e";
         expResult = new ArrayList<>(Arrays.asList());
-        result = CvUtil.expandCVlist(cvString);
+        result = CvUtil.expandCvList(cvString);
         assertEquals(expResult, result);
         // make sure an error message is generated.
         jmri.util.JUnitAppender.assertErrorMessage("Invalid string '" + cvString + "'");

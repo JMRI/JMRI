@@ -314,7 +314,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             return;
         }
         if (!CV.equals("")) { // some variables have no CV per se
-            List<String> cvList = CvUtil.expandCVlist(CV);
+            List<String> cvList = CvUtil.expandCvList(CV);
             if (cvList.isEmpty()) {
                 _cvModel.addCV(CV, readOnly, infoOnly, writeOnly);
             } else { // or require expansion

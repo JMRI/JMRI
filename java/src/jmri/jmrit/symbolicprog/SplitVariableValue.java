@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * the attributes {@code highCV} and {@code upperMask}.
  * <br><br>
  * The preferred technique is now to specify all CVs in the {@code CV} attribute
- * alone, as documented at {@link CvUtil#expandCVlist expandCVlist(String)}.
+ * alone, as documented at {@link CvUtil#expandCvList expandCvList(String)}.
  * <br><br>
  * Attributes {@code factor} and {@code offset} are applied when going <i>to</i>
  * value of the variable
@@ -87,7 +87,7 @@ public class SplitVariableValue extends VariableValue
         // set up array of used CVs
         cvList = new ArrayList<>();
 
-        List<String> nameList = CvUtil.expandCVlist(_cvNum); // see if cvName needs expanding
+        List<String> nameList = CvUtil.expandCvList(_cvNum); // see if cvName needs expanding
         if (nameList.isEmpty()) {
             // primary CV
             cvList.add(new CvItem(_cvNum, mask));

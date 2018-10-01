@@ -56,7 +56,7 @@ public class CvUtil {
      * <br><strong>or</strong><br>
      * an empty list if nothing to expand
      */
-    public static List<String> expandCVlist(String cvString) {
+    public static List<String> expandCvList(String cvString) {
         List<String> ret = new ArrayList<>();
         Pattern pattern;
         Matcher matcher;

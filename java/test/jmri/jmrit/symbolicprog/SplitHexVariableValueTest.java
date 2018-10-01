@@ -49,7 +49,7 @@ public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
             v.put(highCV, cvNext);
         }
         if (!cvNum.equals("")) { // some variables have no CV per se
-            List<String> cvList = CvUtil.expandCVlist(cvNum);
+            List<String> cvList = CvUtil.expandCvList(cvNum);
             if (cvList.isEmpty()) {
                 CvValue cvNext = new CvValue(cvNum, p);
                 cvNext.setValue(0);

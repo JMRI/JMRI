@@ -43,7 +43,7 @@ public class SplitDateTimeVariableValueTest extends AbstractVariableValueTestBas
             String cvNum, String mask, int minVal, int maxVal,
             HashMap<String, CvValue> v, JLabel status, String item) {
         if (!cvNum.equals("")) { // some variables have no CV per se
-            List<String> cvList = CvUtil.expandCVlist(cvNum);
+            List<String> cvList = CvUtil.expandCvList(cvNum);
             if (cvList.isEmpty()) {
                 CvValue cvNext = new CvValue(cvNum, p);
                 cvNext.setValue(0);
