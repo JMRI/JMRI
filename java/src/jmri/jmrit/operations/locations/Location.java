@@ -1261,6 +1261,15 @@ public class Location implements java.beans.PropertyChangeListener {
         }
         return false;
     }
+    
+    public boolean hasSchedules() {
+        for (Track track : getTrackList()) {
+            if (track.getTrackType().equals(Track.SPUR) && track.getSchedule() != null) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /*
      * set the jmri.Reporter object associated with this location.
