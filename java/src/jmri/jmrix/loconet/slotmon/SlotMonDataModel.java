@@ -1,7 +1,6 @@
 package jmri.jmrix.loconet.slotmon;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -497,7 +496,6 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
 
     @Override
     public void setValueAt(Object value, int row, int col) {
-        int status;
         LocoNetMessage msg;
         LocoNetSlot s = memo.getSlotManager().slot(row);
         if (s == null) {
@@ -889,6 +887,9 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     /**
      * Send the LocoNet message to set the state of locomotive direction and
      * functions F0, F1, F2, F3, F4
+     * @param slot loconet slot
+     * @param col  grid col
+     * @param row  grid row
      */
     protected void sendFunctionGroup1(LocoNetSlot slot, int col, int row) {
         log.debug("F0-F4 change requested {}", row);
@@ -936,6 +937,9 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
 
     /**
      * Send the LocoNet message to set the state of functions F5, F6, F7, F8
+     * @param slot loconet slot
+     * @param col  grid col
+     * @param row  grid row
      */
     protected void sendFunctionGroup2(LocoNetSlot slot, int col, int row) {
         boolean tempF5 = (col == F5COLUMN) ? !slot.isF5() : slot.isF5();
@@ -978,6 +982,9 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     /**
      * Sends Function Group 3 values - F9 thru F12, using an "OPC_IMM_PACKET" LocoNet
      * Message.
+     * @param slot loconet slot
+     * @param col  grid col
+     * @param row  grid row
      */
      protected void sendFunctionGroup3(LocoNetSlot slot, int col, int row) {
         // LocoNet practice is to send F9-F12 as a DCC packet
@@ -995,6 +1002,9 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     /**
      * Sends Function Group 4 values - F13 thru F20, using an "OPC_IMM_PACKET" LocoNet
      * Message.
+     * @param slot loconet slot
+     * @param col  grid col
+     * @param row  grid row
      */
     protected void sendFunctionGroup4(LocoNetSlot slot, int col, int row) {
         // LocoNet practice is to send F13-F20 as a DCC packet
@@ -1017,6 +1027,9 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     /**
      * Sends Function Group 5 values - F21 thru F28, using an "OPC_IMM_PACKET" LocoNet
      * Message.
+     * @param slot loconet slot
+     * @param col  grid col
+     * @param row  grid row
      */
     protected void sendFunctionGroup5(LocoNetSlot slot, int col, int row) {
         // LocoNet practice is to send F21-F28 as a DCC packet
@@ -1040,6 +1053,9 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     /**
      * Send the Expanded LocoNet message to set the state of locomotive direction and
      * functions F0, F1, F2, F3, F4, F5, F6
+     * @param slot loconet slot
+     * @param col  grid col
+     * @param row  grid row
      */
     protected void sendExpFunctionGroup1(LocoNetSlot slot, int col, int row) {
         boolean tempF0 = (col == F0COLUMN) ? !slot.isF0() : slot.isF0();
@@ -1066,6 +1082,9 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
 
     /**
      * Send the Expanded LocoNet message to set the state of functions F7, F8, F8, F9, F10, F11, F12, F13
+     * @param slot loconet slot
+     * @param col  grid col
+     * @param row  grid row
      */
     protected void sendExpFunctionGroup2(LocoNetSlot slot, int col, int row) {
         boolean tempF7 = (col == F7COLUMN) ? !slot.isF7() : slot.isF7();
@@ -1093,6 +1112,9 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
     /**
      * Sends expanded loconet message F14 thru F20
      * Message.
+     * @param slot loconet slot
+     * @param col  grid col
+     * @param row  grid row
      */
     protected void sendExpFunctionGroup3(LocoNetSlot slot, int col, int row) {
         boolean tempF14 = (col == F14COLUMN) ? !slot.isF14() : slot.isF14();
@@ -1119,6 +1141,9 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
 
     /**
      * Sends Expanded loconet message F21 thru F28 Message.
+     * @param slot loconet slot
+     * @param col  grid col
+     * @param row  grid row
      */
     protected void sendExpFunctionGroup4(LocoNetSlot slot, int col, int row) {
         boolean tempF21 = (col == F21COLUMN) ? !slot.isF21() : slot.isF21();

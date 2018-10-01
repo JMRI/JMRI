@@ -211,7 +211,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * This is declared final because we never need to modify the array itself,
      * just its contents.
      */
-    protected LocoNetSlot _slots[] = new LocoNetSlot[getNumSlots()]; ;
+    protected LocoNetSlot _slots[] = new LocoNetSlot[getNumSlots()];
 
     /**
      * Access the information in a specific slot. Note that this is a mutable
@@ -278,15 +278,11 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
         // We will just check the normal loco slots 1 to numSlots exclude systemslots
         for (int i = 1; i < numSlots; i++) {
-            try {
-                slot = _slots[i];
-                if (!slot.isSystemSlot()) {
-                    if ((slot.slotStatus() == LnConstants.LOCO_IN_USE) && (slot.getLastUpdateTime() <= staleTimeout)) {
-                        sendReadSlot(i);
-                    }
+            slot = _slots[i];
+            if (!slot.isSystemSlot()) {
+                if ((slot.slotStatus() == LnConstants.LOCO_IN_USE) && (slot.getLastUpdateTime() <= staleTimeout)) {
+                    sendReadSlot(i);
                 }
-            } catch (Exception ex) {
-                log.warn("Erro slot[{}]", i);
             }
         }
     }
@@ -871,7 +867,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     @Override
     public List<ProgrammingMode> getSupportedModes() {
-        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        List<ProgrammingMode> ret = new ArrayList<>();
         ret.add(ProgrammingMode.PAGEMODE);
         ret.add(ProgrammingMode.DIRECTBYTEMODE);
         ret.add(ProgrammingMode.REGISTERMODE);

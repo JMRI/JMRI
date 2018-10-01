@@ -4438,14 +4438,12 @@ public class LocoNetMessageInterpret {
         boolean isUnconsisting = ((l.getElement(3) & 0b01110000) == 0b01010000);
         if (isUnconsisting) {
             // source and dest same, returns slot contents
-            int stat = l.getElement(4);
             return Bundle.getMessage("LN_MSG_OPC_EXP_UNCONSISTING",
                     src);
         }
         boolean isConsisting = ((l.getElement(3) & 0b01110000) == 0b01000000);
         if (isConsisting) {
             //add dest to src, returns dest slot contents
-            int stat = l.getElement(4);
             return Bundle.getMessage("LN_MSG_OPC_EXP_CONSISTING",
                     src,dest);
         }
@@ -4471,7 +4469,7 @@ public class LocoNetMessageInterpret {
 
     private static String interpretPocExpLocoSpdDirFunction(LocoNetMessage l) {
         int slot = ((l.getElement(1) & 0x03) * 128) + (l.getElement(2) & 0x7f);
-        if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK) == 0) {
+        if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_SPEED) == 0) {
             // speed and direction
             int spd = l.getElement(4);
             String direction = Bundle.getMessage((l.getElement(1) & 0b00001000) != 0
@@ -4486,23 +4484,23 @@ public class LocoNetMessageInterpret {
                     : Bundle.getMessage("LN_MSG_FUNC_OFF");
         }
         if ((l.getElement(1) &
-                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F0F6_MASK) {
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F0F6_MASK) {
             return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F0_F6", slot, fn[3], fn[7], fn[6], fn[5], fn[4], fn[2],
                     fn[1]);
         } else if ((l.getElement(1) &
-                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F7F13_MASK) {
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F7F13_MASK) {
             return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F7_F13", slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
                     fn[1]);
         } else if ((l.getElement(1) &
-                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F14F20_MASK) {
-            return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F14_20",slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F14F20_MASK) {
+            return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F14_F20",slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
                     fn[1]);
         } else if ((l.getElement(1) &
-                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF_MASK) {
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF_MASK) {
             return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F21_F28",slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
                     fn[1], Bundle.getMessage("LN_MSG_FUNC_OFF"));
         } else if ((l.getElement(1) &
-                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON_MASK) {
+                LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON_MASK) {
             return Bundle.getMessage("LN_MSG_OPC_EXP_FUNCTIONS_F21_F28", slot, fn[7], fn[6], fn[5], fn[4], fn[3], fn[2],
                     fn[1], Bundle.getMessage("LN_MSG_FUNC_ON"));
         }
@@ -4530,7 +4528,6 @@ public class LocoNetMessageInterpret {
         int adr2 = l.getElement(6); // loco address high
         int snd = l.getElement(10); // Sound 1-4 / F5-F8
         String[] sndf5_8 = interpretF5_F8toStrings(snd);
-        int id = l.getElement(18) + 256 * l.getElement(19);
 
         String locoAdrStr = figureAddressIncludingAliasing(adr, adr2, ss2, id1, id2);
         return Bundle.getMessage(((command == 0xEE)
