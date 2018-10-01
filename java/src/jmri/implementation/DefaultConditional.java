@@ -1078,9 +1078,6 @@ public class DefaultConditional extends AbstractNamedBean
                             jmri.jmrit.logix.WarrantTableFrame frame = jmri.jmrit.logix.WarrantTableFrame.getDefault();
                             String err = frame.runTrain(w, Warrant.MODE_RUN);
                             if (err != null) {
-                                w.stopWarrant(true);
-                            }
-                            if (err != null) {
                                 errorList.add("runAutoTrain error - " + err);  // NOI18N
                                 w.stopWarrant(true);
                             }

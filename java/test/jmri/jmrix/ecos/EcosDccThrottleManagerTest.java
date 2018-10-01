@@ -4,6 +4,7 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -13,8 +14,9 @@ import org.junit.Test;
 public class EcosDccThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
     @Test
-    public void testCTor() {
-        Assert.assertNotNull("exists",tm);
+    @Override
+    @Ignore("test requires further setup")
+    public void testGetThrottleInfo() {
     }
 
     // The minimal setup for log4J

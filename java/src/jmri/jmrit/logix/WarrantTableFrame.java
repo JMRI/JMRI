@@ -69,7 +69,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     static final String resume = Bundle.getMessage("Resume");
     static final String abort = Bundle.getMessage("Abort");
     static final String retry = Bundle.getMessage("Retry");
-    static final String[] controls = {" ", halt, resume, ramp, retry, stop, abort};
+    static final String[] controls = {" ", halt, resume, ramp, retry, stop, abort, (Warrant._debug?"Debug":"")};
 
     public static int _maxHistorySize = 40;
 
