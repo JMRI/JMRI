@@ -157,14 +157,14 @@
  by logging into the router's administrative portal or using a browser on your JMRI computer to go to the web
  site "whatismypublicip.com" or similar.  You then have to create a link between that
  IP address and a port number to the internal IP address and port number of the JMRI WiThrottle Server.
- This is called “port forwarding” and needs to be set up on your local router. Setting up port 
+ This is called "port forwarding" and needs to be set up on your local router. Setting up port 
  forwarding varies with the model of router so we won't attempt to give specific 
  instructions on how to do that.  However, detailed instructions can usually be found on the internet and
  the topic has been addressed in the JMRI online forum as well.</p>
 
 <p>Once you have determined the public address of your JMRI computer and set up port forwarding 
  to the WiThrottle server, you enter this information into the throttle app on your mobile device.
- You will know you have been successful when your mobile device’s name appears in the WiThrottle window
+ You will know you have been successful when your mobile device's name appears in the WiThrottle window
  and your engine roster appears on your app.
 
 <p>TROUBLE SHOOTING: if you get an error or your mobile device app doesn't appear to connect, check that
