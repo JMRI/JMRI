@@ -151,7 +151,7 @@ public class SignalSystemTest {
         checkAspect("IF$vsm:UP-2008:SL-3A($0248)", "Stop");
         checkAspect("IF$vsm:UP-2008:SL-3L2($0249)", "Approach Restricting");
         checkAspect("IF$vsm:UP-2008:SL-3L2($0250)", "Approach");
-
+ 
         // clean up messages from file
         jmri.util.JUnitAppender.assertErrorMessage("No facing block found for source mast IF$vsm:BNSF-1996:SL-2A($0010)");
         jmri.util.JUnitAppender.clearBacklog();
