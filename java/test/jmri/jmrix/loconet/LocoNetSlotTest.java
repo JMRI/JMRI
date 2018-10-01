@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet;
 
-import jmri.ProgListenerScaffold;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -622,6 +621,20 @@ public class LocoNetSlotTest {
         }
         Assert.assertEquals("Element 11",0x71,lm2.getElement(11));
         Assert.assertEquals("Element 12",0x02,lm2.getElement(12));
+    }
+
+    @Test
+    public void testExpWriteThrottleID() throws LocoNetException {
+        int ia[]={0xE6, 0x15, 0x01, 0x02, 0x03, 0x00, 0x02, 0x47, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x49 };
+        LocoNetMessage lm =new LocoNetMessage(ia);
+        LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
+        LocoNetMessage lm2 = t.writeThrottleID(0x0171);
+        Assert.assertEquals("Opcode",LnConstants.OPC_EXP_WR_SL_DATA,lm2.getOpCode());
+        for(int i = 1;i<=18;i++){
+            Assert.assertEquals("Element " + i,lm.getElement(i),lm2.getElement(i));
+        }
+        Assert.assertEquals("Element 19",0x71,lm2.getElement(19));
+        Assert.assertEquals("Element 20",0x02,lm2.getElement(20));
     }
 
     @Test

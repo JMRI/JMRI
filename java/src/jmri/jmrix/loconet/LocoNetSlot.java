@@ -73,7 +73,7 @@ public class LocoNetSlot {
 
     /**
      * Creates a slot object based on the contents of a LocoNet message.
-     * The slot number is assumed to be found in byte 2 of the message
+     * The slot number is assumed to be found in byte 2 of the message if message is 0xE6 or bytes 2 and 3 for 0xE7
      * <p>
      * @param l - a LocoNet message
      * @throws LocoNetException if the slot does not have an easily-found
@@ -86,7 +86,13 @@ public class LocoNetSlot {
         // "speed" message or "dir/func" message does not give any other useful
         // information for object initialization.
         loconetProtocol = LnConstants.LOCONETPROTOCOL_UNKNOWN;
-        slot = l.getElement(2);
+        if ( l.getOpCode() == LnConstants.OPC_SL_RD_DATA || l.getOpCode() == LnConstants.OPC_WR_SL_DATA)  {
+            slot = l.getElement(2);
+        } else if (l.getOpCode() == LnConstants.OPC_EXP_RD_SL_DATA || l.getOpCode() == LnConstants.OPC_EXP_WR_SL_DATA) {
+            slot = ( (l.getElement(1) & 0x03 ) *128) + l.getElement(2);
+        } else {
+           throw new LocoNetException("Invalid loconet message for setting up a slot");
+        }
         if ((slot == 0) || (slot > 120 && slot < 128)
                 || (slot > 247 && slot < 257)
                 || (slot > 375 && slot < 385)) {
@@ -790,20 +796,20 @@ public class LocoNetSlot {
         // sort out valid messages, handle
         switch (l.getOpCode()) {
             case LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR:  //speed and functions
-                if ((l.getElement(1) & 0b11110000) == 0) {
+                if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_SPEED) == 0) {
                     // speed and direction
                     spd = l.getElement(4);
                     dirf = dirf & 0b11011111;
                     if ((l.getElement(1) & 0b00001000) != 0) {
                         dirf = dirf | 0b00100000;
                     }
-                } else if ((l.getElement(1) & 0b11111000) == 0b00010000) {
+                } else if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F0F6_MASK) {
                     // function grp 1
                     dirf = dirf & 0b11100000;
                     dirf = dirf | (l.getElement(4) & 0b00011111);
                     snd = snd & 0b11111100;
                     snd = snd | ((l.getElement(4) & 0b01100000) >> 5);
-                } else if ((l.getElement(1) & 0b11111000) == 0b00011000) {
+                } else if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F7F13_MASK) {
                     // function grp 2
                     snd = snd & 0b11110011;
                     snd = snd | ((l.getElement(4) & 0b00000011) << 2);
@@ -812,7 +818,7 @@ public class LocoNetSlot {
                     localF11 = ((l.getElement(4) & 0b00010000) != 0);
                     localF12 = ((l.getElement(4) & 0b00100000) != 0);
                     localF13 = ((l.getElement(4) & 0b01000000) != 0);
-                } else if ((l.getElement(1) & 0b11111000) == 0b00100000) {
+                } else if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F14F20_MASK) {
                     localF14 = ((l.getElement(4) & 0b00000001) != 0);
                     localF15 = ((l.getElement(4) & 0b00000010) != 0);
                     localF16 = ((l.getElement(4) & 0b00000100) != 0);
@@ -820,7 +826,8 @@ public class LocoNetSlot {
                     localF18 = ((l.getElement(4) & 0b00010000) != 0);
                     localF19 = ((l.getElement(4) & 0b00100000) != 0);
                     localF20 = ((l.getElement(4) & 0b01000000) != 0);
-                } else if ((l.getElement(1) & 0b11111000) == 0b00101000 || (l.getElement(1) & 0b11111000) == 0b00110000) {
+                } else if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF_MASK 
+                        || (l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON_MASK) {
                     localF21 = ((l.getElement(4) & 0b00000001) != 0);
                     localF22 = ((l.getElement(4) & 0b00000010) != 0);
                     localF23 = ((l.getElement(4) & 0b00000100) != 0);
@@ -1302,7 +1309,7 @@ public class LocoNetSlot {
     private long lastUpdateTime; // Time of last update for detecting stale slots
 
     // data members to hold contact with the slot listeners
-    final private List<SlotListener> slotListeners = new ArrayList<SlotListener>();
+    final private List<SlotListener> slotListeners = new ArrayList<>();
 
     /**
      * Registers a slot listener if it is not already registered.
@@ -1344,7 +1351,7 @@ public class LocoNetSlot {
         // make a copy of the listener list to synchronized not needed for transmit
         List<SlotListener> v;
         synchronized (this) {
-            v = new ArrayList<SlotListener>(slotListeners);
+            v = new ArrayList<>(slotListeners);
         }
         log.debug("notify {} SlotListeners",v.size()); // NOI18N
         // forward to all listeners
