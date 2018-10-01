@@ -394,7 +394,7 @@ public class NmraPacket {
      * complex accessory decoders. Each signal head can display one aspect at a
      * time.
      * <p>
-     * {@code{preamble} 0 10AAAAAA 0 0AAA0AA1 0 000XXXXX 0 EEEEEEEE 1}
+     * {@code {preamble} 0 10AAAAAA 0 0AAA0AA1 0 000XXXXX 0 EEEEEEEE 1}
      * <p>
      * XXXXX is for a single head. A value of 00000 for XXXXX indicates the
      * absolute stop aspect. All other aspects represented by the values for
