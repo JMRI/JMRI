@@ -8,6 +8,7 @@ import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.Turnout;
+import jmri.util.HelpUtil;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -151,12 +152,12 @@ public class SignalSystemTest {
         checkAspect("IF$vsm:UP-2008:SL-3A($0248)", "Stop");
         checkAspect("IF$vsm:UP-2008:SL-3L2($0249)", "Approach Restricting");
         checkAspect("IF$vsm:UP-2008:SL-3L2($0250)", "Approach");
- 
+
+        final int numErrorMessages = 19;
         // clean up messages from file
-        jmri.util.JUnitAppender.assertErrorMessage("No facing block found for source mast IF$vsm:BNSF-1996:SL-2A($0010)");
-        jmri.util.JUnitAppender.clearBacklog();
-        jmri.util.JUnitAppender.verifyNoBacklog();
-        log.info("suppressing multiple \"No facing block found ...\" messages from AA1UPtest.xml file");
+        for (int i=0; i < numErrorMessages; i++) {
+            jmri.util.JUnitAppender.assertErrorMessageStartsWith("No facing block found for source mast IF$vsm:BNSF-1996:SL-");
+        }
     }
 
     void checkAspect(String mastName, String aspect) {
