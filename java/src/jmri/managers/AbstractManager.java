@@ -12,6 +12,7 @@ import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.ConfigureManager;
+import jmri.Disposable;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -35,7 +36,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
-abstract public class AbstractManager<E extends NamedBean> implements Manager<E>, PropertyChangeListener, VetoableChangeListener {
+abstract public class AbstractManager<E extends NamedBean>
+        implements Manager<E>, PropertyChangeListener, VetoableChangeListener, Disposable {
 
     // The data model consists of several components:
     // * The primary reference is _beans, a SortedSet of NamedBeans, sorted automatically on system name.

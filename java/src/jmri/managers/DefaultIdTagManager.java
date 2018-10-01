@@ -11,7 +11,6 @@ import java.util.Set;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.Application;
-import jmri.Disposable;
 import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceInitializer;
@@ -38,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
-public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTagManager, Disposable {
+public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTagManager {
 
     private boolean dirty = false;
     private boolean initialised = false;

@@ -804,9 +804,6 @@ public final class InstanceManager {
         log.debug("Clearing InstanceManager");
         if (traceFileActive) traceFileWriter.println("clearAll");
         
-        // replace the instance manager, so future calls will invoke the new one
-        LazyInstanceManager.instanceManager = new InstanceManager();
-        
         // continue to clean up this one
         new HashSet<>(managerLists.keySet()).forEach((type) -> {
             clear(type);
@@ -825,6 +822,9 @@ public final class InstanceManager {
             traceFileWriter.println(""); // marks new InstanceManager
             traceFileWriter.flush();
         }
+        
+        // replace the instance manager, so future calls will invoke the new one
+        LazyInstanceManager.instanceManager = new InstanceManager();
     }
 
     /**
