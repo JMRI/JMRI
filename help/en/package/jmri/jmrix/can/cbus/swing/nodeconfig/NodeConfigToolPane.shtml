@@ -182,7 +182,7 @@
       <li>NEVAL - Listen when waiting for an event variable.</li>
       </ul>
       
-    <h4>Variance to MERG CBUS Developers Guide 6b</h3>
+    <h4>Variance to MERG CBUS Developers Guide 6b</h4>
       <p>ENLRNI has not been found to be supported by enough modules to be appropriate for use in a generic tool.
       Instead when editing, the event is deleted fom the node and then re-taught for each event variable.</p>
       
@@ -207,8 +207,8 @@
       
       <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI MERG CBUS Support page</a>.</p>
       
-      <p><a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.java
-      ">MERG CBUS Node Config Tool Source Code on Github</a></p>
+      <p><a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.java"
+      >MERG CBUS Node Config Tool Source Code on Github</a></p>
       
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->

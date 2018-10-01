@@ -260,7 +260,7 @@
       </ul>
       
 
-      <h4>Variance to MERG CBUS Developers Guide 6b</h3>
+      <h4>Variance to MERG CBUS Developers Guide 6b</h4>
       <p>In this data model, it is assumed that event and node combinations are the unique factor.</p>      
       <p>Any event OPCs sent with extra data bytes will be logged according to its core event and node combination, 
       irrelevant of extra data bytes.</p>
