@@ -25,7 +25,7 @@ import org.junit.Test;
 
 /**
  * Tests for the Operations Trains GUI class
- * 
+ *
  * @author Dan Boudreau Copyright (C) 2009
  */
 public class TrainBuilderGuiTest extends OperationsSwingTestCase {
