@@ -5,8 +5,8 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <meta name="keywords" content="JMRI MERGCBUS help support event table tool">
-  <title>JMRI: MERGCBUS Event Table</title><!-- Style -->
+  <meta name="keywords" content="JMRI MERG CBUS help support event table tool">
+  <title>JMRI: MERG CBUS Event Table</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -22,12 +22,19 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: MERGCBUS Event Table</h1><a href=
-      "../../../../../../../html/hardware/can/images/CbusEventTable_963x276.png"><img src="../../../../../../../html/hardware/can/images/CbusEventTable_963x276.png"
-      width="963" height="276" alt="Event Table Screen" align=
-      "right"></a>
+      <h1>JMRI: MERG CBUS Event Table</h1>
+      
+        <ul class="snav">
+        <li><a href="#stats">Columns</a></li>
+        <li><a href="#status">Requesting Event Status</a></li>
+        <li><a href="#importexport">Table Import and Export</a></li>
+        <li><a href="#opc">OPCs</a></li>
+        </ul>
+      
+      <img src="../../../../../../../html/hardware/can/images/merg-cbus-ev-table-785x307.png"
+      width="785" height="307" alt="MERG CBUS Event Table Screen" align="right">
 
-      <p>The MERGCBUS Event Table displays event information on your <a href=
+      <p>The MERG CBUS Event Table displays event information on your <a href=
       "../../../../../../../html/hardware/can/cbus/index.shtml">CBUS</a>
       connection.</p>
       
@@ -41,6 +48,9 @@
       
       <p>The table will always start with no entries, data is not maintained between sessions.</p>
       
+      <p>You can open the table automatically by adding it to your JMRI startup action list.
+      <br>PanelPro > Edit Preferences > Start Up > Add > Perform Action > Open CBUS Event Table.
+      </p>
 
       <p>Short event codes will be stripped of any node number contained within the event CAN message.</p>
       <p>All numeric values decimal.</p>
@@ -50,11 +60,14 @@
       <br>The table will then only show events which contain the search phrase.
       <br>Text in the information panel at the bottom of the event table will also be highlighted.</p>
       
+      <p>New events added to the table created manually with the create event window at 
+      the right of the filter window default to an unknown status, and do not send an event message on creation.</p>
+      
+            <img src="../../../../../../../html/hardware/can/images/merg-cbus-ev-table-filter-788x360.png"
+      width="788" height="360" alt="MERG CBUS Event Table Filter" align="right">
 
-    <h3>Columns</h3>
-    <img src="../../../../../../../html/hardware/can/images/CbusEventTable_Columns_123x318.png"
-      width="123" height="318" alt="Event Table Screen" align=
-      "right">
+    <h3><a name="stats" id="stats">Columns</a></h3>
+
       
         <p>The order can be rearranged by dragging the column header. </p>
         <p>Right click in the header to select a list of columns to display.</p>
@@ -78,24 +91,30 @@
     <h4>CAN ID</h4>
       <p>The last CAN ID heard by the event.</p>
       
-
       
     <h4>On / Off / In / Out / Total Session</h4>
+    
+      <img src="../../../../../../../html/hardware/can/images/merg-cbus-ev-table-stats-804x244.png"
+      width="802" height="244" alt="MERG CBUS Event Table Statistics" align="right">
+    
       <p>Running total on events.</p>
       <p>Running total off events.</p>
-      <p>Running total events sent by JMRI.</p>
-      <p>Running total events received by JMRI.</p>
+      <p>Running total events sent out by JMRI.</p>
+      <p>Running total events received in by JMRI.</p>
       <p>Total events.</p>      
       
       
     <h4>Last Heard</h4>      
         <p>Time + datestamp of the last time the event was heard. </p>
       
-      
+       
+      <h4>Delete Event</h4>
+      <p>Delete event from this table after confirmation, option to disable further confirmatiions.</p>
+      <p>The event will be re-added to the table if re-heard on the network.</p>   
 
       
-    <h4>Get Status Button</h4>  
-      <p>On clicking, JMRI sends an event accessory status request message 
+    <h3><a name="status" id="status">Requesting Event Status</a></h3>  
+      <p>On clicking Status, JMRI sends an event accessory status request message 
       to the network, long if the event has a node, short if without.</p>
       <p>This triggers a JMRI event listener which awaits a response 
       from the event, either a request response or a normal event 
@@ -139,7 +158,8 @@
       
       
     <h4>Event Feedback</h4>  
-      
+      <img src="../../../../../../../html/hardware/can/images/merg-cbus-ev-table-feedback-792x221.png"
+      width="792" height="221" alt="MERG CBUS Event Table Feedback" align="right">
 
       <p>When an event is sent by JMRI 
       which has a number in the feedback response column,
@@ -158,34 +178,22 @@
       <p>FB reqiured - Number of response events required to prove.<br>
       Unavailable if FB Event or Node number is set.</p>
 
-
       <p>FB Outstanding - How many feedback events are currently outstanding.</p> 
       
       <p>FB Timeout - ms before alerts set in.<br>
       Unavailable if FB Event or node numbers set.</p>
       
-      
       <p>FB Event - If this particular event is feedback for another event, 
-      include that other event number.
-      <br>Only available when FB Required, timeout o</p>
+      include that other event number.</p>
       
       <p>FB Node - If this particular event is feedback for another event, 
       include that  event node number.</p>
-       
-        
-      <h4>Delete Event</h4>
-      <p>Delete event from this table after confirmation, option to disable further confirmatiions.</p>
-      <p>The event will be re-added to the table if re-heard on the network.</p>      
+   
       
 
-    <h3>Printing and Export / Import</h3>
+    <h3><a name="importexport" id="importexport">Printing and Export / Import from MERG FCU</a></h3>
     
-      <p>You can start the table by adding it to your JMRI startup action list.
-      <br>PanelPro > Edit Preferences > Start Up > Add > Perform Action > Open CBUS Event Table.
-      </p>
-      
-      
-      
+
 
     <p>From the File menu, choose Export to open file save dialog and save
         the contents of the table in a CSV (comma separated values) text file.</p>
@@ -199,12 +207,66 @@
 
         <p>You can import event and node numbers, names and their node names from a FCU config file.</p>
       
+      <p>Click on File > Import FCU events, then select an FCU congiguration xml file.</p>
+      
       <p>The FCU config file may well contain multiple copies of the event,
       ( for teaching to different nodes ), so only the 1st unique event and node number 
       found in the file is added.</p>
       
       <p>An event name within the file will be added to an existing table entry if it has no event name.</p>
       
+      
+    <h3><a name="opc" id="opc">Supported Operation Codes</a></h3>
+    <img src="../../../../../../../html/hardware/can/images/merg-cbus-ev-table-columns-431x506.png"
+      width="451" height="506" alt="MERG CBUS Event Table Columns" align="right">
+      
+      <ul>
+      <li>ASON - Sent when user clicks send on / toggle button, node number 0 </li>
+      <li>ASOF - Sent when user clicks send off / toggle button, node number 0</li>
+      <li>ACON - Sent when user clicks send on / toggle button, node number > 0</li>
+      <li>ACOF - Sent when user clicks send off / toggle button, node number > 0</li>
+      <li>ASRQ - Sent when user clicks status button, node number 0</li>      
+      <li>AREQ - Sent when user clicks status button, node number > 0</li>
+      </ul>
+      
+      <p>Received OPC's can be from other JMRI components,
+      or from an external CBUS connection.</p>
+      
+      <p>All opscodes defined as an accessory event ( with the exception of Fast Clock ) 
+      are constant listeners, ie </p>
+      
+      <ul>
+      <li>ASRQ / AREQ - Autostarts feedback timer for the associated event.</li>
+      <li>ACON / ACOF</li>
+      <li>ARON / AROF</li>
+      <li>ASON / ASOF</li>
+      <li>ARSON / ARSOF</li>
+      <li>ACON1 / ACOF1</li>
+      <li>ARON1 / AROF1</li>
+      <li>ASON1 / ASOF1</li>
+      <li>ARSON1 / ARSOF1</li>
+      <li>ACON2 / ACOF2</li>
+      <li>ARON2 / AROF2</li>
+      <li>ASON2 / ASOF2</li>
+      <li>ARSON2 / ARSOF2</li>
+      <li>ACON3 / ACOF3</li>
+      <li>ARON3 / AROF3</li>
+      <li>ACDAT</li>
+      <li>ARDAT</li>
+      <li>ASON3 / ASOF3</li>
+      <li>DDES</li>
+      <li>DDRS</li>
+      <li>ARSON3 / ARSOF3</li>
+      </ul>
+      
+
+      <h4>Variance to MERG CBUS Developers Guide 6b</h3>
+      <p>In this data model, it is assumed that event and node combinations are the unique factor.</p>      
+      <p>Any event OPCs sent with extra data bytes will be logged according to its core event and node combination, 
+      irrelevant of extra data bytes.</p>
+      <p>The extra data is not currently displayed in the table, 
+      although likely to be added as a new column at some point.</p>
+       
       
     <h3>JMRI Help</h3>
       
@@ -214,7 +276,14 @@
       Console</a> can help you figure out what events are happening
       on your layout.</p>
       
-      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI MERGCBUS Help page</a>.</p>
+            <p><a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/swing/eventtable/CbusEventTableDataModel.java"
+            >MERG CBUS Event Table Data Model Source Code on Github</a></p>
+      
+            <p><a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/swing/eventtable/CbusEventTablePane.java"
+            >MERG CBUS Event Table Window Source Code on Github</a></p>
+      
+      
+      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI MERG CBUS Help page</a>.</p>
         
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
