@@ -3,9 +3,11 @@ package jmri.jmris.srcp;
 import org.junit.Assert;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import jmri.util.JUnitUtil;
+import jmri.DccLocoAddress;
 
 /**
  * Tests for the jmri.jmris.srcp.JmriSRCPThrottleServer class
@@ -44,6 +46,46 @@ public class JmriSRCPThrottleServerTest extends jmri.jmris.AbstractThrottleServe
        }
        Assert.assertTrue("wrong value",sb.toString().endsWith("412 ERROR wrong value\n\r"));
     }
+
+    /**
+     * confirm the error status was forwarded to the client.
+     */
+    public void confirmThrottleErrorStatusSent(){
+       Assert.assertTrue("called in error",sb.toString().endsWith("499 ERROR unspecified error\n\r"));
+    }
+
+    @Test
+    public void sendStatusStandardTest(){
+       try {
+          ((JmriSRCPThrottleServer)ats).initThrottle(1,42,false,128,28);
+          ats.sendStatus(new DccLocoAddress(42,false));
+       } catch (java.io.IOException ioe) {
+          Assert.fail("failed sending status");
+       }
+       confirmThrottleErrorStatusSent();
+    }
+  
+    @Override
+    @Test
+    public void sendStatusTest(){
+       try {
+          ((JmriSRCPThrottleServer)ats).initThrottle(1,42,false,128,28);
+          confirmThrottleRequestSucceeded();
+          ((JmriSRCPThrottleServer)ats).sendStatus(1,42);
+          confirmThrottleStatusSent();
+       } catch (java.io.IOException ioe) {
+          Assert.fail("failed sending status");
+       }
+    }
+
+    /**
+     * confirm the throttle status was forwarded to the client.
+     */
+    @Override
+    public void confirmThrottleStatusSent(){
+       Assert.assertTrue("throttle status",sb.toString().endsWith("100 INFO 1 GL 42 1 0 126 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0\n\r"));
+    }
+
 
     @Before
     public void setUp() {
