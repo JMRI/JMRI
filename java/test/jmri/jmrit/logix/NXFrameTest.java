@@ -72,7 +72,6 @@ public class NXFrameTest {
         InstanceManager.getDefault(ConfigureManager.class).load(f);
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
-        OBlock block = _OBlockMgr.getBySystemName("OB0");
 
         NXFrame nxFrame = new NXFrame();
         WarrantTableAction.setNXFrame(nxFrame);
