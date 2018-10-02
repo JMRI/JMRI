@@ -148,7 +148,7 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
     // Ensure minimal setup for log4J
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
 
         loadLocations();
@@ -157,7 +157,7 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
     // The minimal setup for log4J
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

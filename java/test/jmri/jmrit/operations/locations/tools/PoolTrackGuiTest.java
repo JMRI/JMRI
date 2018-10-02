@@ -346,14 +346,14 @@ public class PoolTrackGuiTest extends OperationsSwingTestCase {
     // Ensure minimal setup for log4J
     @Before
     @Override
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
     }
 
     // The minimal setup for log4J
     @After
     @Override
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }
