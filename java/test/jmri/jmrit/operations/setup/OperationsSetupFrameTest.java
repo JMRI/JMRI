@@ -110,7 +110,7 @@ public class OperationsSetupFrameTest extends OperationsSwingTestCase {
                     Bundle.getMessage("MaxTrainLengthIncreased"), new Object[]{1234,"feet"}), "OK");
         // dialog window should appear regarding railroad name
         /*pressDialogButton(f,java.text.MessageFormat.format(Bundle
-                    .getMessage("ChangeRailroadName"), new Object[]{"My Jmri Railroad", "Test Railroad Name"}) ,"No");
+                    .getMessage("ChangeRailroadName"), new Object[]{"My Jmri Railroad", "Test Railroad Name"}) ,Bundle.getMessage("ButtonNo"));
         // done*/
         JUnitUtil.dispose(f);
         jfo.dispose();

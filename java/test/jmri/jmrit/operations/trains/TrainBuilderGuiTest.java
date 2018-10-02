@@ -268,7 +268,7 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         }, "wait for prompt");
         
         // next prompt asks if cars are to be released from train by reset
-        JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), "No");
+        JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), Bundle.getMessage("ButtonNo"));
         
         jmri.util.JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
@@ -365,7 +365,7 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         },"wait for prompt");
         
         // next prompt asks if cars are to be released from train by reset
-        JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), "Yes");
+        JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), Bundle.getMessage("ButtonYes"));
         
         jmri.util.JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
@@ -455,7 +455,7 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         },"wait for prompt");
         
         // next prompt asks if cars are to be released from train by reset
-        JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), "Yes");
+        JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), Bundle.getMessage("ButtonYes"));
         
         jmri.util.JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
@@ -552,7 +552,7 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         },"wait for prompt");
         
         // next prompt asks if cars are to be released from train by reset
-        JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), "Yes");
+        JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), Bundle.getMessage("ButtonYes"));
         
         jmri.util.JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
@@ -644,7 +644,7 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         },"wait for prompt");
         
         // next prompt asks if cars are to be released from train by reset
-        JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), "No");
+        JemmyUtil.pressDialogButton(Bundle.getMessage("buildResetTrain"), Bundle.getMessage("ButtonNo"));
         
         jmri.util.JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
