@@ -374,7 +374,7 @@ public class XBeeNode extends IEEE802154Node {
      * Connect a StreamConnectionConfig object to the XBeeIOStream
      * associated with this node.
      *
-     * @param cont AbstractStreamConnectionConfig object to connect
+     * @param cfg AbstractStreamConnectionConfig object to connect
      */
     public void connectPortController(jmri.jmrix.AbstractStreamConnectionConfig cfg) {
         connectedConfig = cfg;
