@@ -162,7 +162,7 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
     // Ensure minimal setup for log4J
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
 
         loadLocations();
@@ -175,7 +175,7 @@ public class YardEditFrameTest extends OperationsSwingTestCase {
 
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }
