@@ -2033,7 +2033,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 _variableNamePanel.setToolTipText(Bundle.getMessage("NameHintSignal"));  // NOI18N
                 _variableNamePanel.setVisible(true);
                 _variableStatePanel.setVisible(true);
-                if (testType == Conditional.TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS) {
+                if (testType == Conditional.Type.SIGNAL_HEAD_APPEARANCE_EQUALS) {
                     _variableSignalPanel.setVisible(true);
                 } else {
                     _variableSignalPanel.setVisible(false);
@@ -2053,7 +2053,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 _variableNamePanel.setToolTipText(Bundle.getMessage("NameHintSignalMast"));  // NOI18N
                 _variableNamePanel.setVisible(true);
                 _variableStatePanel.setVisible(true);
-                if (testType == Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS) {
+                if (testType == Conditional.Type.SIGNAL_MAST_ASPECT_EQUALS) {
                     _variableSignalPanel.setVisible(true);
                 } else {
                     _variableSignalPanel.setVisible(false);
@@ -2064,8 +2064,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
             case Conditional.ITEM_TYPE_MEMORY:
                 JPanel p = (JPanel) _variableData1Panel.getComponent(0);
                 JLabel l = (JLabel) p.getComponent(0);
-                if ((testType == Conditional.TYPE_MEMORY_COMPARE)
-                        || (testType == Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE)) {
+                if ((testType == Conditional.Type.MEMORY_COMPARE)
+                        || (testType == Conditional.Type.MEMORY_COMPARE_INSENSITIVE)) {
                     l.setText(Bundle.getMessage("LabelMemoryValue"));  // NOI18N
                     _variableData1Panel.setToolTipText(Bundle.getMessage("DataHintMemory"));  // NOI18N
                 } else {
@@ -2401,7 +2401,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         _curVariable.setNum1(0);
         _curVariable.setNum2(0);
         int itemType = _variableItemBox.getSelectedIndex();
-        Conditional.Type testType = 0;
+        Conditional.Type testType = Conditional.Type.NONE;
         switch (itemType) {
             case Conditional.ITEM_TYPE_SENSOR:
                 testType = Conditional.ITEM_TO_SENSOR_TEST[_variableStateBox.getSelectedIndex()];
@@ -2428,10 +2428,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 testType = Conditional.ITEM_TO_WARRANT_TEST[_variableStateBox.getSelectedIndex()];
                 break;
             case Conditional.ITEM_TYPE_CLOCK:
-                testType = Conditional.TYPE_FAST_CLOCK_RANGE;
+                testType = Conditional.Type.FAST_CLOCK_RANGE;
                 break;
             case Conditional.ITEM_TYPE_OBLOCK:
-                testType = Conditional.TYPE_BLOCK_STATUS_EQUALS;
+                testType = Conditional.Type.BLOCK_STATUS_EQUALS;
                 break;
             case Conditional.ITEM_TYPE_ENTRYEXIT:
                 testType = Conditional.ITEM_TO_ENTRYEXIT_TEST[_variableStateBox.getSelectedIndex()];
@@ -2487,8 +2487,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     return false;
                 }
                 String name2 = _variableData1Field.getText();
-                if ((testType == Conditional.TYPE_MEMORY_COMPARE)
-                        || (testType == Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE)) {
+                if ((testType == Conditional.Type.MEMORY_COMPARE)
+                        || (testType == Conditional.Type.MEMORY_COMPARE_INSENSITIVE)) {
                     name2 = validateMemoryReference(name2);
                     if (name2 == null) {
                         return false;
@@ -2517,7 +2517,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 if (name == null) {
                     return false;
                 }
-                if (testType == Conditional.TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS) {
+                if (testType == Conditional.Type.SIGNAL_HEAD_APPEARANCE_EQUALS) {
                     String appStr = (String) _variableSignalBox.getSelectedItem();
                     Conditional.Type type = ConditionalVariable.stringToVariableTest(appStr);
                     if (type == Conditional.Type.ERROR) {
@@ -2538,7 +2538,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 if (name == null) {
                     return false;
                 }
-                if (testType == Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS) {
+                if (testType == Conditional.Type.SIGNAL_MAST_ASPECT_EQUALS) {
                     if (_variableSignalBox.getSelectedIndex() < 0) {
                         JOptionPane.showMessageDialog(_editConditionalFrame,
                                 Bundle.getMessage("ErrorAspect"),
