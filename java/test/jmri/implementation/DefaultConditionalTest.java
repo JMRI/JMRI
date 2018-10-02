@@ -109,13 +109,13 @@ public class DefaultConditionalTest {
         List<ConditionalVariable> conditionalVariablesList_Empty = Arrays.asList(conditionalVariables_Empty);
         
         ConditionalVariable[] conditionalVariables_True
-                = { new ConditionalVariableStatic(Conditional.TRUE) };
+                = { new ConditionalVariableStatic(Conditional.State.TRUE) };
         List<ConditionalVariable> conditionalVariablesList_True = Arrays.asList(conditionalVariables_True);
         
         ConditionalVariable[] conditionalVariables_TrueTrueTrue
-                = { new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE) };
+                = { new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.TRUE) };
         List<ConditionalVariable> conditionalVariablesList_TrueTrueTrue = Arrays.asList(conditionalVariables_TrueTrueTrue);
         
         // Test empty antecedent string
@@ -161,53 +161,53 @@ public class DefaultConditionalTest {
         List<ConditionalVariable> conditionalVariablesList_Empty = Arrays.asList(conditionalVariables_Empty);
         
         ConditionalVariable[] conditionalVariables_True
-                = { new ConditionalVariableStatic(Conditional.TRUE) };
+                = { new ConditionalVariableStatic(Conditional.State.TRUE) };
         List<ConditionalVariable> conditionalVariablesList_True = Arrays.asList(conditionalVariables_True);
         
         ConditionalVariable[] conditionalVariables_False
-                = { new ConditionalVariableStatic(Conditional.FALSE) };
+                = { new ConditionalVariableStatic(Conditional.State.FALSE) };
         List<ConditionalVariable> conditionalVariablesList_False = Arrays.asList(conditionalVariables_False);
         
         ConditionalVariable[] conditionalVariables_NotTrue
-                = { new ConditionalVariableStatic(Conditional.TRUE, true) };
+                = { new ConditionalVariableStatic(Conditional.State.TRUE, true) };
         List<ConditionalVariable> conditionalVariablesList_NotTrue = Arrays.asList(conditionalVariables_NotTrue);
         
         ConditionalVariable[] conditionalVariables_NotFalse
-                = { new ConditionalVariableStatic(Conditional.FALSE, true) };
+                = { new ConditionalVariableStatic(Conditional.State.FALSE, true) };
         List<ConditionalVariable> conditionalVariablesList_NotFalse = Arrays.asList(conditionalVariables_NotFalse);
         
         ConditionalVariable[] conditionalVariables_TrueTrueTrue
-                = { new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE) };
+                = { new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.TRUE) };
         List<ConditionalVariable> conditionalVariablesList_TrueTrueTrue = Arrays.asList(conditionalVariables_TrueTrueTrue);
         
         ConditionalVariable[] conditionalVariables_FalseFalseFalse
-                = {new ConditionalVariableStatic(Conditional.FALSE)
-                        , new ConditionalVariableStatic(Conditional.FALSE)
-                        , new ConditionalVariableStatic(Conditional.FALSE) };
+                = {new ConditionalVariableStatic(Conditional.State.FALSE)
+                        , new ConditionalVariableStatic(Conditional.State.FALSE)
+                        , new ConditionalVariableStatic(Conditional.State.FALSE) };
         List<ConditionalVariable> conditionalVariablesList_FalseFalseFalse = Arrays.asList(conditionalVariables_FalseFalseFalse);
         
         ConditionalVariable[] conditionalVariables_TrueTrueFalse
-                = {new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.FALSE) };
+                = {new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.FALSE) };
         List<ConditionalVariable> conditionalVariablesList_TrueTrueFalse = Arrays.asList(conditionalVariables_TrueTrueFalse);
         
         // Test with two digit variable numbers
         ConditionalVariable[] conditionalVariables_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse
-                = {new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.FALSE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.FALSE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.FALSE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.FALSE) };
+                = {new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.FALSE)
+                        , new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.FALSE)
+                        , new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.FALSE)
+                        , new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.FALSE) };
         List<ConditionalVariable> conditionalVariablesList_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse =
                 Arrays.asList(conditionalVariables_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse);
         
@@ -340,15 +340,15 @@ public class DefaultConditionalTest {
     @Test
     public void testTriggers() {
         ConditionalVariable[] conditionalVariables_True
-                = { new ConditionalVariableStatic(Conditional.TRUE) };
+                = { new ConditionalVariableStatic(Conditional.State.TRUE) };
         List<ConditionalVariable> conditionalVariablesList_True = Arrays.asList(conditionalVariables_True);
         
         ConditionalVariable[] conditionalVariables_TrueWithTrigger
-                = { new ConditionalVariableStatic(Conditional.TRUE, "MyName", true) };
+                = { new ConditionalVariableStatic(Conditional.State.TRUE, "MyName", true) };
         List<ConditionalVariable> conditionalVariablesList_TrueWithTrigger = Arrays.asList(conditionalVariables_TrueWithTrigger);
         
         ConditionalVariable[] conditionalVariables_TrueWithNotTrigger
-                = { new ConditionalVariableStatic(Conditional.TRUE, "MyName", false) };
+                = { new ConditionalVariableStatic(Conditional.State.TRUE, "MyName", false) };
         List<ConditionalVariable> conditionalVariablesList_TrueWithNotTrigger = Arrays.asList(conditionalVariables_TrueWithNotTrigger);
         
         TestConditionalAction testConditionalAction = new TestConditionalAction();
@@ -553,11 +553,11 @@ public class DefaultConditionalTest {
     @Test
     public void testActionCurrentState() {
         ConditionalVariable[] conditionalVariables_True
-                = { new ConditionalVariableStatic(Conditional.TRUE) };
+                = { new ConditionalVariableStatic(Conditional.State.TRUE) };
         List<ConditionalVariable> conditionalVariablesList_True = Arrays.asList(conditionalVariables_True);
         
         ConditionalVariable[] conditionalVariables_False
-                = { new ConditionalVariableStatic(Conditional.FALSE) };
+                = { new ConditionalVariableStatic(Conditional.State.FALSE) };
         List<ConditionalVariable> conditionalVariablesList_False = Arrays.asList(conditionalVariables_False);
         
         TestConditionalAction testConditionalAction;
@@ -657,7 +657,7 @@ public class DefaultConditionalTest {
     @Test
     public void testAction() {
         ConditionalVariable[] conditionalVariables_True
-                = { new ConditionalVariableStatic(Conditional.TRUE) };
+                = { new ConditionalVariableStatic(Conditional.State.TRUE) };
         List<ConditionalVariable> conditionalVariablesList_True = Arrays.asList(conditionalVariables_True);
         
         TestConditionalAction testConditionalAction;
@@ -782,7 +782,7 @@ public class DefaultConditionalTest {
     @Test
     public void testActionPlaySound() {
         ConditionalVariable[] conditionalVariables_True
-                = { new ConditionalVariableStatic(Conditional.TRUE) };
+                = { new ConditionalVariableStatic(Conditional.State.TRUE) };
         List<ConditionalVariable> conditionalVariablesList_True = Arrays.asList(conditionalVariables_True);
         
         TestConditionalAction testConditionalAction;
@@ -827,18 +827,18 @@ public class DefaultConditionalTest {
     
     private final class ConditionalVariableStatic extends ConditionalVariable {
         
-        ConditionalVariableStatic(int state) {
+        ConditionalVariableStatic(Conditional.State state) {
             super();
             setState(state);
         }
         
-        ConditionalVariableStatic(int state, boolean not) {
+        ConditionalVariableStatic(Conditional.State state, boolean not) {
             super();
             setState(state);
             setNegation(not);
         }
         
-        ConditionalVariableStatic(int state, String name, boolean trigger) {
+        ConditionalVariableStatic(Conditional.State state, String name, boolean trigger) {
             super();
             setName(name);
             setState(state);
@@ -847,7 +847,7 @@ public class DefaultConditionalTest {
         
         @Override
         public boolean evaluate() {
-            return getState() == Conditional.TRUE;
+            return getState() == Conditional.State.TRUE;
         }
         
     }

@@ -57,7 +57,6 @@ public interface Conditional extends NamedBean {
             return _state;
         }
         
-
         public static State getOperatorFromIntValue(int stateInt) {
             for (State state : State.values()) {
                 if (state.getIntValue() == stateInt) {
@@ -138,6 +137,133 @@ public interface Conditional extends NamedBean {
     @Deprecated
     public static final int OPERATOR_OR_NOT = 6;
     
+    // state variable and action items used by logix.
+    enum ItemType {
+        NONE(TYPE_NONE, "ItemTypeNone"),        // There is no ITEM_TYPE_NONE so use TYPE_NONE instead
+        SENSOR(ITEM_TYPE_SENSOR, "ItemTypeSensor"),
+        TURNOUT(ITEM_TYPE_TURNOUT, "ItemTypeTurnout"),
+        LIGHT(ITEM_TYPE_LIGHT, "ItemTypeLight"),
+        SIGNALHEAD(ITEM_TYPE_SIGNALHEAD, "ItemTypeSignalHead"),
+        SIGNALMAST(ITEM_TYPE_SIGNALMAST, "ItemTypeSignalMast"),
+        MEMORY(ITEM_TYPE_MEMORY, "ItemTypeMemory"),
+        CONDITIONAL(ITEM_TYPE_CONDITIONAL, "ItemTypeConditional"),  // used only by ConditionalVariable
+        LOGIX(ITEM_TYPE_LOGIX, "ItemTypeLogix"),                    // used only by ConditionalAction
+        WARRANT(ITEM_TYPE_WARRANT, "ItemTypeWarrant"),
+        CLOCK(ITEM_TYPE_CLOCK, "ItemTypeClock"),
+        OBLOCK(ITEM_TYPE_OBLOCK, "ItemTypeOBlock"),
+        ENTRYEXIT(ITEM_TYPE_ENTRYEXIT, "ItemTypeEntryExit"),
+        LAST_STATE_VAR(ITEM_TYPE_LAST_STATE_VAR, "ItemTypeStateVar"),
+
+        AUDIO(ITEM_TYPE_AUDIO, "ItemTypeAudio"),
+        SCRIPT(ITEM_TYPE_SCRIPT, "ItemTypeScript"),
+        OTHER(ITEM_TYPE_OTHER, "ItemTypeOther"),
+        LAST_ACTION(ITEM_TYPE_LAST_ACTION, "ItemTypeLastAction");
+        
+        private final int _type;
+        private final String _bundleKey;
+        
+        private ItemType(int type, String bundleKey) {
+            _type = type;
+            _bundleKey = bundleKey;
+        }
+        
+        public int getIntValue() {
+            return _type;
+        }
+        
+        public static State getOperatorFromIntValue(int stateInt) {
+            for (State state : State.values()) {
+                if (state.getIntValue() == stateInt) {
+                    return state;
+                }
+            }
+            
+            throw new IllegalArgumentException("State is unknown");
+        }
+
+        @Override
+        public String toString() {
+            return Bundle.getMessage(_bundleKey);
+        }
+    }
+    
+    // items
+    enum Type {
+        NONE(TYPE_NONE, ItemType.NONE, "TypeNone"),
+        SENSOR_ACTIVE(TYPE_SENSOR_ACTIVE, ItemType.SENSOR, "TypeSensorActive"),
+        SENSOR_INACTIVE(TYPE_SENSOR_INACTIVE, ItemType.SENSOR, "TypeSensorInactive"),
+        TURNOUT_THROWN(TYPE_TURNOUT_THROWN, ItemType.TURNOUT, "TypeTurnoutThrown"),
+        TURNOUT_CLOSED(TYPE_TURNOUT_CLOSED, ItemType.TURNOUT, "TypeTurnoutClosed"),
+        CONDITIONAL_TRUE(TYPE_CONDITIONAL_TRUE, ItemType.CONDITIONAL, "TypeConditionalTrue"),
+        CONDITIONAL_FALSE(TYPE_CONDITIONAL_FALSE, ItemType.CONDITIONAL, "TypeConditionalFalse"),
+        LIGHT_ON(TYPE_LIGHT_ON, ItemType.LIGHT, "TypeLightOn"),
+        LIGHT_OFF(TYPE_LIGHT_OFF, ItemType.LIGHT, "TypeLightOff"),
+        MEMORY_EQUALS(TYPE_MEMORY_EQUALS, ItemType.MEMORY, "TypeMemoryEquals"),
+        MEMORY_COMPARE(TYPE_MEMORY_COMPARE, ItemType.MEMORY, "TypeMemoryCompare"),
+        MEMORY_EQUALS_INSENSITIVE(TYPE_MEMORY_EQUALS_INSENSITIVE, ItemType.MEMORY, "TypeMemoryEqualsInsensitive"),
+        MEMORY_COMPARE_INSENSITIVE(TYPE_MEMORY_COMPARE_INSENSITIVE, ItemType.MEMORY, "TypeMemoryCompareInsensitive"),
+        FAST_CLOCK_RANGE(TYPE_FAST_CLOCK_RANGE, ItemType.CLOCK, "TypeFastClockRange"),
+        SIGNAL_HEAD_RED(TYPE_SIGNAL_HEAD_RED, ItemType.SIGNALHEAD, "TypeSignalHeadRead"),
+        SIGNAL_HEAD_YELLOW(TYPE_SIGNAL_HEAD_YELLOW, ItemType.SIGNALHEAD, "TypeSignalHeadYellow"),
+        SIGNAL_HEAD_GREEN(TYPE_SIGNAL_HEAD_GREEN, ItemType.SIGNALHEAD, "TypeSignalHeadGreen"),
+        SIGNAL_HEAD_DARK(TYPE_SIGNAL_HEAD_DARK, ItemType.SIGNALHEAD, "TypeSignalHeadDark"),
+        SIGNAL_HEAD_FLASHRED(TYPE_SIGNAL_HEAD_FLASHRED, ItemType.SIGNALHEAD, "TypeSignalHeadFlashRed"),
+        SIGNAL_HEAD_FLASHYELLOW(TYPE_SIGNAL_HEAD_FLASHYELLOW, ItemType.SIGNALHEAD, "TypeSignalHeadFlashYellow"),
+        SIGNAL_HEAD_FLASHGREEN(TYPE_SIGNAL_HEAD_FLASHGREEN, ItemType.SIGNALHEAD, "TypeSignalHeadFlashGreen"),
+        SIGNAL_HEAD_LIT(TYPE_SIGNAL_HEAD_LIT, ItemType.SIGNALHEAD, "TypeSignalHeadHeadLit"),
+        SIGNAL_HEAD_HELD(TYPE_SIGNAL_HEAD_HELD, ItemType.SIGNALHEAD, "TypeHeadHeld"),
+        SIGNAL_HEAD_LUNAR(TYPE_SIGNAL_HEAD_LUNAR, ItemType.SIGNALHEAD, "TypeHeadLunar"),
+        SIGNAL_HEAD_FLASHLUNAR(TYPE_SIGNAL_HEAD_FLASHLUNAR, ItemType.SIGNALHEAD, "TypeHeadFlashLunar"),
+    // Warrant variables
+        ROUTE_FREE(TYPE_ROUTE_FREE, ItemType.WARRANT, "TypeRouteFree"),
+        ROUTE_OCCUPIED(TYPE_ROUTE_OCCUPIED, ItemType.WARRANT, "TypeRouteOccupied"),
+        ROUTE_ALLOCATED(TYPE_ROUTE_ALLOCATED, ItemType.WARRANT, "TypeRouteAllocated"),
+        ROUTE_SET(TYPE_ROUTE_SET, ItemType.WARRANT, "TypeRouteSet"),
+        TRAIN_RUNNING(TYPE_TRAIN_RUNNING, ItemType.WARRANT, "TypeTrainRunning"),
+        SIGNAL_MAST_ASPECT_EQUALS(TYPE_SIGNAL_MAST_ASPECT_EQUALS, ItemType.SIGNALMAST, "TypeSignalMastAspectEquals"),
+        SIGNAL_MAST_LIT(TYPE_SIGNAL_MAST_LIT, ItemType.SIGNALMAST, "TypeSignalMastLit"),
+        SIGNAL_MAST_HELD(TYPE_SIGNAL_MAST_HELD, ItemType.SIGNALMAST, "TypeSignalMastHeld"),
+        SIGNAL_HEAD_APPEARANCE_EQUALS(TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS, ItemType.SIGNALHEAD, "TypeSignalHeadAppearanceEquals"),
+        BLOCK_STATUS_EQUALS(TYPE_BLOCK_STATUS_EQUALS, ItemType.OBLOCK, "TypeBlockStatusEquals"),
+
+    //Entry Exit Rules
+        ENTRYEXIT_ACTIVE(TYPE_ENTRYEXIT_ACTIVE, ItemType.ENTRYEXIT, "TypeEntryExitActive"),
+        ENTRYEXIT_INACTIVE(TYPE_ENTRYEXIT_INACTIVE, ItemType.ENTRYEXIT, "TypeEntryExitInactive");
+        
+        private final int _item;
+        private final ItemType _itemType;
+        private final String _bundleKey;
+        
+        private Type(int state, ItemType itemType, String bundleKey) {
+            _item = state;
+            _itemType = itemType;
+            _bundleKey = bundleKey;
+        }
+        
+        public ItemType getItemType() {
+            return _itemType;
+        }
+        
+        public int getIntValue() {
+            return _item;
+        }
+        
+        public static State getOperatorFromIntValue(int stateInt) {
+            for (State state : State.values()) {
+                if (state.getIntValue() == stateInt) {
+                    return state;
+                }
+            }
+            
+            throw new IllegalArgumentException("State is unknown");
+        }
+
+        @Override
+        public String toString() {
+            return Bundle.getMessage(_bundleKey);
+        }
+    }
+
     // state variable types
     public static final int TYPE_NONE = 0;
     public static final int TYPE_SENSOR_ACTIVE = 1;

@@ -275,15 +275,15 @@ public class ConditionalVariableTest {
         String deviceName = "3";
         InstanceManager.getDefault(MemoryManager.class).provideMemory(deviceName);
         ConditionalVariable cv = new ConditionalVariable(false, Conditional.Operator.AND, TYPE_MEMORY_EQUALS, deviceName, false);
-        Assert.assertTrue("state is unknown", cv.getState() == NamedBean.UNKNOWN);
-        cv.setState(Conditional.TRUE);
-        Assert.assertTrue("state is TRUE", cv.getState() == Conditional.TRUE);
-        cv.setState(Conditional.FALSE);
-        Assert.assertTrue("state is FALSE", cv.getState() == Conditional.FALSE);
+        Assert.assertTrue("state is unknown", cv.getState() == Conditional.State.UNKNOWN);
+        cv.setState(Conditional.State.TRUE);
+        Assert.assertTrue("state is TRUE", cv.getState() == Conditional.State.TRUE);
+        cv.setState(Conditional.State.FALSE);
+        Assert.assertTrue("state is FALSE", cv.getState() == Conditional.State.FALSE);
         cv.setState(true);
-        Assert.assertTrue("state is TRUE", cv.getState() == Conditional.TRUE);
+        Assert.assertTrue("state is TRUE", cv.getState() == Conditional.State.TRUE);
         cv.setState(false);
-        Assert.assertTrue("state is FALSE", cv.getState() == Conditional.FALSE);
+        Assert.assertTrue("state is FALSE", cv.getState() == Conditional.State.FALSE);
     }
     
     @Test

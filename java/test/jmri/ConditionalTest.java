@@ -423,6 +423,20 @@ public class ConditionalTest {
         Assert.assertEquals(Conditional.ACTION_TRIGGER_ROUTE, Conditional.ITEM_TO_OTHER_ACTION[0]);
     }
     
+    @Test
+    public void testEnums() {
+        
+        // This is a temporary test to check the new enums
+        for (Conditional.Type type : Conditional.Type.values()) {
+            Conditional.ItemType itemType = type.getItemType();
+            
+            int typeInt = type.getIntValue();
+            int itemTypeInt = type.getItemType().getIntValue();
+            
+            String message = String.format("type %s has correct itemType %s", type.name(), itemType.name());
+            Assert.assertTrue(message, Conditional.TEST_TO_ITEM[typeInt] == itemTypeInt);
+        }
+    }
     
     
     // from here down is testing infrastructure
