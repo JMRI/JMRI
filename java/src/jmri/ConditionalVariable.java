@@ -2,6 +2,7 @@ package jmri;
 
 import java.util.Date;
 import java.util.ResourceBundle;
+import jmri.Conditional.State;
 import jmri.Conditional.Operator;
 import jmri.jmrit.beantable.LogixTableAction;
 import jmri.jmrit.logix.OBlock;
@@ -63,7 +64,7 @@ public class ConditionalVariable {
     // Conditionals and this parameter nows controls whether, if its change of state changes the
     // state of the conditional, should that also  trigger the actions.
     private boolean _triggersActions = true;
-    private int _state = NamedBean.UNKNOWN;        // tri-state
+    private State _state = State.UNKNOWN;        // tri-state
 
     /**
      * Create a blank ConditionalVariable, to be filled in later.
@@ -366,19 +367,19 @@ public class ConditionalVariable {
         _triggersActions = trigger;
     }
 
-    public int getState() {
+    public State getState() {
         return _state;
     }
 
-    public void setState(int state) {
+    public void setState(Conditional.State state) {
         _state = state;
     }
 
     public void setState(boolean state) {
         if (state) {
-            _state = Conditional.TRUE;
+            _state = State.TRUE;
         } else {
-            _state = Conditional.FALSE;
+            _state = State.FALSE;
         }
     }
 
@@ -636,9 +637,9 @@ public class ConditionalVariable {
             result = !result;
         }
         if (result) {
-            setState(Conditional.TRUE);
+            setState(State.TRUE);
         } else {
-            setState(Conditional.FALSE);
+            setState(State.FALSE);
         }
         return (result);
     }

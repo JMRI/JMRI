@@ -40,6 +40,40 @@ import java.util.List;
 public interface Conditional extends NamedBean {
 
     // states
+    enum State {
+        UNKNOWN(NamedBean.UNKNOWN, "StateUnknown"),
+        FALSE(Conditional.FALSE, "StateFalse"),
+        TRUE(Conditional.TRUE, "StateTrue");
+        
+        private final int _state;
+        private final String _bundleKey;
+        
+        private State(int state, String bundleKey) {
+            _state = state;
+            _bundleKey = bundleKey;
+        }
+        
+        public int getIntValue() {
+            return _state;
+        }
+        
+
+        public static State getOperatorFromIntValue(int stateInt) {
+            for (State state : State.values()) {
+                if (state.getIntValue() == stateInt) {
+                    return state;
+                }
+            }
+            
+            throw new IllegalArgumentException("State is unknown");
+        }
+
+        @Override
+        public String toString() {
+            return Bundle.getMessage(_bundleKey);
+        }
+    }
+    
     /**
      * @deprecated since 4.7.1; use {@link jmri.NamedBean#UNKNOWN} instead
      */

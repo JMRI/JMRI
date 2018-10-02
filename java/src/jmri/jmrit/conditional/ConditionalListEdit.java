@@ -37,6 +37,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import jmri.Audio;
 import jmri.Conditional;
+import jmri.Conditional.State;
 import jmri.Conditional.Operator;
 import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
@@ -4465,11 +4466,11 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     return variable.toString();
                 case STATE_COLUMN:
                     switch (variable.getState()) {
-                        case Conditional.TRUE:
+                        case TRUE:
                             return Bundle.getMessage("True");  // NOI18N
-                        case Conditional.FALSE:
+                        case FALSE:
                             return Bundle.getMessage("False");  // NOI18N
-                        case NamedBean.UNKNOWN:
+                        case UNKNOWN:
                             return Bundle.getMessage("BeanStateUnknown");  // NOI18N
                         default:
                             log.warn("Unhandled state type: {}", variable.getState());  // NOI18N
@@ -4511,11 +4512,11 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 case STATE_COLUMN:
                     String state = ((String) value);
                     if (state.equals(Bundle.getMessage("True").toUpperCase().trim())) {  // NOI18N
-                        variable.setState(Conditional.TRUE);
+                        variable.setState(State.TRUE);
                     } else if (state.equals(Bundle.getMessage("False").toUpperCase().trim())) {  // NOI18N
-                        variable.setState(Conditional.FALSE);
+                        variable.setState(State.FALSE);
                     } else {
-                        variable.setState(NamedBean.UNKNOWN);
+                        variable.setState(State.UNKNOWN);
                     }
                     break;
                 case TRIGGERS_COLUMN:
