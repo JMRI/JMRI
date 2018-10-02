@@ -61,12 +61,12 @@ public class StreamConfigPane extends JmrixConfigPane {
      */
     public static synchronized StreamConfigPane createPanel(XBeeNode node) {
         ConnectionConfig c = null;
-        /*try {
+        try {
             c = InstanceManager.getDefault(ConnectionConfigManager.class).getConnections(index);
             log.debug("connection {} is {}", index, c);
         } catch (IndexOutOfBoundsException ex) {
             log.debug("connection {} is null, creating new one", index);
-        }*/
+        }
         return createPanel(c);
     }
 
@@ -342,7 +342,7 @@ public class StreamConfigPane extends JmrixConfigPane {
         String title = this.getConnectionName();
         if (title == null
                 && this.getCurrentProtocolName() != null
-                && !this.getCurrentProtocolName().equals(StreamConfigPane.NONE)) {
+                && !this.getCurrentProtocolName().equals(JmrixConfigPane.NONE)) {
             title = this.getCurrentProtocolName();
         }
         if (title != null && !this.getDisabled()) {
