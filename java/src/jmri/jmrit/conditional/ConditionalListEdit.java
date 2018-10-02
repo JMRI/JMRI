@@ -194,8 +194,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
     List<ConditionalVariable> _variableList;
     ConditionalVariable _curVariable;
     int _curVariableRowNumber;
-    int _curVariableItem = 0;
-    TreeSet<String> _oldTargetNames = new TreeSet<String>();
+    Conditional.ItemType _curVariableItem = Conditional.ItemType.NONE;
+    TreeSet<String> _oldTargetNames = new TreeSet<>();
 
     // ------------ Current Action Information ------------
     List<ConditionalAction> _actionList;
@@ -1047,7 +1047,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             return;
         }
         _showReminder = true;
-        _curVariableItem = 0;
+        _curVariableItem = Conditional.ItemType.NONE;
         ConditionalVariable variable = new ConditionalVariable();
         _variableList.add(variable);
         _newItem = true;
@@ -1247,7 +1247,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         // clean up empty variable and actions
         if (!LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())) {
             for (int i = 0; i < _variableList.size(); i++) {
-                if (_variableList.get(i).getType() == Conditional.TYPE_NONE) {
+                if (_variableList.get(i).getType() == Conditional.Type.NONE) {
                     _variableList.remove(i);
                     _variableTableModel.fireTableRowsDeleted(i, i);
                 }
@@ -1661,8 +1661,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
 
         // Item Type
         _variableItemBox = new JComboBox<>();
-        for (int i = 0; i <= Conditional.ITEM_TYPE_LAST_STATE_VAR; i++) {
-            _variableItemBox.addItem(ConditionalVariable.getItemTypeString(i));
+        for (Conditional.ItemType itemType : Conditional.ItemType.values()) {
+            _variableItemBox.addItem(itemType.toString());
         }
         JComboBoxUtil.setupComboBoxMaxRows(_variableItemBox);
         panel1.add(makeEditPanel(_variableItemBox, "LabelVariableType", "VariableTypeHint"));  // NOI18N
@@ -1790,7 +1790,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         _variableItemBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int newVariableItem = _variableItemBox.getSelectedIndex();
+                Conditional.ItemType newVariableItem = _variableItemBox.getSelectedIndex();
                 if (log.isDebugEnabled()) {
                     log.debug("_variableItemBox Listener: new = {}, curr = {}, row = {}",  // NOI18N
                             newVariableItem, _curVariableItem, _curVariableRowNumber);
@@ -1821,7 +1821,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 cancelEditVariablePressed();
             }
         });
-        _curVariableItem = Conditional.TEST_TO_ITEM[_curVariable.getType()];
+        _curVariableItem = _curVariable.getType().getItemType();
         initializeStateVariables();
         _editVariableFrame.pack();
         _editVariableFrame.setVisible(true);
@@ -1833,42 +1833,42 @@ public class ConditionalListEdit extends ConditionalEditBase {
      * Set display to show current state variable (_curVariable) parameters.
      */
     void initializeStateVariables() {
-        int testType = _curVariable.getType();
-        int itemType = Conditional.TEST_TO_ITEM[testType];
+        Conditional.Type testType = _curVariable.getType();
+        Conditional.ItemType itemType = testType.getItemType();
         if (log.isDebugEnabled()) {
             log.debug("initializeStateVariables: itemType = {}, testType = {}", itemType, testType);  // NOI18N
         }
-        if (testType == Conditional.TYPE_NONE) {
+        if (testType == Conditional.Type.NONE) {
             return;
         }
         // set item - _variableItemBox Listener will call variableItemChanged
         _variableItemBox.setSelectedIndex(itemType);
         switch (itemType) {
-            case Conditional.ITEM_TYPE_SENSOR:
+            case SENSOR:
                 _variableStateBox.setSelectedIndex(DefaultConditional.getIndexInTable(
                         Conditional.ITEM_TO_SENSOR_TEST, testType));
                 _variableNameField.setText(_curVariable.getName());
                 break;
 
-            case Conditional.ITEM_TYPE_TURNOUT:
+            case TURNOUT:
                 _variableStateBox.setSelectedIndex(DefaultConditional.getIndexInTable(
                         Conditional.ITEM_TO_TURNOUT_TEST, testType));
                 _variableNameField.setText(_curVariable.getName());
                 break;
 
-            case Conditional.ITEM_TYPE_LIGHT:
+            case LIGHT:
                 _variableStateBox.setSelectedIndex(DefaultConditional.getIndexInTable(
                         Conditional.ITEM_TO_LIGHT_TEST, testType));
                 _variableNameField.setText(_curVariable.getName());
                 break;
 
-            case Conditional.ITEM_TYPE_SIGNALHEAD:
+            case SIGNALHEAD:
                 _variableStateBox.setSelectedIndex(DefaultConditional.getIndexInTable(
                         Conditional.ITEM_TO_SIGNAL_HEAD_TEST, testType));
                 _variableNameField.setText(_curVariable.getName());
-                if ((Conditional.TYPE_SIGNAL_HEAD_RED <= testType && testType <= Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN)
-                        || Conditional.TYPE_SIGNAL_HEAD_LUNAR == testType
-                        || Conditional.TYPE_SIGNAL_HEAD_FLASHLUNAR == testType) {
+                if ((Conditional.Type.SIGNAL_HEAD_RED <= testType && testType <= Conditional.Type.SIGNAL_HEAD_FLASHGREEN)
+                        || Conditional.Type.SIGNAL_HEAD_LUNAR == testType
+                        || Conditional.Type.SIGNAL_HEAD_FLASHLUNAR == testType) {
                     _variableStateBox.setSelectedItem( // index 1 = TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS
                             ConditionalVariable.describeState(Conditional.ITEM_TO_SIGNAL_HEAD_TEST[1]));
                     loadJComboBoxWithHeadAppearances(_variableSignalBox, _curVariable.getName());
@@ -1878,19 +1878,19 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 }
                 break;
 
-            case Conditional.ITEM_TYPE_SIGNALMAST:
+            case SIGNALMAST:
                 // set display to show current state variable (curVariable) parameters
                 _variableStateBox.setSelectedIndex(DefaultConditional.getIndexInTable(
                         Conditional.ITEM_TO_SIGNAL_MAST_TEST, testType));
                 _variableNameField.setText(_curVariable.getName());
-                if (testType == Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS) {
+                if (testType == Conditional.Type.SIGNAL_MAST_ASPECT_EQUALS) {
                     loadJComboBoxWithMastAspects(_variableSignalBox, _curVariable.getName());
                     _variableSignalBox.setSelectedItem(_curVariable.getDataString());
                     _variableSignalPanel.setVisible(true);
                 }
                 break;
 
-            case Conditional.ITEM_TYPE_MEMORY:
+            case MEMORY:
                 _variableCompareTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
                         Conditional.ITEM_TO_MEMORY_TEST, testType));
                 _variableNameField.setText(_curVariable.getName());
@@ -1902,19 +1902,19 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 _variableData1Field.setText(_curVariable.getDataString());
                 break;
 
-            case Conditional.ITEM_TYPE_CONDITIONAL:
+            case CONDITIONAL:
                 _variableStateBox.setSelectedIndex(DefaultConditional.getIndexInTable(
                         Conditional.ITEM_TO_CONDITIONAL_TEST, testType));
                 _variableNameField.setText(_curVariable.getName());
                 break;
 
-            case Conditional.ITEM_TYPE_WARRANT:
+            case WARRANT:
                 _variableStateBox.setSelectedIndex(DefaultConditional.getIndexInTable(
                         Conditional.ITEM_TO_WARRANT_TEST, testType));
                 _variableNameField.setText(_curVariable.getName());
                 break;
 
-            case Conditional.ITEM_TYPE_CLOCK:
+            case CLOCK:
                 int time = _curVariable.getNum1();
                 _variableData1Field.setText(formatTime(time / 60, time - ((time / 60) * 60)));
                 time = _curVariable.getNum2();
@@ -1922,7 +1922,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 _variableNameField.setText("");
                 break;
 
-            case Conditional.ITEM_TYPE_OBLOCK:
+            case OBLOCK:
                 _variableNameField.setText(_curVariable.getName());
                 //_variableStateBox.removeAllItems();
                 Iterator<String> names = OBlock.getLocalStatusNames();
@@ -1933,7 +1933,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 _variableStateBox.setVisible(true);
                 break;
 
-            case Conditional.ITEM_TYPE_ENTRYEXIT:
+            case ENTRYEXIT:
                 _variableNameField.setText(_curVariable.getBean().getUserName());
                 _variableStateBox.setSelectedIndex(DefaultConditional.getIndexInTable(
                         Conditional.ITEM_TO_ENTRYEXIT_TEST, testType));
@@ -1957,7 +1957,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
      *                 i.e. ITEM_TYPE_SENSOR
      */
     private void variableItemChanged(int itemType) {
-        int testType = _curVariable.getType();
+        Conditional.Type testType = _curVariable.getType();
         if (log.isDebugEnabled()) {
             log.debug("variableItemChanged: itemType = {}, testType = {}", itemType, testType);  // NOI18N
         }
@@ -2284,8 +2284,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
         // Get the current Logix name for selecting the current combo box row
         String cdlName = _curVariable.getName();
         String lgxName;
-        if (cdlName.length() == 0 || (_curVariable.getType() != Conditional.TYPE_CONDITIONAL_TRUE
-                && _curVariable.getType() != Conditional.TYPE_CONDITIONAL_FALSE)) {
+        if (cdlName.length() == 0 || (_curVariable.getType() != Conditional.Type.CONDITIONAL_TRUE
+                && _curVariable.getType() != Conditional.Type.CONDITIONAL_FALSE)) {
             // Use the current logix name for "add" state variable
             lgxName = _curLogix.getSystemName();
         } else {
@@ -2401,7 +2401,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         _curVariable.setNum1(0);
         _curVariable.setNum2(0);
         int itemType = _variableItemBox.getSelectedIndex();
-        int testType = 0;
+        Conditional.Type testType = 0;
         switch (itemType) {
             case Conditional.ITEM_TYPE_SENSOR:
                 testType = Conditional.ITEM_TO_SENSOR_TEST[_variableStateBox.getSelectedIndex()];
@@ -2519,8 +2519,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 }
                 if (testType == Conditional.TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS) {
                     String appStr = (String) _variableSignalBox.getSelectedItem();
-                    int type = ConditionalVariable.stringToVariableTest(appStr);
-                    if (type < 0) {
+                    Conditional.Type type = ConditionalVariable.stringToVariableTest(appStr);
+                    if (type == Conditional.Type.ERROR) {
                         JOptionPane.showMessageDialog(_editConditionalFrame,
                                 Bundle.getMessage("ErrorAppearance"),
                                 Bundle.getMessage("ErrorTitle"), // NOI18N
@@ -2584,7 +2584,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         boolean result = _curVariable.evaluate();
         log.debug("State Variable \"{}\" of type '{}' state= {} type= {}",  // NOI18N
                 name, ConditionalVariable.getTestTypeString(testType), result, _curVariable.getType());
-        if (_curVariable.getType() == Conditional.TYPE_NONE) {
+        if (_curVariable.getType() == Conditional.Type.NONE) {
             JOptionPane.showMessageDialog(_editConditionalFrame,
                     Bundle.getMessage("ErrorVariableState"),
                     Bundle.getMessage("ErrorTitle"), // NOI18N

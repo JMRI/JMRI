@@ -189,6 +189,7 @@ public interface Conditional extends NamedBean {
     
     // items
     enum Type {
+        ERROR(TYPE_ERROR, ItemType.NONE, "TypeError"),
         NONE(TYPE_NONE, ItemType.NONE, "TypeNone"),
         SENSOR_ACTIVE(TYPE_SENSOR_ACTIVE, ItemType.SENSOR, "TypeSensorActive"),
         SENSOR_INACTIVE(TYPE_SENSOR_INACTIVE, ItemType.SENSOR, "TypeSensorInactive"),
@@ -265,6 +266,7 @@ public interface Conditional extends NamedBean {
     }
 
     // state variable types
+    public static final int TYPE_ERROR = -1;
     public static final int TYPE_NONE = 0;
     public static final int TYPE_SENSOR_ACTIVE = 1;
     public static final int TYPE_SENSOR_INACTIVE = 2;
