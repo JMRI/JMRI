@@ -218,14 +218,14 @@ public class AutomationTableFrameTest extends OperationsSwingTestCase {
     // Ensure minimal setup for log4J
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
     }
 
     // The minimal setup for log4J
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         // jmri.util.JUnitUtil.tearDown();
 
         super.tearDown();

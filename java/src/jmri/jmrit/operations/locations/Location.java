@@ -1043,9 +1043,9 @@ public class Location implements java.beans.PropertyChangeListener {
      * @param box JComboBox to be updated.
      * @param rs Rolling Stock to be serviced
      * @param filter When true, remove tracks not able to service rs.
-     * @param destination When true, the tracks are destinations for the rs.
+     * @param isDestination When true, the tracks are destinations for the rs.
      */
-    public void updateComboBox(JComboBox<Track> box, RollingStock rs, boolean filter, boolean destination) {
+    public void updateComboBox(JComboBox<Track> box, RollingStock rs, boolean filter, boolean isDestination) {
         updateComboBox(box);
         if (!filter || rs == null) {
             return;
@@ -1053,12 +1053,12 @@ public class Location implements java.beans.PropertyChangeListener {
         List<Track> tracks = getTrackByNameList(null);
         for (Track track : tracks) {
             String status = "";
-            if (destination) {
+            if (isDestination) {
                 status = rs.testDestination(this, track);
             } else {
                 status = rs.testLocation(this, track);
             }
-            if (status.equals(Track.OKAY) && (!destination || !track.getTrackType().equals(Track.STAGING))) {
+            if (status.equals(Track.OKAY) && (!isDestination || !track.isStaging())) {
                 box.setSelectedItem(track);
                 log.debug("Available track: {} for location: {}", track.getName(), getName());
             } else {
@@ -1264,7 +1264,7 @@ public class Location implements java.beans.PropertyChangeListener {
     
     public boolean hasSchedules() {
         for (Track track : getTrackList()) {
-            if (track.getTrackType().equals(Track.SPUR) && track.getSchedule() != null) {
+            if (track.isSpur() && track.getSchedule() != null) {
                 return true;
             }
         }

@@ -161,7 +161,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
             _track.addPropertyChangeListener(this);
             trackName.setText(_track.getName());
             onlyCarsWithFD.setSelected(_track.isOnlyCarsWithFinalDestinationEnabled());
-            pFD.setVisible(_track.getTrackType().equals(Track.INTERCHANGE));
+            pFD.setVisible(_track.isInterchange());
             enableButtons(true);
         } else {
             enableButtons(false);
