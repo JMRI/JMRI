@@ -305,7 +305,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                                         !_car.getLoadName().equals(InstanceManager.getDefault(CarLoads.class).getDefaultLoadName()))) {
                     op.setText(Bundle.getMessage("X(TrainLocalMove)"));
                     // determine if spur can accept car with custom load
-                } else if (track.getTrackType().equals(Track.SPUR) &&
+                } else if (track.isSpur() &&
                         track.getSchedule() == null &&
                         _car != null &&
                         _car.getTrack() != track &&
