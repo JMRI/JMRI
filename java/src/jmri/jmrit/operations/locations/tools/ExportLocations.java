@@ -140,6 +140,20 @@ public class ExportLocations extends XmlFile {
                 del +
                 Bundle.getMessage("Destinations") +
                 del +
+                Bundle.getMessage("SwapCarLoads") +
+                del +
+                Bundle.getMessage("EmptyDefaultCarLoads") +
+                del +
+                Bundle.getMessage("EmptyCarLoads") +
+                del +
+                Bundle.getMessage("LoadCarLoads") +
+                del +
+                Bundle.getMessage("LoadAnyCarLoads") +
+                del +
+                Bundle.getMessage("LoadsStaging") +
+                del +
+                Bundle.getMessage("BlockCars") +
+                del +
                 Bundle.getMessage("Comment") +
                 del +
                 Bundle.getMessage("CommentBoth") +
@@ -342,6 +356,20 @@ public class ExportLocations extends XmlFile {
                         ESC +
                         destinationNames.toString() +
                         ESC +
+                        del +
+                        (track.isLoadSwapEnabled() ? Bundle.getMessage("ButtonYes") : "") +
+                        del +
+                        (track.isLoadEmptyEnabled() ? Bundle.getMessage("ButtonYes") : "") +
+                        del +
+                        (track.isRemoveCustomLoadsEnabled() ? Bundle.getMessage("ButtonYes") : "") +
+                        del +
+                        (track.isAddCustomLoadsEnabled() ? Bundle.getMessage("ButtonYes") : "") +
+                        del +
+                        (track.isAddCustomLoadsAnySpurEnabled() ? Bundle.getMessage("ButtonYes") : "") +
+                        del +
+                        (track.isAddCustomLoadsAnyStagingTrackEnabled() ? Bundle.getMessage("ButtonYes") : "") +
+                        del +
+                        (track.isBlockCarsEnabled() ? Bundle.getMessage("ButtonYes") : "") +
                         del +
                         ESC +
                         track.getComment() +

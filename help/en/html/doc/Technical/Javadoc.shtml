@@ -81,11 +81,13 @@
     <a name="html" id="html"></a>
     <h3>HTML in Javadoc</h3>
     
-      <p>The Javadoc content is interpreted as HTML 4.01, so it
+      <p>The Java 8 Javadoc content is interpreted as HTML 4.01, so it
       should be valid HTML 4.01. If it's not, it probably won't
       display properly when somebody wants to understand your code,
       so it's in your interest to get the Javadoc comments
-      right.</p>
+      right.  In addition, Java 11 will eventually require us to 
+      write HTML 5 Javadoc content; keeping it orderly now will
+      help with that migration later.</p>
       
       <p>We run the <code>ant scanhelp</code> job
       during 
@@ -117,9 +119,24 @@
         <dt>"bad use of '&gt;'"</dt>
 
         <dd>Probably using '&gt;' as a character, e.g. A -&gt; B.
-        If so, replace with "&amp;gt;" or wrap the line with
-        @literal</dd>
+        If so, replace with "&amp;gt;" or wrap it with
+        @literal as in
+
+<pre style="font-family: monospace;">
+        {@literal 0.0 -&gt; 1.0.}
+</pre>
+        and
+<pre style="font-family: monospace;">
+        opcodes {@code &lt;opc, string description&gt;} via                
+</pre>
+        </dd>
       </dl>
+
+       <p>
+        Definitely use @code{...} in Javadoc comments
+        instead of trying to provide HTML-style 
+        elements like &lt;tt&gt; and &lt;code&gt;, as they 
+        won't format correctly.
 
       <p>You also have to (sometimes) end your paragraph tags to
       start another type of element, e.g. lists:</p>
