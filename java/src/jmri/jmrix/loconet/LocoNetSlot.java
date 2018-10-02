@@ -796,7 +796,9 @@ public class LocoNetSlot {
         // sort out valid messages, handle
         switch (l.getOpCode()) {
             case LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR:  //speed and functions
-                if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_SPEED) == 0) {
+                if (((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_SPEED) == 0)
+                        && (((stat & LnConstants.CONSIST_MASK) != LnConstants.CONSIST_MID) &&
+                        ((stat & LnConstants.CONSIST_MASK) != LnConstants.CONSIST_SUB))) {
                     // speed and direction
                     spd = l.getElement(4);
                     dirf = dirf & 0b11011111;
@@ -1258,7 +1260,8 @@ public class LocoNetSlot {
         l.setElement(9, (isF12() ? 0b00010000 : 0x00 )
                 | (isF20() ? 0b00100000 : 0x00)
                 | (isF28() ? 0b01000000 : 0x00));
-        l.setElement(10, ( isF0() ? 0b00010000 : 0x00)
+        l.setElement(10, ( isForward() ? 0x00 : 0x00100000)
+                | (isF0() ? 0b00010000 : 0x00)
                 | (isF1() ? 0b00000001 : 0x00)
                 | (isF2() ? 0b00000010 : 0x00)
                 | (isF3() ? 0b00000100 : 0x00)
