@@ -633,43 +633,43 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             List<ConditionalVariable> varList = c.getCopyOfStateVariables();
             for (int k = 0; k < varList.size(); k++) {
                 ConditionalVariable variable = varList.get(k);
-                int testState = variable.getType();
+                Conditional.Type testState = variable.getType();
                 //boolean negated = variable.isNegated();
                 int type;
                 switch (testState) {
-                    case Conditional.TYPE_SENSOR_ACTIVE:
+                    case SENSOR_ACTIVE:
                         type = SENSOR_TYPE;
                         //if (negated) testState = Conditional.TYPE_SENSOR_INACTIVE;
                         break;
-                    case Conditional.TYPE_SENSOR_INACTIVE:
+                    case SENSOR_INACTIVE:
                         type = SENSOR_TYPE;
                         //if (negated) testState = Conditional.TYPE_SENSOR_ACTIVE;
                         break;
-                    case Conditional.TYPE_TURNOUT_CLOSED:
+                    case TURNOUT_CLOSED:
                         type = TURNOUT_TYPE;
                         //if (negated) testState = Conditional.TYPE_TURNOUT_THROWN;
                         break;
-                    case Conditional.TYPE_TURNOUT_THROWN:
+                    case TURNOUT_THROWN:
                         type = TURNOUT_TYPE;
                         //if (negated) testState = Conditional.TYPE_TURNOUT_CLOSED;
                         break;
-                    case Conditional.TYPE_LIGHT_ON:
+                    case LIGHT_ON:
                         type = LIGHT_TYPE;
                         //if (negated) testState = Conditional.TYPE_LIGHT_OFF;
                         break;
-                    case Conditional.TYPE_LIGHT_OFF:
+                    case LIGHT_OFF:
                         type = LIGHT_TYPE;
                         //if (negated) testState = Conditional.TYPE_LIGHT_ON;
                         break;
-                    case Conditional.TYPE_SIGNAL_HEAD_LIT:
-                    case Conditional.TYPE_SIGNAL_HEAD_RED:
-                    case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
-                    case Conditional.TYPE_SIGNAL_HEAD_GREEN:
-                    case Conditional.TYPE_SIGNAL_HEAD_DARK:
-                    case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
-                    case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
-                    case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
-                    case Conditional.TYPE_SIGNAL_HEAD_HELD:
+                    case SIGNAL_HEAD_LIT:
+                    case SIGNAL_HEAD_RED:
+                    case SIGNAL_HEAD_YELLOW:
+                    case SIGNAL_HEAD_GREEN:
+                    case SIGNAL_HEAD_DARK:
+                    case SIGNAL_HEAD_FLASHRED:
+                    case SIGNAL_HEAD_FLASHYELLOW:
+                    case SIGNAL_HEAD_FLASHGREEN:
+                    case SIGNAL_HEAD_HELD:
                         type = SIGNAL_TYPE;
                         break;
                     default:
@@ -756,30 +756,30 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             int atype = 0;
             for (int k = 0; k < varList.size(); k++) {
                 ConditionalVariable variable = varList.get(k);
-                int testState = variable.getType();
+                Conditional.Type testState = variable.getType();
                 int type;
                 switch (testState) {
-                    case Conditional.TYPE_SENSOR_ACTIVE:
-                    case Conditional.TYPE_SENSOR_INACTIVE:
+                    case SENSOR_ACTIVE:
+                    case SENSOR_INACTIVE:
                         type = SENSOR_TYPE;
                         break;
-                    case Conditional.TYPE_TURNOUT_CLOSED:
-                    case Conditional.TYPE_TURNOUT_THROWN:
+                    case TURNOUT_CLOSED:
+                    case TURNOUT_THROWN:
                         type = TURNOUT_TYPE;
                         break;
-                    case Conditional.TYPE_LIGHT_ON:
-                    case Conditional.TYPE_LIGHT_OFF:
+                    case LIGHT_ON:
+                    case LIGHT_OFF:
                         type = LIGHT_TYPE;
                         break;
-                    case Conditional.TYPE_SIGNAL_HEAD_LIT:
-                    case Conditional.TYPE_SIGNAL_HEAD_RED:
-                    case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
-                    case Conditional.TYPE_SIGNAL_HEAD_GREEN:
-                    case Conditional.TYPE_SIGNAL_HEAD_DARK:
-                    case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
-                    case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
-                    case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
-                    case Conditional.TYPE_SIGNAL_HEAD_HELD:
+                    case SIGNAL_HEAD_LIT:
+                    case SIGNAL_HEAD_RED:
+                    case SIGNAL_HEAD_YELLOW:
+                    case SIGNAL_HEAD_GREEN:
+                    case SIGNAL_HEAD_DARK:
+                    case SIGNAL_HEAD_FLASHRED:
+                    case SIGNAL_HEAD_FLASHYELLOW:
+                    case SIGNAL_HEAD_FLASHGREEN:
+                    case SIGNAL_HEAD_HELD:
                         type = SIGNAL_TYPE;
                         break;
                     default:
@@ -1514,16 +1514,16 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                     if (Route.ONCHANGE == type) {
                         switch (elt.getType()) {
                             case SENSOR_TYPE:
-                                type = Conditional.TYPE_SENSOR_ACTIVE;
+                                type = Conditional.Type.SENSOR_ACTIVE;
                                 break;
                             case TURNOUT_TYPE:
-                                type = Conditional.TYPE_TURNOUT_CLOSED;
+                                type = Conditional.Type.TURNOUT_CLOSED;
                                 break;
                             case LIGHT_TYPE:
-                                type = Conditional.TYPE_LIGHT_ON;
+                                type = Conditional.Type.LIGHT_ON;
                                 break;
                             case SIGNAL_TYPE:
-                                type = Conditional.TYPE_SIGNAL_HEAD_LIT;
+                                type = Conditional.Type.SIGNAL_HEAD_LIT;
                                 break;
                             default:
                                 log.debug("updatePressed: Unknown state variable type " + elt.getType());
@@ -1542,7 +1542,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             }
         } else {
             oneTriggerList.add(new ConditionalVariable(false, Conditional.Operator.NONE,
-                    Conditional.TYPE_NONE, LOGIX_INITIALIZER, true));
+                    Conditional.Type.NONE, LOGIX_INITIALIZER, true));
         }
         if (log.isDebugEnabled()) {
             log.debug("actionList.size()= " + actionList.size() + ", oneTriggerList.size()= " + oneTriggerList.size()
