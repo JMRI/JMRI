@@ -634,8 +634,8 @@ public class DefaultLogix extends AbstractNamedBean
                         }
                     }
                     // addition listeners needed for memory compare
-                    if (varType == Conditional.TYPE_MEMORY_COMPARE
-                            || varType == Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE) {
+                    if (varType == Conditional.Type.MEMORY_COMPARE
+                            || varType == Conditional.Type.MEMORY_COMPARE_INSENSITIVE) {
                         positionOfListener = getPositionOfListener(varListenerType, varType,
                                 variable.getDataString());
                         if (positionOfListener == -1) {
@@ -669,14 +669,14 @@ public class DefaultLogix extends AbstractNamedBean
         }
     }
 
-    private int getPositionOfListener(int varListenerType, int varType, String varName) {
+    private int getPositionOfListener(int varListenerType, Conditional.Type varType, String varName) {
         // check if already in list
         for (int j = 0; (j < _listeners.size()); j++) {
             if (varListenerType == _listeners.get(j).getType()) {
                 if (varName.equals(_listeners.get(j).getDevName())) {
                     if (varListenerType == LISTENER_TYPE_SIGNALHEAD) {
-                        if (varType == Conditional.TYPE_SIGNAL_HEAD_LIT
-                                || varType == Conditional.TYPE_SIGNAL_HEAD_HELD) {
+                        if (varType == Conditional.Type.SIGNAL_HEAD_LIT
+                                || varType == Conditional.Type.SIGNAL_HEAD_HELD) {
                             if (varType == _listeners.get(j).getVarType()) {
                                 return j;
                             }

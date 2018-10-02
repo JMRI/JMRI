@@ -639,27 +639,27 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                 switch (testState) {
                     case SENSOR_ACTIVE:
                         type = SENSOR_TYPE;
-                        //if (negated) testState = Conditional.TYPE_SENSOR_INACTIVE;
+                        //if (negated) testState = Conditional.Type.SENSOR_INACTIVE;
                         break;
                     case SENSOR_INACTIVE:
                         type = SENSOR_TYPE;
-                        //if (negated) testState = Conditional.TYPE_SENSOR_ACTIVE;
+                        //if (negated) testState = Conditional.Type.SENSOR_ACTIVE;
                         break;
                     case TURNOUT_CLOSED:
                         type = TURNOUT_TYPE;
-                        //if (negated) testState = Conditional.TYPE_TURNOUT_THROWN;
+                        //if (negated) testState = Conditional.Type.TURNOUT_THROWN;
                         break;
                     case TURNOUT_THROWN:
                         type = TURNOUT_TYPE;
-                        //if (negated) testState = Conditional.TYPE_TURNOUT_CLOSED;
+                        //if (negated) testState = Conditional.Type.TURNOUT_CLOSED;
                         break;
                     case LIGHT_ON:
                         type = LIGHT_TYPE;
-                        //if (negated) testState = Conditional.TYPE_LIGHT_OFF;
+                        //if (negated) testState = Conditional.Type.LIGHT_OFF;
                         break;
                     case LIGHT_OFF:
                         type = LIGHT_TYPE;
-                        //if (negated) testState = Conditional.TYPE_LIGHT_ON;
+                        //if (negated) testState = Conditional.Type.LIGHT_ON;
                         break;
                     case SIGNAL_HEAD_LIT:
                     case SIGNAL_HEAD_RED:
@@ -1437,7 +1437,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             if (name == null || name.length() == 0) {
                 name = elt.getSysName();
             }
-            int state = elt.getState();    // actionData
+            Conditional.Type state = elt.getState();    // actionData
             int actionType = 0;
             String params = "";
             switch (elt.getType()) {
@@ -1488,7 +1488,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                 if (i == 0) {
                     opern = Conditional.Operator.NONE;
                 }
-                int state = elt.getState();
+                Conditional.Type state = elt.getState();
                 if (VETO < state) {
                     vetoList.add(new ConditionalVariable(true, opern, (state & ~VETO), name, _newRouteType));
                 }
@@ -1509,7 +1509,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                 if (i == 0) {
                     opern = Conditional.Operator.NONE;
                 }
-                int type = elt.getState();
+                Conditional.Type type = elt.getState();
                 if (VETO > type) {
                     if (Route.ONCHANGE == type) {
                         switch (elt.getType()) {
@@ -1625,7 +1625,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             int alignType = sensor.getState();
             for (int k = 0; k < _includedOutputList.size(); k++) {
                 RouteOutputElement elt = _includedOutputList.get(k);
-                int varType = 0;
+                Conditional.Type varType = Conditional.Type.NONE;
                 boolean add = (ALL_TYPE == alignType);
                 switch (elt.getType()) {
                     case SENSOR_TYPE:
@@ -1633,11 +1633,11 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                             add = true;
                         }
                         switch (elt.getState()) {
-                            case Sensor.INACTIVE:
-                                varType = Conditional.TYPE_SENSOR_INACTIVE;
+                            case SENSOR_INACTIVE:
+                                varType = Conditional.Type.SENSOR_INACTIVE;
                                 break;
-                            case Sensor.ACTIVE:
-                                varType = Conditional.TYPE_SENSOR_ACTIVE;
+                            case SENSOR_ACTIVE:
+                                varType = Conditional.Type.SENSOR_ACTIVE;
                                 break;
                             case Route.TOGGLE:
                                 add = false;
@@ -1652,11 +1652,11 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                             add = true;
                         }
                         switch (elt.getState()) {
-                            case Turnout.CLOSED:
-                                varType = Conditional.TYPE_TURNOUT_CLOSED;
+                            case TURNOUT_CLOSED:
+                                varType = Conditional.Type.TURNOUT_CLOSED;
                                 break;
-                            case Turnout.THROWN:
-                                varType = Conditional.TYPE_TURNOUT_THROWN;
+                            case TURNOUT_THROWN:
+                                varType = Conditional.Type.TURNOUT_THROWN;
                                 break;
                             case Route.TOGGLE:
                                 add = false;
@@ -1671,11 +1671,11 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                             add = true;
                         }
                         switch (elt.getState()) {
-                            case Light.ON:
-                                varType = Conditional.TYPE_LIGHT_ON;
+                            case LIGHT_ON:
+                                varType = Conditional.Type.LIGHT_ON;
                                 break;
-                            case Light.OFF:
-                                varType = Conditional.TYPE_LIGHT_OFF;
+                            case LIGHT_OFF:
+                                varType = Conditional.Type.LIGHT_OFF;
                                 break;
                             case Route.TOGGLE:
                                 add = false;
@@ -1690,38 +1690,38 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                             add = true;
                         }
                         switch (elt.getState()) {
-                            case SignalHead.DARK:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_DARK;
+                            case SIGNAL_HEAD_DARK:
+                                varType = Conditional.Type.SIGNAL_HEAD_DARK;
                                 break;
-                            case SignalHead.RED:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_RED;
+                            case SIGNAL_HEAD_RED:
+                                varType = Conditional.Type.SIGNAL_HEAD_RED;
                                 break;
-                            case SignalHead.FLASHRED:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_FLASHRED;
+                            case SIGNAL_HEAD_FLASHRED:
+                                varType = Conditional.Type.SIGNAL_HEAD_FLASHRED;
                                 break;
-                            case SignalHead.YELLOW:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_YELLOW;
+                            case SIGNAL_HEAD_YELLOW:
+                                varType = Conditional.Type.SIGNAL_HEAD_YELLOW;
                                 break;
-                            case SignalHead.FLASHYELLOW:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW;
+                            case SIGNAL_HEAD_FLASHYELLOW:
+                                varType = Conditional.Type.SIGNAL_HEAD_FLASHYELLOW;
                                 break;
-                            case SignalHead.GREEN:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_GREEN;
+                            case SIGNAL_HEAD_GREEN:
+                                varType = Conditional.Type.SIGNAL_HEAD_GREEN;
                                 break;
-                            case SignalHead.FLASHGREEN:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN;
+                            case SIGNAL_HEAD_FLASHGREEN:
+                                varType = Conditional.Type.SIGNAL_HEAD_FLASHGREEN;
                                 break;
                             case SET_SIGNAL_HELD:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_HELD;
+                                varType = Conditional.Type.SIGNAL_HEAD_HELD;
                                 break;
                             case CLEAR_SIGNAL_HELD:
                                 add = false;    // don't know how to test for this
                                 break;
                             case SET_SIGNAL_DARK:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_DARK;
+                                varType = Conditional.Type.SIGNAL_HEAD_DARK;
                                 break;
                             case SET_SIGNAL_LIT:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_LIT;
+                                varType = Conditional.Type.SIGNAL_HEAD_LIT;
                                 break;
                             default:
                                 log.warn("Unexpected state {} from elt.getState() in SIGNAL_TYPE", elt.getState());
@@ -2490,7 +2490,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         int _type;
         String _typeString;
         boolean _included;
-        int _state;
+        Conditional.Type _state;
 
         RouteElement(String sysName, String userName, int type) {
             _sysName = sysName;
@@ -2543,11 +2543,11 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             _included = include;
         }
 
-        int getState() {
+        Conditional.Type getState() {
             return _state;
         }
 
-        void setState(int state) {
+        void setState(Conditional.Type state) {
             _state = state;
         }
     }
@@ -2567,21 +2567,21 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
 
         RouteInputSensor(String sysName, String userName) {
             super(sysName, userName, SENSOR_TYPE);
-            setState(Conditional.TYPE_SENSOR_ACTIVE);
+            setState(Conditional.Type.SENSOR_ACTIVE);
         }
 
         @Override
         String getTestState() {
             switch (_state) {
-                case Conditional.TYPE_SENSOR_INACTIVE:
+                case Conditional.Type.SENSOR_INACTIVE:
                     return ON_INACTIVE;
-                case Conditional.TYPE_SENSOR_ACTIVE:
+                case Conditional.Type.SENSOR_ACTIVE:
                     return ON_ACTIVE;
                 case Route.ONCHANGE:
                     return ON_CHANGE;
-                case VETO + Conditional.TYPE_SENSOR_INACTIVE:
+                case VETO + Conditional.Type.SENSOR_INACTIVE:
                     return VETO_ON_INACTIVE;
-                case VETO + Conditional.TYPE_SENSOR_ACTIVE:
+                case VETO + Conditional.Type.SENSOR_ACTIVE:
                     return VETO_ON_ACTIVE;
                 default:
                     log.error("Unhandled test state type: {}", _state);
@@ -2593,15 +2593,15 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         @Override
         void setTestState(String state) {
             if (ON_INACTIVE.equals(state)) {
-                _state = Conditional.TYPE_SENSOR_INACTIVE;
+                _state = Conditional.Type.SENSOR_INACTIVE;
             } else if (ON_ACTIVE.equals(state)) {
-                _state = Conditional.TYPE_SENSOR_ACTIVE;
+                _state = Conditional.Type.SENSOR_ACTIVE;
             } else if (ON_CHANGE.equals(state)) {
                 _state = Route.ONCHANGE;
             } else if (VETO_ON_INACTIVE.equals(state)) {
-                _state = VETO + Conditional.TYPE_SENSOR_INACTIVE;
+                _state = VETO + Conditional.Type.SENSOR_INACTIVE;
             } else if (VETO_ON_ACTIVE.equals(state)) {
-                _state = VETO + Conditional.TYPE_SENSOR_ACTIVE;
+                _state = VETO + Conditional.Type.SENSOR_ACTIVE;
             }
         }
     }
@@ -2610,21 +2610,21 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
 
         RouteInputTurnout(String sysName, String userName) {
             super(sysName, userName, TURNOUT_TYPE);
-            setState(Conditional.TYPE_TURNOUT_CLOSED);
+            setState(Conditional.Type.TURNOUT_CLOSED);
         }
 
         @Override
         String getTestState() {
             switch (_state) {
-                case Conditional.TYPE_TURNOUT_CLOSED:
+                case Conditional.Type.TURNOUT_CLOSED:
                     return ON_CLOSED;
-                case Conditional.TYPE_TURNOUT_THROWN:
+                case Conditional.Type.TURNOUT_THROWN:
                     return ON_THROWN;
                 case Route.ONCHANGE:
                     return ON_CHANGE;
-                case VETO + Conditional.TYPE_TURNOUT_CLOSED:
+                case VETO + Conditional.Type.TURNOUT_CLOSED:
                     return VETO_ON_CLOSED;
-                case VETO + Conditional.TYPE_TURNOUT_THROWN:
+                case VETO + Conditional.Type.TURNOUT_THROWN:
                     return VETO_ON_THROWN;
                 default:
                     log.warn("Unhandled test state type: {}", _state);
@@ -2635,15 +2635,15 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         @Override
         void setTestState(String state) {
             if (ON_CLOSED.equals(state)) {
-                _state = Conditional.TYPE_TURNOUT_CLOSED;
+                _state = Conditional.Type.TURNOUT_CLOSED;
             } else if (ON_THROWN.equals(state)) {
-                _state = Conditional.TYPE_TURNOUT_THROWN;
+                _state = Conditional.Type.TURNOUT_THROWN;
             } else if (ON_CHANGE.equals(state)) {
                 _state = Route.ONCHANGE;
             } else if (VETO_ON_CLOSED.equals(state)) {
-                _state = VETO + Conditional.TYPE_TURNOUT_CLOSED;
+                _state = VETO + Conditional.Type.TURNOUT_CLOSED;
             } else if (VETO_ON_THROWN.equals(state)) {
-                _state = VETO + Conditional.TYPE_TURNOUT_THROWN;
+                _state = VETO + Conditional.Type.TURNOUT_THROWN;
             }
         }
     }
@@ -2652,21 +2652,21 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
 
         RouteInputLight(String sysName, String userName) {
             super(sysName, userName, LIGHT_TYPE);
-            setState(Conditional.TYPE_LIGHT_OFF);
+            setState(Conditional.Type.LIGHT_OFF);
         }
 
         @Override
         String getTestState() {
             switch (_state) {
-                case Conditional.TYPE_LIGHT_OFF:
+                case Conditional.Type.LIGHT_OFF:
                     return ON_UNLIT;
-                case Conditional.TYPE_LIGHT_ON:
+                case Conditional.Type.LIGHT_ON:
                     return ON_LIT;
                 case Route.ONCHANGE:
                     return ON_CHANGE;
-                case VETO + Conditional.TYPE_LIGHT_OFF:
+                case VETO + Conditional.Type.LIGHT_OFF:
                     return VETO_ON_UNLIT;
-                case VETO + Conditional.TYPE_LIGHT_ON:
+                case VETO + Conditional.Type.LIGHT_ON:
                     return VETO_ON_LIT;
                 default:
                     log.warn("Unhandled test state: {}", _state);
@@ -2678,15 +2678,15 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         @Override
         void setTestState(String state) {
             if (ON_UNLIT.equals(state)) {
-                _state = Conditional.TYPE_LIGHT_OFF;
+                _state = Conditional.Type.LIGHT_OFF;
             } else if (ON_LIT.equals(state)) {
-                _state = Conditional.TYPE_LIGHT_ON;
+                _state = Conditional.Type.LIGHT_ON;
             } else if (ON_CHANGE.equals(state)) {
                 _state = Route.ONCHANGE;
             } else if (VETO_ON_UNLIT.equals(state)) {
-                _state = VETO + Conditional.TYPE_LIGHT_OFF;
+                _state = VETO + Conditional.Type.LIGHT_OFF;
             } else if (VETO_ON_LIT.equals(state)) {
-                _state = VETO + Conditional.TYPE_LIGHT_ON;
+                _state = VETO + Conditional.Type.LIGHT_ON;
             }
         }
     }
@@ -2695,47 +2695,47 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
 
         RouteInputSignal(String sysName, String userName) {
             super(sysName, userName, SIGNAL_TYPE);
-            setState(Conditional.TYPE_SIGNAL_HEAD_LIT);
+            setState(Conditional.Type.SIGNAL_HEAD_LIT);
         }
 
         @Override
         String getTestState() {
             switch (_state) {
-                case Conditional.TYPE_SIGNAL_HEAD_RED:
+                case SIGNAL_HEAD_RED:
                     return ON_RED;
-                case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
+                case SIGNAL_HEAD_FLASHRED:
                     return ON_FLASHRED;
-                case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
+                case SIGNAL_HEAD_YELLOW:
                     return ON_YELLOW;
-                case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
+                case SIGNAL_HEAD_FLASHYELLOW:
                     return ON_FLASHYELLOW;
-                case Conditional.TYPE_SIGNAL_HEAD_GREEN:
+                case SIGNAL_HEAD_GREEN:
                     return ON_GREEN;
-                case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
+                case SIGNAL_HEAD_FLASHGREEN:
                     return ON_FLASHGREEN;
-                case Conditional.TYPE_SIGNAL_HEAD_DARK:
+                case SIGNAL_HEAD_DARK:
                     return ON_DARK;
-                case Conditional.TYPE_SIGNAL_HEAD_LIT:
+                case SIGNAL_HEAD_LIT:
                     return ON_SIGNAL_LIT;
-                case Conditional.TYPE_SIGNAL_HEAD_HELD:
+                case SIGNAL_HEAD_HELD:
                     return ON_SIGNAL_HELD;
-                case VETO + Conditional.TYPE_SIGNAL_HEAD_RED:
+                case VETO + Conditional.Type.SIGNAL_HEAD_RED:
                     return VETO_ON_RED;
-                case VETO + Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
+                case VETO + Conditional.Type.SIGNAL_HEAD_FLASHRED:
                     return VETO_ON_FLASHRED;
-                case VETO + Conditional.TYPE_SIGNAL_HEAD_YELLOW:
+                case VETO + Conditional.Type.SIGNAL_HEAD_YELLOW:
                     return VETO_ON_YELLOW;
-                case VETO + Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
+                case VETO + Conditional.Type.SIGNAL_HEAD_FLASHYELLOW:
                     return VETO_ON_FLASHYELLOW;
-                case VETO + Conditional.TYPE_SIGNAL_HEAD_GREEN:
+                case VETO + Conditional.Type.SIGNAL_HEAD_GREEN:
                     return VETO_ON_GREEN;
-                case VETO + Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
+                case VETO + Conditional.Type.SIGNAL_HEAD_FLASHGREEN:
                     return VETO_ON_FLASHGREEN;
-                case VETO + Conditional.TYPE_SIGNAL_HEAD_DARK:
+                case VETO + Conditional.Type.SIGNAL_HEAD_DARK:
                     return VETO_ON_DARK;
-                case VETO + Conditional.TYPE_SIGNAL_HEAD_LIT:
+                case VETO + Conditional.Type.SIGNAL_HEAD_LIT:
                     return VETO_ON_SIGNAL_LIT;
-                case VETO + Conditional.TYPE_SIGNAL_HEAD_HELD:
+                case VETO + Conditional.Type.SIGNAL_HEAD_HELD:
                     return VETO_ON_SIGNAL_HELD;
                 default:
                     log.warn("Unhandled test state: {}", _state);
@@ -2747,41 +2747,41 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         @Override
         void setTestState(String state) {
             if (ON_RED.equals(state)) {
-                _state = Conditional.TYPE_SIGNAL_HEAD_RED;
+                _state = Conditional.Type.SIGNAL_HEAD_RED;
             } else if (ON_FLASHRED.equals(state)) {
-                _state = Conditional.TYPE_SIGNAL_HEAD_FLASHRED;
+                _state = Conditional.Type.SIGNAL_HEAD_FLASHRED;
             } else if (ON_YELLOW.equals(state)) {
-                _state = Conditional.TYPE_SIGNAL_HEAD_YELLOW;
+                _state = Conditional.Type.SIGNAL_HEAD_YELLOW;
             } else if (ON_FLASHYELLOW.equals(state)) {
-                _state = Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW;
+                _state = Conditional.Type.SIGNAL_HEAD_FLASHYELLOW;
             } else if (ON_GREEN.equals(state)) {
-                _state = Conditional.TYPE_SIGNAL_HEAD_GREEN;
+                _state = Conditional.Type.SIGNAL_HEAD_GREEN;
             } else if (ON_FLASHGREEN.equals(state)) {
-                _state = Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN;
+                _state = Conditional.Type.SIGNAL_HEAD_FLASHGREEN;
             } else if (ON_DARK.equals(state)) {
-                _state = Conditional.TYPE_SIGNAL_HEAD_DARK;
+                _state = Conditional.Type.SIGNAL_HEAD_DARK;
             } else if (ON_SIGNAL_LIT.equals(state)) {
-                _state = Conditional.TYPE_SIGNAL_HEAD_LIT;
+                _state = Conditional.Type.SIGNAL_HEAD_LIT;
             } else if (ON_SIGNAL_HELD.equals(state)) {
-                _state = Conditional.TYPE_SIGNAL_HEAD_HELD;
+                _state = Conditional.Type.SIGNAL_HEAD_HELD;
             } else if (VETO_ON_RED.equals(state)) {
-                _state = VETO + Conditional.TYPE_SIGNAL_HEAD_RED;
+                _state = VETO + Conditional.Type.SIGNAL_HEAD_RED;
             } else if (VETO_ON_FLASHRED.equals(state)) {
-                _state = VETO + Conditional.TYPE_SIGNAL_HEAD_FLASHRED;
+                _state = VETO + Conditional.Type.SIGNAL_HEAD_FLASHRED;
             } else if (VETO_ON_YELLOW.equals(state)) {
-                _state = VETO + Conditional.TYPE_SIGNAL_HEAD_YELLOW;
+                _state = VETO + Conditional.Type.SIGNAL_HEAD_YELLOW;
             } else if (VETO_ON_FLASHYELLOW.equals(state)) {
-                _state = VETO + Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW;
+                _state = VETO + Conditional.Type.SIGNAL_HEAD_FLASHYELLOW;
             } else if (VETO_ON_GREEN.equals(state)) {
-                _state = VETO + Conditional.TYPE_SIGNAL_HEAD_GREEN;
+                _state = VETO + Conditional.Type.SIGNAL_HEAD_GREEN;
             } else if (VETO_ON_FLASHGREEN.equals(state)) {
-                _state = VETO + Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN;
+                _state = VETO + Conditional.Type.SIGNAL_HEAD_FLASHGREEN;
             } else if (VETO_ON_DARK.equals(state)) {
-                _state = VETO + Conditional.TYPE_SIGNAL_HEAD_DARK;
+                _state = VETO + Conditional.Type.SIGNAL_HEAD_DARK;
             } else if (VETO_ON_SIGNAL_LIT.equals(state)) {
-                _state = VETO + Conditional.TYPE_SIGNAL_HEAD_LIT;
+                _state = VETO + Conditional.Type.SIGNAL_HEAD_LIT;
             } else if (VETO_ON_SIGNAL_HELD.equals(state)) {
-                _state = VETO + Conditional.TYPE_SIGNAL_HEAD_HELD;
+                _state = VETO + Conditional.Type.SIGNAL_HEAD_HELD;
             }
         }
     }
@@ -2801,15 +2801,15 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
 
         RouteOutputSensor(String sysName, String userName) {
             super(sysName, userName, SENSOR_TYPE);
-            setState(Sensor.ACTIVE);
+            setState(Conditional.Type.SENSOR_ACTIVE);
         }
 
         @Override
         String getSetToState() {
             switch (_state) {
-                case Sensor.INACTIVE:
+                case SENSOR_INACTIVE:
                     return SET_TO_INACTIVE;
-                case Sensor.ACTIVE:
+                case SENSOR_ACTIVE:
                     return SET_TO_ACTIVE;
                 case Route.TOGGLE:
                     return SET_TO_TOGGLE;
@@ -2823,9 +2823,9 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         @Override
         void setSetToState(String state) {
             if (SET_TO_INACTIVE.equals(state)) {
-                _state = Sensor.INACTIVE;
+                _state = Conditional.Type.SENSOR_INACTIVE;
             } else if (SET_TO_ACTIVE.equals(state)) {
-                _state = Sensor.ACTIVE;
+                _state = Conditional.Type.SENSOR_ACTIVE;
             } else if (SET_TO_TOGGLE.equals(state)) {
                 _state = Route.TOGGLE;
             }
@@ -2836,15 +2836,15 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
 
         RouteOutputTurnout(String sysName, String userName) {
             super(sysName, userName, TURNOUT_TYPE);
-            setState(Turnout.CLOSED);
+            setState(Conditional.Type.TURNOUT_CLOSED);
         }
 
         @Override
         String getSetToState() {
             switch (_state) {
-                case Turnout.CLOSED:
+                case TURNOUT_CLOSED:
                     return SET_TO_CLOSED;
-                case Turnout.THROWN:
+                case TURNOUT_THROWN:
                     return SET_TO_THROWN;
                 case Route.TOGGLE:
                     return SET_TO_TOGGLE;
@@ -2857,9 +2857,9 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         @Override
         void setSetToState(String state) {
             if (SET_TO_CLOSED.equals(state)) {
-                _state = Turnout.CLOSED;
+                _state = Conditional.Type.TURNOUT_CLOSED;
             } else if (SET_TO_THROWN.equals(state)) {
-                _state = Turnout.THROWN;
+                _state = Conditional.Type.TURNOUT_THROWN;
             } else if (SET_TO_TOGGLE.equals(state)) {
                 _state = Route.TOGGLE;
             }
@@ -2870,15 +2870,15 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
 
         RouteOutputLight(String sysName, String userName) {
             super(sysName, userName, LIGHT_TYPE);
-            setState(Light.ON);
+            setState(Conditional.Type.LIGHT_ON);
         }
 
         @Override
         String getSetToState() {
             switch (_state) {
-                case Light.ON:
+                case LIGHT_ON:
                     return SET_TO_ON;
-                case Light.OFF:
+                case LIGHT_OFF:
                     return SET_TO_OFF;
                 case Route.TOGGLE:
                     return SET_TO_TOGGLE;
@@ -2891,9 +2891,9 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         @Override
         void setSetToState(String state) {
             if (SET_TO_ON.equals(state)) {
-                _state = Light.ON;
+                _state = Conditional.Type.LIGHT_ON;
             } else if (SET_TO_OFF.equals(state)) {
-                _state = Light.OFF;
+                _state = Conditional.Type.LIGHT_OFF;
             } else if (SET_TO_TOGGLE.equals(state)) {
                 _state = Route.TOGGLE;
             }
@@ -2904,25 +2904,25 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
 
         RouteOutputSignal(String sysName, String userName) {
             super(sysName, userName, SIGNAL_TYPE);
-            setState(SignalHead.RED);
+            setState(Conditional.Type.SIGNAL_HEAD_RED);
         }
 
         @Override
         String getSetToState() {
             switch (_state) {
-                case SignalHead.DARK:
+                case SIGNAL_HEAD_DARK:
                     return SET_TO_DARK;
-                case SignalHead.RED:
+                case SIGNAL_HEAD_RED:
                     return SET_TO_RED;
-                case SignalHead.FLASHRED:
+                case SIGNAL_HEAD_FLASHRED:
                     return SET_TO_FLASHRED;
-                case SignalHead.YELLOW:
+                case SIGNAL_HEAD_YELLOW:
                     return SET_TO_YELLOW;
-                case SignalHead.FLASHYELLOW:
+                case SIGNAL_HEAD_FLASHYELLOW:
                     return SET_TO_FLASHYELLOW;
-                case SignalHead.GREEN:
+                case SIGNAL_HEAD_GREEN:
                     return SET_TO_GREEN;
-                case SignalHead.FLASHGREEN:
+                case SIGNAL_HEAD_FLASHGREEN:
                     return SET_TO_FLASHGREEN;
                 case CLEAR_SIGNAL_HELD:
                     return SET_TO_CLEAR;
@@ -2940,19 +2940,19 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         @Override
         void setSetToState(String state) {
             if (SET_TO_DARK.equals(state)) {
-                _state = SignalHead.DARK;
+                _state = Conditional.Type.SIGNAL_HEAD_DARK;
             } else if (SET_TO_RED.equals(state)) {
-                _state = SignalHead.RED;
+                _state = Conditional.Type.SIGNAL_HEAD_RED;
             } else if (SET_TO_FLASHRED.equals(state)) {
-                _state = SignalHead.FLASHRED;
+                _state = Conditional.Type.SIGNAL_HEAD_FLASHRED;
             } else if (SET_TO_YELLOW.equals(state)) {
-                _state = SignalHead.YELLOW;
+                _state = Conditional.Type.SIGNAL_HEAD_YELLOW;
             } else if (SET_TO_FLASHYELLOW.equals(state)) {
-                _state = SignalHead.FLASHYELLOW;
+                _state = Conditional.Type.SIGNAL_HEAD_FLASHYELLOW;
             } else if (SET_TO_GREEN.equals(state)) {
-                _state = SignalHead.GREEN;
+                _state = Conditional.Type.SIGNAL_HEAD_GREEN;
             } else if (SET_TO_FLASHGREEN.equals(state)) {
-                _state = SignalHead.FLASHGREEN;
+                _state = Conditional.Type.SIGNAL_HEAD_FLASHGREEN;
             } else if (SET_TO_CLEAR.equals(state)) {
                 _state = CLEAR_SIGNAL_HELD;
             } else if (SET_TO_LIT.equals(state)) {

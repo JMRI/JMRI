@@ -5808,9 +5808,9 @@ public class LayoutEditorTools {
                 log.error("Trouble creating conditional " + cName + " while setting up Logix.");
                 return "";
             }
-            int type = Conditional.TYPE_TURNOUT_THROWN;
+            Conditional.Type type = Conditional.Type.TURNOUT_THROWN;
             if (!continuing) {
-                type = Conditional.TYPE_TURNOUT_CLOSED;
+                type = Conditional.Type.TURNOUT_CLOSED;
             }
             List<ConditionalVariable> variableList = c.getCopyOfStateVariables();
             variableList.add(new ConditionalVariable(false, Conditional.Operator.AND,
@@ -13303,17 +13303,17 @@ public class LayoutEditorTools {
                 return "";
             }
         }
-        int type = Conditional.TYPE_TURNOUT_THROWN;
+        Conditional.Type type = Conditional.Type.TURNOUT_THROWN;
         if (nearState == Turnout.CLOSED) {
-            type = Conditional.TYPE_TURNOUT_CLOSED;
+            type = Conditional.Type.TURNOUT_CLOSED;
         }
         ArrayList<ConditionalVariable> variableList = new ArrayList<>();
         variableList.add(new ConditionalVariable(false, Conditional.Operator.AND,
                 type, turnoutName, true));
 
-        type = Conditional.TYPE_TURNOUT_THROWN;
+        type = Conditional.Type.TURNOUT_THROWN;
         if (farState == Turnout.CLOSED) {
-            type = Conditional.TYPE_TURNOUT_CLOSED;
+            type = Conditional.Type.TURNOUT_CLOSED;
         }
         variableList.add(new ConditionalVariable(false, Conditional.Operator.AND,
                 type, farTurnoutName, true));

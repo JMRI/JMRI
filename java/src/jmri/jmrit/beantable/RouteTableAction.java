@@ -1497,11 +1497,11 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                 switch (rTurnout.getState()) {
                     case Turnout.CLOSED:
                         variableList.add(new ConditionalVariable(false, Conditional.Operator.AND,
-                                Conditional.TYPE_TURNOUT_CLOSED, name, true));
+                                Conditional.Type.TURNOUT_CLOSED, name, true));
                         break;
                     case Turnout.THROWN:
                         variableList.add(new ConditionalVariable(false, Conditional.Operator.AND,
-                                Conditional.TYPE_TURNOUT_THROWN, name, true));
+                                Conditional.Type.TURNOUT_THROWN, name, true));
                         break;
                     default:
                         log.warn("Turnout {} was {}, neither CLOSED nor THROWN; not handled", name, rTurnout.getState()); // NOI18N
@@ -1531,9 +1531,9 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             ArrayList<ConditionalVariable> variableList = new ArrayList<>();
             //String devName = cTurnout.getText();
             int mode = turnoutModeFromBox(cTurnoutStateBox);
-            int type = Conditional.TYPE_TURNOUT_CLOSED;
+            Conditional.Type type = Conditional.Type.TURNOUT_CLOSED;
             if (mode == Route.ONTHROWN) {
-                type = Conditional.TYPE_TURNOUT_THROWN;
+                type = Conditional.Type.TURNOUT_THROWN;
             }
             variableList.add(new ConditionalVariable(false, Conditional.Operator.NONE,
                     type, turnoutLockSystemName, true));
@@ -1733,31 +1733,31 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         int mode = sensorModeFromBox(sensorbox);
         boolean trigger = true;
         boolean negated = false;
-        int type;
+        Conditional.Type type;
         switch (mode) {
             case Route.ONACTIVE:    // route fires if sensor goes active
                 if (makeVeto || onChange) {
                     return null;
                 }
-                type = Conditional.TYPE_SENSOR_ACTIVE;
+                type = Conditional.Type.SENSOR_ACTIVE;
                 break;
             case Route.ONINACTIVE:  // route fires if sensor goes inactive
                 if (makeVeto || onChange) {
                     return null;
                 }
-                type = Conditional.TYPE_SENSOR_INACTIVE;
+                type = Conditional.Type.SENSOR_INACTIVE;
                 break;
             case Route.ONCHANGE:  // route fires if sensor goes active or inactive
                 if (makeVeto || !onChange) {
                     return null;
                 }
-                type = Conditional.TYPE_SENSOR_ACTIVE;
+                type = Conditional.Type.SENSOR_ACTIVE;
                 break;
             case Route.VETOACTIVE:  // sensor must be active for route to fire
                 if (!makeVeto || onChange) {
                     return null;
                 }
-                type = Conditional.TYPE_SENSOR_ACTIVE;
+                type = Conditional.Type.SENSOR_ACTIVE;
                 negated = true;
                 trigger = false;
                 break;
@@ -1765,7 +1765,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                 if (!makeVeto || onChange) {
                     return null;
                 }
-                type = Conditional.TYPE_SENSOR_INACTIVE;
+                type = Conditional.Type.SENSOR_INACTIVE;
                 negated = true;
                 trigger = false;
                 break;
@@ -1785,7 +1785,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         String devName = jmriBox.getSelectedDisplayName();
         int mode = turnoutModeFromBox(box);
         Operator oper = Conditional.Operator.AND;
-        int type;
+        Conditional.Type type;
         boolean negated = false;
         boolean trigger = true;
         switch (mode) {
@@ -1793,25 +1793,25 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                 if (makeVeto || onChange) {
                     return null;
                 }
-                type = Conditional.TYPE_TURNOUT_CLOSED;
+                type = Conditional.Type.TURNOUT_CLOSED;
                 break;
             case Route.ONTHROWN:  // route fires if turnout goes thrown
                 if (makeVeto || onChange) {
                     return null;
                 }
-                type = Conditional.TYPE_TURNOUT_THROWN;
+                type = Conditional.Type.TURNOUT_THROWN;
                 break;
             case Route.ONCHANGE:    // route fires if turnout goes active or inactive
                 if (makeVeto || !onChange) {
                     return null;
                 }
-                type = Conditional.TYPE_TURNOUT_CLOSED;
+                type = Conditional.Type.TURNOUT_CLOSED;
                 break;
             case Route.VETOCLOSED:  // turnout must be closed for route to fire
                 if (!makeVeto || onChange) {
                     return null;
                 }
-                type = Conditional.TYPE_TURNOUT_CLOSED;
+                type = Conditional.Type.TURNOUT_CLOSED;
                 trigger = false;
                 negated = true;
                 break;
@@ -1819,7 +1819,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                 if (!makeVeto || onChange) {
                     return null;
                 }
-                type = Conditional.TYPE_TURNOUT_THROWN;
+                type = Conditional.Type.TURNOUT_THROWN;
                 trigger = false;
                 negated = true;
                 break;

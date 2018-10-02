@@ -746,7 +746,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
         cancelPressed();    // Make sure that there are no active edit sessions
         _showReminder = true;
-        _curVariableItem = Conditional.Type.NONE;
+        _curVariableItem = Conditional.ItemType.NONE;
         ConditionalVariable variable = new ConditionalVariable();
         _variableList.add(variable);
         _newVariableItem = true;
@@ -2539,7 +2539,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 }
 
                 setVariableNameBox(itemType);
-                if (testType == Conditional.TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS) {
+                if (testType == Conditional.Type.SIGNAL_HEAD_APPEARANCE_EQUALS) {
                     makeDetailGrid("SignalAspectVariable");  // NOI18N
                 } else {
                     makeDetailGrid("StandardVariable");  // NOI18N
@@ -2803,9 +2803,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      *
      * @param testType One of the four types
      */
-    private void compareTypeChanged(int testType) {
-        if ((testType == Conditional.TYPE_MEMORY_COMPARE)
-                || (testType == Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE)) {
+    private void compareTypeChanged(Conditional.Type testType) {
+        if ((testType == Conditional.Type.MEMORY_COMPARE)
+                || (testType == Conditional.Type.MEMORY_COMPARE_INSENSITIVE)) {
             _variableMemoryValueLabel.setText(Bundle.getMessage("LabelMemoryValue"));  // NOI18N
             _variableMemoryValueLabel.setToolTipText(Bundle.getMessage("DataHintMemory"));  // NOI18N
         } else {
@@ -2882,40 +2882,40 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         updateVariableNegation();
         _curVariable.setTriggerActions(_variableTriggerActions.isSelected());
 
-        int itemType = _variableItemBox.getSelectedIndex();
+        Conditional.ItemType itemType = _variableItemBox.getSelectedIndex();
         Conditional.Type testType = Conditional.Type.NONE;
         switch (itemType) {
-            case Conditional.ITEM_TYPE_SENSOR:
+            case SENSOR:
                 testType = Conditional.ITEM_TO_SENSOR_TEST[_variableStateBox.getSelectedIndex()];
                 break;
-            case Conditional.ITEM_TYPE_TURNOUT:
+            case TURNOUT:
                 testType = Conditional.ITEM_TO_TURNOUT_TEST[_variableStateBox.getSelectedIndex()];
                 break;
-            case Conditional.ITEM_TYPE_LIGHT:
+            case LIGHT:
                 testType = Conditional.ITEM_TO_LIGHT_TEST[_variableStateBox.getSelectedIndex()];
                 break;
-            case Conditional.ITEM_TYPE_SIGNALHEAD:
+            case SIGNALHEAD:
                 testType = Conditional.ITEM_TO_SIGNAL_HEAD_TEST[_variableStateBox.getSelectedIndex()];
                 break;
-            case Conditional.ITEM_TYPE_SIGNALMAST:
+            case SIGNALMAST:
                 testType = Conditional.ITEM_TO_SIGNAL_MAST_TEST[_variableStateBox.getSelectedIndex()];
                 break;
-            case Conditional.ITEM_TYPE_MEMORY:
+            case MEMORY:
                 testType = Conditional.ITEM_TO_MEMORY_TEST[_variableCompareTypeBox.getSelectedIndex()];
                 break;
-            case Conditional.ITEM_TYPE_CONDITIONAL:
+            case CONDITIONAL:
                 testType = Conditional.ITEM_TO_CONDITIONAL_TEST[_variableStateBox.getSelectedIndex()];
                 break;
-            case Conditional.ITEM_TYPE_WARRANT:
+            case WARRANT:
                 testType = Conditional.ITEM_TO_WARRANT_TEST[_variableStateBox.getSelectedIndex()];
                 break;
-            case Conditional.ITEM_TYPE_CLOCK:
-                testType = Conditional.TYPE_FAST_CLOCK_RANGE;
+            case CLOCK:
+                testType = Conditional.Type.FAST_CLOCK_RANGE;
                 break;
-            case Conditional.ITEM_TYPE_OBLOCK:
-                testType = Conditional.TYPE_BLOCK_STATUS_EQUALS;
+            case OBLOCK:
+                testType = Conditional.Type.BLOCK_STATUS_EQUALS;
                 break;
-            case Conditional.ITEM_TYPE_ENTRYEXIT:
+            case ENTRYEXIT:
                 testType = Conditional.ITEM_TO_ENTRYEXIT_TEST[_variableStateBox.getSelectedIndex()];
                 break;
             default:
@@ -2927,19 +2927,19 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _curVariable.setType(testType);
         log.debug("validateVariable: itemType= {}, testType= {}", itemType, testType);  // NOI18N
         switch (itemType) {
-            case Conditional.ITEM_TYPE_SENSOR:
+            case SENSOR:
                 name = validateSensorReference(name);
                 if (name == null) {
                     return false;
                 }
                 break;
-            case Conditional.ITEM_TYPE_TURNOUT:
+            case TURNOUT:
                 name = validateTurnoutReference(name);
                 if (name == null) {
                     return false;
                 }
                 break;
-            case Conditional.ITEM_TYPE_CONDITIONAL:
+            case CONDITIONAL:
                 name = validateConditionalReference(name);
                 if (name == null) {
                     return false;
@@ -2956,20 +2956,20 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     _curVariable.setGuiName(uName);
                 }
                 break;
-            case Conditional.ITEM_TYPE_LIGHT:
+            case LIGHT:
                 name = validateLightReference(name);
                 if (name == null) {
                     return false;
                 }
                 break;
-            case Conditional.ITEM_TYPE_MEMORY:
+            case MEMORY:
                 name = validateMemoryReference(name);
                 if (name == null) {
                     return false;
                 }
                 String name2 = _variableData1Field.getText();
-                if ((testType == Conditional.TYPE_MEMORY_COMPARE)
-                        || (testType == Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE)) {
+                if ((testType == Conditional.Type.MEMORY_COMPARE)
+                        || (testType == Conditional.Type.MEMORY_COMPARE_INSENSITIVE)) {
                     name2 = validateMemoryReference(name2);
                     if (name2 == null) {
                         return false;
@@ -2978,7 +2978,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 _curVariable.setDataString(name2);
                 _curVariable.setNum1(_variableCompareOpBox.getSelectedIndex() + 1);
                 break;
-            case Conditional.ITEM_TYPE_CLOCK:
+            case CLOCK:
                 int beginTime = parseTime(_variableData1Field.getText());
                 if (beginTime < 0) {
                     // parse error occurred - message has been sent
@@ -2993,12 +2993,12 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 _curVariable.setNum2(endTime);
                 name = "Clock";  // NOI18N
                 break;
-            case Conditional.ITEM_TYPE_SIGNALHEAD:
+            case SIGNALHEAD:
                 name = validateSignalHeadReference(name);
                 if (name == null) {
                     return false;
                 }
-                if (testType == Conditional.TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS) {
+                if (testType == Conditional.Type.SIGNAL_HEAD_APPEARANCE_EQUALS) {
                     String appStr = (String) _variableSignalBox.getSelectedItem();
                     Conditional.Type type = ConditionalVariable.stringToVariableTest(appStr);
                     if (type == Conditional.Type.ERROR) {
@@ -3013,12 +3013,12 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                             name, testType, _variableSignalBox.getSelectedItem()); // NOI18N
                 }
                 break;
-            case Conditional.ITEM_TYPE_SIGNALMAST:
+            case SIGNALMAST:
                 name = validateSignalMastReference(name);
                 if (name == null) {
                     return false;
                 }
-                if (testType == Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS) {
+                if (testType == Conditional.Type.SIGNAL_MAST_ASPECT_EQUALS) {
                     if (_variableSignalBox.getSelectedIndex() < 0) {
                         JOptionPane.showMessageDialog(_editLogixFrame,
                                 Bundle.getMessage("ErrorAspect"), Bundle.getMessage("ErrorTitle"), // NOI18N
@@ -3030,13 +3030,13 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     //                _curVariable.setType(ConditionalVariable.stringToVariableTest(appStr));
                 }
                 break;
-            case Conditional.ITEM_TYPE_WARRANT:
+            case WARRANT:
                 name = validateWarrantReference(name);
                 if (name == null) {
                     return false;
                 }
                 break;
-            case Conditional.ITEM_TYPE_OBLOCK:
+            case OBLOCK:
                 name = validateOBlockReference(name);
                 if (name == null) {
                     return false;
@@ -3046,7 +3046,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 log.debug("OBlock \"{}\"of type '{}' _variableSignalBox.getSelectedItem()= {}",
                         name, testType, _variableSignalBox.getSelectedItem()); // NOI18N
                 break;
-            case Conditional.ITEM_TYPE_ENTRYEXIT:
+            case ENTRYEXIT:
                 name = validateEntryExitReference(name);
                 if (name == null) {
                     return false;
@@ -3160,14 +3160,14 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     _variableItemBox.getSelectedIndex(),
                     _variableStateBox.getSelectedIndex());
 
-            int itemType = _variableItemBox.getSelectedIndex();
+            Conditional.ItemType itemType = _variableItemBox.getSelectedIndex();
 
             if (_variableStateBox.getSelectedIndex() == 1) {
-                if (itemType == Conditional.ITEM_TYPE_SIGNALHEAD) {
+                if (itemType == Conditional.ItemType.SIGNALHEAD) {
                     loadJComboBoxWithHeadAppearances(_variableSignalBox, _variableNameField.getText().trim());
                     _detailGrid.setVisible(false);
                     makeDetailGrid("SignalAspectVariable");  // NOI18N
-                } else if (itemType == Conditional.ITEM_TYPE_SIGNALMAST) {
+                } else if (itemType == Conditional.ItemType.SIGNALMAST) {
                     loadJComboBoxWithMastAspects(_variableSignalBox, _variableNameField.getText().trim());
                     _detailGrid.setVisible(false);
                     makeDetailGrid("SignalAspectVariable");  // NOI18N
