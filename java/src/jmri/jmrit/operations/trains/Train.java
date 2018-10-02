@@ -1788,7 +1788,7 @@ public class Train implements java.beans.PropertyChangeListener {
                             }
                             // allow car to return to staging?
                             if (isAllowReturnToStagingEnabled()
-                                    && car.getTrack().getTrackType().equals(Track.STAGING)
+                                    && car.getTrack().isStaging()
                                     && rldest.getLocation() == car.getLocation()) {
                                 if (addToReport) {
                                     TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle

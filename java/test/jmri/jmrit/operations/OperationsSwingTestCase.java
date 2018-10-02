@@ -100,7 +100,7 @@ public class OperationsSwingTestCase {
     }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
 
 
@@ -118,7 +118,7 @@ public class OperationsSwingTestCase {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 }

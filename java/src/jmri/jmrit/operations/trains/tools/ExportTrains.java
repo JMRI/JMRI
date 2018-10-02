@@ -43,7 +43,7 @@ public class ExportTrains extends XmlFile {
      * Store the all of the operation car objects in the default place,
      * including making a backup if needed
      */
-    public void writeOperationsCarFile() {
+    public void writeOperationsTrainsFile() {
         makeBackupFile(defaultOperationsFilename());
         try {
             if (!checkFile(defaultOperationsFilename())) {
