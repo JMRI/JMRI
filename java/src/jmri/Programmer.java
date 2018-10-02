@@ -278,7 +278,7 @@ public interface Programmer {
     }
 
     /**
-     * wrapper to call {@link #ProgListener.programmingOpReply} that verifies
+     * wrapper to call {@link ProgListener#programmingOpReply()} that verifies
      * the specified progListener is not null.
      *
      * @param p listener to notify
