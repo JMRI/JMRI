@@ -89,7 +89,7 @@ public class LocoNetSlot {
         if ( l.getOpCode() == LnConstants.OPC_SL_RD_DATA || l.getOpCode() == LnConstants.OPC_WR_SL_DATA)  {
             slot = l.getElement(2);
         } else if (l.getOpCode() == LnConstants.OPC_EXP_RD_SL_DATA || l.getOpCode() == LnConstants.OPC_EXP_WR_SL_DATA) {
-            slot = ( (l.getElement(1) & 0x03 ) *128) + l.getElement(2);
+            slot = ( (l.getElement(2) & 0x03 ) *128) + l.getElement(3);
         } else {
            throw new LocoNetException("Invalid loconet message for setting up a slot");
         }
@@ -796,7 +796,9 @@ public class LocoNetSlot {
         // sort out valid messages, handle
         switch (l.getOpCode()) {
             case LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR:  //speed and functions
-                if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_SPEED) == 0) {
+                if (((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_SPEED) == 0)
+                        && (((stat & LnConstants.CONSIST_MASK) != LnConstants.CONSIST_MID) &&
+                        ((stat & LnConstants.CONSIST_MASK) != LnConstants.CONSIST_SUB))) {
                     // speed and direction
                     spd = l.getElement(4);
                     dirf = dirf & 0b11011111;
@@ -890,7 +892,8 @@ public class LocoNetSlot {
                         // unconsisting returns slot contents so do nothing to this slot
                     } else if ((l.getElement(3) & 0b01110000) == 0b01000000) {
                         //consisting do something?
-                        //TODO consisting
+                        //Set From slot as slave to slot as master
+                        stat = stat | LnConstants.CONSIST_TOP;
                     } else if (src == 0 && dest == 0) {
                         stat = stat & ~LnConstants.LOCO_IN_USE;
                         log.info("set idle");
@@ -1257,7 +1260,8 @@ public class LocoNetSlot {
         l.setElement(9, (isF12() ? 0b00010000 : 0x00 )
                 | (isF20() ? 0b00100000 : 0x00)
                 | (isF28() ? 0b01000000 : 0x00));
-        l.setElement(10, ( isF0() ? 0b00010000 : 0x00)
+        l.setElement(10, ( isForward() ? 0x00 : 0x00100000)
+                | (isF0() ? 0b00010000 : 0x00)
                 | (isF1() ? 0b00000001 : 0x00)
                 | (isF2() ? 0b00000010 : 0x00)
                 | (isF3() ? 0b00000100 : 0x00)
