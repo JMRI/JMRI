@@ -194,7 +194,7 @@ public class StreamConfigPane extends JmrixConfigPane {
                     p.addComboBoxLastSelection((String) manuBox.getSelectedItem(), (String) modeBox.getSelectedItem());
                 }
             }
-            selection();
+            select();
         });
         JPanel manufacturerPanel = new JPanel();
         manufacturerPanel.add(manuBox);
@@ -212,7 +212,7 @@ public class StreamConfigPane extends JmrixConfigPane {
         scroll.setBorder(BorderFactory.createEmptyBorder());
         add(scroll, BorderLayout.CENTER);
 
-        selection();  // first time through, pretend we've selected a value
+        select();  // first time through, pretend we've selected a value
         // to load the rest of the GUI
     }
 
@@ -255,7 +255,7 @@ public class StreamConfigPane extends JmrixConfigPane {
         }
     }
 
-    void selection() {
+    void select() {
         ConnectionConfig old = this.ccCurrent;
         int current = modeBox.getSelectedIndex();
         details.removeAll();
