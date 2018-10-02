@@ -2,7 +2,8 @@ package jmri.jmrit.operations;
 
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * Common setup and tear down for operation tests.
@@ -10,16 +11,14 @@ import junit.framework.TestCase;
  * @author Dan Boudreau Copyright (C) 2015
  * 
  */
-public class OperationsTestCase extends TestCase {
+public class OperationsTestCase {
 
-    public OperationsTestCase(String s) {
-        super(s);
-    }
+//    public OperationsTestCase(String s) {
+//        super(s);
+//    }
 
-    // Ensure minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
 
 
@@ -36,10 +35,8 @@ public class OperationsTestCase extends TestCase {
         JUnitOperationsUtil.resetOperationsManager();
     }
 
-    // The minimal setup for log4J
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 }
