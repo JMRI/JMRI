@@ -60,13 +60,7 @@ public class StreamConfigPane extends JmrixConfigPane {
      *         index did not match an existing connection configuration
      */
     public static synchronized StreamConfigPane createPanel(XBeeNode node) {
-        ConnectionConfig c = null;
-        try {
-            c = InstanceManager.getDefault(ConnectionConfigManager.class).getConnections(index);
-            log.debug("connection {} is {}", index, c);
-        } catch (IndexOutOfBoundsException ex) {
-            log.debug("connection {} is null, creating new one", index);
-        }
+        ConnectionConfig c = node.getConnectionConfig();
         return createPanel(c);
     }
 
