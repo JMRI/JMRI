@@ -1,7 +1,7 @@
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -13,7 +13,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class ExportLocationsTest extends OperationsSwingTestCase {
+public class ExportLocationsTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {

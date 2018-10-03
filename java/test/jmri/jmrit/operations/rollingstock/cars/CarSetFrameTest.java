@@ -3,7 +3,7 @@ package jmri.jmrit.operations.rollingstock.cars;
 import java.awt.GraphicsEnvironment;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assume;
@@ -15,7 +15,7 @@ import org.junit.Test;
  *
  * @author	Dan Boudreau Copyright (C) 2009
  */
-public class CarSetFrameTest extends OperationsSwingTestCase {
+public class CarSetFrameTest extends OperationsTestCase {
 
     @Test
     public void testCarSetFrame() {

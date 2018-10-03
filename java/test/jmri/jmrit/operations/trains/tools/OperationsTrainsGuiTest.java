@@ -2,7 +2,7 @@ package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Color;
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainIcon;
 import org.junit.After;
@@ -16,7 +16,7 @@ import org.junit.Test;
  *
  * @author Dan Boudreau Copyright (C) 2009
  */
-public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
+public class OperationsTrainsGuiTest extends OperationsTestCase {
 
     // test TrainIcon attributes
     @Test
