@@ -24,7 +24,6 @@ import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -4499,11 +4498,11 @@ public class TrainTest extends OperationsTestCase {
     // Ensure minimal setup for log4J
     @Override
     @Before
-    public void setUp() throws Exception {
-        JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-
-        JUnitOperationsUtil.resetOperationsManager();
+    public void setUp() {
+        super.setUp();
+//        jmri.util.JUnitUtil.resetProfileManager();
+//
+//        JUnitOperationsUtil.resetOperationsManager();
 
         tmanager = InstanceManager.getDefault(TrainManager.class);
         rmanager = InstanceManager.getDefault(RouteManager.class);
@@ -4528,14 +4527,11 @@ public class TrainTest extends OperationsTestCase {
         Setup.setCarMoves(7); // set default to 7 moves per location
     }
 
-    public TrainTest(String s) {
-        super(s);
-    }
 
     @Override
     @After
-    public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
+    public void tearDown() {
+        super.tearDown();
     }
 
 }

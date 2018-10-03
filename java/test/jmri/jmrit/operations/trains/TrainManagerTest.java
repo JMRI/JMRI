@@ -7,7 +7,6 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
-import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -203,20 +202,15 @@ public class TrainManagerTest extends OperationsTestCase {
     // Ensure minimal setup for log4J
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
-        JUnitUtil.setUp();
 
         jmri.util.JUnitOperationsUtil.initOperationsData();
     }
 
-    public TrainManagerTest(String s) {
-        super(s);
-    }
-
     @After
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 

@@ -306,7 +306,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
 
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
         // add type names
         CarTypes ct = InstanceManager.getDefault(CarTypes.class);
@@ -319,7 +319,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
 
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }
