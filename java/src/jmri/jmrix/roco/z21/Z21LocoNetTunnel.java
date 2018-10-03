@@ -63,7 +63,7 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
         // Then use those pipes as the input and output pipes for
         // a new LnStreamPortController object.
         LocoNetSystemConnectionMemo lnMemo = new LocoNetSystemConnectionMemo();
-        setStreamPortController(new LnStreamPortController(lnMemo,pin, pout, "None"));
+        setStreamPortController(new Z21LnStreamPortController(lnMemo,pin, pout, "None"));
 
         // register as a Z21Listener, so we can receive replies
         _memo.getTrafficController().addz21Listener(this);
