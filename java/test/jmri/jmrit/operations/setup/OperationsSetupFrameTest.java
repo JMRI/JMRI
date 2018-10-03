@@ -161,14 +161,14 @@ public class OperationsSetupFrameTest extends OperationsSwingTestCase {
     // The minimal setup for log4J
     @Before
     @Override
-    public void setUp() throws Exception{
+    public void setUp(){
         super.setUp();
         new Setup();
     }
 
     @After
     @Override
-    public void tearDown() throws Exception{
+    public void tearDown(){
         super.tearDown();
     }
 

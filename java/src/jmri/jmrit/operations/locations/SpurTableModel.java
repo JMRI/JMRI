@@ -62,7 +62,7 @@ public class SpurTableModel extends TrackTableModel {
         super.propertyChange(e);
         if (e.getSource().getClass().equals(Track.class)) {
             Track track = ((Track) e.getSource());
-            if (track.getTrackType().equals(Track.SPUR)) {
+            if (track.isSpur()) {
                 int row = tracksList.indexOf(track);
                 if (Control.SHOW_PROPERTY) {
                     log.debug("Update spur table row: {} track: {}", row, track.getName());

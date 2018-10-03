@@ -1,9 +1,10 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations RollingStock Cars Kernel class Last manually cross-checked
@@ -15,6 +16,7 @@ import org.junit.Assert;
  */
 public class KernelTest extends OperationsTestCase {
 
+    @Test
     public void testKernel() {
         Kernel k1 = new Kernel("TESTKERNEL");
         Assert.assertEquals("Kernel Name", "TESTKERNEL", k1.getName());
@@ -70,6 +72,7 @@ public class KernelTest extends OperationsTestCase {
 
     }
 
+    @Test
     public void testCarKernel() {
         Kernel kold = new Kernel("TESTKERNELOLD");
         Assert.assertEquals("Kernel Name old", "TESTKERNELOLD", kold.getName());
@@ -136,28 +139,14 @@ public class KernelTest extends OperationsTestCase {
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
     }
 
-    public KernelTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", KernelTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(KernelTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
        super.tearDown();
     }
 }

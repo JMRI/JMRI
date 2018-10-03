@@ -11,25 +11,28 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class CommonConductorYardmasterPanelTest  {
+public class CommonConductorYardmasterPanelTest {
 
     protected CommonConductorYardmasterPanel p = null;
 
     @Test
-    public void testCtor(){
-       Assert.assertNotNull("exists",p);
+    public void testCtor() {
+        Assert.assertNotNull("exists", p);
     }
 
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        p = new CommonConductorYardmasterPanel(){
+        JUnitUtil.setUp();
+        p = new CommonConductorYardmasterPanel() {
             @Override
-            protected void update(){
+            public void update() {
             }
         };
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
 }

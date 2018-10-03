@@ -85,7 +85,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         }
     }
 
-    List<ScheduleItem> _list = new ArrayList<ScheduleItem>();
+    List<ScheduleItem> _list = new ArrayList<>();
 
     protected void initTable(ScheduleEditFrame frame, JTable table, Schedule schedule, Location location, Track track) {
         _schedule = schedule;
@@ -390,7 +390,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     String[] randomValues = {ScheduleItem.NONE, "50", "30", "25", "20", "15", "10", "5", "2", "1"}; // NOI18N
 
     private JComboBox<String> getRandomComboBox(ScheduleItem si) {
-        JComboBox<String> cb = new JComboBox<String>();
+        JComboBox<String> cb = new JComboBox<>();
         for (String item : randomValues) {
             cb.addItem(item);
         }
@@ -648,7 +648,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         List<Track> tracks = loc.getTrackList();
         for (Track track : tracks) {
             if (!track.acceptsTypeName(carType) ||
-                    track.getTrackType().equals(Track.STAGING) ||
+                    track.isStaging() ||
                     (!carRoad.equals(ScheduleItem.NONE) && !track.acceptsRoadName(carRoad)) ||
                     (!carLoad.equals(ScheduleItem.NONE) && !track.acceptsLoad(carLoad, carType))) {
                 cb.removeItem(track);

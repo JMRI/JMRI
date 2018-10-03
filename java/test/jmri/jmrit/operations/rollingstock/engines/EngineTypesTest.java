@@ -1,9 +1,10 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations RollingStock Engine class Last manually
@@ -20,12 +21,14 @@ public class EngineTypesTest extends OperationsTestCase {
 
     // test EngineTypes Class
     // test EngineTypes creation
+    @Test
     public void testEngineTypesCreate() {
         EngineTypes et1 = new EngineTypes();
         Assert.assertNotNull("exists", et1);
     }
 
     // test EngineTypes public constants
+    @Test
     public void testEngineTypesConstants() {
         EngineTypes et1 = new EngineTypes();
 
@@ -35,6 +38,7 @@ public class EngineTypesTest extends OperationsTestCase {
     }
 
     // test EngineTypes Names
+    @Test
     public void testEngineTypesNames() {
         EngineTypes et1 = new EngineTypes();
 
@@ -60,28 +64,14 @@ public class EngineTypesTest extends OperationsTestCase {
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
     }
 
-    public EngineTypesTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", EngineTypesTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(EngineTypesTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
        super.tearDown();
     }
 

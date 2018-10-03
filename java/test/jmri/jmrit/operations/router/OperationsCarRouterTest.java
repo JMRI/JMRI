@@ -4370,7 +4370,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
 
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
         
         // change report level to increase test coverage
@@ -4387,18 +4387,13 @@ public class OperationsCarRouterTest extends OperationsTestCase {
         // register the car and engine types used
         ct.addName("Boxcar");
         ct.addName(Bundle.getMessage("Caboose"));
-        ct.addName("Flat");
-        
-    }
-
-    public OperationsCarRouterTest(String s) {
-        super(s);
+        ct.addName("Flat");   
     }
 
     // The minimal setup for log4J
     @Override
     @After
-    protected void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }
