@@ -9,8 +9,8 @@ import jmri.jmrit.operations.routes.RouteManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.swing.JemmyUtil;
 import jmri.util.ThreadingUtil;
+import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -497,14 +497,14 @@ public class TrainEditFrameTest extends OperationsSwingTestCase {
     // The minimal setup for log4J
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
         loadTrains();
     }
 
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 

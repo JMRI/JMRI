@@ -321,7 +321,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
                 return getModifiedString(track.getLoadNames().length, track.getLoadOption().equals(Track.ALL_LOADS),
                         track
                                 .getLoadOption().equals(Track.INCLUDE_LOADS)) +
-                        (track.getTrackType().equals(Track.SPUR) && track.isHoldCarsWithCustomLoadsEnabled() ? " H"
+                        (track.isSpur() && track.isHoldCarsWithCustomLoadsEnabled() ? " H"
                                 : "");
             case SHIP_COLUMN:
                 return getModifiedString(track.getShipLoadNames().length,

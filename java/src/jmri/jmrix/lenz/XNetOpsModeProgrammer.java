@@ -71,7 +71,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         tc.sendXNetMessage(msg, this);
         /* We can trigger a read to an LRC120, but the information is not
          currently sent back to us via the XpressNet */
-        p.programmingOpReply(CV, jmri.ProgListener.NotImplemented);
+        notifyProgListenerEnd(p,CV,jmri.ProgListener.NotImplemented);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         tc.sendXNetMessage(msg, this);
         /* We can trigger a read to an LRC120, but the information is not
          currently sent back to us via the XpressNet */
-        p.programmingOpReply(val, jmri.ProgListener.NotImplemented);
+        notifyProgListenerEnd(p,val,jmri.ProgListener.NotImplemented);
     }
 
     /**
@@ -133,7 +133,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
                 new jmri.util.WaitHandler(this,250);
                 progState = NOTPROGRAMMING;
                 stopTimer();
-                progListener.programmingOpReply(value, jmri.ProgListener.OK);
+                notifyProgListenerEnd(progListener,value,jmri.ProgListener.OK);
             } else {
                 /* this is an error */
                 if (l.isRetransmittableErrorMsg()) {
@@ -143,12 +143,12 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
                         && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
                     progState = NOTPROGRAMMING;
                     stopTimer();
-                    progListener.programmingOpReply(value, jmri.ProgListener.NotImplemented);
+                    notifyProgListenerEnd(progListener,value,jmri.ProgListener.NotImplemented);
                 } else {
                     /* this is an unknown error */
                     progState = NOTPROGRAMMING;
                     stopTimer();
-                    progListener.programmingOpReply(value, jmri.ProgListener.UnknownError);
+                    notifyProgListenerEnd(progListener,value,jmri.ProgListener.UnknownError);
                 }
             }
         }
@@ -194,9 +194,9 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
             // perhaps no loco present? Fail back to end of programming
             progState = NOTPROGRAMMING;
             if (getCanRead()) {
-                progListener.programmingOpReply(value, jmri.ProgListener.FailedTimeout);
+               notifyProgListenerEnd(progListener,value,jmri.ProgListener.FailedTimeout);
             } else {
-                progListener.programmingOpReply(value, jmri.ProgListener.OK);
+               notifyProgListenerEnd(progListener,value,jmri.ProgListener.OK);
             }
         }
     }

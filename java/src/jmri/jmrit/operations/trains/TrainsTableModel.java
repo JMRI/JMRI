@@ -16,7 +16,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import jmri.InstanceManager;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
-import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.RouteEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -483,7 +482,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         return (Setup.isStagingTrackImmediatelyAvail() &&
                 !train.isTrainEnRoute() &&
                 train.getDepartureTrack() != null &&
-                train.getDepartureTrack().getTrackType().equals(Track.STAGING) &&
+                train.getDepartureTrack().isStaging() &&
                 train.getDepartureTrack() != train.getTerminationTrack() &&
                 train.getDepartureTrack().getDropRS() > 0);
     }
