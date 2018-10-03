@@ -763,7 +763,7 @@ public class ConditionalVariableTest {
         Assert.assertTrue("getItemTypeString() returns correct value",
                 "(case sensitive) Memory".equals(Conditional.Type.MEMORY_COMPARE.toString()));
         Assert.assertTrue("getItemTypeString() returns correct value",
-                "".equals(Conditional.Type.FAST_CLOCK_RANGE.toString()));
+                "Fast Clock Range".equals(Conditional.Type.FAST_CLOCK_RANGE.toString()));
         Assert.assertTrue("getItemTypeString() returns correct value",
                 "Red".equals(Conditional.Type.SIGNAL_HEAD_RED.toString()));
         Assert.assertTrue("getItemTypeString() returns correct value",
