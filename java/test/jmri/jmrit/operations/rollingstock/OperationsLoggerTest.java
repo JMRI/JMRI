@@ -10,9 +10,10 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Setup;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Logger class
@@ -23,6 +24,7 @@ import org.junit.Assert;
 public class OperationsLoggerTest extends OperationsTestCase {
 
     // test creation
+    @Test
     public void testCreate() {
         // load a car
         CarManager manager = InstanceManager.getDefault(CarManager.class);
@@ -58,31 +60,17 @@ public class OperationsLoggerTest extends OperationsTestCase {
 
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
     }
-
-    public OperationsLoggerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OperationsLoggerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OperationsLoggerTest.class);
-        return suite;
-    }
-
+    
     Locale defaultLocale = Locale.getDefault();
 
     // The minimal setup for log4J
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         super.tearDown();
     }
 }

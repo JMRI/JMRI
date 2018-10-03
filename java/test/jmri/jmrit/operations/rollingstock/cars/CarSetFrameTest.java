@@ -115,14 +115,14 @@ public class CarSetFrameTest extends OperationsSwingTestCase {
 
     @Override
     @After
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
         JUnitUtil.initIdTagManager();
     }
 
     @Override
     @Before
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

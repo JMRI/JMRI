@@ -6,9 +6,10 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Locations class Last manually cross-checked on
@@ -25,6 +26,7 @@ public class TrackTest extends OperationsTestCase {
 
     // test Track class
     // test Track public constants
+    @Test
     public void testTrackConstants() {
         Assert.assertEquals("Location Track Constant ANY", "Any", Track.ANY);
         Assert.assertEquals("Location Track Constant TRAINS", "trains", Track.TRAINS);
@@ -55,6 +57,7 @@ public class TrackTest extends OperationsTestCase {
     }
 
     // test Track attributes
+    @Test
     public void testTrackAttributes() {
         Location l = new Location("Location Test Attridutes id", "Location Test Name");
         Track t = new Track("Test id", "Test Name", "Test Type", l);
@@ -114,6 +117,7 @@ public class TrackTest extends OperationsTestCase {
     }
 
     // test Track car support
+    @Test
     public void testTrackCarSupport() {
         Location l = new Location("Location Test Car id", "Location Test Name");
         Track t = new Track("Test id", "Test Name", "Test Type", l);
@@ -211,6 +215,7 @@ public class TrackTest extends OperationsTestCase {
     }
 
     // test Track pickup support
+    @Test
     public void testTrackPickUpSupport() {
         Location l = new Location("Location Test Pickup id", "Location Test Name");
         Track t = new Track("Test id", "Test Name", "Test Type", l);
@@ -237,6 +242,7 @@ public class TrackTest extends OperationsTestCase {
     }
 
     // test Track drop support
+    @Test
     public void testTrackDropSupport() {
         Location l = new Location("Location Test Drop id", "Location Test Name");
         Track t = new Track("Test id", "Test Name", "Test Type", l);
@@ -270,6 +276,7 @@ public class TrackTest extends OperationsTestCase {
     }
 
     // test Track typename support
+    @Test
     public void testTrackTypeNameSupport() {
         Location l = new Location("Location Test Name id", "Location Test Name");
         Track t = new Track("Test id", "Test Name", "Test Type", l);
@@ -360,6 +367,7 @@ public class TrackTest extends OperationsTestCase {
     }
 
     // test Track schedule support
+    @Test
     public void testTrackScheduleSupport() {
         Location l = new Location("Location Test Schedule id", "Location Test Name");
         Track t = new Track("Test id", "Test Name", Track.SPUR, l);
@@ -383,6 +391,7 @@ public class TrackTest extends OperationsTestCase {
     }
 
     // test Track load support
+    @Test
     public void testTrackLoadSupport() {
         Location l = new Location("Location Test Load id", "Location Test Name");
         Track t = new Track("Test id", "Test Name", "Test Type", l);
@@ -413,6 +422,7 @@ public class TrackTest extends OperationsTestCase {
         Assert.assertEquals("Location Track Add Loads false", false, t.isAddCustomLoadsEnabled());
     }
 
+    @Test
     public void testSpurTrackOrder() {
         Location l = InstanceManager.getDefault(LocationManager.class).newLocation("TestOrder");
         Track t = l.addTrack("New track 1", Track.SPUR);
@@ -425,6 +435,7 @@ public class TrackTest extends OperationsTestCase {
         Assert.assertEquals("Track Order", Track.NORMAL, t.getServiceOrder());
     }
 
+    @Test
     public void testYardTrackOrder() {
         Location l = InstanceManager.getDefault(LocationManager.class).newLocation("TestOrder");
         Track t = l.addTrack("New track 2", Track.YARD);
@@ -437,6 +448,7 @@ public class TrackTest extends OperationsTestCase {
         Assert.assertEquals("Track Order", Track.LIFO, t.getServiceOrder());
     }
 
+    @Test
     public void testStagingTrackOrder() {
         Location l = InstanceManager.getDefault(LocationManager.class).newLocation("TestOrder");
         Track t = l.addTrack("New track 3", Track.STAGING);
@@ -448,6 +460,7 @@ public class TrackTest extends OperationsTestCase {
         Assert.assertEquals("Track Order", Track.NORMAL, t.getServiceOrder());
     }
 
+    @Test
     public void testInterchangeTrackOrder() {
         Location l = InstanceManager.getDefault(LocationManager.class).newLocation("TestOrder");
         Track t = l.addTrack("New track 4", Track.INTERCHANGE);
@@ -461,29 +474,15 @@ public class TrackTest extends OperationsTestCase {
     }
 
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
-    }
-
-    public TrackTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", TrackTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(TrackTest.class);
-        return suite;
     }
 
     // The minimal setup for log4J
     @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 }
