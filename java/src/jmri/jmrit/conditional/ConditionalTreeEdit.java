@@ -2046,7 +2046,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     }
                     _curVariableItem = newVariableItem;
                 }
-                variableTypeChanged(newVariableItem);
+                variableTypeChanged(newVariableItem.getIntValue());
             }
         });
 
@@ -3202,7 +3202,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         @Override
         public void actionPerformed(ActionEvent e) {
             int selection = _variableCompareTypeBox.getSelectedIndex();
-            compareTypeChanged(Conditional.ITEM_TO_MEMORY_TEST[selection]);
+            compareTypeChanged(Conditional.Type.getMemoryItems().get(selection));
         }
     };
 

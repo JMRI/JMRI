@@ -1809,7 +1809,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     }
                     _curVariableItem = newVariableItem;
                 }
-                variableItemChanged(newVariableItem);
+                variableItemChanged(newVariableItem.getIntValue());
                 _editVariableFrame.pack();
             }
         });
