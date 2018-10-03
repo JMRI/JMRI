@@ -329,10 +329,10 @@ public interface Conditional extends NamedBean {
             return signalMastItemsList;
         }
         
-        public static State getOperatorFromIntValue(int stateInt) {
-            for (State state : State.values()) {
-                if (state.getIntValue() == stateInt) {
-                    return state;
+        public static Type getOperatorFromIntValue(int typeInt) {
+            for (Type type : Type.values()) {
+                if (type.getIntValue() == typeInt) {
+                    return type;
                 }
             }
             

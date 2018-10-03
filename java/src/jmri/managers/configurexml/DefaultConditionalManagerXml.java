@@ -297,8 +297,8 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                         variable.setNegation(false);
                     }
                 }
-                variable.setType(Conditional.Type.getOperatorFromIntValue(Integer.parseInt(conditionalVarList.get(n))
-                        .getAttribute("type").getValue()));  // NOI18N
+                variable.setType(Conditional.Type.getOperatorFromIntValue(Integer.parseInt(conditionalVarList.get(n)
+                        .getAttribute("type").getValue())));  // NOI18N
                 variable.setName(conditionalVarList.get(n)
                         .getAttribute("systemName").getValue());  // NOI18N
                 if (conditionalVarList.get(n).getAttribute("dataString") != null) {  // NOI18N
