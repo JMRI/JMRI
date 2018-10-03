@@ -268,8 +268,8 @@ public interface Conditional extends NamedBean {
             turnoutItemsList = getList(ItemType.TURNOUT);
             conditionalItemsList = getList(ItemType.CONDITIONAL);
             lightItemsList = getList(ItemType.LIGHT);
-            warrantItemsList = getList(ItemType.WARRANT);
-            memoryItemsList = getList(ItemType.MEMORY);
+//            warrantItemsList = getList(ItemType.WARRANT);
+//            memoryItemsList = getList(ItemType.MEMORY);
 //            oblockItemsList = getList(ItemType.OBLOCK);
             entryExitItemsList = getList(ItemType.ENTRYEXIT);
             
@@ -278,6 +278,13 @@ public interface Conditional extends NamedBean {
             
             Type[] typeArray2 = {NONE, SIGNAL_MAST_ASPECT_EQUALS, SIGNAL_MAST_LIT, SIGNAL_MAST_HELD};
             signalMastItemsList = Collections.unmodifiableList(Arrays.asList(typeArray2));
+            
+            Type[] typeArray3 = {ROUTE_FREE, ROUTE_SET, ROUTE_ALLOCATED, ROUTE_OCCUPIED, TRAIN_RUNNING};
+            warrantItemsList = Collections.unmodifiableList(Arrays.asList(typeArray3));
+            
+            Type[] typeArray4 = {MEMORY_EQUALS, MEMORY_EQUALS_INSENSITIVE,
+                MEMORY_COMPARE, MEMORY_COMPARE_INSENSITIVE};
+            memoryItemsList = Collections.unmodifiableList(Arrays.asList(typeArray4));
         }
         
         private Type(int state, ItemType itemType, String string) {
@@ -516,7 +523,7 @@ public interface Conditional extends NamedBean {
     /**
      * *************** ConditionalVariable Maps *******************************
      */
-    // Map state variable types to their item type
+/*    // Map state variable types to their item type
     @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
     // arrays. Someday...
@@ -560,7 +567,7 @@ public interface Conditional extends NamedBean {
         ITEM_TYPE_ENTRYEXIT, // TYPE_ENTRYEXIT_ACTIVE = 35
         ITEM_TYPE_ENTRYEXIT // TYPE_ENTRYEXIT_INACTIVE = 36
     };
-
+*/
     // Map SignalHead comboBox items to SignalHead Conditional variable types
     @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed

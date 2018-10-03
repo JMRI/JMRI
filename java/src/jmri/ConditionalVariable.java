@@ -221,7 +221,7 @@ public class ConditionalVariable {
     public void setName(String name) {
         _name = name;
         NamedBean bean = null;
-        int itemType = Conditional.TEST_TO_ITEM[_type];
+        int itemType = Conditional.Type.getOperatorFromIntValue(_type).getItemType().getIntValue();
 
         try {
             switch (itemType) {
@@ -292,7 +292,7 @@ public class ConditionalVariable {
     }
 
     public String getDataString() {
-        if (Conditional.TEST_TO_ITEM[_type] == Conditional.ITEM_TYPE_MEMORY
+        if (Conditional.Type.getOperatorFromIntValue(_type).getItemType().getIntValue() == Conditional.ITEM_TYPE_MEMORY
                 && _namedBeanData != null) {
             return _namedBeanData.getName();
         }
@@ -301,7 +301,8 @@ public class ConditionalVariable {
 
     public void setDataString(String data) {
         _dataString = data;
-        if (data != null && !data.equals("") && Conditional.TEST_TO_ITEM[_type] == Conditional.ITEM_TYPE_MEMORY) {
+        if (data != null && !data.equals("")
+                && Conditional.Type.getOperatorFromIntValue(_type).getItemType().getIntValue() == Conditional.ITEM_TYPE_MEMORY) {
             NamedBean bean = InstanceManager.memoryManagerInstance().getMemory(data);
             if (bean != null) {
                 _namedBeanData = nbhm.getNamedBeanHandle(data, bean);
@@ -413,7 +414,7 @@ public class ConditionalVariable {
     public boolean evaluate() {
         boolean result = true;
         // evaluate according to state variable type
-        int itemType = Conditional.TEST_TO_ITEM[_type];
+        int itemType = Conditional.Type.getOperatorFromIntValue(_type).getItemType().getIntValue();
         log.debug("evaluate: \"{}\" type= {} itemType= {}", getName(), _type, itemType);
         switch (itemType) {
             case Conditional.ITEM_TYPE_SENSOR:
@@ -1046,7 +1047,7 @@ public class ConditionalVariable {
     @Override
     public String toString() {
         String type = getTestTypeString(_type);
-        int itemType = Conditional.TEST_TO_ITEM[_type];
+        int itemType = Conditional.Type.getOperatorFromIntValue(_type).getItemType().getIntValue();
         switch (itemType) {
             case Conditional.ITEM_TYPE_SENSOR:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
