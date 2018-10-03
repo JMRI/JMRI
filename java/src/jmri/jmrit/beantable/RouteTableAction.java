@@ -1497,11 +1497,11 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                 switch (rTurnout.getState()) {
                     case Turnout.CLOSED:
                         variableList.add(new ConditionalVariable(false, Conditional.Operator.AND,
-                                Conditional.Type.TURNOUT_CLOSED, name, true));
+                                Conditional.Type.TURNOUT_CLOSED.getIntValue(), name, true));
                         break;
                     case Turnout.THROWN:
                         variableList.add(new ConditionalVariable(false, Conditional.Operator.AND,
-                                Conditional.Type.TURNOUT_THROWN, name, true));
+                                Conditional.Type.TURNOUT_THROWN.getIntValue(), name, true));
                         break;
                     default:
                         log.warn("Turnout {} was {}, neither CLOSED nor THROWN; not handled", name, rTurnout.getState()); // NOI18N
@@ -1773,7 +1773,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                 log.error("Control Sensor " + devName + " has bad mode= " + mode);
                 return null;
         }
-        return new ConditionalVariable(negated, oper, type, devName, trigger);
+        return new ConditionalVariable(negated, oper, type.getIntValue(), devName, trigger);
     }
 
     ConditionalVariable makeCtrlTurnoutVar(JmriBeanComboBox jmriBox, JComboBox<String> box,
@@ -1827,7 +1827,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                 log.error("Control Turnout " + devName + " has bad mode= " + mode);
                 return null;
         }
-        return new ConditionalVariable(negated, oper, type, devName, trigger);
+        return new ConditionalVariable(negated, oper, type.getIntValue(), devName, trigger);
     }
 
     /**

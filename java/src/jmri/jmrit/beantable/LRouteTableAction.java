@@ -1542,7 +1542,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             }
         } else {
             oneTriggerList.add(new ConditionalVariable(false, Conditional.Operator.NONE,
-                    Conditional.Type.NONE, LOGIX_INITIALIZER, true));
+                    Conditional.Type.NONE.getIntValue(), LOGIX_INITIALIZER, true));
         }
         if (log.isDebugEnabled()) {
             log.debug("actionList.size()= " + actionList.size() + ", oneTriggerList.size()= " + oneTriggerList.size()

@@ -5814,7 +5814,7 @@ public class LayoutEditorTools {
             }
             List<ConditionalVariable> variableList = c.getCopyOfStateVariables();
             variableList.add(new ConditionalVariable(false, Conditional.Operator.AND,
-                    type, turnoutName, true));
+                    type.getIntValue(), turnoutName, true));
             c.setStateVariables(variableList);
             List<ConditionalAction> actionList = c.getCopyOfActions();
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
@@ -13309,14 +13309,14 @@ public class LayoutEditorTools {
         }
         ArrayList<ConditionalVariable> variableList = new ArrayList<>();
         variableList.add(new ConditionalVariable(false, Conditional.Operator.AND,
-                type, turnoutName, true));
+                type.getIntValue(), turnoutName, true));
 
         type = Conditional.Type.TURNOUT_THROWN;
         if (farState == Turnout.CLOSED) {
             type = Conditional.Type.TURNOUT_CLOSED;
         }
         variableList.add(new ConditionalVariable(false, Conditional.Operator.AND,
-                type, farTurnoutName, true));
+                type.getIntValue(), farTurnoutName, true));
         c.setStateVariables(variableList);
         ArrayList<ConditionalAction> actionList = new ArrayList<>();
         actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,

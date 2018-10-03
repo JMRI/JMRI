@@ -334,7 +334,8 @@ public class DefaultLogix extends AbstractNamedBean
             ArrayList<ConditionalVariable> badVariable = new ArrayList<>();
             for (ConditionalVariable var : varList) {
                 // Find any Conditional State Variables
-                if (var.getType() == Conditional.Type.CONDITIONAL_TRUE || var.getType() == Conditional.Type.CONDITIONAL_FALSE) {
+                if (var.getType() == Conditional.Type.CONDITIONAL_TRUE.getIntValue()
+                        || var.getType() == Conditional.Type.CONDITIONAL_FALSE.getIntValue()) {
                     // Get the referenced (target) conditonal -- The name can be either a system name or a user name
                     Conditional cRef = InstanceManager.getDefault(jmri.ConditionalManager.class).getConditional(var.getName());
                     if (cRef != null) {
@@ -356,8 +357,8 @@ public class DefaultLogix extends AbstractNamedBean
                 }
 
                 // Find any Entry/Exit State Variables
-                if (var.getType() == Conditional.Type.ENTRYEXIT_ACTIVE
-                        || var.getType() == Conditional.Type.ENTRYEXIT_INACTIVE) {
+                if (var.getType() == Conditional.Type.ENTRYEXIT_ACTIVE.getIntValue()
+                        || var.getType() == Conditional.Type.ENTRYEXIT_INACTIVE.getIntValue()) {
                     if (!NXUUID.matcher(var.getName()).find()) {
                         // Either a user name or an old style system name (plain UUID)
                         jmri.jmrit.entryexit.DestinationPoints dp =
@@ -439,7 +440,7 @@ public class DefaultLogix extends AbstractNamedBean
                     int varListenerType = 0;
                     String varName = variable.getName();
                     NamedBeanHandle<?> namedBean = variable.getNamedBean();
-                    Conditional.Type varType = variable.getType();
+                    Conditional.Type varType = Conditional.Type.getOperatorFromIntValue(variable.getType());
                     int signalAspect = -1;
                     // Get Listener type from variable type
                     switch (varType) {

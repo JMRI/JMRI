@@ -851,7 +851,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             case "Variable":     // NOI18N
                 _labelPanel.add(_variableLabel);
                 _curVariable = _variableList.get(_curNodeRow);
-                _curVariableItem = _curVariable.getType().getItemType();
+                _curVariableItem = Conditional.Type.getOperatorFromIntValue(_curVariable.getType()).getItemType();
                 initializeStateVariables();
                 if (_logicType != Conditional.MIXED) {
                     setMoveButtons();
@@ -2088,7 +2088,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         // Compare type
         _variableCompareTypeBox = new JComboBox<String>();
         for (int i = 0; i < Conditional.ITEM_TO_MEMORY_TEST.length; i++) {
-            _variableCompareTypeBox.addItem(Conditional.Type.getMemoryItems().get(i));
+            _variableCompareTypeBox.addItem(Conditional.Type.getMemoryItems().get(i).toString());
         }
         _variableCompareTypeBox.addActionListener(compareTypeBoxListener);
 
@@ -2351,7 +2351,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Set display to show current state variable (curVariable) parameters.
      */
     void initializeStateVariables() {
-        Conditional.Type testType = _curVariable.getType();
+        Conditional.Type testType = Conditional.Type.getOperatorFromIntValue(_curVariable.getType());
         if (log.isDebugEnabled()) {
             log.debug("initializeStateVariables: testType= {}", testType);  // NOI18N
         }
@@ -2398,7 +2398,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                         || Conditional.Type.SIGNAL_HEAD_FLASHLUNAR == testType) {
                     _variableStateBox.setSelectedItem( // index 1 = TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS
                             Conditional.Type.getSignalHeadItems().get(1));
-                    _variableSignalBox.setSelectedItem(_curVariable.getType().toString());
+                    _variableSignalBox.setSelectedItem(_curVariable.getType());
                 }
                 break;
 
@@ -2473,7 +2473,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      *                 i.e. ITEM_TYPE_SENSOR
      */
     private void variableTypeChanged(int itemType) {
-        Conditional.Type testType = _curVariable.getType();
+        Conditional.Type testType = Conditional.Type.getOperatorFromIntValue(_curVariable.getType());
         log.debug("variableTypeChanged: itemType= {}, testType= {}", itemType, testType);  // NOI18N
         _variableStateBox.removeAllItems();
         _variableNameField.removeActionListener(variableSignalHeadNameListener);
@@ -2690,8 +2690,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         // Get the current Logix name for selecting the current combo box row
         String cdlName = _curVariable.getName();
         String lgxName;
-        if (cdlName.length() == 0 || (_curVariable.getType() != Conditional.Type.CONDITIONAL_TRUE
-                && _curVariable.getType() != Conditional.Type.CONDITIONAL_FALSE)) {
+        if (cdlName.length() == 0 || (_curVariable.getType() != Conditional.Type.CONDITIONAL_TRUE.getIntValue()
+                && _curVariable.getType() != Conditional.Type.CONDITIONAL_FALSE.getIntValue())) {
             // Use the current logix name for "add" state variable
             lgxName = _curLogix.getSystemName();
         } else {
@@ -2915,7 +2915,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                         JOptionPane.ERROR_MESSAGE);
                 return false;
         }
-        _curVariable.setType(testType);
+        _curVariable.setType(testType.getIntValue());
         log.debug("validateVariable: itemType= {}, testType= {}", itemType, testType);  // NOI18N
         switch (itemType) {
             case SENSOR:
@@ -2998,7 +2998,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                                 JOptionPane.ERROR_MESSAGE);
                         return false;
                     }
-                    _curVariable.setType(type);
+                    _curVariable.setType(type.getIntValue());
                     _curVariable.setDataString(appStr);
                     log.debug("SignalHead \"{}\"of type '{}' _variableSignalBox.getSelectedItem()= {}",
                             name, testType, _variableSignalBox.getSelectedItem()); // NOI18N
@@ -3052,9 +3052,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _curVariable.setName(name);
         boolean result = _curVariable.evaluate();
         log.debug("State Variable \"{}\" of type '{}' state= {} type= {}",
-                name, ConditionalVariable.getTestTypeString(testType),
+                name, ConditionalVariable.getTestTypeString(testType.getIntValue()),
                 result, _curVariable.getType());  // NOI18N
-        if (_curVariable.getType() == Conditional.Type.NONE) {
+        if (_curVariable.getType() == Conditional.Type.NONE.getIntValue()) {
             JOptionPane.showMessageDialog(_editLogixFrame,
                     Bundle.getMessage("ErrorVariableState"), Bundle.getMessage("ErrorTitle"), // NOI18N
                     JOptionPane.ERROR_MESSAGE);

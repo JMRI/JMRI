@@ -105,7 +105,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     } else {
                         vElem.setAttribute("negated", "no");  // NOI18N
                     }
-                    vElem.setAttribute("type", Integer.toString(variable.getType().getIntValue()));  // NOI18N
+                    vElem.setAttribute("type", Integer.toString(variable.getType()));  // NOI18N
                     vElem.setAttribute("systemName", variable.getName());  // NOI18N
                     vElem.setAttribute("dataString", variable.getDataString());  // NOI18N
                     vElem.setAttribute("num1", Integer.toString(variable.getNum1()));  // NOI18N
@@ -297,8 +297,8 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                         variable.setNegation(false);
                     }
                 }
-                variable.setType(Conditional.Type.getOperatorFromIntValue(Integer.parseInt(conditionalVarList.get(n)
-                        .getAttribute("type").getValue())));  // NOI18N
+                variable.setType(Integer.parseInt(conditionalVarList.get(n)
+                        .getAttribute("type").getValue()));  // NOI18N
                 variable.setName(conditionalVarList.get(n)
                         .getAttribute("systemName").getValue());  // NOI18N
                 if (conditionalVarList.get(n).getAttribute("dataString") != null) {  // NOI18N
