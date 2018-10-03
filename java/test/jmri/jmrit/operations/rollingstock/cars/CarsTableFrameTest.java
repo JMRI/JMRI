@@ -3,7 +3,7 @@ package jmri.jmrit.operations.rollingstock.cars;
 import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -21,7 +21,7 @@ import org.junit.Test;
  *
  * @author	Dan Boudreau Copyright (C) 2009
  */
-public class CarsTableFrameTest extends OperationsSwingTestCase {
+public class CarsTableFrameTest extends OperationsTestCase {
 
     @Test
     public void testCarsTableFrame() throws Exception {

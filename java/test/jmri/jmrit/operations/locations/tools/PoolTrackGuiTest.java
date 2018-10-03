@@ -1,7 +1,7 @@
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Pool;
 import jmri.jmrit.operations.locations.Track;
@@ -18,7 +18,7 @@ import org.junit.Test;
  *
  * @author Gregory Madsen Copyright (C) 2012
  */
-public class PoolTrackGuiTest extends OperationsSwingTestCase {
+public class PoolTrackGuiTest extends OperationsTestCase {
 
     /*
      * Things to test with this frame:

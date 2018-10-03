@@ -1,7 +1,7 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
@@ -16,7 +16,7 @@ import org.junit.Test;
  * @author Dan Boudreau Copyright (C) 2009
  * @author Paul Bender Copyright (C) 2017	
  */
-public class OptionFrameTest extends OperationsSwingTestCase {
+public class OptionFrameTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {

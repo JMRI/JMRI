@@ -2,7 +2,7 @@ package jmri.jmrit.operations.trains.excel;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
@@ -16,7 +16,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class SetupExcelProgramSwitchListFrameTest extends OperationsSwingTestCase {
+public class SetupExcelProgramSwitchListFrameTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
