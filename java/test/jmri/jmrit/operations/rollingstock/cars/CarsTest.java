@@ -4,9 +4,10 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations RollingStock Cars class Last manually cross-checked
@@ -19,12 +20,14 @@ import org.junit.Assert;
 public class CarsTest extends OperationsTestCase {
 
     // test constructors.
+    @Test
     public void testCtor() {
         // test the default constructor.
         Car c1 = new Car();
         Assert.assertNotNull("Default Constructor", c1);
     }
 
+    @Test
     public void test2ParmCtor() {
         // test the constructor with roadname and roadnumer as parameters.
         Car c1 = new Car("TESTROAD", "TESTNUMBER1");
@@ -35,6 +38,7 @@ public class CarsTest extends OperationsTestCase {
         Assert.assertEquals("Car ID", "TESTROAD" + "TESTNUMBER1", c1.getId());
     }
 
+    @Test
     public void testXmlConstructor() {
         // test the constructor loading this car from an XML element.
 
@@ -103,6 +107,7 @@ public class CarsTest extends OperationsTestCase {
     }
 
     // test creation
+    @Test
     public void testCreate() {
         Car c1 = new Car("TESTROAD", "TESTNUMBER1");
         c1.setTypeName("TESTTYPE");
@@ -134,6 +139,7 @@ public class CarsTest extends OperationsTestCase {
     }
 
     // test setting the location
+    @Test
     public void testSetLocation() {
         CarManager manager = InstanceManager.getDefault(CarManager.class);
 
@@ -200,6 +206,7 @@ public class CarsTest extends OperationsTestCase {
     }
 
     // test setting the destination
+    @Test
     public void testSetDestination() {
         CarManager manager = InstanceManager.getDefault(CarManager.class);
 
@@ -275,28 +282,14 @@ public class CarsTest extends OperationsTestCase {
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
     }
 
-    public CarsTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", CarsTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(CarsTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         super.tearDown();
     }
 }
