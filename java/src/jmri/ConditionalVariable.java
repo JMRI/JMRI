@@ -791,6 +791,8 @@ public class ConditionalVariable {
      * @param t the state
      * @return the localized description
      */
+    // Use t.toString() instead
+/*    
     public static String describeState(Conditional.Type t) {
         switch (t) {
             case NONE:
@@ -874,7 +876,7 @@ public class ConditionalVariable {
                 return "<none>"; // NOI18N
         }
     }
-
+*/
     /**
      * Convert Variable Test Type to Text String. Used in Logix
      * GUI Maintenance tools.

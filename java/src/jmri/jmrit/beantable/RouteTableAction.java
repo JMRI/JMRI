@@ -1531,9 +1531,9 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             ArrayList<ConditionalVariable> variableList = new ArrayList<>();
             //String devName = cTurnout.getText();
             int mode = turnoutModeFromBox(cTurnoutStateBox);
-            Conditional.Type type = Conditional.Type.TURNOUT_CLOSED;
+            int type = Turnout.CLOSED;
             if (mode == Route.ONTHROWN) {
-                type = Conditional.Type.TURNOUT_THROWN;
+                type = Turnout.THROWN;
             }
             variableList.add(new ConditionalVariable(false, Conditional.Operator.NONE,
                     type, turnoutLockSystemName, true));

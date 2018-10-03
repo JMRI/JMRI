@@ -72,6 +72,7 @@ public class ConditionalTest {
         Assert.assertEquals(Conditional.TYPE_SIGNAL_MAST_LIT, 31);
         Assert.assertEquals(Conditional.TYPE_SIGNAL_MAST_HELD, 32);
         Assert.assertEquals(Conditional.TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS, 33);
+        // This item is never used
         Assert.assertEquals(Conditional.TYPE_BLOCK_STATUS_EQUALS, 34);
 
         //Entry Exit Rules
@@ -186,12 +187,12 @@ public class ConditionalTest {
         Assert.assertEquals(Conditional.ITEM_TYPE_CLOCK, 9);
         Assert.assertEquals(Conditional.ITEM_TYPE_OBLOCK, 10);
         Assert.assertEquals(Conditional.ITEM_TYPE_ENTRYEXIT, 11);
-        Assert.assertEquals(Conditional.ITEM_TYPE_LAST_STATE_VAR, 11);
+//        Assert.assertEquals(Conditional.ITEM_TYPE_LAST_STATE_VAR, 11);
 
         Assert.assertEquals(Conditional.ITEM_TYPE_AUDIO, 12);
         Assert.assertEquals(Conditional.ITEM_TYPE_SCRIPT, 13);
         Assert.assertEquals(Conditional.ITEM_TYPE_OTHER, 14);
-        Assert.assertEquals(Conditional.ITEM_TYPE_LAST_ACTION, 14);
+//        Assert.assertEquals(Conditional.ITEM_TYPE_LAST_ACTION, 14);
     }
     
     @Test
@@ -243,27 +244,55 @@ public class ConditionalTest {
         Assert.assertEquals(Conditional.TYPE_SIGNAL_HEAD_LIT, Conditional.ITEM_TO_SIGNAL_HEAD_TEST[2]);
         Assert.assertEquals(Conditional.TYPE_SIGNAL_HEAD_HELD, Conditional.ITEM_TO_SIGNAL_HEAD_TEST[3]);
 
+        // Map SignalHead comboBox items to SignalHead Conditional variable types
+        Assert.assertEquals(Conditional.Type.NONE, Conditional.Type.getSignalHeadItems().get(0));
+        Assert.assertEquals(Conditional.Type.SIGNAL_HEAD_APPEARANCE_EQUALS, Conditional.Type.getSignalHeadItems().get(1));
+        Assert.assertEquals(Conditional.Type.SIGNAL_HEAD_LIT, Conditional.Type.getSignalHeadItems().get(2));
+        Assert.assertEquals(Conditional.Type.SIGNAL_HEAD_HELD, Conditional.Type.getSignalHeadItems().get(3));
+
         // Map SignalMAst comboBox items to SignalMast Conditional variable types
         Assert.assertEquals(Conditional.TYPE_NONE, Conditional.ITEM_TO_SIGNAL_MAST_TEST[0]);
         Assert.assertEquals(Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS, Conditional.ITEM_TO_SIGNAL_MAST_TEST[1]);
         Assert.assertEquals(Conditional.TYPE_SIGNAL_MAST_LIT, Conditional.ITEM_TO_SIGNAL_MAST_TEST[2]);
         Assert.assertEquals(Conditional.TYPE_SIGNAL_MAST_HELD, Conditional.ITEM_TO_SIGNAL_MAST_TEST[3]);
         
+        // Map SignalMAst comboBox items to SignalMast Conditional variable types
+        Assert.assertEquals(Conditional.Type.NONE, Conditional.Type.getSignalMastItems().get(0));
+        Assert.assertEquals(Conditional.Type.SIGNAL_MAST_ASPECT_EQUALS, Conditional.Type.getSignalMastItems().get(1));
+        Assert.assertEquals(Conditional.Type.SIGNAL_MAST_LIT, Conditional.Type.getSignalMastItems().get(2));
+        Assert.assertEquals(Conditional.Type.SIGNAL_MAST_HELD, Conditional.Type.getSignalMastItems().get(3));
+        
         // Map Sensor state comboBox items to Sensor Conditional variable types
         Assert.assertEquals(Conditional.TYPE_SENSOR_ACTIVE, Conditional.ITEM_TO_SENSOR_TEST[0]);
         Assert.assertEquals(Conditional.TYPE_SENSOR_INACTIVE, Conditional.ITEM_TO_SENSOR_TEST[1]);
+
+        // Map Sensor state comboBox items to Sensor Conditional variable types
+        Assert.assertEquals(Conditional.Type.SENSOR_ACTIVE, Conditional.Type.getSensorItems().get(0));
+        Assert.assertEquals(Conditional.Type.SENSOR_INACTIVE, Conditional.Type.getSensorItems().get(1));
 
         // Map Turnout state comboBox items to Turnout Conditional variable types
         Assert.assertEquals(Conditional.TYPE_TURNOUT_THROWN, Conditional.ITEM_TO_TURNOUT_TEST[0]);
         Assert.assertEquals(Conditional.TYPE_TURNOUT_CLOSED, Conditional.ITEM_TO_TURNOUT_TEST[1]);
 
+        // Map Turnout state comboBox items to Turnout Conditional variable types
+        Assert.assertEquals(Conditional.Type.TURNOUT_THROWN, Conditional.Type.getTurnoutItems().get(0));
+        Assert.assertEquals(Conditional.Type.TURNOUT_CLOSED, Conditional.Type.getTurnoutItems().get(1));
+
         // Map Conditional state comboBox items to  Condition ConditionalVvariable types
         Assert.assertEquals(Conditional.TYPE_CONDITIONAL_TRUE, Conditional.ITEM_TO_CONDITIONAL_TEST[0]);
         Assert.assertEquals(Conditional.TYPE_CONDITIONAL_FALSE, Conditional.ITEM_TO_CONDITIONAL_TEST[1]);
 
+        // Map Conditional state comboBox items to  Condition ConditionalVvariable types
+        Assert.assertEquals(Conditional.Type.CONDITIONAL_TRUE, Conditional.Type.getConditionalItems().get(0));
+        Assert.assertEquals(Conditional.Type.CONDITIONAL_FALSE, Conditional.Type.getConditionalItems().get(1));
+
         // Map Memory state comboBox items to Light ConditionalVariable types
         Assert.assertEquals(Conditional.TYPE_LIGHT_ON, Conditional.ITEM_TO_LIGHT_TEST[0]);
         Assert.assertEquals(Conditional.TYPE_LIGHT_OFF, Conditional.ITEM_TO_LIGHT_TEST[1]);
+
+        // Map Memory state comboBox items to Light ConditionalVariable types
+        Assert.assertEquals(Conditional.Type.LIGHT_ON, Conditional.Type.getLightItems().get(0));
+        Assert.assertEquals(Conditional.Type.LIGHT_OFF, Conditional.Type.getLightItems().get(1));
 
         // Map Warrant state comboBox items to Warrant ConditionalVariable types
         Assert.assertEquals(Conditional.TYPE_ROUTE_FREE, Conditional.ITEM_TO_WARRANT_TEST[0]);
@@ -272,16 +301,34 @@ public class ConditionalTest {
         Assert.assertEquals(Conditional.TYPE_ROUTE_OCCUPIED, Conditional.ITEM_TO_WARRANT_TEST[3]);
         Assert.assertEquals(Conditional.TYPE_TRAIN_RUNNING, Conditional.ITEM_TO_WARRANT_TEST[4]);
 
+        // Map Warrant state comboBox items to Warrant ConditionalVariable types
+        Assert.assertEquals(Conditional.Type.ROUTE_FREE, Conditional.Type.getWarrantItems().get(0));
+        Assert.assertEquals(Conditional.Type.ROUTE_SET, Conditional.Type.getWarrantItems().get(1));
+        Assert.assertEquals(Conditional.Type.ROUTE_ALLOCATED, Conditional.Type.getWarrantItems().get(2));
+        Assert.assertEquals(Conditional.Type.ROUTE_OCCUPIED, Conditional.Type.getWarrantItems().get(3));
+        Assert.assertEquals(Conditional.Type.TRAIN_RUNNING, Conditional.Type.getWarrantItems().get(4));
+
         // Map Memory Compare Type comboBox items to Memory ConditionalVariable types
         Assert.assertEquals(Conditional.TYPE_MEMORY_EQUALS, Conditional.ITEM_TO_MEMORY_TEST[0]);
         Assert.assertEquals(Conditional.TYPE_MEMORY_EQUALS_INSENSITIVE, Conditional.ITEM_TO_MEMORY_TEST[1]);
         Assert.assertEquals(Conditional.TYPE_MEMORY_COMPARE, Conditional.ITEM_TO_MEMORY_TEST[2]);
         Assert.assertEquals(Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE, Conditional.ITEM_TO_MEMORY_TEST[3]);
 
-        Assert.assertEquals(Conditional.TYPE_BLOCK_STATUS_EQUALS, Conditional.ITEM_TO_OBLOCK_TEST[0]);
+        // Map Memory Compare Type comboBox items to Memory ConditionalVariable types
+        Assert.assertEquals(Conditional.Type.MEMORY_EQUALS, Conditional.Type.getMemoryItems().get(0));
+        Assert.assertEquals(Conditional.Type.MEMORY_EQUALS_INSENSITIVE, Conditional.Type.getMemoryItems().get(1));
+        Assert.assertEquals(Conditional.Type.MEMORY_COMPARE, Conditional.Type.getMemoryItems().get(2));
+        Assert.assertEquals(Conditional.Type.MEMORY_COMPARE_INSENSITIVE, Conditional.Type.getMemoryItems().get(3));
+
+//        Assert.assertEquals(Conditional.TYPE_BLOCK_STATUS_EQUALS, Conditional.ITEM_TO_OBLOCK_TEST[0]);
+
+//        Assert.assertEquals(Conditional.TYPE_BLOCK_STATUS_EQUALS, Conditional.Type.getOBlockItems().get(0));
 
         Assert.assertEquals(Conditional.TYPE_ENTRYEXIT_ACTIVE, Conditional.ITEM_TO_ENTRYEXIT_TEST[0]);
         Assert.assertEquals(Conditional.TYPE_ENTRYEXIT_INACTIVE, Conditional.ITEM_TO_ENTRYEXIT_TEST[1]);
+
+        Assert.assertEquals(Conditional.Type.ENTRYEXIT_ACTIVE, Conditional.Type.getEntryExitItems().get(0));
+        Assert.assertEquals(Conditional.Type.ENTRYEXIT_INACTIVE, Conditional.Type.getEntryExitItems().get(1));
 
         /**
          * *************** ConditionalAction Maps *******************************
