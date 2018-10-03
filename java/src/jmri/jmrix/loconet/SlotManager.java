@@ -184,14 +184,14 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     private final int SLOTS_OTHER = 128;
     private final int SLOTS_DCS240 = 433;
-    private int numSlots = SLOTS_DCS240;         // This is the largest number so far it will reset after the commandstation is known value. 
+    private int numSlots = SLOTS_DCS240;         // This is the largest number so far it will reset after the commandstation is known value.
     /**
-     * The network protocol. 
+     * The network protocol.
      */
     private int loconetProtocol = LnConstants.LOCONETPROTOCOL_UNKNOWN;    // defaults to unknown
 
     /**
-     * 
+     *
      * @param value the loconet protocol supported
      */
     public void setLoconet2Supported(int value) {
@@ -199,7 +199,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
     /**
-     * 
+     *
      * @return the loconet protocol supported
      */
     public int getLoconetProtocol() {
@@ -748,7 +748,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             log.error("slot rejected LocoNetMessage {}", m); // NOI18N
             return;
         } catch (Exception e) {
-            log.error("_slots[{}].setSlot({})",i,m,e);
+            log.error("Unexplained error _slots[{}].setSlot({})",i,m,e);
+            return;
         }
         // notify listeners that slot may have changed
         notify(_slots[i]);

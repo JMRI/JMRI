@@ -796,6 +796,11 @@ public class LocoNetSlot {
         // sort out valid messages, handle
         switch (l.getOpCode()) {
             case LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR:  //speed and functions
+                if (l.getElement(3) != expandedThrottleControllingID) {
+                    // Message is not from owning throttle
+                    log.debug("OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR for slot[{}] sent from throttle[{}], slot owned by [{}]",slot,l.getElement(3),expandedThrottleControllingID);
+                    return;
+                }
                 if (((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_SPEED) == 0)
                         && (((stat & LnConstants.CONSIST_MASK) != LnConstants.CONSIST_MID) &&
                         ((stat & LnConstants.CONSIST_MASK) != LnConstants.CONSIST_SUB))) {
@@ -854,6 +859,7 @@ public class LocoNetSlot {
                 }
                 dirf = l.getElement(10) & 0b00111111;
                 id = l.getElement(18) + 128 * l.getElement(19);
+                expandedThrottleControllingID = l.getElement(18);
                 snd = snd & 0b11111100;
                 snd = snd |  ( (l.getElement(11) & 0b01100000) >> 5) ;
                 snd = l.getElement(11) & 0b00001111;
@@ -929,6 +935,7 @@ public class LocoNetSlot {
                 // item 9 is in add2
                 snd = l.getElement(10);
                 id = l.getElement(11) + 128 * l.getElement(12);
+                expandedThrottleControllingID = l.getElement(11);
 
                 notifySlotListeners();
                 return;
@@ -1307,6 +1314,7 @@ public class LocoNetSlot {
     private int snd;  // <SND> is the settings for functions F5-F8
     private int id;  // throttle id, made from
     //     <ID1> and <ID2> normally identify the throttle controlling the loco
+    private int expandedThrottleControllingID; //the throttle ID byte that is used in sending commands that require a throttle ID. (ID1)
 
     private int _pcmd;  // hold pcmd and pstat for programmer
 

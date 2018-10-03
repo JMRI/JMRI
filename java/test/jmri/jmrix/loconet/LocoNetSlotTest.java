@@ -626,7 +626,7 @@ public class LocoNetSlotTest {
     @Test
     public void testExpWriteThrottleID() throws LocoNetException {
         int ia[]={0xE6, 0x15, 0x01, 0x02, 0x03, 0x00, 0x02, 0x47,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x49 };
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x42, 0x4C, 0x49 };
         LocoNetMessage lm =new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
         LocoNetMessage lm2 = t.writeThrottleID(0x0171);
@@ -742,16 +742,24 @@ public class LocoNetSlotTest {
     @Test
     public void testExpConsistingStateVsSpeedAccept() throws LocoNetException {
         int ia[]={0xE6, 0x15, 0x01, 0x02, 0x33, 0x28, 0x2B, 0x47,
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x71, 0x02, 0x49 };
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1D, 0x43, 0x49 };
         LocoNetMessage lm =new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(lm);
         Assert.assertEquals("Consist-mode is unconsisted", LnConstants.CONSIST_NO, t.consistStatus());
         Assert.assertEquals("Speed Set from slot read",0, t.speed());
-        int ib[] = {0xD5, 0x01, 0x02, 0x02, 14, 0x30};  // set speed 14
+        int ib[] = {0xD5, 0x01, 0x02, 0x1C, 14, 0x30};  // set speed 14 using wrong throttle ID.
+        lm = new LocoNetMessage(ib);
+        t.setSlot(lm);
+        Assert.assertEquals("Ignore speed from wrong throttle ID",0, t.speed());
+        ib[3] = 0x1D;  // set speed 14 for correct throttle ID
         lm = new LocoNetMessage(ib);
         t.setSlot(lm);
         Assert.assertEquals("Speed Set for Unconsisted slot",14, t.speed());
-        int id[] = {0xD5, 0x11, 0x02, 0x1A, 0x02, 0x23};  //function 2 on
+        int id[] = {0xD5, 0x11, 0x02, 0x1C, 0x02, 0x23};  //function 2 on
+        lm = new LocoNetMessage(id);
+        t.setSlot(lm);
+        Assert.assertEquals("Ignore Function 2 set for Unconsisted slot from wrong throttle",0, t.dirf());
+        id[3] = 0x1D;  //function 2 on for correct throttle id
         lm = new LocoNetMessage(id);
         t.setSlot(lm);
         Assert.assertEquals("Function 2 set for Unconsisted slot",2, t.dirf());
@@ -769,7 +777,7 @@ public class LocoNetSlotTest {
         // Start of Top
         // set up slot 130, loco 5544, fwd 12, f2 on, top consist
         int ic[] = {0xE6, 0x15, 0x01, 0x03, 0x3B, 0x28, 0x2B, 0x47,
-                0x0C, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1A, 0x52, 0x34};
+                0x0C, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1D, 0x42, 0x34};
         lm = new LocoNetMessage(ic);
         t.setSlot(lm);
         Assert.assertEquals("Consist-mode is consist-top", LnConstants.CONSIST_TOP, t.consistStatus());
