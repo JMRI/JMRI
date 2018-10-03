@@ -1866,7 +1866,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 _variableStateBox.setSelectedIndex(DefaultConditional.getIndexInTable(
                         Conditional.ITEM_TO_SIGNAL_HEAD_TEST, testType.getIntValue()));
                 _variableNameField.setText(_curVariable.getName());
-                if ((Conditional.Type.SIGNAL_HEAD_RED <= testType && testType <= Conditional.Type.SIGNAL_HEAD_FLASHGREEN)
+                if ((Conditional.Type.SIGNAL_HEAD_RED.getIntValue() <= testType.getIntValue()
+                        && testType.getIntValue() <= Conditional.Type.SIGNAL_HEAD_FLASHGREEN.getIntValue())
                         || Conditional.Type.SIGNAL_HEAD_LUNAR == testType
                         || Conditional.Type.SIGNAL_HEAD_FLASHLUNAR == testType) {
                     _variableStateBox.setSelectedItem( // index 1 = TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS

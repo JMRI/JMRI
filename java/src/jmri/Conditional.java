@@ -5,6 +5,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
@@ -271,8 +272,12 @@ public interface Conditional extends NamedBean {
             memoryItemsList = getList(ItemType.MEMORY);
 //            oblockItemsList = getList(ItemType.OBLOCK);
             entryExitItemsList = getList(ItemType.ENTRYEXIT);
-            signalHeadItemsList = getList(ItemType.SIGNALHEAD);
-            signalMastItemsList = getList(ItemType.SIGNALMAST);
+            
+            Type[] typeArray1 = {NONE, SIGNAL_HEAD_APPEARANCE_EQUALS, SIGNAL_HEAD_LIT, SIGNAL_HEAD_HELD};
+            signalHeadItemsList = Collections.unmodifiableList(Arrays.asList(typeArray1));
+            
+            Type[] typeArray2 = {NONE, SIGNAL_MAST_ASPECT_EQUALS, SIGNAL_MAST_LIT, SIGNAL_MAST_HELD};
+            signalMastItemsList = Collections.unmodifiableList(Arrays.asList(typeArray2));
         }
         
         private Type(int state, ItemType itemType, String string) {
