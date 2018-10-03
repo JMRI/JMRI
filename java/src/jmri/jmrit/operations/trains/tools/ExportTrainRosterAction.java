@@ -18,6 +18,6 @@ public class ExportTrainRosterAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent ae) {
         ExportTrains ex = new ExportTrains();
-        ex.writeOperationsCarFile();
+        ex.writeOperationsTrainsFile();
     }
 }

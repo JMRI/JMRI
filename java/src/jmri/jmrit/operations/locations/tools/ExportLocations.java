@@ -140,6 +140,20 @@ public class ExportLocations extends XmlFile {
                 del +
                 Bundle.getMessage("Destinations") +
                 del +
+                Bundle.getMessage("SwapCarLoads") +
+                del +
+                Bundle.getMessage("EmptyDefaultCarLoads") +
+                del +
+                Bundle.getMessage("EmptyCarLoads") +
+                del +
+                Bundle.getMessage("LoadCarLoads") +
+                del +
+                Bundle.getMessage("LoadAnyCarLoads") +
+                del +
+                Bundle.getMessage("LoadsStaging") +
+                del +
+                Bundle.getMessage("BlockCars") +
+                del +
                 Bundle.getMessage("Comment") +
                 del +
                 Bundle.getMessage("CommentBoth") +
@@ -279,38 +293,56 @@ public class ExportLocations extends XmlFile {
                         del +
                         trainDirections.toString() +
                         del +
+                        ESC +
                         rollingStockNames.toString() +
+                        ESC +
                         del +
                         track.getServiceOrder() +
                         del +
                         track.getRoadOptionString() +
                         del +
+                        ESC +
                         roadNames.toString() +
+                        ESC +
                         del +
                         track.getLoadOptionString() +
                         del +
+                        ESC +
                         loadNames.toString() +
+                        ESC +
                         del +
                         track.getShipLoadOptionString() +
                         del +
+                        ESC +
                         shipNames.toString() +
+                        ESC +
                         del +
                         setOutRestriction +
                         del +
+                        ESC +
                         setOutRestrictions.toString() +
+                        ESC +
                         del +
                         pickUpRestriction +
                         del +
+                        ESC +
                         pickUpRestrictions.toString() +
+                        ESC +
                         del +
+                        ESC +
                         track.getScheduleName() +
+                        ESC +
                         del +
                         (track.getScheduleMode() == Track.MATCH ? Bundle.getMessage("Match")
                                 : Bundle.getMessage("Sequential")) +
                         del +
+                        ESC +
                         alternateTrackName +
+                        ESC +
                         del +
+                        ESC +
                         track.getPoolName() +
+                        ESC +
                         del +
                         track.getMinimumLength() +
                         del +
@@ -324,6 +356,20 @@ public class ExportLocations extends XmlFile {
                         ESC +
                         destinationNames.toString() +
                         ESC +
+                        del +
+                        (track.isLoadSwapEnabled() ? Bundle.getMessage("ButtonYes") : "") +
+                        del +
+                        (track.isLoadEmptyEnabled() ? Bundle.getMessage("ButtonYes") : "") +
+                        del +
+                        (track.isRemoveCustomLoadsEnabled() ? Bundle.getMessage("ButtonYes") : "") +
+                        del +
+                        (track.isAddCustomLoadsEnabled() ? Bundle.getMessage("ButtonYes") : "") +
+                        del +
+                        (track.isAddCustomLoadsAnySpurEnabled() ? Bundle.getMessage("ButtonYes") : "") +
+                        del +
+                        (track.isAddCustomLoadsAnyStagingTrackEnabled() ? Bundle.getMessage("ButtonYes") : "") +
+                        del +
+                        (track.isBlockCarsEnabled() ? Bundle.getMessage("ButtonYes") : "") +
                         del +
                         ESC +
                         track.getComment() +

@@ -71,11 +71,16 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
         // handle window close
         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 
-        // pack and center this frame
+        // pack
         pack();
+        
+        // center as default
         Dimension screen = getToolkit().getScreenSize();
         Dimension size = getSize();
         setLocation((screen.width - size.width) / 2, (screen.height - size.height) / 2);
+        
+        // then try to load location and size from preferences
+        setFrameLocation();
     }
 
     /**

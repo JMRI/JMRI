@@ -3,9 +3,10 @@ package jmri.jmrit.operations.rollingstock.cars;
 import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations RollingStock CarColors class Last manually
@@ -17,6 +18,7 @@ import org.junit.Assert;
  */
 public class CarColorsTest extends OperationsTestCase {
 
+    @Test
     public void testDefaultCarColors() {
         CarColors cc1 = InstanceManager.getDefault(CarColors.class);
         cc1.getNames();	// load predefined colors
@@ -25,6 +27,7 @@ public class CarColorsTest extends OperationsTestCase {
         Assert.assertTrue("Car Color Predefined Blue", cc1.containsName("Blue"));
     }
 
+    @Test
     public void testAddAndDeleteCarColors() {
         CarColors cc1 = InstanceManager.getDefault(CarColors.class);
         cc1.getNames();	// load predefined colors
@@ -47,29 +50,15 @@ public class CarColorsTest extends OperationsTestCase {
     }
 
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
-    }
-
-    public CarColorsTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", CarColorsTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(CarColorsTest.class);
-        return suite;
     }
 
     // The minimal setup for log4J
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         super.tearDown();
     }
 }

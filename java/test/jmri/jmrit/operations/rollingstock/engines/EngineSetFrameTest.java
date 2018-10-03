@@ -38,7 +38,7 @@ public class EngineSetFrameTest extends OperationsSwingTestCase {
     // Ensure minimal setup for log4J
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
 
         loadEngines();
@@ -128,7 +128,7 @@ public class EngineSetFrameTest extends OperationsSwingTestCase {
 
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

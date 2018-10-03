@@ -8,7 +8,6 @@ import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import org.jdom2.Attribute;
@@ -409,7 +408,7 @@ public class Route implements java.beans.PropertyChangeListener {
      * @return the minimum scale train length for this route.
      */
     public int getRouteMinimumTrainLength() {
-        int min = Setup.getMaxTrainLength();
+        int min = getRouteMaximumTrainLength();
         for (RouteLocation rl : getLocationsByIdList()) {
             if (rl.getMaxTrainLength() < min)
                 min = rl.getMaxTrainLength();
