@@ -214,18 +214,18 @@ public interface Conditional extends NamedBean {
         SIGNAL_HEAD_YELLOW(TYPE_SIGNAL_HEAD_YELLOW, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateYellow")), // NOI18N
         SIGNAL_HEAD_GREEN(TYPE_SIGNAL_HEAD_GREEN, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateGreen")), // NOI18N
         SIGNAL_HEAD_DARK(TYPE_SIGNAL_HEAD_DARK, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateDark")), // NOI18N
-        SIGNAL_HEAD_FLASHRED(TYPE_SIGNAL_HEAD_FLASHRED, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashRed")), // NOI18N
-        SIGNAL_HEAD_FLASHYELLOW(TYPE_SIGNAL_HEAD_FLASHYELLOW, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashYellow")), // NOI18N
-        SIGNAL_HEAD_FLASHGREEN(TYPE_SIGNAL_HEAD_FLASHGREEN, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashGreen")), // NOI18N
+        SIGNAL_HEAD_FLASHRED(TYPE_SIGNAL_HEAD_FLASHRED, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashingRed")), // NOI18N
+        SIGNAL_HEAD_FLASHYELLOW(TYPE_SIGNAL_HEAD_FLASHYELLOW, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashingYellow")), // NOI18N
+        SIGNAL_HEAD_FLASHGREEN(TYPE_SIGNAL_HEAD_FLASHGREEN, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashingGreen")), // NOI18N
         SIGNAL_HEAD_LIT(TYPE_SIGNAL_HEAD_LIT, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateLit")), // NOI18N
         SIGNAL_HEAD_HELD(TYPE_SIGNAL_HEAD_HELD, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateHeld")), // NOI18N
         SIGNAL_HEAD_LUNAR(TYPE_SIGNAL_HEAD_LUNAR, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateLunar")), // NOI18N
-        SIGNAL_HEAD_FLASHLUNAR(TYPE_SIGNAL_HEAD_FLASHLUNAR, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashLunar")), // NOI18N
+        SIGNAL_HEAD_FLASHLUNAR(TYPE_SIGNAL_HEAD_FLASHLUNAR, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashingLunar")), // NOI18N
     // Warrant variables
         ROUTE_FREE(TYPE_ROUTE_FREE, ItemType.WARRANT, rbx.getString("StateRouteFree")), // NOI18N
-        ROUTE_OCCUPIED(TYPE_ROUTE_OCCUPIED, ItemType.WARRANT, rbx.getString("StateRouteOccupied")), // NOI18N
-        ROUTE_ALLOCATED(TYPE_ROUTE_ALLOCATED, ItemType.WARRANT, rbx.getString("StateRouteAllocated")), // NOI18N
-        ROUTE_SET(TYPE_ROUTE_SET, ItemType.WARRANT, rbx.getString("StateRouteSet")), // NOI18N
+        ROUTE_OCCUPIED(TYPE_ROUTE_OCCUPIED, ItemType.WARRANT, rbx.getString("stateRouteOccupied")), // NOI18N
+        ROUTE_ALLOCATED(TYPE_ROUTE_ALLOCATED, ItemType.WARRANT, rbx.getString("StateRouteReserved")), // NOI18N
+        ROUTE_SET(TYPE_ROUTE_SET, ItemType.WARRANT, rbx.getString("StateRouteIsSet")), // NOI18N
         TRAIN_RUNNING(TYPE_TRAIN_RUNNING, ItemType.WARRANT, rbx.getString("StateTrainRunning")), // NOI18N
         SIGNAL_MAST_ASPECT_EQUALS(TYPE_SIGNAL_MAST_ASPECT_EQUALS, ItemType.SIGNALMAST, rbx.getString("TypeSignalMastAspectEquals")), // NOI18N
         SIGNAL_MAST_LIT(TYPE_SIGNAL_MAST_LIT, ItemType.SIGNALMAST, Bundle.getMessage("SignalMastStateLit")), // NOI18N
