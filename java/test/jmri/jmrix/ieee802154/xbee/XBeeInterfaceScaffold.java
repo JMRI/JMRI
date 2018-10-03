@@ -1,6 +1,7 @@
 package jmri.jmrix.ieee802154.xbee;
 
 import com.digi.xbee.api.XBeeDevice;
+import com.digi.xbee.api.RemoteXBeeDevice;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
 import com.digi.xbee.api.models.XBeeProtocol;
@@ -22,6 +23,7 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
 
     private XBeeDevice localDevice;
     private XBeeAdapter a;
+    public boolean dataSent = false;  // public OK here, so long as this is a test class
 
     public XBeeInterfaceScaffold() {
         super();
@@ -36,7 +38,19 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
            }
         };  
         // Create the local device.
-        localDevice = new XBeeDevice(a);
+        localDevice = new XBeeDevice(a){
+           @Override
+           public void sendData(RemoteXBeeDevice remoteXBeeDevice, byte[] data){
+               // set the data sent flag.
+               dataSent = true;
+           }
+
+           @Override
+           public void sendDataAsync(RemoteXBeeDevice remoteXBeeDevice, byte[] data){
+               // set the data sent flag.
+               dataSent = true;
+           }
+        };
 
     }
 

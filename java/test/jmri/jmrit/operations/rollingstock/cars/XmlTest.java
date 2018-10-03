@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.util.List;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.jdom2.JDOMException;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations RollingStock Cars XML class Last manually
@@ -24,6 +25,7 @@ public class XmlTest extends OperationsTestCase {
      * @throws JDOMException exception
      * @throws IOException exception
      */
+    @Test
     public void testXMLCreate() throws JDOMException, IOException {
 
         // confirm that file name has been modified for testing
@@ -383,28 +385,14 @@ public class XmlTest extends OperationsTestCase {
     // TODO: Add test to create xml file
     // TODO: Add test to read xml file
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
     }
 
-    public XmlTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XmlTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XmlTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         super.tearDown();
     }
 }
