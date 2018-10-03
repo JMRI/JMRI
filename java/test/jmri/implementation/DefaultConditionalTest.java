@@ -829,25 +829,25 @@ public class DefaultConditionalTest {
         
         ConditionalVariableStatic(Conditional.State state) {
             super();
-            setState(state);
+            setState(state.getIntValue());
         }
         
         ConditionalVariableStatic(Conditional.State state, boolean not) {
             super();
-            setState(state);
+            setState(state.getIntValue());
             setNegation(not);
         }
         
         ConditionalVariableStatic(Conditional.State state, String name, boolean trigger) {
             super();
             setName(name);
-            setState(state);
+            setState(state.getIntValue());
             setTriggerActions(trigger);
         }
         
         @Override
         public boolean evaluate() {
-            return getState() == Conditional.State.TRUE;
+            return getState() == Conditional.State.TRUE.getIntValue();
         }
         
     }

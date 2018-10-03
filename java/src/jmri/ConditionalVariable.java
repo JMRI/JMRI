@@ -793,6 +793,7 @@ public class ConditionalVariable {
      * @param t the state
      * @return the localized description
      */
+/*    
     public static String describeState(int t) {
         switch (t) {
             case Conditional.TYPE_NONE:
@@ -876,7 +877,7 @@ public class ConditionalVariable {
                 return "<none>"; // NOI18N
         }
     }
-
+*/
     /**
      * Convert Variable Test Type to Text String. Used in Logix
      * GUI Maintenance tools.
