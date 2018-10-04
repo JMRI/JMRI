@@ -221,7 +221,7 @@ public interface Conditional extends NamedBean {
     }
     
     // items
-    enum Type implements ConditionalType {
+    enum Type {
         ERROR(TYPE_ERROR, ItemType.NONE, ""), // NOI18N
         NONE(TYPE_NONE, ItemType.NONE, ""), // NOI18N
         SENSOR_ACTIVE(TYPE_SENSOR_ACTIVE, ItemType.SENSOR, Bundle.getMessage("SensorStateActive")), // NOI18N
