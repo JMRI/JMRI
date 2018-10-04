@@ -1661,7 +1661,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
 
         // Item Type
         _variableItemBox = new JComboBox<>();
-        for (Conditional.ItemType itemType : Conditional.ItemType.values()) {
+        for (Conditional.ItemType itemType : Conditional.ItemType.getStateVarList()) {
             _variableItemBox.addItem(itemType.toString());
         }
         JComboBoxUtil.setupComboBoxMaxRows(_variableItemBox);

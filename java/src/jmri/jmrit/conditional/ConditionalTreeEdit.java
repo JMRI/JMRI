@@ -2027,7 +2027,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     void buildVariableComponents() {
         // Item Type
         _variableItemBox = new JComboBox<String>();
-        for (Conditional.ItemType itemType : Conditional.ItemType.values()) {
+        for (Conditional.ItemType itemType : Conditional.ItemType.getStateVarList()) {
             _variableItemBox.addItem(itemType.toString());
         }
         JComboBoxUtil.setupComboBoxMaxRows(_variableItemBox);

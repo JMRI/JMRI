@@ -145,32 +145,51 @@ public interface Conditional extends NamedBean {
     
     // state variable and action items used by logix.
     enum ItemType {
-        NONE(TYPE_NONE, "ItemTypeNone"),        // There is no ITEM_TYPE_NONE so use TYPE_NONE instead
-        SENSOR(ITEM_TYPE_SENSOR, "ItemTypeSensor"),
-        TURNOUT(ITEM_TYPE_TURNOUT, "ItemTypeTurnout"),
-        LIGHT(ITEM_TYPE_LIGHT, "ItemTypeLight"),
-        SIGNALHEAD(ITEM_TYPE_SIGNALHEAD, "ItemTypeSignalHead"),
-        SIGNALMAST(ITEM_TYPE_SIGNALMAST, "ItemTypeSignalMast"),
-        MEMORY(ITEM_TYPE_MEMORY, "ItemTypeMemory"),
-        CONDITIONAL(ITEM_TYPE_CONDITIONAL, "ItemTypeConditional"),  // used only by ConditionalVariable
-        LOGIX(ITEM_TYPE_LOGIX, "ItemTypeLogix"),                    // used only by ConditionalAction
-        WARRANT(ITEM_TYPE_WARRANT, "ItemTypeWarrant"),
-        CLOCK(ITEM_TYPE_CLOCK, "ItemTypeClock"),
-        OBLOCK(ITEM_TYPE_OBLOCK, "ItemTypeOBlock"),
-        ENTRYEXIT(ITEM_TYPE_ENTRYEXIT, "ItemTypeEntryExit"),
-//        LAST_STATE_VAR(ITEM_TYPE_LAST_STATE_VAR, "ItemTypeStateVar"),
+        NONE(TYPE_NONE, IsStateVar.IS_STATE_VAR, "ItemTypeNone"),        // There is no ITEM_TYPE_NONE so use TYPE_NONE instead
+        SENSOR(ITEM_TYPE_SENSOR, IsStateVar.IS_STATE_VAR, "ItemTypeSensor"),
+        TURNOUT(ITEM_TYPE_TURNOUT, IsStateVar.IS_STATE_VAR, "ItemTypeTurnout"),
+        LIGHT(ITEM_TYPE_LIGHT, IsStateVar.IS_STATE_VAR, "ItemTypeLight"),
+        SIGNALHEAD(ITEM_TYPE_SIGNALHEAD, IsStateVar.IS_STATE_VAR, "ItemTypeSignalHead"),
+        SIGNALMAST(ITEM_TYPE_SIGNALMAST, IsStateVar.IS_STATE_VAR, "ItemTypeSignalMast"),
+        MEMORY(ITEM_TYPE_MEMORY, IsStateVar.IS_STATE_VAR, "ItemTypeMemory"),
+        CONDITIONAL(ITEM_TYPE_CONDITIONAL, IsStateVar.IS_STATE_VAR, "ItemTypeConditional"),  // used only by ConditionalVariable
+        LOGIX(ITEM_TYPE_LOGIX, IsStateVar.IS_STATE_VAR, "ItemTypeLogix"),                    // used only by ConditionalAction
+        WARRANT(ITEM_TYPE_WARRANT, IsStateVar.IS_STATE_VAR, "ItemTypeWarrant"),
+        CLOCK(ITEM_TYPE_CLOCK, IsStateVar.IS_STATE_VAR, "ItemTypeClock"),
+        OBLOCK(ITEM_TYPE_OBLOCK, IsStateVar.IS_STATE_VAR, "ItemTypeOBlock"),
+        ENTRYEXIT(ITEM_TYPE_ENTRYEXIT, IsStateVar.IS_STATE_VAR, "ItemTypeEntryExit"),
+//        LAST_STATE_VAR(ITEM_TYPE_LAST_STATE_VAR, IsStateVar.IS_STATE_VAR, "ItemTypeStateVar"),
 
-        AUDIO(ITEM_TYPE_AUDIO, "ItemTypeAudio"),
-        SCRIPT(ITEM_TYPE_SCRIPT, "ItemTypeScript"),
-        OTHER(ITEM_TYPE_OTHER, "ItemTypeOther");
+        AUDIO(ITEM_TYPE_AUDIO, IsStateVar.IS_NOT_STATE_VAR, "ItemTypeAudio"),
+        SCRIPT(ITEM_TYPE_SCRIPT, IsStateVar.IS_NOT_STATE_VAR, "ItemTypeScript"),
+        OTHER(ITEM_TYPE_OTHER, IsStateVar.IS_NOT_STATE_VAR, "ItemTypeOther");
 //        LAST_ACTION(ITEM_TYPE_LAST_ACTION, "ItemTypeLastAction");
         
         private final int _type;
+        private IsStateVar _isStateVar;
         private final String _bundleKey;
         
-        private ItemType(int type, String bundleKey) {
+        private static final List<ItemType> stateVarList;
+        
+        static
+        {
+            stateVarList = new ArrayList<>();
+            
+            for (ItemType itemType : ItemType.values()) {
+                if (itemType._isStateVar == IsStateVar.IS_STATE_VAR) {
+                    stateVarList.add(itemType);
+                }
+            }
+        }
+        
+        private ItemType(int type, IsStateVar isStateVar, String bundleKey) {
             _type = type;
+            _isStateVar = isStateVar;
             _bundleKey = bundleKey;
+        }
+        
+        public static List<ItemType> getStateVarList() {
+            return stateVarList;
         }
         
         public int getIntValue() {
@@ -190,6 +209,12 @@ public interface Conditional extends NamedBean {
         @Override
         public String toString() {
             return Bundle.getMessage(_bundleKey);
+        }
+        
+        // This enum is only used within the outer enum ItemType.
+        private enum IsStateVar {
+            IS_STATE_VAR,
+            IS_NOT_STATE_VAR
         }
     }
     
@@ -221,7 +246,7 @@ public interface Conditional extends NamedBean {
         SIGNAL_HEAD_HELD(TYPE_SIGNAL_HEAD_HELD, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateHeld")), // NOI18N
         SIGNAL_HEAD_LUNAR(TYPE_SIGNAL_HEAD_LUNAR, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateLunar")), // NOI18N
         SIGNAL_HEAD_FLASHLUNAR(TYPE_SIGNAL_HEAD_FLASHLUNAR, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashingLunar")), // NOI18N
-    // Warrant variables
+        // Warrant variables
         ROUTE_FREE(TYPE_ROUTE_FREE, ItemType.WARRANT, rbx.getString("StateRouteFree")), // NOI18N
         ROUTE_OCCUPIED(TYPE_ROUTE_OCCUPIED, ItemType.WARRANT, rbx.getString("stateRouteOccupied")), // NOI18N
         ROUTE_ALLOCATED(TYPE_ROUTE_ALLOCATED, ItemType.WARRANT, rbx.getString("StateRouteReserved")), // NOI18N
@@ -232,7 +257,7 @@ public interface Conditional extends NamedBean {
         SIGNAL_MAST_HELD(TYPE_SIGNAL_MAST_HELD, ItemType.SIGNALMAST, Bundle.getMessage("SignalMastStateHeld")), // NOI18N
         SIGNAL_HEAD_APPEARANCE_EQUALS(TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS, ItemType.SIGNALHEAD, rbx.getString("TypeSignalHeadAspectEquals")), // NOI18N
         BLOCK_STATUS_EQUALS(TYPE_BLOCK_STATUS_EQUALS, ItemType.OBLOCK, ""), // NOI18N
-    //Entry Exit Rules
+        //Entry Exit Rules
         ENTRYEXIT_ACTIVE(TYPE_ENTRYEXIT_ACTIVE, ItemType.ENTRYEXIT, Bundle.getMessage("SensorStateActive")), // NOI18N
         ENTRYEXIT_INACTIVE(TYPE_ENTRYEXIT_INACTIVE, ItemType.ENTRYEXIT, Bundle.getMessage("SensorStateInactive")); // NOI18N
 
@@ -251,16 +276,6 @@ public interface Conditional extends NamedBean {
         private static final List<Type> signalHeadItemsList;
         private static final List<Type> signalMastItemsList;
         
-        
-        private static List<Type> getList(ItemType itemType) {
-            List<Type> list = new ArrayList<>();
-            for (Type t : Type.values()) {
-                if (t.getItemType() == itemType) {
-                    list.add(t);
-                }
-            }
-            return Collections.unmodifiableList(list);
-        }
         
         static
         {
