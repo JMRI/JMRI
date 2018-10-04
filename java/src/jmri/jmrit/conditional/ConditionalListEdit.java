@@ -2572,7 +2572,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         _curVariable.setName(name);
         boolean result = _curVariable.evaluate();
         log.debug("State Variable \"{}\" of type '{}' state= {} type= {}",  // NOI18N
-                name, testType.toString(), result, _curVariable.getType());
+                name, testType.getTestTypeString(), result, _curVariable.getType());
         if (_curVariable.getType() == Conditional.Type.NONE) {
             JOptionPane.showMessageDialog(_editConditionalFrame,
                     Bundle.getMessage("ErrorVariableState"),

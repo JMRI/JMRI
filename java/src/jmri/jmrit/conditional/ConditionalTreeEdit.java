@@ -3050,7 +3050,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _curVariable.setName(name);
         boolean result = _curVariable.evaluate();
         log.debug("State Variable \"{}\" of type '{}' state= {} type= {}",
-                name, testType.toString(),
+                name, testType.getTestTypeString(),
                 result, _curVariable.getType());  // NOI18N
         if (_curVariable.getType() == Conditional.Type.NONE) {
             JOptionPane.showMessageDialog(_editLogixFrame,

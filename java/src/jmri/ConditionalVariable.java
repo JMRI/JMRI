@@ -384,7 +384,7 @@ public class ConditionalVariable {
     }
 
     public String getTestTypeString() {
-        return _type.toString();
+        return _type.getTestTypeString();
     }
 
     /**
@@ -862,7 +862,7 @@ public class ConditionalVariable {
 
     @Override
     public String toString() {
-        String type = _type.toString();
+        String type = _type.getTestTypeString();
         int itemType = _type.getItemType().getIntValue();
         switch (itemType) {
             case Conditional.ITEM_TYPE_SENSOR:
