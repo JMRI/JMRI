@@ -344,11 +344,12 @@ public class OperationsPanel extends JPanel {
 //        return so.toString();
 //    }
 
-    // Kludge fix for horizontal scrollbar encroaching buttons at bottom of a scrollable window.
-    protected JPanel pad; // used to pad out lower part of window to fix horizontal scrollbar issue
+    
+//    protected JPanel pad; // used to pad out lower part of window to fix horizontal scrollbar issue
 
+ // Kludge fix for horizontal scrollbar encroaching buttons at bottom of a scrollable window.
     protected void addHorizontalScrollBarKludgeFix(JScrollPane pane, JPanel panel) {
-        pad = new JPanel(); // kludge fix for horizontal scrollbar
+        JPanel pad = new JPanel(); // kludge fix for horizontal scrollbar
         pad.add(new JLabel(" "));
         panel.add(pad);
 
