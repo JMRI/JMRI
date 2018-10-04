@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  * The "system" name is provided by the system-specific implementations, and
  * provides a unique mapping to the layout control system (for example LocoNet
  * or NCE) and address within that system. It must be present and unique across
- * the JMRI instance.
+ * the JMRI instance. Two beans are identical if they have the same system name; if not, not.
  * <p>
  * The "user" name is optional. It's free form text except for two restrictions:
  * <ul>

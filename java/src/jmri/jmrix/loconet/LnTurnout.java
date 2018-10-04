@@ -240,9 +240,8 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                 int sw1 = l.getElement(1);
                 int sw2 = l.getElement(2);
                 if (myAddress(sw1, sw2)) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("SW_REQ received with valid address");
-                    }
+                
+                    log.debug("SW_REQ received with valid address");
                     //sort out states
                     int state;
                     if ((sw2 & LnConstants.OPC_SW_REQ_DIR) != 0) {
@@ -267,9 +266,8 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                 int sw1 = l.getElement(1);
                 int sw2 = l.getElement(2);
                 if (myAddress(sw1, sw2)) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("SW_REP received with valid address");
-                    }
+
+                    log.debug("SW_REP received with valid address");
                     // see if its a turnout state report
                     if ((sw2 & LnConstants.OPC_SW_REP_INPUTS) == 0) {
                         // LnConstants.OPC_SW_REP_INPUTS not set, these report outputs
