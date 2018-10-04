@@ -264,27 +264,33 @@ public interface Conditional extends NamedBean {
         
         static
         {
-            sensorItemsList = getList(ItemType.SENSOR);
-            turnoutItemsList = getList(ItemType.TURNOUT);
-            conditionalItemsList = getList(ItemType.CONDITIONAL);
-            lightItemsList = getList(ItemType.LIGHT);
-//            warrantItemsList = getList(ItemType.WARRANT);
-//            memoryItemsList = getList(ItemType.MEMORY);
-//            oblockItemsList = getList(ItemType.OBLOCK);
-            entryExitItemsList = getList(ItemType.ENTRYEXIT);
+            Type[] typeArray1 = {SENSOR_ACTIVE, SENSOR_INACTIVE};
+            sensorItemsList = Collections.unmodifiableList(Arrays.asList(typeArray1));
             
-            Type[] typeArray1 = {NONE, SIGNAL_HEAD_APPEARANCE_EQUALS, SIGNAL_HEAD_LIT, SIGNAL_HEAD_HELD};
-            signalHeadItemsList = Collections.unmodifiableList(Arrays.asList(typeArray1));
+            Type[] typeArray2 = {TURNOUT_THROWN, TURNOUT_CLOSED};
+            turnoutItemsList = Collections.unmodifiableList(Arrays.asList(typeArray2));
             
-            Type[] typeArray2 = {NONE, SIGNAL_MAST_ASPECT_EQUALS, SIGNAL_MAST_LIT, SIGNAL_MAST_HELD};
-            signalMastItemsList = Collections.unmodifiableList(Arrays.asList(typeArray2));
+            Type[] typeArray3 = {CONDITIONAL_TRUE, CONDITIONAL_FALSE};
+            conditionalItemsList = Collections.unmodifiableList(Arrays.asList(typeArray3));
             
-            Type[] typeArray3 = {ROUTE_FREE, ROUTE_SET, ROUTE_ALLOCATED, ROUTE_OCCUPIED, TRAIN_RUNNING};
-            warrantItemsList = Collections.unmodifiableList(Arrays.asList(typeArray3));
+            Type[] typeArray4 = {LIGHT_ON, LIGHT_OFF};
+            lightItemsList = Collections.unmodifiableList(Arrays.asList(typeArray4));
             
-            Type[] typeArray4 = {MEMORY_EQUALS, MEMORY_EQUALS_INSENSITIVE,
+            Type[] typeArray5 = {ROUTE_FREE, ROUTE_SET, ROUTE_ALLOCATED, ROUTE_OCCUPIED, TRAIN_RUNNING};
+            warrantItemsList = Collections.unmodifiableList(Arrays.asList(typeArray5));
+            
+            Type[] typeArray6 = {MEMORY_EQUALS, MEMORY_EQUALS_INSENSITIVE,
                 MEMORY_COMPARE, MEMORY_COMPARE_INSENSITIVE};
-            memoryItemsList = Collections.unmodifiableList(Arrays.asList(typeArray4));
+            memoryItemsList = Collections.unmodifiableList(Arrays.asList(typeArray6));
+            
+            Type[] typeArray7 = {ENTRYEXIT_ACTIVE, ENTRYEXIT_INACTIVE};
+            entryExitItemsList = Collections.unmodifiableList(Arrays.asList(typeArray7));
+            
+            Type[] typeArray8 = {NONE, SIGNAL_HEAD_APPEARANCE_EQUALS, SIGNAL_HEAD_LIT, SIGNAL_HEAD_HELD};
+            signalHeadItemsList = Collections.unmodifiableList(Arrays.asList(typeArray8));
+            
+            Type[] typeArray9 = {NONE, SIGNAL_MAST_ASPECT_EQUALS, SIGNAL_MAST_LIT, SIGNAL_MAST_HELD};
+            signalMastItemsList = Collections.unmodifiableList(Arrays.asList(typeArray9));
         }
         
         private Type(int state, ItemType itemType, String string) {
@@ -500,7 +506,6 @@ public interface Conditional extends NamedBean {
      * types share the following group categories:
      */
     // state variable and action items used by logix.
-    // When a new type is added, insert at proper location and update 'LAST' numbers
     static final int ITEM_TYPE_SENSOR = 1;
     static final int ITEM_TYPE_TURNOUT = 2;
     static final int ITEM_TYPE_LIGHT = 3;
@@ -519,133 +524,6 @@ public interface Conditional extends NamedBean {
     static final int ITEM_TYPE_SCRIPT = 13;
     static final int ITEM_TYPE_OTHER = 14;
 //    static final int ITEM_TYPE_LAST_ACTION = 14;
-
-    /**
-     * *************** ConditionalVariable Maps *******************************
-     */
-/*    // Map state variable types to their item type
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public final static int[] TEST_TO_ITEM = {TYPE_NONE, // TYPE_NONE                0
-        ITEM_TYPE_SENSOR, // TYPE_SENSOR_ACTIVE       1
-        ITEM_TYPE_SENSOR, // TYPE_SENSOR_INACTIVE     2
-        ITEM_TYPE_TURNOUT, // TYPE_TURNOUT_THROWN      3
-        ITEM_TYPE_TURNOUT, // TYPE_TURNOUT_ClOSED      4
-        ITEM_TYPE_CONDITIONAL, // TYPE_CONDITIONAL_TRUE    5
-        ITEM_TYPE_CONDITIONAL, // TYPE_CONDITIONAL_FALSE   6
-        ITEM_TYPE_LIGHT, // TYPE_LIGHT_ON            7
-        ITEM_TYPE_LIGHT, // TYPE_LIGHT_OFF           8
-        ITEM_TYPE_MEMORY, // TYPE_MEMORY_EQUALS       9
-        ITEM_TYPE_CLOCK, // TYPE_FAST_CLOCK_RANGE    10
-        ITEM_TYPE_SIGNALHEAD, // TYPE_SIGNAL_HEAD_RED     11
-        ITEM_TYPE_SIGNALHEAD, // TYPE_SIGNAL_HEAD_YELLOW  12
-        ITEM_TYPE_SIGNALHEAD, // TYPE_SIGNAL_HEAD_GREEN   13
-        ITEM_TYPE_SIGNALHEAD, // TYPE_SIGNAL_HEAD_DARK    14
-        ITEM_TYPE_SIGNALHEAD, // TYPE_SIGNAL_HEAD_FLASHRED 15
-        ITEM_TYPE_SIGNALHEAD, // TYPE_SIGNAL_HEAD_FLASHYELLOW
-        ITEM_TYPE_SIGNALHEAD, // TYPE_SIGNAL_HEAD_FLASHGREEN 17
-        ITEM_TYPE_SIGNALHEAD, // TYPE_SIGNAL_HEAD_LIT     18
-        ITEM_TYPE_SIGNALHEAD, // TYPE_SIGNAL_HEAD_HELD    19
-        ITEM_TYPE_MEMORY, // TYPE_MEMORY_COMPARE      20
-        ITEM_TYPE_SIGNALHEAD, // TYPE_SIGNAL_HEAD_LUNAR   21
-        ITEM_TYPE_SIGNALHEAD, // TYPE_SIGNAL_HEAD_FLASHLUNAR 22
-        ITEM_TYPE_MEMORY, // TYPE_MEMORY_EQUALS_INSENSITIVE 23
-        ITEM_TYPE_MEMORY, // TYPE_MEMORY_COMPARE_INSENSITIVE
-        ITEM_TYPE_WARRANT, // TYPE_ROUTE_FREE          25
-        ITEM_TYPE_WARRANT, // TYPE_ROUTE_OCCUPIED      26
-        ITEM_TYPE_WARRANT, // TYPE_ROUTE_ALLOCATED     27
-        ITEM_TYPE_WARRANT, // TYPE_ROUTE_SET           28
-        ITEM_TYPE_WARRANT, // TYPE_TRAIN_RUNNING       29
-        ITEM_TYPE_SIGNALMAST, // TYPE_SIGNAL_MAST_ASPECT_EQUALS 30
-        ITEM_TYPE_SIGNALMAST, // TYPE_SIGNAL_MAST_LIT = 31;
-        ITEM_TYPE_SIGNALMAST, // TYPE_SIGNAL_MAST_HELD = 32
-        ITEM_TYPE_SIGNALHEAD, // TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS = 33;
-        ITEM_TYPE_OBLOCK, // TYPE_BLOCK_STATUS_EQUALS = 34
-        ITEM_TYPE_ENTRYEXIT, // TYPE_ENTRYEXIT_ACTIVE = 35
-        ITEM_TYPE_ENTRYEXIT // TYPE_ENTRYEXIT_INACTIVE = 36
-    };
-*/
-    // Map SignalHead comboBox items to SignalHead Conditional variable types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_SIGNAL_HEAD_TEST = {TYPE_NONE,
-        TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS,
-        TYPE_SIGNAL_HEAD_LIT,
-        TYPE_SIGNAL_HEAD_HELD};
-
-    // Map SignalMAst comboBox items to SignalMast Conditional variable types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_SIGNAL_MAST_TEST = {TYPE_NONE,
-        TYPE_SIGNAL_MAST_ASPECT_EQUALS,
-        TYPE_SIGNAL_MAST_LIT,
-        TYPE_SIGNAL_MAST_HELD};
-
-    // Map Sensor state comboBox items to Sensor Conditional variable types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_SENSOR_TEST = {TYPE_SENSOR_ACTIVE, TYPE_SENSOR_INACTIVE};
-
-    // Map Turnout state comboBox items to Turnout Conditional variable types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_TURNOUT_TEST = {TYPE_TURNOUT_THROWN, TYPE_TURNOUT_CLOSED};
-
-    // Map Conditional state comboBox items to  Condition ConditionalVvariable types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_CONDITIONAL_TEST = {TYPE_CONDITIONAL_TRUE, TYPE_CONDITIONAL_FALSE};
-
-    // Map Memory state comboBox items to Light ConditionalVariable types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_LIGHT_TEST = {TYPE_LIGHT_ON, TYPE_LIGHT_OFF};
-
-    // Map Warrant state comboBox items to Warrant ConditionalVariable types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_WARRANT_TEST = {TYPE_ROUTE_FREE, TYPE_ROUTE_SET, TYPE_ROUTE_ALLOCATED,
-        TYPE_ROUTE_OCCUPIED, TYPE_TRAIN_RUNNING};
-
-    // Map Memory Compare Type comboBox items to Memory ConditionalVariable types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_MEMORY_TEST = {TYPE_MEMORY_EQUALS, TYPE_MEMORY_EQUALS_INSENSITIVE,
-        TYPE_MEMORY_COMPARE, TYPE_MEMORY_COMPARE_INSENSITIVE};
-
-    // This variable is never used
-//    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY")
-//    public static final int[] ITEM_TO_OBLOCK_TEST = {TYPE_BLOCK_STATUS_EQUALS};
-
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY")
-    public static final int[] ITEM_TO_ENTRYEXIT_TEST = {TYPE_ENTRYEXIT_ACTIVE, TYPE_ENTRYEXIT_INACTIVE};
 
     /**
      * *************** ConditionalAction Maps *******************************
