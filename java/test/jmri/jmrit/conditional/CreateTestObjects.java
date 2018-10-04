@@ -32,7 +32,7 @@ public class CreateTestObjects {
         ConditionalVariable var1 = new ConditionalVariable();
         var1.setOpern(Conditional.Operator.NONE);
         var1.setNegation(true);
-        var1.setType(1);
+        var1.setType(Conditional.Type.SENSOR_ACTIVE);
         var1.setName("Sensor 1");  // NOI18N
         var1.setDataString("");
         var1.setNum1(0);
@@ -44,7 +44,7 @@ public class CreateTestObjects {
         ConditionalVariable var2 = new ConditionalVariable();
         var2.setOpern(Conditional.Operator.AND);
         var2.setNegation(true);
-        var2.setType(2);
+        var2.setType(Conditional.Type.SENSOR_INACTIVE);
         var2.setName("Sensor 1");  // NOI18N
         var2.setDataString("");
         var2.setNum1(0);
