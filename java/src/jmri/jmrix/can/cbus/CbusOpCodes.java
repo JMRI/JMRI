@@ -10,6 +10,7 @@ import jmri.jmrix.AbstractMessage;
 /**
  * Methods to decode CBUS opcodes
  *
+ * https://github.com/MERG-DEV/CBUSlib
  * @author Andrew Crosland Copyright (C) 2009
  * @author Steve Young (C) 2018
  */

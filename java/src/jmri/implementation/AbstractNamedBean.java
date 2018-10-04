@@ -312,9 +312,9 @@ public abstract class AbstractNamedBean implements NamedBean {
     /**
      * {@inheritDoc}
      * <p>
-     * This implementation tests that the results of
-     * {@link jmri.NamedBean#getSystemName()} and
-     * {@link jmri.NamedBean#getUserName()} are equal for this and obj.
+     * This implementation tests that 
+     * {@link jmri.NamedBean#getSystemName()}
+     * is equal for this and obj.
      *
      * @param obj the reference object with which to compare.
      * @return {@code true} if this object is the same as the obj argument;
@@ -322,39 +322,24 @@ public abstract class AbstractNamedBean implements NamedBean {
      */
     @Override
     public boolean equals(Object obj) {
-        // test the obj == this
-        boolean result = super.equals(obj);
+        if (obj == this) return true;  // for efficiency
+        if (obj == null) return false; // by contract
 
-        if (!result && (obj != null) && obj instanceof AbstractNamedBean) {
+        if (obj instanceof AbstractNamedBean) {  // NamedBeans are not equal to things of other types
             AbstractNamedBean b = (AbstractNamedBean) obj;
-            if (this.getSystemName().equals(b.getSystemName())) {
-                String bUserName = b.getUserName();
-                if ((mUserName != null) && (bUserName != null)
-                        && mUserName.equals(bUserName)) {
-                    result = true;
-                }
-            }
+            return this.getSystemName().equals(b.getSystemName());
         }
-        return result;
+        return false;
     }
 
     /**
-     * Calculate our hash code.
-     *
-     * @return our hash code
+     * {@inheritDoc}
+     * 
+     * @return hash code value is based on sthe ystem name.
      */
     @Override
     public int hashCode() {
-        int result = super.hashCode();
-        if (mSystemName != null) {
-            result = mSystemName.hashCode();
-            if (mUserName != null) {
-                result = (result * 37) + mUserName.hashCode();
-            }
-        } else if (mUserName != null) {
-            result = mUserName.hashCode();
-        }
-        return result;
+        return getSystemName().hashCode(); // as the 
     }
     
     /**

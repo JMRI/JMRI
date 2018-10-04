@@ -485,7 +485,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 } else
                     return Bundle.getMessage("CbusSendOff");
             case STATUS_REQUEST_BUTTON_COLUMN:
-                return("Get Status");
+                return Bundle.getMessage("StatusButton");
             case COMMENT_COLUMN:
                 return _comment[row];
             case DELETE_BUTTON_COLUMN:
