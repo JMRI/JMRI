@@ -222,52 +222,53 @@ public interface Conditional extends NamedBean {
     
     // items
     enum Type {
-        ERROR(TYPE_ERROR, ItemType.NONE, ""), // NOI18N
-        NONE(TYPE_NONE, ItemType.NONE, ""), // NOI18N
-        SENSOR_ACTIVE(TYPE_SENSOR_ACTIVE, ItemType.SENSOR, Bundle.getMessage("SensorStateActive")), // NOI18N
-        SENSOR_INACTIVE(TYPE_SENSOR_INACTIVE, ItemType.SENSOR, Bundle.getMessage("SensorStateInactive")), // NOI18N
-        TURNOUT_THROWN(TYPE_TURNOUT_THROWN, ItemType.TURNOUT, Bundle.getMessage("TurnoutStateThrown")), // NOI18N
-        TURNOUT_CLOSED(TYPE_TURNOUT_CLOSED, ItemType.TURNOUT, Bundle.getMessage("TurnoutStateClosed")), // NOI18N
-        CONDITIONAL_TRUE(TYPE_CONDITIONAL_TRUE, ItemType.CONDITIONAL, Bundle.getMessage("True")), // NOI18N
-        CONDITIONAL_FALSE(TYPE_CONDITIONAL_FALSE, ItemType.CONDITIONAL, Bundle.getMessage("False")), // NOI18N
-        LIGHT_ON(TYPE_LIGHT_ON, ItemType.LIGHT, rbx.getString("LightOn")), // NOI18N
-        LIGHT_OFF(TYPE_LIGHT_OFF, ItemType.LIGHT, rbx.getString("LightOff")), // NOI18N
-        MEMORY_EQUALS(TYPE_MEMORY_EQUALS, ItemType.MEMORY, rbx.getString("StateMemoryEquals")), // NOI18N
-        MEMORY_COMPARE(TYPE_MEMORY_COMPARE, ItemType.MEMORY, rbx.getString("StateMemoryCompare")), // NOI18N
-        MEMORY_EQUALS_INSENSITIVE(TYPE_MEMORY_EQUALS_INSENSITIVE, ItemType.MEMORY, rbx.getString("StateMemoryEqualsInsensitive")), // NOI18N
-        MEMORY_COMPARE_INSENSITIVE(TYPE_MEMORY_COMPARE_INSENSITIVE, ItemType.MEMORY, rbx.getString("StateMemoryCompareInsensitive")), // NOI18N
-        FAST_CLOCK_RANGE(TYPE_FAST_CLOCK_RANGE, ItemType.CLOCK, rbx.getString("TypeFastClockRange")), // NOI18N
+        ERROR(TYPE_ERROR, ItemType.NONE, "", ""), // NOI18N
+        NONE(TYPE_NONE, ItemType.NONE, "", ""), // NOI18N
+        SENSOR_ACTIVE(TYPE_SENSOR_ACTIVE, ItemType.SENSOR, Bundle.getMessage("SensorStateActive"), rbx.getString("TypeSensorActive")), // NOI18N
+        SENSOR_INACTIVE(TYPE_SENSOR_INACTIVE, ItemType.SENSOR, Bundle.getMessage("SensorStateInactive"), rbx.getString("TypeSensorInactive")), // NOI18N
+        TURNOUT_THROWN(TYPE_TURNOUT_THROWN, ItemType.TURNOUT, Bundle.getMessage("TurnoutStateThrown"), rbx.getString("TypeTurnoutThrown")), // NOI18N
+        TURNOUT_CLOSED(TYPE_TURNOUT_CLOSED, ItemType.TURNOUT, Bundle.getMessage("TurnoutStateClosed"), rbx.getString("TypeTurnoutClosed")), // NOI18N
+        CONDITIONAL_TRUE(TYPE_CONDITIONAL_TRUE, ItemType.CONDITIONAL, Bundle.getMessage("True"), rbx.getString("TypeConditionalTrue")), // NOI18N
+        CONDITIONAL_FALSE(TYPE_CONDITIONAL_FALSE, ItemType.CONDITIONAL, Bundle.getMessage("False"), rbx.getString("TypeConditionalFalse")), // NOI18N
+        LIGHT_ON(TYPE_LIGHT_ON, ItemType.LIGHT, rbx.getString("LightOn"), rbx.getString("TypeLightOn")), // NOI18N
+        LIGHT_OFF(TYPE_LIGHT_OFF, ItemType.LIGHT, rbx.getString("LightOff"), rbx.getString("TypeLightOff")), // NOI18N
+        MEMORY_EQUALS(TYPE_MEMORY_EQUALS, ItemType.MEMORY, rbx.getString("StateMemoryEquals"), rbx.getString("TypeMemoryEquals")), // NOI18N
+        MEMORY_COMPARE(TYPE_MEMORY_COMPARE, ItemType.MEMORY, rbx.getString("StateMemoryCompare"), rbx.getString("TypeMemoryCompare")), // NOI18N
+        MEMORY_EQUALS_INSENSITIVE(TYPE_MEMORY_EQUALS_INSENSITIVE, ItemType.MEMORY, rbx.getString("StateMemoryEqualsInsensitive"), rbx.getString("TypeMemoryEqualsInsensitive")), // NOI18N
+        MEMORY_COMPARE_INSENSITIVE(TYPE_MEMORY_COMPARE_INSENSITIVE, ItemType.MEMORY, rbx.getString("StateMemoryCompareInsensitive"), rbx.getString("TypeMemoryCompareInsensitive")), // NOI18N
+        FAST_CLOCK_RANGE(TYPE_FAST_CLOCK_RANGE, ItemType.CLOCK, rbx.getString("TypeFastClockRange"), rbx.getString("TypeFastClockRange")), // NOI18N
         
         // Note the set signalHeadAppearanceSet below which holds those SignalHead types that are appearances.
-        SIGNAL_HEAD_RED(TYPE_SIGNAL_HEAD_RED, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateRed")), // NOI18N
-        SIGNAL_HEAD_YELLOW(TYPE_SIGNAL_HEAD_YELLOW, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateYellow")), // NOI18N
-        SIGNAL_HEAD_GREEN(TYPE_SIGNAL_HEAD_GREEN, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateGreen")), // NOI18N
-        SIGNAL_HEAD_DARK(TYPE_SIGNAL_HEAD_DARK, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateDark")), // NOI18N
-        SIGNAL_HEAD_FLASHRED(TYPE_SIGNAL_HEAD_FLASHRED, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashingRed")), // NOI18N
-        SIGNAL_HEAD_FLASHYELLOW(TYPE_SIGNAL_HEAD_FLASHYELLOW, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashingYellow")), // NOI18N
-        SIGNAL_HEAD_FLASHGREEN(TYPE_SIGNAL_HEAD_FLASHGREEN, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashingGreen")), // NOI18N
-        SIGNAL_HEAD_LIT(TYPE_SIGNAL_HEAD_LIT, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateLit")), // NOI18N
-        SIGNAL_HEAD_HELD(TYPE_SIGNAL_HEAD_HELD, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateHeld")), // NOI18N
-        SIGNAL_HEAD_LUNAR(TYPE_SIGNAL_HEAD_LUNAR, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateLunar")), // NOI18N
-        SIGNAL_HEAD_FLASHLUNAR(TYPE_SIGNAL_HEAD_FLASHLUNAR, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashingLunar")), // NOI18N
+        SIGNAL_HEAD_RED(TYPE_SIGNAL_HEAD_RED, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateRed"), Bundle.getMessage("SignalHeadStateRed")), // NOI18N
+        SIGNAL_HEAD_YELLOW(TYPE_SIGNAL_HEAD_YELLOW, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateYellow"), Bundle.getMessage("SignalHeadStateYellow")), // NOI18N
+        SIGNAL_HEAD_GREEN(TYPE_SIGNAL_HEAD_GREEN, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateGreen"), Bundle.getMessage("SignalHeadStateGreen")), // NOI18N
+        SIGNAL_HEAD_DARK(TYPE_SIGNAL_HEAD_DARK, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateDark"), Bundle.getMessage("SignalHeadStateDark")), // NOI18N
+        SIGNAL_HEAD_FLASHRED(TYPE_SIGNAL_HEAD_FLASHRED, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashingRed"), Bundle.getMessage("SignalHeadStateFlashingRed")), // NOI18N
+        SIGNAL_HEAD_FLASHYELLOW(TYPE_SIGNAL_HEAD_FLASHYELLOW, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashingYellow"), Bundle.getMessage("SignalHeadStateFlashingYellow")), // NOI18N
+        SIGNAL_HEAD_FLASHGREEN(TYPE_SIGNAL_HEAD_FLASHGREEN, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashingGreen"), Bundle.getMessage("SignalHeadStateFlashingGreen")), // NOI18N
+        SIGNAL_HEAD_LIT(TYPE_SIGNAL_HEAD_LIT, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateLit"), Bundle.getMessage("SignalHeadStateLit")), // NOI18N
+        SIGNAL_HEAD_HELD(TYPE_SIGNAL_HEAD_HELD, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateHeld"), Bundle.getMessage("SignalHeadStateHeld")), // NOI18N
+        SIGNAL_HEAD_LUNAR(TYPE_SIGNAL_HEAD_LUNAR, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateLunar"), Bundle.getMessage("SignalHeadStateLunar")), // NOI18N
+        SIGNAL_HEAD_FLASHLUNAR(TYPE_SIGNAL_HEAD_FLASHLUNAR, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashingLunar"), Bundle.getMessage("SignalHeadStateFlashingLunar")), // NOI18N
         // Warrant variables
-        ROUTE_FREE(TYPE_ROUTE_FREE, ItemType.WARRANT, rbx.getString("StateRouteFree")), // NOI18N
-        ROUTE_OCCUPIED(TYPE_ROUTE_OCCUPIED, ItemType.WARRANT, rbx.getString("stateRouteOccupied")), // NOI18N
-        ROUTE_ALLOCATED(TYPE_ROUTE_ALLOCATED, ItemType.WARRANT, rbx.getString("StateRouteReserved")), // NOI18N
-        ROUTE_SET(TYPE_ROUTE_SET, ItemType.WARRANT, rbx.getString("StateRouteIsSet")), // NOI18N
-        TRAIN_RUNNING(TYPE_TRAIN_RUNNING, ItemType.WARRANT, rbx.getString("StateTrainRunning")), // NOI18N
-        SIGNAL_MAST_ASPECT_EQUALS(TYPE_SIGNAL_MAST_ASPECT_EQUALS, ItemType.SIGNALMAST, rbx.getString("TypeSignalMastAspectEquals")), // NOI18N
-        SIGNAL_MAST_LIT(TYPE_SIGNAL_MAST_LIT, ItemType.SIGNALMAST, Bundle.getMessage("SignalMastStateLit")), // NOI18N
-        SIGNAL_MAST_HELD(TYPE_SIGNAL_MAST_HELD, ItemType.SIGNALMAST, Bundle.getMessage("SignalMastStateHeld")), // NOI18N
-        SIGNAL_HEAD_APPEARANCE_EQUALS(TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS, ItemType.SIGNALHEAD, rbx.getString("TypeSignalHeadAspectEquals")), // NOI18N
-        BLOCK_STATUS_EQUALS(TYPE_BLOCK_STATUS_EQUALS, ItemType.OBLOCK, ""), // NOI18N
+        ROUTE_FREE(TYPE_ROUTE_FREE, ItemType.WARRANT, rbx.getString("StateRouteFree"), rbx.getString("TypeWarrantRouteFree")), // NOI18N
+        ROUTE_OCCUPIED(TYPE_ROUTE_OCCUPIED, ItemType.WARRANT, rbx.getString("stateRouteOccupied"), rbx.getString("TypeWarrantRouteOccupied")), // NOI18N
+        ROUTE_ALLOCATED(TYPE_ROUTE_ALLOCATED, ItemType.WARRANT, rbx.getString("StateRouteReserved"), rbx.getString("TypeWarrantRouteAllocated")), // NOI18N
+        ROUTE_SET(TYPE_ROUTE_SET, ItemType.WARRANT, rbx.getString("StateRouteIsSet"), rbx.getString("TypeRouteIsSet")), // NOI18N
+        TRAIN_RUNNING(TYPE_TRAIN_RUNNING, ItemType.WARRANT, rbx.getString("StateTrainRunning"), rbx.getString("TypeTrainRunning")), // NOI18N
+        SIGNAL_MAST_ASPECT_EQUALS(TYPE_SIGNAL_MAST_ASPECT_EQUALS, ItemType.SIGNALMAST, rbx.getString("TypeSignalMastAspectEquals"), rbx.getString("TypeSignalMastAspectEquals")), // NOI18N
+        SIGNAL_MAST_LIT(TYPE_SIGNAL_MAST_LIT, ItemType.SIGNALMAST, Bundle.getMessage("SignalMastStateLit"), Bundle.getMessage("SignalMastStateLit")), // NOI18N
+        SIGNAL_MAST_HELD(TYPE_SIGNAL_MAST_HELD, ItemType.SIGNALMAST, Bundle.getMessage("SignalMastStateHeld"), Bundle.getMessage("SignalMastStateHeld")), // NOI18N
+        SIGNAL_HEAD_APPEARANCE_EQUALS(TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS, ItemType.SIGNALHEAD, rbx.getString("TypeSignalHeadAspectEquals"), rbx.getString("TypeSignalHeadAspectEquals")), // NOI18N
+        BLOCK_STATUS_EQUALS(TYPE_BLOCK_STATUS_EQUALS, ItemType.OBLOCK, "", ""), // NOI18N
         //Entry Exit Rules
-        ENTRYEXIT_ACTIVE(TYPE_ENTRYEXIT_ACTIVE, ItemType.ENTRYEXIT, Bundle.getMessage("SensorStateActive")), // NOI18N
-        ENTRYEXIT_INACTIVE(TYPE_ENTRYEXIT_INACTIVE, ItemType.ENTRYEXIT, Bundle.getMessage("SensorStateInactive")); // NOI18N
+        ENTRYEXIT_ACTIVE(TYPE_ENTRYEXIT_ACTIVE, ItemType.ENTRYEXIT, Bundle.getMessage("SensorStateActive"), rbx.getString("TypeEntryExitActive")), // NOI18N
+        ENTRYEXIT_INACTIVE(TYPE_ENTRYEXIT_INACTIVE, ItemType.ENTRYEXIT, Bundle.getMessage("SensorStateInactive"), rbx.getString("TypeEntryExitInactive")); // NOI18N
 
         private final int _item;
         private final ItemType _itemType;
         private final String _string;
+        private final String _testTypeString;
         
         private static final List<Type> sensorItemsList;
         private static final List<Type> turnoutItemsList;
@@ -320,10 +321,11 @@ public interface Conditional extends NamedBean {
             signalMastItemsList = Collections.unmodifiableList(Arrays.asList(typeArray10));
         }
         
-        private Type(int state, ItemType itemType, String string) {
+        private Type(int state, ItemType itemType, String string, String testTypeString) {
             _item = state;
             _itemType = itemType;
             _string = string;
+            _testTypeString = testTypeString;
         }
         
         public ItemType getItemType() {
@@ -402,6 +404,10 @@ public interface Conditional extends NamedBean {
         @Override
         public String toString() {
             return _string;
+        }
+        
+        public String getTestTypeString() {
+            return _testTypeString;
         }
     }
     
