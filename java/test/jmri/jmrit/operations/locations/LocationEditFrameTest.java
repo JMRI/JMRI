@@ -3,6 +3,7 @@ package jmri.jmrit.operations.locations;
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
@@ -23,7 +24,7 @@ public class LocationEditFrameTest extends OperationsTestCase {
     @Test
     public void testLocationEditFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        loadLocations();
+        JUnitOperationsUtil.loadFiveLocations();
 
         LocationEditFrame f = new LocationEditFrame(null);
         f.setTitle("Test Add Location Frame");

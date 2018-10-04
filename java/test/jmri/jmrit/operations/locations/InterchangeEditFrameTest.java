@@ -5,6 +5,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
@@ -160,7 +161,7 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         CarTypes ct = InstanceManager.getDefault(CarTypes.class);
         ct.addName("Boxcar");
 
-        loadLocations();
+        JUnitOperationsUtil.loadFiveLocations();
 
         // add UP road name
         CarRoads cr = InstanceManager.getDefault(CarRoads.class);
@@ -169,7 +170,7 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         lManager = InstanceManager.getDefault(LocationManager.class);
         l = lManager.getLocationByName("Test Loc C");
         
-        loadTrain(l);
+        JUnitOperationsUtil.loadTrain(l);
        
     }
 

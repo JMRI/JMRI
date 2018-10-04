@@ -6,6 +6,7 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteManager;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
@@ -18,7 +19,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class TrainEditBuildOptionsFrameTest extends OperationsTestCase{
+public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
@@ -284,7 +285,7 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase{
     @Before
     public void setUp() {
         super.setUp();
-        loadTrains();
+        JUnitOperationsUtil.loadTrains();
      }
 
     @Override

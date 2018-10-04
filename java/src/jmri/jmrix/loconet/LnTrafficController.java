@@ -86,11 +86,13 @@ public abstract class LnTrafficController implements LocoNetInterface {
         synchronized (this) {
             v = (Vector<LocoNetListener>) listeners.clone();
         }
-        log.debug("notify of incoming LocoNet packet: {}", m.toString());
+
         // forward to all listeners
+        log.debug("notify of incoming LocoNet packet: {}", m);
         int cnt = v.size();
         for (int i = 0; i < cnt; i++) {
             LocoNetListener client = listeners.elementAt(i);
+            log.trace("  notify {} of incoming LocoNet packet: {}", client, m);
             client.message(m);
         }
     }
