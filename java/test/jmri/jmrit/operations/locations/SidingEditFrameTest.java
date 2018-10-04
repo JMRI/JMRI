@@ -4,7 +4,7 @@ package jmri.jmrit.operations.locations;
 import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
@@ -22,7 +22,7 @@ import org.junit.Test;
  *
  * @author Dan Boudreau Copyright (C) 2009
  */
-public class SidingEditFrameTest extends OperationsSwingTestCase {
+public class SidingEditFrameTest extends OperationsTestCase {
 
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
     private LocationManager lManager = null;

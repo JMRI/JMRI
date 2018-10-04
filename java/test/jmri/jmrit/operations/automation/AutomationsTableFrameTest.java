@@ -2,7 +2,7 @@ package jmri.jmrit.operations.automation;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import org.junit.After;
@@ -11,7 +11,7 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
-public class AutomationsTableFrameTest extends OperationsSwingTestCase {
+public class AutomationsTableFrameTest extends OperationsTestCase {
 
     @Test
     public void testFrameCreation() {

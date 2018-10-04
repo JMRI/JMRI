@@ -3,7 +3,7 @@ package jmri.jmrit.operations.routes;
 import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
@@ -19,7 +19,7 @@ import org.junit.Test;
  *
  * @author	Dan Boudreau Copyright (C) 2009
  */
-public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
+public class OperationsRoutesGuiTest extends OperationsTestCase {
 
     @Test
     public void testRoutesTableFrame() {

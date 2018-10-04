@@ -2,7 +2,7 @@ package jmri.jmrit.operations.locations.schedules;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -17,7 +17,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class ExportSchedulesTest extends OperationsSwingTestCase{
+public class ExportSchedulesTest extends OperationsTestCase{
 
     @Test
     public void testCTor() {

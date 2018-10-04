@@ -3,7 +3,7 @@ package jmri.jmrit.operations.rollingstock.cars.tools;
 import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.cars.CarEditFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.util.JUnitUtil;
@@ -19,7 +19,7 @@ import org.junit.Test;
  *
  * @author	Dan Boudreau Copyright (C) 2009
  */
-public class CarAttributeEditFrameTest extends OperationsSwingTestCase {
+public class CarAttributeEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testCarAttributeEditFrameColor() {
