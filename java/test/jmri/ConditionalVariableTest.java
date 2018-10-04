@@ -37,41 +37,41 @@ public class ConditionalVariableTest {
         jmri.util.JUnitUtil.initWarrantManagerThrowException();
         jmri.util.JUnitUtil.initOBlockManagerThrowException();
         
-        ConditionalVariable cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.SENSOR_ACTIVE.getIntValue(), deviceName, false);
+        ConditionalVariable cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.SENSOR_ACTIVE, deviceName, false);
         Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
         jmri.util.JUnitAppender.assertErrorMessage("invalid sensor name= \"3\" in state variable");
         
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.TURNOUT_THROWN.getIntValue(), deviceName, false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.TURNOUT_THROWN, deviceName, false);
         Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
         jmri.util.JUnitAppender.assertErrorMessage("invalid turnout name= \"3\" in state variable");
         
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.MEMORY_EQUALS.getIntValue(), deviceName, false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.MEMORY_EQUALS, deviceName, false);
         Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
         jmri.util.JUnitAppender.assertErrorMessage("invalid memory name= \"3\" in state variable");
         
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.LIGHT_ON.getIntValue(), deviceName, false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.LIGHT_ON, deviceName, false);
         Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
         jmri.util.JUnitAppender.assertErrorMessage("invalid light name= \"3\" in state variable");
         
         // Note that the signal head IH1 created here are also used to test the signal mast.
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.SIGNAL_HEAD_RED.getIntValue(), "IH1", false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.SIGNAL_HEAD_RED, "IH1", false);
         Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
         jmri.util.JUnitAppender.assertWarnMessage("could not provide \"IH1\" in constructor");
         
         // The signal head IH1 created above is also used here in signal mast IF$shsm:AAR-1946:CPL(IH1)
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.SIGNAL_MAST_ASPECT_EQUALS.getIntValue(), "IF$shsm:AAR-1946:CPL(IH1)", false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.SIGNAL_MAST_ASPECT_EQUALS, "IF$shsm:AAR-1946:CPL(IH1)", false);
         Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
         jmri.util.JUnitAppender.assertErrorMessage("invalid signalmast name= \"IF$shsm:AAR-1946:CPL(IH1)\" in state variable");
         
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.CONDITIONAL_TRUE.getIntValue(), "IX:AUTO:0001C1", false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.CONDITIONAL_TRUE, "IX:AUTO:0001C1", false);
         Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
         jmri.util.JUnitAppender.assertErrorMessage("invalid conditional; name= \"IX:AUTO:0001C1\" in state variable");
         
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.ROUTE_OCCUPIED.getIntValue(), "IW3", false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.ROUTE_OCCUPIED, "IW3", false);
         Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
         jmri.util.JUnitAppender.assertWarnMessage("could not provide \"IW3\" in constructor");
         
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.BLOCK_STATUS_EQUALS.getIntValue(), "OB3", false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.BLOCK_STATUS_EQUALS, "OB3", false);
         Assert.assertTrue("getNamedBean() returns null", cv.getNamedBean() == null);
         jmri.util.JUnitAppender.assertWarnMessage("could not provide \"OB3\" in constructor");
         
@@ -86,7 +86,7 @@ public class ConditionalVariableTest {
         
         bean = InstanceManager.getDefault(SensorManager.class).provideSensor(deviceName);
         otherBean = InstanceManager.getDefault(SensorManager.class).provideSensor(otherDeviceName);
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.SENSOR_ACTIVE.getIntValue(), deviceName, false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.SENSOR_ACTIVE, deviceName, false);
         Assert.assertTrue("getNamedBean() returns correct bean", bean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
         cv.setName(otherDeviceName);
         Assert.assertTrue("setName() sets correct bean", otherBean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
@@ -95,7 +95,7 @@ public class ConditionalVariableTest {
         
         bean = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(deviceName);
         otherBean = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(otherDeviceName);
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.TURNOUT_THROWN.getIntValue(), deviceName, false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.TURNOUT_THROWN, deviceName, false);
         Assert.assertTrue("getNamedBean() returns correct bean", bean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
         cv.setName(otherDeviceName);
         Assert.assertTrue("setName() sets correct bean", otherBean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
@@ -104,21 +104,21 @@ public class ConditionalVariableTest {
         
         bean = InstanceManager.getDefault(MemoryManager.class).provideMemory(deviceName);
         otherBean = InstanceManager.getDefault(MemoryManager.class).provideMemory(otherDeviceName);
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.MEMORY_EQUALS.getIntValue(), deviceName, false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.MEMORY_EQUALS, deviceName, false);
         Assert.assertTrue("getNamedBean() returns correct bean", bean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
         cv.setName(otherDeviceName);
         Assert.assertTrue("setName() sets correct bean", otherBean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
         cv.setDataString("A desired memory value");
         Assert.assertTrue("toString() returns correct value",
                 "Memory \"4\" = value \"A desired memory value\"".equals(cv.toString()));
-        cv.setType(Conditional.Type.MEMORY_COMPARE.getIntValue());
+        cv.setType(Conditional.Type.MEMORY_COMPARE);
         cv.setDataString("MemoryVariable");
         Assert.assertTrue("toString() returns correct value",
                 "Memory \"4\" = Memory \"MemoryVariable\"".equals(cv.toString()));
         
         bean = InstanceManager.getDefault(LightManager.class).provideLight(deviceName);
         otherBean = InstanceManager.getDefault(LightManager.class).provideLight(otherDeviceName);
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.LIGHT_ON.getIntValue(), deviceName, false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.LIGHT_ON, deviceName, false);
         Assert.assertTrue("getNamedBean() returns correct bean", bean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
         cv.setName(otherBean.getSystemName());
         Assert.assertTrue("setName() sets correct bean", otherBean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
@@ -132,34 +132,34 @@ public class ConditionalVariableTest {
         InstanceManager.getDefault(SignalHeadManager.class).register(signalHeadIH2);
         bean = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead("IH1");
         otherBean = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead("IH2");
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.SIGNAL_HEAD_RED.getIntValue(), "IH1", false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.SIGNAL_HEAD_RED, "IH1", false);
         Assert.assertTrue("getNamedBean() returns correct bean", bean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
         cv.setName("IH2");
         Assert.assertTrue("setName() sets correct bean", otherBean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
         Assert.assertTrue("toString() returns correct value",
                 "Signal Head \"IH2\" Appearance is \"Red\"".equals(cv.toString()));
-        cv.setType(Conditional.Type.SIGNAL_HEAD_LIT.getIntValue());
+        cv.setType(Conditional.Type.SIGNAL_HEAD_LIT);
         Assert.assertTrue("toString() returns correct value",
                 "Signal Head \"IH2\" state is \"Lit\"".equals(cv.toString()));
         
         // The signal head IH1 created above is also used here in signal mast IF$shsm:AAR-1946:CPL(IH1)
         bean = InstanceManager.getDefault(SignalMastManager.class).provideSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
         otherBean = InstanceManager.getDefault(SignalMastManager.class).provideSignalMast("IF$shsm:AAR-1946:CPL(IH2)");
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.SIGNAL_MAST_ASPECT_EQUALS.getIntValue(), "IF$shsm:AAR-1946:CPL(IH1)", false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.SIGNAL_MAST_ASPECT_EQUALS, "IF$shsm:AAR-1946:CPL(IH1)", false);
         Assert.assertTrue("getNamedBean() returns correct bean", bean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
         cv.setName("IF$shsm:AAR-1946:CPL(IH2)");
         Assert.assertTrue("setName() sets correct bean", otherBean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
         cv.setDataString("Approach");
         Assert.assertTrue("toString() returns correct value",
                 "Signal Mast \"IF$shsm:AAR-1946:CPL(IH2)\" Aspect is \"Approach\"".equals(cv.toString()));
-        cv.setType(Conditional.Type.SIGNAL_MAST_LIT.getIntValue());
+        cv.setType(Conditional.Type.SIGNAL_MAST_LIT);
         Assert.assertTrue("toString() returns correct value",
                 "Signal Mast \"IF$shsm:AAR-1946:CPL(IH2)\" state is \"Lit\"".equals(cv.toString()));
         
         InstanceManager.getDefault(LogixManager.class).createNewLogix("IX:AUTO:0002");
         bean = InstanceManager.getDefault(ConditionalManager.class).createNewConditional("IX:AUTO:0001C1", "Conditional");
         otherBean = InstanceManager.getDefault(ConditionalManager.class).createNewConditional("IX:AUTO:0001C2", "Conditional");
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.CONDITIONAL_TRUE.getIntValue(), "IX:AUTO:0001C1", false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.CONDITIONAL_TRUE, "IX:AUTO:0001C1", false);
         Assert.assertTrue("getNamedBean() returns correct bean", bean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
         cv.setName("IX:AUTO:0001C2");
         Assert.assertTrue("setName() sets correct bean", otherBean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
@@ -169,7 +169,7 @@ public class ConditionalVariableTest {
         
         bean = InstanceManager.getDefault(WarrantManager.class).provideWarrant("IW3");
         otherBean = InstanceManager.getDefault(WarrantManager.class).provideWarrant("IW4");
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.ROUTE_OCCUPIED.getIntValue(), "IW3", false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.ROUTE_OCCUPIED, "IW3", false);
         Assert.assertTrue("getNamedBean() returns correct bean", bean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
         cv.setName("IW4");
         Assert.assertTrue("setName() sets correct bean", otherBean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
@@ -178,7 +178,7 @@ public class ConditionalVariableTest {
         
         bean = InstanceManager.getDefault(OBlockManager.class).provideOBlock("OB3");
         otherBean = InstanceManager.getDefault(OBlockManager.class).provideOBlock("OB4");
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.BLOCK_STATUS_EQUALS.getIntValue(), "OB3", false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.BLOCK_STATUS_EQUALS, "OB3", false);
         Assert.assertTrue("getNamedBean() returns correct bean", bean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
         cv.setName("OB4");
         Assert.assertTrue("setName() sets correct bean", otherBean.equals(((NamedBeanHandle)cv.getNamedBean()).getBean()));
@@ -240,8 +240,8 @@ public class ConditionalVariableTest {
     
     @Test
     public void testEquals() {
-        ConditionalVariable c1 = new ConditionalVariable(false, Operator.AND, 2, "name", false);
-        ConditionalVariable c2 = new ConditionalVariable(false, Operator.AND, 2, "name", false);
+        ConditionalVariable c1 = new ConditionalVariable(false, Operator.AND, Conditional.Type.SENSOR_INACTIVE, "name", false);
+        ConditionalVariable c2 = new ConditionalVariable(false, Operator.AND, Conditional.Type.SENSOR_INACTIVE, "name", false);
 
         Assert.assertTrue("identity", c1.equals(c1));
         Assert.assertFalse("object equals, not content equals", c1.equals(c2));
@@ -258,7 +258,7 @@ public class ConditionalVariableTest {
         bean.setUserName("BeanUserName");
         otherBean = InstanceManager.getDefault(MemoryManager.class).provideMemory(otherDeviceName);
         otherBean.setUserName("OtherBeanUserName");
-        ConditionalVariable cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.MEMORY_EQUALS.getIntValue(), deviceName, false);
+        ConditionalVariable cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.MEMORY_EQUALS, deviceName, false);
         Assert.assertTrue("getDataString() returns empty string", "".equals(cv.getDataString()));
         Assert.assertTrue("getNamedBeanData() returns null", cv.getNamedBeanData() == null);
         cv.setDataString(otherBean.getUserName());
@@ -271,7 +271,7 @@ public class ConditionalVariableTest {
     public void testState() {
         String deviceName = "3";
         InstanceManager.getDefault(MemoryManager.class).provideMemory(deviceName);
-        ConditionalVariable cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.MEMORY_EQUALS.getIntValue(), deviceName, false);
+        ConditionalVariable cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.MEMORY_EQUALS, deviceName, false);
         Assert.assertTrue("state is unknown", cv.getState() == Conditional.State.UNKNOWN.getIntValue());
         cv.setState(Conditional.State.TRUE.getIntValue());
         Assert.assertTrue("state is TRUE", cv.getState() == Conditional.State.TRUE.getIntValue());
@@ -287,7 +287,7 @@ public class ConditionalVariableTest {
     public void testGetOpernString() {
         String deviceName = "3";
         InstanceManager.getDefault(MemoryManager.class).provideMemory(deviceName);
-        ConditionalVariable cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.MEMORY_EQUALS.getIntValue(), deviceName, false);
+        ConditionalVariable cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.MEMORY_EQUALS, deviceName, false);
         Assert.assertTrue("getTestTypeString() returns correct value",
                 "Memory Compare to Value (Case Sensitive)".equals(cv.getTestTypeString()));
         
@@ -332,84 +332,84 @@ public class ConditionalVariableTest {
     public void testGetTestTypeString() {
         String deviceName = "3";
         InstanceManager.getDefault(MemoryManager.class).provideMemory(deviceName);
-        ConditionalVariable cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.MEMORY_EQUALS.getIntValue(), deviceName, false);
+        ConditionalVariable cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.MEMORY_EQUALS, deviceName, false);
         Assert.assertTrue("getTestTypeString() returns correct value",
                 "Memory Compare to Value (Case Sensitive)".equals(cv.getTestTypeString()));
         
         Assert.assertTrue("Sensor Active",
-                "Sensor Active".equals(ConditionalVariable.getTestTypeString(Conditional.Type.SENSOR_ACTIVE.getIntValue())));
+                "Sensor Active".equals(Conditional.Type.SENSOR_ACTIVE.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Sensor Inactive".equals(ConditionalVariable.getTestTypeString(Conditional.Type.SENSOR_INACTIVE.getIntValue())));
+                "Sensor Inactive".equals(Conditional.Type.SENSOR_INACTIVE.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Turnout Thrown".equals(ConditionalVariable.getTestTypeString(Conditional.Type.TURNOUT_THROWN.getIntValue())));
+                "Turnout Thrown".equals(Conditional.Type.TURNOUT_THROWN.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Turnout Closed".equals(ConditionalVariable.getTestTypeString(Conditional.Type.TURNOUT_CLOSED.getIntValue())));
+                "Turnout Closed".equals(Conditional.Type.TURNOUT_CLOSED.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Conditional True".equals(ConditionalVariable.getTestTypeString(Conditional.Type.CONDITIONAL_TRUE.getIntValue())));
+                "Conditional True".equals(Conditional.Type.CONDITIONAL_TRUE.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Conditional False".equals(ConditionalVariable.getTestTypeString(Conditional.Type.CONDITIONAL_FALSE.getIntValue())));
+                "Conditional False".equals(Conditional.Type.CONDITIONAL_FALSE.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Light On".equals(ConditionalVariable.getTestTypeString(Conditional.Type.LIGHT_ON.getIntValue())));
+                "Light On".equals(Conditional.Type.LIGHT_ON.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Light Off".equals(ConditionalVariable.getTestTypeString(Conditional.Type.LIGHT_OFF.getIntValue())));
+                "Light Off".equals(Conditional.Type.LIGHT_OFF.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Memory Compare to Value (Case Sensitive)".equals(ConditionalVariable.getTestTypeString(Conditional.Type.MEMORY_EQUALS.getIntValue())));
+                "Memory Compare to Value (Case Sensitive)".equals(Conditional.Type.MEMORY_EQUALS.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Memory Compare to Memory (Case Sensitive)".equals(ConditionalVariable.getTestTypeString(Conditional.Type.MEMORY_COMPARE.getIntValue())));
+                "Memory Compare to Memory (Case Sensitive)".equals(Conditional.Type.MEMORY_COMPARE.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Fast Clock Range".equals(ConditionalVariable.getTestTypeString(Conditional.Type.FAST_CLOCK_RANGE.getIntValue())));
+                "Fast Clock Range".equals(Conditional.Type.FAST_CLOCK_RANGE.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Red".equals(ConditionalVariable.getTestTypeString(Conditional.Type.SIGNAL_HEAD_RED.getIntValue())));
+                "Red".equals(Conditional.Type.SIGNAL_HEAD_RED.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Yellow".equals(ConditionalVariable.getTestTypeString(Conditional.Type.SIGNAL_HEAD_YELLOW.getIntValue())));
+                "Yellow".equals(Conditional.Type.SIGNAL_HEAD_YELLOW.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Green".equals(ConditionalVariable.getTestTypeString(Conditional.Type.SIGNAL_HEAD_GREEN.getIntValue())));
+                "Green".equals(Conditional.Type.SIGNAL_HEAD_GREEN.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Dark".equals(ConditionalVariable.getTestTypeString(Conditional.Type.SIGNAL_HEAD_DARK.getIntValue())));
+                "Dark".equals(Conditional.Type.SIGNAL_HEAD_DARK.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Flashing Red".equals(ConditionalVariable.getTestTypeString(Conditional.Type.SIGNAL_HEAD_FLASHRED.getIntValue())));
+                "Flashing Red".equals(Conditional.Type.SIGNAL_HEAD_FLASHRED.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Flashing Yellow".equals(ConditionalVariable.getTestTypeString(Conditional.Type.SIGNAL_HEAD_FLASHYELLOW.getIntValue())));
+                "Flashing Yellow".equals(Conditional.Type.SIGNAL_HEAD_FLASHYELLOW.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Flashing Green".equals(ConditionalVariable.getTestTypeString(Conditional.Type.SIGNAL_HEAD_FLASHGREEN.getIntValue())));
+                "Flashing Green".equals(Conditional.Type.SIGNAL_HEAD_FLASHGREEN.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Lit".equals(ConditionalVariable.getTestTypeString(Conditional.Type.SIGNAL_HEAD_LIT.getIntValue())));
+                "Lit".equals(Conditional.Type.SIGNAL_HEAD_LIT.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Held".equals(ConditionalVariable.getTestTypeString(Conditional.Type.SIGNAL_HEAD_HELD.getIntValue())));
+                "Held".equals(Conditional.Type.SIGNAL_HEAD_HELD.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Lunar".equals(ConditionalVariable.getTestTypeString(Conditional.Type.SIGNAL_HEAD_LUNAR.getIntValue())));
+                "Lunar".equals(Conditional.Type.SIGNAL_HEAD_LUNAR.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Flashing Lunar".equals(ConditionalVariable.getTestTypeString(Conditional.Type.SIGNAL_HEAD_FLASHLUNAR.getIntValue())));
+                "Flashing Lunar".equals(Conditional.Type.SIGNAL_HEAD_FLASHLUNAR.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Memory Compare to Value (Case Insensitive)".equals(ConditionalVariable.getTestTypeString(Conditional.Type.MEMORY_EQUALS_INSENSITIVE.getIntValue())));
+                "Memory Compare to Value (Case Insensitive)".equals(Conditional.Type.MEMORY_EQUALS_INSENSITIVE.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Memory Compare to Memory (Case Insensitive)".equals(ConditionalVariable.getTestTypeString(Conditional.Type.MEMORY_COMPARE_INSENSITIVE.getIntValue())));
+                "Memory Compare to Memory (Case Insensitive)".equals(Conditional.Type.MEMORY_COMPARE_INSENSITIVE.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Free".equals(ConditionalVariable.getTestTypeString(Conditional.Type.ROUTE_FREE.getIntValue())));
+                "Free".equals(Conditional.Type.ROUTE_FREE.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Occupied".equals(ConditionalVariable.getTestTypeString(Conditional.Type.ROUTE_OCCUPIED.getIntValue())));
+                "Occupied".equals(Conditional.Type.ROUTE_OCCUPIED.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Allocated".equals(ConditionalVariable.getTestTypeString(Conditional.Type.ROUTE_ALLOCATED.getIntValue())));
+                "Allocated".equals(Conditional.Type.ROUTE_ALLOCATED.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Set".equals(ConditionalVariable.getTestTypeString(Conditional.Type.ROUTE_SET.getIntValue())));
+                "Set".equals(Conditional.Type.ROUTE_SET.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Running".equals(ConditionalVariable.getTestTypeString(Conditional.Type.TRAIN_RUNNING.getIntValue())));
+                "Running".equals(Conditional.Type.TRAIN_RUNNING.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Signal Mast Aspect equals".equals(ConditionalVariable.getTestTypeString(Conditional.Type.SIGNAL_MAST_ASPECT_EQUALS.getIntValue())));
+                "Signal Mast Aspect equals".equals(Conditional.Type.SIGNAL_MAST_ASPECT_EQUALS.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Signal Head Appearance equals".equals(ConditionalVariable.getTestTypeString(Conditional.Type.SIGNAL_HEAD_APPEARANCE_EQUALS.getIntValue())));
+                "Signal Head Appearance equals".equals(Conditional.Type.SIGNAL_HEAD_APPEARANCE_EQUALS.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Lit".equals(ConditionalVariable.getTestTypeString(Conditional.Type.SIGNAL_MAST_LIT.getIntValue())));
+                "Lit".equals(Conditional.Type.SIGNAL_MAST_LIT.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Held".equals(ConditionalVariable.getTestTypeString(Conditional.Type.SIGNAL_MAST_HELD.getIntValue())));
+                "Held".equals(Conditional.Type.SIGNAL_MAST_HELD.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Active".equals(ConditionalVariable.getTestTypeString(Conditional.Type.ENTRYEXIT_ACTIVE.getIntValue())));
+                "Active".equals(Conditional.Type.ENTRYEXIT_ACTIVE.toString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Inactive".equals(ConditionalVariable.getTestTypeString(Conditional.Type.ENTRYEXIT_INACTIVE.getIntValue())));
+                "Inactive".equals(Conditional.Type.ENTRYEXIT_INACTIVE.toString()));
         
         // Test invalid value
-        Assert.assertTrue("getTestTypeString() returns correct value",
-                "(None)".equals(ConditionalVariable.getTestTypeString(-1)));
+//        Assert.assertTrue("getTestTypeString() returns correct value",
+//                "(None)".equals(ConditionalVariable.getTestTypeString(-1)));
     }
     
     @Test
@@ -434,36 +434,36 @@ public class ConditionalVariableTest {
         String otherDeviceName = "5";
         
         Sensor sensor = InstanceManager.getDefault(SensorManager.class).provideSensor(deviceName);
-        ConditionalVariable cv = new ConditionalVariable(false, Conditional.Operator.AND, ITEM_TYPE_SENSOR, deviceName, false);
+        ConditionalVariable cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.SENSOR_ACTIVE, deviceName, false);
         sensor.setState(Sensor.ACTIVE);
         Assert.assertTrue("evaluate() returns true", cv.evaluate());
         sensor.setState(Sensor.INACTIVE);
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
-        cv = new ConditionalVariable_BeanAlwaysNull(false, Conditional.Operator.AND, ITEM_TYPE_SENSOR, deviceName, false);
+        cv = new ConditionalVariable_BeanAlwaysNull(false, Conditional.Operator.AND, Conditional.Type.SENSOR_ACTIVE, deviceName, false);
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
         jmri.util.JUnitAppender.assertErrorMessage("invalid sensor name= \"3\" in state variable");
         
         
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout(deviceName);
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.TURNOUT_THROWN.getIntValue(), deviceName, false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.TURNOUT_THROWN, deviceName, false);
         turnout.setState(Turnout.THROWN);
         Assert.assertTrue("evaluate() returns true", cv.evaluate());
         turnout.setState(Turnout.CLOSED);
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
         
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.TURNOUT_CLOSED.getIntValue(), deviceName, false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.TURNOUT_CLOSED, deviceName, false);
         turnout.setState(Turnout.THROWN);
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
         turnout.setState(Turnout.CLOSED);
         Assert.assertTrue("evaluate() returns true", cv.evaluate());
         
-        cv = new ConditionalVariable_BeanAlwaysNull(false, Conditional.Operator.AND, Conditional.Type.TURNOUT_CLOSED.getIntValue(), deviceName, false);
+        cv = new ConditionalVariable_BeanAlwaysNull(false, Conditional.Operator.AND, Conditional.Type.TURNOUT_CLOSED, deviceName, false);
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
         jmri.util.JUnitAppender.assertErrorMessage("invalid turnout name= \"3\" in state variable");
         
         
         Memory memory = InstanceManager.getDefault(MemoryManager.class).provideMemory(deviceName);
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.MEMORY_EQUALS.getIntValue(), deviceName, false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.MEMORY_EQUALS, deviceName, false);
         cv.setDataString("2");
         memory.setState(Sensor.ACTIVE);     // Sensor.ACTIVE = 0x02
         Assert.assertTrue("evaluate() returns true", cv.evaluate());
@@ -472,32 +472,32 @@ public class ConditionalVariableTest {
         
         Memory otherMemory = InstanceManager.getDefault(MemoryManager.class).provideMemory(otherDeviceName);
         otherMemory.setState(Sensor.ACTIVE);    // Remove this???
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.MEMORY_COMPARE.getIntValue(), deviceName, false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.MEMORY_COMPARE, deviceName, false);
         cv.setDataString(otherDeviceName);
         memory.setState(Sensor.ACTIVE);     // Sensor.ACTIVE = 0x02
         Assert.assertTrue("evaluate() returns true", cv.evaluate());
         memory.setState(Sensor.INACTIVE);
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
         
-        cv = new ConditionalVariable_BeanAlwaysNull(false, Conditional.Operator.AND, Conditional.Type.MEMORY_EQUALS.getIntValue(), deviceName, false);
+        cv = new ConditionalVariable_BeanAlwaysNull(false, Conditional.Operator.AND, Conditional.Type.MEMORY_EQUALS, deviceName, false);
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
         jmri.util.JUnitAppender.assertErrorMessage("invalid memory name= \"3\" in state variable");
         
         
         Light light = InstanceManager.getDefault(LightManager.class).provideLight(deviceName);
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.LIGHT_ON.getIntValue(), deviceName, false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.LIGHT_ON, deviceName, false);
         light.setState(Light.ON);
         Assert.assertTrue("evaluate() returns true", cv.evaluate());
         light.setState(Light.OFF);
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
         
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.LIGHT_OFF.getIntValue(), deviceName, false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.LIGHT_OFF, deviceName, false);
         light.setState(Light.ON);
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
         light.setState(Light.OFF);
         Assert.assertTrue("evaluate() returns true", cv.evaluate());
         
-        cv = new ConditionalVariable_BeanAlwaysNull(false, Conditional.Operator.AND, Conditional.Type.LIGHT_OFF.getIntValue(), deviceName, false);
+        cv = new ConditionalVariable_BeanAlwaysNull(false, Conditional.Operator.AND, Conditional.Type.LIGHT_OFF, deviceName, false);
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
         jmri.util.JUnitAppender.assertErrorMessage("invalid light name= \"3\" in state variable");
         
@@ -505,85 +505,85 @@ public class ConditionalVariableTest {
         // Note that the signal head IH1 created here are also used to test the signal mast.
         SignalHead signalHeadIH1 = new VirtualSignalHead("IH1");
         InstanceManager.getDefault(SignalHeadManager.class).register(signalHeadIH1);
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.SIGNAL_HEAD_YELLOW.getIntValue(), "IH1", false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.SIGNAL_HEAD_YELLOW, "IH1", false);
         
-        cv.setType(Conditional.Type.SIGNAL_HEAD_RED.getIntValue());
+        cv.setType(Conditional.Type.SIGNAL_HEAD_RED);
         signalHeadIH1.setAppearance(SignalHead.RED);
         Assert.assertTrue("evaluate() returns true", cv.evaluate());
         signalHeadIH1.setAppearance(SignalHead.DARK);
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
         
-        cv.setType(Conditional.Type.SIGNAL_HEAD_YELLOW.getIntValue());
+        cv.setType(Conditional.Type.SIGNAL_HEAD_YELLOW);
         signalHeadIH1.setAppearance(SignalHead.YELLOW);
         Assert.assertTrue("evaluate() returns true", cv.evaluate());
         signalHeadIH1.setAppearance(SignalHead.DARK);
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
         
-        cv.setType(Conditional.Type.SIGNAL_HEAD_GREEN.getIntValue());
+        cv.setType(Conditional.Type.SIGNAL_HEAD_GREEN);
         signalHeadIH1.setAppearance(SignalHead.GREEN);
         Assert.assertTrue("evaluate() returns true", cv.evaluate());
         signalHeadIH1.setAppearance(SignalHead.DARK);
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
         
-        cv.setType(Conditional.Type.SIGNAL_HEAD_DARK.getIntValue());
+        cv.setType(Conditional.Type.SIGNAL_HEAD_DARK);
         signalHeadIH1.setAppearance(SignalHead.DARK);
         Assert.assertTrue("evaluate() returns true", cv.evaluate());
         signalHeadIH1.setAppearance(SignalHead.GREEN);
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
         
-        cv.setType(Conditional.Type.SIGNAL_HEAD_FLASHRED.getIntValue());
+        cv.setType(Conditional.Type.SIGNAL_HEAD_FLASHRED);
         signalHeadIH1.setAppearance(SignalHead.FLASHRED);
         Assert.assertTrue("evaluate() returns true", cv.evaluate());
         signalHeadIH1.setAppearance(SignalHead.DARK);
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
         
-        cv.setType(Conditional.Type.SIGNAL_HEAD_FLASHYELLOW.getIntValue());
+        cv.setType(Conditional.Type.SIGNAL_HEAD_FLASHYELLOW);
         signalHeadIH1.setAppearance(SignalHead.FLASHYELLOW);
         Assert.assertTrue("evaluate() returns true", cv.evaluate());
         signalHeadIH1.setAppearance(SignalHead.DARK);
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
         
-        cv.setType(Conditional.Type.SIGNAL_HEAD_FLASHGREEN.getIntValue());
+        cv.setType(Conditional.Type.SIGNAL_HEAD_FLASHGREEN);
         signalHeadIH1.setAppearance(SignalHead.FLASHGREEN);
         Assert.assertTrue("evaluate() returns true", cv.evaluate());
         signalHeadIH1.setAppearance(SignalHead.DARK);
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
         
-        cv.setType(Conditional.Type.SIGNAL_HEAD_LUNAR.getIntValue());
+        cv.setType(Conditional.Type.SIGNAL_HEAD_LUNAR);
         signalHeadIH1.setAppearance(SignalHead.LUNAR);
         Assert.assertTrue("evaluate() returns true", cv.evaluate());
         signalHeadIH1.setAppearance(SignalHead.DARK);
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
         
-        cv.setType(Conditional.Type.SIGNAL_HEAD_FLASHLUNAR.getIntValue());
+        cv.setType(Conditional.Type.SIGNAL_HEAD_FLASHLUNAR);
         signalHeadIH1.setAppearance(SignalHead.FLASHLUNAR);
         Assert.assertTrue("evaluate() returns true", cv.evaluate());
         signalHeadIH1.setAppearance(SignalHead.DARK);
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
         
-        cv.setType(Conditional.Type.SIGNAL_HEAD_LIT.getIntValue());
+        cv.setType(Conditional.Type.SIGNAL_HEAD_LIT);
         signalHeadIH1.setLit(true);
         Assert.assertTrue("evaluate() returns true", cv.evaluate());
         signalHeadIH1.setLit(false);
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
         
-        cv.setType(Conditional.Type.SIGNAL_HEAD_HELD.getIntValue());
+        cv.setType(Conditional.Type.SIGNAL_HEAD_HELD);
         signalHeadIH1.setHeld(true);
         Assert.assertTrue("evaluate() returns true", cv.evaluate());
         signalHeadIH1.setHeld(false);
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
         
-        cv = new ConditionalVariable_BeanAlwaysNull(false, Conditional.Operator.AND, Conditional.Type.SIGNAL_HEAD_RED.getIntValue(), "IH1", false);
+        cv = new ConditionalVariable_BeanAlwaysNull(false, Conditional.Operator.AND, Conditional.Type.SIGNAL_HEAD_RED, "IH1", false);
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
         jmri.util.JUnitAppender.assertErrorMessage("invalid signalhead name= \"IH1\" in state variable");
         
         
         // The signal head IH1 created above is also used here in signal mast IF$shsm:AAR-1946:CPL(IH1)
         SignalMast signalMast = InstanceManager.getDefault(SignalMastManager.class).provideSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.SIGNAL_MAST_LIT.getIntValue(), "IF$shsm:AAR-1946:CPL(IH1)", false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.SIGNAL_MAST_LIT, "IF$shsm:AAR-1946:CPL(IH1)", false);
         
         cv.setDataString("Clear");
-        cv.setType(Conditional.Type.SIGNAL_MAST_ASPECT_EQUALS.getIntValue());
+        cv.setType(Conditional.Type.SIGNAL_MAST_ASPECT_EQUALS);
         // The null check is only to ensure that the evaluate() tests aspect == null
         Assert.assertTrue("aspect is null", signalMast.getAspect() == null);
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
@@ -592,13 +592,13 @@ public class ConditionalVariableTest {
         signalMast.setAspect("Approach");
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
         
-        cv.setType(Conditional.Type.SIGNAL_MAST_LIT.getIntValue());
+        cv.setType(Conditional.Type.SIGNAL_MAST_LIT);
         signalMast.setLit(true);
         Assert.assertTrue("evaluate() returns true", cv.evaluate());
         signalMast.setLit(false);
         Assert.assertFalse("evaluate() returns false", cv.evaluate());
         
-        cv.setType(Conditional.Type.SIGNAL_MAST_HELD.getIntValue());
+        cv.setType(Conditional.Type.SIGNAL_MAST_HELD);
         signalMast.setHeld(true);
         Assert.assertTrue("evaluate() returns true", cv.evaluate());
         signalMast.setHeld(false);
@@ -607,7 +607,7 @@ public class ConditionalVariableTest {
         
         InstanceManager.getDefault(LogixManager.class).createNewLogix("IX:AUTO:0002");
         Conditional conditional = InstanceManager.getDefault(ConditionalManager.class).createNewConditional("IX:AUTO:0001C1", "Conditional");
-        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.CONDITIONAL_TRUE.getIntValue(), "IX:AUTO:0001C1", false);
+        cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.CONDITIONAL_TRUE, "IX:AUTO:0001C1", false);
         conditional.setState(Conditional.TRUE);
         Assert.assertTrue("evaluate() returns true", cv.evaluate());
         conditional.setState(Conditional.FALSE);
@@ -638,7 +638,7 @@ public class ConditionalVariableTest {
     public void testCompare() {
         String deviceName = "3";
         InstanceManager.getDefault(SensorManager.class).provideSensor(deviceName);
-        ConditionalVariable cv = new ConditionalVariable(false, Conditional.Operator.AND, ITEM_TYPE_SENSOR, deviceName, false);
+        ConditionalVariable cv = new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.SENSOR_ACTIVE, deviceName, false);
         
         Assert.assertTrue("evaluate() returns true", cv.compare(null, null, false));
         Assert.assertFalse("evaluate() returns false", cv.compare("10", null, false));
@@ -975,7 +975,7 @@ public class ConditionalVariableTest {
      */
     private class ConditionalVariable_BeanAlwaysNull extends ConditionalVariable {
         
-        ConditionalVariable_BeanAlwaysNull(boolean not, Operator opern, int type, String name, boolean trigger) {
+        ConditionalVariable_BeanAlwaysNull(boolean not, Operator opern, Conditional.Type type, String name, boolean trigger) {
             super(not, opern, type, name, trigger);
         }
         
