@@ -3,7 +3,7 @@ package jmri.jmrit.operations.setup;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JComboBox;
 import jmri.jmrit.display.LocoIcon;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
@@ -23,7 +23,7 @@ import org.netbeans.jemmy.operators.JRadioButtonOperator;
  * @author Dan Boudreau Copyright (C) 2009
  * @author Paul Bender Copyright (C) 2017
  */
-public class OperationsSetupFrameTest extends OperationsSwingTestCase {
+public class OperationsSetupFrameTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {

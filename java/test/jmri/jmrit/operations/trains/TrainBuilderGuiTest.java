@@ -3,7 +3,7 @@ package jmri.jmrit.operations.trains;
 import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -28,7 +28,7 @@ import org.junit.Test;
  *
  * @author Dan Boudreau Copyright (C) 2009
  */
-public class TrainBuilderGuiTest extends OperationsSwingTestCase {
+public class TrainBuilderGuiTest extends OperationsTestCase {
 
     // allow 2 retries of intermittent tests
     @org.junit.Rule

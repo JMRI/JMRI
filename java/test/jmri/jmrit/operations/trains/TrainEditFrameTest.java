@@ -3,7 +3,7 @@ package jmri.jmrit.operations.trains;
 import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.util.JUnitOperationsUtil;
@@ -21,7 +21,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class TrainEditFrameTest extends OperationsSwingTestCase {
+public class TrainEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
@@ -499,7 +499,7 @@ public class TrainEditFrameTest extends OperationsSwingTestCase {
     @Before
     public void setUp() {
         super.setUp();
-        loadTrains();
+        JUnitOperationsUtil.loadTrains();
     }
 
     @Override

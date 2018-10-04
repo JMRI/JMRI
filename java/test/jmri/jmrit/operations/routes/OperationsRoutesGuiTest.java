@@ -3,8 +3,9 @@ package jmri.jmrit.operations.routes;
 import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
@@ -19,12 +20,12 @@ import org.junit.Test;
  *
  * @author	Dan Boudreau Copyright (C) 2009
  */
-public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
+public class OperationsRoutesGuiTest extends OperationsTestCase {
 
     @Test
     public void testRoutesTableFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        loadRoutes();
+        JUnitOperationsUtil.loadFiveRoutes();
 
         RoutesTableFrame f = new RoutesTableFrame();
 
@@ -63,7 +64,7 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         f.commentTextField.setText("New Text Route Comment");
         JemmyUtil.enterClickAndLeave(f.addRouteButton);
 
-        loadRoutes();
+        JUnitOperationsUtil.loadFiveRoutes();
 
         RouteManager rManager = InstanceManager.getDefault(RouteManager.class);
         Assert.assertEquals("should be 6 routes", 6, rManager.getRoutesByNameList().size());
@@ -72,7 +73,7 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals("route comment", "New Text Route Comment", newRoute.getComment());
 
         // Add some locations to the route
-        loadLocations();
+        JUnitOperationsUtil.loadFiveLocations();
         LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc B"));
         //f.addLocationButton.doClick();
@@ -122,7 +123,7 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
     @Test
     public void testRouteEditFrameRead() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        loadRoutes();
+        JUnitOperationsUtil.loadFiveRoutes();
         RouteManager lManager = InstanceManager.getDefault(RouteManager.class);
         Route l2 = lManager.getRouteByName("Test Route C");
 
@@ -134,20 +135,6 @@ public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
         Assert.assertEquals("route comment", "Comment test route C", f.commentTextField.getText());
 
         JUnitUtil.dispose(f);
-    }
-
-    private void loadRoutes() {
-        RouteManager rManager = InstanceManager.getDefault(RouteManager.class);
-        Route r1 = rManager.newRoute("Test Route E");
-        r1.setComment("Comment test route E");
-        Route r2 = rManager.newRoute("Test Route D");
-        r2.setComment("Comment test route D");
-        Route r3 = rManager.newRoute("Test Route C");
-        r3.setComment("Comment test route C");
-        Route r4 = rManager.newRoute("Test Route B");
-        r4.setComment("Comment test route B");
-        Route r5 = rManager.newRoute("Test Route A");
-        r5.setComment("Comment test route A");
     }
 
     @Override

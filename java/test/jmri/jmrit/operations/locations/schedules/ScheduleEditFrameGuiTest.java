@@ -4,10 +4,11 @@ import java.awt.GraphicsEnvironment;
 import java.util.List;
 import javax.swing.JComboBox;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
@@ -21,7 +22,7 @@ import org.junit.Test;
  *
  * @author	Dan Boudreau Copyright (C) 2009
  */
-public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
+public class ScheduleEditFrameGuiTest extends OperationsTestCase {
 
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
 
@@ -151,7 +152,7 @@ public class ScheduleEditFrameGuiTest extends OperationsSwingTestCase {
     public void setUp() {
         super.setUp();
 
-        loadLocations();
+        JUnitOperationsUtil.loadFiveLocations();
     }
 
     // The minimal setup for log4J

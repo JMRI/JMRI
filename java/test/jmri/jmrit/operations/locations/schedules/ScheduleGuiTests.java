@@ -2,9 +2,10 @@ package jmri.jmrit.operations.locations.schedules;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -17,7 +18,7 @@ import org.junit.Test;
  *
  * @author Dan Boudreau Copyright (C) 2016
  */
-public class ScheduleGuiTests extends OperationsSwingTestCase {
+public class ScheduleGuiTests extends OperationsTestCase {
 
     @Test
     public void testScheduleCopyFrame() {
@@ -72,7 +73,7 @@ public class ScheduleGuiTests extends OperationsSwingTestCase {
     public void setUp() {
         super.setUp();
 
-        loadLocations();
+        JUnitOperationsUtil.loadFiveLocations();
         
     }
 
