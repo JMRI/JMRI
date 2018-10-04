@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 
 /**
@@ -235,6 +237,8 @@ public interface Conditional extends NamedBean {
         MEMORY_EQUALS_INSENSITIVE(TYPE_MEMORY_EQUALS_INSENSITIVE, ItemType.MEMORY, rbx.getString("StateMemoryEqualsInsensitive")), // NOI18N
         MEMORY_COMPARE_INSENSITIVE(TYPE_MEMORY_COMPARE_INSENSITIVE, ItemType.MEMORY, rbx.getString("StateMemoryCompareInsensitive")), // NOI18N
         FAST_CLOCK_RANGE(TYPE_FAST_CLOCK_RANGE, ItemType.CLOCK, rbx.getString("TypeFastClockRange")), // NOI18N
+        
+        // Note the set signalHeadAppearanceSet below which holds those SignalHead types that are appearances.
         SIGNAL_HEAD_RED(TYPE_SIGNAL_HEAD_RED, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateRed")), // NOI18N
         SIGNAL_HEAD_YELLOW(TYPE_SIGNAL_HEAD_YELLOW, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateYellow")), // NOI18N
         SIGNAL_HEAD_GREEN(TYPE_SIGNAL_HEAD_GREEN, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateGreen")), // NOI18N
@@ -276,6 +280,8 @@ public interface Conditional extends NamedBean {
         private static final List<Type> signalHeadItemsList;
         private static final List<Type> signalMastItemsList;
         
+        private static final Set<Type> signalHeadAppearanceSet;
+        
         
         static
         {
@@ -304,8 +310,14 @@ public interface Conditional extends NamedBean {
             Type[] typeArray8 = {NONE, SIGNAL_HEAD_APPEARANCE_EQUALS, SIGNAL_HEAD_LIT, SIGNAL_HEAD_HELD};
             signalHeadItemsList = Collections.unmodifiableList(Arrays.asList(typeArray8));
             
-            Type[] typeArray9 = {NONE, SIGNAL_MAST_ASPECT_EQUALS, SIGNAL_MAST_LIT, SIGNAL_MAST_HELD};
-            signalMastItemsList = Collections.unmodifiableList(Arrays.asList(typeArray9));
+            Type[] typeArray9 = {SIGNAL_HEAD_RED, SIGNAL_HEAD_YELLOW, SIGNAL_HEAD_GREEN,
+                SIGNAL_HEAD_DARK, SIGNAL_HEAD_FLASHRED, SIGNAL_HEAD_FLASHYELLOW,
+                SIGNAL_HEAD_FLASHGREEN, SIGNAL_HEAD_LUNAR, SIGNAL_HEAD_FLASHLUNAR,
+            };
+            signalHeadAppearanceSet = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(typeArray9)));
+            
+            Type[] typeArray10 = {NONE, SIGNAL_MAST_ASPECT_EQUALS, SIGNAL_MAST_LIT, SIGNAL_MAST_HELD};
+            signalMastItemsList = Collections.unmodifiableList(Arrays.asList(typeArray10));
         }
         
         private Type(int state, ItemType itemType, String string) {
@@ -358,8 +370,21 @@ public interface Conditional extends NamedBean {
             return signalHeadItemsList;
         }
         
+        public static boolean isSignalHeadApperance(Type type) {
+            return signalHeadAppearanceSet.contains(type);
+        }
+        
         public static List<Type> getSignalMastItems() {
             return signalMastItemsList;
+        }
+        
+        public static int getIndexInList(List<Type> table, Type entry) {
+            for (int i = 0; i < table.size(); i++) {
+                if (entry == table.get(i)) {
+                    return i;
+                }
+            }
+            return -1;
         }
         
         public static Type getOperatorFromIntValue(int typeInt) {
