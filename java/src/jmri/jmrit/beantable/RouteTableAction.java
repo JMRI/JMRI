@@ -1531,16 +1531,16 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             ArrayList<ConditionalVariable> variableList = new ArrayList<>();
             //String devName = cTurnout.getText();
             int mode = turnoutModeFromBox(cTurnoutStateBox);
-            int type = Turnout.CLOSED;
+            Conditional.Type conditionalType = Conditional.Type.TURNOUT_CLOSED;
             if (mode == Route.ONTHROWN) {
-                type = Turnout.THROWN;
+                conditionalType = Conditional.Type.TURNOUT_THROWN;
             }
             variableList.add(new ConditionalVariable(false, Conditional.Operator.NONE,
-                    type, turnoutLockSystemName, true));
+                    conditionalType, turnoutLockSystemName, true));
 
             actionList = new ArrayList<>();
             int option = Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
-            type = Turnout.LOCKED;
+            int type = Turnout.LOCKED;
             if (mode == Route.ONCHANGE) {
                 option = Conditional.ACTION_OPTION_ON_CHANGE;
                 type = Route.TOGGLE;
