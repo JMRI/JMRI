@@ -337,75 +337,75 @@ public class ConditionalVariableTest {
                 "Memory Compare to Value (Case Sensitive)".equals(cv.getTestTypeString()));
         
         Assert.assertTrue("Sensor Active",
-                "Sensor Active".equals(Conditional.Type.SENSOR_ACTIVE.toString()));
+                "Sensor Active".equals(Conditional.Type.SENSOR_ACTIVE.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Sensor Inactive".equals(Conditional.Type.SENSOR_INACTIVE.toString()));
+                "Sensor Inactive".equals(Conditional.Type.SENSOR_INACTIVE.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Turnout Thrown".equals(Conditional.Type.TURNOUT_THROWN.toString()));
+                "Turnout Thrown".equals(Conditional.Type.TURNOUT_THROWN.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Turnout Closed".equals(Conditional.Type.TURNOUT_CLOSED.toString()));
+                "Turnout Closed".equals(Conditional.Type.TURNOUT_CLOSED.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Conditional True".equals(Conditional.Type.CONDITIONAL_TRUE.toString()));
+                "Conditional True".equals(Conditional.Type.CONDITIONAL_TRUE.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Conditional False".equals(Conditional.Type.CONDITIONAL_FALSE.toString()));
+                "Conditional False".equals(Conditional.Type.CONDITIONAL_FALSE.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Light On".equals(Conditional.Type.LIGHT_ON.toString()));
+                "Light On".equals(Conditional.Type.LIGHT_ON.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Light Off".equals(Conditional.Type.LIGHT_OFF.toString()));
+                "Light Off".equals(Conditional.Type.LIGHT_OFF.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Memory Compare to Value (Case Sensitive)".equals(Conditional.Type.MEMORY_EQUALS.toString()));
+                "Memory Compare to Value (Case Sensitive)".equals(Conditional.Type.MEMORY_EQUALS.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Memory Compare to Memory (Case Sensitive)".equals(Conditional.Type.MEMORY_COMPARE.toString()));
+                "Memory Compare to Memory (Case Sensitive)".equals(Conditional.Type.MEMORY_COMPARE.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Fast Clock Range".equals(Conditional.Type.FAST_CLOCK_RANGE.toString()));
+                "Fast Clock Range".equals(Conditional.Type.FAST_CLOCK_RANGE.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Red".equals(Conditional.Type.SIGNAL_HEAD_RED.toString()));
+                "Red".equals(Conditional.Type.SIGNAL_HEAD_RED.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Yellow".equals(Conditional.Type.SIGNAL_HEAD_YELLOW.toString()));
+                "Yellow".equals(Conditional.Type.SIGNAL_HEAD_YELLOW.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Green".equals(Conditional.Type.SIGNAL_HEAD_GREEN.toString()));
+                "Green".equals(Conditional.Type.SIGNAL_HEAD_GREEN.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Dark".equals(Conditional.Type.SIGNAL_HEAD_DARK.toString()));
+                "Dark".equals(Conditional.Type.SIGNAL_HEAD_DARK.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Flashing Red".equals(Conditional.Type.SIGNAL_HEAD_FLASHRED.toString()));
+                "Flashing Red".equals(Conditional.Type.SIGNAL_HEAD_FLASHRED.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Flashing Yellow".equals(Conditional.Type.SIGNAL_HEAD_FLASHYELLOW.toString()));
+                "Flashing Yellow".equals(Conditional.Type.SIGNAL_HEAD_FLASHYELLOW.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Flashing Green".equals(Conditional.Type.SIGNAL_HEAD_FLASHGREEN.toString()));
+                "Flashing Green".equals(Conditional.Type.SIGNAL_HEAD_FLASHGREEN.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Lit".equals(Conditional.Type.SIGNAL_HEAD_LIT.toString()));
+                "Lit".equals(Conditional.Type.SIGNAL_HEAD_LIT.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Held".equals(Conditional.Type.SIGNAL_HEAD_HELD.toString()));
+                "Held".equals(Conditional.Type.SIGNAL_HEAD_HELD.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Lunar".equals(Conditional.Type.SIGNAL_HEAD_LUNAR.toString()));
+                "Lunar".equals(Conditional.Type.SIGNAL_HEAD_LUNAR.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Flashing Lunar".equals(Conditional.Type.SIGNAL_HEAD_FLASHLUNAR.toString()));
+                "Flashing Lunar".equals(Conditional.Type.SIGNAL_HEAD_FLASHLUNAR.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Memory Compare to Value (Case Insensitive)".equals(Conditional.Type.MEMORY_EQUALS_INSENSITIVE.toString()));
+                "Memory Compare to Value (Case Insensitive)".equals(Conditional.Type.MEMORY_EQUALS_INSENSITIVE.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Memory Compare to Memory (Case Insensitive)".equals(Conditional.Type.MEMORY_COMPARE_INSENSITIVE.toString()));
+                "Memory Compare to Memory (Case Insensitive)".equals(Conditional.Type.MEMORY_COMPARE_INSENSITIVE.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Free".equals(Conditional.Type.ROUTE_FREE.toString()));
+                "Free".equals(Conditional.Type.ROUTE_FREE.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Occupied".equals(Conditional.Type.ROUTE_OCCUPIED.toString()));
+                "Occupied".equals(Conditional.Type.ROUTE_OCCUPIED.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Allocated".equals(Conditional.Type.ROUTE_ALLOCATED.toString()));
+                "Allocated".equals(Conditional.Type.ROUTE_ALLOCATED.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Set".equals(Conditional.Type.ROUTE_SET.toString()));
+                "Set".equals(Conditional.Type.ROUTE_SET.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Running".equals(Conditional.Type.TRAIN_RUNNING.toString()));
+                "Running".equals(Conditional.Type.TRAIN_RUNNING.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Signal Mast Aspect equals".equals(Conditional.Type.SIGNAL_MAST_ASPECT_EQUALS.toString()));
+                "Signal Mast Aspect equals".equals(Conditional.Type.SIGNAL_MAST_ASPECT_EQUALS.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Signal Head Appearance equals".equals(Conditional.Type.SIGNAL_HEAD_APPEARANCE_EQUALS.toString()));
+                "Signal Head Appearance equals".equals(Conditional.Type.SIGNAL_HEAD_APPEARANCE_EQUALS.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Lit".equals(Conditional.Type.SIGNAL_MAST_LIT.toString()));
+                "Lit".equals(Conditional.Type.SIGNAL_MAST_LIT.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Held".equals(Conditional.Type.SIGNAL_MAST_HELD.toString()));
+                "Held".equals(Conditional.Type.SIGNAL_MAST_HELD.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Active".equals(Conditional.Type.ENTRYEXIT_ACTIVE.toString()));
+                "Active".equals(Conditional.Type.ENTRYEXIT_ACTIVE.getTestTypeString()));
         Assert.assertTrue("getTestTypeString() returns correct value",
-                "Inactive".equals(Conditional.Type.ENTRYEXIT_INACTIVE.toString()));
+                "Inactive".equals(Conditional.Type.ENTRYEXIT_INACTIVE.getTestTypeString()));
         
         // Test invalid value
 //        Assert.assertTrue("getTestTypeString() returns correct value",
