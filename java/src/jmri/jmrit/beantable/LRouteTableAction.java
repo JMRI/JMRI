@@ -681,12 +681,13 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                         }
                         continue;
                 }
+                int testStateInt = testState.getIntValue();
                 Operator opern = variable.getOpern();
                 if (k != 0 && (opern == Conditional.Operator.AND)) {
                     // guess this is a VETO
-                    testState += VETO;
+                    testStateInt += VETO;
                 } else if (onChange) {
-                    testState = Route.ONCHANGE;
+                    testStateInt = Route.ONCHANGE;
                 }
                 String name = variable.getName();
                 String key = type + name;
@@ -703,7 +704,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                     }
                 } else {
                     elt.setIncluded(true);
-                    elt.setState(testState);
+                    elt.setState(testStateInt);
                 }
             }
         }
@@ -1490,7 +1491,8 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                 }
                 int state = elt.getState();
                 if (VETO < state) {
-                    vetoList.add(new ConditionalVariable(true, opern, (state & ~VETO), name, _newRouteType));
+                    vetoList.add(new ConditionalVariable(true, opern,
+                            Conditional.Type.getOperatorFromIntValue(state & ~VETO), name, _newRouteType));
                 }
             }
         }
@@ -1528,9 +1530,9 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                             default:
                                 log.debug("updatePressed: Unknown state variable type " + elt.getType());
                         }
-                        twoTriggerList.add(new ConditionalVariable(false, opern, type, name, true));
+                        twoTriggerList.add(new ConditionalVariable(false, opern, Conditional.Type.getOperatorFromIntValue(type), name, true));
                     } else {
-                        oneTriggerList.add(new ConditionalVariable(false, opern, type, name, true));
+                        oneTriggerList.add(new ConditionalVariable(false, opern, Conditional.Type.getOperatorFromIntValue(type), name, true));
                     }
                 }
             }
