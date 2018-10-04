@@ -43,7 +43,7 @@
     
     
     <p>Layouts using a CAN event-based system may be better off using Turnout Controlled Signal Masts, 
-    see an example at <a href="../../../help/en/html/hardware/can/cbus/index.shtml#signalling">MERGCBUS Signalling</a></p>
+    see an example at <a href="../../../help/en/html/hardware/can/cbus/index.shtml#signalling">MERG CBUS Signalling</a></p>
     
 
     <table>
