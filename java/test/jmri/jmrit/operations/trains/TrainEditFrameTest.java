@@ -499,7 +499,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
     @Before
     public void setUp() {
         super.setUp();
-        loadTrains();
+        JUnitOperationsUtil.loadTrains();
     }
 
     @Override

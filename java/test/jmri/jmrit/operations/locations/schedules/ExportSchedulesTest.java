@@ -6,6 +6,7 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -38,7 +39,7 @@ public class ExportSchedulesTest extends OperationsTestCase{
         ExportSchedules exportLoc = new ExportSchedules();
         Assert.assertNotNull("exists", exportLoc);
         
-        loadLocations(); //only Test Loc E has a track
+        JUnitOperationsUtil.loadFiveLocations(); //only Test Loc E has a track
         
         LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location l1 = lManager.getLocationByName("Test Loc E");

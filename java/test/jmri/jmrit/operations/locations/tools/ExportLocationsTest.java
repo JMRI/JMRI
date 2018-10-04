@@ -2,6 +2,7 @@ package jmri.jmrit.operations.locations.tools;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -27,7 +28,7 @@ public class ExportLocationsTest extends OperationsTestCase {
         ExportLocations exportLoc = new ExportLocations();
         Assert.assertNotNull("exists", exportLoc);
         
-        loadLocations(); //only Test Loc E has a track
+        JUnitOperationsUtil.loadFiveLocations(); //only Test Loc E has a track
         
         // should cause export complete dialog to appear
         Thread export = new Thread(new Runnable() {

@@ -9,6 +9,7 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
@@ -306,11 +307,11 @@ public class SidingEditFrameTest extends OperationsTestCase {
     public void setUp() {
         super.setUp();
 
-        loadLocations();
+        JUnitOperationsUtil.loadFiveLocations();
         lManager = InstanceManager.getDefault(LocationManager.class);
         l = lManager.getLocationByName("Test Loc C");
 
-        loadTrain(l);
+        JUnitOperationsUtil.loadTrain(l);
         TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
         trainA = trainManager.getTrainByName("Test Train A"); 
     }
