@@ -729,8 +729,8 @@ public class ConditionalEditBase {
     void loadReferenceNames(List<ConditionalVariable> varList, TreeSet<String> treeSet) {
         treeSet.clear();
         for (ConditionalVariable var : varList) {
-            if (var.getType() == Conditional.Type.CONDITIONAL_TRUE.getIntValue()
-                    || var.getType() == Conditional.Type.CONDITIONAL_FALSE.getIntValue()) {
+            if (var.getType() == Conditional.Type.CONDITIONAL_TRUE
+                    || var.getType() == Conditional.Type.CONDITIONAL_FALSE) {
                 treeSet.add(var.getName());
             }
         }
