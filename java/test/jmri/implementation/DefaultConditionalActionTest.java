@@ -346,9 +346,8 @@ public class DefaultConditionalActionTest {
     
     @Test
     public void testGetActionDataString() {
-        System.out.format("AA: %s%n", DefaultConditionalAction.getActionDataString(Conditional.ActionType.NONE, 0));
         Assert.assertTrue("getActionDataString() returns correct value",
-                "Closed".equals(DefaultConditionalAction.getActionDataString(Conditional.ActionType.NONE, 0)));
+                "".equals(DefaultConditionalAction.getActionDataString(Conditional.ActionType.NONE, 0)));
         Assert.assertTrue("getActionDataString() returns correct value",
                 "Closed".equals(DefaultConditionalAction.getActionDataString(Conditional.ActionType.SET_TURNOUT, Turnout.CLOSED)));
         Assert.assertTrue("getActionDataString() returns correct value",
