@@ -2046,7 +2046,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     }
                     _curVariableItem = newVariableItem;
                 }
-                variableTypeChanged(newVariableItem.getIntValue());
+                variableTypeChanged(newVariableItem);
             }
         });
 
