@@ -1943,9 +1943,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             }
         }
         if (active) {
-            setPickWindow("Activate", 0);  // NOI18N
+            setPickWindow("Activate", Conditional.ItemType.NONE);  // NOI18N
         } else {
-            setPickWindow("Deactivate", 0);  // NOI18N
+            setPickWindow("Deactivate", Conditional.ItemType.NONE);  // NOI18N
         }
     }
 
@@ -2359,7 +2359,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         log.debug("initializeStateVariables: itemType= {}, testType= {}", itemType, testType);  // NOI18N
         if (itemType.getIntValue() == _variableItemBox.getSelectedIndex()) {
             // Force a refresh of variableTypeChanged
-            variableTypeChanged(itemType.getIntValue());
+            variableTypeChanged(itemType);
         }
         _variableItemBox.setSelectedIndex(itemType.getIntValue());
         _variableOperBox.setSelectedItem(_curVariable.getOpernString());
@@ -4169,44 +4169,47 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      *                            comboBox
      * @return integer representing the selected action
      */
-    static int getActionTypeFromBox(Conditional.ItemType itemType, int actionTypeSelection) {
-        if (itemType < 0 || actionTypeSelection < 0) {
-            return Conditional.ACTION_NONE;
+    static Conditional.ActionType getActionTypeFromBox(Conditional.ItemType itemType, int actionTypeSelection) {
+//        if (itemType < 0 || actionTypeSelection < 0) {
+//            return Conditional.ActionType.NONE;
+//        }
+        if (actionTypeSelection < 0) {
+            return Conditional.ActionType.NONE;
         }
         switch (itemType) {
             case SENSOR:
-                return Conditional.ITEM_TO_SENSOR_ACTION[actionTypeSelection];
+                return Conditional.ActionType.getSensorItems().get(actionTypeSelection);
             case TURNOUT:
-                return Conditional.ITEM_TO_TURNOUT_ACTION[actionTypeSelection];
+                return Conditional.ActionType.getTurnoutItems().get(actionTypeSelection);
             case LIGHT:
-                return Conditional.ITEM_TO_LIGHT_ACTION[actionTypeSelection];
+                return Conditional.ActionType.getLightItems().get(actionTypeSelection);
             case SIGNALHEAD:
-                return Conditional.ITEM_TO_SIGNAL_HEAD_ACTION[actionTypeSelection];
+                return Conditional.ActionType.getSignalHeadItems().get(actionTypeSelection);
             case SIGNALMAST:
-                return Conditional.ITEM_TO_SIGNAL_MAST_ACTION[actionTypeSelection];
+                return Conditional.ActionType.getSignalMastItems().get(actionTypeSelection);
             case MEMORY:
-                return Conditional.ITEM_TO_MEMORY_ACTION[actionTypeSelection];
+                return Conditional.ActionType.getMemoryItems().get(actionTypeSelection);
             case LOGIX:
-                return Conditional.ITEM_TO_LOGIX_ACTION[actionTypeSelection];
+                return Conditional.ActionType.getLogixItems().get(actionTypeSelection);
             case WARRANT:
-                return Conditional.ITEM_TO_WARRANT_ACTION[actionTypeSelection];
+                return Conditional.ActionType.getWarrantItems().get(actionTypeSelection);
             case OBLOCK:
-                return Conditional.ITEM_TO_OBLOCK_ACTION[actionTypeSelection];
+                return Conditional.ActionType.getOBlockItems().get(actionTypeSelection);
             case CLOCK:
-                return Conditional.ITEM_TO_CLOCK_ACTION[actionTypeSelection];
+                return Conditional.ActionType.getClockItems().get(actionTypeSelection);
             case AUDIO:
-                return Conditional.ITEM_TO_AUDIO_ACTION[actionTypeSelection];
+                return Conditional.ActionType.getAudioItems().get(actionTypeSelection);
             case SCRIPT:
-                return Conditional.ITEM_TO_SCRIPT_ACTION[actionTypeSelection];
+                return Conditional.ActionType.getScriptItems().get(actionTypeSelection);
             case OTHER:
-                return Conditional.ITEM_TO_OTHER_ACTION[actionTypeSelection];
+                return Conditional.ActionType.getOtherItems().get(actionTypeSelection);
             case ENTRYEXIT:
-                return Conditional.ITEM_TO_ENTRYEXIT_ACTION[actionTypeSelection];
+                return Conditional.ActionType.getEntryExitItems().get(actionTypeSelection);
             default:
                 // fall through
                 break;
         }
-        return Conditional.ACTION_NONE;
+        return Conditional.ActionType.NONE;
     }
 
     JFileChooser sndFileChooser = null;
@@ -4313,7 +4316,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                         return false;
                     }
                 }
-                actionType = Conditional.ITEM_TO_SENSOR_ACTION[selection - 1];
+                actionType = Conditional.ActionType.getSensorItems().get(selection - 1);
                 if ((actionType == Conditional.ActionType.RESET_DELAYED_SENSOR)
                         || (actionType == Conditional.ActionType.DELAYED_SENSOR)) {
                     if (!validateTimeReference(actionType, actionString)) {
@@ -4342,7 +4345,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                         return false;
                     }
                 }
-                actionType = Conditional.ITEM_TO_TURNOUT_ACTION[selection - 1];
+                actionType = Conditional.ActionType.getTurnoutItems().get(selection - 1);
                 if ((actionType == Conditional.ActionType.RESET_DELAYED_TURNOUT)
                         || (actionType == Conditional.ActionType.DELAYED_TURNOUT)) {
                     if (!validateTimeReference(actionType, actionString)) {
@@ -4379,7 +4382,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                         return false;
                     }
                 }
-                actionType = Conditional.ITEM_TO_LIGHT_ACTION[selection - 1];
+                actionType = Conditional.ActionType.getLightItems().get(selection - 1);
                 if (actionType == Conditional.ActionType.SET_LIGHT_INTENSITY) {
                     Light lgtx = getLight(name);
                     // check if light user name was entered
@@ -4433,7 +4436,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                         return false;
                     }
                 }
-                actionType = Conditional.ITEM_TO_SIGNAL_HEAD_ACTION[selection - 1];
+                actionType = Conditional.ActionType.getSignalHeadItems().get(selection - 1);
                 if (actionType == Conditional.ActionType.SET_SIGNAL_APPEARANCE) {
                     String appStr = (String) _actionBox.getSelectedItem();
                     _curAction.setActionData(DefaultConditionalAction.stringToActionData(appStr));
@@ -4449,7 +4452,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                         return false;
                     }
                 }
-                actionType = Conditional.ITEM_TO_SIGNAL_MAST_ACTION[selection - 1];
+                actionType = Conditional.ActionType.getSignalMastItems().get(selection - 1);
                 if (actionType == Conditional.ActionType.SET_SIGNALMAST_ASPECT) {
                     _curAction.setActionString((String) _actionBox.getSelectedItem());
                 }
@@ -4466,7 +4469,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 if (name == null) {
                     return false;
                 }
-                actionType = Conditional.ITEM_TO_MEMORY_ACTION[selection - 1];
+                actionType = Conditional.ActionType.getMemoryItems().get(selection - 1);
                 if (actionType == Conditional.ActionType.COPY_MEMORY) {
                     actionString = validateMemoryReference(actionString);
                     if (actionString == null) {
@@ -4484,7 +4487,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                         return false;
                     }
                 }
-                actionType = Conditional.ITEM_TO_LOGIX_ACTION[selection - 1];
+                actionType = Conditional.ActionType.getLogixItems().get(selection - 1);
                 _actionNameField.setText(name);
                 _curAction.setDeviceName(name);
                 break;
@@ -4495,7 +4498,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                         return false;
                     }
                 }
-                actionType = Conditional.ITEM_TO_WARRANT_ACTION[selection - 1];
+                actionType = Conditional.ActionType.getWarrantItems().get(selection - 1);
                 _actionNameField.setText(name);
                 _curAction.setDeviceName(name);
                 if (actionType == Conditional.ActionType.CONTROL_TRAIN) {
@@ -4519,7 +4522,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                         return false;
                     }
                 }
-                actionType = Conditional.ITEM_TO_OBLOCK_ACTION[selection - 1];
+                actionType = Conditional.ActionType.getOBlockItems().get(selection - 1);
                 _actionNameField.setText(name);
                 _curAction.setDeviceName(name);
                 if (actionType == Conditional.ActionType.SET_BLOCK_VALUE) {
@@ -4533,12 +4536,12 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                         return false;
                     }
                 }
-                actionType = Conditional.ITEM_TO_ENTRYEXIT_ACTION[selection - 1];
+                actionType = Conditional.ActionType.getEntryExitItems().get(selection - 1);
                 _actionNameField.setText(name);
                 _curAction.setDeviceName(name);
                 break;
             case CLOCK:
-                actionType = Conditional.ITEM_TO_CLOCK_ACTION[selection - 1];
+                actionType = Conditional.ActionType.getClockItems().get(selection - 1);
                 if (actionType == Conditional.ActionType.SET_FAST_CLOCK_TIME) {
                     int time = parseTime(_shortActionString.getText().trim());
                     if (time < 0) {
@@ -4548,7 +4551,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 }
                 break;
             case AUDIO:
-                actionType = Conditional.ITEM_TO_AUDIO_ACTION[selection - 1];
+                actionType = Conditional.ActionType.getAudioItems().get(selection - 1);
                 if (actionType == Conditional.ActionType.PLAY_SOUND) {
                     _curAction.setActionString(_longActionString.getText().trim());
                 } else if (actionType == Conditional.ActionType.CONTROL_AUDIO) {
@@ -4598,7 +4601,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 }
                 break;
             case SCRIPT:
-                actionType = Conditional.ITEM_TO_SCRIPT_ACTION[selection - 1];
+                actionType = Conditional.ActionType.getScriptItems().get(selection - 1);
                 if (actionType == Conditional.ActionType.RUN_SCRIPT) {
                     _curAction.setActionString(_longActionString.getText().trim());
                 } else if (actionType == Conditional.ActionType.JYTHON_COMMAND) {
@@ -4606,7 +4609,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 }
                 break;
             case OTHER:
-                actionType = Conditional.ITEM_TO_OTHER_ACTION[selection - 1];
+                actionType = Conditional.ActionType.getOtherItems().get(selection - 1);
                 if (actionType == Conditional.ActionType.TRIGGER_ROUTE) {
                     if (!referenceByMemory) {
                         name = validateRouteReference(name);
