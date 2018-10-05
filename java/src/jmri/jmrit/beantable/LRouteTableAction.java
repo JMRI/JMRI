@@ -1439,22 +1439,22 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                 name = elt.getSysName();
             }
             int state = elt.getState();    // actionData
-            int actionType = 0;
+            Conditional.ActionType actionType = Conditional.ActionType.NONE;
             String params = "";
             switch (elt.getType()) {
                 case SENSOR_TYPE:
-                    actionType = Conditional.ACTION_SET_SENSOR;
+                    actionType = Conditional.ActionType.SET_SENSOR;
                     break;
                 case TURNOUT_TYPE:
-                    actionType = Conditional.ACTION_SET_TURNOUT;
+                    actionType = Conditional.ActionType.SET_TURNOUT;
                     break;
                 case LIGHT_TYPE:
-                    actionType = Conditional.ACTION_SET_LIGHT;
+                    actionType = Conditional.ActionType.SET_LIGHT;
                     break;
                 case SIGNAL_TYPE:
-                    actionType = Conditional.ACTION_SET_SIGNAL_APPEARANCE;
+                    actionType = Conditional.ActionType.SET_SIGNAL_APPEARANCE;
                     if (state > OFFSET) {
-                        actionType = state & ~OFFSET;
+                        actionType = Conditional.ActionType.getOperatorFromIntValue(state & ~OFFSET);
                     }
                     break;
                 default:

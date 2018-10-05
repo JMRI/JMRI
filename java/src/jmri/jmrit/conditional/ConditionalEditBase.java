@@ -480,7 +480,7 @@ public class ConditionalEditBase {
      */
     void createSinglePanelPickList(Conditional.ItemType itemType, PickSingleListener listener, boolean actionType) {
         if (_pickListener != null) {
-            int saveType = _pickListener.getItemType();
+            Conditional.ItemType saveType = _pickListener.getItemType();
             if (saveType != itemType) {
                 // The type has changed, need to start over
                 closeSinglePanelPickList();
@@ -573,13 +573,13 @@ public class ConditionalEditBase {
          * @param textField The target field object when an entry is selected
          * @param itemType  The current selected table type number
          */
-        public PickSingleListener(JTextField textField, int itemType) {
+        public PickSingleListener(JTextField textField, Conditional.ItemType itemType) {
             saveItemType = itemType;
             saveTextField = textField;
         }
 
         JTextField saveTextField;
-        int saveItemType;          // Current table type
+        Conditional.ItemType saveItemType;          // Current table type
 
         @Override
         public void valueChanged(ListSelectionEvent e) {
@@ -595,7 +595,7 @@ public class ConditionalEditBase {
             }
         }
 
-        public int getItemType() {
+        public Conditional.ItemType getItemType() {
             return saveItemType;
         }
     }
@@ -826,7 +826,7 @@ public class ConditionalEditBase {
      * @return true if either correct decimal format or a memory with the given
      *         name is present
      */
-    boolean validateIntensityReference(int actionType, String intReference) {
+    boolean validateIntensityReference(Conditional.ActionType actionType, String intReference) {
         if (intReference == null || intReference.trim().length() == 0) {
             displayBadNumberReference(actionType);
             return false;
@@ -885,13 +885,13 @@ public class ConditionalEditBase {
     /**
      * Check if a string is decimal or references a decimal.
      *
-     * @param actionType integer representing the Conditional action type being
+     * @param actionType enum representing the Conditional action type being
      *                   checked, i.e. ACTION_DELAYED_TURNOUT
      * @param ref        entry to check
      * @return true if ref is itself a decimal or user will provide one from a
      *         Memory at run time
      */
-    boolean validateTimeReference(int actionType, String ref) {
+    boolean validateTimeReference(Conditional.ActionType actionType, String ref) {
         if (ref == null || ref.trim().length() == 0) {
             displayBadNumberReference(actionType);
             return false;
@@ -939,25 +939,25 @@ public class ConditionalEditBase {
      * @param time       value to be checked
      * @return false if time &gt; 3600 (seconds) or too small
      */
-    boolean validateTime(int actionType, float time) {
+    boolean validateTime(Conditional.ActionType actionType, float time) {
         float maxTime = 3600;     // more than 1 hour
         float minTime = 0.020f;
         if (time < minTime || time > maxTime) {
             String errorNum = " ";
             switch (actionType) {
-                case Conditional.ACTION_DELAYED_TURNOUT:
+                case DELAYED_TURNOUT:
                     errorNum = "Error39";       // NOI18N
                     break;
-                case Conditional.ACTION_RESET_DELAYED_TURNOUT:
+                case RESET_DELAYED_TURNOUT:
                     errorNum = "Error41";       // NOI18N
                     break;
-                case Conditional.ACTION_DELAYED_SENSOR:
+                case DELAYED_SENSOR:
                     errorNum = "Error23";       // NOI18N
                     break;
-                case Conditional.ACTION_RESET_DELAYED_SENSOR:
+                case RESET_DELAYED_SENSOR:
                     errorNum = "Error27";       // NOI18N
                     break;
-                case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
+                case SET_LIGHT_TRANSITION_TIME:
                     errorNum = "Error29";       // NOI18N
                     break;
                 default:
@@ -978,27 +978,27 @@ public class ConditionalEditBase {
      * @param actionType integer representing the Conditional action type being
      *                   checked, i.e. ACTION_DELAYED_TURNOUT
      */
-    void displayBadNumberReference(int actionType) {
+    void displayBadNumberReference(Conditional.ActionType actionType) {
         String errorNum = " ";
         switch (actionType) {
-            case Conditional.ACTION_DELAYED_TURNOUT:
+            case DELAYED_TURNOUT:
                 errorNum = "Error39";       // NOI18N
                 break;
-            case Conditional.ACTION_RESET_DELAYED_TURNOUT:
+            case RESET_DELAYED_TURNOUT:
                 errorNum = "Error41";       // NOI18N
                 break;
-            case Conditional.ACTION_DELAYED_SENSOR:
+            case DELAYED_SENSOR:
                 errorNum = "Error23";       // NOI18N
                 break;
-            case Conditional.ACTION_RESET_DELAYED_SENSOR:
+            case RESET_DELAYED_SENSOR:
                 errorNum = "Error27";       // NOI18N
                 break;
-            case Conditional.ACTION_SET_LIGHT_INTENSITY:
+            case SET_LIGHT_INTENSITY:
                 JOptionPane.showMessageDialog(null,
                         Bundle.getMessage("Error43"), // NOI18N
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);       // NOI18N
                 return;
-            case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
+            case SET_LIGHT_TRANSITION_TIME:
                 errorNum = "Error29";       // NOI18N
                 break;
             default:

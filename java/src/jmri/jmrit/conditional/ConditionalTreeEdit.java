@@ -4651,7 +4651,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      */
     class ActionTypeListener implements ActionListener {
 
-        Conditional.ActionType _itemType;
+        Conditional.ItemType _itemType;
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -4661,14 +4661,14 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 log.debug("ActionTypeListener: itemType = {}, local itemType = {}, actionType = {}",  // NOI18N
                         select1, _itemType, select2);
             }
-            if (select1 != _itemType) {
+            if (select1 != _itemType.getIntValue()) {
                 log.error("ActionTypeListener actionItem selection ({}) != expected actionItem ({})",  // NOI18N
                         select1, _itemType);
             }
             if (_curAction != null) {
-                if (select1 > 0 && _itemType == select1) {
+                if (select1 > 0 && _itemType.getIntValue() == select1) {
                     _curAction.setType(getActionTypeFromBox(_itemType, select2));
-                    if (select1 == _itemType) {
+                    if (select1 == _itemType.getIntValue()) {
                         String text = _actionNameField.getText();
                         if (text != null && text.length() > 0) {
                             _curAction.setDeviceName(text);
@@ -4680,7 +4680,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             }
         }
 
-        public void setItemType(Conditional.ActionType type) {
+        public void setItemType(Conditional.ItemType type) {
             _itemType = type;
         }
     }

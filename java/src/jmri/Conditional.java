@@ -502,58 +502,81 @@ public interface Conditional extends NamedBean {
         private final ItemType _itemType;
         private final String _bundleKey;
         private final String _actionTypeString;
-/*        
-        private static final List<Type> sensorItemsList;
-        private static final List<Type> turnoutItemsList;
-        private static final List<Type> conditionalItemsList;
-        private static final List<Type> lightItemsList;
-        private static final List<Type> warrantItemsList;
-        private static final List<Type> memoryItemsList;
-//        private static final List<Type> oblockItemsList;
-        private static final List<Type> entryExitItemsList;
-        private static final List<Type> signalHeadItemsList;
-        private static final List<Type> signalMastItemsList;
         
-        private static final Set<Type> signalHeadAppearanceSet;
+        private static final List<ActionType> sensorItemsList;
+        private static final List<ActionType> turnoutItemsList;
+        private static final List<ActionType> lightItemsList;
+        private static final List<ActionType> warrantItemsList;
+        private static final List<ActionType> memoryItemsList;
+        private static final List<ActionType> oblockItemsList;
+        private static final List<ActionType> entryExitItemsList;
+        private static final List<ActionType> signalHeadItemsList;
+        private static final List<ActionType> signalMastItemsList;
+        private static final List<ActionType> clockItemsList;
+        private static final List<ActionType> logixItemsList;
+        private static final List<ActionType> audioItemsList;
+        private static final List<ActionType> scriptItemsList;
+        private static final List<ActionType> otherItemsList;
+        
+//        private static final Set<ActionType> signalHeadAppearanceSet;
         
         
         static
         {
-            Type[] typeArray1 = {SENSOR_ACTIVE, SENSOR_INACTIVE};
+            ActionType[] typeArray1 = {SET_SENSOR, DELAYED_SENSOR,
+                RESET_DELAYED_SENSOR, CANCEL_SENSOR_TIMERS};
             sensorItemsList = Collections.unmodifiableList(Arrays.asList(typeArray1));
             
-            Type[] typeArray2 = {TURNOUT_THROWN, TURNOUT_CLOSED};
+            ActionType[] typeArray2 = {SET_TURNOUT, DELAYED_TURNOUT, LOCK_TURNOUT,
+                CANCEL_TURNOUT_TIMERS, RESET_DELAYED_TURNOUT};
             turnoutItemsList = Collections.unmodifiableList(Arrays.asList(typeArray2));
             
-            Type[] typeArray3 = {CONDITIONAL_TRUE, CONDITIONAL_FALSE};
-            conditionalItemsList = Collections.unmodifiableList(Arrays.asList(typeArray3));
+            ActionType[] typeArray3 = {SET_LIGHT, SET_LIGHT_INTENSITY,
+                SET_LIGHT_TRANSITION_TIME};
+            lightItemsList = Collections.unmodifiableList(Arrays.asList(typeArray3));
             
-            Type[] typeArray4 = {LIGHT_ON, LIGHT_OFF};
-            lightItemsList = Collections.unmodifiableList(Arrays.asList(typeArray4));
+            ActionType[] typeArray4 = {ALLOCATE_WARRANT_ROUTE, DEALLOCATE_WARRANT_ROUTE,
+                SET_ROUTE_TURNOUTS, AUTO_RUN_WARRANT, MANUAL_RUN_WARRANT, CONTROL_TRAIN,
+                SET_TRAIN_ID, SET_TRAIN_NAME, THROTTLE_FACTOR};
+            warrantItemsList = Collections.unmodifiableList(Arrays.asList(typeArray4));
             
-            Type[] typeArray5 = {ROUTE_FREE, ROUTE_SET, ROUTE_ALLOCATED, ROUTE_OCCUPIED, TRAIN_RUNNING};
-            warrantItemsList = Collections.unmodifiableList(Arrays.asList(typeArray5));
+            ActionType[] typeArray5 = {SET_MEMORY, COPY_MEMORY};
+            memoryItemsList = Collections.unmodifiableList(Arrays.asList(typeArray5));
             
-            Type[] typeArray6 = {MEMORY_EQUALS, MEMORY_EQUALS_INSENSITIVE,
-                MEMORY_COMPARE, MEMORY_COMPARE_INSENSITIVE};
-            memoryItemsList = Collections.unmodifiableList(Arrays.asList(typeArray6));
+            ActionType[] typeArray6 = {SET_NXPAIR_ENABLED, SET_NXPAIR_DISABLED,
+                SET_NXPAIR_SEGMENT};
+            entryExitItemsList = Collections.unmodifiableList(Arrays.asList(typeArray6));
             
-            Type[] typeArray7 = {ENTRYEXIT_ACTIVE, ENTRYEXIT_INACTIVE};
-            entryExitItemsList = Collections.unmodifiableList(Arrays.asList(typeArray7));
+            ActionType[] typeArray7 = {SET_SIGNAL_APPEARANCE, SET_SIGNAL_HELD,
+                CLEAR_SIGNAL_HELD, SET_SIGNAL_DARK, SET_SIGNAL_LIT};
+            signalHeadItemsList = Collections.unmodifiableList(Arrays.asList(typeArray7));
             
-            Type[] typeArray8 = {NONE, SIGNAL_HEAD_APPEARANCE_EQUALS, SIGNAL_HEAD_LIT, SIGNAL_HEAD_HELD};
-            signalHeadItemsList = Collections.unmodifiableList(Arrays.asList(typeArray8));
+            ActionType[] typeArray8 = {SET_SIGNALMAST_ASPECT, SET_SIGNALMAST_HELD,
+                CLEAR_SIGNALMAST_HELD, SET_SIGNALMAST_DARK, SET_SIGNALMAST_LIT};
+            signalMastItemsList = Collections.unmodifiableList(Arrays.asList(typeArray8));
             
-            Type[] typeArray9 = {SIGNAL_HEAD_RED, SIGNAL_HEAD_YELLOW, SIGNAL_HEAD_GREEN,
-                SIGNAL_HEAD_DARK, SIGNAL_HEAD_FLASHRED, SIGNAL_HEAD_FLASHYELLOW,
-                SIGNAL_HEAD_FLASHGREEN, SIGNAL_HEAD_LUNAR, SIGNAL_HEAD_FLASHLUNAR,
-            };
-            signalHeadAppearanceSet = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(typeArray9)));
+            ActionType[] typeArray9 = {SET_FAST_CLOCK_TIME, START_FAST_CLOCK,
+                STOP_FAST_CLOCK};
+            clockItemsList = Collections.unmodifiableList(Arrays.asList(typeArray9));
             
-            Type[] typeArray10 = {NONE, SIGNAL_MAST_ASPECT_EQUALS, SIGNAL_MAST_LIT, SIGNAL_MAST_HELD};
-            signalMastItemsList = Collections.unmodifiableList(Arrays.asList(typeArray10));
+            ActionType[] typeArray10 = {ENABLE_LOGIX, DISABLE_LOGIX};
+            logixItemsList = Collections.unmodifiableList(Arrays.asList(typeArray10));
+            
+            ActionType[] typeArray11 = {DEALLOCATE_BLOCK, SET_BLOCK_VALUE,
+                SET_BLOCK_ERROR, CLEAR_BLOCK_ERROR, SET_BLOCK_OUT_OF_SERVICE,
+                SET_BLOCK_IN_SERVICE};
+            oblockItemsList = Collections.unmodifiableList(Arrays.asList(typeArray11));
+            
+            ActionType[] typeArray12 = {PLAY_SOUND, CONTROL_AUDIO};
+            audioItemsList = Collections.unmodifiableList(Arrays.asList(typeArray12));
+            
+            ActionType[] typeArray13 = {RUN_SCRIPT, JYTHON_COMMAND};
+            scriptItemsList = Collections.unmodifiableList(Arrays.asList(typeArray13));
+            
+            ActionType[] typeArray14 = {TRIGGER_ROUTE};
+            otherItemsList = Collections.unmodifiableList(Arrays.asList(typeArray14));
         }
-*/        
+        
         private ActionType(int state, ItemType itemType, String bundleKey, String actionTypeString) {
             _item = state;
             _itemType = itemType;
@@ -568,51 +591,67 @@ public interface Conditional extends NamedBean {
         public int getIntValue() {
             return _item;
         }
-/*        
-        public static List<Type> getSensorItems() {
+        
+        public static List<ActionType> getSensorItems() {
             return sensorItemsList;
         }
         
-        public static List<Type> getTurnoutItems() {
+        public static List<ActionType> getTurnoutItems() {
             return turnoutItemsList;
         }
         
-        public static List<Type> getConditionalItems() {
-            return conditionalItemsList;
-        }
-        
-        public static List<Type> getLightItems() {
+        public static List<ActionType> getLightItems() {
             return lightItemsList;
         }
         
-        public static List<Type> getWarrantItems() {
+        public static List<ActionType> getWarrantItems() {
             return warrantItemsList;
         }
         
-        public static List<Type> getMemoryItems() {
+        public static List<ActionType> getMemoryItems() {
             return memoryItemsList;
         }
         
-//        public static List<Type> getOBlockItems() {
-//            return oblockItemsList;
-//        }
+        public static List<ActionType> getOBlockItems() {
+            return oblockItemsList;
+        }
         
-        public static List<Type> getEntryExitItems() {
+        public static List<ActionType> getEntryExitItems() {
             return entryExitItemsList;
         }
         
-        public static List<Type> getSignalHeadItems() {
+        public static List<ActionType> getSignalHeadItems() {
             return signalHeadItemsList;
         }
         
-        public static boolean isSignalHeadApperance(Type type) {
-            return signalHeadAppearanceSet.contains(type);
-        }
+//        public static boolean isSignalHeadApperance(Type type) {
+//            return signalHeadAppearanceSet.contains(type);
+//        }
         
-        public static List<Type> getSignalMastItems() {
+        public static List<ActionType> getSignalMastItems() {
             return signalMastItemsList;
         }
-*/        
+        
+        public static List<ActionType> getClockItems() {
+            return clockItemsList;
+        }
+        
+        public static List<ActionType> getLogixItems() {
+            return logixItemsList;
+        }
+        
+        public static List<ActionType> getAudioItems() {
+            return audioItemsList;
+        }
+        
+        public static List<ActionType> getScriptItems() {
+            return scriptItemsList;
+        }
+        
+        public static List<ActionType> getOtherItems() {
+            return otherItemsList;
+        }
+        
         public static int getIndexInList(List<ActionType> table, ActionType entry) {
             for (int i = 0; i < table.size(); i++) {
                 if (entry == table.get(i)) {
