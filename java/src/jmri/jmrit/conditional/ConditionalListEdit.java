@@ -2138,7 +2138,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
 
     /**
      * Update the name combo box selection based on the current contents of the
-     * name field. Called by {@link #variableItemChanged(int)}.
+     * name field. Called by {@link #variableItemChanged(Conditional.ItemType)}.
      *
      * @since 4.7.3
      * @param itemType The type of name box to be created.
@@ -3428,7 +3428,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
 
     /**
      * Update the name combo box selection based on the current contents of the
-     * name field. Called by {@link #actionItemChanged(int)}.
+     * name field. Called by {@link #actionItemChanged(Conditional.ItemType)}.
      *
      * @since 4.7.3
      * @param itemType The type of name box to be created.
