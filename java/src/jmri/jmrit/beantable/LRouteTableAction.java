@@ -576,26 +576,26 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                 ConditionalAction action = actionList.get(k);
                 int type;
                 switch (action.getType()) {
-                    case Conditional.ACTION_SET_SENSOR:
+                    case SET_SENSOR:
                         type = SENSOR_TYPE;
                         break;
-                    case Conditional.ACTION_SET_TURNOUT:
+                    case SET_TURNOUT:
                         type = TURNOUT_TYPE;
                         break;
-                    case Conditional.ACTION_SET_LIGHT:
+                    case SET_LIGHT:
                         type = LIGHT_TYPE;
                         break;
-                    case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
-                    case Conditional.ACTION_SET_SIGNAL_HELD:
-                    case Conditional.ACTION_CLEAR_SIGNAL_HELD:
-                    case Conditional.ACTION_SET_SIGNAL_DARK:
-                    case Conditional.ACTION_SET_SIGNAL_LIT:
+                    case SET_SIGNAL_APPEARANCE:
+                    case SET_SIGNAL_HELD:
+                    case CLEAR_SIGNAL_HELD:
+                    case SET_SIGNAL_DARK:
+                    case SET_SIGNAL_LIT:
                         type = SIGNAL_TYPE;
                         break;
-                    case Conditional.ACTION_RUN_SCRIPT:
+                    case RUN_SCRIPT:
                         scriptFile.setText(action.getActionString());
                         continue;
-                    case Conditional.ACTION_PLAY_SOUND:
+                    case PLAY_SOUND:
                         soundFile.setText(action.getActionString());
                         continue;
                     default:
@@ -633,43 +633,43 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             List<ConditionalVariable> varList = c.getCopyOfStateVariables();
             for (int k = 0; k < varList.size(); k++) {
                 ConditionalVariable variable = varList.get(k);
-                int testState = variable.getType();
+                Conditional.Type testState = variable.getType();
                 //boolean negated = variable.isNegated();
                 int type;
                 switch (testState) {
-                    case Conditional.TYPE_SENSOR_ACTIVE:
+                    case SENSOR_ACTIVE:
                         type = SENSOR_TYPE;
                         //if (negated) testState = Conditional.TYPE_SENSOR_INACTIVE;
                         break;
-                    case Conditional.TYPE_SENSOR_INACTIVE:
+                    case SENSOR_INACTIVE:
                         type = SENSOR_TYPE;
                         //if (negated) testState = Conditional.TYPE_SENSOR_ACTIVE;
                         break;
-                    case Conditional.TYPE_TURNOUT_CLOSED:
+                    case TURNOUT_CLOSED:
                         type = TURNOUT_TYPE;
                         //if (negated) testState = Conditional.TYPE_TURNOUT_THROWN;
                         break;
-                    case Conditional.TYPE_TURNOUT_THROWN:
+                    case TURNOUT_THROWN:
                         type = TURNOUT_TYPE;
                         //if (negated) testState = Conditional.TYPE_TURNOUT_CLOSED;
                         break;
-                    case Conditional.TYPE_LIGHT_ON:
+                    case LIGHT_ON:
                         type = LIGHT_TYPE;
                         //if (negated) testState = Conditional.TYPE_LIGHT_OFF;
                         break;
-                    case Conditional.TYPE_LIGHT_OFF:
+                    case LIGHT_OFF:
                         type = LIGHT_TYPE;
                         //if (negated) testState = Conditional.TYPE_LIGHT_ON;
                         break;
-                    case Conditional.TYPE_SIGNAL_HEAD_LIT:
-                    case Conditional.TYPE_SIGNAL_HEAD_RED:
-                    case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
-                    case Conditional.TYPE_SIGNAL_HEAD_GREEN:
-                    case Conditional.TYPE_SIGNAL_HEAD_DARK:
-                    case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
-                    case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
-                    case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
-                    case Conditional.TYPE_SIGNAL_HEAD_HELD:
+                    case SIGNAL_HEAD_LIT:
+                    case SIGNAL_HEAD_RED:
+                    case SIGNAL_HEAD_YELLOW:
+                    case SIGNAL_HEAD_GREEN:
+                    case SIGNAL_HEAD_DARK:
+                    case SIGNAL_HEAD_FLASHRED:
+                    case SIGNAL_HEAD_FLASHYELLOW:
+                    case SIGNAL_HEAD_FLASHGREEN:
+                    case SIGNAL_HEAD_HELD:
                         type = SIGNAL_TYPE;
                         break;
                     default:
@@ -681,12 +681,13 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                         }
                         continue;
                 }
+                int testStateInt = testState.getIntValue();
                 Operator opern = variable.getOpern();
                 if (k != 0 && (opern == Conditional.Operator.AND)) {
                     // guess this is a VETO
-                    testState += VETO;
+                    testStateInt += VETO;
                 } else if (onChange) {
-                    testState = Route.ONCHANGE;
+                    testStateInt = Route.ONCHANGE;
                 }
                 String name = variable.getName();
                 String key = type + name;
@@ -703,7 +704,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                     }
                 } else {
                     elt.setIncluded(true);
-                    elt.setState(testState);
+                    elt.setState(testStateInt);
                 }
             }
         }
@@ -721,7 +722,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             List<ConditionalAction> actionList = c.getCopyOfActions();
             for (int k = 0; k < actionList.size(); k++) {
                 ConditionalAction action = actionList.get(k);
-                if (action.getType() != Conditional.ACTION_SET_SENSOR) {
+                if (action.getType() != Conditional.ActionType.SET_SENSOR) {
                     JOptionPane.showMessageDialog(
                             _addFrame, java.text.MessageFormat.format(rbx.getString("AlignWarn1"),
                                     new Object[]{action.toString(), c.getSystemName()}),
@@ -756,30 +757,30 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             int atype = 0;
             for (int k = 0; k < varList.size(); k++) {
                 ConditionalVariable variable = varList.get(k);
-                int testState = variable.getType();
+                Conditional.Type testState = variable.getType();
                 int type;
                 switch (testState) {
-                    case Conditional.TYPE_SENSOR_ACTIVE:
-                    case Conditional.TYPE_SENSOR_INACTIVE:
+                    case SENSOR_ACTIVE:
+                    case SENSOR_INACTIVE:
                         type = SENSOR_TYPE;
                         break;
-                    case Conditional.TYPE_TURNOUT_CLOSED:
-                    case Conditional.TYPE_TURNOUT_THROWN:
+                    case TURNOUT_CLOSED:
+                    case TURNOUT_THROWN:
                         type = TURNOUT_TYPE;
                         break;
-                    case Conditional.TYPE_LIGHT_ON:
-                    case Conditional.TYPE_LIGHT_OFF:
+                    case LIGHT_ON:
+                    case LIGHT_OFF:
                         type = LIGHT_TYPE;
                         break;
-                    case Conditional.TYPE_SIGNAL_HEAD_LIT:
-                    case Conditional.TYPE_SIGNAL_HEAD_RED:
-                    case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
-                    case Conditional.TYPE_SIGNAL_HEAD_GREEN:
-                    case Conditional.TYPE_SIGNAL_HEAD_DARK:
-                    case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
-                    case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
-                    case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
-                    case Conditional.TYPE_SIGNAL_HEAD_HELD:
+                    case SIGNAL_HEAD_LIT:
+                    case SIGNAL_HEAD_RED:
+                    case SIGNAL_HEAD_YELLOW:
+                    case SIGNAL_HEAD_GREEN:
+                    case SIGNAL_HEAD_DARK:
+                    case SIGNAL_HEAD_FLASHRED:
+                    case SIGNAL_HEAD_FLASHYELLOW:
+                    case SIGNAL_HEAD_FLASHGREEN:
+                    case SIGNAL_HEAD_HELD:
                         type = SIGNAL_TYPE;
                         break;
                     default:
@@ -826,7 +827,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             }
             for (int k = 0; k < actionList.size(); k++) {
                 ConditionalAction action = actionList.get(k);
-                if (action.getType() != Conditional.ACTION_LOCK_TURNOUT) {
+                if (action.getType() != Conditional.ActionType.LOCK_TURNOUT) {
                     JOptionPane.showMessageDialog(
                             _addFrame, java.text.MessageFormat.format(rbx.getString("LockWarn2"),
                                     new Object[]{action.getDeviceName(), c.getSystemName()}),
@@ -1438,22 +1439,22 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                 name = elt.getSysName();
             }
             int state = elt.getState();    // actionData
-            int actionType = 0;
+            Conditional.ActionType actionType = Conditional.ActionType.NONE;
             String params = "";
             switch (elt.getType()) {
                 case SENSOR_TYPE:
-                    actionType = Conditional.ACTION_SET_SENSOR;
+                    actionType = Conditional.ActionType.SET_SENSOR;
                     break;
                 case TURNOUT_TYPE:
-                    actionType = Conditional.ACTION_SET_TURNOUT;
+                    actionType = Conditional.ActionType.SET_TURNOUT;
                     break;
                 case LIGHT_TYPE:
-                    actionType = Conditional.ACTION_SET_LIGHT;
+                    actionType = Conditional.ActionType.SET_LIGHT;
                     break;
                 case SIGNAL_TYPE:
-                    actionType = Conditional.ACTION_SET_SIGNAL_APPEARANCE;
+                    actionType = Conditional.ActionType.SET_SIGNAL_APPEARANCE;
                     if (state > OFFSET) {
-                        actionType = state & ~OFFSET;
+                        actionType = Conditional.ActionType.getOperatorFromIntValue(state & ~OFFSET);
                     }
                     break;
                 default:
@@ -1465,12 +1466,12 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         String file = scriptFile.getText();
         if (file.length() > 0) {
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                    Conditional.ACTION_RUN_SCRIPT, "", -1, file));
+                    Conditional.ActionType.RUN_SCRIPT, "", -1, file));
         }
         file = soundFile.getText();
         if (file.length() > 0) {
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                    Conditional.ACTION_PLAY_SOUND, "", -1, file));
+                    Conditional.ActionType.PLAY_SOUND, "", -1, file));
         }
         ArrayList<ConditionalAction> onChangeList = cloneActionList(actionList, Conditional.ACTION_OPTION_ON_CHANGE);
 
@@ -1490,7 +1491,8 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                 }
                 int state = elt.getState();
                 if (VETO < state) {
-                    vetoList.add(new ConditionalVariable(true, opern, (state & ~VETO), name, _newRouteType));
+                    vetoList.add(new ConditionalVariable(true, opern,
+                            Conditional.Type.getOperatorFromIntValue(state & ~VETO), name, _newRouteType));
                 }
             }
         }
@@ -1528,9 +1530,9 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                             default:
                                 log.debug("updatePressed: Unknown state variable type " + elt.getType());
                         }
-                        twoTriggerList.add(new ConditionalVariable(false, opern, type, name, true));
+                        twoTriggerList.add(new ConditionalVariable(false, opern, Conditional.Type.getOperatorFromIntValue(type), name, true));
                     } else {
-                        oneTriggerList.add(new ConditionalVariable(false, opern, type, name, true));
+                        oneTriggerList.add(new ConditionalVariable(false, opern, Conditional.Type.getOperatorFromIntValue(type), name, true));
                     }
                 }
             }
@@ -1542,7 +1544,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             }
         } else {
             oneTriggerList.add(new ConditionalVariable(false, Conditional.Operator.NONE,
-                    Conditional.TYPE_NONE, LOGIX_INITIALIZER, true));
+                    Conditional.Type.NONE, LOGIX_INITIALIZER, true));
         }
         if (log.isDebugEnabled()) {
             log.debug("actionList.size()= " + actionList.size() + ", oneTriggerList.size()= " + oneTriggerList.size()
@@ -1619,13 +1621,13 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                 name = sensor.getSysName();
             }
             aList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                    Conditional.ACTION_SET_SENSOR, name, Sensor.ACTIVE, ""));
+                    Conditional.ActionType.SET_SENSOR, name, Sensor.ACTIVE, ""));
             aList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
-                    Conditional.ACTION_SET_SENSOR, name, Sensor.INACTIVE, ""));
+                    Conditional.ActionType.SET_SENSOR, name, Sensor.INACTIVE, ""));
             int alignType = sensor.getState();
             for (int k = 0; k < _includedOutputList.size(); k++) {
                 RouteOutputElement elt = _includedOutputList.get(k);
-                int varType = 0;
+                Conditional.Type varType = Conditional.Type.NONE;
                 boolean add = (ALL_TYPE == alignType);
                 switch (elt.getType()) {
                     case SENSOR_TYPE:
@@ -1634,10 +1636,10 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                         }
                         switch (elt.getState()) {
                             case Sensor.INACTIVE:
-                                varType = Conditional.TYPE_SENSOR_INACTIVE;
+                                varType = Conditional.Type.SENSOR_INACTIVE;
                                 break;
                             case Sensor.ACTIVE:
-                                varType = Conditional.TYPE_SENSOR_ACTIVE;
+                                varType = Conditional.Type.SENSOR_ACTIVE;
                                 break;
                             case Route.TOGGLE:
                                 add = false;
@@ -1653,10 +1655,10 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                         }
                         switch (elt.getState()) {
                             case Turnout.CLOSED:
-                                varType = Conditional.TYPE_TURNOUT_CLOSED;
+                                varType = Conditional.Type.TURNOUT_CLOSED;
                                 break;
                             case Turnout.THROWN:
-                                varType = Conditional.TYPE_TURNOUT_THROWN;
+                                varType = Conditional.Type.TURNOUT_THROWN;
                                 break;
                             case Route.TOGGLE:
                                 add = false;
@@ -1672,10 +1674,10 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                         }
                         switch (elt.getState()) {
                             case Light.ON:
-                                varType = Conditional.TYPE_LIGHT_ON;
+                                varType = Conditional.Type.LIGHT_ON;
                                 break;
                             case Light.OFF:
-                                varType = Conditional.TYPE_LIGHT_OFF;
+                                varType = Conditional.Type.LIGHT_OFF;
                                 break;
                             case Route.TOGGLE:
                                 add = false;
@@ -1691,37 +1693,37 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                         }
                         switch (elt.getState()) {
                             case SignalHead.DARK:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_DARK;
+                                varType = Conditional.Type.SIGNAL_HEAD_DARK;
                                 break;
                             case SignalHead.RED:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_RED;
+                                varType = Conditional.Type.SIGNAL_HEAD_RED;
                                 break;
                             case SignalHead.FLASHRED:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_FLASHRED;
+                                varType = Conditional.Type.SIGNAL_HEAD_FLASHRED;
                                 break;
                             case SignalHead.YELLOW:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_YELLOW;
+                                varType = Conditional.Type.SIGNAL_HEAD_YELLOW;
                                 break;
                             case SignalHead.FLASHYELLOW:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW;
+                                varType = Conditional.Type.SIGNAL_HEAD_FLASHYELLOW;
                                 break;
                             case SignalHead.GREEN:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_GREEN;
+                                varType = Conditional.Type.SIGNAL_HEAD_GREEN;
                                 break;
                             case SignalHead.FLASHGREEN:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN;
+                                varType = Conditional.Type.SIGNAL_HEAD_FLASHGREEN;
                                 break;
                             case SET_SIGNAL_HELD:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_HELD;
+                                varType = Conditional.Type.SIGNAL_HEAD_HELD;
                                 break;
                             case CLEAR_SIGNAL_HELD:
                                 add = false;    // don't know how to test for this
                                 break;
                             case SET_SIGNAL_DARK:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_DARK;
+                                varType = Conditional.Type.SIGNAL_HEAD_DARK;
                                 break;
                             case SET_SIGNAL_LIT:
-                                varType = Conditional.TYPE_SIGNAL_HEAD_LIT;
+                                varType = Conditional.Type.SIGNAL_HEAD_LIT;
                                 break;
                             default:
                                 log.warn("Unexpected state {} from elt.getState() in SIGNAL_TYPE", elt.getState());
@@ -1766,10 +1768,10 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                     eltName = elt.getSysName();
                 }
                 aList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                        Conditional.ACTION_LOCK_TURNOUT,
+                        Conditional.ActionType.LOCK_TURNOUT,
                         eltName, Turnout.LOCKED, ""));
                 aList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
-                        Conditional.ACTION_LOCK_TURNOUT,
+                        Conditional.ActionType.LOCK_TURNOUT,
                         eltName, Turnout.UNLOCKED, ""));
             }
             numConds = makeRouteConditional(numConds, /*false,*/ aList, oneTriggerList,

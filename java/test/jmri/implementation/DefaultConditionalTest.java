@@ -109,13 +109,13 @@ public class DefaultConditionalTest {
         List<ConditionalVariable> conditionalVariablesList_Empty = Arrays.asList(conditionalVariables_Empty);
         
         ConditionalVariable[] conditionalVariables_True
-                = { new ConditionalVariableStatic(Conditional.TRUE) };
+                = { new ConditionalVariableStatic(Conditional.State.TRUE) };
         List<ConditionalVariable> conditionalVariablesList_True = Arrays.asList(conditionalVariables_True);
         
         ConditionalVariable[] conditionalVariables_TrueTrueTrue
-                = { new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE) };
+                = { new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.TRUE) };
         List<ConditionalVariable> conditionalVariablesList_TrueTrueTrue = Arrays.asList(conditionalVariables_TrueTrueTrue);
         
         // Test empty antecedent string
@@ -161,53 +161,53 @@ public class DefaultConditionalTest {
         List<ConditionalVariable> conditionalVariablesList_Empty = Arrays.asList(conditionalVariables_Empty);
         
         ConditionalVariable[] conditionalVariables_True
-                = { new ConditionalVariableStatic(Conditional.TRUE) };
+                = { new ConditionalVariableStatic(Conditional.State.TRUE) };
         List<ConditionalVariable> conditionalVariablesList_True = Arrays.asList(conditionalVariables_True);
         
         ConditionalVariable[] conditionalVariables_False
-                = { new ConditionalVariableStatic(Conditional.FALSE) };
+                = { new ConditionalVariableStatic(Conditional.State.FALSE) };
         List<ConditionalVariable> conditionalVariablesList_False = Arrays.asList(conditionalVariables_False);
         
         ConditionalVariable[] conditionalVariables_NotTrue
-                = { new ConditionalVariableStatic(Conditional.TRUE, true) };
+                = { new ConditionalVariableStatic(Conditional.State.TRUE, true) };
         List<ConditionalVariable> conditionalVariablesList_NotTrue = Arrays.asList(conditionalVariables_NotTrue);
         
         ConditionalVariable[] conditionalVariables_NotFalse
-                = { new ConditionalVariableStatic(Conditional.FALSE, true) };
+                = { new ConditionalVariableStatic(Conditional.State.FALSE, true) };
         List<ConditionalVariable> conditionalVariablesList_NotFalse = Arrays.asList(conditionalVariables_NotFalse);
         
         ConditionalVariable[] conditionalVariables_TrueTrueTrue
-                = { new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE) };
+                = { new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.TRUE) };
         List<ConditionalVariable> conditionalVariablesList_TrueTrueTrue = Arrays.asList(conditionalVariables_TrueTrueTrue);
         
         ConditionalVariable[] conditionalVariables_FalseFalseFalse
-                = {new ConditionalVariableStatic(Conditional.FALSE)
-                        , new ConditionalVariableStatic(Conditional.FALSE)
-                        , new ConditionalVariableStatic(Conditional.FALSE) };
+                = {new ConditionalVariableStatic(Conditional.State.FALSE)
+                        , new ConditionalVariableStatic(Conditional.State.FALSE)
+                        , new ConditionalVariableStatic(Conditional.State.FALSE) };
         List<ConditionalVariable> conditionalVariablesList_FalseFalseFalse = Arrays.asList(conditionalVariables_FalseFalseFalse);
         
         ConditionalVariable[] conditionalVariables_TrueTrueFalse
-                = {new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.FALSE) };
+                = {new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.FALSE) };
         List<ConditionalVariable> conditionalVariablesList_TrueTrueFalse = Arrays.asList(conditionalVariables_TrueTrueFalse);
         
         // Test with two digit variable numbers
         ConditionalVariable[] conditionalVariables_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse
-                = {new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.FALSE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.FALSE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.FALSE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.TRUE)
-                        , new ConditionalVariableStatic(Conditional.FALSE) };
+                = {new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.FALSE)
+                        , new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.FALSE)
+                        , new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.FALSE)
+                        , new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.TRUE)
+                        , new ConditionalVariableStatic(Conditional.State.FALSE) };
         List<ConditionalVariable> conditionalVariablesList_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse =
                 Arrays.asList(conditionalVariables_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse);
         
@@ -340,15 +340,15 @@ public class DefaultConditionalTest {
     @Test
     public void testTriggers() {
         ConditionalVariable[] conditionalVariables_True
-                = { new ConditionalVariableStatic(Conditional.TRUE) };
+                = { new ConditionalVariableStatic(Conditional.State.TRUE) };
         List<ConditionalVariable> conditionalVariablesList_True = Arrays.asList(conditionalVariables_True);
         
         ConditionalVariable[] conditionalVariables_TrueWithTrigger
-                = { new ConditionalVariableStatic(Conditional.TRUE, "MyName", true) };
+                = { new ConditionalVariableStatic(Conditional.State.TRUE, "MyName", true) };
         List<ConditionalVariable> conditionalVariablesList_TrueWithTrigger = Arrays.asList(conditionalVariables_TrueWithTrigger);
         
         ConditionalVariable[] conditionalVariables_TrueWithNotTrigger
-                = { new ConditionalVariableStatic(Conditional.TRUE, "MyName", false) };
+                = { new ConditionalVariableStatic(Conditional.State.TRUE, "MyName", false) };
         List<ConditionalVariable> conditionalVariablesList_TrueWithNotTrigger = Arrays.asList(conditionalVariables_TrueWithNotTrigger);
         
         TestConditionalAction testConditionalAction = new TestConditionalAction();
@@ -405,7 +405,7 @@ public class DefaultConditionalTest {
         ix1.setLogicType(Conditional.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
         ix1.setAction(conditionalActionList);
-        testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
+        testConditionalAction._type = Conditional.ActionType.SET_MEMORY;
         testConditionalAction._namedBean = myMemory;
         myMemory.setValue("InitialValue");
         testConditionalAction._deviceName = "MyDeviceName";
@@ -419,7 +419,7 @@ public class DefaultConditionalTest {
         ix1.setLogicType(Conditional.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
         ix1.setAction(conditionalActionList);
-        testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
+        testConditionalAction._type = Conditional.ActionType.SET_MEMORY;
         testConditionalAction._namedBean = myMemory;
         myMemory.setValue("InitialValue");
         testConditionalAction._deviceName = "MyDeviceName";
@@ -433,7 +433,7 @@ public class DefaultConditionalTest {
         ix1.setLogicType(Conditional.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
         ix1.setAction(conditionalActionList);
-        testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
+        testConditionalAction._type = Conditional.ActionType.SET_MEMORY;
         testConditionalAction._namedBean = myMemory;
         myMemory.setValue("InitialValue");
         testConditionalAction._deviceName = "MyDeviceName";
@@ -447,7 +447,7 @@ public class DefaultConditionalTest {
         ix1.setLogicType(Conditional.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_TrueWithNotTrigger);
         ix1.setAction(conditionalActionList);
-        testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
+        testConditionalAction._type = Conditional.ActionType.SET_MEMORY;
         testConditionalAction._namedBean = myMemory;
         myMemory.setValue("InitialValue");
         testConditionalAction._deviceName = "MyDeviceName";
@@ -463,7 +463,7 @@ public class DefaultConditionalTest {
         ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
         ix1.setAction(conditionalActionList);
         ix1.setTriggerOnChange(true);
-        testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
+        testConditionalAction._type = Conditional.ActionType.SET_MEMORY;
         testConditionalAction._namedBean = myMemory;
         myMemory.setValue("InitialValue");
         testConditionalAction._deviceName = "MyDeviceName";
@@ -480,7 +480,7 @@ public class DefaultConditionalTest {
         ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
         ix1.setAction(conditionalActionList);
         ix1.setTriggerOnChange(true);
-        testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
+        testConditionalAction._type = Conditional.ActionType.SET_MEMORY;
         testConditionalAction._namedBean = myMemory;
         myMemory.setValue("InitialValue");
         testConditionalAction._deviceName = "MyDeviceName";
@@ -499,7 +499,7 @@ public class DefaultConditionalTest {
         ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
         ix1.setAction(conditionalActionList);
         ix1.setTriggerOnChange(false);
-        testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
+        testConditionalAction._type = Conditional.ActionType.SET_MEMORY;
         testConditionalAction._namedBean = myMemory;
         myMemory.setValue("InitialValue");
         testConditionalAction._deviceName = "MyDeviceName";
@@ -516,7 +516,7 @@ public class DefaultConditionalTest {
         ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
         ix1.setAction(conditionalActionList);
         ix1.setTriggerOnChange(false);
-        testConditionalAction._type = Conditional.ACTION_SET_MEMORY;
+        testConditionalAction._type = Conditional.ActionType.SET_MEMORY;
         testConditionalAction._namedBean = myMemory;
         myMemory.setValue("InitialValue");
         testConditionalAction._deviceName = "MyDeviceName";
@@ -540,7 +540,7 @@ public class DefaultConditionalTest {
         return ix1;
     }
     
-    private TestConditionalAction getConditionalAction(int type, NamedBean namedBean) {
+    private TestConditionalAction getConditionalAction(Conditional.ActionType type, NamedBean namedBean) {
         TestConditionalAction testConditionalAction = new TestConditionalAction();
         testConditionalAction._type = type;
         testConditionalAction._namedBean = namedBean;
@@ -553,18 +553,18 @@ public class DefaultConditionalTest {
     @Test
     public void testActionCurrentState() {
         ConditionalVariable[] conditionalVariables_True
-                = { new ConditionalVariableStatic(Conditional.TRUE) };
+                = { new ConditionalVariableStatic(Conditional.State.TRUE) };
         List<ConditionalVariable> conditionalVariablesList_True = Arrays.asList(conditionalVariables_True);
         
         ConditionalVariable[] conditionalVariables_False
-                = { new ConditionalVariableStatic(Conditional.FALSE) };
+                = { new ConditionalVariableStatic(Conditional.State.FALSE) };
         List<ConditionalVariable> conditionalVariablesList_False = Arrays.asList(conditionalVariables_False);
         
         TestConditionalAction testConditionalAction;
         
         // Test old state == TRUE && currentState == TRUE && option == ACTION_OPTION_ON_CHANGE_TO_TRUE
         Memory myMemory = InstanceManager.getDefault(MemoryManager.class).newMemory("MySystemName", "MemoryValue");
-        testConditionalAction = getConditionalAction(Conditional.ACTION_SET_MEMORY, myMemory);
+        testConditionalAction = getConditionalAction(Conditional.ActionType.SET_MEMORY, myMemory);
         testConditionalAction._option = Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
         testConditionalAction._actionString = "NewValue";
         DefaultConditional ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
@@ -575,7 +575,7 @@ public class DefaultConditionalTest {
         Assert.assertTrue("memory has not been set", "OldValue".equals(myMemory.getValue()));
         
         // Test old state == FALSE && currentState == TRUE && option == ACTION_OPTION_ON_CHANGE_TO_TRUE
-        testConditionalAction = getConditionalAction(Conditional.ACTION_SET_MEMORY, myMemory);
+        testConditionalAction = getConditionalAction(Conditional.ActionType.SET_MEMORY, myMemory);
         testConditionalAction._actionString = "NewValue";
         testConditionalAction._option = Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
         ix1 = getConditional(conditionalVariablesList_False, testConditionalAction);
@@ -586,7 +586,7 @@ public class DefaultConditionalTest {
         Assert.assertTrue("memory has been set", "NewValue".equals(myMemory.getValue()));
         
         // Test old state == FALSE && currentState == FALSE && option == ACTION_OPTION_ON_CHANGE_TO_FALSE
-        testConditionalAction = getConditionalAction(Conditional.ACTION_SET_MEMORY, myMemory);
+        testConditionalAction = getConditionalAction(Conditional.ActionType.SET_MEMORY, myMemory);
         testConditionalAction._option = Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE;
         testConditionalAction._actionString = "NewValue";
         ix1 = getConditional(conditionalVariablesList_False, testConditionalAction);
@@ -597,7 +597,7 @@ public class DefaultConditionalTest {
         Assert.assertTrue("memory has not been set", "OldValue".equals(myMemory.getValue()));
         
         // Test old state == TRUE && currentState == FALSE && option == ACTION_OPTION_ON_CHANGE_TO_FALSE
-        testConditionalAction = getConditionalAction(Conditional.ACTION_SET_MEMORY, myMemory);
+        testConditionalAction = getConditionalAction(Conditional.ActionType.SET_MEMORY, myMemory);
         testConditionalAction._actionString = "NewValue";
         testConditionalAction._option = Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE;
         ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
@@ -609,7 +609,7 @@ public class DefaultConditionalTest {
         Assert.assertTrue("memory has been set", "NewValue".equals(myMemory.getValue()));
         
         // Test old state == FALSE && currentState == FALSE && option == ACTION_OPTION_ON_CHANGE
-        testConditionalAction = getConditionalAction(Conditional.ACTION_SET_MEMORY, myMemory);
+        testConditionalAction = getConditionalAction(Conditional.ActionType.SET_MEMORY, myMemory);
         testConditionalAction._option = Conditional.ACTION_OPTION_ON_CHANGE;
         testConditionalAction._actionString = "NewValue";
         ix1 = getConditional(conditionalVariablesList_False, testConditionalAction);
@@ -620,7 +620,7 @@ public class DefaultConditionalTest {
         Assert.assertTrue("memory has not been set", "OldValue".equals(myMemory.getValue()));
         
         // Test old state == FALSE && currentState == TRUE && option == ACTION_OPTION_ON_CHANGE
-        testConditionalAction = getConditionalAction(Conditional.ACTION_SET_MEMORY, myMemory);
+        testConditionalAction = getConditionalAction(Conditional.ActionType.SET_MEMORY, myMemory);
         testConditionalAction._actionString = "NewValue";
         testConditionalAction._option = Conditional.ACTION_OPTION_ON_CHANGE;
         ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
@@ -632,7 +632,7 @@ public class DefaultConditionalTest {
         Assert.assertTrue("memory has been set", "NewValue".equals(myMemory.getValue()));
         
         // Test old state == TRUE && currentState == FALSE && option == ACTION_OPTION_ON_CHANGE
-        testConditionalAction = getConditionalAction(Conditional.ACTION_SET_MEMORY, myMemory);
+        testConditionalAction = getConditionalAction(Conditional.ActionType.SET_MEMORY, myMemory);
         testConditionalAction._option = Conditional.ACTION_OPTION_ON_CHANGE;
         testConditionalAction._actionString = "NewValue";
         ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
@@ -643,7 +643,7 @@ public class DefaultConditionalTest {
         Assert.assertTrue("memory has been set", "NewValue".equals(myMemory.getValue()));
         
         // Test old state == TRUE && currentState == TRUE && option == ACTION_OPTION_ON_CHANGE
-        testConditionalAction = getConditionalAction(Conditional.ACTION_SET_MEMORY, myMemory);
+        testConditionalAction = getConditionalAction(Conditional.ActionType.SET_MEMORY, myMemory);
         testConditionalAction._actionString = "NewValue";
         testConditionalAction._option = Conditional.ACTION_OPTION_ON_CHANGE;
         ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
@@ -657,7 +657,7 @@ public class DefaultConditionalTest {
     @Test
     public void testAction() {
         ConditionalVariable[] conditionalVariables_True
-                = { new ConditionalVariableStatic(Conditional.TRUE) };
+                = { new ConditionalVariableStatic(Conditional.State.TRUE) };
         List<ConditionalVariable> conditionalVariablesList_True = Arrays.asList(conditionalVariables_True);
         
         TestConditionalAction testConditionalAction;
@@ -678,7 +678,7 @@ public class DefaultConditionalTest {
         // Test ACTION_SET_LIGHT
         // Test ACTION_SET_MEMORY
         Memory myMemory = InstanceManager.getDefault(MemoryManager.class).newMemory("MySystemName", "MemoryValue");
-        testConditionalAction = getConditionalAction(Conditional.ACTION_SET_MEMORY, myMemory);
+        testConditionalAction = getConditionalAction(Conditional.ActionType.SET_MEMORY, myMemory);
         testConditionalAction._actionString = "NewValue";
         DefaultConditional ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
         ix1.calculate(true, null);
@@ -688,7 +688,7 @@ public class DefaultConditionalTest {
         // Test system name
         Logix x = InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("MySystemName", "MyUserName");
         x.setEnabled(false);
-        testConditionalAction = getConditionalAction(Conditional.ACTION_ENABLE_LOGIX, myMemory);
+        testConditionalAction = getConditionalAction(Conditional.ActionType.ENABLE_LOGIX, myMemory);
         testConditionalAction._deviceName = x.getSystemName();
         ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
         ix1.calculate(true, null);
@@ -696,7 +696,7 @@ public class DefaultConditionalTest {
         
         // Test user name
         x.setEnabled(false);
-        testConditionalAction = getConditionalAction(Conditional.ACTION_ENABLE_LOGIX, myMemory);
+        testConditionalAction = getConditionalAction(Conditional.ActionType.ENABLE_LOGIX, myMemory);
         testConditionalAction._deviceName = x.getUserName();
         ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
         ix1.calculate(true, null);
@@ -705,7 +705,7 @@ public class DefaultConditionalTest {
         // Test ACTION_DISABLE_LOGIX
         // Test system name
         x.setEnabled(true);
-        testConditionalAction = getConditionalAction(Conditional.ACTION_DISABLE_LOGIX, myMemory);
+        testConditionalAction = getConditionalAction(Conditional.ActionType.DISABLE_LOGIX, myMemory);
         testConditionalAction._deviceName = x.getSystemName();
         ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
         ix1.calculate(true, null);
@@ -713,7 +713,7 @@ public class DefaultConditionalTest {
         
         // Test user name
         x.setEnabled(true);
-        testConditionalAction = getConditionalAction(Conditional.ACTION_DISABLE_LOGIX, myMemory);
+        testConditionalAction = getConditionalAction(Conditional.ActionType.DISABLE_LOGIX, myMemory);
         testConditionalAction._deviceName = x.getUserName();
         ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
         ix1.calculate(true, null);
@@ -735,7 +735,7 @@ public class DefaultConditionalTest {
         Memory destMemory = InstanceManager.getDefault(MemoryManager.class).newMemory("SomeSystemName", "SomeUserName");
         destMemory.setValue("OtherValue");
         myMemory.setValue("MemoryValue");
-        testConditionalAction = getConditionalAction(Conditional.ACTION_COPY_MEMORY, myMemory);
+        testConditionalAction = getConditionalAction(Conditional.ActionType.COPY_MEMORY, myMemory);
         testConditionalAction._actionString = destMemory.getSystemName();
         ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
         ix1.calculate(true, null);
@@ -744,7 +744,7 @@ public class DefaultConditionalTest {
         // Test copy to memory by user name
         destMemory.setValue("OtherValue");
         myMemory.setValue("MemoryValue");
-        testConditionalAction = getConditionalAction(Conditional.ACTION_COPY_MEMORY, myMemory);
+        testConditionalAction = getConditionalAction(Conditional.ActionType.COPY_MEMORY, myMemory);
         testConditionalAction._actionString = destMemory.getUserName();
         ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
         ix1.calculate(true, null);
@@ -782,7 +782,7 @@ public class DefaultConditionalTest {
     @Test
     public void testActionPlaySound() {
         ConditionalVariable[] conditionalVariables_True
-                = { new ConditionalVariableStatic(Conditional.TRUE) };
+                = { new ConditionalVariableStatic(Conditional.State.TRUE) };
         List<ConditionalVariable> conditionalVariablesList_True = Arrays.asList(conditionalVariables_True);
         
         TestConditionalAction testConditionalAction;
@@ -794,7 +794,7 @@ public class DefaultConditionalTest {
             Assume.assumeNoException("Unable to initialize AudioSystem", ex);
         }
         Memory myMemory = InstanceManager.getDefault(MemoryManager.class).newMemory("MySystemName2", "MemoryValue2");
-        testConditionalAction = getConditionalAction(Conditional.ACTION_PLAY_SOUND, myMemory);
+        testConditionalAction = getConditionalAction(Conditional.ActionType.PLAY_SOUND, myMemory);
         testConditionalAction._actionString = "MySound.wav";
         MySound sound = new MySound();
         testConditionalAction.setSound(sound);
@@ -827,27 +827,27 @@ public class DefaultConditionalTest {
     
     private final class ConditionalVariableStatic extends ConditionalVariable {
         
-        ConditionalVariableStatic(int state) {
+        ConditionalVariableStatic(Conditional.State state) {
             super();
-            setState(state);
+            setState(state.getIntValue());
         }
         
-        ConditionalVariableStatic(int state, boolean not) {
+        ConditionalVariableStatic(Conditional.State state, boolean not) {
             super();
-            setState(state);
+            setState(state.getIntValue());
             setNegation(not);
         }
         
-        ConditionalVariableStatic(int state, String name, boolean trigger) {
+        ConditionalVariableStatic(Conditional.State state, String name, boolean trigger) {
             super();
             setName(name);
-            setState(state);
+            setState(state.getIntValue());
             setTriggerActions(trigger);
         }
         
         @Override
         public boolean evaluate() {
-            return getState() == Conditional.TRUE;
+            return getState() == Conditional.State.TRUE.getIntValue();
         }
         
     }
@@ -855,7 +855,7 @@ public class DefaultConditionalTest {
     
     private class TestConditionalAction extends DefaultConditionalAction {
         
-        int _type = Conditional.ACTION_NONE;
+        Conditional.ActionType _type = Conditional.ActionType.NONE;
         int _option = Conditional.ACTION_OPTION_ON_CHANGE;
         String _deviceName = null;
         NamedBean _namedBean = null;
@@ -892,7 +892,7 @@ public class DefaultConditionalTest {
         }
 
         @Override
-        public int getType() {
+        public Conditional.ActionType getType() {
             return _type;
         }
 
@@ -932,7 +932,7 @@ public class DefaultConditionalTest {
         }
 
         @Override
-        public void setType(int type) {
+        public void setType(Conditional.ActionType type) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 

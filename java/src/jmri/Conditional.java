@@ -4,6 +4,12 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.ResourceBundle;
 
 /**
  * A Conditional is layout control logic, consisting of a logical expression and
@@ -39,19 +45,54 @@ import java.util.List;
  */
 public interface Conditional extends NamedBean {
 
+    static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.conditional.ConditionalBundle");
+    
     // states
+    enum State {
+        UNKNOWN(NamedBean.UNKNOWN, "StateUnknown"),
+        FALSE(Conditional.FALSE, "StateFalse"),
+        TRUE(Conditional.TRUE, "StateTrue");
+        
+        private final int _state;
+        private final String _bundleKey;
+        
+        private State(int state, String bundleKey) {
+            _state = state;
+            _bundleKey = bundleKey;
+        }
+        
+        public int getIntValue() {
+            return _state;
+        }
+        
+        public static State getOperatorFromIntValue(int stateInt) {
+            for (State state : State.values()) {
+                if (state.getIntValue() == stateInt) {
+                    return state;
+                }
+            }
+            
+            throw new IllegalArgumentException("State is unknown");
+        }
+
+        @Override
+        public String toString() {
+            return Bundle.getMessage(_bundleKey);
+        }
+    }
+    
     /**
      * @deprecated since 4.7.1; use {@link jmri.NamedBean#UNKNOWN} instead
      */
     @Deprecated
-    public static final int UNKNOWN = NamedBean.UNKNOWN;
-    public static final int FALSE = 0x02;
-    public static final int TRUE = 0x04;
+    static final int UNKNOWN = NamedBean.UNKNOWN;
+    static final int FALSE = 0x02;
+    static final int TRUE = 0x04;
 
     // logic operators used in antecedent
-    public static final int ALL_AND = 0x01;
-    public static final int ALL_OR = 0x02;
-    public static final int MIXED = 0x03;
+    static final int ALL_AND = 0x01;
+    static final int ALL_OR = 0x02;
+    static final int MIXED = 0x03;
 
     public enum Operator {
         NONE,
@@ -85,309 +126,722 @@ public interface Conditional extends NamedBean {
     // state variable definitions. Keep these since they are needed
     // for backward compatibility in DefaultConditionalManagerXml.
     // But they are not used elsewhere.
-    public static final int OPERATOR_AND = 1;
-    public static final int OPERATOR_NONE = 4;
-    public static final int OPERATOR_OR = 5;
+    static final int OPERATOR_AND = 1;
+    static final int OPERATOR_NONE = 4;
+    static final int OPERATOR_OR = 5;
     /**
      * @deprecated since 4.13.4; It is not stored in the XML file since 4.13.4.
      */
     @Deprecated
-    public static final int OPERATOR_NOT = 2;
+    static final int OPERATOR_NOT = 2;
     /**
      * @deprecated since 4.13.4; It is not stored in the XML file since 4.13.4.
      */
     @Deprecated
-    public static final int OPERATOR_AND_NOT = 3;
+    static final int OPERATOR_AND_NOT = 3;
     /**
      * @deprecated since 4.13.4; It is not stored in the XML file since 4.13.4.
      */
     @Deprecated
-    public static final int OPERATOR_OR_NOT = 6;
+    static final int OPERATOR_OR_NOT = 6;
     
+    // state variable and action items used by logix.
+    enum ItemType {
+        NONE(TYPE_NONE, IsStateVar.IS_STATE_VAR, "ItemTypeNone"),        // There is no ITEM_TYPE_NONE so use TYPE_NONE instead
+        SENSOR(ITEM_TYPE_SENSOR, IsStateVar.IS_STATE_VAR, "ItemTypeSensor"),
+        TURNOUT(ITEM_TYPE_TURNOUT, IsStateVar.IS_STATE_VAR, "ItemTypeTurnout"),
+        LIGHT(ITEM_TYPE_LIGHT, IsStateVar.IS_STATE_VAR, "ItemTypeLight"),
+        SIGNALHEAD(ITEM_TYPE_SIGNALHEAD, IsStateVar.IS_STATE_VAR, "ItemTypeSignalHead"),
+        SIGNALMAST(ITEM_TYPE_SIGNALMAST, IsStateVar.IS_STATE_VAR, "ItemTypeSignalMast"),
+        MEMORY(ITEM_TYPE_MEMORY, IsStateVar.IS_STATE_VAR, "ItemTypeMemory"),
+        CONDITIONAL(ITEM_TYPE_CONDITIONAL, IsStateVar.IS_STATE_VAR, "ItemTypeConditional"),  // used only by ConditionalVariable
+        LOGIX(ITEM_TYPE_LOGIX, IsStateVar.IS_STATE_VAR, "ItemTypeLogix"),                    // used only by ConditionalAction
+        WARRANT(ITEM_TYPE_WARRANT, IsStateVar.IS_STATE_VAR, "ItemTypeWarrant"),
+        CLOCK(ITEM_TYPE_CLOCK, IsStateVar.IS_STATE_VAR, "ItemTypeClock"),
+        OBLOCK(ITEM_TYPE_OBLOCK, IsStateVar.IS_STATE_VAR, "ItemTypeOBlock"),
+        ENTRYEXIT(ITEM_TYPE_ENTRYEXIT, IsStateVar.IS_STATE_VAR, "ItemTypeEntryExit"),
+//        LAST_STATE_VAR(ITEM_TYPE_LAST_STATE_VAR, IsStateVar.IS_STATE_VAR, "ItemTypeStateVar"),
+
+        AUDIO(ITEM_TYPE_AUDIO, IsStateVar.IS_NOT_STATE_VAR, "ItemTypeAudio"),
+        SCRIPT(ITEM_TYPE_SCRIPT, IsStateVar.IS_NOT_STATE_VAR, "ItemTypeScript"),
+        OTHER(ITEM_TYPE_OTHER, IsStateVar.IS_NOT_STATE_VAR, "ItemTypeOther");
+//        LAST_ACTION(ITEM_TYPE_LAST_ACTION, "ItemTypeLastAction");
+        
+        private final int _type;
+        private IsStateVar _isStateVar;
+        private final String _bundleKey;
+        
+        private static final List<ItemType> stateVarList;
+        
+        static
+        {
+            stateVarList = new ArrayList<>();
+            
+            for (ItemType itemType : ItemType.values()) {
+                if (itemType._isStateVar == IsStateVar.IS_STATE_VAR) {
+                    stateVarList.add(itemType);
+                }
+            }
+        }
+        
+        private ItemType(int type, IsStateVar isStateVar, String bundleKey) {
+            _type = type;
+            _isStateVar = isStateVar;
+            _bundleKey = bundleKey;
+        }
+        
+        public static List<ItemType> getStateVarList() {
+            return stateVarList;
+        }
+        
+        public int getIntValue() {
+            return _type;
+        }
+        
+        public static ItemType getOperatorFromIntValue(int itemTypeInt) {
+            for (ItemType itemType : ItemType.values()) {
+                if (itemType.getIntValue() == itemTypeInt) {
+                    return itemType;
+                }
+            }
+            
+            throw new IllegalArgumentException("ItemType is unknown");
+        }
+
+        @Override
+        public String toString() {
+            return Bundle.getMessage(_bundleKey);
+        }
+        
+        // This enum is only used within the outer enum ItemType.
+        private enum IsStateVar {
+            IS_STATE_VAR,
+            IS_NOT_STATE_VAR
+        }
+    }
+    
+    // items
+    enum Type {
+        ERROR(TYPE_ERROR, ItemType.NONE, "", ""), // NOI18N
+        NONE(TYPE_NONE, ItemType.NONE, "", ""), // NOI18N
+        SENSOR_ACTIVE(TYPE_SENSOR_ACTIVE, ItemType.SENSOR, Bundle.getMessage("SensorStateActive"), rbx.getString("TypeSensorActive")), // NOI18N
+        SENSOR_INACTIVE(TYPE_SENSOR_INACTIVE, ItemType.SENSOR, Bundle.getMessage("SensorStateInactive"), rbx.getString("TypeSensorInactive")), // NOI18N
+        TURNOUT_THROWN(TYPE_TURNOUT_THROWN, ItemType.TURNOUT, Bundle.getMessage("TurnoutStateThrown"), rbx.getString("TypeTurnoutThrown")), // NOI18N
+        TURNOUT_CLOSED(TYPE_TURNOUT_CLOSED, ItemType.TURNOUT, Bundle.getMessage("TurnoutStateClosed"), rbx.getString("TypeTurnoutClosed")), // NOI18N
+        CONDITIONAL_TRUE(TYPE_CONDITIONAL_TRUE, ItemType.CONDITIONAL, Bundle.getMessage("True"), rbx.getString("TypeConditionalTrue")), // NOI18N
+        CONDITIONAL_FALSE(TYPE_CONDITIONAL_FALSE, ItemType.CONDITIONAL, Bundle.getMessage("False"), rbx.getString("TypeConditionalFalse")), // NOI18N
+        LIGHT_ON(TYPE_LIGHT_ON, ItemType.LIGHT, rbx.getString("LightOn"), rbx.getString("TypeLightOn")), // NOI18N
+        LIGHT_OFF(TYPE_LIGHT_OFF, ItemType.LIGHT, rbx.getString("LightOff"), rbx.getString("TypeLightOff")), // NOI18N
+        MEMORY_EQUALS(TYPE_MEMORY_EQUALS, ItemType.MEMORY, rbx.getString("StateMemoryEquals"), rbx.getString("TypeMemoryEquals")), // NOI18N
+        MEMORY_COMPARE(TYPE_MEMORY_COMPARE, ItemType.MEMORY, rbx.getString("StateMemoryCompare"), rbx.getString("TypeMemoryCompare")), // NOI18N
+        MEMORY_EQUALS_INSENSITIVE(TYPE_MEMORY_EQUALS_INSENSITIVE, ItemType.MEMORY, rbx.getString("StateMemoryEqualsInsensitive"), rbx.getString("TypeMemoryEqualsInsensitive")), // NOI18N
+        MEMORY_COMPARE_INSENSITIVE(TYPE_MEMORY_COMPARE_INSENSITIVE, ItemType.MEMORY, rbx.getString("StateMemoryCompareInsensitive"), rbx.getString("TypeMemoryCompareInsensitive")), // NOI18N
+        FAST_CLOCK_RANGE(TYPE_FAST_CLOCK_RANGE, ItemType.CLOCK, rbx.getString("TypeFastClockRange"), rbx.getString("TypeFastClockRange")), // NOI18N
+        
+        // Note the set signalHeadAppearanceSet below which holds those SignalHead types that are appearances.
+        SIGNAL_HEAD_RED(TYPE_SIGNAL_HEAD_RED, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateRed"), Bundle.getMessage("SignalHeadStateRed")), // NOI18N
+        SIGNAL_HEAD_YELLOW(TYPE_SIGNAL_HEAD_YELLOW, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateYellow"), Bundle.getMessage("SignalHeadStateYellow")), // NOI18N
+        SIGNAL_HEAD_GREEN(TYPE_SIGNAL_HEAD_GREEN, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateGreen"), Bundle.getMessage("SignalHeadStateGreen")), // NOI18N
+        SIGNAL_HEAD_DARK(TYPE_SIGNAL_HEAD_DARK, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateDark"), Bundle.getMessage("SignalHeadStateDark")), // NOI18N
+        SIGNAL_HEAD_FLASHRED(TYPE_SIGNAL_HEAD_FLASHRED, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashingRed"), Bundle.getMessage("SignalHeadStateFlashingRed")), // NOI18N
+        SIGNAL_HEAD_FLASHYELLOW(TYPE_SIGNAL_HEAD_FLASHYELLOW, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashingYellow"), Bundle.getMessage("SignalHeadStateFlashingYellow")), // NOI18N
+        SIGNAL_HEAD_FLASHGREEN(TYPE_SIGNAL_HEAD_FLASHGREEN, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashingGreen"), Bundle.getMessage("SignalHeadStateFlashingGreen")), // NOI18N
+        SIGNAL_HEAD_LIT(TYPE_SIGNAL_HEAD_LIT, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateLit"), Bundle.getMessage("SignalHeadStateLit")), // NOI18N
+        SIGNAL_HEAD_HELD(TYPE_SIGNAL_HEAD_HELD, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateHeld"), Bundle.getMessage("SignalHeadStateHeld")), // NOI18N
+        SIGNAL_HEAD_LUNAR(TYPE_SIGNAL_HEAD_LUNAR, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateLunar"), Bundle.getMessage("SignalHeadStateLunar")), // NOI18N
+        SIGNAL_HEAD_FLASHLUNAR(TYPE_SIGNAL_HEAD_FLASHLUNAR, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashingLunar"), Bundle.getMessage("SignalHeadStateFlashingLunar")), // NOI18N
+        // Warrant variables
+        ROUTE_FREE(TYPE_ROUTE_FREE, ItemType.WARRANT, rbx.getString("StateRouteFree"), rbx.getString("TypeWarrantRouteFree")), // NOI18N
+        ROUTE_OCCUPIED(TYPE_ROUTE_OCCUPIED, ItemType.WARRANT, rbx.getString("stateRouteOccupied"), rbx.getString("TypeWarrantRouteOccupied")), // NOI18N
+        ROUTE_ALLOCATED(TYPE_ROUTE_ALLOCATED, ItemType.WARRANT, rbx.getString("StateRouteReserved"), rbx.getString("TypeWarrantRouteAllocated")), // NOI18N
+        ROUTE_SET(TYPE_ROUTE_SET, ItemType.WARRANT, rbx.getString("StateRouteIsSet"), rbx.getString("TypeRouteIsSet")), // NOI18N
+        TRAIN_RUNNING(TYPE_TRAIN_RUNNING, ItemType.WARRANT, rbx.getString("StateTrainRunning"), rbx.getString("TypeTrainRunning")), // NOI18N
+        SIGNAL_MAST_ASPECT_EQUALS(TYPE_SIGNAL_MAST_ASPECT_EQUALS, ItemType.SIGNALMAST, rbx.getString("TypeSignalMastAspectEquals"), rbx.getString("TypeSignalMastAspectEquals")), // NOI18N
+        SIGNAL_MAST_LIT(TYPE_SIGNAL_MAST_LIT, ItemType.SIGNALMAST, Bundle.getMessage("SignalMastStateLit"), Bundle.getMessage("SignalMastStateLit")), // NOI18N
+        SIGNAL_MAST_HELD(TYPE_SIGNAL_MAST_HELD, ItemType.SIGNALMAST, Bundle.getMessage("SignalMastStateHeld"), Bundle.getMessage("SignalMastStateHeld")), // NOI18N
+        SIGNAL_HEAD_APPEARANCE_EQUALS(TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS, ItemType.SIGNALHEAD, rbx.getString("TypeSignalHeadAspectEquals"), rbx.getString("TypeSignalHeadAspectEquals")), // NOI18N
+        BLOCK_STATUS_EQUALS(TYPE_BLOCK_STATUS_EQUALS, ItemType.OBLOCK, "", ""), // NOI18N
+        //Entry Exit Rules
+        ENTRYEXIT_ACTIVE(TYPE_ENTRYEXIT_ACTIVE, ItemType.ENTRYEXIT, Bundle.getMessage("SensorStateActive"), rbx.getString("TypeEntryExitActive")), // NOI18N
+        ENTRYEXIT_INACTIVE(TYPE_ENTRYEXIT_INACTIVE, ItemType.ENTRYEXIT, Bundle.getMessage("SensorStateInactive"), rbx.getString("TypeEntryExitInactive")); // NOI18N
+
+        private final int _item;
+        private final ItemType _itemType;
+        private final String _string;
+        private final String _testTypeString;
+        
+        private static final List<Type> sensorItemsList;
+        private static final List<Type> turnoutItemsList;
+        private static final List<Type> conditionalItemsList;
+        private static final List<Type> lightItemsList;
+        private static final List<Type> warrantItemsList;
+        private static final List<Type> memoryItemsList;
+//        private static final List<Type> oblockItemsList;
+        private static final List<Type> entryExitItemsList;
+        private static final List<Type> signalHeadItemsList;
+        private static final List<Type> signalMastItemsList;
+        
+        private static final Set<Type> signalHeadAppearanceSet;
+        
+        
+        static
+        {
+            Type[] typeArray1 = {SENSOR_ACTIVE, SENSOR_INACTIVE};
+            sensorItemsList = Collections.unmodifiableList(Arrays.asList(typeArray1));
+            
+            Type[] typeArray2 = {TURNOUT_THROWN, TURNOUT_CLOSED};
+            turnoutItemsList = Collections.unmodifiableList(Arrays.asList(typeArray2));
+            
+            Type[] typeArray3 = {CONDITIONAL_TRUE, CONDITIONAL_FALSE};
+            conditionalItemsList = Collections.unmodifiableList(Arrays.asList(typeArray3));
+            
+            Type[] typeArray4 = {LIGHT_ON, LIGHT_OFF};
+            lightItemsList = Collections.unmodifiableList(Arrays.asList(typeArray4));
+            
+            Type[] typeArray5 = {ROUTE_FREE, ROUTE_SET, ROUTE_ALLOCATED, ROUTE_OCCUPIED, TRAIN_RUNNING};
+            warrantItemsList = Collections.unmodifiableList(Arrays.asList(typeArray5));
+            
+            Type[] typeArray6 = {MEMORY_EQUALS, MEMORY_EQUALS_INSENSITIVE,
+                MEMORY_COMPARE, MEMORY_COMPARE_INSENSITIVE};
+            memoryItemsList = Collections.unmodifiableList(Arrays.asList(typeArray6));
+            
+            Type[] typeArray7 = {ENTRYEXIT_ACTIVE, ENTRYEXIT_INACTIVE};
+            entryExitItemsList = Collections.unmodifiableList(Arrays.asList(typeArray7));
+            
+            Type[] typeArray8 = {NONE, SIGNAL_HEAD_APPEARANCE_EQUALS, SIGNAL_HEAD_LIT, SIGNAL_HEAD_HELD};
+            signalHeadItemsList = Collections.unmodifiableList(Arrays.asList(typeArray8));
+            
+            Type[] typeArray9 = {SIGNAL_HEAD_RED, SIGNAL_HEAD_YELLOW, SIGNAL_HEAD_GREEN,
+                SIGNAL_HEAD_DARK, SIGNAL_HEAD_FLASHRED, SIGNAL_HEAD_FLASHYELLOW,
+                SIGNAL_HEAD_FLASHGREEN, SIGNAL_HEAD_LUNAR, SIGNAL_HEAD_FLASHLUNAR,
+            };
+            signalHeadAppearanceSet = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(typeArray9)));
+            
+            Type[] typeArray10 = {NONE, SIGNAL_MAST_ASPECT_EQUALS, SIGNAL_MAST_LIT, SIGNAL_MAST_HELD};
+            signalMastItemsList = Collections.unmodifiableList(Arrays.asList(typeArray10));
+        }
+        
+        private Type(int state, ItemType itemType, String string, String testTypeString) {
+            _item = state;
+            _itemType = itemType;
+            _string = string;
+            _testTypeString = testTypeString;
+        }
+        
+        public ItemType getItemType() {
+            return _itemType;
+        }
+        
+        public int getIntValue() {
+            return _item;
+        }
+        
+        public static List<Type> getSensorItems() {
+            return sensorItemsList;
+        }
+        
+        public static List<Type> getTurnoutItems() {
+            return turnoutItemsList;
+        }
+        
+        public static List<Type> getConditionalItems() {
+            return conditionalItemsList;
+        }
+        
+        public static List<Type> getLightItems() {
+            return lightItemsList;
+        }
+        
+        public static List<Type> getWarrantItems() {
+            return warrantItemsList;
+        }
+        
+        public static List<Type> getMemoryItems() {
+            return memoryItemsList;
+        }
+        
+//        public static List<Type> getOBlockItems() {
+//            return oblockItemsList;
+//        }
+        
+        public static List<Type> getEntryExitItems() {
+            return entryExitItemsList;
+        }
+        
+        public static List<Type> getSignalHeadItems() {
+            return signalHeadItemsList;
+        }
+        
+        public static boolean isSignalHeadApperance(Type type) {
+            return signalHeadAppearanceSet.contains(type);
+        }
+        
+        public static List<Type> getSignalMastItems() {
+            return signalMastItemsList;
+        }
+        
+        public static int getIndexInList(List<Type> table, Type entry) {
+            for (int i = 0; i < table.size(); i++) {
+                if (entry == table.get(i)) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+        
+        public static Type getOperatorFromIntValue(int typeInt) {
+            for (Type type : Type.values()) {
+                if (type.getIntValue() == typeInt) {
+                    return type;
+                }
+            }
+            
+            throw new IllegalArgumentException("Type is unknown");
+        }
+
+        // Some items uses Bundle.getString() and some items uses rbx.getString()
+        // and therefore the items must call getString() in the call to the constructor.
+        @Override
+        public String toString() {
+            return _string;
+        }
+        
+        public String getTestTypeString() {
+            return _testTypeString;
+        }
+    }
+    
+    // items
+    enum ActionType {
+        // For now, use same string for toString() and getActionTypeString()
+        // If this is going to be changed, it's toString() that may be changed.
+        // getActionTypeString() must be kept as is.
+        
+        NONE(ACTION_NONE, ItemType.NONE, rbx.getString("ActionNone"), rbx.getString("ActionNone")), // NOI18N
+        SET_TURNOUT(ACTION_SET_TURNOUT, ItemType.TURNOUT, rbx.getString("ActionSetTurnout"), rbx.getString("ActionSetTurnout")), // NOI18N
+        // allowed settings for turnout are Thrown and Closed (in data)
+        SET_SIGNAL_APPEARANCE(ACTION_SET_SIGNAL_APPEARANCE, ItemType.SIGNALHEAD, rbx.getString("ActionSetSignal"), rbx.getString("ActionSetSignal")), // NOI18N
+        // allowed settings for signal head are the seven Appearances (in data)
+        SET_SIGNAL_HELD(ACTION_SET_SIGNAL_HELD, ItemType.SIGNALHEAD, rbx.getString("ActionSetSignalHeld"), rbx.getString("ActionSetSignalHeld")), // NOI18N
+        CLEAR_SIGNAL_HELD(ACTION_CLEAR_SIGNAL_HELD, ItemType.SIGNALHEAD, rbx.getString("ActionClearSignalHeld"), rbx.getString("ActionClearSignalHeld")), // NOI18N
+        SET_SIGNAL_DARK(ACTION_SET_SIGNAL_DARK, ItemType.SIGNALHEAD, rbx.getString("ActionSetSignalDark"), rbx.getString("ActionSetSignalDark")), // NOI18N
+        SET_SIGNAL_LIT(ACTION_SET_SIGNAL_LIT, ItemType.SIGNALHEAD, rbx.getString("ActionSetSignalLit"), rbx.getString("ActionSetSignalLit")), // NOI18N
+        TRIGGER_ROUTE(ACTION_TRIGGER_ROUTE, ItemType.OTHER, rbx.getString("ActionTriggerRoute"), rbx.getString("ActionTriggerRoute")), // NOI18N
+        SET_SENSOR(ACTION_SET_SENSOR, ItemType.SENSOR, rbx.getString("ActionSetSensor"), rbx.getString("ActionSetSensor")), // NOI18N
+        // allowed settings for sensor are active and inactive (in data)
+        DELAYED_SENSOR(ACTION_DELAYED_SENSOR, ItemType.SENSOR, rbx.getString("ActionDelayedSensor"), rbx.getString("ActionDelayedSensor")), // NOI18N
+        // allowed settings for timed sensor are active and inactive (in data)
+        //   time in seconds before setting sensor should be in delay
+        SET_LIGHT(ACTION_SET_LIGHT, ItemType.LIGHT, rbx.getString("ActionSetLight"), rbx.getString("ActionSetLight")), // NOI18N
+        // allowed settings for light are ON and OFF (in data)
+        SET_MEMORY(ACTION_SET_MEMORY, ItemType.MEMORY, rbx.getString("ActionSetMemory"), rbx.getString("ActionSetMemory")), // NOI18N
+        // text to set into the memory variable should be in string
+        ENABLE_LOGIX(ACTION_ENABLE_LOGIX, ItemType.LOGIX, rbx.getString("ActionEnableLogix"), rbx.getString("ActionEnableLogix")), // NOI18N
+        DISABLE_LOGIX(ACTION_DISABLE_LOGIX, ItemType.LOGIX, rbx.getString("ActionDisableLogix"), rbx.getString("ActionDisableLogix")), // NOI18N
+        PLAY_SOUND(ACTION_PLAY_SOUND, ItemType.AUDIO, rbx.getString("ActionPlaySound"), rbx.getString("ActionPlaySound")), // NOI18N
+        // reference to sound should be in string
+        RUN_SCRIPT(ACTION_RUN_SCRIPT, ItemType.SCRIPT, rbx.getString("ActionRunScript"), rbx.getString("ActionRunScript")), // NOI18N
+        // reference to script should be in string
+        DELAYED_TURNOUT(ACTION_DELAYED_TURNOUT, ItemType.TURNOUT, rbx.getString("ActionDelayedTurnout"), rbx.getString("ActionDelayedTurnout")), // NOI18N
+        // allowed settings for timed turnout are Thrown and Closed (in data)
+        //   time in seconds before setting turnout should be in delay
+        LOCK_TURNOUT(ACTION_LOCK_TURNOUT, ItemType.TURNOUT, rbx.getString("ActionTurnoutLock"), rbx.getString("ActionTurnoutLock")), // NOI18N
+        RESET_DELAYED_SENSOR(ACTION_RESET_DELAYED_SENSOR, ItemType.SENSOR, rbx.getString("ActionResetDelayedSensor"), rbx.getString("ActionResetDelayedSensor")), // NOI18N
+        // allowed settings for timed sensor are active and inactive (in data)
+        //   time in seconds before setting sensor should be in delay
+        CANCEL_SENSOR_TIMERS(ACTION_CANCEL_SENSOR_TIMERS, ItemType.SENSOR, rbx.getString("ActionCancelSensorTimers"), rbx.getString("ActionCancelSensorTimers")), // NOI18N
+        // cancels all timers delaying setting of specified sensor
+        RESET_DELAYED_TURNOUT(ACTION_RESET_DELAYED_TURNOUT, ItemType.TURNOUT, rbx.getString("ActionResetDelayedTurnout"), rbx.getString("ActionResetDelayedTurnout")), // NOI18N
+        // allowed settings for timed sensor are active and inactive (in data)
+        //   time in seconds before setting sensor should be in delay
+        CANCEL_TURNOUT_TIMERS(ACTION_CANCEL_TURNOUT_TIMERS, ItemType.TURNOUT, rbx.getString("ActionCancelTurnoutTimers"), rbx.getString("ActionCancelTurnoutTimers")), // NOI18N
+        // cancels all timers delaying setting of specified sensor
+        SET_FAST_CLOCK_TIME(ACTION_SET_FAST_CLOCK_TIME, ItemType.CLOCK, rbx.getString("ActionSetFastClockTime"), rbx.getString("ActionSetFastClockTime")), // NOI18N
+        // sets the fast clock time to the time specified
+        START_FAST_CLOCK(ACTION_START_FAST_CLOCK, ItemType.CLOCK, rbx.getString("ActionStartFastClock"), rbx.getString("ActionStartFastClock")), // NOI18N
+        // starts the fast clock
+        STOP_FAST_CLOCK(ACTION_STOP_FAST_CLOCK, ItemType.CLOCK, rbx.getString("ActionStopFastClock"), rbx.getString("ActionStopFastClock")), // NOI18N
+        // stops the fast clock
+        COPY_MEMORY(ACTION_COPY_MEMORY, ItemType.MEMORY, rbx.getString("ActionCopyMemory"), rbx.getString("ActionCopyMemory")), // NOI18N
+        // copies value from memory variable (in name) to memory variable (in string)
+        SET_LIGHT_INTENSITY(ACTION_SET_LIGHT_INTENSITY, ItemType.LIGHT, rbx.getString("ActionSetLightIntensity"), rbx.getString("ActionSetLightIntensity")), // NOI18N
+        SET_LIGHT_TRANSITION_TIME(ACTION_SET_LIGHT_TRANSITION_TIME, ItemType.LIGHT, rbx.getString("ActionSetLightTransitionTime"), rbx.getString("ActionSetLightTransitionTime")), // NOI18N
+        // control the specified audio object
+        CONTROL_AUDIO(ACTION_CONTROL_AUDIO, ItemType.AUDIO, rbx.getString("ActionControlAudio"), rbx.getString("ActionControlAudio")), // NOI18N
+        // execute a jython command
+        JYTHON_COMMAND(ACTION_JYTHON_COMMAND, ItemType.SCRIPT, rbx.getString("ActionJythonCommand"), rbx.getString("ActionJythonCommand")), // NOI18N
+        // Warrant actions
+        ALLOCATE_WARRANT_ROUTE(ACTION_ALLOCATE_WARRANT_ROUTE, ItemType.WARRANT, rbx.getString("ActionAllocateWarrant"), rbx.getString("ActionAllocateWarrant")), // NOI18N
+        DEALLOCATE_WARRANT_ROUTE(ACTION_DEALLOCATE_WARRANT_ROUTE, ItemType.WARRANT, rbx.getString("ActionDeallocateWarrant"), rbx.getString("ActionDeallocateWarrant")), // NOI18N
+        SET_ROUTE_TURNOUTS(ACTION_SET_ROUTE_TURNOUTS, ItemType.WARRANT, rbx.getString("ActionSetWarrantTurnouts"), rbx.getString("ActionSetWarrantTurnouts")), // NOI18N
+        AUTO_RUN_WARRANT(ACTION_AUTO_RUN_WARRANT, ItemType.WARRANT, rbx.getString("ActionAutoRunWarrant"), rbx.getString("ActionAutoRunWarrant")), // NOI18N
+        MANUAL_RUN_WARRANT(ACTION_MANUAL_RUN_WARRANT, ItemType.WARRANT, rbx.getString("ActionManualRunWarrant"), rbx.getString("ActionManualRunWarrant")), // NOI18N
+        CONTROL_TRAIN(ACTION_CONTROL_TRAIN, ItemType.WARRANT, rbx.getString("ActionControlTrain"), rbx.getString("ActionControlTrain")), // NOI18N
+        SET_TRAIN_ID(ACTION_SET_TRAIN_ID, ItemType.WARRANT, rbx.getString("ActionSetTrainId"), rbx.getString("ActionSetTrainId")), // NOI18N
+        SET_TRAIN_NAME(ACTION_SET_TRAIN_NAME, ItemType.WARRANT, rbx.getString("ActionSetTrainName"), rbx.getString("ActionSetTrainName")), // NOI18N
+        SET_SIGNALMAST_ASPECT(ACTION_SET_SIGNALMAST_ASPECT, ItemType.SIGNALMAST, rbx.getString("ActionSetSignalMastAspect"), rbx.getString("ActionSetSignalMastAspect")), // NOI18N
+        THROTTLE_FACTOR(ACTION_THROTTLE_FACTOR, ItemType.WARRANT, rbx.getString("ActionSetThrottleFactor"), rbx.getString("ActionSetThrottleFactor")), // NOI18N
+        SET_SIGNALMAST_HELD(ACTION_SET_SIGNALMAST_HELD, ItemType.SIGNALMAST, rbx.getString("ActionSetSignalMastHeld"), rbx.getString("ActionSetSignalMastHeld")), // NOI18N
+        CLEAR_SIGNALMAST_HELD(ACTION_CLEAR_SIGNALMAST_HELD, ItemType.SIGNALMAST, rbx.getString("ActionClearSignalMastHeld"), rbx.getString("ActionClearSignalMastHeld")), // NOI18N
+        SET_SIGNALMAST_DARK(ACTION_SET_SIGNALMAST_DARK, ItemType.SIGNALMAST, rbx.getString("ActionSetSignalMastDark"), rbx.getString("ActionSetSignalMastDark")), // NOI18N
+        SET_SIGNALMAST_LIT(ACTION_SET_SIGNALMAST_LIT, ItemType.SIGNALMAST, rbx.getString("ActionClearSignalMastDark"), rbx.getString("ActionClearSignalMastDark")), // NOI18N
+        SET_BLOCK_VALUE(ACTION_SET_BLOCK_VALUE, ItemType.OBLOCK, rbx.getString("ActionSetBlockValue"), rbx.getString("ActionSetBlockValue")), // NOI18N
+        SET_BLOCK_ERROR(ACTION_SET_BLOCK_ERROR, ItemType.OBLOCK, rbx.getString("ActionSetBlockError"), rbx.getString("ActionSetBlockError")), // NOI18N
+        CLEAR_BLOCK_ERROR(ACTION_CLEAR_BLOCK_ERROR, ItemType.OBLOCK, rbx.getString("ActionClearBlockError"), rbx.getString("ActionClearBlockError")), // NOI18N
+        DEALLOCATE_BLOCK(ACTION_DEALLOCATE_BLOCK, ItemType.OBLOCK, rbx.getString("ActionDeallocateBlock"), rbx.getString("ActionDeallocateBlock")), // NOI18N
+        SET_BLOCK_OUT_OF_SERVICE(ACTION_SET_BLOCK_OUT_OF_SERVICE, ItemType.OBLOCK, rbx.getString("ActionSetBlockOutOfService"), rbx.getString("ActionSetBlockOutOfService")), // NOI18N
+        SET_BLOCK_IN_SERVICE(ACTION_SET_BLOCK_IN_SERVICE, ItemType.OBLOCK, rbx.getString("ActionBlockInService"), rbx.getString("ActionBlockInService")), // NOI18N
+        // EntryExit Actions
+        SET_NXPAIR_ENABLED(ACTION_SET_NXPAIR_ENABLED, ItemType.ENTRYEXIT, rbx.getString("ActionNXPairEnabled"), rbx.getString("ActionNXPairEnabled")), // NOI18N
+        SET_NXPAIR_DISABLED(ACTION_SET_NXPAIR_DISABLED, ItemType.ENTRYEXIT, rbx.getString("ActionNXPairDisabled"), rbx.getString("ActionNXPairDisabled")), // NOI18N
+        SET_NXPAIR_SEGMENT(ACTION_SET_NXPAIR_SEGMENT, ItemType.ENTRYEXIT, rbx.getString("ActionNXPairSegment"), rbx.getString("ActionNXPairSegment")); // NOI18N
+//        static final int NUM_ACTION_TYPES(NUM_ACTION_TYPES, ItemType.NONE, "aaa"); // NOI18N
+        
+            
+        private final int _item;
+        private final ItemType _itemType;
+        private final String _bundleKey;
+        private final String _actionTypeString;
+        
+        private static final List<ActionType> sensorItemsList;
+        private static final List<ActionType> turnoutItemsList;
+        private static final List<ActionType> lightItemsList;
+        private static final List<ActionType> warrantItemsList;
+        private static final List<ActionType> memoryItemsList;
+        private static final List<ActionType> oblockItemsList;
+        private static final List<ActionType> entryExitItemsList;
+        private static final List<ActionType> signalHeadItemsList;
+        private static final List<ActionType> signalMastItemsList;
+        private static final List<ActionType> clockItemsList;
+        private static final List<ActionType> logixItemsList;
+        private static final List<ActionType> audioItemsList;
+        private static final List<ActionType> scriptItemsList;
+        private static final List<ActionType> otherItemsList;
+        
+//        private static final Set<ActionType> signalHeadAppearanceSet;
+        
+        
+        static
+        {
+            ActionType[] typeArray1 = {SET_SENSOR, DELAYED_SENSOR,
+                RESET_DELAYED_SENSOR, CANCEL_SENSOR_TIMERS};
+            sensorItemsList = Collections.unmodifiableList(Arrays.asList(typeArray1));
+            
+            ActionType[] typeArray2 = {SET_TURNOUT, DELAYED_TURNOUT, LOCK_TURNOUT,
+                CANCEL_TURNOUT_TIMERS, RESET_DELAYED_TURNOUT};
+            turnoutItemsList = Collections.unmodifiableList(Arrays.asList(typeArray2));
+            
+            ActionType[] typeArray3 = {SET_LIGHT, SET_LIGHT_INTENSITY,
+                SET_LIGHT_TRANSITION_TIME};
+            lightItemsList = Collections.unmodifiableList(Arrays.asList(typeArray3));
+            
+            ActionType[] typeArray4 = {ALLOCATE_WARRANT_ROUTE, DEALLOCATE_WARRANT_ROUTE,
+                SET_ROUTE_TURNOUTS, AUTO_RUN_WARRANT, MANUAL_RUN_WARRANT, CONTROL_TRAIN,
+                SET_TRAIN_ID, SET_TRAIN_NAME, THROTTLE_FACTOR};
+            warrantItemsList = Collections.unmodifiableList(Arrays.asList(typeArray4));
+            
+            ActionType[] typeArray5 = {SET_MEMORY, COPY_MEMORY};
+            memoryItemsList = Collections.unmodifiableList(Arrays.asList(typeArray5));
+            
+            ActionType[] typeArray6 = {SET_NXPAIR_ENABLED, SET_NXPAIR_DISABLED,
+                SET_NXPAIR_SEGMENT};
+            entryExitItemsList = Collections.unmodifiableList(Arrays.asList(typeArray6));
+            
+            ActionType[] typeArray7 = {SET_SIGNAL_APPEARANCE, SET_SIGNAL_HELD,
+                CLEAR_SIGNAL_HELD, SET_SIGNAL_DARK, SET_SIGNAL_LIT};
+            signalHeadItemsList = Collections.unmodifiableList(Arrays.asList(typeArray7));
+            
+            ActionType[] typeArray8 = {SET_SIGNALMAST_ASPECT, SET_SIGNALMAST_HELD,
+                CLEAR_SIGNALMAST_HELD, SET_SIGNALMAST_DARK, SET_SIGNALMAST_LIT};
+            signalMastItemsList = Collections.unmodifiableList(Arrays.asList(typeArray8));
+            
+            ActionType[] typeArray9 = {SET_FAST_CLOCK_TIME, START_FAST_CLOCK,
+                STOP_FAST_CLOCK};
+            clockItemsList = Collections.unmodifiableList(Arrays.asList(typeArray9));
+            
+            ActionType[] typeArray10 = {ENABLE_LOGIX, DISABLE_LOGIX};
+            logixItemsList = Collections.unmodifiableList(Arrays.asList(typeArray10));
+            
+            ActionType[] typeArray11 = {DEALLOCATE_BLOCK, SET_BLOCK_VALUE,
+                SET_BLOCK_ERROR, CLEAR_BLOCK_ERROR, SET_BLOCK_OUT_OF_SERVICE,
+                SET_BLOCK_IN_SERVICE};
+            oblockItemsList = Collections.unmodifiableList(Arrays.asList(typeArray11));
+            
+            ActionType[] typeArray12 = {PLAY_SOUND, CONTROL_AUDIO};
+            audioItemsList = Collections.unmodifiableList(Arrays.asList(typeArray12));
+            
+            ActionType[] typeArray13 = {RUN_SCRIPT, JYTHON_COMMAND};
+            scriptItemsList = Collections.unmodifiableList(Arrays.asList(typeArray13));
+            
+            ActionType[] typeArray14 = {TRIGGER_ROUTE};
+            otherItemsList = Collections.unmodifiableList(Arrays.asList(typeArray14));
+        }
+        
+        private ActionType(int state, ItemType itemType, String bundleKey, String actionTypeString) {
+            _item = state;
+            _itemType = itemType;
+            _bundleKey = bundleKey;
+            _actionTypeString = actionTypeString;
+        }
+        
+        public ItemType getItemType() {
+            return _itemType;
+        }
+        
+        public int getIntValue() {
+            return _item;
+        }
+        
+        public static List<ActionType> getSensorItems() {
+            return sensorItemsList;
+        }
+        
+        public static List<ActionType> getTurnoutItems() {
+            return turnoutItemsList;
+        }
+        
+        public static List<ActionType> getLightItems() {
+            return lightItemsList;
+        }
+        
+        public static List<ActionType> getWarrantItems() {
+            return warrantItemsList;
+        }
+        
+        public static List<ActionType> getMemoryItems() {
+            return memoryItemsList;
+        }
+        
+        public static List<ActionType> getOBlockItems() {
+            return oblockItemsList;
+        }
+        
+        public static List<ActionType> getEntryExitItems() {
+            return entryExitItemsList;
+        }
+        
+        public static List<ActionType> getSignalHeadItems() {
+            return signalHeadItemsList;
+        }
+        
+//        public static boolean isSignalHeadApperance(Type type) {
+//            return signalHeadAppearanceSet.contains(type);
+//        }
+        
+        public static List<ActionType> getSignalMastItems() {
+            return signalMastItemsList;
+        }
+        
+        public static List<ActionType> getClockItems() {
+            return clockItemsList;
+        }
+        
+        public static List<ActionType> getLogixItems() {
+            return logixItemsList;
+        }
+        
+        public static List<ActionType> getAudioItems() {
+            return audioItemsList;
+        }
+        
+        public static List<ActionType> getScriptItems() {
+            return scriptItemsList;
+        }
+        
+        public static List<ActionType> getOtherItems() {
+            return otherItemsList;
+        }
+        
+        public static int getIndexInList(List<ActionType> table, ActionType entry) {
+            for (int i = 0; i < table.size(); i++) {
+                if (entry == table.get(i)) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+        
+        public static ActionType getOperatorFromIntValue(int actionInt) {
+            for (ActionType action : ActionType.values()) {
+                if (action.getIntValue() == actionInt) {
+                    return action;
+                }
+            }
+            
+            throw new IllegalArgumentException("Action is unknown");
+        }
+
+        // Some items uses Bundle.getString() and some items uses rbx.getString()
+        // and therefore the items must call getString() in the call to the constructor.
+        @Override
+        public String toString() {
+            return Bundle.getMessage(_bundleKey);
+        }
+        
+        public String getActionTypeString() {
+            return _actionTypeString;
+        }
+    }
+
     // state variable types
-    public static final int TYPE_NONE = 0;
-    public static final int TYPE_SENSOR_ACTIVE = 1;
-    public static final int TYPE_SENSOR_INACTIVE = 2;
-    public static final int TYPE_TURNOUT_THROWN = 3;
-    public static final int TYPE_TURNOUT_CLOSED = 4;
-    public static final int TYPE_CONDITIONAL_TRUE = 5;
-    public static final int TYPE_CONDITIONAL_FALSE = 6;
-    public static final int TYPE_LIGHT_ON = 7;
-    public static final int TYPE_LIGHT_OFF = 8;
-    public static final int TYPE_MEMORY_EQUALS = 9;
-    public static final int TYPE_FAST_CLOCK_RANGE = 10;
+    static final int TYPE_ERROR = -1;
+    static final int TYPE_NONE = 0;
+    static final int TYPE_SENSOR_ACTIVE = 1;
+    static final int TYPE_SENSOR_INACTIVE = 2;
+    static final int TYPE_TURNOUT_THROWN = 3;
+    static final int TYPE_TURNOUT_CLOSED = 4;
+    static final int TYPE_CONDITIONAL_TRUE = 5;
+    static final int TYPE_CONDITIONAL_FALSE = 6;
+    static final int TYPE_LIGHT_ON = 7;
+    static final int TYPE_LIGHT_OFF = 8;
+    static final int TYPE_MEMORY_EQUALS = 9;
+    static final int TYPE_FAST_CLOCK_RANGE = 10;
 // Note - within the TYPE_SIGNAL_HEAD definitions, all must be together,
 //  RED must be first, and HELD must be last
-    public static final int TYPE_SIGNAL_HEAD_RED = 11;
-    public static final int TYPE_SIGNAL_HEAD_YELLOW = 12;
-    public static final int TYPE_SIGNAL_HEAD_GREEN = 13;
-    public static final int TYPE_SIGNAL_HEAD_DARK = 14;
-    public static final int TYPE_SIGNAL_HEAD_FLASHRED = 15;
-    public static final int TYPE_SIGNAL_HEAD_FLASHYELLOW = 16;
-    public static final int TYPE_SIGNAL_HEAD_FLASHGREEN = 17;
-    public static final int TYPE_SIGNAL_HEAD_LIT = 18;
-    public static final int TYPE_SIGNAL_HEAD_HELD = 19;
-    public static final int TYPE_MEMORY_COMPARE = 20;
-    public static final int TYPE_SIGNAL_HEAD_LUNAR = 21;
-    public static final int TYPE_SIGNAL_HEAD_FLASHLUNAR = 22;
-    public static final int TYPE_MEMORY_EQUALS_INSENSITIVE = 23;
-    public static final int TYPE_MEMORY_COMPARE_INSENSITIVE = 24;
+    static final int TYPE_SIGNAL_HEAD_RED = 11;
+    static final int TYPE_SIGNAL_HEAD_YELLOW = 12;
+    static final int TYPE_SIGNAL_HEAD_GREEN = 13;
+    static final int TYPE_SIGNAL_HEAD_DARK = 14;
+    static final int TYPE_SIGNAL_HEAD_FLASHRED = 15;
+    static final int TYPE_SIGNAL_HEAD_FLASHYELLOW = 16;
+    static final int TYPE_SIGNAL_HEAD_FLASHGREEN = 17;
+    static final int TYPE_SIGNAL_HEAD_LIT = 18;
+    static final int TYPE_SIGNAL_HEAD_HELD = 19;
+    static final int TYPE_MEMORY_COMPARE = 20;
+    static final int TYPE_SIGNAL_HEAD_LUNAR = 21;
+    static final int TYPE_SIGNAL_HEAD_FLASHLUNAR = 22;
+    static final int TYPE_MEMORY_EQUALS_INSENSITIVE = 23;
+    static final int TYPE_MEMORY_COMPARE_INSENSITIVE = 24;
     // Warrant variables
-    public static final int TYPE_ROUTE_FREE = 25;
-    public static final int TYPE_ROUTE_OCCUPIED = 26;
-    public static final int TYPE_ROUTE_ALLOCATED = 27;
-    public static final int TYPE_ROUTE_SET = 28;
-    public static final int TYPE_TRAIN_RUNNING = 29;
-    public static final int TYPE_SIGNAL_MAST_ASPECT_EQUALS = 30;
-    public static final int TYPE_SIGNAL_MAST_LIT = 31;
-    public static final int TYPE_SIGNAL_MAST_HELD = 32;
-    public static final int TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS = 33;
-    public static final int TYPE_BLOCK_STATUS_EQUALS = 34;
+    static final int TYPE_ROUTE_FREE = 25;
+    static final int TYPE_ROUTE_OCCUPIED = 26;
+    static final int TYPE_ROUTE_ALLOCATED = 27;
+    static final int TYPE_ROUTE_SET = 28;
+    static final int TYPE_TRAIN_RUNNING = 29;
+    static final int TYPE_SIGNAL_MAST_ASPECT_EQUALS = 30;
+    static final int TYPE_SIGNAL_MAST_LIT = 31;
+    static final int TYPE_SIGNAL_MAST_HELD = 32;
+    static final int TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS = 33;
+    
+    static final int TYPE_BLOCK_STATUS_EQUALS = 34;
 
     //Entry Exit Rules
-    public static final int TYPE_ENTRYEXIT_ACTIVE = 35;
-    public static final int TYPE_ENTRYEXIT_INACTIVE = 36;
+    static final int TYPE_ENTRYEXIT_ACTIVE = 35;
+    static final int TYPE_ENTRYEXIT_INACTIVE = 36;
 
     // action definitions
-    public static final int ACTION_OPTION_ON_CHANGE_TO_TRUE = 1;
-    public static final int ACTION_OPTION_ON_CHANGE_TO_FALSE = 2;
-    public static final int ACTION_OPTION_ON_CHANGE = 3;
-    public static final int NUM_ACTION_OPTIONS = 3;
+    static final int ACTION_OPTION_ON_CHANGE_TO_TRUE = 1;
+    static final int ACTION_OPTION_ON_CHANGE_TO_FALSE = 2;
+    static final int ACTION_OPTION_ON_CHANGE = 3;
+    static final int NUM_ACTION_OPTIONS = 3;
 
     // action types
-    public static final int ACTION_NONE = 1;
-    public static final int ACTION_SET_TURNOUT = 2;
+    static final int ACTION_NONE = 1;
+    static final int ACTION_SET_TURNOUT = 2;
     // allowed settings for turnout are Thrown and Closed (in data)
-    public static final int ACTION_SET_SIGNAL_APPEARANCE = 3;
+    static final int ACTION_SET_SIGNAL_APPEARANCE = 3;
     // allowed settings for signal head are the seven Appearances (in data)
-    public static final int ACTION_SET_SIGNAL_HELD = 4;
-    public static final int ACTION_CLEAR_SIGNAL_HELD = 5;
-    public static final int ACTION_SET_SIGNAL_DARK = 6;
-    public static final int ACTION_SET_SIGNAL_LIT = 7;
-    public static final int ACTION_TRIGGER_ROUTE = 8;
-    public static final int ACTION_SET_SENSOR = 9;
+    static final int ACTION_SET_SIGNAL_HELD = 4;
+    static final int ACTION_CLEAR_SIGNAL_HELD = 5;
+    static final int ACTION_SET_SIGNAL_DARK = 6;
+    static final int ACTION_SET_SIGNAL_LIT = 7;
+    static final int ACTION_TRIGGER_ROUTE = 8;
+    static final int ACTION_SET_SENSOR = 9;
     // allowed settings for sensor are active and inactive (in data)
-    public static final int ACTION_DELAYED_SENSOR = 10;
+    static final int ACTION_DELAYED_SENSOR = 10;
     // allowed settings for timed sensor are active and inactive (in data)
     //   time in seconds before setting sensor should be in delay
-    public static final int ACTION_SET_LIGHT = 11;
+    static final int ACTION_SET_LIGHT = 11;
     // allowed settings for light are ON and OFF (in data)
-    public static final int ACTION_SET_MEMORY = 12;
+    static final int ACTION_SET_MEMORY = 12;
     // text to set into the memory variable should be in string
-    public static final int ACTION_ENABLE_LOGIX = 13;
-    public static final int ACTION_DISABLE_LOGIX = 14;
-    public static final int ACTION_PLAY_SOUND = 15;
+    static final int ACTION_ENABLE_LOGIX = 13;
+    static final int ACTION_DISABLE_LOGIX = 14;
+    static final int ACTION_PLAY_SOUND = 15;
     // reference to sound should be in string
-    public static final int ACTION_RUN_SCRIPT = 16;
+    static final int ACTION_RUN_SCRIPT = 16;
     // reference to script should be in string
-    public static final int ACTION_DELAYED_TURNOUT = 17;
+    static final int ACTION_DELAYED_TURNOUT = 17;
     // allowed settings for timed turnout are Thrown and Closed (in data)
     //   time in seconds before setting turnout should be in delay
-    public static final int ACTION_LOCK_TURNOUT = 18;
-    public static final int ACTION_RESET_DELAYED_SENSOR = 19;
+    static final int ACTION_LOCK_TURNOUT = 18;
+    static final int ACTION_RESET_DELAYED_SENSOR = 19;
     // allowed settings for timed sensor are active and inactive (in data)
     //   time in seconds before setting sensor should be in delay
-    public static final int ACTION_CANCEL_SENSOR_TIMERS = 20;
+    static final int ACTION_CANCEL_SENSOR_TIMERS = 20;
     // cancels all timers delaying setting of specified sensor
-    public static final int ACTION_RESET_DELAYED_TURNOUT = 21;
+    static final int ACTION_RESET_DELAYED_TURNOUT = 21;
     // allowed settings for timed sensor are active and inactive (in data)
     //   time in seconds before setting sensor should be in delay
-    public static final int ACTION_CANCEL_TURNOUT_TIMERS = 22;
+    static final int ACTION_CANCEL_TURNOUT_TIMERS = 22;
     // cancels all timers delaying setting of specified sensor
-    public static final int ACTION_SET_FAST_CLOCK_TIME = 23;
+    static final int ACTION_SET_FAST_CLOCK_TIME = 23;
     // sets the fast clock time to the time specified
-    public static final int ACTION_START_FAST_CLOCK = 24;
+    static final int ACTION_START_FAST_CLOCK = 24;
     // starts the fast clock
-    public static final int ACTION_STOP_FAST_CLOCK = 25;
+    static final int ACTION_STOP_FAST_CLOCK = 25;
     // stops the fast clock
-    public static final int ACTION_COPY_MEMORY = 26;
+    static final int ACTION_COPY_MEMORY = 26;
     // copies value from memory variable (in name) to memory variable (in string)
-    public static final int ACTION_SET_LIGHT_INTENSITY = 27;
-    public static final int ACTION_SET_LIGHT_TRANSITION_TIME = 28;
+    static final int ACTION_SET_LIGHT_INTENSITY = 27;
+    static final int ACTION_SET_LIGHT_TRANSITION_TIME = 28;
     // control the specified audio object
-    public static final int ACTION_CONTROL_AUDIO = 29;
+    static final int ACTION_CONTROL_AUDIO = 29;
     // execute a jython command
-    public static final int ACTION_JYTHON_COMMAND = 30;
+    static final int ACTION_JYTHON_COMMAND = 30;
     // Warrant actions
-    public static final int ACTION_ALLOCATE_WARRANT_ROUTE = 31;
-    public static final int ACTION_DEALLOCATE_WARRANT_ROUTE = 32;
-    public static final int ACTION_SET_ROUTE_TURNOUTS = 33;
-    public static final int ACTION_AUTO_RUN_WARRANT = 34;
-    public static final int ACTION_CONTROL_TRAIN = 35;
-    public static final int ACTION_SET_TRAIN_ID = 36;
-    public static final int ACTION_SET_SIGNALMAST_ASPECT = 37;
-    public static final int ACTION_THROTTLE_FACTOR = 38;
-    public static final int ACTION_SET_SIGNALMAST_HELD = 39;
-    public static final int ACTION_CLEAR_SIGNALMAST_HELD = 40;
-    public static final int ACTION_SET_SIGNALMAST_DARK = 41;
-    public static final int ACTION_SET_SIGNALMAST_LIT = 42;
-    public static final int ACTION_SET_BLOCK_ERROR = 43;
-    public static final int ACTION_CLEAR_BLOCK_ERROR = 44;
-    public static final int ACTION_DEALLOCATE_BLOCK = 45;
-    public static final int ACTION_SET_BLOCK_OUT_OF_SERVICE = 46;
-    public static final int ACTION_SET_BLOCK_IN_SERVICE = 47;
-    public static final int ACTION_MANUAL_RUN_WARRANT = 48;
-    public static final int ACTION_SET_TRAIN_NAME = 49;
-    public static final int ACTION_SET_BLOCK_VALUE = 50;
+    static final int ACTION_ALLOCATE_WARRANT_ROUTE = 31;
+    static final int ACTION_DEALLOCATE_WARRANT_ROUTE = 32;
+    static final int ACTION_SET_ROUTE_TURNOUTS = 33;
+    static final int ACTION_AUTO_RUN_WARRANT = 34;
+    static final int ACTION_CONTROL_TRAIN = 35;
+    static final int ACTION_SET_TRAIN_ID = 36;
+    static final int ACTION_SET_SIGNALMAST_ASPECT = 37;
+    static final int ACTION_THROTTLE_FACTOR = 38;
+    static final int ACTION_SET_SIGNALMAST_HELD = 39;
+    static final int ACTION_CLEAR_SIGNALMAST_HELD = 40;
+    static final int ACTION_SET_SIGNALMAST_DARK = 41;
+    static final int ACTION_SET_SIGNALMAST_LIT = 42;
+    static final int ACTION_SET_BLOCK_ERROR = 43;
+    static final int ACTION_CLEAR_BLOCK_ERROR = 44;
+    static final int ACTION_DEALLOCATE_BLOCK = 45;
+    static final int ACTION_SET_BLOCK_OUT_OF_SERVICE = 46;
+    static final int ACTION_SET_BLOCK_IN_SERVICE = 47;
+    static final int ACTION_MANUAL_RUN_WARRANT = 48;
+    static final int ACTION_SET_TRAIN_NAME = 49;
+    static final int ACTION_SET_BLOCK_VALUE = 50;
     // EntryExit Actions
-    public static final int ACTION_SET_NXPAIR_ENABLED = 51;
-    public static final int ACTION_SET_NXPAIR_DISABLED = 52;
-    public static final int ACTION_SET_NXPAIR_SEGMENT = 53;
-    public static final int NUM_ACTION_TYPES = 53;
+    static final int ACTION_SET_NXPAIR_ENABLED = 51;
+    static final int ACTION_SET_NXPAIR_DISABLED = 52;
+    static final int ACTION_SET_NXPAIR_SEGMENT = 53;
+//    static final int NUM_ACTION_TYPES = 53;
 
     /**
      * ***********************************************************************************
      */
-    /* New Variable and Action type scheme for Logix UI
+    /* New Variable and ActionType type scheme for Logix UI
      * State Variables and actions are grouped according to type.  Variable and action
      * types share the following group categories:
      */
     // state variable and action items used by logix.
-    // When a new type is added, insert at proper location and update 'LAST' numbers
-    public static final int ITEM_TYPE_SENSOR = 1;
-    public static final int ITEM_TYPE_TURNOUT = 2;
-    public static final int ITEM_TYPE_LIGHT = 3;
-    public static final int ITEM_TYPE_SIGNALHEAD = 4;
-    public static final int ITEM_TYPE_SIGNALMAST = 5;
-    public static final int ITEM_TYPE_MEMORY = 6;
-    public static final int ITEM_TYPE_CONDITIONAL = 7;  // used only by ConditionalVariable
-    public static final int ITEM_TYPE_LOGIX = 7;        // used only by ConditionalAction
-    public static final int ITEM_TYPE_WARRANT = 8;
-    public static final int ITEM_TYPE_CLOCK = 9;
-    public static final int ITEM_TYPE_OBLOCK = 10;
-    public static final int ITEM_TYPE_ENTRYEXIT = 11;
-    public static final int ITEM_TYPE_LAST_STATE_VAR = 11;
+    static final int ITEM_TYPE_SENSOR = 1;
+    static final int ITEM_TYPE_TURNOUT = 2;
+    static final int ITEM_TYPE_LIGHT = 3;
+    static final int ITEM_TYPE_SIGNALHEAD = 4;
+    static final int ITEM_TYPE_SIGNALMAST = 5;
+    static final int ITEM_TYPE_MEMORY = 6;
+    static final int ITEM_TYPE_CONDITIONAL = 7;  // used only by ConditionalVariable
+    static final int ITEM_TYPE_LOGIX = 7;        // used only by ConditionalAction
+    static final int ITEM_TYPE_WARRANT = 8;
+    static final int ITEM_TYPE_CLOCK = 9;
+    static final int ITEM_TYPE_OBLOCK = 10;
+    static final int ITEM_TYPE_ENTRYEXIT = 11;
+//    static final int ITEM_TYPE_LAST_STATE_VAR = 11;
 
-    public static final int ITEM_TYPE_AUDIO = 12;
-    public static final int ITEM_TYPE_SCRIPT = 13;
-    public static final int ITEM_TYPE_OTHER = 14;
-    public static final int ITEM_TYPE_LAST_ACTION = 14;
-
-    /**
-     * *************** ConditionalVariable Maps *******************************
-     */
-    // Map state variable types to their item type
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public final static int[] TEST_TO_ITEM = {TYPE_NONE, // TYPE_NONE                0
-        ITEM_TYPE_SENSOR, // TYPE_SENSOR_ACTIVE       1
-        ITEM_TYPE_SENSOR, // TYPE_SENSOR_INACTIVE     2
-        ITEM_TYPE_TURNOUT, // TYPE_TURNOUT_THROWN      3
-        ITEM_TYPE_TURNOUT, // TYPE_TURNOUT_ClOSED      4
-        ITEM_TYPE_CONDITIONAL, // TYPE_CONDITIONAL_TRUE    5
-        ITEM_TYPE_CONDITIONAL, // TYPE_CONDITIONAL_FALSE   6
-        ITEM_TYPE_LIGHT, // TYPE_LIGHT_ON            7
-        ITEM_TYPE_LIGHT, // TYPE_LIGHT_OFF           8
-        ITEM_TYPE_MEMORY, // TYPE_MEMORY_EQUALS       9
-        ITEM_TYPE_CLOCK, // TYPE_FAST_CLOCK_RANGE    10
-        ITEM_TYPE_SIGNALHEAD, // TYPE_SIGNAL_HEAD_RED     11
-        ITEM_TYPE_SIGNALHEAD, // TYPE_SIGNAL_HEAD_YELLOW  12
-        ITEM_TYPE_SIGNALHEAD, // TYPE_SIGNAL_HEAD_GREEN   13
-        ITEM_TYPE_SIGNALHEAD, // TYPE_SIGNAL_HEAD_DARK    14
-        ITEM_TYPE_SIGNALHEAD, // TYPE_SIGNAL_HEAD_FLASHRED 15
-        ITEM_TYPE_SIGNALHEAD, // TYPE_SIGNAL_HEAD_FLASHYELLOW
-        ITEM_TYPE_SIGNALHEAD, // TYPE_SIGNAL_HEAD_FLASHGREEN 17
-        ITEM_TYPE_SIGNALHEAD, // TYPE_SIGNAL_HEAD_LIT     18
-        ITEM_TYPE_SIGNALHEAD, // TYPE_SIGNAL_HEAD_HELD    19
-        ITEM_TYPE_MEMORY, // TYPE_MEMORY_COMPARE      20
-        ITEM_TYPE_SIGNALHEAD, // TYPE_SIGNAL_HEAD_LUNAR   21
-        ITEM_TYPE_SIGNALHEAD, // TYPE_SIGNAL_HEAD_FLASHLUNAR 22
-        ITEM_TYPE_MEMORY, // TYPE_MEMORY_EQUALS_INSENSITIVE 23
-        ITEM_TYPE_MEMORY, // TYPE_MEMORY_COMPARE_INSENSITIVE
-        ITEM_TYPE_WARRANT, // TYPE_ROUTE_FREE          25
-        ITEM_TYPE_WARRANT, // TYPE_ROUTE_OCCUPIED      26
-        ITEM_TYPE_WARRANT, // TYPE_ROUTE_ALLOCATED     27
-        ITEM_TYPE_WARRANT, // TYPE_ROUTE_SET           28
-        ITEM_TYPE_WARRANT, // TYPE_TRAIN_RUNNING       29
-        ITEM_TYPE_SIGNALMAST, // TYPE_SIGNAL_MAST_ASPECT_EQUALS 30
-        ITEM_TYPE_SIGNALMAST, // TYPE_SIGNAL_MAST_LIT = 31;
-        ITEM_TYPE_SIGNALMAST, // TYPE_SIGNAL_MAST_HELD = 32
-        ITEM_TYPE_SIGNALHEAD, // TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS = 33;
-        ITEM_TYPE_OBLOCK, // TYPE_BLOCK_STATUS_EQUALS = 34
-        ITEM_TYPE_ENTRYEXIT, // TYPE_ENTRYEXIT_ACTIVE = 35
-        ITEM_TYPE_ENTRYEXIT // TYPE_ENTRYEXIT_INACTIVE = 36
-    };
-
-    // Map SignalHead comboBox items to SignalHead Conditional variable types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_SIGNAL_HEAD_TEST = {TYPE_NONE,
-        TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS,
-        TYPE_SIGNAL_HEAD_LIT,
-        TYPE_SIGNAL_HEAD_HELD};
-
-    // Map SignalMAst comboBox items to SignalMast Conditional variable types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_SIGNAL_MAST_TEST = {TYPE_NONE,
-        TYPE_SIGNAL_MAST_ASPECT_EQUALS,
-        TYPE_SIGNAL_MAST_LIT,
-        TYPE_SIGNAL_MAST_HELD};
-
-    // Map Sensor state comboBox items to Sensor Conditional variable types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_SENSOR_TEST = {TYPE_SENSOR_ACTIVE, TYPE_SENSOR_INACTIVE};
-
-    // Map Turnout state comboBox items to Turnout Conditional variable types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_TURNOUT_TEST = {TYPE_TURNOUT_THROWN, TYPE_TURNOUT_CLOSED};
-
-    // Map Conditional state comboBox items to  Condition ConditionalVvariable types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_CONDITIONAL_TEST = {TYPE_CONDITIONAL_TRUE, TYPE_CONDITIONAL_FALSE};
-
-    // Map Memory state comboBox items to Light ConditionalVariable types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_LIGHT_TEST = {TYPE_LIGHT_ON, TYPE_LIGHT_OFF};
-
-    // Map Warrant state comboBox items to Warrant ConditionalVariable types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_WARRANT_TEST = {TYPE_ROUTE_FREE, TYPE_ROUTE_SET, TYPE_ROUTE_ALLOCATED,
-        TYPE_ROUTE_OCCUPIED, TYPE_TRAIN_RUNNING};
-
-    // Map Memory Compare Type comboBox items to Memory ConditionalVariable types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_MEMORY_TEST = {TYPE_MEMORY_EQUALS, TYPE_MEMORY_EQUALS_INSENSITIVE,
-        TYPE_MEMORY_COMPARE, TYPE_MEMORY_COMPARE_INSENSITIVE};
-
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY")
-    public static final int[] ITEM_TO_OBLOCK_TEST = {TYPE_BLOCK_STATUS_EQUALS};
-
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY")
-    public static final int[] ITEM_TO_ENTRYEXIT_TEST = {TYPE_ENTRYEXIT_ACTIVE, TYPE_ENTRYEXIT_INACTIVE};
+    static final int ITEM_TYPE_AUDIO = 12;
+    static final int ITEM_TYPE_SCRIPT = 13;
+    static final int ITEM_TYPE_OTHER = 14;
+//    static final int ITEM_TYPE_LAST_ACTION = 14;
 
     /**
      * *************** ConditionalAction Maps *******************************

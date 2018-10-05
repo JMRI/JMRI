@@ -2,9 +2,7 @@ package jmri.jmrit.conditional;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import jmri.jmrit.picker.PickSinglePanel;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -13,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
+import jmri.Conditional;
 
 /*
 * Tests for the ConditionalEditBase Class
@@ -34,8 +33,8 @@ public class ConditionalEditBaseTest {
     public void testNameBox() {
         ConditionalEditBase cdlBase = new ConditionalEditBase();
 
-        Assert.assertNotNull("ConditionalEditBase createNameBox Return not null", cdlBase.createNameBox(1));  // NOI18N
-        Assert.assertNull("ConditionalEditBase createNameBox Return null", cdlBase.createNameBox(9));  // NOI18N
+        Assert.assertNotNull("ConditionalEditBase createNameBox Return not null", cdlBase.createNameBox(Conditional.ItemType.SENSOR));  // NOI18N
+        Assert.assertNull("ConditionalEditBase createNameBox Return null", cdlBase.createNameBox(Conditional.ItemType.CLOCK));  // NOI18N
     }
 
     @Test
@@ -45,7 +44,7 @@ public class ConditionalEditBaseTest {
 
         cdlBase.openPickListTable();
         cdlBase.hidePickListTable();
-        cdlBase.setPickListTab(1, true);
+        cdlBase.setPickListTab(Conditional.ItemType.SENSOR, true);
 
         JFrame frame = JFrameOperator.waitJFrame(Bundle.getMessage("TitlePickList"), false, false);  // NOI18N
         Assert.assertNotNull(frame);
@@ -59,7 +58,7 @@ public class ConditionalEditBaseTest {
 
         JTextField _actionNameField = new JTextField("");
 
-        cdlBase.createSinglePanelPickList(2, cdlBase.new PickSingleListener(_actionNameField, 2), true);
+        cdlBase.createSinglePanelPickList(Conditional.ItemType.TURNOUT, cdlBase.new PickSingleListener(_actionNameField, Conditional.ItemType.TURNOUT), true);
         JFrame frame = JFrameOperator.waitJFrame(Bundle.getMessage("SinglePickFrame"), false, false);  // NOI18N
         Assert.assertNotNull(frame);
 
