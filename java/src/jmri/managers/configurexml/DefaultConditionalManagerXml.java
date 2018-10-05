@@ -127,7 +127,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     ConditionalAction action = actionList.get(k);
                     Element aElem = new Element("conditionalAction");  // NOI18N
                     aElem.setAttribute("option", Integer.toString(action.getOption()));  // NOI18N
-                    aElem.setAttribute("type", Integer.toString(action.getType()));  // NOI18N
+                    aElem.setAttribute("type", Integer.toString(action.getType().getIntValue()));  // NOI18N
                     aElem.setAttribute("systemName", action.getDeviceName());  // NOI18N
                     aElem.setAttribute("data", Integer.toString(action.getActionData()));  // NOI18N
                     // To allow regression of config files back to previous releases
@@ -353,7 +353,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 }
                 attr = conditionalActionList.get(n).getAttribute("type");  // NOI18N
                 if (attr != null) {
-                    action.setType(Integer.parseInt(attr.getValue()));
+                    action.setType(Conditional.ActionType.getOperatorFromIntValue(Integer.parseInt(attr.getValue())));
                 } else {
                     log.warn("unexpected null in type " + conditionalActionList.get(n)  // NOI18N
                             + " " + conditionalActionList.get(n).getAttributes());

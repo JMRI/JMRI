@@ -219,7 +219,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                 variableList.add(new ConditionalVariable(false, Conditional.Operator.OR,
                         Conditional.Type.SENSOR_ACTIVE, sensor, true));
                 actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                        Conditional.ACTION_SET_SENSOR, sensor,
+                        Conditional.ActionType.SET_SENSOR, sensor,
                         Sensor.INACTIVE, ""));
                 count++;
             }

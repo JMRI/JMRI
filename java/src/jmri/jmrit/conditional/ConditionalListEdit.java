@@ -3558,7 +3558,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             }
             currentChooser = scriptFileChooser;
         } else {
-            log.warn("Unexpected actionType[" + actionType + "] = " + DefaultConditionalAction.getActionTypeString(actionType));  // NOI18N
+            log.warn("Unexpected actionType[" + actionType + "] = " + actionType.getActionTypeString());  // NOI18N
             if (defaultFileChooser == null) {
                 defaultFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
                 defaultFileChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());

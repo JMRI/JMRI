@@ -376,50 +376,50 @@ public class ConditionalEditBase {
      * @param itemType The selected variable or action type
      * @return nameBox A combo box based on the item type
      */
-    JmriBeanComboBox createNameBox(int itemType) {
+    JmriBeanComboBox createNameBox(Conditional.ItemType itemType) {
         JmriBeanComboBox nameBox;
         switch (itemType) {
-            case Conditional.ITEM_TYPE_SENSOR:      // 1
+            case SENSOR:      // 1
                 nameBox = new JmriBeanComboBox(
                         InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
                 break;
-            case Conditional.ITEM_TYPE_TURNOUT:     // 2
+            case TURNOUT:     // 2
                 nameBox = new JmriBeanComboBox(
                         InstanceManager.getDefault(TurnoutManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
                 break;
-            case Conditional.ITEM_TYPE_LIGHT:       // 3
+            case LIGHT:       // 3
                 nameBox = new JmriBeanComboBox(
                         InstanceManager.getDefault(LightManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
                 break;
-            case Conditional.ITEM_TYPE_SIGNALHEAD:  // 4
+            case SIGNALHEAD:  // 4
                 nameBox = new JmriBeanComboBox(
                         InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
                 break;
-            case Conditional.ITEM_TYPE_SIGNALMAST:  // 5
+            case SIGNALMAST:  // 5
                 nameBox = new JmriBeanComboBox(
                         InstanceManager.getDefault(SignalMastManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
                 break;
-            case Conditional.ITEM_TYPE_MEMORY:      // 6
+            case MEMORY:      // 6
                 nameBox = new JmriBeanComboBox(
                         InstanceManager.getDefault(MemoryManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
                 break;
-            case Conditional.ITEM_TYPE_LOGIX:       // 7
+            case LOGIX:       // 7
                 nameBox = new JmriBeanComboBox(
                         InstanceManager.getDefault(LogixManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
                 break;
-            case Conditional.ITEM_TYPE_WARRANT:     // 8
+            case WARRANT:     // 8
                 nameBox = new JmriBeanComboBox(
                         InstanceManager.getDefault(WarrantManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
                 break;
-            case Conditional.ITEM_TYPE_OBLOCK:      // 10
+            case OBLOCK:      // 10
                 nameBox = new JmriBeanComboBox(
                         InstanceManager.getDefault(OBlockManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
                 break;
-            case Conditional.ITEM_TYPE_ENTRYEXIT:   // 11
+            case ENTRYEXIT:   // 11
                 nameBox = new JmriBeanComboBox(
                         InstanceManager.getDefault(EntryExitPairs.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
                 break;
-            case Conditional.ITEM_TYPE_OTHER:   // 14
+            case OTHER:   // 14
                 nameBox = new JmriBeanComboBox(
                         InstanceManager.getDefault(jmri.RouteManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
                 break;
@@ -478,7 +478,7 @@ public class ConditionalEditBase {
      * @param listener   The listener to be assigned to the picklist
      * @param actionType True if Action, false if Variable.
      */
-    void createSinglePanelPickList(int itemType, PickSingleListener listener, boolean actionType) {
+    void createSinglePanelPickList(Conditional.ItemType itemType, PickSingleListener listener, boolean actionType) {
         if (_pickListener != null) {
             int saveType = _pickListener.getItemType();
             if (saveType != itemType) {
@@ -493,38 +493,38 @@ public class ConditionalEditBase {
         PickSinglePanel _pickSingle;
 
         switch (itemType) {
-            case Conditional.ITEM_TYPE_SENSOR:      // 1
+            case SENSOR:      // 1
                 _pickSingle = new PickSinglePanel<Sensor>(PickListModel.sensorPickModelInstance());
                 break;
-            case Conditional.ITEM_TYPE_TURNOUT:     // 2
+            case TURNOUT:     // 2
                 _pickSingle = new PickSinglePanel<Turnout>(PickListModel.turnoutPickModelInstance());
                 break;
-            case Conditional.ITEM_TYPE_LIGHT:       // 3
+            case LIGHT:       // 3
                 _pickSingle = new PickSinglePanel<Light>(PickListModel.lightPickModelInstance());
                 break;
-            case Conditional.ITEM_TYPE_SIGNALHEAD:  // 4
+            case SIGNALHEAD:  // 4
                 _pickSingle = new PickSinglePanel<SignalHead>(PickListModel.signalHeadPickModelInstance());
                 break;
-            case Conditional.ITEM_TYPE_SIGNALMAST:  // 5
+            case SIGNALMAST:  // 5
                 _pickSingle = new PickSinglePanel<SignalMast>(PickListModel.signalMastPickModelInstance());
                 break;
-            case Conditional.ITEM_TYPE_MEMORY:      // 6
+            case MEMORY:      // 6
                 _pickSingle = new PickSinglePanel<Memory>(PickListModel.memoryPickModelInstance());
                 break;
-            case Conditional.ITEM_TYPE_LOGIX:      // 7 -- can be either Logix or Conditional
+            case LOGIX:      // 7 -- can be either Logix or Conditional
                 if (!actionType) {
                     // State Variable
                     return;
                 }
                 _pickSingle = new PickSinglePanel<Logix>(PickListModel.logixPickModelInstance());
                 break;
-            case Conditional.ITEM_TYPE_WARRANT:     // 8
+            case WARRANT:     // 8
                 _pickSingle = new PickSinglePanel<Warrant>(PickListModel.warrantPickModelInstance());
                 break;
-            case Conditional.ITEM_TYPE_OBLOCK:      // 10
+            case OBLOCK:      // 10
                 _pickSingle = new PickSinglePanel<OBlock>(PickListModel.oBlockPickModelInstance());
                 break;
-            case Conditional.ITEM_TYPE_ENTRYEXIT:   // 11
+            case ENTRYEXIT:   // 11
                 _pickSingle = new PickSinglePanel<jmri.jmrit.entryexit.DestinationPoints>(PickListModel.entryExitPickModelInstance());
                 break;
             default:
@@ -631,7 +631,7 @@ public class ConditionalEditBase {
      * @param curType    is the current type
      * @param actionType True if Action, false if Variable.
      */
-    void setPickListTab(int curType, boolean actionType) {
+    void setPickListTab(Conditional.ItemType curType, boolean actionType) {
         boolean tabSet = true;
         if (_pickTables == null) {
             return;
@@ -643,25 +643,25 @@ public class ConditionalEditBase {
             // Convert variable/action type to the corresponding tab index
             int tabIndex = 0;
             switch (curType) {
-                case Conditional.ITEM_TYPE_SENSOR:    // 1
+                case SENSOR:    // 1
                     tabIndex = 1;
                     break;
-                case Conditional.ITEM_TYPE_TURNOUT:   // 2
+                case TURNOUT:   // 2
                     tabIndex = 0;
                     break;
-                case Conditional.ITEM_TYPE_LIGHT:     // 3
+                case LIGHT:     // 3
                     tabIndex = 6;
                     break;
-                case Conditional.ITEM_TYPE_SIGNALHEAD:            // 4
+                case SIGNALHEAD:            // 4
                     tabIndex = 2;
                     break;
-                case Conditional.ITEM_TYPE_SIGNALMAST:            // 5
+                case SIGNALMAST:            // 5
                     tabIndex = 3;
                     break;
-                case Conditional.ITEM_TYPE_MEMORY:    // 6
+                case MEMORY:    // 6
                     tabIndex = 4;
                     break;
-                case Conditional.ITEM_TYPE_LOGIX:     // 7 Conditional (Variable) or Logix (Action)
+                case LOGIX:     // 7 Conditional (Variable) or Logix (Action)
                     if (actionType) {
                         tabIndex = 10;
                     } else {
@@ -669,13 +669,13 @@ public class ConditionalEditBase {
                         tabSet = false;
                     }
                     break;
-                case Conditional.ITEM_TYPE_WARRANT:   // 8
+                case WARRANT:   // 8
                     tabIndex = 7;
                     break;
-                case Conditional.ITEM_TYPE_OBLOCK:    // 10
+                case OBLOCK:    // 10
                     tabIndex = 8;
                     break;
-                case Conditional.ITEM_TYPE_ENTRYEXIT: // 11
+                case ENTRYEXIT: // 11
                     tabIndex = 9;
                     break;
                 default:
