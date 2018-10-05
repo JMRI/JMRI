@@ -67,41 +67,6 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         
     }
    
-    @Test 
-    public void testDirectMode() throws Exception {
-
-        // Default mode is DIRECT
-        Assert.assertEquals(Turnout.DIRECT, t.getFeedbackMode());
-        
-        // Check that state changes appropriately
-        t.setCommandedState(Turnout.THROWN);
-        //Assert.assertEquals(t.getState(), Turnout.THROWN);
-        DCCppMessage m = dnis.outbound.elementAt(0);
-        Assert.assertTrue(m.isAccessoryMessage());
-        Assert.assertEquals(1, m.getAccessoryStateInt());
-        t.setCommandedState(Turnout.CLOSED);
-        //Assert.assertEquals(t.getState(), Turnout.CLOSED);
-        m = dnis.outbound.elementAt(1);
-        Assert.assertTrue(m.isAccessoryMessage());
-        Assert.assertEquals(0, m.getAccessoryStateInt());
-        
-        // Test Inverted state
-        // Check that state changes appropriately
-        t.setInverted(true);
-        t.setCommandedState(Turnout.THROWN);
-        //Assert.assertEquals(t.getState(), Turnout.THROWN);
-        m = dnis.outbound.elementAt(2);
-        log.debug("Inverted Direct: {}", m.toString());
-        Assert.assertTrue(m.isAccessoryMessage());
-        Assert.assertEquals(0, m.getAccessoryStateInt());
-        t.setCommandedState(Turnout.CLOSED);
-        //Assert.assertEquals(t.getState(), Turnout.CLOSED);
-        m = dnis.outbound.elementAt(3);
-        Assert.assertTrue(m.isAccessoryMessage());
-        Assert.assertEquals(1, m.getAccessoryStateInt());        
-    }
-
-    @Test    
     public void testMonitoringMode() throws Exception {
         // Set mode to Monitoring
         t.setFeedbackMode(Turnout.MONITORING);
