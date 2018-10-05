@@ -262,7 +262,6 @@ public class CarSetFrame extends RollingStockSetFrame<Car> implements java.beans
 
     protected boolean askKernelChange = true;
 
-    @Override
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     protected boolean change(Car car) {
         // save the auto button
