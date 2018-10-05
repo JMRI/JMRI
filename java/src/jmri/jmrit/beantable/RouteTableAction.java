@@ -1377,7 +1377,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                 name = rSensor.getSysName();
             }
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                    Conditional.ACTION_SET_SENSOR, name, rSensor.getState(), ""));
+                    Conditional.ActionType.SET_SENSOR, name, rSensor.getState(), ""));
         }
         for (int i = 0; i < _includedTurnoutList.size(); i++) {
             RouteTurnout rTurnout = _includedTurnoutList.get(i);
@@ -1386,17 +1386,17 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                 name = rTurnout.getSysName();
             }
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                    Conditional.ACTION_SET_TURNOUT, name, rTurnout.getState(), ""));
+                    Conditional.ActionType.SET_TURNOUT, name, rTurnout.getState(), ""));
         }
         String file = soundFile.getText();
         if (file.length() > 0) {
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                    Conditional.ACTION_PLAY_SOUND, "", -1, FileUtil.getPortableFilename(file)));
+                    Conditional.ActionType.PLAY_SOUND, "", -1, FileUtil.getPortableFilename(file)));
         }
         file = scriptFile.getText();
         if (file.length() > 0) {
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                    Conditional.ACTION_RUN_SCRIPT, "", -1, FileUtil.getPortableFilename(file)));
+                    Conditional.ActionType.RUN_SCRIPT, "", -1, FileUtil.getPortableFilename(file)));
         }
 
         ///// Construct 'AND' clause from 'VETO' controls ////////
@@ -1509,9 +1509,9 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             }
             actionList = new ArrayList<>();
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                    Conditional.ACTION_SET_SENSOR, sensorSystemName, Sensor.ACTIVE, ""));
+                    Conditional.ActionType.SET_SENSOR, sensorSystemName, Sensor.ACTIVE, ""));
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
-                    Conditional.ACTION_SET_SENSOR, sensorSystemName, Sensor.INACTIVE, ""));
+                    Conditional.ActionType.SET_SENSOR, sensorSystemName, Sensor.INACTIVE, ""));
 
             Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional(cSystemName, cUserName);
             c.setStateVariables(variableList);
@@ -1551,7 +1551,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                 if (name == null || name.length() == 0) {
                     name = rTurnout.getSysName();
                 }
-                actionList.add(new DefaultConditionalAction(option, Conditional.ACTION_LOCK_TURNOUT,
+                actionList.add(new DefaultConditionalAction(option, Conditional.ActionType.LOCK_TURNOUT,
                         name, type, ""));
             }
             if (mode != Route.ONCHANGE) {
@@ -1564,7 +1564,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                     if (name == null || name.length() == 0) {
                         name = rTurnout.getSysName();
                     }
-                    actionList.add(new DefaultConditionalAction(option, Conditional.ACTION_LOCK_TURNOUT,
+                    actionList.add(new DefaultConditionalAction(option, Conditional.ActionType.LOCK_TURNOUT,
                             name, type, ""));
                 }
             }

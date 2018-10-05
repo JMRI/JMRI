@@ -389,9 +389,9 @@ public class DefaultLogix extends AbstractNamedBean
             ArrayList<ConditionalAction> badAction = new ArrayList<>();
             for (ConditionalAction action : actionList) {
                 // Find any Entry/Exit Actions
-                if (action.getType() == Conditional.ACTION_SET_NXPAIR_ENABLED
-                        || action.getType() == Conditional.ACTION_SET_NXPAIR_DISABLED
-                        || action.getType() == Conditional.ACTION_SET_NXPAIR_SEGMENT) {
+                if (action.getType() == Conditional.ActionType.SET_NXPAIR_ENABLED
+                        || action.getType() == Conditional.ActionType.SET_NXPAIR_DISABLED
+                        || action.getType() == Conditional.ActionType.SET_NXPAIR_SEGMENT) {
                     if (!NXUUID.matcher(action.getDeviceName()).find()) {
                         // Either a user name or an old style system name (plain UUID)
                         jmri.jmrit.entryexit.DestinationPoints dp =
