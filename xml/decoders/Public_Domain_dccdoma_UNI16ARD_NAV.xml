@@ -15,6 +15,7 @@
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no" >
     <version author="Petr Šídlo sidlo64@hotmail.com" version="2" lastUpdated="20180805"/>
+    <version author="Petr Šídlo sidlo64@hotmail.com" version="1" lastUpdated="20180408"/>
     <!-- Accessory decoder  -->
     <!-- Description of circuit diagram https://sites.google.com/site/sidloweb/elektrika/22-uni16ard -->
     <!-- Program description https://sites.google.com/site/sidloweb/elektrika/24-uni16ard-nav -->
@@ -24,7 +25,7 @@
     <decoder>
 
         <family name="dccdoma.cz" mfg="Public-domain and DIY" >
-            <model model="UNI16ARD-NAV" lowVersionID="41" highVersionID="49" productID="16843010" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
+            <model show="no" model="UNI16ARD-NAV" replacementModel="UNI16ARD-NAV-ST" replacementFamily="dccdoma.cz" lowVersionID="41" highVersionID="49" productID="16843010" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
         </family>
     
         <programming direct="yes" paged="yes" register="no" ops="no" />

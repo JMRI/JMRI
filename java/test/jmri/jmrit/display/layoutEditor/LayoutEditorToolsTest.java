@@ -6,12 +6,7 @@ import jmri.InstanceManager;
 import jmri.implementation.VirtualSignalHead;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JButtonOperator;
 
@@ -23,6 +18,7 @@ import org.netbeans.jemmy.operators.JButtonOperator;
 public class LayoutEditorToolsTest {
     
     // allow 2 retries of intermittent tests
+    @Rule
     public jmri.util.junit.rules.RetryRule retryRule = new jmri.util.junit.rules.RetryRule(2);
     
     private LayoutEditor le = null;

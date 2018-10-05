@@ -2,7 +2,7 @@ package jmri.jmrit.operations.rollingstock.engines.tools;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -12,6 +12,7 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineEditFrame;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -24,7 +25,7 @@ import org.junit.Test;
  * @author	Dan Boudreau Copyright (C) 2010
  *
  */
-public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
+public class EngineAttributeEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testEngineAttributeEditFrameModel() {
@@ -35,7 +36,7 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals(27, f.comboBox.getItemCount());
         // now add a new model name
         f.addTextBox.setText("New Model");
-        enterClickAndLeave(f.addButton);
+        JemmyUtil.enterClickAndLeave(f.addButton);
         // new model should appear at start of list
         Assert.assertEquals("new model name", "New Model", f.comboBox.getItemAt(0));
 
@@ -43,13 +44,13 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
         f.comboBox.setSelectedItem("SD45");
         f.addTextBox.setText("DS54");
         // push replace button
-        enterClickAndLeave(f.replaceButton);
+        JemmyUtil.enterClickAndLeave(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
-        pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
         // did the replace work?
         Assert.assertEquals("replaced SD45 with DS54", "DS54", f.comboBox.getItemAt(0));
 
-        enterClickAndLeave(f.deleteButton);
+        JemmyUtil.enterClickAndLeave(f.deleteButton);
         // new model was next
         Assert.assertEquals("new model after delete", "New Model", f.comboBox.getItemAt(0));
 
@@ -75,7 +76,7 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
 
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
 
         loadEngines();
@@ -165,7 +166,7 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
 
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

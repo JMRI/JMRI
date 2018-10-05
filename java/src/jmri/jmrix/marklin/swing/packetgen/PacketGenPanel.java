@@ -150,7 +150,7 @@ public class PacketGenPanel extends jmri.jmrix.marklin.swing.MarklinPanel implem
      */
     @Override
     public void reply(MarklinReply r) {
-        packetReplyField.setText(r.toHexString());
+        packetReplyField.setText(r.toString());
     }
 
     private final static Logger log = LoggerFactory.getLogger(PacketGenPanel.class);

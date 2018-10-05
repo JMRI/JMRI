@@ -162,10 +162,8 @@ public class SetPhysicalLocationAction extends AbstractAction {
          */
         protected JComboBox<String> getReporterComboBox() {
             ReporterManager mgr = InstanceManager.getDefault(jmri.ReporterManager.class);
-            String[] nameArray = mgr.getSystemNameArray();
             List<String> displayList = new ArrayList<>();
-            for (String name : nameArray) {
-                Reporter r = mgr.getBySystemName(name);
+            for (Reporter r : mgr.getNamedBeanSet()) {
                 if (r != null) {
                     _reporterList.add(r);
                     displayList.add(r.getDisplayName());

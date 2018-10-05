@@ -973,7 +973,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             } else {
                 log.warn("rejecting the cs opsw access account unsupported CV name format");
                 // unsupported format in "cv" name. Signal an error
-                p.programmingOpReply(1, ProgListener.SequenceError);
+                notifyProgListenerEnd(p, 1, ProgListener.SequenceError);
                 return;
 
             }
@@ -991,6 +991,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
     @Override
+    @Deprecated // 4.1.1
     public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         lopsa = 0;
         hopsa = 0;
@@ -1086,7 +1087,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             } else {
                 log.warn("rejecting the cs opsw access account unsupported CV name format");
                 // unsupported format in "cv" name.  Signal an error.
-                p.programmingOpReply(1, ProgListener.SequenceError);
+                notifyProgListenerEnd(p, 1, ProgListener.SequenceError);
                 return;
             }
         }
@@ -1169,7 +1170,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             } else {
                 log.warn("rejecting the cs opsw access account unsupported CV name format");
                 // unsupported format in "cv" name.  Signal an error.
-                p.programmingOpReply(1, ProgListener.SequenceError);
+                notifyProgListenerEnd(p, 1, ProgListener.SequenceError);
                 return;
 
             }
@@ -1202,6 +1203,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
     @Override
+    @Deprecated // 4.1.1
     public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         lopsa = 0;
         hopsa = 0;
@@ -1354,7 +1356,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         javax.swing.Timer timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                p.programmingOpReply(value, status);
+                notifyProgListenerEnd(p, value, status);
             }
         });
         timer.setInitialDelay(delay);

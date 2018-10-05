@@ -59,36 +59,16 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
     public synchronized void message(DCCppReply l) {
         // receive a DCC++ message and log it
         // display the raw data if requested
-        // Since DCC++ is text-based traffic, this is good enough for now.
-        // TODO: Provide "beautified" output later.
-        StringBuilder raw = new StringBuilder("RX: ");
-        if (rawCheckBox.isSelected()) {
-            raw.append(l.toString());
-        }
-
         log.debug("Message in Monitor: {} opcode {}", l.toString(), Character.toString(l.getOpCodeChar()));
 
-        String text = l.toMonitorString();
-
-        nextLine(text + "\n", raw.toString());
+	logMessage("","RX: ",l);
     }
 
     // listen for the messages to the Base Station
-    @SuppressWarnings("fallthrough")
     @Override
     public synchronized void message(DCCppMessage l) {
         // display the raw data if requested  
-        // Since DCC++ is text-based traffic, this is good enough for now.
-        // TODO: Provide "beautified" output later.
-        StringBuilder raw = new StringBuilder("TX: ");
-        if (rawCheckBox.isSelected()) {
-            raw.append(l.toString());
-        }
-
-        String text = l.toMonitorString();
-
-        nextLine(text + "\n", raw.toString());
-
+	logMessage("","TX: ",l);
     }
 
     // Handle a timeout notification

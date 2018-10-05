@@ -8,6 +8,7 @@
 
   <title>JMRI: Building with NetBeans</title>
     <meta name="author" content="Bob Jacobsen">
+    <meta name="author" content="B. Milhaupt">
   <meta name="keywords" content="JMRI technical code NetBeans">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -30,17 +31,21 @@
   <!--#include virtual="/Header.shtml" -->
 
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
       <h1>JMRI Code: Building with NetBeans</h1>
 
     <div class="toc">
-      <ul>
+     <ul>
         <li><a href="#intro">Introduction</a></li>
 
         <li><a href="#installing">Getting and Installing
-        NetBeans</a></li>
+        NetBeans</a>
+        <ul>
+        <li><a href="#windowsUsers">Important note for Windows users</a></li>
+        <li><a href="#heap">Java "Heap" and "low memory" notifications</a></li>
+        </ul></li>
 
         <li><a href="#checkout">Checking out code</a></li>
 
@@ -60,6 +65,8 @@
 
         <li><a href="#compileIndividualFile">NetBeans and compiling
         individual files</a></li>
+	<li><a href="#fetch">Loading a Specific Branch from 
+	GitHub</a></li>
 
         <li><a href="#patch">Making a Patch File</a></li>
       </ul><a href="#SeeAlso">See Also</a>
@@ -102,7 +109,7 @@
       software repositories - search your package manager for
       NetBeans.</p>
 
-      <h3>Important note for Windows users</h3>
+      <h3><a id="windowsUsers" name="windowsUsers"></a>Important note for Windows users</h3>
 
       <p>Due to different handling of Line Endings characters
       (<code>LF / CR LF</code>) between Windows and other systems -
@@ -181,6 +188,23 @@
       line-endings to the configured form and saves the file. If
       "CANCEL" is selected, the file will be saved WITHOUT changing
       any line-endings.</p>
+
+      <h3><a id="heap" name="heap"></a>Java "Heap" size and "low memory" notifications.</h3>
+
+      <p>Netbeans may provide notification of "Low Memory" situations 
+      when perfroming some operations, including running certain JMRI
+      "targets" within the build.xml file.  Netbeans can become 
+      <strong>very</strong> sluggish when it encounters these low memory 
+      conditions.  This can happen regardless of the amount of memory 
+      your machine has, unless you take steps to re-configure Netbeans.</p>
+
+      <p>By default, Netbeans uses a strategy to allocate a given 
+      amount of "Heap" space which is insufficient for projects
+      which are as large as JMRI.  JMRI developers who use Netbeans are 
+      encouraged to increase the Netbeans default Heap allocation which
+      is made when Netbeans is launched.  This is generally done via
+      a change to the "netbeans.conf" file.  See <a href="http://wiki.netbeans.org/FaqSettingHeapSize">
+      FaqSettingHeapSize</a> for details.</p>
 
       <h2><a id="gituse" name="gituse"></a>Using NetBeans with
       JMRI's Git Code Repository</h2>
@@ -319,14 +343,27 @@
           A new JMRI checkout should build cleanly. If not, please
           check with the JMRIusers or jmri-developers mailings
           lists for help.</p>
-
+          <a href="images/NetBeansContextLaunch.png"><img src="images/NetBeansContextLaunch.png" height="319" width="147" align="right"></a>
           <ul>
             <li>[Run] -&gt; [Run Project (JMRI)] will compile and
             invoke DecoderPro</li>
 
             <li>You can choose other targets (i.e. PanelPro...) by
-            changing [File]-&gt;[Project Properties
-            (JMRI)]-&gt;[Build and Run]-&gt;[Run Project]</li>
+            right-clicking (or control clicking) to get the 
+            project contextual menu.  This works in 
+            various places, but most certainly on the 
+            "JMRI" icon under Projects in the left side-bar.
+            In the middle of that menu are 
+            items for launching PanelPro, launching DecoderPro
+            and doing other build steps.</li>
+            
+            <li>The "Debug" target is a special case.
+            Which program (PanelPro vs DecoderPro) 
+            is defined by a line near the end of the
+            nbproject/ide-targets.xml file in the 
+            JMRI source directory. Perhaps 
+            somebody can some day figure out a 
+            better way to configure that...
           </ul>
 
           <p>If you want to run the program under the NetBeans
@@ -406,7 +443,7 @@
           JMRI branches, whichever branch you add the catalog from,
           that branch's schema is what is used.</p>
 
-          <h2><a id="spotbugs" name="spotbugs">Running
+          <h2><a id="SpotBugs" name="SpotBugs">Running
                   SpotBugs</a></h2>
 
           <p>The SpotBugs tool is a static code analysis tool which
@@ -477,22 +514,6 @@
           from within NetBeans generally does not suffer from the
           shortcomings of the configuration information found in
           the files in the project's nbproject/ directory.</p>
-
-          <h2><a id="SeeAlso" name="SeeAlso">See Also</a></h2>
-
-          <ul>
-            <li><a href="http://netbeans.org/">The NetBeans.org
-            Integrated Development Environment web site</a></li>
-
-            <li><a href="http://subversion.apache.org/">The
-            Apache.org Subversion project web site</a></li>
-
-            <li><a href="http://sourceforge.net/projects/nsis">The
-            NSIS project web site</a></li>
-
-            <li><a href="https://spotbugs.github.io">The
-                    SpotBugs web site</a></li>
-          </ul>
 
         <h2><a id="fetch" name="fetch"></a>Loading a Specific Branch from GitHub</h2>
         
@@ -568,6 +589,22 @@
             <li>After it finishes calculating the diffs, the file
             you selected will contain the patches, along with an
             information header.</li>
+          </ul>
+
+          <h2><a id="SeeAlso" name="SeeAlso">See Also</a></h2>
+
+          <ul>
+            <li><a href="http://netbeans.org/">The NetBeans.org
+            Integrated Development Environment web site</a></li>
+
+            <li><a href="http://subversion.apache.org/">The
+            Apache.org Subversion project web site</a></li>
+
+            <li><a href="http://sourceforge.net/projects/nsis">The
+            NSIS project web site</a></li>
+
+            <li><a href="https://spotbugs.github.io">The
+                    SpotBugs web site</a></li>
           </ul>
 
 

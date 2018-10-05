@@ -325,7 +325,7 @@ public class RollingStockSetFrame<T extends RollingStock> extends OperationsFram
         }
         // check to see if rolling stock is in staging and out of service (also location unknown)
         if (outOfServiceCheckBox.isSelected() && rs.getTrack() != null
-                && rs.getTrack().getTrackType().equals(Track.STAGING)) {
+                && rs.getTrack().isStaging()) {
             JOptionPane.showMessageDialog(this, getRb().getString("rsNeedToRemoveStaging"), getRb()
                     .getString("rsInStaging"), JOptionPane.WARNING_MESSAGE);
             // clear the rolling stock's location
@@ -515,7 +515,7 @@ public class RollingStockSetFrame<T extends RollingStock> extends OperationsFram
                 log.debug("changeDestination: {}, ({})", destinationBox.getSelectedItem(),
                         destTrack);
                 if (destTrack != null && rs.getDestinationTrack() != destTrack
-                        && destTrack.getTrackType().equals(Track.STAGING)
+                        && destTrack.isStaging()
                         && (rs.getTrain() == null || !rs.getTrain().isBuilt())) {
                     log.debug("Destination track ({}) is staging", destTrack.getName());
                     JOptionPane.showMessageDialog(this, getRb().getString("rsDoNotSelectStaging"), getRb()

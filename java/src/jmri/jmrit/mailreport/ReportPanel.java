@@ -314,15 +314,16 @@ public class ReportPanel extends JPanel {
                 if (!directory.equals("") || file.getName().toLowerCase().matches(".*(config\\.xml|\\.properties)")) {
                     log.debug("Add file: {}{}", directory, file.getName());
                     byte[] buffer = new byte[1024];
-                    FileInputStream in = new FileInputStream(file);
-                    out.putNextEntry(new ZipEntry(directory + file.getName()));
+                    try (FileInputStream in = new FileInputStream(file)) {
+                        out.putNextEntry(new ZipEntry(directory + file.getName()));
 
-                    int length;
-                    while ((length = in.read(buffer)) > 0) {
-                        out.write(buffer, 0, length);
+                        int length;
+                        while ((length = in.read(buffer)) > 0) {
+                            out.write(buffer, 0, length);
+                        }
+                        out.closeEntry();
+                        in.close();
                     }
-                    out.closeEntry();
-                    in.close();
                 } else {
                     log.debug("Skip file: {}{}", directory, file.getName());
                 }

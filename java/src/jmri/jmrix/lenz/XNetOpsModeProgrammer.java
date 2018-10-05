@@ -51,6 +51,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
      * Send an ops-mode write request to the Xpressnet.
      */
     @Override
+    @Deprecated // 4.1.1
     synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         XNetMessage msg = XNetMessage.getWriteOpsModeCVMsg(mAddressHigh, mAddressLow, CV, val);
         tc.sendXNetMessage(msg, this);
@@ -64,12 +65,13 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     }
 
     @Override
+    @Deprecated // 4.1.1
     synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {
         XNetMessage msg = XNetMessage.getVerifyOpsModeCVMsg(mAddressHigh, mAddressLow, CV, value);
         tc.sendXNetMessage(msg, this);
         /* We can trigger a read to an LRC120, but the information is not
          currently sent back to us via the XpressNet */
-        p.programmingOpReply(CV, jmri.ProgListener.NotImplemented);
+        notifyProgListenerEnd(p,CV,jmri.ProgListener.NotImplemented);
     }
 
     @Override
@@ -79,7 +81,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         tc.sendXNetMessage(msg, this);
         /* We can trigger a read to an LRC120, but the information is not
          currently sent back to us via the XpressNet */
-        p.programmingOpReply(val, jmri.ProgListener.NotImplemented);
+        notifyProgListenerEnd(p,val,jmri.ProgListener.NotImplemented);
     }
 
     /**
@@ -131,7 +133,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
                 new jmri.util.WaitHandler(this,250);
                 progState = NOTPROGRAMMING;
                 stopTimer();
-                progListener.programmingOpReply(value, jmri.ProgListener.OK);
+                notifyProgListenerEnd(progListener,value,jmri.ProgListener.OK);
             } else {
                 /* this is an error */
                 if (l.isRetransmittableErrorMsg()) {
@@ -141,12 +143,12 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
                         && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
                     progState = NOTPROGRAMMING;
                     stopTimer();
-                    progListener.programmingOpReply(value, jmri.ProgListener.NotImplemented);
+                    notifyProgListenerEnd(progListener,value,jmri.ProgListener.NotImplemented);
                 } else {
                     /* this is an unknown error */
                     progState = NOTPROGRAMMING;
                     stopTimer();
-                    progListener.programmingOpReply(value, jmri.ProgListener.UnknownError);
+                    notifyProgListenerEnd(progListener,value,jmri.ProgListener.UnknownError);
                 }
             }
         }
@@ -184,9 +186,19 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
 
     @Override
     synchronized protected void timeout() {
-        progState = NOTPROGRAMMING;
-        stopTimer();
-        progListener.programmingOpReply(value, jmri.ProgListener.FailedTimeout);
+        if (progState != NOTPROGRAMMING) {
+            // we're programming, time to stop
+            if (log.isDebugEnabled()) {
+                log.debug("timeout!");
+            }
+            // perhaps no loco present? Fail back to end of programming
+            progState = NOTPROGRAMMING;
+            if (getCanRead()) {
+               notifyProgListenerEnd(progListener,value,jmri.ProgListener.FailedTimeout);
+            } else {
+               notifyProgListenerEnd(progListener,value,jmri.ProgListener.OK);
+            }
+        }
     }
 
     // initialize logging

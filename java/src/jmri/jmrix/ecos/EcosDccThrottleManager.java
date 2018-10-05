@@ -86,6 +86,7 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
     public String[] getAddressTypes() {
         return new String[]{
             LocoAddress.Protocol.DCC.getPeopleName(),
+            LocoAddress.Protocol.MFX.getPeopleName(),
             LocoAddress.Protocol.MOTOROLA.getPeopleName(),
             LocoAddress.Protocol.SELECTRIX.getPeopleName(),
             LocoAddress.Protocol.LGB.getPeopleName()};
@@ -94,6 +95,7 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
     @Override
     public LocoAddress.Protocol[] getAddressProtocolTypes() {
         return new LocoAddress.Protocol[]{LocoAddress.Protocol.DCC,
+            LocoAddress.Protocol.MFX,
             LocoAddress.Protocol.MOTOROLA,
             LocoAddress.Protocol.SELECTRIX,
             LocoAddress.Protocol.LGB};
@@ -104,7 +106,7 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
      * Decide whether given a long address or not.
      */
     static boolean isLongAddress(int num) {
-        return (num >= 100);
+        return (num >= 127);
     }
 
     @Override

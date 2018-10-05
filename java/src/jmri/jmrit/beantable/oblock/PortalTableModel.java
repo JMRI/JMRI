@@ -216,7 +216,7 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
         Portal portal = _manager.getBySystemName(name);
         if (portal == null) {
             log.error("Portal null, getValueAt row= " + row + ", col= " + col + ", "
-                    + "portalListSize= " + _manager.getSystemNameArray().length);
+                    + "portalListSize= " + _manager.getObjectCount());
             return;
         }
 
@@ -300,10 +300,9 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Po
                         portal.getName()), Bundle.getMessage("WarningTitle"),
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                 == JOptionPane.YES_OPTION) {
-            OBlockManager OBlockMgr = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-            String[] sysNames = OBlockMgr.getSystemNameArray();
-            for (int i = 0; i < sysNames.length; i++) {
-                OBlockMgr.getBySystemName(sysNames[i]).removePortal(portal);
+            OBlockManager oBlockMgr = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
+            for (OBlock oblock : oBlockMgr.getNamedBeanSet()) {
+                oblock.removePortal(portal);
             }
             portal.dispose();
             return true;

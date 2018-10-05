@@ -55,6 +55,10 @@ public class JMRIClientTurnoutTest extends jmri.implementation.AbstractTurnoutTe
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initInternalSensorManager();
+        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        
         jcins = new JMRIClientTrafficControlScaffold();
         t = new JMRIClientTurnout(3, new JMRIClientSystemConnectionMemo(jcins));
     }

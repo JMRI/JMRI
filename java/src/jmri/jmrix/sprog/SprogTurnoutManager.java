@@ -28,7 +28,7 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
-        int addr = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue(); // multi char prefix
+        int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1)); // multi char prefix
         Turnout t;
         if (_memo.getSprogMode() == SprogConstants.SprogMode.OPS ) {
             t = new SprogCSTurnout(addr, _memo);
@@ -52,7 +52,7 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         // name must be in the STnnnnn format (S is user configurable)
         int num = 0;
         try {
-            num = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
+            num = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         } catch (Exception e) {
             log.debug("invalid character in number field of system name: {}", systemName);
             return (0);

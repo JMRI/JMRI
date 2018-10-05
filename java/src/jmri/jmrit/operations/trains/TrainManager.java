@@ -1026,14 +1026,12 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
             }
             // check for scripts
             if (options.getChild(Xml.SCRIPTS) != null) {
-                @SuppressWarnings("unchecked")
                 List<Element> lm = options.getChild(Xml.SCRIPTS).getChildren(Xml.START_UP);
                 for (Element es : lm) {
                     if ((a = es.getAttribute(Xml.NAME)) != null) {
                         addStartUpScript(a.getValue());
                     }
                 }
-                @SuppressWarnings("unchecked")
                 List<Element> lt = options.getChild(Xml.SCRIPTS).getChildren(Xml.SHUT_DOWN);
                 for (Element es : lt) {
                     if ((a = es.getAttribute(Xml.NAME)) != null) {
@@ -1043,7 +1041,6 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
             }
         }
         if (root.getChild(Xml.TRAINS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> eTrains = root.getChild(Xml.TRAINS).getChildren(Xml.TRAIN);
             log.debug("readFile sees {} trains", eTrains.size());
             for (Element eTrain : eTrains) {

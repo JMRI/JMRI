@@ -27,7 +27,7 @@
 
 <body>
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
       <h1>JMRI: Technology Road Map</h1>
@@ -257,25 +257,28 @@
       releases in Fall 2015 started the requirement for Java 8,
       also known as Java 1.8.
       This has continued through the following release series.
-      The June 2018 release, notionally JMRI 4.12 will
-      remain with Java 8, but may involve other updates.
+      The December 2018 release, notionally JMRI 4.14 will
+      remain with Java 8, but may involve other library updates.
+      This includes doing development, test and production release
+      builds using Java 1.8.0_72.
       
       <p>The next long-term-support Java release will be
-      Java 11 in Fall of 2018.  Oracle intendes to 
+      Java 11 in Fall of 2018.  Oracle intends to 
       <a href="https://blogs.oracle.com/java-platform-group/a-quick-summary-on-the-new-java-se-subscription">align their Java and the OpenJDK at that point</a>.
       Because some people will
       need to have that on their computers for other purposes, 
-      we intend to support JMRI running on Oracle Java 8 through 11
+      we intend to support JMRI building and/or running on Oracle Java 8 through 11
       and OpenJDK version 11
-      by JMRI 4.14 in December 2018.
+      by JMRI 4.14 in December 2018. 
       
       <p>
       At some point, the Java version required by JMRI has to move forward.
       For example, Oracle 
       <a href="http://www.oracle.com/technetwork/java/javase/javaclientroadmapupdate2018mar-4414431.pdf">has announced</a> that they'll stop providing standalone JRE installers 
       by the end of 2020, by which time JMRI distributions will have to contain
-      the Java runtime components. That in turn might require tools like
-      jlink from Java 9 or late.
+      the Java runtime components or it won't be possible to run JMRI on newly-bought PCs. 
+      That in turn might require tools like
+      jlink from Java 9 or later.
 
       <p>
       While we don't know yet when JMRI will have to move past Java 1.8, 

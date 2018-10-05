@@ -89,7 +89,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
     //private static VSDecoderManager instance = null;   // sole instance of this class
-    private static VSDecoderManagerThread thread = null; // thread for running the manager
+    private volatile static VSDecoderManagerThread thread = null; // thread for running the manager
 
     private VSDecoderPreferences vsdecoderPrefs; // local pointer to the preferences object
 

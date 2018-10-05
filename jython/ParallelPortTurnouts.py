@@ -10,6 +10,7 @@
 
 import jmri
 import java
+import java.beans
 
 name = "LPT1" 
 #name = "/dev/cu.usbmodem3d11" # debug

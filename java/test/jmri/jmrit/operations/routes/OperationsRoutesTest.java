@@ -9,10 +9,11 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.jdom2.JDOMException;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Route class Last manually cross-checked on 20090131
@@ -26,6 +27,7 @@ import org.junit.Assert;
 public class OperationsRoutesTest extends OperationsTestCase {
 
     // test Route creation
+    @Test
     public void testCreate() {
         Route r1 = new Route("TESTROUTEID", "TESTROUTENAME");
         r1.setComment("TESTCOMMENT");
@@ -36,6 +38,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
     }
 
     // test Route public constants
+    @Test
     public void testConstants() {
         Route r1 = new Route("TESTROUTEID", "TESTROUTENAME");
 
@@ -53,6 +56,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
     }
 
     // test Route attributes
+    @Test
     public void testAttributes() {
         Route r1 = new Route("TESTROUTEID", "TESTROUTENAME");
 
@@ -65,6 +69,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
     }
 
     // test route location
+    @Test
     public void testRouteLocation() {
         Route r1 = new Route("TESTROUTEID", "TESTROUTENAME");
 
@@ -80,6 +85,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
     }
 
     // test public RouteLocation constants
+    @Test
     public void testRouteLocationConstants() {
         Route r1 = new Route("TESTROUTEID", "TESTROUTENAME");
 
@@ -111,6 +117,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
     }
 
     // test RouteLocation attributes
+    @Test
     public void testRouteLocationAttributes() {
         Route r1 = new Route("TESTROUTEID", "TESTROUTENAME");
 
@@ -179,6 +186,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
     }
 
     // test route location management
+    @Test
     public void testRouteLocationManagement() {
         Route r1 = new Route("TESTROUTEID", "TESTROUTENAME");
 
@@ -325,6 +333,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
         }
     }
 
+    @Test
     public void testRouteManager() {
         RouteManager rm = InstanceManager.getDefault(RouteManager.class);
         List<Route> listById = rm.getRoutesByIdList();
@@ -483,6 +492,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
     }
 
     // test route status
+    @Test
     public void testRouteStatus() {
         RouteManager rm = InstanceManager.getDefault(RouteManager.class);
         Route r = rm.newRoute("TestRouteStatus");
@@ -509,6 +519,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
      * @throws JDOMException exception
      * @throws IOException exception
      */
+    @Test
     public void testXMLCreate() throws JDOMException, IOException {
 
         RouteManager manager = InstanceManager.getDefault(RouteManager.class);
@@ -715,28 +726,14 @@ public class OperationsRoutesTest extends OperationsTestCase {
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
     }
 
-    public OperationsRoutesTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OperationsRoutesTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OperationsRoutesTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         super.tearDown();
     }
 }

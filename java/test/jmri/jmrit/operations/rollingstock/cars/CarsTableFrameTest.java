@@ -3,12 +3,13 @@ package jmri.jmrit.operations.rollingstock.cars;
 import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -20,7 +21,7 @@ import org.junit.Test;
  *
  * @author	Dan Boudreau Copyright (C) 2009
  */
-public class CarsTableFrameTest extends OperationsSwingTestCase {
+public class CarsTableFrameTest extends OperationsTestCase {
 
     @Test
     public void testCarsTableFrame() throws Exception {
@@ -108,7 +109,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th car in sort by number list", c2.getId(), cars.get(4).getId());
 
         // now sort by built date
-        enterClickAndLeave(ctf.sortByBuilt);
+        JemmyUtil.enterClickAndLeave(ctf.sortByBuilt);
         cars = ctf.carsTableModel.getSelectedCarList();
         Assert.assertEquals("1st car in sort by built list", c5, cars.get(0));
         Assert.assertEquals("2nd car in sort by built list", c4, cars.get(1));
@@ -117,7 +118,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th car in sort by built list", c1, cars.get(4));
 
         // now sort by color
-        enterClickAndLeave(ctf.sortByColor);
+        JemmyUtil.enterClickAndLeave(ctf.sortByColor);
         cars = ctf.carsTableModel.getSelectedCarList();
         Assert.assertEquals("1st car in sort by color list", c4.getId(), cars.get(0).getId());
         Assert.assertEquals("2nd car in sort by color list", c2.getId(), cars.get(1).getId());
@@ -125,7 +126,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("4th car in sort by color list", c1.getId(), cars.get(3).getId());
         Assert.assertEquals("5th car in sort by color list", c3.getId(), cars.get(4).getId());
 
-        enterClickAndLeave(ctf.sortByDestination);
+        JemmyUtil.enterClickAndLeave(ctf.sortByDestination);
         cars = ctf.carsTableModel.getSelectedCarList();
         Assert.assertEquals("1st car in sort by destination list", c2, cars.get(0));
         Assert.assertEquals("2nd car in sort by destination list", c4, cars.get(1));
@@ -133,11 +134,11 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("4th car in sort by destination list", c3, cars.get(3));
         Assert.assertEquals("5th car in sort by destination list", c5, cars.get(4));
 
-        enterClickAndLeave(ctf.sortByKernel);
+        JemmyUtil.enterClickAndLeave(ctf.sortByKernel);
         //TODO add kernels
 
         // now sort by load
-        enterClickAndLeave(ctf.sortByLoad);
+        JemmyUtil.enterClickAndLeave(ctf.sortByLoad);
         cars = ctf.carsTableModel.getSelectedCarList();
         Assert.assertEquals("1st car in sort by load list", c2, cars.get(0));
         Assert.assertEquals("2nd car in sort by load list", c4, cars.get(1));
@@ -146,7 +147,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th car in sort by load list", c5, cars.get(4));
 
         // now sort by location
-        enterClickAndLeave(ctf.sortByLocation);
+        JemmyUtil.enterClickAndLeave(ctf.sortByLocation);
         cars = ctf.carsTableModel.getSelectedCarList();
         Assert.assertEquals("1st car in sort by location list", c2, cars.get(0));
         Assert.assertEquals("2nd car in sort by location list", c3, cars.get(1));
@@ -155,7 +156,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th car in sort by location list", c1, cars.get(4));
 
         // now sort by moves
-        enterClickAndLeave(ctf.sortByMoves);
+        JemmyUtil.enterClickAndLeave(ctf.sortByMoves);
         cars = ctf.carsTableModel.getSelectedCarList();
         Assert.assertEquals("1st car in sort by move list", c5, cars.get(0));
         Assert.assertEquals("2nd car in sort by move list", c4, cars.get(1));
@@ -164,7 +165,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th car in sort by move list", c1, cars.get(4));
 
         // test sort by number again
-        enterClickAndLeave(ctf.sortByNumber);
+        JemmyUtil.enterClickAndLeave(ctf.sortByNumber);
         cars = ctf.carsTableModel.getSelectedCarList();
         Assert.assertEquals("1st car in sort by number list 2", c1, cars.get(0));
         Assert.assertEquals("2nd car in sort by number list 2", c4, cars.get(1));
@@ -173,7 +174,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th car in sort by number list 2", c2, cars.get(4));
 
         // test sort by owner
-        //enterClickAndLeave(ctf.sortByOwner);
+        //JemmyUtil.enterClickAndLeave(ctf.sortByOwner);
         ctf.sortByOwner.doClick();
         cars = ctf.carsTableModel.getSelectedCarList();
         Assert.assertEquals("1st car in sort by owner list", c4, cars.get(0));
@@ -183,7 +184,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th car in sort by owner list", c1, cars.get(4));
 
         // test sort by rfid
-        //enterClickAndLeave(ctf.sortByRfid);
+        //JemmyUtil.enterClickAndLeave(ctf.sortByRfid);
         // use doClick() in case the radio button isn't visible due to scrollbars
         ctf.sortByRfid.doClick();
         cars = ctf.carsTableModel.getSelectedCarList();
@@ -194,7 +195,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th car in sort by rfid list", c3, cars.get(4));
 
         // test sort by road
-        enterClickAndLeave(ctf.sortByRoad);
+        JemmyUtil.enterClickAndLeave(ctf.sortByRoad);
         cars = ctf.carsTableModel.getSelectedCarList();
         Assert.assertEquals("1st car in sort by road list", c3, cars.get(0));
         Assert.assertEquals("2nd car in sort by road list", c1, cars.get(1));
@@ -202,11 +203,11 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("4th car in sort by road list", c4, cars.get(3));
         Assert.assertEquals("5th car in sort by road list", c2, cars.get(4));
 
-        enterClickAndLeave(ctf.sortByTrain);
+        JemmyUtil.enterClickAndLeave(ctf.sortByTrain);
         //TODO add trains
 
         // test sort by type
-        enterClickAndLeave(ctf.sortByType);
+        JemmyUtil.enterClickAndLeave(ctf.sortByType);
         cars = ctf.carsTableModel.getSelectedCarList();
         Assert.assertEquals("1st car in sort by type list", c2, cars.get(0));
         Assert.assertEquals("2nd car in sort by type list", c1, cars.get(1));
@@ -216,14 +217,14 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
 
         // test find text field
         ctf.findCarTextBox.setText("*2");
-        enterClickAndLeave(ctf.findButton);
+        JemmyUtil.enterClickAndLeave(ctf.findButton);
         // table is sorted by type, cars with number 2 are in the first and last rows
         Assert.assertEquals("find car by number 1st", 0, ctf.carsTable.getSelectedRow());
-        enterClickAndLeave(ctf.findButton);
+        JemmyUtil.enterClickAndLeave(ctf.findButton);
         Assert.assertEquals("find car by number 2nd", 4, ctf.carsTable.getSelectedRow());
 
         // create the CarEditFrame
-        enterClickAndLeave(ctf.addButton);
+        JemmyUtil.enterClickAndLeave(ctf.addButton);
 
         JUnitUtil.dispose(ctf);
 
@@ -305,7 +306,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
 
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
         // add type names
         CarTypes ct = InstanceManager.getDefault(CarTypes.class);
@@ -318,7 +319,7 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
 
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

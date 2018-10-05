@@ -322,7 +322,6 @@ public class Schedule implements java.beans.PropertyChangeListener {
             _comment = a.getValue();
         }
         if (e.getChildren(Xml.ITEM) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> eScheduleItems = e.getChildren(Xml.ITEM);
             log.debug("schedule: {} has {} items", getName(), eScheduleItems.size());
             for (Element eScheduleItem : eScheduleItems) {

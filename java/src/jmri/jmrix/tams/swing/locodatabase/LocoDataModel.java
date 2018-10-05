@@ -101,7 +101,6 @@ public class LocoDataModel extends javax.swing.table.AbstractTableModel implemen
         }
     }
 
-    @SuppressWarnings("null")
     @Override
     public Object getValueAt(int row, int col) {
         if (locolist.size() == 0) {

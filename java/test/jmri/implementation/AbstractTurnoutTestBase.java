@@ -216,9 +216,9 @@ public abstract class AbstractTurnoutTestBase {
     public void testTwoSensorFeedback() throws jmri.JmriException {
         Sensor s1 = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS1");
         Sensor s2 = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS2");
-        t.setFeedbackMode(Turnout.TWOSENSOR); 
         t.provideFirstFeedbackSensor("IS1");
         t.provideSecondFeedbackSensor("IS2");
+        t.setFeedbackMode(Turnout.TWOSENSOR); 
         Assert.assertEquals("known state for TWOSENSOR feedback (UNKNOWN,UNKNOWN)",Turnout.UNKNOWN,t.getKnownState());
 
         s1.setKnownState(Sensor.ACTIVE);
@@ -241,6 +241,12 @@ public abstract class AbstractTurnoutTestBase {
         s1.setKnownState(Sensor.ACTIVE);
         s2.setKnownState(Sensor.ACTIVE);
         Assert.assertEquals("state changed by TWOSENSOR feedback (Active,Active)", Turnout.INCONSISTENT, t.getKnownState());
+    }
+
+
+    @Test
+    public void testGetBeanType(){
+         Assert.assertEquals("bean type",t.getBeanType(),Bundle.getMessage("BeanNameTurnout"));
     }
 
 }

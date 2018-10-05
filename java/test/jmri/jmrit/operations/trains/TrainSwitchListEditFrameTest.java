@@ -3,12 +3,14 @@ package jmri.jmrit.operations.trains;
 import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
+import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -19,7 +21,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class TrainSwitchListEditFrameTest extends OperationsSwingTestCase {
+public class TrainSwitchListEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
@@ -51,17 +53,17 @@ public class TrainSwitchListEditFrameTest extends OperationsSwingTestCase {
             Assert.assertTrue("print switchlist 1", l.isSwitchListEnabled());
         }
         // now clear all locations
-        enterClickAndLeave(f.clearButton);
+        JemmyUtil.enterClickAndLeave(f.clearButton);
 
-        enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
 
         for (int i = 0; i < locations.size(); i++) {
             Location l = locations.get(i);
             Assert.assertFalse("print switchlist 2", l.isSwitchListEnabled());
         }
         // now set all locations
-        enterClickAndLeave(f.setButton);
-        enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeave(f.setButton);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
 
         for (int i = 0; i < locations.size(); i++) {
             Location l = locations.get(i);
@@ -69,23 +71,23 @@ public class TrainSwitchListEditFrameTest extends OperationsSwingTestCase {
         }
 
         // test the two check box options
-        enterClickAndLeave(f.switchListRealTimeCheckBox);
-        enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeave(f.switchListRealTimeCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
 
         Assert.assertTrue("All Trains", Setup.isSwitchListAllTrainsEnabled());
         Assert.assertTrue("Page per Train", Setup.getSwitchListPageFormat().equals(Setup.PAGE_NORMAL));
         Assert.assertFalse("Real Time", Setup.isSwitchListRealTime());
 
-        enterClickAndLeave(f.switchListAllTrainsCheckBox);
-        enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeave(f.switchListAllTrainsCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
 
         Assert.assertFalse("All Trains", Setup.isSwitchListAllTrainsEnabled());
         Assert.assertTrue("Page per Train", Setup.getSwitchListPageFormat().equals(Setup.PAGE_NORMAL));
         Assert.assertFalse("Real Time", Setup.isSwitchListRealTime());
 
         // TODO add test for combo box
-        //      enterClickAndLeave(f.switchListPageComboBox);
-        //      enterClickAndLeave(f.saveButton);
+        //      JemmyUtil.enterClickAndLeave(f.switchListPageComboBox);
+        //      JemmyUtil.enterClickAndLeave(f.saveButton);
         //      Assert.assertFalse("All Trains", Setup.isSwitchListAllTrainsEnabled());
         //      Assert.assertTrue("Page per Train", Setup.isSwitchListPagePerTrainEnabled());
         //      Assert.assertFalse("Real Time", Setup.isSwitchListRealTime());
@@ -97,14 +99,14 @@ public class TrainSwitchListEditFrameTest extends OperationsSwingTestCase {
     // The minimal setup for log4J
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
-        loadTrains();
+        JUnitOperationsUtil.loadTrains();
     }
 
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 
