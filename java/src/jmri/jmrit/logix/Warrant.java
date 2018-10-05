@@ -124,7 +124,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     static final int MID = 2;
     static final int END = 3;
     
-    static boolean _debug = false;
+    static boolean _debug; {
+        if (log.isDebugEnabled()) {
+            _debug = true;
+        } else {
+            _debug = false;
+        }
+    }
 
     /**
      * Create an object with no route defined. The list of BlockOrders is the
@@ -1068,7 +1074,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             Engineer.ThrottleRamp ramp = _engineer.getRamp();
             if (ramp != null) {
                 info.append("Ramp Thread.State= "); info.append(ramp.getState());
-                info.append(", ready= "); info.append(ramp.ready);
+                info.append(", ready= "); info.append(ramp.ready); info.append("\n\t\t");
+                for (StackTraceElement elem : ramp.getStackTrace()) {
+                    info.append(elem.getClassName()); info.append(".");
+                    info.append(elem.getMethodName()); info.append(", line ");
+                    info.append(elem.getLineNumber()); info.append("\n\t\t");
+                }
             } else {
                 info.append("No ramp");
             }
@@ -2090,7 +2101,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     }
 
     private class CommandDelay extends Thread implements Runnable {
-    //private class CommandDelay extends javax.swing.SwingWorker<Boolean, String> {
 
         String nextSpeedType;
         long _startWaitTime = 0;
@@ -2131,7 +2141,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                         log.debug("CommandDelay: after wait of {}ms, start Ramp to {}. warrant {}",
                                 _startWaitTime, nextSpeedType, getDisplayName());
                     }
-                    jmri.util.ThreadingUtil.runOnLayout(() -> { // move to layout-handling thread. Why?
+                    jmri.util.ThreadingUtil.runOnLayout(() -> { // move to layout-handling thread. <-Why?
+                        // engineer does not use GUI in these calls.  !!! investigate.
                         _engineer.rampSpeedTo(nextSpeedType, _endBlockIdx, _useIndex);
                         // start ramp first
                         if (nextSpeedType.equals(Stop) || nextSpeedType.equals(EStop)) {
@@ -2455,6 +2466,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         cancelDelayRamp();  // cancel old, if nec.
         blkOrder = getBlockOrderAt(_idxCurrentOrder);
 
+        //  if Ramping not considered here. FIX!!! some ramp up is OK - but must decide the proper time to interrupt.
          if (log.isDebugEnabled()) {
              log.debug("Schedule speed change to {} in block \"{}\" availDist={}, warrant= {}",
                      speedType, blkOrder.getBlock().getDisplayName(), availDist, getDisplayName());
