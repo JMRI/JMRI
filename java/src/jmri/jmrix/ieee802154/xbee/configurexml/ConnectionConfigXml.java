@@ -7,6 +7,7 @@ import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
 import java.util.List;
 import jmri.jmrix.AbstractStreamPortController;
+import jmri.jmrix.AbstractStreamConnectionConfig;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.ieee802154.xbee.ConnectionConfig;
 import jmri.jmrix.ieee802154.xbee.XBeeAdapter;
@@ -77,6 +78,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                             pc.getClass().getName()));
                 }
 
+                jmri.jmrix.AbstractStreamConnectionConfig cf = null;
+		if ((cf = node.getConnectionConfig()) != null) {
+                    n.addContent(makeParameter("StreamConfig",
+                            cf.getClass().getName()));
+                }
+
                 // look for the next node
                 node = (XBeeNode) xtc.getNode(index);
                 index++;
@@ -145,22 +152,51 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                // otherwise, the IOStream associated with the node has not
                // been configured.
                String streamController = findParmValue(n, "StreamController");
-               if (streamController != null) {
+               String streamConfig = findParmValue(n, "StreamConfig");
+               AbstractStreamPortController connectedController = null; 
+	       if (streamController != null) {
                     try {
                         @SuppressWarnings("unchecked") // Class.forName cast is unchecked at this point
                         java.lang.Class<jmri.jmrix.AbstractStreamPortController> T = (Class<AbstractStreamPortController>) Class.forName(streamController);
-                        node.connectPortController(T);
+			java.lang.reflect.Constructor<?> ctor = T.getConstructor(java.io.DataInputStream.class, java.io.DataOutputStream.class, String.class);
+                        connectedController = (jmri.jmrix.AbstractStreamPortController) ctor.newInstance(node.getIOStream().getInputStream(), node.getIOStream().getOutputStream(), "XBee Node " + node.getPreferedName());
+		    } catch (java.lang.ClassNotFoundException cnfe) {
+			log.error("Unable to find class for stream controller : {}",streamController);
+		    } catch (java.lang.InstantiationException | 
+	                     java.lang.NoSuchMethodException |
+                             java.lang.IllegalAccessException | 
+                             java.lang.reflect.InvocationTargetException ex) {
+			 log.error("Unable to construct Stream Port Controller for node.", ex);
+	            }
+	       }
+	       if (streamConfig != null && connectedController != null ) {
+                    try {
+                        @SuppressWarnings("unchecked") // Class.forName cast is unchecked at this point
+                        java.lang.Class<jmri.jmrix.AbstractStreamConnectionConfig> T = (Class<AbstractStreamConnectionConfig>) Class.forName(streamConfig);
+			java.lang.reflect.Constructor<?> ctor = T.getConstructor(jmri.jmrix.AbstractStreamPortController.class);
+                        jmri.jmrix.AbstractStreamConnectionConfig connectedConfig = (jmri.jmrix.AbstractStreamConnectionConfig) ctor.newInstance(connectedController);
+                        node.connectPortController(connectedConfig);
                     } catch (java.lang.ClassNotFoundException cnfe) {
-                        log.error("Unable to find class for stream controller : {}",streamController);
+                        log.error("Unable to find class for stream config: {}",streamConfig);
+		    } catch (java.lang.InstantiationException | 
+	                     java.lang.NoSuchMethodException |
+                             java.lang.IllegalAccessException | 
+                             java.lang.reflect.InvocationTargetException ex) {
+			 log.error("Unable to construct Stream Port Configuration for node.", ex);
                     }
-                }
-            } catch (TimeoutException toe) {
-               log.error("Timeout adding node {} from configuration file.",remoteDevice);
-            } catch (XBeeException xbe) {
-               log.error("Exception adding node {} from configuration file.",remoteDevice);
-            }
-
-        }
+	       } else if(connectedController != null) {
+	            // fallback for connections created with a script
+	            node.connectPortController(connectedController);
+	       }
+	    } catch (TimeoutException toe) {
+		 log.error("Timeout adding node {} from configuration file.",
+				 remoteDevice);
+	    } catch (XBeeException xbe) {
+		 log.error("Exception adding node {} from configuration file.",
+				 remoteDevice);
+	    }
+	}
+		
     }
 
     /**

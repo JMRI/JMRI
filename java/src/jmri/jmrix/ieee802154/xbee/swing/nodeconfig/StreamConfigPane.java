@@ -133,12 +133,16 @@ public class StreamConfigPane extends JmrixConfigPane {
 
         manuBox.addItem(NONE_SELECTED);
 
-        //manufactureNameList = manager.getConnectionManufacturers();
-        /*Set<Class<? extends AbstractStreamPortController>> subTypes = reflections.getSubTypesOf(AbstractStreamPortController.class);
-        for (Class cType : subTypes) {
-            manuBox.addItem(cType.getName());
-        }*/
-        manuBox.addItem("jmri.jmrix.lenz.XNetStreamPortController.class");
+        manufactureNameList = manager.getConnectionManufacturers();
+        for (String manuName : manufactureNameList) {
+            if (original != null && original.getManufacturer() != null
+                    && original.getManufacturer().equals(manuName)) {
+                manuBox.addItem(manuName);
+                manuBox.setSelectedItem(manuName);
+            } else {
+                manuBox.addItem(manuName);
+            }
+        }
         manuBox.addActionListener((ActionEvent evt) -> {
             updateComboConnection();
         });
@@ -147,12 +151,12 @@ public class StreamConfigPane extends JmrixConfigPane {
         classConnectionNameList = manager.getConnectionTypes((String) manuBox.getSelectedItem());
         classConnectionList = new jmri.jmrix.ConnectionConfig[classConnectionNameList.length + 1];
         modeBox.addItem(NONE_SELECTED);
-        if (manuBox.getSelectedIndex() != 0) {
+        //if (manuBox.getSelectedIndex() != 0) {
             modeBox.setEnabled(true);
-        } else {
+        //} else {
             modeBox.setSelectedIndex(0);
             modeBox.setEnabled(false);
-        }
+        //}
         int n = 1;
         if (manuBox.getSelectedIndex() != 0) {
             for (String className : classConnectionNameList) {

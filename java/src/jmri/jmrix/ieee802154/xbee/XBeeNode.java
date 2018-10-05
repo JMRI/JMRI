@@ -342,20 +342,7 @@ public class XBeeNode extends IEEE802154Node {
      */
     public void connectPortController(jmri.jmrix.AbstractStreamPortController cont) {
         connectedController = cont;
-    }
-
-    /**
-     * Create a new object derived from AbstractStreamPortController and
-     * connect it to the IOStream associated with this object.
-     */
-    public void connectPortController(Class<jmri.jmrix.AbstractStreamPortController> T) {
-        try {
-            java.lang.reflect.Constructor<?> ctor = T.getConstructor(java.io.DataInputStream.class, java.io.DataOutputStream.class, String.class);
-            connectedController = (jmri.jmrix.AbstractStreamPortController) ctor.newInstance(getIOStream().getInputStream(), getIOStream().getOutputStream(), "XBee Node " + getPreferedName());
-            connectedController.configure();
-        } catch (java.lang.InstantiationException | java.lang.NoSuchMethodException | java.lang.IllegalAccessException | java.lang.reflect.InvocationTargetException ex) {
-            log.error("Unable to construct Stream Port Controller for node.", ex);
-        }
+        connectedController.configure();
     }
 
     /**
