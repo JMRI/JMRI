@@ -2853,8 +2853,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
         _actionNameField.setText(_curAction.getDeviceName());
         switch (itemType) {
             case SENSOR:
-                _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
-                        Conditional.ITEM_TO_SENSOR_ACTION, actionType) + 1);
+                _actionTypeBox.setSelectedIndex(
+                        Conditional.ActionType.getIndexInList(Conditional.ActionType.getSensorItems(), actionType) + 1);
                 if ((actionType == Conditional.ActionType.RESET_DELAYED_SENSOR)
                         || (actionType == Conditional.ActionType.DELAYED_SENSOR)) {
                     _shortActionString.setText(_curAction.getActionString());
@@ -2873,8 +2873,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 break;
 
             case TURNOUT:
-                _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
-                        Conditional.ITEM_TO_TURNOUT_ACTION, actionType) + 1);
+                _actionTypeBox.setSelectedIndex(
+                        Conditional.ActionType.getIndexInList(Conditional.ActionType.getTurnoutItems(), actionType) + 1);
                 if ((actionType == Conditional.ActionType.RESET_DELAYED_TURNOUT)
                         || (actionType == Conditional.ActionType.DELAYED_TURNOUT)) {
                     _shortActionString.setText(_curAction.getActionString());
@@ -2901,8 +2901,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 break;
 
             case LIGHT:
-                _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
-                        Conditional.ITEM_TO_LIGHT_ACTION, actionType) + 1);
+                _actionTypeBox.setSelectedIndex(
+                        Conditional.ActionType.getIndexInList(Conditional.ActionType.getLightItems(), actionType) + 1);
                 if (actionType == Conditional.ActionType.SET_LIGHT) {
                     if (_curAction.getActionData() == Light.ON) {
                         _actionBox.setSelectedIndex(0);
@@ -2918,18 +2918,18 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 break;
 
             case SIGNALHEAD:
-                _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
-                        Conditional.ITEM_TO_SIGNAL_HEAD_ACTION, actionType) + 1);
+                _actionTypeBox.setSelectedIndex(
+                        Conditional.ActionType.getIndexInList(Conditional.ActionType.getSignalHeadItems(), actionType) + 1);
                 break;
 
             case SIGNALMAST:
-                _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
-                        Conditional.ITEM_TO_SIGNAL_MAST_ACTION, actionType) + 1);
+                _actionTypeBox.setSelectedIndex(
+                        Conditional.ActionType.getIndexInList(Conditional.ActionType.getSignalMastItems(), actionType) + 1);
                 break;
 
             case CLOCK:
-                _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
-                        Conditional.ITEM_TO_CLOCK_ACTION, actionType) + 1);
+                _actionTypeBox.setSelectedIndex(
+                        Conditional.ActionType.getIndexInList(Conditional.ActionType.getClockItems(), actionType) + 1);
                 if (actionType == Conditional.ActionType.SET_FAST_CLOCK_TIME) {
                     int time = _curAction.getActionData();
                     _longActionString.setText(formatTime(time / 60, time - ((time / 60) * 60)));
@@ -2938,19 +2938,19 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 break;
 
             case MEMORY:
-                _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
-                        Conditional.ITEM_TO_MEMORY_ACTION, actionType) + 1);
+                _actionTypeBox.setSelectedIndex(
+                        Conditional.ActionType.getIndexInList(Conditional.ActionType.getMemoryItems(), actionType) + 1);
                 _shortActionString.setText(_curAction.getActionString());
                 break;
 
             case LOGIX:
-                _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
-                        Conditional.ITEM_TO_LOGIX_ACTION, actionType) + 1);
+                _actionTypeBox.setSelectedIndex(
+                        Conditional.ActionType.getIndexInList(Conditional.ActionType.getLogixItems(), actionType) + 1);
                 break;
 
             case WARRANT:
-                _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
-                        Conditional.ITEM_TO_WARRANT_ACTION, actionType) + 1);
+                _actionTypeBox.setSelectedIndex(
+                        Conditional.ActionType.getIndexInList(Conditional.ActionType.getWarrantItems(), actionType) + 1);
                 if (actionType == Conditional.ActionType.CONTROL_TRAIN) {
                     if (_curAction.getActionData() == Warrant.HALT) {
                         _actionBox.setSelectedIndex(0);
@@ -2967,22 +2967,22 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 break;
 
             case OBLOCK:
-                _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
-                        Conditional.ITEM_TO_OBLOCK_ACTION, actionType) + 1);
+                _actionTypeBox.setSelectedIndex(
+                        Conditional.ActionType.getIndexInList(Conditional.ActionType.getOBlockItems(), actionType) + 1);
                 if (actionType == Conditional.ActionType.SET_BLOCK_VALUE) {
                     _shortActionString.setText(_curAction.getActionString());
                 }
                 break;
 
             case ENTRYEXIT:
-                _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
-                        Conditional.ITEM_TO_ENTRYEXIT_ACTION, actionType) + 1);
+                _actionTypeBox.setSelectedIndex(
+                        Conditional.ActionType.getIndexInList(Conditional.ActionType.getEntryExitItems(), actionType) + 1);
                 _actionNameField.setText(_curAction.getBean().getUserName());
                 break;
 
             case AUDIO:
-                _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
-                        Conditional.ITEM_TO_AUDIO_ACTION, actionType) + 1);
+                _actionTypeBox.setSelectedIndex(
+                        Conditional.ActionType.getIndexInList(Conditional.ActionType.getAudioItems(), actionType) + 1);
                 if (actionType == Conditional.ActionType.PLAY_SOUND) {
                     _longActionString.setText(_curAction.getActionString());
                 } else if (actionType == Conditional.ActionType.CONTROL_AUDIO) {
@@ -3025,8 +3025,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 break;
 
             case SCRIPT:
-                _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
-                        Conditional.ITEM_TO_SCRIPT_ACTION, actionType) + 1);
+                _actionTypeBox.setSelectedIndex(
+                        Conditional.ActionType.getIndexInList(Conditional.ActionType.getScriptItems(), actionType) + 1);
                 if (actionType == Conditional.ActionType.RUN_SCRIPT) {
                     _longActionString.setText(_curAction.getActionString());
                 } else if (actionType == Conditional.ActionType.JYTHON_COMMAND) {
@@ -3035,8 +3035,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 break;
 
             case OTHER:
-                _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
-                        Conditional.ITEM_TO_OTHER_ACTION, actionType) + 1);
+                _actionTypeBox.setSelectedIndex(
+                        Conditional.ActionType.getIndexInList(Conditional.ActionType.getOtherItems(), actionType) + 1);
                 // ACTION_TRIGGER_ROUTE
                 break;
 
@@ -3057,7 +3057,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
      *
      * @param type index of the newly selected Action type
      */
-    void actionItemChanged(int type) {
+    void actionItemChanged(Conditional.ActionType type) {
         Conditional.ActionType actionType = _curAction.getType();
         if (log.isDebugEnabled()) {
             log.debug("actionItemChanged: itemType = {}, actionType = {}", type, actionType);  // NOI18N
@@ -3072,17 +3072,17 @@ public class ConditionalListEdit extends ConditionalEditBase {
         _namePanel.setVisible(false);
         _actionPanel.setVisible(false);
         _optionPanel.setVisible(false);
-        int itemType = Conditional.ACTION_TO_ITEM[actionType];
-        if (type == Conditional.TYPE_NONE && itemType == Conditional.TYPE_NONE) {
+        Conditional.ItemType itemType = actionType.getItemType();
+        if (type == Conditional.ActionType.NONE && itemType == Conditional.ItemType.NONE) {
             return;
         }
         _actionTypePanel.setVisible(true);
         _actionTypeBox.removeAllItems();
         _actionBox.removeAllItems();
-        if (type != Conditional.TYPE_NONE) {  // actionItem listener choice overrides current item
+        if (type != Conditional.ActionType.NONE) {  // actionItem listener choice overrides current item
             itemType = type;
         }
-        if (itemType != Conditional.ACTION_TO_ITEM[actionType]) {
+        if (itemType != actionType.getItemType()) {
             actionType = Conditional.ActionType.NONE;    // chosen item type does not support action type
         }
         if (actionType != Conditional.ActionType.NONE) {
@@ -3102,10 +3102,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
         }
 
         switch (itemType) {
-            case Conditional.ITEM_TYPE_TURNOUT:
+            case TURNOUT:
                 for (int i = 0; i < Conditional.ITEM_TO_TURNOUT_ACTION.length; i++) {
                     _actionTypeBox.addItem(
-                            DefaultConditionalAction.getActionTypeString(Conditional.ITEM_TO_TURNOUT_ACTION[i]));
+                            Conditional.ActionType.getTurnoutItems().get(i).getActionTypeString());
                 }
                 if ((actionType == Conditional.ActionType.RESET_DELAYED_TURNOUT)
                         || (actionType == Conditional.ActionType.DELAYED_TURNOUT)) {
@@ -3139,10 +3139,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 setActionNameBox(itemType);
                 break;
 
-            case Conditional.ITEM_TYPE_SENSOR:
+            case SENSOR:
                 for (int i = 0; i < Conditional.ITEM_TO_SENSOR_ACTION.length; i++) {
                     _actionTypeBox.addItem(
-                            DefaultConditionalAction.getActionTypeString(Conditional.ITEM_TO_SENSOR_ACTION[i]));
+                            Conditional.ActionType.getSensorItems().get(i).getActionTypeString());
                 }
                 if ((actionType == Conditional.ActionType.RESET_DELAYED_SENSOR)
                         || (actionType == Conditional.ActionType.DELAYED_SENSOR)) {
@@ -3169,12 +3169,12 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 setActionNameBox(itemType);
                 break;
 
-            case Conditional.ITEM_TYPE_SIGNALHEAD:
+            case SIGNALHEAD:
                 _actionNameField.addActionListener(actionSignalHeadNameListener);
 
                 for (int i = 0; i < Conditional.ITEM_TO_SIGNAL_HEAD_ACTION.length; i++) {
                     _actionTypeBox.addItem(
-                            DefaultConditionalAction.getActionTypeString(Conditional.ITEM_TO_SIGNAL_HEAD_ACTION[i]));
+                            Conditional.ActionType.getSignalHeadItems().get(i).getActionTypeString());
                 }
                 if (actionType == Conditional.ActionType.SET_SIGNAL_APPEARANCE) {
                     JPanel p = (JPanel) _actionPanel.getComponent(0);
@@ -3191,12 +3191,12 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 setActionNameBox(itemType);
                 break;
 
-            case Conditional.ITEM_TYPE_SIGNALMAST:
+            case SIGNALMAST:
                 _actionNameField.addActionListener(actionSignalMastNameListener);
 
                 for (int i = 0; i < Conditional.ITEM_TO_SIGNAL_MAST_ACTION.length; i++) {
                     _actionTypeBox.addItem(
-                            DefaultConditionalAction.getActionTypeString(Conditional.ITEM_TO_SIGNAL_MAST_ACTION[i]));
+                            Conditional.ActionType.getSignalMastItems().get(i).getActionTypeString());
                 }
                 if (actionType == Conditional.ActionType.SET_SIGNALMAST_ASPECT) {
                     JPanel p = (JPanel) _actionPanel.getComponent(0);
@@ -3213,10 +3213,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 setActionNameBox(itemType);
                 break;
 
-            case Conditional.ITEM_TYPE_LIGHT:
+            case LIGHT:
                 for (int i = 0; i < Conditional.ITEM_TO_LIGHT_ACTION.length; i++) {
                     _actionTypeBox.addItem(
-                            DefaultConditionalAction.getActionTypeString(Conditional.ITEM_TO_LIGHT_ACTION[i]));
+                            Conditional.ActionType.getLightItems().get(i).getActionTypeString());
                 }
                 if (actionType == Conditional.ActionType.SET_LIGHT_INTENSITY) {
                     JPanel p = (JPanel) _shortTextPanel.getComponent(0);
@@ -3245,10 +3245,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 setActionNameBox(itemType);
                 break;
 
-            case Conditional.ITEM_TYPE_MEMORY:
+            case MEMORY:
                 for (int i = 0; i < Conditional.ITEM_TO_MEMORY_ACTION.length; i++) {
                     _actionTypeBox.addItem(
-                            DefaultConditionalAction.getActionTypeString(Conditional.ITEM_TO_MEMORY_ACTION[i]));
+                            Conditional.ActionType.getMemoryItems().get(i).getActionTypeString());
                 }
                 JPanel p = (JPanel) _shortTextPanel.getComponent(0);
                 JLabel l = (JLabel) p.getComponent(0);
@@ -3265,10 +3265,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 setActionNameBox(itemType);
                 break;
 
-            case Conditional.ITEM_TYPE_CLOCK:
+            case CLOCK:
                 for (int i = 0; i < Conditional.ITEM_TO_CLOCK_ACTION.length; i++) {
                     _actionTypeBox.addItem(
-                            DefaultConditionalAction.getActionTypeString(Conditional.ITEM_TO_CLOCK_ACTION[i]));
+                            Conditional.ActionType.getClockItems().get(i).getActionTypeString());
                 }
                 if (actionType == Conditional.ActionType.SET_FAST_CLOCK_TIME) {
                     p = (JPanel) _textPanel.getComponent(0);
@@ -3279,20 +3279,20 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 }
                 break;
 
-            case Conditional.ITEM_TYPE_LOGIX:
+            case LOGIX:
                 for (int i = 0; i < Conditional.ITEM_TO_LOGIX_ACTION.length; i++) {
                     _actionTypeBox.addItem(
-                            DefaultConditionalAction.getActionTypeString(Conditional.ITEM_TO_LOGIX_ACTION[i]));
+                            Conditional.ActionType.getLogixItems().get(i).getActionTypeString());
                 }
                 _namePanel.setToolTipText(Bundle.getMessage("NameHintLogix"));  // NOI18N
                 _namePanel.setVisible(true);
                 setActionNameBox(itemType);
                 break;
 
-            case Conditional.ITEM_TYPE_WARRANT:
+            case WARRANT:
                 for (int i = 0; i < Conditional.ITEM_TO_WARRANT_ACTION.length; i++) {
                     _actionTypeBox.addItem(
-                            DefaultConditionalAction.getActionTypeString(Conditional.ITEM_TO_WARRANT_ACTION[i]));
+                            Conditional.ActionType.getWarrantItems().get(i).getActionTypeString());
                 }
                 _namePanel.setToolTipText(Bundle.getMessage("NameHintWarrant"));  // NOI18N
                 _namePanel.setVisible(true);
@@ -3324,10 +3324,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 setActionNameBox(itemType);
                 break;
 
-            case Conditional.ITEM_TYPE_OBLOCK:
+            case OBLOCK:
                 for (int i = 0; i < Conditional.ITEM_TO_OBLOCK_ACTION.length; i++) {
                     _actionTypeBox.addItem(
-                            DefaultConditionalAction.getActionTypeString(Conditional.ITEM_TO_OBLOCK_ACTION[i]));
+                            Conditional.ActionType.getOBlockItems().get(i).getActionTypeString());
                 }
                 _namePanel.setToolTipText(Bundle.getMessage("NameHintOBlock"));  // NOI18N
                 _namePanel.setVisible(true);
@@ -3341,20 +3341,20 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 setActionNameBox(itemType);
                 break;
 
-            case Conditional.ITEM_TYPE_ENTRYEXIT:
+            case ENTRYEXIT:
                 for (int i = 0; i < Conditional.ITEM_TO_ENTRYEXIT_ACTION.length; i++) {
                     _actionTypeBox.addItem(
-                            DefaultConditionalAction.getActionTypeString(Conditional.ITEM_TO_ENTRYEXIT_ACTION[i]));
+                            Conditional.ActionType.getEntryExitItems().get(i).getActionTypeString());
                 }
                 _namePanel.setToolTipText(Bundle.getMessage("NameHintEntryExit"));  // NOI18N
                 _namePanel.setVisible(true);
                 setActionNameBox(itemType);
                 break;
 
-            case Conditional.ITEM_TYPE_AUDIO:
+            case AUDIO:
                 for (int i = 0; i < Conditional.ITEM_TO_AUDIO_ACTION.length; i++) {
                     _actionTypeBox.addItem(
-                            DefaultConditionalAction.getActionTypeString(Conditional.ITEM_TO_AUDIO_ACTION[i]));
+                            Conditional.ActionType.getAudioItems().get(i).getActionTypeString());
                 }
                 if (actionType == Conditional.ActionType.PLAY_SOUND) {
                     p = (JPanel) _textPanel.getComponent(0);
@@ -3384,10 +3384,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 }
                 break;
 
-            case Conditional.ITEM_TYPE_SCRIPT:
+            case SCRIPT:
                 for (int i = 0; i < Conditional.ITEM_TO_SCRIPT_ACTION.length; i++) {
                     _actionTypeBox.addItem(
-                            DefaultConditionalAction.getActionTypeString(Conditional.ITEM_TO_SCRIPT_ACTION[i]));
+                            Conditional.ActionType.getScriptItems().get(i).getActionTypeString());
                 }
                 if (actionType == Conditional.ActionType.RUN_SCRIPT) {
                     p = (JPanel) _textPanel.getComponent(0);
@@ -3405,10 +3405,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 }
                 break;
 
-            case Conditional.ITEM_TYPE_OTHER:
+            case OTHER:
                 for (int i = 0; i < Conditional.ITEM_TO_OTHER_ACTION.length; i++) {
                     _actionTypeBox.addItem(
-                            DefaultConditionalAction.getActionTypeString(Conditional.ITEM_TO_OTHER_ACTION[i]));
+                            Conditional.ActionType.getOtherItems().get(i).getActionTypeString());
                 }
                 if (actionType == Conditional.ActionType.TRIGGER_ROUTE) {
                     _namePanel.setToolTipText(Bundle.getMessage("NameHintRoute"));  // NOI18N
@@ -3591,38 +3591,38 @@ public class ConditionalListEdit extends ConditionalEditBase {
      *                            comboBox
      * @return integer representing the selected action
      */
-    static int getActionTypeFromBox(int itemType, int actionTypeSelection) {
+    static int getActionTypeFromBox(Conditional.ItemType itemType, int actionTypeSelection) {
         if (itemType < 0 || actionTypeSelection < 0) {
             return Conditional.ACTION_NONE;
         }
         switch (itemType) {
-            case Conditional.ITEM_TYPE_SENSOR:
+            case SENSOR:
                 return Conditional.ITEM_TO_SENSOR_ACTION[actionTypeSelection];
-            case Conditional.ITEM_TYPE_TURNOUT:
+            case TURNOUT:
                 return Conditional.ITEM_TO_TURNOUT_ACTION[actionTypeSelection];
-            case Conditional.ITEM_TYPE_LIGHT:
+            case LIGHT:
                 return Conditional.ITEM_TO_LIGHT_ACTION[actionTypeSelection];
-            case Conditional.ITEM_TYPE_SIGNALHEAD:
+            case SIGNALHEAD:
                 return Conditional.ITEM_TO_SIGNAL_HEAD_ACTION[actionTypeSelection];
-            case Conditional.ITEM_TYPE_SIGNALMAST:
+            case SIGNALMAST:
                 return Conditional.ITEM_TO_SIGNAL_MAST_ACTION[actionTypeSelection];
-            case Conditional.ITEM_TYPE_MEMORY:
+            case MEMORY:
                 return Conditional.ITEM_TO_MEMORY_ACTION[actionTypeSelection];
-            case Conditional.ITEM_TYPE_LOGIX:
+            case LOGIX:
                 return Conditional.ITEM_TO_LOGIX_ACTION[actionTypeSelection];
-            case Conditional.ITEM_TYPE_WARRANT:
+            case WARRANT:
                 return Conditional.ITEM_TO_WARRANT_ACTION[actionTypeSelection];
-            case Conditional.ITEM_TYPE_OBLOCK:
+            case OBLOCK:
                 return Conditional.ITEM_TO_OBLOCK_ACTION[actionTypeSelection];
-            case Conditional.ITEM_TYPE_CLOCK:
+            case CLOCK:
                 return Conditional.ITEM_TO_CLOCK_ACTION[actionTypeSelection];
-            case Conditional.ITEM_TYPE_AUDIO:
+            case AUDIO:
                 return Conditional.ITEM_TO_AUDIO_ACTION[actionTypeSelection];
-            case Conditional.ITEM_TYPE_SCRIPT:
+            case SCRIPT:
                 return Conditional.ITEM_TO_SCRIPT_ACTION[actionTypeSelection];
-            case Conditional.ITEM_TYPE_OTHER:
+            case OTHER:
                 return Conditional.ITEM_TO_OTHER_ACTION[actionTypeSelection];
-            case Conditional.ITEM_TYPE_ENTRYEXIT:
+            case ENTRYEXIT:
                 return Conditional.ITEM_TO_ENTRYEXIT_ACTION[actionTypeSelection];
             default:
                 // fall through
@@ -3644,7 +3644,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
      * @return true if all data checks out OK, otherwise false.
      */
     boolean validateAction() {
-        int itemType = _actionItemBox.getSelectedIndex();
+        Conditional.ItemType itemType = Conditional.ItemType.getOperatorFromIntValue(_actionItemBox.getSelectedIndex());
         Conditional.ActionType actionType = Conditional.ActionType.NONE;
         int selection = _actionTypeBox.getSelectedIndex();
         if (selection == 0) {
@@ -3671,7 +3671,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             referenceByMemory = true;
         }
         switch (itemType) {
-            case Conditional.ITEM_TYPE_SENSOR:
+            case SENSOR:
                 if (!referenceByMemory) {
                     name = validateSensorReference(name);
                     if (name == null) {
@@ -3700,7 +3700,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 _actionNameField.setText(name);
                 _curAction.setDeviceName(name);
                 break;
-            case Conditional.ITEM_TYPE_TURNOUT:
+            case TURNOUT:
                 if (!referenceByMemory) {
                     name = validateTurnoutReference(name);
                     if (name == null) {
@@ -3737,7 +3737,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 _actionNameField.setText(name);
                 _curAction.setDeviceName(name);
                 break;
-            case Conditional.ITEM_TYPE_LIGHT:
+            case LIGHT:
                 if (!referenceByMemory) {
                     name = validateLightReference(name);
                     if (name == null) {
@@ -3791,7 +3791,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 _actionNameField.setText(name);
                 _curAction.setDeviceName(name);
                 break;
-            case Conditional.ITEM_TYPE_SIGNALHEAD:
+            case SIGNALHEAD:
                 if (!referenceByMemory) {
                     name = validateSignalHeadReference(name);
                     if (name == null) {
@@ -3807,7 +3807,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 _actionNameField.setText(name);
                 _curAction.setDeviceName(name);
                 break;
-            case Conditional.ITEM_TYPE_SIGNALMAST:
+            case SIGNALMAST:
                 if (!referenceByMemory) {
                     name = validateSignalMastReference(name);
                     if (name == null) {
@@ -3821,7 +3821,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 _actionNameField.setText(name);
                 _curAction.setDeviceName(name);
                 break;
-            case Conditional.ITEM_TYPE_MEMORY:
+            case MEMORY:
                 if (referenceByMemory) {
                     JOptionPane.showMessageDialog(_editActionFrame,
                             Bundle.getMessage("Warn6"),
@@ -3844,7 +3844,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 _curAction.setDeviceName(name);
                 _curAction.setActionString(actionString);
                 break;
-            case Conditional.ITEM_TYPE_LOGIX:
+            case LOGIX:
                 if (!referenceByMemory) {
                     name = validateLogixReference(name);
                     if (name == null) {
@@ -3855,7 +3855,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 _actionNameField.setText(name);
                 _curAction.setDeviceName(name);
                 break;
-            case Conditional.ITEM_TYPE_WARRANT:
+            case WARRANT:
                 if (!referenceByMemory) {
                     name = validateWarrantReference(name);
                     if (name == null) {
@@ -3879,7 +3879,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     _curAction.setActionString(actionString);
                 }
                 break;
-            case Conditional.ITEM_TYPE_OBLOCK:
+            case OBLOCK:
                 if (!referenceByMemory) {
                     name = validateOBlockReference(name);
                     if (name == null) {
@@ -3893,7 +3893,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     _curAction.setActionString(actionString);
                 }
                 break;
-            case Conditional.ITEM_TYPE_ENTRYEXIT:
+            case ENTRYEXIT:
                 if (!referenceByMemory) {
                     name = validateEntryExitReference(name);
                     if (name == null) {
@@ -3904,7 +3904,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 _actionNameField.setText(name);
                 _curAction.setDeviceName(name);
                 break;
-            case Conditional.ITEM_TYPE_CLOCK:
+            case CLOCK:
                 actionType = Conditional.ITEM_TO_CLOCK_ACTION[selection - 1];
                 if (actionType == Conditional.ActionType.SET_FAST_CLOCK_TIME) {
                     int time = parseTime(_longActionString.getText().trim());
@@ -3914,7 +3914,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     _curAction.setActionData(time);
                 }
                 break;
-            case Conditional.ITEM_TYPE_AUDIO:
+            case AUDIO:
                 actionType = Conditional.ITEM_TO_AUDIO_ACTION[selection - 1];
                 if (actionType == Conditional.ActionType.PLAY_SOUND) {
                     _curAction.setActionString(_longActionString.getText().trim());
@@ -3964,7 +3964,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     }
                 }
                 break;
-            case Conditional.ITEM_TYPE_SCRIPT:
+            case SCRIPT:
                 actionType = Conditional.ITEM_TO_SCRIPT_ACTION[selection - 1];
                 if (actionType == Conditional.ActionType.RUN_SCRIPT) {
                     _curAction.setActionString(_longActionString.getText().trim());
@@ -3972,7 +3972,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     _curAction.setActionString(_shortActionString.getText().trim());
                 }
                 break;
-            case Conditional.ITEM_TYPE_OTHER:
+            case OTHER:
                 actionType = Conditional.ITEM_TO_OTHER_ACTION[selection - 1];
                 if (actionType == Conditional.ActionType.TRIGGER_ROUTE) {
                     if (!referenceByMemory) {
