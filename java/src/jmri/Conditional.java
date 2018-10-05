@@ -775,7 +775,7 @@ public interface Conditional extends NamedBean {
     static final int ACTION_SET_NXPAIR_ENABLED = 51;
     static final int ACTION_SET_NXPAIR_DISABLED = 52;
     static final int ACTION_SET_NXPAIR_SEGMENT = 53;
-    static final int NUM_ACTION_TYPES = 53;
+//    static final int NUM_ACTION_TYPES = 53;
 
     /**
      * ***********************************************************************************
