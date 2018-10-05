@@ -3057,7 +3057,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
      *
      * @param type index of the newly selected Action type
      */
-    void actionItemChanged(Conditional.ActionType type) {
+    void actionItemChanged(Conditional.ItemType type) {
         Conditional.ActionType actionType = _curAction.getType();
         if (log.isDebugEnabled()) {
             log.debug("actionItemChanged: itemType = {}, actionType = {}", type, actionType);  // NOI18N
@@ -3073,14 +3073,14 @@ public class ConditionalListEdit extends ConditionalEditBase {
         _actionPanel.setVisible(false);
         _optionPanel.setVisible(false);
         Conditional.ItemType itemType = actionType.getItemType();
-        if (type == Conditional.ActionType.NONE && itemType == Conditional.ItemType.NONE) {
+        if (type == Conditional.ItemType.NONE && itemType == Conditional.ItemType.NONE) {
             return;
         }
         _actionTypePanel.setVisible(true);
         _actionTypeBox.removeAllItems();
         _actionBox.removeAllItems();
-        if (type != Conditional.ActionType.NONE) {  // actionItem listener choice overrides current item
-            itemType = type.getItemType();
+        if (type != Conditional.ItemType.NONE) {  // actionItem listener choice overrides current item
+            itemType = type;
         }
         if (itemType != actionType.getItemType()) {
             actionType = Conditional.ActionType.NONE;    // chosen item type does not support action type
