@@ -72,7 +72,7 @@ abstract public class AbstractPowerManager implements PowerManager {
             }
         }
     }
-
+    
     /**
      * Returns the amount of time since the layout was last powered up,
      * in milliseconds. If the layout has not been powered up as far as
