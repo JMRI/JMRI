@@ -14,10 +14,14 @@ public class PropertyChangeListenerScaffold implements PropertyChangeListener {
 
     private boolean propertyChanged;
     private int callCount;
+    private String lastChange;
+    private Object lastValue;
 
     public PropertyChangeListenerScaffold() {
        propertyChanged = false;
        callCount = 0;
+       lastChange = "";
+       lastValue = null;
     }
 
     public void resetPropertyChanged(){
@@ -33,7 +37,17 @@ public class PropertyChangeListenerScaffold implements PropertyChangeListener {
        return callCount;
     }
 
+    public String getLastProperty(){
+       return lastChange;
+    }
+
+    public Object getLastValue(){
+       return lastValue;
+    }
+
     public void onChange(String property, Object newValue){
+       lastChange = property;
+       lastValue = newValue;
     }
 
     @Override
