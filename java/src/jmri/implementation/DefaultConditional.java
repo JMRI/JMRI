@@ -74,7 +74,8 @@ public class DefaultConditional extends AbstractNamedBean
 
     // boolean expression of state variables
     private String _antecedent = "";
-    private int _logicType = Conditional.ALL_AND;
+    private Conditional.AntecedentOperator _logicType =
+            Conditional.AntecedentOperator.ALL_AND;
     // variables (antecedent) parameters
     private List<ConditionalVariable> _variableList = new ArrayList<>();
     // actions (consequent) parameters
@@ -104,7 +105,7 @@ public class DefaultConditional extends AbstractNamedBean
      * Get type of operators in the antecedent statement.
      */
     @Override
-    public int getLogicType() {
+    public Conditional.AntecedentOperator getLogicType() {
         return _logicType;
     }
 
@@ -117,7 +118,7 @@ public class DefaultConditional extends AbstractNamedBean
      * @param antecedent non-localized (US-english) string description of antecedent
      */
     @Override
-    public void setLogicType(int type, String antecedent) {
+    public void setLogicType(Conditional.AntecedentOperator type, String antecedent) {
         _logicType = type;
         _antecedent = antecedent; // non-localised (universal) string description
         setState(NamedBean.UNKNOWN);
@@ -233,18 +234,18 @@ public class DefaultConditional extends AbstractNamedBean
         }
         boolean result = true;
         switch (_logicType) {
-            case Conditional.ALL_AND:
+            case ALL_AND:
                 for (int i = 0; (i < _variableList.size()) && result; i++) {
                     result = _variableList.get(i).evaluate();
                 }
                 break;
-            case Conditional.ALL_OR:
+            case ALL_OR:
                 result = false;
                 for (int k = 0; (k < _variableList.size()) && !result; k++) {
                     result = _variableList.get(k).evaluate();
                 }
                 break;
-            case Conditional.MIXED:
+            case MIXED:
                 char[] ch = _antecedent.toCharArray();
                 int n = 0;
                 for (int j = 0; j < ch.length; j++) {

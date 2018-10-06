@@ -108,7 +108,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     JPanel _gridPanel;  // Child of _detailGrid, contains the current grid labels and fields
     JTextField _editConditionalUserName;
     JTextField _editAntecedent;
-    JComboBox<String> _editOperatorMode;
+    JComboBox<Conditional.AntecedentOperator> _editOperatorMode;
     boolean _editActive = false;
     JButton _cancelAction;
     JButton _updateAction;
@@ -166,7 +166,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     Conditional.ItemType _curActionItem = Conditional.ItemType.NONE;
     String _curConditionalName = "";
     String _antecedent;
-    int _logicType;
+    Conditional.AntecedentOperator _logicType;
     boolean _triggerMode;
     boolean _newActionItem = false;
     boolean _newVariableItem = false;
@@ -468,10 +468,10 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     void buildConditionalComponents() {
         _editConditionalUserName = new JTextField(20);
         _editAntecedent = new JTextField(20);
-        _editOperatorMode = new JComboBox<>(new String[]{
-                Bundle.getMessage("LogicAND"), // NOI18N
-                Bundle.getMessage("LogicOR"), // NOI18N
-                Bundle.getMessage("LogicMixed")});  // NOI18N
+        _editOperatorMode = new JComboBox<>();
+        for (Conditional.AntecedentOperator operator : Conditional.AntecedentOperator.values()) {
+            _editOperatorMode.addItem(operator);
+        }
     }
 
     // ------------ Create Conditional GridBag panels ------------
@@ -756,7 +756,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _curVariable = _variableList.get(size - 1);
         // default of operator for postion 0 (row 1) is Conditional.OPERATOR_NONE
         if (size > 1) {
-            if (_logicType == Conditional.ALL_OR) {
+            if (_logicType == Conditional.AntecedentOperator.ALL_OR) {
                 _curVariable.setOpern(Conditional.Operator.OR);
             } else {
                 _curVariable.setOpern(Conditional.Operator.AND);
@@ -831,8 +831,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 break;
 
             case "Antecedent":      // NOI18N
-                int chkLogicType = _curConditional.getLogicType();
-                if (chkLogicType != Conditional.MIXED) {
+                Conditional.AntecedentOperator chkLogicType = _curConditional.getLogicType();
+                if (chkLogicType != Conditional.AntecedentOperator.MIXED) {
                     makeDetailGrid("EmptyGrid");  // NOI18N
                     return;
                 }
@@ -843,8 +843,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 break;
 
             case "LogicType":       // NOI18N
-                int curLogicType = _curConditional.getLogicType();
-                _editOperatorMode.setSelectedIndex(curLogicType - 1);
+                Conditional.AntecedentOperator curLogicType = _curConditional.getLogicType();
+                _editOperatorMode.setSelectedItem(curLogicType);
                 makeDetailGrid("LogicType");  // NOI18N
                 break;
 
@@ -853,7 +853,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 _curVariable = _variableList.get(_curNodeRow);
                 _curVariableItem = _curVariable.getType().getItemType();
                 initializeStateVariables();
-                if (_logicType != Conditional.MIXED) {
+                if (_logicType != Conditional.AntecedentOperator.MIXED) {
                     setMoveButtons();
                 }
                 _oldTargetNames.clear();
@@ -891,7 +891,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 break;
 
             case "LogicType":       // NOI18N
-                logicTypeChanged(_editOperatorMode.getSelectedIndex() + 1); // non-localized form
+                logicTypeChanged(_editOperatorMode.getItemAt(_editOperatorMode.getSelectedIndex()));
                 break;
 
             case "Variable":       // NOI18N
@@ -982,16 +982,16 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * @param newType The selected logic type
      */
     @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "Except for the root node, all nodes are ConditionalTreeNode")  // NOI18N
-    void logicTypeChanged(int newType) {
+    void logicTypeChanged(Conditional.AntecedentOperator newType) {
         if (_logicType == newType) {
             return;
         }
 
         makeAntecedent();
         Operator oper;
-        if (newType != Conditional.MIXED) {
+        if (newType != Conditional.AntecedentOperator.MIXED) {
             oper = Conditional.Operator.OR;
-            if (newType == Conditional.ALL_AND) {
+            if (newType == Conditional.AntecedentOperator.ALL_AND) {
                 oper = Conditional.Operator.AND;
             }
 
@@ -1287,7 +1287,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 // Adjust operator
                 if (newVarRow == 0) {
                     _variableList.get(newVarRow).setOpern(Conditional.Operator.NONE);
-                    Operator newOper = (_logicType == Conditional.ALL_AND)
+                    Operator newOper = (_logicType == Conditional.AntecedentOperator.ALL_AND)
                             ? Conditional.Operator.AND : Conditional.Operator.OR;
                     _variableList.get(_curNodeRow).setOpern(newOper);
                 }
@@ -1332,7 +1332,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 // Adjust operator
                 if (_curNodeRow == 0) {
                     _variableList.get(_curNodeRow).setOpern(Conditional.Operator.NONE);
-                    Operator newOper = (_logicType == Conditional.ALL_AND)
+                    Operator newOper = (_logicType == Conditional.AntecedentOperator.ALL_AND)
                             ? Conditional.Operator.AND : Conditional.Operator.OR;
                     _variableList.get(newVarRow).setOpern(newOper);
                 }
@@ -1727,7 +1727,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 _labelPanel.add(_variableLabel);
                 _addButtonPanel.setVisible(true);
                 _deleteButtonPanel.setVisible(true);
-                if (_logicType != Conditional.MIXED) {
+                if (_logicType != Conditional.AntecedentOperator.MIXED) {
                     setMoveButtons();
                 }
                 editPressed();
@@ -1779,23 +1779,23 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             case "Antecedent":  // NOI18N
                 cdl = (Conditional) component;
                 String antecedent = translateAntecedent(cdl.getAntecedentExpression(), false);
-                if (cdl.getLogicType() != Conditional.MIXED) {
+                if (cdl.getLogicType() != Conditional.AntecedentOperator.MIXED) {
                     antecedent = "- - - - - - - - -";
                 }
                 return Bundle.getMessage("LogixAntecedent") + " " + antecedent;   // NOI18N
 
             case "LogicType":  // NOI18N
                 cdl = (Conditional) component;
-                int logicType = cdl.getLogicType();
+                Conditional.AntecedentOperator logicType = cdl.getLogicType();
                 String logicName; // used for display only
                 switch (logicType) {
-                    case Conditional.ALL_AND:
+                    case ALL_AND:
                         logicName = Bundle.getMessage("LogicAND");      // NOI18N
                         break;
-                    case Conditional.ALL_OR:
+                    case ALL_OR:
                         logicName = Bundle.getMessage("LogicOR");       // NOI18N
                         break;
-                    case Conditional.MIXED:
+                    case MIXED:
                         logicName = Bundle.getMessage("LogicMixed");    // NOI18N
                         break;
                     default:
@@ -2674,7 +2674,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Clean up: Cancel, Update and Delete Variable buttons.
      */
     void cleanUpVariable() {
-        if (_logicType != Conditional.MIXED) {
+        if (_logicType != Conditional.AntecedentOperator.MIXED) {
             setMoveButtons();
         }
     }

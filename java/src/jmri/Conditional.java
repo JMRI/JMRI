@@ -1,6 +1,5 @@
 package jmri;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -90,6 +89,39 @@ public interface Conditional extends NamedBean {
     static final int FALSE = 0x02;
     static final int TRUE = 0x04;
 
+    public enum AntecedentOperator {
+        ALL_AND(Conditional.ALL_AND, rbx.getString("LogicAND")),
+        ALL_OR(Conditional.ALL_OR, rbx.getString("LogicOR")),
+        MIXED(Conditional.MIXED, rbx.getString("LogicMixed"));
+        
+        private final int _value;
+        private final String _string;
+        
+        private AntecedentOperator(int value, String string) {
+            _value = value;
+            _string = string;
+        }
+        
+        public int getIntValue() {
+            return _value;
+        }
+        
+        public static AntecedentOperator getOperatorFromIntValue(int value) {
+            for (AntecedentOperator antecedentOperators : AntecedentOperator.values()) {
+                if (antecedentOperators.getIntValue() == value) {
+                    return antecedentOperators;
+                }
+            }
+            
+            throw new IllegalArgumentException("ItemType is unknown");
+        }
+        
+        @Override
+        public String toString() {
+            return _string;
+        }
+    }
+    
     // logic operators used in antecedent
     static final int ALL_AND = 0x01;
     static final int ALL_OR = 0x02;
@@ -207,16 +239,6 @@ public interface Conditional extends NamedBean {
             throw new IllegalArgumentException("ItemType is unknown");
         }
         
-        /*.*
-         * Return the item type before this.
-         * 
-         * @return the previous item type in this enum
-         */
-//        public ItemType previous() {
-//            ItemType[] valueArray = values();
-//            return valueArray[(this.ordinal()-1) % valueArray.length];
-//        }
-
         @Override
         public String toString() {
             return Bundle.getMessage(_bundleKey);
@@ -535,8 +557,6 @@ public interface Conditional extends NamedBean {
         private static final List<Action> scriptItemsList;
         private static final List<Action> otherItemsList;
         
-//        private static final Set<Action> signalHeadAppearanceSet;
-        
         
         static
         {
@@ -664,15 +684,6 @@ public interface Conditional extends NamedBean {
             return otherItemsList;
         }
         
-//        public static int getIndexInList(List<Action> table, Action entry) {
-//            for (int i = 0; i < table.size(); i++) {
-//                if (entry == table.get(i)) {
-//                    return i;
-//                }
-//            }
-//            return -1;
-//        }
-        
         public static Action getOperatorFromIntValue(int actionInt) {
             for (Action action : Action.values()) {
                 if (action.getIntValue() == actionInt) {
@@ -705,8 +716,8 @@ public interface Conditional extends NamedBean {
     static final int TYPE_LIGHT_OFF = 8;
     static final int TYPE_MEMORY_EQUALS = 9;
     static final int TYPE_FAST_CLOCK_RANGE = 10;
-// Note - within the TYPE_SIGNAL_HEAD definitions, all must be together,
-//  RED must be first, and HELD must be last
+    // Note - within the TYPE_SIGNAL_HEAD definitions, all must be together,
+    //  RED must be first, and HELD must be last
     static final int TYPE_SIGNAL_HEAD_RED = 11;
     static final int TYPE_SIGNAL_HEAD_YELLOW = 12;
     static final int TYPE_SIGNAL_HEAD_GREEN = 13;
@@ -833,7 +844,6 @@ public interface Conditional extends NamedBean {
     static final int ACTION_SET_NXPAIR_ENABLED = 51;
     static final int ACTION_SET_NXPAIR_DISABLED = 52;
     static final int ACTION_SET_NXPAIR_SEGMENT = 53;
-//    static final int NUM_ACTION_TYPES = 53;
 
     /**
      * ***********************************************************************************
@@ -855,198 +865,11 @@ public interface Conditional extends NamedBean {
     static final int ITEM_TYPE_CLOCK = 9;
     static final int ITEM_TYPE_OBLOCK = 10;
     static final int ITEM_TYPE_ENTRYEXIT = 11;
-//    static final int ITEM_TYPE_LAST_STATE_VAR = 11;
 
     static final int ITEM_TYPE_AUDIO = 12;
     static final int ITEM_TYPE_SCRIPT = 13;
     static final int ITEM_TYPE_OTHER = 14;
-//    static final int ITEM_TYPE_LAST_ACTION = 14;
 
-    /**
-     * *************** ConditionalAction Maps *******************************
-     *./
-    // Map action type to the item type
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ACTION_TO_ITEM = {TYPE_NONE,
-        TYPE_NONE, // ACTION_NONE              1
-        ITEM_TYPE_TURNOUT, // ACTION_SET_TURNOUT       2
-        ITEM_TYPE_SIGNALHEAD, // ACTION_SET_SIGNAL_APPEARANCE 
-        ITEM_TYPE_SIGNALHEAD, // ACTION_SET_SIGNAL_HELD   4
-        ITEM_TYPE_SIGNALHEAD, // ACTION_CLEAR_SIGNAL_HELD 5
-        ITEM_TYPE_SIGNALHEAD, // ACTION_SET_SIGNAL_DARK   6
-        ITEM_TYPE_SIGNALHEAD, // ACTION_SET_SIGNAL_LIT    7
-        ITEM_TYPE_OTHER, // ACTION_TRIGGER_ROUTE     8
-        ITEM_TYPE_SENSOR, // ACTION_SET_SENSOR        9
-        ITEM_TYPE_SENSOR, // ACTION_DELAYED_SENSOR    10
-        ITEM_TYPE_LIGHT, // ACTION_SET_LIGHT         11
-        ITEM_TYPE_MEMORY, // ACTION_SET_MEMORY        12
-        ITEM_TYPE_LOGIX, // ACTION_ENABLE_LOGIX      13
-        ITEM_TYPE_LOGIX, // ACTION_DISABLE_LOGIX     14
-        ITEM_TYPE_AUDIO, // ACTION_PLAY_SOUND        15
-        ITEM_TYPE_SCRIPT, // ACTION_RUN_SCRIPT        16
-        ITEM_TYPE_TURNOUT, // ACTION_DELAYED_TURNOUT   17
-        ITEM_TYPE_TURNOUT, // ACTION_LOCK_TURNOUT      18
-        ITEM_TYPE_SENSOR, // ACTION_RESET_DELAYED_SENSOR
-        ITEM_TYPE_SENSOR, // ACTION_CANCEL_SENSOR_TIMERS 20
-        ITEM_TYPE_TURNOUT, // ACTION_RESET_DELAYED_TURNOUT
-        ITEM_TYPE_TURNOUT, // ACTION_CANCEL_TURNOUT_TIMERS
-        ITEM_TYPE_CLOCK, // ACTION_SET_FAST_CLOCK_TIME 23
-        ITEM_TYPE_CLOCK, // ACTION_START_FAST_CLOCK  24
-        ITEM_TYPE_CLOCK, // ACTION_STOP_FAST_CLOCK   25
-        ITEM_TYPE_MEMORY, // ACTION_COPY_MEMORY       26
-        ITEM_TYPE_LIGHT, // ACTION_SET_LIGHT_INTENSITY 27
-        ITEM_TYPE_LIGHT, // ACTION_SET_LIGHT_TRANSITION_TIME
-        ITEM_TYPE_AUDIO, // ACTION_CONTROL_AUDIO     29
-        ITEM_TYPE_SCRIPT, // ACTION_JYTHON_COMMAND    30
-        ITEM_TYPE_WARRANT, // ACTION_ALLOCATE_WARRANT_ROUTE 31
-        ITEM_TYPE_WARRANT, // ACTION_DEALLOCATE_WARRANT_ROUTE
-        ITEM_TYPE_WARRANT, // ACTION_SET_ROUTE_TURNOUTS 33
-        ITEM_TYPE_WARRANT, // ACTION_AUTO_RUN_WARRANT       34
-        ITEM_TYPE_WARRANT, // ACTION_CONTROL_TRAIN     35
-        ITEM_TYPE_WARRANT, // ACTION_SET_TRAIN_ID      36
-        ITEM_TYPE_SIGNALMAST, // ACTION_SET_SIGNALMAST_ASPECT 37 
-        ITEM_TYPE_WARRANT, // ACTION_THROTTLE_FACTOR   38
-        ITEM_TYPE_SIGNALMAST, // ACTION_SET_SIGNALMAST_HELD = 39;
-        ITEM_TYPE_SIGNALMAST, // ACTION_CLEAR_SIGNALMAST_HELD = 40 
-        ITEM_TYPE_SIGNALMAST, // ACTION_SET_SIGNALMAST_DARK = 41
-        ITEM_TYPE_SIGNALMAST, // ACTION_SET_SIGNALMAST_LIT = 42
-        ITEM_TYPE_OBLOCK, // ACTION_SET_BLOCK_ERROR = 43;
-        ITEM_TYPE_OBLOCK, //  ACTION_CLEAR_BLOCK_ERROR = 44;
-        ITEM_TYPE_OBLOCK, //  ACTION_DEALLOCATE_BLOCK = 45;
-        ITEM_TYPE_OBLOCK, //  ACTION_SET_BLOCK_OUT_OF_SERVICE = 46;
-        ITEM_TYPE_OBLOCK, //  ACTION_SET_BLOCK_IN_SERVICE = 47;
-        ITEM_TYPE_WARRANT, // ACTION_MANUAL_RUN_WARRANT 48
-        ITEM_TYPE_WARRANT, // ACTION_SET_TRAIN_NAME 49
-        ITEM_TYPE_OBLOCK, //ACTION_SET_BLOCK_VALUE 50
-        ITEM_TYPE_ENTRYEXIT, //ACTION_SET_NXPAIR_ENABLED 51
-        ITEM_TYPE_ENTRYEXIT, //ACTION_SET_NXPAIR_DISABLED 52
-        ITEM_TYPE_ENTRYEXIT //ACTION_SET_NXPAIR_SEGMENT 53
-};
-*/
-/*
-    // Map Sensor Type comboBox items to Sensor action types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_SENSOR_ACTION = {ACTION_SET_SENSOR, ACTION_DELAYED_SENSOR,
-        ACTION_RESET_DELAYED_SENSOR, ACTION_CANCEL_SENSOR_TIMERS};
-
-    // Map Turnout Type comboBox items to Turnout action types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_TURNOUT_ACTION = {ACTION_SET_TURNOUT, ACTION_DELAYED_TURNOUT,
-        ACTION_LOCK_TURNOUT, ACTION_CANCEL_TURNOUT_TIMERS, ACTION_RESET_DELAYED_TURNOUT};
-
-    // Map Memory Type comboBox items to Memory action types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_MEMORY_ACTION = {12, 26};
-
-    // Map Light Type comboBox items to Light action types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_LIGHT_ACTION = {ACTION_SET_LIGHT, ACTION_SET_LIGHT_INTENSITY,
-        ACTION_SET_LIGHT_TRANSITION_TIME};
-
-    // Map FastClock Type comboBox items to FastClock action types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_CLOCK_ACTION = {ACTION_SET_FAST_CLOCK_TIME,
-        ACTION_START_FAST_CLOCK, ACTION_STOP_FAST_CLOCK};
-
-    // Map Logix Type comboBox items to Logix action types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_LOGIX_ACTION = {ACTION_ENABLE_LOGIX, ACTION_DISABLE_LOGIX};
-
-    // Map Warrant Type comboBox items to Warrant action types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public final static int[] ITEM_TO_WARRANT_ACTION = {ACTION_ALLOCATE_WARRANT_ROUTE,
-        ACTION_DEALLOCATE_WARRANT_ROUTE, ACTION_SET_ROUTE_TURNOUTS, ACTION_AUTO_RUN_WARRANT,
-        ACTION_MANUAL_RUN_WARRANT, ACTION_CONTROL_TRAIN, ACTION_SET_TRAIN_ID,
-        ACTION_SET_TRAIN_NAME, ACTION_THROTTLE_FACTOR};
-
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY")
-    public final static int[] ITEM_TO_OBLOCK_ACTION = {ACTION_DEALLOCATE_BLOCK,
-        ACTION_SET_BLOCK_VALUE, ACTION_SET_BLOCK_ERROR, ACTION_CLEAR_BLOCK_ERROR,
-        ACTION_SET_BLOCK_OUT_OF_SERVICE, ACTION_SET_BLOCK_IN_SERVICE};
-
-    // Map Signal Head Type comboBox items to Signal Head action types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_SIGNAL_HEAD_ACTION = {ACTION_SET_SIGNAL_APPEARANCE,
-        ACTION_SET_SIGNAL_HELD, ACTION_CLEAR_SIGNAL_HELD,
-        ACTION_SET_SIGNAL_DARK, ACTION_SET_SIGNAL_LIT};
-
-    // Map Signal Mast Type comboBox items to Signal Mast action types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_SIGNAL_MAST_ACTION = {ACTION_SET_SIGNALMAST_ASPECT,
-        ACTION_SET_SIGNALMAST_HELD, ACTION_CLEAR_SIGNALMAST_HELD,
-        ACTION_SET_SIGNALMAST_DARK, ACTION_SET_SIGNALMAST_LIT};
-
-    // Map Audio Type comboBox items to Audio action types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_AUDIO_ACTION = {ACTION_PLAY_SOUND, ACTION_CONTROL_AUDIO};
-
-    // Map Script Type comboBox items to Script action types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_SCRIPT_ACTION = {ACTION_RUN_SCRIPT, ACTION_JYTHON_COMMAND};
-
-    // Map EntryExit Type comboBox items to EntryExit action types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure,
-    // just have to accept these exposed
-    // arrays. Someday...
-    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY
-    // OF STATIC FINAL ELEMENTS??
-    public static final int[] ITEM_TO_ENTRYEXIT_ACTION = {ACTION_SET_NXPAIR_ENABLED,
-        ACTION_SET_NXPAIR_DISABLED, ACTION_SET_NXPAIR_SEGMENT};
-
-    // Map Misc Type comboBox items to Misc action types
-    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
-    // just have to accept these exposed
-    // arrays. Someday...
-    public static final int[] ITEM_TO_OTHER_ACTION = {ACTION_TRIGGER_ROUTE};
-*/
     /**
      * set the logic type (all AND's all OR's or mixed AND's and OR's set the
      * antecedent expression - should be a well formed boolean statement with
@@ -1055,7 +878,7 @@ public interface Conditional extends NamedBean {
      * @param type       the type
      * @param antecedent the expression
      */
-    public void setLogicType(int type, String antecedent);
+    public void setLogicType(Conditional.AntecedentOperator type, String antecedent);
 
     /**
      * Get antecedent (boolean expression) of Conditional
@@ -1069,7 +892,7 @@ public interface Conditional extends NamedBean {
      *
      * @return the type
      */
-    public int getLogicType();
+    public Conditional.AntecedentOperator getLogicType();
 
     /**
      * @return true if action list is executed only when state changes, false if

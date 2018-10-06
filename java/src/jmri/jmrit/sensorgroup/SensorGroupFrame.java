@@ -231,7 +231,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         }
         Conditional c = new SensorGroupConditional(cSystemName, cUserName);
         c.setStateVariables(variableList);
-        c.setLogicType(Conditional.ALL_OR, "");
+        c.setLogicType(Conditional.AntecedentOperator.ALL_OR, "");
         c.setAction(actionList);
         logix.addConditional(cSystemName, 0);       // Update the Logix Conditional names list
         logix.addConditional(cSystemName, c);       // Update the Logix Conditional hash map

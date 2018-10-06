@@ -142,12 +142,12 @@ public class ConditionalListEdit extends ConditionalEditBase {
 
     ActionTableModel _actionTableModel = null;
     VariableTableModel _variableTableModel = null;
-    JComboBox<String> _operatorBox;
+    JComboBox<Conditional.AntecedentOperator> _operatorBox;
     JComboBox<String> _andOperatorBox;
     JComboBox<String> _notOperatorBox;
     JTextField _antecedentField;
     JPanel _antecedentPanel;
-    int _logicType = Conditional.ALL_AND;
+    Conditional.AntecedentOperator _logicType = Conditional.AntecedentOperator.ALL_AND;
     String _antecedent = null;
     boolean _newItem = false; // marks a new Action or Variable object was added
 
@@ -724,7 +724,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 }
             });
             _antecedentPanel.add(helpButton);
-            _antecedentPanel.setVisible(_logicType == Conditional.MIXED);
+            _antecedentPanel.setVisible(_logicType == Conditional.AntecedentOperator.MIXED);
             logicPanel.add(_antecedentPanel);
 
             // add state variable table title
@@ -838,14 +838,14 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 }
             });
             _reorderVarButton.setToolTipText(Bundle.getMessage("ReorderButtonHint"));  // NOI18N
-            _reorderVarButton.setEnabled(!(_logicType == Conditional.MIXED));
+            _reorderVarButton.setEnabled(!(_logicType == Conditional.AntecedentOperator.MIXED));
             logicPanel.add(panel42);
 
             // logic type area
-            _operatorBox = new JComboBox<String>(new String[]{
-                Bundle.getMessage("LogicAND"), // NOI18N
-                Bundle.getMessage("LogicOR"), // NOI18N
-                Bundle.getMessage("LogicMixed")}); // NOI18N
+            _operatorBox = new JComboBox<>();
+            for (Conditional.AntecedentOperator operator : Conditional.AntecedentOperator.values()) {
+                _operatorBox.addItem(operator);
+            }
             JPanel typePanel = makeEditPanel(_operatorBox, "LabelLogicType", "TypeLogicHint");  // NOI18N
             _operatorBox.addActionListener(new ActionListener() {
                 @Override
@@ -853,7 +853,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     logicTypeChanged(e);
                 }
             });
-            _operatorBox.setSelectedIndex(_logicType - 1);
+            _operatorBox.setSelectedItem(_logicType);
             logicPanel.add(typePanel);
             logicPanel.add(Box.createHorizontalStrut(STRUT));
 
@@ -1054,7 +1054,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         int size = _variableList.size();
         // default of operator for postion 0 (row 1) is Conditional.OPERATOR_NONE
         if (size > 1) {
-            if (_logicType == Conditional.ALL_OR) {
+            if (_logicType == Conditional.AntecedentOperator.ALL_OR) {
                 variable.setOpern(Conditional.Operator.OR);
             } else {
                 variable.setOpern(Conditional.Operator.AND);
@@ -1119,7 +1119,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         if (_nextInOrder == 0) {
             oper = Conditional.Operator.NONE;
         } else {
-            oper = (_logicType == Conditional.ALL_AND)
+            oper = (_logicType == Conditional.AntecedentOperator.ALL_AND)
                     ? Conditional.Operator.AND
                     : Conditional.Operator.OR;
         }
@@ -1396,17 +1396,18 @@ public class ConditionalListEdit extends ConditionalEditBase {
      * @return false if there is no change in operator
      */
     boolean logicTypeChanged(ActionEvent e) {
-        int type = _operatorBox.getSelectedIndex() + 1;
+        Conditional.AntecedentOperator type =
+                _operatorBox.getItemAt(_operatorBox.getSelectedIndex());
         if (type == _logicType) {
             return false;
         }
         makeAntecedent();
 
-        if (type == Conditional.MIXED) {
+        if (type == Conditional.AntecedentOperator.MIXED) {
             _antecedentPanel.setVisible(true);
             _reorderVarButton.setEnabled(false);
         } else {
-            Operator oper = (type == Conditional.ALL_AND)
+            Operator oper = (type == Conditional.AntecedentOperator.ALL_AND)
                     ? Conditional.Operator.AND
                     : Conditional.Operator.OR;
             for (int i = 1; i < _variableList.size(); i++) {
@@ -1799,7 +1800,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     if (_curVariableRowNumber >= 0) {
                         _curVariable = new ConditionalVariable();
                         if (_curVariableRowNumber > 0) {
-                            if (_logicType == Conditional.ALL_OR) {
+                            if (_logicType == Conditional.AntecedentOperator.ALL_OR) {
                                 _curVariable.setOpern(Conditional.Operator.OR);
                             } else {
                                 _curVariable.setOpern(Conditional.Operator.AND);
@@ -4349,7 +4350,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 case ROWNUM_COLUMN:
                     return (false);
                 case AND_COLUMN:
-                    return (_logicType == Conditional.MIXED);
+                    return (_logicType == Conditional.AntecedentOperator.MIXED);
                 case NOT_COLUMN:
                     return (true);
                 case DESCRIPTION_COLUMN:

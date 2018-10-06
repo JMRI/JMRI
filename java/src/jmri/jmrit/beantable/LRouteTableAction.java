@@ -1877,7 +1877,10 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         //int option = onChange ? Conditional.ACTION_OPTION_ON_CHANGE : Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
         //c.setAction(cloneActionList(actionList, option));
         c.setAction(actionList);
-        int logicType = _newRouteType ? Conditional.MIXED : Conditional.ALL_AND;
+        Conditional.AntecedentOperator logicType =
+                _newRouteType
+                ? Conditional.AntecedentOperator.MIXED
+                : Conditional.AntecedentOperator.ALL_AND;
         c.setLogicType(logicType, antecedent.toString());
         logix.addConditional(cSystemName, 0);
         log.debug("Conditional added: SysName= \"" + cSystemName + "\"");
@@ -1926,7 +1929,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         c.setStateVariables(triggerList);
         //c.setAction(cloneActionList(actionList, Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE));
         c.setAction(actionList);
-        c.setLogicType(Conditional.ALL_AND, "");
+        c.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
         logix.addConditional(cSystemName, 0);
         log.debug("Conditional added: SysName= \"" + cSystemName + "\"");
         c.calculate(true, null);

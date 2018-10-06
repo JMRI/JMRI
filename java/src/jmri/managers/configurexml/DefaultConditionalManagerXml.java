@@ -77,7 +77,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 // store common parts
                 storeCommon(c, elem);
                 elem.setAttribute("antecedent", c.getAntecedentExpression());  // NOI18N
-                elem.setAttribute("logicType", Integer.toString(c.getLogicType()));  // NOI18N
+                elem.setAttribute("logicType", Integer.toString(c.getLogicType().getIntValue()));  // NOI18N
                 if (c.getTriggerOnChange()) {
                     elem.setAttribute("triggerOnChange", "yes");  // NOI18N
                 } else {
@@ -265,7 +265,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 logicType = Integer.parseInt(
                         condElem.getAttribute("logicType").getValue());  // NOI18N
             }
-            c.setLogicType(logicType, ant);
+            c.setLogicType(Conditional.AntecedentOperator.getOperatorFromIntValue(logicType), ant);
 
             // load state variables, if there are any
             List<Element> conditionalVarList = condElem.getChildren("conditionalStateVariable");  // NOI18N

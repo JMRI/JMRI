@@ -259,9 +259,9 @@ public class ConditionalEditBase {
      * @param antecedent The current antecedent
      * @return an extended antecedent
      */
-    String appendToAntecedent(int logicType, int varListSize, String antecedent) {
+    String appendToAntecedent(Conditional.AntecedentOperator logicType, int varListSize, String antecedent) {
         if (varListSize > 1) {
-            if (logicType == Conditional.OPERATOR_OR) {
+            if (logicType == Conditional.AntecedentOperator.ALL_OR) {
                 antecedent = antecedent + " or ";   // NOI18N
             } else {
                 antecedent = antecedent + " and ";  // NOI18N
@@ -281,8 +281,8 @@ public class ConditionalEditBase {
      * @param curConditional The current conditional.
      * @return false if antecedent can't be validated
      */
-    boolean validateAntecedent(int logicType, String antecedentText, List<ConditionalVariable> variableList, Conditional curConditional) {
-        if (logicType != Conditional.MIXED
+    boolean validateAntecedent(Conditional.AntecedentOperator logicType, String antecedentText, List<ConditionalVariable> variableList, Conditional curConditional) {
+        if (logicType != Conditional.AntecedentOperator.MIXED
                 || LRouteTableAction.LOGIX_INITIALIZER.equals(_curLogix.getSystemName())
                 || antecedentText == null
                 || antecedentText.trim().length() == 0) {

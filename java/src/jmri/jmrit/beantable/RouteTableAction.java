@@ -1515,7 +1515,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
             Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional(cSystemName, cUserName);
             c.setStateVariables(variableList);
-            c.setLogicType(Conditional.ALL_AND, "");
+            c.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
             c.setAction(actionList);
             logix.addConditional(cSystemName, 0);
             c.calculate(true, null);
@@ -1572,7 +1572,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             // add new Conditionals for action on 'locks'
             Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).createNewConditional(cSystemName, cUserName);
             c.setStateVariables(variableList);
-            c.setLogicType(Conditional.ALL_AND, "");
+            c.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
             c.setAction(actionList);
             logix.addConditional(cSystemName, 0);
             c.calculate(true, null);
@@ -1639,7 +1639,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             c.setStateVariables(varList);
             int option = onChange ? Conditional.ACTION_OPTION_ON_CHANGE : Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
             c.setAction(cloneActionList(actionList, option));
-            c.setLogicType(Conditional.ALL_AND, "");
+            c.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
             logix.addConditional(cSystemName, 0);
             c.calculate(true, null);
             numConds++;
@@ -1689,7 +1689,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             c.setStateVariables(varList);
             int option = onChange ? Conditional.ACTION_OPTION_ON_CHANGE : Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
             c.setAction(cloneActionList(actionList, option));
-            c.setLogicType(Conditional.ALL_AND, "");
+            c.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
             logix.addConditional(cSystemName, 0);
             c.calculate(true, null);
             numConds++;

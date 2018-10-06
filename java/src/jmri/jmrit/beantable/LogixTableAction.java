@@ -1825,7 +1825,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
                 showCondName = "C" + (rx + 1);
             }
             condText.append("\n  " + showSystemName + "  " + showCondName + "   \n");
-            if (curConditional.getLogicType() == Conditional.MIXED) {
+            if (curConditional.getLogicType() == Conditional.AntecedentOperator.MIXED) {
                 _antecedent = curConditional.getAntecedentExpression();
                 String antecedent = ConditionalEditBase.translateAntecedent(_antecedent, false);
                 condText.append("   " + Bundle.getMessage("LogixAntecedent") + " " + antecedent + "  \n");   // NOI18N
