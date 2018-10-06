@@ -278,7 +278,7 @@ public interface Conditional extends NamedBean {
         private static final List<Type> memoryItemsList;
 //        private static final List<Type> oblockItemsList;
         private static final List<Type> entryExitItemsList;
-        private static final List<Type> signalHeadItemsList;
+        private static final List<Type> signalHeadStateMachineItemsList;
         private static final List<Type> signalMastItemsList;
         
         private static final Set<Type> signalHeadAppearanceSet;
@@ -309,7 +309,7 @@ public interface Conditional extends NamedBean {
             entryExitItemsList = Collections.unmodifiableList(Arrays.asList(typeArray7));
             
             Type[] typeArray8 = {NONE, SIGNAL_HEAD_APPEARANCE_EQUALS, SIGNAL_HEAD_LIT, SIGNAL_HEAD_HELD};
-            signalHeadItemsList = Collections.unmodifiableList(Arrays.asList(typeArray8));
+            signalHeadStateMachineItemsList = Collections.unmodifiableList(Arrays.asList(typeArray8));
             
             Type[] typeArray9 = {SIGNAL_HEAD_RED, SIGNAL_HEAD_YELLOW, SIGNAL_HEAD_GREEN,
                 SIGNAL_HEAD_DARK, SIGNAL_HEAD_FLASHRED, SIGNAL_HEAD_FLASHYELLOW,
@@ -368,8 +368,8 @@ public interface Conditional extends NamedBean {
             return entryExitItemsList;
         }
         
-        public static List<Type> getSignalHeadItems() {
-            return signalHeadItemsList;
+        public static List<Type> getSignalHeadStateMachineItems() {
+            return signalHeadStateMachineItemsList;
         }
         
         public static boolean isSignalHeadApperance(Type type) {

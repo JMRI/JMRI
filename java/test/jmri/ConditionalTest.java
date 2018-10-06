@@ -198,10 +198,10 @@ public class ConditionalTest {
     @Test
     public void testArrays() {
         // Map SignalHead comboBox items to SignalHead Conditional variable types
-        Assert.assertEquals(Conditional.Type.NONE, Conditional.Type.getSignalHeadItems().get(0));
-        Assert.assertEquals(Conditional.Type.SIGNAL_HEAD_APPEARANCE_EQUALS, Conditional.Type.getSignalHeadItems().get(1));
-        Assert.assertEquals(Conditional.Type.SIGNAL_HEAD_LIT, Conditional.Type.getSignalHeadItems().get(2));
-        Assert.assertEquals(Conditional.Type.SIGNAL_HEAD_HELD, Conditional.Type.getSignalHeadItems().get(3));
+        Assert.assertEquals(Conditional.Type.NONE, Conditional.Type.getSignalHeadStateMachineItems().get(0));
+        Assert.assertEquals(Conditional.Type.SIGNAL_HEAD_APPEARANCE_EQUALS, Conditional.Type.getSignalHeadStateMachineItems().get(1));
+        Assert.assertEquals(Conditional.Type.SIGNAL_HEAD_LIT, Conditional.Type.getSignalHeadStateMachineItems().get(2));
+        Assert.assertEquals(Conditional.Type.SIGNAL_HEAD_HELD, Conditional.Type.getSignalHeadStateMachineItems().get(3));
 
         // Map SignalMAst comboBox items to SignalMast Conditional variable types
         Assert.assertEquals(Conditional.Type.NONE, Conditional.Type.getSignalMastItems().get(0));

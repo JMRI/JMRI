@@ -1864,11 +1864,11 @@ public class ConditionalListEdit extends ConditionalEditBase {
 
             case SIGNALHEAD:
                 _variableStateBox.setSelectedIndex(
-                        Conditional.Type.getIndexInList(Conditional.Type.getSignalHeadItems(), testType));
+                        Conditional.Type.getIndexInList(Conditional.Type.getSignalHeadStateMachineItems(), testType));
                 _variableNameField.setText(_curVariable.getName());
                 if (Conditional.Type.isSignalHeadApperance(testType)) {
                     _variableStateBox.setSelectedItem( // index 1 = TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS
-                            Conditional.Type.getSignalHeadItems().get(1).getIntValue());
+                            Conditional.Type.getSignalHeadStateMachineItems().get(1).getIntValue());
                     loadJComboBoxWithHeadAppearances(_variableSignalBox, _curVariable.getName());
                     _variableSignalBox.setSelectedItem(_curVariable.getType());
                     _variableSignalPanel.setVisible(true);
@@ -2020,7 +2020,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 _variableStateBox.addActionListener(variableSignalTestStateListener);
                 loadJComboBoxWithHeadAppearances(_variableSignalBox, _variableNameField.getText().trim());
 
-                for (Conditional.Type type : Conditional.Type.getSignalHeadItems()) {
+                for (Conditional.Type type : Conditional.Type.getSignalHeadStateMachineItems()) {
                     _variableStateBox.addItem(type.toString());
                 }
                 _variableNamePanel.setToolTipText(Bundle.getMessage("NameHintSignal"));  // NOI18N
@@ -2402,7 +2402,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 testType = Conditional.Type.getLightItems().get(_variableStateBox.getSelectedIndex());
                 break;
             case SIGNALHEAD:
-                testType = Conditional.Type.getSignalHeadItems().get(_variableStateBox.getSelectedIndex());
+                testType = Conditional.Type.getSignalHeadStateMachineItems().get(_variableStateBox.getSelectedIndex());
                 break;
             case SIGNALMAST:
                 testType = Conditional.Type.getSignalMastItems().get(_variableStateBox.getSelectedIndex());
