@@ -6,8 +6,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * DCCppThrottleTest.java
@@ -18,8 +16,6 @@ import org.slf4j.LoggerFactory;
  * @author	Mark Underwood
  */
 public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
-
-    private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutTest.class);
 
     @Override
     public int numListeners() {
