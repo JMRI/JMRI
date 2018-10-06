@@ -3030,7 +3030,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 if (name == null) {
                     return false;
                 }
-                String stri18n = (String) _variableStateBox.getSelectedItem().toString();
+                String stri18n = _variableStateBox.getSelectedItem().toString();
                 _curVariable.setDataString(OBlock.getSystemStatusName(stri18n));
                 log.debug("OBlock \"{}\"of type '{}' _variableSignalBox.getSelectedItem()= {}",
                         name, testType, _variableSignalBox.getSelectedItem()); // NOI18N
