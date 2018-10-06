@@ -826,7 +826,7 @@ public class ConditionalEditBase {
      * @return true if either correct decimal format or a memory with the given
      *         name is present
      */
-    boolean validateIntensityReference(Conditional.ActionType actionType, String intReference) {
+    boolean validateIntensityReference(Conditional.Action actionType, String intReference) {
         if (intReference == null || intReference.trim().length() == 0) {
             displayBadNumberReference(actionType);
             return false;
@@ -891,7 +891,7 @@ public class ConditionalEditBase {
      * @return true if ref is itself a decimal or user will provide one from a
      *         Memory at run time
      */
-    boolean validateTimeReference(Conditional.ActionType actionType, String ref) {
+    boolean validateTimeReference(Conditional.Action actionType, String ref) {
         if (ref == null || ref.trim().length() == 0) {
             displayBadNumberReference(actionType);
             return false;
@@ -939,7 +939,7 @@ public class ConditionalEditBase {
      * @param time       value to be checked
      * @return false if time &gt; 3600 (seconds) or too small
      */
-    boolean validateTime(Conditional.ActionType actionType, float time) {
+    boolean validateTime(Conditional.Action actionType, float time) {
         float maxTime = 3600;     // more than 1 hour
         float minTime = 0.020f;
         if (time < minTime || time > maxTime) {
@@ -978,7 +978,7 @@ public class ConditionalEditBase {
      * @param actionType integer representing the Conditional action type being
      *                   checked, i.e. ACTION_DELAYED_TURNOUT
      */
-    void displayBadNumberReference(Conditional.ActionType actionType) {
+    void displayBadNumberReference(Conditional.Action actionType) {
         String errorNum = " ";
         switch (actionType) {
             case DELAYED_TURNOUT:

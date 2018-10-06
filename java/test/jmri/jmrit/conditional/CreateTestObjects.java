@@ -60,7 +60,7 @@ public class CreateTestObjects {
 //       <conditionalAction option="1" type="9" systemName="Reset" data="4" delay="0" string="" />
         ConditionalAction act1 = new DefaultConditionalAction();
         act1.setOption(1);
-        act1.setType(Conditional.ActionType.SET_SENSOR);
+        act1.setType(Conditional.Action.SET_SENSOR);
         act1.setDeviceName("Sensor 1");  // NOI18N
         act1.setActionData(4);
         act1.setActionString("");
@@ -69,7 +69,7 @@ public class CreateTestObjects {
 //       <conditionalAction option="1" type="2" systemName="T-LT264" data="2" delay="0" string="" />
         ConditionalAction act2 = new DefaultConditionalAction();
         act2.setOption(1);
-        act2.setType(Conditional.ActionType.SET_TURNOUT);
+        act2.setType(Conditional.Action.SET_TURNOUT);
         act2.setDeviceName("Turnout 1");  // NOI18N
         act2.setActionData(2);
         act2.setActionString("");

@@ -602,7 +602,7 @@ public class DefaultConditional extends AbstractNamedBean
                 }
                 int value = 0;
                 Timer timer = null;
-                Conditional.ActionType type = action.getType();
+                Conditional.Action type = action.getType();
                 String devName = getDeviceName(action);
                 if (devName == null) {
                     errorList.add("invalid memory name in action - " + action);  // NOI18N
@@ -1440,8 +1440,8 @@ public class DefaultConditional extends AbstractNamedBean
     public void cancelSensorTimer(String sname) {
         for (int i = 0; i < _actionList.size(); i++) {
             ConditionalAction action = _actionList.get(i);
-            if ((action.getType() == Conditional.ActionType.DELAYED_SENSOR)
-                    || (action.getType() == Conditional.ActionType.RESET_DELAYED_SENSOR)) {
+            if ((action.getType() == Conditional.Action.DELAYED_SENSOR)
+                    || (action.getType() == Conditional.Action.RESET_DELAYED_SENSOR)) {
                 if (action.isTimerActive()) {
                     String devName = getDeviceName(action);
                     // have active set sensor timer - is it for our sensor?
@@ -1472,8 +1472,8 @@ public class DefaultConditional extends AbstractNamedBean
     public void cancelTurnoutTimer(String sname) {
         for (int i = 0; i < _actionList.size(); i++) {
             ConditionalAction action = _actionList.get(i);
-            if ((action.getType() == Conditional.ActionType.DELAYED_TURNOUT)
-                    || (action.getType() == Conditional.ActionType.RESET_DELAYED_TURNOUT)) {
+            if ((action.getType() == Conditional.Action.DELAYED_TURNOUT)
+                    || (action.getType() == Conditional.Action.RESET_DELAYED_TURNOUT)) {
                 if (action.isTimerActive()) {
                     // have active set turnout timer - is it for our turnout?
                     String devName = getDeviceName(action);

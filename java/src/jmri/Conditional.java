@@ -412,7 +412,7 @@ public interface Conditional extends NamedBean {
     }
     
     // items
-    enum ActionType {
+    enum Action {
         // For now, use same string for toString() and getActionTypeString()
         // If this is going to be changed, it's toString() that may be changed.
         // getActionTypeString() must be kept as is.
@@ -503,81 +503,81 @@ public interface Conditional extends NamedBean {
         private final String _bundleKey;
         private final String _actionTypeString;
         
-        private static final List<ActionType> sensorItemsList;
-        private static final List<ActionType> turnoutItemsList;
-        private static final List<ActionType> lightItemsList;
-        private static final List<ActionType> warrantItemsList;
-        private static final List<ActionType> memoryItemsList;
-        private static final List<ActionType> oblockItemsList;
-        private static final List<ActionType> entryExitItemsList;
-        private static final List<ActionType> signalHeadItemsList;
-        private static final List<ActionType> signalMastItemsList;
-        private static final List<ActionType> clockItemsList;
-        private static final List<ActionType> logixItemsList;
-        private static final List<ActionType> audioItemsList;
-        private static final List<ActionType> scriptItemsList;
-        private static final List<ActionType> otherItemsList;
+        private static final List<Action> sensorItemsList;
+        private static final List<Action> turnoutItemsList;
+        private static final List<Action> lightItemsList;
+        private static final List<Action> warrantItemsList;
+        private static final List<Action> memoryItemsList;
+        private static final List<Action> oblockItemsList;
+        private static final List<Action> entryExitItemsList;
+        private static final List<Action> signalHeadItemsList;
+        private static final List<Action> signalMastItemsList;
+        private static final List<Action> clockItemsList;
+        private static final List<Action> logixItemsList;
+        private static final List<Action> audioItemsList;
+        private static final List<Action> scriptItemsList;
+        private static final List<Action> otherItemsList;
         
-//        private static final Set<ActionType> signalHeadAppearanceSet;
+//        private static final Set<Action> signalHeadAppearanceSet;
         
         
         static
         {
-            ActionType[] typeArray1 = {SET_SENSOR, DELAYED_SENSOR,
+            Action[] typeArray1 = {SET_SENSOR, DELAYED_SENSOR,
                 RESET_DELAYED_SENSOR, CANCEL_SENSOR_TIMERS};
             sensorItemsList = Collections.unmodifiableList(Arrays.asList(typeArray1));
             
-            ActionType[] typeArray2 = {SET_TURNOUT, DELAYED_TURNOUT, LOCK_TURNOUT,
+            Action[] typeArray2 = {SET_TURNOUT, DELAYED_TURNOUT, LOCK_TURNOUT,
                 CANCEL_TURNOUT_TIMERS, RESET_DELAYED_TURNOUT};
             turnoutItemsList = Collections.unmodifiableList(Arrays.asList(typeArray2));
             
-            ActionType[] typeArray3 = {SET_LIGHT, SET_LIGHT_INTENSITY,
+            Action[] typeArray3 = {SET_LIGHT, SET_LIGHT_INTENSITY,
                 SET_LIGHT_TRANSITION_TIME};
             lightItemsList = Collections.unmodifiableList(Arrays.asList(typeArray3));
             
-            ActionType[] typeArray4 = {ALLOCATE_WARRANT_ROUTE, DEALLOCATE_WARRANT_ROUTE,
+            Action[] typeArray4 = {ALLOCATE_WARRANT_ROUTE, DEALLOCATE_WARRANT_ROUTE,
                 SET_ROUTE_TURNOUTS, AUTO_RUN_WARRANT, MANUAL_RUN_WARRANT, CONTROL_TRAIN,
                 SET_TRAIN_ID, SET_TRAIN_NAME, THROTTLE_FACTOR};
             warrantItemsList = Collections.unmodifiableList(Arrays.asList(typeArray4));
             
-            ActionType[] typeArray5 = {SET_MEMORY, COPY_MEMORY};
+            Action[] typeArray5 = {SET_MEMORY, COPY_MEMORY};
             memoryItemsList = Collections.unmodifiableList(Arrays.asList(typeArray5));
             
-            ActionType[] typeArray6 = {SET_NXPAIR_ENABLED, SET_NXPAIR_DISABLED,
+            Action[] typeArray6 = {SET_NXPAIR_ENABLED, SET_NXPAIR_DISABLED,
                 SET_NXPAIR_SEGMENT};
             entryExitItemsList = Collections.unmodifiableList(Arrays.asList(typeArray6));
             
-            ActionType[] typeArray7 = {SET_SIGNAL_APPEARANCE, SET_SIGNAL_HELD,
+            Action[] typeArray7 = {SET_SIGNAL_APPEARANCE, SET_SIGNAL_HELD,
                 CLEAR_SIGNAL_HELD, SET_SIGNAL_DARK, SET_SIGNAL_LIT};
             signalHeadItemsList = Collections.unmodifiableList(Arrays.asList(typeArray7));
             
-            ActionType[] typeArray8 = {SET_SIGNALMAST_ASPECT, SET_SIGNALMAST_HELD,
+            Action[] typeArray8 = {SET_SIGNALMAST_ASPECT, SET_SIGNALMAST_HELD,
                 CLEAR_SIGNALMAST_HELD, SET_SIGNALMAST_DARK, SET_SIGNALMAST_LIT};
             signalMastItemsList = Collections.unmodifiableList(Arrays.asList(typeArray8));
             
-            ActionType[] typeArray9 = {SET_FAST_CLOCK_TIME, START_FAST_CLOCK,
+            Action[] typeArray9 = {SET_FAST_CLOCK_TIME, START_FAST_CLOCK,
                 STOP_FAST_CLOCK};
             clockItemsList = Collections.unmodifiableList(Arrays.asList(typeArray9));
             
-            ActionType[] typeArray10 = {ENABLE_LOGIX, DISABLE_LOGIX};
+            Action[] typeArray10 = {ENABLE_LOGIX, DISABLE_LOGIX};
             logixItemsList = Collections.unmodifiableList(Arrays.asList(typeArray10));
             
-            ActionType[] typeArray11 = {DEALLOCATE_BLOCK, SET_BLOCK_VALUE,
+            Action[] typeArray11 = {DEALLOCATE_BLOCK, SET_BLOCK_VALUE,
                 SET_BLOCK_ERROR, CLEAR_BLOCK_ERROR, SET_BLOCK_OUT_OF_SERVICE,
                 SET_BLOCK_IN_SERVICE};
             oblockItemsList = Collections.unmodifiableList(Arrays.asList(typeArray11));
             
-            ActionType[] typeArray12 = {PLAY_SOUND, CONTROL_AUDIO};
+            Action[] typeArray12 = {PLAY_SOUND, CONTROL_AUDIO};
             audioItemsList = Collections.unmodifiableList(Arrays.asList(typeArray12));
             
-            ActionType[] typeArray13 = {RUN_SCRIPT, JYTHON_COMMAND};
+            Action[] typeArray13 = {RUN_SCRIPT, JYTHON_COMMAND};
             scriptItemsList = Collections.unmodifiableList(Arrays.asList(typeArray13));
             
-            ActionType[] typeArray14 = {TRIGGER_ROUTE};
+            Action[] typeArray14 = {TRIGGER_ROUTE};
             otherItemsList = Collections.unmodifiableList(Arrays.asList(typeArray14));
         }
         
-        private ActionType(int state, ItemType itemType, String bundleKey, String actionTypeString) {
+        private Action(int state, ItemType itemType, String bundleKey, String actionTypeString) {
             _item = state;
             _itemType = itemType;
             _bundleKey = bundleKey;
@@ -592,35 +592,35 @@ public interface Conditional extends NamedBean {
             return _item;
         }
         
-        public static List<ActionType> getSensorItems() {
+        public static List<Action> getSensorItems() {
             return sensorItemsList;
         }
         
-        public static List<ActionType> getTurnoutItems() {
+        public static List<Action> getTurnoutItems() {
             return turnoutItemsList;
         }
         
-        public static List<ActionType> getLightItems() {
+        public static List<Action> getLightItems() {
             return lightItemsList;
         }
         
-        public static List<ActionType> getWarrantItems() {
+        public static List<Action> getWarrantItems() {
             return warrantItemsList;
         }
         
-        public static List<ActionType> getMemoryItems() {
+        public static List<Action> getMemoryItems() {
             return memoryItemsList;
         }
         
-        public static List<ActionType> getOBlockItems() {
+        public static List<Action> getOBlockItems() {
             return oblockItemsList;
         }
         
-        public static List<ActionType> getEntryExitItems() {
+        public static List<Action> getEntryExitItems() {
             return entryExitItemsList;
         }
         
-        public static List<ActionType> getSignalHeadItems() {
+        public static List<Action> getSignalHeadItems() {
             return signalHeadItemsList;
         }
         
@@ -628,31 +628,31 @@ public interface Conditional extends NamedBean {
 //            return signalHeadAppearanceSet.contains(type);
 //        }
         
-        public static List<ActionType> getSignalMastItems() {
+        public static List<Action> getSignalMastItems() {
             return signalMastItemsList;
         }
         
-        public static List<ActionType> getClockItems() {
+        public static List<Action> getClockItems() {
             return clockItemsList;
         }
         
-        public static List<ActionType> getLogixItems() {
+        public static List<Action> getLogixItems() {
             return logixItemsList;
         }
         
-        public static List<ActionType> getAudioItems() {
+        public static List<Action> getAudioItems() {
             return audioItemsList;
         }
         
-        public static List<ActionType> getScriptItems() {
+        public static List<Action> getScriptItems() {
             return scriptItemsList;
         }
         
-        public static List<ActionType> getOtherItems() {
+        public static List<Action> getOtherItems() {
             return otherItemsList;
         }
         
-        public static int getIndexInList(List<ActionType> table, ActionType entry) {
+        public static int getIndexInList(List<Action> table, Action entry) {
             for (int i = 0; i < table.size(); i++) {
                 if (entry == table.get(i)) {
                     return i;
@@ -661,8 +661,8 @@ public interface Conditional extends NamedBean {
             return -1;
         }
         
-        public static ActionType getOperatorFromIntValue(int actionInt) {
-            for (ActionType action : ActionType.values()) {
+        public static Action getOperatorFromIntValue(int actionInt) {
+            for (Action action : Action.values()) {
                 if (action.getIntValue() == actionInt) {
                     return action;
                 }
@@ -675,7 +675,7 @@ public interface Conditional extends NamedBean {
         // and therefore the items must call getString() in the call to the constructor.
         @Override
         public String toString() {
-            return Bundle.getMessage(_bundleKey);
+            return _bundleKey;
         }
         
         public String getActionTypeString() {
@@ -819,7 +819,7 @@ public interface Conditional extends NamedBean {
     /**
      * ***********************************************************************************
      */
-    /* New Variable and ActionType type scheme for Logix UI
+    /* New Variable and Action type scheme for Logix UI
      * State Variables and actions are grouped according to type.  Variable and action
      * types share the following group categories:
      */
@@ -907,7 +907,7 @@ public interface Conditional extends NamedBean {
         ITEM_TYPE_ENTRYEXIT, //ACTION_SET_NXPAIR_DISABLED 52
         ITEM_TYPE_ENTRYEXIT //ACTION_SET_NXPAIR_SEGMENT 53
 };
-
+/*
     // Map Sensor Type comboBox items to Sensor action types
     @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
@@ -1026,7 +1026,7 @@ public interface Conditional extends NamedBean {
     // just have to accept these exposed
     // arrays. Someday...
     public static final int[] ITEM_TO_OTHER_ACTION = {ACTION_TRIGGER_ROUTE};
-
+*/
     /**
      * set the logic type (all AND's all OR's or mixed AND's and OR's set the
      * antecedent expression - should be a well formed boolean statement with

@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 public class DefaultConditionalAction implements ConditionalAction {
 
     private int _option = Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
-    private Conditional.ActionType _type = Conditional.ActionType.NONE;
+    private Conditional.Action _type = Conditional.Action.NONE;
     private String _deviceName = " ";
     private int _actionData = 0;
     private String _actionString = "";
@@ -55,7 +55,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     public DefaultConditionalAction() {
     }
 
-    public DefaultConditionalAction(int option, Conditional.ActionType type, String name, int actionData, String actionStr) {
+    public DefaultConditionalAction(int option, Conditional.Action type, String name, int actionData, String actionStr) {
         _option = option;
         _type = type;
         _deviceName = name;
@@ -223,7 +223,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                     }
                     break;
                 default:
-                    if (getType() == Conditional.ActionType.TRIGGER_ROUTE) {
+                    if (getType() == Conditional.Action.TRIGGER_ROUTE) {
                         try {
                             bean = InstanceManager.getDefault(RouteManager.class).getRoute(devName);
                         } catch (IllegalArgumentException e) {
@@ -242,12 +242,12 @@ public class DefaultConditionalAction implements ConditionalAction {
      * The consequent device or element type.
      */
     @Override
-    public Conditional.ActionType getType() {
+    public Conditional.Action getType() {
         return _type;
     }
 
     @Override
-    public void setType(Conditional.ActionType type) {
+    public void setType(Conditional.Action type) {
         _type = type;
     }
 
@@ -668,16 +668,16 @@ public class DefaultConditionalAction implements ConditionalAction {
      * @param str the string to get the type for
      * @return the type or 0 if str is not a recognized action
      */
-    public static Conditional.ActionType stringToActionType(String str) {
+    public static Conditional.Action stringToActionType(String str) {
         if (str != null) {
-            for (Conditional.ActionType action : Conditional.ActionType.values()) {
+            for (Conditional.Action action : Conditional.Action.values()) {
                 if (str.equals(action.getActionTypeString())) {
                     return action;
                 }
             }
         }
         log.warn("Unexpected parameter to stringToActionType({})", str);
-        return Conditional.ActionType.NONE;
+        return Conditional.Action.NONE;
     }
 
     /**
@@ -749,7 +749,7 @@ public class DefaultConditionalAction implements ConditionalAction {
         return -1;
     }
 
-    public static String getActionDataString(Conditional.ActionType t, int data) {
+    public static String getActionDataString(Conditional.Action t, int data) {
         switch (t) {
             case SET_TURNOUT:
             case DELAYED_TURNOUT:

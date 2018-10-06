@@ -77,10 +77,10 @@ public class OsIndicator implements Constants {
 
         List<ConditionalAction> actionList = c.getCopyOfActions();
         actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                Conditional.ActionType.SET_TURNOUT, output,
+                Conditional.Action.SET_TURNOUT, output,
                 Turnout.CLOSED, " ")); //NOI18N
         actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
-                Conditional.ActionType.SET_TURNOUT, output,
+                Conditional.Action.SET_TURNOUT, output,
                 Turnout.THROWN, " ")); //NOI18N
         c.setAction(actionList);          // string data
 

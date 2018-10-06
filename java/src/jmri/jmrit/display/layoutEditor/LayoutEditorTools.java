@@ -5818,10 +5818,10 @@ public class LayoutEditorTools {
             c.setStateVariables(variableList);
             List<ConditionalAction> actionList = c.getCopyOfActions();
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                    Conditional.ActionType.SET_SENSOR, sensorName,
+                    Conditional.Action.SET_SENSOR, sensorName,
                     Sensor.ACTIVE, ""));
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
-                    Conditional.ActionType.SET_SENSOR, sensorName,
+                    Conditional.Action.SET_SENSOR, sensorName,
                     Sensor.INACTIVE, ""));
             c.setAction(actionList);		  // string data
             x.addConditional(cName, -1);
@@ -13320,10 +13320,10 @@ public class LayoutEditorTools {
         c.setStateVariables(variableList);
         ArrayList<ConditionalAction> actionList = new ArrayList<>();
         actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                Conditional.ActionType.SET_SENSOR, sensorName,
+                Conditional.Action.SET_SENSOR, sensorName,
                 Sensor.INACTIVE, ""));
         actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
-                Conditional.ActionType.SET_SENSOR, sensorName,
+                Conditional.Action.SET_SENSOR, sensorName,
                 Sensor.ACTIVE, ""));
         c.setAction(actionList);		// string data
         if (newConditional) {
