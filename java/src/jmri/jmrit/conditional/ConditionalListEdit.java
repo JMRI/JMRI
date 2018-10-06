@@ -2253,9 +2253,9 @@ public class ConditionalListEdit extends ConditionalEditBase {
     private void compareTypeChanged(int selection) {
         JPanel p = (JPanel) _variableData1Panel.getComponent(0);
         JLabel l = (JLabel) p.getComponent(0);
-        int testType = Conditional.Type.getMemoryItems().get(selection).getIntValue();
-        if ((testType == Conditional.TYPE_MEMORY_COMPARE)
-                || (testType == Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE)) {
+        Conditional.Type testType = Conditional.Type.getMemoryItems().get(selection);
+        if ((testType == Conditional.Type.MEMORY_COMPARE)
+                || (testType == Conditional.Type.MEMORY_COMPARE_INSENSITIVE)) {
             l.setText(Bundle.getMessage("LabelMemoryValue"));  // NOI18N
             _variableData1Panel.setToolTipText(Bundle.getMessage("DataHintMemory"));  // NOI18N
         } else {
@@ -2594,10 +2594,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
             int itemType = _variableItemBox.getSelectedIndex();
 
             if (_variableStateBox.getSelectedIndex() == 1) {
-                if (itemType == Conditional.ITEM_TYPE_SIGNALHEAD) {
+                if (itemType == Conditional.ItemType.SIGNALHEAD.getIntValue()) {
                     loadJComboBoxWithHeadAppearances(_variableSignalBox, _variableNameField.getText().trim());
                     _variableSignalPanel.setVisible(true);
-                } else if (itemType == Conditional.ITEM_TYPE_SIGNALMAST) {
+                } else if (itemType == Conditional.ItemType.SIGNALMAST.getIntValue()) {
                     loadJComboBoxWithMastAspects(_variableSignalBox, _variableNameField.getText().trim());
                     _variableSignalPanel.setVisible(true);
                 } else {

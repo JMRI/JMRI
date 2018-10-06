@@ -247,6 +247,61 @@ public class ConditionalTest {
          * *************** ConditionalAction Maps *******************************
          */
         // Map action type to the item type
+        Assert.assertEquals(Conditional.ItemType.NONE, Conditional.Action.NONE.getItemType());
+        Assert.assertEquals(Conditional.ItemType.TURNOUT, Conditional.Action.SET_TURNOUT.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SIGNALHEAD, Conditional.Action.SET_SIGNAL_APPEARANCE.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SIGNALHEAD, Conditional.Action.SET_SIGNAL_HELD.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SIGNALHEAD, Conditional.Action.CLEAR_SIGNAL_HELD.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SIGNALHEAD, Conditional.Action.SET_SIGNAL_DARK.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SIGNALHEAD, Conditional.Action.SET_SIGNAL_LIT.getItemType());
+        Assert.assertEquals(Conditional.ItemType.OTHER, Conditional.Action.TRIGGER_ROUTE.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SENSOR, Conditional.Action.SET_SENSOR.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SENSOR, Conditional.Action.DELAYED_SENSOR.getItemType());
+        Assert.assertEquals(Conditional.ItemType.LIGHT, Conditional.Action.SET_LIGHT.getItemType());
+        Assert.assertEquals(Conditional.ItemType.MEMORY, Conditional.Action.SET_MEMORY.getItemType());
+        Assert.assertEquals(Conditional.ItemType.LOGIX, Conditional.Action.ENABLE_LOGIX.getItemType());
+        Assert.assertEquals(Conditional.ItemType.LOGIX, Conditional.Action.DISABLE_LOGIX.getItemType());
+        Assert.assertEquals(Conditional.ItemType.AUDIO, Conditional.Action.PLAY_SOUND.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SCRIPT, Conditional.Action.RUN_SCRIPT.getItemType());
+        Assert.assertEquals(Conditional.ItemType.TURNOUT, Conditional.Action.DELAYED_TURNOUT.getItemType());
+        Assert.assertEquals(Conditional.ItemType.TURNOUT, Conditional.Action.LOCK_TURNOUT.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SENSOR, Conditional.Action.RESET_DELAYED_SENSOR.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SENSOR, Conditional.Action.CANCEL_SENSOR_TIMERS.getItemType());
+        Assert.assertEquals(Conditional.ItemType.TURNOUT, Conditional.Action.RESET_DELAYED_TURNOUT.getItemType());
+        Assert.assertEquals(Conditional.ItemType.TURNOUT, Conditional.Action.CANCEL_TURNOUT_TIMERS.getItemType());
+        Assert.assertEquals(Conditional.ItemType.CLOCK, Conditional.Action.SET_FAST_CLOCK_TIME.getItemType());
+        Assert.assertEquals(Conditional.ItemType.CLOCK, Conditional.Action.START_FAST_CLOCK.getItemType());
+        Assert.assertEquals(Conditional.ItemType.CLOCK, Conditional.Action.STOP_FAST_CLOCK.getItemType());
+        Assert.assertEquals(Conditional.ItemType.MEMORY, Conditional.Action.COPY_MEMORY.getItemType());
+        Assert.assertEquals(Conditional.ItemType.LIGHT, Conditional.Action.SET_LIGHT_INTENSITY.getItemType());
+        Assert.assertEquals(Conditional.ItemType.LIGHT, Conditional.Action.SET_LIGHT_TRANSITION_TIME.getItemType());
+        Assert.assertEquals(Conditional.ItemType.AUDIO, Conditional.Action.CONTROL_AUDIO.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SCRIPT, Conditional.Action.JYTHON_COMMAND.getItemType());
+        Assert.assertEquals(Conditional.ItemType.WARRANT, Conditional.Action.ALLOCATE_WARRANT_ROUTE.getItemType());
+        Assert.assertEquals(Conditional.ItemType.WARRANT, Conditional.Action.DEALLOCATE_WARRANT_ROUTE.getItemType());
+        Assert.assertEquals(Conditional.ItemType.WARRANT, Conditional.Action.SET_ROUTE_TURNOUTS.getItemType());
+        Assert.assertEquals(Conditional.ItemType.WARRANT, Conditional.Action.AUTO_RUN_WARRANT.getItemType());
+        Assert.assertEquals(Conditional.ItemType.WARRANT, Conditional.Action.CONTROL_TRAIN.getItemType());
+        Assert.assertEquals(Conditional.ItemType.WARRANT, Conditional.Action.SET_TRAIN_ID.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SIGNALMAST, Conditional.Action.SET_SIGNALMAST_ASPECT.getItemType());
+        Assert.assertEquals(Conditional.ItemType.WARRANT, Conditional.Action.THROTTLE_FACTOR.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SIGNALMAST, Conditional.Action.SET_SIGNALMAST_HELD.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SIGNALMAST, Conditional.Action.CLEAR_SIGNALMAST_HELD.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SIGNALMAST, Conditional.Action.SET_SIGNALMAST_DARK.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SIGNALMAST, Conditional.Action.SET_SIGNALMAST_LIT.getItemType());
+        Assert.assertEquals(Conditional.ItemType.OBLOCK, Conditional.Action.SET_BLOCK_ERROR.getItemType());
+        Assert.assertEquals(Conditional.ItemType.OBLOCK, Conditional.Action.CLEAR_BLOCK_ERROR.getItemType());
+        Assert.assertEquals(Conditional.ItemType.OBLOCK, Conditional.Action.DEALLOCATE_BLOCK.getItemType());
+        Assert.assertEquals(Conditional.ItemType.OBLOCK, Conditional.Action.SET_BLOCK_OUT_OF_SERVICE.getItemType());
+        Assert.assertEquals(Conditional.ItemType.OBLOCK, Conditional.Action.SET_BLOCK_IN_SERVICE.getItemType());
+        Assert.assertEquals(Conditional.ItemType.WARRANT, Conditional.Action.MANUAL_RUN_WARRANT.getItemType());
+        Assert.assertEquals(Conditional.ItemType.WARRANT, Conditional.Action.SET_TRAIN_NAME.getItemType());
+        Assert.assertEquals(Conditional.ItemType.OBLOCK, Conditional.Action.SET_BLOCK_VALUE.getItemType());
+        Assert.assertEquals(Conditional.ItemType.ENTRYEXIT, Conditional.Action.SET_NXPAIR_ENABLED.getItemType());
+        Assert.assertEquals(Conditional.ItemType.ENTRYEXIT, Conditional.Action.SET_NXPAIR_DISABLED.getItemType());
+        Assert.assertEquals(Conditional.ItemType.ENTRYEXIT, Conditional.Action.SET_NXPAIR_SEGMENT.getItemType());
+/*
+        // Map action type to the item type
         Assert.assertEquals(Conditional.TYPE_NONE, Conditional.ACTION_TO_ITEM[Conditional.ACTION_NONE]);
         Assert.assertEquals(Conditional.ITEM_TYPE_TURNOUT, Conditional.ACTION_TO_ITEM[Conditional.ACTION_SET_TURNOUT]);
         Assert.assertEquals(Conditional.ITEM_TYPE_SIGNALHEAD, Conditional.ACTION_TO_ITEM[Conditional.ACTION_SET_SIGNAL_APPEARANCE]);
@@ -300,7 +355,7 @@ public class ConditionalTest {
         Assert.assertEquals(Conditional.ITEM_TYPE_ENTRYEXIT, Conditional.ACTION_TO_ITEM[Conditional.ACTION_SET_NXPAIR_ENABLED]);
         Assert.assertEquals(Conditional.ITEM_TYPE_ENTRYEXIT, Conditional.ACTION_TO_ITEM[Conditional.ACTION_SET_NXPAIR_DISABLED]);
         Assert.assertEquals(Conditional.ITEM_TYPE_ENTRYEXIT, Conditional.ACTION_TO_ITEM[Conditional.ACTION_SET_NXPAIR_SEGMENT]);
-
+*/
         // Map Sensor Type comboBox items to Sensor action types
         Assert.assertEquals(Conditional.Action.SET_SENSOR, Conditional.Action.getSensorItems().get(0));
         Assert.assertEquals(Conditional.Action.DELAYED_SENSOR, Conditional.Action.getSensorItems().get(1));

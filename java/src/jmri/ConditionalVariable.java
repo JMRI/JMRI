@@ -292,7 +292,7 @@ public class ConditionalVariable {
     }
 
     public String getDataString() {
-        if (_type.getItemType().getIntValue() == Conditional.ITEM_TYPE_MEMORY
+        if (_type.getItemType() == Conditional.ItemType.MEMORY
                 && _namedBeanData != null) {
             return _namedBeanData.getName();
         }
@@ -302,7 +302,7 @@ public class ConditionalVariable {
     public void setDataString(String data) {
         _dataString = data;
         if (data != null && !data.equals("")
-                && _type.getItemType().getIntValue() == Conditional.ITEM_TYPE_MEMORY) {
+                && _type.getItemType() == Conditional.ItemType.MEMORY) {
             NamedBean bean = InstanceManager.memoryManagerInstance().getMemory(data);
             if (bean != null) {
                 _namedBeanData = nbhm.getNamedBeanHandle(data, bean);
@@ -414,10 +414,10 @@ public class ConditionalVariable {
     public boolean evaluate() {
         boolean result = true;
         // evaluate according to state variable type
-        int itemType = _type.getItemType().getIntValue();
+        Conditional.ItemType itemType = _type.getItemType();
         log.debug("evaluate: \"{}\" type= {} itemType= {}", getName(), _type, itemType);
         switch (itemType) {
-            case Conditional.ITEM_TYPE_SENSOR:
+            case SENSOR:
                 //Sensor sn = InstanceManager.sensorManagerInstance().provideSensor(getName());
                 Sensor sn = (Sensor) getBean();
                 if (sn == null) {
@@ -430,7 +430,7 @@ public class ConditionalVariable {
                     result = sn.getState() == Sensor.INACTIVE;
                 }
                 break;
-            case Conditional.ITEM_TYPE_TURNOUT:
+            case TURNOUT:
                 Turnout t = (Turnout) getBean();
                 if (t == null) {
                     log.error("invalid turnout name= \"{}\" in state variable", getName());
@@ -442,7 +442,7 @@ public class ConditionalVariable {
                     result = t.getKnownState() == Turnout.CLOSED;
                 }
                 break;
-            case Conditional.ITEM_TYPE_LIGHT:
+            case LIGHT:
                 Light lgt = (Light) getBean();
                 if (lgt == null) {
                     log.error("invalid light name= \"{}\" in state variable", getName());
@@ -454,7 +454,7 @@ public class ConditionalVariable {
                     result = lgt.getState() == Light.OFF;
                 }
                 break;
-            case Conditional.ITEM_TYPE_SIGNALMAST:
+            case SIGNALMAST:
                 SignalMast f = (SignalMast) getBean();
                 if (f == null) {
                     log.error("invalid signal mast name= \"{}\" in state variable", getName());
@@ -478,7 +478,7 @@ public class ConditionalVariable {
                         log.warn("unexpected type {} in ITEM_TYPE_SIGNALMAST", _type);
                 }
                 break;
-            case Conditional.ITEM_TYPE_SIGNALHEAD:
+            case SIGNALHEAD:
                 SignalHead h = (SignalHead) getBean();
                 if (h == null) {
                     log.error("invalid signal head name= \"{}\" in state variable", getName());
@@ -522,7 +522,7 @@ public class ConditionalVariable {
                         result = false;
                 }
                 break;
-            case Conditional.ITEM_TYPE_MEMORY:
+            case MEMORY:
                 Memory m = (Memory) getBean();
                 if (m == null) {
                     log.error("invalid memory name= \"{}\" in state variable", getName());
@@ -556,7 +556,7 @@ public class ConditionalVariable {
                 }
                 result = compare(value1, value2, caseInsensitive);
                 break;
-            case Conditional.ITEM_TYPE_CONDITIONAL:
+            case CONDITIONAL:
                 Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(getName());
                 if (c == null) {
                     c = InstanceManager.getDefault(jmri.ConditionalManager.class).getByUserName(getName());
@@ -571,7 +571,7 @@ public class ConditionalVariable {
                     result = c.getState() == Conditional.FALSE;
                 }
                 break;
-            case Conditional.ITEM_TYPE_WARRANT:
+            case WARRANT:
                 Warrant w = InstanceManager.getDefault(WarrantManager.class).getWarrant(getName());
                 if (w == null) {
                     log.error("invalid Warrant name= \"{}\" in state variable", getName());
@@ -598,7 +598,7 @@ public class ConditionalVariable {
                         result = false;
                 }
                 break;
-            case Conditional.ITEM_TYPE_CLOCK:
+            case CLOCK:
                 Timebase fastClock = InstanceManager.getDefault(jmri.Timebase.class);
                 Date currentTime = fastClock.getTime();
                 int currentMinutes = (currentTime.getHours() * 60) + currentTime.getMinutes();
@@ -613,7 +613,7 @@ public class ConditionalVariable {
                     result = beginTime <= currentMinutes || currentMinutes <= endTime;
                 }
                 break;
-            case Conditional.ITEM_TYPE_OBLOCK:
+            case OBLOCK:
                 OBlock b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(getName());
                 if (b == null) {
                     log.error("invalid OBlock name= \"{}\" in state variable", getName());
@@ -621,7 +621,7 @@ public class ConditionalVariable {
                 }
                 result = b.statusIs(_dataString);
                 break;
-            case Conditional.ITEM_TYPE_ENTRYEXIT:
+            case ENTRYEXIT:
                 NamedBean e = getBean();
                 if (_type == Conditional.Type.ENTRYEXIT_ACTIVE) {
                     result = e.getState() == 0x02;
@@ -758,29 +758,29 @@ public class ConditionalVariable {
      * @param t the type
      * @return the localized description
      */
-    public static String getItemTypeString(int t) {
+    public static String getItemTypeString(Conditional.ItemType t) {
         switch (t) {
-            case Conditional.ITEM_TYPE_SENSOR:
+            case SENSOR:
                 return Bundle.getMessage("BeanNameSensor"); // NOI18N
-            case Conditional.ITEM_TYPE_TURNOUT:
+            case TURNOUT:
                 return Bundle.getMessage("BeanNameTurnout"); // NOI18N
-            case Conditional.ITEM_TYPE_LIGHT:
+            case LIGHT:
                 return Bundle.getMessage("BeanNameLight"); // NOI18N
-            case Conditional.ITEM_TYPE_SIGNALHEAD:
+            case SIGNALHEAD:
                 return Bundle.getMessage("BeanNameSignalHead"); // NOI18N
-            case Conditional.ITEM_TYPE_SIGNALMAST:
+            case SIGNALMAST:
                 return Bundle.getMessage("BeanNameSignalMast"); // NOI18N
-            case Conditional.ITEM_TYPE_MEMORY:
+            case MEMORY:
                 return Bundle.getMessage("BeanNameMemory"); // NOI18N
-            case Conditional.ITEM_TYPE_CONDITIONAL:
+            case CONDITIONAL:
                 return Bundle.getMessage("BeanNameConditional"); // NOI18N
-            case Conditional.ITEM_TYPE_WARRANT:
+            case WARRANT:
                 return Bundle.getMessage("BeanNameWarrant"); // NOI18N
-            case Conditional.ITEM_TYPE_CLOCK:
+            case CLOCK:
                 return Bundle.getMessage("FastClock"); // NOI18N
-            case Conditional.ITEM_TYPE_OBLOCK:
+            case OBLOCK:
                 return Bundle.getMessage("BeanNameOBlock"); // NOI18N
-            case Conditional.ITEM_TYPE_ENTRYEXIT:
+            case ENTRYEXIT:
                 return Bundle.getMessage("EntryExit"); // NOI18N
             default:
                 return "";

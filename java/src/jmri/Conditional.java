@@ -160,12 +160,10 @@ public interface Conditional extends NamedBean {
         CLOCK(ITEM_TYPE_CLOCK, IsStateVar.IS_STATE_VAR, "ItemTypeClock"),
         OBLOCK(ITEM_TYPE_OBLOCK, IsStateVar.IS_STATE_VAR, "ItemTypeOBlock"),
         ENTRYEXIT(ITEM_TYPE_ENTRYEXIT, IsStateVar.IS_STATE_VAR, "ItemTypeEntryExit"),
-//        LAST_STATE_VAR(ITEM_TYPE_LAST_STATE_VAR, IsStateVar.IS_STATE_VAR, "ItemTypeStateVar"),
 
         AUDIO(ITEM_TYPE_AUDIO, IsStateVar.IS_NOT_STATE_VAR, "ItemTypeAudio"),
         SCRIPT(ITEM_TYPE_SCRIPT, IsStateVar.IS_NOT_STATE_VAR, "ItemTypeScript"),
         OTHER(ITEM_TYPE_OTHER, IsStateVar.IS_NOT_STATE_VAR, "ItemTypeOther");
-//        LAST_ACTION(ITEM_TYPE_LAST_ACTION, "ItemTypeLastAction");
         
         private final int _type;
         private IsStateVar _isStateVar;
@@ -276,7 +274,6 @@ public interface Conditional extends NamedBean {
         private static final List<Type> lightItemsList;
         private static final List<Type> warrantItemsList;
         private static final List<Type> memoryItemsList;
-//        private static final List<Type> oblockItemsList;
         private static final List<Type> entryExitItemsList;
         private static final List<Type> signalHeadStateMachineItemsList;
         private static final List<Type> signalMastItemsList;
@@ -359,10 +356,6 @@ public interface Conditional extends NamedBean {
         public static List<Type> getMemoryItems() {
             return memoryItemsList;
         }
-        
-//        public static List<Type> getOBlockItems() {
-//            return oblockItemsList;
-//        }
         
         public static List<Type> getEntryExitItems() {
             return entryExitItemsList;
@@ -495,7 +488,6 @@ public interface Conditional extends NamedBean {
         SET_NXPAIR_ENABLED(ACTION_SET_NXPAIR_ENABLED, ItemType.ENTRYEXIT, rbx.getString("ActionNXPairEnabled"), rbx.getString("ActionNXPairEnabled")), // NOI18N
         SET_NXPAIR_DISABLED(ACTION_SET_NXPAIR_DISABLED, ItemType.ENTRYEXIT, rbx.getString("ActionNXPairDisabled"), rbx.getString("ActionNXPairDisabled")), // NOI18N
         SET_NXPAIR_SEGMENT(ACTION_SET_NXPAIR_SEGMENT, ItemType.ENTRYEXIT, rbx.getString("ActionNXPairSegment"), rbx.getString("ActionNXPairSegment")); // NOI18N
-//        static final int NUM_ACTION_TYPES(NUM_ACTION_TYPES, ItemType.NONE, "aaa"); // NOI18N
         
             
         private final int _item;
@@ -623,10 +615,6 @@ public interface Conditional extends NamedBean {
         public static List<Action> getSignalHeadItems() {
             return signalHeadItemsList;
         }
-        
-//        public static boolean isSignalHeadApperance(Type type) {
-//            return signalHeadAppearanceSet.contains(type);
-//        }
         
         public static List<Action> getSignalMastItems() {
             return signalMastItemsList;
@@ -845,7 +833,7 @@ public interface Conditional extends NamedBean {
 
     /**
      * *************** ConditionalAction Maps *******************************
-     */
+     *./
     // Map action type to the item type
     @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
@@ -907,6 +895,7 @@ public interface Conditional extends NamedBean {
         ITEM_TYPE_ENTRYEXIT, //ACTION_SET_NXPAIR_DISABLED 52
         ITEM_TYPE_ENTRYEXIT //ACTION_SET_NXPAIR_SEGMENT 53
 };
+*/
 /*
     // Map Sensor Type comboBox items to Sensor action types
     @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 

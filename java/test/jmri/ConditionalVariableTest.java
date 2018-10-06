@@ -711,31 +711,31 @@ public class ConditionalVariableTest {
     @Test
     public void testGetItemTypeString() {
         Assert.assertTrue("getItemTypeString() returns correct value",
-                "Sensor".equals(ConditionalVariable.getItemTypeString(ITEM_TYPE_SENSOR)));
+                "Sensor".equals(ConditionalVariable.getItemTypeString(ItemType.SENSOR)));
         Assert.assertTrue("getItemTypeString() returns correct value",
-                "Turnout".equals(ConditionalVariable.getItemTypeString(ITEM_TYPE_TURNOUT)));
+                "Turnout".equals(ConditionalVariable.getItemTypeString(ItemType.TURNOUT)));
         Assert.assertTrue("getItemTypeString() returns correct value",
-                "Light".equals(ConditionalVariable.getItemTypeString(ITEM_TYPE_LIGHT)));
+                "Light".equals(ConditionalVariable.getItemTypeString(ItemType.LIGHT)));
         Assert.assertTrue("getItemTypeString() returns correct value",
-                "Signal Head".equals(ConditionalVariable.getItemTypeString(ITEM_TYPE_SIGNALHEAD)));
+                "Signal Head".equals(ConditionalVariable.getItemTypeString(ItemType.SIGNALHEAD)));
         Assert.assertTrue("getItemTypeString() returns correct value",
-                "Signal Mast".equals(ConditionalVariable.getItemTypeString(ITEM_TYPE_SIGNALMAST)));
+                "Signal Mast".equals(ConditionalVariable.getItemTypeString(ItemType.SIGNALMAST)));
         Assert.assertTrue("getItemTypeString() returns correct value",
-                "Memory".equals(ConditionalVariable.getItemTypeString(ITEM_TYPE_MEMORY)));
+                "Memory".equals(ConditionalVariable.getItemTypeString(ItemType.MEMORY)));
         Assert.assertTrue("getItemTypeString() returns correct value",
-                "Conditional".equals(ConditionalVariable.getItemTypeString(ITEM_TYPE_CONDITIONAL)));
+                "Conditional".equals(ConditionalVariable.getItemTypeString(ItemType.CONDITIONAL)));
         Assert.assertTrue("getItemTypeString() returns correct value",
-                "Warrant".equals(ConditionalVariable.getItemTypeString(ITEM_TYPE_WARRANT)));
+                "Warrant".equals(ConditionalVariable.getItemTypeString(ItemType.WARRANT)));
         Assert.assertTrue("getItemTypeString() returns correct value",
-                "Fast Clock".equals(ConditionalVariable.getItemTypeString(ITEM_TYPE_CLOCK)));
+                "Fast Clock".equals(ConditionalVariable.getItemTypeString(ItemType.CLOCK)));
         Assert.assertTrue("getItemTypeString() returns correct value",
-                "Occupancy Block".equals(ConditionalVariable.getItemTypeString(ITEM_TYPE_OBLOCK)));
+                "Occupancy Block".equals(ConditionalVariable.getItemTypeString(ItemType.OBLOCK)));
         Assert.assertTrue("getItemTypeString() returns correct value",
-                "Entry Exit".equals(ConditionalVariable.getItemTypeString(ITEM_TYPE_ENTRYEXIT)));
+                "Entry Exit".equals(ConditionalVariable.getItemTypeString(ItemType.ENTRYEXIT)));
         
         // Test wrong value
-        Assert.assertTrue("getItemTypeString() returns correct value",
-                "".equals(ConditionalVariable.getItemTypeString(-1)));
+//        Assert.assertTrue("getItemTypeString() returns correct value",
+//                "".equals(ConditionalVariable.getItemTypeString(-1)));
     }
     
     @Test
