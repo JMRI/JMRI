@@ -154,7 +154,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     // ------------ Components of Edit Variable panes ------------
     JmriJFrame _editVariableFrame = null;
     JComboBox<Conditional.ItemType> _variableItemBox;
-    JComboBox<String> _variableStateBox;
+    JComboBox<Conditional.Type> _variableStateBox;
     JTextField _variableNameField;
     JComboBox<String> _variableCompareOpBox;
     JComboBox<String> _variableSignalBox;
@@ -1699,8 +1699,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
         panel1.add(Box.createHorizontalStrut(STRUT));
 
         // State Box
-        _variableStateBox = new JComboBox<String>();
-        _variableStateBox.addItem("XXXXXXX");  // NOI18N
+        _variableStateBox = new JComboBox<>();
+        _variableStateBox.addItem(Conditional.Type.XXXXXXX);
         _variableStatePanel = makeEditPanel(_variableStateBox, "LabelVariableState", "VariableStateHint");  // NOI18N
         _variableStatePanel.setVisible(false);
         panel1.add(_variableStatePanel);
@@ -1845,30 +1845,25 @@ public class ConditionalListEdit extends ConditionalEditBase {
         _variableItemBox.setSelectedItem(itemType);
         switch (itemType) {
             case SENSOR:
-                _variableStateBox.setSelectedIndex(
-                        Conditional.Type.getIndexInList(Conditional.Type.getSensorItems(), testType));
+                _variableStateBox.setSelectedItem(testType);
                 _variableNameField.setText(_curVariable.getName());
                 break;
 
             case TURNOUT:
-                _variableStateBox.setSelectedIndex(
-                        Conditional.Type.getIndexInList(Conditional.Type.getTurnoutItems(), testType));
+                _variableStateBox.setSelectedItem(testType);
                 _variableNameField.setText(_curVariable.getName());
                 break;
 
             case LIGHT:
-                _variableStateBox.setSelectedIndex(
-                        Conditional.Type.getIndexInList(Conditional.Type.getLightItems(), testType));
+                _variableStateBox.setSelectedItem(testType);
                 _variableNameField.setText(_curVariable.getName());
                 break;
 
             case SIGNALHEAD:
-                _variableStateBox.setSelectedIndex(
-                        Conditional.Type.getIndexInList(Conditional.Type.getSignalHeadStateMachineItems(), testType));
+                _variableStateBox.setSelectedItem(testType);
                 _variableNameField.setText(_curVariable.getName());
                 if (Conditional.Type.isSignalHeadApperance(testType)) {
-                    _variableStateBox.setSelectedItem( // index 1 = TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS
-                            Conditional.Type.getSignalHeadStateMachineItems().get(1).getIntValue());
+                    _variableStateBox.setSelectedItem(Conditional.Type.SIGNAL_HEAD_APPEARANCE_EQUALS);
                     loadJComboBoxWithHeadAppearances(_variableSignalBox, _curVariable.getName());
                     _variableSignalBox.setSelectedItem(_curVariable.getType());
                     _variableSignalPanel.setVisible(true);
@@ -1877,8 +1872,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
 
             case SIGNALMAST:
                 // set display to show current state variable (curVariable) parameters
-                _variableStateBox.setSelectedIndex(
-                        Conditional.Type.getIndexInList(Conditional.Type.getSignalMastItems(), testType));
+                _variableStateBox.setSelectedItem(testType);
                 _variableNameField.setText(_curVariable.getName());
                 if (testType == Conditional.Type.SIGNAL_MAST_ASPECT_EQUALS) {
                     loadJComboBoxWithMastAspects(_variableSignalBox, _curVariable.getName());
@@ -1900,14 +1894,12 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 break;
 
             case CONDITIONAL:
-                _variableStateBox.setSelectedIndex(
-                        Conditional.Type.getIndexInList(Conditional.Type.getConditionalItems(), testType));
+                _variableStateBox.setSelectedItem(testType);
                 _variableNameField.setText(_curVariable.getName());
                 break;
 
             case WARRANT:
-                _variableStateBox.setSelectedIndex(
-                        Conditional.Type.getIndexInList(Conditional.Type.getWarrantItems(), testType));
+                _variableStateBox.setSelectedItem(testType);
                 _variableNameField.setText(_curVariable.getName());
                 break;
 
@@ -1922,18 +1914,23 @@ public class ConditionalListEdit extends ConditionalEditBase {
             case OBLOCK:
                 _variableNameField.setText(_curVariable.getName());
                 //_variableStateBox.removeAllItems();
-                Iterator<String> names = OBlock.getLocalStatusNames();
-                while (names.hasNext()) {
-                    _variableStateBox.addItem(names.next());
+                for (Conditional.Type type : Conditional.Type.getOBlockItems()) {
+                    _variableStateBox.addItem(type);
+                    if (type.toString().equals(OBlock.getLocalStatusName(_curVariable.getDataString()))) {
+                        _variableStateBox.setSelectedItem(type);
+                    }
                 }
-                _variableStateBox.setSelectedItem(OBlock.getLocalStatusName(_curVariable.getDataString()));
+//                Iterator<String> names = OBlock.getLocalStatusNames();
+//                while (names.hasNext()) {
+//                    _variableStateBox.addItem(names.next());
+//                }
+//                _variableStateBox.setSelectedItem(OBlock.getLocalStatusName(_curVariable.getDataString()));
                 _variableStateBox.setVisible(true);
                 break;
 
             case ENTRYEXIT:
                 _variableNameField.setText(_curVariable.getBean().getUserName());
-                _variableStateBox.setSelectedIndex(
-                        Conditional.Type.getIndexInList(Conditional.Type.getEntryExitItems(), testType));
+                _variableStateBox.setSelectedItem(testType);
                 _variableStateBox.setVisible(true);
                 break;
 
@@ -1988,7 +1985,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             case SENSOR:
                 _variableNamePanel.setToolTipText(Bundle.getMessage("NameHintSensor"));  // NOI18N
                 for (Conditional.Type type : Conditional.Type.getSensorItems()) {
-                    _variableStateBox.addItem(type.toString());
+                    _variableStateBox.addItem(type);
                 }
                 _variableStatePanel.setVisible(true);
                 _variableNamePanel.setVisible(true);
@@ -1998,7 +1995,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             case TURNOUT:
                 _variableNamePanel.setToolTipText(Bundle.getMessage("NameHintTurnout"));  // NOI18N
                 for (Conditional.Type type : Conditional.Type.getTurnoutItems()) {
-                    _variableStateBox.addItem(type.toString());
+                    _variableStateBox.addItem(type);
                 }
                 _variableNamePanel.setVisible(true);
                 _variableStatePanel.setVisible(true);
@@ -2008,7 +2005,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             case LIGHT:
                 _variableNamePanel.setToolTipText(Bundle.getMessage("NameHintLight"));  // NOI18N
                 for (Conditional.Type type : Conditional.Type.getLightItems()) {
-                    _variableStateBox.addItem(type.toString());
+                    _variableStateBox.addItem(type);
                 }
                 _variableStatePanel.setVisible(true);
                 _variableNamePanel.setVisible(true);
@@ -2021,7 +2018,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 loadJComboBoxWithHeadAppearances(_variableSignalBox, _variableNameField.getText().trim());
 
                 for (Conditional.Type type : Conditional.Type.getSignalHeadStateMachineItems()) {
-                    _variableStateBox.addItem(type.toString());
+                    _variableStateBox.addItem(type);
                 }
                 _variableNamePanel.setToolTipText(Bundle.getMessage("NameHintSignal"));  // NOI18N
                 _variableNamePanel.setVisible(true);
@@ -2040,7 +2037,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 loadJComboBoxWithMastAspects(_variableSignalBox, _variableNameField.getText().trim());
 
                 for (Conditional.Type type : Conditional.Type.getSignalMastItems()) {
-                    _variableStateBox.addItem(type.toString());
+                    _variableStateBox.addItem(type);
                 }
                 _variableNamePanel.setToolTipText(Bundle.getMessage("NameHintSignalMast"));  // NOI18N
                 _variableNamePanel.setVisible(true);
@@ -2077,7 +2074,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 _selectLogixBox.addActionListener(selectLogixBoxListener);
                 _selectConditionalBox.addActionListener(selectConditionalBoxListener);
                 for (Conditional.Type type : Conditional.Type.getConditionalItems()) {
-                    _variableStateBox.addItem(type.toString());
+                    _variableStateBox.addItem(type);
                 }
                 // Load the Logix and Conditional combo boxes
                 loadSelectLogixBox();
@@ -2091,7 +2088,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             case WARRANT:
                 _variableNamePanel.setToolTipText(Bundle.getMessage("NameHintWarrant"));  // NOI18N
                 for (Conditional.Type type : Conditional.Type.getWarrantItems()) {
-                    _variableStateBox.addItem(type.toString());
+                    _variableStateBox.addItem(type);
                 }
                 _variableNamePanel.setVisible(true);
                 _variableStatePanel.setVisible(true);
@@ -2111,10 +2108,13 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 _variableNamePanel.setToolTipText(Bundle.getMessage("NameHintOBlock"));  // NOI18N
                 _variableNamePanel.setVisible(true);
                 _variableStateBox.removeAllItems();
-                Iterator<String> names = OBlock.getLocalStatusNames();
-                while (names.hasNext()) {
-                    _variableStateBox.addItem(names.next());
+                for (Conditional.Type type : Conditional.Type.getOBlockItems()) {
+                    _variableStateBox.addItem(type);
                 }
+//                Iterator<String> names = OBlock.getLocalStatusNames();
+//                while (names.hasNext()) {
+//                    _variableStateBox.addItem(names.next());
+//                }
                 _variableStatePanel.setVisible(true);
                 setVariableNameBox(itemType);
                 break;
@@ -2123,7 +2123,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 _variableNamePanel.setToolTipText(Bundle.getMessage("NameHintEntryExit"));  // NOI18N
                 _variableNameField.setText(_curVariable.getName());
                 for (Conditional.Type type : Conditional.Type.getEntryExitItems()) {
-                    _variableStateBox.addItem(type.toString());
+                    _variableStateBox.addItem(type);
                 }
                 _variableStatePanel.setVisible(true);
                 _variableNamePanel.setVisible(true);
@@ -2393,28 +2393,28 @@ public class ConditionalListEdit extends ConditionalEditBase {
         Conditional.Type testType = Conditional.Type.NONE;
         switch (itemType) {
             case SENSOR:
-                testType = Conditional.Type.getSensorItems().get(_variableStateBox.getSelectedIndex());
+                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
                 break;
             case TURNOUT:
-                testType = Conditional.Type.getTurnoutItems().get(_variableStateBox.getSelectedIndex());
+                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
                 break;
             case LIGHT:
-                testType = Conditional.Type.getLightItems().get(_variableStateBox.getSelectedIndex());
+                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
                 break;
             case SIGNALHEAD:
-                testType = Conditional.Type.getSignalHeadStateMachineItems().get(_variableStateBox.getSelectedIndex());
+                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
                 break;
             case SIGNALMAST:
-                testType = Conditional.Type.getSignalMastItems().get(_variableStateBox.getSelectedIndex());
+                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
                 break;
             case MEMORY:
-                testType = Conditional.Type.getMemoryItems().get(_variableCompareTypeBox.getSelectedIndex());
+                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
                 break;
             case CONDITIONAL:
-                testType = Conditional.Type.getConditionalItems().get(_variableStateBox.getSelectedIndex());
+                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
                 break;
             case WARRANT:
-                testType = Conditional.Type.getWarrantItems().get(_variableStateBox.getSelectedIndex());
+                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
                 break;
             case CLOCK:
                 testType = Conditional.Type.FAST_CLOCK_RANGE;
@@ -2423,7 +2423,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 testType = Conditional.Type.BLOCK_STATUS_EQUALS;
                 break;
             case ENTRYEXIT:
-                testType = Conditional.Type.getEntryExitItems().get(_variableStateBox.getSelectedIndex());
+                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
                 break;
             default:
                 JOptionPane.showMessageDialog(_editConditionalFrame,
@@ -2551,7 +2551,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 if (name == null) {
                     return false;
                 }
-                String str = (String) _variableStateBox.getSelectedItem();
+                String str = _variableStateBox.getSelectedItem().toString();
                 _curVariable.setDataString(OBlock.getSystemStatusName(str));
                 log.debug("OBlock \"{}\" of type '{}' _variableStateBox.getSelectedItem()= {}",
                         name, testType, _variableStateBox.getSelectedItem()); // NOI18N

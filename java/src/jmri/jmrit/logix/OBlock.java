@@ -95,6 +95,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         _statusMap.put("powerError", Integer.valueOf(TRACK_ERROR));
     }
 
+    // Note also the enum jmri.Conditional.Type with the values OBLOCK_????
     static void loadStatusNameMap() {
         _statusNameMap.put(Bundle.getMessage("unoccupied"), "unoccupied");
         _statusNameMap.put(Bundle.getMessage("occupied"), "occupied");

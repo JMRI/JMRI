@@ -46,6 +46,7 @@ import java.util.ResourceBundle;
 public interface Conditional extends NamedBean {
 
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.conditional.ConditionalBundle");
+    static final ResourceBundle rbxWarrant = ResourceBundle.getBundle("jmri.jmrit.logix.WarrantBundle");
     
     // states
     enum State {
@@ -271,7 +272,17 @@ public interface Conditional extends NamedBean {
         BLOCK_STATUS_EQUALS(TYPE_BLOCK_STATUS_EQUALS, ItemType.OBLOCK, "", ""), // NOI18N
         //Entry Exit Rules
         ENTRYEXIT_ACTIVE(TYPE_ENTRYEXIT_ACTIVE, ItemType.ENTRYEXIT, rbx.getString("TypeEntryExitActive"), rbx.getString("TypeEntryExitActive")), // NOI18N
-        ENTRYEXIT_INACTIVE(TYPE_ENTRYEXIT_INACTIVE, ItemType.ENTRYEXIT, rbx.getString("TypeEntryExitInactive"), rbx.getString("TypeEntryExitInactive")); // NOI18N
+        ENTRYEXIT_INACTIVE(TYPE_ENTRYEXIT_INACTIVE, ItemType.ENTRYEXIT, rbx.getString("TypeEntryExitInactive"), rbx.getString("TypeEntryExitInactive")), // NOI18N
+        // OBlock
+        OBLOCK_UNOCCUPIED(TYPE_OBLOCK_UNOCCUPIED, ItemType.OBLOCK, rbxWarrant.getString("unoccupied"), rbxWarrant.getString("unoccupied")), // NOI18N
+        OBLOCK_OCCUPIED(TYPE_OBLOCK_OCCUPIED, ItemType.OBLOCK, rbxWarrant.getString("occupied"), rbxWarrant.getString("occupied")), // NOI18N
+        OBLOCK_ALLOCATED(TYPE_OBLOCK_ALLOCATED, ItemType.OBLOCK, rbxWarrant.getString("allocated"), rbxWarrant.getString("allocated")), // NOI18N
+        OBLOCK_RUNNING(TYPE_OBLOCK_RUNNING, ItemType.OBLOCK, rbxWarrant.getString("running"), rbxWarrant.getString("running")), // NOI18N
+        OBLOCK_OUT_OF_SERVICE(TYPE_OBLOCK_OUT_OF_SERVICE, ItemType.OBLOCK, rbxWarrant.getString("outOfService"), rbxWarrant.getString("outOfService")), // NOI18N
+        OBLOCK_DARK(TYPE_OBLOCK_DARK, ItemType.OBLOCK, rbxWarrant.getString("dark"), rbxWarrant.getString("dark")), // NOI18N
+        OBLOCK_POWER_ERROR(TYPE_OBLOCK_POWER_ERROR, ItemType.OBLOCK, rbxWarrant.getString("powerError"), rbxWarrant.getString("powerError")), // NOI18N
+        // This is used by ConditionalListEdit and ConditionalTreeEdit
+        XXXXXXX(TYPE_XXXXXXX, ItemType.NONE, "XXXXXXX", "XXXXXXX"); // NOI18N
 
         private final int _item;
         private final ItemType _itemType;
@@ -287,6 +298,7 @@ public interface Conditional extends NamedBean {
         private static final List<Type> entryExitItemsList;
         private static final List<Type> signalHeadStateMachineItemsList;
         private static final List<Type> signalMastItemsList;
+        private static final List<Type> oblockItemsList;
         
         private static final Set<Type> signalHeadAppearanceSet;
         
@@ -326,6 +338,10 @@ public interface Conditional extends NamedBean {
             
             Type[] typeArray10 = {NONE, SIGNAL_MAST_ASPECT_EQUALS, SIGNAL_MAST_LIT, SIGNAL_MAST_HELD};
             signalMastItemsList = Collections.unmodifiableList(Arrays.asList(typeArray10));
+            
+            Type[] typeArray11 = {OBLOCK_UNOCCUPIED, OBLOCK_OCCUPIED, OBLOCK_ALLOCATED,
+                OBLOCK_RUNNING, OBLOCK_OUT_OF_SERVICE, OBLOCK_DARK, OBLOCK_POWER_ERROR};
+            oblockItemsList = Collections.unmodifiableList(Arrays.asList(typeArray11));
         }
         
         private Type(int state, ItemType itemType, String string, String testTypeString) {
@@ -381,6 +397,10 @@ public interface Conditional extends NamedBean {
         
         public static List<Type> getSignalMastItems() {
             return signalMastItemsList;
+        }
+        
+        public static List<Type> getOBlockItems() {
+            return oblockItemsList;
         }
         
         public static int getIndexInList(List<Type> table, Type entry) {
@@ -717,6 +737,16 @@ public interface Conditional extends NamedBean {
     //Entry Exit Rules
     static final int TYPE_ENTRYEXIT_ACTIVE = 35;
     static final int TYPE_ENTRYEXIT_INACTIVE = 36;
+    
+    static final int TYPE_OBLOCK_UNOCCUPIED = 37;
+    static final int TYPE_OBLOCK_OCCUPIED = 38;
+    static final int TYPE_OBLOCK_ALLOCATED = 39;
+    static final int TYPE_OBLOCK_RUNNING = 40;
+    static final int TYPE_OBLOCK_OUT_OF_SERVICE = 41;
+    static final int TYPE_OBLOCK_DARK = 42;
+    static final int TYPE_OBLOCK_POWER_ERROR = 43;
+    
+    static final int TYPE_XXXXXXX = 9999;
 
     // action definitions
     static final int ACTION_OPTION_ON_CHANGE_TO_TRUE = 1;
