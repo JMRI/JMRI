@@ -160,7 +160,7 @@ public class HelpUtil {
                 if (hsURL != null) {
                     log.debug("JavaHelp using {}", helpsetName);
                 } else {
-                    log.warn("JavaHelp: File {} not found, dropping to default", helpsetName);
+                    log.info("JavaHelp: File {} not found, dropping to default", helpsetName);
                     language = "en";
                     helpsetName = "help/" + language + "/JmriHelp_" + language + ".hs";
                     hsURL = FileUtil.findURL(helpsetName);
