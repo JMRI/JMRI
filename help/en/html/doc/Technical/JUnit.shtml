@@ -169,7 +169,7 @@
     runs a specific test or test suite.<br>
     (Hint: How to set this up <a href="IntelliJ.shtml#test">using IntelliJ</a>)
 
-      <h3><a name="I18N" id="I18N">A Note on Internationalization (I18N)</h3>
+      <h3><a name="I18N" id="I18N">A Note on Internationalization (I18N)</a></h3>
       
       Tests check the correctness of text in GUI elements, warning messages, and 
       other places. Many of these are 
