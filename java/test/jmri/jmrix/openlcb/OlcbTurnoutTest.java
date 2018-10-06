@@ -100,55 +100,6 @@ public class OlcbTurnoutTest {
     }
 
     @Test
-    public void testDirectFeedback() throws jmri.JmriException {
-        OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
-        s.setFeedbackMode(Turnout.DIRECT);
-        s.finishLoad();
-
-        s.addPropertyChangeListener(l);
-
-        s.setState(Turnout.THROWN);
-        t.flush();
-        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
-
-        Assert.assertEquals(Turnout.THROWN, s.getCommandedState());
-        Assert.assertEquals(Turnout.THROWN, s.getKnownState());
-
-        s.setState(Turnout.CLOSED);
-        t.flush();
-        JUnitUtil.waitFor( () -> { return l.getPropertyChanged(); });
-
-        Assert.assertEquals(Turnout.CLOSED, s.getCommandedState());
-        Assert.assertEquals(Turnout.CLOSED, s.getKnownState());
-
-        // message for Active and Inactive
-        CanMessage mActive = new CanMessage(
-                new int[]{1, 2, 3, 4, 5, 6, 7, 8},
-                0x195B4000
-        );
-        mActive.setExtended(true);
-
-        CanMessage mInactive = new CanMessage(
-                new int[]{1, 2, 3, 4, 5, 6, 7, 9},
-                0x195B4000
-        );
-        mInactive.setExtended(true);
-
-        l.resetPropertyChanged();
-
-        //  Feedback is ignored. Neither known nor commanded state changes.
-        t.sendMessage(mActive);
-        Assert.assertEquals(Turnout.CLOSED, s.getCommandedState());
-        Assert.assertEquals(Turnout.CLOSED, s.getKnownState());
-        Assert.assertEquals("not called",0,l.getCallCount());
-
-        t.sendMessage(mInactive);
-        Assert.assertEquals(Turnout.CLOSED, s.getCommandedState());
-        Assert.assertEquals(Turnout.CLOSED, s.getKnownState());
-        Assert.assertEquals("not called",0,l.getCallCount());
-    }
-
-    @Test
     public void testAuthoritative() throws jmri.JmriException {
         OlcbTurnout s = new OlcbTurnout("M", "1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9", t.iface);
         s.setFeedbackMode(Turnout.MONITORING);
