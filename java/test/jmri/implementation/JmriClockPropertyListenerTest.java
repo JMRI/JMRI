@@ -17,7 +17,7 @@ public class JmriClockPropertyListenerTest {
     public void testCTor() {
         JmriClockPropertyListener t =
                 new JmriClockPropertyListener("foo",0,"bar",
-                        Conditional.Type.getOperatorFromIntValue(1),new DefaultConditional("foo"),0,0);
+                        Conditional.Type.SENSOR_ACTIVE,new DefaultConditional("foo"),0,0);
         Assert.assertNotNull("exists",t);
     }
 

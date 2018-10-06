@@ -17,7 +17,7 @@ public class JmriSimplePropertyListenerTest {
     public void testCTor() {
         JmriSimplePropertyListener t =
                 new JmriSimplePropertyListener("foo",0,"bar",
-                        Conditional.Type.getOperatorFromIntValue(1),new DefaultConditional("foo"));
+                        Conditional.Type.SENSOR_ACTIVE,new DefaultConditional("foo"));
         Assert.assertNotNull("exists",t);
     }
 

@@ -644,14 +644,14 @@ public interface Conditional extends NamedBean {
             return otherItemsList;
         }
         
-        public static int getIndexInList(List<Action> table, Action entry) {
-            for (int i = 0; i < table.size(); i++) {
-                if (entry == table.get(i)) {
-                    return i;
-                }
-            }
-            return -1;
-        }
+//        public static int getIndexInList(List<Action> table, Action entry) {
+//            for (int i = 0; i < table.size(); i++) {
+//                if (entry == table.get(i)) {
+//                    return i;
+//                }
+//            }
+//            return -1;
+//        }
         
         public static Action getOperatorFromIntValue(int actionInt) {
             for (Action action : Action.values()) {

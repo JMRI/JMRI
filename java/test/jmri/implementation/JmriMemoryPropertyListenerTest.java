@@ -17,7 +17,7 @@ public class JmriMemoryPropertyListenerTest {
     public void testCTor() {
         JmriMemoryPropertyListener t =
                 new JmriMemoryPropertyListener("foo",0,"bar",
-                        Conditional.Type.getOperatorFromIntValue(1),new DefaultConditional("foo"),"test");
+                        Conditional.Type.SENSOR_ACTIVE,new DefaultConditional("foo"),"test");
         Assert.assertNotNull("exists",t);
     }
 
