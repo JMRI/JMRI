@@ -260,8 +260,8 @@ public interface Conditional extends NamedBean {
         SIGNAL_HEAD_APPEARANCE_EQUALS(TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS, ItemType.SIGNALHEAD, rbx.getString("TypeSignalHeadAspectEquals"), rbx.getString("TypeSignalHeadAspectEquals")), // NOI18N
         BLOCK_STATUS_EQUALS(TYPE_BLOCK_STATUS_EQUALS, ItemType.OBLOCK, "", ""), // NOI18N
         //Entry Exit Rules
-        ENTRYEXIT_ACTIVE(TYPE_ENTRYEXIT_ACTIVE, ItemType.ENTRYEXIT, rbx.getMessage("TypeEntryExitActive"), rbx.getString("TypeEntryExitActive")), // NOI18N
-        ENTRYEXIT_INACTIVE(TYPE_ENTRYEXIT_INACTIVE, ItemType.ENTRYEXIT, rbx.getMessage("TypeEntryExitInactive"), rbx.getString("TypeEntryExitInactive")); // NOI18N
+        ENTRYEXIT_ACTIVE(TYPE_ENTRYEXIT_ACTIVE, ItemType.ENTRYEXIT, rbx.getString("TypeEntryExitActive"), rbx.getString("TypeEntryExitActive")), // NOI18N
+        ENTRYEXIT_INACTIVE(TYPE_ENTRYEXIT_INACTIVE, ItemType.ENTRYEXIT, rbx.getString("TypeEntryExitInactive"), rbx.getString("TypeEntryExitInactive")); // NOI18N
 
         private final int _item;
         private final ItemType _itemType;
