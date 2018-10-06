@@ -154,7 +154,11 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
             synchronized (this) {
                 newKnownState(INCONSISTENT);
             }
-        }
+        } else if( _activeFeedbackType == DIRECT ){
+            synchronized (this) {
+                newKnownState(s);
+            }
+	}
     }
 
     // Handle a request to change state by sending a DCC++ command
@@ -194,7 +198,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
             // Convert the integer Turnout value to boolean for DCC++ internal code.
             // Assume if it's not THROWN (true), it must be CLOSED (false).
             msg = DCCppMessage.makeAccessoryDecoderMsg(mNumber, newstate);
-            internalState = IDLE; // change this!
+	    internalState = IDLE;
             break;
             
         }

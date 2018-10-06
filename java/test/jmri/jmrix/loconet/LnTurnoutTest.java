@@ -1,10 +1,7 @@
 package jmri.jmrix.loconet;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -104,6 +101,12 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         m.setElement(3, 0x00);
         lnis.sendTestMessage(m);
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
+    }
+
+    @Test
+    @Override
+    @Ignore("requires work for LocoNet turnouts")
+    public void testDirectFeedback() throws jmri.JmriException {
     }
 
     // LnTurnout test for incoming status message
