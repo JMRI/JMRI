@@ -90,9 +90,9 @@ public interface Conditional extends NamedBean {
     static final int TRUE = 0x04;
 
     public enum AntecedentOperator {
-        ALL_AND(Conditional.ALL_AND, rbx.getString("LogicAND")),
-        ALL_OR(Conditional.ALL_OR, rbx.getString("LogicOR")),
-        MIXED(Conditional.MIXED, rbx.getString("LogicMixed"));
+        ALL_AND(Conditional.ALL_AND, Bundle.getMessage("LogicAND")),
+        ALL_OR(Conditional.ALL_OR, Bundle.getMessage("LogicOR")),
+        MIXED(Conditional.MIXED, Bundle.getMessage("LogicMixed"));
         
         private final int _value;
         private final String _string;

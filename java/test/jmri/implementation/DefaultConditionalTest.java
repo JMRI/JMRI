@@ -75,7 +75,7 @@ public class DefaultConditionalTest {
     
     private void testCalculate(int expectedResult, String antecedent, List<ConditionalVariable> conditionalVariablesList, String errorMessage) {
         Conditional ix1 = new DefaultConditional("IXIC 1");
-        ix1.setLogicType(Conditional.MIXED, antecedent);
+        ix1.setLogicType(Conditional.AntecedentOperator.MIXED, antecedent);
         ix1.setStateVariables(conditionalVariablesList);
         
         switch (expectedResult) {
@@ -296,44 +296,44 @@ public class DefaultConditionalTest {
         
         // Test ALL_AND
         Conditional ix1 = new DefaultConditional("IXIC 1");
-        ix1.setLogicType(Conditional.ALL_AND, "");
+        ix1.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
         ix1.setStateVariables(conditionalVariablesList_TrueTrueTrue);
         Assert.assertTrue("calculate() returns NamedBean.TRUE", ix1.calculate(false, null) == Conditional.TRUE);
         
         ix1 = new DefaultConditional("IXIC 1");
-        ix1.setLogicType(Conditional.ALL_AND, "");
+        ix1.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
         ix1.setStateVariables(conditionalVariablesList_TrueTrueFalse);
         Assert.assertTrue("calculate() returns NamedBean.FALSE", ix1.calculate(false, null) == Conditional.FALSE);
         
         ix1 = new DefaultConditional("IXIC 1");
-        ix1.setLogicType(Conditional.ALL_AND, "");
+        ix1.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
         ix1.setStateVariables(conditionalVariablesList_FalseFalseFalse);
         Assert.assertTrue("calculate() returns NamedBean.FALSE", ix1.calculate(false, null) == Conditional.FALSE);
         
         
         // Test ALL_OR
         ix1 = new DefaultConditional("IXIC 1");
-        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setLogicType(Conditional.AntecedentOperator.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_TrueTrueTrue);
         Assert.assertTrue("calculate() returns NamedBean.TRUE", ix1.calculate(false, null) == Conditional.TRUE);
         
         ix1 = new DefaultConditional("IXIC 1");
-        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setLogicType(Conditional.AntecedentOperator.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_TrueTrueFalse);
         Assert.assertTrue("calculate() returns NamedBean.FALSE", ix1.calculate(false, null) == Conditional.TRUE);
         
         ix1 = new DefaultConditional("IXIC 1");
-        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setLogicType(Conditional.AntecedentOperator.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_FalseFalseFalse);
         Assert.assertTrue("calculate() returns NamedBean.FALSE", ix1.calculate(false, null) == Conditional.FALSE);
         
         
         // Test wrong logic
-        ix1 = new DefaultConditional("IXIC 1");
-        ix1.setLogicType(0xFFF, "");    // This logix does not exists
-        ix1.setStateVariables(conditionalVariablesList_TrueTrueTrue);
-        Assert.assertTrue("calculate() returns NamedBean.TRUE", ix1.calculate(false, null) == Conditional.TRUE);
-        jmri.util.JUnitAppender.assertWarnMessage("Conditional IXIC 1 fell through switch in calculate");
+//        ix1 = new DefaultConditional("IXIC 1");
+//        ix1.setLogicType(0xFFF, "");    // This logix does not exists
+//        ix1.setStateVariables(conditionalVariablesList_TrueTrueTrue);
+//        Assert.assertTrue("calculate() returns NamedBean.TRUE", ix1.calculate(false, null) == Conditional.TRUE);
+//        jmri.util.JUnitAppender.assertWarnMessage("Conditional IXIC 1 fell through switch in calculate");
     }
     
     
@@ -362,7 +362,7 @@ public class DefaultConditionalTest {
         
         // Test that trigger is not checked if enabled == false
         Conditional ix1 = new DefaultConditional("IXIC 1");
-        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setLogicType(Conditional.AntecedentOperator.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
         PropertyChangeEvent event = new PropertyChangeEvent(new Object(), "PropertyName", "OldValue", "NewValue") {
             @Override
@@ -381,7 +381,7 @@ public class DefaultConditionalTest {
         
         // Test invalid event source object
         ix1 = new DefaultConditional("IXIC 1");
-        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setLogicType(Conditional.AntecedentOperator.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_True);
         int result = ix1.calculate(true, new PropertyChangeEvent(new Object(), "PropertyName", "OldValue", "NewValue"));
         Assert.assertTrue("calculate() returns NamedBean.TRUE", result == Conditional.TRUE);
@@ -389,7 +389,7 @@ public class DefaultConditionalTest {
         
         // Test trigger event with bad device name
         ix1 = new DefaultConditional("IXIC 1");
-        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setLogicType(Conditional.AntecedentOperator.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
         ix1.setAction(conditionalActionList);
         testConditionalAction._namedBean = myMemory;
@@ -402,7 +402,7 @@ public class DefaultConditionalTest {
         // Test trigger event with system name.
         // This action wants to trigger the event.
         ix1 = new DefaultConditional("IXIC 1");
-        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setLogicType(Conditional.AntecedentOperator.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
         ix1.setAction(conditionalActionList);
         testConditionalAction._type = Conditional.Action.SET_MEMORY;
@@ -416,7 +416,7 @@ public class DefaultConditionalTest {
         // Test trigger event with user name.
         // This action wants to trigger the event.
         ix1 = new DefaultConditional("IXIC 1");
-        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setLogicType(Conditional.AntecedentOperator.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
         ix1.setAction(conditionalActionList);
         testConditionalAction._type = Conditional.Action.SET_MEMORY;
@@ -430,7 +430,7 @@ public class DefaultConditionalTest {
         // Test trigger event with bad system and user name.
         // This action wants to trigger the event.
         ix1 = new DefaultConditional("IXIC 1");
-        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setLogicType(Conditional.AntecedentOperator.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
         ix1.setAction(conditionalActionList);
         testConditionalAction._type = Conditional.Action.SET_MEMORY;
@@ -444,7 +444,7 @@ public class DefaultConditionalTest {
         // Test not trigger event.
         // This action does not want to trigger the event.
         ix1 = new DefaultConditional("IXIC 1");
-        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setLogicType(Conditional.AntecedentOperator.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_TrueWithNotTrigger);
         ix1.setAction(conditionalActionList);
         testConditionalAction._type = Conditional.Action.SET_MEMORY;
@@ -459,7 +459,7 @@ public class DefaultConditionalTest {
         // _triggerActionsOnChange == true
         // This action want to trigger the event.
         ix1 = new DefaultConditional("IXIC 1");
-        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setLogicType(Conditional.AntecedentOperator.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
         ix1.setAction(conditionalActionList);
         ix1.setTriggerOnChange(true);
@@ -476,7 +476,7 @@ public class DefaultConditionalTest {
         // _triggerActionsOnChange == true
         // This action want to trigger the event.
         ix1 = new DefaultConditional("IXIC 1");
-        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setLogicType(Conditional.AntecedentOperator.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
         ix1.setAction(conditionalActionList);
         ix1.setTriggerOnChange(true);
@@ -495,7 +495,7 @@ public class DefaultConditionalTest {
         // _triggerActionsOnChange == false
         // This action want to trigger the event.
         ix1 = new DefaultConditional("IXIC 1");
-        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setLogicType(Conditional.AntecedentOperator.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
         ix1.setAction(conditionalActionList);
         ix1.setTriggerOnChange(false);
@@ -512,7 +512,7 @@ public class DefaultConditionalTest {
         // _triggerActionsOnChange == false
         // This action want to trigger the event.
         ix1 = new DefaultConditional("IXIC 1");
-        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setLogicType(Conditional.AntecedentOperator.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList_TrueWithTrigger);
         ix1.setAction(conditionalActionList);
         ix1.setTriggerOnChange(false);
@@ -534,7 +534,7 @@ public class DefaultConditionalTest {
         conditionalActionList.add(conditionalAction);
         
         DefaultConditional ix1 = new DefaultConditional("IXIC 1");
-        ix1.setLogicType(Conditional.ALL_OR, "");
+        ix1.setLogicType(Conditional.AntecedentOperator.ALL_OR, "");
         ix1.setStateVariables(conditionalVariablesList);
         ix1.setAction(conditionalActionList);
         return ix1;
