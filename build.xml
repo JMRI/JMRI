@@ -1352,8 +1352,8 @@
 
           <check>
               <rule>
-                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.35"/>
-                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.75"/>
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.40"/>
+                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.80"/>
               </rule>
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
@@ -1521,8 +1521,8 @@
 
           <check>
               <rule>
-                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.35"/>
-                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.75"/>
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.40"/>
+                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.80"/>
               </rule>
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
@@ -1550,8 +1550,8 @@
 
           <check>
               <rule>
-                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.35"/>
-                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.75"/>
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.40"/>
+                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.80"/>
               </rule>
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
@@ -1579,8 +1579,8 @@
 
           <check>
               <rule>
-                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.35"/>
-                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.75"/>
+                  <limit counter="LINE" value="COVEREDRATIO" minimum="0.40"/>
+                  <limit counter="CLASS" value="COVEREDRATIO" minimum="0.80"/>
               </rule>
               <rule element="PACKAGE">
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
