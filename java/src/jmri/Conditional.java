@@ -206,15 +206,15 @@ public interface Conditional extends NamedBean {
             throw new IllegalArgumentException("ItemType is unknown");
         }
         
-        /**
+        /*.*
          * Return the item type before this.
          * 
          * @return the previous item type in this enum
          */
-        public ItemType previous() {
-            ItemType[] valueArray = values();
-            return valueArray[(this.ordinal()-1) % valueArray.length];
-        }
+//        public ItemType previous() {
+//            ItemType[] valueArray = values();
+//            return valueArray[(this.ordinal()-1) % valueArray.length];
+//        }
 
         @Override
         public String toString() {
@@ -416,94 +416,89 @@ public interface Conditional extends NamedBean {
     
     // items
     enum Action {
-        // For now, use same string for toString() and getActionTypeString()
-        // If this is going to be changed, it's toString() that may be changed.
-        // getActionTypeString() must be kept as is.
-        
-        NONE(ACTION_NONE, ItemType.NONE, rbx.getString("ActionNone"), rbx.getString("ActionNone")), // NOI18N
-        SET_TURNOUT(ACTION_SET_TURNOUT, ItemType.TURNOUT, rbx.getString("ActionSetTurnout"), rbx.getString("ActionSetTurnout")), // NOI18N
+        NONE(ACTION_NONE, ItemType.NONE, ""), // NOI18N
+        SET_TURNOUT(ACTION_SET_TURNOUT, ItemType.TURNOUT, rbx.getString("ActionSetTurnout")), // NOI18N
         // allowed settings for turnout are Thrown and Closed (in data)
-        SET_SIGNAL_APPEARANCE(ACTION_SET_SIGNAL_APPEARANCE, ItemType.SIGNALHEAD, rbx.getString("ActionSetSignal"), rbx.getString("ActionSetSignal")), // NOI18N
+        SET_SIGNAL_APPEARANCE(ACTION_SET_SIGNAL_APPEARANCE, ItemType.SIGNALHEAD, rbx.getString("ActionSetSignal")), // NOI18N
         // allowed settings for signal head are the seven Appearances (in data)
-        SET_SIGNAL_HELD(ACTION_SET_SIGNAL_HELD, ItemType.SIGNALHEAD, rbx.getString("ActionSetSignalHeld"), rbx.getString("ActionSetSignalHeld")), // NOI18N
-        CLEAR_SIGNAL_HELD(ACTION_CLEAR_SIGNAL_HELD, ItemType.SIGNALHEAD, rbx.getString("ActionClearSignalHeld"), rbx.getString("ActionClearSignalHeld")), // NOI18N
-        SET_SIGNAL_DARK(ACTION_SET_SIGNAL_DARK, ItemType.SIGNALHEAD, rbx.getString("ActionSetSignalDark"), rbx.getString("ActionSetSignalDark")), // NOI18N
-        SET_SIGNAL_LIT(ACTION_SET_SIGNAL_LIT, ItemType.SIGNALHEAD, rbx.getString("ActionSetSignalLit"), rbx.getString("ActionSetSignalLit")), // NOI18N
-        TRIGGER_ROUTE(ACTION_TRIGGER_ROUTE, ItemType.OTHER, rbx.getString("ActionTriggerRoute"), rbx.getString("ActionTriggerRoute")), // NOI18N
-        SET_SENSOR(ACTION_SET_SENSOR, ItemType.SENSOR, rbx.getString("ActionSetSensor"), rbx.getString("ActionSetSensor")), // NOI18N
+        SET_SIGNAL_HELD(ACTION_SET_SIGNAL_HELD, ItemType.SIGNALHEAD, rbx.getString("ActionSetSignalHeld")), // NOI18N
+        CLEAR_SIGNAL_HELD(ACTION_CLEAR_SIGNAL_HELD, ItemType.SIGNALHEAD, rbx.getString("ActionClearSignalHeld")), // NOI18N
+        SET_SIGNAL_DARK(ACTION_SET_SIGNAL_DARK, ItemType.SIGNALHEAD, rbx.getString("ActionSetSignalDark")), // NOI18N
+        SET_SIGNAL_LIT(ACTION_SET_SIGNAL_LIT, ItemType.SIGNALHEAD, rbx.getString("ActionSetSignalLit")), // NOI18N
+        TRIGGER_ROUTE(ACTION_TRIGGER_ROUTE, ItemType.OTHER, rbx.getString("ActionTriggerRoute")), // NOI18N
+        SET_SENSOR(ACTION_SET_SENSOR, ItemType.SENSOR, rbx.getString("ActionSetSensor")), // NOI18N
         // allowed settings for sensor are active and inactive (in data)
-        DELAYED_SENSOR(ACTION_DELAYED_SENSOR, ItemType.SENSOR, rbx.getString("ActionDelayedSensor"), rbx.getString("ActionDelayedSensor")), // NOI18N
+        DELAYED_SENSOR(ACTION_DELAYED_SENSOR, ItemType.SENSOR, rbx.getString("ActionDelayedSensor")), // NOI18N
         // allowed settings for timed sensor are active and inactive (in data)
         //   time in seconds before setting sensor should be in delay
-        SET_LIGHT(ACTION_SET_LIGHT, ItemType.LIGHT, rbx.getString("ActionSetLight"), rbx.getString("ActionSetLight")), // NOI18N
+        SET_LIGHT(ACTION_SET_LIGHT, ItemType.LIGHT, rbx.getString("ActionSetLight")), // NOI18N
         // allowed settings for light are ON and OFF (in data)
-        SET_MEMORY(ACTION_SET_MEMORY, ItemType.MEMORY, rbx.getString("ActionSetMemory"), rbx.getString("ActionSetMemory")), // NOI18N
+        SET_MEMORY(ACTION_SET_MEMORY, ItemType.MEMORY, rbx.getString("ActionSetMemory")), // NOI18N
         // text to set into the memory variable should be in string
-        ENABLE_LOGIX(ACTION_ENABLE_LOGIX, ItemType.LOGIX, rbx.getString("ActionEnableLogix"), rbx.getString("ActionEnableLogix")), // NOI18N
-        DISABLE_LOGIX(ACTION_DISABLE_LOGIX, ItemType.LOGIX, rbx.getString("ActionDisableLogix"), rbx.getString("ActionDisableLogix")), // NOI18N
-        PLAY_SOUND(ACTION_PLAY_SOUND, ItemType.AUDIO, rbx.getString("ActionPlaySound"), rbx.getString("ActionPlaySound")), // NOI18N
+        ENABLE_LOGIX(ACTION_ENABLE_LOGIX, ItemType.LOGIX, rbx.getString("ActionEnableLogix")), // NOI18N
+        DISABLE_LOGIX(ACTION_DISABLE_LOGIX, ItemType.LOGIX, rbx.getString("ActionDisableLogix")), // NOI18N
+        PLAY_SOUND(ACTION_PLAY_SOUND, ItemType.AUDIO, rbx.getString("ActionPlaySound")), // NOI18N
         // reference to sound should be in string
-        RUN_SCRIPT(ACTION_RUN_SCRIPT, ItemType.SCRIPT, rbx.getString("ActionRunScript"), rbx.getString("ActionRunScript")), // NOI18N
+        RUN_SCRIPT(ACTION_RUN_SCRIPT, ItemType.SCRIPT, rbx.getString("ActionRunScript")), // NOI18N
         // reference to script should be in string
-        DELAYED_TURNOUT(ACTION_DELAYED_TURNOUT, ItemType.TURNOUT, rbx.getString("ActionDelayedTurnout"), rbx.getString("ActionDelayedTurnout")), // NOI18N
+        DELAYED_TURNOUT(ACTION_DELAYED_TURNOUT, ItemType.TURNOUT, rbx.getString("ActionDelayedTurnout")), // NOI18N
         // allowed settings for timed turnout are Thrown and Closed (in data)
         //   time in seconds before setting turnout should be in delay
-        LOCK_TURNOUT(ACTION_LOCK_TURNOUT, ItemType.TURNOUT, rbx.getString("ActionTurnoutLock"), rbx.getString("ActionTurnoutLock")), // NOI18N
-        RESET_DELAYED_SENSOR(ACTION_RESET_DELAYED_SENSOR, ItemType.SENSOR, rbx.getString("ActionResetDelayedSensor"), rbx.getString("ActionResetDelayedSensor")), // NOI18N
+        LOCK_TURNOUT(ACTION_LOCK_TURNOUT, ItemType.TURNOUT, rbx.getString("ActionTurnoutLock")), // NOI18N
+        RESET_DELAYED_SENSOR(ACTION_RESET_DELAYED_SENSOR, ItemType.SENSOR, rbx.getString("ActionResetDelayedSensor")), // NOI18N
         // allowed settings for timed sensor are active and inactive (in data)
         //   time in seconds before setting sensor should be in delay
-        CANCEL_SENSOR_TIMERS(ACTION_CANCEL_SENSOR_TIMERS, ItemType.SENSOR, rbx.getString("ActionCancelSensorTimers"), rbx.getString("ActionCancelSensorTimers")), // NOI18N
+        CANCEL_SENSOR_TIMERS(ACTION_CANCEL_SENSOR_TIMERS, ItemType.SENSOR, rbx.getString("ActionCancelSensorTimers")), // NOI18N
         // cancels all timers delaying setting of specified sensor
-        RESET_DELAYED_TURNOUT(ACTION_RESET_DELAYED_TURNOUT, ItemType.TURNOUT, rbx.getString("ActionResetDelayedTurnout"), rbx.getString("ActionResetDelayedTurnout")), // NOI18N
+        RESET_DELAYED_TURNOUT(ACTION_RESET_DELAYED_TURNOUT, ItemType.TURNOUT, rbx.getString("ActionResetDelayedTurnout")), // NOI18N
         // allowed settings for timed sensor are active and inactive (in data)
         //   time in seconds before setting sensor should be in delay
-        CANCEL_TURNOUT_TIMERS(ACTION_CANCEL_TURNOUT_TIMERS, ItemType.TURNOUT, rbx.getString("ActionCancelTurnoutTimers"), rbx.getString("ActionCancelTurnoutTimers")), // NOI18N
+        CANCEL_TURNOUT_TIMERS(ACTION_CANCEL_TURNOUT_TIMERS, ItemType.TURNOUT, rbx.getString("ActionCancelTurnoutTimers")), // NOI18N
         // cancels all timers delaying setting of specified sensor
-        SET_FAST_CLOCK_TIME(ACTION_SET_FAST_CLOCK_TIME, ItemType.CLOCK, rbx.getString("ActionSetFastClockTime"), rbx.getString("ActionSetFastClockTime")), // NOI18N
+        SET_FAST_CLOCK_TIME(ACTION_SET_FAST_CLOCK_TIME, ItemType.CLOCK, rbx.getString("ActionSetFastClockTime")), // NOI18N
         // sets the fast clock time to the time specified
-        START_FAST_CLOCK(ACTION_START_FAST_CLOCK, ItemType.CLOCK, rbx.getString("ActionStartFastClock"), rbx.getString("ActionStartFastClock")), // NOI18N
+        START_FAST_CLOCK(ACTION_START_FAST_CLOCK, ItemType.CLOCK, rbx.getString("ActionStartFastClock")), // NOI18N
         // starts the fast clock
-        STOP_FAST_CLOCK(ACTION_STOP_FAST_CLOCK, ItemType.CLOCK, rbx.getString("ActionStopFastClock"), rbx.getString("ActionStopFastClock")), // NOI18N
+        STOP_FAST_CLOCK(ACTION_STOP_FAST_CLOCK, ItemType.CLOCK, rbx.getString("ActionStopFastClock")), // NOI18N
         // stops the fast clock
-        COPY_MEMORY(ACTION_COPY_MEMORY, ItemType.MEMORY, rbx.getString("ActionCopyMemory"), rbx.getString("ActionCopyMemory")), // NOI18N
+        COPY_MEMORY(ACTION_COPY_MEMORY, ItemType.MEMORY, rbx.getString("ActionCopyMemory")), // NOI18N
         // copies value from memory variable (in name) to memory variable (in string)
-        SET_LIGHT_INTENSITY(ACTION_SET_LIGHT_INTENSITY, ItemType.LIGHT, rbx.getString("ActionSetLightIntensity"), rbx.getString("ActionSetLightIntensity")), // NOI18N
-        SET_LIGHT_TRANSITION_TIME(ACTION_SET_LIGHT_TRANSITION_TIME, ItemType.LIGHT, rbx.getString("ActionSetLightTransitionTime"), rbx.getString("ActionSetLightTransitionTime")), // NOI18N
+        SET_LIGHT_INTENSITY(ACTION_SET_LIGHT_INTENSITY, ItemType.LIGHT, rbx.getString("ActionSetLightIntensity")), // NOI18N
+        SET_LIGHT_TRANSITION_TIME(ACTION_SET_LIGHT_TRANSITION_TIME, ItemType.LIGHT, rbx.getString("ActionSetLightTransitionTime")), // NOI18N
         // control the specified audio object
-        CONTROL_AUDIO(ACTION_CONTROL_AUDIO, ItemType.AUDIO, rbx.getString("ActionControlAudio"), rbx.getString("ActionControlAudio")), // NOI18N
+        CONTROL_AUDIO(ACTION_CONTROL_AUDIO, ItemType.AUDIO, rbx.getString("ActionControlAudio")), // NOI18N
         // execute a jython command
-        JYTHON_COMMAND(ACTION_JYTHON_COMMAND, ItemType.SCRIPT, rbx.getString("ActionJythonCommand"), rbx.getString("ActionJythonCommand")), // NOI18N
+        JYTHON_COMMAND(ACTION_JYTHON_COMMAND, ItemType.SCRIPT, rbx.getString("ActionJythonCommand")), // NOI18N
         // Warrant actions
-        ALLOCATE_WARRANT_ROUTE(ACTION_ALLOCATE_WARRANT_ROUTE, ItemType.WARRANT, rbx.getString("ActionAllocateWarrant"), rbx.getString("ActionAllocateWarrant")), // NOI18N
-        DEALLOCATE_WARRANT_ROUTE(ACTION_DEALLOCATE_WARRANT_ROUTE, ItemType.WARRANT, rbx.getString("ActionDeallocateWarrant"), rbx.getString("ActionDeallocateWarrant")), // NOI18N
-        SET_ROUTE_TURNOUTS(ACTION_SET_ROUTE_TURNOUTS, ItemType.WARRANT, rbx.getString("ActionSetWarrantTurnouts"), rbx.getString("ActionSetWarrantTurnouts")), // NOI18N
-        AUTO_RUN_WARRANT(ACTION_AUTO_RUN_WARRANT, ItemType.WARRANT, rbx.getString("ActionAutoRunWarrant"), rbx.getString("ActionAutoRunWarrant")), // NOI18N
-        MANUAL_RUN_WARRANT(ACTION_MANUAL_RUN_WARRANT, ItemType.WARRANT, rbx.getString("ActionManualRunWarrant"), rbx.getString("ActionManualRunWarrant")), // NOI18N
-        CONTROL_TRAIN(ACTION_CONTROL_TRAIN, ItemType.WARRANT, rbx.getString("ActionControlTrain"), rbx.getString("ActionControlTrain")), // NOI18N
-        SET_TRAIN_ID(ACTION_SET_TRAIN_ID, ItemType.WARRANT, rbx.getString("ActionSetTrainId"), rbx.getString("ActionSetTrainId")), // NOI18N
-        SET_TRAIN_NAME(ACTION_SET_TRAIN_NAME, ItemType.WARRANT, rbx.getString("ActionSetTrainName"), rbx.getString("ActionSetTrainName")), // NOI18N
-        SET_SIGNALMAST_ASPECT(ACTION_SET_SIGNALMAST_ASPECT, ItemType.SIGNALMAST, rbx.getString("ActionSetSignalMastAspect"), rbx.getString("ActionSetSignalMastAspect")), // NOI18N
-        THROTTLE_FACTOR(ACTION_THROTTLE_FACTOR, ItemType.WARRANT, rbx.getString("ActionSetThrottleFactor"), rbx.getString("ActionSetThrottleFactor")), // NOI18N
-        SET_SIGNALMAST_HELD(ACTION_SET_SIGNALMAST_HELD, ItemType.SIGNALMAST, rbx.getString("ActionSetSignalMastHeld"), rbx.getString("ActionSetSignalMastHeld")), // NOI18N
-        CLEAR_SIGNALMAST_HELD(ACTION_CLEAR_SIGNALMAST_HELD, ItemType.SIGNALMAST, rbx.getString("ActionClearSignalMastHeld"), rbx.getString("ActionClearSignalMastHeld")), // NOI18N
-        SET_SIGNALMAST_DARK(ACTION_SET_SIGNALMAST_DARK, ItemType.SIGNALMAST, rbx.getString("ActionSetSignalMastDark"), rbx.getString("ActionSetSignalMastDark")), // NOI18N
-        SET_SIGNALMAST_LIT(ACTION_SET_SIGNALMAST_LIT, ItemType.SIGNALMAST, rbx.getString("ActionClearSignalMastDark"), rbx.getString("ActionClearSignalMastDark")), // NOI18N
-        SET_BLOCK_VALUE(ACTION_SET_BLOCK_VALUE, ItemType.OBLOCK, rbx.getString("ActionSetBlockValue"), rbx.getString("ActionSetBlockValue")), // NOI18N
-        SET_BLOCK_ERROR(ACTION_SET_BLOCK_ERROR, ItemType.OBLOCK, rbx.getString("ActionSetBlockError"), rbx.getString("ActionSetBlockError")), // NOI18N
-        CLEAR_BLOCK_ERROR(ACTION_CLEAR_BLOCK_ERROR, ItemType.OBLOCK, rbx.getString("ActionClearBlockError"), rbx.getString("ActionClearBlockError")), // NOI18N
-        DEALLOCATE_BLOCK(ACTION_DEALLOCATE_BLOCK, ItemType.OBLOCK, rbx.getString("ActionDeallocateBlock"), rbx.getString("ActionDeallocateBlock")), // NOI18N
-        SET_BLOCK_OUT_OF_SERVICE(ACTION_SET_BLOCK_OUT_OF_SERVICE, ItemType.OBLOCK, rbx.getString("ActionSetBlockOutOfService"), rbx.getString("ActionSetBlockOutOfService")), // NOI18N
-        SET_BLOCK_IN_SERVICE(ACTION_SET_BLOCK_IN_SERVICE, ItemType.OBLOCK, rbx.getString("ActionBlockInService"), rbx.getString("ActionBlockInService")), // NOI18N
+        ALLOCATE_WARRANT_ROUTE(ACTION_ALLOCATE_WARRANT_ROUTE, ItemType.WARRANT, rbx.getString("ActionAllocateWarrant")), // NOI18N
+        DEALLOCATE_WARRANT_ROUTE(ACTION_DEALLOCATE_WARRANT_ROUTE, ItemType.WARRANT, rbx.getString("ActionDeallocateWarrant")), // NOI18N
+        SET_ROUTE_TURNOUTS(ACTION_SET_ROUTE_TURNOUTS, ItemType.WARRANT, rbx.getString("ActionSetWarrantTurnouts")), // NOI18N
+        AUTO_RUN_WARRANT(ACTION_AUTO_RUN_WARRANT, ItemType.WARRANT, rbx.getString("ActionAutoRunWarrant")), // NOI18N
+        MANUAL_RUN_WARRANT(ACTION_MANUAL_RUN_WARRANT, ItemType.WARRANT, rbx.getString("ActionManualRunWarrant")), // NOI18N
+        CONTROL_TRAIN(ACTION_CONTROL_TRAIN, ItemType.WARRANT, rbx.getString("ActionControlTrain")), // NOI18N
+        SET_TRAIN_ID(ACTION_SET_TRAIN_ID, ItemType.WARRANT, rbx.getString("ActionSetTrainId")), // NOI18N
+        SET_TRAIN_NAME(ACTION_SET_TRAIN_NAME, ItemType.WARRANT, rbx.getString("ActionSetTrainName")), // NOI18N
+        SET_SIGNALMAST_ASPECT(ACTION_SET_SIGNALMAST_ASPECT, ItemType.SIGNALMAST, rbx.getString("ActionSetSignalMastAspect")), // NOI18N
+        THROTTLE_FACTOR(ACTION_THROTTLE_FACTOR, ItemType.WARRANT, rbx.getString("ActionSetThrottleFactor")), // NOI18N
+        SET_SIGNALMAST_HELD(ACTION_SET_SIGNALMAST_HELD, ItemType.SIGNALMAST, rbx.getString("ActionSetSignalMastHeld")), // NOI18N
+        CLEAR_SIGNALMAST_HELD(ACTION_CLEAR_SIGNALMAST_HELD, ItemType.SIGNALMAST, rbx.getString("ActionClearSignalMastHeld")), // NOI18N
+        SET_SIGNALMAST_DARK(ACTION_SET_SIGNALMAST_DARK, ItemType.SIGNALMAST, rbx.getString("ActionSetSignalMastDark")), // NOI18N
+        SET_SIGNALMAST_LIT(ACTION_SET_SIGNALMAST_LIT, ItemType.SIGNALMAST, rbx.getString("ActionClearSignalMastDark")), // NOI18N
+        SET_BLOCK_VALUE(ACTION_SET_BLOCK_VALUE, ItemType.OBLOCK, rbx.getString("ActionSetBlockValue")), // NOI18N
+        SET_BLOCK_ERROR(ACTION_SET_BLOCK_ERROR, ItemType.OBLOCK, rbx.getString("ActionSetBlockError")), // NOI18N
+        CLEAR_BLOCK_ERROR(ACTION_CLEAR_BLOCK_ERROR, ItemType.OBLOCK, rbx.getString("ActionClearBlockError")), // NOI18N
+        DEALLOCATE_BLOCK(ACTION_DEALLOCATE_BLOCK, ItemType.OBLOCK, rbx.getString("ActionDeallocateBlock")), // NOI18N
+        SET_BLOCK_OUT_OF_SERVICE(ACTION_SET_BLOCK_OUT_OF_SERVICE, ItemType.OBLOCK, rbx.getString("ActionSetBlockOutOfService")), // NOI18N
+        SET_BLOCK_IN_SERVICE(ACTION_SET_BLOCK_IN_SERVICE, ItemType.OBLOCK, rbx.getString("ActionBlockInService")), // NOI18N
         // EntryExit Actions
-        SET_NXPAIR_ENABLED(ACTION_SET_NXPAIR_ENABLED, ItemType.ENTRYEXIT, rbx.getString("ActionNXPairEnabled"), rbx.getString("ActionNXPairEnabled")), // NOI18N
-        SET_NXPAIR_DISABLED(ACTION_SET_NXPAIR_DISABLED, ItemType.ENTRYEXIT, rbx.getString("ActionNXPairDisabled"), rbx.getString("ActionNXPairDisabled")), // NOI18N
-        SET_NXPAIR_SEGMENT(ACTION_SET_NXPAIR_SEGMENT, ItemType.ENTRYEXIT, rbx.getString("ActionNXPairSegment"), rbx.getString("ActionNXPairSegment")); // NOI18N
+        SET_NXPAIR_ENABLED(ACTION_SET_NXPAIR_ENABLED, ItemType.ENTRYEXIT, rbx.getString("ActionNXPairEnabled")), // NOI18N
+        SET_NXPAIR_DISABLED(ACTION_SET_NXPAIR_DISABLED, ItemType.ENTRYEXIT, rbx.getString("ActionNXPairDisabled")), // NOI18N
+        SET_NXPAIR_SEGMENT(ACTION_SET_NXPAIR_SEGMENT, ItemType.ENTRYEXIT, rbx.getString("ActionNXPairSegment")); // NOI18N
         
             
         private final int _item;
         private final ItemType _itemType;
-        private final String _bundleKey;
-        private final String _actionTypeString;
+        private final String _string;
         
         private static final List<Action> sensorItemsList;
         private static final List<Action> turnoutItemsList;
@@ -579,11 +574,10 @@ public interface Conditional extends NamedBean {
             otherItemsList = Collections.unmodifiableList(Arrays.asList(typeArray14));
         }
         
-        private Action(int state, ItemType itemType, String bundleKey, String actionTypeString) {
+        private Action(int state, ItemType itemType, String string) {
             _item = state;
             _itemType = itemType;
-            _bundleKey = bundleKey;
-            _actionTypeString = actionTypeString;
+            _string = string;
         }
         
         public ItemType getItemType() {
@@ -673,12 +667,9 @@ public interface Conditional extends NamedBean {
         // and therefore the items must call getString() in the call to the constructor.
         @Override
         public String toString() {
-            return _bundleKey;
+            return _string;
         }
         
-        public String getActionTypeString() {
-            return _actionTypeString;
-        }
     }
 
     // state variable types

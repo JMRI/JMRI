@@ -446,7 +446,7 @@ public class DefaultConditionalAction implements ConditionalAction {
      */
     @Override
     public String getTypeString() {
-        return _type.getActionTypeString();
+        return _type.toString();
     }
 
     /**
@@ -671,7 +671,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     public static Conditional.Action stringToActionType(String str) {
         if (str != null) {
             for (Conditional.Action action : Conditional.Action.values()) {
-                if (str.equals(action.getActionTypeString())) {
+                if (str.equals(action.toString())) {
                     return action;
                 }
             }
