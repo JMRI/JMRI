@@ -205,6 +205,16 @@ public interface Conditional extends NamedBean {
             
             throw new IllegalArgumentException("ItemType is unknown");
         }
+        
+        /**
+         * Return the item type before this.
+         * 
+         * @return the previous item type in this enum
+         */
+        public ItemType previous() {
+            ItemType[] valueArray = values();
+            return valueArray[(this.ordinal()-1) % valueArray.length];
+        }
 
         @Override
         public String toString() {

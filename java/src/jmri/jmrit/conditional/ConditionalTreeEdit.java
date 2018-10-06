@@ -179,7 +179,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     ArrayList<String> _selectConditionalList = new ArrayList<>();
 
     // ------------ Components of Edit Variable pane ------------
-    JComboBox<String> _variableItemBox;
+    JComboBox<Conditional.ItemType> _variableItemBox;
     JComboBox<String> _variableStateBox;
     JComboBox<String> _variableOperBox;
     JCheckBox _variableNegated;
@@ -194,7 +194,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     JTextField _variableData2Field;
 
     // ------------ Components of Edit Action pane ------------
-    JComboBox<String> _actionItemBox;
+    JComboBox<Conditional.ItemType> _actionItemBox;
     JComboBox<String> _actionTypeBox;
     JLabel _actionTypeLabel = new JLabel("Type");  // NOI18N
     JTextField _actionNameField;
@@ -2026,15 +2026,15 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      */
     void buildVariableComponents() {
         // Item Type
-        _variableItemBox = new JComboBox<String>();
+        _variableItemBox = new JComboBox<>();
         for (Conditional.ItemType itemType : Conditional.ItemType.getStateVarList()) {
-            _variableItemBox.addItem(itemType.toString());
+            _variableItemBox.addItem(itemType);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_variableItemBox);
         _variableItemBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Conditional.ItemType newVariableItem = Conditional.ItemType.getOperatorFromIntValue(_variableItemBox.getSelectedIndex());
+                Conditional.ItemType newVariableItem = _variableItemBox.getItemAt(_variableItemBox.getSelectedIndex());
                 if (log.isDebugEnabled()) {
                     log.debug("_variableItemBox Listener: new = {}, curr = {}, row = {}",  // NOI18N
                             newVariableItem, _curVariableItem, _curNodeRow);
@@ -2357,11 +2357,11 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         }
         Conditional.ItemType itemType = testType.getItemType();
         log.debug("initializeStateVariables: itemType= {}, testType= {}", itemType, testType);  // NOI18N
-        if (itemType.getIntValue() == _variableItemBox.getSelectedIndex()) {
+        if (itemType == _variableItemBox.getSelectedItem()) {
             // Force a refresh of variableTypeChanged
             variableTypeChanged(itemType);
         }
-        _variableItemBox.setSelectedIndex(itemType.getIntValue());
+        _variableItemBox.setSelectedItem(itemType);
         _variableOperBox.setSelectedItem(_curVariable.getOpernString());
         _variableNegated.setSelected(_curVariable.isNegated());
         _variableTriggerActions.setSelected(_curVariable.doTriggerActions());
@@ -2871,7 +2871,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         updateVariableNegation();
         _curVariable.setTriggerActions(_variableTriggerActions.isSelected());
 
-        Conditional.ItemType itemType = Conditional.ItemType.getOperatorFromIntValue(_variableItemBox.getSelectedIndex());
+        Conditional.ItemType itemType = _variableItemBox.getItemAt(_variableItemBox.getSelectedIndex());
         Conditional.Type testType = Conditional.Type.NONE;
         switch (itemType) {
             case SENSOR:
@@ -3149,7 +3149,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     _variableItemBox.getSelectedIndex(),
                     _variableStateBox.getSelectedIndex());
 
-            Conditional.ItemType itemType = Conditional.ItemType.getOperatorFromIntValue(_variableItemBox.getSelectedIndex());
+            Conditional.ItemType itemType = _variableItemBox.getItemAt(_variableItemBox.getSelectedIndex());
 
             if (_variableStateBox.getSelectedIndex() == 1) {
                 if (itemType == Conditional.ItemType.SIGNALHEAD) {
@@ -3211,16 +3211,16 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      */
     void buildActionComponents() {
         // Item Type
-        _actionItemBox = new JComboBox<String>();
+        _actionItemBox = new JComboBox<>();
         for (Conditional.ItemType itemType : Conditional.ItemType.values()) {
-            _actionItemBox.addItem(itemType.toString());
+            _actionItemBox.addItem(itemType);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_actionItemBox);
         _actionItemBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Conditional.ItemType newActionItem =
-                        Conditional.ItemType.getOperatorFromIntValue(_actionItemBox.getSelectedIndex());
+                        _actionItemBox.getItemAt(_actionItemBox.getSelectedIndex());
                 if (log.isDebugEnabled()) {
                     log.debug("_actionItemBox Listener: new = {}, curr = {}, row = {}",  // NOI18N
                             newActionItem, _curActionItem, _curNodeRow);
@@ -3496,7 +3496,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         Conditional.Action actionType = _curAction.getType();
         Conditional.ItemType itemType = actionType.getItemType();
         log.debug("initializeActionVariables: itemType= {}, actionType= {}", itemType, actionType);  // NOI18N
-        _actionItemBox.setSelectedIndex(itemType.getIntValue());
+        _actionItemBox.setSelectedItem(itemType);
         _actionNameField.setText(_curAction.getDeviceName());
         switch (itemType) {
             case NONE:
@@ -4269,7 +4269,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * @return true if all data checks out OK, otherwise false.
      */
     boolean validateAction() {
-        Conditional.ItemType itemType = Conditional.ItemType.getOperatorFromIntValue(_actionItemBox.getSelectedIndex());
+        Conditional.ItemType itemType = _actionItemBox.getItemAt(_actionItemBox.getSelectedIndex());
         Conditional.Action actionType = Conditional.Action.NONE;
         int selection = _actionTypeBox.getSelectedIndex();
         if (selection == 0) {
@@ -4644,20 +4644,20 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            int select1 = _actionItemBox.getSelectedIndex();
-            int select2 = _actionTypeBox.getSelectedIndex() - 1;
+            Conditional.ItemType select1 = _actionItemBox.getItemAt(_actionItemBox.getSelectedIndex());
+            Conditional.ItemType select2 = _actionItemBox.getItemAt(_actionItemBox.getSelectedIndex()).previous();
             if (log.isDebugEnabled()) {
                 log.debug("ActionTypeListener: itemType = {}, local itemType = {}, actionType = {}",  // NOI18N
                         select1, _itemType, select2);
             }
-            if (select1 != _itemType.getIntValue()) {
+            if (select1 != _itemType) {
                 log.error("ActionTypeListener actionItem selection ({}) != expected actionItem ({})",  // NOI18N
                         select1, _itemType);
             }
             if (_curAction != null) {
-                if (select1 > 0 && _itemType.getIntValue() == select1) {
+                if (select1 != Conditional.ItemType.NONE && _itemType == select1) {
                     _curAction.setType(getActionTypeFromBox(_itemType, select2));
-                    if (select1 == _itemType.getIntValue()) {
+                    if (select1 == _itemType) {
                         String text = _actionNameField.getText();
                         if (text != null && text.length() > 0) {
                             _curAction.setDeviceName(text);

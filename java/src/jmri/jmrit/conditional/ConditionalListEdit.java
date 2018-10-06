@@ -153,7 +153,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
 
     // ------------ Components of Edit Variable panes ------------
     JmriJFrame _editVariableFrame = null;
-    JComboBox<String> _variableItemBox;
+    JComboBox<Conditional.ItemType> _variableItemBox;
     JComboBox<String> _variableStateBox;
     JTextField _variableNameField;
     JComboBox<String> _variableCompareOpBox;
@@ -172,7 +172,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
 
     // ------------ Components of Edit Action panes ------------
     JmriJFrame _editActionFrame = null;
-    JComboBox<String> _actionItemBox;
+    JComboBox<Conditional.ItemType> _actionItemBox;
     JComboBox<String> _actionTypeBox;
     JComboBox<String> _actionBox;
     JTextField _actionNameField;
@@ -1662,7 +1662,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         // Item Type
         _variableItemBox = new JComboBox<>();
         for (Conditional.ItemType itemType : Conditional.ItemType.getStateVarList()) {
-            _variableItemBox.addItem(itemType.toString());
+            _variableItemBox.addItem(itemType);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_variableItemBox);
         panel1.add(makeEditPanel(_variableItemBox, "LabelVariableType", "VariableTypeHint"));  // NOI18N
@@ -1790,7 +1790,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         _variableItemBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Conditional.ItemType newVariableItem = Conditional.ItemType.getOperatorFromIntValue(_variableItemBox.getSelectedIndex());
+                Conditional.ItemType newVariableItem = _variableItemBox.getItemAt(_variableItemBox.getSelectedIndex());
                 if (log.isDebugEnabled()) {
                     log.debug("_variableItemBox Listener: new = {}, curr = {}, row = {}",  // NOI18N
                             newVariableItem, _curVariableItem, _curVariableRowNumber);
@@ -1842,7 +1842,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             return;
         }
         // set item - _variableItemBox Listener will call variableItemChanged
-        _variableItemBox.setSelectedIndex(itemType.getIntValue());
+        _variableItemBox.setSelectedItem(itemType);
         switch (itemType) {
             case SENSOR:
                 _variableStateBox.setSelectedIndex(
@@ -2389,7 +2389,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         _curVariable.setDataString("");
         _curVariable.setNum1(0);
         _curVariable.setNum2(0);
-        Conditional.ItemType itemType = Conditional.ItemType.getOperatorFromIntValue(_variableItemBox.getSelectedIndex());
+        Conditional.ItemType itemType = _variableItemBox.getItemAt(_variableItemBox.getSelectedIndex());
         Conditional.Type testType = Conditional.Type.NONE;
         switch (itemType) {
             case SENSOR:
@@ -2591,13 +2591,13 @@ public class ConditionalListEdit extends ConditionalEditBase {
             log.debug("variableSignalTestStateListener fires; _variableItemBox.getSelectedIndex()= \"{}\" _variableStateBox.getSelectedIndex()= \"{}\"", // NOI18N
                     _variableItemBox.getSelectedIndex(), _variableStateBox.getSelectedIndex());
 
-            int itemType = _variableItemBox.getSelectedIndex();
+            Conditional.ItemType itemType = _variableItemBox.getItemAt(_variableItemBox.getSelectedIndex());
 
             if (_variableStateBox.getSelectedIndex() == 1) {
-                if (itemType == Conditional.ItemType.SIGNALHEAD.getIntValue()) {
+                if (itemType == Conditional.ItemType.SIGNALHEAD) {
                     loadJComboBoxWithHeadAppearances(_variableSignalBox, _variableNameField.getText().trim());
                     _variableSignalPanel.setVisible(true);
-                } else if (itemType == Conditional.ItemType.SIGNALMAST.getIntValue()) {
+                } else if (itemType == Conditional.ItemType.SIGNALMAST) {
                     loadJComboBoxWithMastAspects(_variableSignalBox, _variableNameField.getText().trim());
                     _variableSignalPanel.setVisible(true);
                 } else {
@@ -2683,7 +2683,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
 
         _actionItemBox = new JComboBox<>();
         for (Conditional.ItemType itemType : Conditional.ItemType.values()) {
-            _actionItemBox.addItem(itemType.toString());
+            _actionItemBox.addItem(itemType);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_actionItemBox);
         panel1.add(makeEditPanel(_actionItemBox, "LabelActionItem", "ActionItemHint"));  // NOI18N
@@ -2807,7 +2807,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         _actionItemBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Conditional.ItemType newActionItem = Conditional.ItemType.getOperatorFromIntValue(_actionItemBox.getSelectedIndex());
+                Conditional.ItemType newActionItem = _actionItemBox.getItemAt(_actionItemBox.getSelectedIndex());
                 log.debug("_actionItemBox Listener: new = {}, curr = {}, row = {}",  // NOI18N
                         newActionItem, _curActionItem, _curActionRowNumber);
                 if (newActionItem != _curActionItem) {
@@ -2849,7 +2849,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         if (actionType == Conditional.Action.NONE) {
             return;
         }
-        _actionItemBox.setSelectedIndex(itemType.getIntValue());
+        _actionItemBox.setSelectedItem(itemType);
         _actionNameField.setText(_curAction.getDeviceName());
         switch (itemType) {
             case SENSOR:
@@ -3633,7 +3633,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
      * @return true if all data checks out OK, otherwise false.
      */
     boolean validateAction() {
-        Conditional.ItemType itemType = Conditional.ItemType.getOperatorFromIntValue(_actionItemBox.getSelectedIndex());
+        Conditional.ItemType itemType = _actionItemBox.getItemAt(_actionItemBox.getSelectedIndex());
         Conditional.Action actionType = Conditional.Action.NONE;
         int selection = _actionTypeBox.getSelectedIndex();
         if (selection == 0) {
@@ -3997,18 +3997,18 @@ public class ConditionalListEdit extends ConditionalEditBase {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            int select1 = _actionItemBox.getSelectedIndex();
-            int select2 = _actionTypeBox.getSelectedIndex() - 1;
+            Conditional.ItemType select1 = _actionItemBox.getItemAt(_actionItemBox.getSelectedIndex());
+            Conditional.ItemType select2 = _actionItemBox.getItemAt(_actionItemBox.getSelectedIndex()).previous();
             log.debug("ActionTypeListener: actionItemType= {}, _itemType= {}, action= {}",
                     select1, _itemType, select2);  // NOI18N
-            if (select1 != _itemType.getIntValue()) {
+            if (select1 != _itemType) {
                 log.debug("ActionTypeListener actionItem selection ({}) != expected actionItem ({})",
                         select1, _itemType);  // NOI18N
             }
             if (_curAction != null) {
-                if (select1 > 0 && _itemType.getIntValue() == select1) {
+                if (select1 != Conditional.ItemType.NONE && _itemType == select1) {
                     _curAction.setType(getActionTypeFromBox(_itemType, select2));
-                    if (select1 == _itemType.getIntValue()) {
+                    if (select1 == _itemType) {
                         String text = _actionNameField.getText();
                         if (text != null && text.length() > 0) {
                             _curAction.setDeviceName(text);
