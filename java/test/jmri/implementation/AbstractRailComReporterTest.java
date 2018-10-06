@@ -1,39 +1,31 @@
 package jmri.implementation;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class AbstractRailComReporterTest {
+public class AbstractRailComReporterTest extends AbstractReporterTestBase {
 
-    @Test
-    public void testCTor() {
-        AbstractRailComReporter t = new AbstractRailComReporter("IR1");
-        Assert.assertNotNull("exists",t);
+    @Override
+    protected Object generateObjectToReport(){
+        return new DefaultRailCom("ID1234", "Test Tag");
     }
 
-    @Test
-    public void testGetBeanType(){
-         AbstractRailComReporter t = new AbstractRailComReporter("IR1");
-         Assert.assertEquals("bean type",t.getBeanType(),Bundle.getMessage("BeanNameReporter"));
-    }
-
-    // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        r = new AbstractRailComReporter("IR1");
     }
 
     @After
+    @Override
     public void tearDown() {
+        r = null;
         JUnitUtil.tearDown();
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(AbstractRailComReporterTest.class);
 
 }
