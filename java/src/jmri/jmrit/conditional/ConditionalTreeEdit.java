@@ -4656,7 +4656,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             }
             if (_curAction != null) {
                 if (select1 != Conditional.ItemType.NONE && _itemType == select1) {
-                    _curAction.setType(getActionTypeFromBox(_itemType, select2));
+                    _curAction.setType(getActionTypeFromBox(_itemType, select2.getIntValue()));
                     if (select1 == _itemType) {
                         String text = _actionNameField.getText();
                         if (text != null && text.length() > 0) {
