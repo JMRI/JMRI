@@ -44,7 +44,7 @@
       <a href="CI-status.shtml">CI status page</a>
       that shows the combined status of that.</p>
 
-      <p>We also use two additioanl CI engines to test every change
+      <p>We also use two additional CI engines to test every change
       entered into our GitHub code repository.</p>
 
       <a name="travis" id="travis"></a>
