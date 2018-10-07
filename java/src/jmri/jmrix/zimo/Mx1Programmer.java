@@ -218,7 +218,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         // clear the current listener _first_
         jmri.ProgListener temp = _usingProgrammer;
         _usingProgrammer = null;
-        temp.programmingOpReply(value, status);
+        notifyProgListenerEnd(temp, value, status);
     }
 
     public int ascToBcd(int hex) {

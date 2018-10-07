@@ -285,6 +285,22 @@ public class Track {
     public String getName() {
         return _name;
     }
+    
+    public boolean isSpur() {
+        return getTrackType().equals(Track.SPUR);
+    }
+    
+    public boolean isYard() {
+        return getTrackType().equals(Track.YARD);
+    }
+    
+    public boolean isInterchange() {
+        return getTrackType().equals(Track.INTERCHANGE);
+    }
+    
+    public boolean isStaging() {
+        return getTrackType().equals(Track.STAGING);
+    }
 
     /**
      * Gets the track type
@@ -505,7 +521,7 @@ public class Track {
             return false;
         }
         // ignore reservation factor unless car is departing staging
-        if (car.getTrack() != null && car.getTrack().getTrackType().equals(STAGING)) {
+        if (car.getTrack() != null && car.getTrack().isStaging()) {
             return (getLength() * getReservationFactor() / 100 - (getReservedInRoute() + carLength) >= 0);
         }
         // if there's alternate, include that length in the calculation
@@ -1286,7 +1302,7 @@ public class Track {
             return true;
         }
         // yard tracks accept all trains
-        if (getTrackType().equals(YARD)) {
+        if (isYard()) {
             return true;
         }
         if (_dropOption.equals(TRAINS)) {
@@ -1305,7 +1321,7 @@ public class Track {
             return true;
         }
         // yard tracks accept all routes
-        if (getTrackType().equals(YARD)) {
+        if (isYard()) {
             return true;
         }
         if (_dropOption.equals(EXCLUDE_ROUTES)) {
@@ -1368,7 +1384,7 @@ public class Track {
             return true;
         }
         // yard tracks accept all trains
-        if (getTrackType().equals(YARD)) {
+        if (isYard()) {
             return true;
         }
         if (_pickupOption.equals(TRAINS)) {
@@ -1387,7 +1403,7 @@ public class Track {
             return true;
         }
         // yard tracks accept all routes
-        if (getTrackType().equals(YARD)) {
+        if (isYard()) {
             return true;
         }
         if (_pickupOption.equals(EXCLUDE_ROUTES)) {
@@ -1480,7 +1496,7 @@ public class Track {
                         MessageFormat.format(Bundle.getMessage("carIsNotAllowed"), new Object[]{getName()}); // no
             }
             // does this track (interchange) accept cars without a final destination?
-            if (getTrackType().equals(INTERCHANGE) &&
+            if (isInterchange() &&
                     isOnlyCarsWithFinalDestinationEnabled() &&
                     car.getFinalDestination() == null) {
                 return NO_FINAL_DESTINATION;
@@ -1582,7 +1598,7 @@ public class Track {
      * @return Service order: Track.NORMAL, Track.FIFO, Track.LIFO
      */
     public String getServiceOrder() {
-        if (getTrackType().equals(SPUR) || getTrackType().equals(STAGING)) {
+        if (isSpur() || isStaging()) {
             return NORMAL;
         }
         return _order;
@@ -1639,7 +1655,7 @@ public class Track {
 
     public String getScheduleId() {
         // Only spurs can have a schedule
-        if (!getTrackType().equals(SPUR)) {
+        if (!isSpur()) {
             return NONE;
         }
         // old code only stored schedule name, so create id if needed.
@@ -1876,7 +1892,7 @@ public class Track {
             return OKAY;
         }
         // only spurs can have a schedule
-        if (!getTrackType().equals(SPUR)) {
+        if (!isSpur()) {
             return OKAY;
         }
         if (getScheduleId().equals(NONE)) {
@@ -2383,8 +2399,12 @@ public class Track {
         }
     }
 
+    /**
+     * Get destination option for interchange or staging track
+     * @return option
+     */
     public String getDestinationOption() {
-        if (getTrackType().equals(INTERCHANGE) || getTrackType().equals(STAGING)) {
+        if (isInterchange() || isStaging()) {
             return _destinationOption;
         }
         return ALL_DESTINATIONS;

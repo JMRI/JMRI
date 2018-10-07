@@ -37,14 +37,15 @@
       <h1>JMRI Code: Building with NetBeans</h1>
 
     <div class="toc">
+     <ul>
         <li><a href="#intro">Introduction</a></li>
 
         <li><a href="#installing">Getting and Installing
-        NetBeans</a></li>
+        NetBeans</a>
         <ul>
         <li><a href="#windowsUsers">Important note for Windows users</a></li>
         <li><a href="#heap">Java "Heap" and "low memory" notifications</a></li>
-        </ul>
+        </ul></li>
 
         <li><a href="#checkout">Checking out code</a></li>
 

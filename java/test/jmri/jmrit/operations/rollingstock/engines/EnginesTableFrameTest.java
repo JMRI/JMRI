@@ -3,7 +3,7 @@ package jmri.jmrit.operations.rollingstock.engines;
 import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -24,7 +24,7 @@ import org.junit.Test;
  * @author	Dan Boudreau Copyright (C) 2010
  *
  */
-public class EnginesTableFrameTest extends OperationsSwingTestCase {
+public class EnginesTableFrameTest extends OperationsTestCase {
 
     @Test
     public void testenginesTableFrame() throws Exception {
@@ -154,7 +154,7 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
     // Ensure minimal setup for log4J
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
 
         loadEngines();
@@ -244,7 +244,7 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
 
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

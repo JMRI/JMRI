@@ -441,9 +441,11 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 _warrant.fireRunStatus("RampDone", _halt, type);
             });
         }
-        synchronized (this) {
-            notify();
-            log.debug("rampDone called notify");
+        if (!_atHalt && !_atClear) {
+            synchronized (this) {
+                notify();
+                log.debug("rampDone called notify");
+            }
         }
     }
 
@@ -646,10 +648,11 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 _throttle.setSpeedSetting(-1.0f);
                 setSpeed(0.0f);     // prevent creep after EStop - according to Jim Betz
             }
-            if (abort) {
+            if (abort && turnOffFunctions) {
                 _throttle.setF0(false);
                 _throttle.setF1(false);
                 _throttle.setF2(false);
+                _throttle.setF3(false);
             }
             _warrant.releaseThrottle(_throttle);
         }
@@ -1101,6 +1104,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                         float scriptDist = 0;
                         float scriptSpeed = 0;
                         for (int idx = _idxCurrentCommand; idx > 0; idx--) {
+                            // backing down to find current script speed
                             ThrottleSetting ts = _commands.get(idx);
                             if ("SPEED".equals(ts.getCommand().toUpperCase())) {
                                 scriptSpeed = Float.parseFloat(ts.getValue());
@@ -1108,13 +1112,14 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             }
                         }
                         float rampDist = _speedUtil.rampLengthForSpeedChange(speed, _endSpeed, _isForward);
-                        int idxNextSpeedCmd = Math.max(_idxSkipToSpeedCommand, _idxCurrentCommand+1); // resume speed index
+                        int idxSpeedCmd = Math.max(_idxSkipToSpeedCommand-1, _idxCurrentCommand); // resume speed index
+                        int idxNextSpeedCmd = idxSpeedCmd + 1;
                         long scriptTime = 0;
                         boolean hasSpeed = (scriptSpeed > 0);
-                        for (int idx = idxNextSpeedCmd; idx < _commands.size(); idx++) {
-                            ThrottleSetting ts = _commands.get(idx);
+                        while (idxNextSpeedCmd < _commands.size()) {
+                            ThrottleSetting ts = _commands.get(idxSpeedCmd);
                             if (hasSpeed) {
-                                scriptTime += ts.getTime(); // TODO fix -time at this scriptSpeed is next getTime()
+                                scriptTime += ts.getTime();
                                 String cmd = ts.getCommand().toUpperCase();
                                 if ("SPEED".equals(cmd) || "NOOP".equals(cmd)) {
                                     scriptDist += _speedUtil.getDistanceTraveled(scriptSpeed, _endSpeedType, scriptTime, _isForward);
@@ -1127,16 +1132,17 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                                             _endSpeed = _speedUtil.modifySpeed(scriptSpeed, _endSpeedType, _isForward);
                                             rampDist = _speedUtil.rampLengthForSpeedChange(speed, _endSpeed, _isForward);
                                         }
-                                        idxNextSpeedCmd = idx;
                                     }
-//                                    log.debug("scriptDist= {}, rampDist= {} for _endSpeed= {} at index= {}",
-//                                            scriptDist, rampDist, _endSpeed, idx);
+                                    log.debug("scriptDist= {}, rampDist= {} for _endSpeed= {} at index= {}",
+                                            scriptDist, rampDist, _endSpeed, idxSpeedCmd);
                                     if (scriptDist >= rampDist) {
-                                        advanceToCommandIndex(idxNextSpeedCmd); // don't let script set speeds up to here
+                                        advanceToCommandIndex(idxSpeedCmd); // don't let script set speeds up to here
                                         break;
                                     }
                                 }
                             }
+                            idxSpeedCmd++;
+                            idxNextSpeedCmd++;
                         }
                         _normalSpeed = scriptSpeed;
                         if (log.isDebugEnabled()) 

@@ -261,9 +261,9 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
             _track.addPropertyChangeListener(this);
             trackName.setText(_track.getName());
             // only show ship loads for staging tracks
-            paneShipLoadControls.setVisible(_track.getTrackType().equals(Track.STAGING));
-            paneShipLoads.setVisible(_track.getTrackType().equals(Track.STAGING));
-            pOptions.setVisible(_track.getTrackType().equals(Track.SPUR));
+            paneShipLoadControls.setVisible(_track.isStaging());
+            paneShipLoads.setVisible(_track.isStaging());
+            pOptions.setVisible(_track.isSpur());
             holdCars.setSelected(_track.isHoldCarsWithCustomLoadsEnabled());
             updateButtons(true);
         } else {
