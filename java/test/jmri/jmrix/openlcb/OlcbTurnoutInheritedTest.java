@@ -2,8 +2,7 @@ package jmri.jmrix.openlcb;
 
 import jmri.util.JUnitUtil;
 import jmri.implementation.AbstractTurnoutTestBase;
-import org.junit.Before;
-import org.junit.After;
+import org.junit.*;
 
 /**
  * Tests inherited from the abstract turnout test base, specialized for the OlcbTurnout. This is
@@ -49,5 +48,11 @@ public class OlcbTurnoutInheritedTest extends AbstractTurnoutTestBase {
     public void checkClosedMsgSent() throws InterruptedException {
         tif.flush();
         tif.assertSentMessage(":X195B4C4CN0102030405060709;");
+    }
+
+    @Test
+    @Override
+    @Ignore("requires work for olcb turnouts")
+    public void testDirectFeedback() throws jmri.JmriException {
     }
 }
