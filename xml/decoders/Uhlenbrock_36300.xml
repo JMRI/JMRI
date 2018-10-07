@@ -175,6 +175,14 @@
         <label xml:lang="de">Spannungsteiler Motorregelung EMK</label>
       </variable>	  
       <!-- End CV49 specifics -->
+      <!-- added for 363x CV50 -->
+      <variable item="Motorola address 2" CV="50" default="0">
+        <decVal max="255"/>
+        <label>Motorola loco address 2</label>
+        <label xml:lang="de">Motorola Lokadresse 2</label>
+        <tooltip>for F5 to F8 (Value 1-255)</tooltip>
+        <tooltip xml:lang="de">für F5 bis F8 (Wert 1-255)</tooltip>
+      </variable>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv51analog.xml"/>
       <variable item="EMF Option 1" CV="53" default="35">
         <decVal max="63"/>
@@ -212,24 +220,20 @@
         <tooltip>Increase if loc does not run smoothly at low speeds - Decrease if the top speed is too low after CV53 has been lowered</tooltip>
         <tooltip xml:lang="de">vergrößern, wenn Lok bei geringer Geschwindigkeit ungleichmäßig läuft; verkleinern, wenn bei heruntergesetztem CV 53 Höchstgeschwindigkeit der Lok zu gering ist</tooltip>
       </variable>	  
-      <variable item="Short circuit supervision" CV="60" default="9" readOnly="yes">
+      <variable item="Short circuit supervision" CV="60" default="137" readOnly="yes">
         <decVal max="9"/>
-        <label>Motor Short circuit supervision</label>
-        <label xml:lang="de">Kurzschlussüberwachung Motor</label>
-        <tooltip>Do not change! 0=deactivated - 9=activated</tooltip>        
+        <label>Motor and Function Output Short circuit supervision</label>
+        <label xml:lang="de">Kurzschlussüberwachung Motor- und Funktionsausgänge</label>
+        <tooltip>Do not change! 0=deactivated - 137=activated</tooltip>
       </variable>
       <variable item="Shutdown Temperature" CV="61" default="32" readOnly="yes">
         <decVal/>
         <label>Shutdown Temperature</label>
         <label xml:lang="de">Abschalttemperatur</label>
         <tooltip>in °C, different with each decoder</tooltip>
-      </variable>	  
-      <variable item="Lights Short circuit supervision" CV="62" default="249" readOnly="yes">
-        <decVal max="255"/>
-        <label>Lights Short circuit supervision</label>
-        <label xml:lang="de">Kurzschlussüberwachung Licht</label>
-        <tooltip>Do not change! 0=deactivated - 249=activated</tooltip>        
-      </variable>	
+      </variable>
+      <!-- added for 363x -->
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv62error.xml"/>
       <variable item="End braking speed" CV="64" default="30">
         <decVal/>
         <label>End braking speed</label>
@@ -411,10 +415,16 @@
         <tooltip>value * 0.2s</tooltip>
         <tooltip xml:lang="de">Wert * 0.2s</tooltip>
       </variable>
-      <variable item="Smoke generator option 4" CV="131" default="31">
-        <decVal max="32"/>
+      <!-- changed values for PWM-Anfahren -->
+      <variable item="Smoke generator option 4" CV="131" mask="XXXVVVVV" default="31">
+        <decVal max="31"/>
         <label>Smoke gen. control PWM - Start</label>
         <label xml:lang="de">Rauchgen. PWM-Anfahren</label>
+      </variable>
+      <variable item="Smoke generator option 7" CV="131" mask="VVVXXXXX" default="64">
+        <decVal max="128"/>
+        <label>Smoke gen. Start delay</label>
+        <label xml:lang="de">Rauchgen. Anfahrwartezeit</label>
       </variable>
       <variable item="Smoke generator option 5" CV="132" default="16">
         <decVal max="32"/>
@@ -426,6 +436,7 @@
         <label>Smoke gen. control PWM - Idle</label>
         <label xml:lang="de">Rauchgen. PWM-Leerlauf</label>
       </variable>
+      <!-- integrate IntelliSound3 variables in decoder -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/soundVars7outputs.xml"/>
     </variables>
     <resets>

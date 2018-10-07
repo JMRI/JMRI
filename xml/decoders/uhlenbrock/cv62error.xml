@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2014 All rights reserved                            -->
+<!-- Copyright (C) JMRI 2018 All rights reserved                            -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
-    <year>2014</year>
+    <year>2018</year>
     <holder>JMRI</holder>
   </copyright>
   <authorgroup xmlns="http://docbook.org/ns/docbook">
@@ -27,13 +27,14 @@
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
       <revnumber>1</revnumber>
-      <date>2014-05-10</date>
+      <date>2018-10-06</date>
       <authorinitials>ALM</authorinitials>
-      <revremark>Initial version as separate file from Uhlenbrock_73400.xml v2</revremark>
+      <revremark>Initial version as separate file for Uhlenbrock_36300.xml.
+      Based on uhlenbrock/cv100error</revremark>
     </revision>
-  <!-- Uhlenbrock Decoder Configuration CV 100 - error register -->
+  <!-- Uhlenbrock Decoder Configuration CV 62 - error register -->
   </revhistory>
-  <variable item="Error register" CV="100" default="0" readOnly="yes" mask="XXXXXXVV">
+  <variable item="Error register" CV="62" default="0" readOnly="yes">
 	<enumVal>
 	  <enumChoice choice="No error" value="0">
             <choice>No error</choice>
@@ -45,21 +46,26 @@
             <choice>Motor short circuit</choice>
             <choice xml:lang="de">Kurzschluss Motor</choice>
             <choice xml:lang="it">Corto-Circuito Motore</choice>
-            <choice xml:lang="nl">Kortsluiting in motor</choice>
+            <choice xml:lang="nl">Fout in motor</choice>
 	  </enumChoice>
-	  <enumChoice choice="Light short circuit">
-            <choice>Light short circuit</choice>
-            <choice xml:lang="de">Kurzschluss Licht</choice>
-            <choice xml:lang="it">Corto-Circuito Luci</choice>
-            <choice xml:lang="nl">Kortsluiting in functie-uitgang</choice>
+	  <enumChoice choice="Function output short circuit">
+            <choice>Function output short circuit</choice>
+            <choice xml:lang="de">Kurzschluss Funktionsausgang</choice>
+            <choice xml:lang="it">Corto-Circuito Functione</choice>
+            <choice xml:lang="nl">Fout in functie-uitgang</choice>
 	  </enumChoice>
 	  <enumChoice choice="Motor+Light short circuit">
-            <choice>Motor+Light short circuit</choice>
-            <choice xml:lang="de">Kurzschluss Motor+Licht</choice>
-            <choice xml:lang="it">Corto-Circuito Motore e Luci</choice>
-            <choice xml:lang="nl">Kortsluiting in motor+functie</choice>
-	  </enumChoice>	  
-	</enumVal>
+            <choice>Motor+Functions short circuit</choice>
+            <choice xml:lang="de">Kurzschluss Motor+Funktione</choice>
+            <choice xml:lang="it">Corto-Circuito Motore e Functione</choice>
+            <choice xml:lang="nl">Fout in Moter+Functie</choice>
+	  </enumChoice>
+      <enumChoice choice="Temperature error">
+            <choice>Temperature Error</choice>
+            <choice xml:lang="de">Temperaturüberschreitung</choice>
+            <choice xml:lang="nl">Temperatuuroverschrijding</choice>
+       </enumChoice>
+    </enumVal>
 	<label>Error register</label>
 	<label xml:lang="de">Fehlerspeicher</label>
     <label xml:lang="it">Errore registro</label>

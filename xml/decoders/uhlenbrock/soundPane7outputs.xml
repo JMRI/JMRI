@@ -17,10 +17,10 @@
             <revnumber>1</revnumber>
             <date>2018-09-29</date>
             <authorinitials>EB</authorinitials>
-            <revremark>Initial version as separate file</revremark>
+            <revremark>Initial version as separate file, taken from Uhlenbrock_32300.xml</revremark>
         </revision>
-        <!-- Valid only for certain Uhlenbrock decoders with 7 additional outputs A1 to A7,
-             such as 76560, 36320, 36360 (non exhaustive list) -->
+        <!-- Valid only for certain Uhlenbrock decoders with IntelliSound Module,
+             such as 32300, 36320, 36360 (non exhaustive list) -->
     </revhistory>
 
     <name>IntelliSound</name>

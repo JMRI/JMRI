@@ -29,12 +29,10 @@
       <revnumber>1</revnumber>
       <date>2018-09-30</date>
       <authorinitials>EB</authorinitials>
-      <revremark>Initial version as separate file from Uhlenbrock_32300.xml</revremark>
+      <revremark>Initial version as separate file, taken from Uhlenbrock_32300.xml</revremark>
     </revision>
-  <!-- 	Uhlenbrock Decoder CV 12									-->
-  <!--	for many decoders is usually in CV 49 - bits 3 and 4    	-->
-  <!-- 	valid for certain decoder types only  :              		-->    
-  <!-- 						76560, 36320, 36360 (not exhaustive)    -->
+      <!-- Valid only for certain Uhlenbrock decoders with IntelliSound Module,
+           such as 32300, 36320, 36360 (non exhaustive list) -->
   </revhistory>
     <variable item="SUSI-range" CV="897.0" default="1" tooltip="Will not read/write properly if multiple SUSI modules attached">
         <!-- Note: this is a normal CV, with no need to specify the index. However, setting the index allows resetting it to zero -->
