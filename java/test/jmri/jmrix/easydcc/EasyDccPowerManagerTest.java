@@ -37,6 +37,16 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTestBase {
     protected void hearOff() {
         // this does nothing, as there is no unsolicited on
     }
+    
+    @Override
+    protected void sendIdleReply() {
+        // this does nothign as there is no IDLE support
+    }
+
+    @Override
+    protected void hearIdle() {
+        // this does nothign as there is no IDLE support
+    }
 
     @Override
     protected int numListeners() {
@@ -56,6 +66,11 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTestBase {
     @Override
     protected boolean outboundOffOK(int index) {
         return 'K' == ((controller.outbound.elementAt(index))).getOpCode();
+    }
+
+    @Override
+    protected boolean outboundIdleOK(int index) {
+        return false;
     }
 
     // setup a default EasyDccTrafficController interface
