@@ -198,7 +198,7 @@ public abstract class TrainCustomCommon {
             log.debug("Waiting for Excel program to complete");
             status = process.waitFor(waitTimeSeconds, TimeUnit.SECONDS);
             if (file.exists()) {
-                log.error("Common file not deleted!");
+                log.error("Common file ({}) not deleted!", file.getPath());
                 return false;
             }
             log.debug("Excel program complete!");
