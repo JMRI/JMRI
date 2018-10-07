@@ -18,7 +18,7 @@ public class AbstractRailComReporterTest extends AbstractReporterTestBase {
     // includes a notify(IdTag) method.
     @Test
     public void testNotify() {
-        Assume.assumeTrue(r instanceof AbstractReporter);
+        Assume.assumeTrue(r instanceof AbstractRailComReporter);
         Assume.assumeTrue(generateObjectToReport() instanceof IdTag);
         Assert.assertEquals("IdTag not Seen",IdTag.UNKNOWN,r.getState());
         ((AbstractRailComReporter)r).notify((IdTag)generateObjectToReport());
