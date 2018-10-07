@@ -154,7 +154,11 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
             synchronized (this) {
                 newKnownState(INCONSISTENT);
             }
-        }
+        } else if( _activeFeedbackType == DIRECT ){
+            synchronized (this) {
+                newKnownState(s);
+            }
+	}
     }
 
     // Handle a request to change state by sending a DCC++ command
@@ -194,7 +198,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
             // Convert the integer Turnout value to boolean for DCC++ internal code.
             // Assume if it's not THROWN (true), it must be CLOSED (false).
             msg = DCCppMessage.makeAccessoryDecoderMsg(mNumber, newstate);
-            internalState = IDLE; // change this!
+	    internalState = IDLE;
             break;
             
         }
@@ -269,7 +273,6 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         case DIRECT:
         default:
             // Default is direct mode - we should never get here, actually.
-            handleDirectModeFeedback(l);
         }
     }
 
@@ -284,39 +287,6 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         if (log.isDebugEnabled()) {
             log.debug("Notified of timeout on message" + msg.toString());
         }
-    }
-
-    /*
-     * With DIRECT mode we don't actually expect a response from the
-     * Base Station, but we'll leave this code in, in case the Base Station
-     * implements an ACK or OK response later.
-     */
-    synchronized private void handleDirectModeFeedback(DCCppReply l) {
-        /* If commanded state does not equal known state, we are 
-         going to check to see if one of the following conditions 
-         applies:
-         1) The received message is a feedback message for a turnout
-         and one of the two addresses to which it applies is our 
-         address
-         2) We receive an "OK" message, indicating the command was
-         successfully sent
-           
-         If either of these two cases occur, we trigger an off message
-         */
-
-        if (log.isDebugEnabled()) {
-            log.debug("Handle Message for turnout "
-                      + mNumber + " in DIRECT feedback mode ");
-        }
-        if (getCommandedState() != getKnownState() || internalState == COMMANDSENT) {
-            if (l.isTurnoutReply() && l.getTOIDInt() == mNumber) {
-                // This message includes feedback for this turnout  
-                if (log.isDebugEnabled()) {
-                    log.debug("Turnout " + mNumber + " DIRECT feedback mode - directed reply received.");
-                }
-            }
-        }
-        return;
     }
 
     /*
