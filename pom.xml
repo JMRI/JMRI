@@ -29,7 +29,7 @@
         <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
         <ant.version>1.10.1</ant.version>
         <ant.jvm.args></ant.jvm.args>
-        <argLine>-Xmx1536m</argLine>
+        <argLine>-Xmx1536m -Duser.language=en -Duser.region=US</argLine>
         <surefire.version>2.20</surefire.version>
     </properties>
     <scm>
