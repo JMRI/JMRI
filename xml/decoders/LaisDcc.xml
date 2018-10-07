@@ -16,6 +16,7 @@
   <version author="Alain Le Marchand" version="2" lastUpdated="20170408"/>
   <version author="Stanley@laisdcc.com" version="3" lastUpdated="20180103"/>
   <version author="Alain Le Marchand" version="4" lastUpdated="20180106"/>
+  <version author="Alain Carasso" version="5" lastUpdated="20181007"/>
   <!-- Version 1: original version from LaisDCC website                                  -->
   <!-- Version 2: updated low and high values for decoder version, based on real models -->
   <!--            Updated manufacturer name to "LaisDCC" - with capital lettter for DCC -->
@@ -35,9 +36,11 @@
   <!--            - Removed CV15 CV lock: used for dynamic programming                  -->
   <!--              not as permanent value. Not in JMRI to avoid errors.                -->
   <!--            Added 860010/LaisDcc-Z2                                               -->
+  <!-- Version 5: updated high value for decoder version, up to 6, based on real models -->
+  <!-- it looks to correspond to newer decoders (KungFu Series) with same CV set        -->
   <decoder>
-    <family name="Locomotive Decoders" mfg="LaisDCC" comment="LaisDCC decoder range" lowVersionID="02" highVersionID="04">
-      <model model="860010/LaisDcc-Z2" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860010" formFactor="Z" connector="Wires" comment="Z/N scale, wires NEM651">
+    <family name="Locomotive Decoders" mfg="LaisDCC" comment="LaisDCC decoder range" lowVersionID="02" highVersionID="06">
+      <model model="8x0010/LaisDcc-Z2" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860010" formFactor="Z" connector="Wires" comment="Z/N scale, wires NEM651">
         <output name="1" label="White|Pin 5" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow|Pin 6" connection="wire" maxcurrent="100 mA"/>
         <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
@@ -46,7 +49,7 @@
         <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
         <size length="13.3" width="7.3" height="3.8" units="mm"/>
       </model>
-      <model model="860012" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860012" formFactor="N" connector="Wires" comment="N scale, wires NEM651">
+      <model model="8x0012" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860012" formFactor="N" connector="Wires" comment="N scale, wires NEM651">
         <output name="1" label="White|Pin 5" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow|Pin 6" connection="wire" maxcurrent="100 mA"/>
         <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
@@ -55,7 +58,7 @@
         <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
         <size length="14.5" width="8.2" height="3" units="mm"/>
       </model>
-      <model model="860013" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860013" formFactor="N" connector="NEM651" comment="N scale, 6-pin direct NEM651 plug">
+      <model model="8x0013" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860013" formFactor="N" connector="NEM651" comment="N scale, 6-pin direct NEM651 plug">
         <output name="1" label="White|Pin 5" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow|Pin 6" connection="plug" maxcurrent="100 mA"/>
         <output name="7" label="Rule 17|Dimming"/>	<!-- virtual "output" -->
@@ -64,7 +67,7 @@
         <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
         <size length="14.5" width="8.2" height="3" units="mm"/>
       </model>
-      <model model="860014" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860014" formFactor="HO" connector="Wires" comment="HO-scale, 9 Wires">
+      <model model="8x0014" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860014" formFactor="HO" connector="Wires" comment="HO-scale, 9 Wires">
         <output name="1" label="White|Wire" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow|Wire" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green|Wire" connection="wire" maxcurrent="100 mA"/>
@@ -75,7 +78,7 @@
         <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
         <size length="15" width="7" height="2.7" units="mm"/>
       </model>
-			<model model="860015" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860015" formFactor="HO" connector="Next18" comment="HO-scale, with Next18 harness">
+      <model model="8x0015" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860015" formFactor="HO" connector="Next18" comment="HO-scale, with Next18 harness">
         <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow|Pin 17" connection="plug" maxcurrent="100 mA"/>
         <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA"/>
@@ -88,7 +91,7 @@
         <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
         <size length="15" width="9.5" height="2.9" units="mm"/>
       </model>
-			<model model="860016" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860016" formFactor="HO" connector="PluX22" comment="HO-scale, with Plux22 harness">
+      <model model="8x0016" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860016" formFactor="HO" connector="PluX22" comment="HO-scale, with Plux22 harness">
         <output name="1" label="White|Pin 7" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow|Pin 13" connection="plug" maxcurrent="100 mA"/>
         <output name="3" label="Green|Pin 16" connection="plug" maxcurrent="100 mA"/>
@@ -113,7 +116,7 @@
         <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
         <size length="14.2" width="12.5" height="3.5" units="mm"/>
       </model>
-      <model model="860019" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860019" formFactor="HO" connector="21MTC" comment="HO-scale, with 21MTC harness">
+      <model model="8x0019" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860019" formFactor="HO" connector="21MTC" comment="HO-scale, with 21MTC harness">
         <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow|Pin 7" connection="plug" maxcurrent="100 mA"/>
         <output name="3" label="Green|Pin 15" connection="plug" maxcurrent="100 mA"/>
@@ -126,7 +129,7 @@
         <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
         <size length="17" width="16" height="3.5" units="mm"/>
       </model>
-      <model model="860020" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860020" formFactor="HO" connector="NEM652" comment="HO-scale, direct NEM652 + wire for F2">
+      <model model="8x0020" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860020" formFactor="HO" connector="NEM652" comment="HO-scale, direct NEM652 + wire for F2">
         <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA"/>
         <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA"/>
@@ -137,7 +140,7 @@
         <output name="10" label="BEMF|Control"/>	<!-- virtual "output" -->
         <size length="15" width="15" height="3.5" units="mm"/>
       </model>
-      <model model="860021" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860021" formFactor="HO" connector="Wires/NEM652" comment="HO-scale, Wires and NEM652">
+      <model model="8x0021" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860021" formFactor="HO" connector="Wires/NEM652" comment="HO-scale, Wires and NEM652">
         <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA"/>
         <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA"/>
