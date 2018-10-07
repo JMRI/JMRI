@@ -10,21 +10,18 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class EcosReporterTest {
-
-    @Test
-    public void testCTor() {
-        EcosReporter t = new EcosReporter("UR1","Test");
-        Assert.assertNotNull("exists",t);
-    }
+public class EcosReporterTest extends jmri.implementation.AbstractRailComReporterTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        r = new EcosReporter("UR1","Test");
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }
