@@ -3,9 +3,10 @@ package jmri.jmrit.operations.rollingstock.cars;
 import java.util.List;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations RollingStock Cars Loads class Last manually
@@ -17,6 +18,7 @@ import org.junit.Assert;
  */
 public class CarLoadsTest extends OperationsTestCase {
 
+    @Test
     public void testDefaultCarLoads() {
         CarLoads cl = InstanceManager.getDefault(CarLoads.class);
 
@@ -37,6 +39,7 @@ public class CarLoadsTest extends OperationsTestCase {
         Assert.assertTrue("Default empty", cl.containsName("bOxCaR", "E"));
     }
 
+    @Test
     public void testAddCarLoads() {
         CarLoads cl = InstanceManager.getDefault(CarLoads.class);
 
@@ -60,6 +63,7 @@ public class CarLoadsTest extends OperationsTestCase {
 
     }
 
+    @Test
     public void testReplaceCarLoads() {
         CarLoads cl = InstanceManager.getDefault(CarLoads.class);
         cl.addName("bOxCaR", "A boxcar load");
@@ -77,6 +81,7 @@ public class CarLoadsTest extends OperationsTestCase {
 
     }
 
+    @Test
     public void testDeleteCarLoads() {
         CarLoads cl = InstanceManager.getDefault(CarLoads.class);
         cl.addName("BoXcaR", "New Boxcar Load");
@@ -95,6 +100,7 @@ public class CarLoadsTest extends OperationsTestCase {
         Assert.assertTrue("new load", cl.containsName("bOxCaR", "C boxcar load"));
     }
 
+    @Test
     public void testGetAndSetDefaultEmptyCarLoads() {
         CarLoads cl = InstanceManager.getDefault(CarLoads.class);
         Assert.assertEquals("default empty", "E", cl.getDefaultEmptyName());
@@ -131,28 +137,14 @@ public class CarLoadsTest extends OperationsTestCase {
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
     }
 
-    public CarLoadsTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", CarLoadsTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(CarLoadsTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         super.tearDown();
     }
 }

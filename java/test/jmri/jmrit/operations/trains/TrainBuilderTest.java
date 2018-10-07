@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.List;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -34,7 +35,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.timetable.TrainSchedule;
 import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -49,7 +49,7 @@ import org.junit.Test;
  *
  * @author Bob Coleman Copyright (C) 2008, 2009
  */
-public class TrainBuilderTest {
+public class TrainBuilderTest extends OperationsTestCase {
 
     private final int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
 
@@ -13715,12 +13715,11 @@ public class TrainBuilderTest {
 
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
+    @Override
     @Before
-    public void setUp() throws Exception {
-        JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+    public void setUp() {
+        super.setUp();
 
-        JUnitOperationsUtil.resetOperationsManager();
         // setup new managers
         tmanager = InstanceManager.getDefault(TrainManager.class);
         rmanager = InstanceManager.getDefault(RouteManager.class);
@@ -13766,8 +13765,9 @@ public class TrainBuilderTest {
     }
 
     // The minimal setup for log4J
+    @Override
     @After
-    public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
+    public void tearDown() {
+        super.tearDown();
     }
 }

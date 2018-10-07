@@ -4,11 +4,12 @@ package jmri.jmrit.operations.locations;
 import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
@@ -22,7 +23,7 @@ import org.junit.Test;
  *
  * @author Dan Boudreau Copyright (C) 2009
  */
-public class SidingEditFrameTest extends OperationsSwingTestCase {
+public class SidingEditFrameTest extends OperationsTestCase {
 
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
     private LocationManager lManager = null;
@@ -303,21 +304,21 @@ public class SidingEditFrameTest extends OperationsSwingTestCase {
     // Ensure minimal setup for log4J
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
 
-        loadLocations();
+        JUnitOperationsUtil.loadFiveLocations();
         lManager = InstanceManager.getDefault(LocationManager.class);
         l = lManager.getLocationByName("Test Loc C");
 
-        loadTrain(l);
+        JUnitOperationsUtil.loadTrain(l);
         TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
         trainA = trainManager.getTrainByName("Test Train A"); 
     }
 
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

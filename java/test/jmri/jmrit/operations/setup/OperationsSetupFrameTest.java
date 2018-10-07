@@ -3,7 +3,7 @@ package jmri.jmrit.operations.setup;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JComboBox;
 import jmri.jmrit.display.LocoIcon;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
@@ -23,7 +23,7 @@ import org.netbeans.jemmy.operators.JRadioButtonOperator;
  * @author Dan Boudreau Copyright (C) 2009
  * @author Paul Bender Copyright (C) 2017
  */
-public class OperationsSetupFrameTest extends OperationsSwingTestCase {
+public class OperationsSetupFrameTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
@@ -110,7 +110,7 @@ public class OperationsSetupFrameTest extends OperationsSwingTestCase {
                     Bundle.getMessage("MaxTrainLengthIncreased"), new Object[]{1234,"feet"}), "OK");
         // dialog window should appear regarding railroad name
         /*pressDialogButton(f,java.text.MessageFormat.format(Bundle
-                    .getMessage("ChangeRailroadName"), new Object[]{"My Jmri Railroad", "Test Railroad Name"}) ,"No");
+                    .getMessage("ChangeRailroadName"), new Object[]{"My Jmri Railroad", "Test Railroad Name"}) ,Bundle.getMessage("ButtonNo"));
         // done*/
         JUnitUtil.dispose(f);
         jfo.dispose();
@@ -161,14 +161,14 @@ public class OperationsSetupFrameTest extends OperationsSwingTestCase {
     // The minimal setup for log4J
     @Before
     @Override
-    public void setUp() throws Exception{
+    public void setUp(){
         super.setUp();
         new Setup();
     }
 
     @After
     @Override
-    public void tearDown() throws Exception{
+    public void tearDown(){
         super.tearDown();
     }
 

@@ -2,10 +2,11 @@ package jmri.jmrit.operations.locations.schedules;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -17,7 +18,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class ExportSchedulesTest extends OperationsSwingTestCase{
+public class ExportSchedulesTest extends OperationsTestCase{
 
     @Test
     public void testCTor() {
@@ -28,7 +29,7 @@ public class ExportSchedulesTest extends OperationsSwingTestCase{
     // The minimal setup for log4J
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
     }
     
@@ -38,7 +39,7 @@ public class ExportSchedulesTest extends OperationsSwingTestCase{
         ExportSchedules exportLoc = new ExportSchedules();
         Assert.assertNotNull("exists", exportLoc);
         
-        loadLocations(); //only Test Loc E has a track
+        JUnitOperationsUtil.loadFiveLocations(); //only Test Loc E has a track
         
         LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location l1 = lManager.getLocationByName("Test Loc E");
@@ -73,7 +74,7 @@ public class ExportSchedulesTest extends OperationsSwingTestCase{
 
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 

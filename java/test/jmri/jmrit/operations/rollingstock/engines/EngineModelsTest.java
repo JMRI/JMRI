@@ -2,9 +2,10 @@ package jmri.jmrit.operations.rollingstock.engines;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations RollingStock Engine class Last manually
@@ -21,12 +22,14 @@ public class EngineModelsTest extends OperationsTestCase {
 
     // test EngineModels Class
     // test EngineModels creation
+    @Test
     public void testEngineModelsCreate() {
         EngineModels em1 = new EngineModels();
         Assert.assertNotNull("exists", em1);
     }
 
     // test EngineModels public constants
+    @Test
     public void testEngineModelsConstants() {
         EngineModels em1 = new EngineModels();
 
@@ -35,6 +38,7 @@ public class EngineModelsTest extends OperationsTestCase {
     }
 
     // test EngineModels Names
+    @Test
     public void testEngineModelsNames() {
         EngineModels em1 = new EngineModels();
 
@@ -54,6 +58,7 @@ public class EngineModelsTest extends OperationsTestCase {
     }
 
     // test EngineModels Attributes
+    @Test
     public void testEngineModelsAttributes() {
         EngineModels em1 = new EngineModels();
 
@@ -84,6 +89,7 @@ public class EngineModelsTest extends OperationsTestCase {
     }
 
     // test EngineModels Defaults
+    @Test
     public void testEngineModelsDefaults() throws Exception {
 
         InstanceManager.getDefault(EngineModels.class).addName("E8");
@@ -252,28 +258,14 @@ public class EngineModelsTest extends OperationsTestCase {
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
     }
 
-    public EngineModelsTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", EngineModelsTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(EngineModelsTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         super.tearDown();
     }
 

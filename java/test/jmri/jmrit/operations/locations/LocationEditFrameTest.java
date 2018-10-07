@@ -2,7 +2,8 @@ package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
@@ -16,14 +17,14 @@ import org.junit.Test;
  *
  * @author	Dan Boudreau Copyright (C) 2009
  */
-public class LocationEditFrameTest extends OperationsSwingTestCase {
+public class LocationEditFrameTest extends OperationsTestCase {
 
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
 
     @Test
     public void testLocationEditFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        loadLocations();
+        JUnitOperationsUtil.loadFiveLocations();
 
         LocationEditFrame f = new LocationEditFrame(null);
         f.setTitle("Test Add Location Frame");
@@ -67,13 +68,13 @@ public class LocationEditFrameTest extends OperationsSwingTestCase {
 
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
     }
 
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

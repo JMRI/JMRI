@@ -1,8 +1,7 @@
 package jmri.jmrit.operations.rollingstock.cars.tools;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.operations.OperationsSwingTestCase;
-import jmri.jmrit.operations.rollingstock.cars.tools.CarLoadEditFrame;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
@@ -16,7 +15,7 @@ import org.junit.Test;
  *
  * @author	Dan Boudreau Copyright (C) 2009
  */
-public class CarLoadEditFrameTest extends OperationsSwingTestCase {
+public class CarLoadEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testCarLoadEditFrame() {
@@ -33,13 +32,13 @@ public class CarLoadEditFrameTest extends OperationsSwingTestCase {
     // Ensure minimal setup for log4J
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
     }
 
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

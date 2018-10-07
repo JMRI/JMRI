@@ -2,7 +2,7 @@ package jmri.jmrit.operations.rollingstock.engines.tools;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -25,7 +25,7 @@ import org.junit.Test;
  * @author	Dan Boudreau Copyright (C) 2010
  *
  */
-public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
+public class EngineAttributeEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testEngineAttributeEditFrameModel() {
@@ -76,7 +76,7 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
 
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
 
         loadEngines();
@@ -166,7 +166,7 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
 
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

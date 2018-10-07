@@ -531,12 +531,12 @@
                                         <limit>
                                             <counter>LINE</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.35</minimum>
+                                            <minimum>0.40</minimum>
                                         </limit>
                                         <limit>
                                             <counter>CLASS</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.75</minimum>
+                                            <minimum>0.80</minimum>
                                         </limit>
                                     </limits>
                                 </rule>

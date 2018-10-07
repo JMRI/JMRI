@@ -50,6 +50,7 @@ import org.junit.runners.Suite;
         jmri.jmrit.speedometer.PackageTest.class,
         jmri.jmrit.analogclock.PackageTest.class,
         jmri.jmrit.revhistory.PackageTest.class,
+        jmri.jmrit.sample.PackageTest.class,
         jmri.jmrit.sound.PackageTest.class,
         jmri.jmrit.vsdecoder.PackageTest.class,
         jmri.jmrit.simplelightctrl.PackageTest.class,

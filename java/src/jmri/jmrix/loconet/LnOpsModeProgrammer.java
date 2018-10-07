@@ -242,7 +242,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
             // SV2 mode
             log.warn("confirm CV \"{}\" addr:{} in SV2 mode not implemented", CV, mAddress);
-            pL.programmingOpReply(0, ProgListener.UnknownError);
+            notifyProgListenerEnd(pL, 0, ProgListener.UnknownError);
         } else {
             // DCC ops mode
             mSlotMgr.confirmCVOpsMode(CV, val, pL, mAddress, mLongAddr);
@@ -278,7 +278,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
                 ProgListener temp = p;
                 p = null;
-                temp.programmingOpReply(val, code);
+                notifyProgListenerEnd(temp, val, code);
 
                 return;
             }
@@ -296,7 +296,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
             ProgListener temp = p;
             p = null;
-            temp.programmingOpReply(val, code);
+            notifyProgListenerEnd(temp, val, code);
 
 
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
@@ -335,7 +335,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
                 }
                 ProgListener temp = p;
                 p = null;
-                temp.programmingOpReply(val, code);
+                notifyProgListenerEnd(temp, val, code);
             }
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
             // see if reply to LNSV 1 or LNSV2 request
@@ -362,7 +362,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
                 ProgListener temp = p;
                 p = null;
-                temp.programmingOpReply(val, code);
+                notifyProgListenerEnd(temp, val, code);
             }
         }
     }
@@ -544,7 +544,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             bdOpSwAccessTimer = new javax.swing.Timer(1000, (ActionEvent e) -> {
                 ProgListener temp = p;
                 p = null;
-                temp.programmingOpReply(0, ProgListener.FailedTimeout);
+                notifyProgListenerEnd(temp, 0, ProgListener.FailedTimeout);
             });
         bdOpSwAccessTimer.setInitialDelay(1000);
         bdOpSwAccessTimer.setRepeats(false);

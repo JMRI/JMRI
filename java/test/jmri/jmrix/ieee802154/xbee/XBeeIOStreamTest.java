@@ -7,6 +7,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -50,6 +51,14 @@ public class XBeeIOStreamTest {
    @Test
    public void checkDisabled(){
        Assert.assertFalse(a.getDisabled());
+   }
+
+   @Test
+   @Ignore("data send occurs, but tearDown closes the pipes to quickly")
+   public void checkSend() throws java.io.IOException {
+       a.configure(); // start the send and receive threads.
+       a.getOutputStream().writeChars("Hello World");
+       jmri.util.JUnitUtil.waitFor(()->{ return tc.dataSent; });
    }
 
     @Before

@@ -2,7 +2,7 @@ package jmri.jmrit.operations.automation;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
@@ -12,7 +12,7 @@ import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
-public class AutomationCopyFrameTest extends OperationsSwingTestCase {
+public class AutomationCopyFrameTest extends OperationsTestCase {
 
     @Test
     public void testFrameCreation() {
@@ -93,14 +93,14 @@ public class AutomationCopyFrameTest extends OperationsSwingTestCase {
     // Ensure minimal setup for log4J
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
     }
 
     // The minimal setup for log4J
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

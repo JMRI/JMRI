@@ -1,10 +1,7 @@
 package jmri.jmrix.loconet;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -106,6 +103,12 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
     }
 
+    @Test
+    @Override
+    @Ignore("requires work for LocoNet turnouts")
+    public void testDirectFeedback() throws jmri.JmriException {
+    }
+
     // LnTurnout test for incoming status message
     @Test
     public void testLnTurnoutStatusMsg() {
@@ -136,7 +139,6 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
     public void testLnTurnoutExactFeedback() {
         LocoNetMessage m;
         // prepare a specific test
-        t = new LnTurnout("L", 21, lnis); // note different address; we have traces for this address
         t.setBinaryOutput(true);
         t.setCommandedState(jmri.Turnout.CLOSED);
         t.setFeedbackMode(jmri.Turnout.EXACT);
@@ -145,6 +147,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         Assert.assertEquals("KnownState after set CLOSED is UNKNOWN", jmri.Turnout.UNKNOWN, t.getKnownState());
 
         // notify the Ln of first feedback - AUX is thrown, so moved off 
+        log.debug("notify of 1st feedback");
         m = new LocoNetMessage(4);
         m.setOpCode(0xb1);
         m.setElement(1, 0x14);
@@ -155,6 +158,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         Assert.assertEquals("KnownState after AUX report THROWN is INCONSISTENT", jmri.Turnout.INCONSISTENT, t.getKnownState());
 
         // notify the Ln of second feedback - SWITCH is closed, so moved on
+        log.debug("notify of 2nd feedback");
         m = new LocoNetMessage(4);
         m.setOpCode(0xb1);
         m.setElement(1, 0x14);
@@ -269,7 +273,6 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
     // test that only one message is sent when binaryOutput is set
     @Test
     public void testBasicSet() throws InterruptedException {
-        t = new LnTurnout("L", 121, lnis);
         t.setBinaryOutput(true);
         t.setCommandedState(jmri.Turnout.THROWN);
 
@@ -281,7 +284,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         // check for messages
         Assert.assertTrue("just one messages", lnis.outbound.size() == 1);
         Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
-                "B0 78 10 00");  // THROWN/ON loconet message
+                "B0 14 10 00");  // THROWN/ON loconet message
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
     }
 

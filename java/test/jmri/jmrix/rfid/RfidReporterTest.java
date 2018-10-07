@@ -1,56 +1,40 @@
 package jmri.jmrix.rfid;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import org.junit.*;
 
 /**
  * RfidReporterTest.java
  *
  * Description:	tests for the jmri.jmrix.rfid.RfidReporter class
  *
- * @author	Paul Bender
+ * @author	Paul Bender Copyright (C) 2016,2018
  */
-public class RfidReporterTest extends TestCase {
+public class RfidReporterTest extends jmri.implementation.AbstractReporterTestBase {
 
+    @Override
+    protected Object generateObjectToReport(){
+        return new jmri.implementation.DefaultIdTag("ID0413276BC1", "Test Tag");
+    }
+
+    @Test
     public void test1ParamCtor() {
        RfidReporter s = new RfidReporter("FRA");
        Assert.assertNotNull("exists", s);
     }
-    public void test2ParamCtor() {
-       RfidReporter s = new RfidReporter("FRA", "Test");
-       Assert.assertNotNull("exists", s);
-    }
-
-    // from here down is testing infrastructure
-    public RfidReporterTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", RfidReporterTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(RfidReporterTest.class);
-        return suite;
-    }
 
     // The minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
-        super.setUp();
+        r = new RfidReporter("FRA", "Test");
     }
 
     @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-        jmri.util.JUnitUtil.tearDown();
+    @After
+    public void tearDown() {
+        r = null;
+    	jmri.util.JUnitUtil.tearDown();
     }
 
 }

@@ -832,7 +832,7 @@ public class PrintLocationsAction extends AbstractAction {
 
     private String getTrackShipLoads(Track track) {
         // only staging has the ship load control
-        if (!track.getTrackType().equals(Track.STAGING)) {
+        if (!track.isStaging()) {
             return "";
         }
         if (track.getShipLoadOption().equals(Track.ALL_LOADS)) {
@@ -863,8 +863,8 @@ public class PrintLocationsAction extends AbstractAction {
 
     private String getCarOrder(Track track) {
         // only yards and interchanges have the car order option
-        if (track.getTrackType().equals(Track.SPUR) ||
-                track.getTrackType().equals(Track.STAGING) ||
+        if (track.isSpur() ||
+                track.isStaging() ||
                 track.getServiceOrder().equals(Track.NORMAL)) {
             return "";
         }
@@ -1035,7 +1035,7 @@ public class PrintLocationsAction extends AbstractAction {
 
     private String getSchedule(Track track) {
         // only spurs have schedules
-        if (!track.getTrackType().equals(Track.SPUR) || track.getSchedule() == null) {
+        if (!track.isSpur() || track.getSchedule() == null) {
             return "";
         }
         StringBuffer buf = new StringBuffer(TAB +
@@ -1061,8 +1061,7 @@ public class PrintLocationsAction extends AbstractAction {
     }
     
     private String getStagingInfo(Track track) {
-        // only spurs have schedules
-        if (!track.getTrackType().equals(Track.STAGING)) {
+        if (!track.isStaging()) {
             return "";
         }
 

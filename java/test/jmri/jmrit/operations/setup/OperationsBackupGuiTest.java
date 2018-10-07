@@ -2,7 +2,7 @@ package jmri.jmrit.operations.setup;
 
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assume;
@@ -25,18 +25,18 @@ import org.junit.Test;
  *
  * @author Gregory Madsen Copyright (C) 2012
  */
-public class OperationsBackupGuiTest extends OperationsSwingTestCase {
+public class OperationsBackupGuiTest extends OperationsTestCase {
 
     // Ensure minimal setup for log4J
     @Before
     @Override
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
     }
 
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 
