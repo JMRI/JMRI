@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.*;
 
-import javax.annotation.Nonnull
+import javax.annotation.Nonnull;
 
 import jmri.util.exceptionhandler.UncaughtExceptionHandler;
 
