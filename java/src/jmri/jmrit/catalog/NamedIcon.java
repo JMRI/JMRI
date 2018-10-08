@@ -166,6 +166,11 @@ public class NamedIcon extends ImageIcon {
         this(pUrl.toString(), pName);
     }
 
+    /**
+     * Create a named icon from an Image. N.B. NamedIcon's create
+     * using this constructor can NOT be animated GIFs
+     * @param im Image to use
+     */
     public NamedIcon(Image im) {
         super(im);
         mDefaultImage = getImage();
@@ -278,7 +283,7 @@ public class NamedIcon extends ImageIcon {
         private int mWidth;
         private IIOImage mFrames[] = null;
         private IIOMetadata mStreamMd;
-    };
+    }
 
     /*
      public Image getOriginalImage() {
