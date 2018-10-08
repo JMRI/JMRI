@@ -13,6 +13,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import jmri.ConfigureManager;
+import jmri.jmrix.AbstractStreamConnectionConfig;
 import jmri.jmrix.AbstractStreamPortController;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
@@ -46,11 +47,14 @@ public class StreamConfigPane extends JmrixConfigPane {
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(StreamConfigPane.class);
 
+    private XBeeNode confNode = null;
+
     /*
      * Create panel is seperated off from the instance and synchronized, so that only
      * one connection can be configured at once, this prevents multiple threads from
      * trying to create the same panel at the same time.
      */
+
     /**
      * Create a new connection configuration panel.
      *
@@ -99,9 +103,13 @@ public class StreamConfigPane extends JmrixConfigPane {
         ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cmOD != null) {
             cmOD.deregister(confPane);
-            cmOD.deregister(confPane.ccCurrent);
+            //cmOD.deregister(confPane.ccCurrent);
         }
         InstanceManager.getDefault(ConnectionConfigManager.class).remove(confPane.ccCurrent);
+    }
+
+    public void setXBeeNode(XBeeNode node){
+       confNode = node;
     }
 
     private boolean isDirty = false;
@@ -272,8 +280,13 @@ public class StreamConfigPane extends JmrixConfigPane {
             }
         }
         if (old != this.ccCurrent) {
-            this.ccCurrent.register();
+              // store the connection config with the node.
+              if(ccCurrent instanceof AbstractStreamConnectionConfig) {
+                 confNode.connectPortController((AbstractStreamConnectionConfig)ccCurrent); 
+              // this.ccCurrent.register();
+              }
         }
+
         validate();
 
         repaint();
