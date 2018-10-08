@@ -56,8 +56,7 @@ abstract public class AbstractReporterTestBase {
 
     @Test
     public void testGetBeanType(){
-         AbstractRailComReporter t = new AbstractRailComReporter("IR1");
-         Assert.assertEquals("bean type",t.getBeanType(),Bundle.getMessage("BeanNameReporter"));
+         Assert.assertEquals("bean type",r.getBeanType(),Bundle.getMessage("BeanNameReporter"));
     }
 
     @Before
