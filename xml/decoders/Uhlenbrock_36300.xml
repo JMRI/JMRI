@@ -410,21 +410,54 @@
       </variable>
       <variable item="Smoke generator option 3" CV="130" mask="XXVVVVVV" default="0">
         <decVal max="63"/>
-        <label>Smoke gen. accel. time</label>
-        <label xml:lang="de">Rauchgen. Anfahrzeit</label>
-        <tooltip>value * 0.2s</tooltip>
-        <tooltip xml:lang="de">Wert * 0.2s</tooltip>
+        <label>Smoke gen. duration (T2)</label>
+        <label xml:lang="de">Rauchzeit (T2)</label>
+        <tooltip>Value * 0.2s + Start delay (T1)</tooltip>
+        <tooltip xml:lang="de">Wert * 0.2s + Anfahrwartezeit (T1)</tooltip>
       </variable>
-      <!-- changed values for PWM-Anfahren -->
+      <!-- specific 363x values for CV 131 PWM-Anfahren -->
       <variable item="Smoke generator option 4" CV="131" mask="XXXVVVVV" default="31">
         <decVal max="31"/>
         <label>Smoke gen. control PWM - Start</label>
         <label xml:lang="de">Rauchgen. PWM-Anfahren</label>
       </variable>
-      <variable item="Smoke generator option 7" CV="131" mask="VVVXXXXX" default="64">
-        <decVal max="128"/>
-        <label>Smoke gen. Start delay</label>
-        <label xml:lang="de">Rauchgen. Anfahrwartezeit</label>
+      <variable item="Smoke generator option 7" CV="131" mask="VVVXXXXX" default="4">
+        <enumVal>
+          <enumChoice choice="0s">
+            <choice>0 sec.</choice>
+            <choice xml:lang="de">0 Sek.</choice>
+          </enumChoice>
+          <enumChoice choice="1s">
+            <choice>1 sec.</choice>
+            <choice xml:lang="de">1 Sek.</choice>
+          </enumChoice>
+          <enumChoice choice="2s">
+            <choice>2 sec.</choice>
+            <choice xml:lang="de">2 Sek.</choice>
+          </enumChoice>
+          <enumChoice choice="3s" value="3">
+            <choice>3 sec.</choice>
+            <choice xml:lang="de">3 Sek.</choice>
+          </enumChoice>
+          <enumChoice choice="4s">
+            <choice>4 sec.</choice>
+            <choice xml:lang="de">4 Sek.</choice>
+          </enumChoice>
+          <enumChoice choice="5s">
+            <choice>5 sec.</choice>
+            <choice xml:lang="de">5 Sek.</choice>
+          </enumChoice>
+          <enumChoice choice="6s">
+            <choice>6 sec.</choice>
+            <choice xml:lang="de">6 Sek.</choice>
+          </enumChoice>
+          <enumChoice choice="7s">
+            <choice>7 sec.</choice>
+            <choice xml:lang="de">7 Sek.</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Smoke generator - Start delay (T1)</label>
+        <label xml:lang="de">Rauchgen. - Anfahrwartezeit (T1)</label>
       </variable>
       <variable item="Smoke generator option 5" CV="132" default="16">
         <decVal max="32"/>

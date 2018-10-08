@@ -34,7 +34,7 @@
     </revision>
   <!-- Uhlenbrock Decoder Configuration CV 62 - error register -->
   </revhistory>
-  <variable item="Error register" CV="62" default="0" readOnly="yes">
+  <variable item="Error register" CV="62" default="0">
 	<enumVal>
 	  <enumChoice choice="No error" value="0">
             <choice>No error</choice>
