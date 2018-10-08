@@ -47,11 +47,11 @@
             <choice>Range I (CVs 900-939)</choice>
             <choice xml:lang="de">Bereich I (CVs 900-939)</choice>
           </enumChoice>
-          <enumChoice choice="Range II (CVs 940-979)">
+          <enumChoice choice="Range II (CVs 940-979)" value="2">
             <choice>Range II (CVs 940-979)</choice>
             <choice xml:lang="de">Bereich II (CVs 940-979)</choice>
           </enumChoice>
-          <enumChoice choice="Range III (CVs 980-1019)">
+          <enumChoice choice="Range III (CVs 980-1019)" value="3">
             <choice>Range III (CVs 980-1019)</choice>
             <choice xml:lang="de">Bereich III (CVs 980-1019)</choice>
           </enumChoice>

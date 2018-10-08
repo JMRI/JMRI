@@ -19,7 +19,7 @@
             <authorinitials>EB</authorinitials>
             <revremark>Initial version as separate file, taken from Uhlenbrock_32300.xml</revremark>
         </revision>
-        <!-- Valid only for certain Uhlenbrock decoders with IntelliSound Module,
+        <!-- Valid only for certain Uhlenbrock decoders with IntelliSound3 Module,
              such as 32300, 36320, 36360 (non exhaustive list) -->
     </revhistory>
 

@@ -31,7 +31,7 @@
       <authorinitials>EB</authorinitials>
       <revremark>Initial version as separate file, taken from Uhlenbrock_32300.xml</revremark>
     </revision>
-      <!-- Valid only for certain Uhlenbrock decoders with IntelliSound Module,
+      <!-- Valid only for certain Uhlenbrock decoders with IntelliSound3 Module,
            such as 32300, 36320, 36360 (non exhaustive list) -->
   </revhistory>
     <variable item="SUSI-range" CV="897.0" default="1" tooltip="Will not read/write properly if multiple SUSI modules attached">
@@ -41,11 +41,11 @@
                 <choice>Range I (CVs 900-939)</choice>
                 <choice xml:lang="de">Bereich I (CVs 900-939)</choice>
             </enumChoice>
-            <enumChoice choice="Range II (CVs 940-979)">
+            <enumChoice choice="Range II (CVs 940-979)" value="2">
                 <choice>Range II (CVs 940-979)</choice>
                 <choice xml:lang="de">Bereich II (CVs 940-979)</choice>
             </enumChoice>
-            <enumChoice choice="Range III (CVs 980-1019)">
+            <enumChoice choice="Range III (CVs 980-1019)" value="3">
                 <choice>Range III (CVs 980-1019)</choice>
                 <choice xml:lang="de">Bereich III (CVs 980-1019)</choice>
             </enumChoice>
