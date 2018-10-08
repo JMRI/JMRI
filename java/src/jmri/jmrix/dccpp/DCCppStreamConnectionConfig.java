@@ -48,8 +48,7 @@ public class DCCppStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnec
     @Override
     protected void setInstance() {
         if (adapter == null) {
-            //adapter = new DCCppStreamPortController();
+            adapter = new DCCppStreamPortController();
         }
     }
-
 }

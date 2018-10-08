@@ -24,6 +24,10 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
         super(new SprogSystemConnectionMemo(SprogConstants.SprogMode.OPS), in, out, pname);
     }
 
+    public SprogCSStreamPortController() {
+        super(new SprogSystemConnectionMemo(SprogConstants.SprogMode.OPS));
+    }
+
     @Override
     public void configure() {
         log.debug("configure() called.");

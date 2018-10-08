@@ -48,7 +48,7 @@ public class LnStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnectio
     @Override
     protected void setInstance() {
         if (adapter == null) {
-            //adapter = new LnStreamPortController();
+            adapter = new LnStreamPortController();
         }
     }
 
