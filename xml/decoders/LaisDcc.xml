@@ -16,6 +16,7 @@
   <version author="Alain Le Marchand" version="2" lastUpdated="20170408"/>
   <version author="Stanley@laisdcc.com" version="3" lastUpdated="20180103"/>
   <version author="Alain Le Marchand" version="4" lastUpdated="20180106"/>
+  <version author="Alain Carasso" version="5" lastUpdated="20181008"/>
   <!-- Version 1: original version from LaisDCC website                                  -->
   <!-- Version 2: updated low and high values for decoder version, based on real models -->
   <!--            Updated manufacturer name to "LaisDCC" - with capital lettter for DCC -->
@@ -35,8 +36,9 @@
   <!--            - Removed CV15 CV lock: used for dynamic programming                  -->
   <!--              not as permanent value. Not in JMRI to avoid errors.                -->
   <!--            Added 860010/LaisDcc-Z2                                               -->
+  <!-- Version 5: highversionID modified up to 6:                                       -->
   <decoder>
-    <family name="Locomotive Decoders" mfg="LaisDCC" comment="LaisDCC decoder range" lowVersionID="02" highVersionID="04">
+    <family name="Locomotive Decoders" mfg="LaisDCC" comment="LaisDCC decoder range" lowVersionID="02" highVersionID="06">
       <model model="860010/LaisDcc-Z2" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860010" formFactor="Z" connector="Wires" comment="Z/N scale, wires NEM651">
         <output name="1" label="White|Pin 5" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow|Pin 6" connection="wire" maxcurrent="100 mA"/>
