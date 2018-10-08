@@ -278,7 +278,7 @@ public class NamedIcon extends ImageIcon {
     private GIFMetadataImages mGifInfo = null;
     private final Image mDefaultImage;
 
-    private class GIFMetadataImages {
+    private static class GIFMetadataImages {
         private int mHeight;
         private int mWidth;
         private IIOImage mFrames[] = null;
