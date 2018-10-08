@@ -15,7 +15,7 @@
     <revhistory xmlns="http://docbook.org/ns/docbook">
         <revision>
             <revnumber>1</revnumber>
-            <date>2018-09-29</date>
+            <date>2018-10-08</date>
             <authorinitials>EB</authorinitials>
             <revremark>Initial version as separate file, taken from Uhlenbrock_32300.xml</revremark>
         </revision>
@@ -97,6 +97,7 @@
                 <label>
                     <text>CVs for SUSI range I :</text>
                     <text xml:lang="de">CVs für SUSI Adressbereich I :</text>
+                    <text xml:lang="nl">CV's voor SUSI-adresbereik I :</text>
                 </label>
             </column>
         </group>
@@ -110,6 +111,7 @@
                 <label>
                     <text>CVs for SUSI range II :</text>
                     <text xml:lang="de">CVs für SUSI Adressbereich II :</text>
+                    <text xml:lang="nl">CV's voor SUSI-adresbereik II :</text>
                 </label>
             </column>
         </group>
@@ -123,6 +125,7 @@
                 <label>
                     <text>CVs for SUSI range III :</text>
                     <text xml:lang="de">CVs für SUSI Adressbereich III :</text>
+                    <text xml:lang="nl">CV's voor SUSI-adresbereik III :</text>
                 </label>
             </column>
         </group>
