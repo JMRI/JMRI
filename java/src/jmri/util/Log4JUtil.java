@@ -208,7 +208,7 @@ public class Log4JUtil {
      * @param len The number of stack trace entries to keep.
      * @return THe original object with truncated stack trace
      */
-    public static <T extends Throwable> @Nonnull T shortenStacktrace(@Nonnull T t, int len) {
+    public  @Nonnull static <T extends Throwable> T shortenStacktrace(@Nonnull T t, int len) {
         StackTraceElement[]	originalTrace = t.getStackTrace();
         StackTraceElement[] newTrace = new StackTraceElement[len];
         for (int i = 0; i < len; i++) newTrace[i] = originalTrace[i];
