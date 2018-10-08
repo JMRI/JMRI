@@ -88,7 +88,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         // first, remove listeners from the individual objects
         removePropertyChangeTrains();
 
-        synchronized (sysList) {
+        synchronized (this) {
             if (_sort == SORTBYID) {
                 sysList = trainManager.getTrainsByIdList();
             } else {
