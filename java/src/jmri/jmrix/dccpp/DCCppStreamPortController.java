@@ -17,6 +17,10 @@ public class DCCppStreamPortController extends jmri.jmrix.AbstractStreamPortCont
         super(new DCCppSystemConnectionMemo(), in, out, pname);
     }
 
+    public DCCppStreamPortController() {
+        super(new DCCppSystemConnectionMemo());
+    }
+
     @Override
     public void configure() {
         // connect to a packetizing traffic controller

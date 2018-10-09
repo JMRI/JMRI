@@ -24,6 +24,10 @@ public class RfidStreamPortController extends AbstractStreamPortController imple
         super(new StandaloneSystemConnectionMemo(), in, out, pname);
     }
 
+    public RfidStreamPortController() {
+        super(new StandaloneSystemConnectionMemo());
+    }
+
     @Override
     public void configure() {
         log.debug("configure() called.");

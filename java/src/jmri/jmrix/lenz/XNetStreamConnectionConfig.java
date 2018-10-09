@@ -48,7 +48,7 @@ public class XNetStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnect
     @Override
     protected void setInstance() {
         if (adapter == null) {
-            //adapter = new XNetStreamPortController();
+            adapter = new XNetStreamPortController();
         }
     }
 

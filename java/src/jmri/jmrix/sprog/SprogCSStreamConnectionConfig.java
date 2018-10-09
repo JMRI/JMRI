@@ -48,7 +48,7 @@ public class SprogCSStreamConnectionConfig extends jmri.jmrix.AbstractStreamConn
     @Override
     protected void setInstance() {
         if (adapter == null) {
-            //adapter = new SProgCSStreamPortController();
+            adapter = new SprogCSStreamPortController();
         }
     }
 
