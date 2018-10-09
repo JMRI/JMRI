@@ -86,6 +86,9 @@ public class Car extends RollingStock {
         car.setOwner(getOwner());
         car.setRoadName(getRoadName());
         car.setTypeName(getTypeName());
+        car.setCaboose(isCaboose());
+        car.setFred(hasFred());
+        car.setPassenger(isPassenger());
         car.loaded = true;
         return car;
     }
