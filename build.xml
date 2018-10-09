@@ -321,7 +321,7 @@
 
     <!-- Java Code Coverage -->
     <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
-        <classpath path="lib/jacocoant.jar" />
+        <classpath path="lib/org.jacoco.ant-0.8.2-nodeps.jar" />
     </taskdef>
 
     <!-- fileset for the jacoco targets. -->

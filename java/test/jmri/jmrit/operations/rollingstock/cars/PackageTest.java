@@ -27,7 +27,8 @@ import org.junit.runners.Suite;
         CarsSetFrameActionTest.class,
         CarRosterMenuTest.class,
         CarsTableModelTest.class,
-        jmri.jmrit.operations.rollingstock.cars.tools.PackageTest.class
+        jmri.jmrit.operations.rollingstock.cars.tools.PackageTest.class,
+        BundleTest.class,
 })
 
 /**
