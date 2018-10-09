@@ -176,7 +176,7 @@ public class JUnitOperationsUtil {
         locationNorthIndustries.setSwitchListEnabled(true);
         lmanager.register(locationNorthIndustries);
 
-        Track l20yard1 = new Track("2s1", "NI Yard", Track.YARD, locationNorthIndustries);
+        Track l20yard1 = new Track("20s1", "NI Yard", Track.YARD, locationNorthIndustries);
         l20yard1.setLength(432);
         l20yard1.setCommentBoth("Test comment for NI Yard drops and pulls");
         l20yard1.setCommentSetout("Test comment for NI Yard drops only");

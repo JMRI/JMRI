@@ -2826,7 +2826,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Location l3 = lmanager.getLocationById("3"); // staging
         Track l1s1 = l1.getTrackById("1s1");
         Track l1s2 = l1.getTrackById("1s2");
-        Track l2s1 = l2.getTrackById("2s1");
+        Track l2s1 = l2.getTrackById("20s1");
         Track l3s1 = l3.getTrackById("3s1");
         Track l3s2 = l3.getTrackById("3s2");
         Route route1 = rmanager.getRouteById("1");
@@ -3058,7 +3058,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // provide a destination for the car with FRED out of staging
         Location locationNI = lmanager.getLocationById("20");
-        Track yardNI = locationNI.getTrackById("2s1");
+        Track yardNI = locationNI.getTrackById("20s1");
 
         // car with FRED and no changes in trains route, has to go terminal
         train1.reset();
@@ -4005,7 +4005,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Location l3 = lmanager.getLocationById("3");
         Track l1s1 = l1.getTrackById("1s1");
         Track l1s2 = l1.getTrackById("1s2");
-        Track l2s1 = l2.getTrackById("2s1");
+        Track l2s1 = l2.getTrackById("20s1");
         Track l3s1 = l3.getTrackById("3s1");
         Track l3s2 = l3.getTrackById("3s2");
         Route route1 = rmanager.getRouteById("1");
@@ -4607,7 +4607,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Location l3 = lmanager.getLocationById("3");
         Track l1s1 = l1.getTrackById("1s1");
 
-        Track l2s1 = l2.getTrackById("2s1");
+        Track l2s1 = l2.getTrackById("20s1");
         Track l3s1 = l3.getTrackById("3s1");
         Track l3s2 = l3.getTrackById("3s2");
 
@@ -4756,7 +4756,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Track northEnd3 = northEndStaging.addTrack("North End 3", Track.STAGING);
         northEnd3.setLength(500);
 
-        Track yard = northIndustries.getTrackById("2s1");
+        Track yard = northIndustries.getTrackById("20s1");
 
         // create a route that returns to staging
         Route route = rmanager.newRoute("NorthEnd-NI-NorthEnd");
@@ -4826,7 +4826,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Track northEndStaging1 = northEndStaging.getTrackByName("North End 1", Track.STAGING);
 
         Location northIndustries = lmanager.getLocationById("20");
-        Track niYard = northIndustries.getTrackById("2s1");
+        Track niYard = northIndustries.getTrackById("20s1");
 
         Location southEndStaging = lmanager.getLocationById("3");
         Track southEndStaging1 = southEndStaging.getTrackByName("South End 1", Track.STAGING);
@@ -4924,7 +4924,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Location northIndustries = lmanager.getLocationById("20");
 
         Track northEndStaging1 = northEndStaging.getTrackById("1s1");
-        Track yardNI = northIndustries.getTrackById("2s1");
+        Track yardNI = northIndustries.getTrackById("20s1");
 
         // create a route that returns to staging
         Route route = rmanager.newRoute("NorthEnd-NI-NorthEnd");
@@ -5004,7 +5004,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Location northIndustries = lmanager.getLocationById("20");
         Location southEndStaging = lmanager.getLocationById("3");
 
-        Track yardNI = northIndustries.getTrackById("2s1");
+        Track yardNI = northIndustries.getTrackById("20s1");
         Track southEndStaging1 = southEndStaging.getTrackById("3s1");
         Track southEndStaging2 = southEndStaging.getTrackById("3s2");
 
@@ -5676,7 +5676,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         southEndStaging1.addLoadName("Flour");
 
         Location locationNI = lmanager.getLocationById("20");
-        Track yardNI = locationNI.getTrackById("2s1");
+        Track yardNI = locationNI.getTrackById("20s1");
 
         Car c1 = cmanager.getByRoadAndNumber("CP", "C10099"); // on staging track north end 1
         Car c2 = cmanager.getByRoadAndNumber("CP", "C20099"); // on staging track north end 1
@@ -5771,7 +5771,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Track northEndStaging2 = locationNorthEnd.getTrackById("1s2");
 
         Location locationNI = lmanager.getLocationById("20");
-        Track yardNI = locationNI.getTrackById("2s1");
+        Track yardNI = locationNI.getTrackById("20s1");
 
         Location locationSouthEnd = lmanager.getLocationById("3");
         Track southEndStaging1 = locationSouthEnd.getTrackById("3s1");
@@ -5853,7 +5853,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Track northEndStaging1 = locationNorthEnd.getTrackById("1s1");
 
         Location locationNI = lmanager.getLocationById("20");
-        Track yardNI = locationNI.getTrackById("2s1");
+        Track yardNI = locationNI.getTrackById("20s1");
         // eliminate NI yard as a possible destination
         yardNI.deleteTypeName("Boxcar");
 
@@ -6065,7 +6065,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Track northEndStaging1 = locationNorthEnd.getTrackById("1s1");
 
         Location locationNI = lmanager.getLocationById("20");
-        Track yardNI = locationNI.getTrackById("2s1");
+        Track yardNI = locationNI.getTrackById("20s1");
 
         Location locationSouthEnd = lmanager.getLocationById("3");
         Track southEndStaging1 = locationSouthEnd.getTrackById("3s1");
@@ -6142,7 +6142,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         southEndStaging1.addLoadName("Steel");
 
         Location locationNI = lmanager.getLocationById("20");
-        Track yardNI = locationNI.getTrackById("2s1");
+        Track yardNI = locationNI.getTrackById("20s1");
 
         // cars in staging have "E" loads, inclusing caboose
         Car c1 = cmanager.getByRoadAndNumber("CP", "C10099"); // on staging track north end 1
