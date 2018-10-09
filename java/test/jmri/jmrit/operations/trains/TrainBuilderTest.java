@@ -12627,9 +12627,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue(train.isBuilt());
 
         // confirm that car destination is correct
-        Assert.assertEquals("car destination is now the yard", midtownYard, c1.getDestinationTrack());
-        // passenger car is being routed to final destination
-        Assert.assertEquals("car final destination", eastendSpur1, c1.getFinalDestinationTrack());
+        Assert.assertEquals("car destination", eastendSpur1, c1.getDestinationTrack());
 
         // Caboose or car with FRED are exceptions to the through car restriction
         c1.setPassenger(false);

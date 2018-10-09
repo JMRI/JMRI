@@ -130,7 +130,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             log.debug("Routing using train ({})", train.getName());
         }
         // Has the car arrived at the car's final destination?
-        if (car.getLocation().equals(car.getFinalDestination()) &&
+        if (!car.isCaboose() && !car.hasFred() && car.getLocation().equals(car.getFinalDestination()) &&
                 (car.getTrack().equals(car.getFinalDestinationTrack()) || car.getFinalDestinationTrack() == null)) {
             log.debug("Car ({}) has arrived at final destination", car);
             _status = STATUS_CAR_AT_DESINATION;
