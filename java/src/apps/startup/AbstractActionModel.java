@@ -43,11 +43,13 @@ public abstract class AbstractActionModel implements StartupModel {
 
     @Override
     public void setName(@Nonnull String n) {
+        log.debug("setName(\"{}\")", n);
         // can set className to null if no class found for n
         this.className = StartupActionModelUtil.getDefault().getClassName(n);
     }
 
     public void setClassName(@Nonnull String n) {
+        log.debug("setClassName(\"{}\")", n);
         Objects.requireNonNull(n, "Class name cannot be null");
         this.className = n;
     }

@@ -148,7 +148,8 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         List<String> sortedList = l.getSystemNameList();
         List<Sensor> beanList = l.getNamedBeanList();
         SortedSet<Sensor> beanSet = l.getNamedBeanSet();
-        String[] sortedArray = l.getSystemNameArray();
+        String[] sortedArray = l.getSystemNameArray();  // deprecated, but we test until removed
+        jmri.util.JUnitAppender.suppressWarnMessage("Manager#getSystemNameArray() is deprecated");
         
         Assert.assertEquals("ordered list length", 2, orderedList.size());
         Assert.assertEquals("ordered list 1st", "IS4", orderedList.get(0));

@@ -57,7 +57,7 @@ public abstract class TrainCustomCommon {
      *
      */
     @SuppressFBWarnings(value = "UW_UNCOND_WAIT")
-    public void addCVSFile(File csvFile) {
+    public synchronized void addCVSFile(File csvFile) {
         // Ignore null files...
         if (csvFile == null || !excelFileExists()) {
             return;
@@ -78,7 +78,7 @@ public abstract class TrainCustomCommon {
         waitTimeSeconds = getFileCount() * Control.excelWaitTime;
         alive = true;
 
-        File csvNamesFile = new File(InstanceManager.getDefault(OperationsManager.class).getFile(getDirectoryName()), csvNamesFileName);
+        File csvNamesFile = new File(InstanceManager.getDefault(OperationsManager.class).getFile(getDirectoryName()), getCommonFileName());
 
         try {
             FileUtil.appendTextToFile(csvNamesFile, csvFile.getAbsolutePath());
@@ -95,7 +95,7 @@ public abstract class TrainCustomCommon {
      * @return True if successful.
      */
     @SuppressFBWarnings(value = "UW_UNCOND_WAIT")
-    public boolean process() {
+    public synchronized boolean process() {
 
         // check to see it the Excel program is available
         if (!excelFileExists()) {
@@ -198,7 +198,7 @@ public abstract class TrainCustomCommon {
             log.debug("Waiting for Excel program to complete");
             status = process.waitFor(waitTimeSeconds, TimeUnit.SECONDS);
             if (file.exists()) {
-                log.error("Common file not deleted!");
+                log.error("Common file ({}) not deleted! Wait time {} seconds", file.getPath(), waitTimeSeconds);
                 return false;
             }
             log.debug("Excel program complete!");

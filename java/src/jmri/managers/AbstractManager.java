@@ -516,11 +516,13 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     }
 
     /** {@inheritDoc} */
+    @Override
     public void addDataListener(ManagerDataListener<E> e) {
         if (e != null) listeners.add(e);
     }
 
     /** {@inheritDoc} */
+    @Override
     public void removeDataListener(ManagerDataListener<E> e) {
         if (e != null) listeners.remove(e);
     }
@@ -530,6 +532,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     private boolean muted = false;
     
     /** {@inheritDoc} */
+    @Override
     public void setDataListenerMute(boolean m) {
         if (muted && !m) {
             // send a total update, as we haven't kept track of specifics

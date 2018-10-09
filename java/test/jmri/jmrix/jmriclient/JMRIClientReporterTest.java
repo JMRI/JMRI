@@ -1,10 +1,7 @@
 package jmri.jmrix.jmriclient;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import org.junit.*;
 
 /**
  * JMRIClientReporterTest.java
@@ -13,9 +10,17 @@ import org.junit.Assert;
  *
  * @author	Bob Jacobsen
  */
-public class JMRIClientReporterTest extends TestCase {
+public class JMRIClientReporterTest extends jmri.implementation.AbstractReporterTestBase{
 
-    public void testCtor() {
+    @Override
+    protected Object generateObjectToReport(){
+        return new jmri.implementation.DefaultIdTag("ID0413276BC1", "Test Tag");
+    }
+
+    @Before
+    @Override
+    public void setUp() {
+        JUnitUtil.setUp();
         JMRIClientTrafficController tc = new JMRIClientTrafficController() {
             @Override
             public void sendJMRIClientMessage(JMRIClientMessage m, JMRIClientListener reply) {
@@ -23,35 +28,12 @@ public class JMRIClientReporterTest extends TestCase {
                 // connection during test.
             }
         };
-        JMRIClientReporter m = new JMRIClientReporter(3, new JMRIClientSystemConnectionMemo(tc));
-        Assert.assertNotNull(m);
-    }
-
-    // from here down is testing infrastructure
-    public JMRIClientReporterTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", JMRIClientReporterTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JMRIClientReporterTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
-        JUnitUtil.setUp();
+        r = new JMRIClientReporter(3, new JMRIClientSystemConnectionMemo(tc));
     }
 
     @Override
-    protected void tearDown() {
+    public void tearDown() {
+	r = null;
         JUnitUtil.tearDown();
     }
 

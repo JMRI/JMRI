@@ -88,17 +88,19 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         // first, remove listeners from the individual objects
         removePropertyChangeTrains();
 
-        if (_sort == SORTBYID) {
-            sysList = trainManager.getTrainsByIdList();
-        } else {
-            sysList = trainManager.getTrainsByTimeList();
-        }
+        synchronized (this) {
+            if (_sort == SORTBYID) {
+                sysList = trainManager.getTrainsByIdList();
+            } else {
+                sysList = trainManager.getTrainsByTimeList();
+            }
 
-        if (!isShowAll()) {
-            // filter out trains not checked
-            for (int i = sysList.size() - 1; i >= 0; i--) {
-                if (!sysList.get(i).isBuildEnabled()) {
-                    sysList.remove(i);
+            if (!isShowAll()) {
+                // filter out trains not checked
+                for (int i = sysList.size() - 1; i >= 0; i--) {
+                    if (!sysList.get(i).isBuildEnabled()) {
+                        sysList.remove(i);
+                    }
                 }
             }
         }
@@ -107,7 +109,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         addPropertyChangeTrains();
     }
 
-    List<Train> sysList = null;
+    List<Train> sysList = trainManager.getTrainsByTimeList();
     JTable _table = null;
     TrainsTableFrame _frame = null;
 
