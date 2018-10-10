@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.13.3ish+jake+20180909T1853Z+R8dc99f022d on Sun Sep 09 11:53:20 PDT 2018-->
-  <decoderIndex version="906">
+  <!--Written by JMRI version 4.13.4ish+heap+20181008T2308Z+R5d61c14 on Tue Oct 09 10:08:26 AEDT 2018-->
+  <decoderIndex version="908">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -8410,8 +8410,9 @@
           <output name="4" label="D - Marron" />
         </model>
       </family>
-      <family name="Locomotive Decoders" mfg="LaisDCC" comment="LaisDCC decoder range" lowVersionID="02" highVersionID="04" file="LaisDcc.xml">
-        <model model="860010/LaisDcc-Z2" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860010" formFactor="Z" connector="Wires" comment="Z/N scale, wires NEM651">
+      <family name="Locomotive Decoders" mfg="LaisDCC" comment="LaisDCC decoder range" lowVersionID="02" highVersionID="06" file="LaisDcc.xml">
+        <!--           old models not showing anymore  -->
+        <model show="no" model="860010/LaisDcc-Z2" replacementModel="8x00nn - 2 outputs" replacementFamily="Locomotive Decoders" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="Z" connector="Wires" comment="Z/N scale, wires NEM651">
           <output name="1" label="White|Pin 5" connection="wire" maxcurrent="100 mA" />
           <output name="2" label="Yellow|Pin 6" connection="wire" maxcurrent="100 mA" />
           <output name="7" label="Rule 17|Dimming" />
@@ -8424,7 +8425,7 @@
           <!-- virtual "output" -->
           <size length="13.3" width="7.3" height="3.8" units="mm" />
         </model>
-        <model model="860012" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860012" formFactor="N" connector="Wires" comment="N scale, wires NEM651">
+        <model show="no" model="860012" replacementModel="8x00nn - 2 outputs" replacementFamily="Locomotive Decoders" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="Wires" comment="N scale, wires NEM651">
           <output name="1" label="White|Pin 5" connection="wire" maxcurrent="100 mA" />
           <output name="2" label="Yellow|Pin 6" connection="wire" maxcurrent="100 mA" />
           <output name="7" label="Rule 17|Dimming" />
@@ -8437,7 +8438,7 @@
           <!-- virtual "output" -->
           <size length="14.5" width="8.2" height="3" units="mm" />
         </model>
-        <model model="860013" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860013" formFactor="N" connector="NEM651" comment="N scale, 6-pin direct NEM651 plug">
+        <model show="no" model="860013" replacementModel="8x00nn - 2 outputs" replacementFamily="Locomotive Decoders" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="NEM651" comment="N scale, 6-pin direct NEM651 plug">
           <output name="1" label="White|Pin 5" connection="plug" maxcurrent="100 mA" />
           <output name="2" label="Yellow|Pin 6" connection="plug" maxcurrent="100 mA" />
           <output name="7" label="Rule 17|Dimming" />
@@ -8450,7 +8451,7 @@
           <!-- virtual "output" -->
           <size length="14.5" width="8.2" height="3" units="mm" />
         </model>
-        <model model="860014" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860014" formFactor="HO" connector="Wires" comment="HO-scale, 9 Wires">
+        <model show="no" model="860014" replacementModel="8x00nn - 4 outputs" replacementFamily="Locomotive Decoders" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="Wires" comment="HO-scale, 9 Wires">
           <output name="1" label="White|Wire" connection="wire" maxcurrent="100 mA" />
           <output name="2" label="Yellow|Wire" connection="wire" maxcurrent="100 mA" />
           <output name="3" label="Green|Wire" connection="wire" maxcurrent="100 mA" />
@@ -8465,7 +8466,7 @@
           <!-- virtual "output" -->
           <size length="15" width="7" height="2.7" units="mm" />
         </model>
-        <model model="860015" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860015" formFactor="HO" connector="Next18" comment="HO-scale, with Next18 harness">
+        <model show="no" model="860015" replacementModel="8x00nn - 6 outputs" replacementFamily="Locomotive Decoders" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="Next18" comment="HO-scale, with Next18 harness">
           <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA" />
           <output name="2" label="Yellow|Pin 17" connection="plug" maxcurrent="100 mA" />
           <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA" />
@@ -8482,7 +8483,7 @@
           <!-- virtual "output" -->
           <size length="15" width="9.5" height="2.9" units="mm" />
         </model>
-        <model model="860016" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860016" formFactor="HO" connector="PluX22" comment="HO-scale, with Plux22 harness">
+        <model show="no" model="860016" replacementModel="8x00nn - 6 outputs" replacementFamily="Locomotive Decoders" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="PluX22" comment="HO-scale, with Plux22 harness">
           <output name="1" label="White|Pin 7" connection="plug" maxcurrent="100 mA" />
           <output name="2" label="Yellow|Pin 13" connection="plug" maxcurrent="100 mA" />
           <output name="3" label="Green|Pin 16" connection="plug" maxcurrent="100 mA" />
@@ -8500,7 +8501,7 @@
           <size length="16" width="17.5" height="3" units="mm" />
         </model>
         <!-- Model 860018 replaced by 860020 -->
-        <model show="maybe" model="860018" replacementModel="860020" replacementFamily="Locomotive Decoders" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860018" formFactor="HO" connector="NEM652" comment="HO-scale, direct NEM652 + wire for F2">
+        <model show="no" model="860018" replacementModel="8x00nn - 4 outputs" replacementFamily="Locomotive Decoders" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="NEM652" comment="HO-scale, direct NEM652 + wire for F2">
           <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA" />
           <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA" />
           <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA" />
@@ -8515,7 +8516,7 @@
           <!-- virtual "output" -->
           <size length="14.2" width="12.5" height="3.5" units="mm" />
         </model>
-        <model model="860019" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860019" formFactor="HO" connector="21MTC" comment="HO-scale, with 21MTC harness">
+        <model show="no" model="860019" replacementModel="8x00nn - 6 outputs" replacementFamily="Locomotive Decoders" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="21MTC" comment="HO-scale, with 21MTC harness">
           <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA" />
           <output name="2" label="Yellow|Pin 7" connection="plug" maxcurrent="100 mA" />
           <output name="3" label="Green|Pin 15" connection="plug" maxcurrent="100 mA" />
@@ -8532,7 +8533,7 @@
           <!-- virtual "output" -->
           <size length="17" width="16" height="3.5" units="mm" />
         </model>
-        <model model="860020" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860020" formFactor="HO" connector="NEM652" comment="HO-scale, direct NEM652 + wire for F2">
+        <model show="no" model="860020" replacementModel="8x00nn - 4 outputs" replacementFamily="Locomotive Decoders" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="NEM652" comment="HO-scale, direct NEM652 + wire for F2">
           <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA" />
           <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA" />
           <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA" />
@@ -8547,7 +8548,7 @@
           <!-- virtual "output" -->
           <size length="15" width="15" height="3.5" units="mm" />
         </model>
-        <model model="860021" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" productID="860021" formFactor="HO" connector="Wires/NEM652" comment="HO-scale, Wires and NEM652">
+        <model show="no" model="860021" replacementModel="8x00nn - 4 outputs" replacementFamily="Locomotive Decoders" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="Wires/NEM652" comment="HO-scale, Wires and NEM652">
           <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA" />
           <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA" />
           <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA" />
@@ -8561,6 +8562,55 @@
           <output name="10" label="BEMF|Control" />
           <!-- virtual "output" -->
           <size length="15" width="7" height="2.7" units="mm" />
+        </model>
+        <!--      new models based on available outputs defined, without form factor   -->
+        <model model="8x00nn - 2 outputs" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" connector="Wires" comment="N scale, wires NEM651">
+          <output name="1" label="White|Pin 5" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow|Pin 6" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="|" />
+          <output name="4" label="|" />
+          <output name="5" label="|" />
+          <output name="6" label="|" />
+          <output name="7" label="Rule 17|Dimming" />
+          <!-- virtual "output" -->
+          <output name="8" label="Ditch|Blink" />
+          <!-- virtual "output" -->
+          <output name="9" label="Motor|Control" />
+          <!-- virtual "output" -->
+          <output name="10" label="BEMF|Control" />
+          <!-- virtual "output" -->
+        </model>
+        <model model="8x00nn - 4 outputs" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="Wires/NEM652" comment="HO-scale, Wires and NEM652">
+          <output name="1" label="White|Pin 6" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow|Pin 2" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green|Pin 3" connection="plug" maxcurrent="100 mA" />
+          <output name="4" label="Purple|Wire" connection="wire" maxcurrent="100 mA" />
+          <output name="5" label="|" />
+          <output name="6" label="|" />
+          <output name="7" label="Rule 17|Dimming" />
+          <!-- virtual "output" -->
+          <output name="8" label="Ditch|Blink" />
+          <!-- virtual "output" -->
+          <output name="9" label="Motor|Control" />
+          <!-- virtual "output" -->
+          <output name="10" label="BEMF|Control" />
+          <!-- virtual "output" -->
+        </model>
+        <model model="8x00nn - 6 outputs" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" connector="21MTC" comment="HO-scale, with 21MTC harness">
+          <output name="1" label="White|Pin 8" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow|Pin 7" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green|Pin 15" connection="plug" maxcurrent="100 mA" />
+          <output name="4" label="Purple|Pin 14" connection="plug" maxcurrent="100 mA" />
+          <output name="5" label="Pink|Pin 13" connection="plug" maxcurrent="100 mA" />
+          <output name="6" label="Brown|Pin 4" connection="plug" maxcurrent="100 mA" />
+          <output name="7" label="Rule 17|Dimming" />
+          <!-- virtual "output" -->
+          <output name="8" label="Ditch|Blink" />
+          <!-- virtual "output" -->
+          <output name="9" label="Motor|Control" />
+          <!-- virtual "output" -->
+          <output name="10" label="BEMF|Control" />
+          <!-- virtual "output" -->
         </model>
       </family>
       <family name="Lenz 4th gen BEMF decoders" mfg="Lenz" lowVersionID="51" file="Lenz_51.xml">
@@ -11856,14 +11906,14 @@
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_UNI16ARD_NAV.xml">
         <model show="no" model="UNI16ARD-NAV" replacementModel="UNI16ARD-NAV-ST" replacementFamily="dccdoma.cz" lowVersionID="41" highVersionID="49" productID="16843010" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
       </family>
-      <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_UNI16ARD_NAV_ST.xml">
-        <model model="UNI16ARD-NAV-ST" lowVersionID="41" highVersionID="49" productID="16843010" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
-      </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_UNI16ARD_NAV_EXT.xml">
         <model model="UNI16ARD-NAV-EXT" lowVersionID="10" highVersionID="19" productID="16843011" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_UNI16ARD_NAV_MX.xml">
         <model model="UNI16ARD-NAV-MX" lowVersionID="10" highVersionID="19" productID="16843012" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
+      </family>
+      <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_UNI16ARD_NAV_ST.xml">
+        <model model="UNI16ARD-NAV-ST" lowVersionID="41" highVersionID="49" productID="16843010" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
       </family>
       <family name="QSI Articulated Steam" mfg="QSIndustries" lowVersionID="2" highVersionID="5" file="QSI_Articulated_Steam.xml">
         <model model="BLI AC5 Cab Forward 4-8-8-2" lowVersionID="5" numFns="14" numOuts="14" productID="403">

@@ -86,6 +86,9 @@ public class Car extends RollingStock {
         car.setOwner(getOwner());
         car.setRoadName(getRoadName());
         car.setTypeName(getTypeName());
+        car.setCaboose(isCaboose());
+        car.setFred(hasFred());
+        car.setPassenger(isPassenger());
         car.loaded = true;
         return car;
     }
@@ -174,6 +177,7 @@ public class Car extends RollingStock {
 
     /**
      * Gets the car's load's priority.
+     * 
      * @return The car's load priority.
      */
     public String getLoadPriority() {
@@ -207,6 +211,7 @@ public class Car extends RollingStock {
 
     /**
      * Used to keep track of which item in a schedule was used for this car.
+     * 
      * @param id The ScheduleItem id for this car.
      *
      */
@@ -327,7 +332,8 @@ public class Car extends RollingStock {
     }
 
     public String getPickupScheduleName() {
-        TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(getPickupScheduleId());
+        TrainSchedule sch =
+                InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(getPickupScheduleId());
         String name = NONE;
         if (sch != null) {
             name = sch.getName();
@@ -508,6 +514,7 @@ public class Car extends RollingStock {
 
     /**
      * A kernel is a group of cars that are switched as a unit.
+     * 
      * @param kernel The assigned Kernel for this car.
      *
      */
@@ -646,29 +653,31 @@ public class Car extends RollingStock {
         // and the pickup day
         setPickupScheduleId(getNextPickupScheduleId());
         setNextPickupScheduleId(NONE);
-        // arrived at spur?
-        if (destTrack != null && destTrack.isSpur()) {
-            updateLoad();
-        } // update load optionally when car reaches staging
-        else if (destTrack != null && destTrack.isStaging()) {
-            if (destTrack.isLoadSwapEnabled() && getLoadName().equals(carLoads.getDefaultEmptyName())) {
-                setLoadName(carLoads.getDefaultLoadName());
-            } else if (destTrack.isLoadSwapEnabled() && getLoadName().equals(carLoads.getDefaultLoadName())) {
-                setLoadEmpty();
-            } else if (destTrack.isLoadEmptyEnabled() && getLoadName().equals(carLoads.getDefaultLoadName())) {
-                setLoadEmpty();
-            } // empty car if it has a custom load
-            else if (destTrack.isRemoveCustomLoadsEnabled() &&
-                    !getLoadName().equals(carLoads.getDefaultEmptyName()) &&
-                    !getLoadName().equals(carLoads.getDefaultLoadName())) {
-                // remove this car's final destination if it has one
-                setFinalDestination(null);
-                setFinalDestinationTrack(null);
-                // car arriving into staging with the RWE load?
-                if (getLoadName().equals(getReturnWhenEmptyLoadName())) {
-                    setLoadName(carLoads.getDefaultEmptyName());
-                } else {
-                    setLoadEmpty(); // note that RWE sets the car's final destination
+        if (destTrack != null) {
+            // arrived at spur?
+            if (destTrack.isSpur()) {
+                updateLoad();
+            } 
+            // update load optionally when car reaches staging
+            else if (destTrack.isStaging()) {
+                if (destTrack.isLoadSwapEnabled() && getLoadName().equals(carLoads.getDefaultEmptyName())) {
+                    setLoadName(carLoads.getDefaultLoadName());
+                } else if (destTrack.isLoadSwapEnabled() && getLoadName().equals(carLoads.getDefaultLoadName())) {
+                    setLoadEmpty();
+                } else if (destTrack.isLoadEmptyEnabled() && getLoadName().equals(carLoads.getDefaultLoadName())) {
+                    setLoadEmpty();
+                } else if (destTrack.isRemoveCustomLoadsEnabled() &&
+                        !getLoadName().equals(carLoads.getDefaultEmptyName()) &&
+                        !getLoadName().equals(carLoads.getDefaultLoadName())) {
+                    // remove this car's final destination if it has one
+                    setFinalDestination(null);
+                    setFinalDestinationTrack(null);
+                    // car arriving into staging with the RWE load?
+                    if (getLoadName().equals(getReturnWhenEmptyLoadName())) {
+                        setLoadName(carLoads.getDefaultEmptyName());
+                    } else {
+                        setLoadEmpty(); // note that RWE sets the car's final destination
+                    }
                 }
             }
         }
@@ -852,7 +861,8 @@ public class Car extends RollingStock {
             setFinalDestinationTrack(getFinalDestination().getTrackById(a.getValue()));
         }
         if ((a = e.getAttribute(Xml.PREVIOUS_NEXT_DEST_ID)) != null) {
-            setPreviousFinalDestination(InstanceManager.getDefault(LocationManager.class).getLocationById(a.getValue()));
+            setPreviousFinalDestination(
+                    InstanceManager.getDefault(LocationManager.class).getLocationById(a.getValue()));
         }
         if (getPreviousFinalDestination() != null && (a = e.getAttribute(Xml.PREVIOUS_NEXT_DEST_TRACK_ID)) != null) {
             setPreviousFinalDestinationTrack(getPreviousFinalDestination().getTrackById(a.getValue()));

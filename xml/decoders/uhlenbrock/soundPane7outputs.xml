@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2018</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Egbert</firstname>
+                <surname>Broerse</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2018-10-08</date>
+            <authorinitials>EB</authorinitials>
+            <revremark>Initial version as separate file, taken from Uhlenbrock_32300.xml</revremark>
+        </revision>
+        <!-- Valid only for certain Uhlenbrock decoders with IntelliSound3 Module,
+             such as 32300, 36320, 36360 (non exhaustive list) -->
+    </revhistory>
+
+    <name>IntelliSound</name>
+    <column>
+        <row>
+            <column>
+                <display item="SUSI-range"/>
+                <label><text> </text></label>
+            </column>
+            <label><text>                    </text></label>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
+                </qualifier>
+                <column>
+                    <display item="Range I Manufacturer ID"/>
+                    <display item="Range I Software version"/>
+                    <label><text> </text></label>
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <display item="Range I Hardware Version"/>
+                    <display item="Range I Additional version info"/>
+                    <label><text> </text></label>
+                </column>
+            </group>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>2</value>
+                </qualifier>
+                <column>
+                    <display item="Range II Manufacturer ID"/>
+                    <display item="Range II Software version"/>
+                    <label><text> </text></label>
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <display item="Range II Hardware Version"/>
+                    <display item="Range II Additional version info"/>
+                    <label><text> </text></label>
+                </column>
+            </group>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>3</value>
+                </qualifier>
+                <column>
+                    <display item="Range III Manufacturer ID"/>
+                    <display item="Range III Software version"/>
+                    <label><text> </text></label>
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <display item="Range III Hardware Version"/>
+                    <display item="Range III Additional version info"/>
+                    <label><text> </text></label>
+                </column>
+            </group>
+        </row>
+        <separator/>
+        <group>
+            <qualifier>
+                <variableref>SUSI-range</variableref>
+                <relation>eq</relation>
+                <value>1</value>
+            </qualifier>
+            <column>
+                <label>
+                    <text>CVs for SUSI range I :</text>
+                    <text xml:lang="de">CVs für SUSI Adressbereich I :</text>
+                    <text xml:lang="nl">CV's voor SUSI-adresbereik I :</text>
+                </label>
+            </column>
+        </group>
+        <group>
+            <qualifier>
+                <variableref>SUSI-range</variableref>
+                <relation>eq</relation>
+                <value>2</value>
+            </qualifier>
+            <column>
+                <label>
+                    <text>CVs for SUSI range II :</text>
+                    <text xml:lang="de">CVs für SUSI Adressbereich II :</text>
+                    <text xml:lang="nl">CV's voor SUSI-adresbereik II :</text>
+                </label>
+            </column>
+        </group>
+        <group>
+            <qualifier>
+                <variableref>SUSI-range</variableref>
+                <relation>eq</relation>
+                <value>3</value>
+            </qualifier>
+            <column>
+                <label>
+                    <text>CVs for SUSI range III :</text>
+                    <text xml:lang="de">CVs für SUSI Adressbereich III :</text>
+                    <text xml:lang="nl">CV's voor SUSI-adresbereik III :</text>
+                </label>
+            </column>
+        </group>
+        <separator/>
+        <row>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
+                </qualifier>
+                <column>
+                    <label><text> </text></label>
+                    <display item="Range I Sound Volume"/>
+                    <label><text> </text></label>
+                    <display item="Range I Volume Custom 1"/>
+                    <display item="Range I Volume Custom 2"/>
+                    <display item="Range I Volume Custom 3"/>
+                    <display item="Range I Volume Custom 4"/>
+                    <label><text> </text></label>
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <label><text> </text></label>
+                    <display item="Range I Chuff Control"/>
+                    <display item="Range I Firebox"/>
+                    <display item="Range I End step"/>
+                    <display item="Range I Whistle Repeat Pause" format="checkbox"/>
+                    <display item="Range I Chuffs halved" format="checkbox"/>
+                    <display item="Range I Fader time" format="checkbox"/>
+                    <label><text> </text></label>
+                </column>
+            </group>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>2</value>
+                </qualifier>
+                <column>
+                    <label><text> </text></label>
+                    <display item="Range II Sound Volume"/>
+                    <label><text> </text></label>
+                    <display item="Range II Volume Custom 1"/>
+                    <display item="Range II Volume Custom 2"/>
+                    <display item="Range II Volume Custom 3"/>
+                    <display item="Range II Volume Custom 4"/>
+                    <label><text> </text></label>
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <label><text> </text></label>
+                    <display item="Range II Chuff Control"/>
+                    <display item="Range II Firebox"/>
+                    <display item="Range II End step"/>
+                    <display item="Range II Whistle Repeat Pause" format="checkbox"/>
+                    <display item="Range II Chuffs halved" format="checkbox"/>
+                    <display item="Range II Fader time" format="checkbox"/>
+                    <label><text> </text></label>
+                </column>
+            </group>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>3</value>
+                </qualifier>
+                <column>
+                    <label><text> </text></label>
+                    <display item="Range III Sound Volume"/>
+                    <label><text> </text></label>
+                    <display item="Range III Volume Custom 1"/>
+                    <display item="Range III Volume Custom 2"/>
+                    <display item="Range III Volume Custom 3"/>
+                    <display item="Range III Volume Custom 4"/>
+                    <label><text> </text></label>
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <label><text> </text></label>
+                    <display item="Range III Chuff Control"/>
+                    <display item="Range III Firebox"/>
+                    <display item="Range III End step"/>
+                    <display item="Range III Whistle Repeat Pause" format="checkbox"/>
+                    <display item="Range III Chuffs halved" format="checkbox"/>
+                    <display item="Range III Fader time" format="checkbox"/>
+                    <label><text> </text></label>
+                </column>
+            </group>
+        </row>
+        <row>
+            <label><text>      </text></label>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
+                </qualifier>
+                <column>
+                    <display item="Range I Threshold for cooling fan in E-lok"/>
+                    <display item="Range I Threshold for brake screeching"/>
+                    <label><text> </text></label>
+                    <display item="Range I Idle Time"/>
+                    <label><text> </text></label>
+                    <display item="Range I Time between two chuffs at max speed"/>
+                    <display item="Range I Time between two chuffs at min speed"/>
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <display item="Range I Start-up delay"/>
+                    <display item="Range I Steam load time acceleration"/>
+                    <display item="Range I Steam load time load increase"/>
+                    <display item="Range I Steam output Stop"/>
+                    <display item="Range I Steam output running"/>
+                    <display item="Range I Steam output idle"/>
+                    <display item="Range I Steam output start-up"/>
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <display item="Range I Timeout Short whistle"/>
+                    <display item="Range I Hold time hissing"/>
+                    <label><text> </text></label>
+                    <display item="Range I Detection faster"/>
+                    <display item="Range I Detection slower"/>
+                    <display item="Range I Sensitivity to load change"/>
+                    <display item="Range I Threshold with load increase"/>
+                    <display item="Range I Threshold with load decrease"/>
+                </column>
+            </group>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>2</value>
+                </qualifier>
+                <column>
+                    <display item="Range II Threshold for cooling fan in E-lok"/>
+                    <display item="Range II Threshold for brake screeching"/>
+                    <label><text> </text></label>
+                    <display item="Range II Idle Time"/>
+                    <label><text> </text></label>
+                    <display item="Range II Time between two chuffs at max speed"/>
+                    <display item="Range II Time between two chuffs at min speed"/>
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <display item="Range II Start-up delay"/>
+                    <display item="Range II Steam load time acceleration"/>
+                    <display item="Range II Steam load time load increase"/>
+                    <display item="Range II Steam output Stop"/>
+                    <display item="Range II Steam output running"/>
+                    <display item="Range II Steam output idle"/>
+                    <display item="Range II Steam output start-up"/>
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <display item="Range II Timeout Short whistle"/>
+                    <display item="Range II Hold time hissing"/>
+                    <label><text> </text></label>
+                    <display item="Range II Detection faster"/>
+                    <display item="Range II Detection slower"/>
+                    <display item="Range II Sensitivity to load change"/>
+                    <display item="Range II Threshold with load increase"/>
+                    <display item="Range II Threshold with load decrease"/>
+                </column>
+            </group>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>3</value>
+                </qualifier>
+                <column>
+                    <display item="Range III Threshold for cooling fan in E-lok"/>
+                    <display item="Range III Threshold for brake screeching"/>
+                    <label><text> </text></label>
+                    <display item="Range III Idle Time"/>
+                    <label><text> </text></label>
+                    <display item="Range III Time between two chuffs at max speed"/>
+                    <display item="Range III Time between two chuffs at min speed"/>
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <display item="Range III Start-up delay"/>
+                    <display item="Range III Steam load time acceleration"/>
+                    <display item="Range III Steam load time load increase"/>
+                    <display item="Range III Steam output Stop"/>
+                    <display item="Range III Steam output running"/>
+                    <display item="Range III Steam output idle"/>
+                    <display item="Range III Steam output start-up"/>
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
+                    <display item="Range III Timeout Short whistle"/>
+                    <display item="Range III Hold time hissing"/>
+                    <label><text> </text></label>
+                    <display item="Range III Detection faster"/>
+                    <display item="Range III Detection slower"/>
+                    <display item="Range III Sensitivity to load change"/>
+                    <display item="Range III Threshold with load increase"/>
+                    <display item="Range III Threshold with load decrease"/>
+                </column>
+            </group>
+        </row>
+    </column>
+</pane>
