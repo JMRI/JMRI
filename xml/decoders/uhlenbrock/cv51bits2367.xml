@@ -68,17 +68,17 @@
   <variable item="Cv51 bit7" CV="51" default="0" mask="VXXXXXXX">
     <enumVal>
       <enumChoice choice="PID">
-        <choice>PID Throttle</choice>
+        <choice>PID Controller</choice>
         <choice xml:lang="de">PID Regler</choice>
-        <choice xml:lang="nl">PID Rijregelaar</choice>
+        <choice xml:lang="nl">PID Regelaar</choice>
       </enumChoice>
       <enumChoice choice="SX">
-        <choice>SX Throttle</choice>
+        <choice>SX Controller</choice>
         <choice xml:lang="de">SX Regler</choice>
-        <choice xml:lang="nl">SX Rijregelaar</choice>
+        <choice xml:lang="nl">SX Regelaar</choice>
       </enumChoice>
     </enumVal>
-    <label>In Analog Mode</label>
+    <label>In Analog Mode use</label>
     <label xml:lang="de">Analogfahren mit</label>
     <label xml:lang="nl">Analoog rijden met</label>
   </variable>

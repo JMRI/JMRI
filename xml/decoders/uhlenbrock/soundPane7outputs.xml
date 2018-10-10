@@ -225,6 +225,7 @@
                     <value>1</value>
                 </qualifier>
                 <column>
+                    <display item="Range I Sound switch off time" include="32500,32504,36520,36560"/>
                     <display item="Range I Threshold for cooling fan in E-lok"/>
                     <display item="Range I Threshold for brake screeching"/>
                     <label><text> </text></label>
@@ -262,6 +263,7 @@
                     <value>2</value>
                 </qualifier>
                 <column>
+                    <display item="Range II Sound switch off time" include="32500,32504,36520,36560"/>
                     <display item="Range II Threshold for cooling fan in E-lok"/>
                     <display item="Range II Threshold for brake screeching"/>
                     <label><text> </text></label>
@@ -299,6 +301,7 @@
                     <value>3</value>
                 </qualifier>
                 <column>
+                    <display item="Range III Sound switch off time" include="32500,32504,36520,36560"/>
                     <display item="Range III Threshold for cooling fan in E-lok"/>
                     <display item="Range III Threshold for brake screeching"/>
                     <label><text> </text></label>

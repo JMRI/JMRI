@@ -217,6 +217,14 @@
         <label xml:lang="de">F28 aktiviert Sound</label>
     </variable>
     <!-- End Function Mapping -->
+    <variable item="Range I Sound switch off time" CV="933.0" default="0" include="32500,32504,36520,36560">
+        <decVal/>
+        <label>Sound switch off time</label>
+        <label xml:lang="de">Sound Ausschaltzeit</label>
+        <label xml:lang="nl">Uitschakeltijd Geluid</label>
+        <tooltip>0=Off 1-255 sec.</tooltip>
+        <tooltip xml:lang="de">0=Aus 1-255 Sek.</tooltip>
+    </variable>
     <variable item="Range I Threshold for cooling fan in E-lok" CV="934.0" default="200">
         <decVal/>
         <label>Threshold for cooling fan (E-loco)</label>
@@ -631,6 +639,14 @@
         <label xml:lang="de">F28 aktiviert Sound</label>
     </variable>
     <!-- End Function Mapping -->
+    <variable item="Range II Sound switch off time" CV="973.0" default="0" include="32500,32504,36520,36560">
+        <decVal/>
+        <label>Sound switch off time</label>
+        <label xml:lang="de">Sound Ausschaltzeit</label>
+        <label xml:lang="nl">Uitschakeltijd Geluid</label>
+        <tooltip>0=Off 1-255 sec.</tooltip>
+        <tooltip xml:lang="de">0=Aus 1-255 Sek.</tooltip>
+    </variable>
     <variable item="Range II Threshold for cooling fan in E-lok" CV="974.0" default="200">
         <decVal/>
         <label>Threshold for cooling fan (E-loco)</label>
@@ -1045,6 +1061,14 @@
         <label xml:lang="de">F28 aktiviert Sound</label>
     </variable>
     <!-- End Function Mapping -->
+    <variable item="Range III Sound switch off time" CV="933.0" default="0" include="32500,32504,36520,36560">
+        <decVal/>
+        <label>Sound switch off time</label>
+        <label xml:lang="de">Sound Ausschaltzeit</label>
+        <label xml:lang="nl">Uitschakeltijd Geluid</label>
+        <tooltip>0=Off 1-255 sec.</tooltip>
+        <tooltip xml:lang="de">0=Aus 1-255 Sek.</tooltip>
+    </variable>
     <variable item="Range III Threshold for cooling fan in E-lok" CV="1014.0" default="200">
         <decVal/>
         <label>Threshold for cooling fan (E-loco)</label>

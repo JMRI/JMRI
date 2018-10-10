@@ -82,6 +82,9 @@
     </column>
     <column>
       <separator/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Outputs monitoring off 1" format="checkbox"/>
       <display item="Outputs monitoring off 2" format="checkbox"/>
       <display item="Outputs monitoring off 3" format="checkbox"/>
