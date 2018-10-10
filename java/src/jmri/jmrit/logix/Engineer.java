@@ -365,12 +365,11 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * or waiting for clearance ahead for rogue occupancy, stop aspect or
      * sharing of turnouts, this call will free the wait.
      */
-    @SuppressFBWarnings(value="NO_NOTIFY_NOT_NOTIFYALL", justification="Notify Engineer thread ONLY")
     synchronized protected void clearWaitForSync() {
         if (_waitForSync) {
             if (log.isDebugEnabled()) 
                 log.debug("clearWaitForSync() calls notify()");
-            notify();   // if wait is cleared, this sets _waitForSync= false
+            notifyAll();   // if wait is cleared, this sets _waitForSync= false
         }
     }
 
@@ -383,7 +382,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * @param endBlockIdx BlockOrder index of where ramp is to end.
      * @param useIndex false if endBlockIdx should not be considered 
      */
-    @SuppressFBWarnings(value="NO_NOTIFY_NOT_NOTIFYALL", justification="Notify ThrottleRamp thread ONLY")
     protected void rampSpeedTo(String endSpeedType, int endBlockIdx, boolean useIndex) {
         if (!setSpeedRatio(endSpeedType)) {
             return;
@@ -415,7 +413,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             if (_ramp.ready) {
                 _ramp.setParameters(endSpeedType, endBlockIdx, useIndex);
                 synchronized (_ramp) {
-                    _ramp.notify(); // free wait at ThrottleRamp.run()
+                    _ramp.notifyAll(); // free wait at ThrottleRamp.run()
                     log.debug("rampSpeedTo called notify _ramp.ready={}", _ramp.ready);
                 }
             } else {
@@ -431,7 +429,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         }
     }
 
-    @SuppressFBWarnings(value= {"IS2_INCONSISTENT_SYNC", "NO_NOTIFY_NOT_NOTIFYALL"}, justification="display of _speedType for viewing only. Notify Engineer thread ONLY")
+    @SuppressFBWarnings(value= "IS2_INCONSISTENT_SYNC", justification="display of _speedType for viewing only")
     private void rampDone(boolean stop, String type) {
         // ignore "IS2_INCONSISTENT_SYNC" warning here
         if (log.isDebugEnabled())
@@ -446,7 +444,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         }
         if (!_atHalt && !_atClear) {
             synchronized (this) {
-                notify();
+                notifyAll();  // let engineer run script
                 log.debug("rampDone called notify");
             }
         }
@@ -458,19 +456,18 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      */
     @SuppressFBWarnings(value="IS2_INCONSISTENT_SYNC", justification="display of _speedType on GUI for viewing only")
      protected void setSpeed(float s) {
+//        ThreadingUtil.runOnLayoutEventually(() -> {   // invoke later. CAN GET WAY OUT OF SYNC!! and although logged, engine speed not changed.
+//          jmri.util.ThreadingUtil.runOnLayout(() -> { // move to layout-handling thread.  CAN HANG GUI!! Then must kill Java process.
         float speed = s;
         _speedUtil.speedChange();   // call before changing throttle setting
-        _throttle.setSpeedSetting(speed);
-        if (log.isDebugEnabled()) {
-            ThreadingUtil.warnLocks();
-        }
-        // Do asynchronously, already within a synchronized block?
-        ThreadingUtil.runOnLayoutEventually(() -> {
+        _throttle.setSpeedSetting(speed);       // CAN MISS SETTING SPEED (as done when runOnLayoutEventually used) 
+        ThreadingUtil.runOnLayoutEventually(() -> { // runOnLayout may block GUI
+            // Late update to GUI is OK, this is just an informational status display
             _warrant.fireRunStatus("SpeedChange", null, _speedType);
         });
         if (log.isDebugEnabled()) 
             log.debug("Speed Set to {}, _speedType={}.  warrant {}",
-                speed, _speedType, _warrant.getDisplayName());
+                s, _speedType, _warrant.getDisplayName());
     }
 
     protected float getSpeedSetting() {
@@ -478,7 +475,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     protected float getScriptSpeed() {
-        return _speedUtil.modifySpeed(_normalSpeed, _speedType, _isForward);
+        return _normalSpeed;
     }
     /**
      * Utility for unscripted speed changes.
@@ -487,11 +484,14 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * @return true to continue, false to return
      */
     private boolean setSpeedRatio(String speedType) {
+        float newSpeed = _speedUtil.modifySpeed(_normalSpeed, speedType, _isForward);
         if (log.isDebugEnabled()) {
-            float newSpeed = _speedUtil.modifySpeed(_normalSpeed, speedType, _isForward);
-            float scriptSpeed = getScriptSpeed();
+            float scriptSpeed = _speedUtil.modifySpeed(_normalSpeed, _speedType, _isForward);
             log.debug("Speed change: \"{}\" speed setting= {}, script speed = {},  newSpeed= {}. - {}",
                     speedType, getSpeedSetting(), scriptSpeed, newSpeed, _warrant.getDisplayName());
+        }
+        if (Math.abs(getSpeedSetting() - newSpeed) < .003) {
+            return false;
         }
         if (!speedType.equals(Warrant.Stop) && !speedType.equals(Warrant.EStop)) {
             _speedType = speedType;
@@ -537,7 +537,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * such as losing detection of train's location.
      * @param halt true if train should halt
      */
-    @SuppressFBWarnings(value="NO_NOTIFY_NOT_NOTIFYALL", justification="Notify Engineer thread ONLY")
     synchronized public void setHalt(boolean halt) {
         if (log.isDebugEnabled()) 
             log.debug("setHalt({}): _atHalt= {}, _waitForClear= {}, _waitForSync= {}, warrant {}",
@@ -547,7 +546,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             if (_atHalt) {
                 if (log.isDebugEnabled()) 
                     log.debug("setHalt calls notify()");
-                notify();   // free wait at _atHalt
+                notifyAll();   // free wait at _atHalt
             }
         } else {
             _halt = true;
@@ -561,7 +560,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * Track condition override of throttle script.
      * @param stop true if train should stop
      */
-    @SuppressFBWarnings(value="NO_NOTIFY_NOT_NOTIFYALL", justification="Notify Engineer thread ONLY")
     synchronized protected void setWaitforClear(boolean stop) {
         if (log.isDebugEnabled()) 
             log.debug("setWaitforClear({}): _atClear= {}, throttle speed= {}, _halt= {}, _waitForSync= {}, warrant {}",
@@ -570,8 +568,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             _waitForClear = false;
             if (_atClear) {
                 if (log.isDebugEnabled()) 
-                    log.debug("setWaitforClear calls notify()");
-                notify();   // free wait at _atClear
+                    log.debug("setWaitforClear calls notify");
+                notifyAll();   // free wait at _atClear
             }
         } else {
             _waitForClear = true;
@@ -910,7 +908,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                     try {
                         ThreadingUtil.runOnLayoutEventually(() -> {
                               _warrant.fireRunStatus("SensorWaitCommand", act, _waitSensor.getDisplayName());
-                      });
+                        });
                         wait();
                         String name =  _waitSensor.getDisplayName();    // save name, _waitSensor will be null 'eventually' 
                         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -944,16 +942,15 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     @Override
-    @SuppressFBWarnings(value="NO_NOTIFY_NOT_NOTIFYALL", justification="Notify Engineer thread ONLY")
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (log.isDebugEnabled()) 
             log.debug("propertyChange {} new value= {}", evt.getPropertyName(), evt.getNewValue());
         if ((evt.getPropertyName().equals("KnownState")
                 && ((Number) evt.getNewValue()).intValue() == _sensorWaitState)) {
             synchronized (this) {
-                if (!_halt && !_waitForClear) {
-                    this.notify();  // free sensor wait
-                }
+//                if (!_halt && !_waitForClear) {
+                    this.notifyAll();  // free sensor wait
+//                }
             }
         }
     }
@@ -1043,11 +1040,10 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             setName("Ramp(" + _warrant.getTrainName() +")");
         }
 
-        @SuppressFBWarnings(value="NO_NOTIFY_NOT_NOTIFYALL", justification="Notify ThrottleRamp thread ONLY")
         synchronized void quit() {
             stop = true;
-            log.debug("ThrottleRamp.quit calls notify()");
-            _ramp.notify(); // free waits at ramp time interval
+            log.debug("ThrottleRamp.quit calls notify)");
+            _ramp.notifyAll(); // free waits at ramp time interval
         }
 
         synchronized void die() {

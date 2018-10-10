@@ -176,6 +176,7 @@ public class NXFrame extends WarrantRoute {
         p.add(Box.createHorizontalStrut(2 * STRUT_SIZE));
         button = new JButton(Bundle.getMessage("ButtonRunNX"));
         button.addActionListener((ActionEvent e) -> {
+            clearTempWarrant();
             makeAndRunWarrant();
         });
         p.add(button);
@@ -458,7 +459,6 @@ public class NXFrame extends WarrantRoute {
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return;
         }
-        clearTempWarrant();
         // There is a dccAddress so a throttle can be acquired
         String s = ("" + Math.random()).substring(2);
         Warrant warrant = new Warrant("IW" + s, "NX(" + getAddress() + ")");

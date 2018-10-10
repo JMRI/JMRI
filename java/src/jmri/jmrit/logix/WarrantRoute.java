@@ -145,6 +145,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         _calculateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                clearTempWarrant();
                 calculate();
             }
         });
