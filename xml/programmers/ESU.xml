@@ -197,6 +197,8 @@
         <label>
           <text>Will decoder respond to function requests at consist address?</text>
           <text xml:lang="it">Il decoder risponde alle Funzioni anche all'indirizzo del Consist ?</text>
+          <text xml:lang="fr">Le décodeur répondra-t-il aux commandes de fonctions à l'adresse de Multi-Traction (UM)?</text>
+          <text xml:lang="cs">Bude dekodér reagovat na vyžádané funkce na adrese soupravy?</text>
 		  <text xml:lang="ca">Les funcions del descodificador seran controlades per l'adreça de multi-tracció ?</text>
           <text xml:lang="de">Sind Decoderfunktionen steuerbar durch die Mehrfachtrakstionsadresse?</text>
           <text xml:lang="nl">Reageert de decoder op functiecommando's aan het Multitractie-adres?</text>
