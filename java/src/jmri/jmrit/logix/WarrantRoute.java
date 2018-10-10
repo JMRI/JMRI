@@ -150,9 +150,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             }
         });
         JPanel p = new JPanel();
-//        p.add(Box.createHorizontalGlue());
         p.add(makeTextBoxPanel(vertical, _calculateButton, "CalculateRoute", null));
-//        p.add(Box.createHorizontalGlue());
         return p;
     }
     public JPanel makePickListPanel() {

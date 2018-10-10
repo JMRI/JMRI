@@ -38,7 +38,7 @@ public class LearnWarrantTest {
     private OBlockManager _OBlockMgr;
 
     @Test
-    @Ignore("Causes timeouts due to changes in the scripts - not a threading problem")
+    @Ignore("Causes timeouts due to changes in the scripts - not a threading problem. New script needed")
     public void testLearnWarrant() throws Exception {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't Assume in TestCase

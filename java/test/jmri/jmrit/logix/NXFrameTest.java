@@ -126,7 +126,7 @@ public class NXFrameTest {
     }
 
     @Test
-    @Ignore("Causes timeouts due to changes in the scripts - not a threading problem")
+    @Ignore("Causes timeouts due to changes in the scripts - not a threading problem. New script needed")
     public void testNXWarrant() throws Exception {
         // The first part of this test duplicates testNXWarrantSetup().  It
         // then goes on to test a Warrant through the WarrantTableFrame.

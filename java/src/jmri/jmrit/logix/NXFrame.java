@@ -478,7 +478,6 @@ public class NXFrame extends WarrantRoute {
         }
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         if (msg == null) {
-//            WarrantTableAction.setNXFrame(this);        // redundant
             tableFrame.getModel().addNXWarrant(warrant);   //need to catch propertyChange at start
             if (log.isDebugEnabled()) {
                 log.debug("NXWarrant added to table");
@@ -494,7 +493,6 @@ public class NXFrame extends WarrantRoute {
         }
 
         if (msg == null && mode == Warrant.MODE_RUN) {
-//            if (log.isDebugEnabled()) log.debug("Warrant "+warrant.getDisplayName()+" running.");
             if (_haltStartBox.isSelected()) {
                 class Halter implements Runnable {
 

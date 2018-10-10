@@ -456,6 +456,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      */
     @SuppressFBWarnings(value="IS2_INCONSISTENT_SYNC", justification="display of _speedType on GUI for viewing only")
      protected void setSpeed(float s) {
+        // Whether, runOnLayoutEventually, runOnLayout, or no thread change used, when multiple ramps need to be used,
+        // throttle seem to become unresponsive - i.e. speed setting not made.
 //        ThreadingUtil.runOnLayoutEventually(() -> {   // invoke later. CAN GET WAY OUT OF SYNC!! and although logged, engine speed not changed.
 //          jmri.util.ThreadingUtil.runOnLayout(() -> { // move to layout-handling thread.  CAN HANG GUI!! Then must kill Java process.
         float speed = s;

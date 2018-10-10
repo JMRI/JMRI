@@ -979,7 +979,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                                 _waitForSignal = false;
                                 _waitForBlock = false;
                             }
-                            _engineer.rampSpeedTo(_curSpeedType, 0, false); // TODO check match end speed to script speed
+                            _engineer.rampSpeedTo(_curSpeedType, 0, false);
                             setMovement(MID);
                          } else if (runState == WAIT_FOR_TRAIN || runState == SPEED_RESTRICTED) {
                              // user wants to increase throttle of stalled train slowly
