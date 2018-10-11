@@ -1,7 +1,6 @@
 package jmri.jmrit.operations.trains;
 
 import java.awt.Color;
-import java.awt.Frame;
 import java.io.File;
 import java.text.MessageFormat;
 import java.util.List;
@@ -287,8 +286,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         toolMenu.add(new SetupExcelProgramFrameAction(Bundle.getMessage("MenuItemSetupExcelProgram")));
         toolMenu.add(new ExportTrainRosterAction());
         toolMenu.addSeparator();
-        toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPrint"), new Frame(), false, this));
-        toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPreview"), new Frame(), true, this));
+        toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPrint"), false, this));
+        toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPreview"), true, this));
 
         menuBar.add(toolMenu);
         menuBar.add(new jmri.jmrit.operations.OperationsMenu());
