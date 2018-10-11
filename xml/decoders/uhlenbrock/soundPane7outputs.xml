@@ -15,7 +15,7 @@
     <revhistory xmlns="http://docbook.org/ns/docbook">
         <revision>
             <revnumber>1</revnumber>
-            <date>2018-10-08</date>
+            <date>2018-10-11</date>
             <authorinitials>EB</authorinitials>
             <revremark>Initial version as separate file, taken from Uhlenbrock_32300.xml</revremark>
         </revision>
@@ -282,6 +282,10 @@
                     <label><text> </text></label>
                     <display item="Range II Time between two chuffs at max speed"/>
                     <display item="Range II Time between two chuffs at min speed"/>
+                    <label><text> </text></label>
+                    <display item="Range II Screeching off Function" include="32500,32504,36520,36560"/>
+                    <display item="Range II Squeal Start Function" include="32500,32504,36520,36560"/>
+                    <display item="Range II Squeal Stop Function" include="32500,32504,36520,36560"/>
                 </column>
                 <column><label><text>      </text></label></column>
                 <column>
@@ -305,6 +309,11 @@
                     <display item="Range II Sensitivity to load change"/>
                     <display item="Range II Threshold with load increase"/>
                     <display item="Range II Threshold with load decrease"/>
+                    <label><text> </text></label>
+                    <display item="Range II Idle 0" format="checkbox" include="32500,32504,36520,36560"/>
+                    <display item="Range II Idle 1" format="checkbox" include="32500,32504,36520,36560"/>
+                    <display item="Range II Idle 2" format="checkbox" include="32500,32504,36520,36560"/>
+                    <display item="Range II Idle 5" format="checkbox" include="32500,32504,36520,36560"/>
                 </column>
             </group>
             <group>
@@ -322,6 +331,10 @@
                     <label><text> </text></label>
                     <display item="Range III Time between two chuffs at max speed"/>
                     <display item="Range III Time between two chuffs at min speed"/>
+                    <label><text> </text></label>
+                    <display item="Range III Screeching off Function" include="32500,32504,36520,36560"/>
+                    <display item="Range III Squeal Start Function" include="32500,32504,36520,36560"/>
+                    <display item="Range III Squeal Stop Function" include="32500,32504,36520,36560"/>
                 </column>
                 <column><label><text>      </text></label></column>
                 <column>
@@ -345,6 +358,11 @@
                     <display item="Range III Sensitivity to load change"/>
                     <display item="Range III Threshold with load increase"/>
                     <display item="Range III Threshold with load decrease"/>
+                    <label><text> </text></label>
+                    <display item="Range III Idle 0" format="checkbox" include="32500,32504,36520,36560"/>
+                    <display item="Range III Idle 1" format="checkbox" include="32500,32504,36520,36560"/>
+                    <display item="Range III Idle 2" format="checkbox" include="32500,32504,36520,36560"/>
+                    <display item="Range III Idle 5" format="checkbox" include="32500,32504,36520,36560"/>
                 </column>
             </group>
         </row>
