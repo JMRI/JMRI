@@ -333,6 +333,7 @@
         <tooltip xml:lang="de">50-255, Zeit zwischen zwei Auspuffschlägen bei minimaler Lokgeschwindigkeit ohne Kontakt</tooltip>
     </variable>
     <!-- Bank A CVs (Index CV 1021 = 1) -->
+    <!-- TODO group hide/show with CV 1021 choice = 1 -->
     <variable item="Range I Hardware Version" CV="900.1" readOnly="yes" default="0">
         <decVal/>
         <label>Hardware Version</label>
@@ -1485,8 +1486,45 @@
         <tooltip>0-128, 128=tone change is off</tooltip>
         <tooltip xml:lang="de">0-128, 128 = Tonänderung bei Lastabnahme ausgeschaltet</tooltip>
     </variable>
-    <!-- TODO IntelliSound4 900B - 938B -->
-    <!-- TODO IntelliSound4 900C - 913C -->
+    <!-- TODO IntelliSound4 Bank B CV 900B - 938B, group hide/show with CV 1021 choice = 2 -->
+    <variable item="Bank B Range I Volume for chuffs" CV="900.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for chuffs</label>
+        <label xml:lang="de">Lautstärke für Auspuffschläge</label>
+        <tooltip>only steam locos</tooltip>
+        <tooltip xml:lang="de">nur Dampflok</tooltip>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 1" CV="901.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #1</label>
+        <label xml:lang="de">Lautstärke für Sound 1</label>
+    </variable>
+    <!-- TODO add sounds 2 - 7 -->
+    <variable item="Bank B Range I Alternative Volume" CV="908.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Alternative Volume</label>
+        <label xml:lang="de">Alternative Lautstärke</label>
+        <tooltip>Switchable by function in CV 914A</tooltip>
+        <tooltip xml:lang="de">Schaltbar per Funktion aus CV 914A</tooltip>
+    </variable>
+    <!-- TODO add sounds 9 - 25 -->
+    <!-- TODO IntelliSound4 Bank C CV 900C - 913C, group hide/show with CV 1021 choice = 3 -->
+    <variable item="Bank C Range I Diesel notch after idle" CV="900.3" default="40" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Diesel notch after idle</label>
+        <label xml:lang="de">Dieselrampe nach Leerlauf</label>
+    </variable>
+    <variable item="Bank C Range I Speed step next gear 1" CV="901.3" default="30" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+    </variable>
+    <!-- TODO add next gear 2-12 -->
+    <variable item="Bank C Range I Speed step next gear 13" CV="913.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+    </variable>
     <!-- Declaration of the "switch" CV, not for direct use but for checking value -->
     <variable item="Range I Bank switch" CV="1021" default="0">
         <enumVal>
