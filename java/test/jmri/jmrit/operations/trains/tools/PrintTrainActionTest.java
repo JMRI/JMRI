@@ -21,11 +21,9 @@ public class PrintTrainActionTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
         TrainEditFrame tef = new TrainEditFrame(train1);
-        jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("Print Train Action");
-        PrintTrainAction t = new PrintTrainAction("Test Action",jf,true,tef);
-        Assert.assertNotNull("exists",t);
+        PrintTrainAction t = new PrintTrainAction("Test Action", true, tef);
+        Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(tef);
-        JUnitUtil.dispose(jf);
     }
 
     // The minimal setup for log4J

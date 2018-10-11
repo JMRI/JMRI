@@ -67,7 +67,7 @@ public class TrainScriptFrame extends OperationsFrame {
     JButton saveTrainButton = new JButton(Bundle.getMessage("SaveTrain"));
 
     public TrainScriptFrame() {
-        super();
+        super(Bundle.getMessage("MenuItemScripts"));
     }
 
     public void initComponents(TrainEditFrame parent) {
