@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006, 2014 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -22,7 +21,7 @@
 					and used generic items on standard panes (motor, lights, analog) as much as possible
 	                Using English/German terms as defined in official Uhlenbrock documentation								-->
 	<!-- 			Add 76200, 76425																						-->
-  <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
+    <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
 <decoder>
     <family name="Multi-Protocol Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="9" comment="Decoders not sorted (necessarily) in numerical order">
       <model model="76200" highVersionID="40" numOuts="4" numFns="8" maxMotorCurrent="1.2A" formFactor="HO" productID="76200" comment="HO-Scale, wired, for universal (Märklin) motors">
