@@ -43,17 +43,12 @@ import org.slf4j.LoggerFactory;
  */
 public class PrintCarRosterAction extends AbstractAction {
 
-    public PrintCarRosterAction(String actionName, Frame frame, boolean preview, CarsTableFrame pWho) {
+    public PrintCarRosterAction(String actionName, boolean preview, CarsTableFrame pWho) {
         super(actionName);
-        mFrame = frame;
         isPreview = preview;
         panel = pWho;
     }
 
-    /**
-     * Frame hosting the printing
-     */
-    Frame mFrame;
     /**
      * Variable to set whether this is to be printed or previewed
      */
@@ -86,7 +81,7 @@ public class PrintCarRosterAction extends AbstractAction {
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleCarRoster"), fontSize, .5, .5, .5, .5,
+            writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleCarRoster"), fontSize, .5, .5, .5, .5,
                     isPreview, "", landscape, true, null);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
@@ -374,13 +369,12 @@ public class PrintCarRosterAction extends AbstractAction {
     JCheckBox printSpace = new JCheckBox(Bundle.getMessage("PrintSpace"));
     JCheckBox printPage = new JCheckBox(Bundle.getMessage("PrintPage"));
 
-    JButton okayButton = new JButton(Bundle.getMessage("ButtonOK"));
-
     static final String NEW_LINE = "\n"; // NOI18N
 
     public class CarPrintOptionFrame extends OperationsFrame {
 
         PrintCarRosterAction pcr;
+        JButton okayButton = new JButton(Bundle.getMessage("ButtonOK"));
 
         public CarPrintOptionFrame(PrintCarRosterAction pcr) {
             super();
@@ -487,9 +481,9 @@ public class PrintCarRosterAction extends AbstractAction {
         @Override
         public void initComponents() {
             if (isPreview) {
-                cpof.setTitle(Bundle.getMessage("MenuItemPreview"));
+                setTitle(Bundle.getMessage("MenuItemPreview"));
             } else {
-                cpof.setTitle(Bundle.getMessage("MenuItemPrint"));
+                setTitle(Bundle.getMessage("MenuItemPrint"));
             }
             loadSortByComboBox(sortByComboBox);
             printSpace.setEnabled(panel.sortByLocation.isSelected());

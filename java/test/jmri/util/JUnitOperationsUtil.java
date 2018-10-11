@@ -495,6 +495,7 @@ public class JUnitOperationsUtil {
         car.setOwner(owner);
         car.setBuilt(built);
         car.setMoves(moves);
+        car.setColor("Black");
 
         if (track != null) {
             Assert.assertEquals("place car", Track.OKAY, car.setLocation(track.getLocation(), track));
