@@ -19,6 +19,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarColors;
 import jmri.jmrit.operations.rollingstock.cars.CarLengths;
+import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
@@ -178,7 +179,6 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
         }
         if (_comboboxName.equals(ROAD)) {
             if (!OperationsXml.checkFileName(itemName)) { // NOI18N
-                log.error("Road name must not contain reserved characters");
                 JOptionPane.showMessageDialog(this,
                         Bundle.getMessage("NameResChar") + NEW_LINE + Bundle.getMessage("ReservedChar"),
                         MessageFormat.format(errorMessage, new Object[]{_comboboxName}),
@@ -189,6 +189,13 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
         String[] item = {itemName};
         if (_comboboxName.equals(TYPE)) {
             item = itemName.split("-");
+            // can't have the " & " as part of the type name
+            if (itemName.contains(CarLoad.SPLIT_CHAR)) {
+                JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carNameNoAndChar"),
+                        new Object[]{CarLoad.SPLIT_CHAR}), MessageFormat.format(errorMessage, new Object[]{_comboboxName}),
+                        JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
         }
         if (item[0].length() > Control.max_len_string_attibute) {
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carAttribute"),

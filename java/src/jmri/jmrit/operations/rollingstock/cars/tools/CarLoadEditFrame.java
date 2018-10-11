@@ -175,7 +175,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
             }
             // can't have the " & " as part of the load name
             if (loadName.contains(CarLoad.SPLIT_CHAR)) {
-                JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carLoadNoAndChar"),
+                JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carNameNoAndChar"),
                         new Object[]{CarLoad.SPLIT_CHAR}), Bundle.getMessage("canNotUseLoadName"),
                         JOptionPane.ERROR_MESSAGE);
                 return;
