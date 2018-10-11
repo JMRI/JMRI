@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2014 All rights reserved                            -->
-<!-- $Id$             -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -45,20 +44,24 @@
         <choice>Digital operation only</choice>
         <choice xml:lang="de">nur Digital Betrieb</choice>
         <choice xml:lang="it">Solo DCC</choice>
+        <choice xml:lang="nl">Alleen Digitaal rijden</choice>
       </enumChoice>
       <enumChoice choice="Analog operation only">
         <choice>Analog operation only</choice>
         <choice xml:lang="de">nur Analog Betrieb</choice>
         <choice xml:lang="it">Solo Analogico</choice>
+        <choice xml:lang="nl">Alleen Analoog rijden</choice>
       </enumChoice>
       <enumChoice choice="Auto Detection">
         <choice>Auto Detection</choice>
         <choice xml:lang="de">automatischer Erkennung</choice>
-        <choice xml:lang="it">Rilevazione Automatica</choice>			
+        <choice xml:lang="it">Rilevazione Automatica</choice>
+        <choice xml:lang="nl">Automatisch herkennen</choice>
       </enumChoice>
     </enumVal>
     <label>Analog/Digital operation</label>
-    <label xml:lang="de">Analogen/Digital Betriebsart</label>	
+    <label xml:lang="de">Analogen/Digital Betriebsart</label>
+    <label xml:lang="nl">Analoog-/Digitaalbedrijf</label>
     <label xml:lang="it">Operatività in Analogico / DCC</label>		
   </variable>
 </variables>

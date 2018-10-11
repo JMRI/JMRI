@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,25 +12,21 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Alain Le Marchand" version="2.0" lastUpdated="20140803"/>
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20110820"/>
-  <!--
-  This version was based on the English versions of the Uhlenbrock manuals - IntelliSoundModule 32 100
+  <!-- Initial Version 1.0 - 20 Aug 11
+  Based on the English versions of the Uhlenbrock manuals - IntelliSoundModule 32 100
   and IntelliSoundModule 32 400 (web links dated 23.06.2006) - and the PIKO German manual -
   36193 PIKO Soundmodul with 36193-90-7000 in the lower left of the last page (courtesy of
   CHAMPEX-LINDEN Modellspielwaren, http://www.champex-linden.de/cl_pi_piko.htm).
 
   This decoder XML is meant to be used with the "Custom" programmer format as very few of the
-  SUSI variables have standard NMRA analogues.
-
-  Initial Version 1.0 - 20 Aug 11
-  -->
+  SUSI variables have standard NMRA analogues. -->
+  <version author="Alain Le Marchand" version="2.0" lastUpdated="20140803"/>
   <!-- 	Version 2.0 :
 		Added Ranges 2 and 3 - and automatic switch between ranges on the IntelliSound pane
 		Created Xinclude file for the functions sound enum
 		Fixed F5 = CV908 (and not CV905)
-		German translation according to Uhlenbrock 32300 manual
-  -->
+		German translation according to Uhlenbrock 32300 manual -->
   <decoder>
     <family name="IntelliSound Module" mfg="Uhlenbrock Elektronik" comment="Auxiliary Sound module for all locomotive decoders with SUSI connector">
       <model model="32100">
@@ -52,11 +47,11 @@
             <choice>Range I (CVs 900-939)</choice>
             <choice xml:lang="de">Bereich I (CVs 900-939)</choice>
           </enumChoice>
-          <enumChoice choice="Range II (CVs 940-979)">
+          <enumChoice choice="Range II (CVs 940-979)" value="2">
             <choice>Range II (CVs 940-979)</choice>
             <choice xml:lang="de">Bereich II (CVs 940-979)</choice>
           </enumChoice>
-          <enumChoice choice="Range III (CVs 980-1019)">
+          <enumChoice choice="Range III (CVs 980-1019)" value="3">
             <choice>Range III (CVs 980-1019)</choice>
             <choice xml:lang="de">Bereich III (CVs 980-1019)</choice>
           </enumChoice>

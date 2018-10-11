@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2014 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -18,11 +17,13 @@
 <!-- 	Valid for 731x0, 734x0, 764x0 families (non exhaustive list)        -->
 <!-- 																		-->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Uhlenbrock</name>
   <column>
     <separator/>
     <label>
       <text>Uhlenbrock configuration</text>
-      <text xml:lang="de">Uhlenbrock Konfiguration</text>		
+      <text xml:lang="de">Uhlenbrock Konfiguration</text>
+      <text xml:lang="nl">Uhlenbrock Configuratie</text>
     </label>
     <label>
       <text> </text>
@@ -52,6 +53,7 @@
     <label>
       <text>Braking parameters</text>
       <text xml:lang="de">Bremsparameter</text>
+      <text xml:lang="nl">Remparameters</text>
     </label>
     <label>
       <text> </text>
@@ -75,7 +77,8 @@
       <display item="Smoke generator option 3"/>
       <display item="Smoke generator option 4"/>
       <display item="Smoke generator option 5"/>
-      <display item="Smoke generator option 6"/>  
+      <display item="Smoke generator option 6"/>
+      <display item="Smoke generator option 7"/>
     </column>
     <column>
       <separator/>
@@ -90,6 +93,7 @@
         <text>Errors or Information (Read-Only)</text>
         <text xml:lang="de">Fehler oder Information (Read-Only)</text>
         <text xml:lang="it">Informazioni o Errori (Solo-Lettura)</text>
+        <text xml:lang="nl">Fouten of Informatie (Alleen Lezen)</text>
       </label>
     <label>
       <text> </text>
@@ -107,5 +111,4 @@
       <display item="Offset Register"/>
       <display item="Page Register"/>
   </column>
-  <name>Uhlenbrock</name>
 </pane>
