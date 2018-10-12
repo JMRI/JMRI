@@ -15,7 +15,7 @@
     <revhistory xmlns="http://docbook.org/ns/docbook">
         <revision>
             <revnumber>1</revnumber>
-            <date>2018-10-11</date>
+            <date>2018-10-12</date>
             <authorinitials>EB</authorinitials>
             <revremark>Initial version as separate file, taken from Uhlenbrock_32300.xml</revremark>
         </revision>
@@ -94,6 +94,10 @@
                 <value>1</value>
             </qualifier>
             <column>
+                <display item="Range I Bank switch"/>
+            </column>
+            <column><label><text>      </text></label></column>
+            <column>
                 <label>
                     <text>CVs for SUSI range I :</text>
                     <text xml:lang="de">CVs für SUSI Adressbereich I :</text>
@@ -108,6 +112,10 @@
                 <value>2</value>
             </qualifier>
             <column>
+                <display item="Range II Bank switch"/>
+            </column>
+            <column><label><text>      </text></label></column>
+            <column>
                 <label>
                     <text>CVs for SUSI range II :</text>
                     <text xml:lang="de">CVs für SUSI Adressbereich II :</text>
@@ -121,6 +129,10 @@
                 <relation>eq</relation>
                 <value>3</value>
             </qualifier>
+            <column>
+                <display item="Range III Bank switch"/>
+            </column>
+            <column><label><text>      </text></label></column>
             <column>
                 <label>
                     <text>CVs for SUSI range III :</text>
@@ -137,6 +149,11 @@
                     <relation>eq</relation>
                     <value>1</value>
                 </qualifier>
+                <qualifier>
+                    <variableref>Range I Bank switch</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
+                </qualifier>
                 <column>
                     <label><text> </text></label>
                     <display item="Range I Sound Volume"/>
@@ -148,6 +165,7 @@
                     <label><text> </text></label>
                 </column>
                 <column><label><text>      </text></label></column>
+                <column><label><text>      </text></label></column>
                 <column>
                     <label><text> </text></label>
                     <display item="Range I Chuff Control"/>
@@ -156,7 +174,45 @@
                     <display item="Range I Whistle Repeat Pause" format="checkbox"/>
                     <display item="Range I Chuffs halved" format="checkbox"/>
                     <display item="Range I Fader time" format="checkbox"/>
+                </column>
+            </group>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Range I Bank switch</variableref>
+                    <relation>eq</relation>
+                    <value>2</value>
+                </qualifier>
+                <column>
                     <label><text> </text></label>
+                    <display item="Bank B Range I Volume for chuffs"/>
+                    <display item="Bank B Range I Alternative Volume"/>
+                    <label><text> </text></label>
+                    <display item="Bank B Range I Volume sound number 1"/>
+                    <!-- TODO add Bank B Range I sounds 2 - 7 and 9 - 25 here -->
+                </column>
+            </group>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Range I Bank switch</variableref>
+                    <relation>eq</relation>
+                    <value>3</value>
+                </qualifier>
+                <column>
+                    <label><text> </text></label>
+                    <display item="Bank C Range I Diesel notch after idle"/>
+                    <label><text> </text></label>
+                    <display item="Bank C Range I Speed step next gear 1"/>
+                    <!-- TODO add Bank C Range I Speed step next gear 2 - 12 here -->
                 </column>
             </group>
             <group>
@@ -164,6 +220,11 @@
                     <variableref>SUSI-range</variableref>
                     <relation>eq</relation>
                     <value>2</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Range II Bank switch</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
                 </qualifier>
                 <column>
                     <label><text> </text></label>
@@ -176,6 +237,7 @@
                     <label><text> </text></label>
                 </column>
                 <column><label><text>      </text></label></column>
+                <column><label><text>      </text></label></column>
                 <column>
                     <label><text> </text></label>
                     <display item="Range II Chuff Control"/>
@@ -184,7 +246,45 @@
                     <display item="Range II Whistle Repeat Pause" format="checkbox"/>
                     <display item="Range II Chuffs halved" format="checkbox"/>
                     <display item="Range II Fader time" format="checkbox"/>
+                </column>
+            </group>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>2</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Range II Bank switch</variableref>
+                    <relation>eq</relation>
+                    <value>2</value>
+                </qualifier>
+                <column>
                     <label><text> </text></label>
+                    <display item="Bank B Range II Volume for chuffs"/>
+                    <display item="Bank B Range II Alternative Volume"/>
+                    <label><text> </text></label>
+                    <display item="Bank B Range II Volume sound number 1"/>
+                    <!-- TODO add Bank B Range II sounds 2 - 7 and 9 - 25 here -->
+                </column>
+            </group>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>2</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Range II Bank switch</variableref>
+                    <relation>eq</relation>
+                    <value>3</value>
+                </qualifier>
+                <column>
+                    <label><text> </text></label>
+                    <display item="Bank C Range II Diesel notch after idle"/>
+                    <label><text> </text></label>
+                    <display item="Bank C Range II Speed step next gear 1"/>
+                    <!-- TODO add Bank C Range II Speed step next gear 2 - 12 here -->
                 </column>
             </group>
             <group>
@@ -192,6 +292,11 @@
                     <variableref>SUSI-range</variableref>
                     <relation>eq</relation>
                     <value>3</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Range III Bank switch</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
                 </qualifier>
                 <column>
                     <label><text> </text></label>
@@ -204,6 +309,7 @@
                      <label><text> </text></label>
                 </column>
                 <column><label><text>      </text></label></column>
+                <column><label><text>      </text></label></column>
                 <column>
                     <label><text> </text></label>
                     <display item="Range III Chuff Control"/>
@@ -212,7 +318,45 @@
                     <display item="Range III Whistle Repeat Pause" format="checkbox"/>
                     <display item="Range III Chuffs halved" format="checkbox"/>
                     <display item="Range III Fader time" format="checkbox"/>
+                </column>
+            </group>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>3</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Range III Bank switch</variableref>
+                    <relation>eq</relation>
+                    <value>2</value>
+                </qualifier>
+                <column>
                     <label><text> </text></label>
+                    <display item="Bank B Range III Volume for chuffs"/>
+                    <display item="Bank B Range III Alternative Volume"/>
+                    <label><text> </text></label>
+                    <display item="Bank B Range III Volume sound number 1"/>
+                    <!-- TODO add Bank B Range III sounds 2 - 7 and 9 - 25 here -->
+                </column>
+            </group>
+            <group>
+                <qualifier>
+                    <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>3</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Range III Bank switch</variableref>
+                    <relation>eq</relation>
+                    <value>3</value>
+                </qualifier>
+                <column>
+                    <label><text> </text></label>
+                    <display item="Bank C Range III Diesel notch after idle"/>
+                    <label><text> </text></label>
+                    <display item="Bank C Range III Speed step next gear 1"/>
+                    <!-- TODO add Bank C Range III Speed step next gear 2 - 12 here -->
                 </column>
             </group>
         </row>
@@ -221,6 +365,11 @@
             <group>
                 <qualifier>
                     <variableref>SUSI-range</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Range I Bank switch</variableref>
                     <relation>eq</relation>
                     <value>1</value>
                 </qualifier>
@@ -248,7 +397,6 @@
                     <display item="Range I Steam output idle"/>
                     <display item="Range I Steam output start-up"/>
                     <label><text> </text></label>
-                    <display item="Range I Bank switch"/>
                 </column>
                 <column><label><text>      </text></label></column>
                 <column>
@@ -272,6 +420,11 @@
                     <variableref>SUSI-range</variableref>
                     <relation>eq</relation>
                     <value>2</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Range II Bank switch</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
                 </qualifier>
                 <column>
                     <display item="Range II Sound switch off time" include="32500,32504,36520,36560"/>
@@ -297,7 +450,6 @@
                     <display item="Range II Steam output idle"/>
                     <display item="Range II Steam output start-up"/>
                     <label><text> </text></label>
-                    <display item="Range II Bank switch"/>
                 </column>
                 <column><label><text>      </text></label></column>
                 <column>
@@ -321,6 +473,11 @@
                     <variableref>SUSI-range</variableref>
                     <relation>eq</relation>
                     <value>3</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Range III Bank switch</variableref>
+                    <relation>eq</relation>
+                    <value>1</value>
                 </qualifier>
                 <column>
                     <display item="Range III Sound switch off time" include="32500,32504,36520,36560"/>
@@ -346,7 +503,6 @@
                     <display item="Range III Steam output idle"/>
                     <display item="Range III Steam output start-up"/>
                     <label><text> </text></label>
-                    <display item="Range III Bank switch"/>
                 </column>
                 <column><label><text>      </text></label></column>
                 <column>
