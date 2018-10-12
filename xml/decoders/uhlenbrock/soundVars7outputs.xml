@@ -377,12 +377,12 @@
     </variable>
     <!-- Special functions assignment -->
     <!-- IntelliSound4 914A, 919A - 923A-->
-    <variable item="Range I Screeching off Function" CV="914.1" default="21" include="32500,32504,36520,36560">
+    <variable item="Range I Alternative Volume" CV="914.1" default="21" include="32500,32504,36520,36560">
         <decVal min="0" max="28"/>
-        <label>Screeching off Function</label>
-        <label xml:lang="de">Kurvenquietschen aus Funktion</label>
-        <tooltip>&lt;html&gt;Special function with which the external input on E-locos and Diesel locos&lt;br&gt;for the Curve screeching, can be switched off&lt;/html&gt;</tooltip>
-        <tooltip xml:lang="de">&lt;html&gt;Sonderfunktion mit der der externe Eingang bei E-Loks und Dieselloks&lt;br&gt;für das Kurvenquietschen abgeschaltet werden kann&lt;/html&gt;</tooltip>
+        <label>Special function Alt. Volume</label>
+        <label xml:lang="de">Sonderfunktion Alternativlautstärke</label>
+        <tooltip>Special function switches alternative volume from CV 908B</tooltip>
+        <tooltip xml:lang="de">Sonderfunktion schaltet Alternativlautstärke aus CV 908B</tooltip>
     </variable>
     <variable item="Range I Idle 0" CV="919.1" mask="XXXXXXXV" default="0" include="32500,32504,36520,36560">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -422,12 +422,12 @@
         <label>Speed step at which curve squealing stops</label>
         <label xml:lang="de">Fahrstufe ab der Kurvenquietschen aufhört</label>
     </variable>
-    <variable item="Range I Alternative Volume" CV="924.1" default="31">
+    <variable item="Range I Screeching off Function" CV="924.1" default="31">
         <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoice.xml"/>
         <label>Screeching off Function</label>
         <label xml:lang="de">Kurvenquietschen aus Funktion</label>
-        <tooltip>Special function switches alternative volume from CV 908B</tooltip>
-        <tooltip xml:lang="de">Sonderfunktion schaltet Alternativlautstärke aus CV 908B</tooltip>
+        <tooltip>&lt;html&gt;Special function with which the external input on E-locos and Diesel locos&lt;br&gt;for the Curve screeching, can be switched off&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Sonderfunktion mit der der externe Eingang bei E-Loks und Dieselloks&lt;br&gt;für das Kurvenquietschen abgeschaltet werden kann&lt;/html&gt;</tooltip>
     </variable>
     <variable item="Range I Start-up delay off Function" CV="925.1" default="31">
         <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoice.xml"/>
@@ -853,12 +853,12 @@
     </variable>
     <!-- Special functions assignment -->
     <!-- IntelliSound4 954A, 959A - 963A-->
-    <variable item="Range II Screeching off Function" CV="954.1" default="21" include="32500,32504,36520,36560">
+    <variable item="Range II Alternative Volume" CV="954.1" default="21" include="32500,32504,36520,36560">
         <decVal min="0" max="28"/>
-        <label>Screeching off Function</label>
-        <label xml:lang="de">Kurvenquietschen aus Funktion</label>
-        <tooltip>&lt;html&gt;Special function with which the external input on E-locos and Diesel locos&lt;br&gt;for the Curve screeching, can be switched off&lt;/html&gt;</tooltip>
-        <tooltip xml:lang="de">&lt;html&gt;Sonderfunktion mit der der externe Eingang bei E-Loks und Dieselloks&lt;br&gt;für das Kurvenquietschen abgeschaltet werden kann&lt;/html&gt;</tooltip>
+        <label>Special function Alt. Volume</label>
+        <label xml:lang="de">Sonderfunktion Alternativlautstärke</label>
+        <tooltip>Special function switches alternative volume from CV 948B</tooltip>
+        <tooltip xml:lang="de">Sonderfunktion schaltet Alternativlautstärke aus CV 948B</tooltip>
     </variable>
     <variable item="Range II Idle 0" CV="959.1" mask="XXXXXXXV" default="0" include="32500,32504,36520,36560">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -1329,12 +1329,12 @@
     </variable>
     <!-- Special functions assignment -->
     <!-- IntelliSound4 994A, 999A - 1003A-->
-    <variable item="Range III Screeching off Function" CV="994.1" default="21" include="32500,32504,36520,36560">
+    <variable item="Range III Alternative Volume" CV="994.1" default="21" include="32500,32504,36520,36560">
         <decVal min="0" max="28"/>
-        <label>Screeching off Function</label>
-        <label xml:lang="de">Kurvenquietschen aus Funktion</label>
-        <tooltip>&lt;html&gt;Special function with which the external input on E-locos and Diesel locos&lt;br&gt;for the Curve screeching, can be switched off&lt;/html&gt;</tooltip>
-        <tooltip xml:lang="de">&lt;html&gt;Sonderfunktion mit der der externe Eingang bei E-Loks und Dieselloks&lt;br&gt;für das Kurvenquietschen abgeschaltet werden kann&lt;/html&gt;</tooltip>
+        <label>Special function Alt. Volume</label>
+        <label xml:lang="de">Sonderfunktion Alternativlautstärke</label>
+        <tooltip>Special function switches alternative volume from CV 908B</tooltip>
+        <tooltip xml:lang="de">Sonderfunktion schaltet Alternativlautstärke aus CV 908B</tooltip>
     </variable>
     <variable item="Range III Idle 0" CV="999.1" mask="XXXXXXXV" default="0" include="32500,32504,36520,36560">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -1546,7 +1546,7 @@
     <!-- TODO add Bank B Range III sounds 2 - 7 -->
     <variable item="Bank B Range III Alternative Volume" CV="988.2" default="255" include="32500,32504,36520,36560">
         <decVal min="0" max="255"/>
-        <label>Alternative Volume</label>
+        <label>Alternative Volume</label>919
         <label xml:lang="de">Alternative Lautstärke</label>
         <tooltip>Switchable by function in CV 994A</tooltip>
         <tooltip xml:lang="de">Schaltbar per Funktion aus CV 994A</tooltip>

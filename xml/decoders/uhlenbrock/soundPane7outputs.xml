@@ -383,7 +383,6 @@
                     <display item="Range I Time between two chuffs at max speed"/>
                     <display item="Range I Time between two chuffs at min speed"/>
                     <label><text> </text></label>
-                    <display item="Range I Screeching off Function" include="32500,32504,36520,36560"/>
                     <display item="Range I Squeal Start Function" include="32500,32504,36520,36560"/>
                     <display item="Range I Squeal Stop Function" include="32500,32504,36520,36560"/>
                 </column>
@@ -397,6 +396,8 @@
                     <display item="Range I Steam output idle"/>
                     <display item="Range I Steam output start-up"/>
                     <label><text> </text></label>
+                    <display item="Range I Screeching off Function"/>
+                    <display item="Range I Alternative Volume" include="32500,32504,36520,36560"/>
                 </column>
                 <column><label><text>      </text></label></column>
                 <column>
@@ -436,7 +437,6 @@
                     <display item="Range II Time between two chuffs at max speed"/>
                     <display item="Range II Time between two chuffs at min speed"/>
                     <label><text> </text></label>
-                    <display item="Range II Screeching off Function" include="32500,32504,36520,36560"/>
                     <display item="Range II Squeal Start Function" include="32500,32504,36520,36560"/>
                     <display item="Range II Squeal Stop Function" include="32500,32504,36520,36560"/>
                 </column>
@@ -450,6 +450,8 @@
                     <display item="Range II Steam output idle"/>
                     <display item="Range II Steam output start-up"/>
                     <label><text> </text></label>
+                    <display item="Range II Screeching off Function"/>
+                    <display item="Range II Alternative Volume" include="32500,32504,36520,36560"/>
                 </column>
                 <column><label><text>      </text></label></column>
                 <column>
@@ -489,7 +491,6 @@
                     <display item="Range III Time between two chuffs at max speed"/>
                     <display item="Range III Time between two chuffs at min speed"/>
                     <label><text> </text></label>
-                    <display item="Range III Screeching off Function" include="32500,32504,36520,36560"/>
                     <display item="Range III Squeal Start Function" include="32500,32504,36520,36560"/>
                     <display item="Range III Squeal Stop Function" include="32500,32504,36520,36560"/>
                 </column>
@@ -503,6 +504,8 @@
                     <display item="Range III Steam output idle"/>
                     <display item="Range III Steam output start-up"/>
                     <label><text> </text></label>
+                    <display item="Range III Screeching off Function"/>
+                    <display item="Range III Alternative Volume" include="32500,32504,36520,36560"/>
                 </column>
                 <column><label><text>      </text></label></column>
                 <column>
