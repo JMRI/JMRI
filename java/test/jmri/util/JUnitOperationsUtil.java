@@ -256,6 +256,7 @@ public class JUnitOperationsUtil {
         train1.setRoute(route1);
         train1.setDepartureTime("6", "5");
         train1.setComment("Test comment for train STF");
+        train1.setDescription("Train STF");
 
         // increase test coverage by providing a manifest logo for this train
         java.net.URL url = FileUtil.findURL("resources/logo.gif", FileUtil.Location.INSTALLED);
@@ -266,6 +267,7 @@ public class JUnitOperationsUtil {
         Train train2 = new Train("2", "SFF");
         train2.setRoute(route1);
         train2.setDepartureTime("22", "45");
+        train2.setDescription("Train SFF");
         tmanager.register(train2);
 
         // improve test coverage
@@ -495,6 +497,7 @@ public class JUnitOperationsUtil {
         car.setOwner(owner);
         car.setBuilt(built);
         car.setMoves(moves);
+        car.setColor("Black");
 
         if (track != null) {
             Assert.assertEquals("place car", Track.OKAY, car.setLocation(track.getLocation(), track));

@@ -1,19 +1,23 @@
 package jmri.jmrit.operations.routes;
 
 import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import org.netbeans.jemmy.operators.JSpinnerOperator;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class SetTrainIconRouteFrameTest {
+public class SetTrainIconRouteFrameTest extends OperationsTestCase {
 
     @Test
     public void testCTorNull() {
@@ -30,19 +34,63 @@ public class SetTrainIconRouteFrameTest {
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(t);
     }
+    
+    @Test
+    public void testFrameButtons() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Route route = InstanceManager.getDefault(RouteManager.class).getRouteByName("Southbound Main Route");
+        Assert.assertNotNull(route);
+        SetTrainIconRouteFrame t = new SetTrainIconRouteFrame(route.getName());
+        Assert.assertNotNull("exists",t);
+        
+        JemmyUtil.enterClickAndLeave(t.placeButton);
+
+        // error dialog should appear
+        JemmyUtil.pressDialogButton(t, Bundle.getMessage("PanelNotFound"), "OK");
+
+        // confirm default
+        RouteLocation rl = route.getDepartsRouteLocation();
+        Assert.assertEquals("icon position", 25, rl.getTrainIconX());
+        
+        // modify spinner and update
+        JSpinnerOperator so = new JSpinnerOperator(t.spinTrainIconX);
+        so.setValue(345);
+        JemmyUtil.enterClickAndLeave(t.applyButton);
+        
+        // confirmation dialog should appear      
+        JemmyUtil.pressDialogButton(t, Bundle.getMessage("DoYouWantThisRoute"), "Yes");
+
+        Assert.assertEquals("icon position", 345, rl.getTrainIconX());
+        
+        // Save changes
+        JemmyUtil.enterClickAndLeave(t.saveButton);
+        
+        JemmyUtil.enterClickAndLeave(t.nextButton);
+        
+        // confirm next route location has been loaded
+        Assert.assertEquals("spinner value for ", 75, t.spinTrainIconX.getValue());
+        
+        JemmyUtil.enterClickAndLeave(t.previousButton);
+        
+        // confirm previous route location has been loaded
+        Assert.assertEquals("spinner value for ", 345, t.spinTrainIconX.getValue());
+        
+        JUnitUtil.dispose(t);
+    }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
-        JUnitOperationsUtil.resetOperationsManager();
+        super.setUp();
+ 
         JUnitOperationsUtil.initOperationsData();
     }
 
+    @Override
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SetTrainIconRouteFrameTest.class);

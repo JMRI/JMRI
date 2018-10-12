@@ -276,6 +276,24 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
             }
         }
     }
+    
+    public boolean hasRoadRestrictions() {
+        for (Train train : getList()) {
+            if (!train.getRoadOption().equals(Train.ALL_ROADS)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean hasLoadRestrictions() {
+        for (Train train : getList()) {
+            if (!train.getLoadOption().equals(Train.ALL_LOADS)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public void dispose() {
         _trainHashTable.clear();
