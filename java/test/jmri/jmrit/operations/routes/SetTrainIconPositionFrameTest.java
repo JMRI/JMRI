@@ -21,6 +21,17 @@ public class SetTrainIconPositionFrameTest {
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
     }
+    
+    @Test
+    public void testFrameButtons() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        SetTrainIconPositionFrame t = new SetTrainIconPositionFrame();
+        Assert.assertNotNull("exists", t);
+        
+        
+        
+        JUnitUtil.dispose(t);
+    }
 
     // The minimal setup for log4J
     @Before

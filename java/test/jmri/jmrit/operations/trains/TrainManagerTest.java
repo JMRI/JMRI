@@ -1,6 +1,7 @@
 
 package jmri.jmrit.operations.trains;
 
+import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -14,6 +15,7 @@ import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -203,7 +205,8 @@ public class TrainManagerTest extends OperationsTestCase {
     }
     
     @Test
-    public void testSelectedTrains() {
+    public void testSelectedTrainsGUI() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         
         // don't build train 1
@@ -214,7 +217,7 @@ public class TrainManagerTest extends OperationsTestCase {
         
         tmanager.buildSelectedTrains(tmanager.getTrainsByIdList());
         
-        Thread t = getThreadByName("Build Trains");
+        Thread t = jmri.util.JUnitUtil.getThreadByName("Build Trains");
         if (t != null) {
             jmri.util.JUnitUtil.waitFor(() -> {
                 return t.getState().equals(Thread.State.TERMINATED);
@@ -262,13 +265,6 @@ public class TrainManagerTest extends OperationsTestCase {
         }, "wait terminate");
        
         Assert.assertFalse(train2.isBuilt());
-    }
-    
-    private Thread getThreadByName(String threadName) {
-        for (Thread t : Thread.getAllStackTraces().keySet()) {
-            if (t.getName().equals(threadName)) return t;
-        }
-        return null;
     }
 
     // from here down is testing infrastructure
