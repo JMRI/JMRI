@@ -4,8 +4,8 @@ import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.rollingstock.cars.CarEditFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
@@ -24,8 +24,11 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
     @Test
     public void testCarAttributeEditFrameColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        JUnitOperationsUtil.initOperationsData();
         CarAttributeEditFrame f = new CarAttributeEditFrame();
-        f.initComponents(CarEditFrame.COLOR);
+        f.initComponents(CarAttributeEditFrame.COLOR);
+        f.toggleShowQuanity();
         f.addTextBox.setText("Pink");
         JemmyUtil.enterClickAndLeave(f.addButton);
         // new color should appear at start of list
@@ -61,7 +64,8 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         cm.newKernel("TwoCars");
 
         CarAttributeEditFrame f = new CarAttributeEditFrame();
-        f.initComponents(CarEditFrame.KERNEL);
+        f.initComponents(CarAttributeEditFrame.KERNEL);
+        f.toggleShowQuanity();
         // confirm that space and TwoCar kernel exists
         Assert.assertEquals("space 1", "", f.comboBox.getItemAt(0));
         Assert.assertEquals("previous kernel 1", "TwoCars", f.comboBox.getItemAt(1));
@@ -95,16 +99,16 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
     public void testCarAttributeEditFrame2() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CarAttributeEditFrame f = new CarAttributeEditFrame();
-        f.initComponents(CarEditFrame.LENGTH);
+        f.initComponents(CarAttributeEditFrame.LENGTH);
         JUnitUtil.dispose(f);
         f = new CarAttributeEditFrame();
-        f.initComponents(CarEditFrame.OWNER);
+        f.initComponents(CarAttributeEditFrame.OWNER);
         JUnitUtil.dispose(f);
         f = new CarAttributeEditFrame();
-        f.initComponents(CarEditFrame.ROAD);
+        f.initComponents(CarAttributeEditFrame.ROAD);
         JUnitUtil.dispose(f);
         f = new CarAttributeEditFrame();
-        f.initComponents(CarEditFrame.TYPE);
+        f.initComponents(CarAttributeEditFrame.TYPE);
         JUnitUtil.dispose(f);
     }
 

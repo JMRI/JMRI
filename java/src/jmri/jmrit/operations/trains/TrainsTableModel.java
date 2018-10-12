@@ -35,21 +35,23 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     TrainManager trainManager = InstanceManager.getDefault(TrainManager.class); // There is only one manager
 
     // Defines the columns
-    private static final int IDCOLUMN = 0;
-    private static final int TIME_COLUMN = IDCOLUMN + 1;
-    private static final int BUILDBOXCOLUMN = TIME_COLUMN + 1;
-    private static final int BUILDCOLUMN = BUILDBOXCOLUMN + 1;
-    private static final int NAMECOLUMN = BUILDCOLUMN + 1;
-    private static final int DESCRIPTIONCOLUMN = NAMECOLUMN + 1;
-    private static final int ROUTECOLUMN = DESCRIPTIONCOLUMN + 1;
-    private static final int DEPARTSCOLUMN = ROUTECOLUMN + 1;
-    private static final int TERMINATESCOLUMN = DEPARTSCOLUMN + 1;
-    private static final int CURRENTCOLUMN = TERMINATESCOLUMN + 1;
-    private static final int STATUSCOLUMN = CURRENTCOLUMN + 1;
-    private static final int ACTIONCOLUMN = STATUSCOLUMN + 1;
-    private static final int EDITCOLUMN = ACTIONCOLUMN + 1;
+    private static final int ID_COLUMN = 0;
+    private static final int TIME_COLUMN = ID_COLUMN + 1;
+    private static final int BUILDBOX_COLUMN = TIME_COLUMN + 1;
+    private static final int BUILD_COLUMN = BUILDBOX_COLUMN + 1;
+    private static final int NAME_COLUMN = BUILD_COLUMN + 1;
+    private static final int DESCRIPTION_COLUMN = NAME_COLUMN + 1;
+    private static final int ROAD_COLUMN = DESCRIPTION_COLUMN + 1;
+    private static final int LOAD_COLUMN = ROAD_COLUMN + 1;
+    private static final int ROUTE_COLUMN = LOAD_COLUMN + 1;
+    private static final int DEPARTS_COLUMN = ROUTE_COLUMN + 1;
+    private static final int TERMINATES_COLUMN = DEPARTS_COLUMN + 1;
+    private static final int CURRENT_COLUMN = TERMINATES_COLUMN + 1;
+    private static final int STATUS_COLUMN = CURRENT_COLUMN + 1;
+    private static final int ACTION_COLUMN = STATUS_COLUMN + 1;
+    private static final int EDIT_COLUMN = ACTION_COLUMN + 1;
 
-    private static final int HIGHESTCOLUMN = EDITCOLUMN + 1;
+    private static final int HIGHESTCOLUMN = EDIT_COLUMN + 1;
 
     public TrainsTableModel() {
         super();
@@ -66,9 +68,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     public void setSort(int sort) {
         _sort = sort;
         updateList();
-        XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(IDCOLUMN), sort == SORTBYID);
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(TIME_COLUMN), sort == SORTBYTIME);
+        updateColumnVisible();
     }
 
     private boolean _showAll = true;
@@ -120,25 +120,25 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         table.setDefaultRenderer(Object.class, new MyTableCellRenderer());
         initTable();
     }
-    
+
     // Train frame table column widths (13), starts with id column and ends with edit
-    private final int[] _tableColumnWidths = {50, 50, 50, 72, 100, 140, 120, 120, 120, 120, 120, 90, 70};
+    private final int[] _tableColumnWidths = {50, 50, 50, 72, 100, 140, 50, 50, 120, 120, 120, 120, 120, 90, 70};
 
     void initTable() {
         // Use XTableColumnModel so we can control which columns are visible
         XTableColumnModel tcm = new XTableColumnModel();
         _table.setColumnModel(tcm);
         _table.createDefaultColumnsFromModel();
-        
+
         // Install the button handlers
         ButtonRenderer buttonRenderer = new ButtonRenderer();
         TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
-        tcm.getColumn(EDITCOLUMN).setCellRenderer(buttonRenderer);
-        tcm.getColumn(EDITCOLUMN).setCellEditor(buttonEditor);
-        tcm.getColumn(ACTIONCOLUMN).setCellRenderer(buttonRenderer);
-        tcm.getColumn(ACTIONCOLUMN).setCellEditor(buttonEditor);
-        tcm.getColumn(BUILDCOLUMN).setCellRenderer(buttonRenderer);
-        tcm.getColumn(BUILDCOLUMN).setCellEditor(buttonEditor);
+        tcm.getColumn(EDIT_COLUMN).setCellRenderer(buttonRenderer);
+        tcm.getColumn(EDIT_COLUMN).setCellEditor(buttonEditor);
+        tcm.getColumn(ACTION_COLUMN).setCellRenderer(buttonRenderer);
+        tcm.getColumn(ACTION_COLUMN).setCellEditor(buttonEditor);
+        tcm.getColumn(BUILD_COLUMN).setCellRenderer(buttonRenderer);
+        tcm.getColumn(BUILD_COLUMN).setCellEditor(buttonEditor);
         _table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
 
         // set column preferred widths
@@ -148,7 +148,15 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         _frame.loadTableDetails(_table);
 
         // turn off column
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(IDCOLUMN), _sort == SORTBYID);
+        updateColumnVisible();
+    }
+    
+    private void updateColumnVisible() {
+        XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(ID_COLUMN), _sort == SORTBYID);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(TIME_COLUMN), _sort == SORTBYTIME);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(ROAD_COLUMN), trainManager.hasRoadRestrictions());
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), trainManager.hasLoadRestrictions());
     }
 
     @Override
@@ -178,31 +186,35 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     @Override
     public String getColumnName(int col) {
         switch (col) {
-            case IDCOLUMN:
+            case ID_COLUMN:
                 return IDCOLUMNNAME;
             case TIME_COLUMN:
                 return TIMECOLUMNNAME;
-            case BUILDBOXCOLUMN:
+            case BUILDBOX_COLUMN:
                 return BUILDBOXCOLUMNNAME;
-            case BUILDCOLUMN:
+            case BUILD_COLUMN:
                 return BUILDCOLUMNNAME;
-            case NAMECOLUMN:
+            case NAME_COLUMN:
                 return NAMECOLUMNNAME;
-            case DESCRIPTIONCOLUMN:
+            case DESCRIPTION_COLUMN:
                 return DESCRIPTIONCOLUMNNAME;
-            case ROUTECOLUMN:
+            case ROAD_COLUMN:
+                return Bundle.getMessage("Road");
+            case LOAD_COLUMN:
+                return Bundle.getMessage("Load");
+            case ROUTE_COLUMN:
                 return ROUTECOLUMNNAME;
-            case DEPARTSCOLUMN:
+            case DEPARTS_COLUMN:
                 return DEPARTSCOLUMNNAME;
-            case CURRENTCOLUMN:
+            case CURRENT_COLUMN:
                 return CURRENTCOLUMNNAME;
-            case TERMINATESCOLUMN:
+            case TERMINATES_COLUMN:
                 return TERMINATESCOLUMNNAME;
-            case STATUSCOLUMN:
+            case STATUS_COLUMN:
                 return STATUSCOLUMNNAME;
-            case ACTIONCOLUMN:
+            case ACTION_COLUMN:
                 return ACTIONCOLUMNNAME;
-            case EDITCOLUMN:
+            case EDIT_COLUMN:
                 return EDITCOLUMNNAME;
             default:
                 return "unknown"; // NOI18N
@@ -212,21 +224,23 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
-            case BUILDBOXCOLUMN:
+            case BUILDBOX_COLUMN:
                 return Boolean.class;
-            case IDCOLUMN:
+            case ID_COLUMN:
             case TIME_COLUMN:
-            case NAMECOLUMN:
-            case DESCRIPTIONCOLUMN:
-            case ROUTECOLUMN:
-            case DEPARTSCOLUMN:
-            case CURRENTCOLUMN:
-            case TERMINATESCOLUMN:
-            case STATUSCOLUMN:
+            case NAME_COLUMN:
+            case DESCRIPTION_COLUMN:
+            case ROAD_COLUMN:
+            case LOAD_COLUMN:
+            case ROUTE_COLUMN:
+            case DEPARTS_COLUMN:
+            case CURRENT_COLUMN:
+            case TERMINATES_COLUMN:
+            case STATUS_COLUMN:
                 return String.class;
-            case BUILDCOLUMN:
-            case ACTIONCOLUMN:
-            case EDITCOLUMN:
+            case BUILD_COLUMN:
+            case ACTION_COLUMN:
+            case EDIT_COLUMN:
                 return JButton.class;
             default:
                 return null;
@@ -236,11 +250,11 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
-            case BUILDCOLUMN:
-            case BUILDBOXCOLUMN:
-            case ROUTECOLUMN:
-            case ACTIONCOLUMN:
-            case EDITCOLUMN:
+            case BUILD_COLUMN:
+            case BUILDBOX_COLUMN:
+            case ROUTE_COLUMN:
+            case ACTION_COLUMN:
+            case EDIT_COLUMN:
                 return true;
             default:
                 return false;
@@ -257,38 +271,43 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             return "ERROR train unknown " + row; // NOI18N
         }
         switch (col) {
-            case IDCOLUMN:
+            case ID_COLUMN:
                 return train.getId();
             case TIME_COLUMN:
                 return train.getDepartureTime();
-            case NAMECOLUMN:
+            case NAME_COLUMN:
                 return train.getIconName();
-            case DESCRIPTIONCOLUMN:
+            case DESCRIPTION_COLUMN:
                 return train.getDescription();
-            case BUILDBOXCOLUMN: {
+            case BUILDBOX_COLUMN:
                 return Boolean.valueOf(train.isBuildEnabled());
-            }
-            case ROUTECOLUMN:
+            case ROAD_COLUMN:
+                return getModifiedString(train.getRoadNames().length, train.getRoadOption().equals(Train.ALL_ROADS),
+                        train.getRoadOption().equals(Train.INCLUDE_ROADS));
+            case LOAD_COLUMN:
+                return getModifiedString(train.getLoadNames().length, train.getLoadOption().equals(Train.ALL_LOADS),
+                        train.getLoadOption().equals(Train.INCLUDE_LOADS));
+            case ROUTE_COLUMN:
                 return train.getTrainRouteName();
-            case DEPARTSCOLUMN: {
+            case DEPARTS_COLUMN: {
                 if (train.getDepartureTrack() == null) {
                     return train.getTrainDepartsName();
                 } else {
                     return train.getTrainDepartsName() + " (" + train.getDepartureTrack().getName() + ")";
                 }
             }
-            case CURRENTCOLUMN:
+            case CURRENT_COLUMN:
                 return train.getCurrentLocationName();
-            case TERMINATESCOLUMN: {
+            case TERMINATES_COLUMN: {
                 if (train.getTerminationTrack() == null) {
                     return train.getTrainTerminatesName();
                 } else {
                     return train.getTrainTerminatesName() + " (" + train.getTerminationTrack().getName() + ")";
                 }
             }
-            case STATUSCOLUMN:
+            case STATUS_COLUMN:
                 return train.getStatus();
-            case BUILDCOLUMN: {
+            case BUILD_COLUMN: {
                 if (train.isBuilt()) {
                     if (Setup.isGenerateCsvManifestEnabled() && trainManager.isOpenFileEnabled()) {
                         return Bundle.getMessage("OpenFile");
@@ -304,7 +323,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 }
                 return Bundle.getMessage("Build");
             }
-            case ACTIONCOLUMN: {
+            case ACTION_COLUMN: {
                 if (train.getBuildFailed()) {
                     return Bundle.getMessage("Report");
                 }
@@ -314,29 +333,39 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 }
                 return trainManager.getTrainsFrameTrainAction();
             }
-            case EDITCOLUMN:
+            case EDIT_COLUMN:
                 return Bundle.getMessage("ButtonEdit");
             default:
                 return "unknown " + col; // NOI18N
         }
     }
 
+    private String getModifiedString(int number, boolean all, boolean accept) {
+        if (all) {
+            return "";
+        }
+        if (accept) {
+            return "A " + Integer.toString(number); // NOI18N
+        }
+        return "E " + Integer.toString(number); // NOI18N
+    }
+
     @Override
     public void setValueAt(Object value, int row, int col) {
         switch (col) {
-            case EDITCOLUMN:
+            case EDIT_COLUMN:
                 editTrain(row);
                 break;
-            case BUILDCOLUMN:
+            case BUILD_COLUMN:
                 buildTrain(row);
                 break;
-            case ROUTECOLUMN:
+            case ROUTE_COLUMN:
                 editRoute(row);
                 break;
-            case ACTIONCOLUMN:
+            case ACTION_COLUMN:
                 actionTrain(row);
                 break;
-            case BUILDBOXCOLUMN: {
+            case BUILDBOX_COLUMN: {
                 Train train = sysList.get(row);
                 train.setBuildEnabled(((Boolean) value).booleanValue());
                 break;
@@ -417,8 +446,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             } else {
                 if (!train.printManifestIfBuilt()) {
                     log.debug("Manifest file for train ({}) not found", train.getName());
-                    int result = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("TrainManifestFileMissing"),
-                            new Object[]{train.getName()}), Bundle.getMessage("TrainManifestFileError"),
+                    int result = JOptionPane.showConfirmDialog(null,
+                            MessageFormat.format(Bundle.getMessage("TrainManifestFileMissing"),
+                                    new Object[]{train.getName()}),
+                            Bundle.getMessage("TrainManifestFileError"),
                             JOptionPane.YES_NO_OPTION);
                     if (result == JOptionPane.YES_OPTION) {
                         train.setModified(true);
@@ -464,7 +495,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         } else if (train.isBuilt() && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.TERMINATE)) {
             log.debug("Terminate train ({})", train.getName());
             int status = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("TerminateTrain"),
-                    new Object[]{train.getName(), train.getDescription()}), MessageFormat.format(Bundle
+                    new Object[]{train.getName(), train.getDescription()}),
+                    MessageFormat.format(Bundle
                             .getMessage("DoYouWantToTermiate"), new Object[]{train.getName()}),
                     JOptionPane.YES_NO_OPTION);
             if (status == JOptionPane.YES_OPTION) {
@@ -511,11 +543,15 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     @Override
- // removed synchronized from propertyChange, it caused a thread lock, see _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
+    // removed synchronized from propertyChange, it caused a thread lock, see _table.scrollRectToVisible(_table.getCellRect(row, 0, true));
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change {} old: {} new: {}",
                     e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
+        }
+        if (e.getPropertyName().equals(Train.ROADS_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Train.LOADS_CHANGED_PROPERTY)) {
+            updateColumnVisible();
         }
         if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(TrainManager.PRINTPREVIEW_CHANGED_PROPERTY) ||
