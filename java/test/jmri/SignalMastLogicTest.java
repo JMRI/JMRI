@@ -2,10 +2,7 @@ package jmri;
 
 import java.util.Hashtable;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.netbeans.jemmy.EventTool;
 
 /**
