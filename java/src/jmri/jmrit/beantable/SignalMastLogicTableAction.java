@@ -121,8 +121,9 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
             static public final int COMCOL = 4;
             static public final int DELCOL = 5;
             static public final int ENABLECOL = 6;
-            static public final int MAXSPEEDCOL = 7;
-            static public final int EDITLOGICCOL = 8;
+            static public final int EDITLOGICCOL = 7;
+            static public final int MAXSPEEDCOL = 8;
+            static public final int COLUMNCOUNT = 9;
 
             //We have to set a manager first off, but this gets replaced.
             @Override
@@ -232,7 +233,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
 
             @Override
             public int getColumnCount() {
-                return EDITLOGICCOL + 1;
+                return COLUMNCOUNT;
             }
 
             @Override
@@ -289,7 +290,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                     case ENABLECOL:
                         return Bundle.getMessage("ColumnHeadEnabled");
                     case MAXSPEEDCOL:
-                        return "MaxSpeed";
+                        return Bundle.getMessage("LabelMaxSpeed");
                     default:
                         return "unknown";
                 }
