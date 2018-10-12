@@ -455,16 +455,16 @@
 			</variable>-->
 			<!-- CV=29 -->
 			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-			<variable CV="29" item="Speed Step Mode"        mask="XXXXXXVX" default="1">
+			<variable CV="29" item="Speed Step Mode" mask="XXXXXXVX" default="1">
 				<enumVal>
 					<enumChoice choice="14 speed step mode">
 						<choice xml:lang="de">14 Fahrstufen Modus</choice>
-						<choice xml:lang="nl">14 rij stappen modus</choice>
+						<choice xml:lang="nl">14 rijstappen modus</choice>
 					</enumChoice>
 					<enumChoice choice="28 speed step mode">
 						<choice>28 speed step mode</choice>
 						<choice xml:lang="de">28 Fahrstufen Modus</choice>
-						<choice xml:lang="nl">28 rij stappen modus</choice>
+						<choice xml:lang="nl">28 rijstappen modus</choice>
 					</enumChoice>
 				</enumVal>
 				<label>Speed Steps</label>
@@ -480,12 +480,12 @@
 					<enumChoice choice="Don't use Speed Table, use Start Voltage (Vstart)">
 						<choice>Use bild-in Speed Table </choice>
 						<choice xml:lang="de">Interne Geschwindigkeitstabelle verwenden </choice>
-						<choice xml:lang="nl">Gebruik interne snelheid's tabel </choice>
+						<choice xml:lang="nl">Gebruik interne snelheidstabel </choice>
 					</enumChoice>
 					<enumChoice choice="Use Speed Table">
 						<choice>Use Speed Table (CV30 - CV43, CV44)</choice>
 						<choice xml:lang="de">Geschw.-Kennlinie nutzen (CV30 - CV43, CV44)</choice>
-						<choice xml:lang="nl">Gebruik de snelheid's grafiek (CV30 - CV43, CV44)</choice>
+						<choice xml:lang="nl">Gebruik de snelheidsgrafiek (CV30 - CV43, CV44)</choice>
 					</enumChoice>
 				</enumVal>
 				<label>                    </label>
@@ -496,20 +496,20 @@
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
 				<label>Speed control</label>
 				<label xml:lang="de">Drehzahlregelung</label>
-				<label xml:lang="nl">Toerental regeling</label>
+				<label xml:lang="nl">Toerentalregeling</label>
 			</variable>
 			<!-- Non-Standard Speed Table -->
 			<variable CV="30" item="Speed Table" comment="Range 1-63">
 				<speedTableVal min="1" max="63" entries="14"/>
 				<label>Speed Table (CV30-CV43)</label>
 				<label xml:lang="de">Einstellbare Fahrkurve (CV30-CV43)</label>
-				<label xml:lang="nl">Instelbare snelheid’s tabel (CV30-CV43)</label>
+				<label xml:lang="nl">Instelbare snelheidstabel (CV30-CV43)</label>
 			</variable>
 			<variable CV="44" item="Speed Table 15" comment="Range 1-126" default="29">
 				<decVal min="1" max="126"/>
 				<label>Speed Step 15</label>
 				<label xml:lang="de">Fahrstufe 15</label>
-				<label xml:lang="nl">Snelheid's stap 15</label>
+				<label xml:lang="nl">Snelheidsstap 15</label>
 				<comment>Range 1-126</comment>
 			</variable>
 			<!-- Whistle Table -->
