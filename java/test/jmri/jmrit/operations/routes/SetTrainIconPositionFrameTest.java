@@ -65,7 +65,6 @@ public class SetTrainIconPositionFrameTest extends OperationsTestCase {
         // modify spinner and update
         JSpinnerOperator so = new JSpinnerOperator(t.spinTrainIconSouthX);
         so.setValue(234);
-        //t.spinTrainIconSouthX.setValue(234);
         JemmyUtil.enterClickAndLeave(t.applyButton);
         
         // confirm dialog should appear
