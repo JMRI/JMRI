@@ -283,7 +283,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         containerPanel.add(header);
 
         JTabbedPane detailsTab = new JTabbedPane();
-        detailsTab.setLayout(new BoxLayout(detailsTab, BoxLayout.Y_AXIS));
         detailsTab.add(Bundle.getMessage("Blocks"), buildBlocksPanel());  // NOI18N
         detailsTab.add(Bundle.getMessage("Turnouts"), buildTurnoutPanel());  // NOI18N
         detailsTab.add(Bundle.getMessage("Sensors"), buildSensorPanel());  // NOI18N
@@ -992,11 +991,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         jFrame = null;
     }
 
-    @Override
-    public void initComponents() {
-
-    }
-
     int blockModeFromBox(JComboBox<String> box) {
         String mode = (String) box.getSelectedItem();
         int result = jmri.util.StringUtil.getStateFromName(mode, blockInputModeValues, blockInputModes);
@@ -1085,13 +1079,6 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 newAmast.setState(sml.getAutoSignalMastState(mast, destMast));
             }
         }
-    }
-
-    /**
-     * Free up resources when no longer used.
-     */
-    @Override
-    public void dispose() {
     }
 
     ButtonGroup selGroup = null;
