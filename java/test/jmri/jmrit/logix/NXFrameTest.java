@@ -169,10 +169,9 @@ public class NXFrameTest {
         jrbo.clickMouse();
         // then the Review Button
         JemmyUtil.pressButton(jdo, Bundle.getMessage("ButtonReview"));
-
-        nxFrame.setThrottleIncrement(0.05f);
-
         JemmyUtil.pressButton(jdo, Bundle.getMessage("ButtonSelect"));
+
+        nxFrame.setThrottleIncrement(0.05f);     
         nxFrame.setMaxSpeed(2);
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
         JemmyUtil.confirmJOptionPane(nfo, Bundle.getMessage("WarningTitle"), Bundle.getMessage("badSpeed", "2"), "OK");
@@ -186,14 +185,22 @@ public class NXFrameTest {
         // The next part deals with a WarrantTableFrame, should it still be
         // in this test file?
 
+        // Wouldn't help.  Most of the above would have to be repeated.
+        // Problem with this test appears to be the method call by "ButtonRunNX" (NXFrame.makeAndRunWarrant)
+        // is not completed.  i.e tableFrame.getModel().addNXWarrant(warrant) is not called in time.
+
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         Assert.assertNotNull("tableFrame", tableFrame);
+
         WarrantTableModel model = tableFrame.getModel();
         Assert.assertNotNull("tableFrame model", model);
+        
         JUnitUtil.waitFor(() -> {
-            return model.getRowCount()>0;
+            return model.getWarrantAt(0) != null;
         }, "NXWarrant loaded into table");
+        
         Warrant warrant = tableFrame.getModel().getWarrantAt(0);
+
         Assert.assertNotNull("warrant", warrant);
         Assert.assertNotNull("warrant.getBlockOrders(", warrant.getBlockOrders());
         warrant.getBlockOrders();

@@ -456,20 +456,24 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      */
     @SuppressFBWarnings(value="IS2_INCONSISTENT_SYNC", justification="display of _speedType on GUI for viewing only")
      protected void setSpeed(float s) {
-        // Whether, runOnLayoutEventually, runOnLayout, or no thread change used, when multiple ramps need to be used,
-        // throttle seem to become unresponsive - i.e. speed setting not made.
-//        ThreadingUtil.runOnLayoutEventually(() -> {   // invoke later. CAN GET WAY OUT OF SYNC!! and although logged, engine speed not changed.
-//          jmri.util.ThreadingUtil.runOnLayout(() -> { // move to layout-handling thread.  CAN HANG GUI!! Then must kill Java process.
         float speed = s;
-        _speedUtil.speedChange();   // call before changing throttle setting
-        _throttle.setSpeedSetting(speed);       // CAN MISS SETTING SPEED (as done when runOnLayoutEventually used) 
+        // Whether, runOnLayoutEventually, runOnLayout, or no thread change used, sometimes when multiple ramps need to be used,
+        // throttle seems to become unresponsive - i.e. speed settings not made.
+//        ThreadingUtil.runOnLayoutEventually(() -> {   // invoke later. CAN GET WAY OUT OF SYNC!! and although logged, engine speed not changed.
+//        jmri.util.ThreadingUtil.runOnLayout(() -> { // move to layout-handling thread.  CAN HANG GUI!! Then must kill Java process.
+              _speedUtil.speedChange();   // call before changing throttle setting
+              _throttle.setSpeedSetting(speed);       // CAN MISS SETTING SPEED (as done when runOnLayoutEventually used) 
+//              if (log.isDebugEnabled()) 
+//                  log.debug("On Layout thread, Speed Set to {}, _speedType={}.  warrant {}",
+//                          speed, _speedType, _warrant.getDisplayName());
+//        });
         ThreadingUtil.runOnLayoutEventually(() -> { // runOnLayout may block GUI
             // Late update to GUI is OK, this is just an informational status display
             _warrant.fireRunStatus("SpeedChange", null, _speedType);
         });
         if (log.isDebugEnabled()) 
-            log.debug("Speed Set to {}, _speedType={}.  warrant {}",
-                s, _speedType, _warrant.getDisplayName());
+            log.debug("On Engineer/Ramp thread, Speed Set to {}, _speedType={}.  warrant {}",
+                    speed, _speedType, _warrant.getDisplayName());
     }
 
     protected float getSpeedSetting() {

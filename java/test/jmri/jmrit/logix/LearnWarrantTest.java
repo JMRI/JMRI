@@ -14,7 +14,6 @@ import jmri.util.junit.rules.RetryRule;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
@@ -38,7 +37,6 @@ public class LearnWarrantTest {
     private OBlockManager _OBlockMgr;
 
     @Test
-    @Ignore("Causes timeouts due to changes in the scripts - not a threading problem. New script needed")
     public void testLearnWarrant() throws Exception {
         if (GraphicsEnvironment.isHeadless()) {
             return; // can't Assume in TestCase
@@ -70,9 +68,9 @@ public class LearnWarrantTest {
         String[] route = {"OB1", "OB2", "OB3", "OB4", "OB5"};
 
         JFrameOperator jfo = new JFrameOperator(frame);
-/*        pressButton(jfo, Bundle.getMessage("Calculate"));
+        pressButton(jfo, Bundle.getMessage("Calculate"));
         
-        JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("DialogTitle"));
+/*        JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("DialogTitle"));
         pressButton(jdo, Bundle.getMessage("ButtonSelect"));
 */
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);

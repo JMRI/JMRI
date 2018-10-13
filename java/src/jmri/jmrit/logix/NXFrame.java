@@ -445,7 +445,7 @@ public class NXFrame extends WarrantRoute {
         updateAutoRunPanel();
         pack();
     }
-    
+
     private void makeAndRunWarrant() {
         if (log.isDebugEnabled()) {
             log.debug("NXFrame selectedRoute()");
