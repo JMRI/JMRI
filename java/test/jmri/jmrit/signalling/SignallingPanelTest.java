@@ -18,7 +18,8 @@ public class SignallingPanelTest {
     public void testNullCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("Signalling Panel");
-        SignallingPanel t = new SignallingPanel(jf);
+        
+        new SignallingPanel(jf);
         // just checking for no exceptions in ctor
         
         JUnitUtil.dispose(jf);
@@ -42,8 +43,8 @@ public class SignallingPanelTest {
         
         jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
         Turnout it1 = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
-        Sensor is1 = InstanceManager.sensorManagerInstance().provideSensor("IS1");
-        Sensor is2 = InstanceManager.sensorManagerInstance().provideSensor("IS2");
+        InstanceManager.sensorManagerInstance().provideSensor("IS1");
+        InstanceManager.sensorManagerInstance().provideSensor("IS2");
         SignalMast sm1 = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0001)");
         InstanceManager.getDefault(jmri.SignalMastManager.class).register(sm1);
         SignalMast sm2 = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0002)");
