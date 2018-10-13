@@ -312,13 +312,9 @@ public class SlipIconAdder extends IconAdder {
             dim = panel.getPreferredSize();
         }
         while ((cnt % 2) != 0) {
-            try {
-                rowPanel.add(Box.createRigidArea(dim));
-                cnt++;
-            } catch (NullPointerException npe) {
-                /* never */
-
-            }
+            java.util.Objects.requireNonNull(rowPanel, "rowPanel should have been non-null in this case");
+            rowPanel.add(Box.createRigidArea(dim));
+            cnt++;
         }
         if (rowPanel != null) {
             _iconPanel.add(rowPanel);

@@ -23,7 +23,7 @@
 
 <body>
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
       <h1>JMRI: Java Version-Specific Features</h1>
@@ -78,26 +78,7 @@
           using very large fonts as a workaround, but it quickly
           breaks as text overlaps widget boundaries)</td>
 
-          <td>8?</td>
-
-          <td>9</td>
-        </tr>
-
-        <tr>
-          <td>It seems that MacOS X (macOS) users will lose the use
-          of the OS X App menu for About, Preferences, and
-          (critically) Quit handling on that platform</td>
-
-          <td>9</td>
-
-          <td>9</td>
-        </tr>
-
-        <tr>
-          <td>It seems that MacOS X (macOS) users will lose
-          Applescript scripting</td>
-
-          <td>9</td>
+          <td>8</td>
 
           <td>9</td>
         </tr>
@@ -106,21 +87,18 @@
           <td>Multi-version JARs can help with migration, see
           <a href="https://blog.codefx.org/tools/multi-release-jars-multiple-java-versions">discussion</a></td>
 
-          <td>?</td>
-
           <td>9</td>
+
+          <td>?</td>
         </tr>
 
         <tr>
-          <td>JMRI uses several com.sun classes that will, at some point,
-          no longer be accessible.  This was originally scheduled as part of JPMS for
-          1.9, but was later removed.  At some point, we will
-          need to migrate away from these before using a more 
-          advanced JRE or JDK.</td>
+          <td>The Deprecated annotation can take "since" and "forRemoval" specifications, 
+                which simplifies our API migration management a lot.</td>
 
-          <td>?</td>
+          <td>9</td>
 
-          <td>?</td>
+          <td>8</td>
         </tr>
 
         <tr>
@@ -152,27 +130,65 @@
         <tr>
           <td>JLink - improve packaging, faster startup</td>
 
-          <td>?</td>
-
           <td>9</td>
+
+          <td>?</td>
         </tr>
         
         <tr>
-          <td>Even better support for immutable collections</td>
+          <td>var syntax - improves readability of code, use of generics</td>
+
+          <td>10<br>11</td>
 
           <td>?</td>
+        </tr>
+
+        <tr>
+          <td>Even better support for immutable collections</td>
 
           <td>10</td>
+
+          <td>?</td>
         </tr>
  
         <tr>
-          <td>Improved String <a href="http://marxsoftware.blogspot.com/2018/05/jdk-11-string-methods.html">whitespace support</a></td>
+          <td>It seems that MacOS X (macOS) users will lose the use
+          of the OS X App menu for About, Preferences, and
+          (critically) Quit handling on that platform</td>
 
-          <td>?</td>
+          <td>&gt; 10</td>
 
-          <td>11</td>
+          <td>&gt; 10</td>
         </tr>
 
+        <tr>
+          <td>It seems that MacOS X (macOS) users will lose
+          Applescript scripting</td>
+
+          <td>&gt; 10</td>
+
+          <td>&gt; 10</td>
+        </tr>
+
+        <tr>
+          <td>Improved String <a href="http://marxsoftware.blogspot.com/2018/05/jdk-11-string-methods.html">whitespace support</a></td>
+
+          <td>11</td>
+
+          <td>?</td>
+        </tr>
+
+        <tr>
+          <td>JMRI uses several com.sun classes that will, at some point,
+          no longer be accessible.  This was originally scheduled as part of JPMS for
+          1.9, but was later removed.  At some point, we will
+          need to migrate away from these before using a more 
+          advanced JRE or JDK.</td>
+
+          <td>&gt; 11</td>
+
+          <td>&gt; 11</td>
+        </tr>
 
       </table>(* indicates that a compatibility library is used in
       the early version)
@@ -190,12 +206,18 @@
       As of April 8, 2014 Microsoft stopped supporting Windows XP
       and therefore it is no longer a supported platform." Google
       finds numerous pages that show how to install Java 1.7 on XP
-      or XP SP2. JMRI's 
-      <a href="http://jmri.org/install/WindowsNew.shtml">Windows installation page</a>
-      will have updated information on this.
-      The corresponding 
+      or XP SP2. 
+      Although the corresponding 
       <a href="http://www.oracle.com/technetwork/java/javase/certconfig-2095354.html">Java 8 page</a>
-      makes no mention of XP.</p>
+      makes no mention of XP, it seems reasonable to assume the same applies.
+      JMRI's 
+      <a href="http://jmri.org/install/WindowsNew.shtml">Windows installation page</a>
+      keeps updated information on this.
+      Several JMRI users have reporter that Java 1.8_151 is the last one that 
+      can be cleanly installed and run on XP.  See
+      the
+      <a href="https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html">Java download archive page</a>
+      for links to that.</p>
 
       <P>Updated Feb 10, 2018: At that time, 
       although Java 9 was available, it was 

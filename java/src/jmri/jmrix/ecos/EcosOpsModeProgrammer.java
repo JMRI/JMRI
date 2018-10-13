@@ -28,9 +28,9 @@ public class EcosOpsModeProgrammer extends EcosProgrammer implements AddressedPr
         log.debug("ECoS ops mode programmer " + pAddress + " " + pLongAddr);
         mAddress = pAddress;
         mLongAddr = pLongAddr;
-        EcosObject = 7;
-        ReadCommand  = "mode[readdccpomloco],addr["+pAddress+"]";
-        WriteCommand = "mode[writedccpomloco],addr["+pAddress+"]";
+        ecosObject = 7;
+        readCommand  = "mode[readdccpomloco],addr["+pAddress+"]";
+        writeCommand = "mode[writedccpomloco],addr["+pAddress+"]";
     }
 
     /**

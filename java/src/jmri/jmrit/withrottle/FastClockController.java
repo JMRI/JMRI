@@ -48,13 +48,8 @@ public class FastClockController extends AbstractController {
             }
         };
         
-        if (fastClock == null) {
-            log.info("No fast clock manager instance.");
-            isValid = false;
-            return;
-        } else {
-            isValid = true;
-        }
+        isValid = true;
+        
         updateMinsSetpoint = (short)(fastClock.userGetRate() * UPDATE_MINUTES);
         setReSyncSetpoint();
         // request callback to update time
@@ -139,5 +134,5 @@ public class FastClockController extends AbstractController {
         updateMinsSetpoint = (short)(fastClock.userGetRate() * UPDATE_MINUTES);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(FastClockController.class);
+    // private final static Logger log = LoggerFactory.getLogger(FastClockController.class);
 }

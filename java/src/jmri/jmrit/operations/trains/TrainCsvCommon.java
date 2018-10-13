@@ -280,17 +280,17 @@ public class TrainCsvCommon extends TrainCommon {
                 if (pickup && setout && !track.getCommentBoth().equals(Track.NONE)) {
                     String[] comments = track.getCommentBoth().split(NEW_LINE);
                     for (String comment : comments) {
-                        addLine(fileOut, TKCB + comment);
+                        addLine(fileOut, TKCB + ESC + comment + ESC);
                     }
                 } else if (pickup && !setout && !track.getCommentPickup().equals(Track.NONE)) {
                     String[] comments = track.getCommentPickup().split(NEW_LINE);
                     for (String comment : comments) {
-                        addLine(fileOut, TKCP + comment);
+                        addLine(fileOut, TKCP + ESC + comment + ESC);
                     }
                 } else if (!pickup && setout && !track.getCommentSetout().equals(Track.NONE)) {
                     String[] comments = track.getCommentSetout().split(NEW_LINE);
                     for (String comment : comments) {
-                        addLine(fileOut, TKCS + comment);
+                        addLine(fileOut, TKCS + ESC + comment + ESC);
                     }
                 }
             }

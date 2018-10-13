@@ -28,13 +28,25 @@ public class JsonOperations {
      */
     public static final String ENGINE = "engine"; // NOI18N
     /**
+     * {@value #ENGINES}
+     */
+    public static final String ENGINES = "engines"; // NOI18N
+    /**
      * {@value #LOCATION}
      */
     public static final String LOCATION = "location"; // NOI18N
     /**
+     * {@value #LOCATION_COMMENT}
+     */
+    public static final String LOCATION_COMMENT = "locationComment"; // NOI18N
+    /**
      * {@value #LOCATION_ID}
      */
     public static final String LOCATION_ID = "locationId"; // NOI18N
+    /**
+     * {@value #LOCATION_NAME}
+     */
+    public static final String LOCATION_NAME = "locationName"; // NOI18N
     /**
      * {@value #TRAIN}
      */

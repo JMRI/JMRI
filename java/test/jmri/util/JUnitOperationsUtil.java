@@ -176,7 +176,7 @@ public class JUnitOperationsUtil {
         locationNorthIndustries.setSwitchListEnabled(true);
         lmanager.register(locationNorthIndustries);
 
-        Track l20yard1 = new Track("2s1", "NI Yard", Track.YARD, locationNorthIndustries);
+        Track l20yard1 = new Track("20s1", "NI Yard", Track.YARD, locationNorthIndustries);
         l20yard1.setLength(432);
         l20yard1.setCommentBoth("Test comment for NI Yard drops and pulls");
         l20yard1.setCommentSetout("Test comment for NI Yard drops only");
@@ -256,6 +256,7 @@ public class JUnitOperationsUtil {
         train1.setRoute(route1);
         train1.setDepartureTime("6", "5");
         train1.setComment("Test comment for train STF");
+        train1.setDescription("Train STF");
 
         // increase test coverage by providing a manifest logo for this train
         java.net.URL url = FileUtil.findURL("resources/logo.gif", FileUtil.Location.INSTALLED);
@@ -266,6 +267,7 @@ public class JUnitOperationsUtil {
         Train train2 = new Train("2", "SFF");
         train2.setRoute(route1);
         train2.setDepartureTime("22", "45");
+        train2.setDescription("Train SFF");
         tmanager.register(train2);
 
         // improve test coverage
@@ -480,8 +482,7 @@ public class JUnitOperationsUtil {
 
     public static Car createAndPlaceCar(String road, String number, String type, String length, Track track,
             int moves) {
-        return createAndPlaceCar(road, number, type, length, "",
-                "", track, moves);
+        return createAndPlaceCar(road, number, type, length, "", "", track, moves);
     }
 
     public static Car createAndPlaceCar(String road, String number, String type, String length, String owner,
@@ -495,12 +496,98 @@ public class JUnitOperationsUtil {
         car.setOwner(owner);
         car.setBuilt(built);
         car.setMoves(moves);
+        car.setColor("Black");
 
         if (track != null) {
             Assert.assertEquals("place car", Track.OKAY, car.setLocation(track.getLocation(), track));
         }
 
         return car;
+    }
+    
+    public static void loadTrain(Location l) {
+        Assert.assertNotNull("Test Loc", l);
+        TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
+        Train trainA = trainManager.newTrain("Test Train A");
+        // train needs to service location "l" or error message when saving track edit frame
+        RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
+        Route route = routeManager.newRoute("Route Train A");
+        route.addLocation(l);
+        trainA.setRoute(route);
+    }
+
+    public static void loadTrains() {
+        // Add some cars for the various tests in this suite
+        CarManager cm = InstanceManager.getDefault(CarManager.class);
+        ResourceBundle rb = ResourceBundle
+                .getBundle("jmri.jmrit.operations.JmritOperationsBundle");
+        String roadNames[] = rb.getString("carRoadNames").split(",");
+//        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
+        // add caboose to the roster
+        Car c = cm.newCar(roadNames[2], "687");
+        c.setCaboose(true);
+        c = cm.newCar("CP", "435");
+        c.setCaboose(true);
+
+        // load engines
+        EngineManager emanager = InstanceManager.getDefault(EngineManager.class);
+        Engine e1 = emanager.newEngine("SP", "1");
+        e1.setModel("GP40");
+        Engine e2 = emanager.newEngine("PU", "2");
+        e2.setModel("GP40");
+        Engine e3 = emanager.newEngine("UP", "3");
+        e3.setModel("GP40");
+        Engine e4 = emanager.newEngine("UP", "4");
+        e4.setModel("FT");
+
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        // turn off build fail messages
+        tmanager.setBuildMessagesEnabled(true);
+        // turn off print preview
+        tmanager.setPrintPreviewEnabled(false);
+
+        // load 5 trains
+        for (int i = 0; i < 5; i++) {
+            tmanager.newTrain("Test_Train " + i);
+        }
+
+        // load 6 locations
+        for (int i = 0; i < 6; i++) {
+            InstanceManager.getDefault(LocationManager.class).newLocation("Test_Location " + i);
+        }
+
+        // load 5 routes
+        loadFiveRoutes();
+    }
+    
+    public static void loadFiveLocations() {
+        // create 5 locations
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
+        Location l1 = lManager.newLocation("Test Loc E");
+        l1.addTrack("Test Track", Track.SPUR);
+        l1.setLength(1001);
+        Location l2 = lManager.newLocation("Test Loc D");
+        l2.setLength(1002);
+        Location l3 = lManager.newLocation("Test Loc C");
+        l3.setLength(1003);
+        Location l4 = lManager.newLocation("Test Loc B");
+        l4.setLength(1004);
+        Location l5 = lManager.newLocation("Test Loc A");
+        l5.setLength(1005);
+    }
+    
+    public static void loadFiveRoutes() {
+        RouteManager rManager = InstanceManager.getDefault(RouteManager.class);
+        Route r1 = rManager.newRoute("Test Route E");
+        r1.setComment("Comment test route E");
+        Route r2 = rManager.newRoute("Test Route D");
+        r2.setComment("Comment test route D");
+        Route r3 = rManager.newRoute("Test Route C");
+        r3.setComment("Comment test route C");
+        Route r4 = rManager.newRoute("Test Route B");
+        r4.setComment("Comment test route B");
+        Route r5 = rManager.newRoute("Test Route A");
+        r5.setComment("Comment test route A");
     }
 
     public static BufferedReader getBufferedReader(File file) {

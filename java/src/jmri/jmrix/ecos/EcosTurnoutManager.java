@@ -15,8 +15,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import jmri.ConfigureManager;
-import jmri.Turnout;
+
+import jmri.*;
 import jmri.jmrix.ecos.utilities.GetEcosObjectNumber;
 import jmri.jmrix.ecos.utilities.RemoveObjectFromEcos;
 import org.slf4j.Logger;
@@ -69,7 +69,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr;
         try {
-            addr = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
+            addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         } catch (java.lang.NumberFormatException e) {
             log.error("failed to convert systemName '{}' to a turnout address", systemName);
             return null;
@@ -196,12 +196,12 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                         //Extract symbol number and set on turnout.
                         int symbol = GetEcosObjectNumber.getEcosObjectNumber(msgContents[0], "[", "]");
                         et.setExtended(symbol);
-                        et.setTurnoutOperation(jmri.TurnoutOperationManager.getInstance().getOperation("NoFeedback"));
+                        et.setTurnoutOperation(jmri.InstanceManager.getDefault(TurnoutOperationManager.class).getOperation("NoFeedback"));
                         if ((symbol == 2) || (symbol == 4)) {
 
                             EcosTurnout etx = (EcosTurnout) provideTurnout(et.getSlaveAddress());
                             etx.setExtended(symbol);
-                            etx.setTurnoutOperation(jmri.TurnoutOperationManager.getInstance().getOperation("NoFeedback"));
+                            etx.setTurnoutOperation(jmri.InstanceManager.getDefault(TurnoutOperationManager.class).getOperation("NoFeedback"));
                             switch (symbol) {
                                 case 2:
                                     et.setComment("Three Way Point with " + et.getSlaveAddress());
@@ -520,15 +520,17 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UCF_USELESS_CONTROL_FLOW", 
+        justification = "OK to compare floats, as even tiny differences should trigger update")
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if ((e.getPropertyName().equals("length")) && (!addingTurnouts)) {
             final EcosPreferences p = adaptermemo.getPreferenceManager();
             EcosTurnout et;
             String[] ecoslist = this.getEcosObjectArray();
-            String[] jmrilist = getSystemNameArray();
-            for (int i = 0; i < jmrilist.length; i++) {
-                if (jmrilist[i].startsWith(prefix + "T")) {
-                    et = (EcosTurnout) getBySystemName(jmrilist[i]);
+            
+             for (Turnout turnout : getNamedBeanSet()) {
+                if (turnout.getSystemName().startsWith(prefix + "T")) {
+                    et = (EcosTurnout) turnout;
                     if (et.getObject() == 0) {
                         //We do not support this yet at there are many parameters
                         // when creating a turnout on the ecos.

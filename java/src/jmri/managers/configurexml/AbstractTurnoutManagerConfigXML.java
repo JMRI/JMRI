@@ -46,7 +46,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
         TurnoutManager tm = (TurnoutManager) o;
         if (tm != null) {
             TurnoutOperationManagerXml tomx = new TurnoutOperationManagerXml();
-            Element opElem = tomx.store(TurnoutOperationManager.getInstance());
+            Element opElem = tomx.store(InstanceManager.getDefault(TurnoutOperationManager.class));
             turnouts.addContent(opElem);
             java.util.Iterator<String> iter
                     = tm.getSystemNameAddedOrderList().iterator();
@@ -173,7 +173,6 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
      * @param perNode Element containing per-node Turnout data.
      * @return true if succeeded
      */
-    @SuppressWarnings("unchecked")
     public boolean loadTurnouts(Element shared, Element perNode) {
         boolean result = true;
         List<Element> operationList = shared.getChildren("operations");
@@ -240,17 +239,8 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             // Load common parts
             loadCommon(t, elem);
 
-            // now add feedback if needed
+            // now configure feedback if needed
             Attribute a;
-            a = elem.getAttribute("feedback");
-            if (a != null) {
-                try {
-                    t.setFeedbackMode(a.getValue());
-                } catch (IllegalArgumentException e) {
-                    log.error("Can not set feedback mode: '" + a.getValue() + "' for turnout: '" + sysName + "' user name: '" + (userName == null ? "" : userName) + "'");
-                    result = false;
-                }
-            }
             a = elem.getAttribute("sensor1");
             if (a != null) {
                 try {
@@ -264,6 +254,15 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                 try {
                     t.provideSecondFeedbackSensor(a.getValue());
                 } catch (jmri.JmriException e) {
+                    result = false;
+                }
+            }
+            a = elem.getAttribute("feedback");
+            if (a != null) {
+                try {
+                    t.setFeedbackMode(a.getValue());
+                } catch (IllegalArgumentException e) {
+                    log.error("Can not set feedback mode: '" + a.getValue() + "' for turnout: '" + sysName + "' user name: '" + (userName == null ? "" : userName) + "'");
                     result = false;
                 }
             }
@@ -347,7 +346,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                     } else if (!str.equals("Default")) {
                         t.setInhibitOperation(false);
                         TurnoutOperation toper
-                                = TurnoutOperationManager.getInstance().getOperation(str);
+                                = InstanceManager.getDefault(TurnoutOperationManager.class).getOperation(str);
                         t.setTurnoutOperation(toper);
                     } else {
                         t.setInhibitOperation(false);

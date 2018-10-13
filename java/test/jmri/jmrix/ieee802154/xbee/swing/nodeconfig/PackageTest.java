@@ -12,7 +12,8 @@ import org.slf4j.LoggerFactory;
     XBeeNodeConfigFrameTest.class,
     XBeeAddNodeFrameTest.class,
     XBeeEditNodeFrameTest.class,
-    AssignmentTableModelTest.class
+    AssignmentTableModelTest.class,
+    StreamConfigPaneTest.class
 })
 
 /**

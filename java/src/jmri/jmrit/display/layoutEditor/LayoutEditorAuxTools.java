@@ -353,7 +353,7 @@ public class LayoutEditorAuxTools {
                 prevConnection = lt;
                 if ((lt != null) && (lt.getTurnout() != null)) {
                     int type = lc.getXoverBoundaryType();
-                    bs = null;
+                    // bs is known to be null at this point
                     if (lt.getTurnout() != null) {
                         if (type == LayoutConnectivity.XOVER_BOUNDARY_AB) {
                             bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
@@ -384,7 +384,7 @@ public class LayoutEditorAuxTools {
             lt = lc.getXover();
             if ((lt != null) && (lt.getTurnout() != null)) {
                 int type = lc.getXoverBoundaryType();
-                bs = null;
+                // bs is known to be null at this point
                 if (lt.getTurnout() != null) {
                     if (type == LayoutConnectivity.XOVER_BOUNDARY_AB) {
                         bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);
@@ -509,7 +509,7 @@ public class LayoutEditorAuxTools {
                 prevConnection = lt;
                 if ((lt != null) && (lt.getTurnout() != null)) {
                     int type = lc.getXoverBoundaryType();
-                    bs = null;
+                    // bs is known to be null at this point
                     if (lt.getTurnout() != null) {
                         if (type == LayoutConnectivity.XOVER_BOUNDARY_AB) {
                             bs = new BeanSetting(lt.getTurnout(), lt.getTurnoutName(), Turnout.CLOSED);

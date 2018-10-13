@@ -57,7 +57,6 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
 
     protected boolean init = false;
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void checkInitDone() {
         if (log.isDebugEnabled()) {

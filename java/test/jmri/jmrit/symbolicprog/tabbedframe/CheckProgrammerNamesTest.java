@@ -1,6 +1,5 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import apps.tests.Log4JFixture;
 import java.io.File;
 import org.junit.After;
 import org.junit.Assert;
@@ -95,11 +94,12 @@ public class CheckProgrammerNamesTest {
 
     @Before
     public void setUp() throws Exception {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() throws Exception {
-        Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
 }

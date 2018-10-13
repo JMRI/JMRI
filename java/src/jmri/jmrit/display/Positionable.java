@@ -31,6 +31,7 @@ import javax.swing.border.Border;
  * {@link Editor} subclass that contains them, so the Editor can handle e.g. box
  * selection, etc.
  *
+ * <a href="doc-files/Heirarchy.png"><img src="doc-files/Heirarchy.png" alt="UML class diagram for package" height="33%" width="33%"></a>
  * @see PositionableJComponent
  * @see PositionableLabel
  * @author Bob Jacobsen Copyright (c) 2002

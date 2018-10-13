@@ -47,7 +47,7 @@ public class SerialAddress {
         // try to parse remaining system name part
         int num = 0;
         try {
-            num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue(); // multi char prefix
+            num = Integer.parseInt(systemName.substring(prefix.length() + 1)); // multi char prefix
         } catch (NumberFormatException ex) {
             log.warn("invalid character in number field of system name: {}", systemName);
             return (0);

@@ -3,6 +3,7 @@ package jmri.jmrit.operations.trains;
 import java.io.BufferedReader;
 import java.io.File;
 import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -17,7 +18,6 @@ import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -30,7 +30,7 @@ import org.junit.Test;
  * 
  *         TODO data check of switch list files
  */
-public class TrainSwitchListsTest {
+public class TrainSwitchListsTest extends OperationsTestCase {
 
     private TrainManager tmanager;
     private RouteManager rmanager;
@@ -547,11 +547,10 @@ public class TrainSwitchListsTest {
     }
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-
-        JUnitOperationsUtil.resetOperationsManager();
+        super.setUp();
         // setup new managers
         tmanager = InstanceManager.getDefault(TrainManager.class);
         rmanager = InstanceManager.getDefault(RouteManager.class);
@@ -563,7 +562,7 @@ public class TrainSwitchListsTest {
         tmanager.setBuildMessagesEnabled(false);
         // disable build reports
         tmanager.setBuildReportEnabled(false);
-        
+
         Setup.setBuildAggressive(false);
         Setup.setTrainIntoStagingCheckEnabled(true);
         Setup.setMaxTrainLength(1000);
@@ -589,9 +588,10 @@ public class TrainSwitchListsTest {
 
     }
 
+    @Override
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainSwitchListsTest.class);

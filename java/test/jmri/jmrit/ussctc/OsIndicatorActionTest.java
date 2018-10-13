@@ -28,7 +28,7 @@ public class OsIndicatorActionTest {
     public void testActionCreateAndFire() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         new OsIndicatorAction("test").actionPerformed(null);
-        JFrame f = JFrameOperator.waitJFrame(OsIndicatorPanel.rb.getString("TitleOsIndicator"), true, true);
+        JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("TitleOsIndicator"), true, true);
         Assert.assertNotNull(f);
         JUnitUtil.dispose(f);
     }
@@ -36,6 +36,7 @@ public class OsIndicatorActionTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initRouteManager();
     }
 

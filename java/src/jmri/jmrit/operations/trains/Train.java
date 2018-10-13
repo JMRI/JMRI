@@ -1788,7 +1788,7 @@ public class Train implements java.beans.PropertyChangeListener {
                             }
                             // allow car to return to staging?
                             if (isAllowReturnToStagingEnabled()
-                                    && car.getTrack().getTrackType().equals(Track.STAGING)
+                                    && car.getTrack().isStaging()
                                     && rldest.getLocation() == car.getLocation()) {
                                 if (addToReport) {
                                     TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
@@ -3596,7 +3596,6 @@ public class Train implements java.beans.PropertyChangeListener {
                 setRoute(InstanceManager.getDefault(RouteManager.class).getRouteById(a.getValue()));
             }
             if (eRoute.getChild(Xml.SKIPS) != null) {
-                @SuppressWarnings("unchecked")
                 List<Element> skips = eRoute.getChild(Xml.SKIPS).getChildren(Xml.LOCATION);
                 String[] locs = new String[skips.size()];
                 for (int i = 0; i < skips.size(); i++) {
@@ -3624,7 +3623,6 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         // new way of reading car types using elements
         if (e.getChild(Xml.TYPES) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> carTypes = e.getChild(Xml.TYPES).getChildren(Xml.CAR_TYPE);
             String[] types = new String[carTypes.size()];
             for (int i = 0; i < carTypes.size(); i++) {
@@ -3634,7 +3632,6 @@ public class Train implements java.beans.PropertyChangeListener {
                 }
             }
             setTypeNames(types);
-            @SuppressWarnings("unchecked")
             List<Element> locoTypes = e.getChild(Xml.TYPES).getChildren(Xml.LOCO_TYPE);
             types = new String[locoTypes.size()];
             for (int i = 0; i < locoTypes.size(); i++) {
@@ -3660,7 +3657,6 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         // new way of reading car roads using elements
         if (e.getChild(Xml.CAR_ROADS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> carRoads = e.getChild(Xml.CAR_ROADS).getChildren(Xml.CAR_ROAD);
             String[] roads = new String[carRoads.size()];
             for (int i = 0; i < carRoads.size(); i++) {
@@ -3692,7 +3688,6 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         // new way of reading car loads using elements
         if (e.getChild(Xml.CAR_LOADS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> carLoads = e.getChild(Xml.CAR_LOADS).getChildren(Xml.CAR_LOAD);
             String[] loads = new String[carLoads.size()];
             for (int i = 0; i < carLoads.size(); i++) {
@@ -3711,7 +3706,6 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         // new way of reading car owners using elements
         if (e.getChild(Xml.CAR_OWNERS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> carOwners = e.getChild(Xml.CAR_OWNERS).getChildren(Xml.CAR_OWNER);
             String[] owners = new String[carOwners.size()];
             for (int i = 0; i < carOwners.size(); i++) {
@@ -3921,28 +3915,24 @@ public class Train implements java.beans.PropertyChangeListener {
 
         // check for scripts
         if (e.getChild(Xml.SCRIPTS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> lb = e.getChild(Xml.SCRIPTS).getChildren(Xml.BUILD);
             for (Element es : lb) {
                 if ((a = es.getAttribute(Xml.NAME)) != null) {
                     addBuildScript(a.getValue());
                 }
             }
-            @SuppressWarnings("unchecked")
             List<Element> lab = e.getChild(Xml.SCRIPTS).getChildren(Xml.AFTER_BUILD);
             for (Element es : lab) {
                 if ((a = es.getAttribute(Xml.NAME)) != null) {
                     addAfterBuildScript(a.getValue());
                 }
             }
-            @SuppressWarnings("unchecked")
             List<Element> lm = e.getChild(Xml.SCRIPTS).getChildren(Xml.MOVE);
             for (Element es : lm) {
                 if ((a = es.getAttribute(Xml.NAME)) != null) {
                     addMoveScript(a.getValue());
                 }
             }
-            @SuppressWarnings("unchecked")
             List<Element> lt = e.getChild(Xml.SCRIPTS).getChildren(Xml.TERMINATE);
             for (Element es : lt) {
                 if ((a = es.getAttribute(Xml.NAME)) != null) {

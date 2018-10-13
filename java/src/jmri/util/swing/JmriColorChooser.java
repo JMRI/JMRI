@@ -54,9 +54,8 @@ public class JmriColorChooser {
     /**
      * The number of tabs in the color chooser, 5 standard plus the custom JMRI tab
      */
-    static final int COLOR_TAB_COUNT = 6;
     static Color color;
-
+    
     /**
      * Display the customized color selection dialog.
      * The JMRI custom panel is added before the Java supplied panels so that
@@ -85,8 +84,12 @@ public class JmriColorChooser {
      * @return the updated chooser object
      */
      static public JColorChooser extendColorChooser(JColorChooser chooser) {
+
+        int colorTabCount ;
+
         AbstractColorChooserPanel[] currPanels = chooser.getChooserPanels();
-        AbstractColorChooserPanel[] newPanels = new AbstractColorChooserPanel[COLOR_TAB_COUNT];
+        colorTabCount = currPanels.length + 1 ;
+        AbstractColorChooserPanel[] newPanels = new AbstractColorChooserPanel[colorTabCount];
         newPanels[0] = new jmri.util.swing.JmriColorChooserPanel();
         int idx = 1;
         for (int i = 0; i < currPanels.length; i++) {

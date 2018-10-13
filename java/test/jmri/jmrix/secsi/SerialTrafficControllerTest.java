@@ -177,7 +177,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     @Override
     @Before
     public  void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         SecsiSystemConnectionMemo memo = new SecsiSystemConnectionMemo();
         tc = new SerialTrafficController(memo);
     }

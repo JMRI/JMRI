@@ -86,6 +86,9 @@ public class MultiThrottle {
     }
 
     protected boolean addThrottleController(String key, String action) {   //  key is address format L#### or S##
+        if (!isValidAddr(key) ) { //make sure address is acceptable before proceeding
+            return false;
+        }
         if (throttles == null) {
             throttles = new HashMap<>(1);
         }
@@ -98,15 +101,37 @@ public class MultiThrottle {
         }
         MultiThrottleController mtc = new MultiThrottleController(whichThrottle, key, parentTCL, parentController);
         throttles.put(key, mtc);
+        log.debug("Throttle: {} added to MultiThrottle consist.", key);
 
         //  This will request the loco as a DccTrottle
         mtc.sort(action);
 
-        if (log.isDebugEnabled()) {
-            log.debug("Throttle: " + key + " added to MultiThrottle consist.");
-        }
         return true;
     }
+
+    /**
+     * Validate that address is going to be allowed by throttle controller. 
+     *   If not, send an error string to client.
+     *
+     * @param key address to be validated, of form Lnnnn or Snnn
+     */
+    private boolean isValidAddr(String key) {
+        int addr = Integer.parseInt(key.substring(1));
+        if ((key.charAt(0) == 'L') && 
+                !jmri.InstanceManager.throttleManagerInstance().canBeLongAddress(addr)) {
+            String msg = Bundle.getMessage("ErrorLongAddress", key);
+            log.warn(msg);
+            parentController.sendAlertMessage(msg);
+            return false;
+        } else if ((key.charAt(0) == 'S') && 
+                !jmri.InstanceManager.throttleManagerInstance().canBeShortAddress(addr)) {
+            String msg = Bundle.getMessage("ErrorShortAddress", key);
+            log.warn(msg);
+            parentController.sendAlertMessage(msg);
+            return false;            
+        }
+        return true;
+}
 
     protected boolean removeThrottleController(String key, String action) {
 

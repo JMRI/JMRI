@@ -1,10 +1,9 @@
-//EnginesTableFrameTest.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -12,6 +11,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -24,7 +24,7 @@ import org.junit.Test;
  * @author	Dan Boudreau Copyright (C) 2010
  *
  */
-public class EnginesTableFrameTest extends OperationsSwingTestCase {
+public class EnginesTableFrameTest extends OperationsTestCase {
 
     @Test
     public void testenginesTableFrame() throws Exception {
@@ -52,7 +52,7 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th Engine in sort by number list", e5.getId(), Engines.get(4).getId());
 
         // now sort by built date
-        enterClickAndLeave(etf.sortByBuilt);
+        JemmyUtil.enterClickAndLeave(etf.sortByBuilt);
         Engines = etf.enginesModel.getSelectedEngineList();
         Assert.assertEquals("1st Engine in sort by built list", e5, Engines.get(0));
         Assert.assertEquals("2nd Engine in sort by built list", e4, Engines.get(1));
@@ -60,7 +60,7 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("4th Engine in sort by built list", e3, Engines.get(3));
         Assert.assertEquals("5th Engine in sort by built list", e1, Engines.get(4));
 
-        enterClickAndLeave(etf.sortByDestination);
+        JemmyUtil.enterClickAndLeave(etf.sortByDestination);
         Engines = etf.enginesModel.getSelectedEngineList();
         Assert.assertEquals("1st Engine in sort by destination list", e2, Engines.get(0));
         Assert.assertEquals("2nd Engine in sort by destination list", e4, Engines.get(1));
@@ -69,7 +69,7 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th Engine in sort by destination list", e5, Engines.get(4));
 
         // now sort by location
-        enterClickAndLeave(etf.sortByLocation);
+        JemmyUtil.enterClickAndLeave(etf.sortByLocation);
         Engines = etf.enginesModel.getSelectedEngineList();
         Assert.assertEquals("1st Engine in sort by location list", e2, Engines.get(0));
         Assert.assertEquals("2nd Engine in sort by location list", e3, Engines.get(1));
@@ -78,7 +78,7 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th Engine in sort by location list", e1, Engines.get(4));
 
         // now sort by moves
-        enterClickAndLeave(etf.sortByMoves);
+        JemmyUtil.enterClickAndLeave(etf.sortByMoves);
         Engines = etf.enginesModel.getSelectedEngineList();
         Assert.assertEquals("1st Engine in sort by move list", e5, Engines.get(0));
         Assert.assertEquals("2nd Engine in sort by move list", e4, Engines.get(1));
@@ -87,7 +87,7 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th Engine in sort by move list", e1, Engines.get(4));
 
         // test sort by number again
-        enterClickAndLeave(etf.sortByNumber);
+        JemmyUtil.enterClickAndLeave(etf.sortByNumber);
         Engines = etf.enginesModel.getSelectedEngineList();
         Assert.assertEquals("1st Engine in sort by number list 2", e1, Engines.get(0));
         Assert.assertEquals("2nd Engine in sort by number list 2", e4, Engines.get(1));
@@ -96,7 +96,7 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th Engine in sort by number list 2", e5, Engines.get(4));
 
         // test sort by owner
-        enterClickAndLeave(etf.sortByOwner);
+        JemmyUtil.enterClickAndLeave(etf.sortByOwner);
         Engines = etf.enginesModel.getSelectedEngineList();
         Assert.assertEquals("1st Engine in sort by owner list", e4, Engines.get(0));
         Assert.assertEquals("2nd Engine in sort by owner list", e3, Engines.get(1));
@@ -105,7 +105,7 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th Engine in sort by owner list", e1, Engines.get(4));
 
         // test sort by rfid
-        enterClickAndLeave(etf.sortByRfid);
+        JemmyUtil.enterClickAndLeave(etf.sortByRfid);
         Engines = etf.enginesModel.getSelectedEngineList();
         Assert.assertEquals("1st Engine in sort by rfid list", e5, Engines.get(0));
         Assert.assertEquals("2nd Engine in sort by rfid list", e2, Engines.get(1));
@@ -114,7 +114,7 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th Engine in sort by rfid list", e3, Engines.get(4));
 
         // test sort by road
-        enterClickAndLeave(etf.sortByRoad);
+        JemmyUtil.enterClickAndLeave(etf.sortByRoad);
         Engines = etf.enginesModel.getSelectedEngineList();
         Assert.assertEquals("1st Engine in sort by road list", e3, Engines.get(0));
         Assert.assertEquals("2nd Engine in sort by road list", e1, Engines.get(1));
@@ -122,14 +122,14 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("4th Engine in sort by road list", e4, Engines.get(3));
         Assert.assertEquals("5th Engine in sort by road list", e2, Engines.get(4));
 
-        enterClickAndLeave(etf.sortByTrain);
+        JemmyUtil.enterClickAndLeave(etf.sortByTrain);
         //TODO add trains
 
-        enterClickAndLeave(etf.sortByConsist);
+        JemmyUtil.enterClickAndLeave(etf.sortByConsist);
         //TODO add consists
 
         // test sort by model
-        enterClickAndLeave(etf.sortByModel);
+        JemmyUtil.enterClickAndLeave(etf.sortByModel);
         Engines = etf.enginesModel.getSelectedEngineList();
         Assert.assertEquals("1st Engine in sort by model list", e2, Engines.get(0));
         Assert.assertEquals("2nd Engine in sort by model list", e4, Engines.get(1));
@@ -139,14 +139,14 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
 
         // test find text field
         etf.findEngineTextBox.setText("2");
-        enterClickAndLeave(etf.findButton);
+        JemmyUtil.enterClickAndLeave(etf.findButton);
         // table is sorted by model, Engines with number 2 are in the first and 2nd rows
         Assert.assertEquals("find Engine by number 1st", 0, etf.enginesTable.getSelectedRow());
-        enterClickAndLeave(etf.findButton);
+        JemmyUtil.enterClickAndLeave(etf.findButton);
         Assert.assertEquals("find Engine by number 2nd", 1, etf.enginesTable.getSelectedRow());
 
         // create the EngineEditFrame
-        enterClickAndLeave(etf.addButton);
+        JemmyUtil.enterClickAndLeave(etf.addButton);
 
         JUnitUtil.dispose(etf);
     }
@@ -154,7 +154,7 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
     // Ensure minimal setup for log4J
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
 
         loadEngines();
@@ -244,7 +244,7 @@ public class EnginesTableFrameTest extends OperationsSwingTestCase {
 
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

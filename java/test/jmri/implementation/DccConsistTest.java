@@ -39,7 +39,7 @@ public class DccConsistTest extends AbstractConsistTestBase {
     @After
     @Override
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
         c = null;
     }
 

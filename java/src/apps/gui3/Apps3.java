@@ -154,24 +154,6 @@ public abstract class Apps3 extends AppsBase {
     }
 
     /**
-     * Provides a list of {@link apps.startup.AbstractActionModel} objects that
-     * could be used with the implementing class in {@link #addToActionModel()}.
-     *
-     * @return the list of action models.
-     * @deprecated since 4.5.3
-     */
-    @Deprecated
-    protected ResourceBundle getActionModelResourceBundle() { return null; }
-
-    /**
-     * @deprecated since 4.5.1
-     */
-    @Deprecated
-    protected final void addToActionModel() {
-        // StartupActionModelUtil populates itself, so do nothing
-    }
-
-    /**
      * Set a toolbar to be initially floating. This doesn't quite work right.
      *
      * @param toolBar the toolbar to float
@@ -354,7 +336,7 @@ public abstract class Apps3 extends AppsBase {
             // Apps.setConfigFilename() does not reset the system property
             System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
             Profile profile = ProfileManager.getDefault().getActiveProfile();
-            log.info("Starting with profile {}", profile != null ? profile.getId() : "<none>");
+            log.info("Starting with profile {}", profile.getId());
 
             // rapid language set; must follow up later with full setting as part of preferences
             apps.gui.GuiLafPreferencesManager.setLocaleMinimally(profile);
@@ -380,7 +362,7 @@ public abstract class Apps3 extends AppsBase {
             Profile profile = ProfileManager.getDefault().getActiveProfile();
             if (!GraphicsEnvironment.isHeadless()) {
                 JOptionPane.showMessageDialog(sp,
-                        Bundle.getMessage("SingleConfigMigratedToSharedConfig", profile != null ? profile.getName() : "<none>"),
+                        Bundle.getMessage("SingleConfigMigratedToSharedConfig", profile.getName()),
                         jmri.Application.getApplicationName(),
                         JOptionPane.INFORMATION_MESSAGE);
             }

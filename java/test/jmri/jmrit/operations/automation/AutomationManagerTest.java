@@ -1,4 +1,3 @@
-//AutomationItemTest.java
 package jmri.jmrit.operations.automation;
 
 import jmri.InstanceManager;
@@ -13,12 +12,14 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.timetable.TrainSchedule;
 import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 public class AutomationManagerTest extends OperationsTestCase {
 
+    @Test
     public void testDefaults() {
         AutomationManager manager = InstanceManager.getDefault(AutomationManager.class);
         Assert.assertNotNull("test creation", manager);
@@ -30,6 +31,7 @@ public class AutomationManagerTest extends OperationsTestCase {
         Assert.assertEquals("Only null selection available", 1, manager.getComboBox().getItemCount());
     }
 
+    @Test
     public void testCreateAutomation() {
         AutomationManager manager = InstanceManager.getDefault(AutomationManager.class);
         Assert.assertNotNull("test creation", manager);
@@ -57,6 +59,7 @@ public class AutomationManagerTest extends OperationsTestCase {
      * Creates an automation with 5 items, and checks to see if all items are
      * copied correctly.
      */
+    @Test
     public void testCopyAutomation() {
         AutomationManager manager = InstanceManager.getDefault(AutomationManager.class);
         Assert.assertNotNull("test creation", manager);
@@ -165,28 +168,14 @@ public class AutomationManagerTest extends OperationsTestCase {
     }
 
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
     }
 
-    public AutomationManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", AutomationManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(AutomationManagerTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         super.tearDown();
     }
 }

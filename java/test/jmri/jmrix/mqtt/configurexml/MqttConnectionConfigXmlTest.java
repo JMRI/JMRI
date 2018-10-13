@@ -12,21 +12,19 @@ import org.junit.Test;
  * @author Bob Jacobsen Copyright (C) 2018
  * @since 4.11.5
  */
-public class MqttConnectionConfigXmlTest {
+public class MqttConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXmlTestBase {
 
-    @Test
-    public void ConstructorTest() {
-        Assert.assertNotNull("ConnectionConfig constructor", new MqttConnectionConfigXml());
-    }
-
+    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        xmlAdapter = new MqttConnectionConfigXml();
     }
 
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
+        xmlAdapter = null;
     }
 }

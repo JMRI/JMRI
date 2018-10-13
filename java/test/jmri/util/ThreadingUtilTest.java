@@ -1,19 +1,17 @@
 package jmri.util;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import org.junit.*;
 
 /**
  * Tests for ThreadingUtil class
  *
  * @author	Bob Jacobsen Copyright 2015
  */
-public class ThreadingUtilTest extends TestCase {
+public class ThreadingUtilTest {
 
     boolean done;
     
+    @Test
     public void testToLayout() {
         done = false;
         
@@ -25,6 +23,7 @@ public class ThreadingUtilTest extends TestCase {
     }
 
     Object testRef = null;
+    @Test
     public void testToGuiWarn() {
         // if (!java.lang.management.ManagementFactory
         //                                        .getThreadMXBean().isObjectMonitorUsageSupported())
@@ -55,6 +54,7 @@ public class ThreadingUtilTest extends TestCase {
         JUnitUtil.waitFor( ()->{ return testRef != null; }, "Locked thread complete");
     }
 
+    @Test
     public void testThreadingNesting() {
         done = false;
         
@@ -80,6 +80,7 @@ public class ThreadingUtilTest extends TestCase {
         JUnitUtil.waitFor( ()->{ return done; }, "Separate thread complete");
     }
 
+    @Test
     public void testThreadingNestingToSwing() {
         done = false;
         
@@ -103,6 +104,7 @@ public class ThreadingUtilTest extends TestCase {
         JUnitUtil.waitFor( ()->{ return done; }, "Separate thread complete");
     }
 
+    @Test
     public void testThreadingDelayGUI() {
         done = false;
         
@@ -117,6 +119,7 @@ public class ThreadingUtilTest extends TestCase {
         JUnitUtil.waitFor( ()->{ return done; }, "Delayed operation complete");
     }
 
+    @Test
     public void testThreadingRunOnGUIwithReturn() {
         done = false;
         
@@ -129,6 +132,7 @@ public class ThreadingUtilTest extends TestCase {
         Assert.assertEquals(new Integer(21), value);
     }
 
+    @Test
     public void testThreadingDelayLayout() {
         done = false;
         
@@ -146,6 +150,7 @@ public class ThreadingUtilTest extends TestCase {
     /**
      * Show how to query state of _current_ thread
      */
+    @Test
     public void testSelfState() {
     
         // To run the tests, this thread has to be running, not waiting
@@ -153,34 +158,15 @@ public class ThreadingUtilTest extends TestCase {
         Assert.assertFalse(ThreadingUtil.isThreadWaiting(Thread.currentThread()));
     }
 
-    // from here down is testing infrastructure
-    public ThreadingUtilTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", ThreadingUtilTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(ThreadingUtilTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        apps.tests.Log4JFixture.setUp();
+    @Before
+    public void setUp() throws Exception {
+        jmri.util.JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

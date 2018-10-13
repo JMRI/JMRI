@@ -1,4 +1,3 @@
-//AutomationItemTest.java
 package jmri.jmrit.operations.automation;
 
 import jmri.InstanceManager;
@@ -14,12 +13,14 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.timetable.TrainSchedule;
 import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 public class AutomationItemTest extends OperationsTestCase {
 
+    @Test
     public void testDefaults() {
         AutomationItem automationItem = new AutomationItem("TestId");
         Assert.assertNotNull("test creation", automationItem);
@@ -43,6 +44,7 @@ public class AutomationItemTest extends OperationsTestCase {
         Assert.assertEquals(null, automationItem.getTrainSchedule());
     }
 
+    @Test
     public void testMessages() {
         AutomationItem automationItem = new AutomationItem("TestId");
         Assert.assertNotNull("test creation", automationItem);
@@ -57,6 +59,7 @@ public class AutomationItemTest extends OperationsTestCase {
         Assert.assertEquals("Test Fail message", automationItem.getMessageFail());
     }
 
+    @Test
     public void testAutomationToRun() {
         AutomationItem automationItem = new AutomationItem("TestId");
         Assert.assertNotNull("test creation", automationItem);
@@ -81,6 +84,7 @@ public class AutomationItemTest extends OperationsTestCase {
         Assert.assertEquals(automation, automationItem.getAutomationToRun());
     }
 
+    @Test
     public void testGotoAutomationItem() {
         AutomationManager manager = InstanceManager.getDefault(AutomationManager.class);
         Automation automation = manager.newAutomation("testAutomationGoto");
@@ -100,6 +104,7 @@ public class AutomationItemTest extends OperationsTestCase {
         Assert.assertEquals(item2, item1.getGotoAutomationItem());
     }
 
+    @Test
     public void testRouteLocation() {
         AutomationItem automationItem = new AutomationItem("TestId");
         Assert.assertNotNull("test creation", automationItem);
@@ -113,6 +118,7 @@ public class AutomationItemTest extends OperationsTestCase {
         Assert.assertEquals(rl, automationItem.getRouteLocation());
     }
 
+    @Test
     public void testTrain() {
         AutomationItem automationItem = new AutomationItem("TestId");
         Assert.assertNotNull("test creation", automationItem);
@@ -126,6 +132,7 @@ public class AutomationItemTest extends OperationsTestCase {
         Assert.assertEquals("Build train action", train, automationItem.getTrain());
     }
 
+    @Test
     public void testTrainSchedule() {
         AutomationItem automationItem = new AutomationItem("TestId");
         Assert.assertNotNull("test creation", automationItem);
@@ -146,28 +153,14 @@ public class AutomationItemTest extends OperationsTestCase {
     }
 
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
     }
 
-    public AutomationItemTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", AutomationItemTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(AutomationItemTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         super.tearDown();
     }
 }

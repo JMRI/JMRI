@@ -44,7 +44,7 @@ public class RollingStockSetFrame<T extends RollingStock> extends OperationsFram
     protected LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
     protected TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
 
-    T _rs;
+    RollingStock _rs;
     protected boolean _disableComboBoxUpdate = false;
 
     // labels
@@ -52,7 +52,7 @@ public class RollingStockSetFrame<T extends RollingStock> extends OperationsFram
     JLabel textType = new JLabel();
 
     // major buttons
-    protected JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
+    public JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     protected JButton ignoreAllButton = new JButton(Bundle.getMessage("IgnoreAll"));
 
     // combo boxes
@@ -70,8 +70,8 @@ public class RollingStockSetFrame<T extends RollingStock> extends OperationsFram
     protected JCheckBox autoFinalDestTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
     protected JCheckBox autoTrainCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
 
-    protected JCheckBox locationUnknownCheckBox = new JCheckBox(Bundle.getMessage("LocationUnknown"));
-    protected JCheckBox outOfServiceCheckBox = new JCheckBox(Bundle.getMessage("OutOfService"));
+    public JCheckBox locationUnknownCheckBox = new JCheckBox(Bundle.getMessage("LocationUnknown"));
+    public JCheckBox outOfServiceCheckBox = new JCheckBox(Bundle.getMessage("OutOfService"));
 
     protected JCheckBox ignoreStatusCheckBox = new JCheckBox(Bundle.getMessage("Ignore"));
     protected JCheckBox ignoreLocationCheckBox = new JCheckBox(Bundle.getMessage("Ignore"));
@@ -252,7 +252,7 @@ public class RollingStockSetFrame<T extends RollingStock> extends OperationsFram
         setMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
     }
 
-    public void load(T rs) {
+    public void load(RollingStock rs) {
         _rs = rs;
         textRoad.setText(_rs.getRoadName() + " " + _rs.getNumber());
         textType.setText(_rs.getTypeName());
@@ -306,7 +306,7 @@ public class RollingStockSetFrame<T extends RollingStock> extends OperationsFram
     RouteLocation rd;
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
-    protected boolean change(T rs) {
+    protected boolean change(RollingStock rs) {
         log.debug("Change button action for rs ({})", rs.toString());
         // save the auto buttons
         autoTrackCheckBoxSelected = autoTrackCheckBox.isSelected();
@@ -325,7 +325,7 @@ public class RollingStockSetFrame<T extends RollingStock> extends OperationsFram
         }
         // check to see if rolling stock is in staging and out of service (also location unknown)
         if (outOfServiceCheckBox.isSelected() && rs.getTrack() != null
-                && rs.getTrack().getTrackType().equals(Track.STAGING)) {
+                && rs.getTrack().isStaging()) {
             JOptionPane.showMessageDialog(this, getRb().getString("rsNeedToRemoveStaging"), getRb()
                     .getString("rsInStaging"), JOptionPane.WARNING_MESSAGE);
             // clear the rolling stock's location
@@ -441,7 +441,7 @@ public class RollingStockSetFrame<T extends RollingStock> extends OperationsFram
         return true;
     }
 
-    private boolean changeLocation(T rs) {
+    private boolean changeLocation(RollingStock rs) {
         if (!ignoreLocationCheckBox.isSelected()) {
             if (locationBox.getSelectedItem() == null) {
                 rs.setLocation(null, null);
@@ -484,7 +484,7 @@ public class RollingStockSetFrame<T extends RollingStock> extends OperationsFram
         return true;
     }
 
-    private void loadTrain(T rs) {
+    private void loadTrain(RollingStock rs) {
         if (!ignoreTrainCheckBox.isSelected()) {
             if (trainBox.getSelectedItem() == null) {
                 if (rs.getTrain() != null) {
@@ -503,7 +503,7 @@ public class RollingStockSetFrame<T extends RollingStock> extends OperationsFram
         }
     }
 
-    private boolean changeDestination(T rs) {
+    private boolean changeDestination(RollingStock rs) {
         if (!ignoreDestinationCheckBox.isSelected()) {
             if (destinationBox.getSelectedItem() == null) {
                 rs.setDestination(null, null);
@@ -515,7 +515,7 @@ public class RollingStockSetFrame<T extends RollingStock> extends OperationsFram
                 log.debug("changeDestination: {}, ({})", destinationBox.getSelectedItem(),
                         destTrack);
                 if (destTrack != null && rs.getDestinationTrack() != destTrack
-                        && destTrack.getTrackType().equals(Track.STAGING)
+                        && destTrack.isStaging()
                         && (rs.getTrain() == null || !rs.getTrain().isBuilt())) {
                     log.debug("Destination track ({}) is staging", destTrack.getName());
                     JOptionPane.showMessageDialog(this, getRb().getString("rsDoNotSelectStaging"), getRb()
@@ -544,7 +544,7 @@ public class RollingStockSetFrame<T extends RollingStock> extends OperationsFram
         return true;
     }
 
-    protected void checkTrain(T rs) {
+    protected void checkTrain(RollingStock rs) {
         // determine if train is built and car is part of train or wants to be part of the train
         Train train = rs.getTrain();
         if (train != null && train.isBuilt()) {
@@ -584,7 +584,7 @@ public class RollingStockSetFrame<T extends RollingStock> extends OperationsFram
         }
     }
 
-    protected void setRouteLocationAndDestination(T rs, Train train, RouteLocation rl,
+    protected void setRouteLocationAndDestination(RollingStock rs, Train train, RouteLocation rl,
             RouteLocation rd) {
         if (rs.getRouteLocation() != null || rl != null) {
             train.setModified(true);
@@ -609,7 +609,7 @@ public class RollingStockSetFrame<T extends RollingStock> extends OperationsFram
     }
 
     protected boolean updateGroup(List<T> list) {
-        for (T rs : list) {
+        for (RollingStock rs : list) {
             if (rs == _rs) {
                 continue;
             }

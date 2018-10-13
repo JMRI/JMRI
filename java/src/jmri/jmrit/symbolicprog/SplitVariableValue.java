@@ -143,8 +143,8 @@ public class SplitVariableValue extends VariableValue
     void exitField() {
         // there may be a lost focus event left in the queue when disposed so protect
         if (_value != null && !oldContents.equals(_value.getText())) {
-            int newVal = ((Integer.valueOf(_value.getText()).intValue()) - mOffset) / mFactor;
-            int oldVal = ((Integer.valueOf(oldContents).intValue()) - mOffset) / mFactor;
+            int newVal = ((Integer.parseInt(_value.getText())) - mOffset) / mFactor;
+            int oldVal = ((Integer.parseInt(oldContents)) - mOffset) / mFactor;
             updatedTextField();
             prop.firePropertyChange("Value", Integer.valueOf(oldVal), Integer.valueOf(newVal));
         }
@@ -161,7 +161,7 @@ public class SplitVariableValue extends VariableValue
 
         int newEntry;  // entered value
         try {
-            newEntry = Integer.valueOf(_value.getText()).intValue();
+            newEntry = Integer.parseInt(_value.getText());
         } catch (java.lang.NumberFormatException ex) {
             newEntry = 0;
         }
@@ -210,7 +210,7 @@ public class SplitVariableValue extends VariableValue
         if (log.isDebugEnabled()) {
             log.debug("CV " + getCvNum() + "," + getSecondCvNum() + " actionPerformed");
         }
-        int newVal = ((Integer.valueOf(_value.getText()).intValue()) - mOffset) / mFactor;
+        int newVal = ((Integer.parseInt(_value.getText())) - mOffset) / mFactor;
         updatedTextField();
         prop.firePropertyChange("Value", null, Integer.valueOf(newVal));
     }
@@ -252,7 +252,7 @@ public class SplitVariableValue extends VariableValue
 
     @Override
     public int getIntValue() {
-        return ((Integer.valueOf(_value.getText()).intValue()) - mOffset) / mFactor;
+        return ((Integer.parseInt(_value.getText())) - mOffset) / mFactor;
     }
 
     @Override
@@ -277,7 +277,7 @@ public class SplitVariableValue extends VariableValue
         }
         int oldVal;
         try {
-            oldVal = (Integer.valueOf(_value.getText()).intValue() - mOffset) / mFactor;
+            oldVal = (Integer.parseInt(_value.getText()) - mOffset) / mFactor;
         } catch (java.lang.NumberFormatException ex) {
             oldVal = -999;
         }

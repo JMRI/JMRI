@@ -1,7 +1,5 @@
-//JmriServerActionTest.java
 package jmri.jmris;
 
-import apps.tests.Log4JFixture;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,12 +21,13 @@ public class JmriServerActionTest {
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() throws Exception {
-        Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
 
 }

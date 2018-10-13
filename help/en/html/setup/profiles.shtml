@@ -79,6 +79,13 @@
       configuration files between multiple computers, see the
       <a href="Dropbox.shtml">help page on using Dropbox with
       JMRI</a>.</p>
+      
+      <p>We recommend that Profile directory names end in <code>.jmri</code> so
+          that other applications can use that extension to recognize a profile
+          by extension. JMRI automatically adds <code>.jmri</code> to the name
+          of the directory for new Profiles. If <code>.jmri</code> is added to
+          the name of an existing Profile directory, JMRI should automatically
+          recognize and handle that change.</p>
 
       <h2>Sharing Profiles</h2>
 

@@ -41,6 +41,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.tree.TreeNode;
+
 import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
@@ -129,10 +131,10 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         if (tree != null) {
             CatalogTreeNode node = tree.getRoot();
 
-            Enumeration<CatalogTreeNode> e = node.children();
+            Enumeration<TreeNode> e = node.children();
 
             while (e.hasMoreElements()) {
-                CatalogTreeNode nChild = e.nextElement();
+                CatalogTreeNode nChild = (CatalogTreeNode)e.nextElement();
                 if (_type.equals(nChild.toString())) {
                     _defaultIcons = nChild;
                     _userDefaults = true;
@@ -359,6 +361,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         pack();
     }
 
+    @SuppressWarnings("unchecked") // PickList is a parameterized class, but we don't use that here
     public void setSelection(NamedBean bean) {
         int row = _pickListModel.getIndexOf(bean);
         row = _table.convertRowIndexToView(row);
@@ -619,6 +622,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         return _addButton.isEnabled();
     }
 
+    @SuppressWarnings("unchecked") // PickList is a parameterized class, but we don't use that here
     void addToTable() {
         String name = _sysNametext.getText();
         if (name != null && name.length() > 0) {
@@ -690,11 +694,11 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         }
         CatalogTreeNode root = tree.getRoot();
 
-        Enumeration<CatalogTreeNode> e = root.children();
+        Enumeration<TreeNode> e = root.children();
 
         String name = _defaultIcons.toString();
         while (e.hasMoreElements()) {
-            CatalogTreeNode nChild = e.nextElement();
+            CatalogTreeNode nChild = (CatalogTreeNode)e.nextElement();
             if (name.equals(nChild.toString())) {
                 log.debug("Remove node {}", nChild);
                 root.remove(nChild);

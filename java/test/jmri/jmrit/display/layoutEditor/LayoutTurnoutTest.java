@@ -740,6 +740,7 @@ public class LayoutTurnoutTest {
     public static void beforeClass() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
+            JUnitUtil.resetProfileManager();
             layoutEditor = new LayoutEditor();
         }
     }
@@ -749,12 +750,14 @@ public class LayoutTurnoutTest {
         if (layoutEditor != null) {
             JUnitUtil.dispose(layoutEditor);
         }
+        layoutEditor = null;
         JUnitUtil.tearDown();
     }
 
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             layoutEditor = new LayoutEditor();
             Point2D point = new Point2D.Double(150.0, 100.0);

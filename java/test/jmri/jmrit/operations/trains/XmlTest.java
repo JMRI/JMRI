@@ -1,4 +1,3 @@
-//XmlTest.java
 package jmri.jmrit.operations.trains;
 
 import java.io.File;
@@ -15,10 +14,11 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Setup;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.jdom2.JDOMException;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Xml class Last manually cross-checked on 20090131
@@ -29,6 +29,7 @@ import org.junit.Assert;
  */
 public class XmlTest extends OperationsTestCase {
 
+    @Test
     public void testFilePathNames() {
         // test the build report path name
         Assert.assertEquals("buildstatus", TrainManagerXml.BUILD_STATUS);
@@ -98,6 +99,7 @@ public class XmlTest extends OperationsTestCase {
      * @throws JDOMException exception
      * @throws IOException exception
      */
+    @Test
     public void testXMLCreate() throws JDOMException, IOException {
 
         // confirm that file name has been modified
@@ -604,13 +606,13 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t3 requirements", Train.CABOOSE, t3.getRequirements());
         Assert.assertEquals("t3 raod option", "t3 X raod option", t3.getRoadOption());
         Assert.assertEquals("t3 status", Train.UNKNOWN, t3.getStatus());
-
     }
 
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
 
         Setup.setBuildAggressive(false);
@@ -619,24 +621,9 @@ public class XmlTest extends OperationsTestCase {
         Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
     }
 
-    public XmlTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XmlTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XmlTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         super.tearDown();
     }
 

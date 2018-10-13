@@ -69,7 +69,6 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
 
-    @SuppressWarnings("unchecked")
     @Override
     public Vector<String> getPortNames() {
         // first, check that the comm package can be opened and ports seen
@@ -287,6 +286,8 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     /**
      * for a given readable choice return internal value
      * or the default
+     * <p>
+     * @param s - string containing ?a packetizer name?
      * @return - internal value
      */
     protected String getPacketizerOption(String s) {

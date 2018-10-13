@@ -171,7 +171,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                 }
             }
         }
-        firePropertyChange("run", Boolean.valueOf(run), Boolean.valueOf(!run));
+        firePropertyChange("run", Boolean.valueOf(!run), Boolean.valueOf(run));  // old, then new
         handleAlarm();
     }
 
@@ -208,7 +208,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         setTime(now);
         // notify listeners if internal master
         if (internalMaster) {
-            firePropertyChange("rate", Double.valueOf(factor), Double.valueOf(oldFactor));
+            firePropertyChange("rate", Double.valueOf(oldFactor), Double.valueOf(factor));  // old, then new
         }
         handleAlarm();
     }
@@ -239,7 +239,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         // update memory
         updateMemory(factor);
         // notify listeners
-        firePropertyChange("rate", Double.valueOf(factor), Double.valueOf(oldFactor));
+        firePropertyChange("rate", Double.valueOf(oldFactor), Double.valueOf(factor)); // old, then new
         handleAlarm();
     }
 

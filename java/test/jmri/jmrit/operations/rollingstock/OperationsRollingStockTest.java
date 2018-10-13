@@ -6,9 +6,10 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Setup;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations RollingStock class Last manually cross-checked on
@@ -25,13 +26,15 @@ import org.junit.Assert;
  */
 public class OperationsRollingStockTest extends OperationsTestCase {
 
-    // test constroctors.
+    // test constructors
+    @Test
     public void testCtor() {
         // test the default constructor.
         RollingStock rs1 = new RollingStock();
         Assert.assertNotNull("Default Constructor", rs1);
     }
 
+    @Test
     public void test2ParmCtor() {
         // test the constructor with roadname and roadnumer as parameters.
         RollingStock rs1 = new RollingStock("TESTROAD", "TESTNUMBER1");
@@ -42,6 +45,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         Assert.assertEquals("Car ID", "TESTROAD" + "TESTNUMBER1", rs1.getId());
     }
 
+    @Test
     public void testXmlConstructor() {
         // test the constructor loading this car from an XML element.
 
@@ -86,6 +90,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
     }
 
     // test creation
+    @Test
     public void testCreate() {
         RollingStock rs1 = new RollingStock("TESTROAD", "TESTNUMBER1");
 
@@ -125,6 +130,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
     }
 
     // test RollingStock weight and weighttons
+    @Test
     public void testRollingStockWeight() {
         RollingStock rs1 = new RollingStock("TESTROAD", "TESTNUMBER1");
         Assert.assertEquals("RollingStock Road", "TESTROAD", rs1.getRoadName());
@@ -137,6 +143,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
     }
 
     // test RollingStock public constants
+    @Test
     public void testRollingStockConstants() {
         RollingStock rs1 = new RollingStock("TESTROAD", "TESTNUMBER1");
         Assert.assertEquals("RollingStock Road", "TESTROAD", rs1.getRoadName());
@@ -150,6 +157,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
     }
 
     // test RollingStock location and track
+    @Test
     public void testRollingStockLocation() {
         RollingStock rs1 = new RollingStock("TESTROAD", "TESTNUMBER1");
         /* Rolling Stock needs a valid type */
@@ -235,36 +243,19 @@ public class OperationsRollingStockTest extends OperationsTestCase {
 
         // Normally logged message
         jmri.util.JUnitAppender.assertErrorMessage("Rolling stock (TESTROAD TESTNUMBER1) length () is not valid");
-
     }
 
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
+    @Before
+    public void setUp() {
         super.setUp();
-    }
-
-    public OperationsRollingStockTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OperationsRollingStockTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OperationsRollingStockTest.class);
-        return suite;
     }
 
     // The minimal setup for log4J
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
     }
 }

@@ -95,9 +95,9 @@ public abstract class ItemPanel extends JPanel {
 
     /**
      * Initialization for conversion of plain track to indicator track by CircuitBuilder.
+     * @param doneAction Callback action for Done button
      */
-    public void init(ActionListener doneAction) {
-    }
+    abstract public void init(ActionListener doneAction);
 
 
     protected void setEditor(Editor ed) {
@@ -110,8 +110,9 @@ public abstract class ItemPanel extends JPanel {
     /*
      * Notification to itemPanel to update child dialogs, if any
      */
-    protected void setPreviewBg(int index) {
-    }
+    abstract protected void setPreviewBg(int index);
+    
+    abstract protected void updateBackground0(BufferedImage im);
 
     public boolean oktoUpdate() {
         return true;
@@ -198,6 +199,7 @@ public abstract class ItemPanel extends JPanel {
         }
         // always update background from Panel Editor
         backgrounds[0] = DrawSquares.getImage(500, 400, 10, panelBackground, panelBackground);
+        log.debug("makeBackgrounds backgrounds[0] = {}", backgrounds[0]);
         return backgrounds;
     }
 
@@ -326,9 +328,9 @@ public abstract class ItemPanel extends JPanel {
                     (isPalette?"TabPane":"JFrame"), totalDim.width, totalDim.height,
                     this._itemType, oldDim.width, oldDim.height, newDim.width, newDim.height);
         if (_update) {
-            _paletteFrame.reSize(_paletteFrame, deltaDim, newDim);                            
+            _paletteFrame.reSize(_paletteFrame, deltaDim, newDim, _editor);                            
         } else if (isPalette && _initialized) {
-            _paletteFrame.reSize(ItemPalette._tabPane, deltaDim, newDim);            
+            _paletteFrame.reSize(ItemPalette._tabPane, deltaDim, newDim, _editor);            
         }
     }
 

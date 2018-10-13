@@ -34,6 +34,27 @@ public class LnCommandStationTypeTest {
         memo.dispose();
     }
 
+    @Test
+    public void testGetImpelementsIdle() {
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_DCS050.getImplementsIdle());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_DCS051.getImplementsIdle());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS100.getImplementsIdle());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DB150.getImplementsIdle());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS200.getImplementsIdle());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS210.getImplementsIdle());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS240.getImplementsIdle());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_PR2_ALONE.getImplementsIdle());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_PR3_ALONE.getImplementsIdle());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_STANDALONE.getImplementsIdle());
+
+        // the following command station types are _assumed_ by the coder to not support "idle".
+        // these assertions need to be verified with respect to real hardware.
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_IBX_TYPE_1.getImplementsIdle());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_IBX_TYPE_2.getImplementsIdle());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_LBPS.getImplementsIdle());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_MM.getImplementsIdle());
+        }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

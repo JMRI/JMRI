@@ -7,12 +7,14 @@ import jmri.util.Log4JUtil;
 import org.apache.log4j.Level;
 import org.junit.Assert;
 
+@Deprecated // (since="4.11.4", forRemoval=true) Java9 syntax // migrated into jmri.util.JUnitUtil
 public class Log4JFixture {
 
     private Log4JFixture() {
         // prevent instanciation
     }
-
+    
+    @Deprecated // (since="4.11.4", forRemoval=true) Java9 syntax // migrated into jmri.util.JUnitUtil
     public static void setUp() {
         // always init logging if needed
         initLogging();
@@ -29,6 +31,8 @@ public class Log4JFixture {
     }
 
     static int count = 0;
+    
+    @Deprecated // (since="4.11.4", forRemoval=true) Java9 syntax // migrated into jmri.util.JUnitUtil
     public static void tearDown() {
         JUnitAppender.end();
         Level severity = Level.ERROR; // level at or above which we'll complain
@@ -69,6 +73,7 @@ public class Log4JFixture {
      * First implementation is rather simplistic.
      * @param stop If true, this stop execution after the 1st new thread is found
      */
+    @Deprecated // (since="4.11.4", forRemoval=true) Java9 syntax // migrated into jmri.util.JUnitUtil
     static void checkThreads(boolean stop) {
         // now check for extra threads
         count = 0;
@@ -111,6 +116,7 @@ public class Log4JFixture {
         }
     }
     
+    @Deprecated // (since="4.11.4", forRemoval=true) Java9 syntax // migrated into jmri.util.JUnitUtil
     public static void initLogging() {
         String filename = System.getProperty("jmri.log4jconfigfilename", "tests.lcf");
         Log4JUtil.initLogging(filename);

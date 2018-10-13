@@ -23,12 +23,16 @@ import org.junit.Test;
  */
 public class JsonRosterSocketServiceTest {
 
-    private final JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+    private JsonMockConnection connection;
 
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
+        
+        connection = new JsonMockConnection((DataOutputStream) null);
+        
         InstanceManager.setDefault(Roster.class, new Roster("java/test/jmri/server/json/roster/data/roster.xml"));
         // clear the last message (if any) from the connection
         this.connection.sendMessage((JsonNode) null);
@@ -36,6 +40,7 @@ public class JsonRosterSocketServiceTest {
 
     @After
     public void tearDown() throws Exception {
+        connection = null;
         JUnitUtil.tearDown();
     }
 

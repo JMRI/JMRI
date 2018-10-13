@@ -2,6 +2,7 @@ package jmri.jmrit.signalling;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -85,7 +86,10 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
     jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
     JFrame jFrame;
-
+    
+    // Siae of the individual bean tables inside the shared pane
+    static final Dimension TABLESIZEPREFERRED    = new Dimension(720, 200);
+    
     /**
      * Create an empty JPanel to configure a new Signal Mast Logic.
      *
@@ -146,12 +150,13 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         destMastBox = new JmriBeanComboBox(smm, destMast, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
         JPanel containerPanel = new JPanel();
-        containerPanel.setLayout(new BorderLayout());
+        containerPanel.setLayout(new BoxLayout(containerPanel, BoxLayout.Y_AXIS));
 
         JPanel header = new JPanel();
         header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
 
         JPanel sourcePanel = new JPanel();
+        sourcePanel.setLayout(new BoxLayout(sourcePanel, BoxLayout.X_AXIS));
         sourcePanel.add(sourceMastLabel);
         sourcePanel.add(sourceMastBox);
         sourcePanel.add(fixedSourceMastLabel);
@@ -159,6 +164,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         header.add(sourcePanel);
 
         JPanel destPanel = new JPanel();
+        destPanel.setLayout(new BoxLayout(destPanel, BoxLayout.X_AXIS));
         destPanel.add(destMastLabel);
         destPanel.add(destMastBox);
         destPanel.add(fixedDestMastLabel);
@@ -274,15 +280,16 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         py.add(new JLabel("  " + Bundle.getMessage("Elements")));  // NOI18N
         header.add(py);
 
-        containerPanel.add(header, BorderLayout.NORTH);
+        containerPanel.add(header);
 
         JTabbedPane detailsTab = new JTabbedPane();
+        detailsTab.setLayout(new BoxLayout(detailsTab, BoxLayout.Y_AXIS));
         detailsTab.add(Bundle.getMessage("Blocks"), buildBlocksPanel());  // NOI18N
         detailsTab.add(Bundle.getMessage("Turnouts"), buildTurnoutPanel());  // NOI18N
         detailsTab.add(Bundle.getMessage("Sensors"), buildSensorPanel());  // NOI18N
         detailsTab.add(Bundle.getMessage("SignalMasts"), buildSignalMastPanel());  // NOI18N
 
-        containerPanel.add(detailsTab, BorderLayout.CENTER);
+        containerPanel.add(detailsTab);
 
         JPanel footer = new JPanel();
         footer.setLayout(new FlowLayout(FlowLayout.TRAILING));
@@ -318,7 +325,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         applyButton.setToolTipText(Bundle.getMessage("ApplyButtonToolTip"));  // NOI18N
         applyButton.setVisible(true);
 
-        containerPanel.add(footer, BorderLayout.SOUTH);
+        containerPanel.add(footer);
 
         add(containerPanel);
         if (sourceMast != null) { // edit an existing SML, fix source mast
@@ -429,7 +436,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         _blockModel.configStateColumn(manualBlockTable); // create static comboBox in State column
         manualBlockTable.setRowSorter(manualBlockSorter);
         manualBlockTable.setRowSelectionAllowed(false);
-        manualBlockTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 100));
+        manualBlockTable.setPreferredScrollableViewportSize(TABLESIZEPREFERRED);
         // JComboBox<String> stateCCombo = new JComboBox<>(); // moved to ManualBlockTable class
 
         TableColumnModel _manualBlockColumnModel = manualBlockTable.getColumnModel();
@@ -476,7 +483,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         RowSorterUtil.setSortOrder(autoBlockSorter, AutoBlockModel.SNAME_COLUMN, SortOrder.ASCENDING);
         autoBlockTable.setRowSorter(autoBlockSorter);
         autoBlockTable.setRowSelectionAllowed(false);
-        autoBlockTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 100));
+        autoBlockTable.setPreferredScrollableViewportSize(TABLESIZEPREFERRED);
 
         TableColumnModel _autoBlockColumnModel = autoBlockTable.getColumnModel();
         TableColumn sNameColumnA = _autoBlockColumnModel.
@@ -559,7 +566,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         _turnoutModel.configStateColumn(manualTurnoutTable); // create static comboBox in State column
         manualTurnoutTable.setRowSorter(manualTurnoutSorter);
         manualTurnoutTable.setRowSelectionAllowed(false);
-        manualTurnoutTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 100));
+        manualTurnoutTable.setPreferredScrollableViewportSize(TABLESIZEPREFERRED);
         // JComboBox<String> stateCCombo = new JComboBox<>(); // moved to ManualTurnoutTable class
 
         TableColumnModel _manualTurnoutColumnModel = manualTurnoutTable.getColumnModel();
@@ -607,7 +614,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         RowSorterUtil.setSortOrder(autoTurnoutSorter, AutoTurnoutModel.SNAME_COLUMN, SortOrder.ASCENDING);
         autoTurnoutTable.setRowSorter(autoTurnoutSorter);
         autoTurnoutTable.setRowSelectionAllowed(false);
-        autoTurnoutTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 100));
+        autoTurnoutTable.setPreferredScrollableViewportSize(TABLESIZEPREFERRED);
 
         TableColumnModel _autoTurnoutColumnModel = autoTurnoutTable.getColumnModel();
         TableColumn sNameColumnA = _autoTurnoutColumnModel.
@@ -678,7 +685,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         _sensorModel.configStateColumn(manualSensorTable); // create static comboBox in State column
         manualSensorTable.setRowSorter(manualSensorSorter);
         manualSensorTable.setRowSelectionAllowed(false);
-        manualSensorTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 100));
+        manualSensorTable.setPreferredScrollableViewportSize(TABLESIZEPREFERRED);
         //stateCCombo = new JComboBox<>(); // moved to ManualSensorTable class
 
         TableColumnModel _manualSensorColumnModel = manualSensorTable.getColumnModel();
@@ -753,7 +760,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         _signalMastModel.configStateColumn(manualSignalMastTable); // create mast (row) specific comboBox in Aspect column
         manualSignalMastTable.setRowSorter(sorter);
         manualSignalMastTable.setRowSelectionAllowed(false);
-        manualSignalMastTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 100));
+        manualSignalMastTable.setPreferredScrollableViewportSize(TABLESIZEPREFERRED);
 
         TableColumnModel _manualSignalMastColumnModel = manualSignalMastTable.getColumnModel();
         TableColumn includeColumnC = _manualSignalMastColumnModel.
@@ -797,7 +804,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         RowSorterUtil.setSortOrder(autoMastSorter, AutoMastModel.SNAME_COLUMN, SortOrder.ASCENDING);
         autoMastTable.setRowSorter(autoMastSorter);
         autoMastTable.setRowSelectionAllowed(false);
-        autoMastTable.setPreferredScrollableViewportSize(new java.awt.Dimension(480, 100));
+        autoMastTable.setPreferredScrollableViewportSize(TABLESIZEPREFERRED);
 
         TableColumnModel _autoMastColumnModel = autoMastTable.getColumnModel();
         TableColumn sNameColumnA = _autoMastColumnModel.
@@ -1618,7 +1625,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
              * @return an appropriate combobox for this signal head
              */
             @Override
-            protected JComboBox getEditorBox(int row) {
+            protected JComboBox<String> getEditorBox(int row) {
                 return getStateEditorBox(row);
             }
 
@@ -1756,7 +1763,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
          * @return A combobox containing the valid aspect names for this mast
          */
         @Override
-        JComboBox getStateEditorBox(int row) {
+        JComboBox<String> getStateEditorBox(int row) {
             // create dummy comboBox, override in extended classes for each bean
             JComboBox<String> editCombo = new JComboBox<>();
             editCombo.addItem(SET_TO_UNOCCUPIED);
@@ -1845,7 +1852,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
          * @return A combobox containing the valid aspect names for this mast
          */
         @Override
-        JComboBox getStateEditorBox(int row) {
+        JComboBox<String> getStateEditorBox(int row) {
             // create dummy comboBox, override in extended classes for each bean
             JComboBox<String> editCombo = new JComboBox<>();
             editCombo.addItem(SET_TO_THROWN);
@@ -1929,7 +1936,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
          * @return A combobox containing the valid aspect names for this mast
          */
         @Override
-        JComboBox getStateEditorBox(int row) {
+        JComboBox<String> getStateEditorBox(int row) {
             // create dummy comboBox, override in extended classes for each bean
             JComboBox<String> editCombo = new JComboBox<>();
             editCombo.addItem(SET_TO_INACTIVE);
@@ -2086,7 +2093,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
              * @return an appropriate combobox for this signal mast
              */
             @Override
-            protected JComboBox getEditorBox(int row) {
+            protected JComboBox<String> getEditorBox(int row) {
                 return getAspectEditorBox(row);
             }
 
@@ -2114,8 +2121,8 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
          * @param row Index number (in TableDataModel)
          * @return A combobox containing the valid aspect names for this mast
          */
-        JComboBox getAspectEditorBox(int row) {
-            JComboBox editCombo = editorMap.get(this.getValueAt(row, SNAME_COLUMN));
+        JComboBox<String> getAspectEditorBox(int row) {
+            JComboBox<String> editCombo = editorMap.get(this.getValueAt(row, SNAME_COLUMN));
             if (editCombo == null) {
                 // create a new one with correct aspects
                 editCombo = new JComboBox<String>(getAspectVector(row)); // show it
@@ -2123,7 +2130,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             }
             return editCombo;
         }
-        Hashtable<Object, JComboBox> editorMap = new Hashtable<Object, JComboBox>();
+        Hashtable<Object, JComboBox<String>> editorMap = new Hashtable<Object, JComboBox<String>>();
 
         /**
          * Holds a Hashtable of valid aspects per signal mast used by

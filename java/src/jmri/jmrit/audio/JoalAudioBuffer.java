@@ -304,6 +304,8 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "CF_USELESS_CONTROL_FLOW", 
+            justification = "TODO fill out the actions in these clauses")
     protected void generateLoopBuffers(int which) {
         if ((which == LOOP_POINT_START) || (which == LOOP_POINT_BOTH)) {
             // Create start loop buffer

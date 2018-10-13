@@ -28,7 +28,7 @@
 
 <body>
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
       <h1>JMRI Code: Use of Swing</h1>
@@ -53,6 +53,7 @@
       this, but we're moving classes in this direction as time
       allows.</p>
 
+      <a href="images/SwingStructureExample.png"><img src="images/SwingStructureExample.png" align="right" height="193" width="334"></a>
       <p>The basic structure is:
       <ul>
       <li>Keep Swing code in packages with <code>swing</code>
@@ -173,7 +174,7 @@
       JMRI provides three different ways of embedding JmriPanels in windows:
       <ul>
       <li>The jmri.util.swing.sdi package provides the traditional JMRI "single-document interface", where there are multiple independent windows
-      <li>jThe mri.util.swing.multipane package provides a  "multi-pane" or IDE-style interface", where each window is tiled with inter-related panes.
+      <li>The jmri.util.swing.multipane package provides a  "multi-pane" or IDE-style interface", where each window is tiled with inter-related panes.
         This is used for the (new) DecoderPro.
       <li>The jmri.util.swing.mdi package provides a "multi-document interface", where a primary window contains multiple independent sub-windows.
             This currently isn't used by a JMRI app, at least not as far as we know, but it's available if wanted.

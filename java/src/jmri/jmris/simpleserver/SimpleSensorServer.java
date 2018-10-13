@@ -1,4 +1,3 @@
-//SimpleSensorServer.java
 package jmri.jmris.simpleserver;
 
 import java.io.DataInputStream;

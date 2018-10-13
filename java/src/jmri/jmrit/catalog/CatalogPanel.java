@@ -252,16 +252,15 @@ public class CatalogPanel extends JPanel {
     /**
      * Recursively add the branch nodes to the display tree.
      */
-    @SuppressWarnings("unchecked")
     private void addTreeBranch(CatalogTreeNode node) {
         if (log.isDebugEnabled()) {
             log.debug("addTreeBranch called for node= {}, has {} children.",
                     node.toString(), node.getChildCount());
         }
         CatalogTreeNode root = (CatalogTreeNode) _model.getRoot();
-        Enumeration<CatalogTreeNode> e = node.children();
+        Enumeration<TreeNode> e = node.children();
         while (e.hasMoreElements()) {
-            CatalogTreeNode n = e.nextElement();
+            CatalogTreeNode n = (CatalogTreeNode)e.nextElement();
             addNode(root, n);
         }
     }
@@ -269,14 +268,13 @@ public class CatalogPanel extends JPanel {
     /**
      * Clone the node and adds to parent.
      */
-    @SuppressWarnings("unchecked")
     private void addNode(CatalogTreeNode parent, CatalogTreeNode n) {
         CatalogTreeNode node = new CatalogTreeNode((String) n.getUserObject());
         node.setLeaves(n.getLeaves());
         parent.add(node);
-        Enumeration<CatalogTreeNode> e = n.children();
+        Enumeration<TreeNode> e = n.children();
         while (e.hasMoreElements()) {
-            CatalogTreeNode nChild = e.nextElement();
+            CatalogTreeNode nChild = (CatalogTreeNode)e.nextElement();
             addNode(node, nChild);
         }
     }
@@ -303,15 +301,14 @@ public class CatalogPanel extends JPanel {
      * Find the corresponding node in a CatalogTreeManager tree with a displayed
      * node.
      */
-    @SuppressWarnings("unchecked")
     private CatalogTreeNode match(CatalogTreeNode cRoot, TreeNode[] nodes, int idx) {
         if (idx == nodes.length) {
             return cRoot;
         }
-        Enumeration<CatalogTreeNode> e = cRoot.children();
+        Enumeration<TreeNode> e = cRoot.children();
         CatalogTreeNode result = null;
         while (e.hasMoreElements()) {
-            CatalogTreeNode cNode = e.nextElement();
+            CatalogTreeNode cNode = (CatalogTreeNode)e.nextElement();
             if (nodes[idx].toString().equals(cNode.toString())) {
                 result = match(cNode, nodes, idx + 1);
                 break;
@@ -343,15 +340,14 @@ public class CatalogPanel extends JPanel {
      * @param parent the parent of name
      * @return true if the node was inserted
      */
-    @SuppressWarnings("unchecked")
     protected boolean insertNodeIntoModel(String name, CatalogTreeNode parent) {
         if (!nameOK(parent, name)) {
             return false;
         }
         int index = 0;
-        Enumeration<CatalogTreeNode> e = parent.children();
+        Enumeration<TreeNode> e = parent.children();
         while (e.hasMoreElements()) {
-            CatalogTreeNode n = e.nextElement();
+            CatalogTreeNode n = (CatalogTreeNode)e.nextElement();
             if (name.compareTo(n.toString()) < 0) {
                 break;
             }

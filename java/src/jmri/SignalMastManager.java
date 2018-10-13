@@ -62,10 +62,4 @@ public interface SignalMastManager extends Manager<SignalMast> {
 
     @CheckForNull public SignalMast getBySystemName(@Nonnull String s);
 
-    /**
-     * Get a list of all SignalMast system names.
-     */
-    @Nonnull@Override
-    public List<String> getSystemNameList();
-
 }

@@ -285,16 +285,16 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <tooltip>The speed with which the outputs configured to have a fade function fade in and fade out</tooltip>
             </variable>
 
-            <variable item="Flicker speed" CV="112" default="183" comment="Flicker speed">
+            <variable item="Blink speed" CV="112" default="183" comment="Blinking speed">
                 <decVal min="1" max="255"/>
                 <label xml:lang="fr">Vitesse d’oscillation</label>
                 <label xml:lang="de">Flackergeschwindigkeit</label>
                 <label xml:lang="nl">Knippersnelheid</label>
-                <label>Flicker speed</label>
+                <label>Blink speed</label>
                 <tooltip xml:lang="fr">Vitesse à laquelle les sorties configurées pour osciller oscilleront</tooltip>
                 <tooltip xml:lang="de">Die Geschwindigkeit, mit der die Ausgänge mit Flackerfunktion flackern</tooltip>
                 <tooltip xml:lang="nl">De snelheid waarmee de uitgangen knipperen die voor knipperen zijn geconfigureerd</tooltip>
-                <tooltip>The speed with which the outputs configured to flicker do so</tooltip>
+                <tooltip>The speed with which the outputs configured to blink do so</tooltip>
             </variable>
 
 <!-- start of DR4018 output configurations CV 113 - 128 -->
@@ -302,7 +302,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <decVal min="0" max="15"/>
                 <label xml:lang="fr">Intensité lumineuse</label>
                 <label xml:lang="de">Lichtintensität</label>
-                <label xml:lang="nl">Licht intensiteit</label>
+                <label xml:lang="nl">Lichtintensiteit</label>
                 <label>Light intensity</label>
                 <tooltip>Controls how much Out 1 dims (0-dark to 15-max bright)</tooltip>
             </variable>
@@ -313,12 +313,14 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="nl">Fade in/Fade out effect</label>
                 <label>Fade in/Fade out effect</label>
             </variable>
-            <variable CV="113" mask="XXVXXXXX" item="Flicker effect Out 1" default="0" writeOnly="no" include="4018">
+            <variable CV="113" mask="XXVXXXXX" item="Blinking effect Out 1" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet oscillation</label>
                 <label xml:lang="de">Flackereffekt</label>
-                <label xml:lang="nl">Knipper effect</label>
-                <label>Flicker effect</label>
+                <label xml:lang="nl">Knippereffect</label>
+                <label>Blinking effect</label>
+                <tooltip>&lt;html&gt;Output blinks with the frequency set in CV 112 (tab Module).&lt;br&gt;
+                    Invert blink by also setting Pulse on.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="113" mask="XVXXXXXX" item="Random light effect Out 1" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -329,17 +331,17 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             </variable>
             <variable CV="113" mask="VXXXXXXX" item="Pulse on Out 1" default="0" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                <label xml:lang="fr">Impulsion á Sortie 1</label>
-                <label xml:lang="de">Puls auf Ausgang 1</label>
-                <label xml:lang="nl">Puls op Uitgang 1</label>
-                <label>Pulse on Out 1</label>
+                <label xml:lang="fr">Impulsion</label>
+                <label xml:lang="de">Puls</label>
+                <label xml:lang="nl">Puls</label>
+                <label>Pulse</label>
             </variable>
 
             <variable CV="114" mask="XXXXVVVV" item="Light intensity Out 2" default="15" writeOnly="no" comment="Output 2" include="4018">
                 <decVal min="0" max="15"/>
                 <label xml:lang="fr">Intensité lumineuse</label>
                 <label xml:lang="de">Lichtintensität</label>
-                <label xml:lang="nl">Licht intensiteit</label>
+                <label xml:lang="nl">Lichtintensiteit</label>
                 <label>Light intensity</label>
                 <tooltip>Controls how much Out 2 dims (0-dark to 15-max bright)</tooltip>
             </variable>
@@ -350,12 +352,14 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="nl">Fade in/Fade out effect</label>
                 <label>Fade in/Fade out effect</label>
             </variable>
-            <variable CV="114" mask="XXVXXXXX" item="Flicker effect Out 2" default="0" writeOnly="no" include="4018">
+            <variable CV="114" mask="XXVXXXXX" item="Blinking effect Out 2" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet oscillation</label>
                 <label xml:lang="de">Flackereffekt</label>
-                <label xml:lang="nl">Knipper effect</label>
-                <label>Flicker effect</label>
+                <label xml:lang="nl">Knippereffect</label>
+                <label>Blinking effect</label>
+                <tooltip>&lt;html&gt;Output blinks with the frequency set in CV 112 (tab Module).&lt;br&gt;
+                    Invert blink by also setting Pulse on.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="114" mask="XVXXXXXX" item="Random light effect Out 2" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -366,17 +370,17 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             </variable>
             <variable CV="114" mask="VXXXXXXX" item="Pulse on Out 2" default="0" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                <label xml:lang="fr">Impulsion á Sortie 2</label>
-                <label xml:lang="de">Puls auf Ausgang 2</label>
-                <label xml:lang="nl">Puls op Uitgang 2</label>
-                <label>Pulse on Out 2</label>
+                <label xml:lang="fr">Impulsion</label>
+                <label xml:lang="de">Puls</label>
+                <label xml:lang="nl">Puls</label>
+                <label>Pulse</label>
             </variable>
 
             <variable CV="115" mask="XXXXVVVV" item="Light intensity Out 3" default="15" writeOnly="no" comment="Output 3" include="4018">
                 <decVal min="0" max="15"/>
                 <label xml:lang="fr">Intensité lumineuse</label>
                 <label xml:lang="de">Lichtintensität</label>
-                <label xml:lang="nl">Licht intensiteit</label>
+                <label xml:lang="nl">Lichtintensiteit</label>
                 <label>Light intensity</label>
                 <tooltip>Controls how much Out 3 dims (0-dark to 15-max bright)</tooltip>
             </variable>
@@ -387,12 +391,14 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="nl">Fade in/Fade out effect</label>
                 <label>Fade in/Fade out effect</label>
             </variable>
-            <variable CV="115" mask="XXVXXXXX" item="Flicker effect Out 3" default="0" writeOnly="no" include="4018">
+            <variable CV="115" mask="XXVXXXXX" item="Blinking effect Out 3" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet oscillation</label>
                 <label xml:lang="de">Flackereffekt</label>
-                <label xml:lang="nl">Knipper effect</label>
-                <label>Flicker effect</label>
+                <label xml:lang="nl">Knippereffect</label>
+                <label>Blinking effect</label>
+                <tooltip>&lt;html&gt;Output blinks with the frequency set in CV 112 (tab Module).&lt;br&gt;
+                    Invert blink by also setting Pulse on.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="115" mask="XVXXXXXX" item="Random light effect Out 3" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -403,17 +409,17 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             </variable>
             <variable CV="115" mask="VXXXXXXX" item="Pulse on Out 3" default="0" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                <label xml:lang="fr">Impulsion á Sortie 3</label>
-                <label xml:lang="de">Puls auf Ausgang 3</label>
-                <label xml:lang="nl">Puls op Uitgang 3</label>
-                <label>Pulse on Out 3</label>
+                <label xml:lang="fr">Impulsion</label>
+                <label xml:lang="de">Puls</label>
+                <label xml:lang="nl">Puls</label>
+                <label>Pulse</label>
             </variable>
             
             <variable CV="116" mask="XXXXVVVV" item="Light intensity Out 4" default="15" writeOnly="no" comment="Output 4" include="4018">
                 <decVal min="0" max="15"/>
                 <label xml:lang="fr">Intensité lumineuse</label>
                 <label xml:lang="de">Lichtintensität</label>
-                <label xml:lang="nl">Licht intensiteit</label>
+                <label xml:lang="nl">Lichtintensiteit</label>
                 <label>Light intensity</label>
                 <tooltip>Controls how much Out 4 dims (0-dark to 15-max bright)</tooltip>
             </variable>
@@ -424,12 +430,14 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="nl">Fade in/Fade out effect</label>
                 <label>Fade in/Fade out effect</label>
             </variable>
-            <variable CV="116" mask="XXVXXXXX" item="Flicker effect Out 4" default="0" writeOnly="no" include="4018">
+            <variable CV="116" mask="XXVXXXXX" item="Blinking effect Out 4" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet oscillation</label>
                 <label xml:lang="de">Flackereffekt</label>
-                <label xml:lang="nl">Knipper effect</label>
-                <label>Flicker effect</label>
+                <label xml:lang="nl">Knippereffect</label>
+                <label>Blinking effect</label>
+                <tooltip>&lt;html&gt;Output blinks with the frequency set in CV 112 (tab Module).&lt;br&gt;
+                    Invert blink by also setting Pulse on.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="116" mask="XVXXXXXX" item="Random light effect Out 4" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -440,17 +448,17 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             </variable>
             <variable CV="116" mask="VXXXXXXX" item="Pulse on Out 4" default="0" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                <label xml:lang="fr">Impulsion á Sortie 4</label>
-                <label xml:lang="de">Puls auf Ausgang 4</label>
-                <label xml:lang="nl">Puls op Uitgang 4</label>
-                <label>Pulse on Out 4</label>
+                <label xml:lang="fr">Impulsion</label>
+                <label xml:lang="de">Puls</label>
+                <label xml:lang="nl">Puls</label>
+                <label>Pulse</label>
             </variable>
 
             <variable CV="117" mask="XXXXVVVV" item="Light intensity Out 5" default="15" writeOnly="no" comment="Output 5" include="4018">
                 <decVal min="0" max="15"/>
                 <label xml:lang="fr">Intensité lumineuse</label>
                 <label xml:lang="de">Lichtintensität</label>
-                <label xml:lang="nl">Licht intensiteit</label>
+                <label xml:lang="nl">Lichtintensiteit</label>
                 <label>Light intensity</label>
                 <tooltip>Controls how much Out 5 dims (0-dark to 15-max bright)</tooltip>
             </variable>
@@ -461,12 +469,14 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="nl">Fade in/Fade out effect</label>
                 <label>Fade in/Fade out effect</label>
             </variable>
-            <variable CV="117" mask="XXVXXXXX" item="Flicker effect Out 5" default="0" writeOnly="no" include="4018">
+            <variable CV="117" mask="XXVXXXXX" item="Blinking effect Out 5" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet oscillation</label>
                 <label xml:lang="de">Flackereffekt</label>
-                <label xml:lang="nl">Knipper effect</label>
-                <label>Flicker effect</label>
+                <label xml:lang="nl">Knippereffect</label>
+                <label>Blinking effect</label>
+                <tooltip>&lt;html&gt;Output blinks with the frequency set in CV 112 (tab Module).&lt;br&gt;
+                    Invert blink by also setting Pulse on.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="117" mask="XVXXXXXX" item="Random light effect Out 5" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -477,17 +487,17 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             </variable>
             <variable CV="117" mask="VXXXXXXX" item="Pulse on Out 5" default="0" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                <label xml:lang="fr">Impulsion á Sortie 5</label>
-                <label xml:lang="de">Puls auf Ausgang 5</label>
-                <label xml:lang="nl">Puls op Uitgang 5</label>
-                <label>Pulse on Out 5</label>
+                <label xml:lang="fr">Impulsion</label>
+                <label xml:lang="de">Puls</label>
+                <label xml:lang="nl">Puls</label>
+                <label>Pulse</label>
             </variable>
 
             <variable CV="118" mask="XXXXVVVV" item="Light intensity Out 6" default="15" writeOnly="no" comment="Output 6" include="4018">
                 <decVal min="0" max="15"/>
                 <label xml:lang="fr">Intensité lumineuse</label>
                 <label xml:lang="de">Lichtintensität</label>
-                <label xml:lang="nl">Licht intensiteit</label>
+                <label xml:lang="nl">Lichtintensiteit</label>
                 <label>Light intensity</label>
                 <tooltip>Controls how much Out 6 dims (0-dark to 15-max bright)</tooltip>
             </variable>
@@ -498,12 +508,14 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="nl">Fade in/Fade out effect</label>
                 <label>Fade in/Fade out effect</label>
             </variable>
-            <variable CV="118" mask="XXVXXXXX" item="Flicker effect Out 6" default="0" writeOnly="no" include="4018">
+            <variable CV="118" mask="XXVXXXXX" item="Blinking effect Out 6" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet oscillation</label>
                 <label xml:lang="de">Flackereffekt</label>
-                <label xml:lang="nl">Knipper effect</label>
-                <label>Flicker effect</label>
+                <label xml:lang="nl">Knippereffect</label>
+                <label>Blinking effect</label>
+                <tooltip>&lt;html&gt;Output blinks with the frequency set in CV 112 (tab Module).&lt;br&gt;
+                    Invert blink by also setting Pulse on.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="118" mask="XVXXXXXX" item="Random light effect Out 6" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -514,17 +526,17 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             </variable>
             <variable CV="118" mask="VXXXXXXX" item="Pulse on Out 6" default="0" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                <label xml:lang="fr">Impulsion á Sortie 6</label>
-                <label xml:lang="de">Puls auf Ausgang 6</label>
-                <label xml:lang="nl">Puls op Uitgang 6</label>
-                <label>Pulse on Out 6</label>
+                <label xml:lang="fr">Impulsion</label>
+                <label xml:lang="de">Puls</label>
+                <label xml:lang="nl">Puls</label>
+                <label>Pulse</label>
             </variable>
 
             <variable CV="119" mask="XXXXVVVV" item="Light intensity Out 7" default="15" writeOnly="no" comment="Output 7" include="4018">
                 <decVal min="0" max="15"/>
                 <label xml:lang="fr">Intensité lumineuse</label>
                 <label xml:lang="de">Lichtintensität</label>
-                <label xml:lang="nl">Licht intensiteit</label>
+                <label xml:lang="nl">Lichtintensiteit</label>
                 <label>Light intensity</label>
                 <tooltip>Controls how much Out 7 dims (0-dark to 15-max bright)</tooltip>
             </variable>
@@ -535,12 +547,14 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="nl">Fade in/Fade out effect</label>
                 <label>Fade in/Fade out effect</label>
             </variable>
-            <variable CV="119" mask="XXVXXXXX" item="Flicker effect Out 7" default="0" writeOnly="no" include="4018">
+            <variable CV="119" mask="XXVXXXXX" item="Blinking effect Out 7" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet oscillation</label>
                 <label xml:lang="de">Flackereffekt</label>
-                <label xml:lang="nl">Knipper effect</label>
-                <label>Flicker effect</label>
+                <label xml:lang="nl">Knippereffect</label>
+                <label>Blinking effect</label>
+                <tooltip>&lt;html&gt;Output blinks with the frequency set in CV 112 (tab Module).&lt;br&gt;
+                    Invert blink by also setting Pulse on.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="119" mask="XVXXXXXX" item="Random light effect Out 7" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -551,17 +565,17 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             </variable>
             <variable CV="119" mask="VXXXXXXX" item="Pulse on Out 7" default="0" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                <label xml:lang="fr">Impulsion á Sortie 7</label>
-                <label xml:lang="de">Puls auf Ausgang 7</label>
-                <label xml:lang="nl">Puls op Uitgang 7</label>
-                <label>Pulse on Out 7</label>
+                <label xml:lang="fr">Impulsion</label>
+                <label xml:lang="de">Puls</label>
+                <label xml:lang="nl">Puls</label>
+                <label>Pulse</label>
             </variable>
 
             <variable CV="120" mask="XXXXVVVV" item="Light intensity Out 8" default="15" writeOnly="no" comment="Output 8" include="4018">
                 <decVal min="0" max="15"/>
                 <label xml:lang="fr">Intensité lumineuse</label>
                 <label xml:lang="de">Lichtintensität</label>
-                <label xml:lang="nl">Licht intensiteit</label>
+                <label xml:lang="nl">Lichtintensiteit</label>
                 <label>Light intensity</label>
                 <tooltip>Controls how much Out 8 dims (0-dark to 15-max bright)</tooltip>
             </variable>
@@ -572,12 +586,14 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="nl">Fade in/Fade out effect</label>
                 <label>Fade in/Fade out effect</label>
             </variable>
-            <variable CV="120" mask="XXVXXXXX" item="Flicker effect Out 8" default="0" writeOnly="no" include="4018">
+            <variable CV="120" mask="XXVXXXXX" item="Blinking effect Out 8" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet oscillation</label>
                 <label xml:lang="de">Flackereffekt</label>
-                <label xml:lang="nl">Knipper effect</label>
-                <label>Flicker effect</label>
+                <label xml:lang="nl">Knippereffect</label>
+                <label>Blinking effect</label>
+                <tooltip>&lt;html&gt;Output blinks with the frequency set in CV 112 (tab Module).&lt;br&gt;
+                    Invert blink by also setting Pulse on.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="120" mask="XVXXXXXX" item="Random light effect Out 8" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -588,17 +604,17 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             </variable>
             <variable CV="120" mask="VXXXXXXX" item="Pulse on Out 8" default="0" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                <label xml:lang="fr">Impulsion á Sortie 8</label>
-                <label xml:lang="de">Puls auf Ausgang 8</label>
-                <label xml:lang="nl">Puls op Uitgang 8</label>
-                <label>Pulse on Out 8</label>
+                <label xml:lang="fr">Impulsion</label>
+                <label xml:lang="de">Puls</label>
+                <label xml:lang="nl">Puls</label>
+                <label>Pulse</label>
             </variable>
 
             <variable CV="121" mask="XXXXVVVV" item="Light intensity Out 9" default="15" writeOnly="no" comment="Output 9" include="4018">
                 <decVal min="0" max="15"/>
                 <label xml:lang="fr">Intensité lumineuse</label>
                 <label xml:lang="de">Lichtintensität</label>
-                <label xml:lang="nl">Licht intensiteit</label>
+                <label xml:lang="nl">Lichtintensiteit</label>
                 <label>Light intensity</label>
                 <tooltip>Controls how much Out 9 dims (0-dark to 15-max bright)</tooltip>
             </variable>
@@ -609,12 +625,14 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="nl">Fade in/Fade out effect</label>
                 <label>Fade in/Fade out effect</label>
             </variable>
-            <variable CV="121" mask="XXVXXXXX" item="Flicker effect Out 9" default="0" writeOnly="no" include="4018">
+            <variable CV="121" mask="XXVXXXXX" item="Blinking effect Out 9" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet oscillation</label>
                 <label xml:lang="de">Flackereffekt</label>
-                <label xml:lang="nl">Knipper effect</label>
-                <label>Flicker effect</label>
+                <label xml:lang="nl">Knippereffect</label>
+                <label>Blinking effect</label>
+                <tooltip>&lt;html&gt;Output blinks with the frequency set in CV 112 (tab Module).&lt;br&gt;
+                    Invert blink by also setting Pulse on.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="121" mask="XVXXXXXX" item="Random light effect Out 9" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -625,17 +643,17 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             </variable>
             <variable CV="121" mask="VXXXXXXX" item="Pulse on Out 9" default="0" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                <label xml:lang="fr">Impulsion á Sortie 9</label>
-                <label xml:lang="de">Puls auf Ausgang 9</label>
-                <label xml:lang="nl">Puls op Uitgang 9</label>
-                <label>Pulse on Out 9</label>
+                <label xml:lang="fr">Impulsion</label>
+                <label xml:lang="de">Puls</label>
+                <label xml:lang="nl">Puls</label>
+                <label>Pulse</label>
             </variable>
 
             <variable CV="122" mask="XXXXVVVV" item="Light intensity Out 10" default="15" writeOnly="no" comment="Output 10" include="4018">
                 <decVal min="0" max="15"/>
                 <label xml:lang="fr">Intensité lumineuse</label>
                 <label xml:lang="de">Lichtintensität</label>
-                <label xml:lang="nl">Licht intensiteit</label>
+                <label xml:lang="nl">Lichtintensiteit</label>
                 <label>Light intensity</label>
                 <tooltip>Controls how much Out 10 dims (0-dark to 15-max bright)</tooltip>
             </variable>
@@ -646,12 +664,14 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="nl">Fade in/Fade out effect</label>
                 <label>Fade in/Fade out effect</label>
             </variable>
-            <variable CV="122" mask="XXVXXXXX" item="Flicker effect Out 10" default="0" writeOnly="no" include="4018">
+            <variable CV="122" mask="XXVXXXXX" item="Blinking effect Out 10" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet oscillation</label>
                 <label xml:lang="de">Flackereffekt</label>
-                <label xml:lang="nl">Knipper effect</label>
-                <label>Flicker effect</label>
+                <label xml:lang="nl">Knippereffect</label>
+                <label>Blinking effect</label>
+                <tooltip>&lt;html&gt;Output blinks with the frequency set in CV 112 (tab Module).&lt;br&gt;
+                    Invert blink by also setting Pulse on.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="122" mask="XVXXXXXX" item="Random light effect Out 10" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -662,17 +682,17 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             </variable>
             <variable CV="122" mask="VXXXXXXX" item="Pulse on Out 10" default="0" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                <label xml:lang="fr">Impulsion á Sortie 10</label>
-                <label xml:lang="de">Puls auf Ausgang 10</label>
-                <label xml:lang="nl">Puls op Uitgang 10</label>
-                <label>Pulse on Out 10</label>
+                <label xml:lang="fr">Impulsion</label>
+                <label xml:lang="de">Puls</label>
+                <label xml:lang="nl">Puls</label>
+                <label>Pulse</label>
             </variable>
 
             <variable CV="123" mask="XXXXVVVV" item="Light intensity Out 11" default="15" writeOnly="no" comment="Output 11" include="4018">
                 <decVal min="0" max="15"/>
                 <label xml:lang="fr">Intensité lumineuse</label>
                 <label xml:lang="de">Lichtintensität</label>
-                <label xml:lang="nl">Licht intensiteit</label>
+                <label xml:lang="nl">Lichtintensiteit</label>
                 <label>Light intensity</label>
                 <tooltip>Controls how much Out 11 dims (0-dark to 15-max bright)</tooltip>
             </variable>
@@ -683,12 +703,14 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="nl">Fade in/Fade out effect</label>
                 <label>Fade in/Fade out effect</label>
             </variable>
-            <variable CV="123" mask="XXVXXXXX" item="Flicker effect Out 11" default="0" writeOnly="no" include="4018">
+            <variable CV="123" mask="XXVXXXXX" item="Blinking effect Out 11" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet oscillation</label>
                 <label xml:lang="de">Flackereffekt</label>
-                <label xml:lang="nl">Knipper effect</label>
-                <label>Flicker effect</label>
+                <label xml:lang="nl">Knippereffect</label>
+                <label>Blinking effect</label>
+                <tooltip>&lt;html&gt;Output blinks with the frequency set in CV 112 (tab Module).&lt;br&gt;
+                    Invert blink by also setting Pulse on.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="123" mask="XVXXXXXX" item="Random light effect Out 11" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -699,17 +721,17 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             </variable>
             <variable CV="123" mask="VXXXXXXX" item="Pulse on Out 11" default="0" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                <label xml:lang="fr">Impulsion á Sortie 11</label>
-                <label xml:lang="de">Puls auf Ausgang 11</label>
-                <label xml:lang="nl">Puls op Uitgang 11</label>
-                <label>Pulse on Out 11</label>
+                <label xml:lang="fr">Impulsion</label>
+                <label xml:lang="de">Puls</label>
+                <label xml:lang="nl">Puls</label>
+                <label>Pulse</label>
             </variable>
 
             <variable CV="124" mask="XXXXVVVV" item="Light intensity Out 12" default="15" writeOnly="no" comment="Output 12" include="4018">
                 <decVal min="0" max="15"/>
                 <label xml:lang="fr">Intensité lumineuse</label>
                 <label xml:lang="de">Lichtintensität</label>
-                <label xml:lang="nl">Licht intensiteit</label>
+                <label xml:lang="nl">Lichtintensiteit</label>
                 <label>Light intensity</label>
                 <tooltip>Controls how much Out 12 dims (0-dark to 15-max bright)</tooltip>
             </variable>
@@ -720,12 +742,14 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="nl">Fade in/Fade out effect</label>
                 <label>Fade in/Fade out effect</label>
             </variable>
-            <variable CV="124" mask="XXVXXXXX" item="Flicker effect Out 12" default="0" writeOnly="no" include="4018">
+            <variable CV="124" mask="XXVXXXXX" item="Blinking effect Out 12" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet oscillation</label>
                 <label xml:lang="de">Flackereffekt</label>
-                <label xml:lang="nl">Knipper effect</label>
-                <label>Flicker effect</label>
+                <label xml:lang="nl">Knippereffect</label>
+                <label>Blinking effect</label>
+                <tooltip>&lt;html&gt;Output blinks with the frequency set in CV 112 (tab Module).&lt;br&gt;
+                    Invert blink by also setting Pulse on.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="124" mask="XVXXXXXX" item="Random light effect Out 12" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -736,17 +760,17 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             </variable>
             <variable CV="124" mask="VXXXXXXX" item="Pulse on Out 12" default="0" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                <label xml:lang="fr">Impulsion á Sortie 12</label>
-                <label xml:lang="de">Puls auf Ausgang 12</label>
-                <label xml:lang="nl">Puls op Uitgang 12</label>
-                <label>Pulse on Out 12</label>
+                <label xml:lang="fr">Impulsion</label>
+                <label xml:lang="de">Puls</label>
+                <label xml:lang="nl">Puls</label>
+                <label>Pulse</label>
             </variable>
 
             <variable CV="125" mask="XXXXVVVV" item="Light intensity Out 13" default="15" writeOnly="no" comment="Output 13" include="4018">
                 <decVal min="0" max="15"/>
                 <label xml:lang="fr">Intensité lumineuse</label>
                 <label xml:lang="de">Lichtintensität</label>
-                <label xml:lang="nl">Licht intensiteit</label>
+                <label xml:lang="nl">Lichtintensiteit</label>
                 <label>Light intensity</label>
                 <tooltip>Controls how much Out 13 dims (0-dark to 15-max bright)</tooltip>
             </variable>
@@ -757,12 +781,14 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="nl">Fade in/Fade out effect</label>
                 <label>Fade in/Fade out effect</label>
             </variable>
-            <variable CV="125" mask="XXVXXXXX" item="Flicker effect Out 13" default="0" writeOnly="no" include="4018">
+            <variable CV="125" mask="XXVXXXXX" item="Blinking effect Out 13" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet oscillation</label>
                 <label xml:lang="de">Flackereffekt</label>
-                <label xml:lang="nl">Knipper effect</label>
-                <label>Flicker effect</label>
+                <label xml:lang="nl">Knippereffect</label>
+                <label>Blinking effect</label>
+                <tooltip>&lt;html&gt;Output blinks with the frequency set in CV 112 (tab Module).&lt;br&gt;
+                    Invert blink by also setting Pulse on.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="125" mask="XVXXXXXX" item="Random light effect Out 13" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -773,17 +799,17 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             </variable>
             <variable CV="125" mask="VXXXXXXX" item="Pulse on Out 13" default="0" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                <label xml:lang="fr">Impulsion á Sortie 13</label>
-                <label xml:lang="de">Puls auf Ausgang 13</label>
-                <label xml:lang="nl">Puls op Uitgang 13</label>
-                <label>Pulse on Out 13</label>
+                <label xml:lang="fr">Impulsion</label>
+                <label xml:lang="de">Puls</label>
+                <label xml:lang="nl">Puls</label>
+                <label>Pulse</label>
             </variable>
 
             <variable CV="126" mask="XXXXVVVV" item="Light intensity Out 14" default="15" writeOnly="no" comment="Output 14" include="4018">
                 <decVal min="0" max="15"/>
                 <label xml:lang="fr">Intensité lumineuse</label>
                 <label xml:lang="de">Lichtintensität</label>
-                <label xml:lang="nl">Licht intensiteit</label>
+                <label xml:lang="nl">Lichtintensiteit</label>
                 <label>Light intensity</label>
                 <tooltip>Controls how much Out 14 dims (0-dark to 15-max bright)</tooltip>
             </variable>
@@ -794,12 +820,14 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="nl">Fade in/Fade out effect</label>
                 <label>Fade in/Fade out effect</label>
             </variable>
-            <variable CV="126" mask="XXVXXXXX" item="Flicker effect Out 14" default="0" writeOnly="no" include="4018">
+            <variable CV="126" mask="XXVXXXXX" item="Blinking effect Out 14" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet oscillation</label>
                 <label xml:lang="de">Flackereffekt</label>
-                <label xml:lang="nl">Knipper effect</label>
-                <label>Flicker effect</label>
+                <label xml:lang="nl">Knippereffect</label>
+                <label>Blinking effect</label>
+                <tooltip>&lt;html&gt;Output blinks with the frequency set in CV 112 (tab Module).&lt;br&gt;
+                    Invert blink by also setting Pulse on.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="126" mask="XVXXXXXX" item="Random light effect Out 14" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -810,17 +838,17 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             </variable>
             <variable CV="126" mask="VXXXXXXX" item="Pulse on Out 14" default="0" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                <label xml:lang="fr">Impulsion á Sortie 14</label>
-                <label xml:lang="de">Puls auf Ausgang 14</label>
-                <label xml:lang="nl">Puls op Uitgang 14</label>
-                <label>Pulse on Out 14</label>
+                <label xml:lang="fr">Impulsion</label>
+                <label xml:lang="de">Puls</label>
+                <label xml:lang="nl">Puls</label>
+                <label>Pulse</label>
             </variable>
 
             <variable CV="127" mask="XXXXVVVV" item="Light intensity Out 15" default="15" writeOnly="no" comment="Output 15" include="4018">
                 <decVal min="0" max="15"/>
                 <label xml:lang="fr">Intensité lumineuse</label>
                 <label xml:lang="de">Lichtintensität</label>
-                <label xml:lang="nl">Licht intensiteit</label>
+                <label xml:lang="nl">Lichtintensiteit</label>
                 <label>Light intensity</label>
                 <tooltip>Controls how much Out 15 dims (0-dark to 15-max bright)</tooltip>
             </variable>
@@ -831,12 +859,14 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="nl">Fade in/Fade out effect</label>
                 <label>Fade in/Fade out effect</label>
             </variable>
-            <variable CV="127" mask="XXVXXXXX" item="Flicker effect Out 15" default="0" writeOnly="no" include="4018">
+            <variable CV="127" mask="XXVXXXXX" item="Blinking effect Out 15" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet oscillation</label>
                 <label xml:lang="de">Flackereffekt</label>
-                <label xml:lang="nl">Knipper effect</label>
-                <label>Flicker effect</label>
+                <label xml:lang="nl">Knippereffect</label>
+                <label>Blinking effect</label>
+                <tooltip>&lt;html&gt;Output blinks with the frequency set in CV 112 (tab Module).&lt;br&gt;
+                    Invert blink by also setting Pulse on.&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="127" mask="XVXXXXXX" item="Random light effect Out 15" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -847,17 +877,17 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             </variable>
             <variable CV="127" mask="VXXXXXXX" item="Pulse on Out 15" default="0" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                <label xml:lang="fr">Impulsion á Sortie 15</label>
-                <label xml:lang="de">Puls auf Ausgang 15</label>
-                <label xml:lang="nl">Puls op Uitgang 15</label>
-                <label>Pulse on Out 15</label>
+                <label xml:lang="fr">Impulsion</label>
+                <label xml:lang="de">Puls</label>
+                <label xml:lang="nl">Puls</label>
+                <label>Pulse</label>
             </variable>
 
             <variable CV="128" mask="XXXXVVVV" item="Light intensity Out 16" default="15" writeOnly="no" comment="Output 16" include="4018">
                 <decVal min="0" max="15"/>
                 <label xml:lang="fr">Intensité lumineuse</label>
                 <label xml:lang="de">Lichtintensität</label>
-                <label xml:lang="nl">Licht intensiteit</label>
+                <label xml:lang="nl">Lichtintensiteit</label>
                 <label>Light intensity</label>
                 <tooltip>Controls how much Out 16 dims (0-dark to 15-max bright)</tooltip>
             </variable>
@@ -868,12 +898,14 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="nl">Fade in/Fade out effect</label>
                 <label>Fade in/Fade out effect</label>
             </variable>
-            <variable CV="128" mask="XXVXXXXX" item="Flicker effect Out 16" default="0" writeOnly="no" include="4018">
+            <variable CV="128" mask="XXVXXXXX" item="Blinking effect Out 16" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet oscillation</label>
                 <label xml:lang="de">Flackereffekt</label>
-                <label xml:lang="nl">Knipper effect</label>
-                <label>Flicker effect</label>
+                <label xml:lang="nl">Knippereffect</label>
+                <label>Blinking effect</label>
+                <tooltip>&lt;html&gt;Output blinks with the frequency set in CV 112 (tab Module).&lt;br&gt;
+                    Invert blink by also setting Pulse on&lt;/html&gt;</tooltip>
             </variable>
             <variable CV="128" mask="XVXXXXXX" item="Random light effect Out 16" default="0" writeOnly="no" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -884,10 +916,10 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
             </variable>
             <variable CV="128" mask="VXXXXXXX" item="Pulse on Out 16" default="0" include="4018">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-                <label xml:lang="fr">Impulsion á Sortie 16</label>
-                <label xml:lang="de">Puls auf Ausgang 16</label>
-                <label xml:lang="nl">Puls op Uitgang 16</label>
-                <label>Pulse on Out 16</label>
+                <label xml:lang="fr">Impulsion</label>
+                <label xml:lang="de">Puls</label>
+                <label xml:lang="nl">Puls</label>
+                <label>Pulse</label>
             </variable>
                         
 <!-- start of DR4024 servo configurations CV 113 - 116 -->
@@ -1027,7 +1059,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="de">Blinkend</label>
                 <label xml:lang="nl">Knipperen</label>
                 <label>Flashing</label>
-                <tooltip>Output flickers with the frequency set in CV 112 (tab Module)</tooltip>
+                <tooltip>Output blinks with the frequency set in CV 112 (tab Module).</tooltip>
             </variable>
 
             <variable CV="118" item="Output 6" default="0" include="4024">
@@ -1072,7 +1104,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="de">Blinkend</label>
                 <label xml:lang="nl">Knipperen</label>
                 <label>Flashing</label>
-                <tooltip>Output flickers with the frequency set in CV 112 (tab Module)</tooltip>
+                <tooltip>Output blinks with the frequency set in CV 112 (tab Module).</tooltip>
             </variable>
 
             <variable CV="119" item="Output 7" default="0" include="4024">
@@ -1117,7 +1149,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="de">Blinkend</label>
                 <label xml:lang="nl">Knipperen</label>
                 <label>Flashing</label>
-                <tooltip>Output flickers with the frequency set in CV 112 (tab Module)</tooltip>
+                <tooltip>Output blinks with the frequency set in CV 112 (tab Module).</tooltip>
             </variable>
 
             <variable CV="120" item="Output 8" default="0" include="4024">
@@ -1162,7 +1194,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <label xml:lang="de">Blinkend</label>
                 <label xml:lang="nl">Knipperen</label>
                 <label>Flashing</label>
-                <tooltip>Output flickers with the frequency set in CV 112 (tab Module)</tooltip>
+                <tooltip>Output blinks with the frequency set in CV 112 (tab Module).</tooltip>
             </variable>
             
 <!-- start of DR4024 servo position configurations CV 121- 136 -->
@@ -5013,7 +5045,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 <display item="PWM period" />
                 <display item="Fade speed" />
                 <display item="Dark Time" />
-                <display item="Flicker speed" />
+                <display item="Blinking speed" />
             </column>
             <column>
                <display item="Dim Value" format="hslider" label="" >
@@ -5024,7 +5056,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                 </display>
                 <display item="Dark Time" format="hslider" label="" tooltip="">
                 </display>
-                <display item="Flicker speed" format="hslider" label="" >
+                <display item="Blinking speed" format="hslider" label="" >
                 </display>
             </column>
         </row>
@@ -5161,7 +5193,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         </grid>
             </row>
         </column>
- </pane>
+    </pane>
 
     <pane include="4024">
         <name>Servos</name>
@@ -5379,7 +5411,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                             <display item="Light intensity Out 1" label="" format="hslider" />
                         </row>
                         <display item="Fade in Fade out effect Out 1" format="checkbox" />
-                        <display item="Flicker effect Out 1" format="checkbox" />
+                        <display item="Blinking effect Out 1" format="checkbox" />
                         <display item="Random light effect Out 1" format="checkbox" />
                         <display item="Pulse on Out 1" format="checkbox" />
                         <row>
@@ -5402,7 +5434,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                             <display item="Light intensity Out 2" label="" format="hslider" />
                         </row>
                         <display item="Fade in Fade out effect Out 2" format="checkbox" />
-                        <display item="Flicker effect Out 2" format="checkbox" />
+                        <display item="Blinking effect Out 2" format="checkbox" />
                         <display item="Random light effect Out 2" format="checkbox" />
                         <display item="Pulse on Out 2" format="checkbox" />
                         <row>
@@ -5425,7 +5457,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                             <display item="Light intensity Out 3" label="" format="hslider" />
                         </row>
                         <display item="Fade in Fade out effect Out 3" format="checkbox" />
-                        <display item="Flicker effect Out 3" format="checkbox" />
+                        <display item="Blinking effect Out 3" format="checkbox" />
                         <display item="Random light effect Out 3" format="checkbox" />
                         <display item="Pulse on Out 3" format="checkbox" />
                         <row>
@@ -5447,7 +5479,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                             <display item="Light intensity Out 4" label="" format="hslider" />
                         </row>
                         <display item="Fade in Fade out effect Out 4" format="checkbox" />
-                        <display item="Flicker effect Out 4" format="checkbox" />
+                        <display item="Blinking effect Out 4" format="checkbox" />
                         <display item="Random light effect Out 4" format="checkbox" />
                         <display item="Pulse on Out 4" format="checkbox" />
                         <row>
@@ -5470,7 +5502,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                             <display item="Light intensity Out 5" label="" format="hslider" />
                         </row>
                         <display item="Fade in Fade out effect Out 5" format="checkbox" />
-                        <display item="Flicker effect Out 5" format="checkbox" />
+                        <display item="Blinking effect Out 5" format="checkbox" />
                         <display item="Random light effect Out 5" format="checkbox" />
                         <display item="Pulse on Out 5" format="checkbox" />
                         <row>
@@ -5492,7 +5524,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                             <display item="Light intensity Out 6" label="" format="hslider" />
                         </row>
                         <display item="Fade in Fade out effect Out 6" format="checkbox" />
-                        <display item="Flicker effect Out 6" format="checkbox" />
+                        <display item="Blinking effect Out 6" format="checkbox" />
                         <display item="Random light effect Out 6" format="checkbox" />
                         <display item="Pulse on Out 6" format="checkbox" />
                         <row>
@@ -5515,7 +5547,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                             <display item="Light intensity Out 7" label="" format="hslider" />
                         </row>
                         <display item="Fade in Fade out effect Out 7" format="checkbox" />
-                        <display item="Flicker effect Out 7" format="checkbox" />
+                        <display item="Blinking effect Out 7" format="checkbox" />
                         <display item="Random light effect Out 7" format="checkbox" />
                         <display item="Pulse on Out 7" format="checkbox" />
                         <row>
@@ -5537,7 +5569,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                             <display item="Light intensity Out 8" label="" format="hslider" />
                         </row>
                         <display item="Fade in Fade out effect Out 8" format="checkbox" />
-                        <display item="Flicker effect Out 8" format="checkbox" />
+                        <display item="Blinking effect Out 8" format="checkbox" />
                         <display item="Random light effect Out 8" format="checkbox" />
                         <display item="Pulse on Out 8" format="checkbox" />
                         <row>
@@ -5560,7 +5592,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                             <display item="Light intensity Out 9" label="" format="hslider" />
                         </row>
                         <display item="Fade in Fade out effect Out 9" format="checkbox" />
-                        <display item="Flicker effect Out 9" format="checkbox" />
+                        <display item="Blinking effect Out 9" format="checkbox" />
                         <display item="Random light effect Out 9" format="checkbox" />
                         <display item="Pulse on Out 9" format="checkbox" />
                         <row>
@@ -5582,7 +5614,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                             <display item="Light intensity Out 10" label="" format="hslider" />
                         </row>
                         <display item="Fade in Fade out effect Out 10" format="checkbox" />
-                        <display item="Flicker effect Out 10" format="checkbox" />
+                        <display item="Blinking effect Out 10" format="checkbox" />
                         <display item="Random light effect Out 10" format="checkbox" />
                         <display item="Pulse on Out 10" format="checkbox" />
                         <row>
@@ -5605,7 +5637,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                             <display item="Light intensity Out 11" label="" format="hslider" />
                         </row>
                         <display item="Fade in Fade out effect Out 11" format="checkbox" />
-                        <display item="Flicker effect Out 11" format="checkbox" />
+                        <display item="Blinking effect Out 11" format="checkbox" />
                         <display item="Random light effect Out 11" format="checkbox" />
                         <display item="Pulse on Out 11" format="checkbox" />
                         <row>
@@ -5627,7 +5659,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                             <display item="Light intensity Out 12" label="" format="hslider" />
                         </row>
                         <display item="Fade in Fade out effect Out 12" format="checkbox" />
-                        <display item="Flicker effect Out 12" format="checkbox" />
+                        <display item="Blinking effect Out 12" format="checkbox" />
                         <display item="Random light effect Out 12" format="checkbox" />
                         <display item="Pulse on Out 12" format="checkbox" />
                         <row>
@@ -5650,7 +5682,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                             <display item="Light intensity Out 13" label="" format="hslider" />
                         </row>
                         <display item="Fade in Fade out effect Out 13" format="checkbox" />
-                        <display item="Flicker effect Out 13" format="checkbox" />
+                        <display item="Blinking effect Out 13" format="checkbox" />
                         <display item="Random light effect Out 13" format="checkbox" />
                         <display item="Pulse on Out 13" format="checkbox" />
                         <row>
@@ -5672,7 +5704,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                             <display item="Light intensity Out 14" label="" format="hslider" />
                         </row>
                         <display item="Fade in Fade out effect Out 14" format="checkbox" />
-                        <display item="Flicker effect Out 14" format="checkbox" />
+                        <display item="Blinking effect Out 14" format="checkbox" />
                         <display item="Random light effect Out 14" format="checkbox" />
                         <display item="Pulse on Out 14" format="checkbox" />
                         <row>
@@ -5695,7 +5727,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                             <display item="Light intensity Out 15" label="" format="hslider" />
                         </row>
                         <display item="Fade in Fade out effect Out 15" format="checkbox" />
-                        <display item="Flicker effect Out 15" format="checkbox" />
+                        <display item="Blinking effect Out 15" format="checkbox" />
                         <display item="Random light effect Out 15" format="checkbox" />
                         <display item="Pulse on Out 15" format="checkbox" />
                         <row>
@@ -5717,7 +5749,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
                             <display item="Light intensity Out 16" label="" format="hslider" />
                         </row>
                         <display item="Fade in Fade out effect Out 16" format="checkbox" />
-                        <display item="Flicker effect Out 16" format="checkbox" />
+                        <display item="Blinking effect Out 16" format="checkbox" />
                         <display item="Random light effect Out 16" format="checkbox" />
                         <display item="Pulse on Out 16" format="checkbox" />
                         <row>
@@ -5814,7 +5846,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
         <name>Function map</name>
         <name xml:lang="de">Funktionskarte</name>
         <name xml:lang="fr">Mappage de fonctions</name>
-        <name xml:lang="nl">Funktie-map</name>
+        <name xml:lang="nl">Functietoewijzing</name>
         <column>
         <row>
           <separator/>
@@ -7821,7 +7853,7 @@ xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmpty
   <name>Function map</name>
   <name xml:lang="de">Funktionskarte</name>
   <name xml:lang="fr">Mappage de fonctions</name>
-  <name xml:lang="nl">Funktie-map</name>
+    <name xml:lang="nl">Functietoewijzing</name>
   <column>
     <row>
       <column>

@@ -12,7 +12,12 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen Copyright 2001, 2002
  */
-public class LnReporterTest {
+public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase {
+
+    @Override
+    protected Object generateObjectToReport(){
+        return "3 enter";
+    }
 
     @Test
     public void testLnReporterCreate() {
@@ -78,21 +83,25 @@ public class LnReporterTest {
 
     @Test
     public void testLnReporterGetLocoAddress() {
-        LnReporter r = new LnReporter(3, tc, "L");
-        LocoAddress t = r.getLocoAddress("7413 enter");
+        LocoAddress t = ((LnReporter)r).getLocoAddress("7413 enter");
         Assert.assertEquals("getLocoAddress", t.getNumber(), 7413);
     }
 
     private jmri.jmrix.loconet.LocoNetInterfaceScaffold tc;
 
     @Before
+    @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         tc = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
+        r = new LnReporter(3, tc, "L");
     }
 
     @After
+    @Override
     public void tearDown() {
+	r = null;
+	tc = null;
         JUnitUtil.tearDown();
     }
 

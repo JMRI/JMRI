@@ -2,17 +2,16 @@ package jmri.util;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+
+import org.junit.*;
 
 /**
  * Tests for the jmri.util.DateUtil class.
  * @author Paul Bender Copyright 2014
  */
-public class DateUtilTest extends TestCase {
+public class DateUtilTest {
 
+    @Test
     public void testCalFromJulianDate() {
         // this test checks to see if the julian date
         // 2456678 at 16:00 gives us the correct
@@ -22,6 +21,7 @@ public class DateUtilTest extends TestCase {
         Assert.assertEquals("Day of Year", 20, testCal.get(Calendar.DAY_OF_YEAR));
     }
 
+    @Test
     public void testCalFromJulianDateEpocStart() {
         // this test checks to see if the julian date
         // 2440588 at 12:00 gives us the correct
@@ -31,6 +31,7 @@ public class DateUtilTest extends TestCase {
         Assert.assertEquals("Day of Year", 1, testCal.get(Calendar.DAY_OF_YEAR));
     }
 
+    @Test
     public void testJulianDayFromCalendar() {
         // this test checks to see that the julian date
         // 2456678 is returned when a calendar set to January 20,2014 is
@@ -39,6 +40,7 @@ public class DateUtilTest extends TestCase {
         Assert.assertEquals("Julian Day", 2456678, DateUtil.julianDayFromCalendar(testCal));
     }
 
+    @Test
     public void testJulianDayFromCalendarEpocStart() {
         // this test checks to see that the julian date
         // 2440588 is returned when a calendar set to January 1,1970 is
@@ -47,34 +49,15 @@ public class DateUtilTest extends TestCase {
         Assert.assertEquals("Julian Day", 2440588, DateUtil.julianDayFromCalendar(testCal));
     }
 
-    // from here down is testing infrastructure
-    public DateUtilTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", DateUtilTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DateUtilTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        apps.tests.Log4JFixture.setUp();
+    @Before
+    public void setUp() throws Exception {
+        jmri.util.JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

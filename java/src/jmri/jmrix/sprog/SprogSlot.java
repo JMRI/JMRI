@@ -361,7 +361,6 @@ public class SprogSlot {
         return spd;
     }
 
-    @SuppressWarnings("unused")
     public int locoAddr() {
         return addr;
     }

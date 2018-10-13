@@ -273,20 +273,8 @@ public class WarrantManagerXml //extends XmlFile
                 warrant.setAvoidOrder(loadBlockOrder(order));               
             }
 
-            boolean forward =true;
-            /* Deferred to fix a bug when loading linked warrants - see loop below.
-            List<Element> throttleCmds = elem.getChildren("throttleCommand");
-            if (throttleCmds != null) {
-                for (int k=0; k<throttleCmds.size(); k++) {
-                    ThrottleSetting ts = loadThrottleCommand(throttleCmds.get(k));
-                    warrant.addThrottleCommand(ts);
-                    if (ts.getCommand().toUpperCase().equals("FORWARD")) {
-                        forward = ts.getValue().toUpperCase().equals("TRUE");
-                    }
-                }                
-            }
-            */
             if (SCWa) {
+                boolean forward =true;
                 if (elem.getAttribute("forward") != null) {
                     forward = elem.getAttribute("forward").getValue().equals("true");
                 }
@@ -302,10 +290,10 @@ public class WarrantManagerXml //extends XmlFile
 
         // A second pass through the warrant list done to load the commands. This is done so that
         // references made to warrants in commands are fully specified. Due to ThrottleSetting
-        // Ctor using provideWarrant to establish the reenced warrant.
+        // Ctor using provideWarrant to establish the referenced warrant.
         warrantList = shared.getChildren("warrant");
         for (int i=0; i<warrantList.size(); i++) {
-            boolean forward =true;
+            // boolean forward =true;  // variable not used, see GitHub JMRI/JMRI Issue #5661
             Element elem = warrantList.get(i);
             if (elem.getAttribute("systemName") == null) {
                 break;
@@ -319,9 +307,6 @@ public class WarrantManagerXml //extends XmlFile
                 for (int k=0; k<throttleCmds.size(); k++) {
                     ThrottleSetting ts = loadThrottleCommand(throttleCmds.get(k));
                     warrant.addThrottleCommand(ts);
-                    if (ts.getCommand().toUpperCase().equals("FORWARD")) {
-                        forward = ts.getValue().toUpperCase().equals("TRUE");
-                    }
                 }                
             }
         }

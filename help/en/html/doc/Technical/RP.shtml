@@ -29,7 +29,7 @@
 
 <body>
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
       <h1>JMRI Code: Recommended Practices</h1>
@@ -159,14 +159,40 @@
       As development proceeds, sometimes
       old ways of doing things have to be replaced by new ways. In
       many cases, you can just change all the using code in our
-      repository, and move forward. For general interfaces that
+      repository, and move forward. 
+      For general interfaces that
       might be used externally to JMRI, such as in scripts and
-      CATS, it can be good to leave the old interface in place for
+      CATS, we prefer to leave the old interface in place for
       a while, marking it as "deprecated" so that people can
-      discover that it will eventually go away. After a suitable
-      number of release cycles, the deprecated interface can then
-      be removed.
+      discover that it will eventually go away. The sequence is then:
+      <ul>
+        <li>Write the new methods.
+        <li>Mark the old methods with @deprecated and @Deprecated (see below).
+            <p>Note that if you mark an interface or super-class (i.e. abstract) 
+                class or method
+                as deprecated, you should also mark all implementations of it as
+                deprecated.  That way, they won't themselves show as deprecations to fix,
+                but code that uses them will.
+        <li>Over time, remove all JMRI uses of these deprecated classes and/or methods
+            until the deprecations report is clean. 
+            You can either compile locally
+            with <code>ci-compile-deprecations</code> to check this, or look at the
+            <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Deprecations/lastBuild/warnings4Result/">Jenkins CI report</a>
+            (click the Types tab) to check the JMRI/JMRI master branch.
+            Don't forget to also migrate the 
+            Jython sample scripts! 
 
+        <li>Once JMRI itself is clean (enough), start generating warnings for users
+            (especially scripting users) by adding:
+<pre style="font-family: monospace;">
+            jmri.util.Log4JUtil.warnOnce(log, "Deprecated doStuff() method called. You should replace this with with a call to doBetterStuff()");
+</pre>
+        <li>Wait an appropriate length of time; the more visible the class or method,
+            the longer to wait.  Things that were in scripts should wait at least two
+            production releases.
+        <li>Remove the deprecated methods and their tests.
+        </ul>
+        
       <p>Note that a deprecated interface is meant to still work.
       Deprecated should only mean that you can't count on the
       deprecated interface working in the future, so that it would
@@ -177,7 +203,7 @@
       additional information. A nice discussion of the
       technicalities is <a href=
       "http://download.oracle.com/javase/1.5.0/docs/guide/javadoc/deprecation/deprecation.html">
-      here</a>. We recommend using both of them like this:</p>
+      here</a>. We strongly recommend using both of them like this:</p>
 <pre style="font-family: monospace;">
 /**
  * (Other Javadoc comments)
@@ -187,7 +213,11 @@
 </pre>
         where the line contains the version in which the deprecation
         is applied. That lets you easily know how long ago it was
-        deprecated. 
+        deprecated. (There's a better way to do this in Java 9, but
+        JMRI still has to compile under Java 8 so please don't use that; see the 
+        <a href="TechRoadMap.shtml">release roadmap</a>
+        for background)
+        
 
       <p>You may want to work with the deprecation checks "on"
       during compilation. To do that, change this line of

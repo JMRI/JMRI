@@ -43,6 +43,23 @@ should not be changed. See Javadoc for jmri.web.servlet.ServletHelper#getNavBar(
                         <li id="navbar-operations-conductor" class="context-operations-only"><a href="#"><!-- I18N -->Treindienstleider</a></li>
                     </ul>
                 </li>
+                <li class="dropdown context-tables">
+                    <a href="/tables" class="dropdown-toggle" data-toggle="dropdown">Tables <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/tables/turnouts">Turnouts</a></li>
+                        <li><a href="/tables/sensors">Sensors</a></li>
+                        <li><a href="/tables/routes">Routes</a></li>
+                        <li><a href="/tables/memories">Memories</a></li>
+                        <li><a href="/tables/blocks">Blocks</a></li>
+                        <li><a href="/tables/layoutBlocks">Layout Blocks</a></li>
+                        <li><a href="/tables/lights">Lights</a></li>
+                        <li><a href="/tables/signalMasts">Signal Masts</a></li>
+                        <li><a href="/tables/signalHeads">Signal Heads</a></li>
+                        <li><a href="/tables/locations">Locations</a></li>
+                        <li><a href="/tables/cars">Cars</a></li>
+                        <li><a href="/tables/engines">Engines</a></li>
+                    </ul>
+                </li>               
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li id="navbar-power" data-power="readonly" class="disabled"><a href="#" class="visible-xs"><!-- I18N -->Stromversorgung unbekannt</a><button type="button" class="btn navbar-btn disabled btn-warning hidden-xs"><span class="glyphicon glyphicon-off"></span></button></li>
@@ -70,6 +87,8 @@ should not be changed. See Javadoc for jmri.web.servlet.ServletHelper#getNavBar(
                         <li><a href="/help/en/index.html"><!-- I18N -->Introductie</a></li>
                         <li><a href="/help/en/webtoc.shtml"><!-- I18N -->Inhoudsopgave</a></li>
                         <li><a href="/help/en/webindex.shtml"><!-- I18N -->Register</a></li>
+                        <li><a href="/tables/networkServices">Network Services</a></li>
+                        <li><a href="/tables/configProfiles">Config Profiles</a></li>
                     </ul>
                 </li>
 

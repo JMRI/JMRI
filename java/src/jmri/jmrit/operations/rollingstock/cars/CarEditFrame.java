@@ -101,13 +101,6 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 
     CarLoadEditFrame carLoadEditFrame = null;
 
-    public static final String ROAD = Bundle.getMessage("Road");
-    public static final String TYPE = Bundle.getMessage("Type");
-    public static final String COLOR = Bundle.getMessage("Color");
-    public static final String LENGTH = Bundle.getMessage("Length");
-    public static final String OWNER = Bundle.getMessage("Owner");
-    public static final String KERNEL = Bundle.getMessage("Kernel");
-
     public CarEditFrame() {
         super(Bundle.getMessage("TitleCarAdd"));
     }
@@ -297,7 +290,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
             pRfid.setLayout(new GridBagLayout());
             pRfid.setBorder(BorderFactory.createTitledBorder(Setup.getRfidLabel()));
             addItem(pRfid, rfidComboBox, 1, 0);
-            jmri.InstanceManager.getDefault(jmri.IdTagManager.class).getNamedBeanList().forEach((tag) -> rfidComboBox.addItem(tag));
+            jmri.InstanceManager.getDefault(jmri.IdTagManager.class).getNamedBeanSet().forEach((tag) -> rfidComboBox.addItem(tag));
             rfidComboBox.insertItemAt((jmri.IdTag)null,0); // must have a blank entry, for no ID tag, and make it the default.
             rfidComboBox.setSelectedIndex(0);
             pOptional.add(pRfid);
@@ -906,22 +899,22 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         carAttributeEditFrame.addPropertyChangeListener(this);
 
         if (ae.getSource() == editRoadButton) {
-            carAttributeEditFrame.initComponents(ROAD, (String) roadComboBox.getSelectedItem());
+            carAttributeEditFrame.initComponents(CarAttributeEditFrame.ROAD, (String) roadComboBox.getSelectedItem());
         }
         if (ae.getSource() == editTypeButton) {
-            carAttributeEditFrame.initComponents(TYPE, (String) typeComboBox.getSelectedItem());
+            carAttributeEditFrame.initComponents(CarAttributeEditFrame.TYPE, (String) typeComboBox.getSelectedItem());
         }
         if (ae.getSource() == editColorButton) {
-            carAttributeEditFrame.initComponents(COLOR, (String) colorComboBox.getSelectedItem());
+            carAttributeEditFrame.initComponents(CarAttributeEditFrame.COLOR, (String) colorComboBox.getSelectedItem());
         }
         if (ae.getSource() == editLengthButton) {
-            carAttributeEditFrame.initComponents(LENGTH, (String) lengthComboBox.getSelectedItem());
+            carAttributeEditFrame.initComponents(CarAttributeEditFrame.LENGTH, (String) lengthComboBox.getSelectedItem());
         }
         if (ae.getSource() == editOwnerButton) {
-            carAttributeEditFrame.initComponents(OWNER, (String) ownerComboBox.getSelectedItem());
+            carAttributeEditFrame.initComponents(CarAttributeEditFrame.OWNER, (String) ownerComboBox.getSelectedItem());
         }
         if (ae.getSource() == editKernelButton) {
-            carAttributeEditFrame.initComponents(KERNEL, (String) kernelComboBox.getSelectedItem());
+            carAttributeEditFrame.initComponents(CarAttributeEditFrame.KERNEL, (String) kernelComboBox.getSelectedItem());
         }
     }
 

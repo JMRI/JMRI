@@ -188,7 +188,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             configFilename = FileUtil.getProfilePath() + Profile.CONFIG_FILENAME;
             System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
             Profile profile = ProfileManager.getDefault().getActiveProfile();
-            log.info("Starting with profile {}", (profile != null ? profile.getId() : "<none>"));
+            log.info("Starting with profile {}", profile.getId());
             
             // rapid language set; must follow up later with full setting as part of preferences
             apps.gui.GuiLafPreferencesManager.setLocaleMinimally(profile);
@@ -368,7 +368,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             if (!GraphicsEnvironment.isHeadless()) {
                 Profile profile = ProfileManager.getDefault().getActiveProfile();
                 JOptionPane.showMessageDialog(sp,
-                        Bundle.getMessage("SingleConfigMigratedToSharedConfig", (profile != null ? profile.getName() : "<none>")),
+                        Bundle.getMessage("SingleConfigMigratedToSharedConfig", profile),
                         jmri.Application.getApplicationName(),
                         JOptionPane.INFORMATION_MESSAGE);
             }
@@ -848,11 +848,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         pane2.add(new JLabel(line3()));
 
         Profile profile = ProfileManager.getDefault().getActiveProfile();
-        if (profile != null) {
-            pane2.add(new JLabel(Bundle.getMessage("ActiveProfile", profile.getName())));
-        } else {
-            pane2.add(new JLabel(Bundle.getMessage("FailedProfile")));
-        }
+        pane2.add(new JLabel(Bundle.getMessage("ActiveProfile", profile.getName())));
+
         // add listener for Com port updates
         ConnectionStatus.instance().addPropertyChangeListener(this);
         int i = 0;
@@ -1132,12 +1129,13 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         Dimension screen = frame.getToolkit().getScreenSize();
         Dimension size = frame.getSize();
 
-        Point p = InstanceManager.getDefault(UserPreferencesManager.class).getWindowLocation(containedPane.getClass().getName());
-        if (p != null) {
-            frame.setLocation(p);
-        } else {
-            frame.setLocation((screen.width - size.width) / 2, (screen.height - size.height) / 2);
-        }
+        // first set a default position and size
+        frame.setLocation((screen.width - size.width) / 2, (screen.height - size.height) / 2);
+        
+        // then attempt set from stored preference
+        frame.setFrameLocation();
+        
+        // and finally show
         frame.setVisible(true);
     }
 

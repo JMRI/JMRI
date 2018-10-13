@@ -121,12 +121,14 @@ public class BlockTableActionTest extends AbstractTableActionBase {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initDefaultUserMessagePreferences();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalSignalHeadManager();
-        a = new BlockTableAction();
+        helpTarget = "package.jmri.jmrit.beantable.BlockTable"; 
+ 	a = new BlockTableAction();
     }
 
     @After

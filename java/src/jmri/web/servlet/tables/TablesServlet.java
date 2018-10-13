@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import jmri.InstanceManager;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
 import jmri.web.servlet.ServletUtil;
@@ -34,7 +35,7 @@ public class TablesServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String[] path = request.getRequestURI().split("/"); // NOI18N
-        String tableType = StringUtil.unescapeString(path[path.length - 1]);
+        String tableType = java.net.URLDecoder.decode(path[path.length - 1]);
 
         //print the html, using the replacement values listed to fill in the calculated stuff
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
@@ -42,9 +43,9 @@ public class TablesServlet extends HttpServlet {
         response.getWriter().print(String.format(request.getLocale(),
                 FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Tables.html"))),
                 Bundle.getMessage(request.getLocale(), "TablesTitle"),               //page title is parm 1
-                ServletUtil.getInstance().getNavBar(request.getLocale(), "/tables"), //navbar is parm 2
-                ServletUtil.getInstance().getRailroadName(false),                   //railroad name is parm 3
-                ServletUtil.getInstance().getFooter(request.getLocale(), "/tables"), //footer is parm 4
+                InstanceManager.getDefault(ServletUtil.class).getNavBar(request.getLocale(), "/tables"), //navbar is parm 2
+                InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),                   //railroad name is parm 3
+                InstanceManager.getDefault(ServletUtil.class).getFooter(request.getLocale(), "/tables"), //footer is parm 4
                 tableType //tableType is parm 5
         ));
     }

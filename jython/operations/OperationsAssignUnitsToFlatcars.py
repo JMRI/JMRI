@@ -59,7 +59,7 @@ class AssignTrailersToCars(jmri.jmrit.automat.AbstractAutomaton):
 
     # first some checking
     # determine if trailer, container, and flatcar names exist
-    carTypes = jmri.jmrit.operations.rollingstock.cars.CarTypes.instance()
+    carTypes = jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarTypes)
     for unitArray in self.units:
         unitName = unitArray[0]
         if (carTypes.containsName(unitName) == False):
@@ -76,7 +76,7 @@ class AssignTrailersToCars(jmri.jmrit.automat.AbstractAutomaton):
             print number, "(" + unitName + ") can be carried by flatcar (" + flatcarName + ") load name (" + flatcarLoadName + ")"
             
     # get the train manager
-    trainManager = jmri.jmrit.operations.trains.TrainManager.instance()   
+    trainManager = jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
     # determine if train exists and is built
     train = trainManager.getTrainByName(self.trainName)
     if train == None:
@@ -87,7 +87,7 @@ class AssignTrailersToCars(jmri.jmrit.automat.AbstractAutomaton):
         return False
     
     # get the car manager
-    carManager = jmri.jmrit.operations.rollingstock.cars.CarManager.instance()
+    carManager = jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarManager)
           
     # get a list of cars from the manager
     carList = carManager.getByTrainDestinationList(train)

@@ -35,10 +35,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
+import jmri.LocoAddress;
 import jmri.ThrottleListener;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -203,7 +203,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
         log.warn("Throttle request failed for {} because {}.", address, reason);
         for (ThrottleControllerListener l : listeners) {
-            l.notifyControllerAddressDeclined(this, (DccLocoAddress) address);
+            l.notifyControllerAddressDeclined(this, (DccLocoAddress) address, reason);
             log.debug("Notify TCListener address declined in-use: {}", l.getClass());
         }
     }
@@ -509,7 +509,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     public void setLocoForConsistFunctions(String inPackage) {
         /*
-         *      This is used to control speed an direction on the
+         *      This is used to control speed and direction on the
          *      consist address, but have functions mapped to lead.
          *      Consist address must be set first!
          */

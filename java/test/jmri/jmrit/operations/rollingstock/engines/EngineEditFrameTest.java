@@ -1,16 +1,16 @@
-//EngineEditFrameTest.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -23,7 +23,7 @@ import org.junit.Test;
  * @author	Dan Boudreau Copyright (C) 2010
  *
  */
-public class EngineEditFrameTest extends OperationsSwingTestCase {
+public class EngineEditFrameTest extends OperationsTestCase {
 
     List<String> tempEngines;
 
@@ -41,7 +41,7 @@ public class EngineEditFrameTest extends OperationsSwingTestCase {
         f.builtTextField.setText("1999");
         f.ownerComboBox.setSelectedItem("Owner1");
         f.commentTextField.setText("test Engine comment field");
-        enterClickAndLeave(f.addButton);
+        JemmyUtil.enterClickAndLeave(f.addButton);
 
         EngineManager cManager = InstanceManager.getDefault(EngineManager.class);
         // should have 6 Engines
@@ -57,7 +57,7 @@ public class EngineEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("Engine owner", "Owner1", c6.getOwner());
         Assert.assertEquals("Engine comment", "test Engine comment field", c6.getComment());
 
-        enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
         // should have 6 Engines now
         Assert.assertEquals("number of Engines", 6, cManager.getNumEntries());
 
@@ -88,7 +88,7 @@ public class EngineEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("Engine comment", "Test Engine NH 1 Comment", f.commentTextField.getText());
 
         // test delete button
-        enterClickAndLeave(f.deleteButton);
+        JemmyUtil.enterClickAndLeave(f.deleteButton);
 
         // should have 5 Engines now
         Assert.assertEquals("number of Engines", 4, cManager.getNumEntries());
@@ -98,7 +98,7 @@ public class EngineEditFrameTest extends OperationsSwingTestCase {
 
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
 
         loadEngines();
@@ -190,7 +190,7 @@ public class EngineEditFrameTest extends OperationsSwingTestCase {
 
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

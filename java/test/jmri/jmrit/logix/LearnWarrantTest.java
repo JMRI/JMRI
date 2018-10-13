@@ -35,7 +35,7 @@ public class LearnWarrantTest {
     public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
 
     private OBlockManager _OBlockMgr;
-@SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
+
     @Test
     public void testLearnWarrant() throws Exception {
         if (GraphicsEnvironment.isHeadless()) {
@@ -225,6 +225,7 @@ public class LearnWarrantTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();

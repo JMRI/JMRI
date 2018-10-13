@@ -48,6 +48,8 @@ public class NodeConfigFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+
         memo = new GrapevineSystemConnectionMemo();
         SerialTrafficController tc = new SerialTrafficControlScaffold(memo);
         memo.setTrafficController(tc);

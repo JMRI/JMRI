@@ -1,10 +1,7 @@
 package jmri.jmrix.pi.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * ConnectionConfigXmlTest.java
@@ -13,22 +10,24 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class RaspberryPiConnectionConfigXmlTest {
-
-    @Test
-    public void testCtor() {
-        Assert.assertNotNull("RaspberryPiConnectionConfigXml constructor", new RaspberryPiConnectionConfigXml());
-    }
+public class RaspberryPiConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractConnectionConfigXmlTestBase {
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        xmlAdapter = new RaspberryPiConnectionConfigXml();
     }
 
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
+        xmlAdapter = null;
+    }
+
+    @Test
+    @Ignore("needs mock pi setup")
+    public void getInstanceTest() {
     }
 
 }

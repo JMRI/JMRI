@@ -46,7 +46,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
             String curAddress = systemName.substring(getSystemPrefix().length() + 1, systemName.length());
             int seperator = curAddress.indexOf(":");
             try {
-                board = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
+                board = Integer.parseInt(curAddress.substring(0, seperator));
                 if (!_tmarklin.containsKey(board)) {
                     _tmarklin.put(board, new Hashtable<Integer, MarklinSensor>());
                     MarklinMessage m = MarklinMessage.sensorPollMessage(board);
@@ -58,7 +58,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
             }
             Hashtable<Integer, MarklinSensor> sensorList = _tmarklin.get(board);
             try {
-                channel = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
+                channel = Integer.parseInt(curAddress.substring(seperator + 1));
                 if (!sensorList.containsKey(channel)) {
                     sensorList.put(channel, s);
                 }
@@ -84,13 +84,13 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
         //Address format passed is in the form of board:channel or T:turnout address
         int seperator = curAddress.indexOf(":");
         try {
-            board = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
+            board = Integer.parseInt(curAddress.substring(0, seperator));
         } catch (NumberFormatException ex) {
             log.error("First part of {} in front of : should be a number", curAddress);
             throw new JmriException("Module Address passed should be a number");
         }
         try {
-            port = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
+            port = Integer.parseInt(curAddress.substring(seperator + 1));
         } catch (NumberFormatException ex) {
             log.error("Second part of {} after : should be a number", curAddress);
             throw new JmriException("Port Address passed should be a number");
@@ -212,7 +212,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
                     return;
                 }
                 log.error("state not found " + ms.getDisplayName() + " " + r.getElement(9) + " " + r.getElement(10));
-                log.error(r.toHexString());
+                log.error(r.toString());
             } else {
                 int s88Module = r.getElement(9);
                 if (_tmarklin.containsKey(s88Module)) {

@@ -127,7 +127,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
     @Override
     @Before
     public void setUp(){
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         // prepare an interface, register
         lnis = new LocoNetInterfaceScaffold();

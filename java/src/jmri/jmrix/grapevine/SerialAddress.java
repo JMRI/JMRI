@@ -201,7 +201,7 @@ public class SerialAddress {
         Matcher matcher = getAllPattern().matcher(systemName.substring(prefix.length())); // exclude multichar prefix
         if (!matcher.matches()) {
             // here if an illegal format 
-            log.error("illegal system name format: {}", systemName);
+            log.error("illegal system name format in getNodeFromSystemName: {}", systemName);
             return null;
         }
 
@@ -209,7 +209,7 @@ public class SerialAddress {
         int ua;
         if (matcher.group(6) != null) {
             // This is a Gitnnxxx address
-            int num = Integer.valueOf(matcher.group(6)).intValue();
+            int num = Integer.parseInt(matcher.group(6));
             if (num > 0) {
                 ua = num / 1000;
             } else {
@@ -217,7 +217,7 @@ public class SerialAddress {
                 return null;
             }
         } else {
-            ua = Integer.valueOf(matcher.group(3)).intValue();
+            ua = Integer.parseInt(matcher.group(3));
         }
         return (SerialNode) tc.getNodeFromAddress(ua);
     }
@@ -233,7 +233,7 @@ public class SerialAddress {
         Matcher matcher = getAllPattern().matcher(systemName.substring(prefix.length())); // exclude multichar prefix
         if (!matcher.matches()) {
             // here if an illegal format 
-            log.error("illegal system name format: {}", systemName);
+            log.error("illegal system name format in getBitFromSystemName: {} prefix: {}", systemName, prefix, new Exception("traceback"));
             return 0;
         }
 
@@ -241,7 +241,7 @@ public class SerialAddress {
         int n = 0;
         if (matcher.group(6) != null) {
             // name in be Gitnnxxx format
-            int num = Integer.valueOf(matcher.group(6)).intValue();
+            int num = Integer.parseInt(matcher.group(6));
             if (num > 0) {
                 n = num % 1000;
             } else {
@@ -250,7 +250,7 @@ public class SerialAddress {
             }
         } else {
             // This is a Gitnnaxxxx address
-            n = Integer.valueOf(matcher.group(5)).intValue();
+            n = Integer.parseInt(matcher.group(5));
         }
         return (n);
     }
@@ -267,7 +267,7 @@ public class SerialAddress {
         Matcher matcher = getAllPattern().matcher(systemName.substring(prefix.length())); // exclude multichar prefix
         if (!matcher.matches()) {
             // here if an illegal format 
-            log.error("illegal system name format: {}", systemName);
+            log.error("illegal system name format in getNodeAddressFromSystemName: {}", systemName);
             return (-1);
         }
 
@@ -275,7 +275,7 @@ public class SerialAddress {
         int ua;
         if (matcher.group(6) != null) {
             // This is a Gitnnxxx address
-            int num = Integer.valueOf(matcher.group(6)).intValue();
+            int num = Integer.parseInt(matcher.group(6));
             if (num > 0) {
                 ua = num / 1000;
             } else {
@@ -283,7 +283,7 @@ public class SerialAddress {
                 return (-1);
             }
         } else {
-            ua = Integer.valueOf(matcher.group(3)).intValue();
+            ua = Integer.parseInt(matcher.group(3));
             log.debug("node ua: {}", ua);
         }
         return ua;
@@ -337,7 +337,7 @@ public class SerialAddress {
         int bit = -1;
         if (matcher.group(6) != null) {
             // name in be Gitnnxxx format
-            int num = Integer.valueOf(matcher.group(6)).intValue();
+            int num = Integer.parseInt(matcher.group(6));
             if (num > 0) {
                 node = num / 1000;
                 bit = num % 1000;
@@ -347,8 +347,8 @@ public class SerialAddress {
             }
         } else {
             // This is a Gitnnaxxxx address, get values
-            node = Integer.valueOf(matcher.group(3)).intValue();
-            bit = Integer.valueOf(matcher.group(5)).intValue();
+            node = Integer.parseInt(matcher.group(3));
+            bit = Integer.parseInt(matcher.group(5));
         }
 
         // check values
@@ -465,11 +465,11 @@ public class SerialAddress {
         matcher.matches(); // known to work, just need values
         // check format
         if (matcher.group(6) != null) {
-            int num = Integer.valueOf(matcher.group(6)).intValue();
+            int num = Integer.parseInt(matcher.group(6));
             return prefix + matcher.group(1) + (num / 1000) + "B" + (num % 1000);
         } else {
-            int node = Integer.valueOf(matcher.group(3)).intValue();
-            int bit = Integer.valueOf(matcher.group(5)).intValue();
+            int node = Integer.parseInt(matcher.group(3));
+            int bit = Integer.parseInt(matcher.group(5));
             return prefix + matcher.group(1) + node + "B" + bit;
         }
     }
@@ -497,13 +497,13 @@ public class SerialAddress {
 
            // check format
            if (matcher.group(6) != null) {
-              int num = Integer.valueOf(matcher.group(6)).intValue();
+              int num = Integer.parseInt(matcher.group(6));
               return prefix + matcher.group(1) + num;
            } else {
               // there are alternate forms...
               int offset = typeOffset(matcher.group(4));
-              int node = Integer.valueOf(matcher.group(3)).intValue();
-              int bit = Integer.valueOf(matcher.group(5)).intValue();
+              int node = Integer.parseInt(matcher.group(3));
+              int bit = Integer.parseInt(matcher.group(5));
               return prefix + matcher.group(1) + (node * 1000 + bit + offset);
            }
        } catch(java.lang.StringIndexOutOfBoundsException sobe){

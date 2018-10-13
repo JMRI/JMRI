@@ -1831,6 +1831,8 @@
       </display>
     </column>
     <name>Function Map</name>
+    <name xml:lang="de">Funktionszuordnung</name>
+    <name xml:lang="nl">Functietoewijzing</name>
   </pane>
   <pane>
     <column>
