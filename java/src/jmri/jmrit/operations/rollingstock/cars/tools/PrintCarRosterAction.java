@@ -486,12 +486,7 @@ public class PrintCarRosterAction extends AbstractAction {
                 setTitle(Bundle.getMessage("MenuItemPrint"));
             }
             loadSortByComboBox(sortByComboBox);
-            printSpace.setEnabled(panel.sortByLocation.isSelected());
-            printPage.setEnabled(panel.sortByLocation.isSelected());
-            if (!panel.sortByLocation.isSelected()) {
-                printSpace.setSelected(false);
-                printPage.setSelected(false);
-            }
+            updateLocationCheckboxes();
         }
 
         private void loadSortByComboBox(JComboBox<String> box) {
@@ -509,6 +504,10 @@ public class PrintCarRosterAction extends AbstractAction {
 
         @Override
         public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
+            updateLocationCheckboxes();
+        }
+        
+        private void updateLocationCheckboxes() {
             if (sortByComboBox.getSelectedItem() != null &&
                     sortByComboBox.getSelectedItem()
                             .equals(panel.carsTableModel.getSortByName(panel.carsTableModel.SORTBY_LOCATION))) {
