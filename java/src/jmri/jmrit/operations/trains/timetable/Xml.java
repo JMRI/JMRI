@@ -19,6 +19,8 @@ public class Xml {
     static final String TRAIN_IDS = "trainIds"; // NOI18N
 
     // TrainScheduleManager.java
+    public static final String TRAIN_SCHEDULE_OPTIONS = "trainScheduleOptions"; // NOI18N
+    public static final String ACTIVE_ID = "activeId"; // NOI18N
     static final String SCHEDULES = "schedules"; // NOI18N
 
 }
