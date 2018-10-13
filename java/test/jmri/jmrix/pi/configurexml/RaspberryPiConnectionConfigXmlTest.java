@@ -13,22 +13,18 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class RaspberryPiConnectionConfigXmlTest {
-
-    @Test
-    public void testCtor() {
-        Assert.assertNotNull("RaspberryPiConnectionConfigXml constructor", new RaspberryPiConnectionConfigXml());
-    }
+public class RaspberryPiConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractConnectionConfigXmlTestBase {
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        xmlAdapter = new RaspberryPiConnectionConfigXml();
     }
 
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
+        xmlAdapter = null;
     }
-
 }
