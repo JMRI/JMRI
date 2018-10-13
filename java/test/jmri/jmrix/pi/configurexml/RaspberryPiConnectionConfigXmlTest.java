@@ -1,10 +1,7 @@
 package jmri.jmrix.pi.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * ConnectionConfigXmlTest.java
@@ -27,4 +24,10 @@ public class RaspberryPiConnectionConfigXmlTest extends jmri.jmrix.configurexml.
         JUnitUtil.tearDown();
         xmlAdapter = null;
     }
+
+    @Test
+    @Ignore("needs mock pi setup")
+    public void getInstanceTest() {
+    }
+
 }
