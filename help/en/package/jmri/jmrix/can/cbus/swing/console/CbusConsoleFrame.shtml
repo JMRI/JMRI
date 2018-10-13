@@ -250,7 +250,6 @@
         <p>All OPCs supported, additional OPC information available.</p>
         <p>Received OPCS can be from either other JMRI components,
         or from an external CBUS connection.</p>
-        <p>Error return codes from modules not currently translated from their numeric value.</p>
         <p>Very minor changes to OPC description text for increased screen readability.</p>
 
     <h3>JMRI Help</h3>
