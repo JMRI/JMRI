@@ -166,6 +166,7 @@ public class NXFrame extends WarrantRoute {
         p.add(Box.createGlue());
         JButton button = new JButton(Bundle.getMessage("ButtonRoute"));
         button.addActionListener((ActionEvent e) -> {
+            clearTempWarrant();
             JPanel con = (JPanel)getContentPane().getComponent(0);
             con.removeAll();
             con.add(_routePanel);
@@ -175,6 +176,7 @@ public class NXFrame extends WarrantRoute {
         p.add(Box.createHorizontalStrut(2 * STRUT_SIZE));
         button = new JButton(Bundle.getMessage("ButtonRunNX"));
         button.addActionListener((ActionEvent e) -> {
+            clearTempWarrant();
             makeAndRunWarrant();
         });
         p.add(button);
@@ -443,7 +445,7 @@ public class NXFrame extends WarrantRoute {
         updateAutoRunPanel();
         pack();
     }
-    
+
     private void makeAndRunWarrant() {
         if (log.isDebugEnabled()) {
             log.debug("NXFrame selectedRoute()");
@@ -476,7 +478,6 @@ public class NXFrame extends WarrantRoute {
         }
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         if (msg == null) {
-//            WarrantTableAction.setNXFrame(this);        // redundant
             tableFrame.getModel().addNXWarrant(warrant);   //need to catch propertyChange at start
             if (log.isDebugEnabled()) {
                 log.debug("NXWarrant added to table");
@@ -492,7 +493,6 @@ public class NXFrame extends WarrantRoute {
         }
 
         if (msg == null && mode == Warrant.MODE_RUN) {
-//            if (log.isDebugEnabled()) log.debug("Warrant "+warrant.getDisplayName()+" running.");
             if (_haltStartBox.isSelected()) {
                 class Halter implements Runnable {
 
