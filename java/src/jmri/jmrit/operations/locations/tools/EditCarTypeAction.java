@@ -3,7 +3,6 @@ package jmri.jmrit.operations.locations.tools;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import jmri.jmrit.operations.rollingstock.cars.CarEditFrame;
 import jmri.jmrit.operations.rollingstock.cars.tools.CarAttributeEditFrame;
 
 /**
@@ -26,7 +25,7 @@ public class EditCarTypeAction extends AbstractAction {
         if (f == null || !f.isVisible()) {
             f = new CarAttributeEditFrame();
         }
-        f.initComponents(CarEditFrame.TYPE, null);
+        f.initComponents(CarAttributeEditFrame.TYPE, null);
         f.setExtendedState(Frame.NORMAL);
         f.setVisible(true); // this also brings the frame into focus
     }
