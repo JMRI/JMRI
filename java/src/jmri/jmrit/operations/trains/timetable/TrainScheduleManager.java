@@ -17,6 +17,7 @@ import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.jmrit.operations.trains.TrainSwitchLists;
+import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,12 +31,15 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainScheduleManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
-    public static final String LISTLENGTH_CHANGED_PROPERTY = "trainScheduleListLength"; // NOI18N
-
     public TrainScheduleManager() {
     }
 
+    public static final String NONE = "";
+    private String _trainScheduleActiveId = NONE;
     private int _id = 0;
+    
+    public static final String LISTLENGTH_CHANGED_PROPERTY = "trainScheduleListLength"; // NOI18N
+    public static final String SCHEDULE_ID_CHANGED_PROPERTY = "ActiveTrainScheduleId"; // NOI18N
 
     /**
      * Get the default instance of this class.
@@ -54,13 +58,34 @@ public class TrainScheduleManager implements InstanceManagerAutoDefault, Instanc
     }
 
     // stores known TrainSchedule instances by id
-    protected Hashtable<String, TrainSchedule> _scheduleHashTable = new Hashtable<String, TrainSchedule>();
+    protected Hashtable<String, TrainSchedule> _scheduleHashTable = new Hashtable<>();
 
     /**
      * @return Number of schedules
      */
     public int numEntries() {
         return _scheduleHashTable.size();
+    }
+    
+    /**
+     * Sets the selected schedule id
+     *
+     * @param id Selected schedule id
+     */
+    public void setTrainScheduleActiveId(String id) {
+        String old = _trainScheduleActiveId;
+        _trainScheduleActiveId = id;
+        if (!old.equals(id)) {
+            setDirtyAndFirePropertyChange(SCHEDULE_ID_CHANGED_PROPERTY, old, id);
+        }
+    }
+
+    public String getTrainScheduleActiveId() {
+        return _trainScheduleActiveId;
+    }
+    
+    public TrainSchedule getActiveSchedule() {
+        return getScheduleById(getTrainScheduleActiveId());
     }
 
     /**
@@ -143,7 +168,7 @@ public class TrainScheduleManager implements InstanceManagerAutoDefault, Instanc
     public List<TrainSchedule> getSchedulesByNameList() {
         List<TrainSchedule> sortList = getList();
         // now re-sort
-        List<TrainSchedule> out = new ArrayList<TrainSchedule>();
+        List<TrainSchedule> out = new ArrayList<>();
         for (int i = 0; i < sortList.size(); i++) {
             for (int j = 0; j < out.size(); j++) {
                 if (sortList.get(i).getName().compareToIgnoreCase(out.get(j).getName()) < 0) {
@@ -166,7 +191,7 @@ public class TrainScheduleManager implements InstanceManagerAutoDefault, Instanc
     public List<TrainSchedule> getSchedulesByIdList() {
         List<TrainSchedule> sortList = getList();
         // now re-sort
-        List<TrainSchedule> out = new ArrayList<TrainSchedule>();
+        List<TrainSchedule> out = new ArrayList<>();
         for (int i = 0; i < sortList.size(); i++) {
             for (int j = 0; j < out.size(); j++) {
                 try {
@@ -190,7 +215,7 @@ public class TrainScheduleManager implements InstanceManagerAutoDefault, Instanc
         if (numEntries() == 0) {
             createDefaultSchedules();
         }
-        List<TrainSchedule> out = new ArrayList<TrainSchedule>();
+        List<TrainSchedule> out = new ArrayList<>();
         Enumeration<TrainSchedule> en = _scheduleHashTable.elements();
         while (en.hasMoreElements()) {
             out.add(en.nextElement());
@@ -264,6 +289,9 @@ public class TrainScheduleManager implements InstanceManagerAutoDefault, Instanc
      *
      */
     public void store(Element root) {
+        Element e = new Element(Xml.TRAIN_SCHEDULE_OPTIONS);
+        e.setAttribute(Xml.ACTIVE_ID, InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId());
+        root.addContent(e);
         Element values = new Element(Xml.SCHEDULES);
         // add entries
         List<TrainSchedule> schedules = getSchedulesByIdList();
@@ -274,7 +302,15 @@ public class TrainScheduleManager implements InstanceManagerAutoDefault, Instanc
     }
 
     public void load(Element root) {
-        Element e = root.getChild(Xml.SCHEDULES);
+        Element e = root.getChild(Xml.TRAIN_SCHEDULE_OPTIONS);
+        Attribute a;
+        if (e != null) {
+            if ((a = e.getAttribute(Xml.ACTIVE_ID)) != null) {
+                InstanceManager.getDefault(TrainScheduleManager.class).setTrainScheduleActiveId(a.getValue());
+            }
+        }
+
+        e = root.getChild(Xml.SCHEDULES);
         if (e != null) {
             List<Element> eSchedules = root.getChild(Xml.SCHEDULES).getChildren(Xml.SCHEDULE);
             log.debug("TrainScheduleManager sees {} train schedules", eSchedules.size());
