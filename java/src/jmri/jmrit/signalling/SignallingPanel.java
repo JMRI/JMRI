@@ -283,7 +283,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         containerPanel.add(header);
 
         JTabbedPane detailsTab = new JTabbedPane();
-        detailsTab.setLayout(new BoxLayout(detailsTab, BoxLayout.Y_AXIS));
+        //detailsTab.setLayout(new BoxLayout(detailsTab, BoxLayout.Y_AXIS));
         detailsTab.add(Bundle.getMessage("Blocks"), buildBlocksPanel());  // NOI18N
         detailsTab.add(Bundle.getMessage("Turnouts"), buildTurnoutPanel());  // NOI18N
         detailsTab.add(Bundle.getMessage("Sensors"), buildSensorPanel());  // NOI18N
