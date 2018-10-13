@@ -19,7 +19,7 @@
             <authorinitials>EB</authorinitials>
             <revremark>Initial version as separate file, taken from Uhlenbrock_32300.xml</revremark>
         </revision>
-        <!-- Valid only for certain Uhlenbrock decoders with IntelliSound3-4 Module,
+        <!-- Valid only for certain Uhlenbrock decoders with IntelliSound3/4 Module,
              such as 32300, 36320, 36360 (IS3), 32500, 32504, 36520, 36560 (IS4) (non exhaustive list) -->
     </revhistory>
 
@@ -374,7 +374,7 @@
                     <value>1</value>
                 </qualifier>
                 <column>
-                    <display item="Range I Sound switch off time" include="32500,32504,36520,36560"/>
+                    <display item="Range I Sound switch off time"/> <!-- IntelliSound 4 only -->
                     <display item="Range I Threshold for cooling fan in E-lok"/>
                     <display item="Range I Threshold for brake screeching"/>
                     <label><text> </text></label>
@@ -383,8 +383,8 @@
                     <display item="Range I Time between two chuffs at max speed"/>
                     <display item="Range I Time between two chuffs at min speed"/>
                     <label><text> </text></label>
-                    <display item="Range I Squeal Start Function" include="32500,32504,36520,36560"/>
-                    <display item="Range I Squeal Stop Function" include="32500,32504,36520,36560"/>
+                    <display item="Range I Squeal Start Function"/> <!-- IntelliSound 4 only -->
+                    <display item="Range I Squeal Stop Function"/> <!-- IntelliSound 4 only -->
                 </column>
                 <column><label><text>      </text></label></column>
                 <column>
@@ -397,7 +397,7 @@
                     <display item="Range I Steam output start-up"/>
                     <label><text> </text></label>
                     <display item="Range I Screeching off Function"/>
-                    <display item="Range I Alternative Volume" include="32500,32504,36520,36560"/>
+                    <display item="Range I Alternative Volume"/> <!-- IntelliSound 4 only -->
                 </column>
                 <column><label><text>      </text></label></column>
                 <column>
@@ -410,10 +410,10 @@
                     <display item="Range I Threshold with load increase"/>
                     <display item="Range I Threshold with load decrease"/>
                     <label><text> </text></label>
-                    <display item="Range I Idle 0" format="checkbox" include="32500,32504,36520,36560"/>
-                    <display item="Range I Idle 1" format="checkbox" include="32500,32504,36520,36560"/>
-                    <display item="Range I Idle 2" format="checkbox" include="32500,32504,36520,36560"/>
-                    <display item="Range I Idle 5" format="checkbox" include="32500,32504,36520,36560"/>
+                    <display item="Range I Idle 0" format="checkbox"/> <!-- IntelliSound 4 only -->
+                    <display item="Range I Idle 1" format="checkbox"/> <!-- IntelliSound 4 only -->
+                    <display item="Range I Idle 2" format="checkbox"/> <!-- IntelliSound 4 only -->
+                    <display item="Range I Idle 5" format="checkbox"/> <!-- IntelliSound 4 only -->
                 </column>
             </group>
             <group>
@@ -428,7 +428,7 @@
                     <value>1</value>
                 </qualifier>
                 <column>
-                    <display item="Range II Sound switch off time" include="32500,32504,36520,36560"/>
+                    <display item="Range II Sound switch off time"/> <!-- IntelliSound 4 only -->
                     <display item="Range II Threshold for cooling fan in E-lok"/>
                     <display item="Range II Threshold for brake screeching"/>
                     <label><text> </text></label>
@@ -437,8 +437,8 @@
                     <display item="Range II Time between two chuffs at max speed"/>
                     <display item="Range II Time between two chuffs at min speed"/>
                     <label><text> </text></label>
-                    <display item="Range II Squeal Start Function" include="32500,32504,36520,36560"/>
-                    <display item="Range II Squeal Stop Function" include="32500,32504,36520,36560"/>
+                    <display item="Range II Squeal Start Function"/> <!-- IntelliSound 4 only -->
+                    <display item="Range II Squeal Stop Function"/> <!-- IntelliSound 4 only -->
                 </column>
                 <column><label><text>      </text></label></column>
                 <column>
@@ -451,7 +451,7 @@
                     <display item="Range II Steam output start-up"/>
                     <label><text> </text></label>
                     <display item="Range II Screeching off Function"/>
-                    <display item="Range II Alternative Volume" include="32500,32504,36520,36560"/>
+                    <display item="Range II Alternative Volume"/> <!-- IntelliSound 4 only -->
                 </column>
                 <column><label><text>      </text></label></column>
                 <column>
@@ -464,10 +464,10 @@
                     <display item="Range II Threshold with load increase"/>
                     <display item="Range II Threshold with load decrease"/>
                     <label><text> </text></label>
-                    <display item="Range II Idle 0" format="checkbox" include="32500,32504,36520,36560"/>
-                    <display item="Range II Idle 1" format="checkbox" include="32500,32504,36520,36560"/>
-                    <display item="Range II Idle 2" format="checkbox" include="32500,32504,36520,36560"/>
-                    <display item="Range II Idle 5" format="checkbox" include="32500,32504,36520,36560"/>
+                    <display item="Range II Idle 0" format="checkbox"/> <!-- IntelliSound 4 only -->
+                    <display item="Range II Idle 1" format="checkbox"/> <!-- IntelliSound 4 only -->
+                    <display item="Range II Idle 2" format="checkbox"/> <!-- IntelliSound 4 only -->
+                    <display item="Range II Idle 5" format="checkbox"/> <!-- IntelliSound 4 only -->
                 </column>
             </group>
             <group>
@@ -482,7 +482,7 @@
                     <value>1</value>
                 </qualifier>
                 <column>
-                    <display item="Range III Sound switch off time" include="32500,32504,36520,36560"/>
+                    <display item="Range III Sound switch off time"/> <!-- IntelliSound 4 only -->
                     <display item="Range III Threshold for cooling fan in E-lok"/>
                     <display item="Range III Threshold for brake screeching"/>
                     <label><text> </text></label>
@@ -491,8 +491,8 @@
                     <display item="Range III Time between two chuffs at max speed"/>
                     <display item="Range III Time between two chuffs at min speed"/>
                     <label><text> </text></label>
-                    <display item="Range III Squeal Start Function" include="32500,32504,36520,36560"/>
-                    <display item="Range III Squeal Stop Function" include="32500,32504,36520,36560"/>
+                    <display item="Range III Squeal Start Function"/> <!-- IntelliSound 4 only -->
+                    <display item="Range III Squeal Stop Function"/> <!-- IntelliSound 4 only -->
                 </column>
                 <column><label><text>      </text></label></column>
                 <column>
@@ -505,7 +505,7 @@
                     <display item="Range III Steam output start-up"/>
                     <label><text> </text></label>
                     <display item="Range III Screeching off Function"/>
-                    <display item="Range III Alternative Volume" include="32500,32504,36520,36560"/>
+                    <display item="Range III Alternative Volume"/> <!-- IntelliSound 4 only -->
                 </column>
                 <column><label><text>      </text></label></column>
                 <column>
@@ -518,10 +518,10 @@
                     <display item="Range III Threshold with load increase"/>
                     <display item="Range III Threshold with load decrease"/>
                     <label><text> </text></label>
-                    <display item="Range III Idle 0" format="checkbox" include="32500,32504,36520,36560"/>
-                    <display item="Range III Idle 1" format="checkbox" include="32500,32504,36520,36560"/>
-                    <display item="Range III Idle 2" format="checkbox" include="32500,32504,36520,36560"/>
-                    <display item="Range III Idle 5" format="checkbox" include="32500,32504,36520,36560"/>
+                    <display item="Range III Idle 0" format="checkbox"/> <!-- IntelliSound 4 only -->
+                    <display item="Range III Idle 1" format="checkbox"/> <!-- IntelliSound 4 only -->
+                    <display item="Range III Idle 2" format="checkbox"/> <!-- IntelliSound 4 only -->
+                    <display item="Range III Idle 5" format="checkbox"/> <!-- IntelliSound 4 only -->
                 </column>
             </group>
         </row>

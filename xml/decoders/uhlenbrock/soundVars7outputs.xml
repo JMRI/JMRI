@@ -31,8 +31,8 @@
       <authorinitials>EB</authorinitials>
       <revremark>Initial version as separate file, taken from Uhlenbrock_32300.xml</revremark>
     </revision>
-      <!-- Valid only for certain Uhlenbrock decoders with IntelliSound3 Module,
-           such as 32300, 36320, 36360 (non exhaustive list) -->
+      <!-- Valid only for certain Uhlenbrock decoders with IntelliSound3/4 Module,
+           such as 32300, 36320, 36360 (IS3), 32500, 32504, 36520, 36560 (IS4) (non exhaustive list) -->
   </revhistory>
     <variable item="SUSI-range" CV="897.0" default="1" tooltip="Will not read/write properly if multiple SUSI modules attached">
         <!-- Note: this is a normal CV, with no need to specify the index. However, setting the index allows resetting it to zero -->
@@ -1546,7 +1546,7 @@
     <!-- TODO add Bank B Range III sounds 2 - 7 -->
     <variable item="Bank B Range III Alternative Volume" CV="988.2" default="255" include="32500,32504,36520,36560">
         <decVal min="0" max="255"/>
-        <label>Alternative Volume</label>919
+        <label>Alternative Volume</label>
         <label xml:lang="de">Alternative Lautstärke</label>
         <tooltip>Switchable by function in CV 994A</tooltip>
         <tooltip xml:lang="de">Schaltbar per Funktion aus CV 994A</tooltip>
