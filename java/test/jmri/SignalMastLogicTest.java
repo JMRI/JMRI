@@ -83,7 +83,6 @@ public class SignalMastLogicTest {
      * Check that you can rename the SignalMast user names
      */
     @Test
-    @Ignore("This test fails frequently on appveyor. Possible threading issue")
     public void testRename() {
         // provide 2 virtual signal masts:
         SignalMast sm1 = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0001)");
@@ -102,11 +101,13 @@ public class SignalMastLogicTest {
         sml.initialise();
         new EventTool().waitNoEvent(10);
         Assert.assertEquals("sm1 aspect (1)", "Medium Approach", sm1.getAspect());
+        new EventTool().waitNoEvent(10);
         Assert.assertEquals("sm2 aspect (1)", "Stop", sm2.getAspect());
 
         sm2.setAspect("Clear");
         new EventTool().waitNoEvent(10);
         Assert.assertEquals("sm1 aspect (2)", "Clear", sm1.getAspect());
+        new EventTool().waitNoEvent(10);
         Assert.assertEquals("sm2 aspect (2)", "Clear", sm2.getAspect());
 
         // rename the masts
@@ -116,6 +117,7 @@ public class SignalMastLogicTest {
         sm2.setAspect("Stop");
         new EventTool().waitNoEvent(10);
         Assert.assertEquals("sm1 aspect (3)", "Medium Approach", sm1.getAspect());
+        new EventTool().waitNoEvent(10);
         Assert.assertEquals("sm2 aspect (3)", "Stop", sm2.getAspect());
 
         // clean up
