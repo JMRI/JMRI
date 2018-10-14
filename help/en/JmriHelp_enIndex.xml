@@ -547,6 +547,12 @@
 
   <indexitem text="Wii Remote as Throttle " target="html.tools.throttle.AdvancedThrottleControl_wii"/>
 
+  <indexitem text="Timetable " target="html.tools.TimeTable">
+   <indexitem text="Manage Timetable Data " target="package.jmri.jmrit.timetable.TimeTableFrame"/>
+
+   <indexitem text="Display Timetable Graph " target="package.jmri.jmrit.timetable.TimeTableGraph"/>
+
+  </indexitem>
  </indexitem>
  <indexitem text="Tracker " target="html.tools.tracker.index"/>
 
