@@ -15,6 +15,7 @@ $(document).ready(function() {
         },
         console: function(data) {
             if (data !== '{"type":"pong"}') {
+                $("#error-alert").addClass("hidden").removeClass("show");
                 var console = $("#console pre");
                 if (window.localStorage.getItem("jmri.json-console.json.pretty-print") === "true") {
                     console.append(JSON.stringify(JSON.parse(data), null, 2) + "<br>");
@@ -127,7 +128,8 @@ $(document).ready(function() {
         $('#modal-websocket-reconnecting').addClass('hide').removeClass('show');
     });
     $('input#clearConsole').click(function() {
-        $('div#console').empty(); //clear the console
+        $("#error-alert").addClass("hidden").removeClass("show");
+        $('div#console pre').empty(); //clear the console
         return false;
     });
     $('input#disconnect').click(function() {

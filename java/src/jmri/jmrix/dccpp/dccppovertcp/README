@@ -1,10 +1,13 @@
-This is the README file for the jmrix.loconet.loconetovertcp package.
+This is the README file for the jmrix.dccpp.dccppovertcp package.
 
 The jmrix Java package defines implementations for the JMRI interfaces. 
-jmrix.loconet.loconetovertcp defines classes for interfacing to an LocoNet
-via a telnet connection to a LocoNetOverTcp driver.  For more 
-information, please see:
+jmrix.dccpp.dccppovertcp defines classes for interfacing to a DCC++ base station
+via a telnet connection to a DCCppOverTcp driver.  This essentially makes a
+host instance of JMRI a network bridge for a (presumably) serial attached
+DCC++ base station so that a remote client instance of JMRI can use that base
+station.
 
-http://loconetovertcp.sourceforge.net/Client/index.html
-http://loconetovertcp.sourceforge.net/Server/index.html
+This should also allow MULTIPLE JMRI client instances to share a single DCC++
+base station via a single host instance of JMRI (which can also use the DCC++
+base station).
 	

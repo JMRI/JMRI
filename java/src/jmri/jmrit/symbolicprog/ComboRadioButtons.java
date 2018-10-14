@@ -13,22 +13,13 @@ import org.slf4j.LoggerFactory;
 
 /* Represents a JComboBox as a JPanel of radio buttons.
  *
- * @author			Bob Jacobsen   Copyright (C) 2001
+ * @author   Bob Jacobsen   Copyright (C) 2001
  */
 public class ComboRadioButtons extends JPanel {
 
     ButtonGroup g = new ButtonGroup();
 
     ComboRadioButtons(JComboBox<String> box, EnumVariableValue var) {
-        super();
-        _var = var;
-        _value = var._value;
-        _box = box;
-
-        init();
-    }
-
-    ComboRadioButtons(JComboBox<String> box, IndexedEnumVariableValue var) {
         super();
         _var = var;
         _value = var._value;
@@ -48,6 +39,7 @@ public class ComboRadioButtons extends JPanel {
             b1[i] = b;
             b.setActionCommand(name);
             b.addActionListener(l1[i] = new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     thisActionPerformed(e);
                 }
@@ -60,12 +52,14 @@ public class ComboRadioButtons extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // listen for changes to original
         _box.addActionListener(l2 = new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 originalActionPerformed(e);
             }
         });
         // listen for changes to original state
         _var.addPropertyChangeListener(p1 = new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 originalPropertyChanged(e);
             }
@@ -120,6 +114,7 @@ public class ComboRadioButtons extends JPanel {
     /**
      * Setting tooltip both on this panel, and all buttons inside
      */
+    @Override
     public void setToolTipText(String t) {
         super.setToolTipText(t);   // do default stuff
         // include all buttons
@@ -149,6 +144,6 @@ public class ComboRadioButtons extends JPanel {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ComboRadioButtons.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ComboRadioButtons.class);
 
 }

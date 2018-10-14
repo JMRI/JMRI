@@ -5,47 +5,40 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Converts Stream-based I/O to/from XNet messages. The "XNetInterface" side
- * sends/receives XNetMessage objects. The connection to a XNetPortController is
- * via a pair of *Streams, which then carry sequences of characters for
+ * sends/receives XNetMessage objects. The connection to an XNetPortController is
+ * via a pair of Streams, which then carry sequences of characters for
  * transmission.
- * <P>
+ * <p>
  * Messages come to this via the main GUI thread, and are forwarded back to
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <UL>
- * <LI> RcvHandler - at highest available priority
- * <LI> XmtHandler - down one, which is assumed to be above the GUI
- * <LI> (everything else)
- * </UL>
+ * <ul>
+ *   <li> RcvHandler - at highest available priority
+ *   <li> XmtHandler - down one, which is assumed to be above the GUI
+ *   <li> (everything else)
+ * </ul>
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- *
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class XNetPacketizer extends XNetTrafficController {
 
     public XNetPacketizer(LenzCommandStation pCommandStation) {
         super(pCommandStation);
         // The instance method (from XNetTrafficController) is deprecated
-        // But for the moment we need to make sure we set the static
-        // self variable, and hte instance method does this for us in a
-        // static way (which makes findbugs happy).
-        //instance();
     }
 
 // The methods to implement the XNetInterface
-    public boolean status() {
-        return (ostream != null && istream != null);
-    }
 
     /**
      * Forward a preformatted XNetMessage to the actual interface.
-     *
+     * <p>
      * Checksum is computed and overwritten here, then the message is converted
      * to a byte array and queue for transmission
      *
      * @param m Message to send; will be updated with CRC
      */
+    @Override
     public void sendXNetMessage(XNetMessage m, XNetListener reply) {
         if (m.length() != 0) {
             sendMessage(m, reply);
@@ -70,11 +63,10 @@ public class XNetPacketizer extends XNetTrafficController {
     }
 
     /**
-     * Check to see if PortController object can be sent to. returns true if
-     * ready, false otherwise May throw an Exception.
+     * {@inheritDoc}
      */
     @Override
-    public boolean portReadyToSend(jmri.jmrix.AbstractPortController p) throws Exception {
+    public boolean portReadyToSend(jmri.jmrix.AbstractPortController p) {
         if( !(p instanceof XNetPortController)) {
             return false;
         }
@@ -82,12 +74,11 @@ public class XNetPacketizer extends XNetTrafficController {
             ((XNetPortController) p).setOutputBufferEmpty(false);
             return true;
         } else {
-            if (log.isDebugEnabled()) {
-                log.debug("XPressNet port not ready to receive");
-            }
+            log.debug("XpressNet port not ready to receive");
             return false;
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetPacketizer.class);
+
 }

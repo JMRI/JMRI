@@ -1,9 +1,11 @@
 package jmri.jmrix.pi;
 
+import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.GpioProvider;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -14,9 +16,7 @@ import org.junit.Test;
  */
 public class RaspberryPiAdapterTest {
 
-   @Ignore
-   @Test(expected = java.lang.UnsatisfiedLinkError.class) // only really works on 
-                                                    // Pi for now.
+   @Test
    public void ConstructorTest(){
        RaspberryPiAdapter a = new RaspberryPiAdapter();
        Assert.assertNotNull(a);
@@ -25,12 +25,15 @@ public class RaspberryPiAdapterTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+       JUnitUtil.setUp();
+       GpioProvider myprovider = new PiGpioProviderScaffold();
+       GpioFactory.setDefaultProvider(myprovider);
+       jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 

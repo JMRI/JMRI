@@ -1,4 +1,3 @@
-// TrainSetColorFrame.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Dimension;
@@ -11,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
@@ -25,11 +25,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2014, 2016
- * @version $Revision: 17977 $
  */
 public class TrainsTableSetColorFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    TrainManager trainManager = TrainManager.instance();
+    TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
 
     // labels
     // text field
@@ -38,17 +37,17 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
     JRadioButton autoRadioButton = new JRadioButton(Bundle.getMessage("Auto"));
 
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // combo boxes
-    JComboBox<Train> trainBox = TrainManager.instance().getTrainComboBox();
-    JComboBox<String> colorBox = TrainManager.instance().getRowColorComboBox();
-    JComboBox<String> colorResetBox = TrainManager.instance().getRowColorComboBox();
+    JComboBox<Train> trainBox = InstanceManager.getDefault(TrainManager.class).getTrainComboBox();
+    JComboBox<String> colorBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
+    JComboBox<String> colorResetBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
 
-    JComboBox<String> colorBuiltBox = TrainManager.instance().getRowColorComboBox();
-    JComboBox<String> colorBuildFailedBox = TrainManager.instance().getRowColorComboBox();
-    JComboBox<String> colorTrainEnRouteBox = TrainManager.instance().getRowColorComboBox();
-    JComboBox<String> colorTerminatedBox = TrainManager.instance().getRowColorComboBox();
+    JComboBox<String> colorBuiltBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
+    JComboBox<String> colorBuildFailedBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
+    JComboBox<String> colorTrainEnRouteBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
+    JComboBox<String> colorTerminatedBox = InstanceManager.getDefault(TrainManager.class).getRowColorComboBox();
 
     // display panels based on which option is selected
     JPanel pTrains;
@@ -65,7 +64,7 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
         // general GUI config
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-		// Layout the panel by rows
+  // Layout the panel by rows
 
         // row 1
         JPanel pOption = new JPanel();
@@ -233,5 +232,5 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainsTableSetColorFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainsTableSetColorFrame.class);
 }

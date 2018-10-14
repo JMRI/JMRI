@@ -1,62 +1,61 @@
 package jmri.jmrit.withrottle;
 
+import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test simple functioning of UserInterface
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class UserInterfaceTest extends TestCase {
+public class UserInterfaceTest {
 
+    private UserInterface panel = null;
+
+    @Test
     public void testCtor() {
-        UserInterface panel = new UserInterface(){
-           @Override
-           public void createServerThread(){
-           }
-        };
-
-        Assert.assertNotNull("exists", panel );
-        panel.dispose();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("exists", panel);
     }
 
-    // from here down is testing infrastructure
-    public UserInterfaceTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", UserInterfaceTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(UserInterfaceTest.class);
-        return suite;
-    }
-
-    @Override
+    @Before
     public void setUp() throws Exception {
-        super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initDefaultUserMessagePreferences();
+        InstanceManager.setDefault(DeviceManager.class,new FacelessServer(){
+           @Override
+           public void listen(){
+           }
+        });
+        if(!GraphicsEnvironment.isHeadless()){
+           panel = new UserInterface();
+        }
     }
-    
-    @Override
+
+    @After
     public void tearDown() throws Exception {
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
-        JUnitUtil.resetInstanceManager();
+        if(!GraphicsEnvironment.isHeadless()){
+          try {
+             panel.disableServer();
+             JUnitUtil.waitFor( () -> { return panel.isListen; });
+             JUnitUtil.dispose(panel);
+          } catch(java.lang.NullPointerException npe) {
+             // not all tests fully configure the server, so an
+             // NPE here is ok.
+          }
+        }
+        JUnitUtil.tearDown();
     }
 }

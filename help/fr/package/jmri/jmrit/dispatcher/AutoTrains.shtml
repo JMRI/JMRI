@@ -1,7 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-19-->
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-19-->
 
 <html lang="fr">
 <head>
@@ -9,9 +8,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: AutoTrains Window Help</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Dave Duchamp" name="Author">
+  <meta name="author" content="Dave Duchamp">
   <meta name="keywords" content=
   "JMRI help Dispatcher Auto Active Trains"><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -127,8 +124,8 @@
       dans la m&ecirc;me situation il se trouvait lorsque Le
       fonctionnement en mode manuel &eacute;t&eacute;
       initi&eacute;. Ceci assure reprise automatique en douceur de
-      l'op&eacute;ration. &lt;/ p&gt; 
-      <!--#include virtual="/Footer" --></p>
+      l'op&eacute;ration. &lt;/p&gt;
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

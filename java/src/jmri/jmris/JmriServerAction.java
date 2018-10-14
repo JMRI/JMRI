@@ -1,4 +1,3 @@
-// JmriServerAction.java
 package jmri.jmris;
 
 import java.awt.event.ActionEvent;
@@ -8,14 +7,8 @@ import javax.swing.AbstractAction;
  * Swing action to create and register a JmriServerControlFrame object
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision$
  */
 public class JmriServerAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6687184200606555912L;
 
     public JmriServerAction(String s) {
         super(s);
@@ -25,6 +18,7 @@ public class JmriServerAction extends AbstractAction {
         this("Start Jmri Server");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         JmriServerFrame f = new JmriServerFrame();
@@ -34,4 +28,4 @@ public class JmriServerAction extends AbstractAction {
 }
 
 
-/* @(#)JmriServerAction.java */
+

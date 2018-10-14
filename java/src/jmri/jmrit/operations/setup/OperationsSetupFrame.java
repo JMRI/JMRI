@@ -1,4 +1,3 @@
-// OperationsSetupFrame.java
 package jmri.jmrit.operations.setup;
 
 import java.awt.Dimension;
@@ -10,7 +9,6 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of operation parameters
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012
- * @version $Revision$
  */
 public class OperationsSetupFrame extends OperationsFrame {
 
@@ -41,5 +39,5 @@ public class OperationsSetupFrame extends OperationsFrame {
         initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight500));
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(OperationsSetupFrame.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(OperationsSetupFrame.class);
 }

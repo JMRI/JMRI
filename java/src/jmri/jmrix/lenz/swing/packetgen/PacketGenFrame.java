@@ -1,4 +1,3 @@
-// PacketGenFrame.java
 package jmri.jmrix.lenz.swing.packetgen;
 
 import jmri.jmrix.lenz.XNetMessage;
@@ -7,27 +6,28 @@ import jmri.jmrix.lenz.XNetTrafficController;
 /**
  * Frame for user input of XpressNet messages
  *
- * @author	Bob Jacobsen Copyright (C) 2001,2002
- * @version	$Revision$
- */
+ * @author Bob Jacobsen Copyright (C) 2001,2002
+  */
 public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
 
     /**
-     *
+     * {@inheritDoc}
      */
-    private static final long serialVersionUID = -1866366252396463489L;
-    final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.lenz.swing.XNetSwingBundle");
-
-    public void initComponents() throws Exception {
+    @Override
+    public void initComponents() {
         super.initComponents();
 
         // all we need to do is set the title 
-        setTitle(rb.getString("PacketGenFrameTitle"));
+        setTitle(Bundle.getMessage("PacketGenFrameTitle"));
 
         // pack to cause display
         pack();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
         tc.sendXNetMessage(createPacket(packetTextField.getSelectedItem().toString()), null);
     }

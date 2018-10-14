@@ -5,7 +5,7 @@ package jmri.jmrit.catalog;
  * <P>
  * Name for the leaf Path to lead.
  *
- * @author	Pete Cressman Copyright 2009
+ * @author Pete Cressman Copyright 2009
  *
  */
 public class CatalogTreeLeaf {
@@ -35,4 +35,5 @@ public class CatalogTreeLeaf {
     public int getSize() {
         return _size;
     }
+
 }

@@ -1,4 +1,3 @@
-// Dcc4PcReporter.java
 package jmri.jmrix.dcc4pc;
 
 import java.util.Hashtable;
@@ -21,8 +20,7 @@ import org.slf4j.LoggerFactory;
  * The reporter will decode the rail com packets and add the information to the
  * rail com tag.
  * <P>
- * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 17977 $
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocationReporter {
 
@@ -38,23 +36,24 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
      *
      * @return -1 if the last message specified exiting
      */
+    @Override
     public int getState() {
         return lastLoco;
     }
 
+    @Override
     public void setState(int s) {
         lastLoco = s;
     }
     int lastLoco = -1;
 
+    @Override
     public void dispose() {
         super.dispose();
     }
 
     // data members
     transient RailComPacket[] rcPacket = new RailComPacket[3];
-
-    private static final long serialVersionUID = 120905L;
 
     void setPacket(int[] arraytemp, int dcc_addr_type, int dcc_addr, int cvNumber, int speed, int packetTypeCmd) {
         if (log.isDebugEnabled()) {
@@ -94,7 +93,7 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
             return dcc_addr_type;
         }
 
-        int getDCCAddress() {
+        int getDccAddress() {
             return dccAddress;
         }
 
@@ -303,15 +302,15 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
                         if (rcTag.getExpectedCv() != -1) {
                             rcTag.setCvValue(chbyte);
                         } else {
-                            rcTag.setCv(rc.getCvNumber(), chbyte);
+                            rcTag.setCV(rc.getCvNumber(), chbyte);
                         }
                     }
                     break;
                 case 4:
                     if (log.isDebugEnabled()) {
-                        log.debug(this.getDisplayName() + " Create/Get id tag for " + rc.getDCCAddress());
+                        log.debug(this.getDisplayName() + " Create/Get id tag for " + rc.getDccAddress());
                     }
-                    addr = rc.getDCCAddress();
+                    addr = rc.getDccAddress();
                     addr_type = rc.getAddressType();
                     break;
                 case 1: // Address byte 1
@@ -446,7 +445,7 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
             rcTag.setActualSpeed(actual_speed);
         }
         for (Integer cv : cvValues.keySet()) {
-            rcTag.setCv(cv, cvValues.get(cv));
+            rcTag.setCV(cv, cvValues.get(cv));
             if (cvvalue != -1) {
                 rcTag.setCvValue(cvvalue);
             }
@@ -479,6 +478,7 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
      * the address from the front. Assumes the LocoReporter format is "NNNN
      * [enter|exit]"
      */
+    @Override
     public LocoAddress getLocoAddress(String rep) {
         // Matcher stops at the DCC loco address.
         // m.group(1) is the orientation
@@ -504,6 +504,7 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
      * the direction from the end. Assumes the LocoReporter format is "NNNN
      * [enter|exit]"
      */
+    @Override
     public PhysicalLocationReporter.Direction getDirection(String rep) {
         // TEMPORARY:  Assume we're always Entering, if asked.
         return (PhysicalLocationReporter.Direction.ENTER);
@@ -515,6 +516,7 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
      * Returns the PhysicalLocation of this Reporter. Assumed to be the location
      * of the locomotive being reported about
      */
+    @Override
     public PhysicalLocation getPhysicalLocation() {
         return (getPhysicalLocation(null));
     }
@@ -525,6 +527,7 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
      * Returns the PhysicalLocation of this Reporter. Assumed to be the location
      * of the locomotive being reported about. Does not use the parameter s.
      */
+    @Override
     public PhysicalLocation getPhysicalLocation(String s) {
         return (PhysicalLocation.getBeanPhysicalLocation(this));
     }
@@ -572,8 +575,6 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
         ACK_4, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR,
         ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR};
 
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcReporter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcReporter.class);
 
 }
-
-/* @(#)Dcc4PcReporter.java */

@@ -13,16 +13,20 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+  <version author="B. Milhaupt" version="1.3" lastUpdated="20180823"/>
   <version author="td@teamdigital1.com" version="1.2" lastUpdated="20101101"/>
   <!-- Version 1 initial release -->
   <!-- Version 1.1 release correct input 4 secondary address -->
   <!-- Version 1.2 release correct input 5 primary address and default output state -->
   <!-- and added unoccupied delay time CVs -->
+  <!-- Version 1.3 release, added "LOCONETOPSBOARD" programming token to allow LocoNet-connected boards to read CV values -->
   <decoder>
     <family name="BlocD8" mfg="Team Digital" type="stationary">
       <model model="BlocD8" lowVersionID="1" comment="BlocD8 can be programmed in the usual way"/>
     </family>
-    <programming direct="yes" paged="yes" register="no" ops="yes"/>
+    <programming direct="yes" paged="yes" register="no" ops="yes">
+        <mode>LOCONETOPSBOARD</mode>
+    </programming>
     <variables>
       <variable CV="1" mask="XVVVVVVV" item="Short Address" default="1" tooltip="Range 1-99">
         <shortAddressVal/>
@@ -1664,7 +1668,7 @@
       </label>
       <row>
         <column>
-          <display item="Primary Address 1" tooltip="Determines the input addess"/>
+          <display item="Primary Address 1" tooltip="Determines the input address"/>
         </column>
         <column>
           <label>
@@ -1684,13 +1688,13 @@
           </label>
         </column>
         <column>
-          <display item="Primary Type 1" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Type 1" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv P1" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Secondary Address 1" tooltip="Configures the input for specfic use"/>
+      <display item="Secondary Address 1" tooltip="Configures the input for specific use"/>
       <row>
         <column>
           <label>
@@ -1698,13 +1702,13 @@
           </label>
         </column>
         <column>
-          <display item="Secondary Type 1" tooltip="Configures the input for specfic use"/>
+          <display item="Secondary Type 1" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv S1" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Secondary Transition 1" tooltip="Configures the input for specfic use"/>
+      <display item="Secondary Transition 1" tooltip="Configures the input for specific use"/>
       <display item="Delay 1" tooltip="Value X 256ms = Time between actual unoccupied to indicated unoccupied"/>
       <label>
         <text> </text>
@@ -1722,7 +1726,7 @@
           </label>
         </column>
         <column>
-          <display item="Primary Address 2" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Address 2" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <label>
@@ -1737,13 +1741,13 @@
           </label>
         </column>
         <column>
-          <display item="Primary Type 2" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Type 2" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv P2" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Secondary Address 2" tooltip="Configures the input for specfic use"/>
+      <display item="Secondary Address 2" tooltip="Configures the input for specific use"/>
       <row>
         <column>
           <label>
@@ -1751,13 +1755,13 @@
           </label>
         </column>
         <column>
-          <display item="Secondary Type 2" tooltip="Configures the input for specfic use"/>
+          <display item="Secondary Type 2" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv S2" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Secondary Transition 2" tooltip="Configures the input for specfic use"/>
+      <display item="Secondary Transition 2" tooltip="Configures the input for specific use"/>
       <display item="Delay 2" tooltip="Value X 256ms = Time between actual unoccupied to indicated unoccupied"/>
       <label>
         <text> </text>
@@ -1775,7 +1779,7 @@
           </label>
         </column>
         <column>
-          <display item="Primary Address 3" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Address 3" tooltip="Configures the input for specific use"/>
         </column>
       </row>
       <row>
@@ -1785,13 +1789,13 @@
           </label>
         </column>
         <column>
-          <display item="Primary Type 3" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Type 3" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv P3" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Secondary Address 3" tooltip="Configures the input for specfic use"/>
+      <display item="Secondary Address 3" tooltip="Configures the input for specific use"/>
       <row>
         <column>
           <label>
@@ -1799,13 +1803,13 @@
           </label>
         </column>
         <column>
-          <display item="Secondary Type 3" tooltip="Configures the input for specfic use"/>
+          <display item="Secondary Type 3" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv S3" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Secondary Transition 3" tooltip="Configures the input for specfic use"/>
+      <display item="Secondary Transition 3" tooltip="Configures the input for specific use"/>
       <display item="Delay 3" tooltip="Value X 256ms = Time between actual unoccupied to indicated unoccupied"/>
       <label>
         <text> </text>
@@ -1823,7 +1827,7 @@
           </label>
         </column>
         <column>
-          <display item="Primary Address 4" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Address 4" tooltip="Configures the input for specific use"/>
         </column>
       </row>
       <row>
@@ -1833,13 +1837,13 @@
           </label>
         </column>
         <column>
-          <display item="Primary Type 4" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Type 4" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv P4" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Secondary Address 4" tooltip="Configures the input for specfic use"/>
+      <display item="Secondary Address 4" tooltip="Configures the input for specific use"/>
       <row>
         <column>
           <label>
@@ -1847,13 +1851,13 @@
           </label>
         </column>
         <column>
-          <display item="Secondary Type 4" tooltip="Configures the input for specfic use"/>
+          <display item="Secondary Type 4" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv S4" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Secondary Transition 4" tooltip="Configures the input for specfic use"/>
+      <display item="Secondary Transition 4" tooltip="Configures the input for specific use"/>
       <display item="Delay 4" tooltip="Value X 256ms = Time between actual unoccupied to indicated unoccupied"/>
       <label>
         <text> </text>
@@ -1871,7 +1875,7 @@
       </label>
       <row>
         <column>
-          <display item="Primary Address 5" tooltip="Determines the input addess"/>
+          <display item="Primary Address 5" tooltip="Determines the input address"/>
         </column>
         <column>
           <label>
@@ -1891,13 +1895,13 @@
           </label>
         </column>
         <column>
-          <display item="Primary Type 5" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Type 5" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv P5" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Secondary Address 5" tooltip="Configures the input for specfic use"/>
+      <display item="Secondary Address 5" tooltip="Configures the input for specific use"/>
       <row>
         <column>
           <label>
@@ -1905,13 +1909,13 @@
           </label>
         </column>
         <column>
-          <display item="Secondary Type 5" tooltip="Configures the input for specfic use"/>
+          <display item="Secondary Type 5" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv S5" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Secondary Transition 5" tooltip="Configures the input for specfic use"/>
+      <display item="Secondary Transition 5" tooltip="Configures the input for specific use"/>
       <display item="Delay 5" tooltip="Value X 256ms = Time between actual unoccupied to indicated unoccupied"/>
       <label>
         <text> </text>
@@ -1929,7 +1933,7 @@
           </label>
         </column>
         <column>
-          <display item="Primary Address 6" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Address 6" tooltip="Configures the input for specific use"/>
         </column>
       </row>
       <row>
@@ -1939,13 +1943,13 @@
           </label>
         </column>
         <column>
-          <display item="Primary Type 6" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Type 6" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv P6" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Secondary Address 6" tooltip="Configures the input for specfic use"/>
+      <display item="Secondary Address 6" tooltip="Configures the input for specific use"/>
       <row>
         <column>
           <label>
@@ -1953,13 +1957,13 @@
           </label>
         </column>
         <column>
-          <display item="Secondary Type 6" tooltip="Configures the input for specfic use"/>
+          <display item="Secondary Type 6" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv S6" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Secondary Transition 6" tooltip="Configures the input for specfic use"/>
+      <display item="Secondary Transition 6" tooltip="Configures the input for specific use"/>
       <display item="Delay 6" tooltip="Value X 256ms = Time between actual unoccupied to indicated unoccupied"/>
       <label>
         <text> </text>
@@ -1977,7 +1981,7 @@
           </label>
         </column>
         <column>
-          <display item="Primary Address 7" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Address 7" tooltip="Configures the input for specific use"/>
         </column>
       </row>
       <row>
@@ -1987,13 +1991,13 @@
           </label>
         </column>
         <column>
-          <display item="Primary Type 7" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Type 7" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv P7" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Secondary Address 7" tooltip="Configures the input for specfic use"/>
+      <display item="Secondary Address 7" tooltip="Configures the input for specific use"/>
       <row>
         <column>
           <label>
@@ -2001,13 +2005,13 @@
           </label>
         </column>
         <column>
-          <display item="Secondary Type 7" tooltip="Configures the input for specfic use"/>
+          <display item="Secondary Type 7" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv S7" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Secondary Transition 7" tooltip="Configures the input for specfic use"/>
+      <display item="Secondary Transition 7" tooltip="Configures the input for specific use"/>
       <display item="Delay 7" tooltip="Value X 256ms = Time between actual unoccupied to indicated unoccupied"/>
       <label>
         <text> </text>
@@ -2025,7 +2029,7 @@
           </label>
         </column>
         <column>
-          <display item="Primary Address 8" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Address 8" tooltip="Configures the input for specific use"/>
         </column>
       </row>
       <row>
@@ -2035,13 +2039,13 @@
           </label>
         </column>
         <column>
-          <display item="Primary Type 8" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Type 8" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv P8" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Secondary Address 8" tooltip="Configures the input for specfic use"/>
+      <display item="Secondary Address 8" tooltip="Configures the input for specific use"/>
       <row>
         <column>
           <label>
@@ -2049,13 +2053,13 @@
           </label>
         </column>
         <column>
-          <display item="Secondary Type 8" tooltip="Configures the input for specfic use"/>
+          <display item="Secondary Type 8" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv S8" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Secondary Transition 8" tooltip="Configures the input for specfic use"/>
+      <display item="Secondary Transition 8" tooltip="Configures the input for specific use"/>
       <display item="Delay 8" tooltip="Value X 256ms = Time between actual unoccupied to indicated unoccupied"/>
       <label>
         <text> </text>
@@ -2215,7 +2219,7 @@
       </row>
       <row>
         <column>
-          <display item="MType1" tooltip="A sensor type messsage will executes this route"/>
+          <display item="MType1" tooltip="A sensor type message will executes this route"/>
         </column>
       </row>
       <label>
@@ -2304,7 +2308,7 @@
       </row>
       <row>
         <column>
-          <display item="MType2" tooltip="A sensor type messsage will executes this route"/>
+          <display item="MType2" tooltip="A sensor type message will executes this route"/>
         </column>
       </row>
       <label>
@@ -2393,7 +2397,7 @@
       </row>
       <row>
         <column>
-          <display item="MType3" tooltip="A sensor type messsage will executes this route"/>
+          <display item="MType3" tooltip="A sensor type message will executes this route"/>
         </column>
       </row>
       <label>
@@ -2482,7 +2486,7 @@
       </row>
       <row>
         <column>
-          <display item="MType4" tooltip="A sensor type messsage will executes this route"/>
+          <display item="MType4" tooltip="A sensor type message will executes this route"/>
         </column>
       </row>
       <label>
@@ -2580,7 +2584,7 @@
       </row>
       <row>
         <column>
-          <display item="MType5" tooltip="A sensor type messsage will executes this route"/>
+          <display item="MType5" tooltip="A sensor type message will executes this route"/>
         </column>
       </row>
       <label>
@@ -2669,7 +2673,7 @@
       </row>
       <row>
         <column>
-          <display item="MType6" tooltip="A sensor type messsage will executes this route"/>
+          <display item="MType6" tooltip="A sensor type message will executes this route"/>
         </column>
       </row>
       <label>
@@ -2758,7 +2762,7 @@
       </row>
       <row>
         <column>
-          <display item="MType7" tooltip="A sensor type messsage will executes this route"/>
+          <display item="MType7" tooltip="A sensor type message will executes this route"/>
         </column>
       </row>
       <label>
@@ -2847,7 +2851,7 @@
       </row>
       <row>
         <column>
-          <display item="MType8" tooltip="A sensor type messsage will executes this route"/>
+          <display item="MType8" tooltip="A sensor type message will executes this route"/>
         </column>
       </row>
       <label>

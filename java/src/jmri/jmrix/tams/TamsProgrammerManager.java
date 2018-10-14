@@ -9,9 +9,9 @@ import jmri.managers.DefaultProgrammerManager;
  * Extend DefaultProgrammerManager to provide ops mode programmers for NCE
  * systems
  *
- * @see jmri.ProgrammerManager Based on work by Bob Jacobsen
+ * @see jmri.managers.DefaultProgrammerManager Based on work by Bob Jacobsen
  * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 18841 $
+ *
  */
 public class TamsProgrammerManager extends DefaultProgrammerManager {
 
@@ -27,6 +27,7 @@ public class TamsProgrammerManager extends DefaultProgrammerManager {
      *
      * @return true
      */
+    @Override
     public boolean isAddressedModePossible() {
         return true;
     }
@@ -37,18 +38,18 @@ public class TamsProgrammerManager extends DefaultProgrammerManager {
      *
      * @return true if not USB connect to SB3
      */
+    @Override
     public boolean isGlobalProgrammerAvailable() {
         return true;
     }
 
+    @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new TamsOpsModeProgrammer(tc, pAddress, pLongAddress);
     }
 
+    @Override
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 }
-
-
-/* @(#)TamsProgrammerManager.java */

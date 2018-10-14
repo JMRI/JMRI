@@ -6,7 +6,7 @@ import jmri.util.JmriJFrame;
 /**
  * JFrame to create a new SignalMast
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public class AddSignalMastJFrame extends JmriJFrame {
 
@@ -34,9 +34,7 @@ public class AddSignalMastJFrame extends JmriJFrame {
 
     public void refresh() {
         if (sigMastPanel != null) {
-            sigMastPanel.updateSelectedDriver();
-            sigMastPanel.refreshHeadComboBox();
-
+            sigMastPanel.refresh();
         }
     }
 

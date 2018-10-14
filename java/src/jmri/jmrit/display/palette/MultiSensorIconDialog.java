@@ -1,4 +1,3 @@
-// MultiSensorIconDialog.java
 package jmri.jmrit.display.palette;
 
 import java.awt.FlowLayout;
@@ -8,26 +7,22 @@ import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import jmri.jmrit.catalog.ImageIndexEditor;
+import jmri.CatalogTreeManager;
+import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Icons may be added or deleted from a family
+ * Icons may be added or deleted from a family.
  *
  * @author Pete Cressman Copyright (c) 2010
  */
 public class MultiSensorIconDialog extends IconDialog {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3597269148845925544L;
-
-    /**
+    /*
      * Constructor for existing family to change icons, add/delete icons, or to
-     * delete the family
+     * delete the family.
      */
     public MultiSensorIconDialog(String type, String family, FamilyItemPanel parent,
             HashMap<String, NamedIcon> iconMap) {
@@ -39,7 +34,7 @@ public class MultiSensorIconDialog extends IconDialog {
     }
 
     /**
-     * add/delete icon. For Multisensor, it adds another sensor position.
+     * Add/delete icon. For Multisensor, it adds another sensor position.
      */
     @Override
     protected void makeAddIconButtonPanel(JPanel buttonPanel, String addTip, String deleteTip) {
@@ -47,13 +42,12 @@ public class MultiSensorIconDialog extends IconDialog {
         panel2.setLayout(new FlowLayout());
         JButton addSensor = new JButton(Bundle.getMessage("addIcon"));
         addSensor.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (addNewIcon(getIconName())) {
-                    ImageIndexEditor.indexChanged(true);
-                    JPanel p = (JPanel) (getContentPane().getComponent(0));
-                    p.remove(_iconPanel);
-                    _iconPanel = makeIconPanel(_iconMap);
-                    p.add(_iconPanel, 1);
+                    InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
+                    _iconEditPanel.removeAll();
+                    makeIconPanel(_iconMap, _iconEditPanel);
                     pack();
                 }
             }
@@ -63,13 +57,12 @@ public class MultiSensorIconDialog extends IconDialog {
 
         JButton deleteSensor = new JButton(Bundle.getMessage("deleteIcon"));
         deleteSensor.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (deleteIcon()) {
-                    ImageIndexEditor.indexChanged(true);
-                    JPanel p = (JPanel) (getContentPane().getComponent(0));
-                    p.remove(_iconPanel);
-                    _iconPanel = makeIconPanel(_iconMap);
-                    p.add(_iconPanel, 1);
+                    InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
+                    _iconEditPanel.removeAll();
+                    makeIconPanel(_iconMap, _iconEditPanel);
                     pack();
                 }
             }
@@ -82,16 +75,19 @@ public class MultiSensorIconDialog extends IconDialog {
     @Override
     protected boolean doDoneAction() {
         MultiSensorItemPanel parent = (MultiSensorItemPanel) _parent;
-        if (_iconMap.size() != parent._currentIconMap.size()) {
+        
+        if (_iconMap.size() != parent.getIconMap().size()) {
             parent.setSelections();
         }
         return super.doDoneAction();
     }
 
     /**
-     * Action item for makeAddIconButtonPanel
+     * Action item for makeAddIconButtonPanel.
+     * @param name icon name
+     * @return true if name is OK
      */
-    protected boolean addNewIcon(String name) {
+    private boolean addNewIcon(String name) {
         if (log.isDebugEnabled()) {
             log.debug("addNewIcon Action: iconMap.size()= " + _iconMap.size());
         }
@@ -112,9 +108,9 @@ public class MultiSensorIconDialog extends IconDialog {
     }
 
     /**
-     * Action item for makeAddIconButtonPanel
+     * Action item for makeAddIconButtonPanel.
      */
-    protected boolean deleteIcon() {
+    private boolean deleteIcon() {
         if (log.isDebugEnabled()) {
             log.debug("deleteSensor Action: iconMap.size()= " + _iconMap.size());
         }
@@ -126,5 +122,6 @@ public class MultiSensorIconDialog extends IconDialog {
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MultiSensorIconDialog.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MultiSensorIconDialog.class);
+
 }

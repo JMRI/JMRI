@@ -1,12 +1,10 @@
-// SerialInterface.java
 package jmri.jmrix.maple;
 
 /**
  * Interface to send/receive line information
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision$
- */
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+  */
 public interface SerialInterface {
 
     public void addSerialListener(SerialListener l);
@@ -19,4 +17,4 @@ public interface SerialInterface {
 }
 
 
-/* @(#)SerialInterface.java */
+

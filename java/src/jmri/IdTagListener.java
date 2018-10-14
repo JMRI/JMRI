@@ -1,7 +1,5 @@
 package jmri;
 
-import jmri.IdTag;
-
 /**
  * Connect to an IdTag
  * <hr>

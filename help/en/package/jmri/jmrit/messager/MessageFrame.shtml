@@ -27,8 +27,8 @@
       <h1>JMRI: Send Throttle Message</h1>JMRI has a limited
       ability to send messages to a hand-held throttle.
 
-      <p>This is the jmri.jmrit.messager.MessageFrame help page. 
-      <!--#include virtual="/Footer" --></p>
+      <p>This is the jmri.jmrit.messager.MessageFrame help page.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

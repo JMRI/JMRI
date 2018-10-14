@@ -1,4 +1,3 @@
-// PacketGenFrame.java
 package jmri.jmrix.ecos.swing.packetgen;
 
 import java.awt.Dimension;
@@ -9,18 +8,13 @@ import jmri.jmrix.ecos.EcosReply;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 
 /**
- * Frame for user input of Ecos messages
+ * Frame for user input of ECoS messages
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision$
  */
 public class PacketGenPanel extends jmri.jmrix.ecos.swing.EcosPanel implements EcosListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4117052466081375675L;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
@@ -30,19 +24,23 @@ public class PacketGenPanel extends jmri.jmrix.ecos.swing.EcosPanel implements E
         super();
     }
 
-    public void initComponents() throws Exception {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void initComponents() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // the following code sets the frame's initial state
         {
-            jLabel1.setText("Command: ");
+            jLabel1.setText(Bundle.getMessage("CommandLabel"));
             jLabel1.setVisible(true);
 
-            sendButton.setText("Send");
+            sendButton.setText(Bundle.getMessage("ButtonSend"));
             sendButton.setVisible(true);
-            sendButton.setToolTipText("Send packet");
+            sendButton.setToolTipText(Bundle.getMessage("SendToolTip"));
 
             packetTextField.setText("");
-            packetTextField.setToolTipText("Enter command");
+            packetTextField.setToolTipText(Bundle.getMessage("EnterASCIIToolTip"));
             packetTextField.setMaximumSize(new Dimension(packetTextField
                     .getMaximumSize().width, packetTextField.getPreferredSize().height));
 
@@ -51,6 +49,7 @@ public class PacketGenPanel extends jmri.jmrix.ecos.swing.EcosPanel implements E
             add(sendButton);
 
             sendButton.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     sendButtonActionPerformed(e);
                 }
@@ -58,17 +57,29 @@ public class PacketGenPanel extends jmri.jmrix.ecos.swing.EcosPanel implements E
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.ecos.swing.packetgen.PacketGenFrame";
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getTitle() {
         if (memo != null) {
-            return "Send " + memo.getUserName() + " command";
+            return Bundle.getMessage("SendXCommandTitle", memo.getUserName());
         }
-        return "Send ECOS command";
+        return Bundle.getMessage("MenuItemSendPacket");
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void initComponents(EcosSystemConnectionMemo memo) {
         super.initComponents(memo);
 
@@ -86,9 +97,17 @@ public class PacketGenPanel extends jmri.jmrix.ecos.swing.EcosPanel implements E
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void message(EcosMessage m) {
     }  // ignore replies
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void reply(EcosReply r) {
     } // ignore replies
 

@@ -4,29 +4,29 @@ package jmri;
  * A Logix is a group of Conditionals that monitor one or more conditions
  * (internal or on the layout). It services these Conditionals by installing and
  * deinstalling the proper listeners for their variables.
- * <P>
+ * <p>
  * A Logix can be enabled or not. It passes this attribute to its Conditionals.
  * By default it is enabled. When not enabled, a Conditional will still respond
  * to callbacks from its listeners and calculate its state, however it will not
  * execute its actions. Enabled is a bound property of a Logix.
- * <P>
+ * <p>
  * A Logix can be deactivated or not. When deactivated, the listeners of the
  * Conditional variables are deinstalled.
- * <P>
+ * <p>
  * A Logix does not have a "state", however, each of its Conditionals does.
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
- * @author	Dave Duchamp Copyright (C) 2007 
+ *
+ * @author Dave Duchamp Copyright (C) 2007
  * @author Additional modifications Pete Cressman 2009
  */
 public interface Logix extends NamedBean {
@@ -47,22 +47,31 @@ public interface Logix extends NamedBean {
      * Set enabled status. Enabled is a bound property All conditionals are set
      * to UNKNOWN state and recalculated when the Logix is enabled, provided the
      * Logix has been previously activated.
+     *
+     * @param state true if Logix should be enabled; false otherwise
      */
     public void setEnabled(boolean state);
 
     /**
-     * Get enabled status
+     * Get enabled status.
+     *
+     * @return true if enabled; false otherwise
      */
     public boolean getEnabled();
 
     /**
-     * Get number of Conditionals for this Logix
+     * Get number of Conditionals for this Logix.
+     *
+     * @return the number of conditionals
      */
     public int getNumConditionals();
 
     /**
      * Move 'row' to 'nextInOrder' and shift all between 'nextInOrder' and 'row'
      * up one position. Requires {@code row > nextInOrder}.
+     *
+     * @param nextInOrder target order for Conditional at row
+     * @param row         position of Conditional to move
      */
     public void swapConditional(int nextInOrder, int row);
 
@@ -72,32 +81,54 @@ public interface Logix extends NamedBean {
      * Add/Edit Logix dialog. If 'order' is greater than the number of
      * Conditionals for this Logix, and empty String is returned.
      *
-     * @param order - order in which the Conditional calculates.
+     * @param order - order in which the Conditional calculates
+     * @return system name of conditional or an empty String
      */
     public String getConditionalByNumberOrder(int order);
 
     /**
-     * Add a Conditional to this Logix Returns true if Conditional was
-     * successfully added, returns false if the maximum number of conditionals
-     * has been exceeded.
+     * Add a Conditional name and sequence number to this Logix.
      *
      * @param systemName The Conditional system name
      * @param order      - the order this conditional should calculate in if
      *                   order is negative, the conditional is added at the end
      *                   of current group of conditionals
+     * @return true if the Conditional was added, false otherwise (most likely
+     *         false indicates that maximum number of Conditionals was exceeded)
      */
     public boolean addConditional(String systemName, int order);
 
     /**
-     * Delete a Conditional from this Logix
-     * <P>
+     * Add a child Conditional to the parent Logix.
+     *
+     * @since 4.7.4
+     * @param systemName The system name for the Conditional object.
+     * @param conditional The Conditional object.
+     * @return true if the Conditional was added, false otherwise.
+     */
+    public boolean addConditional(String systemName, Conditional conditional);
+
+    /**
+     * Get a Conditional belonging to this Logix.
+     *
+     * @since 4.7.4
+     * @param systemName The name of the Conditional object.
+     * @return the Conditional object or null if not found.
+     */
+    public Conditional getConditional(String systemName);
+
+    /**
+     * Delete a Conditional from this Logix.
+     * <p>
      * Note: Since each Logix must have at least one Conditional, the last
      * Conditional will not be deleted.
-     * <P>
+     * <p>
      * Returns An array of names used in an error message explaining why
      * Conditional should not be deleted.
      *
      * @param systemName The Conditional system name
+     * @return names of objects blocking deletion or null; note that null does
+     *         not exclusively indicate successful deletion
      */
     public String[] deleteConditional(String systemName);
 
@@ -110,7 +141,7 @@ public interface Logix extends NamedBean {
     /**
      * Activate the Logix, starts Logix processing by connecting all inputs that
      * are included the Conditionals in this Logix.
-     * <P>
+     * <p>
      * A Logix must be activated before it will calculate any of its
      * Conditionals.
      */
@@ -119,13 +150,25 @@ public interface Logix extends NamedBean {
     /**
      * Deactivate the Logix. This method disconnects the Logix from all input
      * objects and stops it from being triggered to calculate.
-     * <P>
+     * <p>
      * A Logix must be deactivated before it's Conditionals are changed.
      */
     public void deActivateLogix();
 
     /**
-     * Assembles a list of state variables that both trigger the Logix, and are
+     * ConditionalVariables only have a single name field.  For user interface purposes
+     * a gui name is used for the referenced conditional user name.  This is not used
+     * for other object types.
+     * <p>
+     * In addition to setting the GUI name, any state variable references are changed to
+     * conditional system names.  This converts the XML system/user name field to the system name
+     * for conditional references.  It does not affect other objects such as sensors, turnouts, etc.
+     * @since 4.7.4
+     */
+    public void setGuiNames();
+
+    /**
+     * Assemble a list of state variables that both trigger the Logix, and are
      * changed by it. Returns true if any such variables were found. Returns
      * false otherwise.
      */
@@ -151,5 +194,6 @@ public interface Logix extends NamedBean {
      * the correspondeing variable suppresses Calculation. Note this method must
      * not modify the supplied variable list in any way.
      */
-	//public void getStateVariableList(ArrayList <ConditionalVariable> varList, ArrayList <int[]> triggerPair);  
+    //public void getStateVariableList(ArrayList <ConditionalVariable> varList, ArrayList <int[]> triggerPair);
+    
 }

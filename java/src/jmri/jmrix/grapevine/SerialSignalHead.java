@@ -1,4 +1,3 @@
-// SerialSignalHead.java
 package jmri.jmrix.grapevine;
 
 import jmri.implementation.DefaultSignalHead;
@@ -6,34 +5,30 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * SerialSignalHead.java
+ * Extend jmri.AbstractSignalHead for grapevine serial signals.
  *
  * This object doesn't listen to the Grapevine serial communications. It
- * probably should, however, in case
+ * probably should, however, in case.
  *
- * Description:	extend jmri.AbstractSignalHead for grapevine serial signals
- *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007
- * @version	$Revision$
- */
+ * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007
+  */
 public class SerialSignalHead extends DefaultSignalHead {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -456123562360110180L;
+    GrapevineSystemConnectionMemo memo = null;
 
     /**
-     * Create a SignalHead object, with only a system name.
-     * <P>
-     * 'systemName' should have been previously validated
+     * Create a SignalHead object, with only system name.
+     *
+     * @param systemName system name including prefix, should have ben previously validated
+     * @param _memo the associated SystemConnectionMemo
      */
-    public SerialSignalHead(String systemName) {
+    public SerialSignalHead(String systemName, GrapevineSystemConnectionMemo _memo) {
         super(systemName);
+        memo = _memo;
         // Save system Name
         tSystemName = systemName;
         // Extract the Bit from the name
-        int num = SerialAddress.getBitFromSystemName(systemName); // bit one is address zero
+        int num = SerialAddress.getBitFromSystemName(systemName, memo.getSystemPrefix()); // bit one is address zero
         // num is 101-124, 201-224, 301-324, 401-424
         output = (num % 100) - 1; // 0-23
         bank = (num / 100) - 1;  // 0 - 3
@@ -41,15 +36,18 @@ public class SerialSignalHead extends DefaultSignalHead {
 
     /**
      * Create a SignalHead object, with both system and user names.
-     * <P>
-     * 'systemName' should have been previously validated
+     *
+     * @param systemName system name including prefix, should have ben previously validated
+     * @param userName free form name
+     * @param _memo the associated SystemConnectionMemo
      */
-    public SerialSignalHead(String systemName, String userName) {
+    public SerialSignalHead(String systemName, String userName, GrapevineSystemConnectionMemo _memo) {
         super(systemName, userName);
+        memo = _memo;
         // Save system Name
         tSystemName = systemName;
         // Extract the Bit from the name
-        int num = SerialAddress.getBitFromSystemName(systemName); // bit one is address zero
+        int num = SerialAddress.getBitFromSystemName(systemName, memo.getSystemPrefix()); // bit one is address zero
         // num is 101-124, 201-224, 301-324, 401-424
         output = (num % 100) - 1; // 0-23
         bank = (num / 100) - 1;  // 0 - 3
@@ -58,11 +56,12 @@ public class SerialSignalHead extends DefaultSignalHead {
     /**
      * Handle a request to change state on layout
      */
+    @Override
     protected void updateOutput() {
-        SerialNode tNode = SerialAddress.getNodeFromSystemName(tSystemName);
+        SerialNode tNode = SerialAddress.getNodeFromSystemName(tSystemName, memo.getTrafficController());
         if (tNode == null) {
             // node does not exist, ignore call
-            log.error("Can't find node for " + tSystemName + ", command ignored");
+            log.error("Can't find node for {}, command ignored", tSystemName);
             return;
         }
 
@@ -72,7 +71,7 @@ public class SerialSignalHead extends DefaultSignalHead {
             tOut = output - 12;
         }
         if ((bank < 0) || (bank > 4)) {
-            log.error("invalid bank " + bank + " for signal " + getSystemName());
+            log.error("invalid bank {} for signal {}", bank, getSystemName());
             bank = 0;
         }
 
@@ -102,7 +101,7 @@ public class SerialSignalHead extends DefaultSignalHead {
                     cmd = 4;
                     break;
                 default:
-                    log.warn("Unexpected new appearance: " + mAppearance);
+                    log.warn("Unexpected new appearance: {}", mAppearance);
                     cmd = 7;
                     break;  // flash red for error
             }
@@ -124,14 +123,16 @@ public class SerialSignalHead extends DefaultSignalHead {
         m.setElement(i++, tNode.getNodeAddress() | 0x80);  // address 2
         m.setElement(i++, bank << 4); // bank is most significant bits
         m.setParity(i - 4);
-        SerialTrafficController.instance().sendSerialMessage(m, null);
+        memo.getTrafficController().sendSerialMessage(m, null);
     }
 
     // flashing is done on the cards, so we don't have to
     // do it manually
+    @Override
     public void startFlash() {
     }
 
+    @Override
     public void stopFlash() {
     }
 
@@ -140,7 +141,6 @@ public class SerialSignalHead extends DefaultSignalHead {
     int output;         // output connector number, 0-23
     int bank;           // bank number, 0-3
 
-    private final static Logger log = LoggerFactory.getLogger(SerialSignalHead.class.getName());
-}
+    private final static Logger log = LoggerFactory.getLogger(SerialSignalHead.class);
 
-/* @(#)SerialSignalHead.java */
+}

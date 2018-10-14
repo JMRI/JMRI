@@ -8,10 +8,9 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
 /**
- * Stores all the loco information from the Ecos into JMRI
+ * Stores all the loco information from the ECoS into JMRI
  *
  * @author Kevin Dickerson
- * @version $Revision$
  */
 public class EcosLocoAddress implements jmri.LocoAddress {
 
@@ -25,6 +24,7 @@ public class EcosLocoAddress implements jmri.LocoAddress {
     boolean direction;
     int currentSpeed;
     private boolean doNotAddToRoster = false;
+    public static int MFX_DCCAddressOffset = 20000;
 
     public EcosLocoAddress(int dCCAddress) {
         _dccAddress = dCCAddress;
@@ -68,8 +68,9 @@ public class EcosLocoAddress implements jmri.LocoAddress {
     }
 
     /**
-     * @return the loco address configured on the ECOS for this loco
+     * @return the loco address configured on the ECoS for this loco
      */
+    @Override
     public int getNumber() {
         return _dccAddress;
     }
@@ -103,7 +104,7 @@ public class EcosLocoAddress implements jmri.LocoAddress {
     protected void setSpeed(int speed) {
         int oldspeed = currentSpeed;
         currentSpeed = speed;
-        firePropertyChange("Speed", oldspeed, currentSpeed);
+        firePropertyChange("Speed", oldspeed, currentSpeed); // NOI18N
     }
 
     public int getSpeed() {
@@ -126,9 +127,9 @@ public class EcosLocoAddress implements jmri.LocoAddress {
 
     public String getDirectionAsString() {
         if (direction) {
-            return "Forward";
+            return Bundle.getMessage("Forward");
         }
-        return "Reverse";
+        return Bundle.getMessage("Reverse");
     }
 
     //Should this option be made public? should setting the object only be available when the Loco is created.
@@ -146,9 +147,11 @@ public class EcosLocoAddress implements jmri.LocoAddress {
     }
 
     public void setEcosDescription(String description) {
+        if (description.startsWith("\"")) description = description.substring(1, description.length());
+        if (description.endsWith("\"")) description = description.substring(0, description.length() - 1);
         String oldValue = _ecosDescription;
         _ecosDescription = description;
-        firePropertyChange("name", oldValue, _ecosDescription);
+        firePropertyChange("name", oldValue, _ecosDescription); // NOI18N
     }
 
     /**
@@ -161,7 +164,7 @@ public class EcosLocoAddress implements jmri.LocoAddress {
     public void setRosterId(String roster) {
         String oldValue = _rosterId;
         _rosterId = roster;
-        firePropertyChange("RosterId", oldValue, _rosterId);
+        firePropertyChange("RosterId", oldValue, _rosterId); // NOI18N
     }
 
     //Protocol is here as it is a potential value from the ecos
@@ -200,6 +203,7 @@ public class EcosLocoAddress implements jmri.LocoAddress {
         }
     }
 
+    @Override
     public LocoAddress.Protocol getProtocol() {
         return _protocol;
     }
@@ -276,4 +280,5 @@ public class EcosLocoAddress implements jmri.LocoAddress {
     public void dispose() {
         pcs = null;
     }
+
 }

@@ -50,6 +50,7 @@
     <label>Braking time</label>
     <label xml:lang="fr">Temps de freinage</label>
     <label xml:lang="de">Bremszeit</label>
+    <label xml:lang="ca">Temps de frenada</label>
   </variable>
   <!-- END CVs for sound modules only --> 
   <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -57,11 +58,13 @@
 	<decVal min="0" max="255"/>
 	<label xml:lang="fr">Poussée de fumée en vitesse 1</label>
 	<label xml:lang="de">Dampfstöße bei Fahrstufe 1</label>
+	<label xml:lang="ca">Manxades de vapor a pas 1</label>
    </variable>
    <variable label="Smoke puffs at speed 1" CV="953" tooltip="CV953 (0-255)" default="120" item="Sound Option 3" exclude="Combo sound decoders">
 	<decVal min="0" max="255"/>
 	<label xml:lang="fr">Poussée de fumée en vitesse 1</label>
 	<label xml:lang="de">Dampfstöße bei Fahrstufe 1</label>
+	<label xml:lang="ca">Manxades de vapor a pas 1</label>
    </variable>
    <!-- END SIMILAR CV --> 
    <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -69,11 +72,13 @@
 	<decVal min="0" max="255"/>
 	<label xml:lang="fr">Poussée de fumée en vitesse supérieure</label>
 	<label xml:lang="de">Dampfstöße bei höherer Fahrstufe</label>
+	<label xml:lang="ca">Manxades de vapor a velocitat supeiror 1</label>
    </variable>
   <variable label="Smoke puffs at higher speed step" CV="954" tooltip="CV954 (0-255)" default="20" item="Sound Option 4" exclude="Combo sound decoders">
 	<decVal min="0" max="255"/>
 	<label xml:lang="fr">Poussée de fumée en vitesse supérieure</label>
 	<label xml:lang="de">Dampfstöße bei höherer Fahrstufe</label>
+	<label xml:lang="ca">Manxades de vapor a màxima velociat</label>
    </variable>
   <!-- END SIMILAR CV --> 
   <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -81,11 +86,14 @@
     <decVal min="0" max="127"/>
     <label xml:lang="fr">Bruit freinage vitesse minimale</label>
     <label xml:lang="de">Bremsenquietschen minimale Fahrstufe</label>
+    <label xml:lang="ca">Soroll de frenada a velocitat minima</label>
   </variable>
    <variable label="Breaking noise at minimal speed step" CV="955" tooltip="CV955 (0-127)" default="20" item="Sound Option 11" exclude="Combo sound decoders">
     <decVal min="0" max="127"/>
     <label xml:lang="fr">Bruit freinage vitesse minimale</label>
     <label xml:lang="de">Bremsenquietschen minimale Fahrstufe</label>
+    <label xml:lang="ca">Soroll de frenada a velocitat minima</label>
+
   </variable>
    <!-- END SIMILAR CV --> 
    <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -93,11 +101,13 @@
     <decVal min="0" max="127"/>
     <label xml:lang="fr">Bruit freinage vitesse initiale</label>
     <label xml:lang="de">Bremsenquietschen Anfangsfahrstufe</label>
+    <label xml:lang="ca">Soroll de frenada a la velolcitat inicial</label>
   </variable>
   <variable label="Breaking noise at start up speed step" CV="956" tooltip="CV956 (0-127)" default="13" item="Sound Option 12" exclude="Combo sound decoders">
     <decVal min="0" max="127"/>
     <label xml:lang="fr">Bruit freinage vitesse initiale</label>
     <label xml:lang="de">Bremsenquietschen Anfangsfahrstufe</label>
+    <label xml:lang="ca">Soroll de frenada a la velolcitat inicial</label>
   </variable>
   <!-- END SIMILAR CV --> 
   <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -105,11 +115,13 @@
     <decVal/>
     <label xml:lang="fr">Modulation cran de vitesse 1</label>
     <label xml:lang="de">Modulation bei Fahrstufe 1</label>
+    <label xml:lang="ca">Modul·lació al pas de velocitat 1</label>
   </variable>
   <variable label="Modulation at speed step 1" CV="957" tooltip="CV957" readOnly="yes" item="Sound Option 5" exclude="Combo sound decoders,SH10A_1.00,SH10A_1.01,SH10A_1.02">
     <decVal/>
     <label xml:lang="fr">Modulation cran de vitesse 1</label>
     <label xml:lang="de">Modulation bei Fahrstufe 1</label>
+    <label xml:lang="ca">Modul·lació al pas de velocitat 1</label>
   </variable>
   <!-- END SIMILAR CV --> 
   <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -117,11 +129,13 @@
      <decVal min="0" max="255"/>
     <label xml:lang="fr">Modulation cran de vitesse 127</label>
     <label xml:lang="de">Modulation bei Fahrstufe 127</label>
+    <label xml:lang="ca">Modul·lació aal pas de velocitat 1</label>
   </variable>
   <variable label="Modulation at speed step 127" CV="958" tooltip="CV958 (0-255)" default="11" item="Sound Option 6" exclude="Combo sound decoders">
      <decVal min="0" max="255"/>
     <label xml:lang="fr">Modulation cran de vitesse 127</label>
     <label xml:lang="de">Modulation bei Fahrstufe 127</label>
+    <label xml:lang="ca">Modul·lacio al pas de velocitat 137</label>
   </variable>
   <!-- END SIMILAR CV --> 
   <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
@@ -129,11 +143,13 @@
      <decVal min="0" max="255"/>
     <label xml:lang="fr">Délai pour mode silencieux</label>
     <label xml:lang="de">Timer für Ausblendeffekt</label>
+    <label xml:lang="ca">Retard per a mode silenciós</label>
   </variable>
   <variable label="Fade-out time in seconds" CV="959" tooltip="CV959 (0-255 in seconds)" default="8" item="Sound Option 7" exclude="Combo sound decoders">
      <decVal min="0" max="255"/>
     <label xml:lang="fr">Délai pour mode silencieux</label>
     <label xml:lang="de">Timer für Ausblendeffekt</label>
+    <label xml:lang="ca">Retard per a mode silenciós</label>
   </variable>
   <!-- END SIMILAR CV --> 
 </variables>

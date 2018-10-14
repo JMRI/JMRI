@@ -1,7 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!--  UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-22-->
+<!--  Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-22-->
 
 <html lang="fr">
 <head>
@@ -11,7 +10,7 @@
   <title>JMRI: Coordinate Edit Help</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Dan Boudreau" name="Author">
+  <meta name="author" content="Dan Boudreau">
   <meta name="keywords" content="JMRI Coordinate Edit Help">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=

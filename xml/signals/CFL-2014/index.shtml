@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author$) 2013 -->
-<!-- $Id$ -->
 <title>JMRI: CFL signals for Luxemburg</title>
 
 <!-- Style -->
@@ -14,9 +13,9 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">

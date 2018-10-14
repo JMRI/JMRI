@@ -1,512 +1,662 @@
 package jmri.jmrit.display.layoutEditor;
 
-import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
+
+import jmri.InstanceManager;
+import jmri.UserPreferencesManager;
+import jmri.jmrit.display.EditorFrameOperator;
+import jmri.util.*;
+import jmri.util.junit.rules.*;
+
+import org.junit.*;
+import org.junit.rules.*;
+import org.netbeans.jemmy.operators.JMenuOperator;
 
 /**
  * Test simple functioning of LayoutEditor
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
-public class LayoutEditorTest extends TestCase {
+public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase {
 
-    public void testCtor() {
-        LayoutEditor e = new LayoutEditor();
-        Assert.assertNotNull("exists", e);
-    }
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
 
+    @Rule
+    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
+
+    private LayoutEditor le = null;
+
+    @Test
     public void testStringCtor() {
-        LayoutEditor e = new LayoutEditor("Test Layout");
-        Assert.assertNotNull("exists", e);
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le = new LayoutEditor("Test Layout");
+        Assert.assertNotNull("exists", le);
     }
 
+    @Test
+    public void testDefaultCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        LayoutEditor e = new LayoutEditor(); // create layout editor
+        Assert.assertNotNull("exists", e);
+        JUnitUtil.dispose(e);
+    }
+
+    @Test
     public void testGetFinder() {
-        LayoutEditor e = new LayoutEditor();
-        LayoutEditorFindItems f = e.getFinder();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        LayoutEditorFindItems f = le.getFinder();
         Assert.assertNotNull("exists", f);
     }
 
+    @Test
     public void testSetSize() {
-        LayoutEditor e = new LayoutEditor();
-        e.setSize(100, 100);
-        java.awt.Dimension d = e.getSize();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setSize(100, 100);
+        java.awt.Dimension d = le.getSize();
+
         // the java.awt.Dimension stores the values as floating point
         // numbers, but setSize expects integer parameters.
         Assert.assertEquals("Width Set", 100.0, d.getWidth(), 0.0);
         Assert.assertEquals("Height Set", 100.0, d.getHeight(), 0.0);
     }
 
+    @Test
+    public void testGetSetZoom() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((m) -> {
+            m.setSaveAllowed(false); // prevent attempts to save while zooming in rest of test
+        });
+        Assert.assertEquals("Zoom Get", 1.0, le.getZoom(), 0.0);
+        // note: Layout Editor won't allow zooms below 0.25
+        Assert.assertEquals("Zoom Set", 0.25, le.setZoom(0.1), 0.0);
+        // note: Layout Editor won't allow zooms above 8.0.
+        Assert.assertEquals("Zoom Set", 8.0, le.setZoom(10.0), 0.0);
+        Assert.assertEquals("Zoom Set", 3.33, le.setZoom(3.33), 0.0);
+        Assert.assertEquals("Zoom Get", 3.33, le.getZoom(), 0.0);
+    }
+
+    @Test
     public void testGetOpenDispatcherOnLoad() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to false.
-        Assert.assertFalse("getOpenDispatcherOnLoad", e.getOpenDispatcherOnLoad());
+        Assert.assertFalse("getOpenDispatcherOnLoad", le.getOpenDispatcherOnLoad());
     }
 
+    @Test
     public void testSetOpenDispatcherOnLoad() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to false, so set to true.
-        e.setOpenDispatcherOnLoad(true);
-        Assert.assertTrue("setOpenDispatcherOnLoad after set", e.getOpenDispatcherOnLoad());
+        le.setOpenDispatcherOnLoad(true);
+        Assert.assertTrue("setOpenDispatcherOnLoad after set", le.getOpenDispatcherOnLoad());
     }
 
+    @Test
     public void testIsDirty() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to false.
-        Assert.assertFalse("isDirty", e.isDirty());
+        Assert.assertFalse("isDirty", le.isDirty());
     }
 
+    @Test
     public void testSetDirty() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to false, setDirty() sets it to true.
-        e.setDirty();
-        Assert.assertTrue("isDirty after set", e.isDirty());
+        le.setDirty();
+        Assert.assertTrue("isDirty after set", le.isDirty());
     }
 
+    @Test
     public void testSetDirtyWithParameter() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to false, so set it to true.
-        e.setDirty(true);
-        Assert.assertTrue("isDirty after set", e.isDirty());
+        le.setDirty(true);
+        Assert.assertTrue("isDirty after set", le.isDirty());
     }
 
+    @Test
     public void testResetDirty() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to false, so set it to true.
-        e.setDirty(true);
+        le.setDirty(true);
         // then call resetDirty, which sets it back to false.
-        e.resetDirty();
-        Assert.assertFalse("isDirty after reset", e.isDirty());
+        le.resetDirty();
+        Assert.assertFalse("isDirty after reset", le.isDirty());
     }
 
+    @Test
     public void testIsAnimating() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // default to true
-        Assert.assertTrue("isAnimating", e.isAnimating());
+        Assert.assertTrue("isAnimating", le.isAnimating());
     }
 
+    @Test
     public void testSetTurnoutAnimating() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // default to true, so set to false.
-        e.setTurnoutAnimation(false);
-        Assert.assertFalse("isAnimating after set", e.isAnimating());
+        le.setTurnoutAnimation(false);
+        Assert.assertFalse("isAnimating after set", le.isAnimating());
     }
 
+    @Test
     public void testGetLayoutWidth() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 0
-        Assert.assertEquals("layout width", 0, e.getLayoutWidth());
+        Assert.assertEquals("layout width", 0, le.getLayoutWidth());
     }
 
+    @Test
     public void testGetLayoutHeight() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 0
-        Assert.assertEquals("layout height", 0, e.getLayoutHeight());
+        Assert.assertEquals("layout height", 0, le.getLayoutHeight());
     }
 
+    @Test
     public void testGetWindowWidth() {
-        LayoutEditor e = new LayoutEditor();
-        // defaults to 0
-        Assert.assertEquals("window width", 0, e.getWindowWidth());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // defaults to screen width - 20
+        int w = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() - 20);
+        Assert.assertEquals("window width", w, le.getWindowWidth());
     }
 
+    @Test
     public void testGetWindowHeight() {
-        LayoutEditor e = new LayoutEditor();
-        // defaults to 0
-        Assert.assertEquals("window height", 0, e.getWindowHeight());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // defaults to screen height - 120
+        int h = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - 120);
+        Assert.assertEquals("window height", h, le.getWindowHeight());
     }
 
+    @Test
     public void testGetUpperLeftX() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 0
-        Assert.assertEquals("upper left X", 0, e.getUpperLeftX());
+        Assert.assertEquals("upper left X", 0, le.getUpperLeftX());
     }
 
+    @Test
     public void testGetUpperLeftY() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 0
-        Assert.assertEquals("upper left Y", 0, e.getUpperLeftY());
+        Assert.assertEquals("upper left Y", 0, le.getUpperLeftY());
     }
 
+    @Test
     public void testSetLayoutDimensions() {
-        LayoutEditor e = new LayoutEditor();
-        // set the panel dimensions to known values
-        e.setLayoutDimensions(100, 100, 100, 100, 100, 100);
-        Assert.assertEquals("layout width after set", 100, e.getLayoutWidth());
-        Assert.assertEquals("layout height after set", 100, e.getLayoutHeight());
-        Assert.assertEquals("window width after set", 100, e.getWindowWidth());
-        Assert.assertEquals("window height after set", 100, e.getWindowHeight());
-        Assert.assertEquals("upper left X after set", 100, e.getUpperLeftX());
-        Assert.assertEquals("upper left Y after set", 100, e.getUpperLeftX());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ThreadingUtil.runOnGUI(() -> {
+            // set the panel dimensions to known values
+            le.setLayoutDimensions(100, 100, 100, 100, 100, 100);
+            Assert.assertEquals("layout width after set", 100, le.getLayoutWidth());
+            Assert.assertEquals("layout height after set", 100, le.getLayoutHeight());
+            Assert.assertEquals("window width after set", 100, le.getWindowWidth());
+            Assert.assertEquals("window height after set", 100, le.getWindowHeight());
+            Assert.assertEquals("upper left X after set", 100, le.getUpperLeftX());
+            Assert.assertEquals("upper left Y after set", 100, le.getUpperLeftX());
+        });
     }
 
+    @Test
     public void testSetGrideSize() {
-        LayoutEditor e = new LayoutEditor();
-        Assert.assertEquals("grid size after set", 100, e.setGridSize(100));
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertEquals("grid size after set", 100, le.setGridSize(100));
     }
 
+    @Test
     public void testGetGrideSize() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 10.
-        Assert.assertEquals("grid size", 10, e.getGridSize());
+        Assert.assertEquals("grid size", 10, le.getGridSize());
     }
 
+    @Test
     public void testGetMainlineTrackWidth() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 4.
-        Assert.assertEquals("mainline track width", 4, e.getMainlineTrackWidth());
+        Assert.assertEquals("mainline track width", 4, le.getMainlineTrackWidth());
     }
 
+    @Test
     public void testSetMainlineTrackWidth() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set to known value
-        e.setMainlineTrackWidth(10);
-        Assert.assertEquals("mainline track width after set", 10, e.getMainlineTrackWidth());
+        le.setMainlineTrackWidth(10);
+        Assert.assertEquals("mainline track width after set", 10, le.getMainlineTrackWidth());
     }
 
+    @Test
     public void testGetSidelineTrackWidth() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 2.
-        Assert.assertEquals("side track width", 2, e.getSideTrackWidth());
+        Assert.assertEquals("side track width", 2, le.getSidelineTrackWidth());
     }
 
+    @Test
     public void testSetSideTrackWidth() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set to known value
-        e.setSideTrackWidth(10);
-        Assert.assertEquals("Side track width after set", 10, e.getSideTrackWidth());
+        le.setSidelineTrackWidth(10);
+        Assert.assertEquals("Side track width after set", 10, le.getSidelineTrackWidth());
     }
 
+    @Test
     public void testGetXScale() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 1.
-        Assert.assertEquals("XScale", 1.0, e.getXScale(), 0.0);
+        Assert.assertEquals("XScale", 1.0, le.getXScale(), 0.0);
     }
 
+    @Test
     public void testSetXScale() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set to known value
-        e.setXScale(2.0);
-        Assert.assertEquals("XScale after set ", 2.0, e.getXScale(), 0.0);
+        le.setXScale(2.0);
+        Assert.assertEquals("XScale after set ", 2.0, le.getXScale(), 0.0);
     }
 
+    @Test
     public void testGetYScale() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 1.
-        Assert.assertEquals("YScale", 1.0, e.getYScale(), 0.0);
+        Assert.assertEquals("YScale", 1.0, le.getYScale(), 0.0);
     }
 
+    @Test
     public void testSetYScale() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set to known value
-        e.setYScale(2.0);
-        Assert.assertEquals("YScale after set ", 2.0, e.getYScale(), 0.0);
+        le.setYScale(2.0);
+        Assert.assertEquals("YScale after set ", 2.0, le.getYScale(), 0.0);
     }
 
+    @Test
     public void testGetDefaultTrackColor() {
-        LayoutEditor e = new LayoutEditor();
-        Assert.assertEquals("Default Track Color", "black", e.getDefaultTrackColor());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertEquals("Default Track Color",ColorUtil.ColorDarkGray, le.getDefaultTrackColor());
     }
 
+    @Test
     public void testSetDefaultTrackColor() {
-        LayoutEditor e = new LayoutEditor();
-        e.setDefaultTrackColor("pink");
-        Assert.assertEquals("Default Track Color after Set", "pink", e.getDefaultTrackColor());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setDefaultTrackColor(ColorUtil.ColorPink);
+        Assert.assertEquals("Default Track Color after Set", ColorUtil.ColorPink, le.getDefaultTrackColor());
     }
 
+    @Test
     public void testGetDefaultOccupiedTrackColor() {
-        LayoutEditor e = new LayoutEditor();
-        Assert.assertEquals("Default Occupied Track Color", "red", e.getDefaultOccupiedTrackColor());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertEquals("Default Occupied Track Color", "red", le.getDefaultOccupiedTrackColor());
     }
 
+    @Test
     public void testSetDefaultOccupiedTrackColor() {
-        LayoutEditor e = new LayoutEditor();
-        e.setDefaultOccupiedTrackColor("pink");
-        Assert.assertEquals("Default Occupied Track Color after Set", "pink", e.getDefaultOccupiedTrackColor());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setDefaultOccupiedTrackColor(ColorUtil.ColorPink);
+        Assert.assertEquals("Default Occupied Track Color after Set", ColorUtil.ColorPink, le.getDefaultOccupiedTrackColor());
     }
 
+    @Test
     public void testGetDefaultAlternativeTrackColor() {
-        LayoutEditor e = new LayoutEditor();
-        Assert.assertEquals("Default Alternative Track Color", "white", e.getDefaultAlternativeTrackColor());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertEquals("Default Alternative Track Color",ColorUtil.ColorWhite, le.getDefaultAlternativeTrackColor());
     }
 
+    @Test
     public void testSetDefaultAlternativeTrackColor() {
-        LayoutEditor e = new LayoutEditor();
-        e.setDefaultAlternativeTrackColor("pink");
-        Assert.assertEquals("Default Alternative Track Color after Set", "pink", e.getDefaultAlternativeTrackColor());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setDefaultAlternativeTrackColor(ColorUtil.ColorPink);
+        Assert.assertEquals("Default Alternative Track Color after Set",ColorUtil.ColorPink, le.getDefaultAlternativeTrackColor());
     }
 
+    @Test
     public void testGetDefaultTextColor() {
-        LayoutEditor e = new LayoutEditor();
-        Assert.assertEquals("Default Text Color", "black", e.getDefaultTextColor());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertEquals("Default Text Color",ColorUtil.ColorBlack, le.getDefaultTextColor());
     }
 
+    @Test
     public void testSetDefaultTextColor() {
-        LayoutEditor e = new LayoutEditor();
-        e.setDefaultTextColor("pink");
-        Assert.assertEquals("Default Text Color after Set", "pink", e.getDefaultTextColor());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setDefaultTextColor(ColorUtil.ColorPink);
+        Assert.assertEquals("Default Text Color after Set",ColorUtil.ColorPink, le.getDefaultTextColor());
     }
 
+    @Test
     public void testGetTurnoutCircleColor() {
-        LayoutEditor e = new LayoutEditor();
-        Assert.assertEquals("Turnout Circle Color", "black", e.getTurnoutCircleColor());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertEquals("Turnout Circle Color",ColorUtil.ColorBlack, le.getTurnoutCircleColor());
     }
 
+    @Test
     public void testSetTurnoutCircleColor() {
-        LayoutEditor e = new LayoutEditor();
-        e.setTurnoutCircleColor("pink");
-        Assert.assertEquals("Turnout Circle after Set", "pink", e.getTurnoutCircleColor());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setTurnoutCircleColor(ColorUtil.ColorPink);
+        Assert.assertEquals("Turnout Circle after Set",ColorUtil.ColorPink, le.getTurnoutCircleColor());
     }
 
+    @Test
     public void testGetTurnoutCircleSize() {
-        LayoutEditor e = new LayoutEditor();
-        // defaults to 2.
-        Assert.assertEquals("turnout circle size", 2, e.getTurnoutCircleSize());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // defaults to 4.
+        Assert.assertEquals("turnout circle size", 4, le.getTurnoutCircleSize());
     }
 
+    @Test
     public void testSetTurnoutCircleSize() {
-        LayoutEditor e = new LayoutEditor();
-        // set to known value
-        e.setTurnoutCircleSize(10);
-        Assert.assertEquals("turnout circle size after set", 10, e.getTurnoutCircleSize());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setTurnoutCircleSize(11);
+        Assert.assertEquals("turnout circle size after set", 11, le.getTurnoutCircleSize());
     }
 
+    @Test
     public void testGetTurnoutDrawUnselectedLeg() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // default to true
-        Assert.assertTrue("getTurnoutDrawUnselectedLeg", e.getTurnoutDrawUnselectedLeg());
+        Assert.assertTrue("getTurnoutDrawUnselectedLeg", le.isTurnoutDrawUnselectedLeg());
     }
 
+    @Test
     public void testSetTurnoutDrawUnselectedLeg() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // default to true, so set to false.
-        e.setTurnoutDrawUnselectedLeg(false);
-        Assert.assertFalse("getTurnoutDrawUnselectedLeg after set", e.getTurnoutDrawUnselectedLeg());
+        le.setTurnoutDrawUnselectedLeg(false);
+        Assert.assertFalse("getTurnoutDrawUnselectedLeg after set", le.isTurnoutDrawUnselectedLeg());
     }
 
+    @Test
     public void testGetLayoutName() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le = new LayoutEditor(); // we do this here to test the default name
         // default is "My Layout"
-        Assert.assertEquals("getLayoutName", "My Layout", e.getLayoutName());
+        Assert.assertEquals("getLayoutName", "My Layout", le.getLayoutName());
     }
 
+    @Test
     public void testSetLayoutName() {
-        LayoutEditor e = new LayoutEditor();
-        // set to a known value
-        e.setLayoutName("foo");
-        Assert.assertEquals("getLayoutName after set", "foo", e.getLayoutName());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // the test layout editor setUp created is named this
+        Assert.assertEquals("getLayoutName", "Test Layout", le.getLayoutName());
+        // set to a known (different) value
+        le.setLayoutName("foo");
+        Assert.assertEquals("getLayoutName after set", "foo", le.getLayoutName());
     }
 
+    @Test
     public void testGetShowHelpBar() {
-        LayoutEditor e = new LayoutEditor();
-        // default to true
-        Assert.assertTrue("getShowHelpBar", e.getShowHelpBar());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        ThreadingUtil.runOnGUI(() -> {
+            le.setShowHelpBar(true);
+        });
+        ThreadingUtil.runOnGUI(() -> {
+            Assert.assertTrue("getShowHelpBar", le.getShowHelpBar());
+        });
+        ThreadingUtil.runOnGUI(() -> {
+            le.setShowHelpBar(false);
+        });
+        ThreadingUtil.runOnGUI(() -> {
+            Assert.assertFalse("getShowHelpBar", le.getShowHelpBar());
+        });
     }
 
+    @Test
     public void testSetShowHelpBar() {
-        LayoutEditor e = new LayoutEditor();
-        // default to true, so set to false.
-        e.setShowHelpBar(false);
-        Assert.assertFalse("getShowHelpBar after set", e.getShowHelpBar());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        ThreadingUtil.runOnGUI(() -> {
+            le.setShowHelpBar(false);
+        });
+        ThreadingUtil.runOnGUI(() -> {
+            Assert.assertFalse("getShowHelpBar after set", le.getShowHelpBar());
+        });
+        ThreadingUtil.runOnGUI(() -> {
+            le.setShowHelpBar(true);
+         });
+        ThreadingUtil.runOnGUI(() -> {
+            Assert.assertTrue("getShowHelpBar", le.getShowHelpBar());
+        });
+        ThreadingUtil.runOnGUI(() -> {
+            le.setShowHelpBar(false);
+        });
+        ThreadingUtil.runOnGUI(() -> {
+            Assert.assertFalse("getShowHelpBar", le.getShowHelpBar());
+        });
+        ThreadingUtil.runOnGUI(() -> {
+            le.setShowHelpBar(true);
+        });
+        ThreadingUtil.runOnGUI(() -> {
+            Assert.assertTrue("getShowHelpBar", le.getShowHelpBar());
+        });
     }
 
+    @Test
     public void testGetDrawGrid() {
-        LayoutEditor e = new LayoutEditor();
-        // default to false 
-        Assert.assertFalse("getDrawGrid", e.getDrawGrid());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // default to true
+        Assert.assertTrue("getDrawGrid", le.getDrawGrid());
     }
 
+    @Test
     public void testSetDrawGrid() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // default to false, so set to true.
-        e.setDrawGrid(true);
-        Assert.assertTrue("getDrawGrid after set", e.getDrawGrid());
+        le.setDrawGrid(true);
+        Assert.assertTrue("getDrawGrid after set", le.getDrawGrid());
     }
 
+    @Test
     public void testGetSnapOnAdd() {
-        LayoutEditor e = new LayoutEditor();
-        // default to false 
-        Assert.assertFalse("getSnapOnAdd", e.getSnapOnAdd());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // default to false
+        Assert.assertFalse("getSnapOnAdd", le.getSnapOnAdd());
     }
 
+    @Test
     public void testSetSnapOnAdd() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // default to false, so set to true.
-        e.setSnapOnAdd(true);
-        Assert.assertTrue("getSnapOnAdd after set", e.getSnapOnAdd());
+        le.setSnapOnAdd(true);
+        Assert.assertTrue("getSnapOnAdd after set", le.getSnapOnAdd());
     }
 
+    @Test
     public void testGetSnapOnMove() {
-        LayoutEditor e = new LayoutEditor();
-        // default to false 
-        Assert.assertFalse("getSnapOnMove", e.getSnapOnMove());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // default to false
+        Assert.assertFalse("getSnapOnMove", le.getSnapOnMove());
     }
 
+    @Test
     public void testSetSnapOnMove() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // default to false, so set to true.
-        e.setSnapOnMove(true);
-        Assert.assertTrue("getSnapOnMove after set", e.getSnapOnMove());
+        le.setSnapOnMove(true);
+        Assert.assertTrue("getSnapOnMove after set", le.getSnapOnMove());
     }
 
+    @Test
     public void testGetAntialiasingOn() {
-        LayoutEditor e = new LayoutEditor();
-        // default to false 
-        Assert.assertFalse("getAntialiasingOn", e.getAntialiasingOn());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // default to false
+        Assert.assertFalse("getAntialiasingOn", le.getAntialiasingOn());
     }
 
+    @Test
     public void testSetAntialiasingOn() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // default to false, so set to true.
-        e.setAntialiasingOn(true);
-        Assert.assertTrue("getAntialiasingOn after set", e.getAntialiasingOn());
+        le.setAntialiasingOn(true);
+        Assert.assertTrue("getAntialiasingOn after set", le.getAntialiasingOn());
     }
 
+    @Test
     public void testGetTurnoutCircles() {
-        LayoutEditor e = new LayoutEditor();
-        // default to false 
-        Assert.assertFalse("getTurnoutCircles", e.getTurnoutCircles());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // default to false
+        Assert.assertFalse("getTurnoutCircles", le.getTurnoutCircles());
     }
 
+    @Test
     public void testSetTurnoutCircles() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // default to false, so set to true.
-        e.setTurnoutCircles(true);
-        Assert.assertTrue("getSetTurnoutCircles after set", e.getTurnoutCircles());
+        le.setTurnoutCircles(true);
+        Assert.assertTrue("getSetTurnoutCircles after set", le.getTurnoutCircles());
     }
 
+    @Test
     public void testGetTooltipsNotEdit() {
-        LayoutEditor e = new LayoutEditor();
-        // default to false 
-        Assert.assertFalse("getTooltipsNotEdit", e.getTooltipsNotEdit());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // default to false
+        Assert.assertFalse("getTooltipsNotEdit", le.getTooltipsNotEdit());
     }
 
+    @Test
     public void testSetTooltipsNotEdit() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // default to false, so set to true.
-        e.setTooltipsNotEdit(true);
-        Assert.assertTrue("getTooltipsNotEdit after set", e.getTooltipsNotEdit());
+        le.setTooltipsNotEdit(true);
+        Assert.assertTrue("getTooltipsNotEdit after set", le.getTooltipsNotEdit());
     }
 
+    @Test
     public void testGetTooltipsInEdit() {
-        LayoutEditor e = new LayoutEditor();
-        // default to true 
-        Assert.assertTrue("getTooltipsInEdit", e.getTooltipsInEdit());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // default to true
+        Assert.assertTrue("getTooltipsInEdit", le.getTooltipsInEdit());
     }
 
+    @Test
     public void testSetTooltipsInEdit() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // default to true, so set to false.
-        e.setTooltipsInEdit(false);
-        Assert.assertFalse("getTooltipsInEdit after set", e.getTooltipsInEdit());
+        le.setTooltipsInEdit(false);
+        Assert.assertFalse("getTooltipsInEdit after set", le.getTooltipsInEdit());
     }
 
+    @Test
     public void testGetAutoBlockAssignment() {
-        LayoutEditor e = new LayoutEditor();
-        // default to false 
-        Assert.assertFalse("getAutoBlockAssignment", e.getAutoBlockAssignment());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // default to false
+        Assert.assertFalse("getAutoBlockAssignment", le.getAutoBlockAssignment());
     }
 
+    @Test
     public void testSetAutoBlockAssignment() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // default to false, so set to true.
-        e.setAutoBlockAssignment(true);
-        Assert.assertTrue("getAutoBlockAssignment after set", e.getAutoBlockAssignment());
+        le.setAutoBlockAssignment(true);
+        Assert.assertTrue("getAutoBlockAssignment after set", le.getAutoBlockAssignment());
     }
 
+    @Test
     public void testGetTurnoutBX() {
-        LayoutEditor e = new LayoutEditor();
-        // defaults to 20. 
-        Assert.assertEquals("getTurnoutBX", 20.0, e.getTurnoutBX(), 0.0);
-    }
-
-    public void testSetTurnoutBX() {
-        LayoutEditor e = new LayoutEditor();
-        // set to known value
-        e.setTurnoutBX(2.0);
-        Assert.assertEquals("getTurnoutBX after set ", 2.0, e.getTurnoutBX(), 0.0);
-    }
-
-    public void testGetTurnoutCX() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 20.
-        Assert.assertEquals("getTurnoutCX", 20.0, e.getTurnoutCX(), 0.0);
+        Assert.assertEquals("getTurnoutBX", 20.0, le.getTurnoutBX(), 0.0);
     }
 
+    @Test
+    public void testSetTurnoutBX() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // set to known value
+        le.setTurnoutBX(2.0);
+        Assert.assertEquals("getTurnoutBX after set ", 2.0, le.getTurnoutBX(), 0.0);
+    }
+
+    @Test
+    public void testGetTurnoutCX() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // defaults to 20.
+        Assert.assertEquals("getTurnoutCX", 20.0, le.getTurnoutCX(), 0.0);
+    }
+
+    @Test
     public void testSetTurnoutCX() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set to known value
-        e.setTurnoutCX(2.0);
-        Assert.assertEquals("getTurnoutCX after set ", 2.0, e.getTurnoutCX(), 0.0);
+        le.setTurnoutCX(2.0);
+        Assert.assertEquals("getTurnoutCX after set ", 2.0, le.getTurnoutCX(), 0.0);
     }
 
+    @Test
     public void testGetTurnoutWid() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 10.
-        Assert.assertEquals("getTurnoutWid", 10.0, e.getTurnoutWid(), 0.0);
+        Assert.assertEquals("getTurnoutWid", 10.0, le.getTurnoutWid(), 0.0);
     }
 
+    @Test
     public void testSetTurnoutWid() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set to known value
-        e.setTurnoutWid(2.0);
-        Assert.assertEquals("getTurnoutWid after set ", 2.0, e.getTurnoutWid(), 0.0);
+        le.setTurnoutWid(2.0);
+        Assert.assertEquals("getTurnoutWid after set ", 2.0, le.getTurnoutWid(), 0.0);
     }
 
+    @Test
     public void testGetXOverLong() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 30.
-        Assert.assertEquals("getXOverLong", 30.0, e.getXOverLong(), 0.0);
+        Assert.assertEquals("getXOverLong", 30.0, le.getXOverLong(), 0.0);
     }
 
+    @Test
     public void testSetXOverLong() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set to known value
-        e.setXOverLong(2.0);
-        Assert.assertEquals("getXOverLong after set ", 2.0, e.getXOverLong(), 0.0);
+        le.setXOverLong(2.0);
+        Assert.assertEquals("getXOverLong after set ", 2.0, le.getXOverLong(), 0.0);
     }
 
+    @Test
     public void testGetXOverHWid() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 10.
-        Assert.assertEquals("getXOverHWid", 10.0, e.getXOverHWid(), 0.0);
+        Assert.assertEquals("getXOverHWid", 10.0, le.getXOverHWid(), 0.0);
     }
 
+    @Test
     public void testSetXOverHWid() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set to known value
-        e.setXOverHWid(2.0);
-        Assert.assertEquals("getXOverWid after set ", 2.0, e.getXOverHWid(), 0.0);
+        le.setXOverHWid(2.0);
+        Assert.assertEquals("getXOverWid after set ", 2.0, le.getXOverHWid(), 0.0);
     }
 
+    @Test
     public void testGetXOverShort() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to 10.
-        Assert.assertEquals("getXOverShort", 10.0, e.getXOverShort(), 0.0);
+        Assert.assertEquals("getXOverShort", 10.0, le.getXOverShort(), 0.0);
     }
 
+    @Test
     public void testSetXOverShort() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set to known value
-        e.setXOverShort(2.0);
-        Assert.assertEquals("getXOverShort after set ", 2.0, e.getXOverShort(), 0.0);
+        le.setXOverShort(2.0);
+        Assert.assertEquals("getXOverShort after set ", 2.0, le.getXOverShort(), 0.0);
     }
 
+    @Test
     public void testResetTurnoutSizes() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // set all dimensions to known value
-        e.setTurnoutBX(2.0);
-        e.setTurnoutCX(2.0);
-        e.setTurnoutWid(2.0);
-        e.setXOverLong(2.0);
-        e.setXOverHWid(2.0);
-        e.setXOverShort(2.0);
+        le.setTurnoutBX(2.0);
+        le.setTurnoutCX(2.0);
+        le.setTurnoutWid(2.0);
+        le.setXOverLong(2.0);
+        le.setXOverHWid(2.0);
+        le.setXOverShort(2.0);
+
         // reset - uses reflection to get a private method.
         java.lang.reflect.Method resetTurnoutSize = null;
         try {
-            resetTurnoutSize = e.getClass().getDeclaredMethod("resetTurnoutSize");
+            resetTurnoutSize = le.getClass().getDeclaredMethod("resetTurnoutSize");
         } catch (java.lang.NoSuchMethodException nsm) {
             Assert.fail("Could not find method resetTurnoutSize in LayoutEditor class.");
         }
@@ -514,7 +664,7 @@ public class LayoutEditorTest extends TestCase {
         Assert.assertNotNull(resetTurnoutSize);
         resetTurnoutSize.setAccessible(true);
         try {
-            resetTurnoutSize.invoke(e);
+            resetTurnoutSize.invoke(le);
         } catch (java.lang.IllegalAccessException iae) {
             Assert.fail("Could not access method resetTurnoutSize in LayoutEditor class.");
         } catch (java.lang.reflect.InvocationTargetException ite) {
@@ -523,63 +673,195 @@ public class LayoutEditorTest extends TestCase {
         }
 
         // then check for the default values.
-        Assert.assertEquals("getTurnoutBX", 20.0, e.getTurnoutBX(), 0.0);
-        Assert.assertEquals("getTurnoutCX", 20.0, e.getTurnoutBX(), 0.0);
-        Assert.assertEquals("getTurnoutWid", 20.0, e.getTurnoutBX(), 0.0);
-        Assert.assertEquals("getXOverLong", 30.0, e.getXOverLong(), 0.0);
-        Assert.assertEquals("getXOverHWid", 30.0, e.getXOverLong(), 0.0);
-        Assert.assertEquals("getXOverShort", 30.0, e.getXOverLong(), 0.0);
+        Assert.assertEquals("getTurnoutBX", 20.0, le.getTurnoutBX(), 0.0);
+        Assert.assertEquals("getTurnoutCX", 20.0, le.getTurnoutBX(), 0.0);
+        Assert.assertEquals("getTurnoutWid", 20.0, le.getTurnoutBX(), 0.0);
+        Assert.assertEquals("getXOverLong", 30.0, le.getXOverLong(), 0.0);
+        Assert.assertEquals("getXOverHWid", 30.0, le.getXOverLong(), 0.0);
+        Assert.assertEquals("getXOverShort", 30.0, le.getXOverLong(), 0.0);
         // and reset also sets the dirty bit.
-        Assert.assertTrue("isDirty after resetTurnoutSize", e.isDirty());
+        Assert.assertTrue("isDirty after resetTurnoutSize", le.isDirty());
     }
 
+    @Test
     public void testGetDirectTurnoutControl() {
-        LayoutEditor e = new LayoutEditor();
-        // default to false 
-        Assert.assertFalse("getDirectTurnoutControl", e.getDirectTurnoutControl());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // default to false
+        Assert.assertFalse("getDirectTurnoutControl", le.getDirectTurnoutControl());
     }
 
+    @Test
     public void testSetDirectTurnoutControl() {
-        LayoutEditor e = new LayoutEditor();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // default to false, so set to true.
-        e.setDirectTurnoutControl(true);
-        Assert.assertTrue("getDirectTurnoutControl after set", e.getDirectTurnoutControl());
+        le.setDirectTurnoutControl(true);
+        Assert.assertTrue("getDirectTurnoutControl after set", le.getDirectTurnoutControl());
+    }
+
+    @Test
+    public void testSetDirectTurnoutControlOff() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setDirectTurnoutControl(false);
+        Assert.assertFalse("getDirectTurnoutControl after set", le.getDirectTurnoutControl());
+    }
+
+    @Test
+    public void testIsEditableDefault() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // default to true
+        Assert.assertTrue("isEditable default true", le.isEditable());
+    }
+
+    @Test
+    public void testSetAllEditableFalse() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setAllEditable(false);
+        Assert.assertFalse("isEditable after setAllEditable(false)", le.isEditable());
+    }
+
+    @Test
+    public void testSetAllEditableTrue() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setAllEditable(true);
+        Assert.assertTrue("isEditable after setAllEditable(true)", le.isEditable());
+    }
+
+    @Test
+    public void testGetHighlightSelectedBlockDefault() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // default to false
+        Assert.assertFalse("le.getHighlightSelectedBlock default false", le.getHighlightSelectedBlock());
+    }
+
+    @Test
+    public void testSetHighlightSelectedBlockTrue() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setHighlightSelectedBlock(true);
+        // setHighlightSelectedBlock performs some GUI actions, so give
+        // the AWT queue some time to clear.
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        Assert.assertTrue("le.getHighlightSelectedBlock after setHighlightSelectedBlock(true)", le.getHighlightSelectedBlock());
+    }
+
+    @Test
+    @Ignore("unreliable on CI servers")
+    public void testSetHighlightSelectedBlockFalse() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setHighlightSelectedBlock(false);
+        // setHighlightSelectedBlock performs some GUI actions, so give
+        // the AWT queue some time to clear.
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        Assert.assertFalse("le.getHighlightSelectedBlock after setHighlightSelectedBlock(false)", le.getHighlightSelectedBlock());
+    }
+
+    @Test
+    public void checkOptionsMenuExists() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setVisible(true);
+        EditorFrameOperator jfo = new EditorFrameOperator(le);
+        JMenuOperator jmo = new JMenuOperator(jfo,Bundle.getMessage("MenuOptions"));
+        Assert.assertNotNull("Options Menu Exists",jmo);
+        Assert.assertEquals("Menu Item Count",18,jmo.getItemCount());
+    }
+
+    @Test
+    public void checkToolsMenuExists() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setVisible(true);
+        EditorFrameOperator jfo = new EditorFrameOperator(le);
+        JMenuOperator jmo = new JMenuOperator(jfo,Bundle.getMessage("MenuTools"));
+        Assert.assertNotNull("Tools Menu Exists",jmo);
+        Assert.assertEquals("Menu Item Count",16,jmo.getItemCount());
+    }
+
+    @Test
+    public void checkZoomMenuExists() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setVisible(true);
+        EditorFrameOperator jfo = new EditorFrameOperator(le);
+        JMenuOperator jmo = new JMenuOperator(jfo,Bundle.getMessage("MenuZoom"));
+        Assert.assertNotNull("Zoom Menu Exists",jmo);
+        Assert.assertEquals("Menu Item Count",16,jmo.getItemCount());
+    }
+
+    @Test
+    public void checkMarkerMenuExists() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setVisible(true);
+        EditorFrameOperator jfo = new EditorFrameOperator(le);
+        JMenuOperator jmo = new JMenuOperator(jfo,Bundle.getMessage("MenuMarker"));
+        Assert.assertNotNull("Marker Menu Exists",jmo);
+        Assert.assertEquals("Menu Item Count",3,jmo.getItemCount());
+    }
+
+    @Test
+    public void checkDispatcherMenuExists() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setVisible(true);
+        EditorFrameOperator jfo = new EditorFrameOperator(le);
+        JMenuOperator jmo = new JMenuOperator(jfo,Bundle.getMessage("MenuDispatcher"));
+        Assert.assertNotNull("Dispatcher Menu Exists",jmo);
+        Assert.assertEquals("Menu Item Count",2,jmo.getItemCount());
+    }
+
+    @Test
+    public void testToolBarPostionOptions(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        le.setVisible(true);
+        EditorFrameOperator jfo = new EditorFrameOperator(le);
+        JMenuOperator jmo = new JMenuOperator(jfo,Bundle.getMessage("MenuOptions"));
+
+        // try each possible option for toolbar location
+
+        //Top
+        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
+                             + Bundle.getMessage("ToolBar") + "/"
+                             + Bundle.getMessage("ToolBarSideTop"), "/");
+         
+        //Left
+        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
+                             + Bundle.getMessage("ToolBar") + "/"
+                             + Bundle.getMessage("ToolBarSideLeft"), "/");
+
+        //Right
+        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
+                             + Bundle.getMessage("ToolBar") + "/"
+                             + Bundle.getMessage("ToolBarSideRight"), "/");
+
+        //Bottom
+        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
+                             + Bundle.getMessage("ToolBar") + "/"
+                             + Bundle.getMessage("ToolBarSideBottom"), "/");
+
+        //float
+        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
+                             + Bundle.getMessage("ToolBar") + "/"
+                             + Bundle.getMessage("ToolBarSideFloat"), "/");
     }
 
     // from here down is testing infrastructure
+    @Before
     @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
-        // reset the instance manager. 
-        JUnitUtil.resetInstanceManager();
+    public void setUp() {
+        JUnitUtil.setUp();
+        if (!GraphicsEnvironment.isHeadless()) {
+            jmri.util.JUnitUtil.resetProfileManager();
+            e = le = new LayoutEditor("Test Layout");
+            jmri.InstanceManager.setDefault(LayoutBlockManager.class,new LayoutBlockManager());
+        }
     }
 
+    @After
     @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+    public void tearDown() {
+        if (le != null) {
+            JUnitUtil.dispose(le);
+            e = null;
+            le = null;
+        }
+        JUnitUtil.tearDown();
     }
 
-    public LayoutEditorTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LayoutEditorTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LayoutEditorTest.class);
-        return suite;
-    }
-
+    //initialize logging
+    // private final static Logger log = LoggerFactory.getLogger(LayoutEditorTest.class.getName());
 }

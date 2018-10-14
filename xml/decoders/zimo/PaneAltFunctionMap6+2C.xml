@@ -17,6 +17,7 @@
     <label>
       <text>           Description                                      Output wire or operation</text>
       <text xml:lang="it">           Descrizione                                      Filo Uscita o operazione</text>
+      <text xml:lang="cs">           Popis                                            Výstupní vodič nebo operace</text>
     </label>
     <label>
       <text> </text>
@@ -29,66 +30,82 @@
         <label>
           <text>                                           Front  </text>
           <text xml:lang="it">                                          Frontale </text>
+          <text xml:lang="cs">                                          Přední  </text>
         </label>
         <label>
           <text>                                           Light  </text>
           <text xml:lang="it">                                           Luci   </text>
+          <text xml:lang="cs">                                           Světlo  </text>
         </label>
         <display item="FL(f) controls output 1" format="checkbox" label="Forward Headlight F0(f)">
           <label>Forward Headlight F0(f)</label>
           <label xml:lang="it">Luci frontali  F0(avanti)</label>
+          <label xml:lang="cs">Přední světla F0 vpřed</label>
         </display>
         <display item="FL(r) controls output 1" format="checkbox" label="Reverse Headlight F0(r)">
           <label>Reverse Headlight F0(r)</label>
           <label xml:lang="it">Luci Posteriori  F0(retro)</label>
+          <label xml:lang="cs">Zadní světla F0 vzad</label>
         </display>
         <display item="F1 controls output 1" format="checkbox" label="Function 1         ">
           <label>Function 1         </label>
           <label xml:lang="it">Funzione 1         </label>
+          <label xml:lang="cs">Funkce 1           </label>
         </display>
         <display item="F2 controls output 1" format="checkbox" label="Function 2         ">
           <label>Function 2         </label>
           <label xml:lang="it">Funzione 2         </label>
+          <label xml:lang="cs">Funkce 2           </label>
         </display>
         <display item="AltF3 controls output 1" format="checkbox" label="Function 3         ">
           <label>Function 3         </label>
           <label xml:lang="it">Funzione 3         </label>
+          <label xml:lang="cs">Funkce 3           </label>
         </display>
         <display item="AltF4 controls output 1" format="checkbox" label="Function 4         ">
           <label>Function 4         </label>
           <label xml:lang="it">Funzione 4         </label>
+          <label xml:lang="cs">Funkce 4           </label>
         </display>
         <display item="AltF5 controls output 1" format="checkbox" label="Function 5         ">
           <label>Function 5         </label>
           <label xml:lang="it">Funzione 5         </label>
+          <label xml:lang="cs">Funkce 5           </label>
         </display>
         <display item="AltF6 controls output 1" format="checkbox" label="Function 6         ">
           <label>Function 6         </label>
           <label xml:lang="it">Funzione 6         </label>
+          <label xml:lang="cs">Funkce 6           </label>
         </display>
         <display item="AltF7 controls output 1" format="checkbox" label="Function 7         ">
           <label>Function 7         </label>
           <label xml:lang="it">Funzione 7         </label>
+          <label xml:lang="cs">Funkce 7           </label>
         </display>
         <display item="AltF8 controls output 1" format="checkbox" label="Function 8         ">
           <label>Function 8         </label>
           <label xml:lang="it">Funzione 8         </label>
+          <label xml:lang="cs">Funkce 8           </label>
         </display>
         <display item="AltF9 controls output 1" format="checkbox" label="Function 9         ">
           <label>Function 9         </label>
           <label xml:lang="it">Funzione 9         </label>
+          <label xml:lang="cs">Funkce 9           </label>
         </display>
         <display item="AltF10 controls output 1" format="checkbox" label="Function 10         ">
           <label>Function 10         </label>
           <label xml:lang="it">Funzione 10         </label>
+          <label xml:lang="cs">Funkce 10          </label>
         </display>
         <display item="AltF11 controls output 1" format="checkbox" label="Function 11         ">
           <label>Function 11         </label>
           <label xml:lang="it">Funzione 11         </label>
+          <label xml:lang="cs">Funkce 11          </label>
         </display>
         <display item="AltF12 controls output 1" format="checkbox" label="Function 12         ">
           <label>Function 12         </label>
           <label xml:lang="it">Funzione 12         </label>
+          <label xml:lang="cs">Funkce 12          </label>
         </display>
       </column>
       <column>
@@ -98,10 +115,12 @@
         <label>
           <text> Rear </text>
           <text xml:lang="it"> Retro </text>
+          <text xml:lang="cs"> Zadní </text>
         </label>
         <label>
           <text> Light </text>
           <text xml:lang="it"> Luci </text>
+          <text xml:lang="cs"> Světlo </text>
         </label>
         <display item="FL(f) controls output 2" format="checkbox" label="">
           <label/>
@@ -468,18 +487,22 @@
         <label>
           <text>   Outputs FO 7 upwards </text>
           <text xml:lang="it">   Le uscite Funz. 7 e superiori </text>
+          <text xml:lang="cs">   Funkční výstupy 7 a výše </text>
         </label>
         <label>
           <text>   can not be used with this </text>
           <text xml:lang="it">   non si possono usare con queste </text>
+          <text xml:lang="cs">   nemohou být použity s tímto </text>
         </label>
         <label>
           <text>   Alternative Function Mapping </text>
           <text xml:lang="it">   Funzioni Speciali  </text>
+          <text xml:lang="cs">   alternativním přiřazením funkcí </text>
         </label>
       </column>
     </row>
   </column>
   <name>Alt Function Map</name>
   <name xml:lang="it">Mappa Funzioni Speciali</name>
+  <name xml:lang="cs">Alternativní přiřazení funkcí</name>
 </pane>

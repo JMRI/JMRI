@@ -8,6 +8,7 @@ import jmri.jmrit.catalog.NamedIcon;
 /**
  * Gather common methods for Turnouts, Semsors, SignalHeads, Masts, etc.
  *
+ * <a href="doc-files/Heirarchy.png"><img src="doc-files/Heirarchy.png" alt="UML class diagram for package" height="33%" width="33%"></a>
  * @author PeteCressman Copyright (C) 2011
  */
 public class PositionableIcon extends PositionableLabel {
@@ -32,10 +33,12 @@ public class PositionableIcon extends PositionableLabel {
         super(s, editor);
     }
 
+    @Override
     public Positionable deepClone() {
         PositionableIcon pos = new PositionableIcon(_editor);
         return finishClone(pos);
     }
+
     protected Positionable finishClone(PositionableIcon pos) {
         pos._iconFamily = _iconFamily;
         pos._scale = _scale;
@@ -45,8 +48,10 @@ public class PositionableIcon extends PositionableLabel {
     }
 
     /**
-     * Get icon by its bean state name key found in
-     * jmri.NamedBeanBundle.properties Get icon by its localized bean state name
+     * Get icon by its localized bean state name.
+     *
+     * @param state the state name
+     * @return the icon or null if no match
      */
     public NamedIcon getIcon(String state) {
         return _iconMap.get(state);
@@ -64,6 +69,7 @@ public class PositionableIcon extends PositionableLabel {
         return _iconMap.keySet().iterator();
     }
 
+    @Override
     public int maxHeight() {
         int max = super.maxHeight();
         if (_iconMap != null) {
@@ -75,6 +81,7 @@ public class PositionableIcon extends PositionableLabel {
         return max;
     }
 
+    @Override
     public int maxWidth() {
         int max = super.maxWidth();
         if (_iconMap != null) {
@@ -92,6 +99,7 @@ public class PositionableIcon extends PositionableLabel {
     /**
      * ****** popup AbstractAction method overrides ********
      */
+    @Override
     protected void rotateOrthogonal() {
         Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
         while (it.hasNext()) {
@@ -101,6 +109,7 @@ public class PositionableIcon extends PositionableLabel {
         updateSize();
     }
 
+    @Override
     public void setScale(double s) {
         _scale = s;
         if (_iconMap == null) {
@@ -114,6 +123,12 @@ public class PositionableIcon extends PositionableLabel {
         updateSize();
     }
 
+    @Override
+    public double getScale() {
+        return _scale;
+    }
+
+    @Override
     public int getDegrees() {
         if (_text) {
             return super.getDegrees();
@@ -127,6 +142,7 @@ public class PositionableIcon extends PositionableLabel {
         return super.getDegrees();
     }
 
+    @Override
     public void rotate(int deg) {
         _rotate = deg % 360;
         setDegrees(deg);
@@ -134,8 +150,8 @@ public class PositionableIcon extends PositionableLabel {
             Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
             while (it.hasNext()) {
                 Entry<String, NamedIcon> entry = it.next();
-                entry.getValue().rotate(deg, this);                    
-            }            
+                entry.getValue().rotate(deg, this);
+            }
         }
         super.rotate(deg);
         updateSize();
@@ -153,4 +169,5 @@ public class PositionableIcon extends PositionableLabel {
         }
         return clone;
     }
+
 }

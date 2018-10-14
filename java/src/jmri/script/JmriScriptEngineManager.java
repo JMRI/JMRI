@@ -29,7 +29,6 @@ import jmri.LightManager;
 import jmri.MemoryManager;
 import jmri.NamedBean;
 import jmri.PowerManager;
-import jmri.ProgrammerManager;
 import jmri.ReporterManager;
 import jmri.RouteManager;
 import jmri.Sensor;
@@ -42,7 +41,6 @@ import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.WarrantManager;
-import jmri.managers.WarningProgrammerManager;
 import jmri.util.FileUtil;
 import jmri.util.FileUtilSupport;
 import org.apache.commons.io.FilenameUtils;
@@ -79,7 +77,7 @@ public final class JmriScriptEngineManager {
     private final ScriptContext context;
 
     private static final Logger log = LoggerFactory.getLogger(JmriScriptEngineManager.class);
-    private static final String jythonDefaults = "jmri_defaults.py"; // should be replaced with default context
+    private static final String JYTHON_DEFAULTS = "jmri_defaults.py"; // should be replaced with default context
 
     public static final String PYTHON = "jython";
     private PythonInterpreter jython = null;
@@ -123,7 +121,6 @@ public final class JmriScriptEngineManager {
         bindings.put("routes", InstanceManager.getNullableDefault(RouteManager.class));
         bindings.put("blocks", InstanceManager.getNullableDefault(BlockManager.class));
         bindings.put("powermanager", InstanceManager.getNullableDefault(PowerManager.class));
-        bindings.put("programmers", new WarningProgrammerManager(InstanceManager.getNullableDefault(ProgrammerManager.class)));
         bindings.put("addressedProgrammers", InstanceManager.getNullableDefault(AddressedProgrammerManager.class));
         bindings.put("globalProgrammers", InstanceManager.getNullableDefault(GlobalProgrammerManager.class));
         bindings.put("shutdown", InstanceManager.getNullableDefault(ShutDownManager.class));
@@ -163,10 +160,9 @@ public final class JmriScriptEngineManager {
      * @return the default JmriScriptEngineManager
      */
     public static JmriScriptEngineManager getDefault() {
-        if (InstanceManager.getNullableDefault(JmriScriptEngineManager.class) == null) {
-            InstanceManager.setDefault(JmriScriptEngineManager.class, new JmriScriptEngineManager());
-        }
-        return InstanceManager.getDefault(JmriScriptEngineManager.class);
+        return InstanceManager.getOptionalDefault(JmriScriptEngineManager.class).orElseGet(() -> {
+            return InstanceManager.setDefault(JmriScriptEngineManager.class, new JmriScriptEngineManager());
+        });
     }
 
     /**
@@ -185,10 +181,11 @@ public final class JmriScriptEngineManager {
      * @param extension a file extension
      * @return a ScriptEngine or null
      */
-    public ScriptEngine getEngineByExtension(String extension) {
+    public ScriptEngine getEngineByExtension(String extension) throws ScriptException {
         String name = this.names.get(extension);
         if (name == null) {
-            log.error("Could not find script engine name for extension \"{}\"", extension);
+            log.error("Could not find script engine for extension \"{}\", expected one of {}", extension, String.join(",", names.keySet()));
+            throw new ScriptException("Could not find script engine for extension \""+extension+"\" expected "+String.join(",", names.keySet()));
         }
         return this.getEngine(name);
     }
@@ -200,10 +197,11 @@ public final class JmriScriptEngineManager {
      * @param mimeType a mimeType for a script
      * @return a ScriptEngine or null
      */
-    public ScriptEngine getEngineByMimeType(String mimeType) {
+    public ScriptEngine getEngineByMimeType(String mimeType) throws ScriptException {
         String name = this.names.get(mimeType);
         if (name == null) {
-            log.error("Could not find script engine name for mime type \"{}\"", mimeType);
+            log.error("Could not find script engine for mime type \"{}\", expected one of {}", mimeType, String.join(",", names.keySet()));
+            throw new ScriptException("Could not find script engine for mime type \""+mimeType+"\" expected "+String.join(",", names.keySet()));
         }
         return this.getEngine(name);
     }
@@ -214,10 +212,11 @@ public final class JmriScriptEngineManager {
      * @param shortName the short name for the ScriptEngine
      * @return a ScriptEngine or null
      */
-    public ScriptEngine getEngineByName(String shortName) {
+    public ScriptEngine getEngineByName(String shortName) throws ScriptException {
         String name = this.names.get(shortName);
         if (name == null) {
-            log.error("Could not find script engine name for short name \"{}\"", shortName);
+            log.error("Could not find script engine for short name \"{}\", expected one of {}", shortName, String.join(",", names.keySet()));
+            throw new ScriptException("Could not find script engine for short name \""+shortName+"\" expected "+String.join(",", names.keySet()));
         }
         return this.getEngine(name);
     }
@@ -419,10 +418,11 @@ public final class JmriScriptEngineManager {
      * @param extension a file extension
      * @return a ScriptEngineFactory or null
      */
-    public ScriptEngineFactory getFactoryByExtension(String extension) {
+    public ScriptEngineFactory getFactoryByExtension(String extension) throws ScriptException {
         String name = this.names.get(extension);
         if (name == null) {
-            log.error("Could not find script engine factory name for extension \"{}\"", extension);
+            log.error("Could not find script engine factory for extension \"{}\", expected one of {}", extension, String.join(",", names.keySet()));
+            throw new ScriptException("Could not find script engine for extension \""+extension+"\" expected "+String.join(",", names.keySet()));
         }
         return this.getFactory(name);
     }
@@ -434,10 +434,11 @@ public final class JmriScriptEngineManager {
      * @param mimeType the script mimeType
      * @return a ScriptEngineFactory or null
      */
-    public ScriptEngineFactory getFactoryByMimeType(String mimeType) {
+    public ScriptEngineFactory getFactoryByMimeType(String mimeType) throws ScriptException {
         String name = this.names.get(mimeType);
         if (name == null) {
-            log.error("Could not find script engine factory name for mime type \"{}\"", mimeType);
+            log.error("Could not find script engine factory for mime type \"{}\", expected one of {}", mimeType, String.join(",", names.keySet()));
+            throw new ScriptException("Could not find script engine for mime type \""+mimeType+"\" expected "+String.join(",", names.keySet()));
         }
         return this.getFactory(name);
     }
@@ -448,10 +449,11 @@ public final class JmriScriptEngineManager {
      * @param shortName the short name for the factory
      * @return a ScriptEngineFactory or null
      */
-    public ScriptEngineFactory getFactoryByName(String shortName) {
+    public ScriptEngineFactory getFactoryByName(String shortName) throws ScriptException {
         String name = this.names.get(shortName);
         if (name == null) {
-            log.error("Could not find script engine factory name for short name \"{}\"", shortName);
+            log.error("Could not find script engine factory for name \"{}\", expected one of {}", shortName, String.join(",", names.keySet()));
+            throw new ScriptException("Could not find script engine for short name \""+shortName+"\" expected "+String.join(",", names.keySet()));
         }
         return this.getFactory(name);
     }
@@ -509,7 +511,7 @@ public final class JmriScriptEngineManager {
                 log.debug("create interpreter");
                 ScriptEngine python = this.manager.getEngineByName(PYTHON);
                 python.setContext(this.context);
-                is = FileUtil.findInputStream(jythonDefaults, new String[]{
+                is = FileUtil.findInputStream(JYTHON_DEFAULTS, new String[]{
                     FileUtil.getUserFilesPath(),
                     FileUtil.getPreferencesPath()
                 });

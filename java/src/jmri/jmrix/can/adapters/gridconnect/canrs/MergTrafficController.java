@@ -1,4 +1,3 @@
-// MergTrafficController.java
 package jmri.jmrix.can.adapters.gridconnect.canrs;
 
 import jmri.jmrix.AbstractMRMessage;
@@ -11,8 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Traffic controller for the MERG varient of the GridConnect protocol.
- * <P>
+ * Traffic controller for the MERG variant of the GridConnect protocol.
+ * <p>
  * MERG CAN-RS/CAN-USB uses messages transmitted as an ASCII string of up to 24
  * characters of the form: :ShhhhNd0d1d2d3d4d5d6d7; The S indicates a standard
  * CAN frame hhhh is the two byte header (11 useful bits), left justified on
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * to) 8 data bytes
  *
  * @author Andrew Crosland Copyright (C) 2008
- * @version	$Revision$
  */
 public class MergTrafficController extends GcTrafficController {
 
@@ -30,6 +28,7 @@ public class MergTrafficController extends GcTrafficController {
     }
 
     // New message for hardware protocol
+    @Override
     protected AbstractMRMessage newMessage() {
         log.debug("New MergMessage created");
         MergMessage msg = new MergMessage();
@@ -39,6 +38,7 @@ public class MergTrafficController extends GcTrafficController {
     /**
      * Make a CanReply from a MergReply reply
      */
+    @Override
     public CanReply decodeFromHardware(AbstractMRReply m) {
         log.debug("Decoding from hardware");
         MergReply gc = (MergReply) m;
@@ -49,6 +49,7 @@ public class MergTrafficController extends GcTrafficController {
     /**
      * Encode a CanMessage for the hardware
      */
+    @Override
     public AbstractMRMessage encodeForHardware(CanMessage m) {
         //log.debug("Encoding for hardware");
         MergMessage ret = new MergMessage(m);
@@ -57,14 +58,13 @@ public class MergTrafficController extends GcTrafficController {
     }
 
     // New reply from hardware
+    @Override
     protected AbstractMRReply newReply() {
         log.debug("New MergReply created");
         MergReply reply = new MergReply();
         return reply;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MergTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MergTrafficController.class);
+
 }
-
-
-/* @(#)MergTrafficController.java */

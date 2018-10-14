@@ -1,24 +1,29 @@
 package jmri.jmris.srcp.parser;
 
 import java.io.StringReader;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 
 /**
  * Tests for the {@link jmri.jmris.srcp.parser.SRCPVisitor} class.
  *
- * @author Paul Bender
- * @version $Revision: 21215 $
+ * @author Paul Bender Copyright (C) 2012,2017
+ * 
  */
-public class SRCPVisitorTest extends TestCase {
+public class SRCPVisitorTest {
 
+    @Test
     public void testCTor() {
         // test the constructor.
         SRCPVisitor v = new SRCPVisitor();
-        assertNotNull(v);
+        Assert.assertNotNull(v);
     }
 
+    @Test
     public void testGetServer() {
         // test that an inbound "GET 0 SERVER" returns the
         // expected response.
@@ -29,13 +34,14 @@ public class SRCPVisitorTest extends TestCase {
         try {
             SimpleNode e = p.command();
             e.jjtAccept(v, null);
-            assertEquals(v.getOutputString(), "100 INFO 0 SERVER RUNNING");
+            Assert.assertEquals(v.getOutputString(), "100 INFO 0 SERVER RUNNING");
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
+    @Test
     public void testResetServer() {
         // test that an inbound "RESET 0 SERVER" returns the
         // expected response.
@@ -46,13 +52,14 @@ public class SRCPVisitorTest extends TestCase {
         try {
             SimpleNode e = p.command();
             e.jjtAccept(v, null);
-            assertEquals(v.getOutputString(), "413 ERROR temporarily prohibited");
+            Assert.assertEquals(v.getOutputString(), "413 ERROR temporarily prohibited");
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
+    @Test
     public void testTERMServer() {
         // test that an inbound "TERM 0 SERVER" returns the
         // expected response.
@@ -63,33 +70,24 @@ public class SRCPVisitorTest extends TestCase {
         try {
             SimpleNode e = p.command();
             e.jjtAccept(v, null);
-            assertEquals(v.getOutputString(), "200 OK");
+            Assert.assertEquals(v.getOutputString(), "200 OK");
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
-        assertFalse(exceptionOccured);
+        Assert.assertFalse(exceptionOccured);
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SRCPVisitorTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SRCPVisitorTest.class);
-        return suite;
-
-    }
 
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

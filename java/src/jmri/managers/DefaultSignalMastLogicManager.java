@@ -2,11 +2,8 @@ package jmri.managers;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
-import jmri.ConfigureManager;
+import java.util.*;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
@@ -24,22 +21,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * Default implementation of a SignalMastLogicManager.
+ * @see jmri.SignalMastLogicManager
  *
  * @author	Kevin Dickerson Copyright (C) 2011
  */
-public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManager, java.beans.VetoableChangeListener {
+public class DefaultSignalMastLogicManager
+        extends AbstractManager<SignalMastLogic>
+        implements jmri.SignalMastLogicManager, java.beans.VetoableChangeListener {
 
     public DefaultSignalMastLogicManager() {
         registerSelf();
@@ -49,6 +38,8 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         //_speedMap = jmri.InstanceManager.getDefault(SignalSpeedMap.class);
     }
 
+    /** {@inheritDoc} */
+    @Override
     public int getXMLOrder() {
         return Manager.SIGNALMASTLOGICS;
     }
@@ -59,35 +50,38 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         return _speedMap;
     }
 
+    /** {@inheritDoc} */
+    @Override
     public SignalMastLogic getSignalMastLogic(SignalMast source) {
-        for (int i = 0; i < signalMastLogic.size(); i++) {
-            if (signalMastLogic.get(i).getSourceMast() == source) {
-                return signalMastLogic.get(i);
+        for (SignalMastLogic signalMastLogic : _beans) {
+            if (signalMastLogic.getSourceMast() == source) {
+                return signalMastLogic;
             }
         }
         return null;
     }
 
+    /** {@inheritDoc} */
+    @Override
     public SignalMastLogic newSignalMastLogic(SignalMast source) {
-        for (int i = 0; i < signalMastLogic.size(); i++) {
-            if (signalMastLogic.get(i).getSourceMast() == source) {
-                return signalMastLogic.get(i);
+        for (SignalMastLogic signalMastLogic : _beans) {
+            if (signalMastLogic.getSourceMast() == source) {
+                return signalMastLogic;
             }
         }
         SignalMastLogic logic = new DefaultSignalMastLogic(source);
-        signalMastLogic.add(logic);
-        firePropertyChange("length", null, Integer.valueOf(signalMastLogic.size()));
+        _beans.add(logic);
+        firePropertyChange("length", null, _beans.size());
         return logic;
     }
 
-    ArrayList<SignalMastLogic> signalMastLogic = new ArrayList<SignalMastLogic>();
-
-    //Hashtable<SignalMast, ArrayList<SignalMastLogic>> destLocationList = new Hashtable<SignalMast, ArrayList<SignalMastLogic>>();
+    /** {@inheritDoc} */
+    @Override
     public void replaceSignalMast(SignalMast oldMast, SignalMast newMast) {
         if (oldMast == null || newMast == null) {
             return;
         }
-        for (SignalMastLogic source : signalMastLogic) {
+        for (SignalMastLogic source : _beans) {
             if (source.getSourceMast() == oldMast) {
                 source.replaceSourceMast(oldMast, newMast);
             } else {
@@ -96,14 +90,16 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         }
     }
 
+    /** {@inheritDoc} */
+    @Override
     public void swapSignalMasts(SignalMast mastA, SignalMast mastB) {
         if (mastA == null || mastB == null) {
             return;
         }
-        ArrayList<SignalMastLogic> mastALogicList = getLogicsByDestination(mastA);
+        List<SignalMastLogic> mastALogicList = getLogicsByDestination(mastA);
         SignalMastLogic mastALogicSource = getSignalMastLogic(mastA);
 
-        ArrayList<SignalMastLogic> mastBLogicList = getLogicsByDestination(mastB);
+        List<SignalMastLogic> mastBLogicList = getLogicsByDestination(mastB);
         SignalMastLogic mastBLogicSource = getSignalMastLogic(mastB);
 
         if (mastALogicSource != null) {
@@ -122,12 +118,11 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
 
     }
 
-    /**
-     * Gather a list of all the signal mast logics, by destination signal mast
-     */
-    public ArrayList<SignalMastLogic> getLogicsByDestination(SignalMast destination) {
-        ArrayList<SignalMastLogic> list = new ArrayList<SignalMastLogic>();
-        for (SignalMastLogic source : signalMastLogic) {
+    /** {@inheritDoc} */
+    @Override
+    public List<SignalMastLogic> getLogicsByDestination(SignalMast destination) {
+        List<SignalMastLogic> list = new ArrayList<>();
+        for (SignalMastLogic source : _beans) {
             if (source.isDestinationValid(destination)) {
                 list.add(source);
             }
@@ -135,19 +130,18 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         return list;
     }
 
-    /**
-     * Returns an arraylist of signalmastlogic
-     *
-     * @return An ArrayList of SignalMast logics
-     */
-    public ArrayList<SignalMastLogic> getSignalMastLogicList() {
-        return signalMastLogic;
+    /** {@inheritDoc} */
+    @Override
+    public List<SignalMastLogic> getSignalMastLogicList() {
+        return new ArrayList<>(_beans);
     }
 
+    /** {@inheritDoc} */
+    @Override
     public boolean isSignalMastUsed(SignalMast mast) {
         if (getSignalMastLogic(mast) != null) {
-            /*Although the we might have it registered as a source, it may not have
-             any valid destination, so therefore it can be returned as not in use */
+            /* Although we might have it registered as a source, it may not have
+             any valid destination, so therefore it can be returned as not in use. */
             if (getSignalMastLogic(mast).getDestinationList().size() != 0) {
                 return true;
             }
@@ -158,21 +152,16 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         return false;
     }
 
-    /**
-     * Remove a destination mast from the signalmast logic
-     *
-     * @param sml  The signalmast logic of the source signal
-     * @param dest The destination mast
-     */
+    /** {@inheritDoc} */
+    @Override
     public void removeSignalMastLogic(SignalMastLogic sml, SignalMast dest) {
         if (sml.removeDestination(dest)) {
             removeSignalMastLogic(sml);
         }
     }
 
-    /**
-     * Completely remove the signalmast logic.
-     */
+    /** {@inheritDoc} */
+    @Override
     public void removeSignalMastLogic(SignalMastLogic sml) {
         if (sml == null) {
             return;
@@ -180,18 +169,17 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         //Need to provide a method to delete and dispose.
         sml.dispose();
 
-        signalMastLogic.remove(sml);
-        firePropertyChange("length", null, Integer.valueOf(signalMastLogic.size()));
+        _beans.remove(sml);
+        firePropertyChange("length", null, Integer.valueOf(_beans.size()));
     }
 
-    /*
-     * Procedure for completely remove a signalmast out of all the logics
-     */
+    /** {@inheritDoc} */
+    @Override
     public void removeSignalMast(SignalMast mast) {
         if (mast == null) {
             return;
         }
-        for (SignalMastLogic source : signalMastLogic) {
+        for (SignalMastLogic source : _beans) {
             if (source.isDestinationValid(mast)) {
                 source.removeDestination(mast);
             }
@@ -199,6 +187,13 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         removeSignalMastLogic(getSignalMastLogic(mast));
     }
 
+    /**
+     * Disable the use of info from the Layout Editor Panels to configure
+     * a Signal Mast Logic for a specific Signal Mast.
+     *
+     * @param mast The Signal Mast for which LE info is to be disabled
+     */
+    @Override
     public void disableLayoutEditorUse(SignalMast mast) {
         SignalMastLogic source = getSignalMastLogic(mast);
         if (source != null) {
@@ -208,133 +203,61 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
             try {
                 sml.useLayoutEditor(false, mast);
             } catch (jmri.JmriException e) {
-                log.error("Error occured while trying to disable layout editor use " + e);
+                log.error("Error occurred while trying to disable layout editor use " + e);
             }
         }
     }
 
-    /**
-     * By default, register this manager to store as configuration information.
-     * Override to change that.
-     *
-     */
-    protected void registerSelf() {
-        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-        if (cm != null) {
-            cm.registerConfig(this, jmri.Manager.SIGNALMASTLOGICS);
-        }
-    }
-
-    // abstract methods to be extended by subclasses
-    // to free resources when no longer used
-    public void dispose() {
-        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-        if (cm != null) {
-            cm.deregister(this);
-        }
-        signalMastLogic.clear();
-    }
+    // Abstract methods to be extended by subclasses:
 
     /**
-     * Used to initialise all the signalmast logics. primarily used after
-     * loading.
+     * Initialise all the Signal Mast Logics. Primarily used after
+     * loading a configuration.
      */
+    @Override
     public void initialise() {
-        for (int i = 0; i < signalMastLogic.size(); i++) {
-            signalMastLogic.get(i).initialise();
+        for (SignalMastLogic signalMastLogic : _beans) {
+            signalMastLogic.initialise();
         }
     }
 
-    public NamedBean getBeanBySystemName(String systemName) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public NamedBean getBeanByUserName(String userName) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public NamedBean getNamedBean(String name) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
+    /** {@inheritDoc} */
+    @Override
     public String getSystemPrefix() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /** {@inheritDoc} */
+    @Override
     public char typeLetter() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public String makeSystemName(String s) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public String[] getSystemNameArray() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public List<String> getSystemNameList() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public List<NamedBean> getNamedBeanList() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
-    protected void firePropertyChange(String p, Object old, Object n) {
-        pcs.firePropertyChange(p, old, n);
-    }
-
     java.beans.VetoableChangeSupport vcs = new java.beans.VetoableChangeSupport(this);
 
-    public synchronized void addVetoableChangeListener(java.beans.VetoableChangeListener l) {
-        vcs.addVetoableChangeListener(l);
-    }
+    int signalLogicDelay = 500;
 
-    public synchronized void removeVetoableChangeListener(java.beans.VetoableChangeListener l) {
-        vcs.removeVetoableChangeListener(l);
-    }
-
-    public void deleteBean(NamedBean bean, String property) throws java.beans.PropertyVetoException {
-
-    }
-
-    public void register(NamedBean n) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    public void deregister(NamedBean n) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    long signalLogicDelay = 500L;
-
-    public long getSignalLogicDelay() {
+    /** {@inheritDoc} */
+    @Override
+    public int getSignalLogicDelay() {
         return signalLogicDelay;
     }
 
-    public void setSignalLogicDelay(long l) {
+    /** {@inheritDoc} */
+    @Override
+    public void setSignalLogicDelay(int l) {
         signalLogicDelay = l;
     }
 
     protected PropertyChangeListener propertyBlockManagerListener = new PropertyChangeListener() {
+        @Override
         public void propertyChange(PropertyChangeEvent e) {
             if (e.getPropertyName().equals("topology")) {
                 //boolean newValue = new Boolean.parseBoolean(String.valueOf(e.getNewValue()));
                 boolean newValue = (Boolean) e.getNewValue();
                 if (newValue) {
-                    for (int i = 0; i < signalMastLogic.size(); i++) {
-                        signalMastLogic.get(i).setupLayoutEditorDetails();
+                    for (SignalMastLogic signalMastLogic : _beans) {
+                        signalMastLogic.setupLayoutEditorDetails();
                     }
                     if (runWhenStablised) {
                         try {
@@ -351,23 +274,24 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     boolean runWhenStablised = false;
 
     /**
-     * Discover valid destination signalmasts for a given source signal on a
-     * given layout editor panel.
+     * Discover valid destination Signal Masts for a given source Signal Mast on a
+     * given Layout Editor Panel.
      *
      * @param source Source SignalMast
      * @param layout Layout Editor panel to check.
      */
+    @Override
     public void discoverSignallingDest(SignalMast source, LayoutEditor layout) throws JmriException {
         firePropertyChange("autoSignalMastGenerateStart", null, source.getDisplayName());
 
-        Hashtable<NamedBean, List<NamedBean>> validPaths = new Hashtable<NamedBean, List<NamedBean>>();
+        Hashtable<NamedBean, List<NamedBean>> validPaths = new Hashtable<>();
         jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
         if (!lbm.isAdvancedRoutingEnabled()) {
             //log.debug("advanced routing not enabled");
             throw new JmriException("advanced routing not enabled");
         }
         if (!lbm.routingStablised()) {
-            throw new JmriException("routing not stablised");
+            throw new JmriException("routing not stabilised");
         }
         try {
             validPaths.put(source, lbm.getLayoutBlockConnectivityTools().discoverPairDest(source, layout, SignalMast.class, LayoutBlockConnectivityTools.MASTTOMAST));
@@ -407,9 +331,10 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     }
 
     /**
-     * Discover all possible valid source and destination signalmasts past pairs
-     * on all layout editor panels.
+     * Discover all possible valid source + destination signal mast pairs
+     * on all Layout Editor Panels.
      */
+    @Override
     public void automaticallyDiscoverSignallingPairs() throws JmriException {
         runWhenStablised = false;
         jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
@@ -420,10 +345,10 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
             runWhenStablised = true;
             return;
         }
-        Hashtable<NamedBean, ArrayList<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(null, SignalMast.class, LayoutBlockConnectivityTools.MASTTOMAST);
+        Hashtable<NamedBean, List<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(null, SignalMast.class, LayoutBlockConnectivityTools.MASTTOMAST);
         Enumeration<NamedBean> en = validPaths.keys();
         firePropertyChange("autoGenerateUpdate", null, ("Found " + validPaths.size() + " masts as sources for logic"));
-        for (NamedBean nb : InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBeanList()) {
+        for (NamedBean nb : InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBeanSet()) {
             nb.removeProperty("intermediateSignal");
         }
         while (en.hasMoreElements()) {
@@ -432,7 +357,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
             if (sml == null) {
                 sml = newSignalMastLogic(key);
             }
-            ArrayList<NamedBean> validDestMast = validPaths.get(key);
+            List<NamedBean> validDestMast = validPaths.get(key);
             for (int i = 0; i < validDestMast.size(); i++) {
                 if (!sml.isDestinationValid((SignalMast) validDestMast.get(i))) {
                     try {
@@ -453,10 +378,14 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         firePropertyChange("autoGenerateComplete", null, null);
     }
 
+    /**
+     * Populate Sections of type SIGNALMASTLOGIC used with Layout Editor with Signal Mast attributes
+     * as stored in Signal Mast Logic.
+     */
     public void generateSection() {
         SectionManager sm = InstanceManager.getDefault(jmri.SectionManager.class);
-        for (NamedBean nb : sm.getNamedBeanList()) {
-            if (((Section) nb).getSectionType() == Section.SIGNALMASTLOGIC) {
+        for (Section nb : sm.getNamedBeanList()) {
+            if (nb.getSectionType() == Section.SIGNALMASTLOGIC) {
                 nb.removeProperty("intermediateSection");
             }
             nb.removeProperty("forwardMast");
@@ -513,44 +442,11 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         }
     }
 
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
-            StringBuilder message = new StringBuilder();
-            boolean found = false;
-            message.append(Bundle.getMessage("VetoFoundInSignalMastLogic"));
-            message.append("<ul>");
-            for (int i = 0; i < signalMastLogic.size(); i++) {
-                try {
-                    signalMastLogic.get(i).vetoableChange(evt);
-                } catch (java.beans.PropertyVetoException e) {
-                    if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { //IN18N
-                        throw e;
-                    }
-                    found = true;
-
-                    message.append(e.getMessage());
-                    message.append("<br>");
-
-                }
-            }
-            message.append("</ul>");
-            if (found) {
-                throw new java.beans.PropertyVetoException(message.toString(), evt);
-            }
-        } else {
-            for (SignalMastLogic sml : signalMastLogic) {
-                try {
-                    sml.vetoableChange(evt);
-                } catch (java.beans.PropertyVetoException e) {
-                    throw e;
-                }
-            }
-        }
-    }
-
+    /** {@inheritDoc} */
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameSignalMastLogic");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManager.class);
 }

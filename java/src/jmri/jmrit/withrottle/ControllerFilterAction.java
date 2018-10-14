@@ -26,6 +26,7 @@ public class ControllerFilterAction extends AbstractAction {
         return "jmri.jmrit.withrottle.ControllerFilterFrame";
     }
 
+    @Override
     public void actionPerformed(ActionEvent ae) {
         JmriJFrame frame = new ControllerFilterFrame();
         try {
@@ -37,6 +38,6 @@ public class ControllerFilterAction extends AbstractAction {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ControllerFilterAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ControllerFilterAction.class);
 
 }

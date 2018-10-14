@@ -1,6 +1,8 @@
 package jmri.jmrix.zimo.swing;
 
 import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JPanel extension to handle automatic creation of window title and help
@@ -19,18 +21,27 @@ abstract public class Mx1Panel extends jmri.util.swing.JmriPanel implements Mx1P
      */
     protected Mx1SystemConnectionMemo memo;
 
-    public void initComponents(Mx1SystemConnectionMemo memo) throws Exception {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void initComponents(Mx1SystemConnectionMemo memo) {
         this.memo = memo;
     }
 
-    public void initContext(Object context) throws Exception {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void initContext(Object context) {
         if (context instanceof Mx1SystemConnectionMemo) {
             try {
                 initComponents((Mx1SystemConnectionMemo) context);
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error("Unable to initialize panel", e);
             }
         }
     }
 
+    private final static Logger log = LoggerFactory.getLogger(Mx1Panel.class);
 }

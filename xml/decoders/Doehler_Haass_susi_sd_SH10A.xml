@@ -12,22 +12,25 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version version="6" author="Ronald Kuhn, ronald@wirkuhns.de" lastUpdated="2016-12-14"/>
+  <!-- Added fw version 1.08+ and 1.09+
+    -->
   <version version="5" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20151229"/>
   <!-- Added fw version 1.07+
-	-->
+    -->
   <version version="4" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20151101"/>
   <!-- Added fw version 1.06+
-	   Merged some CV definitions with the equivalent from the Combo sound decoders (removed duplicate files)
-	-->
+       Merged some CV definitions with the equivalent from the Combo sound decoders (removed duplicate files)
+    -->
   <version version="3" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20150306"/>
   <!-- Added fw version 1.05+
-	-->
+    -->
   <version version="2" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20141013"/>
   <!-- Added fw version 1.04+
-	-->
+    -->
   <version version="1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20140603"/>
   <!-- Sound module definition for firmwares 1.00, 1.01, 1.02 and 1.03.
-	-->
+    -->
   <decoder>
     <family name="SUSI sound modules" mfg="Doehler und Haass">
       <model model="SH10A (firmware 1.00+)" numOuts="0" numFns="0" productID="SH10A_1.00" comment="SH10A with initial firmware 1.00 or later" maxInputVolts="30V" connector="SUSI">
@@ -48,13 +51,23 @@
       <model model="SH10A (firmware 1.05+)" numOuts="0" numFns="0" productID="SH10A_1.05" comment="SH10A with firmware 1.05 or later" maxInputVolts="30V" connector="SUSI">
         <size length="20" width="12" height="1.9" units="mm"/>
       </model>
-	  <model model="SH10A (firmware 1.06+)" numOuts="0" numFns="0" productID="SH10A_1.06" comment="SH10A with firmware 1.06 or later" maxInputVolts="30V" connector="SUSI">
+      <model model="SH10A (firmware 1.06+)" numOuts="0" numFns="0" productID="SH10A_1.06" comment="SH10A with firmware 1.06 or later" maxInputVolts="30V" connector="SUSI">
         <size length="20" width="12" height="1.9" units="mm"/>
       </model>
-	  <model model="SH10A (firmware 1.07+)" numOuts="2" numFns="30" productID="SH10A_1.07" comment="SH10A with firmware 1.07 or later" maxInputVolts="30V" connector="SUSI">
-		<output name="1" label="AUX|1" maxcurrent="20mA"/>
-		<output name="2" label="AUX|2" maxcurrent="20mA"/>
-		<size length="20" width="12" height="1.9" units="mm"/>
+      <model model="SH10A (firmware 1.07+)" numOuts="2" numFns="30" productID="SH10A_1.07" comment="SH10A with firmware 1.07 or later" maxInputVolts="30V" connector="SUSI">
+        <output name="1" label="AUX|1" maxcurrent="20mA"/>
+        <output name="2" label="AUX|2" maxcurrent="20mA"/>
+        <size length="20" width="12" height="1.9" units="mm"/>
+      </model>
+      <model model="SH10A (firmware 1.08+)" numOuts="2" numFns="30" productID="SH10A_1.08" comment="SH10A with firmware 1.08 or later" maxInputVolts="30V" connector="SUSI">
+        <output name="1" label="AUX|1" maxcurrent="20mA"/>
+        <output name="2" label="AUX|2" maxcurrent="20mA"/>
+        <size length="20" width="12" height="1.9" units="mm"/>
+      </model>
+      <model model="SH10A (firmware 1.09+)" numOuts="2" numFns="30" productID="SH10A_1.09" comment="SH10A with firmware 1.09 or later" maxInputVolts="30V" connector="SUSI">
+        <output name="1" label="AUX|1" maxcurrent="20mA"/>
+        <output name="2" label="AUX|2" maxcurrent="20mA"/>
+        <size length="20" width="12" height="1.9" units="mm"/>
       </model>
     </family>
     <programming direct="yes" paged="no" register="no" ops="yes"/>
@@ -71,20 +84,21 @@
       <!-- CVs added in fw 1.01  -->
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv360-362_960-962.xml"/>
       <!-- CVs added in fw 1.01, 1.02, 1.03, 1.04  -->	
-	  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv364-373_964-973.xml"/>
-	  <!-- CVs added in fw 1.02  -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv364-373_964-973.xml"/>
+      <!-- CVs added in fw 1.02  -->
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv350_950.xml"/>
       <!-- CVs added in fw 1.05  -->
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv349_949.xml"/>
-	  <!-- CVs added in fw 1.06  -->
-	  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv374-377_974-977.xml"/>
-	  <!-- CVs added in fw 1.07  -->
-	  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_cv908-909.xml"/>
+      <!-- CVs added in fw 1.06  -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv374-377_974-977.xml"/>
+      <!-- CVs added in fw 1.07  -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_cv908-909.xml"/>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="900" default="101">
          <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
           <label xml:lang="fr">Reset - retour aux valeurs d'usine pour tous les CVs</label>
+          <label xml:lang="ca">Reset a valors de fàbrica</label>
       </factReset>
     </resets>
   </decoder>

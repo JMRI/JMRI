@@ -15,14 +15,15 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
+ * @author   Mark Underwood Copyright (C) 2011
+ * 
  */
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.swing.JmriPanel;
@@ -53,10 +54,12 @@ public class VSDOptionPanel extends JmriPanel {
     public void init() {
     }
 
+    @Override
     public void initContext(Object context) {
         initComponents();
     }
 
+    @Override
     public void initComponents() {
 
         // Below is mostly just "filler" stuff until we implement the real thing
@@ -65,9 +68,10 @@ public class VSDOptionPanel extends JmriPanel {
         JLabel x = new JLabel();
         x.setText("Operations Train: ");
         this.add(x);
-        opsTrainComboBox = TrainManager.instance().getTrainComboBox();
+        opsTrainComboBox = InstanceManager.getDefault(TrainManager.class).getTrainComboBox();
         this.add(opsTrainComboBox);
         opsTrainComboBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 opsTrainSelectAction(e);
             }
@@ -93,12 +97,12 @@ public class VSDOptionPanel extends JmriPanel {
                 selected_train.removePropertyChangeListener(main_frame.getDecoder());
             }
             String opsTrain = opsTrainComboBox.getSelectedItem().toString();
-            if ((selected_train = TrainManager.instance().getTrainByName(opsTrain)) != null) {
+            if ((selected_train = InstanceManager.getDefault(TrainManager.class).getTrainByName(opsTrain)) != null) {
                 selected_train.addPropertyChangeListener(main_frame.getDecoder());
             }
         }
     }
 
     // Unused as yet.  Commented out to hide the compiler warning.
-    //private static final Logger log = LoggerFactory.getLogger(VSDOptionPanel.class.getName());
+    //private static final Logger log = LoggerFactory.getLogger(VSDOptionPanel.class);
 }

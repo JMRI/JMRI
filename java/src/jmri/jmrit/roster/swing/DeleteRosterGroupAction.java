@@ -24,7 +24,7 @@ import jmri.util.swing.WindowInterface;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Kevin Dickerson Copyright (C) 2009
  */
 public class DeleteRosterGroupAction extends JmriAbstractAction {
 
@@ -65,8 +65,8 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
         // so we have to check for null again.
         if (group == null) {
             group = (String) JOptionPane.showInputDialog(_who,
-                    "<html><b>Delete roster group</b><br>Roster entries in the group are not deleted.</html>",
-                    "Delete Roster Group",
+                    Bundle.getMessage("DeleteRosterGroupDialog"),
+                    Bundle.getMessage("DeleteRosterGroupTitle", ""),
                     JOptionPane.INFORMATION_MESSAGE,
                     null,
                     Roster.getDefault().getRosterGroupList().toArray(),
@@ -93,13 +93,12 @@ public class DeleteRosterGroupAction extends JmriAbstractAction {
      * @return true if user says to continue
      */
     boolean userOK(String entry) {
-        String[] titles = {"Delete", "Cancel"};
-        // TODO: I18N
+        String[] titles = {Bundle.getMessage("ButtonDelete"), Bundle.getMessage("ButtonCancel")};
         // TODO: replace "Are you sure..." string with JPanel containing string
         //       and checkbox silencing this message in the future
         return (JOptionPane.YES_OPTION == JOptionPane.showOptionDialog(_who,
-                "Are you sure you want to delete roster group \"" + entry + "\"?",
-                "Delete Roster Group \"" + entry + "\"",
+                Bundle.getMessage("DeleteRosterGroupSure", entry),
+                Bundle.getMessage("DeleteRosterGroupTitle", entry),
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null,

@@ -146,6 +146,6 @@ public class Em18RfidProtocol extends RfidProtocol {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(Em18RfidProtocol.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(Em18RfidProtocol.class);
 
 }

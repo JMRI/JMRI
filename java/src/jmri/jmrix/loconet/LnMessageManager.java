@@ -1,17 +1,15 @@
-// LnMessageManager.java
 package jmri.jmrix.loconet;
 
 /**
  * Provide access to throttle-messaging on a LocoNet.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <P>
- * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
+ *
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class LnMessageManager implements LocoNetListener {
 
@@ -27,7 +25,7 @@ public class LnMessageManager implements LocoNetListener {
 
     public void sendMessage(int id, String text) {
         LocoNetMessage l = new LocoNetMessage(16);
-        String localText = text + "        "; // insure at least 8 characters
+        String localText = text + "        "; // ensure at least 8 characters
         l.setOpCode(LnConstants.OPC_PEER_XFER);
         l.setElement(1, 0x10);
         l.setElement(2, 0x7F);   // throttle message
@@ -47,7 +45,7 @@ public class LnMessageManager implements LocoNetListener {
     }
 
     /**
-     * Free resources when no longer used
+     * Free resources when no longer used.
      */
     public void dispose() {
         tc.removeLocoNetListener(~0, this);
@@ -57,14 +55,13 @@ public class LnMessageManager implements LocoNetListener {
     LnTrafficController tc = null;
 
     /**
-     * Listen for status changes from LocoNet
-     * <P>
+     * Listen for status changes from LocoNet.
+     * <p>
      * This doesn't do anything now. Eventually, it will handle the user
      * response.
      */
+    @Override
     public void message(LocoNetMessage m) {
     }
+
 }
-
-
-/* @(#)LnMessageManager.java */

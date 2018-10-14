@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="td@teamdigital1.com" version="2.0" lastUpdated="20140407"/>
-  <!-- Version 1 inital release -->
+  <!-- Version 1 initial release -->
   <!-- Version 2 4/7/14 release add turnout control option-->
   <!-- Version 2.1 10/10/14 release added aspect memory option-->
   <decoder>

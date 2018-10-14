@@ -11,20 +11,20 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * The JMRI main pane for configuring DCC decoders
+ * The JMRI main pane for configuring DCC decoders.
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
- * @author	Bob Jacobsen Copyright 2003, 2014
+ *
+ * @author Bob Jacobsen Copyright 2003, 2014
  */
 public class DecoderProPane extends apps.AppsLaunchPane {
 
@@ -32,23 +32,28 @@ public class DecoderProPane extends apps.AppsLaunchPane {
         super();
     }
 
+    @Override
     protected String windowHelpID() {
         return "package.apps.DecoderPro.DecoderPro";
     }
 
+    @Override
     protected String logo() {
-        return "resources/DecoderPro.gif";
+        return "resources/decoderpro.gif";
     }
 
+    @Override
     protected String line1() {
         return MessageFormat.format(Bundle.getMessage("DecoderProVersionCredit"),
                 new Object[]{jmri.Version.name()});
     }
 
+    @Override
     protected String line2() {
         return "http://jmri.org/DecoderPro ";
     }
 
+    @Override
     protected JPanel statusPanel() {
         JPanel j = new JPanel();
         j.setLayout(new BoxLayout(j, BoxLayout.Y_AXIS));
@@ -58,6 +63,7 @@ public class DecoderProPane extends apps.AppsLaunchPane {
         Action serviceprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getMessage("DpButtonUseProgrammingTrack"));
         Action opsprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getMessage("DpButtonProgramOnMainTrack"));
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 Apps.handleQuit();
             }
@@ -67,8 +73,8 @@ public class DecoderProPane extends apps.AppsLaunchPane {
         b1.addActionListener(serviceprog);
         b1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(b1);
-        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) == null
-                || !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).isGlobalProgrammerAvailable()) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.GlobalProgrammerManager.class) == null
+                || !jmri.InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).isGlobalProgrammerAvailable()) {
             b1.setEnabled(false);
             b1.setToolTipText(Bundle.getMessage("MsgServiceButtonDisabled"));
         }
@@ -76,8 +82,8 @@ public class DecoderProPane extends apps.AppsLaunchPane {
         m1.addActionListener(opsprog);
         m1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(m1);
-        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) == null
-                || !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).isAddressedModePossible()) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.AddressedProgrammerManager.class) == null
+                || !jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).isAddressedModePossible()) {
             m1.setEnabled(false);
             m1.setToolTipText(Bundle.getMessage("MsgOpsButtonDisabled"));
         }
@@ -96,4 +102,5 @@ public class DecoderProPane extends apps.AppsLaunchPane {
 
         return j;
     }
+
 }

@@ -49,13 +49,13 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     private int fadeInTime = 1000;
     private int fadeOutTime = 1000;
     private float fadeGain = 1.0f;
-    private float dopplerFactor = 1.0f;
     private long timeOfLastFadeCheck = 0;
     private long timeOfLastPositionCheck = 0;
     private int fading = Audio.FADE_NONE;
     private boolean bound = false;
     private boolean positionRelative = false;
     private boolean queued = false;
+    private long offset = 0;
     private AudioBuffer buffer;
 //    private AudioSourceDelayThread asdt = null;
     private LinkedList<AudioBuffer> pendingBufferQueue = new LinkedList<>();
@@ -81,6 +81,10 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
      */
     public AbstractAudioSource(String systemName, String userName) {
         super(systemName, userName);
+    }
+
+    public boolean isAudioAlive() {
+        return ((AudioThread) activeAudioFactory.getCommandThread()).alive();
     }
 
     @Override
@@ -165,7 +169,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         if (!queued) {
             AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
             Audio a = am.getBySystemName(bufferSystemName);
-            if (a.getSubType() == Audio.BUFFER) {
+            if (a != null && a.getSubType() == Audio.BUFFER) {
                 setAssignedBuffer((AudioBuffer) a);
             } else {
                 log.warn("Attempt to assign incorrect object type to buffer - AudioBuffer expected.");
@@ -340,6 +344,25 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     }
 
     @Override
+    public void setOffset(long offset) {
+        if (offset < 0) {
+            offset = 0;
+        }
+        if (offset > this.buffer.getLength()) {
+            offset = this.buffer.getLength();
+        }
+        this.offset = offset;
+        if (log.isDebugEnabled()) {
+            log.debug("Set byte offset of Source " + this.getSystemName() + "to " + offset);
+        }
+    }
+
+    @Override
+    public long getOffset() {
+        return this.offset;
+    }
+
+    @Override
     public void setMaximumDistance(float maximumDistance) {
         if (maximumDistance < 0.0f) {
             maximumDistance = 0.0f;
@@ -493,16 +516,6 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     @Override
     public int getFadeOut() {
         return this.fadeOutTime;
-    }
-
-    @Override
-    public void setDopplerFactor(float dopplerFactor) {
-        this.dopplerFactor = dopplerFactor;
-    }
-
-    @Override
-    public float getDopplerFactor() {
-        return this.dopplerFactor;
     }
 
     /**
@@ -819,6 +832,10 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         return this.fading;
     }
 
+    // note that this doesn't properly implement the 
+    // contract in {@link NamedBean.toString()}, 
+    // which means things like tables and persistance 
+    // might not behave properly.
     @Override
     public String toString() {
         return "Pos: " + this.getPosition().toString()
@@ -829,7 +846,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
                                 : "(min=" + this.getMinLoops() + " max=" + this.getMaxLoops() + ")"));
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AbstractAudioSource.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AbstractAudioSource.class);
 
     /**
      * An internal class used to create a new thread to monitor and maintain
@@ -848,7 +865,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         /**
          * Internal variable to hold the fade direction
          */
-        private int fadeDirection;
+        private final int fadeDirection;
 
         /**
          * Constructor that takes handle to looping AudioSource to monitor

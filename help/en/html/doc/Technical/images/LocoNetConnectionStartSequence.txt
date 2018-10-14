@@ -1,0 +1,77 @@
+@startuml
+participant configurexml
+activate configurexml
+participant "locobufferusb..ConnectionConfigXml\nextends AbstractSerialConnectionConfigXml\nextends AbstractConnectionConfigXml" as ConnectionConfigXml
+participant "locobufferusb.LocoBufferUsbAdapter\nextends LocoBufferAdapter\nimplements jmri.jmrix.SerialPortAdapter" as LocoBufferUsbAdapter
+participant "locobufferusb.ConnectionConfig\nextends AbstractSerialConnectionConfig\nextends AbstractConnectionConfig" as ConnectionConfig
+
+...
+
+configurexml -> ConnectionConfigXml: null ctor (via reflection)
+activate ConnectionConfigXml
+deactivate ConnectionConfigXml
+
+configurexml -> ConnectionConfigXml: load()
+activate ConnectionConfigXml
+
+ConnectionConfigXml -> ConnectionConfigXml: getInstance()
+activate ConnectionConfigXml
+
+ConnectionConfigXml -> LocoBufferUsbAdapter:  null ctor
+activate LocoBufferUsbAdapter
+deactivate LocoBufferUsbAdapter
+note left LocoBufferUsbAdapter: Assigned to "adapter" member
+note left LocoBufferUsbAdapter #FFAAAA: Which object is "adapter" in?
+deactivate ConnectionConfigXml
+
+ConnectionConfigXml -> ConnectionConfigXml : loadCommon()
+activate ConnectionConfigXml
+ConnectionConfigXml -> ConnectionConfigXml : loadOptions()
+activate ConnectionConfigXml
+ConnectionConfigXml -> LocoBufferUsbAdapter : setOptionState(name, value)
+activate LocoBufferUsbAdapter
+deactivate LocoBufferUsbAdapter
+deactivate ConnectionConfigXml
+deactivate ConnectionConfigXml
+
+ConnectionConfigXml -> ConnectionConfigXml : register()
+activate ConnectionConfigXml
+ConnectionConfigXml -> ConnectionConfigXml : register(new ConnectionConfig(adapter))
+activate ConnectionConfigXml
+ConnectionConfigXml -> ConnectionConfig : ctor
+activate ConnectionConfig
+deactivate ConnectionConfig
+ConnectionConfigXml -> ConnectionConfig: register()
+activate ConnectionConfig
+ConnectionConfig -> ConnectionConfig : setInstance()
+activate ConnectionConfig
+note right ConnectionConfig
+    If adapter member not already set,
+    create and store a new LocoBufferUsbAdapter
+end note
+note left ConnectionConfig #FFAAAA: Which object is "adapter" in?
+deactivate ConnectionConfig
+deactivate ConnectionConfig
+deactivate ConnectionConfigXml
+deactivate ConnectionConfigXml
+note right ConnectionConfigXml
+    At this point, we have a ConnectionConfig object 
+    configured and registered for later persistance
+    when e.g. the preferences are stored
+end note
+ConnectionConfigXml -> LocoBufferUsbAdapter: openPort()
+activate LocoBufferUsbAdapter
+LocoBufferUsbAdapter -> LocoBufferUsbAdapter : various calls
+LocoBufferUsbAdapter -> LocoBufferUsbAdapter
+deactivate LocoBufferUsbAdapter
+
+ConnectionConfigXml -> LocoBufferUsbAdapter : configure()
+activate LocoBufferUsbAdapter
+deactivate LocoBufferUsbAdapter
+
+deactivate ConnectionConfigXml
+
+deactivate configurexml
+
+@enduml
+

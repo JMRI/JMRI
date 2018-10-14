@@ -1,11 +1,3 @@
-/*
- * CbusEventFilterPanel.java
- *
- * Created on 16 August 2008, 15:15
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
 package jmri.jmrix.can.cbus.swing.console;
 
 import javax.swing.BorderFactory;
@@ -21,14 +13,10 @@ import jmri.jmrix.can.cbus.CbusConstants;
 
 /**
  *
- * @author Andrew
+ * @author Andrew Crosland
  */
 public class CbusEventFilterPanel extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5291143894239237548L;
     protected JCheckBox nnEnButton = new JCheckBox();
     protected JTextField nnLowField = new JTextField("", 5);
     protected JTextField nnHighField = new JTextField("", 5);
@@ -46,7 +34,7 @@ public class CbusEventFilterPanel extends JPanel {
     protected JButton disableButton = new JButton();
 
     /**
-     * Creates a new instance of CbusEventFilterPanel
+     * Create a new instance of CbusEventFilterPanel.
      */
     public CbusEventFilterPanel(CbusEventFilterFrame filterFrame, int index) {
         super();
@@ -58,7 +46,7 @@ public class CbusEventFilterPanel extends JPanel {
         super();
     }
 
-    public void initComponents(int index) throws Exception {
+    public void initComponents(int index) {
         // Panels will be added across
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
@@ -66,16 +54,16 @@ public class CbusEventFilterPanel extends JPanel {
         JPanel nnPane = new JPanel();
         nnPane.setLayout(new BoxLayout(nnPane, BoxLayout.X_AXIS));
         nnPane.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "Node Number"));
+                BorderFactory.createEtchedBorder(), Bundle.getMessage("NodeNumberTitle")));
 
         // define contents
-        nnEnButton.setText("Enable");
+        nnEnButton.setText(Bundle.getMessage("ButtonEnable"));
         nnEnButton.setVisible(true);
         nnEnButton.setSelected(true);
-        nnEnButton.setToolTipText("Select to enable filtering on Node Number");
+        nnEnButton.setToolTipText(Bundle.getMessage("EnableNodeTooltip"));
         nnPane.add(nnEnButton);
 
-        nnLowField.setToolTipText("Enter the Node Number (decimal) to be filtered");
+        nnLowField.setToolTipText(Bundle.getMessage("NnLowfieldTooltip"));
         nnPane.add(nnLowField);
 
         this.add(nnPane);
@@ -84,15 +72,15 @@ public class CbusEventFilterPanel extends JPanel {
         JPanel evPane = new JPanel();
         evPane.setLayout(new BoxLayout(evPane, BoxLayout.X_AXIS));
         evPane.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "Event"));
+                BorderFactory.createEtchedBorder(), Bundle.getMessage("EventCol")));
 
         // define contents
-        evEnButton.setText("Enable");
+        evEnButton.setText(Bundle.getMessage("ButtonEnable"));
         evEnButton.setVisible(true);
-        evEnButton.setToolTipText("Select to enable filtering on Event");
+        evEnButton.setToolTipText(Bundle.getMessage("EnableEventTooltip"));
         evPane.add(evEnButton);
 
-        evLowField.setToolTipText("Enter the Event (decimal) to be filtered");
+        evLowField.setToolTipText(Bundle.getMessage("EvLowfieldTooltip"));
         evPane.add(evLowField);
 
         this.add(evPane);
@@ -101,23 +89,23 @@ public class CbusEventFilterPanel extends JPanel {
         JPanel eventPane = new JPanel();
         eventPane.setLayout(new BoxLayout(eventPane, BoxLayout.X_AXIS));
         eventPane.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "Event type"));
+                BorderFactory.createEtchedBorder(), Bundle.getMessage("EventTypeTitle")));
 
         // define contents
-        onButton.setText("ON");
+        onButton.setText(Bundle.getMessage("InitialStateOn"));
         onButton.setVisible(true);
-        onButton.setToolTipText("Look for ON events");
+        onButton.setToolTipText(Bundle.getMessage("OnEventsTooltip"));
         eventPane.add(onButton);
 
-        offButton.setText("OFF");
+        offButton.setText(Bundle.getMessage("InitialStateOff"));
         offButton.setVisible(true);
-        offButton.setToolTipText("Look for OFF events");
+        offButton.setToolTipText(Bundle.getMessage("OffEventsTooltip"));
         eventPane.add(offButton);
 
-        eitherButton.setText("Either");
+        eitherButton.setText(Bundle.getMessage("ButtonEither"));
         eitherButton.setVisible(true);
         eitherButton.setSelected(true);
-        eitherButton.setToolTipText("Look for ON or OFF events");
+        eitherButton.setToolTipText(Bundle.getMessage("AllEventsTooltip"));
         eventPane.add(eitherButton);
 
         // Add to group to make one-hot
@@ -127,18 +115,19 @@ public class CbusEventFilterPanel extends JPanel {
 
         this.add(eventPane);
 
-        enableButton.setText("Apply");
+        enableButton.setText(Bundle.getMessage("ButtonApply"));
         enableButton.setVisible(true);
-        enableButton.setToolTipText("Click to apply filter");
+        enableButton.setToolTipText(Bundle.getMessage("TooltipApply"));
         this.add(enableButton);
 
-        disableButton.setText("Disable");
+        disableButton.setText(Bundle.getMessage("ButtonDisable"));
         disableButton.setVisible(true);
-        disableButton.setToolTipText("Click to disable filter");
+        disableButton.setToolTipText(Bundle.getMessage("TooltipDisable"));
         this.add(disableButton);
 
         // connect actions to buttons
         enableButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 enableButtonActionPerformed(e);
             }
@@ -146,6 +135,7 @@ public class CbusEventFilterPanel extends JPanel {
 
         // connect actions to buttons
         disableButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 disableButtonActionPerformed(e);
             }
@@ -161,14 +151,14 @@ public class CbusEventFilterPanel extends JPanel {
             try {
                 nn = Integer.parseInt(nnLowField.getText());
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Invalid Node Number Entered\n",
-                        "CBUS Event Filter", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("SendEventNodeErrorDialog"),
+                        Bundle.getMessage("EventFilterTitle"), JOptionPane.ERROR_MESSAGE);
                 nn = 0;
                 return;
             }
             if ((nn > 65535) || (nn < 0)) {
-                JOptionPane.showMessageDialog(null, "Invalid Node Number Entered\n",
-                        "CBUS Event Filter", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("SendEventNodeErrorDialog"),
+                        Bundle.getMessage("EventFilterTitle"), JOptionPane.ERROR_MESSAGE);
                 nn = 0;
                 return;
             }
@@ -178,14 +168,14 @@ public class CbusEventFilterPanel extends JPanel {
             try {
                 ev = Integer.parseInt(evLowField.getText());
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Invalid Event Entered\n",
-                        "CBUS Event Filter", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("SendEventInvalidDialog"),
+                        Bundle.getMessage("EventFilterTitle"), JOptionPane.ERROR_MESSAGE);
                 ev = 0;
                 return;
             }
             if ((ev > 65535) || (ev < 0)) {
-                JOptionPane.showMessageDialog(null, "Invalid Event Entered\n",
-                        "CBUS Event Filter", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("SendEventInvalidDialog"),
+                        Bundle.getMessage("EventFilterTitle"), JOptionPane.ERROR_MESSAGE);
                 ev = 0;
                 return;
             }

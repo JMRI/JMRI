@@ -1,21 +1,20 @@
-// XBeeReply.java
 package jmri.jmrix.ieee802154.xbee;
 
-import com.rapplogic.xbee.api.XBeeResponse;
+import com.digi.xbee.api.packet.UnknownXBeePacket;
+import com.digi.xbee.api.packet.XBeePacket;
 
 /**
- * Contains the data payload of a serial reply packet. Note that its _only_ the
+ * Contains the data payload of a serial reply packet. Note that it's _only_ the
  * payload.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2006, 2007, 2008 Converted to
+ * @author Bob Jacobsen Copyright (C) 2002, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011 Modified for IEEE 802.15.4 connection
  * @author Paul Bender Copyright (C) 2013
- * @version $Revision$
  */
 public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
 
-    XBeeResponse xbresponse = null;
+    XBeePacket xbresponse = null;
 
     // create a new one
     public XBeeReply() {
@@ -26,50 +25,54 @@ public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
     public XBeeReply(String s) {
         super(s);
         setBinary(true);
-        xbresponse = new com.rapplogic.xbee.api.GenericResponse();
         byte ba[] = jmri.util.StringUtil.bytesFromHexString(s);
-        int ia[] = new int[ba.length];
-        for (int i = 0; i < ba.length; i++) {
-            ia[i] = ba[i];
+        for(int i=0;i<ba.length;i++) {
+           _dataChars[i] = ba[i];
         }
-        xbresponse.setRawPacketBytes(ia);
+        _nDataChars=ba.length;
+        xbresponse = UnknownXBeePacket.createPacket(ba);
     }
 
     public XBeeReply(XBeeReply l) {
         super(l);
         xbresponse = l.xbresponse;
-        _dataChars = xbresponse.getRawPacketBytes();
+        byte data[] = xbresponse.getPacketData();
+        for(int i=0;i<data.length;i++) {
+           _dataChars[i] = data[i];
+        }
+        _nDataChars=data.length;
         setBinary(true);
     }
 
-    public XBeeReply(XBeeResponse xbr) {
+    public XBeeReply(XBeePacket xbr) {
         super();
         xbresponse = xbr;
-        _dataChars = xbr.getRawPacketBytes();
+        byte data[] = xbr.getPacketData();
+        for(int i=0;i<data.length;i++) {
+           _dataChars[i] = data[i];
+        }
+        _nDataChars=data.length;
         setBinary(true);
     }
 
+    @Override
     public String toMonitorString() {
+        return xbresponse.toPrettyString();
+    }
+
+    @Override
+    public String toString() {
         return xbresponse.toString();
     }
 
-    public String toString() {
-        String s = "";
-        int packet[] = xbresponse.getProcessedPacketBytes();
-        for(int i=0;i<packet.length;i++) {
-            s=jmri.util.StringUtil.appendTwoHexFromInt(packet[i],s);
-        }
-        return s;
-    }
-
-    public XBeeResponse getXBeeResponse() {
+    public XBeePacket getXBeeResponse() {
         return xbresponse;
     }
 
-    public void setXBeeResponse(XBeeResponse xbr) {
+    public void setXBeeResponse(XBeePacket xbr) {
         xbresponse = xbr;
     }
 
 }
 
-/* @(#)XBeeReply.java */
+

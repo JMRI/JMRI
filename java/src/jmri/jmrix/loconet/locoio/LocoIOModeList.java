@@ -1,11 +1,3 @@
-/*
- * LocoIOModeList.java
- *
- * Created on January 30, 2007, 9:13 PM
- *
- * Manage the set of valid modes for a particular LocoIO port,
- * as well as the conversions between addresses and SV values.
- */
 package jmri.jmrix.loconet.locoio;
 
 import java.util.Vector;
@@ -14,23 +6,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Manage the set of valid modes for a particular LocoIO port,
+ * as well as the conversions between addresses and SV values.
  *
- * @author plocher
+ * @author John Plocher, January 30, 2007
  */
 public class LocoIOModeList {
 
-    private Vector<LocoIOMode> modeList = new Vector<LocoIOMode>();
-    private String[] validmodes;
+    protected Vector<LocoIOMode> modeList = new Vector<LocoIOMode>();
+    protected String[] validmodes;
 
     /**
-     * Creates a new instance of LocoIOModeList
+     * Create a new instance of LocoIOModeList
      */
     public LocoIOModeList() {
 
         /**
-         * Initialize various configuration modes... TODO: Need to tag these
-         * with which firmware rev supports them and only allow choices that
-         * match.
+         * Initialize various configuration modes.
+         * @TODO: Need to tag these with which firmware rev supports
+         * them and only allow choices that match.
          *
          * Inputs...
          */
@@ -50,7 +44,6 @@ public class LocoIOModeList {
         /**
          * and Outputs...
          */
-
         modeList.add(new LocoIOMode(1, LnConstants.OPC_INPUT_REP, 0xC0, 0x00, "Block Occupied Indication"));
         modeList.add(new LocoIOMode(1, LnConstants.OPC_INPUT_REP, 0xD0, 0x00, "Block Occupied Indication, Blinking"));
         modeList.add(new LocoIOMode(1, LnConstants.OPC_SW_REQ, 0x81, 0x10, "Steady State, single output, On at Power up"));
@@ -71,66 +64,6 @@ public class LocoIOModeList {
             LocoIOMode m = modeList.elementAt(i);
             validmodes[i] = m.getFullMode();
         }
-    }
-
-    @SuppressWarnings("unused")
-    private void test() {
-        /**
-         * This should go into a JUnit test
-         */
-        log.debug("Starting test sequence");
-        for (int i = 0; i <= modeList.size() - 1; i++) {
-            LocoIOMode m = modeList.elementAt(i);
-
-            int haderror = 0;
-            for (i = 1; i <= 2047; i++) {
-                int svA = m.getSV();
-                int v1A = addressToValue1(m, i);
-                int v2A = addressToValue2(m, i);
-
-                log.debug(m.getFullMode() + "=> Address " + Integer.toHexString(i)
-                        + " encodes into "
-                        + LnConstants.OPC_NAME(m.getOpcode()) + " "
-                        + Integer.toHexString(svA) + " "
-                        + Integer.toHexString(v1A) + " "
-                        + Integer.toHexString(v2A));
-
-                LocoIOMode lim = getLocoIOModeFor(svA, v1A, v2A);
-                if (lim == null) {
-                    if (haderror == 0) {
-                        log.error("Testing " + m.getFullMode() + "      ERROR:");
-                    }
-                    String err
-                            = "    Could Not find mode for Packet: "
-                            + Integer.toHexString(svA) + " "
-                            + Integer.toHexString(v1A) + " "
-                            + Integer.toHexString(v2A) + " <CHK>\n";
-                    log.error(err);
-                    haderror++;
-                } else {
-                    int decodedaddress = valuesToAddress(lim.getOpcode(), svA, v1A, v2A);
-                    if ((i) != decodedaddress) {
-                        if (haderror == 0) {
-                            log.error("Testing " + m.getFullMode() + "      ERROR:");
-                        }
-                        String err
-                                = "    Could Not Match Address: ("
-                                + Integer.toHexString(i - 1) + "=>"
-                                + Integer.toHexString(decodedaddress) + ") from "
-                                + LnConstants.OPC_NAME(lim.getOpcode()) + " "
-                                + Integer.toHexString(svA) + " "
-                                + Integer.toHexString(v1A) + " "
-                                + Integer.toHexString(v2A) + "[mask=" + Integer.toHexString(lim.getV2()) + "]\n";
-                        log.error(err);
-                        haderror++;
-                    }
-                }
-            }
-            if (haderror == 0) {
-                log.debug("Testing " + m.getFullMode() + "      **OK**");
-            }
-        }
-        log.debug("Finished test sequence\n");
     }
 
     protected String[] getValidModes() {
@@ -165,7 +98,7 @@ public class LocoIOModeList {
         for (int i = 0; i <= modeList.size() - 1; i++) {
             LocoIOMode m = modeList.elementAt(i);
             if (m.getSV() == cv) {
-                if ((m.getOpcode() == LnConstants.OPC_INPUT_REP)
+                if ((m.getOpCode() == LnConstants.OPC_INPUT_REP)
                         && (m.getV2() == (v2 & 0xD0))) {
                     return m;
                 } else if (((cv == 0x6F) || (cv == 0x67) || (cv == 0x2F) || (cv == 0x27))
@@ -184,23 +117,29 @@ public class LocoIOModeList {
     }
 
     /**
-     * Low bits
+     * Convert Value1 (Low bits) from Port Address.
+     *
+     * @param lim one of a list of defined port operation modes
+     * @param address the address for this port
      */
     protected int addressToValue1(LocoIOMode lim, int address) {
         if (lim == null) {
             return 0;
         }
-        return addressToValues(lim.getOpcode(), lim.getSV(), lim.getV2(), address) & 0x7F;
+        return addressToValues(lim.getOpCode(), lim.getSV(), lim.getV2(), address) & 0x7F;
     }
 
     /**
-     * High bits...
+     * Convert Value2 (High bits) from Port Address.
+     *
+     * @param lim one of a list of defined port operation modes
+     * @param address the address for this port
      */
     protected int addressToValue2(LocoIOMode lim, int address) {
         if (lim == null) {
             return 0;
         }
-        return (addressToValues(lim.getOpcode(), lim.getSV(), lim.getV2(), address) / 256) & 0x7F;
+        return (addressToValues(lim.getOpCode(), lim.getSV(), lim.getV2(), address) / 256) & 0x7F;
     }
 
     /**
@@ -209,12 +148,20 @@ public class LocoIOModeList {
      *
      * @param a1 Byte containing the upper bits
      * @param a2 Byte containing the lower bits
-     * @return 1-4096 address
+     * @return 1-4096 address as decimal
      */
     static private int SENSOR_ADR(int a1, int a2) {
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f)) + 1;
     }
 
+    /**
+     * Create 2 byte value from Port Address bits.
+     *
+     * @param opcode coded value for message type
+     * @param sv index of SV value to create, ignored
+     * @param v2mask mask to apply on Value2
+     * @param address the address for this port
+     */
     protected int addressToValues(int opcode, int sv, int v2mask, int address) {
         int v1 = 0;
         int v2 = 0;
@@ -242,6 +189,15 @@ public class LocoIOModeList {
         return v2 * 256 + v1;
     }
 
+    /**
+     * Extract Port Address from the 3 SV values.
+     *
+     * @param opcode coded value for message type
+     * @param sv first SV value, ignored
+     * @param v1 second value (upper bits)
+     * @param v2 second value (lower bits)
+     * @return address (int) of the port
+     */
     protected int valuesToAddress(int opcode, int sv, int v1, int v2) {
         //int hi = 0;
         //int lo = 0;
@@ -277,8 +233,9 @@ public class LocoIOModeList {
         if (lim == null) {
             return 0;
         }
-        return valuesToAddress(lim.getOpcode(), sv, v1, v2);
+        return valuesToAddress(lim.getOpCode(), sv, v1, v2);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoIOModeList.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(LocoIOModeList.class);
+
 }

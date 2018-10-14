@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author$) 2016 -->
+<title>JMRI: CSX 'Chessie' 2014 Signaling Definition</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: CSX 'Chessie' 2014 Signaling Definition
+</h1>
+
+This directory contains signaling definitions corresponding to 
+the CSX Transportation 'Chessie' Signal Rules - C1281-C1292, January 2014.
+
+<p>
+
+<a href="..\CSX-1998\index.shtml">CSX</a>, <a href="..\B&O-2009\index.shtml">former B&amp;O</a> and <a href="..\B&O-Semaphore\index.shtml">B&amp;O Semaphore</a> rules 1281-1298, and <a href="..\NS-2008\index.shtml">Conrail</a> rules CR1280-CR1295 are not included in this system but are available seperately in their respective definitions.
+
+<p>
+
+The included masts are the types anticipated to be most likely used. If the exact mast is not available you should be able to use one that has just one or two extra lamps. Unlike most other North American systems the illumination or darkness of red lamps on the lower heads does convey meaning so be careful if leaving off or adding red lamps.
+
+<p>
+
+Where possible the default aspect numbers match similar appearances in the <a href="..\BNSF-1996\index.shtml">BNSF</a> and <a href="..\UP-2008\index.shtml">UP</a>,  definitions in order that hardware intended to be used with those defintions will work for the most part with this defintion with minimal reconfiguration.
+
+<p>
+See the 
+<a href="aspects.xml">aspect page</a> to see the aspect that can be displayed with the defined masts listed below.
+
+<p>
+Signal Mast definitions:
+<ul>
+<li><a href="appearance-CO-3-3-3-hi.xml">Triple head 3-3-3 absolute colorlight high signal</a> for protecting Normal/Limited/Medium/Slow/Restricted and compound routes.
+<li><a href="appearance-CO-3-3-2-hi.xml">Triple head 3-3-2 absolute colorlight high signal</a> for protecting Normal/Limited/Medium/Restricted and compound routes.
+<li><a href="appearance-CO-3-3-1-hi.xml">Triple head 3-3-1 absolute colorlight high signal</a> for protecting Normal/Limited/Medium and Restricted routes.
+<li><a href="appearance-CO-3-2-2-hi.xml">Triple head 3-2-2 absolute colorlight high signal</a> for protecting Normal/Slow and Restricted routes.
+<li><a href="appearance-CO-1-3-3-hi.xml">Triple head 1-3-3 absolute colorlight high signal</a> for protecting Limited/Medium/Slow/Restricted routes.
+<li><a href="appearance-CO-1-3-2-hi.xml">Tiple head 1-3-2 absolute colorlight high signal</a> for protecting Limited/Medium/Restricted and compound routes.
+<li><a href="appearance-CO-1-3-1-hi.xml">Triple head 1-3-1 absolute colorlight high signal</a> for protecting Limited/Medium/Restricted routes.
+<li><a href="appearance-CO-1-2-2-hi.xml">Triple head 1-2-2 absolute colorlight high signal</a> for protecting Slow/Restricted routes.
+<li><a href="appearance-CO-3-3-hi.xml">Double head 3-3 absolute colorlight high signal</a> for protecting Normal/Restricted routes.
+<li><a href="appearance-CO-3-1r-hi.xml">Double head 3-1 absolute colorlight high signal</a> for protecting Normal routes.
+<li><a href="appearance-CO-1-2-hi.xml">Double head 1-2 absolute colorlight high signal</a> for protecting Restricting routes.
+<li><a href="appearance-CO-3-3-lo.xml">Double head absolute searchlight dwarf signal</a>
+<li><a href="appearance-CO-3-lo.xml">Single head absolute colorlight dwarf signal</a>
+<li>
+<li><a href="appearance-CO-3-2-hi.xml">Double head 3-2 permissive approach colorlight high signal</a>
+<li><a href="appearance-CO-3-1g-hi.xml">Double head 3-1 permissive approach Medium/Limited colorlight high signal</a>
+<li><a href="appearance-CO-3-1y-hi.xml">Double head 3-1 permissive approach Slow colorlight high signal</a>
+<li><a href="appearance-CO-3-hi.xml">Single head permissive colorlight high signal</a>
+<li><a href="appearance-CO-3p-lo.xml">Triple lamp permissive colorlight dwarf signal</a>
+<li>
+<li><a href="appearance-CO-1-lo.xml">Buffer stop or stop board
+</a>
+</ul>
+    </div>
+</div>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

@@ -6,7 +6,7 @@ import javax.swing.AbstractAction;
 /**
  * Swing action to create and register a SampleAutomaton3 object
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 public class SampleAutomaton3Action extends AbstractAction {
 
@@ -14,6 +14,7 @@ public class SampleAutomaton3Action extends AbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a SampleAutomaton2
         AbstractAutomaton f = new SampleAutomaton3();

@@ -1,6 +1,5 @@
 package jmri.jmrix.sprog.update;
 
-import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 

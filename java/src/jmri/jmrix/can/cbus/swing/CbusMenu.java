@@ -1,7 +1,5 @@
-// CbusMenu.java
 package jmri.jmrix.can.cbus.swing;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.swing.CanNamedPaneAction;
@@ -9,30 +7,19 @@ import jmri.jmrix.can.swing.CanNamedPaneAction;
 /**
  * Create a menu containing the Jmri CAN- and CBUS-specific tools
  *
- * @author	Bob Jacobsen Copyright 2003, 2008, 2009
+ * @author Bob Jacobsen Copyright 2003, 2008, 2009
  * @author Andrew Crosland 2008
- * @version $Revision: 17977 $
  */
 public class CbusMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8901183972160758403L;
 
     public CbusMenu(CanSystemConnectionMemo memo) {
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.can.cbus.CbusBundle");
-
-        String title;
         if (memo != null) {
-            title = memo.getUserName();
+            setText(memo.getUserName());
         } else {
-            title = rb.getString("MenuItemCBUS");
+            setText(Bundle.getMessage("MenuItemCBUS"));
         }
-
-        setText(title);
 
         jmri.util.swing.WindowInterface wi = new jmri.util.swing.sdi.JmriJFrameInterface();
 
@@ -40,10 +27,9 @@ public class CbusMenu extends JMenu {
             if (item == null) {
                 add(new javax.swing.JSeparator());
             } else {
-                add(new CanNamedPaneAction(rb.getString(item.name), wi, item.load, memo));
+                add(new CanNamedPaneAction(Bundle.getMessage(item.name), wi, item.load, memo));
             }
         }
-
     }
 
     Item[] panelItems = new Item[]{
@@ -64,4 +50,5 @@ public class CbusMenu extends JMenu {
         String name;
         String load;
     }
+
 }

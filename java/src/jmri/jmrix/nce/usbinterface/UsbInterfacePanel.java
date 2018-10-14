@@ -1,5 +1,6 @@
 package jmri.jmrix.nce.usbinterface;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -23,31 +24,31 @@ import org.slf4j.LoggerFactory;
 /**
  * Panel for configuring a NCE USB interface
  *
- * @author	ken cameron Copyright (C) 2013
+ * @author ken cameron Copyright (C) 2013
  */
 public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.usbinterface.UsbInterfaceBundle");
 
-    private int replyLen = 0;						// expected byte length
-    private int waiting = 0;						// to catch responses not
+    private int replyLen = 0;      // expected byte length
+    private int waiting = 0;      // to catch responses not
     // intended for this module
-    private int minCabNum = -1;		// either the USB or serial size depending on what we connect to
-    private int maxCabNum = -1;		// either the USB or serial size depending on what we connect to
+    private int minCabNum = -1;  // either the USB or serial size depending on what we connect to
+    private int maxCabNum = -1;  // either the USB or serial size depending on what we connect to
     private int minCabSetNum = -1;
     private int maxCabSetNum = -1;
-    private static final int CAB_MIN_USB = 2;			// USB cabs start at 2
-    private static final int CAB_MIN_PRO = 2;			// Serial cabs start at 2
-    private static final int CAB_MAX_USB_128 = 4;			// There are up to 4 cabs on 1.28
-    private static final int CAB_MAX_USB_165 = 10;			// There are up to 10 cabs on 1.65
-    private static final int CAB_MAX_PRO = 63;			// There are up to 63 cabs
-    private static final int CAB_MAX_SB3 = 5;			// There are up to 5 cabs
+    private static final int CAB_MIN_USB = 2;   // USB cabs start at 2
+    private static final int CAB_MIN_PRO = 2;   // Serial cabs start at 2
+    private static final int CAB_MAX_USB_128 = 4;   // There are up to 4 cabs on 1.28
+    private static final int CAB_MAX_USB_165 = 10;   // There are up to 10 cabs on 1.65
+    private static final int CAB_MAX_PRO = 63;   // There are up to 63 cabs
+    private static final int CAB_MAX_SB3 = 5;   // There are up to 5 cabs
 
-    private static final int REPLY_1 = 1;			// reply length of 1 byte
-    private static final int REPLY_2 = 2;			// reply length of 2 byte
-    private static final int REPLY_4 = 4;			// reply length of 4 byte
+    private static final int REPLY_1 = 1;   // reply length of 1 byte
+    private static final int REPLY_2 = 2;   // reply length of 2 byte
+    private static final int REPLY_4 = 4;   // reply length of 4 byte
 
-    Thread NceCabUpdateThread;
+    Thread nceCabUpdateThread;
     private boolean setRequested = false;
     private int setCabId = -1;
 
@@ -69,20 +70,19 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
         super();
     }
 
-    public void initContext(Object context) throws Exception {
+    @Override
+    public void initContext(Object context) {
         if (context instanceof NceSystemConnectionMemo) {
-            try {
-                initComponents((NceSystemConnectionMemo) context);
-            } catch (Exception e) {
-                //log.error("UsbInterface initContext failed");
-            }
+            initComponents((NceSystemConnectionMemo) context);
         }
     }
 
+    @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.nce.usbinterface.UsbInterfacePanel";
     }
 
+    @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
         if (memo != null) {
@@ -95,7 +95,8 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
         return x.toString();
     }
 
-    public void initComponents(NceSystemConnectionMemo m) throws Exception {
+    @Override
+    public void initComponents(NceSystemConnectionMemo m) {
         this.memo = m;
         this.tc = m.getNceTrafficController();
 
@@ -141,10 +142,10 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
         JPanel p3 = new JPanel();
         add(p3);
-        
+
         addButtonAction(setButton);
     }
-    
+
     // validate if a value is a legal cab id for the system
     // needed since there are gaps in the USB based command stations
     public boolean validateCabId(int id) {
@@ -180,8 +181,9 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
             } else {
                 statusText.setText(MessageFormat.format(rb.getString("StatusInvalidCabIdEntered"), i));
             }
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             // presume it failed to convert.
+            log.debug("failed to convert {}", i);
         }
     }
 
@@ -191,10 +193,11 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
             setCabId = cabId;
         }
         // Set up a separate thread to access CS memory
-        if (NceCabUpdateThread != null && NceCabUpdateThread.isAlive()) {
+        if (nceCabUpdateThread != null && nceCabUpdateThread.isAlive()) {
             return; // thread is already running
         }
-        NceCabUpdateThread = new Thread(new Runnable() {
+        nceCabUpdateThread = new Thread(new Runnable() {
+            @Override
             public void run() {
                 if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
                     if (setRequested) {
@@ -203,9 +206,9 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
                 }
             }
         });
-        NceCabUpdateThread.setName(rb.getString("ThreadTitle"));
-        NceCabUpdateThread.setPriority(Thread.MIN_PRIORITY);
-        NceCabUpdateThread.start();
+        nceCabUpdateThread.setName(rb.getString("ThreadTitle"));
+        nceCabUpdateThread.setPriority(Thread.MIN_PRIORITY);
+        nceCabUpdateThread.start();
     }
 
     private boolean firstTime = true; // wait for panel to display
@@ -215,9 +218,9 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
         if (firstTime) {
             try {
-                Thread.sleep(1000);	// wait for panel to display 
+                Thread.sleep(1000); // wait for panel to display
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                log.error("Thread interrupted.", e);
             }
         }
 
@@ -249,6 +252,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
         this.repaint();
     }
 
+    @Override
     public void message(NceMessage m) {
     }  // ignore replies
 
@@ -256,7 +260,8 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
     int recChar = 0;
     int[] recChars = new int[16];
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification = "Thread wait from main transfer loop")
+    @SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification = "Thread wait from main transfer loop")
+    @Override
     public void reply(NceReply r) {
         if (log.isDebugEnabled()) {
             log.debug("Receive character");
@@ -321,9 +326,9 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
         return true;
     }
 
-    // USB set Cab Id in USB 
+    // USB set Cab Id in USB
     private void writeUsbCabId(int value) {
-        replyLen = REPLY_1;			// Expect 1 byte response
+        replyLen = REPLY_1;   // Expect 1 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.usbSetCabId(value);
         NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_1);
@@ -349,6 +354,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
     private void addButtonAction(JButton b) {
         b.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 buttonActionPerformed(e);
             }
@@ -356,5 +362,5 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(UsbInterfacePanel.class.getName());
+            .getLogger(UsbInterfacePanel.class);
 }

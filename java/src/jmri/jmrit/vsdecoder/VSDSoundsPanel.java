@@ -15,8 +15,8 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
+ * @author   Mark Underwood Copyright (C) 2011
+ * 
  */
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -45,10 +45,12 @@ public class VSDSoundsPanel extends JmriPanel {
     public void init() {
     }
 
+    @Override
     public void initContext(Object context) {
         initComponents();
     }
 
+    @Override
     public void initComponents() {
 
         this.setLayout(new GridLayout(0, 3));
@@ -67,6 +69,6 @@ public class VSDSoundsPanel extends JmriPanel {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(VSDSoundsPanel.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDSoundsPanel.class);
 
 }

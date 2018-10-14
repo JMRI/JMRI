@@ -2,10 +2,11 @@ package jmri.web.servlet.frameimage;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Invokes complete set of tests for the jmri.web.xmlio.JmriJFrameServlet class
@@ -52,7 +53,7 @@ public class JmriJFrameServletTest extends TestCase {
 
     }
 
-    // local varient class to make access to private members
+    // local variant class to make access to private members
     private class JmriJFrameServlet_ut extends JmriJFrameServlet {
 
         @Override
@@ -81,13 +82,11 @@ public class JmriJFrameServletTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
     }
 
     @Override
     protected void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

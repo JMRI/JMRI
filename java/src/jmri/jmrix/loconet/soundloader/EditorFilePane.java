@@ -14,20 +14,17 @@ import javax.swing.SortOrder;
 import javax.swing.table.TableRowSorter;
 import jmri.jmrix.loconet.spjfile.SpjFile;
 import jmri.swing.RowSorterUtil;
-import jmri.util.SystemNameComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Pane for editing Digitrax SPJ files
+ * Pane for editing Digitrax SPJ files.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2010
+ * @author Bob Jacobsen Copyright (C) 2006, 2010
  */
 public class EditorFilePane extends javax.swing.JPanel {
 
     // GUI member declarations
-    static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Editor");
-
     SpjFile file;
     EditorTableDataModel dataModel;
 
@@ -37,8 +34,7 @@ public class EditorFilePane extends javax.swing.JPanel {
             file = new SpjFile(name);
             file.read();
         } catch (IOException e) {
-            log.error("Exception reading file: " + e);
-            e.printStackTrace();
+            log.error("Exception reading file", e);
             return;
         }
 
@@ -51,9 +47,8 @@ public class EditorFilePane extends javax.swing.JPanel {
         JTable dataTable = new JTable(dataModel);
         JScrollPane dataScroll = new JScrollPane(dataTable);
 
-        // give system name column a smarter sorter and use it initially
+        // set default sort order
         TableRowSorter<EditorTableDataModel> sorter = new TableRowSorter<>(dataModel);
-        sorter.setComparator(EditorTableDataModel.HEADERCOL, new SystemNameComparator());
         RowSorterUtil.setSortOrder(sorter, EditorTableDataModel.HEADERCOL, SortOrder.ASCENDING);
 
         // configure items for GUI
@@ -61,13 +56,13 @@ public class EditorFilePane extends javax.swing.JPanel {
 
         add(dataScroll);
 
-        // some stuff at bottom for now       
+        // some stuff at bottom for now
         add(new JSeparator());
         JPanel bottom = new JPanel();
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
 
         JPanel p1 = new JPanel();
-        p1.add(new JLabel(res.getString("LabelSize")));
+        p1.add(new JLabel(Bundle.getMessage("LabelSize")));
         JTextField t1 = new JTextField(12);
         t1.setEditable(false);
         p1.add(t1);
@@ -88,6 +83,6 @@ public class EditorFilePane extends javax.swing.JPanel {
         file = null;  // not for GC, this flags need to reinit
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EditorFilePane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EditorFilePane.class);
 
 }

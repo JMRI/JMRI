@@ -22,10 +22,6 @@
         <label>
           <text>   </text>
         </label>
-        <label>
-          <text>Must have JMRI 3.9.5 or later.</text>
-          <text xml:lang="it">Dovete avere JMRI 3.9.5 o successivo.</text>
-        </label>
 		<group>
 			<qualifier>
 				<variableref>First</variableref>
@@ -264,20 +260,30 @@
 		<text>   </text>
 	</label>
     <row>
-		<display item="Random 1 Sound" layout="above" format="tree"/>
-		<label>
-			<text>   </text>
-		</label>
-		<display item="Random 2 Sound" layout="above" format="tree"/>
-		<label>
-			<text>   </text>
-		</label>
-		<display item="Random 3 Sound" layout="above" format="tree"/>
-		<label>
-			<text>   </text>
-		</label>
-		<display item="Random 4 Sound" layout="above" format="tree"/>
+      <display item="Random 1 Sound" layout="above" format="tree"/>
+      <label>
+        <text>   </text>
+      </label>
+      <display item="Random 2 Sound" layout="above" format="tree"/>
+      <label>
+        <text>   </text>
+      </label>
+      <display item="Random 3 Sound" layout="above" format="tree"/>
+      <label>
+        <text>   </text>
+      </label>
+      <display item="Random 4 Sound" layout="above" format="tree"/>
+      <label>
+        <text>   </text>
+      </label>
+      <display item="Aux Input Sound" layout="above" format="tree"/>
     </row>
+	<label>
+		<text>   </text>
+	</label>
+	<label>
+		<text>Reserved value same as none.</text>
+	</label>
 	<label>
 		<text>   </text>
 	</label>

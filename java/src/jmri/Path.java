@@ -1,7 +1,11 @@
 package jmri;
 
+import java.awt.geom.Point2D;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import jmri.util.MathUtil;
 
 /**
  * Represents a particular set of NamedBean (usually turnout) settings to put a
@@ -25,17 +29,16 @@ import java.util.List;
  * <P>
  * This implementation handles paths with a list of bean settings. This has been
  * extended from the initial implementation.
- *
  * <P>
  * The length of the path may also optionally be entered if desired. This
  * attribute is for use in automatic running of trains. Length should be the
  * actual length of model railroad track in the path. It is always stored here
  * in millimeter units. A length of 0.0 indicates no entry of length by the
- * user.  If there is no entry the length of the block the path is in
- * will be returned.  An Entry is only needed when there are paths of greatly
- * different lengths in the block.
+ * user. If there is no entry the length of the block the path is in will be
+ * returned. An Entry is only needed when there are paths of greatly different
+ * lengths in the block.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008
+ * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
 public class Path {
 
@@ -48,21 +51,30 @@ public class Path {
     /**
      * Convenience constructor to set the destination/source block and
      * directions in one call.
+     *
+     * @param dest               the destination
+     * @param toBlockDirection   direction to next block
+     * @param fromBlockDirection direction from prior block
      */
     public Path(Block dest, int toBlockDirection, int fromBlockDirection) {
         this();
         _toBlockDirection = toBlockDirection;
         _fromBlockDirection = fromBlockDirection;
-        setBlock(dest);
+        Path.this.setBlock(dest);
     }
 
     /**
      * Convenience constructor to set the destination/source block, directions
      * and a single setting element in one call.
+     *
+     * @param dest               the destination
+     * @param toBlockDirection   direction to next block
+     * @param fromBlockDirection direction from prior block
+     * @param setting            the setting to add
      */
     public Path(Block dest, int toBlockDirection, int fromBlockDirection, BeanSetting setting) {
         this(dest, toBlockDirection, fromBlockDirection);
-        addSetting(setting);
+        Path.this.addSetting(setting);
     }
 
     public void addSetting(BeanSetting t) {
@@ -117,10 +129,10 @@ public class Path {
      */
     public boolean checkPathSet() {
         // empty conditions are always set
-        if (_beans.size() == 0) {
+        if (_beans.isEmpty()) {
             return true;
         }
-        // check the status of all BeanSettings 
+        // check the status of all BeanSettings
         for (int i = 0; i < _beans.size(); i++) {
             if (!(_beans.get(i)).check()) {
                 return false;
@@ -150,6 +162,24 @@ public class Path {
      * Westward
      */
     public static final int WEST = 0x00080;
+
+    /**
+     * North-East
+     */
+    public static final int NORTH_EAST = NORTH | EAST;
+    /**
+     * South-East
+     */
+    public static final int SOUTH_EAST = SOUTH | EAST;
+    /**
+     * South-West
+     */
+    public static final int SOUTH_WEST = SOUTH | WEST;
+    /**
+     * North-West
+     */
+    public static final int NORTH_WEST = NORTH | WEST;
+
     /**
      * Clockwise
      */
@@ -178,6 +208,9 @@ public class Path {
     /**
      * Decode the direction constants into a human-readable form. This should
      * eventually be internationalized.
+     *
+     * @param d the direction
+     * @return the direction description
      */
     static public String decodeDirection(int d) {
         if (d == NONE) {
@@ -222,12 +255,14 @@ public class Path {
         return b.toString();
     }
 
-    /*
-     * Set path length.  length must be in millimeters.
+    /**
+     * Set path length.
+     *
+     * @param l length in millimeters
      */
     public void setLength(float l) {
         _length = l;
-        if (_block!=null) {
+        if (_block != null) {
             if (l > _block.getLengthMm()) {
                 _length = _block.getLengthMm();
             }
@@ -235,15 +270,18 @@ public class Path {
     }
 
     /**
-     * Return actual stored length.  default 0.
+     * Return actual stored length.
+     *
+     * @return length in millimeters or 0
      */
     public float getLength() {
         return _length;
     }
 
     /**
-     * Return length in millimeters. Default length of 0 
-     * will return the block length.
+     * Return length in millimeters.
+     *
+     * @return the stored length if greater than 0 or the block length
      */
     public float getLengthMm() {
         if (_length <= 0.0f) {
@@ -253,8 +291,9 @@ public class Path {
     }
 
     /**
-     * Return length in centimeters. Default length of 0 
-     * will return the block length.
+     * Return length in centimeters.
+     *
+     * @return the stored length if greater than 0 or the block length
      */
     public float getLengthCm() {
         if (_length <= 0.0f) {
@@ -264,8 +303,9 @@ public class Path {
     }
 
     /**
-     * Return length in inches. Default length of 0 
-     * will return the block length.
+     * Return length in inches.
+     *
+     * @return the stored length if greater than 0 or the block length
      */
     public float getLengthIn() {
         if (_length <= 0.0f) {
@@ -282,7 +322,7 @@ public class Path {
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="FE_FLOATING_POINT_EQUALITY", justification="equals operator should actually check for equality")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "equals operator should actually check for equality")
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -294,36 +334,123 @@ public class Path {
         if (!(getClass() == obj.getClass())) {
             return false;
         } else {
-            Path p = (Path)obj;
-            
-            // next line is the FE_FLOATING_POINT_EQUALITY annotated above
-            if (p._length != this._length) return false;
-            
-            if (p._toBlockDirection != this._toBlockDirection) return false;
-            if (p._fromBlockDirection != this._fromBlockDirection) return false;
+            Path p = (Path) obj;
 
-            if (p._block == null &&  this._block != null) return false;
-            if (p._block != null &&  this._block == null) return false;
-            if (p._block != null &&  this._block != null && !p._block.equals(this._block)) return false;
+            if (!Float.valueOf(p._length).equals(this._length)) {
+                return false;
+            }
 
-            if (p._beans.size() != this._beans.size()) return false;
-            for (int i = 0; i<p._beans.size(); i++) {
-                if (! p._beans.get(i).equals(this._beans.get(i))) return false;
+            if (p._toBlockDirection != this._toBlockDirection) {
+                return false;
+            }
+            if (p._fromBlockDirection != this._fromBlockDirection) {
+                return false;
+            }
+
+            if (p._block == null && this._block != null) {
+                return false;
+            }
+            if (p._block != null && this._block == null) {
+                return false;
+            }
+            if (p._block != null && this._block != null && !p._block.equals(this._block)) {
+                return false;
+            }
+
+            if (p._beans.size() != this._beans.size()) {
+                return false;
+            }
+            for (int i = 0; i < p._beans.size(); i++) {
+                if (!p._beans.get(i).equals(this._beans.get(i))) {
+                    return false;
+                }
             }
         }
-        return true;
+        return this.hashCode() == obj.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        String separator = ""; // no separator on first item // NOI18N
+        for (BeanSetting beanSetting : this.getSettings()) {
+            result.append(separator).append(MessageFormat.format("{0} with state {1}", beanSetting.getBean().getDisplayName(), beanSetting.getBean().describeState(beanSetting.getSetting()))); // NOI18N
+            separator = ", "; // NOI18N
+        }
+        return MessageFormat.format("Path: \"{0}\" ({1}): {2}", getBlock().getDisplayName(), decodeDirection(getToBlockDirection()), result); // NOI18N
     }
 
     // Can't include _toBlockDirection, _fromBlockDirection, or block information as they can change
     @Override
     public int hashCode() {
-        int hash = 100;
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this._beans);
+        hash = 89 * hash + Objects.hashCode(this._block);
+        hash = 89 * hash + this._toBlockDirection;
+        hash = 89 * hash + this._fromBlockDirection;
+        hash = 89 * hash + Float.floatToIntBits(this._length);
         return hash;
     }
-    
-    private ArrayList<BeanSetting> _beans = new ArrayList<BeanSetting>();
+
+    private final ArrayList<BeanSetting> _beans = new ArrayList<>();
     private Block _block;
     private int _toBlockDirection;
     private int _fromBlockDirection;
     private float _length = 0.0f;  // always stored in millimeters
+
+    /**
+     * compute octagonal direction of vector from p1 to p2
+     * <p>
+     * Note: the octagonal (8) directions are: North, North-East, East,
+     * South-East, South, South-West, West and North-West
+     *
+     * @param p1 the first point
+     * @param p2 the second point
+     * @return the octagonal direction from p1 to p2
+     */
+    public static int computeDirection(Point2D p1, Point2D p2) {
+        double angleDEG = MathUtil.computeAngleDEG(p2, p1);
+        angleDEG = MathUtil.wrap360(angleDEG);  // don't want to deal with negative numbers here...
+
+        // convert the angleDEG into an octant index (ccw from south)
+        // note: because we use round here, the octants are offset by half (+/-22.5 deg)
+        // so SOUTH isn't from 0-45 deg; it's from -22.5 deg to +22.5 deg; etc. for other octants.
+        // (and this is what we want!)
+        int octant = (int) Math.round(angleDEG / 45.0);
+
+        // use the octant index to lookup its direction
+        int dirs[] = {SOUTH, SOUTH_EAST, EAST, NORTH_EAST,
+            NORTH, NORTH_WEST, WEST, SOUTH_WEST, SOUTH};
+        return dirs[octant];
+    }   // computeOctagonalDirection
+
+    /**
+     * return the reverse octagonal direction
+     *
+     * @param inDir the direction
+     * @return the reverse direction or {@value #NONE} if inDir is not a
+     *         direction
+     */
+    public static int reverseDirection(int inDir) {
+        switch (inDir) {
+            case NORTH:
+                return SOUTH;
+            case NORTH_EAST:
+                return SOUTH_WEST;
+            case EAST:
+                return WEST;
+            case SOUTH_EAST:
+                return NORTH_WEST;
+            case SOUTH:
+                return NORTH;
+            case SOUTH_WEST:
+                return NORTH_EAST;
+            case WEST:
+                return EAST;
+            case NORTH_WEST:
+                return SOUTH_EAST;
+            default:
+                return NONE;
+        }
+    }
 }

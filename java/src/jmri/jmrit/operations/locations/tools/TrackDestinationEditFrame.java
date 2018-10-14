@@ -1,4 +1,3 @@
-// TrackDestinationEditFrame.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Dimension;
@@ -17,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -38,13 +38,13 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of track roads
  *
  * @author Dan Boudreau Copyright (C) 2013
- * @version $Revision: 22371 $
+ * 
  */
 public class TrackDestinationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     Track _track = null;
 
-    LocationManager locationManager = LocationManager.instance();
+    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     // panels
     JPanel pControls = new JPanel();
@@ -161,7 +161,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
             _track.addPropertyChangeListener(this);
             trackName.setText(_track.getName());
             onlyCarsWithFD.setSelected(_track.isOnlyCarsWithFinalDestinationEnabled());
-            pFD.setVisible(_track.getTrackType().equals(Track.INTERCHANGE));
+            pFD.setVisible(_track.isInterchange());
             enableButtons(true);
         } else {
             enableButtons(false);
@@ -303,7 +303,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                     continue;
                 }
                 // now check to see if the track's rolling stock is accepted by the destination
-                checkTypes: for (String type : CarTypes.instance().getNames()) {
+                checkTypes: for (String type : InstanceManager.getDefault(CarTypes.class).getNames()) {
                     if (!_track.acceptsTypeName(type)) {
                         continue;
                     }
@@ -333,7 +333,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                     return false; // done
                 }
                 // now check road names
-                checkRoads: for (String road : CarRoads.instance().getNames()) {
+                checkRoads: for (String road : InstanceManager.getDefault(CarRoads.class).getNames()) {
                     if (!_track.acceptsRoadName(road)) {
                         continue;
                     }
@@ -353,11 +353,11 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                     return false; // done
                 }
                 // now check load names
-                for (String type : CarTypes.instance().getNames()) {
+                for (String type : InstanceManager.getDefault(CarTypes.class).getNames()) {
                     if (!_track.acceptsTypeName(type)) {
                         continue;
                     }
-                    List<String> loads = CarLoads.instance().getNames(type);
+                    List<String> loads = InstanceManager.getDefault(CarLoads.class).getNames(type);
                     checkLoads: for (String load : loads) {
                         if (!_track.acceptsLoadName(load)) {
                             continue;
@@ -400,22 +400,22 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                 // need to check all car types, loads, and roads that this track services
                 Car car = new Car();
                 car.setLength(Integer.toString(-RollingStock.COUPLER)); // set car length to net out to zero
-                for (String type : CarTypes.instance().getNames()) {
+                for (String type : InstanceManager.getDefault(CarTypes.class).getNames()) {
                     if (!_track.acceptsTypeName(type)) {
                         continue;
                     }
-                    List<String> loads = CarLoads.instance().getNames(type);
+                    List<String> loads = InstanceManager.getDefault(CarLoads.class).getNames(type);
                     for (String load : loads) {
                         if (!_track.acceptsLoad(load, type)) {
                             continue;
                         }
-                        for (String road : CarRoads.instance().getNames()) {
+                        for (String road : InstanceManager.getDefault(CarRoads.class).getNames()) {
                             if (!_track.acceptsRoadName(road)) {
                                 continue;
                             }
                             // is there a car with this road?
                             boolean foundCar = false;
-                            for (RollingStock rs : CarManager.instance().getList()) {
+                            for (RollingStock rs : InstanceManager.getDefault(CarManager.class).getList()) {
                                 if (rs.getTypeName().equals(type) && rs.getRoadName().equals(road)) {
                                     foundCar = true;
                                     break;
@@ -463,7 +463,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                             
                             log.debug("Find train for car type ({}), road ({}), load ({})", type, road, load);
 
-                            boolean results = Router.instance().setDestination(car, null, null);
+                            boolean results = InstanceManager.getDefault(Router.class).setDestination(car, null, null);
                             car.setDestination(null, null); // clear destination if set by router
                             if (!results) {
                                 noIssues = false;
@@ -504,5 +504,5 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackDestinationEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrackDestinationEditFrame.class);
 }

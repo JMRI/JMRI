@@ -124,7 +124,7 @@
       </dl>
 
       <p>You will see examples of<br>
-      this throughout the manual.</p><a name="Read Data"></a> To
+      this throughout the manual.</p><a name="ReadData"></a> To
       read the actual settings for these options (and IF your
       system and installed decoder will allow readback of decoder
       values), click on the <strong><input name="button" id=
@@ -147,7 +147,7 @@
       Station. If your system does not have the capability to read
       CVs, then these buttons will not be available.</p>
 
-      <p><a name="Enter/Edit data"></a>If you wish to change the
+      <p><a name="EnterEditData"></a>If you wish to change the
       address of the locomotive, type in the new address. To turn
       on or off 4 digit addressing, select the desired radio
       button. . Be sure that the address type agrees with the
@@ -161,7 +161,7 @@
       "button4" value="Write full sheet" type="button"> to write
       the new values in the decoder.</p>
 
-      <p><a name="Write Data"></a>Writing usually takes much less
+      <p><a name="WriteData"></a>Writing usually takes much less
       time than reading, because the value can be sent directly. As
       the write operation proceeds, the data will change from
       yellow to white. If there is difficulty writing to the
@@ -179,7 +179,7 @@
       the loco on the mainline and see if the programming was
       successful.</p>
 
-      <p><a name="Save Data"></a> To finish this "basic"
+      <p><a name="SaveData"></a> To finish this "basic"
       programming of a decoder, click once more on the
       <strong>Roster Entry</strong> tab, You will see that the
       address field has now been filled in, so you can now click on
@@ -187,7 +187,8 @@
       "Save to roster" type="button"></strong> . Your new decoder
       settings have now been written not only to the decoder, but
       also saved to a computer file where they may be recalled in
-      the future. .</p><a name="Do More"></a> But you say..."I want
+      the future. .</p>
+      <a name="DoMore"></a> But you say..."I want
       to change more than what's shown on the Basic decoder pane."
       Well&hellip; there are other programmers that are available.
       But&hellip; first we need to look at the various options. In

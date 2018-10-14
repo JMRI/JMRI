@@ -8,35 +8,39 @@ import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 
 /**
- * Handle a RMI connection for a single remote client. Description: Copyright:
- * Copyright (c) 2002
+ * Handle an RMI connection for a single remote client.
  *
- * @author Alex Shepherd
+ * @author Alex Shepherd Copyright (c) 2002
  */
 public class LnMessageBuffer extends UnicastRemoteObject implements LnMessageBufferInterface, LocoNetListener {
 
     LinkedList<LocoNetMessage> messageList = null;
+    LnTrafficController tc;
 
-    public LnMessageBuffer() throws RemoteException {
+    public LnMessageBuffer(LnTrafficController _tc) throws RemoteException {
         super();
+        tc = _tc;
     }
 
+    @Override
     public void enable(int mask) throws RemoteException {
         if (messageList == null) {
             messageList = new LinkedList<LocoNetMessage>();
         }
-
-        LnTrafficController.instance().addLocoNetListener(mask, this);
+        tc.addLocoNetListener(mask, this);
     }
 
+    @Override
     public void disable(int mask) throws RemoteException {
-        LnTrafficController.instance().removeLocoNetListener(mask, this);
+        tc.removeLocoNetListener(mask, this);
     }
 
+    @Override
     public void clear() throws RemoteException {
         messageList.clear();
     }
 
+    @Override
     public void message(LocoNetMessage msg) {
         synchronized (messageList) {
             messageList.add(msg);
@@ -44,6 +48,7 @@ public class LnMessageBuffer extends UnicastRemoteObject implements LnMessageBuf
         }
     }
 
+    @Override
     public Object[] getMessages(long timeout) {
         Object[] messagesArray = null;
 
@@ -65,7 +70,9 @@ public class LnMessageBuffer extends UnicastRemoteObject implements LnMessageBuf
         return messagesArray;
     }
 
+    @Override
     public void sendLocoNetMessage(LocoNetMessage m) {
-        LnTrafficController.instance().sendLocoNetMessage(m);
+        tc.sendLocoNetMessage(m);
     }
+
 }

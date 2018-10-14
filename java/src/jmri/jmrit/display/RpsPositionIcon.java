@@ -29,7 +29,7 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         displayState();
 
         // blow up default font
-        setFont(jmri.util.FontUtil.deriveFont(getFont(), (float) 24.));
+        setFont(getFont().deriveFont(24.f));
 
         // connect
         Distributor.instance().addMeasurementListener(this);
@@ -61,10 +61,12 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         displayState();
     }
 
+    @Override
     public String getNameString() {
         return "RPS Position Readout";
     }
 
+    @Override
     public boolean setEditIconMenu(JPopupMenu popup) {
         return false;
     }
@@ -72,12 +74,14 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
     /**
      * Pop-up contents
      */
+    @Override
     public boolean showPopUp(JPopupMenu popup) {
 
         if (showIdItem == null) {
             showIdItem = new JCheckBoxMenuItem("Show ID");
             showIdItem.setSelected(false);
             showIdItem.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     toggleID(showIdItem.isSelected());
                 }
@@ -86,12 +90,14 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         popup.add(showIdItem);
 
         popup.add(new AbstractAction("Set Origin") {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setRpsOrigin();
             }
         });
 
         popup.add(new AbstractAction("Set Current Location") {
+            @Override
               public void actionPerformed(ActionEvent e) {
                 setRpsCurrentLocation();
             }
@@ -101,6 +107,7 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         popup.add(notify);
 
         popup.add(new AbstractAction("Set Filter") {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setFilterPopup();
             }
@@ -119,6 +126,7 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
     /**
      * ****** popup AbstractAction.actionPerformed method overrides ********
      */
+    @Override
     protected void rotateOrthogonal() {
         active.setRotation(active.getRotation() + 1, this);
         error.setRotation(error.getRotation() + 1, this);
@@ -127,12 +135,14 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         repaint();
     }
 
+    @Override
     public void setScale(double s) {
         active.scale(s, this);
         error.scale(s, this);
         displayState();
     }
 
+    @Override
     public void rotate(int deg) {
         active.rotate(deg, this);
         error.rotate(deg, this);
@@ -155,6 +165,7 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         /**
          * Does nothing, here to make this work
          */
+        @Override
         public void actionPerformed(ActionEvent e) {
         }
 
@@ -206,10 +217,12 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         return;
     }
 
+    @Override
     public int maxHeight() {
         return getPreferredSize().height;
     }
 
+    @Override
     public int maxWidth() {
         return getPreferredSize().width;
     }
@@ -247,10 +260,11 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
     /**
      * Respond to a measurement by moving to new position
      */
+    @Override
     public void notify(Measurement m) {
         // only honor measurements to this icon if filtered
         if (filterNumber != null && m.getReading() != null
-                && !filterNumber.equals(m.getReading().getID())) {
+                && !filterNumber.equals(m.getReading().getId())) {
             return;
         }
 
@@ -266,7 +280,7 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         }
 
         if (_text) {
-            super.setText("" + m.getReading().getID());
+            super.setText("" + m.getReading().getId());
         }
         displayState();
 
@@ -305,6 +319,7 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
     }
     String filterNumber = null;
 
+    @Override
     public void dispose() {
         Distributor.instance().removeMeasurementListener(this);
         active = null;

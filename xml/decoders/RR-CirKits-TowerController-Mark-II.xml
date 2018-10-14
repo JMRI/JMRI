@@ -18,11 +18,14 @@
   <!-- Version 0.10  TowerController-Mark-II version -->
   <!-- Version 0.11  TowerController-Mark-II version -->
   <!-- Version 0.12  TowerController-Mark-II Change to OPs mode only -->
+  <!-- Version 0.13  added Inv option to outputs, and added trigger options in logic -->
   <decoder>
     <family name="Tower Controller" mfg="RR-CirKits" type="stationary" comment="The TowerController Mark-II is normally programmed in OPs mode">
       <model model="Mark-II" comment="64 Line I/O Driver" lowVersionID="11"/>
     </family>
-    <programming direct="no" paged="yes" register="no" ops="yes"/>
+    <programming direct="no" paged="yes" register="no" ops="no">
+        <mode>LOCONETOPSBOARD</mode>
+    </programming>
     <variables>
       <variable item="Primary Address" CV="1" comment="Short address">
         <shortAddressVal/>
@@ -270,13 +273,27 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PA1 Paired-I</label></variable>
-      <variable item="PA1 Type" CV="132" mask="VVVVXXXX">
+
+      <variable item="PA1 Type" CV="132" mask="XVVVXXXX">
         <qualifier>
           <variableref>PA1 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PA1 Type</label></variable>
+
+      <variable label="PA1 Inv" CV="132" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PA1 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PA1 Length" CV="132" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -390,13 +407,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PA2 Paired-I</label></variable>
-      <variable item="PA2 Type" CV="140" mask="VVVVXXXX">
+      <variable item="PA2 Type" CV="140" mask="XVVVXXXX">
         <qualifier>
           <variableref>PA2 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PA2 Type</label></variable>
+
+      <variable label="PA2 Inv" CV="140" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PA2 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PA2 Length" CV="140" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -510,13 +540,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PA3 Paired-I</label></variable>
-      <variable item="PA3 Type" CV="148" mask="VVVVXXXX">
+      <variable item="PA3 Type" CV="148" mask="XVVVXXXX">
         <qualifier>
           <variableref>PA3 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PA3 Type</label></variable>
+
+      <variable label="PA3 Inv" CV="148" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PA3 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PA3 Length" CV="148" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -630,13 +673,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PA4 Paired-I</label></variable>
-      <variable item="PA4 Type" CV="156" mask="VVVVXXXX">
+      <variable item="PA4 Type" CV="156" mask="XVVVXXXX">
         <qualifier>
           <variableref>PA4 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PA4 Type</label></variable>
+
+      <variable label="PA4 Inv" CV="156" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PA4 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PA4 Length" CV="156" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -750,13 +806,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PA5 Paired-I</label></variable>
-      <variable item="PA5 Type" CV="164" mask="VVVVXXXX">
+      <variable item="PA5 Type" CV="164" mask="XVVVXXXX">
         <qualifier>
           <variableref>PA5 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PA5 Type</label></variable>
+
+      <variable label="PA5 Inv" CV="164" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PA5 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PA5 Length" CV="164" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -870,13 +939,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PA6 Paired-I</label></variable>
-      <variable item="PA6 Type" CV="172" mask="VVVVXXXX">
+      <variable item="PA6 Type" CV="172" mask="XVVVXXXX">
         <qualifier>
           <variableref>PA6 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PA6 Type</label></variable>
+
+      <variable label="PA6 Inv" CV="172" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PA6 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PA6 Length" CV="172" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -990,13 +1072,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PA7 Paired-I</label></variable>
-      <variable item="PA7 Type" CV="180" mask="VVVVXXXX">
+      <variable item="PA7 Type" CV="180" mask="XVVVXXXX">
         <qualifier>
           <variableref>PA7 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PA7 Type</label></variable>
+
+      <variable label="PA7 Inv" CV="180" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PA7 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PA7 Length" CV="180" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -1110,13 +1205,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PA8 Paired-I</label></variable>
-      <variable item="PA8 Type" CV="188" mask="VVVVXXXX">
+      <variable item="PA8 Type" CV="188" mask="XVVVXXXX">
         <qualifier>
           <variableref>PA8 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PA8 Type</label></variable>
+
+      <variable label="PA8 Inv" CV="188" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PA8 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PA8 Length" CV="188" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -1230,13 +1338,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PB1 Paired-I</label></variable>
-      <variable item="PB1 Type" CV="196" mask="VVVVXXXX">
+      <variable item="PB1 Type" CV="196" mask="XVVVXXXX">
         <qualifier>
           <variableref>PB1 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PB1 Type</label></variable>
+
+      <variable label="PB1 Inv" CV="196" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PB1 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PB1 Length" CV="196" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -1350,13 +1471,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PB2 Paired-I</label></variable>
-      <variable item="PB2 Type" CV="204" mask="VVVVXXXX">
+      <variable item="PB2 Type" CV="204" mask="XVVVXXXX">
         <qualifier>
           <variableref>PB2 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PB2 Type</label></variable>
+
+      <variable label="PB2 Inv" CV="204" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PB2 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PB2 Length" CV="204" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -1470,13 +1604,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PB3 Paired-I</label></variable>
-      <variable item="PB3 Type" CV="212" mask="VVVVXXXX">
+      <variable item="PB3 Type" CV="212" mask="XVVVXXXX">
         <qualifier>
           <variableref>PB3 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PB3 Type</label></variable>
+
+      <variable label="PB3 Inv" CV="212" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PB3 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PB3 Length" CV="212" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -1590,13 +1737,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PB4 Paired-I</label></variable>
-      <variable item="PB4 Type" CV="220" mask="VVVVXXXX">
+      <variable item="PB4 Type" CV="220" mask="XVVVXXXX">
         <qualifier>
           <variableref>PB4 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PB4 Type</label></variable>
+
+      <variable label="PB4 Inv" CV="220" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PB4 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PB4 Length" CV="220" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -1710,13 +1870,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PB5 Paired-I</label></variable>
-      <variable item="PB5 Type" CV="228" mask="VVVVXXXX">
+      <variable item="PB5 Type" CV="228" mask="XVVVXXXX">
         <qualifier>
           <variableref>PB5 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PB5 Type</label></variable>
+
+      <variable label="PB5 Inv" CV="228" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PB5 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PB5 Length" CV="228" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -1830,13 +2003,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PB6 Paired-I</label></variable>
-      <variable item="PB6 Type" CV="236" mask="VVVVXXXX">
+      <variable item="PB6 Type" CV="236" mask="XVVVXXXX">
         <qualifier>
           <variableref>PB6 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PB6 Type</label></variable>
+
+      <variable label="PB6 Inv" CV="236" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PB6 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PB6 Length" CV="236" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -1950,13 +2136,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PB7 Paired-I</label></variable>
-      <variable item="PB7 Type" CV="244" mask="VVVVXXXX">
+      <variable item="PB7 Type" CV="244" mask="XVVVXXXX">
         <qualifier>
           <variableref>PB7 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PB7 Type</label></variable>
+
+      <variable label="PB7 Inv" CV="244" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PB7 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PB7 Length" CV="244" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -2070,13 +2269,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PB8 Paired-I</label></variable>
-      <variable item="PB8 Type" CV="252" mask="VVVVXXXX">
+      <variable item="PB8 Type" CV="252" mask="XVVVXXXX">
         <qualifier>
           <variableref>PB8 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PB8 Type</label></variable>
+
+      <variable label="PB8 Inv" CV="252" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PB8 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PB8 Length" CV="252" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -2190,13 +2402,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PC1 Paired-I</label></variable>
-      <variable item="PC1 Type" CV="260" mask="VVVVXXXX">
+      <variable item="PC1 Type" CV="260" mask="XVVVXXXX">
         <qualifier>
           <variableref>PC1 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PC1 Type</label></variable>
+
+      <variable label="PC1 Inv" CV="260" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PC1 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PC1 Length" CV="260" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -2310,13 +2535,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PC2 Paired-I</label></variable>
-      <variable item="PC2 Type" CV="268" mask="VVVVXXXX">
+      <variable item="PC2 Type" CV="268" mask="XVVVXXXX">
         <qualifier>
           <variableref>PC2 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PC2 Type</label></variable>
+
+      <variable label="PC2 Inv" CV="268" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PC2 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PC2 Length" CV="268" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -2430,13 +2668,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PC3 Paired-I</label></variable>
-      <variable item="PC3 Type" CV="276" mask="VVVVXXXX">
+      <variable item="PC3 Type" CV="276" mask="XVVVXXXX">
         <qualifier>
           <variableref>PC3 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PC3 Type</label></variable>
+
+      <variable label="PC3 Inv" CV="276" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PC3 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PC3 Length" CV="276" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -2550,13 +2801,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PC4 Paired-I</label></variable>
-      <variable item="PC4 Type" CV="284" mask="VVVVXXXX">
+      <variable item="PC4 Type" CV="284" mask="XVVVXXXX">
         <qualifier>
           <variableref>PC4 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PC4 Type</label></variable>
+
+      <variable label="PC4 Inv" CV="284" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PC4 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PC4 Length" CV="284" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -2670,13 +2934,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PC5 Paired-I</label></variable>
-      <variable item="PC5 Type" CV="292" mask="VVVVXXXX">
+      <variable item="PC5 Type" CV="292" mask="XVVVXXXX">
         <qualifier>
           <variableref>PC5 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PC5 Type</label></variable>
+
+      <variable label="PC5 Inv" CV="292" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PC5 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PC5 Length" CV="292" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -2790,13 +3067,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PC6 Paired-I</label></variable>
-      <variable item="PC6 Type" CV="300" mask="VVVVXXXX">
+      <variable item="PC6 Type" CV="300" mask="XVVVXXXX">
         <qualifier>
           <variableref>PC6 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PC6 Type</label></variable>
+
+      <variable label="PC6 Inv" CV="300" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PC6 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PC6 Length" CV="300" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -2910,13 +3200,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PC7 Paired-I</label></variable>
-      <variable item="PC7 Type" CV="308" mask="VVVVXXXX">
+      <variable item="PC7 Type" CV="308" mask="XVVVXXXX">
         <qualifier>
           <variableref>PC7 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PC7 Type</label></variable>
+
+      <variable label="PC7 Inv" CV="308" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PC7 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PC7 Length" CV="308" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -3030,13 +3333,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PC8 Paired-I</label></variable>
-      <variable item="PC8 Type" CV="316" mask="VVVVXXXX">
+      <variable item="PC8 Type" CV="316" mask="XVVVXXXX">
         <qualifier>
           <variableref>PC8 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PC8 Type</label></variable>
+
+      <variable label="PC8 Inv" CV="316" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PC8 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PC8 Length" CV="316" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -3150,13 +3466,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PD1 Paired-I</label></variable>
-      <variable item="PD1 Type" CV="324" mask="VVVVXXXX">
+      <variable item="PD1 Type" CV="324" mask="XVVVXXXX">
         <qualifier>
           <variableref>PD1 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PD1 Type</label></variable>
+
+      <variable label="PD1 Inv" CV="324" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PD1 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PD1 Length" CV="324" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -3270,13 +3599,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PD2 Paired-I</label></variable>
-      <variable item="PD2 Type" CV="332" mask="VVVVXXXX">
+      <variable item="PD2 Type" CV="332" mask="XVVVXXXX">
         <qualifier>
           <variableref>PD2 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PD2 Type</label></variable>
+
+      <variable label="PD2 Inv" CV="332" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PD2 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PD2 Length" CV="332" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -3390,13 +3732,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PD3 Paired-I</label></variable>
-      <variable item="PD3 Type" CV="340" mask="VVVVXXXX">
+      <variable item="PD3 Type" CV="340" mask="XVVVXXXX">
         <qualifier>
           <variableref>PD3 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PD3 Type</label></variable>
+
+      <variable label="PD3 Inv" CV="340" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PD3 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PD3 Length" CV="340" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -3510,13 +3865,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PD4 Paired-I</label></variable>
-      <variable item="PD4 Type" CV="348" mask="VVVVXXXX">
+      <variable item="PD4 Type" CV="348" mask="XVVVXXXX">
         <qualifier>
           <variableref>PD4 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PD4 Type</label></variable>
+
+      <variable label="PD4 Inv" CV="348" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PD4 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PD4 Length" CV="348" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -3630,13 +3998,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PD5 Paired-I</label></variable>
-      <variable item="PD5 Type" CV="356" mask="VVVVXXXX">
+      <variable item="PD5 Type" CV="356" mask="XVVVXXXX">
         <qualifier>
           <variableref>PD5 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PD5 Type</label></variable>
+
+      <variable label="PD5 Inv" CV="356" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PD5 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PD5 Length" CV="356" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -3750,13 +4131,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PD6 Paired-I</label></variable>
-      <variable item="PD6 Type" CV="364" mask="VVVVXXXX">
+      <variable item="PD6 Type" CV="364" mask="XVVVXXXX">
         <qualifier>
           <variableref>PD6 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PD6 Type</label></variable>
+
+      <variable label="PD6 Inv" CV="364" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PD6 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PD6 Length" CV="364" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -3870,13 +4264,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PD7 Paired-I</label></variable>
-      <variable item="PD7 Type" CV="372" mask="VVVVXXXX">
+      <variable item="PD7 Type" CV="372" mask="XVVVXXXX">
         <qualifier>
           <variableref>PD7 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PD7 Type</label></variable>
+
+      <variable label="PD7 Inv" CV="372" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PD7 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PD7 Length" CV="372" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -3990,13 +4397,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PD8 Paired-I</label></variable>
-      <variable item="PD8 Type" CV="380" mask="VVVVXXXX">
+      <variable item="PD8 Type" CV="380" mask="XVVVXXXX">
         <qualifier>
           <variableref>PD8 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PD8 Type</label></variable>
+
+      <variable label="PD8 Inv" CV="380" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PD8 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PD8 Length" CV="380" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -4110,13 +4530,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PE1 Paired-I</label></variable>
-      <variable item="PE1 Type" CV="388" mask="VVVVXXXX">
+      <variable item="PE1 Type" CV="388" mask="XVVVXXXX">
         <qualifier>
           <variableref>PE1 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PE1 Type</label></variable>
+
+      <variable label="PE1 Inv" CV="388" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PE1 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PE1 Length" CV="388" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -4230,13 +4663,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PE2 Paired-I</label></variable>
-      <variable item="PE2 Type" CV="396" mask="VVVVXXXX">
+      <variable item="PE2 Type" CV="396" mask="XVVVXXXX">
         <qualifier>
           <variableref>PE2 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PE2 Type</label></variable>
+
+      <variable label="PE2 Inv" CV="396" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PE2 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PE2 Length" CV="396" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -4350,13 +4796,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PE3 Paired-I</label></variable>
-      <variable item="PE3 Type" CV="404" mask="VVVVXXXX">
+      <variable item="PE3 Type" CV="404" mask="XVVVXXXX">
         <qualifier>
           <variableref>PE3 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PE3 Type</label></variable>
+
+      <variable label="PE3 Inv" CV="404" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PE3 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PE3 Length" CV="404" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -4470,13 +4929,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PE4 Paired-I</label></variable>
-      <variable item="PE4 Type" CV="412" mask="VVVVXXXX">
+      <variable item="PE4 Type" CV="412" mask="XVVVXXXX">
         <qualifier>
           <variableref>PE4 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PE4 Type</label></variable>
+
+      <variable label="PE4 Inv" CV="412" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PE4 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PE4 Length" CV="412" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -4590,13 +5062,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PE5 Paired-I</label></variable>
-      <variable item="PE5 Type" CV="420" mask="VVVVXXXX">
+      <variable item="PE5 Type" CV="420" mask="XVVVXXXX">
         <qualifier>
           <variableref>PE5 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PE5 Type</label></variable>
+
+      <variable label="PE5 Inv" CV="420" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PE5 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PE5 Length" CV="420" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -4710,13 +5195,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PE6 Paired-I</label></variable>
-      <variable item="PE6 Type" CV="428" mask="VVVVXXXX">
+      <variable item="PE6 Type" CV="428" mask="XVVVXXXX">
         <qualifier>
           <variableref>PE6 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PE6 Type</label></variable>
+
+      <variable label="PE6 Inv" CV="428" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PE6 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PE6 Length" CV="428" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -4830,13 +5328,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PE7 Paired-I</label></variable>
-      <variable item="PE7 Type" CV="436" mask="VVVVXXXX">
+      <variable item="PE7 Type" CV="436" mask="XVVVXXXX">
         <qualifier>
           <variableref>PE7 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PE7 Type</label></variable>
+
+      <variable label="PE7 Inv" CV="436" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PE7 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PE7 Length" CV="436" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -4950,13 +5461,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PE8 Paired-I</label></variable>
-      <variable item="PE8 Type" CV="444" mask="VVVVXXXX">
+      <variable item="PE8 Type" CV="444" mask="XVVVXXXX">
         <qualifier>
           <variableref>PE8 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PE8 Type</label></variable>
+
+      <variable label="PE8 Inv" CV="444" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PE8 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PE8 Length" CV="444" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -5070,13 +5594,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PF1 Paired-I</label></variable>
-      <variable item="PF1 Type" CV="452" mask="VVVVXXXX">
+      <variable item="PF1 Type" CV="452" mask="XVVVXXXX">
         <qualifier>
           <variableref>PF1 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PF1 Type</label></variable>
+
+      <variable label="PF1 Inv" CV="452" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PF1 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PF1 Length" CV="452" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -5190,13 +5727,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PF2 Paired-I</label></variable>
-      <variable item="PF2 Type" CV="460" mask="VVVVXXXX">
+      <variable item="PF2 Type" CV="460" mask="XVVVXXXX">
         <qualifier>
           <variableref>PF2 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PF2 Type</label></variable>
+
+      <variable label="PF2 Inv" CV="460" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PF2 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PF2 Length" CV="460" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -5310,13 +5860,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PF3 Paired-I</label></variable>
-      <variable item="PF3 Type" CV="468" mask="VVVVXXXX">
+      <variable item="PF3 Type" CV="468" mask="XVVVXXXX">
         <qualifier>
           <variableref>PF3 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PF3 Type</label></variable>
+
+      <variable label="PF3 Inv" CV="468" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PF3 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PF3 Length" CV="468" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -5430,13 +5993,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PF4 Paired-I</label></variable>
-      <variable item="PF4 Type" CV="476" mask="VVVVXXXX">
+      <variable item="PF4 Type" CV="476" mask="XVVVXXXX">
         <qualifier>
           <variableref>PF4 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PF4 Type</label></variable>
+
+      <variable label="PF4 Inv" CV="476" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PF4 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PF4 Length" CV="476" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -5550,13 +6126,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PF5 Paired-I</label></variable>
-      <variable item="PF5 Type" CV="484" mask="VVVVXXXX">
+      <variable item="PF5 Type" CV="484" mask="XVVVXXXX">
         <qualifier>
           <variableref>PF5 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PF5 Type</label></variable>
+
+      <variable label="PF5 Inv" CV="484" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PF5 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PF5 Length" CV="484" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -5670,13 +6259,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PF6 Paired-I</label></variable>
-      <variable item="PF6 Type" CV="492" mask="VVVVXXXX">
+      <variable item="PF6 Type" CV="492" mask="XVVVXXXX">
         <qualifier>
           <variableref>PF6 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PF6 Type</label></variable>
+
+      <variable label="PF6 Inv" CV="492" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PF6 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PF6 Length" CV="492" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -5790,13 +6392,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PF7 Paired-I</label></variable>
-      <variable item="PF7 Type" CV="500" mask="VVVVXXXX">
+      <variable item="PF7 Type" CV="500" mask="XVVVXXXX">
         <qualifier>
           <variableref>PF7 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PF7 Type</label></variable>
+
+      <variable label="PF7 Inv" CV="500" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PF7 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PF7 Length" CV="500" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -5910,13 +6525,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PF8 Paired-I</label></variable>
-      <variable item="PF8 Type" CV="508" mask="VVVVXXXX">
+      <variable item="PF8 Type" CV="508" mask="XVVVXXXX">
         <qualifier>
           <variableref>PF8 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PF8 Type</label></variable>
+
+      <variable label="PF8 Inv" CV="508" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PF8 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PF8 Length" CV="508" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -6030,13 +6658,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PG1 Paired-I</label></variable>
-      <variable item="PG1 Type" CV="516" mask="VVVVXXXX">
+      <variable item="PG1 Type" CV="516" mask="XVVVXXXX">
         <qualifier>
           <variableref>PG1 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PG1 Type</label></variable>
+
+      <variable label="PG1 Inv" CV="516" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PG1 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PG1 Length" CV="516" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -6150,13 +6791,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PG2 Paired-I</label></variable>
-      <variable item="PG2 Type" CV="524" mask="VVVVXXXX">
+      <variable item="PG2 Type" CV="524" mask="XVVVXXXX">
         <qualifier>
           <variableref>PG2 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PG2 Type</label></variable>
+
+      <variable label="PG2 Inv" CV="524" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PG2 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PG2 Length" CV="524" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -6270,13 +6924,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PG3 Paired-I</label></variable>
-      <variable item="PG3 Type" CV="532" mask="VVVVXXXX">
+      <variable item="PG3 Type" CV="532" mask="XVVVXXXX">
         <qualifier>
           <variableref>PG3 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PG3 Type</label></variable>
+
+      <variable label="PG3 Inv" CV="532" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PG3 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PG3 Length" CV="532" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -6390,13 +7057,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PG4 Paired-I</label></variable>
-      <variable item="PG4 Type" CV="540" mask="VVVVXXXX">
+      <variable item="PG4 Type" CV="540" mask="XVVVXXXX">
         <qualifier>
           <variableref>PG4 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PG4 Type</label></variable>
+
+      <variable label="PG4 Inv" CV="540" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PG4 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PG4 Length" CV="540" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -6510,13 +7190,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PG5 Paired-I</label></variable>
-      <variable item="PG5 Type" CV="548" mask="VVVVXXXX">
+      <variable item="PG5 Type" CV="548" mask="XVVVXXXX">
         <qualifier>
           <variableref>PG5 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PG5 Type</label></variable>
+
+      <variable label="PG5 Inv" CV="548" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PG5 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PG5 Length" CV="548" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -6630,13 +7323,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PG6 Paired-I</label></variable>
-      <variable item="PG6 Type" CV="556" mask="VVVVXXXX">
+      <variable item="PG6 Type" CV="556" mask="XVVVXXXX">
         <qualifier>
           <variableref>PG6 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PG6 Type</label></variable>
+
+      <variable label="PG6 Inv" CV="556" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PG6 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PG6 Length" CV="556" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -6750,13 +7456,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PG7 Paired-I</label></variable>
-      <variable item="PG7 Type" CV="564" mask="VVVVXXXX">
+      <variable item="PG7 Type" CV="564" mask="XVVVXXXX">
         <qualifier>
           <variableref>PG7 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PG7 Type</label></variable>
+
+      <variable label="PG7 Inv" CV="564" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PG7 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PG7 Length" CV="564" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -6870,13 +7589,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PG8 Paired-I</label></variable>
-      <variable item="PG8 Type" CV="572" mask="VVVVXXXX">
+      <variable item="PG8 Type" CV="572" mask="XVVVXXXX">
         <qualifier>
           <variableref>PG8 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PG8 Type</label></variable>
+
+      <variable label="PG8 Inv" CV="572" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PG8 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PG8 Length" CV="572" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -6990,13 +7722,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PH1 Paired-I</label></variable>
-      <variable item="PH1 Type" CV="580" mask="VVVVXXXX">
+      <variable item="PH1 Type" CV="580" mask="XVVVXXXX">
         <qualifier>
           <variableref>PH1 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PH1 Type</label></variable>
+
+      <variable label="PH1 Inv" CV="580" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PH1 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PH1 Length" CV="580" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -7110,13 +7855,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PH2 Paired-I</label></variable>
-      <variable item="PH2 Type" CV="588" mask="VVVVXXXX">
+      <variable item="PH2 Type" CV="588" mask="XVVVXXXX">
         <qualifier>
           <variableref>PH2 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PH2 Type</label></variable>
+
+      <variable label="PH2 Inv" CV="588" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PH2 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PH2 Length" CV="588" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -7230,13 +7988,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PH3 Paired-I</label></variable>
-      <variable item="PH3 Type" CV="596" mask="VVVVXXXX">
+      <variable item="PH3 Type" CV="596" mask="XVVVXXXX">
         <qualifier>
           <variableref>PH3 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PH3 Type</label></variable>
+
+      <variable label="PH3 Inv" CV="596" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PH3 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PH3 Length" CV="596" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -7350,13 +8121,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PH4 Paired-I</label></variable>
-      <variable item="PH4 Type" CV="604" mask="VVVVXXXX">
+      <variable item="PH4 Type" CV="604" mask="XVVVXXXX">
         <qualifier>
           <variableref>PH4 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PH4 Type</label></variable>
+
+      <variable label="PH4 Inv" CV="604" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PH4 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PH4 Length" CV="604" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -7470,13 +8254,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PH5 Paired-I</label></variable>
-      <variable item="PH5 Type" CV="612" mask="VVVVXXXX">
+      <variable item="PH5 Type" CV="612" mask="XVVVXXXX">
         <qualifier>
           <variableref>PH5 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PH5 Type</label></variable>
+
+      <variable label="PH5 Inv" CV="612" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PH5 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PH5 Length" CV="612" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -7590,13 +8387,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PH6 Paired-I</label></variable>
-      <variable item="PH6 Type" CV="620" mask="VVVVXXXX">
+      <variable item="PH6 Type" CV="620" mask="XVVVXXXX">
         <qualifier>
           <variableref>PH6 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PH6 Type</label></variable>
+
+      <variable label="PH6 Inv" CV="620" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PH6 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PH6 Length" CV="620" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -7710,13 +8520,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PH7 Paired-I</label></variable>
-      <variable item="PH7 Type" CV="628" mask="VVVVXXXX">
+      <variable item="PH7 Type" CV="628" mask="XVVVXXXX">
         <qualifier>
           <variableref>PH7 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PH7 Type</label></variable>
+
+      <variable label="PH7 Inv" CV="628" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PH7 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PH7 Length" CV="628" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -7830,13 +8653,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PH8 Paired-I</label></variable>
-      <variable item="PH8 Type" CV="636" mask="VVVVXXXX">
+      <variable item="PH8 Type" CV="636" mask="XVVVXXXX">
         <qualifier>
           <variableref>PH8 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PH8 Type</label></variable>
+
+      <variable label="PH8 Inv" CV="636" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PH8 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PH8 Length" CV="636" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -16879,7 +17715,7 @@
             <qualifier>
               <variableref>Firmware Version</variableref>
               <relation>lt</relation>
-              <value>11</value>
+              <value>16</value>
             </qualifier>
           </label>
         </column>

@@ -3,7 +3,6 @@ package jmri.jmrix;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -20,65 +19,44 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provide GUI to configure communications links.
- * <P>
+ * <p>
  * This is really just a catalog of connections to classes within the systems.
  * Reflection is used to reduce coupling at load time.
- * <P>
+ * <p>
  * Objects of this class are based on an underlying ConnectionConfig
  * implementation, which in turn is obtained from the InstanceManager. Those
  * must be created at load time by the ConfigXml process, or in some Application
  * class.
- * <P>
+ * <p>
  * The classes referenced are the specific subclasses of
  * {@link jmri.jmrix.ConnectionConfig} which provides the methods providing data
  * to the configuration GUI, and responding to its changes.
- * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2004, 2010
  */
 public class JmrixConfigPane extends JPanel implements PreferencesPanel {
 
     private static final ResourceBundle acb = ResourceBundle.getBundle("apps.AppsConfigBundle");
-    private boolean isDirty = false;
-
-    /**
-     * Get access to a pane describing existing configuration information, or
-     * create one if needed.
-     * <P>
-     * The index argument is used to connect the new pane to the right
-     * communications info. A value of "1" means the first (primary) port, 2 is
-     * the second, etc.
-     *
-     * @param index 1-N based index of the communications object to configure.
-     * @return a configuration panel for the specified communications object.
-     */
-    public static JmrixConfigPane instance(int index) {
-        JmrixConfigPane retval = configPaneTable.get(index);
-        if (retval != null) {
-            return retval;
-        }
-        return createPanel(index);
-    }
-
-    public static JmrixConfigPane instance(ConnectionConfig config) {
-        for (int key : configPaneTable.keySet()) {
-            if (configPaneTable.get(key).ccCurrent == config) {
-                return configPaneTable.get(key);
-            }
-        }
-        return null;
-    }
+    public static final String NONE_SELECTED = Bundle.getMessage("noneSelected");
+    public static final String NO_PORTS_FOUND = Bundle.getMessage("noPortsFound");
+    public static final String NONE = Bundle.getMessage("none");
+    // initialize logging
+    private final static Logger log = LoggerFactory.getLogger(JmrixConfigPane.class);
 
     /*
      * Create panel is seperated off from the instance and synchronized, so that only
      * one connection can be configured at once, this prevents multiple threads from
      * trying to create the same panel at the same time.
      */
-    private static synchronized JmrixConfigPane createPanel(int index) {
-        JmrixConfigPane retval = configPaneTable.get(Integer.valueOf(index));
-        if (retval != null) {
-            return retval;
-        }
+    /**
+     * Create a new connection configuration panel.
+     *
+     * @param index the index of the desired connection configuration from
+     *              {@link jmri.jmrix.ConnectionConfigManager#getConnections(int)}
+     * @return the panel for the requested connection or for a new connection if
+     *         index did not match an existing connection configuration
+     */
+    public static synchronized JmrixConfigPane createPanel(int index) {
         ConnectionConfig c = null;
         try {
             c = InstanceManager.getDefault(ConnectionConfigManager.class).getConnections(index);
@@ -86,12 +64,21 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
         } catch (IndexOutOfBoundsException ex) {
             log.debug("connection {} is null, creating new one", index);
         }
-        retval = new JmrixConfigPane(c);
-        configPaneTable.put(index, retval);
+        return createPanel(c);
+    }
+
+    /**
+     * Create a new configuration panel for the given connection.
+     *
+     * @param c the connection; if null, the panel is ready for a new connection
+     * @return the new panel
+     */
+    public static synchronized JmrixConfigPane createPanel(ConnectionConfig c) {
+        JmrixConfigPane pane = new JmrixConfigPane(c);
         if (c == null) {
-            retval.isDirty = true;
+            pane.isDirty = true;
         }
-        return retval;
+        return pane;
     }
 
     /**
@@ -100,36 +87,14 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
      * @return a new configuration panel
      */
     public static JmrixConfigPane createNewPanel() {
-
-        int lastIndex = -1;
-        ConnectionConfig[] connections = InstanceManager.getDefault(ConnectionConfigManager.class).getConnections();
-
-        if (connections.length != 0) {
-            lastIndex = connections.length;
-        }
-        for (int key : configPaneTable.keySet()) {
-            if (key > lastIndex) {
-                lastIndex = key;
-            }
-        }
-        lastIndex++;
-        return createPanel(lastIndex);
+        return createPanel(null);
     }
 
-    public static int getNumberOfInstances() {
-        return configPaneTable.size();
-    }
-
-    public static void dispose(int index) {
-        JmrixConfigPane retval = configPaneTable.get(Integer.valueOf(index));
-        if (retval == null) {
-            log.debug("no instance found therefore can not dispose of it!");
-            return;
-        }
-
-        dispose(retval);
-    }
-
+    /**
+     * Disposes of the underlying connection for a configuration pane.
+     *
+     * @param confPane the pane to dispose of
+     */
     public static void dispose(JmrixConfigPane confPane) {
         if (confPane == null) {
             log.debug("no instance found therefore can not dispose of it!");
@@ -139,8 +104,8 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
         if (confPane.ccCurrent != null) {
             try {
                 confPane.ccCurrent.dispose();
-            } catch (Exception ex) {
-                log.error("Error Occured while disposing connection {}", ex.toString());
+            } catch (RuntimeException ex) {
+                log.error("Error Occurred while disposing connection {}", ex.toString());
             }
         }
         ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
@@ -149,28 +114,9 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
             cmOD.deregister(confPane.ccCurrent);
         }
         InstanceManager.getDefault(ConnectionConfigManager.class).remove(confPane.ccCurrent);
-
-        configPaneTable.remove(getInstanceNumber(confPane));
     }
 
-    public static int getInstanceNumber(JmrixConfigPane confPane) {
-        for (int key : configPaneTable.keySet()) {
-            if (configPaneTable.get(key).equals(confPane)) {
-                return key;
-            }
-        }
-        return -1;
-    }
-
-    public static ArrayList<JmrixConfigPane> getListOfConfigPanes() {
-        return new ArrayList<>(configPaneTable.values());
-    }
-
-    static final HashMap<Integer, JmrixConfigPane> configPaneTable = new HashMap<>();
-
-    public static final String NONE_SELECTED = Bundle.getMessage("noneSelected");
-    public static final String NO_PORTS_FOUND = Bundle.getMessage("noPortsFound");
-    public static final String NONE = Bundle.getMessage("none");
+    private boolean isDirty = false;
 
     JComboBox<String> modeBox = new JComboBox<>();
     JComboBox<String> manuBox = new JComboBox<>();
@@ -184,13 +130,16 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
 
     ConnectionConfig ccCurrent = null;
 
+    protected JmrixConfigPane() {
+    }
+
     /**
      * Use "instance" to get one of these. That allows it to reconnect to
      * existing information in an existing ConnectionConfig object. It's
      * permitted to call this with a null argument, e.g. for when first
      * configuring the system.
      */
-    private JmrixConfigPane(ConnectionConfig original) {
+    protected JmrixConfigPane(ConnectionConfig original) {
 
         ConnectionConfigManager manager = InstanceManager.getDefault(ConnectionConfigManager.class);
         ccCurrent = original;
@@ -256,7 +205,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
         modeBox.addActionListener((ActionEvent a) -> {
             if ((String) modeBox.getSelectedItem() != null) {
                 if (!((String) modeBox.getSelectedItem()).equals(NONE_SELECTED)) {
-                    p.addComboBoxLastSelection((String) manuBox.getSelectedItem(), (String) modeBox.getSelectedItem());
+                    p.setComboBoxLastSelection((String) manuBox.getSelectedItem(), (String) modeBox.getSelectedItem());
                 }
             }
             selection();
@@ -402,9 +351,6 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
         classConnectionList[current].setDisabled(disabled);
     }
 
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(JmrixConfigPane.class);
-
     @Override
     public String getPreferencesItem() {
         return "CONNECTIONS"; // NOI18N
@@ -474,4 +420,5 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
     public boolean isPreferencesValid() {
         return true; // no validity checking performed
     }
+
 }

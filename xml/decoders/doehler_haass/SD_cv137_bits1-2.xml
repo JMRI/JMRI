@@ -36,13 +36,15 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Deactivate energy saving mode</label>
     <label xml:lang="fr">Désactiver économie d'énergie</label>
-    <label xml:lang="de">Energiesparmodus ausschlaten</label>
+    <label xml:lang="de">Energiesparmodus ausschalten</label>
     <label xml:lang="it">Disattiva modalità risparmio energetico</label>
+    <label xml:lang="ca">Desactiva modalitat d'estalvi d'energia</label>
   </variable>
   <variable item="Revert SUSI direction" CV="137" mask="XXXXXVXX" tooltip="CV137 bit 2" exclude="SD18A_1.00,SD18A_1.01,SD18A_1.02,SD21A_1.01,SD21A_1.02">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Revert SUSI direction</label>
     <label xml:lang="fr">Inverser sens de marche SUSI</label>
     <label xml:lang="de">SUSI-Fahrtrichtung invertieren</label>
+    <label xml:lang="ca">Invertir el sentit de marxa SUSI</label>
   </variable>
 </variables>

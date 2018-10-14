@@ -1,9 +1,11 @@
 package jmri.jmrix.jmriclient;
 
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
+
 
 /**
  * JMRIClientTurnoutManagerTest.java
@@ -12,39 +14,36 @@ import junit.framework.TestSuite;
  * class
  *
  * @author	Bob Jacobsen
- * @version $Revision: 17977 $
+ * @author      Paul Bender Copyright (C) 2012,2016	
  */
-public class JMRIClientTurnoutManagerTest extends TestCase {
+public class JMRIClientTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
+    @Override
+    public String getSystemName(int i){
+        return "JT" + i;
+    }
+
+    @Test
     public void testCtor() {
-        JMRIClientTurnoutManager m = new JMRIClientTurnoutManager(new JMRIClientSystemConnectionMemo());
-        Assert.assertNotNull(m);
-    }
-
-    // from here down is testing infrastructure
-    public JMRIClientTurnoutManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", JMRIClientTurnoutManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JMRIClientTurnoutManagerTest.class);
-        return suite;
+        Assert.assertNotNull(l);
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        JMRIClientTrafficController tc = new JMRIClientTrafficController(){
+           @Override
+           public void sendJMRIClientMessage(JMRIClientMessage m,JMRIClientListener reply) {
+           }
+        };
+        l= new JMRIClientTurnoutManager(new JMRIClientSystemConnectionMemo(tc));
     }
 
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

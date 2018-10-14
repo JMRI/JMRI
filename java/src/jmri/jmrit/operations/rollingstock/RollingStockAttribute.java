@@ -1,4 +1,3 @@
-// RollingStockAttribute.java
 package jmri.jmrit.operations.rollingstock;
 
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * color, type, load, road, owner, model etc.
  *
  * @author Daniel Boudreau Copyright (C) 2014
- * @version $Revision: 25735 $
+ *
  */
 public class RollingStockAttribute {
 
@@ -24,17 +23,17 @@ public class RollingStockAttribute {
     public RollingStockAttribute() {
     }
 
-    public synchronized void dispose() {
+    public void dispose() {
         list.clear();
         //TODO The removal of listeners causes the tests to fail.
         // Need to reload all listeners for the tests to work.
         // Only tests currently call dispose()
         // remove all listeners
-//		for (java.beans.PropertyChangeListener p : pcs.getPropertyChangeListeners())
-//			pcs.removePropertyChangeListener(p);
+//  for (java.beans.PropertyChangeListener p : pcs.getPropertyChangeListeners())
+//   pcs.removePropertyChangeListener(p);
     }
 
-    protected List<String> list = new ArrayList<String>();
+    protected List<String> list = new ArrayList<>();
 
     public String[] getNames() {
         if (list.size() == 0) {
@@ -57,7 +56,7 @@ public class RollingStockAttribute {
         if (names.length == 0) {
             return;
         }
-        jmri.util.StringUtil.sort(names);
+        java.util.Arrays.sort(names);
         for (String name : names) {
             if (!list.contains(name)) {
                 list.add(name);
@@ -67,6 +66,7 @@ public class RollingStockAttribute {
 
     /**
      * Performs number sort before adding to list
+     * @param lengths The set of strings to be ordered.
      *
      */
     public void setValues(String[] lengths) {
@@ -143,7 +143,11 @@ public class RollingStockAttribute {
 
     /**
      * Create an XML element to represent this Entry. This member has to remain
-     * synchronized with the detailed DTD in operations-cars.dtd.
+     * synchronized with the detailed DTD in operations-cars.dtd and operations-engines.dtd.
+     * @param root Common Element for storage.
+     * @param eNames New format Element group name
+     * @param eName New format Element name
+     * @param oldName Backwards compatibility Element name
      *
      */
     public void store(Element root, String eNames, String eName, String oldName) {
@@ -171,7 +175,6 @@ public class RollingStockAttribute {
     public void load(Element root, String eNames, String eName, String oldName) {
         // new format using elements starting version 3.3.1
         if (root.getChild(eNames) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> l = root.getChild(eNames).getChildren(eName);
             Attribute a;
             String[] names = new String[l.size()];
@@ -208,6 +211,6 @@ public class RollingStockAttribute {
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RollingStockAttribute.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RollingStockAttribute.class);
 
 }

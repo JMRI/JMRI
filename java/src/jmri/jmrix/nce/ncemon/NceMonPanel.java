@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a MonFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @author	kcameron Copyright (C) 2011 copied from SerialMonPane.java
- * @author	Daniel Boudreau Copyright (C) 2012 added human readable format
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author kcameron Copyright (C) 2011 copied from SerialMonPane.java
+ * @author Daniel Boudreau Copyright (C) 2012 added human readable format
  */
 public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListener, NcePanelInterface {
 
@@ -22,12 +22,12 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
         super();
     }
 
-    NceMonBinary nceMon = new NceMonBinary();
-
+    @Override
     public String getHelpTarget() {
         return null;
     }
 
+    @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
         if (memo != null) {
@@ -40,6 +40,7 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
         return x.toString();
     }
 
+    @Override
     public void dispose() {
         // disconnect from the NceTrafficController
         try {
@@ -51,17 +52,20 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
         super.dispose();
     }
 
+    @Override
     public void init() {
     }
 
     NceSystemConnectionMemo memo;
 
+    @Override
     public void initContext(Object context) {
         if (context instanceof NceSystemConnectionMemo) {
             initComponents((NceSystemConnectionMemo) context);
         }
     }
 
+    @Override
     public void initComponents(NceSystemConnectionMemo memo) {
         this.memo = memo;
         // connect to the NceTrafficController
@@ -69,31 +73,25 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
             memo.getNceTrafficController().addNceListener(this);
         } catch (java.lang.NullPointerException e) {
             log.error("Unable to start the NCE Command monitor");
-            JOptionPane.showMessageDialog(null, "An Error has occured that prevents the NCE Command Monitor from being loaded.\nPlease check the System Console for more information", "No Connection", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "An Error has occurred that prevents the NCE Command Monitor from being loaded.\nPlease check the System Console for more information", "No Connection", JOptionPane.WARNING_MESSAGE);
         }
     }
 
+    @Override
     public synchronized void message(NceMessage m) {  // receive a message and log it
         if (m.isBinary()) {
-            nextLine(nceMon.displayMessage(m), m.toString());
+            logMessage(m);
         } else {
-            nextLine("cmd: \"" + m.toString() + "\"\n", null);
+            logMessage("cmd: ",m);
         }
     }
 
+    @Override
     public synchronized void reply(NceReply r) {  // receive a reply message and log it
-        String raw = "";
-        for (int i = 0; i < r.getNumDataElements(); i++) {
-            if (i > 0) {
-                raw += " ";
-            }
-            raw = jmri.util.StringUtil.appendTwoHexFromInt(r.getElement(i) & 0xFF, raw);
-        }
-
         if (r.isUnsolicited()) {
-            nextLine("msg: \"" + r.toString() + "\"\n", raw);
+            logMessage("msg: ",r);
         } else {
-            nextLine(nceMon.displayReply(r), raw);
+            logMessage(r);
         }
     }
 
@@ -110,6 +108,6 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceMonPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceMonPanel.class);
 
 }

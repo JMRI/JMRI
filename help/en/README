@@ -26,7 +26,7 @@ The search index files in JavaHelpSearch/ should NOT be
 manually edited.  JHelpDev will overwrite them when next run.
 
 The build.xml and format.xsl files are used to create the webtoc.html
-and webindex.html files automatically. Those use Server-Side Includes
+and webindex.shtml files automatically. Those use Server-Side Includes
 to display the standard JMRI header and footer, and also some 
 explanatory content from the tocheader and indexheader files.
 
@@ -37,4 +37,23 @@ The html/tools directory is only partially converted - get it from
 the main web site.
 
 html/hardware needs to be carefully checked
+
+JHELPDEV:
+
+The JHelpDev included here is 0.63 from jhelpdev.sf.net, 
+with the following modifications to 
+(a) allow .shtml files
+(b) handle <a name="foo" id="foo">
+
+javasrc/net/sourceforge/jhelpdev/action/CreateMapAction.java 
+54c54
+<  * directory and all subdirectories for files with .html, .htm, .shtml, .jsp or .gif suffixes.
+---
+>  * directory and all subdirectories for files with .html, .htm, .jsp or .gif suffixes.
+85c85
+<     public static final Pattern VALUE_PATTERN = Pattern.compile("\".*?\"",
+---
+>     public static final Pattern VALUE_PATTERN = Pattern.compile("\".*\"",
+256d255
+<                     || filesInDir[i].toUpperCase().endsWith(".SHTML")
 

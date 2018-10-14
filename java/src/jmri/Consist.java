@@ -42,23 +42,32 @@ public interface Consist {
     public void dispose();
 
     /**
-     * Set the Consist Type
+     * Set the Consist Type.
+     *
+     * @param consist_type the consist type
      */
     public void setConsistType(int consist_type);
 
     /**
-     * Get the Consist Type
+     * Get the Consist Type.
+     *
+     * @return the consist type
      */
     public int getConsistType();
 
     /**
      * Get the Consist Address
+     *
+     * @return the consist address
      */
     public DccLocoAddress getConsistAddress();
 
     /**
      * Is the specific address allowed? (needed for system specific
      * restrictions)
+     *
+     * @param address the address
+     * @return true if allowed; false otherwise
      */
     public boolean isAddressAllowed(DccLocoAddress address);
 
@@ -72,18 +81,27 @@ public interface Consist {
     public int sizeLimit();
 
     /**
-     * Get a list of the locomotives in the consist
+     * Get a list of the locomotives in the consist.
+     *
+     * @return the list of addresses
      */
     public ArrayList<DccLocoAddress> getConsistList();
 
     /**
      * Does the consist contain the specified locomotive address?
+     *
+     * @param address the address to check
+     * @return true if in consist; false otherwise
      */
     public boolean contains(DccLocoAddress address);
 
     /**
      * Get the relative direction setting for a specific locomotive in the
-     * consist
+     * consist.
+     *
+     * @param address the address to check
+     * @return true if locomotive is in consist in its normal direction of
+     *         travel; false otherwise
      */
     public boolean getLocoDirection(DccLocoAddress address);
 
@@ -133,6 +151,24 @@ public interface Consist {
      *         locomotives in the consist
      */
     public int getPosition(DccLocoAddress address);
+
+    /**
+     * Set the roster entry of a locomotive within the consist
+     *
+     * @param address  is the Locomotive address
+     * @param rosterId is the roster Identifer of the associated roster entry.
+     */
+    public void setRosterId(DccLocoAddress address, String rosterId);
+
+    /**
+     * Get the rosterId of a locomotive within the consist
+     *
+     * @param address is the Locomotive address of interest
+     * @return string roster Identifier associated with the given address 
+     *         in the consist.  Returns null if no roster entry is associated
+     *         with this entry.
+     */
+    public String getRosterId(DccLocoAddress address);
 
     /**
      * Add a listener for consist events

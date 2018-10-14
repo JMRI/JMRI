@@ -1,26 +1,28 @@
 package jmri.jmrix.rps.swing;
 
+import java.awt.GraphicsEnvironment;
 import java.awt.geom.AffineTransform;
 import javax.swing.JFrame;
+import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.*;
 
 /**
  * Tests for the jmri.jmrix.rps.swing.AffineEntryPanel class
  *
  * @author Bob Jacobsen Copyright 2008
  */
-public class AffineEntryPanelTest extends TestCase {
+public class AffineEntryPanelTest {
 
+    @Test
     public void testCtor() {
         AffineEntryPanel p = new AffineEntryPanel();
         Assert.assertTrue(p.getTransform().equals(new AffineTransform()));
     }
 
+    @Test
     public void testListener() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriJFrame f = new JmriJFrame();
         AffineEntryPanel p = new AffineEntryPanel();
         f.add(p);
@@ -28,6 +30,7 @@ public class AffineEntryPanelTest extends TestCase {
         f.setTitle("Test RPS Listener");
         f.setVisible(true);
         java.beans.PropertyChangeListener l = new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("value")) {
                     System.out.println("See " + e.getPropertyName() + " as " + e.getNewValue());
@@ -35,12 +38,13 @@ public class AffineEntryPanelTest extends TestCase {
             }
         };
         p.addPropertyChangeListener(l);
-        
+
         JFrame f2 = jmri.util.JmriJFrame.getFrame("Test RPS Listener");
-        Assert.assertTrue("found frame", f2 != null);
+        Assert.assertNotNull("found frame", f2);
         f2.dispose();
     }
 
+    @Test
     public void testRoundTrip() {
         AffineEntryPanel p = new AffineEntryPanel();
         AffineTransform t = new AffineTransform(2., 3., 4., 5., 6., 7.);
@@ -48,29 +52,14 @@ public class AffineEntryPanelTest extends TestCase {
         Assert.assertTrue(p.getTransform().equals(t));
     }
 
-//    test order isn't guaranteed!
-//    public void testFrameCreation() {
-//        JFrame f = jmri.util.JmriJFrame.getFrame("Test RPS Listener");
-//        Assert.assertTrue("found frame", f != null);
-//        f.dispose();
-//    }
-
-    // from here down is testing infrastructure
-    public AffineEntryPanelTest(String s) {
-        super(s);
+    // The minimal setup for log4J
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {AffineEntryPanelTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite(AffineEntryPanelTest.class);
-        return suite;
-    }
-
 }

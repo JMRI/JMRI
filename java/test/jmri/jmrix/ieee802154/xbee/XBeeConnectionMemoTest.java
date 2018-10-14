@@ -1,9 +1,16 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import com.digi.xbee.api.XBeeNetwork;
+import com.digi.xbee.api.XBeeDevice;
 
 /**
  * XBeeConnectionMemoTest.java
@@ -11,39 +18,50 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo
  * class
  *
- * @author	Paul Bender
+ * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class XBeeConnectionMemoTest extends TestCase {
+@RunWith(MockitoJUnitRunner.class)
+public class XBeeConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+        
+    @Mock private XBeeTrafficController tc;
+    @Mock private XBeeNetwork xn;
+    private XBeeAdapter xa;
+    private XBeeDevice xb;
 
-    public void testCtor() {
-        XBeeConnectionMemo m = new XBeeConnectionMemo();
-        Assert.assertNotNull("exists", m);
-    }
+    private XBeeConnectionMemo memo = null;
 
-    // from here down is testing infrastructure
-    public XBeeConnectionMemoTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XBeeConnectionMemoTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XBeeConnectionMemoTest.class);
-        return suite;
+    @Override
+    @Test
+    public void testProvidesConsistManager(){
+       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+        memo = new XBeeConnectionMemo();
+        memo.setTrafficController(tc);
+        xa= new XBeeAdapter(){
+           @Override
+           public boolean isOpen(){
+              return true;
+           }
+        };  
+        xb = new XBeeDevice(xa){
+           @Override
+           public XBeeNetwork getNetwork(){
+              return xn;
+           }
+        };
+        Mockito.when(tc.getXBee()).thenReturn(xb);
+        memo.configureManagers();
+        scm = memo;
     }
 
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

@@ -34,13 +34,14 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
      * @param o Object to store, of type LightManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element lights = new Element("lights");
         setStoreElementClass(lights);
         LightManager tm = (LightManager) o;
         if (tm != null) {
             java.util.Iterator<String> iter
-                    = tm.getSystemNameList().iterator();
+                    = tm.getSystemNameAddedOrderList().iterator();
 
             // don't return an element if there are not lights to include
             if (!iter.hasNext()) {
@@ -56,8 +57,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
                 }
                 log.debug("system name is " + sname);
                 Light lgt = tm.getBySystemName(sname);
-                Element elem = new Element("light")
-                        .setAttribute("systemName", sname);
+                Element elem = new Element("light");
                 elem.addContent(new Element("systemName").addContent(sname));
 
                 // store common parts
@@ -124,7 +124,6 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
      *
      * @param lights Element containing the Light elements to load.
      */
-    @SuppressWarnings("unchecked")
     public boolean loadLights(Element lights) {
         boolean result = true;
         List<Element> lightList = lights.getChildren("light");
@@ -132,6 +131,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
             log.debug("Found " + lightList.size() + " lights");
         }
         LightManager tm = InstanceManager.lightManagerInstance();
+        tm.setDataListenerMute(true);
 
         for (int i = 0; i < lightList.size(); i++) {
 
@@ -143,6 +143,8 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
             }
 
             String userName = getUserName(lightList.get(i));
+
+            checkNameNormalization(sysName, userName, tm);
 
             if (log.isDebugEnabled()) {
                 log.debug("create light: (" + sysName + ")("
@@ -317,12 +319,15 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
             // done, start it working
             lgt.activateLight();
         }
+
+        tm.setDataListenerMute(false);
         return result;
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.lightManagerInstance().getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractLightManagerConfigXML.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractLightManagerConfigXML.class);
 }

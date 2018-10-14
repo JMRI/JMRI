@@ -1,27 +1,29 @@
-//OperationsSetupTest.java
 package jmri.jmrit.operations.setup;
 
 import java.io.File;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Setup class Last manually cross-checked on 20090131
- *
+ * <p>
  * Still to do: Backup, Control, Demo
  *
- * @author	Bob Coleman Copyright (C) 2008, 2009
+ * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class OperationsSetupTest extends OperationsTestCase {
 
     // test creation
+    @Test
     @SuppressWarnings("static-access")
     public void testCreate() {
         Setup s = new Setup();
@@ -33,6 +35,7 @@ public class OperationsSetupTest extends OperationsTestCase {
 
     // test public constants
     @SuppressWarnings("static-access")
+    @Test
     public void testConstants() {
         Setup s = new Setup();
 
@@ -56,17 +59,17 @@ public class OperationsSetupTest extends OperationsTestCase {
         Assert.assertEquals("Operations Setup Constant NORTH", 4, Setup.NORTH);
         Assert.assertEquals("Operations Setup Constant SOUTH", 8, Setup.SOUTH);
 
-        Assert.assertEquals("Operations Setup Constant EAST_DIR", "East", Setup.EAST_DIR);
-        Assert.assertEquals("Operations Setup Constant WEST_DIR", "West", Setup.WEST_DIR);
-        Assert.assertEquals("Operations Setup Constant NORTH_DIR", "North", Setup.NORTH_DIR);
-        Assert.assertEquals("Operations Setup Constant SOUTH_DIR", "South", Setup.SOUTH_DIR);
+        Assert.assertEquals("Operations Setup Constant EAST_DIR", Bundle.getMessage("East"), Setup.EAST_DIR);
+        Assert.assertEquals("Operations Setup Constant WEST_DIR", Bundle.getMessage("West"), Setup.WEST_DIR);
+        Assert.assertEquals("Operations Setup Constant NORTH_DIR", Bundle.getMessage("North"), Setup.NORTH_DIR);
+        Assert.assertEquals("Operations Setup Constant SOUTH_DIR", Bundle.getMessage("South"), Setup.SOUTH_DIR);
 
-        Assert.assertEquals("Operations Setup Constant DESCRIPTIVE", "Descriptive", Setup.DESCRIPTIVE);
+        Assert.assertEquals("Operations Setup Constant DESCRIPTIVE", Bundle.getMessage("Descriptive"), Setup.DESCRIPTIVE);
         /* Should be fixed in setup to AAR Codes */
-        Assert.assertEquals("Operations Setup Constant AAR", "ARR Codes", Setup.AAR);
+        Assert.assertEquals("Operations Setup Constant AAR", Bundle.getMessage("ArrCodes"), Setup.AAR);
 
-        Assert.assertEquals("Operations Setup Constant MONOSPACED", "Monospaced", Setup.MONOSPACED);
-        Assert.assertEquals("Operations Setup Constant LENGTHABV", "'", Setup.LENGTHABV);
+        Assert.assertEquals("Operations Setup Constant MONOSPACED", Bundle.getMessage("Monospaced"), Setup.MONOSPACED);
+        Assert.assertEquals("Operations Setup Constant LENGTHABV", Bundle.getMessage("LengthSymbol"), Setup.LENGTHABV);
 
         Assert.assertEquals("Operations Setup Constant BUILD_REPORT_MINIMAL", "1", Setup.BUILD_REPORT_MINIMAL);
         Assert.assertEquals("Operations Setup Constant BUILD_REPORT_NORMAL", "3", Setup.BUILD_REPORT_NORMAL);
@@ -76,6 +79,7 @@ public class OperationsSetupTest extends OperationsTestCase {
 
     // test menu attributes
     @SuppressWarnings("static-access")
+    @Test
     public void testMenuAttributes() {
         Setup s = new Setup();
         s.setMainMenuEnabled(true);
@@ -87,6 +91,7 @@ public class OperationsSetupTest extends OperationsTestCase {
 
     // test scale attributes
     @SuppressWarnings("static-access")
+    @Test
     public void testScaleAttributes() {
         Setup s = new Setup();
         // Not really necessary
@@ -175,6 +180,7 @@ public class OperationsSetupTest extends OperationsTestCase {
 
     // test train attributes
     @SuppressWarnings("static-access")
+    @Test
     public void testTrainAttributes() {
         Setup s = new Setup();
         // Not really necessary
@@ -216,7 +222,7 @@ public class OperationsSetupTest extends OperationsTestCase {
          Assert.assertTrue(s.isShowCarLengthEnabled());
          s.setShowCarLengthEnabled(false);
          Assert.assertFalse(s.isShowCarLengthEnabled());
-		
+
          s.setShowCarLoadEnabled(true);
          Assert.assertTrue(s.isShowCarLoadEnabled());
          s.setShowCarLoadEnabled(false);
@@ -226,7 +232,7 @@ public class OperationsSetupTest extends OperationsTestCase {
          Assert.assertTrue(s.isShowCarColorEnabled());
          s.setShowCarColorEnabled(false);
          Assert.assertFalse(s.isShowCarColorEnabled());
-		
+
          s.setShowCarDestinationEnabled(true);
          Assert.assertTrue(s.isShowCarDestinationEnabled());
          s.setShowCarDestinationEnabled(false);
@@ -244,6 +250,7 @@ public class OperationsSetupTest extends OperationsTestCase {
 
     // test panel attributes
     @SuppressWarnings("static-access")
+    @Test
     public void testPanelAttributes() {
         Setup s = new Setup();
         // Not really necessary
@@ -290,19 +297,21 @@ public class OperationsSetupTest extends OperationsTestCase {
     }
 
     // confirm that all operation file names have been modified
+    @Test
     public void testXMLFileTestFileName() {
-        Assert.assertEquals("Test setup file name", "OperationsJUnitTest.xml", OperationsSetupXml.instance().getOperationsFileName());
-        Assert.assertEquals("Test location file name", "OperationsJUnitTestLocationRoster.xml", LocationManagerXml.instance().getOperationsFileName());
-        Assert.assertEquals("Test train file name", "OperationsJUnitTestTrainRoster.xml", TrainManagerXml.instance().getOperationsFileName());
-        Assert.assertEquals("Test car file name", "OperationsJUnitTestCarRoster.xml", CarManagerXml.instance().getOperationsFileName());
-        Assert.assertEquals("Test engine file name", "OperationsJUnitTestEngineRoster.xml", EngineManagerXml.instance().getOperationsFileName());
-        Assert.assertEquals("Test route file name", "OperationsJUnitTestRouteRoster.xml", RouteManagerXml.instance().getOperationsFileName());
+        Assert.assertEquals("Test setup file name", "OperationsJUnitTest.xml", InstanceManager.getDefault(OperationsSetupXml.class).getOperationsFileName());
+        Assert.assertEquals("Test location file name", "OperationsJUnitTestLocationRoster.xml", InstanceManager.getDefault(LocationManagerXml.class).getOperationsFileName());
+        Assert.assertEquals("Test train file name", "OperationsJUnitTestTrainRoster.xml", InstanceManager.getDefault(TrainManagerXml.class).getOperationsFileName());
+        Assert.assertEquals("Test car file name", "OperationsJUnitTestCarRoster.xml", InstanceManager.getDefault(CarManagerXml.class).getOperationsFileName());
+        Assert.assertEquals("Test engine file name", "OperationsJUnitTestEngineRoster.xml", InstanceManager.getDefault(EngineManagerXml.class).getOperationsFileName());
+        Assert.assertEquals("Test route file name", "OperationsJUnitTestRouteRoster.xml", InstanceManager.getDefault(RouteManagerXml.class).getOperationsFileName());
 
         Assert.assertEquals("Test directory name", "operations" + File.separator + "JUnitTest", OperationsSetupXml.getOperationsDirectoryName());
     }
 
     // test xml file creation and read
     @SuppressWarnings("static-access")
+    @Test
     public void testXMLFileCreate() throws Exception {
         Setup s;
         s = createTestSetup();
@@ -410,10 +419,10 @@ public class OperationsSetupTest extends OperationsTestCase {
         Assert.assertEquals("After Read Train Icon Color Terminate", "White", s.getTrainIconColorTerminate());
     }
 
-	// TODO: Add test to create xml file
+    // TODO: Add test to create xml file
     // TODO: Add test to read xml file
     @SuppressWarnings("static-access")
-    public static Setup createTestSetup() throws java.io.IOException, java.io.FileNotFoundException {
+    private Setup createTestSetup() throws java.io.IOException, java.io.FileNotFoundException {
         // this uses explicit filenames intentionally, to ensure that
         // the resulting files go into the test tree area.
 
@@ -448,7 +457,7 @@ public class OperationsSetupTest extends OperationsTestCase {
 
         // store files in "temp"
         // write it
-        ox.writeFile(OperationsSetupXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName() + File.separator + OperationsSetupXml.instance().getOperationsFileName());
+        ox.writeFile(OperationsSetupXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName() + File.separator + InstanceManager.getDefault(OperationsSetupXml.class).getOperationsFileName());
 
         // Set filename back to Operations
         ox.setOperationsFileName("Operations.xml");
@@ -458,6 +467,7 @@ public class OperationsSetupTest extends OperationsTestCase {
         return s;
     }
 
+    @Test
     public void readTestSetup() throws org.jdom2.JDOMException, java.io.IOException, java.io.FileNotFoundException {
         // this uses explicit filenames intentionally, to ensure that
         // the resulting files go into the test tree area.
@@ -465,45 +475,42 @@ public class OperationsSetupTest extends OperationsTestCase {
         OperationsSetupXml ox = new OperationsSetupXml();
 
         // change file name to OperationsTest
-        ox.setOperationsFileName(OperationsSetupXml.instance().getOperationsFileName());
+        ox.setOperationsFileName(InstanceManager.getDefault(OperationsSetupXml.class).getOperationsFileName());
 
         // create a Operations file with known contents
         Setup s = new Setup();
         Assert.assertNotNull("exists", s);
 
         // read it
-        ox.readFile(OperationsSetupXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName() + File.separator + OperationsSetupXml.instance().getOperationsFileName());
+        ox.readFile(OperationsSetupXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName() + File.separator + InstanceManager.getDefault(OperationsSetupXml.class).getOperationsFileName());
     }
 
-	// from here down is testing infrastructure
+    // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     /**
      * Test-by test initialization.
-     * @throws Exception 
      */
+    @Before
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
     }
 
-    public OperationsSetupTest(String s) {
-        super(s);
-    }
+//    // Main entry point
+//    static public void main(String[] args) {
+//        String[] testCaseName = {"-noloading", OperationsSetupTest.class.getName()};
+//        junit.textui.TestRunner.main(testCaseName);
+//    }
+//
+//    // test suite from all defined tests
+//    public static Test suite() {
+//        TestSuite suite = new TestSuite(OperationsSetupTest.class);
+//        return suite;
+//    }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OperationsSetupTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OperationsSetupTest.class);
-        return suite;
-    }
-
+    @After
     @Override
-    protected void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

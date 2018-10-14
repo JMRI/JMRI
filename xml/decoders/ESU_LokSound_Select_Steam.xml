@@ -12,402 +12,404 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!-- made from the ESU_LokSound_Select.xml Ver 2 file -->
-  <!-- ver1 new file -->
-  <version author="Michael Mosher" version="1" lastUpdated="20101020"/>
-  <!-- ver 2 add CV124 -->
-  <version author="Michael Mosher" version="2" lastUpdated="20101201"/>
-  <!-- ver3 fix bug in sanding volume CV -->
-  <version author="Michael Mosher" version="3" lastUpdated="20101216"/>
-  <!-- ver4 add new models -->
-  <version author="Michael Mosher" version="4" lastUpdated="20121205"/>
-  <!-- ver5 fixed range and default values CVs 5 and 6 -->
-  <version author="Dave Heap" version="5" lastUpdated="20121230"/>
-  <!-- ver6 fixed incorrect PI & SI in all indexed CVs -->
-  <version author="Dave Heap" version="6" lastUpdated="20121230"/>
-  <!-- ver7 added support for new mfx&reg; speed table -->
-  <version author="Dave Heap" version="7" lastUpdated="20130105"/>
-  <!-- ver8 created new xi:include /xml/decoders/esu/v4standardCVs.xml 
-            moved all non-indexed CVs to v4standardCVs.xml 
-            created new xi:include /xml/decoders/esu/v4cv21.22.xml 
-            created new pane xi:include /xml/decoders/esu/v4extraPane.xml 
-            added new items to /xml/programmers/parts/AnalogControlsPane.xml 
-            corrected minor problem in /xml/programmers/parts/ConsistPane.xml 
-            moved many items to more appropriate panes 
-            updated all non-indexed CVs to match LokProgrammer V4.4.3 definitions -->
-  <version author="Dave Heap" version="8" lastUpdated="20130429"/>
-  <!-- ver9 indexed CV fixes -->
-  <version author="Dave Heap" version="9" lastUpdated="20130606"/>
-  <!-- ver10 Add warning to CV reset -->
-  <version author="Dave Heap" version="10" lastUpdated="20130626"/>
-  <!-- ver11 new Function Outputs and Info panes, miscellaneous changes and corrections -->
-  <version author="Dave Heap" version="11" lastUpdated="20130910"/>
-  <!-- ver12 new Sound pane, many changes and corrections -->
-  <version author="Dave Heap" version="12" lastUpdated="20130926"/>
-  <!-- ver13 add new capability section to define high CV alternate write method -->
-  <version author="Dave Heap" version="13" lastUpdated="20131028"/>
-  <!-- ver14 new Function Map pane and supporting JMRI code, expanded Function Output pane -->
-  <version author="Dave Heap" version="14" lastUpdated="20140107"/>
-  <!-- ver15 changed all indexed CVs to new form -->
-  <version author="Dave Heap" version="15" lastUpdated="20140114"/>
-  <!-- ver16 fixed incorrect bell rates -->
-  <version author="Dave Heap" version="16" lastUpdated="20140324"/>
-  <!-- ver17 added a Steam Generic model to use with as-yet undefined models -->
-  <version author="Dave Heap" version="17" lastUpdated="20140205"/>
-  <!-- ver18 renamed where necessary to match ESU practice and added decoder-matchable Product IDs -->
-  <version author="Dave Heap" version="18" lastUpdated="20150427"/>
-  <decoder>
-    <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
-      <model model="LokSound Select Steam Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Steam Generic">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-        <functionlabels>
-          <functionlabel num="0" lockable="true"></functionlabel>
-          <functionlabel num="1" lockable="true"></functionlabel>
-          <functionlabel num="2" lockable="false"></functionlabel>
-          <functionlabel num="3" lockable="true"></functionlabel>
-          <functionlabel num="4" lockable="true"></functionlabel>
-          <functionlabel num="5" lockable="true"></functionlabel>
-          <functionlabel num="6" lockable="true"></functionlabel>
-          <functionlabel num="7" lockable="true"></functionlabel>
-          <functionlabel num="8" lockable="true"></functionlabel>
-          <functionlabel num="9" lockable="true"></functionlabel>
-          <functionlabel num="10" lockable="true"></functionlabel>
-          <functionlabel num="11" lockable="true"></functionlabel>
-          <functionlabel num="12" lockable="true"></functionlabel>
-          <functionlabel num="13" lockable="true"></functionlabel>
-          <functionlabel num="14" lockable="true"></functionlabel>
-          <functionlabel num="15" lockable="true"></functionlabel>
-          <functionlabel num="16" lockable="true"></functionlabel>
-          <functionlabel num="17" lockable="true"></functionlabel>
-          <functionlabel num="18" lockable="true"></functionlabel>
-          <functionlabel num="19" lockable="true"></functionlabel>
-          <functionlabel num="20" lockable="true"></functionlabel>
-          <functionlabel num="21" lockable="true"></functionlabel>
-          <functionlabel num="22" lockable="true"></functionlabel>
-          <functionlabel num="23" lockable="true"></functionlabel>
-          <functionlabel num="24" lockable="true"></functionlabel>
-          <functionlabel num="25" lockable="true"></functionlabel>
-          <functionlabel num="26" lockable="true"></functionlabel>
-          <functionlabel num="27" lockable="true"></functionlabel>
-          <functionlabel num="28" lockable="true"></functionlabel>
-        </functionlabels>
-        <soundlabels>
-          <soundlabel num="1"></soundlabel>
-          <soundlabel num="2"></soundlabel>
-          <soundlabel num="3"></soundlabel>
-          <soundlabel num="4"></soundlabel>
-          <soundlabel num="5"></soundlabel>
-          <soundlabel num="6"></soundlabel>
-          <soundlabel num="7"></soundlabel>
-          <soundlabel num="8"></soundlabel>
-          <soundlabel num="9"></soundlabel>
-          <soundlabel num="10"></soundlabel>
-          <soundlabel num="11"></soundlabel>
-          <soundlabel num="12"></soundlabel>
-          <soundlabel num="13"></soundlabel>
-          <soundlabel num="14"></soundlabel>
-          <soundlabel num="15"></soundlabel>
-          <soundlabel num="16"></soundlabel>
-          <soundlabel num="17"></soundlabel>
-          <soundlabel num="18"></soundlabel>
-          <soundlabel num="19"></soundlabel>
-          <soundlabel num="20"></soundlabel>
-          <soundlabel num="21"></soundlabel>
-          <soundlabel num="22"></soundlabel>
-          <soundlabel num="23"></soundlabel>
-          <soundlabel num="24"></soundlabel>
-          <soundlabel num="25">Random sounds</soundlabel>
-          <soundlabel num="26">Automatic brake sound</soundlabel>
-          <soundlabel num="27"></soundlabel>
-        </soundlabels>
-      </model>
-      <model model="LokSound Select Big Boy 4-8-8-4" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select SP Cab Forward" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73409">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select Y6B 2-8-8-2" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73457">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select Steam 3 Driven Axles" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73413">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select Steam 4 Driven Axles" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73414">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select Steam Geared" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73415">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select Steam Articulated" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <model model="LokSound Select Steam Collection" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73417">
-        <size length="1.41" width=".51" height=".25" units="inches"/>
-      </model>
-      <functionlabels>
-        <functionlabel num="0" lockable="true">Light</functionlabel>
-        <functionlabel num="1" lockable="true">Bell</functionlabel>
-        <functionlabel num="2" lockable="false">Whistle</functionlabel>
-        <functionlabel num="3" lockable="true">Coupler</functionlabel>
-        <functionlabel num="4" lockable="true">Blower</functionlabel>
-        <functionlabel num="5" lockable="true">AUX3</functionlabel>
-        <functionlabel num="6" lockable="true">AUX1+AUX2</functionlabel>
-        <functionlabel num="7" lockable="true">Switching</functionlabel>
-        <functionlabel num="8" lockable="true">Sound On</functionlabel>
-        <functionlabel num="9" lockable="true">Dimmer</functionlabel>
-        <functionlabel num="10" lockable="true">Air Pump</functionlabel>
-        <functionlabel num="11" lockable="true">Oil Burner</functionlabel>
-        <functionlabel num="12" lockable="true">Coal Shovelling</functionlabel>
-        <functionlabel num="13" lockable="true">AUX4</functionlabel>
-        <functionlabel num="14" lockable="true">Injector</functionlabel>
-        <functionlabel num="15" lockable="true">Crossing Comm</functionlabel>
-        <functionlabel num="16" lockable="true">Rail Clank</functionlabel>
-        <functionlabel num="17" lockable="true">Brake Set/Rel</functionlabel>
-        <functionlabel num="18" lockable="true">Sanding Valve</functionlabel>
-        <functionlabel num="19" lockable="true">Cylinder Cocks</functionlabel>
-        <functionlabel num="20" lockable="true">Short Whistle</functionlabel>
-      </functionlabels>
-      <soundlabels>
-        <soundlabel num="1">Chuff #1</soundlabel>
-        <soundlabel num="2">Chuff #2</soundlabel>
-        <soundlabel num="3">Whistle</soundlabel>
-        <soundlabel num="4">Bell</soundlabel>
-        <soundlabel num="5">Coupler</soundlabel>
-        <soundlabel num="6">Dynamo</soundlabel>
-        <soundlabel num="7">Air Pump</soundlabel>
-        <soundlabel num="8">Blower</soundlabel>
-        <soundlabel num="9">Injector</soundlabel>
-        <soundlabel num="10">Crossing Comm</soundlabel>
-        <soundlabel num="11">Rail Clank</soundlabel>
-        <soundlabel num="12">Brake Set/Rel</soundlabel>
-        <soundlabel num="13">Sanding Valve</soundlabel>
-        <soundlabel num="14">Oil Burner</soundlabel>
-        <soundlabel num="15">Coal Shovelling</soundlabel>
-        <soundlabel num="16">Short Whistle</soundlabel>
-        <soundlabel num="17">Johnson Bar</soundlabel>
-        <soundlabel num="18">Cylinder Cocks</soundlabel>
-        <soundlabel num="24">Steam Hissing</soundlabel>
-        <soundlabel num="25">Random sounds</soundlabel>
-        <soundlabel num="26">Automatic brake sound</soundlabel>
-      </soundlabels>
-    </family>
-    <programming direct="yes" paged="yes" register="yes" ops="yes">
-      <capability>
-        <name>High Access via Double Index</name>
-        <parameter name="Max Regular CV address">256</parameter>
-        <parameter name="High Address CV">96</parameter>
-        <parameter name="Low Address CV">97</parameter>
-        <parameter name="Access Register CV">99</parameter>
-        <parameter name="Modulo">100</parameter>
-      </capability>
-      <capability>
-        <name>Indexed CV access</name>
-        <parameter name="PI">31</parameter>
-        <parameter name="SI">32</parameter>
-        <parameter name="cvFirst">false</parameter>
-      </capability>
-    </programming>
-    <variables>
-      <xi:include href="http://jmri.org/xml/decoders/esu/v4standardCVs.xml"/>
-      <variable CV="48" item="Sound Option 2" default="0" include="Steam Generic">
-        <decVal/>
-        <label>Sound Configuration Value</label>
-      </variable>
-      <variable CV="48" mask="XXXXVVVV" default="0" include="Steam Generic" item="Sound Select 1">
-        <decVal max="15"/>
-        <label>Whistle</label>
-      </variable>
-      <variable CV="48" mask="XXXXVVVV" default="3" exclude="Steam Generic" item="Sound Select 1">
-        <enumVal>
-          <enumChoice choice="CB&amp;Q 5 chime short bell">
-            <choice>CB&amp;Q 5 chime short bell</choice>
-          </enumChoice>
-          <enumChoice choice="D&amp;RGW 5 chime step top cast iron whistle">
-            <choice>D&amp;RGW 5 chime step top cast iron whistle</choice>
-          </enumChoice>
-          <enumChoice choice="Great Northern 5 Chime">
-            <choice>Great Northern 5 Chime</choice>
-          </enumChoice>
-          <enumChoice choice="Hancock 3 chime">
-            <choice>Hancock 3 chime</choice>
-          </enumChoice>
-          <enumChoice choice="Hancock 3 chime short bell">
-            <choice>Hancock 3 chime short bell</choice>
-          </enumChoice>
-          <enumChoice choice="Southern 3 chime cast iron">
-            <choice>Southern 3 chime cast iron</choice>
-          </enumChoice>
-          <enumChoice choice="NewYork Central 5 chime">
-            <choice>NewYork Central 5 chime</choice>
-          </enumChoice>
-          <enumChoice choice="New York Central 6 chime">
-            <choice>New York Central 6 chime</choice>
-          </enumChoice>
-          <enumChoice choice="Norfolk &amp; Western">
-            <choice>Norfolk &amp; Western</choice>
-          </enumChoice>
-          <enumChoice choice="Northern Pacific">
-            <choice>Northern Pacific</choice>
-          </enumChoice>
-          <enumChoice choice="Oldtime 3 Chime">
-            <choice>Oldtime 3 Chime</choice>
-          </enumChoice>
-          <enumChoice choice="Reading 6 Chime">
-            <choice>Reading 6 Chime</choice>
-          </enumChoice>
-          <enumChoice choice="Shay 4">
-            <choice>Shay 4</choice>
-          </enumChoice>
-          <enumChoice choice="JT&amp;P Southern 610">
-            <choice>JT&amp;P Southern 610</choice>
-          </enumChoice>
-          <enumChoice choice="Union Pacific Hancock 3-chime steamboat style">
-            <choice>Union Pacific Hancock 3-chime steamboat style</choice>
-          </enumChoice>
-          <enumChoice choice="Western Locomotive Supply 6-chime">
-            <choice>Western Locomotive Supply 6-chime</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Whistle</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="Steam Generic" item="Sound Select 2">
-        <decVal max="3"/>
-        <label>Loco Type</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73409" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="SP Cab Forward">
-            <choice>SP Cab Forward</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Loco Type</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73413" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="Mogul">
-            <choice>Mogul</choice>
-          </enumChoice>
-          <enumChoice choice="0-6-0">
-            <choice>0-6-0</choice>
-          </enumChoice>
-          <enumChoice choice="4-6-2 Pacific">
-            <choice>4-6-2 Pacific</choice>
-          </enumChoice>
-          <enumChoice choice="2-6-2 Prairie">
-            <choice>2-6-2 Prairie</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Loco Type</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73414" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="Mikado">
-            <choice>Mikado</choice>
-          </enumChoice>
-          <enumChoice choice="2-8-0 Consolidation">
-            <choice>2-8-0 Consolidation</choice>
-          </enumChoice>
-          <enumChoice choice="2-8-2 Mikado">
-            <choice>2-8-2 Mikado</choice>
-          </enumChoice>
-          <enumChoice choice="4-8-2 Mountain">
-            <choice>4-8-2 Mountain</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Loco Type</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73415" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="Shay">
-            <choice>Shay</choice>
-          </enumChoice>
-          <enumChoice choice="Heissler">
-            <choice>Heissler</choice>
-          </enumChoice>
-          <enumChoice choice="Climax">
-            <choice>Climax</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Loco Type</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73416" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="Big Boy 4-8-8-4">
-            <choice>Big Boy 4-8-8-4</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Loco Type</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73417" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="4-8-4 Class J">
-            <choice>4-8-4 Class J</choice>
-          </enumChoice>
-          <enumChoice choice="2-10-2 Santa Fe">
-            <choice>2-10-2 Santa Fe</choice>
-          </enumChoice>
-          <enumChoice choice="4-4-0 American">
-            <choice>4-4-0 American</choice>
-          </enumChoice>
-          <enumChoice choice="2-6-2 Tank">
-            <choice>2-6-2 Tank</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Loco Type</label>
-      </variable>
-      <variable CV="48" mask="XXVVXXXX" default="0" include="73457" item="Sound Select 2">
-        <enumVal>
-          <enumChoice choice="Y6B 2-8-8-2">
-            <choice>Y6B 2-8-8-2</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Loco Type</label>
-      </variable>
-      <variable CV="48" mask="XVXXXXXX" default="0" include="Steam Generic" item="Sound Select 3">
-        <decVal max="1"/>
-        <label>Bell</label>
-      </variable>
-      <variable CV="48" mask="XVXXXXXX" default="0" exclude="Steam Generic" item="Sound Select 3">
-        <enumVal>
-          <enumChoice choice="Slow">
-            <choice>Slow</choice>
-          </enumChoice>
-          <enumChoice choice="Fast">
-            <choice>Fast</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Bell</label>
-      </variable>
-      <variable CV="48" mask="VXXXXXXX" default="0" include="Steam Generic" item="Sound Select 4">
-        <decVal max="1"/>
-        <label>Brake Squeal</label>
-      </variable>
-      <variable CV="48" mask="VXXXXXXX" default="0" exclude="Steam Generic" item="Sound Select 4">
-        <enumVal>
-          <enumChoice choice="Squeal #1">
-            <choice>Squeal #1</choice>
-          </enumChoice>
-          <enumChoice choice="Squeal #2">
-            <choice>Squeal #2</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Brake Squeal</label>
-      </variable>
-      <xi:include href="http://jmri.org/xml/decoders/esu/v4soundCVs.xml"/>
-    </variables>
-    <resets>
-      <factReset label="Reset All CVs." CV="8" default="8"/>
-    </resets>
-  </decoder>
-<!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
-  <xi:include href="http://jmri.org/xml/decoders/esu/v4speedTablePane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v4advancedPane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v4lightsPane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v4soundPane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v4soundLevelsPane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v4fnSetPane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/esu/v4readMePane.xml"/>
+    <!-- made from the ESU_LokSound_Select.xml Ver 2 file -->
+    <!-- ver1 new file -->
+    <version author="Michael Mosher" version="1" lastUpdated="20101020"/>
+    <!-- ver 2 add CV124 -->
+    <version author="Michael Mosher" version="2" lastUpdated="20101201"/>
+    <!-- ver3 fix bug in sanding volume CV -->
+    <version author="Michael Mosher" version="3" lastUpdated="20101216"/>
+    <!-- ver4 add new models -->
+    <version author="Michael Mosher" version="4" lastUpdated="20121205"/>
+    <!-- ver5 fixed range and default values CVs 5 and 6 -->
+    <version author="Dave Heap" version="5" lastUpdated="20121230"/>
+    <!-- ver6 fixed incorrect PI & SI in all indexed CVs -->
+    <version author="Dave Heap" version="6" lastUpdated="20121230"/>
+    <!-- ver7 added support for new mfx&reg; speed table -->
+    <version author="Dave Heap" version="7" lastUpdated="20130105"/>
+    <!-- ver8 created new xi:include /xml/decoders/esu/v4standardCVs.xml
+    moved all non-indexed CVs to v4standardCVs.xml
+    created new xi:include /xml/decoders/esu/v4cv21.22.xml
+    created new pane xi:include /xml/decoders/esu/v4extraPane.xml
+    added new items to /xml/programmers/parts/AnalogControlsPane.xml
+    corrected minor problem in /xml/programmers/parts/ConsistPane.xml
+    moved many items to more appropriate panes
+    updated all non-indexed CVs to match LokProgrammer V4.4.3 definitions -->
+    <version author="Dave Heap" version="8" lastUpdated="20130429"/>
+    <!-- ver9 indexed CV fixes -->
+    <version author="Dave Heap" version="9" lastUpdated="20130606"/>
+    <!-- ver10 Add warning to CV reset -->
+    <version author="Dave Heap" version="10" lastUpdated="20130626"/>
+    <!-- ver11 new Function Outputs and Info panes, miscellaneous changes and corrections -->
+    <version author="Dave Heap" version="11" lastUpdated="20130910"/>
+    <!-- ver12 new Sound pane, many changes and corrections -->
+    <version author="Dave Heap" version="12" lastUpdated="20130926"/>
+    <!-- ver13 add new capability section to define high CV alternate write method -->
+    <version author="Dave Heap" version="13" lastUpdated="20131028"/>
+    <!-- ver14 new Function Map pane and supporting JMRI code, expanded Function Output pane -->
+    <version author="Dave Heap" version="14" lastUpdated="20140107"/>
+    <!-- ver15 changed all indexed CVs to new form -->
+    <version author="Dave Heap" version="15" lastUpdated="20140114"/>
+    <!-- ver16 fixed incorrect bell rates -->
+    <version author="Dave Heap" version="16" lastUpdated="20140324"/>
+    <!-- ver17 added a Steam Generic model to use with as-yet undefined models -->
+    <version author="Dave Heap" version="17" lastUpdated="20140205"/>
+    <!-- ver18 renamed where necessary to match ESU practice and added decoder-matchable Product IDs -->
+    <version author="Dave Heap" version="18" lastUpdated="20150427"/>
+    <!-- ver19 this file is now basically legacy, with only obsolete definitions -->
+    <version author="Dave Heap" version="19" lastUpdated="20170819"/>
+    <decoder>
+        <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
+            <model show="no" model="LokSound Select Steam Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Steam Generic">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+                <functionlabels>
+                    <functionlabel num="0" lockable="true"></functionlabel>
+                    <functionlabel num="1" lockable="true"></functionlabel>
+                    <functionlabel num="2" lockable="false"></functionlabel>
+                    <functionlabel num="3" lockable="true"></functionlabel>
+                    <functionlabel num="4" lockable="true"></functionlabel>
+                    <functionlabel num="5" lockable="true"></functionlabel>
+                    <functionlabel num="6" lockable="true"></functionlabel>
+                    <functionlabel num="7" lockable="true"></functionlabel>
+                    <functionlabel num="8" lockable="true"></functionlabel>
+                    <functionlabel num="9" lockable="true"></functionlabel>
+                    <functionlabel num="10" lockable="true"></functionlabel>
+                    <functionlabel num="11" lockable="true"></functionlabel>
+                    <functionlabel num="12" lockable="true"></functionlabel>
+                    <functionlabel num="13" lockable="true"></functionlabel>
+                    <functionlabel num="14" lockable="true"></functionlabel>
+                    <functionlabel num="15" lockable="true"></functionlabel>
+                    <functionlabel num="16" lockable="true"></functionlabel>
+                    <functionlabel num="17" lockable="true"></functionlabel>
+                    <functionlabel num="18" lockable="true"></functionlabel>
+                    <functionlabel num="19" lockable="true"></functionlabel>
+                    <functionlabel num="20" lockable="true"></functionlabel>
+                    <functionlabel num="21" lockable="true"></functionlabel>
+                    <functionlabel num="22" lockable="true"></functionlabel>
+                    <functionlabel num="23" lockable="true"></functionlabel>
+                    <functionlabel num="24" lockable="true"></functionlabel>
+                    <functionlabel num="25" lockable="true"></functionlabel>
+                    <functionlabel num="26" lockable="true"></functionlabel>
+                    <functionlabel num="27" lockable="true"></functionlabel>
+                    <functionlabel num="28" lockable="true"></functionlabel>
+                </functionlabels>
+                <soundlabels>
+                    <soundlabel num="1"></soundlabel>
+                    <soundlabel num="2"></soundlabel>
+                    <soundlabel num="3"></soundlabel>
+                    <soundlabel num="4"></soundlabel>
+                    <soundlabel num="5"></soundlabel>
+                    <soundlabel num="6"></soundlabel>
+                    <soundlabel num="7"></soundlabel>
+                    <soundlabel num="8"></soundlabel>
+                    <soundlabel num="9"></soundlabel>
+                    <soundlabel num="10"></soundlabel>
+                    <soundlabel num="11"></soundlabel>
+                    <soundlabel num="12"></soundlabel>
+                    <soundlabel num="13"></soundlabel>
+                    <soundlabel num="14"></soundlabel>
+                    <soundlabel num="15"></soundlabel>
+                    <soundlabel num="16"></soundlabel>
+                    <soundlabel num="17"></soundlabel>
+                    <soundlabel num="18"></soundlabel>
+                    <soundlabel num="19"></soundlabel>
+                    <soundlabel num="20"></soundlabel>
+                    <soundlabel num="21"></soundlabel>
+                    <soundlabel num="22"></soundlabel>
+                    <soundlabel num="23"></soundlabel>
+                    <soundlabel num="24"></soundlabel>
+                    <soundlabel num="25">Random sounds</soundlabel>
+                    <soundlabel num="26">Automatic brake sound</soundlabel>
+                    <soundlabel num="27"></soundlabel>
+                </soundlabels>
+            </model>
+            <model show="no" model="LokSound Select Big Boy 4-8-8-4" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select SP Cab Forward" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73409">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select Y6B 2-8-8-2" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73457">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select Steam 3 Driven Axles" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73413">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select Steam 4 Driven Axles" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73414">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select Steam Geared" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73415">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select Steam Articulated" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <model show="no" model="LokSound Select Steam Collection" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73417">
+                <size length="1.41" width=".51" height=".25" units="inches"/>
+            </model>
+            <functionlabels>
+                <functionlabel num="0" lockable="true">Light</functionlabel>
+                <functionlabel num="1" lockable="true">Bell</functionlabel>
+                <functionlabel num="2" lockable="false">Whistle</functionlabel>
+                <functionlabel num="3" lockable="true">Coupler</functionlabel>
+                <functionlabel num="4" lockable="true">Blower</functionlabel>
+                <functionlabel num="5" lockable="true">AUX3</functionlabel>
+                <functionlabel num="6" lockable="true">AUX1+AUX2</functionlabel>
+                <functionlabel num="7" lockable="true">Switching</functionlabel>
+                <functionlabel num="8" lockable="true">Sound On</functionlabel>
+                <functionlabel num="9" lockable="true">Dimmer</functionlabel>
+                <functionlabel num="10" lockable="true">Air Pump</functionlabel>
+                <functionlabel num="11" lockable="true">Oil Burner</functionlabel>
+                <functionlabel num="12" lockable="true">Coal Shovelling</functionlabel>
+                <functionlabel num="13" lockable="true">AUX4</functionlabel>
+                <functionlabel num="14" lockable="true">Injector</functionlabel>
+                <functionlabel num="15" lockable="true">Crossing Comm</functionlabel>
+                <functionlabel num="16" lockable="true">Rail Clank</functionlabel>
+                <functionlabel num="17" lockable="true">Brake Set/Rel</functionlabel>
+                <functionlabel num="18" lockable="true">Sanding Valve</functionlabel>
+                <functionlabel num="19" lockable="true">Cylinder Cocks</functionlabel>
+                <functionlabel num="20" lockable="true">Short Whistle</functionlabel>
+            </functionlabels>
+            <soundlabels>
+                <soundlabel num="1">Chuff #1</soundlabel>
+                <soundlabel num="2">Chuff #2</soundlabel>
+                <soundlabel num="3">Whistle</soundlabel>
+                <soundlabel num="4">Bell</soundlabel>
+                <soundlabel num="5">Coupler</soundlabel>
+                <soundlabel num="6">Dynamo</soundlabel>
+                <soundlabel num="7">Air Pump</soundlabel>
+                <soundlabel num="8">Blower</soundlabel>
+                <soundlabel num="9">Injector</soundlabel>
+                <soundlabel num="10">Crossing Comm</soundlabel>
+                <soundlabel num="11">Rail Clank</soundlabel>
+                <soundlabel num="12">Brake Set/Rel</soundlabel>
+                <soundlabel num="13">Sanding Valve</soundlabel>
+                <soundlabel num="14">Oil Burner</soundlabel>
+                <soundlabel num="15">Coal Shovelling</soundlabel>
+                <soundlabel num="16">Short Whistle</soundlabel>
+                <soundlabel num="17">Johnson Bar</soundlabel>
+                <soundlabel num="18">Cylinder Cocks</soundlabel>
+                <soundlabel num="24">Steam Hissing</soundlabel>
+                <soundlabel num="25">Random sounds</soundlabel>
+                <soundlabel num="26">Automatic brake sound</soundlabel>
+            </soundlabels>
+        </family>
+        <programming direct="yes" paged="yes" register="yes" ops="yes">
+            <capability>
+                <name>High Access via Double Index</name>
+                <parameter name="Max Regular CV address">256</parameter>
+                <parameter name="High Address CV">96</parameter>
+                <parameter name="Low Address CV">97</parameter>
+                <parameter name="Access Register CV">99</parameter>
+                <parameter name="Modulo">100</parameter>
+            </capability>
+            <capability>
+                <name>Indexed CV access</name>
+                <parameter name="PI">31</parameter>
+                <parameter name="SI">32</parameter>
+                <parameter name="cvFirst">false</parameter>
+            </capability>
+        </programming>
+        <variables>
+            <xi:include href="http://jmri.org/xml/decoders/esu/v4standardCVs.xml"/>
+            <variable CV="48" item="Sound Option 2" default="0" include="Steam Generic">
+                <decVal/>
+                <label>Sound Configuration Value</label>
+            </variable>
+            <variable CV="48" mask="XXXXVVVV" default="0" include="Steam Generic" item="Sound Select 1">
+                <decVal max="15"/>
+                <label>Whistle</label>
+            </variable>
+            <variable CV="48" mask="XXXXVVVV" default="3" exclude="Steam Generic" item="Sound Select 1">
+                <enumVal>
+                    <enumChoice choice="CB&amp;Q 5 chime short bell">
+                        <choice>CB&amp;Q 5 chime short bell</choice>
+                    </enumChoice>
+                    <enumChoice choice="D&amp;RGW 5 chime step top cast iron whistle">
+                        <choice>D&amp;RGW 5 chime step top cast iron whistle</choice>
+                    </enumChoice>
+                    <enumChoice choice="Great Northern 5 Chime">
+                        <choice>Great Northern 5 Chime</choice>
+                    </enumChoice>
+                    <enumChoice choice="Hancock 3 chime">
+                        <choice>Hancock 3 chime</choice>
+                    </enumChoice>
+                    <enumChoice choice="Hancock 3 chime short bell">
+                        <choice>Hancock 3 chime short bell</choice>
+                    </enumChoice>
+                    <enumChoice choice="Southern 3 chime cast iron">
+                        <choice>Southern 3 chime cast iron</choice>
+                    </enumChoice>
+                    <enumChoice choice="NewYork Central 5 chime">
+                        <choice>NewYork Central 5 chime</choice>
+                    </enumChoice>
+                    <enumChoice choice="New York Central 6 chime">
+                        <choice>New York Central 6 chime</choice>
+                    </enumChoice>
+                    <enumChoice choice="Norfolk &amp; Western">
+                        <choice>Norfolk &amp; Western</choice>
+                    </enumChoice>
+                    <enumChoice choice="Northern Pacific">
+                        <choice>Northern Pacific</choice>
+                    </enumChoice>
+                    <enumChoice choice="Oldtime 3 Chime">
+                        <choice>Oldtime 3 Chime</choice>
+                    </enumChoice>
+                    <enumChoice choice="Reading 6 Chime">
+                        <choice>Reading 6 Chime</choice>
+                    </enumChoice>
+                    <enumChoice choice="Shay 4">
+                        <choice>Shay 4</choice>
+                    </enumChoice>
+                    <enumChoice choice="JT&amp;P Southern 610">
+                        <choice>JT&amp;P Southern 610</choice>
+                    </enumChoice>
+                    <enumChoice choice="Union Pacific Hancock 3-chime steamboat style">
+                        <choice>Union Pacific Hancock 3-chime steamboat style</choice>
+                    </enumChoice>
+                    <enumChoice choice="Western Locomotive Supply 6-chime">
+                        <choice>Western Locomotive Supply 6-chime</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Whistle</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="Steam Generic" item="Sound Select 2">
+                <decVal max="3"/>
+                <label>Loco Type</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73409" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="SP Cab Forward">
+                        <choice>SP Cab Forward</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Loco Type</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73413" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="Mogul">
+                        <choice>Mogul</choice>
+                    </enumChoice>
+                    <enumChoice choice="0-6-0">
+                        <choice>0-6-0</choice>
+                    </enumChoice>
+                    <enumChoice choice="4-6-2 Pacific">
+                        <choice>4-6-2 Pacific</choice>
+                    </enumChoice>
+                    <enumChoice choice="2-6-2 Prairie">
+                        <choice>2-6-2 Prairie</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Loco Type</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73414" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="Mikado">
+                        <choice>Mikado</choice>
+                    </enumChoice>
+                    <enumChoice choice="2-8-0 Consolidation">
+                        <choice>2-8-0 Consolidation</choice>
+                    </enumChoice>
+                    <enumChoice choice="2-8-2 Mikado">
+                        <choice>2-8-2 Mikado</choice>
+                    </enumChoice>
+                    <enumChoice choice="4-8-2 Mountain">
+                        <choice>4-8-2 Mountain</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Loco Type</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73415" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="Shay">
+                        <choice>Shay</choice>
+                    </enumChoice>
+                    <enumChoice choice="Heissler">
+                        <choice>Heissler</choice>
+                    </enumChoice>
+                    <enumChoice choice="Climax">
+                        <choice>Climax</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Loco Type</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73416" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="Big Boy 4-8-8-4">
+                        <choice>Big Boy 4-8-8-4</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Loco Type</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73417" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="4-8-4 Class J">
+                        <choice>4-8-4 Class J</choice>
+                    </enumChoice>
+                    <enumChoice choice="2-10-2 Santa Fe">
+                        <choice>2-10-2 Santa Fe</choice>
+                    </enumChoice>
+                    <enumChoice choice="4-4-0 American">
+                        <choice>4-4-0 American</choice>
+                    </enumChoice>
+                    <enumChoice choice="2-6-2 Tank">
+                        <choice>2-6-2 Tank</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Loco Type</label>
+            </variable>
+            <variable CV="48" mask="XXVVXXXX" default="0" include="73457" item="Sound Select 2">
+                <enumVal>
+                    <enumChoice choice="Y6B 2-8-8-2">
+                        <choice>Y6B 2-8-8-2</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Loco Type</label>
+            </variable>
+            <variable CV="48" mask="XVXXXXXX" default="0" include="Steam Generic" item="Sound Select 3">
+                <decVal max="1"/>
+                <label>Bell</label>
+            </variable>
+            <variable CV="48" mask="XVXXXXXX" default="0" exclude="Steam Generic" item="Sound Select 3">
+                <enumVal>
+                    <enumChoice choice="Slow">
+                        <choice>Slow</choice>
+                    </enumChoice>
+                    <enumChoice choice="Fast">
+                        <choice>Fast</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Bell</label>
+            </variable>
+            <variable CV="48" mask="VXXXXXXX" default="0" include="Steam Generic" item="Sound Select 4">
+                <decVal max="1"/>
+                <label>Brake Squeal</label>
+            </variable>
+            <variable CV="48" mask="VXXXXXXX" default="0" exclude="Steam Generic" item="Sound Select 4">
+                <enumVal>
+                    <enumChoice choice="Squeal #1">
+                        <choice>Squeal #1</choice>
+                    </enumChoice>
+                    <enumChoice choice="Squeal #2">
+                        <choice>Squeal #2</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Brake Squeal</label>
+            </variable>
+            <xi:include href="http://jmri.org/xml/decoders/esu/v4soundCVs.xml"/>
+        </variables>
+        <resets>
+            <factReset label="Reset All CVs." CV="8" default="8"/>
+        </resets>
+    </decoder>
+    <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4speedTablePane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4advancedPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4lightsPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4soundPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4soundLevelsPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4fnSetPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4readMePane.xml"/>
 </decoder-config>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>9</minor>
+    <test>6</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <switchboardeditor class="jmri.jmrit.display.switchboardEditor.configurexml.SwitchboardEditorXml" name="Switchboard" x="1136" y="109" height="337" width="540" editable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="none" hideunconnected="no" rangemin="1" rangemax="32" type="T" connection="X" shape="icon" columns="8" defaulttextcolor="#CCFFCC" redBackground="255" greenBackground="0" blueBackground="0" />
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Sun Oct 22 00:56:59 EDT 2017</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Sun Oct 22 00:57:57 EDT 2017</date>
+      <filename>/home/Paul/.jmri/XNetSimulator/test1.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Sun Oct 22 00:47:10 EDT 2017</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Sun Oct 22 00:49:41 EDT 2017</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Sun Oct 22 00:58:21 EDT 2017</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.9.6ish+Paul+20171022T0456Z+R26798f1 on Sun Oct 22 00:58:21 EDT 2017-->
+</layout-config>

@@ -46,9 +46,9 @@
 
         <dt><a href="../Routes.shtml">Itin&eacute;raires</a></dt>
 
-        <dd>Une forme simple de l'automatisation est de
-        d&eacute;finir des itin&eacute;raires, qui vous permettent
-        de simplifier la commande de vos aiguillages.</dd>
+<DT><A  HREF="../signaling/index.shtml">Signalisation</A>
+<DD> JMRI fournit une logique de signalisation de simple &#224; r&#233;aliste qui peut &#234;tre utilis&#233;e pour
+conduire vos signaux dans de nombreuses applications.
 
         <dt><a href="../Logix.shtml">Logix</a></dt>
 

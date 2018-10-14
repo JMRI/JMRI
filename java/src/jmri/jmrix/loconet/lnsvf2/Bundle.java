@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 @CheckReturnValue
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Desired pattern is repeated class names with package-level access to members")
 
-@net.jcip.annotations.Immutable
+@javax.annotation.concurrent.Immutable
 
 /**
  * Provides standard access for resource bundles in a package.
@@ -42,7 +42,7 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
      */
     static String getMessage(String key) {
         log.debug("interpreting key "+key+" without parameters");
-        return b.handleGetMessage(key);
+        return getBundle().handleGetMessage(key);
     }
 
     /**
@@ -60,7 +60,7 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
      */
     static String getMessage(String key, Object... subs) {
         log.debug("interpreting key "+key+" with " + subs.length + " parameters");
-        return b.handleGetMessage(key, subs);
+        return getBundle().handleGetMessage(key, subs);
     }
     private final static Bundle b = new Bundle();
 
@@ -70,8 +70,7 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
         return name;
     }
 
-    @Override
-    protected jmri.Bundle getBundle() {
+    protected static jmri.Bundle getBundle() {
         return b;
     }
 
@@ -80,7 +79,7 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
         return super.getBundle().handleGetMessage(locale,key);
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LnSv2MessageContents.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnSv2MessageContents.class);
 
     /**
      * Merges user data with a translated string for a given key in a given
@@ -97,7 +96,7 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
      * @return Internationalized text
      */
     static String getMessage(Locale locale, String key, Object... subs) {
-        return b.handleGetMessage(locale, key, subs);
+        return getBundle().handleGetMessage(locale, key, subs);
     }
 
 }

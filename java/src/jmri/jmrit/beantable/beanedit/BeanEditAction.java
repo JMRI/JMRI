@@ -17,10 +17,14 @@ import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JColorChooser;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -36,9 +40,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides the basic information and structure for for a editing the details of
- * a bean object
+ * a bean object.
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 abstract class BeanEditAction extends AbstractAction {
 
@@ -50,14 +54,14 @@ abstract class BeanEditAction extends AbstractAction {
         super("Bean Edit");
     }
 
-    jmri.NamedBean bean;
+    NamedBean bean;
 
     public void setBean(jmri.NamedBean bean) {
         this.bean = bean;
     }
 
     /**
-     * Call to create all the different tabs that will be added to the frame
+     * Call to create all the different tabs that will be added to the frame.
      */
     protected void initPanels() {
         basicDetails();
@@ -75,10 +79,13 @@ abstract class BeanEditAction extends AbstractAction {
     JTextField userNameField = new JTextField(20);
     JTextArea commentField = new JTextArea(3, 30);
     JScrollPane commentFieldScroller = new JScrollPane(commentField);
+    private JLabel statusBar = new JLabel(Bundle.getMessage("ItemEditStatusInfo", Bundle.getMessage("ButtonApply")));
 
     /**
-     * Creates a generic panel that holds the basic bean information System
-     * Name, User Name and Comment
+     * Create a generic panel that holds the basic bean information System Name,
+     * User Name, and Comment.
+     *
+     * @return a new panel
      */
     BeanItemPanel basicDetails() {
         BeanItemPanel basic = new BeanItemPanel();
@@ -87,27 +94,20 @@ abstract class BeanEditAction extends AbstractAction {
         basic.setLayout(new BoxLayout(basic, BoxLayout.Y_AXIS));
 
         basic.addItem(new BeanEditItem(new JLabel(bean.getSystemName()), Bundle.getMessage("ColumnSystemName"), null));
+        //Bundle.getMessage("ConnectionHint", "N/A"))); // TODO get connection name from nbMan.getSystemPrefix()
 
         basic.addItem(new BeanEditItem(userNameField, Bundle.getMessage("ColumnUserName"), null));
 
         basic.addItem(new BeanEditItem(commentFieldScroller, Bundle.getMessage("ColumnComment"), null));
 
         basic.setSaveItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -1823311798750191527L;
-
+            @Override
             public void actionPerformed(ActionEvent e) {
                 saveBasicItems(e);
             }
         });
         basic.setResetItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2590436299984618901L;
-
+            @Override
             public void actionPerformed(ActionEvent e) {
                 resetBasicItems(e);
             }
@@ -162,21 +162,13 @@ abstract class BeanEditAction extends AbstractAction {
         jsp.setPreferredSize(tableDim);
         properties.addItem(new BeanEditItem(jsp, "", null));
         properties.setSaveItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -5627203723098157467L;
-
+            @Override
             public void actionPerformed(ActionEvent e) {
                 propertiesModel.updateModel(bean);
             }
         });
         properties.setResetItem(new AbstractAction() {
-            /**
-             *
-             */
-            private static final long serialVersionUID = -956489116413677732L;
-
+            @Override
             public void actionPerformed(ActionEvent e) {
                 propertiesModel.setModel(bean);
             }
@@ -217,13 +209,15 @@ abstract class BeanEditAction extends AbstractAction {
         selectedTab = c;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (bean == null) {
-            log.error("No bean set so unable to edit a null bean");  //IN18N
+            // display message in status bar TODO
+            log.error("No bean set so unable to edit a null bean");  //NOI18N
             return;
         }
         if (f == null) {
-            f = new JmriJFrame("Edit " + getBeanType() + " " + bean.getDisplayName(), false, false);
+            f = new JmriJFrame(Bundle.getMessage("EditBean", getBeanType(), bean.getDisplayName()), false, false);
             f.addHelpMenu(helpTarget(), true);
             java.awt.Container containerPanel = f.getContentPane();
             initPanelsFirst();
@@ -234,17 +228,30 @@ abstract class BeanEditAction extends AbstractAction {
                 addToPanel(bi, bi.getListOfItems());
                 detailsTab.addTab(bi.getName(), bi);
             }
-
             containerPanel.add(detailsTab, BorderLayout.CENTER);
+
+            // shared bottom panel part
+            JPanel bottom = new JPanel();
+            bottom.setLayout(new BoxLayout(bottom, BoxLayout.PAGE_AXIS));
+            // shared status bar above buttons
+            JPanel panelStatus = new JPanel();
+            statusBar.setFont(statusBar.getFont().deriveFont(0.9f * userNameField.getFont().getSize())); // a bit smaller
+            statusBar.setForeground(Color.gray);
+            panelStatus.add(statusBar);
+            bottom.add(panelStatus);
+
+            // shared buttons
             JPanel buttons = new JPanel();
             JButton applyBut = new JButton(Bundle.getMessage("ButtonApply"));
             applyBut.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     applyButtonAction(e);
                 }
             });
             JButton okBut = new JButton(Bundle.getMessage("ButtonOK"));
             okBut.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     applyButtonAction(e);
                     f.dispose();
@@ -252,6 +259,7 @@ abstract class BeanEditAction extends AbstractAction {
             });
             JButton cancelBut = new JButton(Bundle.getMessage("ButtonCancel"));
             cancelBut.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     cancelButtonAction(e);
                 }
@@ -259,7 +267,8 @@ abstract class BeanEditAction extends AbstractAction {
             buttons.add(applyBut);
             buttons.add(okBut);
             buttons.add(cancelBut);
-            containerPanel.add(buttons, BorderLayout.SOUTH);
+            bottom.add(buttons);
+            containerPanel.add(bottom, BorderLayout.SOUTH);
         }
         for (BeanItemPanel bi : bei) {
             bi.resetField();
@@ -280,7 +289,11 @@ abstract class BeanEditAction extends AbstractAction {
     }
 
     /**
-     * Sets out the panel based upon the items passed in via the ArrayList
+     * Set out the panel based upon the items passed in via the ArrayList.
+     *
+     * @param panel JPanel to add stuff to
+     * @param items a {@link BeanEditItem} list of key-value pairs for the items
+     *              to add
      */
     protected void addToPanel(JPanel panel, List<BeanEditItem> items) {
         GridBagLayout gbLayout = new GridBagLayout();
@@ -288,9 +301,9 @@ abstract class BeanEditAction extends AbstractAction {
         GridBagConstraints cD = new GridBagConstraints();
         GridBagConstraints cR = new GridBagConstraints();
         cL.fill = GridBagConstraints.HORIZONTAL;
-        cL.insets = new Insets(2, 0, 0, 15);
-        cR.insets = new Insets(0, 10, 15, 15);
-        cD.insets = new Insets(2, 0, 0, 0);
+        cL.insets = new Insets(4, 0, 0, 15);   // inset for left hand column (description)
+        cR.insets = new Insets(4, 10, 13, 15); // inset for help (right hand column, multi line text area)
+        cD.insets = new Insets(4, 0, 0, 0);    // top inset 4, up from 2 to align JLabel with JTextField
         cD.anchor = GridBagConstraints.NORTHWEST;
         cL.anchor = GridBagConstraints.NORTHWEST;
 
@@ -298,25 +311,37 @@ abstract class BeanEditAction extends AbstractAction {
         JPanel p = new JPanel();
 
         for (BeanEditItem it : items) {
+            // add the 3 elements on a JPanel to the parent panel grid layout
             if (it.getDescription() != null && it.getComponent() != null) {
-                JLabel decript = new JLabel(it.getDescription() + ":", JLabel.LEFT);
+                JLabel descript = new JLabel(it.getDescription() + ":", JLabel.LEFT);
                 if (it.getDescription().equals("")) {
-                    decript.setText("");
+                    descript.setText("");
                 }
                 cL.gridx = 0;
                 cL.gridy = y;
                 cL.ipadx = 3;
 
-                gbLayout.setConstraints(decript, cL);
+                gbLayout.setConstraints(descript, cL);
                 p.setLayout(gbLayout);
-                p.add(decript, cL);
+                p.add(descript, cL);
 
                 cD.gridx = 1;
                 cD.gridy = y;
 
-                gbLayout.setConstraints(it.getComponent(), cD);
-
-                p.add(it.getComponent(), cD);
+                Component thing = it.getComponent();
+                //log.debug("descript: '" + it.getDescription() + "', thing: " + thing.getClass().getName());
+                if (thing instanceof JComboBox
+                        || thing instanceof JTextField
+                        || thing instanceof JCheckBox
+                        || thing instanceof JRadioButton) {
+                    cD.insets = new Insets(0, 0, 0, 0); // put a little higher than a JLabel
+                } else if (thing instanceof JColorChooser) {
+                    cD.insets = new Insets(-6, 0, 0, 0); // move it up
+                } else {
+                    cD.insets = new Insets(4, 0, 0, 0); // reset
+                }
+                gbLayout.setConstraints(thing, cD);
+                p.add(thing, cD);
 
                 cR.gridx = 2;
                 cR.gridwidth = 1;
@@ -337,7 +362,6 @@ abstract class BeanEditAction extends AbstractAction {
             }
             y++;
         }
-
         panel.add(p);
     }
 
@@ -348,6 +372,11 @@ abstract class BeanEditAction extends AbstractAction {
     }
 
     public void save() {
+        String feedback = Bundle.getMessage("ItemUpdateFeedback", Bundle.getMessage("BeanNameTurnout"))
+                + " " + bean.getSystemName() + " (" + bean.getUserName() + ")";
+        // provide feedback to user, can be overwritten by save action error handler
+        statusBar.setText(feedback);
+        statusBar.setForeground(Color.gray);
         for (BeanItemPanel bi : bei) {
             bi.saveItem();
         }
@@ -367,12 +396,13 @@ abstract class BeanEditAction extends AbstractAction {
     jmri.NamedBeanHandleManager nbMan = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
     abstract protected String getBeanType();
-    /*abstract protected NamedBean getBySystemName(String name);*/
 
     abstract protected NamedBean getByUserName(String name);
 
     /**
-     * Generic method to change the user name of a Bean
+     * Generic method to change the user name of a Bean.
+     *
+     * @param _newName string to use as the new user name
      */
     public void renameBean(String _newName) {
         NamedBean nBean = bean;
@@ -403,7 +433,7 @@ abstract class BeanEditAction extends AbstractAction {
                 if (!nbMan.inUse(nBean.getSystemName(), nBean)) {
                     return;
                 }
-                String msg = java.text.MessageFormat.format(Bundle.getMessage("UpdateToUserName"),
+                String msg = Bundle.getMessage("UpdateToUserName",
                         new Object[]{getBeanType(), value, nBean.getSystemName()});
                 int optionPane = JOptionPane.showConfirmDialog(null,
                         msg, Bundle.getMessage("UpdateToUserNameTitle"),
@@ -442,14 +472,15 @@ abstract class BeanEditAction extends AbstractAction {
         bean.setUserName(null);
     }
 
-    //At this stage we purely use this to allow the user to delete properties, but not add them, changing is possible but only for strings
-    //Based upon the code from the RosterMediaPane
+    /**
+     * TableModel for edit of Bean properties.
+     * <p>
+     * At this stage we purely use this to allow the user to delete properties,
+     * not to add them. Changing properties is possible but only for strings.
+     * Based upon the code from the RosterMediaPane
+     */
     private static class BeanPropertiesTableModel extends AbstractTableModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -7466799526127205872L;
         Vector<KeyValueModel> attributes;
         String titles[];
         boolean wasModified;
@@ -484,10 +515,11 @@ abstract class BeanEditAction extends AbstractAction {
         public void updateModel(NamedBean nb) {
             if (!wasModified()) {
                 return; //No changed made
-            }			// add and update keys
+            }   // add and update keys
             for (int i = 0; i < attributes.size(); i++) {
                 KeyValueModel kv = attributes.get(i);
-                if ((kv.key != null) && // only update if key value defined, will do the remove to
+                if ((kv.key != null)
+                        && // only update if key value defined, will do the remove too
                         ((nb.getProperty(kv.key) == null) || (!kv.value.equals(nb.getProperty(kv.key))))) {
                     nb.setProperty(kv.key, kv.value);
                 }
@@ -496,7 +528,7 @@ abstract class BeanEditAction extends AbstractAction {
 
             Iterator<String> ite = nb.getPropertyKeys().iterator();
             while (ite.hasNext()) {
-                if (!keyExist(ite.next())) // not very efficient algorithm!
+                if (!keyExist(ite.next())) // not a very efficient algorithm!
                 {
                     ite.remove();
                 }
@@ -516,18 +548,22 @@ abstract class BeanEditAction extends AbstractAction {
             return false;
         }
 
+        @Override
         public int getColumnCount() {
             return 2;
         }
 
+        @Override
         public int getRowCount() {
             return attributes.size();
         }
 
+        @Override
         public String getColumnName(int col) {
             return titles[col];
         }
 
+        @Override
         public Object getValueAt(int row, int col) {
             if (row < attributes.size()) {
                 if (col == 0) {
@@ -540,6 +576,7 @@ abstract class BeanEditAction extends AbstractAction {
             return "...";
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             KeyValueModel kv;
 
@@ -579,6 +616,7 @@ abstract class BeanEditAction extends AbstractAction {
             fireTableCellUpdated(row, col);
         }
 
+        @Override
         public boolean isCellEditable(int row, int col) {
             return true;
         }
@@ -589,4 +627,5 @@ abstract class BeanEditAction extends AbstractAction {
     }
 
     private final static Logger log = LoggerFactory.getLogger(BeanEditAction.class);
+
 }

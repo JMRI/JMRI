@@ -64,6 +64,7 @@ public interface BasicRosterEntry {
 
     public String titleString();
 
+    @Override
     public String toString();
 
     public void addPropertyChangeListener(java.beans.PropertyChangeListener l);

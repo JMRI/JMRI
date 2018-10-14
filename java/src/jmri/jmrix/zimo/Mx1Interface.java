@@ -1,4 +1,3 @@
-// Mx1Interface
 package jmri.jmrix.zimo;
 
 /**
@@ -111,4 +110,4 @@ public interface Mx1Interface {
 }
 
 
-/* @(#)Mx1Interface.java */
+

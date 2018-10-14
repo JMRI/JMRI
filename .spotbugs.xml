@@ -1,0 +1,58 @@
+<FindBugsFilter>
+
+    <!-- The following section is used to suppress notifications about
+          specific bugs and categories that we don't think are
+          worth the effort -->
+         
+    <!-- what follows should be kept in sync with .spotbugs-check.xml -->
+
+    <!-- This is used to suppress notifications about
+          specific bugs and categories that we don't think are
+          worth the effort -->
+
+     <Match>
+       <!-- Minor clarity issue -->
+       <Bug pattern="RI_REDUNDANT_INTERFACES" />
+     </Match>
+
+     <Match>
+       <!-- Design issue -->
+       <Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON" />
+     </Match>
+
+     <Match>
+       <!-- Design issue -->
+       <Bug pattern="SIC_INNER_SHOULD_BE_STATIC_NEEDS_THIS" />
+     </Match>
+
+     <Match>
+       <!-- Most of these are non-I18N, internal changes of case.
+            We should find the I18N ones, but it seems excessive
+            to track down and annotate all the others first thing -->
+       <Bug pattern="DM_CONVERT_CASE" />
+     </Match>
+
+     <Match>
+       <!-- Most of these are non-I18N, JMRI-specific file operations.
+            We should find the I18N ones, but it seems excessive
+            to track down and annotate all the others first thing.
+            Suppressed for now to focus attention on
+            other high-priority items.  -->
+       <Bug pattern="DM_DEFAULT_ENCODING" />
+     </Match>
+
+     <Match>
+       <!-- JMRI code is often written to trust weird from other classes,
+            so the question of "malicious" is complicated. The rules in
+            this category should be restored in small batches  -->
+       <Bug category="MALICIOUS_CODE" />
+     </Match>
+
+    <!-- items we're unlikely to restore -->
+
+     <Match>
+       <!-- JMRI does not use serialization, permanently ignore -->
+       <Bug code="Se,SnVI" />
+     </Match>
+
+</FindBugsFilter>

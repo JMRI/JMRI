@@ -15,6 +15,7 @@
 
 import jmri
 import java
+import java.awt
 
 # set the desired colour and size in the two lines below.
 # Many normal colour names can be used instead of WHITE 
@@ -26,7 +27,7 @@ fontSize = 12
 # initialize loop to find all panel editors
 i = 1
 editorList = []
-editor = jmri.InstanceManager.configureManagerInstance().findInstance(
+editor = jmri.InstanceManager.getDefault(jmri.ConfigureManager).findInstance(
     java.lang.Class.forName("jmri.jmrit.display.PanelEditor"),
     i)
 
@@ -35,7 +36,7 @@ while (editor != None) :
     editorList.append(editor)
     # loop again
     i = i + 1
-    editor = jmri.InstanceManager.configureManagerInstance().findInstance(
+    editor = jmri.InstanceManager.getDefault(jmri.ConfigureManager).findInstance(
         java.lang.Class.forName("jmri.jmrit.display.PanelEditor"),
         i)
     

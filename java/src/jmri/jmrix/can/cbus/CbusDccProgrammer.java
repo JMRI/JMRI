@@ -7,7 +7,6 @@ import jmri.jmrix.AbstractProgrammer;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,25 +31,26 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.PAGEMODE);
-        ret.add(DefaultProgrammerManager.DIRECTBITMODE);
-        ret.add(DefaultProgrammerManager.DIRECTBYTEMODE);
-        ret.add(DefaultProgrammerManager.REGISTERMODE);
+        ret.add(ProgrammingMode.PAGEMODE);
+        ret.add(ProgrammingMode.DIRECTBITMODE);
+        ret.add(ProgrammingMode.DIRECTBYTEMODE);
+        ret.add(ProgrammingMode.REGISTERMODE);
         return ret;
     }
 
     // members for handling the programmer interface
     int progState = 0;
     static final int NOTPROGRAMMING = 0;// is notProgramming
-    static final int MODESENT = 1; 		// waiting reply to command to go into programming mode
-    static final int COMMANDSENT = 2; 	// read/write command sent, waiting reply
-    static final int RETURNSENT = 4; 	// waiting reply to go back to ops mode
+    static final int MODESENT = 1;   // waiting reply to command to go into programming mode
+    static final int COMMANDSENT = 2;  // read/write command sent, waiting reply
+    static final int RETURNSENT = 4;  // waiting reply to go back to ops mode
     boolean _progRead = false;
-    int _val;	// remember the value being read/written for confirmative reply
-    int _cv;	// remember the cv being read/written
+    int _val; // remember the value being read/written for confirmative reply
+    int _cv; // remember the cv being read/written
 
     // programming interface
     @Override
+    @Deprecated // 4.1.1
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
@@ -79,6 +79,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     }
 
     @Override
+    @Deprecated // 4.1.1
     synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
@@ -201,15 +202,11 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         }
         // the programmingOpReply handler might send an immediate reply, so
         // clear the current listener _first_
-        if (_usingProgrammer == null) {
-            log.error("No listener to notify");
-        } else {
-            jmri.ProgListener temp = _usingProgrammer;
-            _usingProgrammer = null;
-            temp.programmingOpReply(value, status);
-        }
+        jmri.ProgListener temp = _usingProgrammer;
+        _usingProgrammer = null;
+        notifyProgListenerEnd(temp,value,status);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusDccProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusDccProgrammer.class);
 
 }

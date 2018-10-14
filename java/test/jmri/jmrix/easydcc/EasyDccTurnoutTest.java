@@ -1,64 +1,56 @@
-/**
- * EasyDccTurnoutTest.java
- *
- * Description:	tests for the jmri.jmrix.nce.EasyDccTurnout class
- *
- * @author	Bob Jacobsen
- * @version
- */
 package jmri.jmrix.easydcc;
 
-import jmri.implementation.AbstractTurnoutTest;
+import jmri.implementation.AbstractTurnoutTestBase;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Before;
 
-public class EasyDccTurnoutTest extends AbstractTurnoutTest {
+/**
+ * Tests for the jmri.jmrix.easydcc.EasyDccTurnout class
+ *
+ * @author Bob Jacobsen
+ */
+public class EasyDccTurnoutTest extends AbstractTurnoutTestBase {
 
     private EasyDccTrafficControlScaffold tcis = null;
+    private EasyDccSystemConnectionMemo memo = null;
 
+    @Before
+    @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         // prepare an interface
-        tcis = new EasyDccTrafficControlScaffold();
+        memo = new EasyDccSystemConnectionMemo("E", "EasyDCC Test");
+        tcis = new EasyDccTrafficControlScaffold(memo);
+        memo.setEasyDccTrafficController(tcis); // important for successful getTrafficController()
 
-        t = new EasyDccTurnout(4);
+        t = new EasyDccTurnout("E", 4, memo);
     }
 
+    @Override
     public int numListeners() {
         return tcis.numListeners();
     }
 
+    @Override
     public void checkThrownMsgSent() {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
         Assert.assertEquals("content", "S 02 81 FE 7F", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROWN message
     }
 
+    @Override
     public void checkClosedMsgSent() {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
         Assert.assertEquals("content", "S 02 81 FF 7E", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // CLOSED message
     }
 
-    // from here down is testing infrastructure
-    public EasyDccTurnoutTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", EasyDccTurnoutTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(EasyDccTurnoutTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    // reset objects
+    @After
+    public void tearDown() {
+        tcis.terminateThreads();
+        t.dispose();
+        JUnitUtil.tearDown();
     }
 
 }

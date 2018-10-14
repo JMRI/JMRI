@@ -18,6 +18,8 @@
   <version author="Jos Wils, wilsjos@orcon.net.nz" version="2.0" lastUpdated="20111103"/>
   <!-- ver2.1 renamed where necessary to match ESU practice and added decoder-matchable Product IDs -->
   <version author="Dave Heap" version="2.1" lastUpdated="20150427"/>
+  <!-- ver2.2 added German translation -->
+  <version author="Ronald Kuhn" version="2.2" lastUpdated="20170816"/>
   <!--
      This decoder configuration file is based on ESU_LokPilotDCC.xml
      V 4, dated 20050619, by Walter Thompson. Which also acknowledged
@@ -49,9 +51,11 @@
       <model model="LokPilot Micro V3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall" productID="33554478">
         <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
           <label xml:lang="it">Luci Front</label>
+          <label xml:lang="de">Lvor</label>
         </output>
         <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire">
-        <label xml:lang="it">Luci Retro</label>
+          <label xml:lang="it">Luci Retro</label>
+          <label xml:lang="de">Lrück</label>
         </output>
         <size length="13.5" width="9" height="3.0" units="mm"/>
         <protocols>
@@ -63,18 +67,26 @@
       <model model="LokPilot Micro V3.0 DCC" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall" productID="33554479">
         <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
           <label xml:lang="it">Luci Front</label>
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="ca">Llum frontal</label>
         </output>
         <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire">
           <label xml:lang="it">Luci Retro</label>
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="ca">Llum posterior</label>
         </output>
         <size length="13.5" width="9" height="3.0" units="mm"/>
       </model>
       <model model="LokPilot V3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="33554460,33554470,33554473">
         <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
           <label xml:lang="it">Luci Front</label>
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="ca">Llum Frontal</label>
         </output>
         <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
           <label xml:lang="it">Luci Retro</label>
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="ca">Llum posterior</label>
         </output>
         <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire"/>
         <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire"/>
@@ -88,9 +100,13 @@
       <model model="LokPilot V3.0 DCC" maxInputVolts="27 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="33554461,33554471,33554474">
         <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
           <label xml:lang="it">Luci Front</label>
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="ca">Llum frontal</label>
         </output>
         <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
           <label xml:lang="it">Luci Retro</label>
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="ca">Llum Anterior</label>
         </output>
         <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire"/>
         <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire"/>
@@ -99,9 +115,13 @@
       <model model="LokPilot Micro Fx V3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="33554486">
         <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
           <label xml:lang="it">Luci Front</label>
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="ca">Llum frontal</label>
         </output>
         <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
           <label xml:lang="it">Luci Retro</label>
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="ca">Llum anterior</label>
         </output>
         <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire"/>
         <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire"/>
@@ -114,9 +134,13 @@
       <model model="LokPilot Fx V3.0" maxInputVolts="40 V" maxMotorCurrent="N/A" maxTotalCurrent="0.5 A" numOuts="6" numFns="14" formFactor="HO" connector="NMRAmedium" productID="33554476">
         <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
            <label xml:lang="it">Luci Front</label>
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="ca">Llum frontal</label>
         </output>
         <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
           <label xml:lang="it">Luci Retro</label>
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="ca">Llum anterior</label>
         </output>
         <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire"/>
         <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire"/>
@@ -131,9 +155,13 @@
       <model model="LokPilot XL V3.0" maxInputVolts="40 V" maxMotorCurrent="3.0 A" maxTotalCurrent="5.0 A" numOuts="8" numFns="17" formFactor="G" connector="other" productID="33554483">
         <output name="1" label="Front light" maxcurrent="600 mA" connection="other">
           <label xml:lang="it">Luci Front</label>
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="ca">Llum frontal</label>
         </output>
         <output name="2" label="Rear light " maxcurrent="600 mA" connection="other">
           <label xml:lang="it">Luci Retro</label>
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="ca">Llum anterior</label>
         </output>
         <output name="3" label="   AUX1    " maxcurrent="600 mA" connection="other"/>
         <output name="4" label="   AUX2    " maxcurrent="600 mA" connection="other"/>
@@ -150,9 +178,13 @@
       <model show="no" model="LokPilot micro 3.0" replacementModel="LokPilot Micro V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall" productID="LokPilot Micro V3.0">
         <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
           <label xml:lang="it">Luci Front</label>
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="ca">Llum frontal</label>
         </output>
         <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire">
-        <label xml:lang="it">Luci Retro</label>
+          <label xml:lang="it">Luci Retro</label>
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="ca">Llum anterior</label>
         </output>
         <size length="13.5" width="9" height="3.0" units="mm"/>
         <protocols>
@@ -164,18 +196,26 @@
       <model show="no" model="LokPilot micro DCC 3.0" replacementModel="LokPilot Micro V3.0 DCC" replacementFamily="ESU LokPilot 3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall" productID="LokPilot Micro V3.0 DCC">
         <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
           <label xml:lang="it">Luci Front</label>
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="ca">Llum frontal</label>
         </output>
         <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire">
           <label xml:lang="it">Luci Retro</label>
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="ca">Llum posterior</label>
         </output>
         <size length="13.5" width="9" height="3.0" units="mm"/>
       </model>
       <model show="no" model="LokPilot 3.0" replacementModel="LokPilot V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="LokPilot V3.0">
         <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
           <label xml:lang="it">Luci Front</label>
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="ca">Llum Frontal</label>
         </output>
         <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
           <label xml:lang="it">Luci Retro</label>
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="ca">Llum posterior</label>
         </output>
         <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire"/>
         <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire"/>
@@ -189,9 +229,13 @@
       <model show="no" model="LokPilot DCC 3.0" replacementModel="LokPilot V3.0 DCC" replacementFamily="ESU LokPilot 3.0" maxInputVolts="27 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="LokPilot V3.0 DCC">
         <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
           <label xml:lang="it">Luci Front</label>
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="ca">Llum Frontal</label>
         </output>
         <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
           <label xml:lang="it">Luci Retro</label>
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="ca">Llum posterior</label>
         </output>
         <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire"/>
         <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire"/>
@@ -200,9 +244,13 @@
       <model show="no" model="LokPilot mfx 3.0" replacementModel="LokPilot Micro Fx V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="LokPilot Micro Fx V3.0">
         <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
           <label xml:lang="it">Luci Front</label>
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="ca">Llum frontal</label>
         </output>
         <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
           <label xml:lang="it">Luci Retro</label>
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="ca">Llum posterior</label>
         </output>
         <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire"/>
         <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire"/>
@@ -215,9 +263,13 @@
       <model show="no" model="LokPilot XL 3.0" replacementModel="LokPilot XL V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="40 V" maxMotorCurrent="3.0 A" maxTotalCurrent="5.0 A" numOuts="8" numFns="17" formFactor="G" connector="other" productID="LokPilot XL V3.0">
         <output name="1" label="Front light" maxcurrent="600 mA" connection="other">
           <label xml:lang="it">Luci Front</label>
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="ca">Llum frontal</label>
         </output>
         <output name="2" label="Rear light " maxcurrent="600 mA" connection="other">
           <label xml:lang="it">Luci Retro</label>
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="ca">Llum posterior</label>
         </output>
         <output name="3" label="   AUX1    " maxcurrent="600 mA" connection="other"/>
         <output name="4" label="   AUX2    " maxcurrent="600 mA" connection="other"/>
@@ -234,9 +286,13 @@
       <model show="no" model="LokPilot Fx 3.0" replacementModel="LokPilot Fx V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="40 V" maxMotorCurrent="N/A" maxTotalCurrent="0.5 A" numOuts="6" numFns="14" formFactor="HO" connector="NMRAmedium" productID="LokPilot Fx V3.0">
         <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
            <label xml:lang="it">Luci Front</label>
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="ca">Llum frontal</label>
         </output>
         <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
           <label xml:lang="it">Luci Retro</label>
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="ca">Llum posterior</label>
         </output>
         <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire"/>
         <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire"/>
@@ -252,337 +308,240 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable CV="2" default="3" item="Vstart" tooltip="Determines the starting speed (1-75)">
+      <variable CV="2" item="Vstart" default="3">
         <decVal min="1" max="75"/>
         <label>Starting Voltage</label>
         <label xml:lang="it">Volt Partenza (1-75)</label>
         <label xml:lang="fr">V démarr. (1-75)</label>
         <label xml:lang="de">Anfahrspannung (1-75)</label>
+        <label xml:lang="ca">Voltatge inicial (1-75)</label>
+        <tooltip>Determines the starting speed (1-75)</tooltip>
+        <tooltip xml:lang="de">Legt die Mindestgeschwindigkeit der Lok fest</tooltip>
       </variable>
-      <variable CV="3" default="8" item="Accel" tooltip="This value multiplied by 0.869 gives the time from stop to maximum speed (0-64)">
+      <variable CV="3" item="Accel" default="8">
         <decVal min="0" max="64"/>
         <label>Acceleration</label>
         <label xml:lang="it">Accellerazione (0-64)</label>
         <label xml:lang="fr">Accelération (0-64)</label>
         <label xml:lang="de">Anfahrverzögerung (0-64)</label>
+        <label xml:lang="ca">Acceleració (0-64)</label>
+        <tooltip>This value multiplied by 0.869 gives the time from stop to maximum speed (0-64)</tooltip>
+        <tooltip xml:lang="de">Dieser Wert multipliziert mit 0.869 ergibt die Zeit vom Stillstand bis zur Maximalgeschwindigkeit</tooltip>
       </variable>
-      <variable CV="4" default="6" item="Decel" tooltip="This value multiplied by 0.869 gives the time from maximum speed to stop (0-64)">
+      <variable CV="4" item="Decel" default="6">
         <decVal min="1" max="64"/>
         <label>Deceleration</label>
         <label xml:lang="it">Decellerazione (1-64)</label>
         <label xml:lang="fr">Décélération (1-64)</label>
         <label xml:lang="de">Bremszeit (1-64)</label>
+        <label xml:lang="ca">Desacceleració (1-64)</label>
+        <tooltip>This value multiplied by 0.869 gives the time from maximum speed to stop (0-64)</tooltip>
+        <tooltip xml:lang="de">Dieser Wert multipliziert mit 0.869 ergibt die Zeit von der Maximalgeschwindigkeit bis zum Stillstand</tooltip>
       </variable>
-      <variable CV="5" default="64" item="Vhigh" tooltip="Maximum speed of locomotive (0-64)">
+      <variable CV="5" item="Vhigh" default="64">
         <decVal min="0" max="64"/>
         <label>Maximum Speed</label>
         <label xml:lang="it">Volt Massimi (0-64):</label>
-        <label xml:lang="de">Höchstgeschwindigkeit</label>
+        <label xml:lang="de">Höchstgeschwindigkeit (0-64)</label>
+        <label xml:lang="ca">Velocitat màxoma (0-64)</label>
+        <tooltip>Maximum speed of locomotive (0-64)</tooltip>
+        <tooltip xml:lang="de">Die Höchstgeschwindigkeit der Lok</tooltip>
       </variable>
-      <variable CV="6" default="22" item="Vmid" tooltip="Speed of locomotive at medium speed step (0-64)">
+      <variable CV="6" item="Vmid" default="22">
         <decVal min="0" max="64"/>
         <label>Medium speed</label>
         <label xml:lang="it">Volts intermedi (0-64)</label>
-        <label xml:lang="de">Vmittel (0-64)</label>
+        <label xml:lang="de">Mittengeschwindigkeit (0-64)</label>
+        <label xml:lang="ca">Velocitat intermitja (0-64)</label>
+       <tooltip>Speed of locomotive at medium speed step (0-64)</tooltip>
+       <tooltip xml:lang="de">Die Geschwindigkeit der Lok bei mittlerer Fahrstufe</tooltip>
       </variable>
-      <variable CV="7" item="Decoder Version" tooltip="The decoder version number (read only)">
+      <variable CV="7" item="Decoder Version">
         <decVal/>
         <label>Software Version Number</label>
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
+        <label xml:lang="ca">Versió del decoder</label>
+       <tooltip>The decoder version number (read only)</tooltip>
+       <tooltip xml:lang="de">Interne Softwareversion des Decoders (nur lesend)</tooltip>
       </variable>
-      <variable CV="8" readOnly="yes" default="151" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
+      <variable CV="8" item="Manufacturer" readOnly="yes" default="151">
         <decVal/>
         <label>Manufacturer ID</label>
         <label xml:lang="it">ID Costruttore: </label>
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
+        <label xml:lang="ca">Versió del fabricant</label>
+       <tooltip>The manufacturer's ID number (read only)</tooltip>
+       <tooltip xml:lang="de">Hersteller-Nummer – Das schreiben des Werts 8 bewirkt ein zurücksetzen aller CVs auf die Werkseinstellung.</tooltip>
       </variable>
-      <variable item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" default="1">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="13" item="Analog Mode Function Status - F1" mask="XXXXXXXV" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F1</label>
+        <label xml:lang="de">Analog Modus F1</label>
+        <label xml:lang="ca">Funcionament F1 en analògic</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F1 im Analogmodus.</tooltip>
       </variable>
-      <variable item="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="13" item="Analog Mode Function Status - F2" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F2</label>
+        <label xml:lang="de">Analog Modus F2</label>
+        <label xml:lang="ca">Funcionament F2 en analògic</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F2 im Analogmodus.</tooltip>
       </variable>
-      <variable item="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="13" item="Analog Mode Function Status - F3" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F3</label>
+        <label xml:lang="de">Analog Modus F3</label>
+        <label xml:lang="ca">Funcionament F3 en analògic</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F3 im Analogmodus.</tooltip>
       </variable>
-      <variable item="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="13" item="Analog Mode Function Status - F4" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F4</label>
+        <label xml:lang="de">Analog Modus F4</label>
+        <label xml:lang="ca">Funcionament F4 en analògic</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F4 im Analogmodus.</tooltip>
       </variable>
-      <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="13" item="Analog Mode Function Status - F5" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F5</label>
+        <label xml:lang="de">Analog Modus F5</label>
+        <label xml:lang="ca">Funcionament F5 en analògic</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F5 im Analogmodus.</tooltip>
       </variable>
-      <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="13" item="Analog Mode Function Status - F6" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F6</label>
+        <label xml:lang="de">Analog Modus F6</label>
+        <label xml:lang="ca">Funcionament F6 en analògic</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F6 im Analogmodus.</tooltip>
       </variable>
-      <variable item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="13" item="Analog Mode Function Status - F7" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F7</label>
+        <label xml:lang="de">Analog Modus F7</label>
+        <label xml:lang="ca">Funcionament F7 en analògic</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F7 im Analogmodus.</tooltip>
       </variable>
-      <variable item="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="13" item="Analog Mode Function Status - F8" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F8</label>
+        <label xml:lang="de">Analog Modus F8</label>
+        <label xml:lang="ca">Funcionament F8 en analògic</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F8 im Analogmodus.</tooltip>
       </variable>
-      <variable item="Analog Mode Function Status - FL(f)" CV="14" mask="XXXXXXXV" default="1">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="14" item="Analog Mode Function Status - FL(f)" mask="XXXXXXXV" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - FL(f)</label>
+        <label xml:lang="de">Analog Modus Lvor(v)</label>
+        <label xml:lang="ca">Funcionament FL en analògic</label>
+       <tooltip xml:lang="de">Zustand der Funktionen Lvor vorwärts im Analogmodus.</tooltip>
       </variable>
-      <variable item="Analog Mode Function Status - FL(r)" CV="14" mask="XXXXXXVX" default="1">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="14" item="Analog Mode Function Status - FL(r)" mask="XXXXXXVX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - FL(r)</label>
+        <label xml:lang="de">Analog Modus Lvor(r)</label>
+        <label xml:lang="ca">Funcionament FL en analògic (r)</label>
+       <tooltip xml:lang="de">Zustand der Funktionen Lvor rückwärts im Analogmodus.</tooltip>
       </variable>
-      <variable item="Analog Mode Function Status - F9(f)" CV="14" mask="XXXXXVXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="14" item="Analog Mode Function Status - F9(f)" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F9(f)</label>
+        <label xml:lang="de">Analog Modus F9(v)</label>
+        <label xml:lang="ca">Funcionament F9 en analògic (d)</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F9 vorwärts im Analogmodus.</tooltip>
       </variable>
-      <variable item="Analog Mode Function Status - F10(f)" CV="14" mask="XXXXVXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="14" item="Analog Mode Function Status - F10(f)" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F10(f)</label>
+        <label xml:lang="de">Analog Modus F10(v)</label>
+        <label xml:lang="ca">Funcionament F1 en analògic (r)</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F10 vorwärts im Analogmodus.</tooltip>
       </variable>
-      <variable item="Analog Mode Function Status - F11" CV="14" mask="XXXVXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="14" item="Analog Mode Function Status - F11" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F11</label>
+        <label xml:lang="de">Analog Modus F11</label>
+        <label xml:lang="ca">Funcionament F1 1en analògic</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F11 im Analogmodus.</tooltip>
       </variable>
-      <variable item="Analog Mode Function Status - F12" CV="14" mask="XXVXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="14" item="Analog Mode Function Status - F12" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F12</label>
+        <label xml:lang="de">Analog Modus F12</label>
+        <label xml:lang="ca">Funcionament F12 en analògic</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F12 im Analogmodus.</tooltip>
       </variable>
-      <variable item="Analog Mode Function Status - F9(r)" CV="14" mask="XVXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="14" item="Analog Mode Function Status - F9(r)" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F9(r)</label>
+        <label xml:lang="de">Analog Modus F9(r)</label>
+        <label xml:lang="ca">Funcionament F9 en analògic (d)</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F9 rückwärts im Analogmodus.</tooltip>
       </variable>
-      <variable item="Analog Mode Function Status - F10(r)" CV="14" mask="VXXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="14" item="Analog Mode Function Status - F10(r)" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F10(r)</label>
+        <label xml:lang="de">Analog Modus F10(r)</label>
+        <label xml:lang="ca">Funcionament F1 en analògic (r)</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F10 rückwärts im Analogmodus.</tooltip>
       </variable>
-      <variable item="Consist Address" CV="19" mask="XVVVVVVV" default="0">
-        <decVal/>
-        <label>Consist Address</label>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22_F12.xml"/>
+      <variable CV="22" item="Consist Address Active For F9 in Reverse" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Activation for F9 in Reverse</label>
+        <label xml:lang="de">Verbundadresse aktiv für F9 rückwärts</label>
+        <label xml:lang="ca">Adreça d'activació F9 (r)</label>
       </variable>
-      <variable item="Consist Direction" CV="19" mask="VXXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Direction</label>
+      <variable CV="22" item="Consist Address Active For F10 in Reverse" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Activation for F10 in Reverse</label>
+        <label xml:lang="de">Verbundadresse aktiv für F10 rückwärts</label>
+        <label xml:lang="ca">Adreça d'activació F10 (r)</label>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22.xml"/>
-      <variable item="Consist Address Active For F9 in Forward" CV="22" mask="XXXXXVXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Address Active For F9 in Forward</label>
-      </variable>
-      <variable item="Consist Address Active For F10 in Forward" CV="22" mask="XXXXVXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Address Active For F10 in Forward</label>
-      </variable>
-      <variable item="Consist Address Active For F11" CV="22" mask="XXXVXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Address Active For F11</label>
-      </variable>
-      <variable item="Consist Address Active For F12" CV="22" mask="XXVXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Address Active For F12</label>
-      </variable>
-      <variable item="Consist Address Active For F9 in Reverse" CV="22" mask="XVXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Address Active For F9 in Reverse</label>
-      </variable>
-      <variable item="Consist Address Active For F10 in Reverse" CV="22" mask="VXXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Address Active For F10 in Reverse</label>
-      </variable>
-      <variable CV="28" mask="XXXXXXXV" default="0" item="Advanced Group 1 Option 6">
+      <variable CV="28" item="Advanced Group 1 Option 6" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Enable address broadcast on channel 1</label>
+        <label>RailCom® Channel 1 Address Broadcast</label>
+        <label xml:lang="it">RailCom® canale 1 (Broadcast)</label>
+        <label xml:lang="cs">RailCom® kanál 1 (adresa)</label>
+        <label xml:lang="de">RailCom® Kanal 1 (Broadcast)</label>
+        <label xml:lang="ca">CAnal 1 Railcom (Broadcast)</label>
       </variable>
-      <variable CV="28" mask="XXXXXXVX" default="0" item="Advanced Group 1 Option 7">
+      <variable CV="28" item="Advanced Group 1 Option 7" mask="XXXXXXVX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Allow data transfer on channel 2</label>
+        <label>RailCom® Channel 2 Data Transmission</label>
+        <label xml:lang="it">RailCom® canale 2 (Dati)</label>
+        <label xml:lang="cs">RailCom® kanál 2 (data)</label>
+        <label xml:lang="de">RailCom® Kanal 2 (Daten)</label>
+        <label xml:lang="ca">Canal 2 Railcom (dades)</label>
       </variable>
-      <variable CV="28" mask="XXXXXVXX" default="0" item="Advanced Group 1 Option 8">
+      <variable CV="28" item="Advanced Group 1 Option 8" mask="XXXXXVXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Allow command confirmation on channel 1</label>
+        <label xml:lang="de">RailCom® Befehlsquittierung auf Kanal 1</label>
+        <label xml:lang="ca">Permetre confirmació de comandes en el canal 1</label>
       </variable>
       <!-- CV=29 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
-      <variable CV="29" mask="XXXXVXXX" default="0" item="Advanced Group 1 Option 5">
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <variable CV="29" item="Advanced Group 1 Option 5" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable RailCom</label>
+        <label>RailCom® Enable</label>
+        <label xml:lang="de">RailCom® aktiv</label>
+        <label xml:lang="ca">RailCom activat</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
-      <variable CV="49" mask="XXXXXXXV" default="1" item="Dither option">
+      <variable CV="49" item="Dither option" mask="XXXXXXXV" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Load control</label>
+        <label xml:lang="de">Lastregelung</label>
+        <label xml:lang="ca">Compemsació de càrrega</label>
       </variable>
-      <variable CV="49" mask="XXXXXXVX" default="1" item="Total PWM Period">
+      <variable CV="49" item="Total PWM Period" mask="XXXXXXVX" default="1">
         <enumVal>
           <enumChoice choice="20 kHz Tact frequency on">
             <choice>20 kHz Tact frequency on</choice>
@@ -592,98 +551,159 @@
           </enumChoice>
         </enumVal>
         <label>DC Motor PWM frequency</label>
+        <label xml:lang="de">Motor PWM Frequenz</label>
+        <label xml:lang="ca">Freqüència PWM del motor</label>
       </variable>
-      <variable item="Marklin Delta Mode" CV="49" mask="XXXXXVXX" default="0">
+      <variable CV="49" item="Marklin Delta Mode" mask="XXXXXVXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Marklin Delta Mode</label>
+        <label>Marklin® Delta Mode</label>
+        <label xml:lang="de">Märklin® Delta Modus</label>
+        <label xml:lang="ca">Model Marklin Delta</label>
       </variable>
-      <variable item="Marklin 2. address" CV="49" mask="XXXXVXXX" default="0">
+      <variable CV="49" item="Marklin 2. address" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Marklin 2. address</label>
+        <label xml:lang="de">Märklin® 2. Adresse</label>
+        <label xml:lang="ca">Marklin 2a adreça</label>
       </variable>
-      <variable CV="49" mask="XXXVXXXX" default="1" item="Advanced Group 1 Option 1">
+      <variable CV="49" item="Advanced Group 1 Option 1" mask="XXXVXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Automatic speed step detection</label>
+        <label xml:lang="de">Automatische Fahrstufenerkennung</label>
+        <label xml:lang="ca">Detecció de passos automàtica</label>
       </variable>
-      <variable item="LGB Function button mode" CV="49" mask="XXVXXXXX" default="0">
+      <variable CV="49" item="LGB Function button mode" mask="XXVXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>LGB Function button mode</label>
+        <label>LGB® Function button mode</label>
+        <label xml:lang="de">LGB® Funktionstasten Modus</label>
+        <label xml:lang="ca">Mode de botons de funció en LGB</label>
       </variable>
-      <variable item="ZIMO Manual function" CV="49" mask="XVXXXXXX" default="0">
+      <variable CV="49" item="ZIMO Manual function" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>ZIMO Manual function</label>
+        <label>ZIMO® Manual function</label>
+        <label xml:lang="de">Zimo® Manual Funktion</label>
+        <label xml:lang="ca">Funció Manual ZIMO</label>
       </variable>
-      <variable item="Function key triggered at each change of function status" CV="49" mask="VXXXXXXX" default="0">
+      <variable CV="49" item="Function key triggered at each change of function status" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Function key triggered at each change of function status</label>
+        <label xml:lang="de">Funktionstastenwechsel bei jedem Flankenwechsel</label>
+        <label xml:lang="ca">Disparador de funció canvia a cada canvi d'estat de funció</label>
       </variable>
-      <variable CV="50" mask="XXXXXXXV" default="1" item="Trix Power Conversion">
+      <variable CV="50" item="Trix Power Conversion" mask="XXXXXXXV" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>AC Analogue mode</label>
+        <label xml:lang="de">AC Analog Modus</label>
       </variable>
-      <variable CV="50" mask="XXXXXXVX" default="1" item="Analog Power Conversion">
+      <variable CV="50" item="Analog Power Conversion" mask="XXXXXXVX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>DC Analogue mode</label>
+        <label xml:lang="de">DC Analog Modus</label>
+        <label xml:lang="ca">Mode analògic</label>
       </variable>
-      <variable item="Marklin Brake mode" CV="51" mask="XXXXXXXV" default="1">
+      <variable CV="51" item="Marklin Brake mode" mask="XXXXXXXV" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Marklin Brake mode</label>
+        <label>Marklin® Brake mode</label>
+        <label xml:lang="de">Märklin® Brems Modus</label>
+        <label xml:lang="ca">Mode de frenada Marklin</label>
       </variable>
-      <variable item="ZIMO Brake mode" CV="51" mask="XXXXXXVX" default="1">
+      <variable CV="51" item="ZIMO Brake mode" mask="XXXXXXVX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>ZIMO Brake mode</label>
+        <label>ZIMO® Brake mode</label>
+        <label xml:lang="de">ZIMO® Brems Modus</label>
+        <label xml:lang="ca">Mode de frenada Zimo</label>
       </variable>
-      <variable item="Lenz DCC Brake mode" CV="51" mask="XXXXVXXX" default="0">
+      <variable CV="51" item="Lenz DCC Brake mode" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Lenz DCC Brake mode</label>
+        <label>Lenz® DCC Brake mode</label>
+        <label xml:lang="de">Lenz® DC Brems Modus</label>
+        <label xml:lang="ca">Mode de frenada Lenz</label>
       </variable>
-      <variable CV="53" default="56" item="EMF Static Config" tooltip="Determines the back EMF that the motorshould supply at maximum speed (0-80)">
+      <variable CV="53" item="EMF Static Config" default="56" exclude="LokPilot Fx V3.0,LokPilot Micro Fx V3.0">
         <decVal min="0" max="80"/>
         <label>Control reference</label>
-      </variable>
-      <variable CV="54" default="32" item="EMF Dynamic Config" tooltip="Determines how strongly load control effects (0-80)">
+        <label xml:lang="de">Regelungsreferenz</label>
+        <label xml:lang="ca">Control de referència</label>
+        <tooltip>Determines the back EMF that the motorshould supply at maximum speed (0-80)</tooltip>
+        <tooltip xml:lang="de">Bestimmt die Höhe der EMK-Spannung (0-80)</tooltip>
+       </variable>
+      <variable CV="54" item="EMF Dynamic Config" default="32" exclude="LokPilot Fx V3.0,LokPilot Micro Fx V3.0">
         <decVal min="0" max="80"/>
         <label>Load control parameter K</label>
+        <label xml:lang="de">Lastregelung Param. „K“</label>
+        <label xml:lang="ca">Paràmetre K - Control de càrrega</label>
+        <tooltip>Determines how strongly load control effects (0-80)</tooltip>
+        <tooltip xml:lang="de">„K“-Anteil des internen PI-Reglers (0-80)</tooltip>
       </variable>
-      <variable CV="55" default="24" item="EMF Droop Config" tooltip="Determines the momentum of the motor (0-80)">
+      <variable CV="55" item="EMF Droop Config" default="24" exclude="LokPilot Fx V3.0,LokPilot Micro Fx V3.0">
         <decVal min="0" max="80"/>
         <label>Load control parameter I</label>
+        <label xml:lang="de">Lastregelung Param. „I“</label>
+        <label xml:lang="ca">Paràmetre I - Control de càrrega</label>
+        <tooltip>Determines the momentum of the motor (0-80)</tooltip>
+        <tooltip xml:lang="de">„I“-Anteil des internen PI-Reglers (0-80)</tooltip>
       </variable>
-      <variable CV="56" default="64" item="EMF Feedback Cutout" tooltip="Determines up to how many % of the speed load control is active (0-64)">
+      <variable CV="56" item="EMF Feedback Cutout" default="64" exclude="LokPilot Fx V3.0,LokPilot Micro Fx V3.0">
         <decVal min="0" max="64"/>
         <label>Load control influence</label>
+        <label xml:lang="de">Regelungseinfluss</label>
+        <label xml:lang="ca">Influència del controld e càrrega</label>
+        <tooltip>Determines up to how many % of the speed load control is active (0-64)</tooltip>
+        <tooltip xml:lang="de">Bestimmt, bis zu wie viel % die Lastregelung aktiv ist.</tooltip>
       </variable>
-      <variable item="Forward Trim" CV="66" default="0" tooltip="Divided by 128 results in the factor, with which the motor voltage is multiplied in forward mode (0-255)">
+      <variable CV="66" item="Forward Trim" default="0" exclude="LokPilot Fx V3.0,LokPilot Micro Fx V3.0">
         <decVal min="0" max="255"/>
         <label>Forward Trim</label>
+        <label xml:lang="de">Vorwärts Trimm</label>
+        <label xml:lang="ca">Retall endavant</label>
+        <tooltip>Divided by 128 results in the factor, with which the motor voltage is multiplied in forward mode (0-255)</tooltip>
+        <tooltip xml:lang="de">Dividiert durch 128 ergibt dies den Faktor, mit dem die Motorspannung bei Vorwärtsfahrt multipliziert wird. (0-255)</tooltip>
       </variable>
-      <variable item="Speed Table" CV="67">
+      <variable CV="67" item="Speed Table">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-      <variable item="Reverse Trim" CV="95" default="0" tooltip="Divided by 128 results in the factor, with which the motor voltage is multiplied in reverse mode (0-255)">
+      <variable CV="95" item="Reverse Trim" default="0" exclude="LokPilot Fx V3.0,LokPilot Micro Fx V3.0">
         <decVal min="0" max="255"/>
         <label>Reverse Trim</label>
+        <label xml:lang="de">Rückwärts Trimm</label>
+        <label xml:lang="ca">Retall enrere</label>
+        <tooltip>Divided by 128 results in the factor, with which the motor voltage is multiplied in reverse mode (0-255)</tooltip>
+        <tooltip xml:lang="de">Dividiert durch 128 ergibt dies den Faktor, mit dem die Motorspannung bei Rückwärtsfahrt multipliziert wird. (0-255)</tooltip>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
-      <variable CV="112" default="33" item="Global lighting option 1" tooltip="Frequency of Strobe effects. Always a multiple of 65,536 ms (4-64).">
-        <decVal min="0" max="255"/>
+      <variable CV="112" item="Global lighting option 1" default="33">
+        <decVal min="4" max="64"/>
         <label>Blinking frequency</label>
+        <label xml:lang="de">Blinkfrequenz</label>
+        <label xml:lang="ca">Freqüència intermitència</label>
+        <tooltip>Frequency of Strobe effects. Always a multiple of 65,536 ms (4-64).</tooltip>
+        <tooltip xml:lang="de">Blinkfrequenz der Strobeeffekte. Immer ein Vielfaches von 65,536 ms (4-64).</tooltip>
       </variable>
-      <variable CV="113" mask="XXXXVVVV" default="15" item="Output 1 effect generated" tooltip="Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)">
+      <variable CV="113" item="Output 1 effect generated" mask="XXXXVVVV" default="15">
         <decVal min="0" max="15"/>
         <label>Brightness Headlights</label>
+        <label xml:lang="de">Helligkeit Lvor</label>
+        <label xml:lang="ca">Intensitat llums frontals</label>
+        <tooltip>Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)</tooltip>
+        <tooltip xml:lang="de">Bereich 0-15, Helligkeit</tooltip>
       </variable>
-      <variable CV="113" mask="VVVVXXXX" default="0" item="Output 1 behavior">
+      <variable CV="113" item="Output 1 behavior" mask="VVVVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Continous output (dimmer)">
             <choice>Continous output (dimmer)</choice>
+            <choice xml:lang="de">Dauerlicht (Dimmer)</choice>
+            <choice xml:lang="ca">Sortida continua</choice>
           </enumChoice>
           <enumChoice choice="Blinking output (Phase 1)">
             <choice>Blinking output (Phase 1)</choice>
+            <choice xml:lang="de">Blinklicht (Phase 1)</choice>
+            <choice xml:lang="ca">Intermitència fase 1</choice>
           </enumChoice>
           <enumChoice choice="Blinking output (Phase 2)">
             <choice>Blinking output (Phase 2)</choice>
+            <choice xml:lang="de">Blinklicht (Phase 2)</choice>
+            <choice xml:lang="ca">Intermitència fase 2</choice>
           </enumChoice>
           <enumChoice choice="Strobe">
             <choice>Strobe</choice>
@@ -693,12 +713,18 @@
           </enumChoice>
           <enumChoice choice="Firebox">
             <choice>Firebox</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
+            <choice xml:lang="ca">Caixa de focs</choice>
           </enumChoice>
           <enumChoice choice="Smoke generator">
             <choice>Smoke generator</choice>
+            <choice xml:lang="de">Rauchgenerator</choice>
+            <choice xml:lang="ca">Fumigen</choice>
           </enumChoice>
           <enumChoice choice="Headlights (highbeam/lowbeam)">
             <choice>Headlights (highbeam/lowbeam)</choice>
+            <choice xml:lang="de">Licht Auf-/Abblenden</choice>
+            <choice xml:lang="ca">Intensitat de llums</choice>
           </enumChoice>
           <enumChoice choice="Mars light">
             <choice>Mars light</choice>
@@ -708,9 +734,13 @@
           </enumChoice>
           <enumChoice choice="Rule 17 Forward">
             <choice>Rule 17 Forward</choice>
+            <choice xml:lang="de">Lichtausgang nach „Rule 17 FW“</choice>
+            <choice xml:lang="ca">Regla 17 endavant</choice>
           </enumChoice>
           <enumChoice choice="Rule 17 Reverse">
             <choice>Rule 17 Reverse</choice>
+            <choice xml:lang="de">Lichtausgang nach „Rule 17 REV“</choice>
+            <choice xml:lang="ca">Regla 17 (r)</choice>
           </enumChoice>
           <enumChoice choice="Pulse">
             <choice>Pulse</choice>
@@ -723,21 +753,33 @@
           </enumChoice>
         </enumVal>
         <label>Output Configuration Headlights</label>
+        <label xml:lang="de">Funktion des Ausgangs Lvor</label>
+        <label xml:lang="ca">Configuració Llum Frontal</label>
       </variable>
-      <variable CV="114" mask="XXXXVVVV" default="15" item="Output 2 effect generated" tooltip="Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)">
+      <variable CV="114" item="Output 2 effect generated" mask="XXXXVVVV" default="15">
         <decVal min="0" max="15"/>
         <label>Brightness Back up lights</label>
+        <label xml:lang="de">Helligkeit Lrück</label>
+        <label xml:lang="ca">Brillantor de llums</label>
+        <tooltip>Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)</tooltip>
+        <tooltip xml:lang="de">Bereich 0-15, Helligkeit</tooltip>
       </variable>
-      <variable CV="114" mask="VVVVXXXX" default="0" item="Output 2 behavior">
+      <variable CV="114" item="Output 2 behavior" mask="VVVVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Continous output (dimmer)">
             <choice>Continous output (dimmer)</choice>
+            <choice xml:lang="de">Dauerlicht (Dimmer)</choice>
+            <choice xml:lang="ca">Sortida contínua (intensitat)</choice>
           </enumChoice>
           <enumChoice choice="Blinking output (Phase 1)">
             <choice>Blinking output (Phase 1)</choice>
+            <choice xml:lang="de">Blinklicht (Phase 1)</choice>
+            <choice xml:lang="ca">Intermitència fase 1</choice>
           </enumChoice>
           <enumChoice choice="Blinking output (Phase 2)">
             <choice>Blinking output (Phase 2)</choice>
+            <choice xml:lang="de">Blinklicht (Phase 2)</choice>
+            <choice xml:lang="ca">Intermitència fase 2</choice>
           </enumChoice>
           <enumChoice choice="Strobe">
             <choice>Strobe</choice>
@@ -747,12 +789,16 @@
           </enumChoice>
           <enumChoice choice="Firebox">
             <choice>Firebox</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke generator">
             <choice>Smoke generator</choice>
+            <choice xml:lang="de">Rauchgenerator</choice>
           </enumChoice>
           <enumChoice choice="Headlights (highbeam/lowbeam)">
             <choice>Headlights (highbeam/lowbeam)</choice>
+            <choice xml:lang="de">Licht Auf-/Abblenden</choice>
+            <choice xml:lang="ca">Intensitat de Llums</choice>
           </enumChoice>
           <enumChoice choice="Mars light">
             <choice>Mars light</choice>
@@ -762,9 +808,11 @@
           </enumChoice>
           <enumChoice choice="Rule 17 Forward">
             <choice>Rule 17 Forward</choice>
+            <choice xml:lang="de">Lichtausgang nach „Rule 17 FW“</choice>
           </enumChoice>
           <enumChoice choice="Rule 17 Reverse">
             <choice>Rule 17 Reverse</choice>
+            <choice xml:lang="de">Lichtausgang nach „Rule 17 REV“</choice>
           </enumChoice>
           <enumChoice choice="Pulse">
             <choice>Pulse</choice>
@@ -777,21 +825,32 @@
           </enumChoice>
         </enumVal>
         <label>Output Configuration Back up lights</label>
+        <label xml:lang="de">Funktion des Ausgangs Lrück</label>
       </variable>
-      <variable CV="115" mask="XXXXVVVV" default="15" item="Output 3 effect generated" tooltip="Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)(Coupler hold power:none-full track power)">
+      <variable CV="115" item="Output 3 effect generated" mask="XXXXVVVV" default="15">
         <decVal min="0" max="15"/>
         <label>Brightness AUX1</label>
+        <label xml:lang="de">Helligkeit AUX1</label>
+        <label xml:lang="ca">Intensitat AUX1</label>
+        <tooltip>Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)</tooltip>
+        <tooltip xml:lang="de">Bereich 0-15, Helligkeit</tooltip>
       </variable>
-      <variable CV="115" mask="VVVVXXXX" default="0" item="Output 3 behavior">
+      <variable CV="115" item="Output 3 behavior" mask="VVVVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Continous output (dimmer)">
             <choice>Continous output (dimmer)</choice>
+            <choice xml:lang="de">Dauerlicht (Dimmer)</choice>
+            <choice xml:lang="de">Intensitat sortida continua</choice>
           </enumChoice>
           <enumChoice choice="Blinking output (Phase 1)">
             <choice>Blinking output (Phase 1)</choice>
+            <choice xml:lang="de">Blinklicht (Phase 1)</choice>
+            <choice xml:lang="ca">Intensitat sortida continua (Fase 1)</choice>
           </enumChoice>
           <enumChoice choice="Blinking output (Phase 2)">
             <choice>Blinking output (Phase 2)</choice>
+            <choice xml:lang="de">Blinklicht (Phase 2)</choice>
+            <choice xml:lang="ca">Intensitat sortida continua (Fase 2)</choice>
           </enumChoice>
           <enumChoice choice="Strobe">
             <choice>Strobe</choice>
@@ -801,12 +860,18 @@
           </enumChoice>
           <enumChoice choice="Firebox">
             <choice>Firebox</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
+            <choice xml:lang="ca">Caixa de focs</choice>
           </enumChoice>
           <enumChoice choice="Smoke generator">
             <choice>Smoke generator</choice>
+            <choice xml:lang="de">Rauchgenerator</choice>
+            <choice xml:lang="ca">fumigen</choice>
           </enumChoice>
           <enumChoice choice="Headlights (highbeam/lowbeam)">
             <choice>Headlights (highbeam/lowbeam)</choice>
+            <choice xml:lang="de">Licht Auf-/Abblenden</choice>
+            <choice xml:lang="ca">Intensitat de llums</choice>
           </enumChoice>
           <enumChoice choice="Mars light">
             <choice>Mars light</choice>
@@ -816,9 +881,11 @@
           </enumChoice>
           <enumChoice choice="Rule 17 Forward">
             <choice>Rule 17 Forward</choice>
+            <choice xml:lang="de">Lichtausgang nach „Rule 17 FW“</choice>
           </enumChoice>
           <enumChoice choice="Rule 17 Reverse">
             <choice>Rule 17 Reverse</choice>
+            <choice xml:lang="de">Lichtausgang nach „Rule 17 REV“</choice>
           </enumChoice>
           <enumChoice choice="Pulse">
             <choice>Pulse</choice>
@@ -828,27 +895,32 @@
           </enumChoice>
           <enumChoice choice="Ditch (Phase 2)">
             <choice>Ditch (Phase 2)</choice>
-          </enumChoice>
-          <enumChoice choice="Digital coupler">
-            <choice>Digital coupler</choice>
           </enumChoice>
         </enumVal>
         <label>Output Configuration AUX1</label>
+        <label xml:lang="de">Funktion des Ausgangs AUX1</label>
+        <label xml:lang="ca">Configuració la sortida AUX1</label>
       </variable>
-      <variable CV="116" mask="XXXXVVVV" default="15" item="Output 4 effect generated" tooltip="Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)(Coupler hold power:none-full track power)">
+      <variable CV="116" item="Output 4 effect generated" mask="XXXXVVVV" default="15">
         <decVal min="0" max="15"/>
         <label>Brightness AUX2</label>
+        <label xml:lang="de">Helligkeit AUX2</label>
+        <tooltip>Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)</tooltip>
+        <tooltip xml:lang="de">Bereich 0-15, Helligkeit</tooltip>
       </variable>
-      <variable CV="116" mask="VVVVXXXX" default="0" item="Output 4 behavior">
+      <variable CV="116" item="Output 4 behavior" mask="VVVVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Continous output (dimmer)">
             <choice>Continous output (dimmer)</choice>
+            <choice xml:lang="de">Dauerlicht (Dimmer)</choice>
           </enumChoice>
           <enumChoice choice="Blinking output (Phase 1)">
             <choice>Blinking output (Phase 1)</choice>
+            <choice xml:lang="de">Blinklicht (Phase 1)</choice>
           </enumChoice>
           <enumChoice choice="Blinking output (Phase 2)">
             <choice>Blinking output (Phase 2)</choice>
+            <choice xml:lang="de">Blinklicht (Phase 2)</choice>
           </enumChoice>
           <enumChoice choice="Strobe">
             <choice>Strobe</choice>
@@ -858,12 +930,15 @@
           </enumChoice>
           <enumChoice choice="Firebox">
             <choice>Firebox</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke generator">
             <choice>Smoke generator</choice>
+            <choice xml:lang="de">Rauchgenerator</choice>
           </enumChoice>
           <enumChoice choice="Headlights (highbeam/lowbeam)">
             <choice>Headlights (highbeam/lowbeam)</choice>
+            <choice xml:lang="de">Licht Auf-/Abblenden</choice>
           </enumChoice>
           <enumChoice choice="Mars light">
             <choice>Mars light</choice>
@@ -873,9 +948,11 @@
           </enumChoice>
           <enumChoice choice="Rule 17 Forward">
             <choice>Rule 17 Forward</choice>
+            <choice xml:lang="de">Lichtausgang nach „Rule 17 FW“</choice>
           </enumChoice>
           <enumChoice choice="Rule 17 Reverse">
             <choice>Rule 17 Reverse</choice>
+            <choice xml:lang="de">Lichtausgang nach „Rule 17 REV“</choice>
           </enumChoice>
           <enumChoice choice="Pulse">
             <choice>Pulse</choice>
@@ -886,26 +963,30 @@
           <enumChoice choice="Ditch (Phase 2)">
             <choice>Ditch (Phase 2)</choice>
           </enumChoice>
-          <enumChoice choice="Digital coupler">
-            <choice>Digital coupler</choice>
-          </enumChoice>
         </enumVal>
         <label>Output Configuration AUX2</label>
+        <label xml:lang="de">Funktion des Ausgangs AUX2</label>
       </variable>
-      <variable CV="117" mask="XXXXVVVV" default="15" item="Output 5 effect generated" tooltip="Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)">
+      <variable CV="117" item="Output 5 effect generated" mask="XXXXVVVV" default="15">
         <decVal min="0" max="15"/>
         <label>Brightness AUX3</label>
+        <label xml:lang="de">Helligkeit AUX3</label>
+        <tooltip>Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)</tooltip>
+        <tooltip xml:lang="de">Bereich 0-15, Helligkeit</tooltip>
       </variable>
-      <variable CV="117" mask="VVVVXXXX" default="0" item="Output 5 behavior">
+      <variable CV="117" item="Output 5 behavior" mask="VVVVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Continous output (dimmer)">
             <choice>Continous output (dimmer)</choice>
+            <choice xml:lang="de">Dauerlicht (Dimmer)</choice>
           </enumChoice>
           <enumChoice choice="Blinking output (Phase 1)">
             <choice>Blinking output (Phase 1)</choice>
+            <choice xml:lang="de">Blinklicht (Phase 1)</choice>
           </enumChoice>
           <enumChoice choice="Blinking output (Phase 2)">
             <choice>Blinking output (Phase 2)</choice>
+            <choice xml:lang="de">Blinklicht (Phase 2)</choice>
           </enumChoice>
           <enumChoice choice="Strobe">
             <choice>Strobe</choice>
@@ -915,12 +996,15 @@
           </enumChoice>
           <enumChoice choice="Firebox">
             <choice>Firebox</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke generator">
             <choice>Smoke generator</choice>
+            <choice xml:lang="de">Rauchgenerator</choice>
           </enumChoice>
           <enumChoice choice="Headlights (highbeam/lowbeam)">
             <choice>Headlights (highbeam/lowbeam)</choice>
+            <choice xml:lang="de">Licht Auf-/Abblenden</choice>
           </enumChoice>
           <enumChoice choice="Mars light">
             <choice>Mars light</choice>
@@ -930,9 +1014,11 @@
           </enumChoice>
           <enumChoice choice="Rule 17 Forward">
             <choice>Rule 17 Forward</choice>
+            <choice xml:lang="de">Lichtausgang nach „Rule 17 FW“</choice>
           </enumChoice>
           <enumChoice choice="Rule 17 Reverse">
             <choice>Rule 17 Reverse</choice>
+            <choice xml:lang="de">Lichtausgang nach „Rule 17 REV“</choice>
           </enumChoice>
           <enumChoice choice="Pulse">
             <choice>Pulse</choice>
@@ -945,21 +1031,28 @@
           </enumChoice>
         </enumVal>
         <label>Output Configuration AUX3</label>
+        <label xml:lang="de">Funktion des Ausgangs AUX3</label>
       </variable>
-      <variable CV="118" mask="XXXXVVVV" default="15" item="Output 6 effect generated" tooltip="Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)">
+      <variable CV="118" item="Output 6 effect generated" mask="XXXXVVVV" default="15">
         <decVal min="0" max="15"/>
         <label>Brightness AUX4</label>
+        <label xml:lang="de">Helligkeit AUX4</label>
+        <tooltip>Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)</tooltip>
+        <tooltip xml:lang="de">Bereich 0-15, Helligkeit</tooltip>
       </variable>
-      <variable CV="118" mask="VVVVXXXX" default="0" item="Output 6 behavior">
+      <variable CV="118" item="Output 6 behavior" mask="VVVVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Continous output (dimmer)">
             <choice>Continous output (dimmer)</choice>
+            <choice xml:lang="de">Dauerlicht (Dimmer)</choice>
           </enumChoice>
           <enumChoice choice="Blinking output (Phase 1)">
             <choice>Blinking output (Phase 1)</choice>
+            <choice xml:lang="de">Blinklicht (Phase 1)</choice>
           </enumChoice>
           <enumChoice choice="Blinking output (Phase 2)">
             <choice>Blinking output (Phase 2)</choice>
+            <choice xml:lang="de">Blinklicht (Phase 2)</choice>
           </enumChoice>
           <enumChoice choice="Strobe">
             <choice>Strobe</choice>
@@ -969,12 +1062,15 @@
           </enumChoice>
           <enumChoice choice="Firebox">
             <choice>Firebox</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke generator">
             <choice>Smoke generator</choice>
+            <choice xml:lang="de">Rauchgenerator</choice>
           </enumChoice>
           <enumChoice choice="Headlights (highbeam/lowbeam)">
             <choice>Headlights (highbeam/lowbeam)</choice>
+            <choice xml:lang="de">Licht Auf-/Abblenden</choice>
           </enumChoice>
           <enumChoice choice="Mars light">
             <choice>Mars light</choice>
@@ -984,9 +1080,11 @@
           </enumChoice>
           <enumChoice choice="Rule 17 Forward">
             <choice>Rule 17 Forward</choice>
+            <choice xml:lang="de">Lichtausgang nach „Rule 17 FW“</choice>
           </enumChoice>
           <enumChoice choice="Rule 17 Reverse">
             <choice>Rule 17 Reverse</choice>
+            <choice xml:lang="de">Lichtausgang nach „Rule 17 REV“</choice>
           </enumChoice>
           <enumChoice choice="Pulse">
             <choice>Pulse</choice>
@@ -999,21 +1097,28 @@
           </enumChoice>
         </enumVal>
         <label>Output Configuration AUX4</label>
+        <label xml:lang="de">Funktion des Ausgangs AUX4</label>
       </variable>
-      <variable CV="119" mask="XXXXVVVV" default="15" item="Output 7 effect generated" tooltip="Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)">
+      <variable CV="119" item="Output 7 effect generated" mask="XXXXVVVV" default="15">
         <decVal min="0" max="15"/>
         <label>Brightness AUX5</label>
+        <label xml:lang="de">Helligkeit AUX</label>
+        <tooltip>Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)</tooltip>
+        <tooltip xml:lang="de">Bereich 0-15, Helligkeit</tooltip>
       </variable>
-      <variable CV="119" mask="VVVVXXXX" default="0" item="Output 7 behavior">
+      <variable CV="119" item="Output 7 behavior" mask="VVVVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Continous output (dimmer)">
             <choice>Continous output (dimmer)</choice>
+            <choice xml:lang="de">Dauerlicht (Dimmer)</choice>
           </enumChoice>
           <enumChoice choice="Blinking output (Phase 1)">
             <choice>Blinking output (Phase 1)</choice>
+            <choice xml:lang="de">Blinklicht (Phase 1)</choice>
           </enumChoice>
           <enumChoice choice="Blinking output (Phase 2)">
             <choice>Blinking output (Phase 2)</choice>
+            <choice xml:lang="de">Blinklicht (Phase 2)</choice>
           </enumChoice>
           <enumChoice choice="Strobe">
             <choice>Strobe</choice>
@@ -1023,12 +1128,15 @@
           </enumChoice>
           <enumChoice choice="Firebox">
             <choice>Firebox</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke generator">
             <choice>Smoke generator</choice>
+            <choice xml:lang="de">Rauchgenerator</choice>
           </enumChoice>
           <enumChoice choice="Headlights (highbeam/lowbeam)">
             <choice>Headlights (highbeam/lowbeam)</choice>
+            <choice xml:lang="de">Licht Auf-/Abblenden</choice>
           </enumChoice>
           <enumChoice choice="Mars light">
             <choice>Mars light</choice>
@@ -1038,9 +1146,11 @@
           </enumChoice>
           <enumChoice choice="Rule 17 Forward">
             <choice>Rule 17 Forward</choice>
+            <choice xml:lang="de">Lichtausgang nach „Rule 17 FW“</choice>
           </enumChoice>
           <enumChoice choice="Rule 17 Reverse">
             <choice>Rule 17 Reverse</choice>
+            <choice xml:lang="de">Lichtausgang nach „Rule 17 REV“</choice>
           </enumChoice>
           <enumChoice choice="Pulse">
             <choice>Pulse</choice>
@@ -1053,21 +1163,28 @@
           </enumChoice>
         </enumVal>
         <label>Output Configuration AUX5</label>
+        <label xml:lang="de">Funktion des Ausgangs AUX5</label>
       </variable>
-      <variable CV="120" mask="XXXXVVVV" default="15" item="Output 8 effect generated" tooltip="Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)">
+      <variable CV="120" item="Output 8 effect generated" mask="XXXXVVVV" default="15">
         <decVal min="0" max="15"/>
         <label>Brightness AUX6</label>
+        <label xml:lang="de">Helligkeit AUX6</label>
+        <tooltip>Range 0-15, Brightness: dark-maximum (Pulse: 0.5-8 seconds)</tooltip>
+        <tooltip xml:lang="de">Bereich 0-15, Helligkeit</tooltip>
       </variable>
-      <variable CV="120" mask="VVVVXXXX" default="0" item="Output 8 behavior">
+      <variable CV="120" item="Output 8 behavior" mask="VVVVXXXX" default="0">
         <enumVal>
           <enumChoice choice="Continous output (dimmer)">
             <choice>Continous output (dimmer)</choice>
+            <choice xml:lang="de">Dauerlicht (Dimmer)</choice>
           </enumChoice>
           <enumChoice choice="Blinking output (Phase 1)">
             <choice>Blinking output (Phase 1)</choice>
+            <choice xml:lang="de">Blinklicht (Phase 1)</choice>
           </enumChoice>
           <enumChoice choice="Blinking output (Phase 2)">
             <choice>Blinking output (Phase 2)</choice>
+            <choice xml:lang="de">Blinklicht (Phase 2)</choice>
           </enumChoice>
           <enumChoice choice="Strobe">
             <choice>Strobe</choice>
@@ -1077,12 +1194,15 @@
           </enumChoice>
           <enumChoice choice="Firebox">
             <choice>Firebox</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke generator">
             <choice>Smoke generator</choice>
+            <choice xml:lang="de">Rauchgenerator</choice>
           </enumChoice>
           <enumChoice choice="Headlights (highbeam/lowbeam)">
             <choice>Headlights (highbeam/lowbeam)</choice>
+            <choice xml:lang="de">Licht Auf-/Abblenden</choice>
           </enumChoice>
           <enumChoice choice="Mars light">
             <choice>Mars light</choice>
@@ -1092,9 +1212,11 @@
           </enumChoice>
           <enumChoice choice="Rule 17 Forward">
             <choice>Rule 17 Forward</choice>
+            <choice xml:lang="de">Lichtausgang nach „Rule 17 FW“</choice>
           </enumChoice>
           <enumChoice choice="Rule 17 Reverse">
             <choice>Rule 17 Reverse</choice>
+            <choice xml:lang="de">Lichtausgang nach „Rule 17 REV“</choice>
           </enumChoice>
           <enumChoice choice="Pulse">
             <choice>Pulse</choice>
@@ -1107,74 +1229,78 @@
           </enumChoice>
         </enumVal>
         <label>Output Configuration AUX6</label>
+        <label xml:lang="de">Funktion des Ausgangs AUX6</label>
       </variable>
-      <variable item="Bit for incorrect travel (Motorola)" CV="124" mask="XXXXXXXV" default="0" tooltip="Applies to Motorola only">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="124" item="Bit for incorrect travel (Motorola)" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Bit for incorrect travel (Motorola)</label>
+        <label xml:lang="de">Falschfahrbit (Motorola®)</label>
+        <tooltip>Applies to Motorola® only</tooltip>
+        <tooltip xml:lang="de">Nur für Motorola®</tooltip>
       </variable>
-      <variable item="Saves the status of function buttons" CV="124" mask="XXXXXXVX" default="1" tooltip="Determines, which data are to be saved and used after an interruption of the power supply">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="124" item="Saves the status of function buttons" mask="XXXXXXVX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Saves the status of function buttons</label>
+        <label xml:lang="de">Speicherung des Funktionstastenzustands</label>
+        <tooltip>Determines, which data are to be saved and used after an interruption of the power supply.</tooltip>
+        <tooltip xml:lang="de">Bestimmt, welche Daten gespeichert und nach einer Unterbrechung der Energieversorgung verwendet werden sollen.</tooltip>
       </variable>
-      <variable item="Saves the current speed setting" CV="124" mask="XXXXXVXX" default="1" tooltip="Determines, which data are to be saved and used after an interruption of the power supply">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="124" item="Saves the current speed setting" mask="XXXXXVXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Saves the current speed setting</label>
+        <label xml:lang="de">Speicherung der aktuellen Geschwindigkeit</label>
+        <tooltip>Determines, which data are to be saved and used after an interruption of the power supply</tooltip>
+        <tooltip xml:lang="de">Bestimmt, welche Daten gespeichert und nach einer Unterbrechung der Energieversorgung verwendet werden sollen.</tooltip>
       </variable>
-      <variable CV="124" mask="XXXXVXXX" default="0" item="Kick Start">
+      <variable CV="124" item="Kick Start" mask="XXXXVXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Acceleration based on acceleration time</label>
         <label xml:lang="it">Forza Avviamento</label>
         <label xml:lang="fr">Impuls. de démarrage (kick start)</label>
-        <label xml:lang="de">Kick Start</label>
+        <label xml:lang="de">Anfahren mit Beschleunigungszeit</label>
       </variable>
-      <variable item="Emergency stop when changing direction in Motorola mode" CV="124" mask="XXXVXXXX" default="0">
+      <variable CV="124" item="Emergency stop when changing direction in Motorola mode" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Emergency stop when changing direction in Motorola mode</label>
+        <label xml:lang="de">Kein Nothalt bei Fahrtrichtungsumschaltung im Motorola®-Betrieb</label>
       </variable>
-      <variable item="Motor PWM when running in analog mode" CV="124" mask="XVXXXXXX" default="0">
+      <variable CV="124" item="Motor PWM when running in analog mode" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Motor PWM when running in analog mode</label>
+        <label xml:lang="de">Keine Motor PWM Im Analogbetrieb</label>
       </variable>
-      <variable item="PWM for function outputs in analog mode" CV="124" mask="VXXXXXXX" default="0">
+      <variable CV="124" item="PWM for function outputs in analog mode" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>PWM for function outputs in analog mode</label>
+        <label xml:lang="de">Keine PWM für Funktionsausgänge im Analogbetrieb</label>
       </variable>
-      <variable CV="125" default="15" item="Radio Power Conversion" tooltip="Range 0-127">
+      <variable CV="125" item="Radio Power Conversion" default="15" exclude="LokPilot Fx V3.0,LokPilot Micro Fx V3.0">
         <decVal min="0" max="127"/>
         <label>Analogue DC starting voltage</label>
+        <label xml:lang="de">Anfahrspannung Analog DC</label>
+       <tooltip>Range 0-127</tooltip>
+       <tooltip xml:lang="de">Werte 0-127</tooltip>
       </variable>
-      <variable CV="126" default="45" item="Zero-1 Power Conversion" tooltip="Range 0-127">
+      <variable CV="126" item="Zero-1 Power Conversion" default="45" exclude="LokPilot Fx V3.0,LokPilot Micro Fx V3.0">
         <decVal min="0" max="127"/>
         <label>Analogue DC maximum speed</label>
+        <label xml:lang="de">Höchstgeschwindigkeit Analog DC</label>
+       <tooltip>Range 0-127</tooltip>
+       <tooltip xml:lang="de">Werte 0-127</tooltip>
       </variable>
-      <variable CV="127" default="15" item="CTC/Railcommand Power Conversion" tooltip="Range 0-127">
+      <variable CV="127" item="CTC/Railcommand Power Conversion" default="15" exclude="LokPilot Micro V3.0,LokPilot V3.0 DCC,LokPilot Fx V3.0,LokPilot Micro Fx V3.0">
         <decVal min="0" max="127"/>
         <label>Analogue AC starting voltage</label>
+        <label xml:lang="de">Anfahrspannung Analog AC</label>
+       <tooltip>Range 0-127</tooltip>
+       <tooltip xml:lang="de">Werte 0-127</tooltip>
       </variable>
-      <variable CV="128" default="45" item="FMZ(Fleischmann)" tooltip="Range 0-127">
+      <variable CV="128" item="FMZ(Fleischmann)" default="45" exclude="LokPilot Micro V3.0,LokPilot V3.0 DCC,LokPilot Fx V3.0,LokPilot Micro Fx V3.0">
         <decVal min="0" max="127"/>
         <label>Analogue AC maximum speed</label>
+        <label xml:lang="de">Höchstgeschwindigkeit Analog AC</label>
+       <tooltip>Range 0-127</tooltip>
+       <tooltip xml:lang="de">Werte 0-127</tooltip>
       </variable>
       <variable item="Stand Forward A Headlight" CV="129" mask="XXXXXXXV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -2907,22 +3033,31 @@
       <variable CV="246" default="0" item="Advanced Group 1 Option 2">
         <decVal/>
         <label>Auto Uncoupling Speed</label>
+        <label xml:lang="de">Automatisches Entkuppeln Geschwindigkeit</label>
       </variable>
       <variable CV="247" default="0" item="Advanced Group 1 Option 3">
         <decVal/>
         <label>Auto Uncoupling Push Time</label>
+        <label xml:lang="de">Entkuppeln - Abrückzeit</label>
       </variable>
       <variable CV="248" default="0" item="Advanced Group 1 Option 4">
         <decVal/>
         <label>Auto Uncoupling Remove Time</label>
+        <label xml:lang="de">Entkuppeln - Andrückzeit</label>
       </variable>
-      <variable item="Start delay" CV="253" default="0" tooltip="Delays the start (range 0-255). Allows synchronized starting of locos with LokSound decoders (for consist operation).">
+      <variable CV="253" item="Start delay" default="0">
         <decVal min="0" max="255"/>
         <label>Start delay</label>
+        <label xml:lang="de">Startverzögerung</label>
+        <tooltip>Delays the start (range 0-255). Allows synchronized starting of locos with LokSound decoders (for consist operation).</tooltip>
+        <tooltip xml:lang="de">Verzögert das Anfahren um die hier eingestellte Zeit. Ermöglicht das Synchronisierte Starten von Loks mit LokSound-Decodern (Für Traktionen).</tooltip>
       </variable>
-      <variable item="Constant brake distance" CV="254" default="0" tooltip="Determines the brake distance which will be maintained regardless of the speed of the train. Range 0-64.">
+      <variable CV="254" item="Constant brake distance" default="0">
         <decVal min="0" max="64"/>
         <label>Constant brake distance</label>
+        <label xml:lang="de">Konstanter Bremsweg</label>
+        <tooltip>Determines the brake distance which will be maintained regardless of the speed of the train. Range 0-64.</tooltip>
+        <tooltip xml:lang="de">Ein Wert > 0 gibt einen Bremsweg vor, der unabhängig von der Geschwindigkeit eingehalten wird.</tooltip>
       </variable>
     </variables>
     <resets>
@@ -2933,132 +3068,172 @@
     <column>
       <label>
         <text>Description          Headlight</text>
+        <text xml:lang="de">Beschreibung        Lvor</text>
       </label>
       <label>
         <text>(* = except </text>
+        <text xml:lang="de">(* = Ausnahme </text>
       </label>
       <label>
         <text>  Micro and Fx)</text>
+        <text xml:lang="de">  Micro und Fx)</text>
       </label>
       <label>
         <text> </text>
       </label>
       <display item="Stand Forward A Headlight" label="Standing Forward" format="checkbox">
         <label>Standing Forward</label>
+        <label xml:lang="de">Stand Vorwärts</label>
       </display>
       <display item="Stand Back up A Headlight" label="Standing Backward" format="checkbox">
         <label>Standing Backward</label>
+        <label xml:lang="de">Stand Rückwärts</label>
       </display>
       <display item="Drive Forward A Headlight" label="Drive Forward" format="checkbox">
         <label>Drive Forward</label>
+        <label xml:lang="de">Fahrt Vorwärts</label>
       </display>
       <display item="Drive Back up A Headlight" label="Drive Back up" format="checkbox">
         <label>Drive Back up</label>
+        <label xml:lang="de">Fahrt Rückwärts</label>
       </display>
       <display item="Light Forward A Headlight" label="Light Forward" format="checkbox">
         <label>Light Forward</label>
+        <label xml:lang="de">Lvor Vorwärts</label>
       </display>
       <display item="Light Back up A Headlight" label="Light Back up" format="checkbox">
         <label>Light Back up</label>
+        <label xml:lang="de">Lvor Rückwärts</label>
       </display>
       <display item="F1 Forward A Headlight" label="F1 Forward" format="checkbox">
         <label>F1 Forward</label>
+        <label xml:lang="de">F1 Vorwärts</label>
       </display>
       <display item="F1 Back up A Headlight" label="F1 Back up" format="checkbox">
         <label>F1 Back up</label>
+        <label xml:lang="de">F1 Rückwärts</label>
       </display>
       <display item="F2 Forward A Headlight" label="F2 Forward" format="checkbox">
         <label>F2 Forward</label>
+        <label xml:lang="de">F2 Vorwärts</label>
       </display>
       <display item="F2 Back up A Headlight" label="F2 Back up" format="checkbox">
         <label>F2 Back up</label>
+        <label xml:lang="de">F2 Rückwärts</label>
       </display>
       <display item="F3 Forward A Headlight" label="F3 Forward" format="checkbox">
         <label>F3 Forward</label>
+        <label xml:lang="de">F3 Vorwärts</label>
       </display>
       <display item="F3 Back up A Headlight" label="F3 Back up" format="checkbox">
         <label>F3 Back up</label>
+        <label xml:lang="de">F3 Rückwärts</label>
       </display>
       <display item="F4 Forward A Headlight" label="F4 Forward" format="checkbox">
         <label>F4 Forward</label>
+        <label xml:lang="de">F4 Vorwärts</label>
       </display>
       <display item="F4 Back up A Headlight" label="F4 Back up" format="checkbox">
         <label>F4 Back up</label>
+        <label xml:lang="de">F4 Rückwärts</label>
       </display>
       <display item="F5 Forward A Headlight" label="F5 Forward" format="checkbox">
         <label>F5 Forward</label>
+        <label xml:lang="de">F5 Vorwärts</label>
       </display>
       <display item="F5 Back up A Headlight" label="F5 Back up" format="checkbox">
         <label>F5 Back up</label>
+        <label xml:lang="de">F5 Rückwärts</label>
       </display>
       <display item="F6 Forward A Headlight" label="F6 Forward" format="checkbox">
         <label>F6 Forward</label>
+        <label xml:lang="de">F6 Vorwärts</label>
       </display>
       <display item="F6 Back up A Headlight" label="F6 Back up" format="checkbox">
         <label>F6 Back up</label>
+        <label xml:lang="de">F6 Rückwärts</label>
       </display>
       <display item="F7 Forward A Headlight" label="F7 Forward" format="checkbox">
         <label>F7 Forward</label>
+        <label xml:lang="de">F7 Vorwärts</label>
       </display>
       <display item="F7 Back up A Headlight" label="F7 Back up" format="checkbox">
         <label>F7 Back up</label>
+        <label xml:lang="de">F7 Rückwärts</label>
       </display>
       <display item="F8 Forward A Headlight" label="F8 Forward" format="checkbox">
         <label>F8 Forward</label>
+        <label xml:lang="de">F8 Vorwärts</label>
       </display>
       <display item="F8 Back up A Headlight" label="F8 Back up" format="checkbox">
         <label>F8 Back up</label>
+        <label xml:lang="de">F8 Rückwärts</label>
       </display>
       <display item="F9 Forward A Headlight" label="F9 Forward" format="checkbox">
         <label>F9 Forward</label>
+        <label xml:lang="de">F9 Vorwärts</label>
       </display>
       <display item="F9 Back up A Headlight" label="F9 Back up" format="checkbox">
         <label>F9 Back up</label>
+        <label xml:lang="de">F9 Rückwärts</label>
       </display>
       <display item="F10 Forward A Headlight" label="F10 Forward" format="checkbox">
         <label>F10 Forward</label>
+        <label xml:lang="de">F10 Vorwärts</label>
       </display>
       <display item="F10 Back up A Headlight" label="F10 Back up" format="checkbox">
         <label>F10 Back up</label>
+        <label xml:lang="de">F10 Rückwärts</label>
       </display>
       <display item="F11 Forward A Headlight" label="F11 Forward" format="checkbox">
         <label>F11 Forward</label>
+        <label xml:lang="de">F11 Vorwärts</label>
       </display>
       <display item="F11 Back up A Headlight" label="F11 Back up" format="checkbox">
         <label>F11 Back up</label>
+        <label xml:lang="de">F11 Rückwärts</label>
       </display>
       <display item="F12 Forward A Headlight" label="F12 Forward" format="checkbox">
         <label>F12 Forward</label>
+        <label xml:lang="de">F12 Vorwärts</label>
       </display>
       <display item="F12 Back up A Headlight" label="F12 Back up" format="checkbox">
         <label>F12 Back up</label>
+        <label xml:lang="de">F12 Rückwärts</label>
       </display>
       <display item="F13 Forward A Headlight" label="F13 Forward*" format="checkbox">
         <label>F13 Forward*</label>
+        <label xml:lang="de">F13 Vorwärts*</label>
       </display>
       <display item="F13 Back up A Headlight" label="F13 Back up*" format="checkbox">
         <label>F13 Back up*</label>
+        <label xml:lang="de">F13 Rückwärts*</label>
       </display>
       <display item="F14 Forward A Headlight" label="F14 Forward*" format="checkbox">
         <label>F14 Forward*</label>
+        <label xml:lang="de">F14 Vorwärts*</label>
       </display>
       <display item="F14 Back up A Headlight" label="F14 Back up*" format="checkbox">
         <label>F14 Back up*</label>
+        <label xml:lang="de">F14 Rückwärts*</label>
       </display>
       <display item="F15 Forward A Headlight" label="F15 Forward*" format="checkbox">
         <label>F15 Forward*</label>
+        <label xml:lang="de">F15 Vorwärts*</label>
       </display>
       <display item="F15 Back up A Headlight" label="F15 Back up*" format="checkbox">
         <label>F15 Back up*</label>
+        <label xml:lang="de">F15 Rückwärts*</label>
       </display>
       <label>
+        <text> </text>
+      </label>
+      <label>
         <text>(* = except          Headlight</text>
+        <text xml:lang="de">(* = Ausnahme     Lvor</text>
       </label>
       <label>
         <text>  Micro and Fx)</text>
-      </label>
-      <label>
-        <text> </text>
       </label>
       <label>
         <text> </text>
@@ -3067,6 +3242,7 @@
     <column>
       <label>
         <text>Rear Light</text>
+        <text xml:lang="de">Lrück</text>
       </label>
       <label>
         <text> </text>
@@ -3186,10 +3362,11 @@
         <label/>
       </display>
       <label>
-        <text>Rear Light</text>
+        <text> </text>
       </label>
       <label>
-        <text> </text>
+        <text>Rear Light</text>
+        <text xml:lang="de">Lrück</text>
       </label>
       <label>
         <text> </text>
@@ -3204,6 +3381,7 @@
       </label>
       <label>
         <text>(except</text>
+        <text xml:lang="de">(nicht</text>
       </label>
       <label>
         <text>micro)</text>
@@ -3320,16 +3498,17 @@
         <label/>
       </display>
       <label>
+        <text> </text>
+      </label>
+      <label>
         <text>AUX 1</text>
       </label>
       <label>
         <text>(except</text>
+        <text xml:lang="de">(nicht</text>
       </label>
       <label>
         <text>micro)</text>
-      </label>
-      <label>
-        <text> </text>
       </label>
     </column>
     <column>
@@ -3338,6 +3517,7 @@
       </label>
       <label>
         <text>(except</text>
+        <text xml:lang="de">(nicht</text>
       </label>
       <label>
         <text>micro)</text>
@@ -3454,16 +3634,17 @@
         <label/>
       </display>
       <label>
+        <text> </text>
+      </label>
+      <label>
         <text>AUX 2</text>
       </label>
       <label>
         <text>(except</text>
+        <text xml:lang="de">(nicht</text>
       </label>
       <label>
         <text>micro)</text>
-      </label>
-      <label>
-        <text> </text>
       </label>
     </column>
     <column>
@@ -3472,9 +3653,11 @@
       </label>
       <label>
         <text>(21MTC Fx</text>
+        <text xml:lang="de">(nur 21MTC,</text>
       </label>
       <label>
         <text>XL only)</text>
+        <text xml:lang="de">Fx, XL)</text>
       </label>
       <label>
         <text> </text>
@@ -3588,16 +3771,18 @@
         <label/>
       </display>
       <label>
+        <text> </text>
+      </label>
+      <label>
         <text>AUX 3</text>
       </label>
       <label>
         <text>(21MTC Fx</text>
+        <text xml:lang="de">(nur 21MTC,</text>
       </label>
       <label>
         <text>XL only)</text>
-      </label>
-      <label>
-        <text> </text>
+        <text xml:lang="de">Fx, XL)</text>
       </label>
     </column>
     <column>
@@ -3606,9 +3791,11 @@
       </label>
       <label>
         <text>(21MTC Fx</text>
+        <text xml:lang="de">(nur 21MTC,</text>
       </label>
       <label>
         <text>XL only)</text>
+        <text xml:lang="de">Fx, XL)</text>
       </label>
       <label>
         <text> </text>
@@ -3722,16 +3909,18 @@
         <label/>
       </display>
       <label>
+        <text> </text>
+      </label>
+      <label>
         <text>AUX 4</text>
       </label>
       <label>
         <text>(21MTC Fx</text>
+        <text xml:lang="de">(nur 21MTC,</text>
       </label>
       <label>
         <text>XL only)</text>
-      </label>
-      <label>
-        <text> </text>
+        <text xml:lang="de">Fx, XL)</text>
       </label>
     </column>
     <column>
@@ -3740,9 +3929,11 @@
       </label>
       <label>
         <text>(XL</text>
+        <text xml:lang="de">(nur</text>
       </label>
       <label>
         <text>only)</text>
+        <text xml:lang="de">XL)</text>
       </label>
       <label>
         <text> </text>
@@ -3856,16 +4047,18 @@
         <label/>
       </display>
       <label>
+        <text> </text>
+      </label>
+      <label>
         <text>AUX 5</text>
       </label>
       <label>
         <text>(XL</text>
+        <text xml:lang="de">(nur</text>
       </label>
       <label>
         <text>only)</text>
-      </label>
-      <label>
-        <text> </text>
+        <text xml:lang="de">XL)</text>
       </label>
     </column>
     <column>
@@ -3874,9 +4067,11 @@
       </label>
       <label>
         <text>(XL</text>
+        <text xml:lang="de">(nur</text>
       </label>
       <label>
         <text>only)</text>
+        <text xml:lang="de">XL)</text>
       </label>
       <label>
         <text> </text>
@@ -3990,27 +4185,32 @@
         <label/>
       </display>
       <label>
+        <text> </text>
+      </label>
+      <label>
         <text>AUX 6</text>
       </label>
       <label>
         <text>(XL</text>
+        <text xml:lang="de">(nur</text>
       </label>
       <label>
         <text>only)</text>
-      </label>
-      <label>
-        <text> </text>
+        <text xml:lang="de">XL)</text>
       </label>
     </column>
     <column>
       <label>
         <text>Accel-</text>
+        <text xml:lang="de">Beschleu-</text>
       </label>
       <label>
         <text>eration</text>
+        <text xml:lang="de">nigung</text>
       </label>
       <label>
         <text>on/off</text>
+        <text xml:lang="de">an/aus</text>
       </label>
       <label>
         <text> </text>
@@ -4124,27 +4324,33 @@
         <label/>
       </display>
       <label>
+        <text> </text>
+      </label>
+      <label>
         <text>Accel-</text>
+        <text xml:lang="de">Beschleu-</text>
       </label>
       <label>
         <text>eration</text>
+        <text xml:lang="de">nigung</text>
       </label>
       <label>
         <text>on/off</text>
-      </label>
-      <label>
-        <text> </text>
+        <text xml:lang="de">an/aus</text>
       </label>
     </column>
     <column>
       <label>
         <text>Shunting</text>
+        <text xml:lang="de">Rangier-</text>
       </label>
       <label>
         <text>mode</text>
+        <text xml:lang="de">gang</text>
       </label>
       <label>
         <text>on/off</text>
+        <text xml:lang="de">an/aus</text>
       </label>
       <label>
         <text> </text>
@@ -4258,16 +4464,19 @@
         <label/>
       </display>
       <label>
+        <text> </text>
+      </label>
+      <label>
         <text>Shunting</text>
+        <text xml:lang="de">Rangier-</text>
       </label>
       <label>
         <text>mode</text>
+        <text xml:lang="de">gang</text>
       </label>
       <label>
         <text>on/off</text>
-      </label>
-      <label>
-        <text> </text>
+        <text xml:lang="de">an/aus</text>
       </label>
     </column>
     <column>
@@ -4276,6 +4485,7 @@
       </label>
       <label>
         <text>on/off</text>
+        <text xml:lang="de">an/aus</text>
       </label>
       <label>
         <text> </text>
@@ -4392,13 +4602,14 @@
         <label/>
       </display>
       <label>
+        <text> </text>
+      </label>
+      <label>
         <text>Sound</text>
       </label>
       <label>
         <text>on/off</text>
-      </label>
-      <label>
-        <text> </text>
+        <text xml:lang="de">an/aus</text>
       </label>
       <label>
         <text> </text>
@@ -4407,9 +4618,11 @@
     <column>
       <label>
         <text>Dynamic</text>
+        <text xml:lang="de">Dynamische</text>
       </label>
       <label>
         <text>Brake</text>
+        <text xml:lang="de">Bremse</text>
       </label>
       <label>
         <text> </text>
@@ -4526,19 +4739,23 @@
         <label/>
       </display>
       <label>
+        <text> </text>
+      </label>
+      <label>
         <text>Dynamic</text>
+        <text xml:lang="de">Dynamische</text>
       </label>
       <label>
         <text>Brake</text>
-      </label>
-      <label>
-        <text> </text>
+        <text xml:lang="de">Bremse</text>
       </label>
       <label>
         <text> </text>
       </label>
     </column>
     <name>Function Map</name>
+    <name xml:lang="de">Funktionszuordnung</name>
+    <name xml:lang="nl">Functietoewijzing</name>
   </pane>
   <pane>
     <column>

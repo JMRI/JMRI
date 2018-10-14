@@ -1,22 +1,25 @@
 package jmri.implementation;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Vector;
+
+import javax.annotation.*;
+
 import jmri.InstanceManager;
 import jmri.SignalAppearanceMap;
 import jmri.SignalMast;
 import jmri.SignalSystem;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Abstract class providing the basic logic of the SignalMast interface.
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public abstract class AbstractSignalMast extends AbstractNamedBean
-        implements SignalMast, java.io.Serializable, java.beans.VetoableChangeListener {
+        implements SignalMast, java.beans.VetoableChangeListener {
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSignalMast.class);
 
@@ -28,7 +31,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         super(systemName);
     }
 
-    @javax.annotation.OverridingMethodsMustInvokeSuper
+    @Override
     public void setAspect(String aspect) {
         String oldAspect = this.aspect;
         this.aspect = aspect;
@@ -36,6 +39,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         firePropertyChange("Aspect", oldAspect, aspect);
     }
 
+    @Override
     public String getAspect() {
         return aspect;
     }
@@ -50,10 +54,12 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
      * The state is the index of the current aspect in the list of possible
      * aspects.
      */
+    @Override
     public int getState() {
         return -1;
     }
 
+    @Override
     public void setState(int i) {
     }
 
@@ -63,8 +69,9 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     private boolean mLit = true;
 
     /**
-     * Default behavior for "lit" parameter is to track value and return it.
+     * Default behavior for "lit" property is to track value and return it.
      */
+    @Override
     public boolean getLit() {
         return mLit;
     }
@@ -75,94 +82,111 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     private boolean mHeld = false;
 
     /**
-     * "Held" parameter is just tracked and notified.
+     * "Held" property is just tracked and notified.
      */
+    @Override
     public boolean getHeld() {
         return mHeld;
     }
 
     /**
-     * Set the lit parameter.
-     *
+     * Set the lit property.
+     * <p>
      * This acts on all the SignalHeads included in this SignalMast
+     *
+     * @param newLit the new value of lit
      */
-    @javax.annotation.OverridingMethodsMustInvokeSuper
+    @Override
     public void setLit(boolean newLit) {
         boolean oldLit = mLit;
         mLit = newLit;
         if (oldLit != newLit) {
             //updateOutput();
             // notify listeners, if any
-            firePropertyChange("Lit", Boolean.valueOf(oldLit), Boolean.valueOf(newLit));
+            firePropertyChange("Lit", oldLit, newLit);
         }
 
     }
 
     /**
-     * Set the held parameter.
+     * Set the held property of the signal mast.
      * <P>
      * Note that this does not directly effect the output on the layout; the
-     * held parameter is a local variable which effects the aspect only via
+     * held property is a local variable which effects the aspect only via
      * higher-level logic.
+     *
+     * @param newHeld the new value of the help property
      */
-    @javax.annotation.OverridingMethodsMustInvokeSuper
+    @Override
     public void setHeld(boolean newHeld) {
         boolean oldHeld = mHeld;
         mHeld = newHeld;
         if (oldHeld != newHeld) {
             // notify listeners, if any
-            firePropertyChange("Held", Boolean.valueOf(oldHeld), Boolean.valueOf(newHeld));
+            firePropertyChange("Held", oldHeld, newHeld);
         }
-
     }
 
     DefaultSignalAppearanceMap map;
     SignalSystem systemDefn;
 
-    void configureSignalSystemDefinition(String name) {
+    protected void configureSignalSystemDefinition(String name) {
         systemDefn = InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem(name);
         if (systemDefn == null) {
-            log.error("Did not find signal definition: " + name);
+            log.error("Did not find signal definition: {}", name);
             throw new IllegalArgumentException("Signal definition not found: " + name);
         }
     }
 
-    void configureAspectTable(String signalSystemName, String aspectMapName) {
+    protected void configureAspectTable(String signalSystemName, String aspectMapName) {
         map = DefaultSignalAppearanceMap.getMap(signalSystemName, aspectMapName);
     }
 
+    @Override
     public SignalSystem getSignalSystem() {
         return systemDefn;
     }
 
+    @Override
     public SignalAppearanceMap getAppearanceMap() {
         return map;
     }
 
-    ArrayList<String> disabledAspects = new ArrayList<String>(1);
+    ArrayList<String> disabledAspects = new ArrayList<>(1);
 
-    /**
-     * returns a list of all the valid aspects, that have not been disabled
-     */
+    @Override
     public Vector<String> getValidAspects() {
         java.util.Enumeration<String> e = map.getAspects();
-        Vector<String> v = new Vector<String>();
+        // copy List to Vector
+        Vector<String> v = new Vector<>();
         while (e.hasMoreElements()) {
-            String aspect = e.nextElement();
-            if (!disabledAspects.contains(aspect)) {
-                v.add(aspect);
+            String a = e.nextElement();
+            if (!disabledAspects.contains(a)) {
+                v.add(a);
             }
         }
         return v;
     }
 
     /**
-     * returns a list of all the known aspects for this mast, including those
-     * that have been disabled
+     * {@inheritDoc }
+     */
+    public String getMastType() { return mastType; }
+    public void setMastType(@Nonnull String type) { 
+        Objects.requireNonNull(type, "MastType cannot be null");
+        mastType = type;
+    }
+    String mastType;
+
+    /**
+     * Get a list of all the known aspects for this mast, including those that
+     * have been disabled.
+     *
+     * @return list of known aspects; may be empty
      */
     public Vector<String> getAllKnownAspects() {
         java.util.Enumeration<String> e = map.getAspects();
-        Vector<String> v = new Vector<String>();
+        Vector<String> v = new Vector<>();
         while (e.hasMoreElements()) {
             v.add(e.nextElement());
         }
@@ -174,7 +198,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
             return;
         }
         if (!map.checkAspect(aspect)) {
-            log.warn("attempting to disable an aspect: " + aspect + " that is not on the mast " + getDisplayName());
+            log.warn("attempting to disable an aspect: {} that is not on the mast {}", aspect, getDisplayName());
             return;
         }
         if (!disabledAspects.contains(aspect)) {
@@ -188,7 +212,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
             return;
         }
         if (!map.checkAspect(aspect)) {
-            log.warn("attempting to disable an aspect: " + aspect + " that is not on the mast " + getDisplayName());
+            log.warn("attempting to disable an aspect: {} that is not on the mast {}", aspect, getDisplayName());
             return;
         }
         if (disabledAspects.contains(aspect)) {
@@ -201,23 +225,28 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         return disabledAspects;
     }
 
+    @Override
     public boolean isAspectDisabled(String aspect) {
         return disabledAspects.contains(aspect);
     }
 
     boolean allowUnLit = true;
 
+    @Override
     public void setAllowUnLit(boolean boo) {
         allowUnLit = boo;
     }
 
+    @Override
     public boolean allowUnLit() {
         return allowUnLit;
     }
 
+    @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameSignalMast");
     }

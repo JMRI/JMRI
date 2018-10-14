@@ -1,12 +1,10 @@
-// GenerateTrigger.java
 package jmri.jmrix.loconet.sdf;
 
 /**
  * Implement the GENERATE_TRIGGER macro from the Digitrax sound definition
  * language
  *
- * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class GenerateTrigger extends SdfMacro {
 
@@ -14,12 +12,14 @@ public class GenerateTrigger extends SdfMacro {
         this.trigger = trigger;
     }
 
+    @Override
     public String name() {
-        return "GENERATE_TRIGGER";
+        return "GENERATE_TRIGGER"; // NOI18N
     }
 
     int trigger;
 
+    @Override
     public int length() {
         return 2;
     }
@@ -37,12 +37,13 @@ public class GenerateTrigger extends SdfMacro {
         if (trigName != null) {
             return trigName;
         }
-        return "(trigger = 0x" + jmri.util.StringUtil.twoHexFromInt(trigger) + ")";
+        return "(trigger = 0x" + jmri.util.StringUtil.twoHexFromInt(trigger) + ")"; // NOI18N
     }
 
     /**
      * Store into a buffer.
      */
+    @Override
     public void loadByteArray(SdfBuffer buffer) {
         // data
         buffer.setAtIndexAndInc(0xB1);
@@ -52,17 +53,18 @@ public class GenerateTrigger extends SdfMacro {
         super.loadByteArray(buffer);
     }
 
+    @Override
     public String toString() {
-        return "Cause Trigger " + triggerVal() + '\n';
+        return "Cause Trigger " + triggerVal() + '\n'; // NOI18N
     }
 
+    @Override
     public String oneInstructionString() {
-        return name() + ' ' + triggerVal() + '\n';
+        return name() + ' ' + triggerVal() + '\n'; // NOI18N
     }
 
+    @Override
     public String allInstructionString(String indent) {
         return indent + oneInstructionString();
     }
 }
-
-/* @(#)GenerateTrigger.java */

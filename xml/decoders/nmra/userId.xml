@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year>
@@ -26,6 +15,12 @@
     </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>8</revnumber>
+      <date>2016-10-23</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
     <revision>
       <revnumber>7</revnumber>
       <date>2013-07-29</date>
@@ -51,6 +46,8 @@
         <label xml:lang="it">Id Utente #1 (0-255)</label>
         <label xml:lang="fr">CV Utilisateur #1 (0-255)</label>
         <label xml:lang="de">Benutzer-CV #1 (0-255)</label>
+        <label xml:lang="cs">Uživatel ID #1 (0-255)</label>
+        <label xml:lang="nl">Gebruiker-CV #1 (0-255)</label>
   </variable>
   <variable item="User Id #2" CV="106" default="0">
     <decVal max="255"/>
@@ -58,5 +55,7 @@
         <label xml:lang="it">Id Utente #2 (0-255)</label>
         <label xml:lang="fr">CV Utilisateur #2 (0-255)</label>
         <label xml:lang="de">Benutzer-CV #2 (0-255)</label>
+        <label xml:lang="cs">Uživatel ID #2 (0-255)</label>
+        <label xml:lang="nl">Gebruiker-CV #2 (0-255)</label>
   </variable>
 </variables>

@@ -1,13 +1,16 @@
 package jmri.jmrit.operations.locations;
 
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JComboBox;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.Reporter;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
-import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.TrainCommon;
 import org.jdom2.Element;
@@ -20,31 +23,25 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2013, 2014
  */
-public class LocationManager implements java.beans.PropertyChangeListener {
+public class LocationManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "locationsListLength"; // NOI18N
 
     public LocationManager() {
     }
 
-    /**
-     * record the single instance *
-     */
-    private static LocationManager _instance = null;
     private int _id = 0;
 
+    /**
+     * Get the default instance of this class.
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     public static synchronized LocationManager instance() {
-        if (_instance == null) {
-            log.debug("LocationManager creating instance");
-            // create and load
-            _instance = new LocationManager();
-            OperationsSetupXml.instance(); // load setup
-            LocationManagerXml.instance(); // load locations
-        }
-        if (Control.SHOW_INSTANCE) {
-            log.debug("LocationManager returns instance {}", _instance);
-        }
-        return _instance;
+        return InstanceManager.getDefault(LocationManager.class);
     }
 
     public void dispose() {
@@ -62,6 +59,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     }
 
     /**
+     * @param name The string name of the Location to get.
      * @return requested Location object or null if none exists
      */
     public Location getLocationByName(String name) {
@@ -89,8 +87,9 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     public Location getLocationByReporter(Reporter r) {
         for (Location location : _locationHashTable.values()) {
             try {
-                if (location.getReporter().equals(r))
+                if (location.getReporter().equals(r)) {
                     return location;
+                }
             } catch (java.lang.NullPointerException npe) {
                 // it's valid for a reporter to be null (no reporter
                 // at a given location.
@@ -108,8 +107,9 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     public Track getTrackByReporter(Reporter r) {
         for (Track track : getTracks(null)) {
             try {
-                if (track.getReporter().equals(r))
+                if (track.getReporter().equals(r)) {
                     return track;
+                }
             } catch (java.lang.NullPointerException npe) {
                 // it's valid for a reporter to be null (no reporter
                 // at a given location.
@@ -122,6 +122,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
      * Finds an existing location or creates a new location if needed requires
      * location's name creates a unique id for this location
      *
+     * @param name The string name for a new Location.
+     *
      *
      * @return new location or existing location
      */
@@ -132,6 +134,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
             location = new Location(Integer.toString(_id), name);
             Integer oldSize = Integer.valueOf(_locationHashTable.size());
             _locationHashTable.put(location.getId(), location);
+            resetNameLengths();
             setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
                     Integer.valueOf(_locationHashTable.size()));
         }
@@ -140,6 +143,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     *
+     * @param location The Location to add.
      */
     public void register(Location location) {
         Integer oldSize = Integer.valueOf(_locationHashTable.size());
@@ -154,6 +159,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 
     /**
      * Forget a NamedBean Object created outside the manager.
+     *
+     * @param location The Location to delete.
      */
     public void deregister(Location location) {
         if (location == null) {
@@ -235,8 +242,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
      * Returns all tracks of type
      *
      * @param type Spur (Track.SPUR), Yard (Track.YARD), Interchange
-     *            (Track.INTERCHANGE), Staging (Track.STAGING), or null (returns
-     *            all track types)
+     *             (Track.INTERCHANGE), Staging (Track.STAGING), or null
+     *             (returns all track types)
      * @return List of tracks
      */
     public List<Track> getTracks(String type) {
@@ -255,8 +262,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
      * Returns all tracks of type sorted by use
      *
      * @param type Spur (Track.SPUR), Yard (Track.YARD), Interchange
-     *            (Track.INTERCHANGE), Staging (Track.STAGING), or null (returns
-     *            all track types)
+     *             (Track.INTERCHANGE), Staging (Track.STAGING), or null
+     *             (returns all track types)
      * @return List of tracks ordered by use
      */
     public List<Track> getTracksByMoves(String type) {
@@ -355,6 +362,12 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     protected int _maxTrackNameLength = 0;
     protected int _maxLocationAndTrackNameLength = 0;
 
+    public void resetNameLengths() {
+        _maxLocationNameLength = 0;
+        _maxTrackNameLength = 0;
+        _maxLocationAndTrackNameLength = 0;
+    }
+
     public int getMaxLocationNameLength() {
         calculateMaxNameLengths();
         return _maxLocationNameLength;
@@ -389,11 +402,11 @@ public class LocationManager implements java.beans.PropertyChangeListener {
                 maxLocationName = track.getLocation().getName();
                 _maxLocationNameLength = TrainCommon.splitString(track.getLocation().getName()).length();
             }
-            if (TrainCommon.splitString(track.getLocation().getName()).length() +
-                    TrainCommon.splitString(track.getName()).length() > _maxLocationAndTrackNameLength) {
+            if (TrainCommon.splitString(track.getLocation().getName()).length()
+                    + TrainCommon.splitString(track.getName()).length() > _maxLocationAndTrackNameLength) {
                 maxLocationAndTrackName = track.getLocation().getName() + ", " + track.getName();
-                _maxLocationAndTrackNameLength = TrainCommon.splitString(track.getLocation().getName()).length() +
-                        TrainCommon.splitString(track.getName()).length();
+                _maxLocationAndTrackNameLength = TrainCommon.splitString(track.getLocation().getName()).length()
+                        + TrainCommon.splitString(track.getName()).length();
             }
         }
         log.info("Max track name ({}) at ({}) length {}", maxTrackName, maxLocNameForTrack, _maxTrackNameLength);
@@ -403,7 +416,6 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 
     public void load(Element root) {
         if (root.getChild(Xml.LOCATIONS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> locs = root.getChild(Xml.LOCATIONS).getChildren(Xml.LOCATION);
             log.debug("readFile sees {} locations", locs.size());
             for (Element loc : locs) {
@@ -423,8 +435,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     }
 
     /**
-     * There aren't any current property changes being monitored
-     *
+     * There aren't any current property changes being monitored.
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -444,12 +455,15 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // set dirty
-        LocationManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(LocationManagerXml.class).setDirty(true);
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocationManager.class);
 
+    @Override
+    public void initialize() {
+        InstanceManager.getDefault(OperationsSetupXml.class); // load setup
+        InstanceManager.getDefault(LocationManagerXml.class); // load locations
+    }
 }
-
-/* @(#)LocationManager.java */

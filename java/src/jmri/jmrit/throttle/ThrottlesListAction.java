@@ -2,6 +2,7 @@ package jmri.jmrit.throttle;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.InstanceManager;
 
 public class ThrottlesListAction extends AbstractAction {
 
@@ -22,7 +23,8 @@ public class ThrottlesListAction extends AbstractAction {
         this("Throttles list");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
-        jmri.jmrit.throttle.ThrottleFrameManager.instance().showThrottlesList();
+        InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
     }
 }

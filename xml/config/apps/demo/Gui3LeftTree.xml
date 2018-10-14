@@ -8,18 +8,22 @@
 >
 
   <name>My Layout</name>
+    <name xml:lang="cs">Moje rozvržení</name>
 
   <node><name>Preferences</name>
+        <name xml:lang="cs">Přednastavení</name>
     <node><name>Tabbed Preferences</name>
         <panel>apps.gui3.TabbedPreferences</panel>
     </node>
   </node>
 
   <node><name>Controls</name>
+        <name xml:lang="cs">Ovládání</name>
     <node><name>Power Control</name>
         <adapter>jmri.jmrit.powerpanel.PowerPanelAction</adapter>
     </node>
     <node><name>Sensors</name>
+          <name xml:lang="cs">Snímače</name>
       <panel>jmri.jmrit.beantable.sensor.SensorTablePanel</panel>
     </node>
   </node>

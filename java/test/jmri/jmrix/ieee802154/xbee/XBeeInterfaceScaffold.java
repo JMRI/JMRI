@@ -1,5 +1,10 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import com.digi.xbee.api.XBeeDevice;
+import com.digi.xbee.api.RemoteXBeeDevice;
+import com.digi.xbee.api.models.XBee16BitAddress;
+import com.digi.xbee.api.models.XBee64BitAddress;
+import com.digi.xbee.api.models.XBeeProtocol;
 import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +21,37 @@ import org.slf4j.LoggerFactory;
  */
 public class XBeeInterfaceScaffold extends XBeeTrafficController {
 
+    private XBeeDevice localDevice;
+    private XBeeAdapter a;
+    public boolean dataSent = false;  // public OK here, so long as this is a test class
+
     public XBeeInterfaceScaffold() {
         super();
+        // setup the mock XBee Connection.
+        a= new XBeeAdapter(){
+           @Override
+           public boolean isOpen(){
+              return true;
+           }
+           @Override
+           public void close(){
+           }
+        };  
+        // Create the local device.
+        localDevice = new XBeeDevice(a){
+           @Override
+           public void sendData(RemoteXBeeDevice remoteXBeeDevice, byte[] data){
+               // set the data sent flag.
+               dataSent = true;
+           }
+
+           @Override
+           public void sendDataAsync(RemoteXBeeDevice remoteXBeeDevice, byte[] data){
+               // set the data sent flag.
+               dataSent = true;
+           }
+        };
+
     }
 
     // override some XBeeTrafficController methods for test purposes
@@ -25,6 +59,11 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
     public boolean status() {
         return true;
     }
+
+   @Override
+   public XBeeDevice getXBee() {
+        return localDevice;
+   }
 
     /**
      * record XBee messages sent, provide access for making sure they are OK
@@ -63,18 +102,34 @@ public class XBeeInterfaceScaffold extends XBeeTrafficController {
     /**
      * Avoid error message, normal in parent
      */
+    @Override
     protected void connectionWarn() {
     }
 
     /**
      * Avoid error message, normal in parent
      */
+    @Override
     protected void portWarn(Exception e) {
     }
 
+    @Override
     public void receiveLoop() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeInterfaceScaffold.class.getName());
+    @Override
+    protected void terminate(){
+          if(localDevice!=null) {
+             localDevice.close();
+          }
+          localDevice=null;
+          a = null;
+    }
+
+    public void dispose(){
+        terminate();
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(XBeeInterfaceScaffold.class);
 
 }

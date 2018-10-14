@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -8,9 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: SDF Sound File Editor</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI help Digitrax SDF Sound File Editor"><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -28,13 +25,14 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>SDF Sound File Editor</h1>Digitrax sound decoders are
+      <h1>SDF Sound File Editor</h1>
+      <p>Digitrax sound decoders are
       loaded with "sound projects", stored in "Sound Project"
       (.spj) files. Those contain a number of "sound fragments" in
       .wav format, plus a small program that tells the decoder when
       to play the various sounds, and controls the use of functions
       and CVs. That program is stored in a "Sound Definition" (SDF)
-      format.
+      format.</p>
 
       <p>The SDF Sound File Editor allows you to make certain kinds
       of changes to the SDF information in a sound project. It's
@@ -207,7 +205,8 @@
 
       <p>The editor is meant to be a beginner's tool, and we need a
       lot of explanatory text on each window so people know what
-      the options do. <!--#include virtual="/Footer" --></p>
+      the options do.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

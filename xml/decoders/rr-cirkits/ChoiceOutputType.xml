@@ -22,12 +22,4 @@
   <enumChoice choice="Reserved"/>
   <enumChoice choice="Reserved"/>
   <enumChoice choice="Reserved"/>
-  <enumChoice choice="Short Inv Pulse"/>
-  <enumChoice choice="Long Inv Pulse"/>
-  <enumChoice choice="Short Inv Blink"/>
-  <enumChoice choice="Long Inv Blink"/>
-  <enumChoice choice="Reserved"/>
-  <enumChoice choice="Reserved"/>
-  <enumChoice choice="Reserved"/>
-  <enumChoice choice="Reserved"/>
 </enumVal>

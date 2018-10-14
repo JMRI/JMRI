@@ -27,6 +27,11 @@ public class SwingShutDownTask extends AbstractShutDownTask {
 
     /**
      * Constructor specifies the warning message and action to take
+     *
+     * @param name      the name of the task (used in logs)
+     * @param warning   the prompt to display
+     * @param action    the action button to display
+     * @param component the parent component of the dialog
      */
     public SwingShutDownTask(String name, String warning, String action, Component component) {
         super(name);
@@ -44,6 +49,7 @@ public class SwingShutDownTask extends AbstractShutDownTask {
      *
      * @return true if the shutdown should continue, false to abort.
      */
+    @Override
     public boolean execute() {
         while (!checkPromptNeeded()) {
             // issue prompt
@@ -63,22 +69,23 @@ public class SwingShutDownTask extends AbstractShutDownTask {
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.WARNING_MESSAGE, null,
                     possibleValues, possibleValues[possibleValues.length - 1]);
-            if (selectedValue == 1) {
-                // abort quit
-                return false;
-            } else if (selectedValue == 0) {
-                // quit anyway
-                return true;
-            } else if (selectedValue == 2) {
-                // take action and try again
-                return doPrompt();
-            } else if (selectedValue == -1) {
-                // dialog window closed
-                return doClose();
-            } else {
-                // unexpected value, log but continue
-                log.error("unexpected selection: " + selectedValue);
-                return true;
+            switch (selectedValue) {
+                case 1:
+                    // abort quit
+                    return false;
+                case 0:
+                    // quit anyway
+                    return true;
+                case 2:
+                    // take action and try again
+                    return doPrompt();
+                case -1:
+                    // dialog window closed
+                    return doClose();
+                default:
+                    // unexpected value, log but continue
+                    log.error("unexpected selection: " + selectedValue);
+                    return true;
             }
         }
         // break out of loop when ready to continue       
@@ -117,6 +124,6 @@ public class SwingShutDownTask extends AbstractShutDownTask {
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SwingShutDownTask.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SwingShutDownTask.class);
 
 }

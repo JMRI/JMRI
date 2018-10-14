@@ -5,9 +5,9 @@ import java.io.DataOutputStream;
 import jmri.jmrix.SystemConnectionMemo;
 
 /**
- * Abstract base for classes representing a communications port
+ * Abstract base for classes representing a communications port.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2006, 2007
+ * @author Bob Jacobsen Copyright (C) 2001, 2006, 2007
  */
 public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPortController {
 
@@ -17,12 +17,27 @@ public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPort
         super(connectionMemo);
     }
 
-    // returns the InputStream from the port
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public abstract DataInputStream getInputStream();
 
-    // returns the outputStream to the port
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public abstract DataOutputStream getOutputStream();
 
-    // check that this object is ready to operate
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public abstract boolean status();
+
+    @Override
+    public GrapevineSystemConnectionMemo getSystemConnectionMemo() {
+        return (GrapevineSystemConnectionMemo) super.getSystemConnectionMemo();
+    }
+
 }

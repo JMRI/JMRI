@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year>
@@ -24,15 +13,33 @@
         <surname>Jacobsen</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+        <firstname>Ronald</firstname>
+        <surname>Kuhn</surname>
+      </personname>
+    </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>10</revnumber>
+      <date>2016-06-06</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>Updated German</revremark>
+    </revision>
+    <revision>
+      <revnumber>9</revnumber>
+      <date>2016-10-23</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
     <revision>
       <revnumber>8</revnumber>
       <date>2014-05-17</date>
       <authorinitials>Ba</authorinitials>
       <revremark>Updated German</revremark>
     </revision>
-	<revision>
+    <revision>
       <revnumber>7</revnumber>
       <date>2013-07-29</date>
       <authorinitials>PB</authorinitials>
@@ -54,25 +61,33 @@
   <variable item="Vstart" CV="2">
     <decVal/>
     <label>Vstart</label>
-    <label xml:lang="it">Volt Partenza</label>
+    <label xml:lang="it">Velocità Partenza</label>
     <label xml:lang="fr">V démarr.</label>
-    <label xml:lang="de">Anfahrspannung</label>
- 	<comment>A value of 255 corresponds to 100%</comment>
+    <label xml:lang="cs">Rozjezdové napětí</label>
+    <label xml:lang="de">Abfahrgeschwindigkeit</label>
+    <label xml:lang="nl">Startsnelheid</label>
+    <comment>A value of 255 corresponds to 100%</comment>
     <comment xml:lang="it">Un Valore di 255 corrisponde al 100%</comment>
     <comment xml:lang="de">Der Wert 255 entspricht 100%</comment>
+    <comment xml:lang="cs">Hodnota 255 odpovídá 100 %</comment>
+    <comment xml:lang="nl">Een waarde van 255 betekent 100%</comment>
   </variable>
   <variable item="Vhigh" CV="5">
     <decVal/>
     <label>Vhigh</label>
-    <label xml:lang="it">Volt Massimi</label>
+    <label xml:lang="it">Velocità Massimi</label>
     <label xml:lang="fr">Vmax</label>
     <label xml:lang="de">Höchstgeschwindigkeit</label>
+    <label xml:lang="nl">Max. snelheid</label>
+    <label xml:lang="cs">Maximální napětí</label>
   </variable>
   <variable item="Vmid" CV="6">
     <decVal/>
     <label>Vmid</label>
-    <label xml:lang="it">Volt Intermedi</label>
+    <label xml:lang="it">Velocità Intermedi</label>
     <label xml:lang="fr">Vmoy</label>
     <label xml:lang="de">Mittengeschwindigkeit</label>
+    <label xml:lang="nl">Min. snelheid</label>
+    <label xml:lang="cs">Střední napětí</label>
   </variable>
 </variables>

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Class for messages for a MERG CAN-RS hardware adapter.
  * <P>
- * The MERG varient of the GridConnect protocol encodes messages as an ASCII
+ * The MERG variant of the GridConnect protocol encodes messages as an ASCII
  * string of up to 24 characters of the form: :ShhhhNd0d1d2d3d4d5d6d7; hhhh is
  * the two byte (11 useful bits) header The S indicates a standard CAN frame
  * :XhhhhhhhhNd0d1d2d3d4d5d6d7; The X indicates an extended CAN frame Strict
@@ -61,6 +61,7 @@ public class MergMessage extends GridConnectMessage {
      *
      * @param header A valid CAN header value
      */
+    @Override
     public void setHeader(int header) {
         int munged;
         if (isExtended()) {
@@ -89,6 +90,7 @@ public class MergMessage extends GridConnectMessage {
         }
     }
 
+    @Override
     public void setRtr(boolean rtr) {
         int offset = isExtended() ? 10 : 6;
         setElement(offset, rtr ? 'R' : 'N');
@@ -103,6 +105,7 @@ public class MergMessage extends GridConnectMessage {
      * @param val the value to set
      * @param n   the index of the byte to be set
      */
+    @Override
     public void setByte(int val, int n) {
         if ((n >= 0) && (n <= 7)) {
             int index = n * 2 + (isExtended() ? 11 : 7);  // differs here from superclass
@@ -111,5 +114,5 @@ public class MergMessage extends GridConnectMessage {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MergMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MergMessage.class);
 }

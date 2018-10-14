@@ -1,7 +1,7 @@
 package jmri.jmrix.qsi.swing;
 
-import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 import jmri.jmrix.qsi.QSIMenu;
+import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 
 /**
  * Provide access to Swing components for the Qsi subsystem.
@@ -21,6 +21,7 @@ public class QsiComponentFactory extends jmri.jmrix.swing.ComponentFactory {
     /**
      * Provide a menu with all items attached to this system connection
      */
+    @Override
     public javax.swing.JMenu getMenu() {
         if (memo.getDisabled()) {
             return null;

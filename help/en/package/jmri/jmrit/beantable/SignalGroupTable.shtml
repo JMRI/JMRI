@@ -7,8 +7,8 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Signal Group Table Help</title>
-  <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-  <meta name="Date.Modified" content="20151230">
+  <meta name="author" content="Bob Jacobsen, Egbert Broerse">
+  <meta name="Date.Modified" content="20170124">
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <meta name="keywords" content=
@@ -24,9 +24,9 @@
       <h1>The Signal Group Table</h1>
 
       <p>The Signal Group Table displays a list of your Signal
-      Groups.</p><a href="SignalGroupsTable.png"><img src=
-      "SignalGroupsTable.png" align="right" width="386" height=
-      "165"></a>
+      Groups.</p><a href="images/SignalGroupTable.png"><img src=
+      "images/SignalGroupTable.png" align="right" width="386" height=
+      "168"></a>
 
       <p>There are six columns in the Signal Group Table:</p>
 
@@ -60,20 +60,21 @@
       <h3><a name="edit" id="edit">Editing an existing Signal
       Group</a></h3>
 
-      <p><a name="edit" id="edit">Click on one of the <b>Edit</b>
+      <p>Click on one of the <b>Edit</b>
       buttons at the right of the Signal Group Table to open
-      the</a> <a href="SignalGroupAddEdit.shtml">Edit Signal
+      the
+      <a href="SignalGroupAddEdit.shtml">Edit Signal
       Group</a> window for the corresponding Signal Group. <a href=
-      "SignalGroup.png"><img src="SignalGroup.png" align="right"
-      height="274" width="306"></a></p>
+      "images/SignalGroup.png"><img src="images/SignalGroup.png" align="right"
+      height="223" width="309"></a></p>
 
       <h2><a name="example" id="example">Signal Group Example -
       Junction Indicator</a></h2>
 
       <p>Consider the following track diagram, with 6 possible
       junctions off the main running line.<br>
-      <a href="SignalGroupTrackDiagram.png"><img src=
-      "SignalGroupTrackDiagram.png" height="90" width=
+      <a href="images/SignalGroupTrackDiagram.png"><img src=
+      "images/SignalGroupTrackDiagram.png" height="90" width=
       "233"></a></p>
 
       <p>The Signal facing this junction will have a Junction
@@ -84,8 +85,8 @@
 
       <p>If the route is set for position 1, then the position 1
       indicator will be shown (pictured below).<br>
-      <a href="SignalGroupTrackDiagram1.png"><img src=
-      "SignalGroupTrackDiagram1.png" height="90" width=
+      <a href="images/SignalGroupTrackDiagram1.png"><img src=
+      "images/SignalGroupTrackDiagram1.png" height="90" width=
       "262"></a></p>
 
       <p>With this configuration, you would create a single Turnout
@@ -171,7 +172,8 @@
 
       <p>Back to the <a href=
       "../../../../html/tools/signaling/SignalGroups.shtml">Signal
-      Groups help page</a>. <!--#include virtual="/Footer" --></p>
+        Groups help page</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

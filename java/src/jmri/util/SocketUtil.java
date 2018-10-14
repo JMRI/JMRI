@@ -2,6 +2,7 @@ package jmri.util;
 
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**
  * Common utility methods for working with Sockets.
@@ -14,30 +15,40 @@ import java.net.Socket;
  * an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen Copyright 2006
+ * @deprecated since 4.7.1; use methods of {@link java.net.Socket} or
+ * {@link java.net.ServerSocket} directly
  */
+@Deprecated
 public class SocketUtil {
 
     /**
-     * Return the remote address, if possible, otherwise {@code "<unknown>"}
+     * Return the remote address, if possible, otherwise {@literal <unknown>}
+     *
+     * @param socket the remotely connected socket
+     * @return the address or {@literal <unknown>}
+     * @deprecated since 4.7.1; use
+     * {@link java.net.Socket#getRemoteSocketAddress()} instead
      */
+    @Deprecated
     static public String getRemoteSocketAddress(Socket socket) {
-        try {
-            return socket.getRemoteSocketAddress().toString();
-        } catch (Throwable e) {
-        } finally {
-//            return "<unknown>";
-        }
-        return "<unknown>";
-
+        return socket.getRemoteSocketAddress().toString();
     }
 
     /**
      * Set the Socket's reuseAddress parameter while protecting against failure
+     *
+     * @param socket the socket to set
+     * @param on     true if the address should be reused; false otherwise
+     * @see java.net.ServerSocket#setReuseAddress(boolean)
+     * @deprecated since 4.7.1; use
+     * {@link java.net.ServerSocket#setReuseAddress(boolean)} instead
      */
+    @Deprecated
     static public void setReuseAddress(ServerSocket socket, boolean on) {
         try {
             socket.setReuseAddress(on);
-        } catch (Throwable e) {
+        } catch (SocketException e) {
+            // ignore any errors
         }
     }
 

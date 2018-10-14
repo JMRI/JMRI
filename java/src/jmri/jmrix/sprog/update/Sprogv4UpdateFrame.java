@@ -1,21 +1,22 @@
-// Sprogv4UpdateFrame.java
 package jmri.jmrix.sprog.update;
 
 import javax.swing.JOptionPane;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 import jmri.jmrix.sprog.SprogMessage;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
- * Frame for SPROG firmware update utility.
+ * Frame for SPROG v4 firmware update utility.
  *
  * Refactored
  *
  * @author	Andrew Crosland Copyright (C) 2004
- * @version	$Revision$
+ * 
+ * @deprecated since 4.11.1; supports uncommon Sprog versions that are confused with Sprog II versions.
  */
+@Deprecated
 public class Sprogv4UpdateFrame
         extends SprogUpdateFrame
         implements SprogVersionListener {
@@ -24,10 +25,11 @@ public class Sprogv4UpdateFrame
         super(memo);
     }
 
-    /**
-     * Set the help item
+    /** 
+     * {@inheritDoc}
      */
-    public void initComponents() throws Exception {
+    @Override
+    public void initComponents() {
         super.initComponents();
 
         setSprogModeButton.setVisible(false);
@@ -39,6 +41,10 @@ public class Sprogv4UpdateFrame
         _memo.getSprogVersionQuery().requestVersion(this);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
     synchronized public void notifyVersion(SprogVersion v) {
         sv = v;
         if (sv.sprogType.isSprog() == false) {
@@ -46,12 +52,12 @@ public class Sprogv4UpdateFrame
             if (log.isDebugEnabled()) {
                 log.debug("SPROG not found - looking for bootloader");
             }
-            statusBar.setText("SPROG not found - looking for bootloader");
+            statusBar.setText(Bundle.getMessage("StatusSprogNotFound"));
             requestBoot();
         } else {
             // Check that it's a V4
             if (sv.sprogType.sprogType == SprogType.SPROGV4) {
-                statusBar.setText("Found " + sv.toString());
+                statusBar.setText(Bundle.getMessage("StatusFoundX", sv.toString()));
                 // Put SPROG in boot mode
                 if (log.isDebugEnabled()) {
                     log.debug("Putting SPROG in boot mode");
@@ -62,46 +68,40 @@ public class Sprogv4UpdateFrame
                 bootState = BootState.SETBOOTSENT;
             } else {
                 log.error("Incorrect SPROG Type detected");
-                statusBar.setText("Incorrect SPROG Type deteceted");
+                statusBar.setText(Bundle.getMessage("StatusIncorrectSprogType"));
                 bootState = BootState.IDLE;
             }
         }
     }
 
+    @Override
     synchronized protected void stateSetBootSent() {
         // Only old SPROG v4 reach this state
-        if (log.isDebugEnabled()) {
-            log.debug("reply in SETBOOTSENT state");
-        }
+        log.debug("reply in SETBOOTSENT state");
         if (replyString.indexOf("L>") >= 0) {
             // Enable the file chooser button
-            if (log.isDebugEnabled()) {
-                log.debug("Found v4 bootloader prompt");
-            }
+            log.debug("Found v4 bootloader prompt");
             tc.setSprogState(SprogState.V4BOOTMODE);
             openFileChooserButton.setEnabled(true);
 
             // We remain in this state until program button is pushed
         } else {
-            JOptionPane.showMessageDialog(null, "Bad reply to set boot command",
-                    "SPROG v4 Bootloader", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("StatusBadBootloaderReply"),
+                    Bundle.getMessage("SprogBootloaderXTitle", " v4"), JOptionPane.ERROR_MESSAGE);
             log.error("Bad reply to SETBOOT request");
             bootState = BootState.IDLE;
             tc.setSprogState(SprogState.NORMAL);
         }
     }
 
+    @Override
     synchronized protected void stateBootVerReqSent() {
         stopTimer();
-        if (log.isDebugEnabled()) {
-            log.debug("reply in VERREQSENT state " + replyString);
-        }
+        log.debug("reply in VERREQSENT state {}", replyString);
         // Look for echo of extended address command
         if (replyString.indexOf(":02000004") > 0) {
-            if (log.isDebugEnabled()) {
-                log.debug("Found SPROG v4 bootloader");
-            }
-            statusBar.setText("Connected to SPROG v4 bootloader");
+            log.debug("Found SPROG v4 bootloader");
+            statusBar.setText(Bundle.getMessage("StatusConnectedToBootloader", "4"));
             // Enable the file chooser button
             openFileChooserButton.setEnabled(true);
             // Force SPROG version
@@ -117,11 +117,10 @@ public class Sprogv4UpdateFrame
         }
     }
 
+    @Override
     synchronized protected void stateWriteSent() {
         stopTimer();
-        if (log.isDebugEnabled()) {
-            log.debug("reply in WRITESENT state");
-        }
+        log.debug("reply in WRITESENT state");
         // Check for correct response to type of write that was sent
         if ((reply.getElement(reply.getNumDataElements() - 1) == '.')) {
             if (hexFile.read() > 0) {
@@ -139,16 +138,15 @@ public class Sprogv4UpdateFrame
         }
     }
 
+    @Override
     synchronized protected void stateEofSent() {
         // v4 end of file sent
         stopTimer();
         // Check for correct response to end of file
         if (replyString.indexOf("S") > 0) {
-            if (log.isDebugEnabled()) {
-                log.debug("Good reply in EOFSENT state");
-            }
+            log.debug("Good reply in EOFSENT state");
             bootState = BootState.V4RESET;
-            statusBar.setText("Resetting");
+            statusBar.setText(Bundle.getMessage("StatusResetting"));
         } else {
             log.error("Bad reply in EOFSENT state");
             bootState = BootState.IDLE;
@@ -156,30 +154,26 @@ public class Sprogv4UpdateFrame
         tc.setSprogState(SprogState.NORMAL);
     }
 
+    @Override
     synchronized protected void stateV4Reset() {
         // v4 should have auto reset
         stopTimer();
         // Check for correct response to end of file
         if (replyString.indexOf("S") > 0) {
-            if (log.isDebugEnabled()) {
-                log.debug("Good reply in V4RESET state");
-            }
-            statusBar.setText("Success!");
+            log.debug("Good reply in V4RESET state");
+            statusBar.setText(Bundle.getMessage("StatusSuccess"));
             bootState = BootState.IDLE;
         } else {
-            if (log.isDebugEnabled()) {
-                log.debug("Bad reply in V4RESET state");
-            }
+            log.debug("Bad reply in V4RESET state");
         }
         tc.setSprogState(SprogState.NORMAL);
     }
 
+    @Override
     synchronized protected void requestBoot() {
         // Look for SPROG in boot mode by sending an extended address command
         // which should be echoed
-        if (log.isDebugEnabled()) {
-            log.debug("Request bootloader version");
-        }
+        log.debug("Request bootloader version");
         // allow parsing of bootloader replies
         tc.setSprogState(SprogState.V4BOOTMODE);
         bootState = BootState.VERREQSENT;
@@ -188,26 +182,20 @@ public class Sprogv4UpdateFrame
         startLongTimer();
     }
 
+    @Override
     synchronized protected void sendWrite() {
         if (hexFile.getAddress() < 2 * 0x700) {
-            //
-            if (log.isDebugEnabled()) {
-                log.debug("Send write Flash " + hexFile.getAddress());
-            }
+            log.debug("Send write Flash {}", hexFile.getAddress());
             msg = SprogMessage.getV4WriteFlash(hexFile.getAddress(), hexFile.getData(), 0);
         } else {
-            if (log.isDebugEnabled()) {
-                log.debug("null write " + hexFile.getAddress());
-            }
+            log.debug("null write {}", hexFile.getAddress());
             msg = null;
         }
         if (msg != null) {
             bootState = BootState.WRITESENT;
-            statusBar.setText("Write " + hexFile.getAddress());
+            statusBar.setText(Bundle.getMessage("StatusWriteX", hexFile.getAddress()));
             tc.sendSprogMessage(msg, this);
-            if (log.isDebugEnabled()) {
-                log.debug("Sent write command to address " + hexFile.getAddress());
-            }
+            log.debug("Sent write command to address {}", hexFile.getAddress());
             startLongTimer();
         } else {
             // use timeout to kick off the next write
@@ -216,31 +204,27 @@ public class Sprogv4UpdateFrame
         }
     }
 
+    @Override
     synchronized protected void doneWriting() {
         // Finished
-        if (log.isDebugEnabled()) {
-            log.debug("Done writing");
-        }
-        statusBar.setText("Write Complete");
+        log.debug("Done writing");
+        statusBar.setText(Bundle.getMessage("StatusWriteComplete"));
         openFileChooserButton.setEnabled(false);
         programButton.setEnabled(false);
 
         // send end of file record
-        if (log.isDebugEnabled()) {
-            log.debug("Send end of file ");
-        }
+        log.debug("Send end of file ");
         msg = SprogMessage.getV4EndOfFile();
         bootState = BootState.EOFSENT;
-        statusBar.setText("Write End Of File");
+        statusBar.setText(Bundle.getMessage("StatusWriteEOF"));
         tc.sendSprogMessage(msg, this);
-        if (log.isDebugEnabled()) {
-            log.debug("Sent end of file ");
-        }
+        log.debug("End of file sent");
         startLongTimer();
 
         // *** Check for reset
     }
 
+    @Override
     public synchronized void programButtonActionPerformed(java.awt.event.ActionEvent e) {
         if (hexFile != null) {
             openFileChooserButton.setEnabled(false);
@@ -248,9 +232,7 @@ public class Sprogv4UpdateFrame
             // Read first line from hexfile
             if (hexFile.read() > 0) {
                 // Program line and wait for reply
-                if (log.isDebugEnabled()) {
-                    log.debug("First write " + hexFile.getLen() + " " + hexFile.getAddress());
-                }
+                log.debug("First write {} {}", hexFile.getLen(), hexFile.getAddress());
                 sendWrite();
             } else {
                 doneWriting();
@@ -259,5 +241,6 @@ public class Sprogv4UpdateFrame
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(Sprogv4UpdateFrame.class.getName());
+            .getLogger(Sprogv4UpdateFrame.class);
+
 }

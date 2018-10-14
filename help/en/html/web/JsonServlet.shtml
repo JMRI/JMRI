@@ -49,18 +49,18 @@
       methods:</p>
 
       <ul>
-        <li><strong>The JMRI JSON servlet</strong>, providing both
+        <li>The <strong><a href=#jmri_json_servlet>JMRI JSON servlet</a></strong>, providing both
         HTTP and WebSocket access</li>
 
-        <li><strong>The JMRI JSON server</strong>, providing a
+        <li>The <strong><a href=#jmri_json_server>JMRI JSON server</a></strong>, providing a
         standard network socket for streamed access</li>
 
-        <li><strong>jquery.jmri</strong>, A jQuery-based JavaScript
+        <li><strong><a href=#jquery_jmri>jquery.jmri</a></strong>, A jQuery-based JavaScript
         library that chooses the best method to communicate with a
         JMRI server using the JMRI JSON protocol</li>
       </ul>
 
-      <h2>JMRI JSON Servlet</h2>
+      <h2><a name=jmri_json_servlet>JMRI JSON Servlet</a></h2>
 
       <p>The <b>JMRI JSON Servlet</b> provides web access to lists
       and values for numerous JMRI-defined entities, in the modern
@@ -141,8 +141,7 @@
 
       <p>Currently the servlet supports the following list names
       (not all of these are actually lists) used for GET operations
-      to return lists. These lists are roughly grouped according to
-      the module that uses them.</p>
+      to return lists.</p>
 
       <table class="data">
         <tr>
@@ -154,7 +153,7 @@
 
           <th>POST</th>
 
-          <th>Module</th>
+          <th>Returns:</th>
         </tr>
 
         <tr>
@@ -166,7 +165,7 @@
 
           <td></td>
 
-          <td>PanelPro</td>
+          <td>block array</td>
         </tr>
 
         <tr>
@@ -178,8 +177,10 @@
 
           <td></td>
 
-          <td>OperationsPro</td>
+          <td>car array</td>
         </tr>
+
+        <tr><td>configProfiles</td><td>*</td><td></td><td></td><td>configProfile array</td></tr>
 
         <tr>
           <td>consists</td>
@@ -190,7 +191,7 @@
 
           <td></td>
 
-          <td>DecoderPro</td>
+          <td>consist array</td>
         </tr>
 
         <tr>
@@ -202,7 +203,7 @@
 
           <td></td>
 
-          <td>OperationsPro</td>
+          <td>engine array</td>
         </tr>
 
         <tr>
@@ -214,7 +215,7 @@
 
           <td></td>
 
-          <td>DecoderPro</td>
+          <td>hello message and power message</td>
         </tr>
 
         <tr>
@@ -226,7 +227,7 @@
 
           <td></td>
 
-          <td>PanelPro</td>
+          <td>layoutBlock array</td>
         </tr>
 
         <tr>
@@ -238,7 +239,7 @@
 
           <td></td>
 
-          <td>PanelPro</td>
+          <td>light array</td>
         </tr>
 
         <tr>
@@ -250,19 +251,7 @@
 
           <td></td>
 
-          <td>OperationsPro</td>
-        </tr>
-
-        <tr>
-          <td>panels</td>
-
-          <td>*</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>PanelPro</td>
+          <td>location array</td>
         </tr>
 
         <tr>
@@ -274,7 +263,7 @@
 
           <td></td>
 
-          <td>PanelPro</td>
+          <td>memory array</td>
         </tr>
 
         <tr>
@@ -286,7 +275,7 @@
 
           <td></td>
 
-          <td>DecoderPro</td>
+          <td>metadata array</td>
         </tr>
 
         <tr>
@@ -298,7 +287,7 @@
 
           <td></td>
 
-          <td>DecoderPro</td>
+          <td>networkService array</td>
         </tr>
 
         <tr>
@@ -310,7 +299,19 @@
 
           <td></td>
 
-          <td>DecoderPro</td>
+          <td>node message</td>
+        </tr>
+
+        <tr>
+          <td>panels</td>
+
+          <td>*</td>
+
+          <td></td>
+
+          <td></td>
+
+          <td>panel array</td>
         </tr>
 
         <tr>
@@ -322,7 +323,7 @@
 
           <td>*</td>
 
-          <td>PanelPro</td>
+          <td>n/a</td>
         </tr>
 
         <tr>
@@ -334,79 +335,7 @@
 
           <td></td>
 
-          <td>DecoderPro</td>
-        </tr>
-
-        <tr>
-          <td>roster</td>
-
-          <td>*</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>DecoderPro</td>
-        </tr>
-
-        <tr>
-          <td>rosterGroups</td>
-
-          <td>*</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>DecoderPro</td>
-        </tr>
-
-        <tr>
-          <td>routes</td>
-
-          <td>*</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>PanelPro</td>
-        </tr>
-
-        <tr>
-          <td>systemConnections</td>
-
-          <td>*</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>DecoderPro</td>
-        </tr>
-
-        <tr>
-          <td>time</td>
-
-          <td>*</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>DecoderPro</td>
-        </tr>
-
-        <tr>
-          <td>trains</td>
-
-          <td>*</td>
-
-          <td></td>
-
-          <td></td>
-
-          <td>OperationsPro</td>
+          <td>railroad message</td>
         </tr>
 
         <tr>
@@ -418,7 +347,43 @@
 
           <td></td>
 
-          <td>PanelPro</td>
+          <td>reporter array</td>
+        </tr>
+
+        <tr>
+          <td>roster</td>
+
+          <td>*</td>
+
+          <td></td>
+
+          <td></td>
+
+          <td>rosterEntry array</td>
+        </tr>
+
+        <tr>
+          <td>rosterGroups</td>
+
+          <td>*</td>
+
+          <td></td>
+
+          <td></td>
+
+          <td>rosterGroup array</td>
+        </tr>
+
+        <tr>
+          <td>routes</td>
+
+          <td>*</td>
+
+          <td></td>
+
+          <td></td>
+
+          <td>route array</td>
         </tr>
 
         <tr>
@@ -430,7 +395,7 @@
 
           <td></td>
 
-          <td>PanelPro</td>
+          <td>signalHead array</td>
         </tr>
 
         <tr>
@@ -442,7 +407,7 @@
 
           <td></td>
 
-          <td>PanelPro</td>
+          <td>signalMast array</td>
         </tr>
 
         <tr>
@@ -454,7 +419,43 @@
 
           <td></td>
 
-          <td>PanelPro</td>
+          <td>sensor array</td>
+        </tr>
+
+        <tr>
+          <td>systemConnections</td>
+
+          <td>*</td>
+
+          <td></td>
+
+          <td></td>
+
+          <td>systemConnection array</td>
+        </tr>
+
+        <tr>
+          <td>time</td>
+
+          <td>*</td>
+
+          <td></td>
+
+          <td></td>
+
+          <td>n/a</td>
+        </tr>
+
+        <tr>
+          <td>trains</td>
+
+          <td>*</td>
+
+          <td></td>
+
+          <td></td>
+
+          <td>train array</td>
         </tr>
 
         <tr>
@@ -466,7 +467,7 @@
 
           <td></td>
 
-          <td>PanelPro</td>
+          <td>turnout array</td>
         </tr>
       </table>
 
@@ -493,6 +494,7 @@
         track power</li>
       </ul>
 
+<!-- THIS SECTION IS OUTDATED, code has been completely rewritten
       <p>In order to understand all of the details on the data for
       different types, the best solution is to look at the source
       code. There are two files you can start with that will help a
@@ -537,7 +539,8 @@
       best to do some searching through the source for all of the
       details, as well as experimenting with a tool like Postman in
       Google's Chrome browser.</p>
-
+ -->
+ 
       <h3>Type Names</h3>
 
       <p>Here are the different type names supported for the second
@@ -849,11 +852,6 @@
       handles JSON strings in four different forms:</p>
 
       <ul>
-        <li>list requests in the form:
-        <code>{"list":"trains"}</code> or
-        <code>{"type":"list","list":"trains"}</code> that return an
-        array of items, or an empty array (<code>[]</code>).</li>
-
         <li>individual item state requests in the form:
         <code>{"type":"turnout","data":{"name":"LT14"}}</code> that
         are passed to type-specific handlers. These requests will
@@ -871,6 +869,14 @@
             this.</li>
           </ul>
         </li>
+
+        <li>list requests in the form:
+        <code>{"list":"trains"}</code> or
+        <code>{"type":"list","list":"trains"}</code> that return an
+        array of items, or an empty array (<code>[]</code>). This request
+        initiates a "listener" which will resend
+        the entire list when items are added or removed, as well as
+        set individual listeners for each item (see above).</li>
 
         <li>a heartbeat in the form <code>*</code> or
         <code>{"type":"ping"}</code>. The <code>*</code> heartbeat
@@ -1022,36 +1028,39 @@
         </tr>
       </table>
 
-      <h2>JMRI JSON Server</h2>
+      <h2><a name=jmri_json_server>JMRI JSON Server</a></h2>
 
       <p>The JMRI JSON server is functionally identical to the JSON
       WebSocket, but running over a standard network socket.</p>
 
-      <h2>jquery.jmri</h2>
+      <h2><a name=jquery_jmri>jquery.jmri</a></h2>
 
       <p><em>jquery.jmri</em> is a JavaScript library that ships
       with JMRI and makes the JSON protocol support just work on
-      most current browsers.</p>
+      most current browsers.<br />
+      Note: The support for non-WebSocket browsers is limited by the number
+      of open connections allowed. Maybe 5-10 active objects.</p>
 
       <p>Examples of use of the jquery.jmri JavaScript library that
-      ships with JMRI include (all links assume you are reading
+      ships with JMRI include (example links assume you are reading
       this on your JMRI web server):</p>
 
       <ul>
         <li><a href="/operations">Operations Conductor</a>
         (implemented in <a href=
-        "/js/operations.js">/js/operations.js</a></li>
+        "https://github.com/JMRI/JMRI/blob/master/web/js/operations.js">
+        /js/operations.js</a></li>
 
         <li><a href="/panel">Panel</a> (implemented in <a href=
-        "/js/panel.js">/js/panel.js</a></li>
-        <!-- the webThrottle does not use jquery-json, but instead uses its own implementation, so do not include it in this list
-            <li><a href="/web/webThrottle.html">webThrottle</a> (implemented in <a href="/js/webThrottle.js">/js/webThrottle.js</a></li>
-            -->
+        "https://github.com/JMRI/JMRI/blob/master/web/js/panel.js">
+        /js/panel.js</a></li>
 
         <li><a href="/json">JSON Console</a> (implemented in
-        <a href="/js/json-console.js">/js/json-console.js</a></li>
+        <a href="https://github.com/JMRI/JMRI/blob/master/web/js/json-console.js">
+        /js/json-console.js</a></li>
 
-        <li><a href="/web/power.html">Power Demonstration</a> (view
+        <li><a href="/web/power.html">
+        Power Demonstration</a> (view
         the page source for the implementation)</li>
       </ul><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->

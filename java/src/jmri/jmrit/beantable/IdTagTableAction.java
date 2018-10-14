@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import jmri.IdTag;
@@ -26,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author  Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
-public class IdTagTableAction extends AbstractTableAction {
+public class IdTagTableAction extends AbstractTableAction<IdTag> {
 
     /**
      * Create an action with a specific title.
@@ -57,7 +58,7 @@ public class IdTagTableAction extends AbstractTableAction {
      */
     @Override
     protected void createModel() {
-        m = new BeanTableDataModel() {
+        m = new BeanTableDataModel<IdTag>() {
 
             public static final int WHERECOL = NUMCOLUMN;
             public static final int WHENCOL = WHERECOL + 1;
@@ -78,7 +79,7 @@ public class IdTagTableAction extends AbstractTableAction {
             }
 
             @Override
-            public Manager getManager() {
+            public Manager<IdTag> getManager() {
                 IdTagManager m = InstanceManager.getDefault(IdTagManager.class);
                 if (!m.isInitialised()) {
                     m.init();
@@ -87,19 +88,19 @@ public class IdTagTableAction extends AbstractTableAction {
             }
 
             @Override
-            public NamedBean getBySystemName(String name) {
+            public IdTag getBySystemName(String name) {
                 return InstanceManager.getDefault(IdTagManager.class).getBySystemName(name);
             }
 
             @Override
-            public NamedBean getByUserName(String name) {
+            public IdTag getByUserName(String name) {
                 return InstanceManager.getDefault(IdTagManager.class).getByUserName(name);
             }
             /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnMemoryInUse(); }
              public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnMemoryInUse(boo); }*/
 
             @Override
-            public void clickOn(NamedBean t) {
+            public void clickOn(IdTag t) {
                 // don't do anything on click; not used in this class, because
                 // we override setValueAt
             }
@@ -107,7 +108,7 @@ public class IdTagTableAction extends AbstractTableAction {
             @Override
             public void setValueAt(Object value, int row, int col) {
                 if (col == CLEARCOL) {
-                    IdTag t = (IdTag) getBySystemName(sysNameList.get(row));
+                    IdTag t = getBySystemName(sysNameList.get(row));
                     if (log.isDebugEnabled()) {
                         log.debug("Clear where & when last seen for " + t.getSystemName());
                     }
@@ -173,11 +174,11 @@ public class IdTagTableAction extends AbstractTableAction {
                 switch (col) {
                     case WHERECOL:
                         Reporter r;
-                        t = (IdTag) getBySystemName(sysNameList.get(row));
+                        t = getBySystemName(sysNameList.get(row));
                         return (t != null) ? (((r = t.getWhereLastSeen()) != null) ? r.getSystemName() : null) : null;
                     case WHENCOL:
                         Date d;
-                        t = (IdTag) getBySystemName(sysNameList.get(row));
+                        t = getBySystemName(sysNameList.get(row));
                         return (t != null) ? (((d = t.getWhenLastSeen()) != null)
                                 ? DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM).format(d) : null) : null;
                     case CLEARCOL:
@@ -288,12 +289,10 @@ public class IdTagTableAction extends AbstractTableAction {
     //private boolean noWarn = false;
 
     void handleCreateException(String sysName) {
-        javax.swing.JOptionPane.showMessageDialog(addFrame,
-                java.text.MessageFormat.format(
-                        Bundle.getMessage("ErrorIdTagAddFailed"),
-                        new Object[]{sysName}),
+        JOptionPane.showMessageDialog(addFrame,
+                Bundle.getMessage("ErrorIdTagAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
                 Bundle.getMessage("ErrorTitle"),
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+                JOptionPane.ERROR_MESSAGE);
     }
 
     @Override
@@ -317,7 +316,7 @@ public class IdTagTableAction extends AbstractTableAction {
     }
 
     @Override
-    public void addToPanel(AbstractTableTabAction f) {
+    public void addToPanel(AbstractTableTabAction<IdTag> f) {
         f.addToBottomBox(isStateStored, this.getClass().getName());
         isStateStored.setSelected(InstanceManager.getDefault(IdTagManager.class).isStateStored());
         isStateStored.addActionListener((ActionEvent e) -> {
@@ -335,5 +334,6 @@ public class IdTagTableAction extends AbstractTableAction {
     protected String getClassName() {
         return IdTagTableAction.class.getName();
     }
-    private static final Logger log = LoggerFactory.getLogger(IdTagTableAction.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(IdTagTableAction.class);
+
 }

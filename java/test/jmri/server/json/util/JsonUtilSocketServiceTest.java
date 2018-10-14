@@ -1,27 +1,19 @@
 package jmri.server.json.util;
 
-import static org.junit.Assert.*;
-
-import apps.tests.Log4JFixture;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
+import jmri.InstanceManager;
 import jmri.jmris.json.JsonServerPreferences;
-import jmri.profile.NullProfile;
-import jmri.profile.Profile;
-import jmri.profile.ProfileManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonMockConnection;
-import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import jmri.web.server.WebServerPreferences;
+
+import org.junit.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,31 +23,32 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonUtilSocketServiceTest {
 
-    private static final Logger log = LoggerFactory.getLogger(JsonUtilSocketServiceTest.class);
-
     public JsonUtilSocketServiceTest() {
     }
 
     @BeforeClass
     public static void setUpClass() {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
     }
 
     @AfterClass
     public static void tearDownClass() {
-        Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
 
     @Before
     public void setUp() throws IOException {
-        Profile profile = new NullProfile("TestProfile", null, FileUtil.getFile(FileUtil.SETTINGS));
-        ProfileManager.getDefault().setActiveProfile(profile);
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
     }
 
     @After
     public void tearDown() {
-        JUnitUtil.resetInstanceManager();
     }
 
     /**
@@ -67,24 +60,39 @@ public class JsonUtilSocketServiceTest {
     @Test
     public void testOnMessage() throws Exception {
         Locale locale = Locale.ENGLISH;
+        InstanceManager.getDefault(JsonServerPreferences.class).setValidateServerMessages(true);
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonNode empty = connection.getObjectMapper().createObjectNode();
         JsonUtilSocketService instance = new JsonUtilSocketService(connection);
         // JSON.LOCALE
-        instance.onMessage(JSON.LOCALE, empty, locale);
-        assertNull(connection.getMessage());
+        instance.onMessage(JSON.LOCALE, empty, JSON.POST, locale);
+        Assert.assertNull(connection.getMessage()); // assert no reply
         // JSON.PING
-        instance.onMessage(JSON.PING, empty, locale);
+        instance.onMessage(JSON.PING, empty, JSON.POST, locale);
         JsonNode result = connection.getMessage().path(JSON.TYPE);
-        assertNotNull(result);
-        assertTrue(JsonNode.class.isInstance(result));
-        assertEquals(JSON.PONG, result.asText());
+        Assert.assertNotNull(result);
+        Assert.assertTrue(JsonNode.class.isInstance(result));
+        Assert.assertEquals(JSON.PONG, result.asText());
+        Assert.assertTrue(connection.getMessage().path(JSON.DATA).isMissingNode());
+        // JSON.RAILROAD
+        WebServerPreferences wsp = InstanceManager.getDefault(WebServerPreferences.class);
+        instance.onMessage(JSON.RAILROAD, empty, JSON.GET, locale);
+        result = connection.getMessage().path(JSON.DATA);
+        Assert.assertNotNull(result);
+        Assert.assertEquals(JSON.RAILROAD, connection.getMessage().path(JSON.TYPE).asText());
+        Assert.assertEquals("Railroad name matches", wsp.getRailroadName(), result.path(JSON.NAME).asText());
+        wsp.setRailroadName("test railroad");
+        result = connection.getMessage().path(JSON.DATA);
+        Assert.assertNotNull(result);
+        Assert.assertEquals(JSON.RAILROAD, connection.getMessage().path(JSON.TYPE).asText());
+        Assert.assertEquals("Railroad name matches", wsp.getRailroadName(), result.path(JSON.NAME).asText());
         // JSON.GOODBYE
-        instance.onMessage(JSON.GOODBYE, empty, locale);
+        instance.onMessage(JSON.GOODBYE, empty, JSON.POST, locale);
         result = connection.getMessage().path(JSON.TYPE);
-        assertNotNull(result);
-        assertTrue(JsonNode.class.isInstance(result));
-        assertEquals(JSON.GOODBYE, result.asText());
+        Assert.assertNotNull(result);
+        Assert.assertTrue(JsonNode.class.isInstance(result));
+        Assert.assertEquals(JSON.GOODBYE, result.asText());
+        Assert.assertTrue(connection.getMessage().path(JSON.DATA).isMissingNode());
     }
 
     /**
@@ -94,6 +102,7 @@ public class JsonUtilSocketServiceTest {
      *                             these tests occurs
      */
     @Test
+    @Ignore // See Issue #5642
     public void testOnList() throws Exception {
         Locale locale = Locale.ENGLISH;
         ObjectMapper mapper = new ObjectMapper();
@@ -101,13 +110,15 @@ public class JsonUtilSocketServiceTest {
         JsonNode empty = connection.getObjectMapper().createObjectNode();
         JsonUtilSocketService instance = new JsonUtilSocketService(connection);
         JsonUtilHttpService helper = new JsonUtilHttpService(mapper);
-        JsonServerPreferences.getDefault().setHeartbeatInterval(10);
+        InstanceManager.getDefault(JsonServerPreferences.class).setHeartbeatInterval(10);
         instance.onList(JSON.METADATA, empty, locale);
         Assert.assertEquals(helper.getMetadata(locale), connection.getMessage());
         instance.onList(JSON.NETWORK_SERVICES, empty, locale);
         Assert.assertEquals(helper.getNetworkServices(locale), connection.getMessage());
         instance.onList(JSON.SYSTEM_CONNECTIONS, empty, locale);
         Assert.assertEquals(helper.getSystemConnections(locale), connection.getMessage());
+        instance.onList(JSON.CONFIG_PROFILES, empty, locale);
+        Assert.assertEquals(helper.getConfigProfiles(locale), connection.getMessage());
     }
 
     /**
@@ -123,4 +134,5 @@ public class JsonUtilSocketServiceTest {
         }
     }
 
+    private static final Logger log = LoggerFactory.getLogger(JsonUtilSocketServiceTest.class);
 }

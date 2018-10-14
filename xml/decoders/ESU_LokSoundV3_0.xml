@@ -18,54 +18,69 @@
   <version author="wsthompson@earthlink.net" version="2" lastUpdated="20080324"/>
   <!-- ver3 refactored to use standard Function Map and eliminate three custom panes -->
   <version author="Dave Heap" version="3" lastUpdated="20160419"/>
+  <!-- ver4 optimization and french/german translation -->
+  <version author="Ronald Kuhn" version="4" lastUpdated="20170910"/>
+  <!-- ver5 correctly deal with replacement model names -->
+  <version author="Dave Heap" version="5" lastUpdated="20171008"/>
   <decoder>
     <family name="ESU LokSound V3.0 Silent BEMF/Sound decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="59" highVersionID="59">
-      <model model="ESU_LokSound3" numOuts="6">
+      <model model="LokSound V3.0" numOuts="6">
         <output name="1" label="Front|Light" maxcurrent="250mA">
           <label xml:lang="fr">Feux|avant</label>
           <label xml:lang="it">Luci|Frontali</label>
+          <label xml:lang="de">Licht|vor</label>
         </output>
         <output name="2" label="Rear|Light" maxcurrent="250mA">
           <label xml:lang="fr">Feux|arrière</label>
           <label xml:lang="it">Luci|Posteriori</label>
+          <label xml:lang="de">Licht|rück</label>
         </output>
         <output name="3" label="Aux|1" maxcurrent="250mA">
           <label xml:lang="fr">Aux|1</label>
           <label xml:lang="it">Ausil|1</label>
+          <label xml:lang="de">Aux|1</label>
         </output>
         <output name="4" label="Aux|2" maxcurrent="250mA">
           <label xml:lang="fr">Aux|2</label>
           <label xml:lang="it">Ausil|2</label>
+          <label xml:lang="de">Aux|2</label>
         </output>
         <output name="5" label="Aux|3" maxcurrent="250mA">
           <label xml:lang="fr">Aux|3</label>
           <label xml:lang="it">Ausil|3</label>
+          <label xml:lang="de">Aux|3</label>
         </output>
         <output name="6" label="Aux|4" maxcurrent="250mA">
           <label xml:lang="fr">Aux|4</label>
           <label xml:lang="it">Ausil|4</label>
+          <label xml:lang="de">Aux|4</label>
         </output>
         <output name="7" label="|"/>
         <output name="8" label="|"/>
         <output name="9" label="Momentum|off">
           <label xml:lang="fr">Inertie|désactivée</label>
           <label xml:lang="it">Inerzia|off</label>
+          <label xml:lang="de">Beschleu-|nigung</label>
         </output>
         <output name="10" label="Shunt|mode">
           <label xml:lang="fr">Mode|manœuvre</label>
           <label xml:lang="it">Velocità|Manovra</label>
+          <label xml:lang="de">Rangier-|gang</label>
         </output>
         <output name="11" label="Sound|on">
           <label xml:lang="fr">Son|allumé</label>
           <label xml:lang="it">Suono|on</label>
+          <label xml:lang="de">Sound|an</label>
         </output>
         <output name="12" label="Shift|mode">
           <label xml:lang="fr">Changement|mode</label>
           <label xml:lang="it">Modo|Modifica</label>
+          <label xml:lang="de">Shift|modus</label>
         </output>
         <output name="13" label="Fan|sound">
           <label xml:lang="fr">Son|ventilateur</label>
           <label xml:lang="it">Suono|Ventole</label>
+          <label xml:lang="de">Lüfter|geräusch</label>
         </output>
         <output name="14" label="|"/>
         <output name="15" label="|"/>
@@ -73,61 +88,75 @@
         <output name="17" label="Sound|slot">
           <label xml:lang="fr">Créneau|Son</label>
           <label xml:lang="it">Slot| Suono</label>
+          <label xml:lang="de">Sound|slot</label>
         </output>
         <size length="31" width="15.5" height="6.5" units="mm"/>
         </model>
-      <model model="LokSoundXL Version 3.0" numOuts="8" maxMotorCurrent="3.0A" extFnsNmraF13="yes">
+      <model model="LokSoundXL V3.0" numOuts="8" maxMotorCurrent="3.0A" extFnsNmraF13="yes">
         <output name="1" label="Front|Light" maxcurrent="600mA">
           <label xml:lang="fr">Feux|avant</label>
           <label xml:lang="it">Luci|Frontali</label>
+          <label xml:lang="de">Licht|vor</label>
         </output>
         <output name="2" label="Rear|Light" maxcurrent="600mA">
           <label xml:lang="fr">Feux|arrière</label>
           <label xml:lang="it">Luci|Posteriori</label>
+          <label xml:lang="de">Licht|rück</label>
         </output>
         <output name="3" label="Aux|1" maxcurrent="600mA">
           <label xml:lang="fr">Aux|1</label>
           <label xml:lang="it">Ausil|1</label>
+          <label xml:lang="de">Aux|1</label>
         </output>
         <output name="4" label="Aux|2" maxcurrent="600mA">
           <label xml:lang="fr">Aux|2</label>
           <label xml:lang="it">Ausil|2</label>
+          <label xml:lang="de">Aux|2</label>
         </output>
         <output name="5" label="Aux|3" maxcurrent="600mA">
           <label xml:lang="fr">Aux|3</label>
           <label xml:lang="it">Ausil|3</label>
+          <label xml:lang="de">Aux|3</label>
         </output>
         <output name="6" label="Aux|4" maxcurrent="600mA">
           <label xml:lang="fr">Aux|4</label>
           <label xml:lang="it">Ausil|4</label>
+          <label xml:lang="de">Aux|4</label>
         </output>
         <output name="7" label="Aux|5" maxcurrent="600mA">
           <label xml:lang="fr">Aux|5</label>
           <label xml:lang="it">Ausil|5</label>
+          <label xml:lang="de">Aux|5</label>
         </output>
         <output name="8" label="Aux|6" maxcurrent="600mA">
           <label xml:lang="fr">Aux|6</label>
           <label xml:lang="it">Ausil|6</label>
+          <label xml:lang="de">Aux|6</label>
         </output>
         <output name="9" label="Momentum|off">
           <label xml:lang="fr">Inertie|désactivée</label>
           <label xml:lang="it">Inerzia|off</label>
+          <label xml:lang="de">Beschleu-|nigung</label>
         </output>
         <output name="10" label="Shunt|mode">
           <label xml:lang="fr">Mode|manœuvre</label>
           <label xml:lang="it">Velocità|Manovra</label>
+          <label xml:lang="de">Rangier-|gang</label>
         </output>
         <output name="11" label="Sound|on">
           <label xml:lang="fr">Son|allumé</label>
           <label xml:lang="it">Suono|on</label>
+          <label xml:lang="de">Sound|an</label>
         </output>
         <output name="12" label="Shift|mode">
           <label xml:lang="fr">Changement|mode</label>
           <label xml:lang="it">Modo|Modifica</label>
+          <label xml:lang="de">Shift|modus</label>
         </output>
         <output name="13" label="Fan|sound">
           <label xml:lang="fr">Son|ventilateur</label>
           <label xml:lang="it">Suono|Ventole</label>
+          <label xml:lang="de">Lüfter|geräusch</label>
         </output>
         <output name="14" label="|"/>
         <output name="15" label="|"/>
@@ -135,6 +164,155 @@
         <output name="17" label="Sound|slot">
           <label xml:lang="fr">Créneau|Son</label>
           <label xml:lang="it">Slot| Suono</label>
+          <label xml:lang="de">Sound|slot</label>
+        </output>
+        <size length="51" width="40" height="14" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+      <model show="no" model="ESU_LokSound3" replacementModel="LokSound V3.0" numOuts="6">
+        <output name="1" label="Front|Light" maxcurrent="250mA">
+          <label xml:lang="fr">Feux|avant</label>
+          <label xml:lang="it">Luci|Frontali</label>
+          <label xml:lang="de">Licht|vor</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="250mA">
+          <label xml:lang="fr">Feux|arrière</label>
+          <label xml:lang="it">Luci|Posteriori</label>
+          <label xml:lang="de">Licht|rück</label>
+        </output>
+        <output name="3" label="Aux|1" maxcurrent="250mA">
+          <label xml:lang="fr">Aux|1</label>
+          <label xml:lang="it">Ausil|1</label>
+          <label xml:lang="de">Aux|1</label>
+        </output>
+        <output name="4" label="Aux|2" maxcurrent="250mA">
+          <label xml:lang="fr">Aux|2</label>
+          <label xml:lang="it">Ausil|2</label>
+          <label xml:lang="de">Aux|2</label>
+        </output>
+        <output name="5" label="Aux|3" maxcurrent="250mA">
+          <label xml:lang="fr">Aux|3</label>
+          <label xml:lang="it">Ausil|3</label>
+          <label xml:lang="de">Aux|3</label>
+        </output>
+        <output name="6" label="Aux|4" maxcurrent="250mA">
+          <label xml:lang="fr">Aux|4</label>
+          <label xml:lang="it">Ausil|4</label>
+          <label xml:lang="de">Aux|4</label>
+        </output>
+        <output name="7" label="|"/>
+        <output name="8" label="|"/>
+        <output name="9" label="Momentum|off">
+          <label xml:lang="fr">Inertie|désactivée</label>
+          <label xml:lang="it">Inerzia|off</label>
+          <label xml:lang="de">Beschleu-|nigung</label>
+        </output>
+        <output name="10" label="Shunt|mode">
+          <label xml:lang="fr">Mode|manœuvre</label>
+          <label xml:lang="it">Velocità|Manovra</label>
+          <label xml:lang="de">Rangier-|gang</label>
+        </output>
+        <output name="11" label="Sound|on">
+          <label xml:lang="fr">Son|allumé</label>
+          <label xml:lang="it">Suono|on</label>
+          <label xml:lang="de">Sound|an</label>
+        </output>
+        <output name="12" label="Shift|mode">
+          <label xml:lang="fr">Changement|mode</label>
+          <label xml:lang="it">Modo|Modifica</label>
+          <label xml:lang="de">Shift|modus</label>
+        </output>
+        <output name="13" label="Fan|sound">
+          <label xml:lang="fr">Son|ventilateur</label>
+          <label xml:lang="it">Suono|Ventole</label>
+          <label xml:lang="de">Lüfter|geräusch</label>
+        </output>
+        <output name="14" label="|"/>
+        <output name="15" label="|"/>
+        <output name="16" label="|"/>
+        <output name="17" label="Sound|slot">
+          <label xml:lang="fr">Créneau|Son</label>
+          <label xml:lang="it">Slot| Suono</label>
+          <label xml:lang="de">Sound|slot</label>
+        </output>
+        <size length="31" width="15.5" height="6.5" units="mm"/>
+        </model>
+      <model show="no" model="LokSoundXL Version 3.0" replacementModel="LokSoundXL V3.0" numOuts="8" maxMotorCurrent="3.0A" extFnsNmraF13="yes">
+        <output name="1" label="Front|Light" maxcurrent="600mA">
+          <label xml:lang="fr">Feux|avant</label>
+          <label xml:lang="it">Luci|Frontali</label>
+          <label xml:lang="de">Licht|vor</label>
+        </output>
+        <output name="2" label="Rear|Light" maxcurrent="600mA">
+          <label xml:lang="fr">Feux|arrière</label>
+          <label xml:lang="it">Luci|Posteriori</label>
+          <label xml:lang="de">Licht|rück</label>
+        </output>
+        <output name="3" label="Aux|1" maxcurrent="600mA">
+          <label xml:lang="fr">Aux|1</label>
+          <label xml:lang="it">Ausil|1</label>
+          <label xml:lang="de">Aux|1</label>
+        </output>
+        <output name="4" label="Aux|2" maxcurrent="600mA">
+          <label xml:lang="fr">Aux|2</label>
+          <label xml:lang="it">Ausil|2</label>
+          <label xml:lang="de">Aux|2</label>
+        </output>
+        <output name="5" label="Aux|3" maxcurrent="600mA">
+          <label xml:lang="fr">Aux|3</label>
+          <label xml:lang="it">Ausil|3</label>
+          <label xml:lang="de">Aux|3</label>
+        </output>
+        <output name="6" label="Aux|4" maxcurrent="600mA">
+          <label xml:lang="fr">Aux|4</label>
+          <label xml:lang="it">Ausil|4</label>
+          <label xml:lang="de">Aux|4</label>
+        </output>
+        <output name="7" label="Aux|5" maxcurrent="600mA">
+          <label xml:lang="fr">Aux|5</label>
+          <label xml:lang="it">Ausil|5</label>
+          <label xml:lang="de">Aux|5</label>
+        </output>
+        <output name="8" label="Aux|6" maxcurrent="600mA">
+          <label xml:lang="fr">Aux|6</label>
+          <label xml:lang="it">Ausil|6</label>
+          <label xml:lang="de">Aux|6</label>
+        </output>
+        <output name="9" label="Momentum|off">
+          <label xml:lang="fr">Inertie|désactivée</label>
+          <label xml:lang="it">Inerzia|off</label>
+          <label xml:lang="de">Beschleu-|nigung</label>
+        </output>
+        <output name="10" label="Shunt|mode">
+          <label xml:lang="fr">Mode|manœuvre</label>
+          <label xml:lang="it">Velocità|Manovra</label>
+          <label xml:lang="de">Rangier-|gang</label>
+        </output>
+        <output name="11" label="Sound|on">
+          <label xml:lang="fr">Son|allumé</label>
+          <label xml:lang="it">Suono|on</label>
+          <label xml:lang="de">Sound|an</label>
+        </output>
+        <output name="12" label="Shift|mode">
+          <label xml:lang="fr">Changement|mode</label>
+          <label xml:lang="it">Modo|Modifica</label>
+          <label xml:lang="de">Shift|modus</label>
+        </output>
+        <output name="13" label="Fan|sound">
+          <label xml:lang="fr">Son|ventilateur</label>
+          <label xml:lang="it">Suono|Ventole</label>
+          <label xml:lang="de">Lüfter|geräusch</label>
+        </output>
+        <output name="14" label="|"/>
+        <output name="15" label="|"/>
+        <output name="16" label="|"/>
+        <output name="17" label="Sound|slot">
+          <label xml:lang="fr">Créneau|Son</label>
+          <label xml:lang="it">Slot| Suono</label>
+          <label xml:lang="de">Sound|slot</label>
         </output>
         <size length="51" width="40" height="14" units="mm"/>
         <protocols>
@@ -146,20 +324,14 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable item="Vstart" CV="2" default="3" comment="A value of 255 corresponds to 100%">
-        <decVal/>
-        <label>Vstart</label>
-        <label xml:lang="it">Volt Partenza</label>
-        <label xml:lang="fr">V démarr.</label>
-        <label xml:lang="de">Anfahrspannung</label>
-        <comment>A value of 255 corresponds to 100%</comment>
-      </variable>
+      <!-- CV=2,5,6 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/vStartHighMid.xml"/>
       <variable CV="3" default="4" item="Accel">
         <decVal max="63"/>
         <label>Acceleration</label>
         <label xml:lang="it">Accellerazione (0-63)</label>
         <label xml:lang="fr">Accelération (0-63)</label>
-        <label xml:lang="de">Anfahrverzögerung (0-63)</label>
+        <label xml:lang="de">Beschleunigungszeit (0-63)</label>
       </variable>
       <variable CV="4" default="3" item="Decel">
         <decVal max="63"/>
@@ -168,418 +340,110 @@
         <label xml:lang="fr">Décélération (1-63)</label>
         <label xml:lang="de">Bremszeit (1-63)</label>
       </variable>
-      <variable item="Vhigh" CV="5" default="64" comment="Range 0-255">
-        <decVal/>
-        <label>Vhigh</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable item="Vmid" CV="6" default="22" comment="Range 0-255">
-        <decVal/>
-        <label>Vmid</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <!-- CV7 and CV must be left as readonly = no otherwise will not display -->
-      <variable CV="7" readOnly="no" item="Decoder Version">
-        <decVal/>
-        <label>Decoder Version </label>
-        <label xml:lang="it">Versione Decoder: </label>
-        <label xml:lang="fr">Version décodeur: </label>
-        <label xml:lang="de">Decoder Version: </label>
-      </variable>
-      <variable CV="8" readOnly="no" item="Manufacturer">
-        <decVal/>
-        <label>Manufacturer ID</label>
-        <label xml:lang="it">ID Costruttore: </label>
-        <label xml:lang="fr">ID constructeur: </label>
-        <label xml:lang="de">Hersteller ID: </label>
-      </variable>
-      <variable item="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog Mode Function Status - F1</label>
-      </variable>
-      <variable item="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog Mode Function Status - F2</label>
-      </variable>
-      <variable item="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog Mode Function Status - F3</label>
-      </variable>
-      <variable item="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog Mode Function Status - F4</label>
-      </variable>
-      <variable item="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog Mode Function Status - F5</label>
-      </variable>
-      <variable item="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog Mode Function Status - F6</label>
-      </variable>
-      <variable item="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog Mode Function Status - F7</label>
-      </variable>
-      <variable item="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog Mode Function Status - F8</label>
-      </variable>
-      <variable item="Analog Mode Function Status - FL(f)" CV="14" mask="XXXXXXXV" default="1">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog Mode Function Status - FL(f)</label>
-      </variable>
-      <variable item="Analog Mode Function Status - FL(r)" CV="14" mask="XXXXXXVX" default="1">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog Mode Function Status - FL(r)</label>
-      </variable>
+      <!-- CV=7,8 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <!-- CV=13,14,49,50,51,53-62,64,67,112 -->
+      <xi:include href="http://jmri.org/xml/decoders/esu/v3standardCVs.xml"/>
       <variable CV="14" mask="XXXXXVXX" item="Analog F9(f)">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F9(f)</label>
+        <label xml:lang="fr">Etat des fonctions en anal. - F9(f)</label>
+        <label xml:lang="de">Analog Modus F9(v)</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F9(v) im Analogmodus.</tooltip>
       </variable>
       <variable CV="14" item="Analog F10(f)" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F10(f)</label>
+        <label xml:lang="fr">Etat des fonctions en anal. - F10(f)</label>
+        <label xml:lang="de">Analog Modus F10(v)</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F10(v) im Analogmodus.</tooltip>
       </variable>
       <variable CV="14" item="Analog F11" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F11</label>
+        <label xml:lang="fr">Etat des fonctions en anal. - F11</label>
+        <label xml:lang="de">Analog Modus F11</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F11 im Analogmodus.</tooltip>
       </variable>
       <variable CV="14" item="Analog F12" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F12</label>
+        <label xml:lang="fr">Etat des fonctions en anal. - F12</label>
+        <label xml:lang="de">Analog Modus F12</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F12 im Analogmodus.</tooltip>
       </variable>
       <variable CV="14" item="Analog F9(r)" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F9(r)</label>
+        <label xml:lang="fr">Etat des fonctions en anal. - F9(r)</label>
+        <label xml:lang="de">Analog Modus F9(r)</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F9(r) im Analogmodus.</tooltip>
       </variable>
       <variable CV="14" item="Analog F10(r)" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F10(r)</label>
+        <label xml:lang="fr">Etat des fonctions en anal. - F10(r)</label>
+        <label xml:lang="de">Analog Modus F10(r)</label>
+       <tooltip xml:lang="de">Zustand der Funktionen F10(r) im Analogmodus.</tooltip>
       </variable>
       <!-- CV=19 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <!-- CV=29 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
-      <variable item="BEMF Active" CV="49" mask="XXXXXXXV" default="1">
-        <enumVal>
-          <enumChoice choice="OFF">
-            <choice>OFF</choice>
-          </enumChoice>
-          <enumChoice choice="ON">
-            <choice>ON</choice>
-          </enumChoice>
-        </enumVal>
-        <label>BEMF Active</label>
-      </variable>
-      <variable item="Total PWM Period" CV="49" mask="XXXXXXVX" default="1">
-        <enumVal>
-          <enumChoice choice="15kHz">
-            <choice>15kHz</choice>
-          </enumChoice>
-          <enumChoice choice="30 kHz">
-            <choice>30 kHz</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Total PWM Period</label>
-      </variable>
-      <variable item="Marklin delta Mode" CV="49" mask="XXXXXVXX" default="0">
-        <enumVal>
-          <enumChoice choice="OFF">
-            <choice>OFF</choice>
-          </enumChoice>
-          <enumChoice choice="ON">
-            <choice>ON</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Marklin delta Mode</label>
-      </variable>
-      <variable item="Marklin second address" CV="49" mask="XXXXVXXX" default="0">
-        <enumVal>
-          <enumChoice choice="OFF">
-            <choice>OFF</choice>
-          </enumChoice>
-          <enumChoice choice="ON">
-            <choice>ON</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Marklin second address</label>
-      </variable>
-      <variable item="Automatic Speed Step Detection" CV="49" mask="XXXVXXXX" default="1">
-        <enumVal>
-          <enumChoice choice="OFF">
-            <choice>OFF</choice>
-          </enumChoice>
-          <enumChoice choice="ON">
-            <choice>ON</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Automatic Speed Step Detection</label>
-      </variable>
-      <variable item="LGB function button mode" CV="49" mask="XXVXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="OFF">
-            <choice>OFF</choice>
-          </enumChoice>
-          <enumChoice choice="ON">
-            <choice>ON</choice>
-          </enumChoice>
-        </enumVal>
-        <label>LGB function button mode</label>
-      </variable>
-      <variable item="Zimo manual function" CV="49" mask="XVXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="OFF">
-            <choice>OFF</choice>
-          </enumChoice>
-          <enumChoice choice="ON">
-            <choice>ON</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Zimo manual function</label>
-      </variable>
-      <variable CV="50" mask="XXXXXXVV" item="Analoguemode">
-        <enumVal>
-          <enumChoice choice="AC and  DC Mode off">
-            <choice>AC and  DC Mode off</choice>
-          </enumChoice>
-          <enumChoice choice="AC Mode on">
-            <choice>AC Mode on</choice>
-          </enumChoice>
-          <enumChoice choice="DC Mode on">
-            <choice>DC Mode on</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analogue Mode</label>
-      </variable>
-      <variable CV="51" mask="XXXXXVVV" item="Brakemode">
-        <enumVal>
-          <enumChoice choice="All Modes off">
-            <choice>All Modes off</choice>
-          </enumChoice>
-          <enumChoice choice="Marklin Brake Mode on">
-            <choice>Marklin Brake Mode on</choice>
-          </enumChoice>
-          <enumChoice choice="Zimo Brake Mode on">
-            <choice>Zimo Brake Mode on</choice>
-          </enumChoice>
-          <enumChoice choice="Lenz Brake Mode on">
-            <choice>Lenz Brake Mode on</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Brake Mode</label>
-      </variable>
-      <variable CV="53" default="50" item="Controlref">
-        <decVal max="80"/>
-        <label>Control Reference (BEMF volts at maximum speed){0-80}</label>
-      </variable>
-      <variable CV="54" default="32" item="ParaK">
-        <decVal max="80"/>
-        <label>Load Control Parameter 'K' {0-80}</label>
-      </variable>
-      <variable CV="55" default="24" item="ParaI">
-        <decVal max="80"/>
-        <label>Load Control Parameter 'I' {0-80}</label>
-      </variable>
-      <variable CV="56" default="64" item="Range">
-        <decVal max="64"/>
-        <label>Operating Range of Load Control'</label>
-      </variable>
-      <variable CV="57" default="0" item="Sound Group 1 Control">
-        <decVal max="127"/>
-        <label>Time between 2 chuffs @ speed step 1 (Range 0 - 127)</label>
-      </variable>
-      <variable CV="58" default="0" item="Sound Group 1 Option 1">
-        <decVal max="127"/>
-        <label>Rate of decrease in time between 2 chuffs (Range 0 -127)</label>
-      </variable>
-      <variable CV="59" default="32" item="Sound Group 1 Option 2">
-        <decVal max="64"/>
-        <label>Slow speed sound factor (Range 0- 64)</label>
-      </variable>
-      <variable CV="60" default="55" item="Sound Group 1 Option 3">
-        <decVal max="64"/>
-        <label>High speed sound factor (Range 0 - 64)</label>
-      </variable>
-      <variable CV="61" default="30" item="Sound Group 2 Option 1" comment="Range 0-64">
-        <decVal/>
-        <label>Random Sound - Shortest Interval (Range 0 - 64</label>
-        <comment>Range 0-64</comment>
-      </variable>
-      <variable CV="62" default="50" item="Sound Group 2 Option 2" comment="Range 0-64">
-        <decVal/>
-        <label>Random Sound - Longest Interva (Range 0 - 64)</label>
-        <comment>Range 0-64</comment>
-      </variable>
       <variable CV="63" default="64" item="Sound Group 2 Control" comment="Range 0-64">
         <decVal/>
         <label>Sound Volume Range 0 Quiet - 64 Loudest</label>
+        <label xml:lang="fr">Volume son</label>
+        <label xml:lang="de">Gesamtlautstärke</label>
         <comment>Range 0-64</comment>
+        <comment xml:lang="fr">Valeur 0-64</comment>
       </variable>
-      <variable CV="64" default="7" item="Sound Group 2 Option 3" comment="Range 0-64">
-        <decVal/>
-        <label>Braking Sound threshold (Range 0 - 64)</label>
-        <comment>Range 0-64</comment>
-      </variable>
-      <variable item="Forward Trim" CV="66" default="0" comment="Range 0-255">
-        <decVal/>
-        <label>Forward Trim</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <!-- CV=66 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
+      <!-- CV=95 -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
+      <!-- CV=105,106 -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
-      <variable item="Blinking Rate (4-64)" CV="112" default="33" comment="Controls Blink Interval">
-        <decVal/>
-        <label>Blinking Rate (4-64)</label>
-        <comment>Controls Blink Interval</comment>
-      </variable>
       <variable CV="113" mask="VVVVXXXX" minOut="1" item="Function F0F effect generated">
         <enumVal>
           <enumChoice choice="Continuous (dimmer)">
             <choice>Continuous (dimmer)</choice>
+            <choice xml:lang="de">Dauerlicht (dimmbar)</choice>
           </enumChoice>
           <enumChoice choice="Blinking Phase1">
             <choice>Blinking Phase1</choice>
+            <choice xml:lang="de">Blinklicht (Phase 1)</choice>
           </enumChoice>
           <enumChoice choice="Blinking Phase 2">
             <choice>Blinking Phase 2</choice>
+            <choice xml:lang="de">Blinklicht (Phase 2)</choice>
           </enumChoice>
           <enumChoice choice="Strobe light">
             <choice>Strobe light</choice>
+            <choice xml:lang="de">Strobe</choice>
           </enumChoice>
           <enumChoice choice="Double strobe light">
             <choice>Double strobe light</choice>
+            <choice xml:lang="de">Double Strobe</choice>
           </enumChoice>
           <enumChoice choice="Fire Box">
             <choice>Fire Box</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke Generator">
             <choice>Smoke Generator</choice>
+            <choice xml:lang="de">Rauchgenerator</choice>
           </enumChoice>
           <enumChoice choice="Reserved">
             <choice>Reserved</choice>
+            <choice xml:lang="de">Reserviert</choice>
           </enumChoice>
           <enumChoice choice="Head light Bright/Dim">
             <choice>Head light Bright/Dim</choice>
+            <choice xml:lang="de">Auf-/Abblenden</choice>
           </enumChoice>
           <enumChoice choice="Mars Light">
             <choice>Mars Light</choice>
@@ -589,39 +453,52 @@
           </enumChoice>
         </enumVal>
         <label>Forward light F0F effect generated</label>
+        <label xml:lang="fr">Config phare avant</label>
+        <label xml:lang="de">Lvor Effekt </label>
       </variable>
       <variable CV="113" default="15" mask="XXXXVVVV" minOut="1" item="F0(f) Bright">
         <decVal/>
         <label>FL(f) </label>
+        <label xml:lang="fr">FL (av)</label>
+        <label xml:lang="de">Lvor</label>
       </variable>
       <variable CV="114" mask="VVVVXXXX" minOut="2" item="Function F0R effect generated">
         <enumVal>
           <enumChoice choice="Continuous (dimmer)">
             <choice>Continuous (dimmer)</choice>
+            <choice xml:lang="de">Dauerlicht (dimmbar)</choice>
           </enumChoice>
           <enumChoice choice="Blinking Phase1">
             <choice>Blinking Phase1</choice>
+            <choice xml:lang="de">Blinklicht (Phase 1)</choice>
           </enumChoice>
           <enumChoice choice="Blinking Phase 2">
             <choice>Blinking Phase 2</choice>
+            <choice xml:lang="de">Blinklicht (Phase 2)</choice>
           </enumChoice>
           <enumChoice choice="Strobe light">
             <choice>Strobe light</choice>
+            <choice xml:lang="de">Strobe</choice>
           </enumChoice>
           <enumChoice choice="Double strobe light">
             <choice>Double strobe light</choice>
+            <choice xml:lang="de">Double Strobe</choice>
           </enumChoice>
           <enumChoice choice="Fire Box">
             <choice>Fire Box</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke Generator">
             <choice>Smoke Generator</choice>
+            <choice xml:lang="de">Rauchgenerator</choice>
           </enumChoice>
           <enumChoice choice="Reserved">
             <choice>Reserved</choice>
+            <choice xml:lang="de">Reserviert</choice>
           </enumChoice>
           <enumChoice choice="Head light Bright/Dim">
             <choice>Head light Bright/Dim</choice>
+            <choice xml:lang="de">Auf-/Abblenden</choice>
           </enumChoice>
           <enumChoice choice="Mars Light">
             <choice>Mars Light</choice>
@@ -631,39 +508,52 @@
           </enumChoice>
         </enumVal>
         <label>Reverse light F0R effect generated</label>
+        <label xml:lang="fr">Config phare arrière</label>
+        <label xml:lang="de">Lrück Effekt </label>
       </variable>
       <variable CV="114" default="15" mask="XXXXVVVV" minOut="2" item="F0(r) Bright">
         <decVal/>
         <label> FL(r) </label>
+        <label xml:lang="fr"> FL(arr)</label>
+        <label xml:lang="de">Lrück</label>
       </variable>
-      <variable item="Function 1 effect generated" CV="115" mask="VVVVXXXX" minOut="3">
+      <variable CV="115" item="Function 1 effect generated" mask="VVVVXXXX" minOut="3">
         <enumVal>
           <enumChoice choice="Continuous (dimmer)">
             <choice>Continuous (dimmer)</choice>
+            <choice xml:lang="de">Dauerlicht (dimmbar)</choice>
           </enumChoice>
           <enumChoice choice="Blinking Phase1">
             <choice>Blinking Phase1</choice>
+            <choice xml:lang="de">Blinklicht (Phase 1)</choice>
           </enumChoice>
           <enumChoice choice="Blinking Phase 2">
             <choice>Blinking Phase 2</choice>
+            <choice xml:lang="de">Blinklicht (Phase 2)</choice>
           </enumChoice>
           <enumChoice choice="Strobe light">
             <choice>Strobe light</choice>
+            <choice xml:lang="de">Strobe</choice>
           </enumChoice>
           <enumChoice choice="Double strobe light">
             <choice>Double strobe light</choice>
+            <choice xml:lang="de">Double Strobe</choice>
           </enumChoice>
           <enumChoice choice="Fire Box">
             <choice>Fire Box</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke Generator">
             <choice>Smoke Generator</choice>
+            <choice xml:lang="de">Rauchgenerator</choice>
           </enumChoice>
           <enumChoice choice="Reserved">
             <choice>Reserved</choice>
+            <choice xml:lang="de">Reserviert</choice>
           </enumChoice>
           <enumChoice choice="Head light Bright/Dim">
             <choice>Head light Bright/Dim</choice>
+            <choice xml:lang="de">Auf-/Abblenden</choice>
           </enumChoice>
           <enumChoice choice="Mars Light">
             <choice>Mars Light</choice>
@@ -673,39 +563,52 @@
           </enumChoice>
         </enumVal>
         <label>Function 1 effect generated</label>
+        <label xml:lang="fr">Config sortie auxil 1</label>
+        <label xml:lang="de">AUX 1 Effekt</label>
       </variable>
       <variable CV="115" default="15" mask="XXXXVVVV" minOut="3" item="F1 Bright">
         <decVal/>
         <label>Aux F1 </label>
+        <label xml:lang="fr">Aux F1</label>
+        <label xml:lang="de">AUX 1</label>
       </variable>
-      <variable item="Function 2 effect generated" CV="116" mask="VVVVXXXX" minOut="4">
+      <variable CV="116" item="Function 2 effect generated" mask="VVVVXXXX" minOut="4">
         <enumVal>
           <enumChoice choice="Continuous (dimmer)">
             <choice>Continuous (dimmer)</choice>
+            <choice xml:lang="de">Dauerlicht (dimmbar)</choice>
           </enumChoice>
           <enumChoice choice="Blinking Phase1">
             <choice>Blinking Phase1</choice>
+            <choice xml:lang="de">Blinklicht (Phase 1)</choice>
           </enumChoice>
           <enumChoice choice="Blinking Phase 2">
             <choice>Blinking Phase 2</choice>
+            <choice xml:lang="de">Blinklicht (Phase 2)</choice>
           </enumChoice>
           <enumChoice choice="Strobe light">
             <choice>Strobe light</choice>
+            <choice xml:lang="de">Strobe</choice>
           </enumChoice>
           <enumChoice choice="Double strobe light">
             <choice>Double strobe light</choice>
+            <choice xml:lang="de">Double Strobe</choice>
           </enumChoice>
           <enumChoice choice="Fire Box">
             <choice>Fire Box</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke Generator">
             <choice>Smoke Generator</choice>
+            <choice xml:lang="de">Rauchgenerator</choice>
           </enumChoice>
           <enumChoice choice="Reserved">
             <choice>Reserved</choice>
+            <choice xml:lang="de">Reserviert</choice>
           </enumChoice>
           <enumChoice choice="Head light Bright/Dim">
             <choice>Head light Bright/Dim</choice>
+            <choice xml:lang="de">Auf-/Abblenden</choice>
           </enumChoice>
           <enumChoice choice="Mars Light">
             <choice>Mars Light</choice>
@@ -715,39 +618,52 @@
           </enumChoice>
         </enumVal>
         <label>Function 2 effect generated</label>
+        <label xml:lang="fr">Config sortie auxil 2</label>
+        <label xml:lang="de">AUX 2 Effekt</label>
       </variable>
       <variable CV="116" default="15" mask="XXXXVVVV" minOut="4" item="F2 Bright">
         <decVal/>
         <label>Aux F2 </label>
+        <label xml:lang="fr">Aux F2 </label>
+        <label xml:lang="de">AUX 2</label>
       </variable>
-      <variable item="Function 3 effect generated" CV="117" mask="VVVVXXXX" minOut="5">
+      <variable CV="117" item="Function 3 effect generated" mask="VVVVXXXX" minOut="5">
         <enumVal>
           <enumChoice choice="Continuous (dimmer)">
             <choice>Continuous (dimmer)</choice>
+            <choice xml:lang="de">Dauerlicht (dimmbar)</choice>
           </enumChoice>
           <enumChoice choice="Blinking Phase1">
             <choice>Blinking Phase1</choice>
+            <choice xml:lang="de">Blinklicht (Phase 1)</choice>
           </enumChoice>
           <enumChoice choice="Blinking Phase 2">
             <choice>Blinking Phase 2</choice>
+            <choice xml:lang="de">Blinklicht (Phase 2)</choice>
           </enumChoice>
           <enumChoice choice="Strobe light">
             <choice>Strobe light</choice>
+            <choice xml:lang="de">Strobe</choice>
           </enumChoice>
           <enumChoice choice="Double strobe light">
             <choice>Double strobe light</choice>
+            <choice xml:lang="de">Double Strobe</choice>
           </enumChoice>
           <enumChoice choice="Fire Box">
             <choice>Fire Box</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke Generator">
             <choice>Smoke Generator</choice>
+            <choice xml:lang="de">Rauchgenerator</choice>
           </enumChoice>
           <enumChoice choice="Reserved">
             <choice>Reserved</choice>
+            <choice xml:lang="de">Reserviert</choice>
           </enumChoice>
           <enumChoice choice="Head light Bright/Dim">
             <choice>Head light Bright/Dim</choice>
+            <choice xml:lang="de">Auf-/Abblenden</choice>
           </enumChoice>
           <enumChoice choice="Mars Light">
             <choice>Mars Light</choice>
@@ -757,81 +673,107 @@
           </enumChoice>
         </enumVal>
         <label>Function 3 effect generated</label>
+        <label xml:lang="fr">Config sortie auxil 3</label>
+        <label xml:lang="de">AUX 3 Effekt</label>
       </variable>
       <variable CV="117" default="15" mask="XXXXVVVV" minOut="5" item="F3 Bright">
         <decVal/>
         <label>Aux F3 </label>
+        <label xml:lang="fr">Aux F3 </label>
+        <label xml:lang="de">AUX 3</label>
       </variable>
-      <variable item="Function 4 effect generated" CV="118" mask="VVVVXXXX" minOut="6">
+      <variable CV="118" item="Function 4 effect generated" mask="VVVVXXXX" minOut="6">
         <enumVal>
           <enumChoice choice="Continuous (dimmer)">
             <choice>Continuous (dimmer)</choice>
+            <choice xml:lang="de">Dauerlicht (dimmbar)</choice>
           </enumChoice>
           <enumChoice choice="Blinking Phase1">
             <choice>Blinking Phase1</choice>
+            <choice xml:lang="de">Blinklicht (Phase 1)</choice>
           </enumChoice>
           <enumChoice choice="Blinking Phase 2">
             <choice>Blinking Phase 2</choice>
+            <choice xml:lang="de">Blinklicht (Phase 2)</choice>
           </enumChoice>
           <enumChoice choice="Strobe light">
             <choice>Strobe light</choice>
+            <choice xml:lang="de">Strobe</choice>
           </enumChoice>
           <enumChoice choice="Double strobe light">
             <choice>Double strobe light</choice>
+            <choice xml:lang="de">Double Strobe</choice>
           </enumChoice>
           <enumChoice choice="Fire Box">
             <choice>Fire Box</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke Generator">
             <choice>Smoke Generator</choice>
+            <choice xml:lang="de">Rauchgenerator</choice>
           </enumChoice>
           <enumChoice choice="Reserved">
             <choice>Reserved</choice>
+            <choice xml:lang="de">Reserviert</choice>
           </enumChoice>
           <enumChoice choice="Head light Bright/Dim">
             <choice>Head light Bright/Dim</choice>
+            <choice xml:lang="de">Auf-/Abblenden</choice>
           </enumChoice>
           <enumChoice choice="Mars Light">
             <choice>Mars Light</choice>
           </enumChoice>
-          <enumChoice choice="Gyra Light" value="160">
+          <enumChoice choice="Gyra Light">
             <choice>Gyra Light</choice>
           </enumChoice>
         </enumVal>
         <label>Function 4 effect generated</label>
+        <label xml:lang="fr">Config sortie auxil 4</label>
+        <label xml:lang="de">AUX 4 Effekt</label>
       </variable>
       <variable CV="118" default="15" mask="XXXXVVVV" minOut="6" item="F4 Bright">
         <decVal/>
         <label>Aux F4 </label>
+        <label xml:lang="fr">Aux F4</label>
+        <label xml:lang="de">AUX 4</label>
       </variable>
-      <variable item="Function 5 effect generated" CV="119" mask="VVVVXXXX" minOut="7">
+      <variable CV="119" item="Function 5 effect generated" mask="VVVVXXXX" minOut="7">
         <enumVal>
           <enumChoice choice="Continuous (dimmer)">
             <choice>Continuous (dimmer)</choice>
+            <choice xml:lang="de">Dauerlicht (dimmbar)</choice>
           </enumChoice>
           <enumChoice choice="Blinking Phase1">
             <choice>Blinking Phase1</choice>
+            <choice xml:lang="de">Blinklicht (Phase 1)</choice>
           </enumChoice>
           <enumChoice choice="Blinking Phase 2">
             <choice>Blinking Phase 2</choice>
+            <choice xml:lang="de">Blinklicht (Phase 2)</choice>
           </enumChoice>
           <enumChoice choice="Strobe light">
             <choice>Strobe light</choice>
+            <choice xml:lang="de">Strobe</choice>
           </enumChoice>
           <enumChoice choice="Double strobe light">
             <choice>Double strobe light</choice>
+            <choice xml:lang="de">Double Strobe</choice>
           </enumChoice>
           <enumChoice choice="Fire Box">
             <choice>Fire Box</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke Generator">
             <choice>Smoke Generator</choice>
+            <choice xml:lang="de">Rauchgenerator</choice>
           </enumChoice>
           <enumChoice choice="Reserved">
             <choice>Reserved</choice>
+            <choice xml:lang="de">Reserviert</choice>
           </enumChoice>
           <enumChoice choice="Head light Bright/Dim">
             <choice>Head light Bright/Dim</choice>
+            <choice xml:lang="de">Auf-/Abblenden</choice>
           </enumChoice>
           <enumChoice choice="Mars Light">
             <choice>Mars Light</choice>
@@ -841,39 +783,52 @@
           </enumChoice>
         </enumVal>
         <label>Function 5 effect generated</label>
+        <label xml:lang="fr">Config sortie auxil 5</label>
+        <label xml:lang="de">AUX 5 Effekt</label>
       </variable>
       <variable CV="119" default="15" mask="XXXXVVVV" minOut="7" item="F5 Bright">
         <decVal/>
         <label>Aux F5 </label>
+        <label xml:lang="fr">Aux F5</label>
+        <label xml:lang="de">AUX 5</label>
       </variable>
-      <variable item="Function 6 effect generated" CV="120" mask="VVVVXXXX" minOut="8">
+      <variable CV="120" item="Function 6 effect generated" mask="VVVVXXXX" minOut="8">
         <enumVal>
           <enumChoice choice="Continuous (dimmer)">
             <choice>Continuous (dimmer)</choice>
+            <choice xml:lang="de">Dauerlicht (dimmbar)</choice>
           </enumChoice>
           <enumChoice choice="Blinking Phase1">
             <choice>Blinking Phase1</choice>
+            <choice xml:lang="de">Blinklicht (Phase 1)</choice>
           </enumChoice>
           <enumChoice choice="Blinking Phase 2">
             <choice>Blinking Phase 2</choice>
+            <choice xml:lang="de">Blinklicht (Phase 2)</choice>
           </enumChoice>
           <enumChoice choice="Strobe light">
             <choice>Strobe light</choice>
+            <choice xml:lang="de">Strobe</choice>
           </enumChoice>
           <enumChoice choice="Double strobe light">
             <choice>Double strobe light</choice>
+            <choice xml:lang="de">Double Strobe</choice>
           </enumChoice>
           <enumChoice choice="Fire Box">
             <choice>Fire Box</choice>
+            <choice xml:lang="de">Feuerbüchse</choice>
           </enumChoice>
           <enumChoice choice="Smoke Generator">
             <choice>Smoke Generator</choice>
+            <choice xml:lang="de">Rauchgenerator</choice>
           </enumChoice>
           <enumChoice choice="Reserved">
             <choice>Reserved</choice>
+            <choice xml:lang="de">Reserviert</choice>
           </enumChoice>
           <enumChoice choice="Head light Bright/Dim">
             <choice>Head light Bright/Dim</choice>
+            <choice xml:lang="de">Auf-/Abblenden</choice>
           </enumChoice>
           <enumChoice choice="Mars Light">
             <choice>Mars Light</choice>
@@ -883,26 +838,38 @@
           </enumChoice>
         </enumVal>
         <label>Function 6 effect generated</label>
+        <label xml:lang="fr">Config sortie auxil 6</label>
+        <label xml:lang="de">AUX 6 Effekt</label>
       </variable>
       <variable CV="120" default="15" mask="XXXXVVVV" minOut="8" item="F6 Bright">
         <decVal/>
         <label>Aux F6 </label>
+        <label xml:lang="fr">Aux F6 </label>
+        <label xml:lang="de">AUX 6</label>
       </variable>
       <variable CV="125" mask="XVVVVVVV" default="110" item="DCstart">
         <decVal/>
         <label>Start Volts in DC mode</label>
+        <label xml:lang="fr">Tension de démarrage en analog.</label>
+        <label xml:lang="de">Anfahrspannung Analog DC</label>
       </variable>
       <variable CV="126" mask="XVVVVVVV" default="127" item="DCmax">
         <decVal/>
         <label>Maximum Speed in DC mode</label>
+        <label xml:lang="fr">Vit. Max. en analog. CC</label>
+        <label xml:lang="de">Höchstgeschwindigkeit Analog DC</label>
       </variable>
       <variable CV="127" mask="XVVVVVVV" default="50" item="ACstart">
         <decVal/>
         <label>Start Volts in AC mode</label>
+        <label xml:lang="fr">Tension de démarrage en analog. CA</label>
+        <label xml:lang="de">Anfahrspannung Analog AC</label>
       </variable>
       <variable CV="128" mask="XVVVVVVV" default="127" item="ACmax">
         <decVal/>
         <label>Maximum Speed in AC mode</label>
+        <label xml:lang="fr">Vit. Max. en analog. AC</label>
+        <label xml:lang="de">Höchstgeschwindigkeit Analog AC</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/esu/v3fnMapCVs.xml"/>
     </variables>

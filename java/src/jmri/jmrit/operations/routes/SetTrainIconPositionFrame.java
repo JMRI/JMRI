@@ -1,4 +1,3 @@
-// SetTrainIconPositionFrame.java
 package jmri.jmrit.operations.routes;
 
 import java.awt.Color;
@@ -16,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import jmri.InstanceManager;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.operations.OperationsFrame;
@@ -33,11 +33,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision$
  */
 public class SetTrainIconPositionFrame extends OperationsFrame {
 
-    RouteManager routeManager = RouteManager.instance();
+    RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
 
     // labels
     JLabel textEastX = new JLabel("   X  ");
@@ -48,18 +47,19 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     JLabel textNorthY = new JLabel("   Y  ");
     JLabel textSouthX = new JLabel("   X  ");
     JLabel textSouthY = new JLabel("   Y  ");
+    
+    JLabel textRangeX = new JLabel("   X +/-");
+    JLabel textRangeY = new JLabel("   Y +/-");
 
-    // text field
-    // check boxes
     // major buttons
     JButton placeButton = new JButton(Bundle.getMessage("PlaceTestIcon"));
     JButton applyButton = new JButton(Bundle.getMessage("UpdateRoutes"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // combo boxes
-    JComboBox<Location> locationBox = LocationManager.instance().getComboBox();
+    JComboBox<Location> locationBox = InstanceManager.getDefault(LocationManager.class).getComboBox();
 
-    //Spinners	 
+    //Spinners  
     JSpinner spinTrainIconEastX = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 1));
     JSpinner spinTrainIconEastY = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 1));
     JSpinner spinTrainIconWestX = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 1));
@@ -68,6 +68,10 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     JSpinner spinTrainIconNorthY = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 1));
     JSpinner spinTrainIconSouthX = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 1));
     JSpinner spinTrainIconSouthY = new JSpinner(new SpinnerNumberModel(0, 0, 10000, 1));
+    
+    // detection range
+    JSpinner spinTrainIconRangeX = new JSpinner(new SpinnerNumberModel(Location.RANGE_DEFAULT, 0, 1000, 1));
+    JSpinner spinTrainIconRangeY = new JSpinner(new SpinnerNumberModel(Location.RANGE_DEFAULT, 0, 1000, 1));
 
     // Four test train icons
     TrainIcon _tIonEast;
@@ -122,6 +126,14 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         addItem(pSouth, spinTrainIconSouthX, 1, 0);
         addItem(pSouth, textSouthY, 2, 0);
         addItem(pSouth, spinTrainIconSouthY, 3, 0);
+        
+        JPanel pRange = new JPanel();
+        pRange.setLayout(new GridBagLayout());
+        pRange.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RangeTrainIcon")));
+        addItem(pRange, textRangeX, 0, 0);
+        addItem(pRange, spinTrainIconRangeX, 1, 0);
+        addItem(pRange, textRangeY, 2, 0);
+        addItem(pRange, spinTrainIconRangeY, 3, 0);
 
         JPanel pControl = new JPanel();
         pControl.setLayout(new GridBagLayout());
@@ -141,6 +153,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         getContentPane().add(pSouth);
         getContentPane().add(pEast);
         getContentPane().add(pWest);
+        getContentPane().add(pRange);
         getContentPane().add(pControl);
 
         // add help menu to window
@@ -164,6 +177,9 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         addSpinnerChangeListerner(spinTrainIconNorthY);
         addSpinnerChangeListerner(spinTrainIconSouthX);
         addSpinnerChangeListerner(spinTrainIconSouthY);
+        
+        addSpinnerChangeListerner(spinTrainIconRangeX);
+        addSpinnerChangeListerner(spinTrainIconRangeY);
 
         initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight400));
 
@@ -185,7 +201,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         }
         if (ae.getSource() == applyButton) {
             // update all routes?
-            int value = JOptionPane.showConfirmDialog(null,
+            int value = JOptionPane.showConfirmDialog(this,
                     MessageFormat.format(Bundle.getMessage("UpdateTrainIcon"), new Object[]{l.getName()}),
                     Bundle.getMessage("DoYouWantAllRoutes"),
                     JOptionPane.YES_NO_OPTION);
@@ -195,7 +211,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
             }
         }
         if (ae.getSource() == saveButton) {
-            int value = JOptionPane.showConfirmDialog(null,
+            int value = JOptionPane.showConfirmDialog(this,
                     MessageFormat.format(Bundle.getMessage("UpdateTrainIcon"), new Object[]{l.getName()}),
                     Bundle.getMessage("UpdateDefaults"),
                     JOptionPane.YES_NO_OPTION);
@@ -271,6 +287,9 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         spinTrainIconNorthY.setValue(l.getTrainIconNorth().y);
         spinTrainIconSouthX.setValue(l.getTrainIconSouth().x);
         spinTrainIconSouthY.setValue(l.getTrainIconSouth().y);
+        
+        spinTrainIconRangeX.setValue(l.getTrainIconRangeX());
+        spinTrainIconRangeY.setValue(l.getTrainIconRangeY());
     }
 
     private void spinnersEnable(boolean enable) {
@@ -282,6 +301,9 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         spinTrainIconNorthY.setEnabled(enable);
         spinTrainIconSouthX.setEnabled(enable);
         spinTrainIconSouthY.setEnabled(enable);
+        
+        spinTrainIconRangeX.setEnabled(enable);
+        spinTrainIconRangeY.setEnabled(enable);
     }
 
     private void saveSpinnerValues(Location l) {
@@ -290,6 +312,9 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         l.setTrainIconWest(new Point((Integer) spinTrainIconWestX.getValue(), (Integer) spinTrainIconWestY.getValue()));
         l.setTrainIconNorth(new Point((Integer) spinTrainIconNorthX.getValue(), (Integer) spinTrainIconNorthY.getValue()));
         l.setTrainIconSouth(new Point((Integer) spinTrainIconSouthX.getValue(), (Integer) spinTrainIconSouthY.getValue()));
+        
+        l.setTrainIconRangeX((Integer)spinTrainIconRangeX.getValue());
+        l.setTrainIconRangeY((Integer)spinTrainIconRangeY.getValue());
     }
 
     // place test markers on panel
@@ -298,7 +323,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         if (locationBox.getSelectedItem() == null) {
             return;
         }
-        Editor editor = PanelMenu.instance().getEditorByName(Setup.getPanelName());
+        Editor editor = InstanceManager.getDefault(PanelMenu.class).getEditorByName(Setup.getPanelName());
         if (editor == null) {
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LoadPanel"), new Object[]{Setup.getPanelName()}),
                     Bundle.getMessage("PanelNotFound"), JOptionPane.ERROR_MESSAGE);
@@ -309,8 +334,8 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
             // East icon
             if ((Setup.getTrainDirection() & Setup.EAST) == Setup.EAST) {
                 _tIonEast = editor.addTrainIcon(Bundle.getMessage("East"));
-                _tIonEast.getTooltip().setText(l.getName());
-                _tIonEast.getTooltip().setBackgroundColor(Color.white);
+                _tIonEast.getToolTip().setText(l.getName());
+                _tIonEast.getToolTip().setBackgroundColor(Color.white);
                 _tIonEast.setLocoColor(Setup.getTrainIconColorEast());
                 _tIonEast.setLocation((Integer) spinTrainIconEastX.getValue(), (Integer) spinTrainIconEastY.getValue());
                 addIconListener(_tIonEast);
@@ -318,8 +343,8 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
             // West icon
             if ((Setup.getTrainDirection() & Setup.WEST) == Setup.WEST) {
                 _tIonWest = editor.addTrainIcon(Bundle.getMessage("West"));
-                _tIonWest.getTooltip().setText(l.getName());
-                _tIonWest.getTooltip().setBackgroundColor(Color.white);
+                _tIonWest.getToolTip().setText(l.getName());
+                _tIonWest.getToolTip().setBackgroundColor(Color.white);
                 _tIonWest.setLocoColor(Setup.getTrainIconColorWest());
                 _tIonWest.setLocation((Integer) spinTrainIconWestX.getValue(), (Integer) spinTrainIconWestY.getValue());
                 addIconListener(_tIonWest);
@@ -327,8 +352,8 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
             // North icon
             if ((Setup.getTrainDirection() & Setup.NORTH) == Setup.NORTH) {
                 _tIonNorth = editor.addTrainIcon(Bundle.getMessage("North"));
-                _tIonNorth.getTooltip().setText(l.getName());
-                _tIonNorth.getTooltip().setBackgroundColor(Color.white);
+                _tIonNorth.getToolTip().setText(l.getName());
+                _tIonNorth.getToolTip().setBackgroundColor(Color.white);
                 _tIonNorth.setLocoColor(Setup.getTrainIconColorNorth());
                 _tIonNorth.setLocation((Integer) spinTrainIconNorthX.getValue(), (Integer) spinTrainIconNorthY.getValue());
                 addIconListener(_tIonNorth);
@@ -336,8 +361,8 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
             // South icon
             if ((Setup.getTrainDirection() & Setup.SOUTH) == Setup.SOUTH) {
                 _tIonSouth = editor.addTrainIcon(Bundle.getMessage("South"));
-                _tIonSouth.getTooltip().setText(l.getName());
-                _tIonSouth.getTooltip().setBackgroundColor(Color.white);
+                _tIonSouth.getToolTip().setText(l.getName());
+                _tIonSouth.getToolTip().setBackgroundColor(Color.white);
                 _tIonSouth.setLocoColor(Setup.getTrainIconColorSouth());
                 _tIonSouth.setLocation((Integer) spinTrainIconSouthX.getValue(), (Integer) spinTrainIconSouthY.getValue());
                 addIconListener(_tIonSouth);
@@ -346,7 +371,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     }
 
     public void updateTrainIconCoordinates(Location l) {
-        for (Route route : RouteManager.instance().getRoutesByIdList()) {
+        for (Route route : InstanceManager.getDefault(RouteManager.class).getRoutesByIdList()) {
             for (RouteLocation rl : route.getLocationsBySequenceList()) {
                 if (rl.getName().equals(l.getName())) {
                     log.debug("Updating train icon for route location {} in route {}", rl.getName(), route.getName());
@@ -422,5 +447,5 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(SetTrainIconPositionFrame.class.getName());
+            .getLogger(SetTrainIconPositionFrame.class);
 }

@@ -24,7 +24,7 @@ import jmri.util.JmriJFrame;
  * This Action creates a JmriJFrame displaying the thread output log from the
  * {@link RunJythonScript} class.
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  * @author Matthew Harris Copyright (C) 2010
  */
 public class JythonWindow extends AbstractAction {
@@ -157,5 +157,3 @@ public class JythonWindow extends AbstractAction {
     }
 
 }
-
-/* @(#)JythonWindow.java */

@@ -15,11 +15,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2011
  * @author Gregory Madsen Copyright (C) 2012
- * @version $Revision$
  */
 public class BackupFilesAction extends AbstractAction {
 
-    private final static Logger log = LoggerFactory.getLogger(BackupFilesAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BackupFilesAction.class);
 
     public BackupFilesAction(String s) {
         super(s);
@@ -44,7 +43,7 @@ public class BackupFilesAction extends AbstractAction {
 
         // get directory to write to
         JFileChooser fc = new JFileChooser(backup.getBackupRoot());
-        fc.addChoosableFileFilter(new fileFilter());
+        fc.addChoosableFileFilter(new FileFilter());
 
         File fs = new File(backup.suggestBackupSetName());
         fc.setSelectedFile(fs);
@@ -66,7 +65,7 @@ public class BackupFilesAction extends AbstractAction {
         }
     }
 
-    private static class fileFilter extends javax.swing.filechooser.FileFilter {
+    private static class FileFilter extends javax.swing.filechooser.FileFilter {
 
         @Override
         public boolean accept(File f) {
@@ -74,12 +73,7 @@ public class BackupFilesAction extends AbstractAction {
                 return true;
             }
             String name = f.getName();
-            if (name.matches(".*\\.xml")) // NOI18N
-            {
-                return true;
-            } else {
-                return false;
-            }
+            return name.matches(".*\\.xml"); // NOI18N
         }
 
         @Override
@@ -90,4 +84,4 @@ public class BackupFilesAction extends AbstractAction {
 
 }
 
-/* @(#)BackupFilesAction.java */
+

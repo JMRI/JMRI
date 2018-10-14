@@ -1,57 +1,37 @@
 package jmri.jmrit.display.layoutEditor;
 
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test simple functioning of BlockContentsIcon
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
-public class BlockContentsIconTest extends TestCase {
+public class BlockContentsIconTest {
 
+    @Test
     public void testCtor() {
-        BlockContentsIcon  t = new BlockContentsIcon("test",new LayoutEditor());
-        Assert.assertNotNull("exists", t );
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        BlockContentsIcon t = new BlockContentsIcon("test", new LayoutEditor());
+        Assert.assertNotNull("exists", t);
+        JUnitUtil.dispose(t.getEditor());
     }
 
     // from here down is testing infrastructure
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
-        // reset the instance manager.
-        JUnitUtil.resetInstanceManager();
-    }
- 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+    @Before
+    public void setUp() throws Exception {
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
     }
 
-    public BlockContentsIconTest(String s) {
-        super(s);
+    @After
+    public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
     }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", BlockContentsIconTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(BlockContentsIconTest.class);
-        return suite;
-    }
-
 }

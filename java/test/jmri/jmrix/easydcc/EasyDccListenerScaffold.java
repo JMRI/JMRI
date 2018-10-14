@@ -1,11 +1,9 @@
 package jmri.jmrix.easydcc;
 
-
 /**
  * Stands in for the EasyDccTrafficController class
  *
  * @author	Bob Jacobsen
- * @version
  */
 class EasyDccListenerScaffold implements EasyDccListener {
 
@@ -14,10 +12,12 @@ class EasyDccListenerScaffold implements EasyDccListener {
         rcvdMsg = null;
     }
 
+    @Override
     public void message(EasyDccMessage m) {
         rcvdMsg = m;
     }
 
+    @Override
     public void reply(EasyDccReply r) {
         rcvdReply = r;
     }

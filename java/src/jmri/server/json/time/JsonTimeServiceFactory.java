@@ -2,15 +2,15 @@ package jmri.server.json.time;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JsonConnection;
-import jmri.server.json.JsonHttpService;
-import jmri.server.json.JsonSocketService;
 import jmri.spi.JsonServiceFactory;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Randall Wood
  */
-public class JsonTimeServiceFactory implements JsonServiceFactory {
+@ServiceProvider(service = JsonServiceFactory.class)
+public class JsonTimeServiceFactory implements JsonServiceFactory<JsonTimeHttpService, JsonTimeSocketService> {
 
     public final static String TIME = "time";
 

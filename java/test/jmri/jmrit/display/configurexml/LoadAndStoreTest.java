@@ -1,7 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
-import jmri.configurexml.LoadAndStoreTestBase;
-import junit.framework.Test;
+import java.io.File;
+import org.junit.runners.Parameterized;
 
 /**
  * Test that configuration files can be read and then stored again consistently.
@@ -19,20 +19,12 @@ import junit.framework.Test;
  */
 public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
 
-    // from here down is testing infrastructure
-    // Note setup() and teardown are provided from base class, and 
-    // need to be invoked if you add methods here
-    public LoadAndStoreTest(String s) {
-        super(s);
+    @Parameterized.Parameters(name = "{0} (pass={1})")
+    public static Iterable<Object[]> data() {
+        return getFiles(new File("java/test/jmri/jmrit/display/configurexml"), false, true);
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LoadAndStoreTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    public static Test suite() {
-        return LoadAndStoreTestBase.makeSuite("java/test/jmri/jmrit/display/configurexml/");
+    public LoadAndStoreTest(File file, boolean pass) {
+        super(file, pass, SaveType.Config, false);
     }
 }

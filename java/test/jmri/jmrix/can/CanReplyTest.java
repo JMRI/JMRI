@@ -1,16 +1,21 @@
 package jmri.jmrix.can;
 
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.can.CanReply class
  *
  * @author Bob Jacobsen Copyright 2008, 2009
  */
-public class CanReplyTest extends CanMRCommonTest {
+public class CanReplyTest extends CanMRCommonTestBase {
 
+    private CanReply msg = null;
+
+    @Test
     public void testCopyCtor() {
         CanReply m1 = new CanReply();
         m1.setExtended(true);
@@ -21,6 +26,7 @@ public class CanReplyTest extends CanMRCommonTest {
         Assert.assertTrue("header", m2.getHeader() == 0x12);
     }
 
+    @Test
     public void testEqualsOp() {
         CanReply m1 = new CanReply();
         m1.setExtended(true);
@@ -40,6 +46,7 @@ public class CanReplyTest extends CanMRCommonTest {
         Assert.assertTrue("not equals diff Ext", !m1.equals(m3));
     }
 
+    @Test
     public void testEqualsMessage() {
         CanReply m1 = new CanReply();
         m1.setExtended(true);
@@ -58,6 +65,7 @@ public class CanReplyTest extends CanMRCommonTest {
         Assert.assertTrue("not equals diff Ext", !m1.equals(m3));
     }
 
+    @Test
     public void testEqualsData() {
         CanReply m1 = new CanReply();
         m1.setNumDataElements(2);
@@ -80,79 +88,88 @@ public class CanReplyTest extends CanMRCommonTest {
         Assert.assertTrue("not equals diff Ext", !m1.equals(m3));
     }
 
+    @Test
     public void testHeaderAccessors() {
-        CanReply m = new CanReply();
-
-        m.setHeader(0x555);
-        Assert.assertTrue("Header 0x555", m.getHeader() == 0x555);
+        msg.setHeader(0x555);
+        Assert.assertTrue("Header 0x555", msg.getHeader() == 0x555);
 
     }
 
+    @Test
     public void testRtrBit() {
-        CanReply m = new CanReply();
-        Assert.assertTrue("not rtr at start", !m.isRtr());
-        m.setRtr(true);
-        Assert.assertTrue("rtr set", m.isRtr());
-        m.setRtr(false);
-        Assert.assertTrue("rtr unset", !m.isRtr());
+        Assert.assertTrue("not rtr at start", !msg.isRtr());
+        msg.setRtr(true);
+        Assert.assertTrue("rtr set", msg.isRtr());
+        msg.setRtr(false);
+        Assert.assertTrue("rtr unset", !msg.isRtr());
     }
 
+    @Test
     public void testStdExt() {
-        CanReply m = new CanReply();
-        Assert.assertTrue("std at start", !m.isExtended());
-        m.setExtended(true);
-        Assert.assertTrue("extended", m.isExtended());
-        m.setExtended(false);
-        Assert.assertTrue("std at end", !m.isExtended());
+        Assert.assertTrue("std at start", !msg.isExtended());
+        msg.setExtended(true);
+        Assert.assertTrue("extended", msg.isExtended());
+        msg.setExtended(false);
+        Assert.assertTrue("std at end", !msg.isExtended());
     }
 
+    @Test
     public void testDataElements() {
-        CanReply m = new CanReply();
 
-        m.setNumDataElements(0);
-        Assert.assertTrue("0 Elements", m.getNumDataElements() == 0);
+        msg.setNumDataElements(0);
+        Assert.assertTrue("0 Elements", msg.getNumDataElements() == 0);
 
-        m.setNumDataElements(1);
-        Assert.assertTrue("1 Elements", m.getNumDataElements() == 1);
+        msg.setNumDataElements(1);
+        Assert.assertTrue("1 Elements", msg.getNumDataElements() == 1);
 
-        m.setNumDataElements(8);
-        Assert.assertTrue("8 Elements", m.getNumDataElements() == 8);
+        msg.setNumDataElements(8);
+        Assert.assertTrue("8 Elements", msg.getNumDataElements() == 8);
 
+        msg.setNumDataElements(3);
+        msg.setElement(0, 0x81);
+        msg.setElement(1, 0x02);
+        msg.setElement(2, 0x83);
+        Assert.assertTrue("3 Elements", msg.getNumDataElements() == 3);
+        Assert.assertTrue("3 Element 0", msg.getElement(0) == 0x81);
+        Assert.assertTrue("3 Element 1", msg.getElement(1) == 0x02);
+        Assert.assertTrue("3 Element 2", msg.getElement(2) == 0x83);
+    }
+
+    @Test
+    @Override
+    public void testToString() {
+        CanMessage m = new CanMessage(0x12);
         m.setNumDataElements(3);
         m.setElement(0, 0x81);
         m.setElement(1, 0x02);
         m.setElement(2, 0x83);
-        Assert.assertTrue("3 Elements", m.getNumDataElements() == 3);
-        Assert.assertTrue("3 Element 0", m.getElement(0) == 0x81);
-        Assert.assertTrue("3 Element 1", m.getElement(1) == 0x02);
-        Assert.assertTrue("3 Element 2", m.getElement(2) == 0x83);
+        Assert.assertEquals("string representation", "[12] 81 02 83",m.toString());
     }
 
-    // from here down is testing infrastructure
-    public CanReplyTest(String s) {
-        super(s);
+    @Test
+    @Override
+    public void testToMonitorString() {
+        CanMessage m = new CanMessage(0x12);
+        m.setNumDataElements(3);
+        m.setElement(0, 0x81);
+        m.setElement(1, 0x02);
+        m.setElement(2, 0x83);
+        Assert.assertEquals("string representation", "(12) 81 02 83",m.toMonitorString());
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        apps.tests.AllTest.initLogging();
-        String[] testCaseName = {"-noloading", CanReplyTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite(CanReplyTest.class);
-        return suite;
-    }
 
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        m = msg = new CanReply();
     }
 
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @Override
+    @After
+    public void tearDown() {
+	m = msg = null;
+        JUnitUtil.tearDown();
     }
 }

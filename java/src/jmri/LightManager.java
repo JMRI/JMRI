@@ -1,7 +1,6 @@
 package jmri;
 
 import java.util.List;
-
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -13,7 +12,6 @@ import javax.annotation.Nonnull;
  * instead of being system-specific.
  * <P>
  * Based on SignalHeadManager.java
- *
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -27,7 +25,7 @@ import javax.annotation.Nonnull;
  * <P>
  * @author Dave Duchamp Copyright (C) 2004
  */
-public interface LightManager extends Manager {
+public interface LightManager extends ProvidingManager<Light> {
 
     /**
      * Locate via user name, then system name if needed. If that fails, create a
@@ -39,9 +37,15 @@ public interface LightManager extends Manager {
      *             system name
      * @return Never null under normal circumstances
      */
-    public @Nonnull Light provideLight(@Nonnull String name);
+    @Nonnull
+    public Light provideLight(@Nonnull String name);
+
+    @Override
+    /** {@inheritDoc} */
+    default public Light provide(@Nonnull String name) throws IllegalArgumentException { return provideLight(name); }
 
     // to free resources when no longer used
+    @Override
     public void dispose();
 
     /**
@@ -53,11 +57,12 @@ public interface LightManager extends Manager {
      * @return Never null
      * @throws IllegalArgumentException if Light doesn't already exist and the
      *                                  manager cannot create the Light due to
-     *                                  e.g. an illegal name or name that can't
-     *                                  be parsed.
+     *                                  an illegal name or name that can't be
+     *                                  parsed.
      */
     @CheckReturnValue
-    public @CheckForNull Light getLight(@Nonnull String name);
+    @CheckForNull
+    public Light getLight(@Nonnull String name);
 
     /**
      * Return an instance with the specified system and user names. Note that
@@ -81,42 +86,47 @@ public interface LightManager extends Manager {
      * except to issue warnings. This will mostly happen if you're creating
      * Lights when you should be looking them up.
      *
+     * @param systemName the desired system name
+     * @param userName   the desired user name
      * @return requested Light object (never null)
      * @throws IllegalArgumentException if cannot create the Light due to e.g.
      *                                  an illegal name or name that can't be
      *                                  parsed.
      */
-    public @Nonnull Light newLight(@Nonnull String systemName, @CheckForNull String userName);
+    @Nonnull
+    public Light newLight(@Nonnull String systemName, @CheckForNull String userName);
 
     /**
-     * Locate a Light by its user name
+     * Locate a Light by its user name.
+     *
+     * @param s the user name
+     * @return the light or null if not found
      */
     @CheckReturnValue
-    public @CheckForNull Light getByUserName(@Nonnull String s);
+    @CheckForNull
+    public Light getByUserName(@Nonnull String s);
 
     /**
-     * Locate a Light by its system name
+     * Locate a Light by its system name.
+     *
+     * @param s the system name
+     * @return the light or null if not found
      */
     @CheckReturnValue
-    public @CheckForNull Light getBySystemName(@Nonnull String s);
+    @CheckForNull
+    public Light getBySystemName(@Nonnull String s);
 
     /**
-     * Validate system name format returns 'true' if system name has a valid
-     * format, else returns 'false'
-     */
-    @CheckReturnValue
-    public boolean validSystemNameFormat(@Nonnull String systemName);
-
-    /**
-     * Validate system name for the current hardware configuration returns
-     * 'true' if system name has a valid meaning in current configuration, else
-     * returns 'false'
+     * Test if parameter is a valid system name for current configuration.
+     *
+     * @param systemName the system name
+     * @return true if valid; false otherwise
      */
     @CheckReturnValue
     public boolean validSystemNameConfig(@Nonnull String systemName);
 
     /**
-     * Normalize the system name
+     * Normalize the system name.
      * <P>
      * This routine is used to ensure that each system name is uniquely linked
      * to one C/MRI bit, by removing extra zeros inserted by the user.
@@ -125,12 +135,17 @@ public interface LightManager extends Manager {
      * name. If a system implementation has names that could be normalized, the
      * system-specific Light Manager should override this routine and supply a
      * normalized system name.
+     *
+     * @param systemName the system name to normalize
+     * @return the normalized system name
      */
     @CheckReturnValue
-    public @Nonnull String normalizeSystemName(@Nonnull String systemName);
+    @Nonnull
+    @Override
+    public String normalizeSystemName(@Nonnull String systemName);
 
     /**
-     * Convert the system name to a normalized alternate name
+     * Convert the system name to a normalized alternate name.
      * <P>
      * This routine is to allow testing to ensure that two Lights with alternate
      * names that refer to the same output bit are not created.
@@ -138,15 +153,13 @@ public interface LightManager extends Manager {
      * This routine is implemented in AbstractLightManager to return "". If a
      * system implementation has alternate names, the system specific Light
      * Manager should override this routine and supply the alternate name.
+     *
+     * @param systemName the system name to convert
+     * @return an alternate name
      */
     @CheckReturnValue
-    public @Nonnull String convertSystemNameToAlternate(@Nonnull String systemName);
-
-    /**
-     * Get a list of all Light system names.
-     */
-    @CheckReturnValue
-    public @Nonnull List<String> getSystemNameList();
+    @Nonnull
+    public String convertSystemNameToAlternate(@Nonnull String systemName);
 
     /**
      * Activate the control mechanism for each Light controlled by this
@@ -157,15 +170,20 @@ public interface LightManager extends Manager {
     public void activateAllLights();
 
     /**
-     * Returns 'true' if the System can potentially support variable Lights
+     * Test if system in the given name can support a variable light.
+     *
+     * @param systemName the system name
+     * @return true if variable lights are supported; false otherwise
      */
     @CheckReturnValue
     public boolean supportsVariableLights(@Nonnull String systemName);
 
     /**
-     * A method that determines if it is possible to add a range of lights in
-     * numerical order eg 11 thru 18, primarily used to show/not show the add
-     * range box in the add Light window
+     * Test if possible to generate multiple lights given a numerical range to
+     * complete the system name.
+     *
+     * @param systemName the system name
+     * @return true if multiple lights can be created at once; false otherwise
      */
     @CheckReturnValue
     public boolean allowMultipleAdditions(@Nonnull String systemName);

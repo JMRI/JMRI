@@ -1,76 +1,103 @@
 package jmri.util;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        BundleTest.class,
+        FileUtilTest.class,
+        JUnitAppenderTest.class,
+        IntlUtilitiesTest.class,
+        Log4JUtilTest.class,
+        OrderedHashtableTest.class,
+        PreferNumericComparatorTest.class,
+        StringUtilTest.class,
+        ThreadingUtilTest.class,
+        ThreadingDemoAndTest.class,
+        I18NTest.class,
+        AlphanumComparatorTest.class,
+        ColorUtilTest.class,
+        MathUtilTest.class,
+        SwingTestCaseTest.class,
+        
+        jmri.util.docbook.PackageTest.class,
+        jmri.util.exceptionhandler.PackageTest.class,
+        jmri.util.jdom.PackageTest.class,
+        jmri.util.junit.PackageTest.class,
+        jmri.util.swing.PackageTest.class,
+        jmri.util.zeroconf.PackageTest.class,
+
+        jmri.util.prefs.PackageTest.class,
+        jmri.util.javamail.PackageTest.class,
+        jmri.util.davidflanagan.PackageTest.class,
+        jmri.util.datatransfer.PackageTest.class,
+        jmri.util.com.PackageTest.class,
+        jmri.util.table.PackageTest.class,
+        jmri.util.iharder.PackageTest.class,
+        jmri.util.usb.PackageTest.class,
+        jmri.util.xml.PackageTest.class,
+        
+        WaitHandlerTest.class,
+        PropertyChangeEventQueueTest.class,
+        DateUtilTest.class,
+        BareBonesBrowserLaunchTest.class,
+        ConnectionNameFromSystemNameTest.class,
+        DnDStringImportHandlerTest.class,
+        DnDTableExportHandlerTest.class,
+        DnDTableImportExportHandlerTest.class,
+        FileUtilSupportTest.class,
+        FontUtilTest.class,
+        GetArgumentListTest.class,
+        GetClassPathTest.class,
+        GetJavaPropertyTest.class,
+        HelpUtilTest.class,
+        JTextPaneAppenderTest.class,
+        JmriInsetsTest.class,
+        JmriJFrameTest.class,
+        JmriLocalEntityResolverTest.class,
+        JmriNullEntityResolverTest.class,
+        LocoAddressComparatorTest.class,
+        MouseInputAdapterInstallerTest.class,
+        NamedBeanComparatorTest.class,
+        NonNullArrayListTest.class,
+        NoArchiveFileFilterTest.class,
+        OrderedPropertiesTest.class,
+        PhysicalLocationPanelTest.class,
+        PhysicalLocationTest.class,
+        PortNameMapperTest.class,
+        ResizableImagePanelTest.class,
+        RuntimeUtilTest.class,
+        SerialUtilTest.class,
+        SocketUtilTest.class,
+        SystemNameComparatorTest.class,
+        SystemTypeTest.class,
+        XmlFilenameFilterTest.class,
+        JmriJFrameActionTest.class,
+        JLogoutputFrameTest.class,
+        WindowMenuTest.class,
+        FileChooserFilterTest.class,
+        JTreeWithPopupTest.class,
+        MenuScrollerTest.class,
+        ExternalLinkContentViewerUITest.class,
+        PipeListenerTest.class,
+        IterableEnumerationTest.class,
+        BusyGlassPaneTest.class,
+        MultipartMessageTest.class,
+        NamedBeanExpectedStateTest.class,
+        NamedBeanExpectedValueTest.class,
+        QuickPromptUtilTest.class,
+        UnzipFileClassTest.class,
+        AbstractFrameActionTest.class,
+
+        // deliberately at end
+        jmri.util.Log4JErrorIsErrorTest.class,
+})
 
 /**
  * Invokes complete set of tests in the jmri.util tree
  *
  * @author	Bob Jacobsen Copyright 2003
  */
-public class PackageTest extends TestCase {
-
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.util.PackageTest");   // no tests in this class itself
-
-        suite.addTest(BundleTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(FileUtilTest.class));
-        suite.addTest(JUnitAppenderTest.suite());
-        suite.addTest(IntlUtilitiesTest.suite());
-        suite.addTest(Log4JUtilTest.suite());
-        suite.addTest(NamedBeanHandleTest.suite());
-        suite.addTest(OrderedHashtableTest.suite());
-        suite.addTest(PreferNumericComparatorTest.suite());
-        suite.addTest(StringUtilTest.suite());
-        suite.addTest(ThreadingUtilTest.suite());
-        suite.addTest(I18NTest.suite());
-        suite.addTest(ColorUtilTest.suite());
-
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(SwingTestCaseTest.suite());
-        }
-
-        suite.addTest(jmri.util.docbook.PackageTest.suite());
-        suite.addTest(jmri.util.exceptionhandler.PackageTest.suite());
-        suite.addTest(jmri.util.jdom.PackageTest.suite());
-
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(jmri.util.swing.PackageTest.suite());
-        }
-
-        suite.addTest(jmri.util.WaitHandlerTest.suite());
-        suite.addTest(jmri.util.zeroconf.PackageTest.suite());
-        suite.addTest(jmri.util.DateUtilTest.suite());
-        suite.addTest(jmri.util.prefs.PackageTest.suite());
-
-        // deliberately at end
-        suite.addTest(jmri.util.Log4JErrorIsErrorTest.suite());
-        
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-    }
-
-    @Override
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
-    }
-
+public class PackageTest  {
 }

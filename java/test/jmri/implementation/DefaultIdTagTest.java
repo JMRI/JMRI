@@ -4,33 +4,38 @@ import java.util.Calendar;
 import java.util.Date;
 import jmri.IdTag;
 import jmri.Reporter;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the DefaultIdTag class
  *
  * @author Matthew Harris Copyright (C) 2011
  */
-public class DefaultIdTagTest extends TestCase {
+public class DefaultIdTagTest {
 
+    @Test
     public void testCreateIdTag() {
         IdTag r = new DefaultIdTag("ID0413276BC1");
         Assert.assertNotNull("IdTag not null", r);
     }
 
+    @Test
     public void testGetIdTagUserName() {
         IdTag r = new DefaultIdTag("ID0413276BC1", "Test Tag");
         Assert.assertEquals("IdTag user name is 'Test Tag'", "Test Tag", r.getUserName());
     }
 
+    @Test
     public void testGetIdTagTagID() {
         IdTag r = new DefaultIdTag("ID0413276BC1");
         Assert.assertEquals("IdTag TagID is 0413276BC1", "0413276BC1", r.getTagID());
     }
 
+    @Test
     public void testIdTagToString() {
         IdTag r = new DefaultIdTag("ID0413276BC1");
         Assert.assertEquals("IdTag toString is 0413276BC1", "0413276BC1", r.toString());
@@ -39,6 +44,7 @@ public class DefaultIdTagTest extends TestCase {
         Assert.assertEquals("IdTag toString is 'Test Tag'", "Test Tag", r.toString());
     }
 
+    @Test
     public void testNotYetSeen() {
         IdTag r = new DefaultIdTag("ID0413276BC1");
         Assert.assertNull("At creation, Reporter where seen is null", r.getWhereLastSeen());
@@ -51,13 +57,16 @@ public class DefaultIdTagTest extends TestCase {
         Assert.assertEquals("After setWhereLastSeen(null), IdTag status is UNSEEN", IdTag.UNSEEN, r.getState());
     }
 
+    @Test
     public void testHasBeenSeen() throws InterruptedException {
         IdTag r = new DefaultIdTag("ID0413276BC1");
         Reporter rep = new AbstractReporter("IR1") {
+            @Override
             public int getState() {
                 return state;
             }
 
+            @Override
             public void setState(int s) {
                 state = s;
             }
@@ -83,40 +92,19 @@ public class DefaultIdTagTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public DefaultIdTagTest(String s) {
-        super(s);
-    }
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        super.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+    @Before
+    public void setUp() throws Exception {
+        JUnitUtil.setUp();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.JUnitUtil.initIdTagManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {DefaultIdTagTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DefaultIdTagTest.class);
-        return suite;
+    @After
+    public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
     }
 
 }

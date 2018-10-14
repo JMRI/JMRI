@@ -1,13 +1,11 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="iso-8859-1"?>
 <!-- Copyright (C) Bob Jacobsen 2007 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id$ -->
-
 
 <!-- This XSLT transform is used when a JMRI decoder definition -->
 <!-- file is displayed by a web browser -->
 
-<!-- This file is part of JMRI.  Copyright 2007-2016.                       -->
+<!-- This file is part of JMRI.  Copyright 2007-2018.                       -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -43,14 +41,14 @@
 <html xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" xsl:version="1.0">
   <head>
   </head>
-  <body style="font-family:Arial,helvetica,sans-serif;font-size:12pt;         background-color:#EEEEEE">
+  <body style="font-family:Arial,helvetica,sans-serif;font-size:12pt;background-color:#EEEEEE">
 <!-- display family info -->
     <xsl:for-each select="decoder/family">
     Family: <xsl:value-of select="@name"/><br/>
     Manufacturer: <xsl:value-of select="@mfg"/>
     </xsl:for-each>
 <!-- display old-style version comments -->
-    <p><div style="background-color:gray;color:white;padding:4px"><span style="font-weight:bold;color:white">
+    <div style="background-color:gray;color:white;padding:4px"><span style="font-weight:bold;color:white">
     Definition versions:</span>
       <xsl:for-each select="comment()">
         <br/><xsl:value-of select="."/>
@@ -80,14 +78,13 @@
         </span>
     </xsl:for-each>
 
-    </div>    
-    </p>
+    </div>
 
 
 <p>
 JMRI software, including this file, is distributed under license. That
 license defines the terms under which you can use, modify and/or distribute
-it.  Please see our 
+it. Please see our
 <a href="http://jmri.org/Copyright.html">licensing page</a> 
 for more information.
 </p>
@@ -115,7 +112,7 @@ for more information.
         Form factor: "<xsl:value-of select="@formFactor"/>" (manufacturer's labeling)
         <br/>
 
-        Conenctor: "<xsl:value-of select="@connector"/>"
+        Connector: "<xsl:value-of select="@connector"/>"
         <br/>
 
         Length: <xsl:value-of select="size[last()]/@length"/> <xsl:value-of select="size[last()]/@units"/>
@@ -156,14 +153,14 @@ for more information.
 </xsl:for-each> <!-- end processing each model element-->
     
 
-<HR/>
+<hr/>
 This page was produced by <a href="http://jmri.org">JMRI</a>.
-<P/>Copyright &#169; <xsl:value-of select="$JmriCopyrightYear" /> JMRI Community. 
-<P/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
-<P/><A href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</A>
-<P/>Site hosted by: <BR/>
-<A href="http://sourceforge.net"><IMG src="http://sourceforge.net/sflogo.php?group_id=26788&amp;type=1" width="88" height="31" border="0" alt="SourceForge Logo"/> </A> 
-
+<p/>Copyright &#169; <xsl:value-of select="$JmriCopyrightYear" /> JMRI Community.
+<p/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
+<p/><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
+<p/>Site hosted by: <br/>
+    <a href="http://www.tagadab.com/">
+    <img src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab logo"/></a>
   </body>
 </html>
 

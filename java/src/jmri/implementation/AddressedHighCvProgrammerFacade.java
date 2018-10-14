@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**
+     * @param prog       the programmer associated with this facade
      * @param top        CVs above this use the indirect method
      * @param addrCVhigh CV to which the high part of address is to be written
      * @param addrCVlow  CV to which the low part of address is to be written
@@ -36,29 +37,26 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
     public AddressedHighCvProgrammerFacade(Programmer prog, String top, String addrCVhigh, String addrCVlow, String valueCV, String modulo) {
         super(prog);
         this.top = Integer.parseInt(top);
-        this.addrCVhigh = Integer.parseInt(addrCVhigh);
-        this.addrCVlow = Integer.parseInt(addrCVlow);
-        this.valueCV = Integer.parseInt(valueCV);
+        this.addrCVhigh = addrCVhigh;
+        this.addrCVlow = addrCVlow;
+        this.valueCV = valueCV;
         this.modulo = Integer.parseInt(modulo);
+        _prog = prog;
         log.debug("Created with " + prog + ", " + this.top + ", " + this.addrCVhigh + ", " + this.addrCVlow + ", " + this.valueCV + ", " + this.modulo);
     }
 
     int top;
-    int addrCVhigh;
-    int addrCVlow;
-    int valueCV;
+    String addrCVhigh;
+    String addrCVlow;
+    String valueCV;
     int modulo;
+    Programmer _prog;
 
     // members for handling the programmer interface
-    int _val;	// remember the value being read/written for confirmative reply
-    int _cv;	// remember the cv being read/written
+    int _val; // remember the value being read/written for confirmative reply
+    int _cv; // remember the cv being read/written
 
     // programming interface
-    @Override
-    public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        writeCV("" + CV, val, p);
-    }
-
     @Override
     public void writeCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         log.debug("start writeCV");
@@ -67,22 +65,12 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
         useProgrammer(p);
         if (prog.getCanWrite(CV) || _cv <= top) {
             state = ProgState.PROGRAMMING;
-            prog.writeCV(_cv, val, this);
+            prog.writeCV(CV, val, this);
         } else {
             // write index first
             state = ProgState.WRITELOWWRITE;
             prog.writeCV(addrCVhigh, _cv / modulo, this);
         }
-    }
-
-    @Override
-    public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        readCV(CV, p);
-    }
-
-    @Override
-    public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-        readCV("" + CV, p);
     }
 
     @Override
@@ -92,7 +80,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
         useProgrammer(p);
         if (prog.getCanRead(CV) || _cv <= top) {
             state = ProgState.PROGRAMMING;
-            prog.readCV(_cv, this);
+            prog.readCV(CV, this);
         } else {
             // write index first
             state = ProgState.WRITELOWREAD;
@@ -106,9 +94,7 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
     protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
-            if (log.isInfoEnabled()) {
-                log.info("programmer already in use by " + _usingProgrammer);
-            }
+            log.info("programmer already in use by {}", _usingProgrammer);
             throw new jmri.ProgrammerException("programmer in use");
         } else {
             _usingProgrammer = p;
@@ -117,20 +103,56 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
     }
 
     enum ProgState {
-
-        PROGRAMMING, WRITELOWREAD, WRITELOWWRITE, FINISHREAD, FINISHWRITE, NOTPROGRAMMING
+        /**
+         * A pass-through operation, waiting reply, when done the entire
+         * operation is done
+         */
+        PROGRAMMING,
+        /**
+         * Wrote 1st index on a read operation, waiting for reply
+         */
+        WRITELOWREAD,
+        /**
+         * Wrote 1st index on a write operation, waiting for reply
+         */
+        WRITELOWWRITE,
+        /**
+         * Wrote 2nd index on a read operation, waiting for reply
+         */
+        FINISHREAD,
+        /**
+         * Wrote 2nd index on a write operation, waiting for reply
+         */
+        FINISHWRITE,
+        /**
+         * nothing happening, no reply expected
+         */
+        NOTPROGRAMMING
     }
     ProgState state = ProgState.NOTPROGRAMMING;
 
     // get notified of the final result
     // Note this assumes that there's only one phase to the operation
+    @Override
     public void programmingOpReply(int value, int status) {
         if (log.isDebugEnabled()) {
             log.debug("notifyProgListenerEnd value " + value + " status " + status);
         }
 
+        if (status != OK) {
+            // pass abort up
+            log.debug("Reset and pass abort up");
+            jmri.ProgListener temp = _usingProgrammer;
+            _usingProgrammer = null; // done
+            state = ProgState.NOTPROGRAMMING;
+            temp.programmingOpReply(value, status);
+            return;
+        }
+
         if (_usingProgrammer == null) {
-            log.error("No listener to notify");
+            log.error("No listener to notify, reset and ignore");
+            state = ProgState.NOTPROGRAMMING;
+            return;
         }
 
         switch (state) {
@@ -185,22 +207,26 @@ public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade im
     }
 
     // Access to full address space provided by this.
+    @Override
     public boolean getCanRead() {
-        return true;
+        return _prog.getCanRead();
     }
 
+    @Override
     public boolean getCanRead(String addr) {
-        return Integer.parseInt(addr) <= 1024;
+        return _prog.getCanRead() && (Integer.parseInt(addr) <= 1024);
     }
 
+    @Override
     public boolean getCanWrite() {
-        return true;
+        return _prog.getCanWrite();
     }
 
+    @Override
     public boolean getCanWrite(String addr) {
-        return Integer.parseInt(addr) <= 1024;
+        return _prog.getCanWrite() && (Integer.parseInt(addr) <= 1024);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AddressedHighCvProgrammerFacade.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AddressedHighCvProgrammerFacade.class);
 
 }

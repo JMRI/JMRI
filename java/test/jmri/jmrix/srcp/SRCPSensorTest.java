@@ -1,9 +1,11 @@
 package jmri.jmrix.srcp;
 
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
+
 
 /**
  * SRCPSensorTest.java
@@ -11,44 +13,41 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.srcp.SRCPSensor class
  *
  * @author	Bob Jacobsen
+ * @author      Paul Bender Copyright (C) 2018	
  */
-public class SRCPSensorTest extends TestCase {
+public class SRCPSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
-    public void testCtor() {
+    @Override
+    public int numListeners() {return 0;}
+
+    @Override
+    public void checkOnMsgSent() {}
+
+    @Override
+    public void checkOffMsgSent() {}
+
+    @Override
+    public void checkStatusRequestMsgSent() {}
+
+        
+    // The minimal setup for log4J
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
         SRCPBusConnectionMemo sm = new SRCPBusConnectionMemo(new SRCPTrafficController() {
             @Override
             public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
             }
         }, "A", 1);
-        SRCPSensor s = new SRCPSensor(1, sm);
-        Assert.assertNotNull(s);
-    }
-
-    // from here down is testing infrastructure
-    public SRCPSensorTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SRCPSensorTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SRCPSensorTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        t = new SRCPSensor(1, sm);
     }
 
     @Override
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+	t.dispose();
+        JUnitUtil.tearDown();
     }
+
 }

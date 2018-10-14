@@ -15,8 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import jmri.TurnoutOperation;
-import jmri.TurnoutOperationManager;
+import jmri.*;
 
 /**
  * @author John Harper
@@ -38,6 +37,7 @@ public class TurnoutOperationFrame extends JDialog {
         contentPane.add(outerBox);
         tabPane = new JTabbedPane();
         tabPane.addChangeListener(new ChangeListener() {
+            @Override
             public void stateChanged(ChangeEvent e) {
                 self.changeTab();
             }
@@ -47,6 +47,7 @@ public class TurnoutOperationFrame extends JDialog {
         bottomBox.add(Box.createHorizontalGlue());
         JButton okButton = new JButton(Bundle.getMessage("ButtonOK"));
         okButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 self.doOK();
             }
@@ -55,6 +56,7 @@ public class TurnoutOperationFrame extends JDialog {
         bottomBox.add(okButton);
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 setVisible(false);
             }
@@ -63,6 +65,7 @@ public class TurnoutOperationFrame extends JDialog {
         bottomBox.add(cancelButton);
         JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
         deleteButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 self.doDelete();
             }
@@ -71,7 +74,8 @@ public class TurnoutOperationFrame extends JDialog {
         bottomBox.add(deleteButton);
         outerBox.add(bottomBox);
         populateTabs();
-        TurnoutOperationManager.getInstance().addPropertyChangeListener(new PropertyChangeListener() {
+        InstanceManager.getDefault(TurnoutOperationManager.class).addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
             public void propertyChange(PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("Content")) {
                     populateTabs();
@@ -106,7 +110,7 @@ public class TurnoutOperationFrame extends JDialog {
     }
 
     private void populateTabs() {
-        TurnoutOperation[] operations = TurnoutOperationManager.getInstance().getTurnoutOperations();
+        TurnoutOperation[] operations = InstanceManager.getDefault(TurnoutOperationManager.class).getTurnoutOperations();
         Component firstPane = null;
         tabPane.removeAll();
         Vector<TurnoutOperation> definitiveOperations = new Vector<TurnoutOperation>(10);

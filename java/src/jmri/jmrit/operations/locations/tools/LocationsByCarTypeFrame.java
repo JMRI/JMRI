@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -37,29 +38,29 @@ import org.slf4j.LoggerFactory;
 public class LocationsByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     LocationManager manager;
-    String Empty = "            ";
+    static final String EMPTY = "            ";
 
     // checkboxes have the location id or track id as the checkbox name
-    ArrayList<JCheckBox> locationCheckBoxList = new ArrayList<JCheckBox>();
-    ArrayList<JCheckBox> trackCheckBoxList = new ArrayList<JCheckBox>();
+    ArrayList<JCheckBox> locationCheckBoxList = new ArrayList<>();
+    ArrayList<JCheckBox> trackCheckBoxList = new ArrayList<>();
     JPanel locationCheckBoxes = new JPanel();
 
     // panels
     JPanel pLocations;
 
     // major buttons
-    JButton clearButton = new JButton(Bundle.getMessage("Clear"));
-    JButton setButton = new JButton(Bundle.getMessage("Select"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton clearButton = new JButton(Bundle.getMessage("ClearAll"));
+    JButton setButton = new JButton(Bundle.getMessage("SelectAll"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // check boxes
-    JCheckBox copyCheckBox = new JCheckBox(Bundle.getMessage("Copy"));
+    JCheckBox copyCheckBox = new JCheckBox(Bundle.getMessage("ButtonCopy"));
 
     // text field
-    JLabel textCarType = new JLabel(Empty);
+    JLabel textCarType = new JLabel(EMPTY);
 
     // combo boxes
-    JComboBox<String> typeComboBox = CarTypes.instance().getComboBox();
+    JComboBox<String> typeComboBox = InstanceManager.getDefault(CarTypes.class).getComboBox();
 
     // selected location
     Location _location;
@@ -86,7 +87,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
     public void initComponents(String carType) {
 
         // load managers
-        manager = LocationManager.instance();
+        manager = InstanceManager.getDefault(LocationManager.class);
 
         // general GUI config
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -133,7 +134,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
         addCheckBoxAction(copyCheckBox);
 
         manager.addPropertyChangeListener(this);
-        CarTypes.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
@@ -198,7 +199,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
                 loc.addTypeName((String) typeComboBox.getSelectedItem());
                 // save tracks that have the same id as the location
                 for (JCheckBox cbt : trackCheckBoxList) {
-                    String[] id = cbt.getName().split("s");
+                    String[] id = cbt.getName().split(Location.LOC_TRACK_REGIX);
                     if (loc.getId().equals(id[0])) {
                         Track track = loc.getTrackById(cbt.getName());
                         if (cbt.isSelected()) {
@@ -267,7 +268,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 
     private void updateComboBox() {
         log.debug("update combobox");
-        CarTypes.instance().updateComboBox(typeComboBox);
+        InstanceManager.getDefault(CarTypes.class).updateComboBox(typeComboBox);
     }
 
     private void selectCheckboxes(boolean select) {
@@ -286,7 +287,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
             if (copyCheckBox.isSelected()) {
                 textCarType.setText((String) typeComboBox.getSelectedItem());
             } else {
-                textCarType.setText(Empty);
+                textCarType.setText(EMPTY);
                 updateLocations();
             }
         } else {
@@ -299,7 +300,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
                     String locId = cb.getName();
                     for (int i = 0; i < trackCheckBoxList.size(); i++) {
                         cb = trackCheckBoxList.get(i);
-                        String[] id = cb.getName().split("s");
+                        String[] id = cb.getName().split(Location.LOC_TRACK_REGIX);
                         if (locId.equals(id[0])) {
                             cb.setSelected(false);
                         }
@@ -310,7 +311,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
                 log.debug("Checkbox track {}", cb.getText());
                 // Must select location if track is selected
                 if (cb.isSelected()) {
-                    String[] loc = cb.getName().split("s");
+                    String[] loc = cb.getName().split(Location.LOC_TRACK_REGIX);
                     for (int i = 0; i < locationCheckBoxList.size(); i++) {
                         cb = locationCheckBoxList.get(i);
                         if (cb.getName().equals(loc[0])) {
@@ -344,7 +345,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
     @Override
     public void dispose() {
         manager.removePropertyChangeListener(this);
-        CarTypes.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
         removePropertyChangeLocations();
         super.dispose();
     }
@@ -367,5 +368,5 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationsByCarTypeFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocationsByCarTypeFrame.class);
 }

@@ -1,5 +1,8 @@
 package jmri.server.json.throttle;
 
+import static jmri.server.json.JSON.ADDRESS;
+import static jmri.server.json.JSON.F;
+import static jmri.server.json.JSON.FORWARD;
 import static jmri.server.json.JSON.ID;
 import static jmri.server.json.JSON.IS_LONG_ADDRESS;
 import static jmri.server.json.JSON.STATUS;
@@ -11,13 +14,12 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Map.Entry;
 import javax.servlet.http.HttpServletResponse;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
+import jmri.InstanceManager;
+import jmri.LocoAddress;
 import jmri.Throttle;
 import jmri.ThrottleListener;
 import jmri.jmrit.roster.Roster;
@@ -29,18 +31,10 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
 
     /**
      * Token for type for throttle status messages.
-     *
+     * <p>
      * {@value #THROTTLE}
      */
     public static final String THROTTLE = "throttle"; // NOI18N
-    /**
-     * {@value #ADDRESS}
-     */
-    public static final String ADDRESS = "address"; // NOI18N
-    /**
-     * {@value #FORWARD}
-     */
-    public static final String FORWARD = "forward"; // NOI18N
     /**
      * {@value #RELEASE}
      */
@@ -62,12 +56,6 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
      */
     public static final String SPEED_STEPS = "speedSteps"; // NOI18N
     /**
-     * Prefix for the throttle function keys (F0-F28).
-     * <p>
-     * {@value #F}
-     */
-    public static final String F = "F"; // NOI18N
-    /**
      * Used to notify clients of the number of clients controlling the same
      * throttle.
      * <p>
@@ -86,14 +74,15 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     /**
      * Creates a new JsonThrottle or returns an existing one if the request is
      * for an existing throttle.
-     *
+     * <p>
      * data can contain either a string {@link jmri.server.json.JSON#ID} node
      * containing the ID of a {@link jmri.jmrit.roster.RosterEntry} or an
      * integer {@link jmri.server.json.JSON#ADDRESS} node. If data contains an
      * ADDRESS, the ID node is ignored. The ADDRESS may be accompanied by a
      * boolean {@link jmri.server.json.JSON#IS_LONG_ADDRESS} node specifying the
-     * type of address, if IS_LONG_ADDRESS is not specified, the inverse of {@link jmri.ThrottleManager#canBeShortAddress(int)
-     * } is used as the "best guess" of the address length.
+     * type of address, if IS_LONG_ADDRESS is not specified, the inverse of
+     * {@link jmri.ThrottleManager#canBeShortAddress(int)} is used as the "best
+     * guess" of the address length.
      *
      * @param throttleId The client's identity token for this throttle
      * @param data       JSON object containing either an ADDRESS or an ID
@@ -101,12 +90,12 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
      *                   client
      * @return The throttle
      * @throws jmri.server.json.JsonException if unable to get the requested
-     *                                        {@link jmri.Throttle} 
+     *                                        {@link jmri.Throttle}
      */
     public static JsonThrottle getThrottle(String throttleId, JsonNode data, JsonThrottleSocketService server) throws JsonException {
         DccLocoAddress address = null;
         Locale locale = server.getConnection().getLocale();
-        JsonThrottleManager manager = JsonThrottleManager.getDefault();
+        JsonThrottleManager manager = InstanceManager.getDefault(JsonThrottleManager.class);
         if (!data.path(ADDRESS).isMissingNode()) {
             if (manager.canBeLongAddress(data.path(ADDRESS).asInt())
                     || manager.canBeShortAddress(data.path(ADDRESS).asInt())) {
@@ -147,7 +136,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
 
     public void close(JsonThrottleSocketService server, boolean notifyClient) {
         if (this.throttle != null) {
-            if (JsonThrottleManager.getDefault().getServers(this).size() == 1) {
+            if (InstanceManager.getDefault(JsonThrottleManager.class).getServers(this).size() == 1) {
                 this.throttle.setSpeedSetting(0);
             }
             this.release(server, notifyClient);
@@ -155,7 +144,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     }
 
     public void release(JsonThrottleSocketService server, boolean notifyClient) {
-        JsonThrottleManager manager = JsonThrottleManager.getDefault();
+        JsonThrottleManager manager = InstanceManager.getDefault(JsonThrottleManager.class);
         ObjectMapper mapper = server.getConnection().getObjectMapper();
         if (this.throttle != null) {
             if (manager.getServers(this).size() == 1) {
@@ -178,9 +167,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     }
 
     public void onMessage(Locale locale, JsonNode data, JsonThrottleSocketService server) {
-        Iterator<Entry<String, JsonNode>> nodeIterator = data.fields();
-        while (nodeIterator.hasNext()) {
-            Map.Entry<String, JsonNode> entry = nodeIterator.next();
+        data.fields().forEachRemaining((entry) -> {
             String k = entry.getKey();
             JsonNode v = entry.getValue();
             switch (k) {
@@ -297,11 +284,11 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
                     // catch those
                     break;
             }
-        }
+        });
     }
 
     public void sendMessage(ObjectNode data) {
-        JsonThrottleManager.getDefault().getServers(this).stream().forEach((server) -> {
+        InstanceManager.getDefault(JsonThrottleManager.class).getServers(this).stream().forEach((server) -> {
             this.sendMessage(data, server);
         });
     }
@@ -322,7 +309,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        ObjectNode data = JsonThrottleManager.getDefault().getObjectMapper().createObjectNode();
+        ObjectNode data = InstanceManager.getDefault(JsonThrottleManager.class).getObjectMapper().createObjectNode();
         String property = evt.getPropertyName();
         if (property.equals("SpeedSetting")) { // NOI18N
             data.put(SPEED, ((Number) evt.getNewValue()).floatValue());
@@ -363,12 +350,18 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     }
 
     @Override
-    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
-        JsonThrottleManager manager = JsonThrottleManager.getDefault();
+    public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
+        JsonThrottleManager manager = InstanceManager.getDefault(JsonThrottleManager.class);
         for (JsonThrottleSocketService server : manager.getServers(this).toArray(new JsonThrottleSocketService[manager.getServers(this).size()])) {
             this.sendErrorMessage(new JsonException(512, Bundle.getMessage(server.getConnection().getLocale(), "ErrorThrottleRequestFailed", address, reason)), server);
             server.release(this);
         }
+    }
+
+    @Override
+    public void notifyStealThrottleRequired(LocoAddress address) {
+        // this is an automatically stealing impelementation.
+        jmri.InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }
 
     private void sendErrorMessage(JsonException message, JsonThrottleSocketService server) {
@@ -397,7 +390,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     }
 
     private ObjectNode getStatus() {
-        ObjectNode data = JsonThrottleManager.getDefault().getObjectMapper().createObjectNode();
+        ObjectNode data = InstanceManager.getDefault(JsonThrottleManager.class).getObjectMapper().createObjectNode();
         data.put(ADDRESS, this.throttle.getLocoAddress().getNumber());
         data.put(SPEED, this.throttle.getSpeedSetting());
         data.put(FORWARD, this.throttle.getIsForward());
@@ -431,7 +424,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         data.put(Throttle.F27, this.throttle.getF27());
         data.put(Throttle.F28, this.throttle.getF28());
         data.put(SPEED_STEPS, this.speedSteps);
-        data.put(CLIENTS, JsonThrottleManager.getDefault().getServers(this).size());
+        data.put(CLIENTS, InstanceManager.getDefault(JsonThrottleManager.class).getServers(this).size());
         if (this.throttle.getRosterEntry() != null) {
             data.put(ROSTER_ENTRY, this.throttle.getRosterEntry().getId());
         }

@@ -37,12 +37,10 @@
       <model model="Atlas MP-15DC" lowVersionID="6" numFns="14" numOuts="14" productID="129"/>
       <model model="Atlas SD24/26" lowVersionID="6" numFns="14" numOuts="14" productID="111"/>
       <model model="BLI AC6000" lowVersionID="6" numFns="14" numOuts="14" productID="131"/>
-      <model model="BLI E3/E6 w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="115"/>
-      <model model="BLI E3/E6 wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="116"/>
+      <model model="BLI E3/E6 w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="115,121"/>
+      <model model="BLI E3/E6 wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="116,122"/>
       <model model="BLI E7 w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="119"/>
       <model model="BLI E7 wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="120"/>
-      <model model="BLI E3/E6 w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="121"/>
-      <model model="BLI E3/E6 wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="122"/>
       <model model="BLI F7" lowVersionID="6" numFns="14" numOuts="14" productID="104"/>
       <model model="BLI E8/E9 w/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="117"/>
       <model model="BLI E8/E9 wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="118"/>
@@ -3309,16 +3307,7 @@
       <!-- QSI Product ID -->
       <xi:include href="http://jmri.org/xml/decoders/qsi/ProductNumber.xml"/>
     </variables>
-    <resets>
-      <ifactReset label="Reset System Sound Control" CVname="56.128.51" CV="56" PI="128" SI="51" default="113" item="CV56.128.51"/>
-      <ifactReset label="Reset Individual Sounds" CVname="56.128.52" CV="56" PI="128" SI="52" default="113" item="CV56.128.52"/>
-      <ifactReset label="Reset Function Output Mappings" CVname="56.128.53" CV="56" PI="128" SI="53" default="113" item="CV56.128.53"/>
-      <ifactReset label="Reset QSI Feature Control" CVname="56.128.55" CV="56" PI="128" SI="55" default="113" item="CV56.128.55"/>
-      <ifactReset label="Reset QSI Configuration" CVname="56.128.56" CV="56" PI="128" SI="56" default="113" item="CV56.128.56"/>
-      <ifactReset label="Reset all standard NMRA CV's" CVname="56.128.253" CV="56" PI="128" SI="253" default="113" item="CV56.128.253"/>
-      <ifactReset label="Reset all QSI CV's" CVname="56.128.254" CV="56" PI="128" SI="254" default="113" item="CV56.128.254"/>
-      <ifactReset label="Reset all CV's" CVname="56.128.255" CV="56" PI="128" SI="255" default="113" item="CV56.128.255"/>
-    </resets>
+    <xi:include href="http://jmri.org/xml/decoders/qsi/ResetStandard.xml"/>
   </decoder>
   <pane>
     <column>

@@ -1,9 +1,7 @@
 package jmri.jmrix.dccpp;
 
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
+import org.junit.*;
 
 /**
  * DCCppOpsModeProgrammerTest.java
@@ -13,40 +11,32 @@ import junit.framework.TestSuite;
  * @author	Paul Bender
  * @author	Mark Underwood (C) 2015
  */
-public class DCCppOpsModeProgrammerTest extends TestCase {
+public class DCCppOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
 
-    public void testCtor() {
+    @Override
+    @Test
+    public void testGetCanRead() {
+        // DccPP supports railcom?
+        Assert.assertTrue("can read", programmer.getCanRead());
+    }
+
+    // The minimal setup for log4J
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
         // infrastructure objects
         DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
 
         DCCppOpsModeProgrammer t = new DCCppOpsModeProgrammer(5, tc);
-        Assert.assertNotNull(t);
+	    programmer = t;
     }
 
-    // from here down is testing infrastructure
-    public DCCppOpsModeProgrammerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", DCCppOpsModeProgrammerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DCCppOpsModeProgrammerTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-    }
-
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @Override
+    @After
+    public void tearDown() {
+	    programmer = null;
+        JUnitUtil.tearDown();
     }
 
 }

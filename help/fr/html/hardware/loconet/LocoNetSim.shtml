@@ -1,14 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- UpDated  by Blorec Herv&#233; 2013-09-14-->
+<!-- Updated  by Blorec Herv&#233; 2013-09-14-->
 
 <html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI Hardware Guide: LocoNet&reg; Simulator</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content=
+          "Digitrax LocoNet simulator java model railroad JMRI install windows">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -18,9 +19,6 @@
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/"><!-- /Style -->
-  <meta content="Bob Jacobsen" name="Author">
-  <meta name="keywords" content=
-  "Digitrax LocoNet simulator java model railroad JMRI install windows">
   </head>
 
 <body>
@@ -113,12 +111,11 @@
         Requ&ecirc;te data/status pour le slot 16.</span></p>
 
         <p>Comme il n'y a pas de Central, tle dernier message ne
-        recevra pas de r&eacute;ponse. 
-        <!--#include virtual="/Footer" --></p>
+        recevra pas de r&eacute;ponse.</p>
 
         <h1><a name="SeeAlso" id="SeeAlso">Voir aussi</a></h1>
 
-        <p><a name="SeeAlso" id="SeeAlso">Le</a> <a href=
+        <p>Le <a href=
         "../../../package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml">
         Moniteur LocoNet</a> Outil de captures et
         d'interpr&eacute;tations des messages sur LocoNet.</p>

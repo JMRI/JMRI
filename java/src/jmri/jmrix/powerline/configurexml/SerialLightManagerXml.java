@@ -1,4 +1,3 @@
-// SerialLightManagerXml.java
 package jmri.jmrix.powerline.configurexml;
 
 import org.jdom2.Element;
@@ -14,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * Based on SerialTurnoutManagerXml.java
  *
  * @author Dave Duchamp Copyright (c) 2004, 2007, 2008
- * @version $Revision$
  */
 public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
@@ -22,10 +20,12 @@ public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLi
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element lights) {
         lights.setAttribute("class", "jmri.jmrix.powerline.configurexml.SerialLightManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -36,5 +36,5 @@ public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLi
         return loadLights(shared);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialLightManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialLightManagerXml.class);
 }

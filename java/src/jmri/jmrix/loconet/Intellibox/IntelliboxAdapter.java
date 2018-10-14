@@ -1,20 +1,19 @@
-// LocoBufferAdapter.java
 package jmri.jmrix.loconet.Intellibox;
 
+import java.util.Arrays;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 
 /**
  * Update the code in jmri.jmrix.loconet.locobuffer so that it operates
  * correctly with the Intellibox on-board serial port.
- * <P>
+ * <p>
  * Since this is by definition connected to an Intellibox, the command station
- * prompt has limited choices
+ * prompt has limited choices.
  *
- * @author	Alex Shepherd Copyright (C) 2004
+ * @author Alex Shepherd Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2005, 2010
- * @version	$Revision$
- */
+  */
 public class IntelliboxAdapter extends LocoBufferAdapter {
 
     public IntelliboxAdapter() {
@@ -22,9 +21,9 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
 
         // define command station options
         options.remove(option2Name);
-        options.put(option2Name, new Option("Command station type:", commandStationOptions(), false));
+        options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationOptions(), false));
 
-        validSpeeds = new String[]{"19200", "38400", "115200"};
+        validSpeeds = new String[]{Bundle.getMessage("Baud19200"), Bundle.getMessage("Baud38400"), Bundle.getMessage("Baud115200")};
         validSpeedValues = new int[]{19200, 38400, 115200};
     }
 
@@ -32,6 +31,7 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
      * Set up all of the other objects to operate with a LocoBuffer connected to
      * this port.
      */
+    @Override
     public void configure() {
 
         setCommandStationType(getOptionState(option2Name));
@@ -44,38 +44,35 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
         this.getSystemConnectionMemo().setLnTrafficController(packets);
         // do the common manager config
         this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                mTurnoutNoRetry, mTurnoutExtraSpace);
+                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable);
         this.getSystemConnectionMemo().configureManagers();
 
         // start operation
         packets.startThreads();
     }
 
-    /**
-     * Get an array of valid baud rates.
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     /**
      * Get an array of valid baud rates as integers.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public int[] validBaudNumber() {
-        return validSpeedValues;
+        return Arrays.copyOf(validSpeedValues, validSpeedValues.length);
     }
 
     /**
      * Rephrase option 1, so that it doesn't talk about LocoBuffer
      */
     public String option1Name() {
-        return "Serial connection uses ";
+        return Bundle.getMessage("XconnectionUsesLabel", Bundle.getMessage("TypeSerial"));
     }
 
     /**
-     * Provide just one valid command station value
+     * Provide just one valid command station value.
      */
     public String[] commandStationOptions() {
         String[] retval = {

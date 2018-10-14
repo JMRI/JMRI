@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id$ -->
-
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -64,18 +62,25 @@
         <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
         <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
         <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1" />
-
+        <xs:element name="useAddressOffSet" type="yesNoType" minOccurs="0" maxOccurs="1"/>
         <xs:element name="turnout" minOccurs="0" maxOccurs="unbounded" >
           <xs:annotation><xs:documentation>
           Deprecated in JMRI 2.7.7 in favor of turnoutname element
           </xs:documentation></xs:annotation>
           <xs:complexType>
-            <xs:attribute name="systemName" type="systemNameType" use="required" />
+            <xs:attribute name="systemName" type="beanNameType" use="required" /> <!-- could be just a number, e.g. user name, in old files -->
             <xs:attribute name="userName" type="userNameType" />
             <xs:attribute name="state" type="xs:string" />
           </xs:complexType>
         </xs:element>
-        
+        <xs:element name="aspect" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="number" minOccurs="1" maxOccurs="1" type="xs:integer"/>
+            </xs:sequence>
+            <xs:attribute name="defines" type="xs:string" />    
+          </xs:complexType>
+        </xs:element>
         <xs:element name="appearance" minOccurs="0" maxOccurs="unbounded" >
           <xs:complexType> 
             <xs:simpleContent>

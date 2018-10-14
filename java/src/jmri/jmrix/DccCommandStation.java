@@ -4,7 +4,7 @@ package jmri.jmrix;
  * This turned out to be a dead-end interface, which has now been deprecated.
  * {@link jmri.CommandStation} is the replacement.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2013
+ * @author Bob Jacobsen Copyright (C) 2001, 2013
  * @deprecated Since JRMI 3.11.3, will remove in following development series;
  * use {@link jmri.CommandStation} instead.
  */

@@ -1,0 +1,82 @@
+#! /bin/bash
+#
+# Service operations for a JMRI test release
+# Argument is release version number, e.g. 4.5.8
+# - Download release files from Jenkins and unpack
+# - Display the checksums
+# - Display sample text for releaselist file
+# - Display sample text for JMRI release note
+
+# Download a test release from Jenkins and unpack
+curl -o release.zip "http://builds.jmri.org/jenkins/job/TestReleases/job/$1/lastSuccessfulBuild/artifact/dist/release/*zip*/release.zip"
+rm release/JMRI*
+unzip release.zip
+cd release
+
+# Decide command to create checksums
+if [ -x /usr/bin/hdiutil ]
+then
+  SYSTEM=MACOSX
+else
+  SYSTEM=LINUX
+fi
+if [ "$SYSTEM" = "MACOSX" ]
+then
+  SHA="shasum -a 256"
+else
+  SHA="sha256sum"
+fi
+
+# Create and display the checksums
+$SHA JMRI*
+
+# Display sample text for releaselist file
+echo
+echo "releaselist:"
+echo '----------------------------------------------------------------------------------'
+echo "  ${1}:"
+echo "   tgz: "\""https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.tgz`"\"
+echo "   dmg: "\""https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.dmg`"\"
+echo "   exe: "\""https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.exe`"\" 
+echo '----------------------------------------------------------------------------------'
+
+echo
+echo
+
+# Display sample text for JMRI release note
+echo "release note:"
+echo '----------------------------------------------------------------------------------'
+echo '<ul>'
+echo '<li>OS X / macOS: <a'
+echo "	href="\""https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.dmg`"\"">https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.dmg`</a><br/>"
+echo  "  sha256: `$SHA *.dmg| awk '{print $1}'` </li>"
+echo
+echo '<li>Windows: <a'
+echo "	href="\""https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.exe`"\"">https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.exe`</a><br/>"
+echo "   sha256: `$SHA *.exe| awk '{print $1}'`</li>"
+echo
+echo '<li>Linux: <a'
+echo "	href="\""https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.tgz`"\"">https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.tgz`</a><br/>"
+echo "   sha256: `$SHA *.tgz| awk '{print $1}'`</li>"
+echo '</ul>'
+echo '----------------------------------------------------------------------------------'
+
+echo
+echo
+
+# Display sample text for GitHub release note
+echo "Github note body:"
+echo '----------------------------------------------------------------------------------'
+echo
+echo "[Release notes](http://jmri.org/releasenotes/jmri${1}.shtml)"
+echo
+echo 'Checksums:'
+echo
+echo 'File | SHA256 checksum'
+echo '---|---'
+echo "[`ls *.dmg`](https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.dmg`) | `$SHA *.dmg| awk '{print $1}'`"
+echo "[`ls *.exe`](https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.exe`) | `$SHA *.exe| awk '{print $1}'`"
+echo "[`ls *.tgz`](https://github.com/JMRI/JMRI/releases/download/v${1}/`ls *.tgz`) | `$SHA *.tgz| awk '{print $1}'`"
+echo
+echo '----------------------------------------------------------------------------------'
+

@@ -180,7 +180,7 @@ public class JoalAudioListener extends AbstractAudioListener {
     }
 
     @Override
-    protected void cleanUp() {
+    protected void cleanup() {
         // no clean-up needed for Listener
         if (log.isDebugEnabled()) {
             log.debug("Cleanup JoalAudioListener (" + this.getSystemName() + ")");
@@ -188,6 +188,6 @@ public class JoalAudioListener extends AbstractAudioListener {
         this.dispose();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(JoalAudioListener.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JoalAudioListener.class);
 
 }

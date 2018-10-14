@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2017 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2017</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Marc N.</firstname>
+        <surname>Fournier</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2017-02-10</date>
+      <authorinitials>MFO</authorinitials>
+      <revremark>Add CV64 to deal with 21MTC Logic Level Compatibility</revremark>
+    </revision>
+  </revhistory>
+  <variable CV="64" item="Global lighting option 5"  mask="XVXXXXXX" default="0" include="DH166MT,SDH186MT,SDXH186MT">
+    <enumVal>
+      <enumChoice value="0">
+        <choice>Logic Level</choice>
+      </enumChoice>
+      <enumChoice value="1">
+        <choice>12 Volts</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Logic/12V Level Compatibility Aux3/4</label>
+    <tooltip>&lt;html&gt;Compatibility with either Logic or 12 Volt Level for Aux 3 and 4&lt;br&gt;By default, set to Logic level for most locos using 21MTC.&lt;br&gt;Using 12 V will configure Aux 3 and 4 at the same level as other outputs.&lt;/html&gt;</tooltip>
+  </variable>
+</variables>

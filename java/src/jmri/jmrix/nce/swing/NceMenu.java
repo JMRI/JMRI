@@ -1,6 +1,7 @@
 package jmri.jmrix.nce.swing;
 
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import javax.swing.JMenu;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
@@ -8,26 +9,22 @@ import jmri.jmrix.nce.NceTrafficController;
 /**
  * Create a "Systems" menu containing the JMRI NCE-specific tools.
  *
- * @author	Bob Jacobsen Copyright 2003, 2010 converted to multiple connection
- * @author	kcameron	Copyright 2010, 2013
+ * @author Bob Jacobsen Copyright 2003, 2010 converted to multiple connection
+ * @author kcameron Copyright 2010, 2013
  */
 public class NceMenu extends JMenu {
 
     /**
-     * Create a NCE menu. And loads the NceSystemConnectionMemo to the various
+     * Create an NCE menu and load the NceSystemConnectionMemo to the various
      * actions. Actions will open new windows.
+     *
+     * @param memo the system connection memo to associate menu items with
      */
     // Need to Sort out the NCE server menu items;
-    public NceMenu(NceSystemConnectionMemo memo) {
+    public NceMenu(@Nonnull NceSystemConnectionMemo memo) {
         super();
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
-
-        // memo can not be null!
-        if (memo == null) {
-            new Exception().printStackTrace();
-            return;
-        }
 
         setText(memo.getUserName());
 
@@ -48,7 +45,7 @@ public class NceMenu extends JMenu {
         }
 
         // do we have a NceTrafficController?
-        setEnabled(memo.getNceTrafficController() != null);	// disable menu, no connection, no tools!
+        setEnabled(memo.getNceTrafficController() != null); // disable menu, no connection, no tools!
 
         add(new javax.swing.JSeparator());
     }
@@ -77,4 +74,5 @@ public class NceMenu extends JMenu {
         String load;
         long enable;
     }
+
 }

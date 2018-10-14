@@ -36,9 +36,9 @@
 
       <ul>
         <li><a href=
-        "../../../package/jmri/jmrit/beantable/jmriScriptWindow.png">
+        "../../../package/jmri/jmrit/beantable/images/jmriScriptWindow.png">
         <img src=
-        "../../../package/jmri/jmrit/beantable/jmriScriptWindow.png"
+        "../../../package/jmri/jmrit/beantable/images/jmriScriptWindow.png"
         width="250" height="136" align="right"></a>From the
         "Panels" menu, select "Script Entry". This will give you a
         window where you can type one or more commands to execute.
@@ -240,8 +240,8 @@ returns to the command line.
       a "class" that does what you want. In short form, this gives
       you a way to have independent code to run inside the program.
       But don't worry about this until you've got some more
-      experience with scripting. 
-      <!--#include virtual="/Footer" --></p>
+      experience with scripting.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

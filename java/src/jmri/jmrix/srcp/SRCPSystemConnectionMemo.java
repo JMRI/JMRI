@@ -59,7 +59,7 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private SRCPTrafficController et;
 
     /**
-     * Configure the common managers for Internal connections. This puts the
+     * Configure the common managers for SRCP connections. This puts the
      * common manager config in one place. This method is static so that it can
      * be referenced from classes that don't inherit, including
      * hexfile.HexFileFrame and locormi.LnMessageClient
@@ -94,23 +94,24 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public <T> T get(Class<?> T) {
         return null; // nothing, by default
     }
 
     /**
-     * Tells which managers this provides by class
+     * Tells which managers this class provides.
      */
     @Override
     public boolean provides(Class<?> type) {
         return false; // nothing, by default
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.srcp.SrcpActionListBundle");
     }
 
+    @Override
     public void dispose() {
         et = null;
         InstanceManager.deregister(this, SRCPSystemConnectionMemo.class);
@@ -140,6 +141,3 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
 }
-
-
-/* @(#)InternalSystemConnectionMemo.java */

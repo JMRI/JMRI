@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Back EMF</name>
+  <name xml:lang="de">Lastregelung</name>
   <column/>
   <column/>
   <column>
     <display item="BEMF Active" format="checkbox" label="BEMF off/on" layout="above" tooltip="Sets BEMF off or on">
       <label xml:lang="fr">Comp.charge off/on</label>
       <label xml:lang="it">Compens.BEMF off/on</label>
+      <label xml:lang="de">Lastregelung aus/ein</label>
+      <label xml:lang="ca">Compens.BEMF off/on</label>
     </display>
   </column>
   <column>
@@ -20,6 +24,7 @@
     </label>
     <display item="Controlref" layout="right" tooltip="If the motor does not reach max speed then reduce this parameter">
       <tooltip xml:lang="it">Se il motore non raggiunge la velocità massima, ridurre questo parametro</tooltip>
+      <tooltip xml:lang="ca">Si el motor no aconsegeuix la velocitat màxima, reduir aquest valor</tooltip>
     </display>
     <label>
       <text> </text>
@@ -43,5 +48,4 @@
       <text> </text>
     </label>
   </column>
-  <name>Back EMF</name>
 </pane>

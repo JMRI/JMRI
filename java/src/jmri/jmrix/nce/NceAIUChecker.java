@@ -1,4 +1,3 @@
-//NceAIUChecker.java
 package jmri.jmrix.nce;
 
 import javax.swing.JOptionPane;
@@ -13,14 +12,14 @@ import org.slf4j.LoggerFactory;
  * AIU broadcasts, 0 = disabled, 1 = enabled.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision$
+ * 
  * 
  */
 public class NceAIUChecker implements NceListener {
 
-    private static final int MEM_AIU = 0xDC15; 	// NCE CS AIU memory address 
-    private static final int REPLY_LEN = 1; 	// number of bytes read
-    private boolean EXPECT_REPLY = false; 		// flag 
+    private static final int MEM_AIU = 0xDC15;  // NCE CS AIU memory address 
+    private static final int REPLY_LEN = 1;  // number of bytes read
+    private boolean EXPECT_REPLY = false;   // flag 
 
     private NceTrafficController tc = null;
 
@@ -48,12 +47,14 @@ public class NceAIUChecker implements NceListener {
 
     }
 
+    @Override
     public void message(NceMessage m) {
         if (log.isDebugEnabled()) {
             log.debug("unexpected message");
         }
     }
 
+    @Override
     public void reply(NceReply r) {
         if (!EXPECT_REPLY && log.isDebugEnabled()) {
             log.debug("Unexpected reply in AIU broadcast checker");
@@ -70,6 +71,7 @@ public class NceAIUChecker implements NceListener {
             if (AIUstatus == 1) {
                 log.warn("AIU broadcasts are enabled");
                 ConnectionStatus.instance().setConnectionState(
+                        tc.getUserName(),
                         tc.getPortName(),
                         ConnectionStatus.CONNECTION_DOWN);
                 JOptionPane.showMessageDialog(null,
@@ -86,7 +88,7 @@ public class NceAIUChecker implements NceListener {
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(NceAIUChecker.class.getName());
+            .getLogger(NceAIUChecker.class);
 
 }
-/* @(#)NceAIUChecker.java */
+

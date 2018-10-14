@@ -10,13 +10,13 @@ import jmri.Reporter;
  * Note that we consider it an error for there to be more than one object that
  * corresponds to a particular physical Reporter on the layout.
  *
- * Description:	Abstract class providing the basic logic of the Reporter
+ * Description: Abstract class providing the basic logic of the Reporter
  * interface
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @author Matthew Harris Copyright (C) 2011
  */
-public abstract class AbstractReporter extends AbstractNamedBean implements Reporter, java.io.Serializable {
+public abstract class AbstractReporter extends AbstractNamedBean implements Reporter {
 
     public AbstractReporter(String systemName) {
         super(systemName.toUpperCase());
@@ -26,20 +26,17 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
         super(systemName.toUpperCase(), userName);
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameReporter");
     }
     
-    // for combo boxes
     @Override
-    public String toString() {
-        return getDisplayName();
-    }
-
     public Object getCurrentReport() {
         return _currentReport;
     }
 
+    @Override
     public Object getLastReport() {
         return _lastReport;
     }
@@ -47,6 +44,7 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
     /**
      * Provide a general method for updating the report.
      */
+    @Override
     public void setReport(Object r) {
         if (r == _currentReport) {
             return;

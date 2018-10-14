@@ -7,48 +7,56 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement Turnout for Grapevine.
- *
+ * <p>
  * This object doesn't listen to the Grapevine serial communications. This is
  * because it should be the only object that is sending messages for this
  * turnout; more than one Turnout object pointing to a single device is not
  * allowed.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  */
 public class SerialTurnout extends AbstractTurnout {
 
+    GrapevineSystemConnectionMemo memo = null;
+
     /**
      * Create a Turnout object, with both system and user names.
-     * <P>
-     * 'systemName' was previously validated in SerialTurnoutManager
+     *
+     * @param systemName system name including prefix, previously validated in SerialTurnoutManager
+     * @param userName free form name
+     * @param _memo the associated SystemConnectionMemo
      */
-    public SerialTurnout(String systemName, String userName) {
+    public SerialTurnout(String systemName, String userName, GrapevineSystemConnectionMemo _memo) {
         super(systemName, userName);
-        // Save system Name
+        memo = _memo;
+        // Save systemName
         tSystemName = systemName;
         // Extract the Bit from the name
-        int num = SerialAddress.getBitFromSystemName(systemName); // bit one is address zero
+        int num = SerialAddress.getBitFromSystemName(systemName, memo.getSystemPrefix()); // bit one is address zero
+        log.debug("SerialTurnout {} created, num: {} prefix: {}", systemName, num, memo.getSystemPrefix());
         // num is 101-124, 201-224, 301-324, 401-424
-        output = (num % 100) - 1; // 0-23
+        output = (num % 100) - 1; // 0 - 23
         bank = (num / 100) - 1;  // 0 - 3
     }
 
     /**
-     * Grapevine turnouts can invert their outputs
+     * Grapevine turnouts can invert their outputs.
      */
+    @Override
     public boolean canInvert() {
         return true;
     }
 
     /**
-     * Handle a request to change state by sending a turnout command
+     * Handle a request to change state by sending a turnout command.
      */
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
-        //		public void firePropertyChange(String propertyName,
-        //				                Object oldValue,
-        //						Object newValue)
+        //  public void firePropertyChange(String propertyName,
+        //      Object oldValue,
+        //      Object newValue)
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states
@@ -56,7 +64,7 @@ public class SerialTurnout extends AbstractTurnout {
             // first look for the double case, which we can't handle
             if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN " + s);
+                log.error("Cannot command both CLOSED and THROWN {}", s);
                 return;
             } else {
                 // send a CLOSED command
@@ -68,10 +76,9 @@ public class SerialTurnout extends AbstractTurnout {
         }
     }
 
+    @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
-        if (log.isDebugEnabled()) {
-            log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton");
-        }
+        log.debug("Send command to {} Pushbutton", (_pushButtonLockout ? "Lock" : "Unlock"));
     }
 
     // data members
@@ -80,10 +87,10 @@ public class SerialTurnout extends AbstractTurnout {
     int bank;           // bank number, 0-3
 
     protected void sendMessage(boolean closed) {
-        SerialNode tNode = SerialAddress.getNodeFromSystemName(tSystemName);
+        SerialNode tNode = SerialAddress.getNodeFromSystemName(tSystemName, memo.getTrafficController());
         if (tNode == null) {
             // node does not exist, ignore call
-            log.error("Can't find node for " + tSystemName + ", command ignored");
+            log.error("Can't find node for {}, command ignored", tSystemName);
             return;
         }
         boolean high = (output >= 12);
@@ -92,7 +99,7 @@ public class SerialTurnout extends AbstractTurnout {
             tOut = output - 12;
         }
         if ((bank < 0) || (bank > 4)) {
-            log.error("invalid bank " + bank + " for Turnout " + getSystemName());
+            log.error("invalid bank {}  for Turnout {}", bank, getSystemName());
             bank = 0;
         }
 
@@ -110,8 +117,9 @@ public class SerialTurnout extends AbstractTurnout {
         m.setElement(i++, tNode.getNodeAddress() | 0x80);  // address 2
         m.setElement(i++, bank << 4); // bank is most significant bits
         m.setParity(i - 4);
-        SerialTrafficController.instance().sendSerialMessage(m, null);
+        memo.getTrafficController().sendSerialMessage(m, null);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class);
+
 }

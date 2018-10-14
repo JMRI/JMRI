@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,8 +35,8 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.PAGEMODE);
-        ret.add(DefaultProgrammerManager.DIRECTBITMODE);
+        ret.add(ProgrammingMode.PAGEMODE);
+        ret.add(ProgrammingMode.DIRECTBITMODE);
         return ret;
     }
 
@@ -52,6 +51,8 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
     int _cv;	// remember the cv being read/written
 
     // programming interface
+    @Override
+    @Deprecated // 4.1.1
     public synchronized void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
@@ -75,6 +76,8 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
         readCV(CV, p);
     }
 
+    @Override
+    @Deprecated // 4.1.1
     public synchronized void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
@@ -110,10 +113,12 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
         }
     }
 
+    @Override
     public void message(QsiMessage m) {
         log.error("message received unexpectedly: " + m.toString());
     }
 
+    @Override
     synchronized public void reply(QsiReply m) {
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
@@ -174,6 +179,7 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
     /**
      * Internal routine to handle a timeout
      */
+    @Override
     synchronized protected void timeout() {
         if (progState != NOTPROGRAMMING) {
             // we're programming, time to stop
@@ -198,7 +204,7 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
         // clear the current listener _first_
         jmri.ProgListener temp = _usingProgrammer;
         _usingProgrammer = null;
-        temp.programmingOpReply(value, status);
+        notifyProgListenerEnd(temp, value, status);
     }
 
     QsiTrafficController _controller = null;
@@ -211,6 +217,6 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
         return _controller;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(QsiProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QsiProgrammer.class);
 
 }

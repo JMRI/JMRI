@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -23,7 +24,7 @@ import org.slf4j.LoggerFactory;
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    EngineManager manager = EngineManager.instance(); // There is only one manager
+    EngineManager engineManager = InstanceManager.getDefault(EngineManager.class); // There is only one manager
 
     // Defines the columns
     private static final int NUM_COLUMN = 0;
@@ -51,7 +52,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 
     public EnginesTableModel() {
         super();
-        manager.addPropertyChangeListener(this);
+        engineManager.addPropertyChangeListener(this);
         updateList();
     }
 
@@ -74,7 +75,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 
     /**
      * Not all columns are visible at the same time.
-     * 
+     *
      * @param sort which sort is active
      */
     public void setSort(int sort) {
@@ -95,9 +96,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RFID_WHEN_LAST_SEEN_COLUMN), sort == SORTBY_RFID);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RFID_WHERE_LAST_SEEN_COLUMN), sort == SORTBY_RFID);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), sort == SORTBY_LAST);
-        } else {
-            fireTableDataChanged();
         }
+        fireTableDataChanged();
     }
 
     String _roadNumber = "";
@@ -105,11 +105,12 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 
     /**
      * Search for engine by road number
+     * @param roadNumber The string road number to search for.
      *
      * @return -1 if not found, table row number if found
      */
-    public synchronized int findEngineByRoadNumber(String roadNumber) {
-        if (sysList != null) {
+    public int findEngineByRoadNumber(String roadNumber) {
+        if (engineList != null) {
             if (!roadNumber.equals(_roadNumber)) {
                 return getIndex(0, roadNumber);
             }
@@ -123,8 +124,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     }
 
     private int getIndex(int start, String roadNumber) {
-        for (int index = start; index < sysList.size(); index++) {
-            Engine e = (Engine) sysList.get(index);
+        for (int index = start; index < engineList.size(); index++) {
+            Engine e = engineList.get(index);
             if (e != null) {
                 String[] number = e.getNumber().split("-");
                 // check for wild card '*'
@@ -153,49 +154,49 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         return -1;
     }
 
-    private synchronized void updateList() {
+    private void updateList() {
         // first, remove listeners from the individual objects
         removePropertyChangeEngines();
-        sysList = getSelectedEngineList();
+        engineList = getSelectedEngineList();
         // and add listeners back in
-        for (RollingStock rs : sysList) {
+        for (RollingStock rs : engineList) {
             rs.addPropertyChangeListener(this);
         }
     }
 
-    public List<RollingStock> getSelectedEngineList() {
-        List<RollingStock> list;
+    public List<Engine> getSelectedEngineList() {
+        List<Engine> list;
         if (_sort == SORTBY_ROAD) {
-            list = manager.getByRoadNameList();
+            list = engineManager.getByRoadNameList();
         } else if (_sort == SORTBY_MODEL) {
-            list = manager.getByModelList();
+            list = engineManager.getByModelList();
         } else if (_sort == SORTBY_LOCATION) {
-            list = manager.getByLocationList();
+            list = engineManager.getByLocationList();
         } else if (_sort == SORTBY_DESTINATION) {
-            list = manager.getByDestinationList();
+            list = engineManager.getByDestinationList();
         } else if (_sort == SORTBY_TRAIN) {
-            list = manager.getByTrainList();
+            list = engineManager.getByTrainList();
         } else if (_sort == SORTBY_MOVES) {
-            list = manager.getByMovesList();
+            list = engineManager.getByMovesList();
         } else if (_sort == SORTBY_CONSIST) {
-            list = manager.getByConsistList();
+            list = engineManager.getByConsistList();
         } else if (_sort == SORTBY_OWNER) {
-            list = manager.getByOwnerList();
+            list = engineManager.getByOwnerList();
         } else if (_sort == SORTBY_BUILT) {
-            list = manager.getByBuiltList();
+            list = engineManager.getByBuiltList();
         } else if (_sort == SORTBY_VALUE) {
-            list = manager.getByValueList();
+            list = engineManager.getByValueList();
         } else if (_sort == SORTBY_RFID) {
-            list = manager.getByRfidList();
+            list = engineManager.getByRfidList();
         } else if (_sort == SORTBY_LAST) {
-            list = manager.getByLastDateList();
+            list = engineManager.getByLastDateList();
         } else {
-            list = manager.getByNumberList();
+            list = engineManager.getByNumberList();
         }
         return list;
     }
 
-    List<RollingStock> sysList = null;
+    List<Engine> engineList = null;
 
     JTable _table;
     EnginesTableFrame _frame;
@@ -207,7 +208,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     }
 
     // Default engines frame table column widths, starts with Number column and ends with Edit
-    private int[] _enginesTableColumnWidths =
+    private final int[] _enginesTableColumnWidths =
             {60, 60, 65, 50, 65, 35, 75, 190, 190, 140, 190, 65, 50, 50, 50, 50, 100, 130, 65, 70};
 
     void initTable() {
@@ -239,11 +240,14 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RFID_WHEN_LAST_SEEN_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RFID_WHERE_LAST_SEEN_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), false);
+        
+        // turn on default
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(MOVES_COLUMN), true);
     }
 
     @Override
-    public synchronized int getRowCount() {
-        return sysList.size();
+    public int getRowCount() {
+        return engineList.size();
     }
 
     @Override
@@ -293,7 +297,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             case SET_COLUMN:
                 return Bundle.getMessage("Set");
             case EDIT_COLUMN:
-                return Bundle.getMessage("Edit");
+                return Bundle.getMessage("ButtonEdit"); // titles above all columns
             default:
                 return "unknown"; // NOI18N
         }
@@ -305,7 +309,6 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             case SET_COLUMN:
             case EDIT_COLUMN:
                 return JButton.class;
-            case HP_COLUMN:
             case LENGTH_COLUMN:
             case MOVES_COLUMN:
                 return Integer.class;
@@ -329,11 +332,11 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     }
 
     @Override
-    public synchronized Object getValueAt(int row, int col) {
+    public Object getValueAt(int row, int col) {
         if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
-        Engine eng = (Engine) sysList.get(row);
+        Engine eng = engineList.get(row);
         if (eng == null) {
             return "ERROR engine unknown " + row; // NOI18N
         }
@@ -347,7 +350,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             case MODEL_COLUMN:
                 return eng.getModel();
             case HP_COLUMN:
-                return eng.getHpInteger();
+                return eng.getHp();
             case TYPE_COLUMN: {
                 if (eng.isBunit()) {
                     return eng.getTypeName() + " " + Bundle.getMessage("(B)");
@@ -403,7 +406,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             case SET_COLUMN:
                 return Bundle.getMessage("Set");
             case EDIT_COLUMN:
-                return Bundle.getMessage("Edit");
+                return Bundle.getMessage("ButtonEdit");
             default:
                 return "unknown " + col; // NOI18N
         }
@@ -413,8 +416,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     EngineSetFrame engineSetFrame = null;
 
     @Override
-    public synchronized void setValueAt(Object value, int row, int col) {
-        Engine engine = (Engine) sysList.get(row);
+    public void setValueAt(Object value, int row, int col) {
+        Engine engine = engineList.get(row);
         switch (col) {
             case MOVES_COLUMN:
                 try {
@@ -472,7 +475,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 
     public void dispose() {
         log.debug("dispose EngineTableModel");
-        manager.removePropertyChangeListener(this);
+        engineManager.removePropertyChangeListener(this);
         removePropertyChangeEngines();
         if (engineSetFrame != null) {
             engineSetFrame.dispose();
@@ -482,16 +485,16 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         }
     }
 
-    private synchronized void removePropertyChangeEngines() {
-        if (sysList != null) {
-            for (RollingStock rs : sysList) {
+    private void removePropertyChangeEngines() {
+        if (engineList != null) {
+            for (RollingStock rs : engineList) {
                 rs.removePropertyChangeListener(this);
             }
         }
     }
 
     @Override
-    public synchronized void propertyChange(PropertyChangeEvent e) {
+    public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
@@ -507,7 +510,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         } // must be a engine change
         else if (e.getSource().getClass().equals(Engine.class)) {
             Engine engine = (Engine) e.getSource();
-            int row = sysList.indexOf(engine);
+            int row = engineList.indexOf(engine);
             if (Control.SHOW_PROPERTY) {
                 log.debug("Update engine table row: {}", row);
             }
@@ -517,5 +520,5 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EnginesTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EnginesTableModel.class);
 }

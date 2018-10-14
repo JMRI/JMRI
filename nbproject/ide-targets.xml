@@ -7,7 +7,7 @@
         </nbjpdastart>
         <property name="debugger" value="true"/>
         <property name="jdpa.server" value="n"/>
-        <antcall target="decoderpro"/>
+        <antcall target="panelpro"/>
     </target>
 
 </project>

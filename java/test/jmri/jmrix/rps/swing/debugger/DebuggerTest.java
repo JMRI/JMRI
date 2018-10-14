@@ -1,22 +1,30 @@
 package jmri.jmrix.rps.swing.debugger;
 
+import java.awt.GraphicsEnvironment;
 import javax.vecmath.Point3d;
 import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.Receiver;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
+import org.junit.Assume;
+import org.junit.Assert;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.rps.swing.debugger package
  *
  * @author Bob Jacobsen Copyright 2008
  */
-public class DebuggerTest extends TestCase {
+public class DebuggerTest {
 
+    private RpsSystemConnectionMemo memo = null;
+
+    @Test
     public void testCtor() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // create a context
         Engine.instance().setMaxReceiverNumber(2);
@@ -27,7 +35,7 @@ public class DebuggerTest extends TestCase {
         Measurement m = new Measurement(r, -0.5, 0.5, 0.0, 0.133, 3, "source");
 
         // show frame
-        DebuggerFrame f = new DebuggerFrame();
+        DebuggerFrame f = new DebuggerFrame(memo);
         f.initComponents();
         f.setVisible(true);
 
@@ -35,26 +43,23 @@ public class DebuggerTest extends TestCase {
         f.notify(r);
         f.notify(m);
 
+        Assert.assertNotNull("exists",f);
+
         // close
         f.dispose();
     }
 
-    // from here down is testing infrastructure
-    public DebuggerTest(String s) {
-        super(s);
+    @Before
+    public void setUp(){
+        jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+
+        memo = new RpsSystemConnectionMemo();
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {DebuggerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite(DebuggerTest.class);
-        return suite;
+    @After
+    public void tearDown(){
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

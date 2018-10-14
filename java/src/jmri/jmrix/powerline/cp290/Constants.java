@@ -1,13 +1,11 @@
-// Constants.java
 package jmri.jmrix.powerline.cp290;
 
 /**
  * Constants and functions specific to the CP290 interface
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  * @author Ken Cameron, (C) 2009, add sensors from poll replies
- * @version	$Revision$
- */
+  */
 public class Constants {
 
     public static final int CMD_ON = 0x02;
@@ -17,6 +15,9 @@ public class Constants {
 
     /**
      * Translate Function to Text
+     * @param cmd   cmd value
+     * @param level dim value
+     * @return      formated command as text
      */
     public static String commandToText(int cmd, int level) {
         String cmdText = "";
@@ -45,6 +46,8 @@ public class Constants {
 
     /**
      * Translate House Code to text
+     * @param hC housecode value
+     * @return   housecode as text
      */
     public static String houseCodeToText(int hC) {
         String hCode = "";
@@ -106,6 +109,9 @@ public class Constants {
 
     /**
      * Translate Device Bits to Text
+     * @param hByte high byte
+     * @param lByte low byte
+     * @return      text version of bytes
      */
     public static String deviceToText(int hByte, int lByte) {
         int mask = 0x01;
@@ -130,6 +136,8 @@ public class Constants {
 
     /**
      * Translate status to text
+     * @param s status value
+     * @return  status value as text
      */
     public static String statusToText(int s) {
         String stat = "";
@@ -149,6 +157,8 @@ public class Constants {
 
     /**
      * Format a message nicely
+     * @param m message
+     * @return  message contents as text
      */
     public static String toMonitorString(jmri.jmrix.Message m) {
         // check for valid length
@@ -227,4 +237,4 @@ public class Constants {
     }
 }
 
-/* @(#)Constants.java */
+

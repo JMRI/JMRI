@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2009 -->
-<!-- $Id: index.shtml 25755 2014-05-03 21:25:55Z jacobsen $ -->
 <title>JMRI: Southern Pacific 1969 Signalling Definition</title>
 
 <!-- Style -->
@@ -14,9 +13,9 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -30,7 +29,7 @@ This directory contains signaling definitions corresponding to the
 described in the "Rules and Regulations of the Transportation Department" booklet.
 
 <p>
-The Southern Pacific 1969 rulebook may be available in the files section of the JMRI users' Yahoo group.
+The Southern Pacific 1969 rulebook may be available in the files section of JMRI users Yahoo group, now at Groups.io.
 
 <p>
 There are three icon sets defined for most masts.

@@ -1,7 +1,9 @@
 package jmri.jmrit.withrottle;
 
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
+import jmri.InstanceManager;
 import jmri.ThrottleListener;
 import jmri.jmrit.roster.RosterEntry;
 import org.slf4j.Logger;
@@ -10,7 +12,6 @@ import org.slf4j.LoggerFactory;
 /**
  *
  * @author Brett Hoffman Copyright (C) 2010, 2011
- * @version $Revision$
  */
 public class ConsistFunctionController implements ThrottleListener {
 
@@ -27,6 +28,7 @@ public class ConsistFunctionController implements ThrottleListener {
         rosterLoco = re;
     }
 
+    @Override
     public void notifyThrottleFound(DccThrottle t) {
         if (log.isDebugEnabled()) {
             log.debug("Lead Loco throttle found: " + t
@@ -44,8 +46,15 @@ public class ConsistFunctionController implements ThrottleListener {
         throttleController.sendAllFunctionStates(throttle);
     }
 
-    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
+    @Override
+    public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
         log.error("Throttle request failed for " + address + " because " + reason);
+    }
+
+    @Override
+    public void notifyStealThrottleRequired(LocoAddress address){
+        // this is an automatically stealing impelementation.
+        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }
 
     public void dispose() {
@@ -60,6 +69,6 @@ public class ConsistFunctionController implements ThrottleListener {
         return jmri.InstanceManager.throttleManagerInstance().requestThrottle(loco.getNumber(), loco.isLongAddress(), this);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConsistFunctionController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConsistFunctionController.class);
 
 }

@@ -9,25 +9,41 @@
 
   <node>
     <name>File</name>
+    <name xml:lang="cs">Soubor</name>
+    <name xml:lang="ca">Fitxer</name>
+    <name xml:lang="de">Ablage</name>
+    <name xml:lang="nl">Archief</name>
     <node>
       <name>Load...</name>
       <name xml:lang="it">Carica...</name>
       <name xml:lang="de">Lade...</name>
+      <name xml:lang="cs">Načíst...</name>
+      <name xml:lang="ca">Obre...</name>
+      <name xml:lang="nl">Laad...</name>
     </node>
     <node>
       <name>Store...</name>
       <name xml:lang="it">Salva...</name>
       <name xml:lang="de">Speichere...</name>
+      <name xml:lang="cs">Uložit...</name>
+      <name xml:lang="ca">Desa...</name>
+      <name xml:lang="nl">Bewaar...</name>
     </node>
     <node>
       <name>Print...</name>
       <name xml:lang="it">Stampa...</name>
       <name xml:lang="de">Drucken...</name>
+      <name xml:lang="cs">Tisknout...</name>
+      <name xml:lang="ca">Imprimeix...</name>
+      <name xml:lang="nl">Druk af...</name>
     </node>
     <node>
       <name>Quit</name>
       <name xml:lang="it">Esci</name>
       <name xml:lang="de">Beenden</name>
+      <name xml:lang="cs">Konec</name>
+      <name xml:lang="ca">Surt</name>
+      <name xml:lang="nl">Stop</name>
         <adapter>apps.gui3.paned.QuitAction</adapter>
     </node>
   </node>
@@ -36,25 +52,40 @@
     <name>Edit</name>
     <name xml:lang="it">Modifica</name>
     <name xml:lang="de">Bearbeiten</name>
+    <name xml:lang="cs">Upravit</name>
+    <name xml:lang="ca">Edita</name>
+    <name xml:lang="nl">Wijzig</name>
     <node>
       <name>Cut</name>
       <name xml:lang="it">Taglia</name>
       <name xml:lang="de">Ausschneiden</name>
+      <name xml:lang="cs">Vyjmout</name>
+      <name xml:lang="ca">Retalla</name>
+      <name xml:lang="nl">Knip</name>
     </node>
     <node>
       <name>Copy</name>
       <name xml:lang="it">Copia</name>
       <name xml:lang="de">Kopieren</name>
+      <name xml:lang="cs">Kopírovat</name>
+      <name xml:lang="ca">Copia</name>
+      <name xml:lang="nl">Kopieer</name>
     </node>
     <node>
       <name>Paste</name>
       <name xml:lang="it">Incolla</name>
       <name xml:lang="de">Einsetzen</name>
+      <name xml:lang="cs">Vložit</name>
+      <name xml:lang="ca">Enganxa</name>
+      <name xml:lang="nl">Plak</name>
     </node>
     <node>
       <name>Preferences</name>
       <name xml:lang="it">Preferenze</name>
       <name xml:lang="de">Voreinstellungen</name>
+      <name xml:lang="cs">Předvolby</name>
+      <name xml:lang="ca">Preferències</name>
+      <name xml:lang="nl">Voorkeuren</name>
         <panel>apps.gui3.TabbedPreferences</panel>
     </node>
   </node>

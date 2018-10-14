@@ -1,33 +1,28 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Rectangle2D;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import jmri.jmrit.display.Editor;
 
 /**
- * <P>
- * @author Pete Cressman Copyright: Copyright (c) 2012
- *
+ * @author Pete Cressman Copyright (c) 2012
  */
 public class DrawRectangle extends DrawFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8554060296993964525L;
     int _width;
     int _height;
     JTextField _widthText;
     JTextField _heightText;
 
-    public DrawRectangle(String which, String title, ShapeDrawer parent) {
-        super(which, title, parent);
+    public DrawRectangle(String which, String title, PositionableShape ps, Editor ed, boolean create) {
+        super(which, title, ps, ed, create);
         _lineWidth = 3;
     }
 
@@ -38,78 +33,65 @@ public class DrawRectangle extends DrawFrame {
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         JPanel pp = new JPanel();
         _widthText = new JTextField(6);
+        _width = _shape.getWidth();
         _widthText.setText(Integer.toString(_width));
         _widthText.setHorizontalAlignment(JTextField.RIGHT);
         pp.add(_widthText);
         pp.add(new JLabel(Bundle.getMessage("width")));
+
         p.add(pp);
-        p.add(Box.createHorizontalStrut(STRUT_SIZE));
+        _widthText.addActionListener((ActionEvent e) -> {
+            _shape.setWidth(getInteger(_widthText, _width));
+            updateShape();
+        });
 
         pp = new JPanel();
         _heightText = new JTextField(6);
+        _height = _shape.getHeight();
         _heightText.setText(Integer.toString(_height));
         _heightText.setHorizontalAlignment(JTextField.RIGHT);
         pp.add(_heightText);
         pp.add(new JLabel(Bundle.getMessage("height")));
         p.add(pp);
+        _heightText.addActionListener((ActionEvent e) -> {
+            _shape.setHeight(getInteger(_heightText, _height));
+            updateShape();
+        });
+        p.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                updateShape();
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                _shape.setWidth(getInteger(_widthText, _width));
+                _shape.setHeight(getInteger(_heightText, _height));
+                updateShape();
+            }
+        });
 
         panel.add(p);
-        panel.add(Box.createVerticalStrut(STRUT_SIZE));
         return panel;
     }
 
-    /**
-     * Create a new PositionableShape
-     */
     @Override
-    protected boolean makeFigure(MouseEvent event) {
-        ControlPanelEditor ed = _parent.getEditor();
-        Rectangle r = ed.getSelectRect();
+    protected PositionableShape makeFigure(Rectangle r, Editor ed) {
         if (r != null) {
-            _width = r.width;
-            _height = r.height;
             Rectangle2D.Double rr = new Rectangle2D.Double(0, 0, _width, _height);
-            PositionableRectangle ps = new PositionableRectangle(ed, rr);
-            ps.setLocation(r.x, r.y);
-            ps.setDisplayLevel(ControlPanelEditor.MARKERS);
-            setPositionableParams(ps);
-            ps.updateSize();
-            ed.putItem(ps);
+            _shape = new PositionableRectangle(ed, rr);
         }
-        return true;
+        return _shape;
     }
 
-    /**
-     * Set parameters on a new or updated PositionableShape
-     */
     @Override
-    protected void setPositionableParams(PositionableShape p) {
-        super.setPositionableParams(p);
-        PositionableRectangle pos = (PositionableRectangle) p;
-        pos.setWidth(_width);
-        pos.setHeight(_height);
+    void setDisplayWidth(int w) {
+        _widthText.setText(Integer.toString(w));
     }
 
-    /**
-     * Set parameters on the popup that will edit the PositionableShape
-     */
     @Override
-    protected void setDisplayParams(PositionableShape p) {
-        super.setDisplayParams(p);
-        PositionableRectangle pos = (PositionableRectangle) p;
-        _width = pos.getWidth();
-        _height = pos.getHeight();
+    void setDisplayHeight(int h) {
+        _heightText.setText(Integer.toString(h));
     }
 
-    /**
-     * Editing is done. Update the existing PositionableShape
-     */
-    @Override
-    protected void updateFigure(PositionableShape p) {
-        PositionableRectangle pos = (PositionableRectangle) p;
-        p._width = getInteger(_widthText, p._width);
-        p._height = getInteger(_heightText, p._height);
-        pos.makeShape();
-        setPositionableParams(pos);
-    }
 }

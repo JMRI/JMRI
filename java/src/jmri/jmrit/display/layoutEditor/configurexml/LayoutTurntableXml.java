@@ -8,6 +8,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTurntable;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
 import org.jdom2.Attribute;
+import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutTurntableXml extends AbstractXmlAdapter {
 
@@ -29,6 +31,7 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
      * @param o Object to store, of type LayoutTurntable
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         LayoutTurntable p = (LayoutTurntable) o;
@@ -36,7 +39,7 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
         Element element = new Element("layoutturntable");
         boolean turnoutControl = p.isTurnoutControlled();
         // include attributes
-        element.setAttribute("ident", p.getID());
+        element.setAttribute("ident", p.getId());
         element.setAttribute("radius", "" + p.getRadius());
         Point2D coords = p.getCoordsCenter();
         element.setAttribute("xcen", "" + coords.getX());
@@ -49,7 +52,7 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
             rElem.setAttribute("angle", "" + p.getRayAngle(i));
             TrackSegment t = p.getRayConnectOrdered(i);
             if (t != null) {
-                rElem.setAttribute("connectname", t.getID());
+                rElem.setAttribute("connectname", t.getId());
             }
             rElem.setAttribute("index", "" + p.getRayIndex(i));
             if (turnoutControl && p.getRayTurnoutName(i) != null) {
@@ -58,6 +61,12 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
                     rElem.setAttribute("turnoutstate", "thrown");
                 } else {
                     rElem.setAttribute("turnoutstate", "closed");
+                }
+                if (p.isRayDisabled(i)) {
+                    rElem.setAttribute("disabled", "yes");
+                }
+                if (p.isRayDisabledWhenOccupied(i)) {
+                    rElem.setAttribute("disableWhenOccupied", "yes");
                 }
             }
             element.addContent(rElem);
@@ -72,11 +81,12 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
     }
 
     /**
-     * Load, starting with the layoutturntable element, then all the other data
+     * Load, starting with the layout turntable element, then all the other data
      *
      * @param element Top level Element to unpack.
      * @param o       LayoutEditor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         LayoutEditor p = (LayoutEditor) o;
@@ -97,15 +107,14 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
         LayoutTurntable l = new LayoutTurntable(name, new Point2D.Double(x, y), p);
         l.setRadius(radius);
 
-        boolean turnoutControl = false;
-        if (element.getAttribute("turnoutControlled") != null) {
-            if (element.getAttribute("turnoutControlled").getValue().equals("yes")) {
-                turnoutControl = true;
-            }
+        try {
+            l.setTurnoutControlled(element.getAttribute("turnoutControlled").getBooleanValue());
+        } catch (DataConversionException e1) {
+            log.warn("unable to convert layout turnout turnoutControlled attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
-        l.setTurnoutControlled(turnoutControl);
 
-        // load ray tracks 
+        // load ray tracks
         List<Element> rayTrackList = element.getChildren("raytrack");
         if (rayTrackList.size() > 0) {
             for (int i = 0; i < rayTrackList.size(); i++) {
@@ -124,18 +133,29 @@ public class LayoutTurntableXml extends AbstractXmlAdapter {
                     connectName = a.getValue();
                 }
                 l.addRayTrack(angle, index, connectName);
-                if (turnoutControl && relem.getAttribute("turnout") != null) {
-                    //Turnout t = jmri.InstanceManager.turnoutManagerInstance().getTurnout();
+                if (l.isTurnoutControlled() && relem.getAttribute("turnout") != null) {
                     if (relem.getAttribute("turnoutstate").getValue().equals("thrown")) {
                         l.setRayTurnout(index, relem.getAttribute("turnout").getValue(), Turnout.THROWN);
                     } else {
                         l.setRayTurnout(index, relem.getAttribute("turnout").getValue(), Turnout.CLOSED);
                     }
+                    try {
+                        l.setRayDisabled(index, relem.getAttribute("disabled").getBooleanValue());
+                    } catch (DataConversionException e1) {
+                        log.warn("unable to convert layout turnout disabled attribute");
+                    } catch (NullPointerException e) {  // considered normal if the attribute is not present
+                    }
+                    try {
+                        l.setRayDisabledWhenOccupied(index, relem.getAttribute("disableWhenOccupied").getBooleanValue());
+                    } catch (DataConversionException e1) {
+                        log.warn("unable to convert layout turnout disableWhenOccupied attribute");
+                    } catch (NullPointerException e) {  // considered normal if the attribute is not present
+                    }
                 }
             }
         }
-        p.turntableList.add(l);
+        p.getLayoutTracks().add(l);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutTurntableXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutTurntableXml.class);
 }

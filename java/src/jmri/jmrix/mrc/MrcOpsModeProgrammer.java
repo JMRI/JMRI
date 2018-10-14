@@ -5,7 +5,6 @@ import java.util.List;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,8 +15,8 @@ import org.slf4j.LoggerFactory;
  * Functionally, this just creates packets to send via the command station.
  *
  * @see jmri.Programmer
- * @author	Bob Jacobsen Copyright (C) 2002
- * @author	Ken Cameron Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2002
+ * @author Ken Cameron Copyright (C) 2014
  * @author Kevin Dickerson Copyright (C) 2014
  */
 public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.AddressedProgrammer {
@@ -43,6 +42,8 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
     /**
      * Forward a write request to an ops-mode write operation
      */
+    @Override
+    @Deprecated // 4.1.1
     public synchronized void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         log.debug("write CV={} val={}", CV, val); //IN18N
         MrcMessage msg = MrcMessage.getPOM(addressLo, addressHi, CV, val);
@@ -59,12 +60,15 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         tc.sendMrcMessage(msg);
     }
 
+    @Override
+    @Deprecated // 4.1.1
     public synchronized void readCV(int CV, ProgListener p) throws ProgrammerException {
         log.debug("read CV={}", CV);
         log.error("readCV not available in this protocol"); //IN18N
         throw new ProgrammerException();
     }
 
+    @Override
     public synchronized void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         log.debug("confirm CV={}", CV);
         log.error("confirmCV not available in this protocol"); //IN18N
@@ -72,6 +76,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
     }
 
     // add 200mSec between commands, so MRC command station queue doesn't get overrun
+    @Override
     protected void notifyProgListenerEnd(int value, int status) {
         log.debug("MrcOpsModeProgrammer adds 200mSec delay to response"); //IN18N
         try {
@@ -88,7 +93,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
+        ret.add(ProgrammingMode.OPSBYTEMODE);
         return ret;
     }
 
@@ -103,14 +108,17 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         return false;
     }
 
+    @Override
     public boolean getLongAddress() {
         return mLongAddr;
     }
 
+    @Override
     public int getAddressNumber() {
         return mAddress;
     }
 
+    @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
     }
@@ -121,10 +129,11 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
      * this routine does nothing except to replace the parent routine that does
      * something.
      */
+    @Override
     void cleanup() {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(MrcOpsModeProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MrcOpsModeProgrammer.class);
 
 }

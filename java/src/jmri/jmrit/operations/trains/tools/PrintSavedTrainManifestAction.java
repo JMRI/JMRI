@@ -1,10 +1,10 @@
-// PrintSavedTrainManifestAction.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
@@ -12,6 +12,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.jmrit.operations.trains.TrainPrintUtilities;
+import jmri.jmrit.operations.trains.TrainUtilities;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,11 +21,10 @@ import org.slf4j.LoggerFactory;
  * Action to print a train's manifest that has been saved.
  *
  * @author Daniel Boudreau Copyright (C) 2015
- * @version $Revision$
  */
 public class PrintSavedTrainManifestAction extends AbstractAction implements java.beans.PropertyChangeListener {
 
-    private final static Logger log = LoggerFactory.getLogger(PrintSavedTrainManifestAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintSavedTrainManifestAction.class);
 
     public PrintSavedTrainManifestAction(String actionName, boolean isPreview, Train train) {
         super(actionName);
@@ -40,6 +40,7 @@ public class PrintSavedTrainManifestAction extends AbstractAction implements jav
     boolean _isPreview;
     Train _train;
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
@@ -58,7 +59,7 @@ public class PrintSavedTrainManifestAction extends AbstractAction implements jav
             return;
         }
         if (_isPreview && Setup.isManifestEditorEnabled()) {
-            TrainPrintUtilities.openDesktopEditor(file);
+            TrainUtilities.openDesktop(file);
             return;
         }
         String logoURL = Setup.NONE;
@@ -69,7 +70,7 @@ public class PrintSavedTrainManifestAction extends AbstractAction implements jav
         }
         String printerName = Location.NONE;
         if (_train != null) {
-            Location departs = LocationManager.instance().getLocationByName(_train.getTrainDepartsName());
+            Location departs = InstanceManager.getDefault(LocationManager.class).getLocationByName(_train.getTrainDepartsName());
             if (departs != null) {
                 printerName = departs.getDefaultPrinterName();
             }
@@ -81,9 +82,9 @@ public class PrintSavedTrainManifestAction extends AbstractAction implements jav
 
     // Get file to read from
     protected File getFile() {
-        String pathName = TrainManagerXml.instance().getBackupManifestDirectory();
+        String pathName = InstanceManager.getDefault(TrainManagerXml.class).getBackupManifestDirectoryName();
         if (_train != null) {
-            pathName = TrainManagerXml.instance().getBackupManifestDirectory(_train.getName());
+            pathName = InstanceManager.getDefault(TrainManagerXml.class).getBackupManifestDirectoryName(_train.getName());
         }
         JFileChooser fc = new JFileChooser(pathName);
         fc.addChoosableFileFilter(new FileFilter());

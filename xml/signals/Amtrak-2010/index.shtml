@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: Suzie_Tall $) 2010 -->
-<!-- $Id: index.shtml 23697 2013-07-01 14:39:59Z Suzie_Tall
 <title>JMRI: Amtrak 2010 Signaling Definition</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -14,9 +13,9 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">

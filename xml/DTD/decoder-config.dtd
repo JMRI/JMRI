@@ -1,6 +1,5 @@
 <!-- Defines XML documenting a type or types of DCC decoder as  -->
 <!-- a component, esp. information on how to program it. -->
-<!-- $Revision$ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -251,7 +250,7 @@
 <!ATTLIST enumVal comment CDATA #IMPLIED>
 
 <!-- an enumVal variable can take on any of a number of specific choices, with -->
-<!-- each choice defined by a user-readble name, and a value -->
+<!-- each choice defined by a user-readable name, and a value -->
 <!ELEMENT enumChoice EMPTY>
 <!ATTLIST enumChoice choice   CDATA #REQUIRED > <!-- name of this choice -->
 <!ATTLIST enumChoice value    CDATA #IMPLIED >  <!-- if present, must be numeric -->
@@ -272,7 +271,7 @@
 <!ATTLIST compositeVal comment CDATA #IMPLIED>
 
 <!-- an compositeChoiceVal variable can take on any of a number of specific choices, with -->
-<!-- each choice defined by a user-readble name, and a set of values for other vars -->
+<!-- each choice defined by a user-readable name, and a set of values for other vars -->
 <!ELEMENT compositeChoice (compositeSetting*)>
 <!ATTLIST compositeChoice choice   CDATA #REQUIRED > <!-- name of this choice -->
 <!ATTLIST compositeChoice comment  CDATA #IMPLIED >

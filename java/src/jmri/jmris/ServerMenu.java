@@ -1,6 +1,3 @@
-/**
- * ServerMenu.java
- */
 package jmri.jmris;
 
 import java.util.ResourceBundle;
@@ -10,15 +7,9 @@ import javax.swing.JMenu;
  * Create a "Server" menu containing the Server interface to the JMRI
  * system-independent tools
  *
- * @author	Paul Bender Copyright 2010
- * @version $Revision$
+ * @author Paul Bender Copyright 2010
  */
 public class ServerMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7699901823839772206L;
 
     public ServerMenu(String name) {
         this();

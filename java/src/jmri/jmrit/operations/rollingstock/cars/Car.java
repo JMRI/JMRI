@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.beans.PropertyChangeEvent;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -18,7 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Car extends RollingStock {
 
-    CarLoads carLoads = CarLoads.instance();
+    CarLoads carLoads = InstanceManager.getDefault(CarLoads.class);
 
     protected boolean _passenger = false;
     protected boolean _hazardous = false;
@@ -76,15 +77,18 @@ public class Car extends RollingStock {
 
     public Car copy() {
         Car car = new Car();
-        car.setBuilt(_built);
-        car.setColor(_color);
-        car.setLength(_length);
-        car.setLoadName(_loadName);
-        car.setReturnWhenEmptyLoadName(_rweLoadName);
-        car.setNumber(_number);
-        car.setOwner(_owner);
-        car.setRoadName(_road);
-        car.setTypeName(_type);
+        car.setBuilt(getBuilt());
+        car.setColor(getColor());
+        car.setLength(getLength());
+        car.setLoadName(getLoadName());
+        car.setReturnWhenEmptyLoadName(getReturnWhenEmptyLoadName());
+        car.setNumber(getNumber());
+        car.setOwner(getOwner());
+        car.setRoadName(getRoadName());
+        car.setTypeName(getTypeName());
+        car.setCaboose(isCaboose());
+        car.setFred(hasFred());
+        car.setPassenger(isPassenger());
         car.loaded = true;
         return car;
     }
@@ -123,7 +127,7 @@ public class Car extends RollingStock {
 
     /**
      * Used to determine if car has FRED (Flashing Rear End Device).
-     * 
+     *
      * @return true if car has FRED.
      */
     public boolean hasFred() {
@@ -140,7 +144,7 @@ public class Car extends RollingStock {
 
     /**
      * The load name assigned to this car.
-     * 
+     *
      * @return The load name assigned to this car.
      */
     public String getLoadName() {
@@ -172,10 +176,12 @@ public class Car extends RollingStock {
     }
 
     /**
-     * Gets the car load's priority.
+     * Gets the car's load's priority.
+     * 
+     * @return The car's load priority.
      */
     public String getLoadPriority() {
-        return (carLoads.getPriority(_type, _loadName));
+        return (carLoads.getPriority(getTypeName(), getLoadName()));
     }
 
     /**
@@ -184,7 +190,7 @@ public class Car extends RollingStock {
      * @return type empty or type load
      */
     public String getLoadType() {
-        return (carLoads.getLoadType(_type, _loadName));
+        return (carLoads.getLoadType(getTypeName(), getLoadName()));
     }
 
     public String getPickupComment() {
@@ -205,6 +211,8 @@ public class Car extends RollingStock {
 
     /**
      * Used to keep track of which item in a schedule was used for this car.
+     * 
+     * @param id The ScheduleItem id for this car.
      *
      */
     public void setScheduleItemId(String id) {
@@ -296,7 +304,7 @@ public class Car extends RollingStock {
 
     /**
      * Sets when this car will be picked up (day of the week)
-     * 
+     *
      * @param id See TrainSchedule.java
      */
     public void setPickupScheduleId(String id) {
@@ -324,7 +332,8 @@ public class Car extends RollingStock {
     }
 
     public String getPickupScheduleName() {
-        TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(getPickupScheduleId());
+        TrainSchedule sch =
+                InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(getPickupScheduleId());
         String name = NONE;
         if (sch != null) {
             name = sch.getName();
@@ -505,6 +514,8 @@ public class Car extends RollingStock {
 
     /**
      * A kernel is a group of cars that are switched as a unit.
+     * 
+     * @param kernel The assigned Kernel for this car.
      *
      */
     public void setKernel(Kernel kernel) {
@@ -548,10 +559,10 @@ public class Car extends RollingStock {
                 car.setFinalDestination(getFinalDestination());
                 car.setFinalDestinationTrack(getFinalDestinationTrack());
                 car.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
-                if (CarLoads.instance().containsName(car.getTypeName(), getLoadName())) {
+                if (InstanceManager.getDefault(CarLoads.class).containsName(car.getTypeName(), getLoadName())) {
                     car.setLoadName(getLoadName());
                 }
-                if (CarLoads.instance().containsName(car.getTypeName(), getNextLoadName())) {
+                if (InstanceManager.getDefault(CarLoads.class).containsName(car.getTypeName(), getNextLoadName())) {
                     car.setNextLoadName(getNextLoadName());
                 }
             }
@@ -642,29 +653,31 @@ public class Car extends RollingStock {
         // and the pickup day
         setPickupScheduleId(getNextPickupScheduleId());
         setNextPickupScheduleId(NONE);
-        // arrived at spur?
-        if (destTrack != null && destTrack.getTrackType().equals(Track.SPUR)) {
-            updateLoad();
-        } // update load optionally when car reaches staging
-        else if (destTrack != null && destTrack.getTrackType().equals(Track.STAGING)) {
-            if (destTrack.isLoadSwapEnabled() && getLoadName().equals(carLoads.getDefaultEmptyName())) {
-                setLoadName(carLoads.getDefaultLoadName());
-            } else if (destTrack.isLoadSwapEnabled() && getLoadName().equals(carLoads.getDefaultLoadName())) {
-                setLoadEmpty();
-            } else if (destTrack.isLoadEmptyEnabled() && getLoadName().equals(carLoads.getDefaultLoadName())) {
-                setLoadEmpty();
-            } // empty car if it has a custom load
-            else if (destTrack.isRemoveCustomLoadsEnabled() &&
-                    !getLoadName().equals(carLoads.getDefaultEmptyName()) &&
-                    !getLoadName().equals(carLoads.getDefaultLoadName())) {
-                // remove this car's final destination if it has one
-                setFinalDestination(null);
-                setFinalDestinationTrack(null);
-                // car arriving into staging with the RWE load?
-                if (getLoadName().equals(getReturnWhenEmptyLoadName())) {
-                    setLoadName(carLoads.getDefaultEmptyName());
-                } else {
-                    setLoadEmpty(); // note that RWE sets the car's final destination
+        if (destTrack != null) {
+            // arrived at spur?
+            if (destTrack.isSpur()) {
+                updateLoad();
+            } 
+            // update load optionally when car reaches staging
+            else if (destTrack.isStaging()) {
+                if (destTrack.isLoadSwapEnabled() && getLoadName().equals(carLoads.getDefaultEmptyName())) {
+                    setLoadName(carLoads.getDefaultLoadName());
+                } else if (destTrack.isLoadSwapEnabled() && getLoadName().equals(carLoads.getDefaultLoadName())) {
+                    setLoadEmpty();
+                } else if (destTrack.isLoadEmptyEnabled() && getLoadName().equals(carLoads.getDefaultLoadName())) {
+                    setLoadEmpty();
+                } else if (destTrack.isRemoveCustomLoadsEnabled() &&
+                        !getLoadName().equals(carLoads.getDefaultEmptyName()) &&
+                        !getLoadName().equals(carLoads.getDefaultLoadName())) {
+                    // remove this car's final destination if it has one
+                    setFinalDestination(null);
+                    setFinalDestinationTrack(null);
+                    // car arriving into staging with the RWE load?
+                    if (getLoadName().equals(getReturnWhenEmptyLoadName())) {
+                        setLoadName(carLoads.getDefaultEmptyName());
+                    } else {
+                        setLoadEmpty(); // note that RWE sets the car's final destination
+                    }
                 }
             }
         }
@@ -753,7 +766,7 @@ public class Car extends RollingStock {
         setFinalDestinationTrack(getPreviousFinalDestinationTrack()); // revert to previous
         if (isLoadGeneratedFromStaging()) {
             setLoadGeneratedFromStaging(false);
-            setLoadName(CarLoads.instance().getDefaultEmptyName());
+            setLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName());
         }
 
         super.reset();
@@ -764,8 +777,8 @@ public class Car extends RollingStock {
         setKernel(null);
         setFinalDestination(null); // removes property change listener
         setFinalDestinationTrack(null); // removes property change listener
-        CarTypes.instance().removePropertyChangeListener(this);
-        CarLengths.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarLengths.class).removePropertyChangeListener(this);
         super.dispose();
     }
 
@@ -798,7 +811,7 @@ public class Car extends RollingStock {
             _utility = a.getValue().equals(Xml.TRUE);
         }
         if ((a = e.getAttribute(Xml.KERNEL)) != null) {
-            Kernel k = CarManager.instance().getKernelByName(a.getValue());
+            Kernel k = InstanceManager.getDefault(CarManager.class).getKernelByName(a.getValue());
             if (k != null) {
                 setKernel(k);
                 if ((a = e.getAttribute(Xml.LEAD_KERNEL)) != null && a.getValue().equals(Xml.TRUE)) {
@@ -842,13 +855,14 @@ public class Car extends RollingStock {
             _nextPickupScheduleId = a.getValue();
         }
         if ((a = e.getAttribute(Xml.NEXT_DEST_ID)) != null) {
-            setFinalDestination(LocationManager.instance().getLocationById(a.getValue()));
+            setFinalDestination(InstanceManager.getDefault(LocationManager.class).getLocationById(a.getValue()));
         }
         if (getFinalDestination() != null && (a = e.getAttribute(Xml.NEXT_DEST_TRACK_ID)) != null) {
             setFinalDestinationTrack(getFinalDestination().getTrackById(a.getValue()));
         }
         if ((a = e.getAttribute(Xml.PREVIOUS_NEXT_DEST_ID)) != null) {
-            setPreviousFinalDestination(LocationManager.instance().getLocationById(a.getValue()));
+            setPreviousFinalDestination(
+                    InstanceManager.getDefault(LocationManager.class).getLocationById(a.getValue()));
         }
         if (getPreviousFinalDestination() != null && (a = e.getAttribute(Xml.PREVIOUS_NEXT_DEST_TRACK_ID)) != null) {
             setPreviousFinalDestinationTrack(getPreviousFinalDestination().getTrackById(a.getValue()));
@@ -857,7 +871,7 @@ public class Car extends RollingStock {
             setPreviousScheduleId(a.getValue());
         }
         if ((a = e.getAttribute(Xml.RWE_DEST_ID)) != null) {
-            _rweDestination = LocationManager.instance().getLocationById(a.getValue());
+            _rweDestination = InstanceManager.getDefault(LocationManager.class).getLocationById(a.getValue());
         }
         if (_rweDestination != null && (a = e.getAttribute(Xml.RWE_DEST_TRACK_ID)) != null) {
             _rweDestTrack = _rweDestination.getTrackById(a.getValue());
@@ -961,13 +975,13 @@ public class Car extends RollingStock {
     @Override
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // Set dirty
-        CarManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(CarManagerXml.class).setDirty(true);
         super.setDirtyAndFirePropertyChange(p, old, n);
     }
 
     private void addPropertyChangeListeners() {
-        CarTypes.instance().addPropertyChangeListener(this);
-        CarLengths.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarLengths.class).addPropertyChangeListener(this);
     }
 
     @Override
@@ -1001,6 +1015,6 @@ public class Car extends RollingStock {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Car.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Car.class);
 
 }

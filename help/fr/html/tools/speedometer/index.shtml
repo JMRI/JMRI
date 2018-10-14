@@ -1,89 +1,86 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Blorec Herv&#233; le 2013-10-01-->
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- UpDated by Blorec Herv&#233; le 2016-09-26-->
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
+<!-- Copyright Bob Jacobsen 2008 -->
+<title>JMRI: Speedometer</title>
 
-  <title>JMRI: Speedometer</title><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
     <div id="mainContent">
       <h2>Tachym&egrave;tre</h2>
 
-      <p>(Voir aussi la page sur le tachym&egrave;tre NCE <a href=
-      "NCE-Speedometer.shtml"></a>) et le <a href=
-      "../../hardware/bachrus/index.shtml">tachym&egrave;tre
-      Bachrus</a>)</p>Les biblioth&egrave;ques JMRI contiennent un
-      outil compteur que vous pouvez utiliser directement depuis
-      l'&eacute;cran, ou le construire dans vos propres
-      applications
+<h1>Compteur</h1>
 
-      <p>Avant vous devrez configurer la mesure de la vitesse .</p>
-
-      <p>Pour ce faire, entrez le nombre de capteurs dans les trois
-      champs. C'est un nombre (comme 23) pour l'adresse du BDL16,
-      DS54, etc le canal qui rapporte le changement d'occupation.
-      La fa&ccedil;on la plus simple pour obtenir le bon
-      num&eacute;ro est d'ouvrir une fen&ecirc;tre "Moniteur", et
-      d&eacute;poser une locomotive sur le canton qui vous
-      &ecirc;tes int&eacute;resse. Vous verrez le message du
-      capteur, avec le num&eacute;ro, dans la fen&ecirc;tre qui
-      ressemble &agrave; quelque chose comme ceci:</p>
-      <pre>
+Les biblioth&#232;ques JMRI
+contiennent un outil Compteur que vous pouvez utiliser directement depuis l'&#233;cran,
+ou le construire dans vos propres applications
+<P>
+Avant que l'outil ne reporte de mesure, vous devrez le configurer .
+<P>
+Pour ce faire, entrez le nombre de Capteurs dans les trois champs. C'est un
+nombre (comme "23") pour l'adresse du BDL16, DS54, etc. le canal qui
+rapporte le changement d'occupation. La fa&#231;on la plus simple pour obtenir le bon num&#233;ro
+ est d'ouvrir une fen&#234;tre "Moniteur Loconet", et d&#233;poser une
+locomotive sur le canton qui vous &#234;tes int&#233;resse. Vous verrez 
+le message du capteur, avec le num&#233;ro, dans la fen&#234;tre qui ressemble &#224; 
+quelque chose comme ceci:
+<PRE>
     General sensor input report: contact 161 (DS54 20 ch1 Sw  input)
         (BDL16 10 A2) is Lo
-</pre>Le num&eacute;ro de contact, 161 dans ce cas, est ce que vous
-voulez.
+</PRE>
+Le num&#233;ro de contact, 161 dans ce cas, est ce que vous voulez.
+<P>
+Il y a trois capteurs afin que vous puissiez avoir un intervalle plus court pour les
+vitesses lentes et un intervalle plus long pour des vitesses rapides.
+L'intervalle de mesure est du Capteur 1 au Capteur 2, et du Capteur de 1 au
+Capteur 3.
+<P>
+Vous devez &#233;galement choisir "&#224; l'entr&#233;e" ou "&#224; la sortie" pour chacun des
+Capteurs. Ceci donne soit le d&#233;marrage/arr&#234;t de l'horloge  lorsque le Capteur
+montre que le Canton est d'abord "Occup&#233;", soit quand il montre que le Canton est
+d'abord "Inoccup&#233;".
+<P>
+Vous pouvez &#233;galement entrer la distance en "&#233;chelle" en pieds entre les diff&#233;rents
+points. Si vous utilisez "sur l'entr&#233;e", la mesure utilise l'entr&#233;e
+fin du bloc.
+<P>
+Enfin, cliquez sur le bouton "D&#233;marrer". Les trois petits points rouges sur
+le c&#244;t&#233; droit de la fen &#234;tre du Compteur commenceront &#224; changer de couleur pour indiquer l'&#233;tat des 
+Capteurs s&#233;lectionn&#233;s: 
+<ul>
+		<li>Rouge pour "Inconnu", aucun message encore vu; 
+		<li>Blanc pour  "Inoccup&#233;";
+		<li> vert ou jaune pour "Occup&#233;".
 
-      <p>Il y a trois capteurs afin que vous puissiez avoir un
-      intervalle plus court pour les vitesses lentes et un
-      intervalle plus long pour des vitesses rapides. L'intervalle
-      est du capteur 1 &agrave; capteur 2, et du capteur de 1
-      &agrave; capteur 3.</p>
+<P>
+Une fois que vous cliquez sur le bouton D&#233;marrer, vous ne pouvez pas modifier la configuration.
+Il suffit de fermer cette fen&#234;tre et ouvrir un autre. Vous pouvez avoir plusieurs
+fen&#234;tres d'outils Compteur ouvertes si vous le souhaitez.
 
-      <p>Vous devez &eacute;galement choisir "&agrave;
-      l'entr&eacute;e" ou "&agrave; la sortie" pour chacun des
-      capteurs. Ceci dit soit le d&eacute;marrage/arr&ecirc;t de
-      l'horloge lorsque le capteur montre que le canton est d'abord
-      occup&eacute;, soit quand il montre que le canton est
-      inoccup&eacute;.</p>
+<p>Consultez &#233;galement les pages d'aide JMRI sur:
 
-      <p>Vous pouvez &eacute;galement entrer la distance en echelle
-      en pieds entre les diff&eacute;rents points. Si vous utilisez
-      "sur l'entr&eacute;e", la mesure utilise l'entr&eacute;e fin
-      du bloc.</p>
+<ul>
+	<li><a href="SpeedMatch.shtml">Vitesse Correspondante</a></li>
+	<li>Le <a href="NCE-Speedometer.shtml">Compteur NCE</a></li>
+	<li>Le <a href="../../hardware/bachrus/index.shtml">Compteur Bachrus</a></li>
+</ul>
 
-      <p>Enfin, cliquez sur le bouton "D&eacute;marrer". Les trois
-      petits points rouges sur le c&ocirc;t&eacute; droit
-      commenceront &agrave; changer de couleur pour indiquer
-      l'&eacute;tat des capteurs s&eacute;lectionn&eacute;s: rouge
-      pour "inconnu", aucun message encore vu; Blanc pour
-      "inoccup&eacute;"; vert ou jaune pour "occup&eacute;".</p>
 
-      <p>Une fois que vous cliquez sur le bouton D&eacute;marrer,
-      vous ne pouvez pas modifier la configuration. Il suffit de
-      fermer cette fen&ecirc;tre et ouvrir un autre. Vous pouvez
-      avoir plusieurs fen&ecirc;tres d'outils tachym&egrave;tre
-      ouvertes si vous le souhaitez. 
-      <!--#include virtual="/Footer" --></p>
-    </div>
-  </div>
+</p>
+
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

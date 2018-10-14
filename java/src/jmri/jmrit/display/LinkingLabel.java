@@ -1,6 +1,8 @@
 package jmri.jmrit.display;
 
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import javax.annotation.Nonnull;
 import javax.swing.JPopupMenu;
 import jmri.jmrit.catalog.NamedIcon;
@@ -45,14 +47,17 @@ public class LinkingLabel extends PositionableLabel implements LinkingObject {
 
     String url;
 
-    public String getUrl() {
+    @Override
+    public String getURL() {
         return url;
     }
 
-    public void setUrl(String u) {
+    @Override
+    public void setULRL(String u) {
         url = u;
     }
 
+    @Override
     public boolean setLinkMenu(JPopupMenu popup) {
         popup.add(CoordinateEdit.getLinkEditAction(this, "EditLink"));
         return true;
@@ -61,6 +66,7 @@ public class LinkingLabel extends PositionableLabel implements LinkingObject {
     // overide where used - e.g. momentary
 //    public void doMousePressed(MouseEvent event) {}
 //    public void doMouseReleased(MouseEvent event) {}
+    @Override
     public void doMouseClicked(MouseEvent event) {
         log.debug("click to " + url);
         try {
@@ -87,12 +93,12 @@ public class LinkingLabel extends PositionableLabel implements LinkingObject {
             } else if (url.length() > 0) {
                 jmri.util.ExternalLinkContentViewerUI.activateURL(new java.net.URL(url));
             }
-        } catch (Throwable t) {
+        } catch (IOException | URISyntaxException t) {
             log.error("Error handling link", t);
         }
         super.doMouseClicked(event);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LinkingLabel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LinkingLabel.class);
 
 }

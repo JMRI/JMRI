@@ -17,15 +17,18 @@ public class DCCppListenerScaffold implements jmri.jmrix.dccpp.DCCppListener {
         rcvCount = 0;
     }
 
+    @Override
     public void message(DCCppReply m) {
         rcvdRply = m;
         rcvCount++;
     }
 
+    @Override
     public void message(DCCppMessage m) {
         rcvdMsg = m;
     }
 
+    @Override
     public void notifyTimeout(DCCppMessage m) {
         timeOutMsg = m;
     }
@@ -33,6 +36,5 @@ public class DCCppListenerScaffold implements jmri.jmrix.dccpp.DCCppListener {
     int rcvCount;
     DCCppReply rcvdRply;
     DCCppMessage timeOutMsg;
-    @SuppressWarnings("unused")
-    private static DCCppMessage rcvdMsg;
+    DCCppMessage rcvdMsg;
 }

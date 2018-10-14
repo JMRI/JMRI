@@ -7,6 +7,7 @@
     <display item="MAN Key Extension (Disable HLU or ABC signal control)" label="Set Function Key to Disable ABC Signal Control">
        <label>Set Function Key to Disable ABC Signal Control</label>
        <label xml:lang="it">Tasto funzione per disabilitare controllo segnale ABC</label>
+       <label xml:lang="cs">Nastavení funkční klávesy pro znepřístupnění řízení signálem ABC</label>
     </display>
     <display item="Direction Dependent stops with asymmetrical DCC"/>
     <label>

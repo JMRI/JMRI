@@ -1,9 +1,5 @@
 package jmri.web.servlet.operations;
 
-import static jmri.server.json.JsonException.CODE;
-import static jmri.server.json.JSON.DATA;
-import static jmri.server.json.JSON.LOCATION;
-import static jmri.server.json.JSON.NULL;
 import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
 import static jmri.web.servlet.ServletUtil.UTF8;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
@@ -14,22 +10,26 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import jmri.server.json.JSON;
-import jmri.server.json.JsonException;
-import jmri.jmris.json.JsonUtil;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.JsonManifest;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.server.json.JSON;
+import jmri.server.json.JsonException;
+import jmri.server.json.operations.JsonOperations;
+import jmri.server.json.operations.JsonUtil;
 import jmri.util.FileUtil;
 import jmri.web.server.WebServer;
 import jmri.web.servlet.ServletUtil;
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,12 +38,15 @@ import org.slf4j.LoggerFactory;
  * @author Randall Wood (C) 2014
  * @author Steve Todd (C) 2013
  */
+@WebServlet(name = "OperationsServlet",
+        urlPatterns = {
+            "/operations", // default
+            "/web/operationsConductor.html", // redirect to default since ~ 13 May 2014
+            "/web/operationsManifest.html", // redirect to default since ~ 13 May 2014
+            "/web/operationsTrains.html" // redirect to default since ~ 13 May 2014
+        })
+@ServiceProvider(service = HttpServlet.class)
 public class OperationsServlet extends HttpServlet {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5856610982342205832L;
 
     private ObjectMapper mapper;
 
@@ -51,10 +54,12 @@ public class OperationsServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        super.init();
-        this.mapper = new ObjectMapper();
-        // ensure all operations managers are functional before handling first request
-        OperationsManager.getInstance();
+        // only do complete initialization for default path, not redirections
+        if (this.getServletContext().getContextPath().equals("/operations")) { // NOI18N
+            this.mapper = new ObjectMapper();
+            // ensure all operations managers are functional before handling first request
+            InstanceManager.getDefault(OperationsManager.class);
+        }
     }
 
     /*
@@ -64,9 +69,15 @@ public class OperationsServlet extends HttpServlet {
      * /operations/conductor/id - get the conductor's screen for train with Id "id"
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (request.getRequestURI().equals("/web/operationsConductor.html") // NOI18N
+                || request.getRequestURI().equals("/web/operationsManifest.html") // NOI18N
+                || request.getRequestURI().equals("/web/operationsTrains.html")) { // NOI18N
+            response.sendRedirect("/operations"); // NOI18N
+            return;
+        }
         String[] pathInfo = request.getPathInfo().substring(1).split("/");
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
-        if (pathInfo[0].equals("") || (pathInfo[0].equals(JSON.TRAINS) && pathInfo.length == 1)) {
+        if (pathInfo[0].equals("") || (pathInfo[0].equals(JsonOperations.TRAINS) && pathInfo.length == 1)) {
             this.processTrains(request, response);
         } else {
             if (pathInfo.length == 1) {
@@ -74,22 +85,27 @@ public class OperationsServlet extends HttpServlet {
             } else {
                 String id = pathInfo[1];
                 String report = pathInfo[0];
-                if (report.equals(JSON.TRAINS) && pathInfo.length == 3) {
+                if (report.equals(JsonOperations.TRAINS) && pathInfo.length == 3) {
                     report = pathInfo[2];
                 }
                 log.debug("Handling {} with id {}", report, id);
-                if (report.equals("manifest")) {
-                    this.processManifest(id, request, response);
-                } else if (report.equals("conductor")) {
-                    this.processConductor(id, request, response);
-                } else if (report.equals("trains")) {
-                    // TODO: allow for editing/building/reseting train
-                    log.warn("Unhandled request for \"trains\"");
-                    response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-                } else {
-                    // Don't know what to do
-                    log.warn("Unparsed request for \"{}\"", report);
-                    response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+                switch (report) {
+                    case "manifest":
+                        this.processManifest(id, request, response);
+                        break;
+                    case "conductor":
+                        this.processConductor(id, request, response);
+                        break;
+                    case "trains":
+                        // TODO: allow for editing/building/reseting train
+                        log.warn("Unhandled request for \"trains\"");
+                        response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+                        break;
+                    default:
+                        // Don't know what to do
+                        log.warn("Unparsed request for \"{}\"", report);
+                        response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+                        break;
                 }
             }
         }
@@ -98,21 +114,22 @@ public class OperationsServlet extends HttpServlet {
     protected void processTrains(HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (JSON.JSON.equals(request.getParameter("format"))) {
             response.setContentType(UTF8_APPLICATION_JSON);
-            ServletUtil.getInstance().setNonCachingHeaders(response);
+            InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
             try {
-                response.getWriter().print(JsonUtil.getTrains(request.getLocale()));
+                JsonUtil utilities = new JsonUtil(this.mapper);
+                response.getWriter().print(utilities.getTrains(request.getLocale()));
             } catch (JsonException ex) {
-                int code = ex.getJsonMessage().path(DATA).path(CODE).asInt(200);
+                int code = ex.getJsonMessage().path(JSON.DATA).path(JsonException.CODE).asInt(200);
                 response.sendError(code, (new ObjectMapper()).writeValueAsString(ex.getJsonMessage()));
             }
         } else if ("html".equals(request.getParameter("format"))) {
             response.setContentType(UTF8_TEXT_HTML);
-            ServletUtil.getInstance().setNonCachingHeaders(response);
+            InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
             boolean showAll = ("all".equals(request.getParameter("show")));
             StringBuilder html = new StringBuilder();
             String format = FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "TrainsSnippet.html")));
-            for (Train train : TrainManager.instance().getTrainsByNameList()) {
-                if (showAll || !CarManager.instance().getByTrainDestinationList(train).isEmpty()) {
+            for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByNameList()) {
+                if (showAll || !InstanceManager.getDefault(CarManager.class).getByTrainDestinationList(train).isEmpty()) {
                     html.append(String.format(request.getLocale(), format,
                             train.getIconName(),
                             StringEscapeUtils.escapeHtml4(train.getDescription()),
@@ -134,23 +151,23 @@ public class OperationsServlet extends HttpServlet {
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Operations.html"))),
                     String.format(request.getLocale(),
                             Bundle.getMessage(request.getLocale(), "HtmlTitle"),
-                            ServletUtil.getInstance().getRailroadName(false),
+                            InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
                             Bundle.getMessage(request.getLocale(), "TrainsTitle")
                     ),
-                    ServletUtil.getInstance().getNavBar(request.getLocale(), request.getContextPath()),
-                    ServletUtil.getInstance().getRailroadName(false),
-                    ServletUtil.getInstance().getFooter(request.getLocale(), request.getContextPath()),
+                    InstanceManager.getDefault(ServletUtil.class).getNavBar(request.getLocale(), request.getContextPath()),
+                    InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
+                    InstanceManager.getDefault(ServletUtil.class).getFooter(request.getLocale(), request.getContextPath()),
                     "" // no train Id
             ));
         }
     }
 
     private void processManifest(String id, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Train train = TrainManager.instance().getTrainById(id);
+        Train train = InstanceManager.getDefault(TrainManager.class).getTrainById(id);
         if ("html".equals(request.getParameter("format"))) {
             log.debug("Getting manifest HTML code for train {}", id);
             HtmlManifest manifest = new HtmlManifest(request.getLocale(), train);
-            ServletUtil.getInstance().setNonCachingHeaders(response);
+            InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
             response.setContentType(UTF8_TEXT_HTML);
             response.getWriter().print(String.format(request.getLocale(),
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "ManifestSnippet.html"))),
@@ -177,44 +194,44 @@ public class OperationsServlet extends HttpServlet {
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Operations.html"))),
                     String.format(request.getLocale(),
                             Bundle.getMessage(request.getLocale(), "HtmlTitle"),
-                            ServletUtil.getInstance().getRailroadName(false),
+                            InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
                             String.format(request.getLocale(),
                                     Bundle.getMessage(request.getLocale(), "ManifestTitle"),
                                     train.getIconName(),
                                     StringEscapeUtils.escapeHtml4(train.getDescription())
                             )
                     ),
-                    ServletUtil.getInstance().getNavBar(request.getLocale(), request.getContextPath()),
-                    !train.getRailroadName().equals("") ? train.getRailroadName() : ServletUtil.getInstance().getRailroadName(false),
-                    ServletUtil.getInstance().getFooter(request.getLocale(), request.getContextPath()),
+                    InstanceManager.getDefault(ServletUtil.class).getNavBar(request.getLocale(), request.getContextPath()),
+                    !train.getRailroadName().equals("") ? train.getRailroadName() : InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
+                    InstanceManager.getDefault(ServletUtil.class).getFooter(request.getLocale(), request.getContextPath()),
                     train.getId()
             ));
         }
     }
 
     private void processConductor(String id, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Train train = TrainManager.instance().getTrainById(id);
+        Train train = InstanceManager.getDefault(TrainManager.class).getTrainById(id);
         JsonNode data;
         if (request.getContentType() != null && request.getContentType().contains(APPLICATION_JSON)) {
             data = this.mapper.readTree(request.getReader());
-            if (!data.path(DATA).isMissingNode()) {
-                data = data.path(DATA);
+            if (!data.path(JSON.DATA).isMissingNode()) {
+                data = data.path(JSON.DATA);
             }
         } else {
             data = this.mapper.createObjectNode();
             ((ObjectNode) data).put("format", request.getParameter("format"));
         }
         if (data.path("format").asText().equals("html")) {
-            if (!data.path(LOCATION).isMissingNode()) {
-                String location = data.path(LOCATION).asText();
-                if (location.equals(NULL) || train.getNextLocationName().equals(location)) {
+            if (!data.path(JsonOperations.LOCATION).isMissingNode()) {
+                String location = data.path(JsonOperations.LOCATION).asText();
+                if (location.equals(JSON.NULL) || train.getNextLocationName().equals(location)) {
                     train.move();
                     return; // done property change will cause update to client
                 }
             }
             log.debug("Getting conductor HTML code for train {}", id);
             HtmlConductor conductor = new HtmlConductor(request.getLocale(), train);
-            ServletUtil.getInstance().setNonCachingHeaders(response);
+            InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
             response.setContentType(UTF8_TEXT_HTML);
             response.getWriter().print(conductor.getLocation());
         } else {
@@ -223,16 +240,16 @@ public class OperationsServlet extends HttpServlet {
                     FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(request.getLocale(), "Operations.html"))),
                     String.format(request.getLocale(),
                             Bundle.getMessage(request.getLocale(), "HtmlTitle"),
-                            ServletUtil.getInstance().getRailroadName(false),
+                            InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
                             String.format(request.getLocale(),
                                     Bundle.getMessage(request.getLocale(), "ConductorTitle"),
                                     train.getIconName(),
                                     StringEscapeUtils.escapeHtml4(train.getDescription())
                             )
                     ),
-                    ServletUtil.getInstance().getNavBar(request.getLocale(), request.getContextPath()),
-                    !train.getRailroadName().equals("") ? train.getRailroadName() : ServletUtil.getInstance().getRailroadName(false),
-                    ServletUtil.getInstance().getFooter(request.getLocale(), request.getContextPath()),
+                    InstanceManager.getDefault(ServletUtil.class).getNavBar(request.getLocale(), request.getContextPath()),
+                    !train.getRailroadName().equals("") ? train.getRailroadName() : InstanceManager.getDefault(ServletUtil.class).getRailroadName(false),
+                    InstanceManager.getDefault(ServletUtil.class).getFooter(request.getLocale(), request.getContextPath()),
                     train.getId()
             ));
         }

@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>7</revnumber>
+      <date>2016-10-09</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>6</revnumber>
       <date>2012-12-27</date>
       <authorinitials>BJ</authorinitials>
@@ -47,7 +53,11 @@
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori da 0 a 255</comment>
     <comment xml:lang="de">Wertebereich 0-255</comment>
-  </variable>
+    <label xml:lang="cs">Zrychlení</label>
+    <comment xml:lang="cs">Meze 0-255</comment>
+    <label xml:lang="ca">Inèrcia d'Acceleració</label>
+    <comment xml:lang="ca">Rang de 0-255</comment>
+</variable>
   <variable CV="4" item="Decel" default="5" comment="Range 0-255">
     <decVal min="0" max="255"/>
     <label>Deceleration (Brake) Momentum (0-255)</label>
@@ -56,5 +66,9 @@
     <comment>Range 0-255</comment>
     <comment xml:lang="it">Valori da 0 a 255</comment>
     <comment xml:lang="de">Wertebereich 0-255</comment>
+    <label xml:lang="cs">Zpomalení</label>
+    <comment xml:lang="cs">Meze 0-255</comment>
+    <label xml:lang="ca">Inèrcia desacceleració (0-255)</label>
+    <comment xml:lang="ca">Rang de 0-255</comment>
   </variable>
 </variables>

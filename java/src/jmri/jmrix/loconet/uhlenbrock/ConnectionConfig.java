@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.loconet.uhlenbrock;
 
 /**
@@ -6,13 +5,14 @@ package jmri.jmrix.loconet.uhlenbrock;
  * connection via an IntelliboxAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
- * @version	$Revision: 17977 $
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     * <p>
+     * @param p - a @link jmri.jmrix.SerialPortAdapter} object
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
@@ -25,13 +25,16 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     public String name() {
-        return "Intellibox-II/IB-Com (USB)";
-    }
+        return "Intellibox-II (USB)";
+    } // NOI18N
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new UhlenbrockAdapter();
         }
     }
+
 }

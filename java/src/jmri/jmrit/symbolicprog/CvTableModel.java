@@ -95,10 +95,12 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
     }
 
     // basic methods for AbstractTableModel implementation
+    @Override
     public int getRowCount() {
         return _numRows;
     }
 
+    @Override
     public int getColumnCount() {
         if (getProgrammer() != null) {
             return HIGHESTCOLUMN;
@@ -107,6 +109,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         }
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case NUMCOLUMN:
@@ -126,6 +129,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case NUMCOLUMN:
@@ -145,6 +149,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case NUMCOLUMN:
@@ -185,6 +190,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         return _cvAllMap.get(number);
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         switch (col) {
             case NUMCOLUMN:
@@ -223,6 +229,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         switch (col) {
             case VALCOLUMN: // Object is actually an Integer
@@ -235,6 +242,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         }
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("action command: " + e.getActionCommand());
@@ -256,6 +264,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         }
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         // don't need to forward Busy, do need to forward Value
         // not sure about any others
@@ -322,7 +331,8 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
             cv.setReadOnly(readOnly);
         }
         if (infoOnly) {
-            cv.setReadOnly(infoOnly);
+            cv.setReadOnly(!infoOnly);
+            cv.setWriteOnly(!infoOnly);
             cv.setInfoOnly(infoOnly);
         }
         if (writeOnly) {
@@ -377,8 +387,12 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         _compareButtons.removeAllElements();
         _compareButtons = null;
 
+        _cvAllMap.clear();
+        _cvAllMap = null;
+        
         _status = null;
+        
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CvTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CvTableModel.class);
 }

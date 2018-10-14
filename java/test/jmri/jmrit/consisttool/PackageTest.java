@@ -2,15 +2,14 @@ package jmri.jmrit.consisttool;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ConsistFileTest.class,
    ConsistToolActionTest.class,
    ConsistDataModelTest.class,
-   ConsistToolFrameTest.class
+   ConsistToolFrameTest.class,
+   BundleTest.class
 })
 
 /**

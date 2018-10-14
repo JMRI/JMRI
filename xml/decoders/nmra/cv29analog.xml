@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id$ -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -26,6 +25,24 @@
     </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>10</revnumber>
+      <date>2018-02-14</date>
+      <authorinitials>WK</authorinitials>
+      <revremark>Added Dutch translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>9</revnumber>
+      <date>2018-01-02</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>French translation improvement</revremark>
+    </revision>
+    <revision>
+      <revnumber>8</revnumber>
+      <date>2016-10-23</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
     <revision>
       <revnumber>7</revnumber>
       <date>2013-07-25</date>
@@ -53,6 +70,8 @@
         <choice xml:lang="fr">Digital NMRA seulement</choice>
         <choice xml:lang="ca">NMRA Digital only (ca)</choice>
         <choice xml:lang="de">Nur Digital nach NMRA</choice>
+        <choice xml:lang="cs">Pouze digitál NMRA</choice>
+        <choice xml:lang="nl">Alleen digitaal vlg. NMRA</choice>
       </enumChoice>
       <enumChoice choice="DC conversion enabled">
         <choice>DC conversion enabled</choice>
@@ -60,15 +79,22 @@
         <choice xml:lang="fr">Mode analogique activé</choice>
         <choice xml:lang="ca">DC conversion enabled (ca)</choice>
         <choice xml:lang="de">Analogbetrieb Aktiviert</choice>
+        <choice xml:lang="cs">Povolena konverze DC</choice>
+        <choice xml:lang="nl">Analogmodus ingeschakeld</choice>
       </enumChoice>
     </enumVal>
+    <label>Power Source Conversion</label>
     <label xml:lang="it">Conversione Sorgente Alimentazione</label>
     <label xml:lang="fr">Conversion source d'alimentation</label>
     <label xml:lang="ca">Power Source Conversion(ca)</label>
     <label xml:lang="de">Stromquelle Konversion</label>
-    <label>Power Source Conversion</label>
-    <tooltip>NMRA Digital only: Digital Operation Only - DC conversion enabled: both Digital + Analog, default is Off</tooltip>
-    <tooltip xml:lang="it">'4' bit. Permette alla loco di andare in DC, per default è Off</tooltip>
-    <tooltip xml:lang="de">Nur Digital nach NMRA: Die Lokomotive fährt nur digital. Analogbetrieb Aktiviert: Die Lokomotive fährt sowohl digital als auch analog.</tooltip>
+    <label xml:lang="cs">Konverze napájení</label>
+    <label xml:lang="nl">Stroombron-omschakeling</label>
+    <tooltip>&lt;html&gt;NMRA Digital only: Digital Operation Only.&lt;br&gt; DC conversion enabled: both Digital + Analog, default is both&lt;br&gt;</tooltip>
+    <tooltip xml:lang="it">&lt;html&gt;'4' bit.&lt;br&gt; Permette alla loco di andare in DC, per default è On&lt;br&gt;</tooltip>
+    <tooltip xml:lang="fr">&lt;html&gt;Digital NMRA seulement: fonctionne uniquement en Digital&lt;br&gt; Mode analogique activé: fonctionne à la fois en Digital et en analogique&lt;br&gt;Les deux par défaut.&lt;br&gt;</tooltip>
+    <tooltip xml:lang="de">&lt;html&gt;Nur Digital nach NMRA: Die Lokomotive fährt nur digital.&lt;br&gt; Analogbetrieb Aktiviert: Die Lokomotive fährt sowohl digital als auch analog.&lt;br&gt;</tooltip>
+    <tooltip xml:lang="cs">&lt;html&gt;Pouze digitál NMRA: pouze digitální provoz. &lt;br&gt; Povolena konverze DC: obojí provoz digitální + analogový, výhozí hodnota je vypnuto.&lt;br&gt;</tooltip>
+    <tooltip xml:lang="nl">&lt;html&gt;Alleen digitaal volgens NMRA: de locomotief rijdt alleen digitaal.&lt;br&gt; Analoge modus geactiveerd: de locomotief rijdt zowel digitaal als analoog.&lt;br&gt;</tooltip>
   </variable>
 </variables>

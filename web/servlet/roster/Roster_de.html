@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="/css/main.css">
         <link rel="stylesheet" href="/css/user.css">
+		<link rel="stylesheet" href="/css/roster.css">
 
         <script src="/js/jquery-1.11.2.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
@@ -22,6 +23,9 @@
         <script src="/js/json2.js"></script>
         <script src="/js/jquery.websocket.js"></script>
         <script src="/js/jquery.jmri.js"></script>
+		<script src="/js/jquery.ui.widget.js"></script>
+		<script src="/js/jquery.iframe-transport.js"></script>
+		<script src="/js/jquery.fileupload.js"></script>
         <script src="/js/main.js"></script>
         <script src="/js/user.js"></script>
         <script src="/js/roster.js"></script>
@@ -35,7 +39,33 @@
 
             <div class="container">
 
-                <h1>%5$s</h1>
+                <div class="row vertical-align">
+                    <div class="col-md-2">
+                        <h1>%5$s</h1>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="row text-right">
+                            <button data-toggle="collapse" data-target="#uploadRoster">Hochladen Lokpark Dateien</button>
+                        </div>
+                        <div id="uploadRoster" class="row collapse">
+                            <div class="col-md-3">
+                                <label class="btn btn-default btn-file">Dateien auswählen... <input id="fileupload"
+                                    type="file" name="files[]" data-url="roster" multiple style="display: none;">
+                                </label>
+                                <div id="dropzone" class="fade well">-oder- Dateien hier ablegen</div>
+                                <label><input id="fileReplace" type="checkbox" value="">Ersetzen, falls
+                                    vorhanden?</label>
+                                <div id="progress" class="progress">
+                                    <div class="bar"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                Ergebnisse:
+                                <div id="msgList"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div id="activity-alert" class="alert alert-info alert-dismissable">Lokpark lesen...</div>
                 <div id="warning-roster-no-entries" class="alert alert-warning alert-dismissable hidden">Lokpark ist leer.</div>

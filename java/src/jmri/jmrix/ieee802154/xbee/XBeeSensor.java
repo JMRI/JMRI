@@ -1,11 +1,13 @@
-// XBeeSensor.java
 package jmri.jmrix.ieee802154.xbee;
 
-import com.rapplogic.xbee.api.ApiId;
-import com.rapplogic.xbee.api.RemoteAtResponse;
-import com.rapplogic.xbee.api.wpan.IoSample;
-import com.rapplogic.xbee.api.wpan.RxResponseIoSample;
-import com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse;
+import com.digi.xbee.api.RemoteXBeeDevice;
+import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
+import com.digi.xbee.api.exceptions.TimeoutException;
+import com.digi.xbee.api.exceptions.XBeeException;
+import com.digi.xbee.api.io.IOLine;
+import com.digi.xbee.api.io.IOSample;
+import com.digi.xbee.api.io.IOValue;
+import com.digi.xbee.api.listeners.IIOSampleReceiveListener;
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
 import org.slf4j.Logger;
@@ -13,20 +15,15 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extend jmri.AbstractSensor for XBee connections.
- * <P>
- * @author	Paul Bender Copyright (C) 2013
- * @version $Revision$
+ *
+ * @author Paul Bender Copyright (C) 2013
  */
-public class XBeeSensor extends AbstractSensor implements XBeeListener {
+public class XBeeSensor extends AbstractSensor implements IIOSampleReceiveListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1015365837178480016L;
-    private String NodeIdentifier; /* This is a string representation of
-     the XBee address in the system name
+    private String nodeIdentifier; /* This is a string representation of
+     the XBee address in the system name.
      It may be an address or it may be
-     the NodeIdentifier string stored in
+     the nodeIdentifier string stored in
      the NI parameter on the node.*/
 
     private int pin;         /* Which DIO pin does this sensor represent. */
@@ -49,7 +46,7 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
     }
 
     /**
-     * Common initialization for both constructors
+     * Common initialization for both constructors.
      */
     private void init(String id) {
         // store address
@@ -67,11 +64,11 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
                //Address format passed is in the form of encoderAddress:input or S:sensor address
                int seperator = systemName.indexOf(":");
                try {
-                   NodeIdentifier = systemName.substring(prefix.length() + 1, seperator);
-                   if ((node = (XBeeNode) tc.getNodeFromName(NodeIdentifier)) == null) {
-                       if ((node = (XBeeNode) tc.getNodeFromAddress(NodeIdentifier)) == null) {
+                   nodeIdentifier = systemName.substring(prefix.length() + 1, seperator);
+                   if ((node = (XBeeNode) tc.getNodeFromName(nodeIdentifier)) == null) {
+                       if ((node = (XBeeNode) tc.getNodeFromAddress(nodeIdentifier)) == null) {
                            try {
-                               node = (XBeeNode) tc.getNodeFromAddress(Integer.parseInt(NodeIdentifier));
+                               node = (XBeeNode) tc.getNodeFromAddress(Integer.parseInt(nodeIdentifier));
                            } catch (java.lang.NumberFormatException nfe) {
                                // if there was a number format exception, we couldn't
                                // find the node.
@@ -79,13 +76,13 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
                            }
                        }
                    }
-                   pin = Integer.valueOf(systemName.substring(seperator + 1)).intValue();
+                   pin = Integer.parseInt(systemName.substring(seperator + 1));
                } catch (NumberFormatException ex) {
                    log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
                }
            } else {
                try {
-                   NodeIdentifier = systemName.substring(prefix.length() + 1, id.length() - 1);
+                   nodeIdentifier = systemName.substring(prefix.length() + 1, id.length() - 1);
                    int address = Integer.parseInt(id.substring(prefix.length() + 1, id.length()));
                    node = (XBeeNode) tc.getNodeFromAddress(address / 10);
                    // calculate the pin to examine
@@ -96,135 +93,108 @@ public class XBeeSensor extends AbstractSensor implements XBeeListener {
            }
            if (log.isDebugEnabled()) {
                log.debug("Created Sensor " + systemName
-                    + " (NodeIdentifier " + NodeIdentifier
+                    + " (NodeIdentifier " + nodeIdentifier
                     + " ,D" + pin
                     + ")");
            }
+
+           // register to hear XBee IO Sample events.
+          tc.getXBee().addIOSampleListener(this);
+
            // Finally, request the current state from the layout.
            this.requestUpdateFromLayout();
-           tc.addXBeeListener(this);
         } 
     }
 
     /**
-     * request an update on status by sending an XBee message
+     * Request an update on status by sending an XBee message.
      */
+    @Override
     public void requestUpdateFromLayout() {
         // Request the sensor status from the XBee Node this sensor is
-        // attached to.  NOTE: This requests status for all sensor inputs
-        // on the device.
-        XBeeMessage msg = XBeeMessage.getForceSampleMessage(node.getPreferedTransmitAddress());
-        // send the message
-        tc.sendXBeeMessage(msg, null);
-
+        // attached to.  
+        try  {
+           IOValue value = node.getXBee().getDIOValue(IOLine.getDIO(pin));
+           if ((value==IOValue.HIGH) ^ _inverted) {
+               setOwnState(Sensor.ACTIVE);
+           } else {
+               setOwnState(Sensor.INACTIVE);
+           }
+        } catch (TimeoutException toe) {
+           log.error("Timeout retrieving IO line value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+           // hidden terminal? Make sure the state appears as unknown.
+           setOwnState(Sensor.UNKNOWN);
+        } catch (InterfaceNotOpenException ino) {
+           log.error("Interface Not Open retrieving IO line value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+        } catch (XBeeException xbe) {
+           log.error("Error retrieving IO line value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+        }
     }
 
-    /**
-     * implementing classes will typically have a function/listener to get
-     * updates from the layout, which will then call public void
-     * firePropertyChange(String propertyName, Object oldValue, Object newValue)
-     * _once_ if anything has changed state (or set the commanded state
-     * directly)
-     *
-     */
-    public synchronized void reply(XBeeReply l) {
+
+    // IIOSampleReceiveListener methods
+
+    @Override
+    public synchronized void ioSampleReceived(RemoteXBeeDevice remoteDevice,IOSample ioSample) {
         if (log.isDebugEnabled()) {
-            log.debug("recieved message: " + l);
+            log.debug("received io sample {} from {}", ioSample, remoteDevice);
         }
 
-        com.rapplogic.xbee.api.XBeeResponse response = l.getXBeeResponse();
+        XBeeNode sourcenode = (XBeeNode) tc.getNodeFromXBeeDevice(remoteDevice);
 
-        if (response.getApiId() == ApiId.RX_64_IO_RESPONSE
-                || response.getApiId() == ApiId.RX_16_IO_RESPONSE) {
-            // This message is an IO response.
-            RxResponseIoSample ioSample = (RxResponseIoSample) response;
-
-            int address[] = ioSample.getSourceAddress().getAddress();
-            XBeeNode sourcenode = (XBeeNode) tc.getNodeFromAddress(address);
-
-            if (node.equals(sourcenode)) {
-                for (IoSample sample : ioSample.getSamples()) {
-                    if (sample.isDigitalOn(pin) ^ _inverted) {
-                        setOwnState(Sensor.ACTIVE);
-                    } else {
-                        setOwnState(Sensor.INACTIVE);
-                    }
-                }
-            }
-        } else if (response.getApiId() == ApiId.ZNET_IO_SAMPLE_RESPONSE) {
-            com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse ioSample
-                    = (com.rapplogic.xbee.api.zigbee.ZNetRxIoSampleResponse) response;
-
-            int address[] = ioSample.getRemoteAddress64().getAddress();
-            XBeeNode sourcenode = (XBeeNode) tc.getNodeFromAddress(address);
-
-            if (node.equals(sourcenode)) {
-                if (ioSample.isDigitalOn(pin) ^ _inverted) {
-                    setOwnState(Sensor.ACTIVE);
-                } else {
-                    setOwnState(Sensor.INACTIVE);
-                }
-            } else {
-                // not what we expected
-                log.debug("Ignoring mystery packet " + response.toString());
-            }
-        } else if (response instanceof RemoteAtResponse) {
-            RemoteAtResponse atResp = (RemoteAtResponse) response;
-            XBeeNode sourcenode = (XBeeNode) tc.getNodeFromAddress(atResp.getRemoteAddress64().getAddress());
-            if (node.equals(sourcenode)) {
-                if (atResp.getCommand().equals("IS")) {
-                    try {
-                        ZNetRxIoSampleResponse ioSample = ZNetRxIoSampleResponse.parseIsSample(atResp);
-                        if (ioSample.isDigitalOn(pin) ^ _inverted) {
-                            setOwnState(Sensor.ACTIVE);
-                        } else {
-                            setOwnState(Sensor.INACTIVE);
-                        }
-                    } catch (java.io.IOException ioe) {
-                        // parse error, wrong format.
-                        log.debug("Caught IOException parsing IS packet");
-                    } catch (java.lang.IllegalStateException ise) {
-                        // is this a series 1 packet?
-                        log.debug("Caught IllegalStateException parsing IS packet");
-                        RxResponseIoSample rxSample = new RxResponseIoSample();
-                        // don't need sampleSize now, might later.
-                        //int sampleSize = atResp.getValue()[0];
-                        rxSample.setChannelIndicator1(atResp.getValue()[1]);
-                        rxSample.setChannelIndicator2(atResp.getValue()[2]);
-                        IoSample sample = new IoSample(rxSample);
-                        sample.setDioMsb(atResp.getValue()[3]);
-                        sample.setDioLsb(atResp.getValue()[4]);
-                        if (sample.isDigitalOn(pin) ^ _inverted) {
-                           setOwnState(Sensor.ACTIVE);
-                        } else {
-                           setOwnState(Sensor.INACTIVE);
-                        }
-                    }
-                }
-            }
+        if (node.equals(sourcenode)) {
+          if ( ioSample.hasDigitalValues()){
+              if ((ioSample.getDigitalValue(IOLine.getDIO(pin))==IOValue.HIGH) ^ _inverted) {
+                 setOwnState(Sensor.ACTIVE);
+             } else {
+                 setOwnState(Sensor.INACTIVE);
+             }
+          }
         }
         return;
     }
 
-    // listen for the messages to the Xbee 
-    public void message(XBeeMessage l) {
+    /**
+     * Set the pull resistance.
+     * <p>
+     * In this default implementation, the input value is ignored.
+     *
+     * @param r PullResistance value to use
+     */
+    @Override
+    public void setPullResistance(PullResistance r){
+       try { 
+          node.setPRParameter(pin,r);
+       } catch (TimeoutException toe) {
+         log.error("Timeout retrieving PR value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+       } catch (XBeeException xbe) {
+         log.error("Error retrieving PR value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+       }
     }
 
-    // Handle a timeout notification
-    public void notifyTimeout(XBeeMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
-        }
+    /**
+     * Get the pull resistance.
+     *
+     * @return the currently set PullResistance value
+     */
+    @Override
+    public PullResistance getPullResistance(){
+       try {
+          return node.getPRValueForPin(pin);
+       } catch (TimeoutException toe) {
+         log.error("Timeout retrieving PR value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+       } catch (XBeeException xbe) {
+         log.error("Error retrieving PR value for {} on {}",IOLine.getDIO(pin),node.getXBee());
+       }
+       return PullResistance.PULL_UP; // return the default if we get this far.
     }
 
+    @Override
     public void dispose() {
+        tc.getXBee().removeIOSampleListener(this);
         super.dispose();
-        tc.removeXBeeListener(this);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeSensor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeSensor.class);
 
 }
-
-
-/* @(#)XBeeSensor.java */

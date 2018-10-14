@@ -7,7 +7,7 @@ import org.jdom2.Element;
  * Static methods for creating sample XML trees.
  *
  * @author Bob Jacobsen Copyright 2011
- * @version $Revision: 34 $
+ * 
  */
 public class SampleFactory {
 
@@ -55,22 +55,22 @@ public class SampleFactory {
                         .addContent(new Element("eventid"))
                         .addContent(new Element("eventid"))
                 )
-                .addContent(new Element("bit")
+                .addContent(new Element("int").setAttribute("size", "1")
                         .addContent(new Element("name").addContent("Regular bit variable"))
                         .addContent(new Element("description").addContent("Demonstrate how a standard bit (boolean) variable can be shown"))
                 )
-                .addContent(new Element("bit")
+                .addContent(new Element("int").setAttribute("size", "1")
                         .addContent(new Element("name").addContent("Bit variable with named states"))
                         .addContent(new Element("description").addContent("Demonstrate how a map relabels the states of a bit (boolean) variable"))
                         .addContent(new Element("map")
                                 .addContent(
                                         new Element("relation")
-                                        .addContent(new Element("property").addContent("true"))
+                                        .addContent(new Element("property").addContent("1"))
                                         .addContent(new Element("value").addContent("Lit"))
                                 )
                                 .addContent(
                                         new Element("relation")
-                                        .addContent(new Element("property").addContent("false"))
+                                        .addContent(new Element("property").addContent("0"))
                                         .addContent(new Element("value").addContent("Not Lit"))
                                 )
                         )

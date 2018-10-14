@@ -7,7 +7,7 @@ import javax.swing.AbstractAction;
 /**
  * Save throttles to XML
  *
- * @author	Lionel Jeanson Copyright 2009
+ * @author Lionel Jeanson Copyright 2009
  */
 public class StoreDefaultXmlThrottlesLayoutAction extends AbstractAction {
 
@@ -30,6 +30,7 @@ public class StoreDefaultXmlThrottlesLayoutAction extends AbstractAction {
      *
      * @param e The event causing the action.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         StoreXmlThrottlesLayoutAction sxta = new StoreXmlThrottlesLayoutAction();
         sxta.saveThrottlesLayout(new File(ThrottleFrame.getDefaultThrottleFilename()));

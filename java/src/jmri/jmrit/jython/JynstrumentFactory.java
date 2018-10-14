@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A JynstrumentFactory handles instantiation and connection of
- * {@link Jynstrument} instances
+ * {@link Jynstrument} instances.
  *
  * @see Jynstrument
  * @author Lionel Jeanson Copyright 2009
@@ -85,10 +85,15 @@ public class JynstrumentFactory {
         // must contain a xyz.py file and construct class name from filename (xyz actually) xyz class in xyz.py file in xyz.jin folder
         String[] children = f.list();
         String className = null;
+        if (children == null) {
+            log.error("Didn't find any files in {}", f);
+            return className;
+        }
+        
         String assumedClassName = f.getName().substring(0, f.getName().length() - 4);
         for (int i = 0; i < children.length; i++) {
             if ((children[i]).compareToIgnoreCase(assumedClassName + ".py") == 0) {
-                return assumedClassName; // got exact match for folder name			
+                return assumedClassName; // got exact match for folder name
             } else if (children[i].substring(children[i].length() - 3).compareToIgnoreCase(".py") == 0) {
                 className = children[i].substring(0, children[i].length() - 3); // else take whatever comes
             }
@@ -96,5 +101,5 @@ public class JynstrumentFactory {
         return className;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JynstrumentFactory.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JynstrumentFactory.class);
 }

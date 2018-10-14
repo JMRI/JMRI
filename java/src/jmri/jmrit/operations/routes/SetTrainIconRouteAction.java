@@ -1,4 +1,3 @@
-// SetTrainIconRouteAction.java
 package jmri.jmrit.operations.routes;
 
 import java.awt.Frame;
@@ -10,7 +9,6 @@ import javax.swing.AbstractAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision$
  */
 public class SetTrainIconRouteAction extends AbstractAction {
 
@@ -23,19 +21,19 @@ public class SetTrainIconRouteAction extends AbstractAction {
     public SetTrainIconRouteAction(String s, String routeName) {
         super(s);
         this.routeName = routeName;
+        setEnabled(routeName != null);
     }
 
     SetTrainIconRouteFrame f = null;
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // create a copy route frame
         if (f == null || !f.isVisible()) {
             f = new SetTrainIconRouteFrame(routeName);
         }
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 }
 
-/* @(#)SetTrainIconRouteAction.java */
+

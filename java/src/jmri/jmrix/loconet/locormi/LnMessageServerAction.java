@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.rmi.RemoteException;
 import javax.swing.AbstractAction;
 import jmri.util.zeroconf.ZeroConfService;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -11,14 +12,8 @@ import org.slf4j.LoggerFactory;
  * LocoNet connection on this machine. Copyright: Copyright (c) 2002
  *
  * @author Alex Shepherd
- * @version $Revision$
  */
 public class LnMessageServerAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5248571475794161828L;
 
     public LnMessageServerAction(String s) {
         super(s);
@@ -28,6 +23,7 @@ public class LnMessageServerAction extends AbstractAction {
         super("Start LocoNet server");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         try {
             // start server
@@ -38,8 +34,10 @@ public class LnMessageServerAction extends AbstractAction {
             // disable action, as already run
             setEnabled(false);
         } catch (RemoteException ex) {
-            LoggerFactory.getLogger(LnMessageServerAction.class.getName()).warn("LnMessageServerAction Exception: " + ex);
+            log.warn("LnMessageServerAction Exception: {}", ex.getMessage()); // NOI18N
         }
     }
+
+    private final static Logger log = LoggerFactory.getLogger(LnMessageServerAction.class);
 
 }

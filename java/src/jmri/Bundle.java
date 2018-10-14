@@ -46,12 +46,12 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
-
 @ParametersAreNonnullByDefault
 @CheckReturnValue
-@net.jcip.annotations.Immutable
+@javax.annotation.concurrent.Immutable
 public class Bundle {
 
+    @Nullable
     private final static String name = "jmri.NamedBeanBundle";  // NOI18N
 
     /**
@@ -64,7 +64,7 @@ public class Bundle {
      * @return Internationalized text
      */
     static String getMessage(String key) {
-        return b.handleGetMessage(key);
+        return getBundle().handleGetMessage(key);
     }
 
     /**
@@ -78,7 +78,7 @@ public class Bundle {
      * @return Internationalized text
      */
     static String getMessage(Locale locale, String key) {
-        return b.handleGetMessage(locale, key);
+        return getBundle().handleGetMessage(locale, key);
     }
 
     /**
@@ -95,7 +95,7 @@ public class Bundle {
      * @return Internationalized text
      */
     static String getMessage(String key, Object... subs) {
-        return b.handleGetMessage(key, subs);
+        return getBundle().handleGetMessage(key, subs);
     }
 
     /**
@@ -113,7 +113,7 @@ public class Bundle {
      * @return Internationalized text
      */
     static String getMessage(Locale locale, String key, Object... subs) {
-        return b.handleGetMessage(locale, key, subs);
+        return getBundle().handleGetMessage(locale, key, subs);
     }
 
     /**
@@ -142,15 +142,16 @@ public class Bundle {
      * @throws MissingResourceException if message cannot be found
      */
     public String handleGetMessage(Locale locale, String key) {
+        log.trace("handleGetMessage for key {}", key);
         if (bundleName() != null) {
             ResourceBundle rb = ResourceBundle.getBundle(bundleName(), locale);
             if (rb.containsKey(key)) {
                 return rb.getString(key);
             } else {
-                return retry(locale,key);
+                return retry(locale, key);
             }
         } else {  // case of no local bundle
-            return retry(locale,key);
+            return retry(locale, key);
         }
     }
 
@@ -187,8 +188,8 @@ public class Bundle {
 
     // the following is different from the method in subclasses because
     // this is the root of the search tree
-    protected String retry(Locale locale,String key) throws MissingResourceException {
-        throw new MissingResourceException("Resource not found", this.getClass().toString(), key); // NOI18N
+    protected String retry(Locale locale, String key) throws MissingResourceException {
+        throw new MissingResourceException("Resource '" + key + "' not found", this.getClass().toString(), key); // NOI18N
     }
 
     private final static Bundle b = new Bundle();
@@ -198,7 +199,7 @@ public class Bundle {
         return name;
     }
 
-    protected jmri.Bundle getBundle() {
+    protected static jmri.Bundle getBundle() {
         return b;
     }
 
@@ -211,4 +212,7 @@ public class Bundle {
     //           log.error("Failed to load defaults because of missing bundle");
     //           return;
     //        }
+    
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Bundle.class);
+
 }

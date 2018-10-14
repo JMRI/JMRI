@@ -1,58 +1,62 @@
 package jmri.jmrix.grapevine;
 
-import jmri.implementation.AbstractTurnoutTest;
+import jmri.implementation.AbstractTurnoutTestBase;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Before;
 
 /**
  * Tests for the jmri.jmrix.grapevine.SerialTurnout class, high part of 24 port
  * card.
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
-public class SerialTurnoutTest2 extends AbstractTurnoutTest {
+  */
+public class SerialTurnoutTest2 extends AbstractTurnoutTestBase {
 
+    private GrapevineSystemConnectionMemo memo = null; 
     private SerialTrafficControlScaffold tcis = null;
 
+    @Before
+    @Override
     public void setUp() {
-        // prepare an interface
-        tcis = new SerialTrafficControlScaffold();
-        tcis.registerNode(new SerialNode(1, SerialNode.NODE2002V6));
+        jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
 
-        t = new SerialTurnout("GT1116", "t4");
+        // prepare an interface
+        memo = new GrapevineSystemConnectionMemo();
+        tcis = new SerialTrafficControlScaffold(memo);
+        memo.setTrafficController(tcis);
+        tcis.registerNode(new SerialNode(1, SerialNode.NODE2002V6, tcis));
+
+        t = new SerialTurnout("GT1116", "t4", memo);
     }
 
+    @Override
     public int numListeners() {
         return tcis.numListeners();
     }
 
+    @Override
     public void checkClosedMsgSent() {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
         Assert.assertEquals("content", "81 7A 81 1B 81 18 81 0C", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // CLOSED message
     }
 
+    @Override
     public void checkThrownMsgSent() {
         Assert.assertTrue("message sent", tcis.outbound.size() > 0);
         Assert.assertEquals("content", "81 7A 81 1B 81 1E 81 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROWN message
     }
 
-    // from here down is testing infrastructure
-    public SerialTurnoutTest2(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SerialTurnoutTest2.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SerialTurnoutTest2.class);
-        return suite;
+    // reset objects
+    @After
+    public void tearDown() {
+        tcis.terminateThreads();
+        tcis = null;
+        memo = null;
+        t.dispose();
+        JUnitUtil.tearDown();
     }
 
 }

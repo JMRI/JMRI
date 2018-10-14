@@ -33,13 +33,14 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
      * @param o Object to store, of type MemoryManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element memories = new Element("memories");
         setStoreElementClass(memories);
         MemoryManager tm = (MemoryManager) o;
         if (tm != null) {
             java.util.Iterator<String> iter
-                    = tm.getSystemNameList().iterator();
+                    = tm.getSystemNameAddedOrderList().iterator();
 
             // don't return an element if there are not memories to include
             if (!iter.hasNext()) {
@@ -55,8 +56,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
                 }
                 log.debug("system name is " + sname);
                 Memory m = tm.getBySystemName(sname);
-                Element elem = new Element("memory")
-                        .setAttribute("systemName", sname);
+                Element elem = new Element("memory");
                 elem.addContent(new Element("systemName").addContent(sname));
 
                 // store common part
@@ -92,6 +92,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
      */
     abstract public void setStoreElementClass(Element memories);
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -115,7 +116,6 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
      *
      * @param memories Element containing the Memory elements to load.
      */
-    @SuppressWarnings("unchecked")
     public void loadMemories(Element memories) {
         List<Element> memoryList = memories.getChildren("memory");
         if (log.isDebugEnabled()) {
@@ -133,6 +133,8 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
 
             String userName = getUserName(memoryList.get(i));
 
+            checkNameNormalization(sysName, userName, tm);
+
             if (log.isDebugEnabled()) {
                 log.debug("create Memory: (" + sysName + ")(" + (userName == null ? "<null>" : userName) + ")");
             }
@@ -145,6 +147,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
         }
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.memoryManagerInstance().getXMLOrder();
     }
@@ -162,5 +165,5 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
         m.setValue(value);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractMemoryManagerConfigXML.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractMemoryManagerConfigXML.class);
 }

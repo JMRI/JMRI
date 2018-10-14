@@ -18,36 +18,21 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame displaying,and more importantly starting, an OpenLCB TCP/IP hub
  *
- * @author	Bob Jacobsen Copyright (C) 2009, 2010, 2012
- * @version $Revision: 17977 $
+ * @author Bob Jacobsen Copyright (C) 2009, 2010, 2012
  */
 public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, CanPanelInterface {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4848969197291158674L;
 
     String nextLine;
 
     public HubPane() {
         super();
         hub = new Hub() {
+            @Override
             public void notifyOwner(String line) {
                 nextLine = line;
-                SwingUtilities.invokeLater(
-                        new Runnable() {
-                            String message = nextLine;
-
-                            public void run() {
-                                try {
-                                    label.setText(message);
-                                } catch (Exception x) {
-                                    x.printStackTrace();
-                                }
-                            }
-                        }
-                );
+                SwingUtilities.invokeLater(() -> {
+                    label.setText(nextLine);
+                });
             }
         };
     }
@@ -58,12 +43,14 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
 
     JLabel label = new JLabel("                                                 ");
 
+    @Override
     public void initContext(Object context) {
         if (context instanceof CanSystemConnectionMemo) {
             initComponents((CanSystemConnectionMemo) context);
         }
     }
 
+    @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         this.memo = memo;
 
@@ -87,6 +74,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
 
     void startHubThread(int port) {
         t = new Thread() {
+            @Override
             public void run() {
                 hub.start();
             }
@@ -95,6 +83,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
 
         // add forwarder for internal JMRI traffic
         hub.addForwarder(new Hub.Forwarding() {
+            @Override
             public void forward(Hub.Memo m) {
                 if (m.source == null) {
                     return;  // was from this
@@ -144,6 +133,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         jmri.util.zeroconf.ZeroConfService.create("_openlcb-can._tcp.local.", port).publish();
     }
 
+    @Override
     public String getTitle() {
         return "OpenLCB Hub Control";
     }
@@ -151,10 +141,12 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
     protected void init() {
     }
 
+    @Override
     public void dispose() {
         memo.getTrafficController().removeCanListener(this);
     }
 
+    @Override
     public synchronized void message(CanMessage l) {  // receive a message and log it
         GridConnectMessage gm = new GridConnectMessage(l);
         if (log.isDebugEnabled()) {
@@ -163,6 +155,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         hub.putLine(gm.toString());
     }
 
+    @Override
     public synchronized void reply(CanReply reply) {
         if (reply != workingReply) {
             GridConnectMessage gm = new GridConnectMessage(new CanMessage(reply));
@@ -173,24 +166,6 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         }
     }
 
-    /**
-     * Nested class to create one of these using old-style defaults
-     */
-    static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -8930726866772302244L;
-
-        public Default() {
-            super("Openlcb Hub Control",
-                    new jmri.util.swing.sdi.JmriJFrameInterface(),
-                    HubPane.class.getName(),
-                    jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
-        }
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(HubPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(HubPane.class);
 
 }

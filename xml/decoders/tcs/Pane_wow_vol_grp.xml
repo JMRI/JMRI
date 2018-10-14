@@ -21,13 +21,6 @@
         <label>
           <text>   </text>
         </label>
-        <label>
-          <text>Must have JMRI 3.9.5 or later.</text>
-          <text xml:lang="it">Dovete avere JMRI 3.9.5 o successivo.</text>
-        </label>
-        <label>
-          <text>   </text>
-        </label>
 		</column>
     </row>
     <row>

@@ -9,13 +9,13 @@ import org.slf4j.LoggerFactory;
 /**
  * Superclass for save/restore of TurnoutOperation subclasses in XML.
  *
- * @author John Harper	Copyright 2005
+ * @author John Harper Copyright 2005
  *
  */
 public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlAdapter {
 
     @Override
-    public boolean load(Element shared, Element perNode) throws Exception {
+    public boolean load(Element shared, Element perNode) {
         loadOne(shared);
         return true;
     }
@@ -25,7 +25,8 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
     /**
      * Load one operation, using the appropriate adapter
      *
-     * @param e	element for operation
+     * @param e element for operation
+     * @return the loaded TurnoutOperation or null if unable to load from e
      */
     public static TurnoutOperation loadOperation(Element e) {
         TurnoutOperation result = null;
@@ -41,14 +42,11 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
                 if (result.getName().charAt(0) == '*') {
                     result.setNonce(true);
                 }
-            } catch (ClassNotFoundException e1) {
+            } catch (ClassNotFoundException | InstantiationException e1) {
                 log.error("while creating TurnoutOperation", e1);
                 return null;
             } catch (IllegalAccessException e2) {
                 log.error("while creating CommonTurnoutOperation", e2);
-                return null;
-            } catch (InstantiationException e3) {
-                log.error("while creating TurnoutOperation", e3);
                 return null;
             }
         }
@@ -64,9 +62,10 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
      * common part of store - create the element and store the name and the
      * class
      *
-     * @param	o	TurnoutOperation object
-     * @return	partially filled element
+     * @param o TurnoutOperation object
+     * @return partially filled element
      */
+    @Override
     public Element store(Object o) {
         TurnoutOperation myOp = (TurnoutOperation) o;
         Element elem = new Element("operation");
@@ -81,23 +80,23 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
      * anything goes wrong (no such class, wrong constructors, instantiation
      * error, ....) just return null
      *
-     * @param op	operation for which configurator is required
-     * @return	the configurator
+     * @param op operation for which configurator is required
+     * @return the configurator
      */
     static public TurnoutOperationXml getAdapter(TurnoutOperation op) {
         TurnoutOperationXml adapter = null;
-        String[] fullOpNameComponents = jmri.util.StringUtil.split(op.getClass().getName(), ".");
+        String[] fullOpNameComponents = op.getClass().getName().split("\\.");
         log.debug("getAdapter found class name {}", op.getClass().getName());
         String[] myNameComponents
                 = new String[]{"jmri", "configurexml", "turnoutoperations", "TurnoutOperationXml"};
         myNameComponents[myNameComponents.length - 1]
                 = fullOpNameComponents[fullOpNameComponents.length - 1];
-        String fullConfigName = StringUtil.join(myNameComponents, ".") + "Xml";
+        String fullConfigName = String.join(".", myNameComponents) + "Xml";
         log.debug("getAdapter looks for {}", fullConfigName);
         try {
             Class<?> configClass = Class.forName(fullConfigName);
             adapter = (TurnoutOperationXml) configClass.newInstance();
-        } catch (Throwable e) { // too many possible to list them all
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
             log.error("exception in getAdapter", e);
         }
         if (adapter == null) {
@@ -106,5 +105,5 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
         return adapter;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutOperationXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutOperationXml.class);
 }

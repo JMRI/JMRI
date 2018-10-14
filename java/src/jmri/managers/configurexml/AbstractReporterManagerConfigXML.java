@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008, 2009
- * @version $Revision$
  */
 public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -32,13 +31,14 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
      * @param o Object to store, of type ReporterManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element reporters = new Element("reporters");
         setStoreElementClass(reporters);
         ReporterManager tm = (ReporterManager) o;
         if (tm != null) {
             java.util.Iterator<String> iter
-                    = tm.getSystemNameList().iterator();
+                    = tm.getSystemNameAddedOrderList().iterator();
 
             // don't return an element if there are not reporters to include
             if (!iter.hasNext()) {
@@ -54,8 +54,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
                 }
                 log.debug("system name is " + sname);
                 Reporter r = tm.getBySystemName(sname);
-                Element elem = new Element("reporter")
-                        .setAttribute("systemName", sname); // deprecated for 2.9.* series
+                Element elem = new Element("reporter");
                 elem.addContent(new Element("systemName").addContent(sname));
                 // store common parts
                 storeCommon(r, elem);
@@ -85,7 +84,6 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
      * @param reporters Element containing the Reporter elements to load.
      * @return true if successful
      */
-    @SuppressWarnings("unchecked")
     public boolean loadReporters(Element reporters) {
         boolean result = true;
         List<Element> reporterList = reporters.getChildren("reporter");
@@ -93,6 +91,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
             log.debug("Found " + reporterList.size() + " reporters");
         }
         ReporterManager tm = InstanceManager.getDefault(jmri.ReporterManager.class);
+        tm.setDataListenerMute(true);
 
         for (int i = 0; i < reporterList.size(); i++) {
 
@@ -111,12 +110,14 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
             Reporter r = tm.newReporter(sysName, userName);
             loadCommon(r, reporterList.get(i));
         }
+        tm.setDataListenerMute(false);
         return result;
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.getDefault(jmri.ReporterManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractReporterManagerConfigXML.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractReporterManagerConfigXML.class);
 }

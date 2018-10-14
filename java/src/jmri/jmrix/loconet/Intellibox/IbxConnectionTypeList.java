@@ -1,13 +1,10 @@
-// LnConnectionTypeList.java
 package jmri.jmrix.loconet.Intellibox;
 
 /**
- * Returns a list of valid lenz XpressNet Connection Types
- * <P>
+ * Returns a list of valid Intellibox Connection Types
+ *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
- *
  */
 public class IbxConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import org.jdom2.Element;
@@ -85,6 +86,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 
     /**
      * Adds a car type to the end of this schedule
+     * @param type The string car type to add.
      *
      * @return ScheduleItem created for the car type added
      */
@@ -108,11 +110,13 @@ public class Schedule implements java.beans.PropertyChangeListener {
      * Add a schedule item at a specific place (sequence) in the schedule
      * Allowable sequence numbers are 0 to max size of schedule. 0 = start of
      * list.
+     * @param carType The string car type name to add.
+     * @param sequence Where in the schedule to add the item.
      *
      * @return schedule item
      */
-    public ScheduleItem addItem(String item, int sequence) {
-        ScheduleItem si = addItem(item);
+    public ScheduleItem addItem(String carType, int sequence) {
+        ScheduleItem si = addItem(carType);
         if (sequence < 0 || sequence > _scheduleHashTable.size()) {
             return si;
         }
@@ -124,6 +128,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     * @param si The schedule item to add.
      */
     public void register(ScheduleItem si) {
         Integer old = Integer.valueOf(_scheduleHashTable.size());
@@ -146,6 +151,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 
     /**
      * Delete a ScheduleItem
+     * @param si The scheduleItem to delete.
      *
      */
     public void deleteItem(ScheduleItem si) {
@@ -174,16 +180,17 @@ public class Schedule implements java.beans.PropertyChangeListener {
 
     /**
      * Get item by car type (gets last schedule item with this type)
+     * @param carType The string car type to search for.
      *
      * @return schedule item
      */
-    public ScheduleItem getItemByType(String type) {
+    public ScheduleItem getItemByType(String carType) {
         List<ScheduleItem> scheduleSequenceList = getItemsBySequenceList();
         ScheduleItem si;
 
         for (int i = scheduleSequenceList.size() - 1; i >= 0; i--) {
             si = scheduleSequenceList.get(i);
-            if (si.getTypeName().equals(type)) {
+            if (si.getTypeName().equals(carType)) {
                 return si;
             }
         }
@@ -192,6 +199,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 
     /**
      * Get a ScheduleItem by id
+     * @param id The string id of the ScheduleItem.
      *
      * @return schedule item
      */
@@ -207,7 +215,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
         while (en.hasMoreElements()) {
             arr[i++] = en.nextElement();
         }
-        jmri.util.StringUtil.sort(arr);
+        java.util.Arrays.sort(arr);
         for (i = 0; i < arr.length; i++) {
             out.add(getItemById(arr[i]));
         }
@@ -241,6 +249,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 
     /**
      * Places a ScheduleItem earlier in the schedule
+     * @param si The ScheduleItem to move.
      *
      */
     public void moveItemUp(ScheduleItem si) {
@@ -263,6 +272,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 
     /**
      * Places a ScheduleItem later in the schedule
+     * @param si The ScheduleItem to move.
      *
      */
     public void moveItemDown(ScheduleItem si) {
@@ -312,7 +322,6 @@ public class Schedule implements java.beans.PropertyChangeListener {
             _comment = a.getValue();
         }
         if (e.getChildren(Xml.ITEM) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> eScheduleItems = e.getChildren(Xml.ITEM);
             log.debug("schedule: {} has {} items", getName(), eScheduleItems.size());
             for (Element eScheduleItem : eScheduleItems) {
@@ -361,10 +370,10 @@ public class Schedule implements java.beans.PropertyChangeListener {
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // set dirty
-        LocationManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(LocationManagerXml.class).setDirty(true);
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Schedule.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Schedule.class);
 
 }

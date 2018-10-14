@@ -7,7 +7,6 @@ import jmri.NmraPacket;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * Functionally, this just creates packets to send via the command station.
  *
  * @see jmri.Programmer
- * @author	Bob Jacobsen Copyright (C) 2002, 2014
+ * @author Bob Jacobsen Copyright (C) 2002, 2014
  * @author kcameron Copyright (C) 2014
  */
 public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProgrammer {
@@ -31,12 +30,14 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
         log.debug("NCE ops mode programmer " + pAddress + " " + pLongAddr);
         mAddress = pAddress;
         mLongAddr = pLongAddr;
-        setMode(DefaultProgrammerManager.OPSBYTEMODE);
+        setMode(ProgrammingMode.OPSBYTEMODE);
     }
 
     /**
      * Forward a write request to an ops-mode write operation
      */
+    @Override
+    @Deprecated // 4.1.1
     public synchronized void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("write CV=" + CV + " val=" + val);
@@ -61,7 +62,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
             if (contents == null) {
                 throw new ProgrammerException();
             }
-            msg = NceMessage.sendPacketMessage(tc, contents, 5);	// retry 5 times
+            msg = NceMessage.sendPacketMessage(tc, contents, 5); // retry 5 times
         }
         // record state. COMMANDSENT is just waiting for a reply...
         useProgrammer(p);
@@ -78,6 +79,8 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
         tc.sendNceMessage(msg, this);
     }
 
+    @Override
+    @Deprecated // 4.1.1
     public synchronized void readCV(int CV, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("read CV=" + CV);
@@ -86,6 +89,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
         throw new ProgrammerException();
     }
 
+    @Override
     public synchronized void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("confirm CV={}", CV);
@@ -95,6 +99,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
     }
 
     // add 200mSec between commands, so NCE command station queue doesn't get overrun
+    @Override
     protected void notifyProgListenerEnd(int value, int status) {
         if (log.isDebugEnabled()) {
             log.debug("NceOpsModeProgrammer adds 200mSec delay to response");
@@ -113,7 +118,7 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
+        ret.add(ProgrammingMode.OPSBYTEMODE);
         return ret;
     }
 
@@ -134,22 +139,26 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
      * this routine does nothing except to replace the parent routine that does
      * something.
      */
+    @Override
     void cleanup() {
     }
 
+    @Override
     public boolean getLongAddress() {
         return mLongAddr;
     }
 
+    @Override
     public int getAddressNumber() {
         return mAddress;
     }
 
+    @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(NceOpsModeProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceOpsModeProgrammer.class);
 
 }

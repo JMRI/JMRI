@@ -9,14 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement simulator for powerline serial systems
+ * Implement simulator for Powerline serial systems
  * <P>
  * System names are "PLnnn", where nnn is the bit number without padding.
  * <P>
  * This is based on the NCE simulator.
  *
- * @author	Dave Duchamp Copyright (C) 2004
- * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008 Converted to multiple connection
+ * @author Dave Duchamp Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008 Converted to multiple connection
  * @author kcameron Copyright (C) 2011
  */
 public class SimulatorAdapter extends SerialPortController implements
@@ -28,7 +28,7 @@ public class SimulatorAdapter extends SerialPortController implements
 
     // streams to share with user class
     private DataOutputStream pout = null; // this is provided to classes who want to write to us
-    private DataInputStream pin = null; // this is provided to class who want data from us
+    private DataInputStream pin = null; // this is provided to classes who want data from us
 
     // internal ends of the pipes
     @SuppressWarnings("unused")
@@ -40,6 +40,7 @@ public class SimulatorAdapter extends SerialPortController implements
         super(new SpecificSystemConnectionMemo());
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         try {
             PipedOutputStream tempPipeI = new PipedOutputStream();
@@ -56,9 +57,10 @@ public class SimulatorAdapter extends SerialPortController implements
     }
 
     /**
-     * set up all of the other objects to simulate operation with an command
+     * Set up all of the other objects to simulate operation with an command
      * station.
      */
+    @Override
     public void configure() {
         SpecificTrafficController tc = new SpecificTrafficController(this.getSystemConnectionMemo());
 
@@ -79,6 +81,7 @@ public class SimulatorAdapter extends SerialPortController implements
     }
 
     // base class methods for the PortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened || pin == null) {
             log.error("getInputStream called before load(), stream not available");
@@ -86,6 +89,7 @@ public class SimulatorAdapter extends SerialPortController implements
         return pin;
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened || pout == null) {
             log.error("getOutputStream called before load(), stream not available");
@@ -93,6 +97,7 @@ public class SimulatorAdapter extends SerialPortController implements
         return pout;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -100,15 +105,18 @@ public class SimulatorAdapter extends SerialPortController implements
     /**
      * Get an array of valid baud rates.
      */
+    @Override
     public String[] validBaudRates() {
         log.debug("validBaudRates should not have been invoked");
         return null;
     }
 
+    @Override
     public String getCurrentBaudRate() {
         return "";
     }
 
+    @Override
     public void run() { // start a new thread
         // Simulator thread just reports start and ends
         if (log.isInfoEnabled()) {
@@ -117,6 +125,6 @@ public class SimulatorAdapter extends SerialPortController implements
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(SimulatorAdapter.class.getName());
+            .getLogger(SimulatorAdapter.class);
 
 }

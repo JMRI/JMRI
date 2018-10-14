@@ -11,6 +11,19 @@ package jmri;
 public interface ShutDownTask {
 
     /**
+     * Ask if shut down is allowed.
+     * <p>
+     * The shut down manager must call this method first on all the tasks
+     * before starting to execute the method execute() on the tasks.
+     * <p>
+     * If this method returns false on any task, the shut down process must
+     * be aborted.
+     *
+     * @return true if it is OK to shut down, false to abort shut down.
+     */
+    public boolean isShutdownAllowed();
+
+    /**
      * Take the necessary action.
      * <p>
      * If the task is lengthy and can easily confirm that it should proceed

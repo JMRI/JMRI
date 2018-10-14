@@ -1,48 +1,68 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
-
 <appearancetable
-    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd"
 >
-
   <copyright xmlns="http://docbook.org/ns/docbook">
-    <year>2012</year><year>2012</year><holder>JMRI</holder>
+    <year>2012</year>
+    <year>2012</year>
+    <holder>JMRI</holder>
   </copyright>
-  
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
-        <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
-        <email>dick@rr-cirkits.com</email>
-    </author>    
+      <personname>
+        <firstname>Dick</firstname>
+        <surname>Bronson</surname>
+      </personname>
+      <email>dick@rr-cirkits.com</email>
+    </author>
     <author>
-        <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
-        <email>jake@physics.berkeley.edu</email>
-    </author>    
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+      <email>jake@physics.berkeley.edu</email>
+    </author>
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
   </authorgroup>
-
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-        <revnumber>1.0</revnumber>
-        <date>2012-10-05</date>
-        <authorinitials>DB</authorinitials>
-        <revremark>Initial Version</revremark>
-    </revision>    
+      <revnumber>1.0</revnumber>
+      <date>2012-10-05</date>
+      <authorinitials>DB</authorinitials>
+      <revremark>Initial Version</revremark>
+    </revision>
     <revision>
-        <revnumber>1.1</revnumber>
-        <date>2013-01-26</date>
-        <authorinitials>DB</authorinitials>
-        <revremark>Added Dark</revremark>
-    </revision>    
+      <revnumber>1.1</revnumber>
+      <date>2013-01-26</date>
+      <authorinitials>DB</authorinitials>
+      <revremark>Added Dark</revremark>
+    </revision>
+    <revision>
+      <revnumber>1.2</revnumber>
+      <date>2016-12-01</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Added specific appearances</revremark>
+    </revision>
+    <revision>
+      <revnumber>1.22</revnumber>
+      <date>2017-09-13</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Added restricted mappings</revremark>
+    </revision>
   </revhistory>
-
   <aspecttable>NS</aspecttable>
   <name>Double head 3-3 color light high signal</name>
   <reference>As described in the NS Operating Rules Book Effective May 1, 2008.</reference>
   <description>Appearances for a double 3-3 lamp signal head without other badging</description>
-
   <appearances>
-
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
@@ -50,7 +70,6 @@
       <reference>N281 (c1)</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NS-2008/CLS-3-3-hi/rule-N281.gif</imagelink>
     </appearance>
-
     <appearance>
       <aspectname>Approach Limited</aspectname>
       <show>yellow</show>
@@ -58,7 +77,6 @@
       <reference>N281b (c1)</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NS-2008/CLS-3-3-hi/rule-N281-B.gif</imagelink>
     </appearance>
-
     <appearance>
       <aspectname>Limited Clear</aspectname>
       <show>red</show>
@@ -66,7 +84,6 @@
       <reference>N281c (c1)</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NS-2008/CLS-3-3-hi/rule-N281-C.gif</imagelink>
     </appearance>
-
     <appearance>
       <aspectname>Approach Medium</aspectname>
       <show>yellow</show>
@@ -74,7 +91,6 @@
       <reference>N282 (c1)</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NS-2008/CLS-3-3-hi/rule-N282.gif</imagelink>
     </appearance>
-
     <appearance>
       <aspectname>Advance Approach</aspectname>
       <show>flashyellow</show>
@@ -82,7 +98,6 @@
       <reference>N282a (c1)</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NS-2008/CLS-3-3-hi/rule-N282-A.gif</imagelink>
     </appearance>
-
     <appearance>
       <aspectname>Medium Clear</aspectname>
       <show>red</show>
@@ -90,7 +105,6 @@
       <reference>N283 (c1)</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NS-2008/CLS-3-3-hi/rule-N283.gif</imagelink>
     </appearance>
-
     <appearance>
       <aspectname>Approach Slow</aspectname>
       <show>yellow</show>
@@ -98,7 +112,6 @@
       <reference>N284 (c1)</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NS-2008/CLS-3-3-hi/rule-N284.gif</imagelink>
     </appearance>
-
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
@@ -106,7 +119,6 @@
       <reference>N285 (c1)</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NS-2008/CLS-3-3-hi/rule-N285.gif</imagelink>
     </appearance>
-
     <appearance>
       <aspectname>Medium Approach</aspectname>
       <show>red</show>
@@ -114,7 +126,6 @@
       <reference>N286 (c1)</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NS-2008/CLS-3-3-hi/rule-N286.gif</imagelink>
     </appearance>
-
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>red</show>
@@ -122,7 +133,6 @@
       <reference>N290 (c1)</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NS-2008/CLS-3-3-hi/rule-N290.gif</imagelink>
     </appearance>
-
     <appearance>
       <aspectname>Stop Signal</aspectname>
       <show>red</show>
@@ -130,107 +140,114 @@
       <reference>N292 (c1)</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NS-2008/CLS-3-3-hi/rule-N292.gif</imagelink>
     </appearance>
-
   </appearances>
   <specificappearances>
     <danger>
       <aspect>Stop Signal</aspect>
     </danger>
+    <permissive>
+      <aspect>Restricting</aspect>
+    </permissive>
     <held>
       <aspect>Stop Signal</aspect>
     </held>
+    <dark>
+      <aspect>Stop Signal</aspect>
+    </dark>
   </specificappearances>
-
   <aspectMappings>
     <aspectMapping>
       <advancedAspect>Clear</advancedAspect>
       <ourAspect>Clear</ourAspect>
       <ourAspect>Limited Clear</ourAspect>
       <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Approach Limited</advancedAspect>
       <ourAspect>Clear</ourAspect>
       <ourAspect>Limited Clear</ourAspect>
       <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Limited Clear</advancedAspect>
       <ourAspect>Approach Limited</ourAspect>
+      <ourAspect>Medium Approach Medium</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Approach Medium</advancedAspect>
       <ourAspect>Clear</ourAspect>
       <ourAspect>Limited Clear</ourAspect>
       <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Advance Approach</advancedAspect>
       <ourAspect>Clear</ourAspect>
       <ourAspect>Limited Clear</ourAspect>
       <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Medium Clear</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
       <ourAspect>Medium Approach Medium</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Medium Approach Medium</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
       <ourAspect>Medium Approach Medium</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Approach Slow</advancedAspect>
-      <ourAspect>Clear</ourAspect>
+      <ourAspect>Advance Approach</ourAspect>
       <ourAspect>Limited Clear</ourAspect>
       <ourAspect>Medium Clear</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
       <ourAspect>Advance Approach</ourAspect>
+      <ourAspect>Medium Approach Medium</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Medium Approach</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
       <ourAspect>Medium Approach Medium</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Slow Clear</advancedAspect>
       <ourAspect>Approach Slow</ourAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-
     <aspectMapping>
       <advancedAspect>Slow Approach</advancedAspect>
       <ourAspect>Approach Slow</ourAspect>
+      <ourAspect>Medium Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-
-     <aspectMapping>
+    <aspectMapping>
       <advancedAspect>Restricting</advancedAspect>
       <ourAspect>Medium Approach</ourAspect>
       <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-
-     <aspectMapping>
+    <aspectMapping>
       <advancedAspect>Stop Signal</advancedAspect>
       <ourAspect>Medium Approach</ourAspect>
       <ourAspect>Approach</ourAspect>
+      <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-
-     <aspectMapping>
+    <aspectMapping>
       <advancedAspect>171</advancedAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
-
   </aspectMappings>
-</appearancetable>  
+</appearancetable>

@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.symbolicprog.ArithmeticQualifier
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame
  *
- * @author	Bob Jacobsen Copyright (C) 2014
+ * @author Bob Jacobsen Copyright (C) 2014
  *
  */
 public abstract class QualifierAdder {
@@ -49,7 +49,6 @@ public abstract class QualifierAdder {
             if (el.getName().equals("pane")) {
                 break;  // stop when we get to an enclosing pane element
             }
-            @SuppressWarnings("unchecked")
             List<Element> le2 = el.getChildren("qualifier");  // we assign to this to allow us to suppress unchecked error
             processList(le2, lq, model);
         }
@@ -88,6 +87,6 @@ public abstract class QualifierAdder {
         lq.add(qual);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(QualifierAdder.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QualifierAdder.class);
 
 }

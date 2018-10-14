@@ -1,4 +1,3 @@
-// EditManifestTextFrame.java
 package jmri.jmrit.operations.setup;
 
 import java.awt.GridBagLayout;
@@ -9,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManifestText;
 
@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManifestText;
  * Frame for user edit of manifest text strings
  *
  * @author Dan Boudreau Copyright (C) 2013
- * @version $Revision: 21846 $
+ * 
  */
 public class EditManifestTextPanel extends OperationsPreferencesPanel {
 
@@ -26,7 +26,7 @@ public class EditManifestTextPanel extends OperationsPreferencesPanel {
             .getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     JButton resetButton = new JButton(Bundle.getMessage("Reset"));
 
     // text field
@@ -313,10 +313,10 @@ public class EditManifestTextPanel extends OperationsPreferencesPanel {
         TrainManifestText.setStringCabooseChange(cabooseChangeAtTextField.getText());
         TrainManifestText.setStringLocoAndCabooseChange(locoAndCabooseChangeAtTextField.getText());
 
-        OperationsSetupXml.instance().writeOperationsFile();
+        InstanceManager.getDefault(OperationsSetupXml.class).writeOperationsFile();
 
         // recreate all train manifests
-        TrainManager.instance().setTrainsModified();
+        InstanceManager.getDefault(TrainManager.class).setTrainsModified();
     }
 
     @Override

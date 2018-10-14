@@ -1,17 +1,16 @@
 package jmri.jmrix.powerline.cm11;
 
 import jmri.jmrix.powerline.SerialMessage;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * JUnit tests for the cm11.SpecficMessage class.
  *
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008
- * @version	$Revision$
- */
+  */
 public class SpecificMessageTest extends TestCase {
 
     public void testCreate() {

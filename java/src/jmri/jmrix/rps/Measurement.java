@@ -1,4 +1,3 @@
-// Measurement.java
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
@@ -10,8 +9,7 @@ import javax.vecmath.Vector3d;
  * Immutable
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version	$Revision$
- */
+  */
 public class Measurement {
 
     public Measurement(Reading r) {
@@ -41,11 +39,11 @@ public class Measurement {
     /**
      * Return the ID int of the transmitter this measurement describes
      */
-    public String getID() {
+    public String getId() {
         if (r == null) {
             return "<none>";
         }
-        return r.getID();
+        return r.getId();
     }
 
     public double getX() {
@@ -122,12 +120,13 @@ public class Measurement {
 
     Reading r;  // a Reading object is by definition immutable
 
+    @Override
     public String toString() {
         if (!isValidPosition()) {
             // out-of-range
-            return "Measurement id=" + getID() + " invalid position";
+            return "Measurement id=" + getId() + " invalid position";
         }
-        return "Measurement id=" + getID() + " position= "
+        return "Measurement id=" + getId() + " position= "
                 + truncate(x) + ", " + truncate(y) + ", " + truncate(z);
     }
 
@@ -137,4 +136,4 @@ public class Measurement {
     }
 }
 
-/* @(#)Measurement.java */
+

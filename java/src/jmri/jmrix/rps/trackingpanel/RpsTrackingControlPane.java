@@ -50,6 +50,7 @@ public class RpsTrackingControlPane extends JPanel {
         // set button
         JButton set = new JButton("Set");
         set.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 update();
             }

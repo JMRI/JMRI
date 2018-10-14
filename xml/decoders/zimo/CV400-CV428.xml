@@ -20,173 +20,202 @@
     <label>Input mapping for internal F0</label>
     <label xml:lang="it">Assegnazione per F0 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F0</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F0</label>
   </variable>
   <variable item="Input mapping for internal F1" CV="401">
     <decVal/>
     <label>Input mapping for internal F1</label>
     <label xml:lang="it">Assegnazione per F1 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F1</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F1</label>
   </variable>
   <variable item="Input mapping for internal F2" CV="402">
     <decVal/>
     <label>Input mapping for internal F2</label>
     <label xml:lang="it">Assegnazione per F2 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F2</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F2</label>
   </variable>
   <variable item="Input mapping for internal F3" CV="403">
     <decVal/>
     <label>Input mapping for internal F3</label>
     <label xml:lang="it">Assegnazione per F3 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F3</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F3</label>
   </variable>
   <variable item="Input mapping for internal F4" CV="404">
     <decVal/>
     <label>Input mapping for internal F4</label>
     <label xml:lang="it">Assegnazione per F4 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F4</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F4</label>
   </variable>
   <variable item="Input mapping for internal F5" CV="405">
     <decVal/>
     <label>Input mapping for internal F5</label>
     <label xml:lang="it">Assegnazione per F5 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F5</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F5</label>
   </variable>
   <variable item="Input mapping for internal F6" CV="406">
     <decVal/>
     <label>Input mapping for internal F6</label>
     <label xml:lang="it">Assegnazione per F6 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F6</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F6</label>
   </variable>
   <variable item="Input mapping for internal F7" CV="407">
     <decVal/>
     <label>Input mapping for internal F7</label>
     <label xml:lang="it">Assegnazione per F7 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F7</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F7</label>
   </variable>
   <variable item="Input mapping for internal F8" CV="408">
     <decVal/>
     <label>Input mapping for internal F8</label>
     <label xml:lang="it">Assegnazione per F8 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F8</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F8</label>
   </variable>
   <variable item="Input mapping for internal F9" CV="409">
     <decVal/>
     <label>Input mapping for internal F9</label>
     <label xml:lang="it">Assegnazione per F9 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F9</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F9</label>
   </variable>
   <variable item="Input mapping for internal F10" CV="410">
     <decVal/>
     <label>Input mapping for internal F10</label>
     <label xml:lang="it">Assegnazione per F10 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F10</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F10</label>
   </variable>
   <variable item="Input mapping for internal F11" CV="411">
     <decVal/>
     <label>Input mapping for internal F11</label>
     <label xml:lang="it">Assegnazione per F11 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F11</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F11</label>
   </variable>
   <variable item="Input mapping for internal F12" CV="412">
     <decVal/>
     <label>Input mapping for internal F12</label>
     <label xml:lang="it">Assegnazione per F12 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F12</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F12</label>
   </variable>
   <variable item="Input mapping for internal F13" CV="413">
     <decVal/>
     <label>Input mapping for internal F13</label>
     <label xml:lang="it">Assegnazione per F13 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F13</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F13</label>
   </variable>
   <variable item="Input mapping for internal F14" CV="414">
     <decVal/>
     <label>Input mapping for internal F14</label>
     <label xml:lang="it">Assegnazione per F14 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F14</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F14</label>
   </variable>
   <variable item="Input mapping for internal F15" CV="415">
     <decVal/>
     <label>Input mapping for internal F15</label>
     <label xml:lang="it">Assegnazione per F15 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F15</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F15</label>
   </variable>
   <variable item="Input mapping for internal F16" CV="416">
     <decVal/>
     <label>Input mapping for internal F16</label>
     <label xml:lang="it">Assegnazione per F16 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F16</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F16</label>
   </variable>
   <variable item="Input mapping for internal F17" CV="417">
     <decVal/>
     <label>Input mapping for internal F17</label>
     <label xml:lang="it">Assegnazione per F17 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F17</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F17</label>
   </variable>
   <variable item="Input mapping for internal F18" CV="418">
     <decVal/>
     <label>Input mapping for internal F18</label>
     <label xml:lang="it">Assegnazione per F18 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F18</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F18</label>
   </variable>
   <variable item="Input mapping for internal F19" CV="419">
     <decVal/>
     <label>Input mapping for internal F19</label>
     <label xml:lang="it">Assegnazione per F19 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F19</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F19</label>
   </variable>
   <variable item="Input mapping for internal F20" CV="420">
     <decVal/>
     <label>Input mapping for internal F20</label>
     <label xml:lang="it">Assegnazione per F20 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F20</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F20</label>
   </variable>
   <variable item="Input mapping for internal F21" CV="421">
     <decVal/>
     <label>Input mapping for internal F21</label>
     <label xml:lang="it">Assegnazione per F21 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F21</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F21</label>
   </variable>
   <variable item="Input mapping for internal F22" CV="422">
     <decVal/>
     <label>Input mapping for internal F22</label>
     <label xml:lang="it">Assegnazione per F22 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F22</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F22</label>
   </variable>
   <variable item="Input mapping for internal F23" CV="423">
     <decVal/>
     <label>Input mapping for internal F23</label>
     <label xml:lang="it">Assegnazione per F23 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F23</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F23</label>
   </variable>
   <variable item="Input mapping for internal F24" CV="424">
     <decVal/>
     <label>Input mapping for internal F24</label>
     <label xml:lang="it">Assegnazione per F24 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F24</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F24</label>
   </variable>
   <variable item="Input mapping for internal F25" CV="425">
     <decVal/>
     <label>Input mapping for internal F25</label>
     <label xml:lang="it">Assegnazione per F25 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F25</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F25</label>
   </variable>
   <variable item="Input mapping for internal F26" CV="426">
     <decVal/>
     <label>Input mapping for internal F26</label>
     <label xml:lang="it">Assegnazione per F26 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F26</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F26</label>
   </variable>
   <variable item="Input mapping for internal F27" CV="427">
     <decVal/>
     <label>Input mapping for internal F27</label>
     <label xml:lang="it">Assegnazione per F27 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F27</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F27</label>
   </variable>
   <variable item="Input mapping for internal F28" CV="428">
     <decVal/>
     <label>Input mapping for internal F28</label>
     <label xml:lang="it">Assegnazione per F28 interno</label>
     <label xml:lang="de">Externe Funktion (F-Taste) für interne F28</label>
+    <label xml:lang="cs">Externí funkční tlačítko pro interní F28</label>
   </variable>
 </variables>

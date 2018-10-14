@@ -11,23 +11,22 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Client for the RMI LocoNet server.
- * <P>
+ * <p>
  * The main() in this class is for test purposes only.
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Alex Shepherd Copyright (c) 2002
  * @author Bob Jacobsen
- * @version $Revision$
  */
 public class LnMessageClient extends LnTrafficRouter {
 
@@ -62,8 +61,8 @@ public class LnMessageClient extends LnTrafficRouter {
         }
     }
 
-    // messages that are received from the server should
-    // be passed to this.notify(LocoNetMessage m);
+    // Messages that are received from the server should
+    // be passed to this.notify(LocoNetMessage m)
     /**
      * Start the connection to the server. This is invoked once.
      */
@@ -77,19 +76,21 @@ public class LnMessageClient extends LnTrafficRouter {
         }
 
         try {
-            System.setSecurityManager(new java.rmi.RMISecurityManager());
-            log.debug("security manager set, set interface to //"
-                    + remoteHostName + "//"
+            if (System.getSecurityManager() == null) {
+                System.setSecurityManager(new SecurityManager());
+            }
+            log.debug("security manager set, set interface to //" // NOI18N
+                    + remoteHostName + "//" // NOI18N
                     + LnMessageServer.serviceName);
             LnMessageServerInterface lnServer = (LnMessageServerInterface) java.rmi.Naming.lookup(
-                    "//" + serverName + "/" + LnMessageServer.serviceName);
+                    "//" + serverName + "/" + LnMessageServer.serviceName); // NOI18N
 
-            lnMessageBuffer = lnServer.getMessageBuffer();
+            lnMessageBuffer = lnServer.getMessageBuffer(clientMemo.getLnTrafficController());
             lnMessageBuffer.enable(0);
             pollThread = new LnMessageClientPollThread(this);
-        } catch (Exception ex) {
-            log.error("Exception while trying to connect: " + ex);
-            throw new LocoNetException("Failed to Connect to Server: " + serverName);
+        } catch (java.rmi.NotBoundException | java.rmi.RemoteException | java.net.MalformedURLException ex) {
+            log.error("Exception while trying to connect: " + ex); // NOI18N
+            throw new LocoNetException("Failed to Connect to Server: " + serverName); // NOI18N
         }
     }
 
@@ -105,7 +106,7 @@ public class LnMessageClient extends LnTrafficRouter {
         clientMemo.setLnTrafficController(this);
         // do the common manager config
         clientMemo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, // for now, assume full capability
-                false, false);
+                false, false, false);
         clientMemo.configureManagers();
 
         // the serial connections (LocoBuffer et al) start
@@ -118,5 +119,6 @@ public class LnMessageClient extends LnTrafficRouter {
         return clientMemo;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnMessageClient.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnMessageClient.class);
+
 }

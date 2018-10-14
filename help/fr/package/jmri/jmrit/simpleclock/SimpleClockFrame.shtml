@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
 
 <html lang="fr">
@@ -9,9 +8,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Setup Fast Clock</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Setup Fast Clock">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -300,9 +297,8 @@
       de JMRI . Plus d'informations sur le m&eacute;canisme
       utilis&eacute; pour Date/Format ce n'est disponible<a href=
       "http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html">ici</a>.
-      Ceci est la page d'aide
-      help/fr/package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml
-      <!--#include virtual="/Footer" --></p>
+      </p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

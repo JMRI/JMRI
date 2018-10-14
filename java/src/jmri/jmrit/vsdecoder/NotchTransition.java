@@ -20,20 +20,13 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision: 18233 $
+ * @author   Mark Underwood Copyright (C) 2011
+ * 
  */
 class NotchTransition extends SoundBite {
 
     private int prev_notch;
     private int next_notch;
-
-    public NotchTransition(String name) {
-        super(name);
-        prev_notch = 0;
-        next_notch = 0;
-        length = 0;
-    }
 
     public NotchTransition(VSDFile vf, String filename, String sname, String uname) {
         super(vf, filename, sname, uname);
@@ -59,5 +52,5 @@ class NotchTransition extends SoundBite {
     }
 
     //Unused for now... commented out to hide the warning.
-    //private static final Logger log = LoggerFactory.getLogger(NotchTransition.class.getName());
+    //private static final Logger log = LoggerFactory.getLogger(NotchTransition.class);
 }

@@ -1,96 +1,88 @@
-//OperationsBackupGuiTest.java
 package jmri.jmrit.operations.setup;
 
-import jmri.jmrit.operations.OperationsSwingTestCase;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import java.awt.Frame;
+import java.awt.GraphicsEnvironment;
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Setup Backup GUI class.
- *
+ * <p>
  * Test have NOT been written to exercise the Backup and Restore menu items on
  * the Setup frame. These operations call the main backup and restore classes,
  * which have tests.
- *
+ * <p>
  * There are only simple tests to ensure that the dialogs can be created and
  * initialized.
- *
+ * <p>
  * The dialog based classes are very simple, so there is not much value in
  * playing around with using the GUI controls to exercise the backup classes.
  *
  *
  * @author Gregory Madsen Copyright (C) 2012
  */
-public class OperationsBackupGuiTest extends OperationsSwingTestCase {
-
-	// private File operationsRoot;
-    // private File defaultBackupRoot;
-    // private File autoBackupRoot;
-    // OperationsBackupTest tester;
-    public OperationsBackupGuiTest(String s) {
-        super(s);
-
-		// Create a Backup tester instance to do various checks on the backups
-        // and restores.
-        // tester = new OperationsBackupTest("For GUI tests");
-        // Initialize our root directories from the Tester
-        // operationsRoot = tester.getOperationsRoot();
-        // defaultBackupRoot = tester.getDefaultBackupRoot();
-        // autoBackupRoot = tester.getAutoBackupRoot();
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading",
-            OperationsBackupGuiTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
+public class OperationsBackupGuiTest extends OperationsTestCase {
 
     // Ensure minimal setup for log4J
+    @Before
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
     }
 
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         super.tearDown();
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OperationsBackupGuiTest.class);
-        return suite;
-    }
-
+    @Test
     public void testCreateBackupDialog() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         BackupDialog dlg = new BackupDialog();
-        dlg.setLocationRelativeTo(null);
+        // frame to own the dialog so SwingUtilities$SharedOwnerFrame is not the owner
+        Frame owner = new Frame();
+        dlg.setLocationRelativeTo(owner);
         dlg.setModal(false);
         dlg.setVisible(true);
 
-        dlg.dispose();
+        JUnitUtil.dispose(dlg);
+        JUnitUtil.dispose(owner);
     }
 
+    @Test
     public void testCreateRestoreDialog() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         RestoreDialog dlg = new RestoreDialog();
-        dlg.setLocationRelativeTo(null);
+        // frame to own the dialog so SwingUtilities$SharedOwnerFrame is not the owner
+        Frame owner = new Frame();
+        dlg.setLocationRelativeTo(owner);
         dlg.setModal(false);
         dlg.setVisible(true);
 
-        dlg.dispose();
+        JUnitUtil.dispose(dlg);
+        JUnitUtil.dispose(owner);
     }
 
+    @Test
     public void testCreateManageBackupsDialog() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ManageBackupsDialog dlg = new ManageBackupsDialog();
-        dlg.setLocationRelativeTo(null);
+        // frame to own the dialog so SwingUtilities$SharedOwnerFrame is not the owner
+        Frame owner = new Frame();
+        dlg.setLocationRelativeTo(owner);
         dlg.setModal(false);
         dlg.setVisible(true);
 
-        dlg.dispose();
+        JUnitUtil.dispose(dlg);
+        JUnitUtil.dispose(owner);
     }
 
-	// private Frame findFrameByClassName(String className) {
+    // private Frame findFrameByClassName(String className) {
     // // This probably should move to some utility class.......
     // Frame[] frames = Frame.getFrames();
     //
@@ -109,8 +101,7 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     // // properly
     // f.initComponents();
     //
-    // getHelper()
-    // .enterClickAndLeave(new MouseEventData(this, f.backupButton));
+    // JemmyUtil.enterClickAndLeave(f.backupButton);
     //
     // // Make sure the Backup frame was created.
     // BackupFrame bf = (BackupFrame) findFrameByClassName("BackupFrame");
@@ -126,15 +117,14 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     // Assert.assertEquals("Suggested set name", setName, dialogSetName);
     //
     // // Now click the Backup button to make the backup
-    // getHelper().enterClickAndLeave(
-    // new MouseEventData(this, bf.backupButton));
+    // JemmyUtil.enterClickAndLeave(bf.backupButton);
     //
     // // This will use the Test backup file names.
     // tester.verifyBackupSetAgainst(operationsRoot, "", defaultBackupRoot,
     // setName);
     //
-    // bf.dispose();
-    // f.dispose();
+    // JUnitUtil.dispose(bf);
+    // JUnitUtil.dispose(f);
     // }
     // public void testBackupButtonWithSuppliedName() {
     // OperationsSetupFrame f = new OperationsSetupFrame();
@@ -142,8 +132,7 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     // // properly
     // f.initComponents();
     //
-    // getHelper()
-    // .enterClickAndLeave(new MouseEventData(this, f.backupButton));
+    // JemmyUtil.enterClickAndLeave(f.backupButton);
     //
     // // Make sure the Backup frame was created.
     // BackupFrame bf = (BackupFrame) findFrameByClassName("BackupFrame");
@@ -159,15 +148,14 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     // Assert.assertEquals("Provided set name", setName, dialogSetName);
     //
     // // Now click the Backup button to make the backup
-    // getHelper().enterClickAndLeave(
-    // new MouseEventData(this, bf.backupButton));
+    // JemmyUtil.enterClickAndLeave(bf.backupButton);
     //
     // // This will use the Test backup file names.
     // tester.verifyBackupSetAgainst(operationsRoot, "", defaultBackupRoot,
     // setName);
     //
-    // bf.dispose();
-    // f.dispose();
+    // JUnitUtil.dispose(bf);
+    // JUnitUtil.dispose(f);
     // }
     // public void testRestoreButtonWithDefaultName() throws IOException {
     // // Get the name that will be used for the backup
@@ -181,8 +169,7 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     // // properly
     // f.initComponents();
     //
-    // getHelper().enterClickAndLeave(
-    // new MouseEventData(this, f.restoreButton));
+    // JemmyUtil.enterClickAndLeave(f.restoreButton);
     //
     // // Make sure the Restore frame was created.
     // RestoreFrame rf = (RestoreFrame) findFrameByClassName("RestoreFrame");
@@ -197,15 +184,14 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     // tester.deleteTestFiles();
     //
     // // Click the Restore button to do the actual restore
-    // getHelper().enterClickAndLeave(
-    // new MouseEventData(this, rf.restoreButton));
+    // JemmyUtil.enterClickAndLeave(rf.restoreButton);
     //
     // // Now verify that the files were restored OK
     // tester.verifyBackupSetAgainst(defaultBackupRoot, setName, operationsRoot,
     // "");
     //
-    // rf.dispose();
-    // f.dispose();
+    // JUnitUtil.dispose(rf);
+    // JUnitUtil.dispose(f);
     // }
     // public void testVerifyBackupSetNameListAndRestore() throws IOException {
     //
@@ -233,8 +219,7 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     // // properly
     // f.initComponents();
     //
-    // getHelper().enterClickAndLeave(
-    // new MouseEventData(this, f.restoreButton));
+    // JemmyUtil.enterClickAndLeave(f.restoreButton);
     //
     // // Make sure the Restore frame was created.
     // RestoreFrame rf = (RestoreFrame) findFrameByClassName("RestoreFrame");
@@ -261,14 +246,13 @@ public class OperationsBackupGuiTest extends OperationsSwingTestCase {
     //
     // rf.backupSetsComboBox.setSelectedIndex(2);
     //
-    // getHelper().enterClickAndLeave(
-    // new MouseEventData(this, rf.restoreButton));
+    // JemmyUtil.enterClickAndLeave(rf.restoreButton);
     //
     // // Now verify that the files were restored OK
     // tester.verifyBackupSetAgainst(defaultBackupRoot, setName3,
     // operationsRoot,
     // "", tester.getRegularBackupSetFileNames());
     //
-    // rf.dispose();
+    // JUnitUtil.dispose(rf);
     // }
 }

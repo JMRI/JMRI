@@ -1,40 +1,42 @@
 package jmri.jmrix.zimo.mx1;
 
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.TooManyListenersException;
 import jmri.jmrix.zimo.Mx1CommandStation;
 import jmri.jmrix.zimo.Mx1Packetizer;
 import jmri.jmrix.zimo.Mx1PortController;
 import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
+import purejavacomm.SerialPort;
+import purejavacomm.SerialPortEvent;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Provide access to Zimo's MX-1 on an attached
- * serial comm port. Normally controlled by the zimo.mx1.Mx1Frame class.
+ * Provide access to Zimo's MX-1 on an attached serial comm port. Adapted for
+ * use with Zimo MX-1 by Sip Bosch.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- *
- * Adapted for use with Zimo MX-1 by Sip Bosch
- *
  */
 public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPortAdapter {
 
     public Mx1Adapter() {
         super(new Mx1SystemConnectionMemo());
-        option1Name = "FlowControl";
+        option1Name = "FlowControl"; // NOI18N
         options.put(option1Name, new Option("MX-1 connection uses : ", validOption1));
         this.manufacturerName = jmri.jmrix.zimo.Mx1ConnectionTypeList.ZIMO;
     }
 
     SerialPort activeSerialPort = null;
 
+    @Override
     public String openPort(String portName, String appName) {
         // open the port in MX-1 mode, check ability to set moderators
         try {
@@ -48,7 +50,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
             // try to set it for Can Net
             try {
                 setSerialPort();
-            } catch (gnu.io.UnsupportedCommOperationException e) {
+            } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
@@ -78,85 +80,19 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
             }
             if (log.isDebugEnabled()) {
                 // report additional status
-                log.debug(" port flow control shows "
-                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"));
-            }
-            if (log.isDebugEnabled()) {
-                // arrange to notify later
-                activeSerialPort.addEventListener(new SerialPortEventListener() {
-                    public void serialEvent(SerialPortEvent e) {
-                        int type = e.getEventType();
-                        switch (type) {
-                            case SerialPortEvent.DATA_AVAILABLE:
-                                log.info("SerialEvent: DATA_AVAILABLE is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
-                                log.info("SerialEvent: OUTPUT_BUFFER_EMPTY is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.CTS:
-                                log.info("SerialEvent: CTS is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.DSR:
-                                log.info("SerialEvent: DSR is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.RI:
-                                log.info("SerialEvent: RI is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.CD:
-                                log.info("SerialEvent: CD is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.OE:
-                                log.info("SerialEvent: OE (overrun error) is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.PE:
-                                log.info("SerialEvent: PE (parity error) is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.FE:
-                                log.info("SerialEvent: FE (framing error) is " + e.getNewValue());
-                                return;
-                            case SerialPortEvent.BI:
-                                log.info("SerialEvent: BI (break interrupt) is " + e.getNewValue());
-                                return;
-                            default:
-                                log.info("SerialEvent of unknown type: " + type + " value: " + e.getNewValue());
-                                return;
-                        }
-                    }
-                }
-                );
-                try {
-                    activeSerialPort.notifyOnFramingError(true);
-                } catch (Exception e) {
-                    log.debug("Could not notifyOnFramingError: " + e);
-                }
+                log.debug(" port flow control shows " // NOI18N
+                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
 
-                try {
-                    activeSerialPort.notifyOnBreakInterrupt(true);
-                } catch (Exception e) {
-                    log.debug("Could not notifyOnBreakInterrupt: " + e);
-                }
-
-                try {
-                    activeSerialPort.notifyOnParityError(true);
-                } catch (Exception e) {
-                    log.debug("Could not notifyOnParityError: " + e);
-                }
-
-                try {
-                    activeSerialPort.notifyOnOverrunError(true);
-                } catch (Exception e) {
-                    log.debug("Could not notifyOnOverrunError: " + e);
-                }
-
+                // log events
+                setPortEventLogging(activeSerialPort);
             }
 
             opened = true;
 
-        } catch (gnu.io.NoSuchPortException p) {
+        } catch (NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
-        } catch (Exception ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+        } catch (IOException ex) {
+            log.error("Unexpected exception while opening port {} trace follows: ", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
@@ -168,7 +104,10 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
      * this, as there seems to be no way to check the number of queued bytes and
      * buffer length. This might go false for short intervals, but it might also
      * stick off if something goes wrong.
+     *
+     * @return true if more data can be sent; false otherwise
      */
+    @Override
     public boolean okToSend() {
         return activeSerialPort.isCTS();
     }
@@ -177,6 +116,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
      * set up all of the other objects to operate with a MX-1 connected to this
      * port
      */
+    @Override
     public void configure() {
         Mx1CommandStation cs = new Mx1CommandStation();
         this.getSystemConnectionMemo().setCommandStation(cs);
@@ -192,6 +132,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
     }
 
 // base class methods for the ZimoPortController interface
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
@@ -200,6 +141,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
         return new DataInputStream(serialStream);
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -212,14 +154,19 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
         return null;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
 
     /**
-     * Local method to do specific configuration
+     * Local method to do specific configuration.
+     *
+     * @throws purejavacomm.UnsupportedCommOperationException if unable to
+     *                                                        configure the
+     *                                                        serial port
      */
-    protected void setSerialPort() throws gnu.io.UnsupportedCommOperationException {
+    protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
         int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
         for (int i = 0; i < validSpeeds.length; i++) {
@@ -229,25 +176,17 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
         }
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
-        // set RTS high, DTR high - done early, so flow control can be configured after
-        activeSerialPort.setRTS(true);		// not connected in some serial ports and adapters
-        activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
-
         // find and configure flow control
         int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also defaults in selectedOption1
         if (getOptionState(option1Name).equals(validOption1[1])) {
             flow = 0;
         }
-        activeSerialPort.setFlowControlMode(flow);
+        configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
-    /**
-     * Get an array of valid baud rates. This is currently just a message saying
-     * its fixed
-     */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @Override
     public String[] validBaudRates() {
-        return validSpeeds;
+        return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
     protected String[] validSpeeds = new String[]{"1,200 baud", "2,400 baud", "4,800 baud",
@@ -255,15 +194,16 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
     protected int[] validSpeedValues = new int[]{1200, 2400, 4800, 9600, 19200, 38400};
 
     // meanings are assigned to these above, so make sure the order is consistent
-    protected String[] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
+    protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm"), Bundle.getMessage("FlowOptionNo")};
     protected String[] validOption2 = new String[]{"3", "5"};
     //protected String selectedOption1=validOption1[0];
 
-    private boolean opened = false;
     InputStream serialStream = null;
 
     /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     * @return the default adapter
+     * @deprecated since 4.4 instance() shouldn't be used, convert to JMRI
+     * multi-system support structure
      */
     @Deprecated
     static public Mx1Adapter instance() {
@@ -274,6 +214,6 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
     }
     static Mx1Adapter mInstance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1Adapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1Adapter.class);
 
 }

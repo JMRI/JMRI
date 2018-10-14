@@ -6,12 +6,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides load and store functionality for configuring MarklinTurnoutManagers.
- * <P>
+ * <p>
  * Uses the store method from the abstract base class, but provides a load
  * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 17977 $
  */
 public class MarklinTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -19,10 +18,12 @@ public class MarklinTurnoutManagerXml extends jmri.managers.configurexml.Abstrac
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element turnouts) {
         turnouts.setAttribute("class", "jmri.jmrix.marklin.configurexml.MarklinTurnoutManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -35,5 +36,5 @@ public class MarklinTurnoutManagerXml extends jmri.managers.configurexml.Abstrac
         return loadTurnouts(shared, perNode);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MarklinTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MarklinTurnoutManagerXml.class);
 }

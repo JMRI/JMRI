@@ -1,4 +1,3 @@
-// ConsumerTablePane.java
 package jmri.jmrix.openlcb.swing.tie;
 
 import java.util.ResourceBundle;
@@ -13,23 +12,17 @@ import javax.swing.table.TableRowSorter;
 /**
  * Pane for showing the consumer table
  *
- * @author	Bob Jacobsen 2008
- * @version	$Revision$
- * @since 2.3.7
+ * @author Bob Jacobsen 2008
+  * @since 2.3.7
  */
 public class ConsumerTablePane extends JPanel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 583763500041401460L;
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
 
     protected JTable table = null;
     protected ConsumerTableModel tableModel = null;
 
-    public void initComponents() throws Exception {
+    public void initComponents() {
 
         // set the frame's initial state
         setSize(500, 300);
@@ -61,5 +54,3 @@ public class ConsumerTablePane extends JPanel {
     }
 
 }
-
-/* @(#)ConsumerTablePane.java */

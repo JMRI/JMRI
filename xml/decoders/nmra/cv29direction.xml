@@ -27,6 +27,24 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>10</revnumber>
+      <date>2018-02-28</date>
+      <authorinitials>WK</authorinitials>
+      <revremark>Added Dutch translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>9</revnumber>
+      <date>2018-01-02</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>French translation improvement</revremark>
+    </revision>
+    <revision>
+      <revnumber>8</revnumber>
+      <date>2016-10-23</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>7</revnumber>
       <date>2013-07-29</date>
       <authorinitials>PB</authorinitials>
@@ -47,12 +65,17 @@
   </revhistory>
   <variable item="Locomotive Direction" CV="29" mask="XXXXXXXV" tooltip="Sets the relative direction of the loco when told to move forward">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
-    <label xml:lang="it">Direzione Normale di Marcia</label>
-    <label xml:lang="fr">Sens normal de marche</label>
-    <label xml:lang="de">Fahrtrichtung Standard</label>
     <label>Locomotive Direction</label>
+    <label xml:lang="cs">Směr lokomotivy</label>
+    <label xml:lang="de">Fahrtrichtung Standard</label>
+    <label xml:lang="fr">Sens normal de marche</label>
+    <label xml:lang="it">Direzione Normale di Marcia</label>
+    <label xml:lang="nl">Rijrichting standaard</label>
     <tooltip>Sets the relative direction of the loco when told to move forward</tooltip>
-    <tooltip xml:lang="it">Stabilisce la direzione di marcia relativa quando la loco è in marcia avanti</tooltip>
+    <tooltip xml:lang="cs">Nastaví relativní směr lokomotivy když je vydán příkaz pohyb vpřed.</tooltip>
+    <tooltip xml:lang="fr">Règle le sens relatif de mouvement de la loco lorsque la marche avant est commandée</tooltip>
     <tooltip xml:lang="de">Legt die relative Fahrtrichtung der Lokomotive fest wenn Fahrbefehl "Vorwärts" erteilt wird.</tooltip>
+    <tooltip xml:lang="it">Stabilisce la direzione di marcia relativa quando la loco è in marcia avanti</tooltip>
+    <tooltip xml:lang="nl">Stelt de relatieve rijrichting van de locomotief vast wanneer het "Voorwaarts" bevel wordt gegeven.</tooltip>
     </variable>
 </variables>

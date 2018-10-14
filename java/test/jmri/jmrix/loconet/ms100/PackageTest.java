@@ -9,7 +9,9 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
-   jmri.jmrix.loconet.ms100.configurexml.PackageTest.class
+   jmri.jmrix.loconet.ms100.configurexml.PackageTest.class,
+   MS100AdapterTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.loconet.ms100 package.
@@ -31,6 +33,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

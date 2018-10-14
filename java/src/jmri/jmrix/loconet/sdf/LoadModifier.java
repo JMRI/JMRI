@@ -1,7 +1,8 @@
-// LoadModifier.java
 package jmri.jmrix.loconet.sdf;
 
 import jmri.util.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implement the LOAD_MODIFIER macro from the Digitrax sound definition language
@@ -9,8 +10,7 @@ import jmri.util.StringUtil;
  * Arg1: Upper 4 bits - math modifiers FMATH_LODE et al Arg2: Arg3:
  *
  *
- * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class LoadModifier extends SdfMacro {
 
@@ -22,14 +22,16 @@ public class LoadModifier extends SdfMacro {
         this.arg3 = arg3;
     }
 
+    @Override
     public String name() {
-        return "LOAD_MODIFIER";
+        return "LOAD_MODIFIER"; // NOI18N
     }
 
     int byte0;
     int modType;
     int arg1, arg2, arg3;
 
+    @Override
     public int length() {
         return 4;
     }
@@ -53,6 +55,7 @@ public class LoadModifier extends SdfMacro {
     /**
      * Format the three bytes as simple numbers, for lack of anything better
      * right now
+     * @return 3 digit string
      */
     String argVal() {
         String arg1Val = "" + arg1;
@@ -64,6 +67,7 @@ public class LoadModifier extends SdfMacro {
     /**
      * Store into a buffer.
      */
+    @Override
     public void loadByteArray(SdfBuffer buffer) {
         // data
         buffer.setAtIndexAndInc(byte0);
@@ -75,10 +79,12 @@ public class LoadModifier extends SdfMacro {
         super.loadByteArray(buffer);
     }
 
+    @Override
     public String toString() {
-        return "Set Modifier " + modTypeVal() + '\n';
+        return "Set Modifier " + modTypeVal() + '\n'; // NOI18N
     }
 
+    @Override
     public String oneInstructionString() {
         String args;
         String arg1Val;
@@ -96,15 +102,15 @@ public class LoadModifier extends SdfMacro {
                 // plus possible 5 bit modifier
                 if ((arg1 & 0xE0) == IMMED_GAIN_MODIFY) {
                     if (arg1 == IMMED_GAIN_MODIFY) {
-                        arg1Val = "IMMED_GAIN_MODIFY";
+                        arg1Val = "IMMED_GAIN_MODIFY"; // NOI18N
                     } else {
-                        arg1Val = "IMMED_GAIN_MODIFY+0x" + StringUtil.twoHexFromInt(arg1 & 0x1f);
+                        arg1Val = "IMMED_GAIN_MODIFY+0x" + StringUtil.twoHexFromInt(arg1 & 0x1f); // NOI18N
                     }
                 } else if ((arg1 & 0xE0) == ANALOG_GAIN_MODIFY) {
                     if (arg1 == ANALOG_GAIN_MODIFY) {
-                        arg1Val = "ANALOG_GAIN_MODIFY";
+                        arg1Val = "ANALOG_GAIN_MODIFY"; // NOI18N
                     } else {
-                        arg1Val = "ANALOG_GAIN_MODIFY+"
+                        arg1Val = "ANALOG_GAIN_MODIFY+" // NOI18N
                                 + StringUtil.getNameFromState(arg1 & 0x1f, workRegCodes, workRegNames);
                     }
                 } else {
@@ -112,28 +118,28 @@ public class LoadModifier extends SdfMacro {
                 }
                 arg2Val = StringUtil.getNameFromState(arg2, fixedCVCodes, fixedCVNames);
                 if (arg2Val == null) {
-                    arg2Val = "0x" + StringUtil.twoHexFromInt(arg2);
+                    arg2Val = "0x" + StringUtil.twoHexFromInt(arg2); // NOI18N
                 }
                 arg3Val = decodeFlags(arg3, arg3ModCodes, arg3ModMasks, arg3ModNames);
                 if (arg3Val == null) {
-                    arg3Val = "0x" + StringUtil.twoHexFromInt(arg3);
+                    arg3Val = "0x" + StringUtil.twoHexFromInt(arg3); // NOI18N
                 }
-                return name() + ' ' + modTypeVal() + "," + arg1Val + "," + arg2Val + "," + arg3Val + '\n';
+                return name() + ' ' + modTypeVal() + "," + arg1Val + "," + arg2Val + "," + arg3Val + '\n'; // NOI18N
 
             case MTYPE_PITCH:
                 // arg1 is CV_PITCH_MODIFY or ANALOG_PITCH_MODIFY
                 // plus possible 5 bit modifier
                 if ((arg1 & 0xE0) == CV_PITCH_MODIFY) {
                     if (arg1 == CV_PITCH_MODIFY) {
-                        arg1Val = "CV_PITCH_MODIFY";
+                        arg1Val = "CV_PITCH_MODIFY"; // NOI18N
                     } else {
-                        arg1Val = "CV_PITCH_MODIFY+0x" + StringUtil.twoHexFromInt(arg1 & 0x1f);
+                        arg1Val = "CV_PITCH_MODIFY+0x" + StringUtil.twoHexFromInt(arg1 & 0x1f); // NOI18N
                     }
                 } else if ((arg1 & 0xE0) == ANALOG_PITCH_MODIFY) {
                     if (arg1 == ANALOG_PITCH_MODIFY) {
-                        arg1Val = "ANALOG_PITCH_MODIFY";
+                        arg1Val = "ANALOG_PITCH_MODIFY"; // NOI18N
                     } else {
-                        arg1Val = "ANALOG_PITCH_MODIFY+"
+                        arg1Val = "ANALOG_PITCH_MODIFY+" // NOI18N
                                 + StringUtil.getNameFromState(arg1 & 0x1f, workRegCodes, workRegNames);
                     }
                 } else {
@@ -141,11 +147,11 @@ public class LoadModifier extends SdfMacro {
                 }
                 arg2Val = StringUtil.getNameFromState(arg2, maxPCodes, maxPNames);
                 if (arg2Val == null) {
-                    arg2Val = "0x" + StringUtil.twoHexFromInt(arg2);
+                    arg2Val = "0x" + StringUtil.twoHexFromInt(arg2); // NOI18N
                 }
                 arg3Val = StringUtil.getNameFromState(arg3, ditherPCodes, ditherPNames);
                 if (arg3Val == null) {
-                    arg3Val = "0x" + StringUtil.twoHexFromInt(arg3);
+                    arg3Val = "0x" + StringUtil.twoHexFromInt(arg3); // NOI18N
                 }
                 return name() + ' ' + modTypeVal() + "," + arg1Val + "," + arg2Val + "," + arg3Val + '\n';
 
@@ -154,12 +160,12 @@ public class LoadModifier extends SdfMacro {
 
                 arg2Val = StringUtil.getNameFromState(arg2, blendArg2Codes, blendArg2Names);
                 if (arg2Val == null) {
-                    arg2Val = "0x" + StringUtil.twoHexFromInt(arg2);
+                    arg2Val = "0x" + StringUtil.twoHexFromInt(arg2); // NOI18N
                 }
 
                 arg3Val = StringUtil.getNameFromState(arg3, blendArg3Codes, blendArg3Names);
                 if (arg3Val == null) {
-                    arg3Val = "0x" + StringUtil.twoHexFromInt(arg3);
+                    arg3Val = "0x" + StringUtil.twoHexFromInt(arg3); // NOI18N
                 }
 
                 return name() + ' ' + modTypeVal() + "," + arg1Val + "," + arg2Val + "," + arg3Val + '\n';
@@ -170,12 +176,12 @@ public class LoadModifier extends SdfMacro {
 
                 arg2Val = StringUtil.getNameFromState(arg2, fixedCVCodes, fixedCVNames);
                 if (arg2Val == null) {
-                    arg2Val = "0x" + StringUtil.twoHexFromInt(arg2);
+                    arg2Val = "0x" + StringUtil.twoHexFromInt(arg2); // NOI18N
                 }
 
                 arg3Val = StringUtil.getNameFromState(arg3, sintenCodes, sintenNames);
                 if (arg3Val == null) {
-                    arg3Val = "0x" + StringUtil.twoHexFromInt(arg3);
+                    arg3Val = "0x" + StringUtil.twoHexFromInt(arg3); // NOI18N
                 }
 
                 return name() + ' ' + modTypeVal() + "," + arg1Val + "," + arg2Val + "," + arg3Val + '\n';
@@ -183,7 +189,7 @@ public class LoadModifier extends SdfMacro {
             case MTYPE_SNDCV:
                 arg1Val = StringUtil.getNameFromState(arg1, fixedCVCodes, fixedCVNames);
                 if (arg1Val == null) {
-                    arg1Val = "0x" + StringUtil.twoHexFromInt(arg1);
+                    arg1Val = "0x" + StringUtil.twoHexFromInt(arg1); // NOI18N
                 }
                 arg2Val = "" + arg2;
                 arg3Val = "" + arg3;
@@ -204,7 +210,7 @@ public class LoadModifier extends SdfMacro {
                 }
                 arg2Val = StringUtil.getNameFromState(arg2, maxPCodes, maxPNames);
                 if (arg2Val == null) {
-                    arg2Val = "0x" + StringUtil.twoHexFromInt(arg2);
+                    arg2Val = "0x" + StringUtil.twoHexFromInt(arg2); // NOI18N
                 }
 
                 // occasionally see MERGE_ALL_MASK in arg3, but that's zero
@@ -216,7 +222,7 @@ public class LoadModifier extends SdfMacro {
                     arg2Val = decodeFlags(arg2, workStatusBitCodes, workStatusBitCodes, workStatusBitNames);
                 }
                 if ((arg1 & 0x1F) == WORK_GLBL_GAIN && arg2 == DEFAULT_GLBL_GAIN) {
-                    arg2Val = "DEFAULT_GLBL_GAIN";
+                    arg2Val = "DEFAULT_GLBL_GAIN"; // NOI18N
                 }
                 return name() + ' ' + modTypeVal() + "," + arg1Val + "," + arg2Val + "," + arg3Val + '\n';
 
@@ -231,24 +237,28 @@ public class LoadModifier extends SdfMacro {
                 } else if (temp1 == null && temp2 != null) {
                     arg1Val = temp2;
                 } else {
-                    arg1Val = "0"; // an odd error, actually
+                    arg1Val = "0"; // an odd error, actually // NOI18N
                 }
                 arg2Val = StringUtil.getNameFromState(arg2 & 0x1F, workRegCodes, workRegNames);
                 if (arg2Val == null) {
-                    arg2Val = "0x" + StringUtil.twoHexFromInt(arg2);
+                    arg2Val = "0x" + StringUtil.twoHexFromInt(arg2); // NOI18N
                 }
 
                 // occasionally see MERGE_ALL_MASK in arg3, but that's zero
                 arg3Val = "" + arg3;
 
-                return name() + ' ' + modTypeVal() + "," + arg1Val + "," + arg2Val + "," + arg3Val + '\n';
+                return name() + ' ' + modTypeVal() + "," + arg1Val + "," + arg2Val + "," + arg3Val + '\n'; // NOI18N
+            default:
+                log.warn("Unhandled modifyer type code: {}", modType);
+                break;
         }
-        return "<could not parse, should not happen>";
+        return "<could not parse, should not happen>"; // NOI18N
     }
 
+    @Override
     public String allInstructionString(String indent) {
         return indent + oneInstructionString();
     }
+    
+    private final static Logger log = LoggerFactory.getLogger(LoadModifier.class);
 }
-
-/* @(#)LoadModifier.java */

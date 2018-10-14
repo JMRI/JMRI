@@ -22,6 +22,7 @@ public class DccLocoAddressXml extends jmri.configurexml.AbstractXmlAdapter {
      * @param o Object to store, of type DccLocoAddress
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         DccLocoAddress p = (DccLocoAddress) o;
 
@@ -42,6 +43,7 @@ public class DccLocoAddressXml extends jmri.configurexml.AbstractXmlAdapter {
         return element;
     }
 
+    @Override
     public boolean load(Element shared, Element perNode) {
         log.error("Invalid method called");
         return false;
@@ -60,9 +62,10 @@ public class DccLocoAddressXml extends jmri.configurexml.AbstractXmlAdapter {
         return new DccLocoAddress(number, longaddress);
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DccLocoAddressXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DccLocoAddressXml.class);
 }

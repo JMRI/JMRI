@@ -1,40 +1,41 @@
-/**
- * DccTurnoutManagerTest.java
- *
- * Description:	tests for the jmri.jmrix.dcc.DccTurnoutManager class
- *
- * @author	Bob Jacobsen
- * @version
- */
 package jmri.jmrix.dcc;
 
 import jmri.Turnout;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+/**
+ * Tests for the jmri.jmrix.dcc.DccTurnoutManager class
+ *
+ * @author	Bob Jacobsen
+ */
+public class DccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
-    @Override
-    protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
-        super.tearDown();
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
     @Override
-    public void setUp() throws Exception {
-        super.setUp();
-        apps.tests.Log4JFixture.setUp();
+    @Before
+    public void setUp(){
+        jmri.util.JUnitUtil.setUp();
         // create and register the manager object
         l = new DccTurnoutManager();
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
+    @Override
     public String getSystemName(int n) {
         return "BT" + n;
     }
 
+    @Test
     public void testAsAbstractFactory() {
         // ask for a Turnout, and check type
         Turnout o = l.newTurnout("BT21", "my name");
@@ -42,7 +43,7 @@ public class DccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest 
         if (log.isDebugEnabled()) {
             log.debug("received turnout value " + o);
         }
-        assertTrue(null != (DccTurnout) o);
+        Assert.assertTrue(null != (DccTurnout) o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
@@ -52,29 +53,11 @@ public class DccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest 
             log.debug("by user name:   " + l.getByUserName("my name"));
         }
 
-        assertTrue(null != l.getBySystemName("BT21"));
-        assertTrue(null != l.getByUserName("my name"));
+        Assert.assertTrue(null != l.getBySystemName("BT21"));
+        Assert.assertTrue(null != l.getByUserName("my name"));
 
     }
 
-    // from here down is testing infrastructure
-    public DccTurnoutManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {DccTurnoutManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite(DccTurnoutManagerTest.class);
-        return suite;
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(DccTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DccTurnoutManagerTest.class);
 
 }

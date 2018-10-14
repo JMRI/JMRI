@@ -149,18 +149,22 @@
       <variable CV="61" default="18" minFn="28" item="F28 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceDiesel.xml"/>
       </variable>
-	  <variable item="Global lighting option 3" CV="159" mask="XXXXVXXX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-		<label>L4/L5 Power Up State</label>
-	  </variable>
-	  <variable item="HO Gauge Rev Level Motor Power Scalar" CV="203" default="50">
-		<decVal max="255"/>
-		<label>HO Gauge Rev Level Motor Power Scalar</label>
-	  </variable>
-	  <variable CV="204" default="1" item="Sound Setting 35">
-		<decVal max="255"/>
-		<label>Initial RevUp</label>
-	  </variable>
+      <variable item="Global lighting option 2" CV="159" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>L1/Headlight Power Up State</label>
+      </variable>
+      <variable CV="201" default="12" item="Sound Setting 38">
+        <decVal max="255"/>
+        <label>Load Motor Last Step</label>
+      </variable>
+      <variable item="HO Gauge Rev Level Motor Power Scalar" CV="203" default="6">
+        <decVal max="255"/>
+        <label>HO Gauge Rev Level Motor Power Scalar</label>
+      </variable>
+      <variable CV="204" default="1" item="Sound Setting 35">
+        <decVal max="255"/>
+        <label>Initial RevUp</label>
+      </variable>
       <variable item="Aux Select for DCMaster" CV="222" default="0">
         <enumVal>
           <enumChoice value="0">
@@ -280,14 +284,33 @@
         </enumVal>
         <label>Aux Select for DCMaster</label>
       </variable>
-	  <variable item="Broadcast Stop Packet Count" CV="244" mask="XXXXXVVV" default="0">
-		<decVal max="7"/>
-		<label>Broadcast Stop Packet Count</label>
-	  </variable>
-	  <variable item="Grid Blower Brake Motor Decrease Time" CV="244" mask="VVVXXXXX" default="1">
-		<decVal max="7"/>
-		<label>Grid Blower Brake Motor Decrease Time</label>
-	  </variable>
+      <variable item="Smoke Unit Power On Delay" CV="233" default="2">
+        <decVal/>
+        <label>Smoke Unit Power On Delay</label>
+      </variable>
+      <variable item="Smoke Unit Fan Minimal Speed" CV="234" default="2">
+        <decVal/>
+        <label>Smoke Unit Fan Minimal Speed</label>
+      </variable>
+      <variable item="Smoke Unit Fan Maximum Speed" CV="235" default="249">
+        <decVal/>
+        <label>Smoke Unit Fan Maximum Speed</label>
+      </variable>
+      <variable item="Smoke Unit Minimal Heater Power" CV="236" default="2">
+        <decVal max="110"/>
+        <label>Smoke Unit Minimal Heater Power</label>
+      </variable>
+      <variable item="Smoke Unit Maximum Heater Power" CV="237" default="50">
+        <decVal max="110"/>
+        <label>Smoke Unit Maximum Heater Power</label>
+      </variable>
+      <variable item="Grid Blower Brake Motor Decrease" CV="244" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+      </variable>
+      <variable item="Grid Blower Brake Motor Decrease Time" CV="244" mask="VVVXXXXX" default="1">
+        <decVal max="7"/>
+        <label>Grid Blower Brake Motor Decrease Time</label>
+      </variable>
     </variables>
     <resets>
       <factReset label="Reset All CVs Unless Locked" CV="8" default="8"/>

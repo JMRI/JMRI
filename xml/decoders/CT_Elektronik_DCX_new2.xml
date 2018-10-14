@@ -13,11 +13,13 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="ronald@wirkuhns.de" version="1.8" lastUpdated="2016/5/12"/>
-  <version author="ncliffe@btinternet.com" version="1.7" lastUpdated="2009/9/01"/>
-  <version author="ncliffe@btinternet.com" version="1.6" lastUpdated="2009/4/02"/>
-  <version author="ncliffe@btinternet.com" version="1.5" lastUpdated="2009/3/12"/>
-  <version author="peter.brandenburg@t-online.de" version="1" lastUpdated="2006/11/20"/>
+  <version author="Nigel Cliffe" version="1.9" lastUpdated="2017/6/16"/> 
+
+  <!-- <version author="ronald@wirkuhns.de" version="1.8" lastUpdated="2016/5/12"/> -->
+  <!-- <version author="ncliffe@btinternet.com" version="1.7" lastUpdated="2009/9/01"/> -->
+  <!-- <version author="ncliffe@btinternet.com" version="1.6" lastUpdated="2009/4/02"/> -->
+  <!-- <version author="ncliffe@btinternet.com" version="1.5" lastUpdated="2009/3/12"/> -->
+  <!-- <version author="peter.brandenburg@t-online.de" version="1" lastUpdated="2006/11/20"/> -->
   <!-- version 1 - added CV's for new generation of decoders - Peter -->
   <!-- version 1.1 - added elements for "shunt speed" based on table supplied by CT -->
   <!--            Nigel Cliffe 2008/07/19; -->
@@ -51,6 +53,8 @@
   <!--    Subsequent changes to a few screens to move features to function map -->
   <!-- Version 1.8, Ronald Kuhn, 2016/05/12  -->
   <!--    translation to german  -->
+  <!-- Version 1.9, Nigel Cliffe, 2016/06/16 -->
+  <!--    Re-instated meaningful labels on CV116 which had been deleted in version 1.8  -->
   <decoder>
     <family name="DCX Series (v.27 and higher)" mfg="CT Elektronik" lowVersionID="27" highVersionID="59" comment="DCX74, DCX75, with variants">
       <model model="DCX74D" numOuts="2" numFns="10" maxMotorCurrent="1.6 A" maxTotalCurrent="0.8 A">
@@ -925,17 +929,17 @@
       </variable>
       <variable CV="116" mask="XXXXXXXV" item="Switching 1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Switching 1</label>
+        <label>Ignore accel (CV3) and decel (CV4)</label>
         <label xml:lang="de">CV3 und CV4 wird ausgeschaltet</label>
       </variable>
       <variable CV="116" mask="XXXXXXVX" default="0" item="Switching 2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Switching 2</label>
+        <label>Half speed</label>
         <label xml:lang="de">max. Geschwindigkeit wird vorwärts und rückwärts halbiert</label>
       </variable>
       <variable CV="116" mask="XXXXXVXX" default="0" item="Switching 3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Switching 3</label>
+        <label>Reverse is 65% of forwards speed</label>
         <label xml:lang="de">rückwärts 65% der max. Geschw.keit (unabhängig vom Rang.)</label>
       </variable>
       <variable CV="117" default="0" item="F-Button Used For Dimming">
@@ -1614,16 +1618,17 @@
       <separator/>
       <display item="Switching 1"/>
       <display item="Switching 2"/>
-      <display item="Switching 3"/>
-      <label>
+       <label>
         <text>  </text>
       </label>
       <label>
         <text>  </text>
       </label>
       <label>
-        <text>  </text>
+        <text>Forward/Reverse speed ratio</text>
       </label>
+	  <display item="Switching 3"/>
+     
       <label>
         <text>  </text>
       </label>

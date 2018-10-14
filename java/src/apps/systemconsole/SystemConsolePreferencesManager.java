@@ -2,7 +2,9 @@ package apps.systemconsole;
 
 import apps.SystemConsole;
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
@@ -10,8 +12,10 @@ import jmri.beans.Bean;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
 import jmri.spi.PreferencesManager;
+import jmri.util.ThreadingUtil;
 import jmri.util.prefs.InitializationException;
 import jmri.util.swing.FontComboUtil;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,6 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood
  */
+@ServiceProvider(service = PreferencesManager.class)
 public class SystemConsolePreferencesManager extends Bean implements PreferencesManager {
 
     public static final String SCHEME = "scheme";
@@ -40,6 +45,7 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
      * per-application instead of per-profile.
      */
     private boolean initialized = false;
+    private final List<InitializationException> exceptions = new ArrayList<>();
     private static final Logger log = LoggerFactory.getLogger(SystemConsolePreferencesManager.class);
 
     @Override
@@ -72,7 +78,7 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
 
     @Override
     public boolean isInitialized(Profile profile) {
-        return this.initialized;
+        return this.initialized && this.exceptions.isEmpty();
     }
 
     @Override
@@ -113,7 +119,7 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
 
     /**
      * Sets the fontSize.
-     *
+     * <p>
      * If the parameter is less than 6, the fontSize is set to 6. If the
      * parameter is greater than 24, the fontSize is set to 24.
      *
@@ -136,9 +142,8 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
     }
 
     /**
-     * @param fontStyle one of
-     *                  {@link java.awt.Font#BOLD}, {@link java.awt.Font#ITALIC},
-     *                  or {@link java.awt.Font#PLAIN}.
+     * @param fontStyle one of {@link Font#BOLD}, {@link Font#ITALIC}, or
+     *                  {@link Font#PLAIN}.
      */
     public void setFontStyle(int fontStyle) {
         if (fontStyle == Font.BOLD || fontStyle == Font.ITALIC || fontStyle == Font.PLAIN || fontStyle == (Font.BOLD | Font.ITALIC)) {
@@ -162,13 +167,19 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
      * @param fontFamily the fontFamily to set
      */
     public void setFontFamily(String fontFamily) {
-        if (FontComboUtil.getFonts(FontComboUtil.MONOSPACED).contains(fontFamily)) {
-            String oldFontFamily = this.fontFamily;
-            this.fontFamily = fontFamily;
-            this.firePropertyChange(FONT_FAMILY, oldFontFamily, fontFamily);
-            SystemConsole.getInstance().setFontFamily(this.getFontFamily());
+        if (FontComboUtil.isReady()) {
+            if (FontComboUtil.getFonts(FontComboUtil.MONOSPACED).contains(fontFamily)) {
+                String oldFontFamily = this.fontFamily;
+                this.fontFamily = fontFamily;
+                this.firePropertyChange(FONT_FAMILY, oldFontFamily, fontFamily);
+                SystemConsole.getInstance().setFontFamily(this.getFontFamily());
+            } else {
+                log.warn("Incompatible console font \"{}\" - using \"{}\"", fontFamily, this.getFontFamily());
+            }
         } else {
-            log.warn("Incompatible console font \"{}\" - using \"{}\"", fontFamily, this.getFontFamily());
+            ThreadingUtil.runOnGUIDelayed(() -> {
+                this.setFontFamily(fontFamily);
+            }, 1000); // one second
         }
     }
 
@@ -193,6 +204,16 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
             this.firePropertyChange(WRAP_STYLE, oldWrapStyle, wrapStyle);
             SystemConsole.getInstance().setWrapStyle(this.getWrapStyle());
         }
+    }
+
+    @Override
+    public boolean isInitializedWithExceptions(Profile profile) {
+        return this.initialized && !this.exceptions.isEmpty();
+    }
+
+    @Override
+    public List<Exception> getInitializationExceptions(Profile profile) {
+        return new ArrayList<>(this.exceptions);
     }
 
 }

@@ -6,14 +6,15 @@ import javax.swing.Icon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.swing.RosterGroupComboBox;
 import jmri.util.swing.WindowInterface;
 
 /**
  * Swing action to create and register a Roster Group Table.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2003
+ * @author Kevin Dickerson Copyright (C) 2009
  */
 public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
 
@@ -58,6 +59,7 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
             /**
              * Include an "add" button
              */
+            @Override
             void extras() {
                 final JComboBox<String> selectCombo = new RosterGroupComboBox();
                 selectCombo.insertItemAt("", 0);
@@ -67,6 +69,7 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
                 p25.add(selectCombo);
                 addToTopBox(p25);
                 selectCombo.addActionListener(new ActionListener() {
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         comboSelected(e, selectCombo.getSelectedItem().toString());
                     }
@@ -81,6 +84,7 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
         f.setVisible(true);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         actionPerformed();
         // create the JTable model, with changes for specific NamedBean
@@ -126,12 +130,12 @@ public class RosterGroupTableAction extends jmri.util.swing.JmriAbstractAction {
     }
 
     void comboSelected(ActionEvent e, String group) {
-        jmri.jmrit.roster.Roster roster = jmri.jmrit.roster.Roster.getDefault();
-        m.setGroup(roster.getRosterGroupPrefix() + group);
+        m.setGroup(Roster.ROSTER_GROUP_PREFIX + group);
         m.fireTableDataChanged();
 
     }
 
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

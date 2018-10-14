@@ -108,7 +108,7 @@
 		<column> <display item="Recip9" format="checkbox" tooltip="Inverts the output state of the effect" /> </column>
 		<column> <label label=" Use for alternating flashing LEDs"/> </column>
 		</row>
-		<display item="Eff9" tooltip="Configures the output for specfic effect" />
+		<display item="Eff9" tooltip="Configures the output for specific effect" />
 		<display item="EffDu9" tooltip="Time is based on the type of effect" />
 	</column>
 	<separator/>
@@ -180,7 +180,7 @@
 		<column> <display item="Recip10" format="checkbox" tooltip="Inverts the output state of the effect" /> </column>
 		<column> <label label=" Use for alternating flashing LEDs"/> </column>
 		</row>
-		<display item="Eff10" tooltip="Configures the output for specfic effect" />
+		<display item="Eff10" tooltip="Configures the output for specific effect" />
 		<display item="EffDu10" tooltip="Time is based on the type of effect" />
 	</column>
 	<separator/>
@@ -252,7 +252,7 @@
 		<column> <display item="Recip11" format="checkbox" tooltip="Inverts the output state of the effect" /> </column>
 		<column> <label label=" Use for alternating flashing LEDs"/> </column>
 		</row>
-		<display item="Eff11" tooltip="Configures the output for specfic effect" />
+		<display item="Eff11" tooltip="Configures the output for specific effect" />
 		<display item="EffDu11" tooltip="Time is based on the type of effect" />
 	</column>
 	<separator/>
@@ -324,7 +324,7 @@
 		<column> <display item="Recip12" format="checkbox" tooltip="Inverts the output state of the effect" /> </column>
 		<column> <label label=" Use for alternating flashing LEDs"/> </column>
 		</row>
-		<display item="Eff12" tooltip="Configures the output for specfic effect" />
+		<display item="Eff12" tooltip="Configures the output for specific effect" />
 		<display item="EffDu12" tooltip="Time is based on the type of effect" />
 	</column>
 	<separator/>
@@ -396,7 +396,7 @@
 		<column> <display item="Recip13" format="checkbox" tooltip="Inverts the output state of the effect" /> </column>
 		<column> <label label=" Use for alternating flashing LEDs"/> </column>
 		</row>
-		<display item="Eff13" tooltip="Configures the output for specfic effect" />
+		<display item="Eff13" tooltip="Configures the output for specific effect" />
 		<display item="EffDu13" tooltip="Time is based on the type of effect" />
 	</column>
 	<separator/>
@@ -468,7 +468,7 @@
 		<column> <display item="Recip14" format="checkbox" tooltip="Inverts the output state of the effect" /> </column>
 		<column> <label label=" Use for alternating flashing LEDs"/> </column>
 		</row>
-		<display item="Eff14" tooltip="Configures the output for specfic effect" />
+		<display item="Eff14" tooltip="Configures the output for specific effect" />
 		<display item="EffDu14" tooltip="Time is based on the type of effect" />
 	</column>
 	<separator/>
@@ -540,7 +540,7 @@
 		<column> <display item="Recip15" format="checkbox" tooltip="Inverts the output state of the effect" /> </column>
 		<column> <label label=" Use for alternating flashing LEDs"/> </column>
 		</row>
-		<display item="Eff15" tooltip="Configures the output for specfic effect" />
+		<display item="Eff15" tooltip="Configures the output for specific effect" />
 		<display item="EffDu15" tooltip="Time is based on the type of effect" />
 	</column>
 	<separator/>
@@ -612,7 +612,7 @@
 		<column> <display item="Recip16" format="checkbox" tooltip="Inverts the output state of the effect" /> </column>
 		<column> <label label=" Use for alternating flashing LEDs"/> </column>
 		</row>
-		<display item="Eff16" tooltip="Configures the output for specfic effect" />
+		<display item="Eff16" tooltip="Configures the output for specific effect" />
 		<display item="EffDu16" tooltip="Time is based on the type of effect" />
 	</column>
 		 <separator/>

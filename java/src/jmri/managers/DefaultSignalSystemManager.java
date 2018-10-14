@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
-public class DefaultSignalSystemManager extends AbstractManager
+public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
         implements SignalSystemManager, java.beans.PropertyChangeListener {
 
     public DefaultSignalSystemManager() {
@@ -38,6 +38,7 @@ public class DefaultSignalSystemManager extends AbstractManager
         load();
     }
 
+    @Override
     public int getXMLOrder() {
         return 65400;
     }
@@ -49,14 +50,17 @@ public class DefaultSignalSystemManager extends AbstractManager
     protected void registerSelf() {
     }
 
+    @Override
     public String getSystemPrefix() {
         return "I";
     }
 
+    @Override
     public char typeLetter() {
         return 'F';
     }
 
+    @Override
     public SignalSystem getSystem(String name) {
         SignalSystem t = getByUserName(name);
         if (t != null) {
@@ -66,12 +70,14 @@ public class DefaultSignalSystemManager extends AbstractManager
         return getBySystemName(name);
     }
 
+    @Override
     public SignalSystem getBySystemName(String key) {
-        return (SignalSystem) _tsys.get(key);
+        return _tsys.get(key);
     }
 
+    @Override
     public SignalSystem getByUserName(String key) {
-        return (SignalSystem) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     void load() {
@@ -263,9 +269,10 @@ public class DefaultSignalSystemManager extends AbstractManager
     static class AspectFile extends XmlFile {
     }
 
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameSignalSystem");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalSystemManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalSystemManager.class);
 }

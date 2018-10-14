@@ -23,21 +23,25 @@ public class ButtonRenderer extends JButton
         putClientProperty("JButton.buttonType", "square");
     }
 
+    @Override
     public void setForeground(Color foreground) {
         this.foreground = foreground;
         super.setForeground(foreground);
     }
 
+    @Override
     public void setBackground(Color background) {
         this.background = background;
         super.setBackground(background);
     }
 
+    @Override
     public void setFont(Font font) {
         this.font = font;
         super.setFont(font);
     }
 
+    @Override
     public Component getTableCellRendererComponent(JTable table,
             Object value, boolean isSelected,
             boolean hasFocus,

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: signalmastlogics.xsd 17977 2011-07-18 17:23:46Z zoo $ -->
-
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -35,8 +33,17 @@
       </xs:annotation>
       <xs:sequence>
         <xs:element name="cleardown" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="dispatcherintegration" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="colourwhilesetting" type="xs:string" minOccurs="0" maxOccurs="1"/>
+
+        <!-- next elements not appearing in EntryExitPairsXml#store or #load code JMRI 4.7.1 -->
+        <xs:element name="settingTimer" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <!-- next elements not appearing in EntryExitPairsXml#store or #load code JMRI 4.7.1 -->
         <xs:element name="logicDelay" type="xs:string" minOccurs="0" maxOccurs="1"/>
-        <xs:element name="layoutPanel" type="EntryExitPanelType" minOccurs="0" maxOccurs="unbounded" />      
+
+        <!-- code in EntryExitPairsXml that writes the following is distinct from usual panel code -->
+        <xs:element name="layoutPanel" type="EntryExitPanelType" minOccurs="0" maxOccurs="unbounded" />
+
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required" />
     </xs:complexType>
@@ -56,7 +63,7 @@
       </xs:sequence>
       <xs:attribute name="name" type="xs:string" use="required" />
     </xs:complexType>
-    
+
     <xs:complexType name="EntryExitSourceType">
       <xs:annotation>
         <xs:documentation>
@@ -73,7 +80,7 @@
       <xs:attribute name="type" type="xs:string" use="required" />
       <xs:attribute name="item" type="beanNameType" use="required" />
     </xs:complexType>
-    
+
     <xs:complexType name="EntryExitDestinationType">
       <xs:annotation>
         <xs:documentation>
@@ -98,6 +105,7 @@
       </xs:attribute>
       <xs:attribute name="item" type="beanNameType" use="required" />
       <xs:attribute name="uniDirection" type="yesNoType" />
+      <xs:attribute name="enabled" type="yesNoType" />
       <xs:attribute name="nxType">
         <xs:simpleType>
           <xs:restriction base="xs:token">

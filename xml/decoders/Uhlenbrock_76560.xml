@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2014 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,8 +13,8 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <version author="Alain Le Marchand" version="1" lastUpdated="20140511"/>
-  <!-- Version 1 - Created from Uhlenbrock_76400.xml v2 (Alain Le Marchand) -->
-  <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
+    <!-- Version 1 - Created from Uhlenbrock_76400.xml v2 (Alain Le Marchand) -->
+    <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
 <decoder>
     <family name="Multi-Protocol Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="9" comment="Decoders not sorted (necessarily) in numerical order">
       <model model="76560" numOuts="9" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="PluX22" productID="76560" comment="HO-Scale, IntelliDrive Deluxe with PluX22 plug and RailCom(R)">
@@ -31,7 +30,7 @@
         <output name="Shunting" label="mode"/>
         <output name="Start/brake" label="inertia"/>
         <size length="22" width="15" height="3.8" units="mm"/>
-      </model>	  
+      </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
@@ -43,6 +42,7 @@
         <label xml:lang="it">Versione Decoder: </label>
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
+        <label xml:lang="nl">Versie van decoder: </label>
       </variable>
       <variable item="Manufacturer" CV="8" readOnly="yes" default="85">
         <decVal/>
@@ -50,6 +50,7 @@
         <label xml:lang="it">ID Costruttore: </label>
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
+        <label xml:lang="nl">Fabrikant-ID: </label>
       </variable>
       <!-- CV12 - see below with CV49 -->
       <variable item="Analog Mode Function Status - FL" CV="13" default="1" mask="XXXXXXXV">
@@ -105,13 +106,17 @@
         <decVal max="63"/>
         <label>Speed Correction Forward</label>
         <label xml:lang="de">Geschw.-korrektur vorwärts</label>
+        <label xml:lang="nl">Snelheidscorr. vooruit</label>
         <tooltip>Factor = Value/128</tooltip>
       </variable>
       <variable item="Reverse Trim" CV="48" default="32">
         <decVal max="63"/>
         <label>Speed Correction Reverse</label>
         <label xml:lang="de">Geschw.-korrektur rückwärts</label>
+        <label xml:lang="nl">Snelheidscorr. achteruit</label>
         <tooltip>Factor = Value/128</tooltip>
+        <tooltip xml:lang="de">Factor = Wert/128</tooltip>
+        <tooltip xml:lang="nl">Factor = Waarde/128</tooltip>
       </variable>	  
       <!-- CV49 Uhlenbrock decoder configuration - common bits -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv49common.xml"/>
@@ -137,10 +142,12 @@
           <enumChoice choice="divided by 2">
             <choice>divided by 2</choice>
             <choice xml:lang="de">dividiert durch 2</choice>
+            <choice xml:lang="nl">gedeeld door 2</choice>
           </enumChoice>
           <enumChoice choice="divided by 3">
             <choice>divided by 3</choice>
             <choice xml:lang="de">dividiert durch 3</choice>
+            <choice xml:lang="nl">gedeeld door 3</choice>
           </enumChoice>
         </enumVal>
         <label>Voltage divider load regulation EMF</label>
@@ -153,7 +160,7 @@
         <label>Repetition rate</label>
         <label xml:lang="de">Wiederholrate der Motorregelung</label>
         <tooltip>Lower if the locomotive does not run smoothly - Value * 53 micro.s</tooltip>
-        <tooltip xml:lang="de">verkleinern, wenn Lok ungleichmäßig läuft - Wert * 53 micro.s</tooltip>
+        <tooltip xml:lang="de">verkleinern, wenn Lok ungleichmäßig läuft - Wert * 53 micro.S</tooltip>
       </variable>	  
       <variable item="EMF Static Config" CV="54" default="20">
         <decVal max="63"/>
@@ -213,6 +220,7 @@
         <speedTableVal/>
         <label>Speed Table</label>
         <label xml:lang="de">Geschwindigkeitskennlinie</label>
+        <label xml:lang="nl">Snelheidsgrafiek</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv107.108indepOutputs.xml"/>
       <variable item="Function F0F check 1" CV="109" mask="XXXXXXXV">
@@ -396,11 +404,12 @@
         <decVal max="32"/>
         <label>Smoke gen. control PWM - Idle</label>
         <label xml:lang="de">Rauchgen. PWM-Leerlauf</label>
-      </variable>	  
+      </variable>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="59" default="1">
-         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+        <label xml:lang="nl">Zet alle CV's terug naar fabrieksinstelling</label>
       </factReset>
     </resets>
   </decoder>

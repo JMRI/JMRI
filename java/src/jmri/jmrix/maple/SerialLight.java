@@ -1,4 +1,3 @@
-// SerialLight.java
 package jmri.jmrix.maple;
 
 import jmri.implementation.AbstractLight;
@@ -6,40 +5,42 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * SerialLight.java
- *
  * Implementation of the Light Object for C/MRI
- * <P>
+ * <p>
  * Based in part on SerialTurnout.java
  *
  * @author Dave Duchamp Copyright (C) 2004, 2009, 2010
- * @version $Revision$
  */
 public class SerialLight extends AbstractLight {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7484666573192742681L;
+    private MapleSystemConnectionMemo _memo = null;
 
     /**
      * Create a Light object, with only system name.
-     * <P>
-     * 'systemName' was previously validated in SerialLightManager
+     * <p>
+     * 'systemName' has already been validated in SerialLightManager
+     *
+     * @param systemName the system name for this Light
      */
-    public SerialLight(String systemName) {
+    public SerialLight(String systemName, MapleSystemConnectionMemo memo) {
         super(systemName);
+        _memo = memo;
         // Initialize the Light
         initializeLight(systemName);
     }
 
     /**
      * Create a Light object, with both system and user names.
-     * <P>
-     * 'systemName' was previously validated in SerialLightManager
+     * <p>
+     * 'systemName' has already been validated in SerialLightManager
+     *
+     * @param systemName the system name for this Light
+     * @param userName   the user name for this Light
      */
-    public SerialLight(String systemName, String userName) {
+    public SerialLight(String systemName, String userName, MapleSystemConnectionMemo memo) {
         super(systemName, userName);
+        _memo = memo;
+        // Initialize the Light
         initializeLight(systemName);
     }
 
@@ -50,7 +51,7 @@ public class SerialLight extends AbstractLight {
      */
     private void initializeLight(String systemName) {
         // Extract the Bit from the name
-        mBit = SerialAddress.getBitFromSystemName(systemName);
+        mBit = SerialAddress.getBitFromSystemName(systemName, _memo.getSystemPrefix());
         // Set initial state
         setState(OFF);
     }
@@ -58,7 +59,7 @@ public class SerialLight extends AbstractLight {
     /**
      * System dependent instance variables
      */
-    int mBit = 0;                // bit within the node
+    int mBit = 0; // bit within the node
 
     /**
      * Set the current state of this Light This routine requests the hardware to
@@ -66,17 +67,17 @@ public class SerialLight extends AbstractLight {
      * SerialNode), a Transmit packet will be sent before this Node is next
      * polled.
      */
+    @Override
     protected void doNewState(int oldState, int newState) {
         if (newState == ON) {
-            OutputBits.instance().setOutputBit(mBit, false);
+            _memo.getTrafficController().outputBits().setOutputBit(mBit, false);
         } else if (newState == OFF) {
-            OutputBits.instance().setOutputBit(mBit, true);
+            _memo.getTrafficController().outputBits().setOutputBit(mBit, true);
         } else {
-            log.warn("illegal state requested for Light: " + getSystemName());
+            log.warn("illegal state requested for Light: {}", getSystemName());
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialLight.class.getName());
-}
+    private final static Logger log = LoggerFactory.getLogger(SerialLight.class);
 
-/* @(#)SerialLight.java */
+}

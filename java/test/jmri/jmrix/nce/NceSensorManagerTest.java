@@ -1,9 +1,6 @@
 package jmri.jmrix.nce;
 
-import jmri.Sensor;
-import jmri.SensorManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,16 +10,16 @@ import org.junit.Test;
  * JUnit tests for the NceAIU class.
  *
  * @author	Bob Jacobsen Copyright 2002
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
-public class NceSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
-        
+public class NceSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
+
     private NceInterfaceScaffold lnis = null;
 
     @Override
     public String getSystemName(int i) {
         return "NS" + i;
-    }    
+    }
 
     @Test
     public void testNceSensorCreate() {
@@ -31,10 +28,8 @@ public class NceSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
 
     @Override
     @Before
-    public void setUp(){
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-
+    public void setUp() {
+        JUnitUtil.setUp();
 
         // prepare an interface
         lnis = new NceInterfaceScaffold();
@@ -48,8 +43,7 @@ public class NceSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
     @After
     public void tearDown() {
         l.dispose();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

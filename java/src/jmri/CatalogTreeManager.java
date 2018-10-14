@@ -1,5 +1,6 @@
 package jmri;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.List;
 
 /**
@@ -23,10 +24,10 @@ import java.util.List;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Pete Cressman Copyright (C) 2009
+ * @author Pete Cressman Copyright (C) 2009
  *
  */
-public interface CatalogTreeManager extends Manager {
+public interface CatalogTreeManager extends Manager<CatalogTree> {
 
     /**
      * Locate via user name, then system name if needed. If that fails, return
@@ -83,23 +84,21 @@ public interface CatalogTreeManager extends Manager {
      */
     public CatalogTree newCatalogTree(String systemName, String userName);
 
-    /**
-     * Get a list of all CatalogTree objects' system names.
-     *
-     * @return list of all CatalogTree system names
-     */
-    @Override
-    public List<String> getSystemNameList();
+    public void storeImageIndex();
+        
+    public boolean isIndexChanged();
+    
+    public void indexChanged(boolean changed);
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY",
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY",
             justification = "with existing code structure, just have to accept these exposed arrays. Someday...")
     static final String[] IMAGE_FILTER = {"gif", "jpg", "jpeg", "png"};
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_OOI_PKGPROTECT",
+    @SuppressFBWarnings(value = "MS_OOI_PKGPROTECT",
             justification = "with existing code structure, just have to accept these exposed arrays. Someday...")
     static final String[] SOUND_FILTER = {"wav"};
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_OOI_PKGPROTECT",
+    @SuppressFBWarnings(value = "MS_OOI_PKGPROTECT",
             justification = "with existing code structure, just have to accept these exposed arrays. Someday...")
     static final String[] SCRIPT_FILTER = {"py", "scpt"};
 

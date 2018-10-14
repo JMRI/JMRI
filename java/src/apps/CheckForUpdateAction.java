@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * Swing action to check for more recent JMRI version. Checks a jmri.org URL for
  * information.
  *
- * @author	Bob Jacobsen Copyright (C) 2007, 2014
+ * @author Bob Jacobsen Copyright (C) 2007, 2014
  * @author Matt Harris Copyright (C) 2008
  *
  */
@@ -46,6 +46,7 @@ public class CheckForUpdateAction extends jmri.util.swing.JmriAbstractAction {
         super(Bundle.getMessage("TitleUpdate"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent ev) {
 
         final JFrame frame = new JmriJFrame(Bundle.getMessage("TitleUpdate"), false, false);
@@ -92,16 +93,17 @@ public class CheckForUpdateAction extends jmri.util.swing.JmriAbstractAction {
             }
         }
 
-        // add content here!
-        text.append("Most recent production release: " + productionrelease + "\n");
-        text.append("Most recent test release: " + testrelease + "\n");
-        text.append("You have: " + jmri.Version.name() + "\n"); // cleaner form is getCanonicalVersion()
+        // add content
+        text.append(Bundle.getMessage("MostRecent", productionrelease) + "\n");
+        text.append(Bundle.getMessage("MostRecentTest", testrelease) + "\n");
+        text.append(Bundle.getMessage("YouHaveVersion", jmri.Version.name()) + "\n"); // cleaner form is getCanonicalVersion()
 
         JPanel p = new JPanel();
         p.setLayout(new FlowLayout());
 
         JButton go = new JButton(Bundle.getMessage("ButtonDownloadPage"));
         go.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 try {
                     Desktop.getDesktop().browse(new URI("http://jmri.org/download"));
@@ -116,6 +118,7 @@ public class CheckForUpdateAction extends jmri.util.swing.JmriAbstractAction {
 
         JButton close = new JButton(Bundle.getMessage("ButtonClose"));
         close.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 frame.setVisible(false);
                 frame.dispose();
@@ -139,11 +142,11 @@ public class CheckForUpdateAction extends jmri.util.swing.JmriAbstractAction {
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CheckForUpdateAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CheckForUpdateAction.class);
 
 }
-

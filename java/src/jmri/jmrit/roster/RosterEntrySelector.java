@@ -1,4 +1,3 @@
-// RosterGroupSelector.java
 package jmri.jmrit.roster;
 
 import java.beans.PropertyChangeListener;

@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<!-- UpDated  by Blorec Herv&#233; 2011-10-01--> 
+<head>
+  <TITLE>
+ 	JMRI: Signal Groups Documentation
+  </TITLE>
+  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+
+<meta name="Author" content="Bob Jacobsen, Egbert Broerse">
+<meta name="Date.Modified" content="20150125"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <meta name="keywords"
+        content="model railroad JMRI decoderpro panelpro signal">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+      <div id="mainContent">
+	  <!-- Page Body -->
+
+<h1>JMRI: Groupes Signaux</h1>
+
+<p>Les Groupes Signaux sont utilis&#233;s pour d&#233;finir un nombre de Feux de Signalisation, o&#249; un seul Feu de Signalisation peut &#234;tre allum&#233; &#224; un moment donn&#233; , en fonction des &#233;tats du M&#226;t de Signalisation associ&#233; et &#224; un ensemble de conditions.</p>
+
+		<h3>Application</h3>
+		<p>Les Groupes Signaux doivent &#234;tre utilis&#233;s o&#249; des Indicateurs ( afficheurs ) suppl&#233;mentaires sont utilis&#233;s pour compl&#233;ter le M&#226;t de Signalisation principal, tel que:</p>
+		<ul>
+			  <li><a href="#junction">Indicateurs de Direction</a></li>
+			  <li><a href="#route">Indicateurs d'Itin&#233;raire</a></li>
+			  <li><a href="#speed">Indicateurs de Vitesse</a></li>
+		</ul>
+		<p>Ces Indicateurs fournissent une information suppl&#233;mentaire pour le conducteur qui n'est pas donn&#233;e pat le M&#226;t de Signalisation, de tels indicateurs sont fr&#233;quemment vus en Europe.</p>
+ 
+		 <h4><a name="junction">Indicateurs de Direction</a></h4>
+	<img src="../../../package/jmri/jmrit/beantable/SignalGroup1.png" ALIGN=RIGHT WIDTH="30" HEIGHT="90" HSPACE="0" VSPACE="0" ALT="Junction Indicator figure">
+
+<p>Un Indicateur de Direction peut &#234;tre configur&#233; pour afficher quoi que ce soit de 1 &#224; 6 voies divergentes. Un simple indicateur sera souvent trouv&#233; l&#224; o&#249; une voie d&#233;vie de la voie principale. Des indicateurs multiples peuvent &#234;tre trouv&#233;s dans des zones plus complexes comme l'approche de gares et des triages, o&#249; de multiples itin&#233;raires peuvent &#234;tre utilis&#233;s. L'Indicateur de Direction informe le conducteur qu'il est sur le point de prendre un itin&#233;raire diff&#233;rent et qu'il devra ajuster sa vitesse en accord avec la signalisation.<br>
+
+ Les Indicateurs de Direction eux-m&#234;mes seront fix&#233;s en fonction d'un ensemble donn&#233; d'Aiguillages pour cette jonction.</p>
+
+<h4><a name="route">Indicateur d'Itin&#233;raire</a></h4>
+<p>L'Indicateur d'Itin&#233;raire est utilis&#233; en GB, il affiche une lettre ou un nombre. Ils sont principalement trouv&#233;s li&#233;s aux Signaux en approche d'une gare et affiche le quai vers lequel le train est dirig&#233;. Compte tenu de la complexit&#233; de certaines zones de la gare, il peut y avoir un nombre de diff&#233;rents itin&#233;raires physiques qui peuvent &#234;tre utilis&#233;s &#224; partir du Signal pour la destination. Ainsi, unIndicateur d'Itin&#233;raire ne peut pas &#234;tre utilis&#233; quand elles sont li&#233;es &#224; des positions aiguillage. De plus l'Indicateur d'Itin&#233;raire ne peut traiter qu'avec 6 itin&#233;raires diff&#233;rents, et certaines stations ont plus de 6 quais.<br>
+
+Donc, l'Indicateur d'Itin&#233;raire peut seulement afficher une destination &#224; la fois. L'affichage d'un itin&#233;raire n'indique pas n&#233;cessairement que le conducteur prendra le m&#234;me itin&#233;raire pour atteindre sa destination.</p> 
+ 
+<h4><a name="speed">Indicateurs de Vitesse</a></h4>
+	<a href="https://mysite.du.edu/~jcalvert/railway/belgian.htm"><img
+			src="../../../package/jmri/jmrit/beantable/images/speedindicbelg40.gif" ALIGN=RIGHT WIDTH="60" HEIGHT="119"
+			HSPACE="0" VSPACE="0" ALT="Speed Indicator figure by J. Calvert"></a>
+		<p>Un Indicateur de Vitesse tel qu'il est utilis&#233; en Hollande( Prorail ) et en Belgique ( NMBS/SNCB ) affiche une Digit allum&#233; en dessous de Feu de Signalisation principal, ex un "4" restreint la vitesse maximum &#224; 40 km/h.</p>
+ 
+<a name="table"><h3>Le Tableau Groupe Signal</h3></a>
+<a href="../../../package/jmri/jmrit/beantable/SignalGroupsTable.png"><img src="../../../package/jmri/jmrit/beantable/SignalGroupsTable.png" ALIGN=RIGHT WIDTH="386" HEIGHT="165" HSPACE="0" VSPACE="0" ALT="Signal Group Table figure"></a>
+
+<p>Les Groupes Signaux JMRI peuvent &#234;tre cr&#233;&#233;s et modifi&#233;s en utilisant le  <a href="../../../package/jmri/jmrit/beantable/SignalGroupTable.shtml">Tableau Groupe de Signaux</a>. Vous acc&#233;dez &#224; cet outil depuis le menu Outils--> Tableaux --> Groupes de Signaux de la plupart des programme JMRI.
+	<br/>
+Dans le Tableau Groupe Signal vous pouvez cr&#233;er, changer et effacer des Groupes Signaux individuellement. Vous changez la configuration d'un Groupe de Signaux en cliquant sur le bouton "Modifier" dans la ligne correspondante.</br>
+ 		Plus d'information sur la configuration  des Groupes Signaux et un <a href="../../../package/jmri/jmrit/beantable/SignalGroupTable.shtml#example">Exemple</a> peuvent &#234;tre trouv&#233;s sur la 
+		<a href="../../../package/jmri/jmrit/beantable/SignalGroupTable.shtml">page d'aide de Tableau de Groupe Signal</a>.</p> 
+
+	<a name="add"><h3>Cr&#233;ation d'un Groupe Signal</h3></a>
+		<p>Vous ajoutez un nouveau Groupe Signal en cliquant sur le bouton "Ajouter.." 
+en bas du Tableau Groupe Signal qui vous emm&#232;ne au 
+	<a href="../../../package/jmri/jmrit/beantable/SignalGroupAddEdit.shtml">volet "Ajouter un Groupe Signal"</a>.</p>	
+
+<h3><h3>Commande d'un Groupe Signal</h3></h3>
+		<p>L'information depuis le Groupe Signal est utilis&#233; par la Logique M&#226;t de signalisation pour calculer le comportement d&#233;fini d'un Groupe Signal. Vous pouvez tester ceci en changeant manuellement un des Feux de Signalisation de l'Indicateur dans le <a href="../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Tableau Feux de Signalisation</a>.
+
+<h2>Sauvegarde et Rechargement de la Configuration</h2>
+
+L'information Groupe Signal est sauvegard&#233;e comme une partie de la configuration JMRI dans un fichier XML, ainsi que la configuration du panneau de commande et d'autres choses semblables. Pour stocker vos panneaux dans le m&#234;me 
+fichier ( recommand&#233; ) s&#233;lectionnez <b>Fichier--> Enregistrer --> Sauvegarder Configuration et le Panneaux dans le Fichier...</b> ou s&#233;lectionnez <b>Panneaux--> Sauvegarder le Panneau...</b> dans le menu de la fen&#234;tre principale JMRI. 
+<p>Pour plus d'information sur la cr&#233;ation et l'affichage de panneaux, incluant comment montrer lesSignaux sur vos Panneaux, SVP voir les <a href="../../apps/PanelPro/Panels.shtml">pages d'aide Panneaux</a>. 
+
+<p>Retour &#224; la <a href="index.shtml#tools">page principale de l'aide Signalisation</a>.
+
+<!--#include virtual="/Footer" -->
+
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+</body>
+</html>

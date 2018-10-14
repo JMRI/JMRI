@@ -15,12 +15,14 @@ import jmri.InstanceManager;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Provide GUI to configure symbolic programmer defaults.
  *
- * @author Bob Jacobsen Copyright (C) 2001, 2003
+ * @author Bob Jacobsen Copyright (C) 2001, 2003, 2017
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
 
     private final ResourceBundle apb = ResourceBundle.getBundle("apps.AppsConfigBundle");
@@ -40,31 +42,35 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
         // also create the advanced panel
         advancedPanel = new JPanel();
         advancedPanel.setLayout(new BoxLayout(advancedPanel, BoxLayout.Y_AXIS));
+        
         advancedPanel.add(showEmptyTabs = new JCheckBox(this.apb.getString("ProgShowEmptyTabs")));
         showEmptyTabs.setSelected(PaneProgFrame.getShowEmptyPanes());
         showEmptyTabs.addItemListener((ItemEvent e) -> {
             InstanceManager.getDefault(ProgrammerConfigManager.class).setShowEmptyPanes(showEmptyTabs.isSelected());
         });
-        advancedPanel.add(ShowCvNums = new JCheckBox(this.apb.getString("ProgShowCVInTips")));
-        ShowCvNums.setSelected(PaneProgFrame.getShowCvNumbers());
-        ShowCvNums.addItemListener((ItemEvent e) -> {
-            InstanceManager.getDefault(ProgrammerConfigManager.class).setShowCvNumbers(ShowCvNums.isSelected());
+        
+        advancedPanel.add(showCvNums = new JCheckBox(this.apb.getString("ProgShowCVInTips")));
+        showCvNums.setSelected(PaneProgFrame.getShowCvNumbers());
+        showCvNums.addItemListener((ItemEvent e) -> {
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setShowCvNumbers(showCvNums.isSelected());
         });
+        
+        advancedPanel.add(canCacheDefault = new JCheckBox(this.apb.getString("ProgCanCacheDefault")));
+        canCacheDefault.setSelected(PaneProgFrame.getCanCacheDefault());
+        canCacheDefault.addItemListener((ItemEvent e) -> {
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setCanCacheDefault(canCacheDefault.isSelected());
+        });
+
+        advancedPanel.add(doConfirmRead = new JCheckBox(this.apb.getString("ProgDoConfirmRead")));
+        doConfirmRead.setSelected(PaneProgFrame.getDoConfirmRead());
+        doConfirmRead.addItemListener((ItemEvent e) -> {
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setDoConfirmRead(doConfirmRead.isSelected());
+        });
+
         this.add(advancedPanel);
         this.add(Box.createVerticalGlue());
     }
     JComboBox<String> programmerBox;
-
-    /**
-     * This constructor does nothing different than the default constructor.
-     *
-     * @param include ignored
-     * @deprecated since 3.9.5
-     */
-    @Deprecated
-    public ProgrammerConfigPane(boolean include) {
-        this();
-    }
 
     @CheckForNull
     public String getSelectedItem() {
@@ -77,16 +83,26 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
 
     JPanel advancedPanel;
     JCheckBox showEmptyTabs;
-    JCheckBox ShowCvNums;
-
+    JCheckBox showCvNums;
+    JCheckBox canCacheDefault;
+    JCheckBox doConfirmRead;
+    
     public boolean getShowEmptyTabs() {
         return showEmptyTabs.isSelected();
     }
 
     public boolean getShowCvNums() {
-        return ShowCvNums.isSelected();
+        return showCvNums.isSelected();
     }
 
+    public boolean getCanCacheDefault() {
+        return canCacheDefault.isSelected();
+    }
+    
+    public boolean getDoConfirmRead() {
+        return doConfirmRead.isSelected();
+    }
+    
     @Override
     public String getPreferencesItem() {
         return "ROSTER"; // NOI18N
@@ -132,6 +148,8 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
         String programmer = this.getSelectedItem();
         return (this.getShowEmptyTabs() != PaneProgFrame.getShowEmptyPanes()
                 || this.getShowCvNums() != PaneProgFrame.getShowCvNumbers()
+                || this.getCanCacheDefault() != PaneProgFrame.getCanCacheDefault()
+                || this.getDoConfirmRead() != PaneProgFrame.getDoConfirmRead()
                 || ((programmer != null)
                         ? !programmer.equals(ProgDefault.getDefaultProgFile())
                         : ProgDefault.getDefaultProgFile() != null));

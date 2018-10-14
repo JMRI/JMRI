@@ -1,7 +1,9 @@
 package jmri.jmrix.rfid;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
- * Contains the data payload of a serial reply packet. Note that its _only_ the
+ * Contains the data payload of a serial reply packet. Note that it's _only_ the
  * payload.
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2006, 2007, 2008
@@ -10,7 +12,7 @@ package jmri.jmrix.rfid;
  */
 abstract public class RfidReply extends jmri.jmrix.AbstractMRReply {
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "URF_UNREAD_FIELD", justification = "used by derived classes to fetch protocol in use")
+    @SuppressFBWarnings(value = "URF_UNREAD_FIELD", justification = "used by derived classes to fetch protocol in use")
     protected RfidTrafficController tc = null;
 
     // create a new one
@@ -37,7 +39,5 @@ abstract public class RfidReply extends jmri.jmrix.AbstractMRReply {
         // doesn't have to do anything
         return index;
     }
-
-    abstract public String toMonitorString();
 
 }

@@ -1,8 +1,7 @@
 package jmri.jmrix.rps.trackingpanel;
 
-import apps.tests.Log4JFixture;
+import java.awt.GraphicsEnvironment;
 import javax.swing.BoxLayout;
-import javax.swing.JFrame;
 import javax.vecmath.Point3d;
 import jmri.InstanceManager;
 import jmri.jmrit.roster.RosterConfigManager;
@@ -12,22 +11,27 @@ import jmri.jmrix.rps.Model;
 import jmri.jmrix.rps.Reading;
 import jmri.jmrix.rps.Receiver;
 import jmri.jmrix.rps.Region;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * JUnit tests for the rps.RpsTrackingPanel class.
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision$
  */
-public class RpsTrackingPanelTest extends TestCase {
+public class RpsTrackingPanelTest {
 
+    RpsSystemConnectionMemo memo = null;
+
+    @Test
     public void testShow() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         new Engine() {
             void reset() {
                 _instance = null;
@@ -39,7 +43,7 @@ public class RpsTrackingPanelTest extends TestCase {
 
         JmriJFrame f = new JmriJFrame("Test Tracking Panel");
         f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
-        RpsTrackingPanel p = new RpsTrackingPanel();
+        RpsTrackingPanel p = new RpsTrackingPanel(memo);
         p.setSize(400, 400);
         p.setOrigin(0, 0);
         p.setCoordMax(30., 30.);
@@ -95,45 +99,20 @@ public class RpsTrackingPanelTest extends TestCase {
             p.notify(m);
         }
 
-//    }
-//  test order isn't guaranteed!
-//    public void testXFrameCreation() {
-        JFrame f2 = jmri.util.JmriJFrame.getFrame("Test Tracking Panel");
-        Assert.assertTrue("found frame", f2 != null);
-        f2.dispose();
+        Assert.assertNotNull("found frame", f);
+        f.dispose();
     }
 
-    // from here down is testing infrastructure
-    public RpsTrackingPanelTest(String s) {
-        super(s);
-    }
+    @Before
+    public void setUp() throws Exception {
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {RpsTrackingPanelTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(RpsTrackingPanelTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        Log4JFixture.setUp();
-        super.setUp();
-        JUnitUtil.resetInstanceManager();
+        memo = new RpsSystemConnectionMemo();
         InstanceManager.setDefault(RosterConfigManager.class, new RosterConfigManager());
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        Log4JFixture.tearDown();
-    }
+    @After
+    public void tearDown() throws Exception {        JUnitUtil.tearDown();    }
 
 }

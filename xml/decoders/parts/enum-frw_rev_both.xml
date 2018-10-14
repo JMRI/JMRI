@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-      <enumChoice choice="Function on running forward">
-         <choice xml:lang="it">Funzione in marcia avanti</choice>
-      </enumChoice>
-      <enumChoice choice="Function on running reverse">
-         <choice xml:lang="it">Funzione in marcia indietro</choice>
-      </enumChoice>
-      <enumChoice choice="Function on both directions">
-         <choice xml:lang="it">Funzione in entrambe le direzioni</choice>
-      </enumChoice>
-    </enumVal>
+  <enumChoice choice="Function on running forward">
+	<choice xml:lang="da">Funktion on ved forlæns kørsel</choice>
+    <choice xml:lang="cs">Funkční při jízdě vpřed</choice>
+    <choice xml:lang="fr">Fonctionne en marche avant</choice>
+    <choice xml:lang="it">Funzione in marcia avanti</choice>
+    <choice xml:lang="de">Funktion beim vorwärts fahren</choice>
+    <choice xml:lang="nl">Functie bij het vooruit rijden</choice>
+  </enumChoice>
+  <enumChoice choice="Function on running reverse">
+	<choice xml:lang="da">Funktion on ved baglæns kørsel</choice>
+    <choice xml:lang="cs">Funkční při jízdě vzad</choice>
+    <choice xml:lang="fr">Fonctionne en marche arrière</choice>
+    <choice xml:lang="it">Funzione in marcia indietro</choice>
+    <choice xml:lang="de">Funktion beim rückwärts fahren</choice>
+    <choice xml:lang="nl">Functie bij achteruit rijden</choice>
+  </enumChoice>
+  <enumChoice choice="Function on both directions">
+	<choice xml:lang="da">Funktion on i begge retninger</choice>
+    <choice xml:lang="cs">Funkční při jízdě oběma směry</choice>
+    <choice xml:lang="fr">Fonctionne dans les deux sens</choice>
+    <choice xml:lang="it">Funzione in entrambe le direzioni</choice>
+    <choice xml:lang="de">Funktion in beiden Richtungen</choice>
+    <choice xml:lang="nl">Functie in beide richtingen</choice>
+  </enumChoice>
+</enumVal>

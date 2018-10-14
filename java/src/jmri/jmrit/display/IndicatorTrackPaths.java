@@ -14,14 +14,13 @@ import org.slf4j.LoggerFactory;
 /**
  * A utility class replacing common methods formerly implementing the
  * IndicatorTrack interface.
- * <P>
  *
  * @author Pete Cressman Copyright (c) 2012
  */
 class IndicatorTrackPaths {
 
     protected ArrayList<String> _paths;      // list of paths that this icon displays
-    private boolean _showTrain; 		// this track icon should display _loco when occupied
+    private boolean _showTrain;         // this track icon should display _loco when occupied
     private LocoLabel _loco = null;
 
     protected IndicatorTrackPaths() {
@@ -30,7 +29,7 @@ class IndicatorTrackPaths {
     protected IndicatorTrackPaths deepClone() {
         IndicatorTrackPaths p = new IndicatorTrackPaths();
         if (_paths != null) {
-            p._paths = new ArrayList<String>();
+            p._paths = new ArrayList<>();
             for (int i = 0; i < _paths.size(); i++) {
                 p._paths.add(_paths.get(i));
             }
@@ -49,7 +48,7 @@ class IndicatorTrackPaths {
 
     protected void addPath(String path) {
         if (_paths == null) {
-            _paths = new ArrayList<String>();
+            _paths = new ArrayList<>();
         }
         if (path != null && path.length() > 0) {
             path = path.trim();
@@ -79,7 +78,7 @@ class IndicatorTrackPaths {
         return _showTrain;
     }
 
-    protected String setStatus(OBlock block, int state) {
+    protected String getStatus(OBlock block, int state) {
         String pathName = block.getAllocatedPathName();
         String status;
         removeLocoIcon();
@@ -90,7 +89,9 @@ class IndicatorTrackPaths {
         } else if ((state & OBlock.ALLOCATED) != 0) {
             if (_paths != null && _paths.contains(pathName)) {
                 if ((state & OBlock.RUNNING) != 0) {
-                    status = "PositionTrack";
+                    status = "PositionTrack";   //occupied by train on a warrant
+                } else if ((state & OBlock.OCCUPIED) != 0) {
+                    status = "OccupiedTrack";   // occupied by rouge train
                 } else {
                     status = "AllocatedTrack";
                 }
@@ -134,7 +135,7 @@ class IndicatorTrackPaths {
             font = ed.getFont();
         }
         int width = ed.getFontMetrics(font).stringWidth(trainName);
-        int height = ed.getFontMetrics(ed.getFont()).getHeight();	// limit height to locoIcon height
+        int height = ed.getFontMetrics(ed.getFont()).getHeight();   // limit height to locoIcon height
         _loco.setLineWidth(1);
         _loco.setLineColor(Color.BLACK);
         _loco.setFillColor(block.getMarkerBackground());
@@ -142,7 +143,6 @@ class IndicatorTrackPaths {
         _loco.setWidth(width + height / 2);
         _loco.setHeight(height + 2);
         _loco.setCornerRadius(height);
-        _loco.makeShape();
         _loco.setDisplayLevel(Editor.MARKERS);
         _loco.updateSize();
         pt.x = pt.x + (size.width - _loco.maxWidth()) / 2;
@@ -151,27 +151,27 @@ class IndicatorTrackPaths {
         ed.putItem(_loco);
     }
 
-    /**
-     * This method seems basically wrong.  It doesn't set
-     * anything, it just converts an int status into a String status value.
-     * Note that it has no internal side-effects.
-     * See also comment in IndicatorTurnoutIcon.setStatus(..) which FindBugs
-     * points out is messed up because of this.
+    /*
+     * Return track name for known state of occupancy sensor
      */
-    protected String setStatus(int state) {
+    protected String getStatus(int state) {
         String status;
-        if (state == Sensor.ACTIVE) {
-            status = "OccupiedTrack";
-        } else if (state == Sensor.INACTIVE) {
-            status = "ClearTrack";
-        } else if (state == Sensor.UNKNOWN) {
-            status = "DontUseTrack";
-        } else {
-            status = "ErrorTrack";
+        switch (state) {
+            case Sensor.ACTIVE:
+                status = "OccupiedTrack";
+                break;
+            case Sensor.INACTIVE:
+                status = "ClearTrack";
+                break;
+            case Sensor.UNKNOWN:
+                status = "DontUseTrack";
+                break;
+            default:
+                status = "ErrorTrack";
+                break;
         }
         return status;
     }
 
-
-    private final static Logger log = LoggerFactory.getLogger(IndicatorTrackPaths.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndicatorTrackPaths.class);
 }

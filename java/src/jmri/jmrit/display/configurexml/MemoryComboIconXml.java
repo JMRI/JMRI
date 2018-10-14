@@ -26,6 +26,7 @@ public class MemoryComboIconXml extends PositionableLabelXml {
      * @param obj Object to store, of type MemorySpinnerIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object obj) {
 
         MemoryComboIcon memoryIcon = (MemoryComboIcon) obj;
@@ -58,6 +59,7 @@ public class MemoryComboIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         Editor p = (Editor) o;
@@ -68,14 +70,15 @@ public class MemoryComboIconXml extends PositionableLabelXml {
         for (int i = 0; i < list.size(); i++) {
             Element e = list.get(i);
             String item = e.getText();
-//            int idx = 0;
-//            try {
-//                idx = e.getAttribute("index").getIntValue();
-//            } catch ( org.jdom2.DataConversionException ex) {
-//                log.error("failed to convert ComboBoxIcon index attribute");
-//                idx = i;
-//            }
-            items[i] = item;
+            try {
+                int idx = e.getAttribute("index").getIntValue();
+                items[idx] = item;
+            } catch ( org.jdom2.DataConversionException ex) {
+                log.error("failed to convert ComboBoxIcon index attribute");
+                if (items[i]==null) {
+                    items[i] = item;                    
+                }
+            }
         }
 
         MemoryComboIcon l = new MemoryComboIcon(p, items);
@@ -106,5 +109,5 @@ public class MemoryComboIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.MEMORIES, element);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MemoryComboIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryComboIconXml.class);
 }

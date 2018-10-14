@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /* Represents a JComboBox as a JCheckBox
  *
- * @author			Bob Jacobsen   Copyright (C) 2001
+ * @author   Bob Jacobsen   Copyright (C) 2001
  */
 public class ComboCheckBox extends JCheckBox {
 
@@ -21,18 +21,21 @@ public class ComboCheckBox extends JCheckBox {
         setOpaque(true);
         // listen for changes to ourself
         addActionListener(l1 = new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 thisActionPerformed(e);
             }
         });
         // listen for changes to original
         _box.addActionListener(l2 = new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 originalActionPerformed(e);
             }
         });
         // listen for changes to original state
         _var.addPropertyChangeListener(p1 = new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 originalPropertyChanged(e);
             }
@@ -88,7 +91,7 @@ public class ComboCheckBox extends JCheckBox {
         _box = null;
     }
 
-    // initialize logging	
-    private final static Logger log = LoggerFactory.getLogger(ComboCheckBox.class.getName());
+    // initialize logging 
+    private final static Logger log = LoggerFactory.getLogger(ComboCheckBox.class);
 
 }

@@ -1,4 +1,3 @@
-// SensorManager.java
 package jmri.jmrix.rps;
 
 import jmri.Sensor;
@@ -9,23 +8,25 @@ import jmri.Sensor;
  * System names are "RSpppp", where ppp is a CSV representation of the region.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version	$Revision$
- */
+  */
 public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
 
     public RpsSensorManager() {
         super();
     }
 
+    @Override
     public String getSystemPrefix() {
         return "R";
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
         super.dispose();
     }
 
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
         try {
            RpsSensor r = new RpsSensor(systemName, userName);
@@ -55,4 +56,4 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
     }
 }
 
-/* @(#)RpsSensorManager.java */
+

@@ -9,15 +9,15 @@
   <title>JMRI: Adding/Editing Signal Heads</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta name="Author" content="Bob Jacobsen">
-  <meta name="Author" content="Egbert Broerse">
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="author" content="Egbert Broerse">
   <meta name="Date.Modified" content="20160516">
   <meta name="keywords" content="JMRI help Signal Heads Add Edit">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -52,8 +52,11 @@
         <dd>This type doesn't connect to the layout at all. Use it
         when you want to e.g. display a signal on a panel, but
         don't have a real one on the layout.</dd>
-
-        <dt>Acela</dt>
+        <dt>
+        <a href="images/SignalHeadAddAcela.png">
+          <img src="images/SignalHeadAddAcela.png" align="right"
+               height="109" width="118"></a>
+        Acela</dt>
 
         <dd>
           This type controls signal heads attached to a <a href=
@@ -68,6 +71,11 @@
           "../../../../html/hardware/acela/">Acela hardware help
           page</a>.</p>
         </dd>
+
+        <dd><a href="images/SignalHeadAddDCC.png"><img src=
+        "images/SignalHeadAddDCC.png" align="right" width="168"
+        height="230" hspace="0" vspace="0" alt=
+        "Add Signal Head panel DCC"></a></dd>
 
         <dt>DCC Signal Decoder</dt>
 
@@ -119,8 +127,8 @@
           <em>possible</em> values differs.</p>
         </dd>
 
-        <dd><a href="SignalHeadAdd1.png"><img src=
-        "SignalHeadAdd1.png" align="right" width="137" height="181"
+        <dd><a href="images/SignalHeadAdd1.png"><img src=
+        "images/SignalHeadAdd1.png" align="right" width="127" height="200"
         hspace="0" vspace="0" alt=
         "Add Signal Head panel figure 1"></a></dd>
 
@@ -166,8 +174,8 @@
           the connection is in the Closed State.</p>
         </dd>
 
-        <dd><a href="SignalHeadAdd2.png"><img src=
-        "SignalHeadAdd2.png" align="right" width="135" height="173"
+        <dd><a href="images/SignalHeadAdd2.png"><img src=
+        "images/SignalHeadAdd2.png" align="right" width="130" height="169"
         hspace="0" vspace="0" alt=
         "Add Signal Head panel figure 2"></a></dd>
 
@@ -287,9 +295,9 @@
           "http://www.digitrax.com/static/apps/products/detection-signaling/se8c/documents/SE8C.pdf">
           Digitrax SE8C Manual</a>.</p>
 
-          <p><a href="Add_New_SE8C_Signal.png"><img src=
-          "Add_New_SE8C_Signal.png" align="right" height="147"
-          width="126"></a> You can optionally enter a more readable
+          <p><a href="images/Add_New_SE8C_Signal.png"><img src=
+          "images/Add_New_SE8C_Signal.png" align="right" height="153"
+          width="131"></a> You can optionally enter a more readable
           User Name if you'd like.</p>
 
           <p>In the "Turnout number" box, enter the appropriate DCC
@@ -332,9 +340,9 @@
           Examples</a> page.</p>
         </dd>
 
-        <dd><a href="SignalHeadAddMERG.png"><img src=
-        "SignalHeadAddMERG.png" align="right" width="141" height=
-        "190" hspace="0" vspace="0" alt=
+        <dd><a href="images/SignalHeadAddMERG.png"><img src=
+        "images/SignalHeadAddMERG.png" align="right" width="140" height=
+        "180" hspace="0" vspace="0" alt=
         "Add Signal Head panel MERG"></a></dd>
 
         <dt>MERG Signal Driver</dt>
@@ -393,27 +401,10 @@
       </ul>
 
       <p>Back to the <a href="SignalHeadTable.shtml">Signal Head
-      Table help page</a>. <!-- Footer --></p>
+      Table help page</a>.</p>
       <hr class="hide">
 
-      <div id="footer">
-        <!-- Piwik -->
-        <script type="text/javascript">
-var pkBaseURL = (("https:" == document.location.protocol) ? "https://apps.sourceforge.net/piwik/jmri/" : "http://apps.sourceforge.net/piwik/jmri/");
-        document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-        </script><script type="text/javascript">
-piwik_action_name = '';
-        piwik_idsite = 1;
-        piwik_url = pkBaseURL + "piwik.php";
-        piwik_log(piwik_action_name, piwik_idsite, piwik_url);
-        </script> <object>
-          <noscript>
-          <p><img src=
-          "http://apps.sourceforge.net/piwik/jmri/piwik.php?idsite=1"
-          alt="piwik"></p></noscript>
-        </object> <!-- End Piwik Tag -->
-      </div><!-- closes #footer-->
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

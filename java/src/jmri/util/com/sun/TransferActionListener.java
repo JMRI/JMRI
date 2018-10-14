@@ -1,6 +1,7 @@
+package jmri.util.com.sun;
+
 // This class comes from the Java Swing tutorial at
 // http://java.sun.com/docs/books/tutorial/uiswing/examples/dnd/ListCutPasteProject
-package jmri.util.com.sun;
 /*
  * Copyright (c) 1995 - 2008 Sun Microsystems, Inc.  All rights reserved.
  *
@@ -60,6 +61,7 @@ public class TransferActionListener implements ActionListener,
         manager.addPropertyChangeListener("permanentFocusOwner", this);
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent e) {
         Object o = e.getNewValue();
         if (o instanceof JComponent) {
@@ -69,6 +71,7 @@ public class TransferActionListener implements ActionListener,
         }
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (focusOwner == null) {
             return;

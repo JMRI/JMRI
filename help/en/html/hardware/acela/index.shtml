@@ -161,11 +161,11 @@
       <h2>JMRI Acela Tools</h2>
 
       <ul>
-        <li>Inputs and Outputs can be configured with <a href=
+        <li>Acela network traffic can be viewed with <a href=
         "../../../package/jmri/jmrix/acela/serialmon/SerialMonFrame.shtml">
         Acela Monitor</a></li>
 
-        <li>Inputs and Outputs can be configured with <a href=
+        <li>Messages can be sent to Acela devices with <a href=
         "../../../package/jmri/jmrix/acela/packetgen/SerialPacketGenFrame.shtml">
         Send Acela Packets</a></li>
 
@@ -178,14 +178,15 @@
 
       <h3>JMRI Help</h3>
 
-      <p>Naming of CTI Acela inputs and outputs are described on a
+      <p>Naming of CTI Acela inputs and outputs is described on a
       <a href="Names.shtml">separate page</a>.</p>
 
       <h3>Third Party info</h3>
 
       <p>More information on the Acela hardware can be found on the
       <a href="http://www.cti-electronics.com/app_sw.htm">CTI web
-      site</a>. <!--#include virtual="/Footer" --></p>
+      site</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

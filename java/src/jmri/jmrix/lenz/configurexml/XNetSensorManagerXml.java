@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Paul Bender Copyright (c) 2003
- * @version $Revision$
  */
 public class XNetSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
@@ -20,10 +19,12 @@ public class XNetSensorManagerXml extends jmri.managers.configurexml.AbstractSen
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element sensors) {
         sensors.setAttribute("class", "jmri.jmrix.lenz.configurexml.XNetSensorManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -34,6 +35,6 @@ public class XNetSensorManagerXml extends jmri.managers.configurexml.AbstractSen
         return loadSensors(shared);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XNetTurnoutManagerXml.class);
 
 }

@@ -10,10 +10,11 @@ import javax.swing.JPanel;
  * NetworkDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2015
+ * @author B. Milhaupt  Copyright (C) 2017
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
-    public final static String NAME = "Network Interface";
+    public final static String NAME = "Network Interface"; // NOI18N
 
     /**
      * Ctor for an object being created during load process; Swing init is
@@ -24,7 +25,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     }
 
     /**
-     * Ctor for a functional Swing object with no existing adapter
+     * Ctor for a functional Swing object with no existing adapter.
      */
     public ConnectionConfig() {
         super();
@@ -41,38 +42,53 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
             public void actionPerformed(ActionEvent e) {
                 enableOpt2(options.get(adapter.getOption1Name()).getItem());
                 enableOpt3(options.get(adapter.getOption1Name()).getItem());
+                enableOpt4(options.get(adapter.getOption3Name()).getItem());
             }
         });
 
         enableOpt2(options.get(adapter.getOption1Name()).getItem());
         enableOpt3(options.get(adapter.getOption1Name()).getItem());
-
+        enableOpt4(options.get(adapter.getOption3Name()).getItem());
     }
 
     private void enableOpt2(Object o) {
-        boolean enable = o.equals("MERG Concentrator");
+        boolean enable = o.equals("MERG Concentrator"); // NOI18N
         options.get(adapter.getOption2Name()).getLabel().setEnabled(enable);
         options.get(adapter.getOption2Name()).getComponent().setEnabled(enable);
         options.get(adapter.getOption2Name()).getComponent().setToolTipText(enable
-                ? "Choose RFID concentrator range setting"
-                : "Range setting not applicable for selected RFID reader type");
+                ? Bundle.getMessage("RfidPrefsOption2ToolTipA")
+                : Bundle.getMessage("RfidPrefsOption2ToolTipB"));
     }
 
     @SuppressWarnings("unchecked")
     private void enableOpt3(Object o) {
-        boolean enable = !o.equals("MERG Concentrator");
+        boolean enable = !o.equals("MERG Concentrator"); // NOI18N
         options.get(adapter.getOption3Name()).getLabel().setEnabled(enable);
         options.get(adapter.getOption3Name()).getComponent().setEnabled(enable);
         options.get(adapter.getOption3Name()).getComponent().setEnabled(enable);
         options.get(adapter.getOption3Name()).getComponent().setToolTipText(enable
-                ? "Choose RFID protocol"
-                : "Protocol setting not applicable for selected RFID reader type");
+                ? Bundle.getMessage("RfidPrefsOption3ToolTipA")
+                : Bundle.getMessage("RfidPrefsOption3ToolTipB"));
         if (!enable) {
             ((JComboBox<Option>) options.get(adapter.getOption3Name()).getComponent()).setSelectedIndex(0);
         }
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+    private void enableOpt4(Object o) {
+        boolean enable = o.equals("Olimex"); // NOI18N
+        options.get(adapter.getOption4Name()).getLabel().setEnabled(enable);
+        options.get(adapter.getOption4Name()).getComponent().setEnabled(enable);
+        options.get(adapter.getOption4Name()).getComponent().setEnabled(enable);
+        options.get(adapter.getOption4Name()).getComponent().setToolTipText(enable
+                ? Bundle.getMessage("RfidPrefsOption4ToolTipA")
+                : Bundle.getMessage("RfidPrefsOption4ToolTipB"));
+        if (!enable) {
+            ((JComboBox<Option>) options.get(adapter.getOption4Name()).getComponent()).setSelectedIndex(0);
+        }
+    }
+
+     @Override
     public String name() {
         return NAME;
     }
@@ -83,4 +99,5 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
             adapter = new NetworkDriverAdapter();
         }
     }
+
 }

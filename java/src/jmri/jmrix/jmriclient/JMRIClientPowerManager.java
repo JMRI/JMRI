@@ -1,4 +1,3 @@
-// JMRIClientPowerManager.java
 package jmri.jmrix.jmriclient;
 
 import jmri.JmriException;
@@ -7,10 +6,9 @@ import jmri.PowerManager;
 /**
  * PowerManager implementation for controlling layout power
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @author	Paul Bender Copyright (C) 2010
- * @version	$Revision$
- */
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Paul Bender Copyright (C) 2010
+  */
 public class JMRIClientPowerManager implements PowerManager, JMRIClientListener {
 
     private JMRIClientSystemConnectionMemo memo = null;
@@ -22,12 +20,14 @@ public class JMRIClientPowerManager implements PowerManager, JMRIClientListener 
         tc.addJMRIClientListener(this);
     }
 
+    @Override
     public String getUserName() {
         return this.memo.getUserName();
     }
 
     int power = UNKNOWN;
 
+    @Override
     public void setPower(int v) throws JmriException {
         power = UNKNOWN; // while waiting for reply
         checkTC();
@@ -43,11 +43,13 @@ public class JMRIClientPowerManager implements PowerManager, JMRIClientListener 
         firePropertyChange("Power", null, null);
     }
 
+    @Override
     public int getPower() {
         return power;
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() throws JmriException {
         tc.removeJMRIClientListener(this);
         tc = null;
@@ -62,6 +64,7 @@ public class JMRIClientPowerManager implements PowerManager, JMRIClientListener 
     // to hear of changes
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
+    @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
@@ -70,6 +73,7 @@ public class JMRIClientPowerManager implements PowerManager, JMRIClientListener 
         pcs.firePropertyChange(p, old, n);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
@@ -77,6 +81,7 @@ public class JMRIClientPowerManager implements PowerManager, JMRIClientListener 
     JMRIClientTrafficController tc = null;
 
     // to listen for status changes from JMRIClient system
+    @Override
     public void reply(JMRIClientReply m) {
         if (m.toString().contains("ON")) {
             power = PowerManager.ON;
@@ -86,10 +91,11 @@ public class JMRIClientPowerManager implements PowerManager, JMRIClientListener 
         firePropertyChange("Power", null, null);
     }
 
+    @Override
     public void message(JMRIClientMessage m) {
     }
 
 }
 
 
-/* @(#)JMRIClientPowerManager.java */
+

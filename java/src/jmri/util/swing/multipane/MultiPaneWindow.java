@@ -31,6 +31,11 @@ public class MultiPaneWindow extends jmri.util.JmriJFrame {
 
     /**
      * Create and initialize a multi-pane GUI window.
+     *
+     * @param name        the name and title of the window
+     * @param treeFile path to the XML file for the navigation tree
+     * @param menubarFile path to the XML file for the menubar
+     * @param toolbarFile path to the XML file for the toolbar
      */
     public MultiPaneWindow(String name, String treeFile, String menubarFile, String toolbarFile) {
         super(name);
@@ -101,6 +106,7 @@ public class MultiPaneWindow extends jmri.util.JmriJFrame {
 
         // install listener
         tree.addTreeSelectionListener(new javax.swing.event.TreeSelectionListener() {
+            @Override
             public void valueChanged(javax.swing.event.TreeSelectionEvent e) {
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
                 if (node == null) {
@@ -152,6 +158,7 @@ public class MultiPaneWindow extends jmri.util.JmriJFrame {
     /**
      * Only close frame, etc, dispose() disposes of all cached panes
      */
+    @Override
     public void dispose() {
         rightTopWI.dispose();
         super.dispose();

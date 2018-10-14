@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * </ul>
  * At least one of Short Address and Long Address must be present!
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2012
+ * @author Bob Jacobsen Copyright (C) 2001, 2012
  */
 public class DccAddressPanel extends JPanel {
 
@@ -59,6 +59,7 @@ public class DccAddressPanel extends JPanel {
 
         // arrange for the field to be updated when any of the variables change
         java.beans.PropertyChangeListener dccNews = new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 updateDccAddress();
             }
@@ -97,6 +98,7 @@ public class DccAddressPanel extends JPanel {
         add(val);
 
         new DccAddressVarHandler(primaryAddr, extendAddr, addMode) {
+            @Override
             protected void doPrimary() {
                 // short address commonRep will be JTextField if variable, JLabel if constant
                 JTextField f;
@@ -110,6 +112,7 @@ public class DccAddressPanel extends JPanel {
                 val.setDocument(f.getDocument());
             }
 
+            @Override
             protected void doExtended() {
                 // long address commonRep will be JTextField if variable, JLabel if constant
                 JTextField f;
@@ -126,8 +129,10 @@ public class DccAddressPanel extends JPanel {
 
         // start listening for changes to this value
         val.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 new DccAddressVarHandler(primaryAddr, extendAddr, addMode) {
+                    @Override
                     protected void doPrimary() {
                         // short address mode
                         primaryAddr.updatedTextField();
@@ -137,6 +142,7 @@ public class DccAddressPanel extends JPanel {
                         }
                     }
 
+                    @Override
                     protected void doExtended() {
                         // long address
                         extendAddr.updatedTextField();
@@ -149,6 +155,7 @@ public class DccAddressPanel extends JPanel {
             }
         });
         val.addFocusListener(new FocusListener() {
+            @Override
             public void focusGained(FocusEvent e) {
                 if (log.isDebugEnabled()) {
                     log.debug("focusGained");
@@ -156,6 +163,7 @@ public class DccAddressPanel extends JPanel {
                 enterField();
             }
 
+            @Override
             public void focusLost(FocusEvent e) {
                 if (log.isDebugEnabled()) {
                     log.debug("focusLost");
@@ -183,6 +191,7 @@ public class DccAddressPanel extends JPanel {
     void exitField() {
         if (!oldContents.equals(val.getText())) {
             new DccAddressVarHandler(primaryAddr, extendAddr, addMode) {
+                @Override
                 protected void doPrimary() {
                     // short address mode
                     primaryAddr.updatedTextField();
@@ -192,6 +201,7 @@ public class DccAddressPanel extends JPanel {
                     }
                 }
 
+                @Override
                 protected void doExtended() {
                     // long address
                     extendAddr.updatedTextField();
@@ -217,6 +227,7 @@ public class DccAddressPanel extends JPanel {
                     + " mode " + (addMode == null ? "<null>" : addMode.getValueString()));
         }
         new DccAddressVarHandler(primaryAddr, extendAddr, addMode) {
+            @Override
             protected void doPrimary() {
                 // short address commonRep will be JTextField if variable, JLabel if constant
                 JTextField f;
@@ -233,6 +244,7 @@ public class DccAddressPanel extends JPanel {
                 }
             }
 
+            @Override
             protected void doExtended() {
                 // long address commonRep will be JTextField if variable, JLabel if constant
                 JTextField f;
@@ -252,6 +264,6 @@ public class DccAddressPanel extends JPanel {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(DccAddressPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DccAddressPanel.class);
 
 }

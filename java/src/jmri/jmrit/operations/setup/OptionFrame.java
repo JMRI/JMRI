@@ -1,4 +1,3 @@
-// OptionFrame.java
 package jmri.jmrit.operations.setup;
 
 import jmri.jmrit.operations.OperationsFrame;
@@ -7,7 +6,6 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of setup options
  *
  * @author Dan Boudreau Copyright (C) 2010, 2011, 2012, 2013
- * @version $Revision$
  */
 public class OptionFrame extends OperationsFrame {
 

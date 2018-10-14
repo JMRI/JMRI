@@ -3,7 +3,6 @@
 <head>
 <!-- Copyright ($Author: jacobsen $) 2009 -->
 <!-- Copyright ($Author: bronson $) 2012 -->
-<!-- $Id: index.shtml,v 1.0 2012/05/10 09:50 bronson Exp $ -->
 <title>JMRI: NS 2008 Signaling Definition</title>
 
 <!-- Style -->
@@ -15,9 +14,9 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -26,7 +25,7 @@
 JMRI: NS 2008 Signaling Definition
 </h1>
 
-This directory contains signaling definitions corresponding to 
+This directory contains former Conrail signaling definitions corresponding to 
 the NS Corporation Signal Rules - 251, 261, 271, Effective May 2008.
 
 <p>
@@ -40,6 +39,7 @@ Signal Mast definitions:
 <li><a href="appearance-CLS-3-3-hi.xml">Triple over triple lamp colorlight high signal</a>
 <li><a href="appearance-CLS-3-3-lo.xml">Triple color over triple color dwarf signal</a>
 <li><a href="appearance-CLS-3-hi.xml">Triple lamp colorlight high signal</a>
+<li><a href="appearance-CLS-3-hi-p.xml">Triple lamp colorlight permissive high signal</a>
 <li><a href="appearance-CLS-3-lo.xml">Triple lamp colorlight dwarf signal</a>
 </ul>
     

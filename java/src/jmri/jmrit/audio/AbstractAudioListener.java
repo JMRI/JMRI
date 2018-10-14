@@ -236,7 +236,7 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
                 + ", meters/unit=" + this.getMetersPerUnit();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AbstractAudioListener.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AbstractAudioListener.class);
 
     /**
      * An internal class used to create a new thread to monitor and maintain

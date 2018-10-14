@@ -9,11 +9,6 @@
 # If you need to add any additional Java options or defines,
 # include them in the JMRI_OPTIONS environment variable
 #
-# If your serial ports are not shown in the initial list, you 
-# can include them in the environment variable JMRI_SERIAL_PORTS
-# separated by commas:
-#    export JMRI_SERIAL_PORTS="/dev/locobuffer,/dev/cmri"
-#
 # You can run separate instances of the program with their
 # own preferences and setup if you either
 # *) Provide the name of a configuration file as the 1st argument
@@ -30,7 +25,6 @@
 # For more information, please see
 # http://jmri.org/install/ShellScripts.shtml
 #
-# $Revision$ (CVS maintains this line, do not edit please)
 
 
 SYSLIBPATH=
@@ -107,7 +101,7 @@ fi
 [ "${DEBUG}" ] && echo "PWD: '${PWD}'"
 
 # build classpath dynamically
-CP=".:classes:java/classes"
+CP=".:classes:target/classes"
 # list of jar files in home, not counting jmri.jar
 LOCALJARFILES=`ls *.jar | grep -v jmri.jar | tr "\n" ":"`
 if [ ${LOCALJARFILES} ]

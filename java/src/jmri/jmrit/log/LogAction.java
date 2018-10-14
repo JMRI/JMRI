@@ -6,9 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a LogFrame object
+ * Swing action to create and register a LogFrame object.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class LogAction extends AbstractAction {
 
@@ -17,9 +17,10 @@ public class LogAction extends AbstractAction {
     }
 
     public LogAction() {
-        this("Add Log Entry");
+        this("Add Log Entry"); // NOI18N
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         LogFrame f = new LogFrame();
         try {
@@ -29,7 +30,7 @@ public class LogAction extends AbstractAction {
         }
         f.setVisible(true);
     }
-    private final static Logger log = LoggerFactory.getLogger(LogAction.class.getName());
-}
 
-/* @(#)LogAction.java */
+    private final static Logger log = LoggerFactory.getLogger(LogAction.class);
+
+}

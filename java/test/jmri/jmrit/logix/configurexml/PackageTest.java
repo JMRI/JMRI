@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+   OBlockManagerXmlTest.class,
+   WarrantManagerXmlTest.class
 })
 /**
  * Tests for the jmri.jmrit.logix.configurexml package.
@@ -29,6 +31,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

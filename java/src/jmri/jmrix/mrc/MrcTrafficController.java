@@ -1,4 +1,3 @@
-// MrcTrafficController.java
 package jmri.jmrix.mrc;
 
 import java.util.Date;
@@ -9,19 +8,21 @@ import org.slf4j.LoggerFactory;
 /**
  * Converts Stream-based I/O to/from MRC messages. The "MrcInterface" side
  * sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a MrcPortController is via a pair of *Streams, which then
  * carry sequences of characters for transmission. Note that this processing is
  * handled in an independent thread.
- * <P>
- * This handles the state transistions, based on the necessary state in each
+ * <p>
+ * This handles the state transitions, based on the necessary state in each
  * message.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+ * @author Bob Jacobsen Copyright (C) 2001
+  */
 public abstract class MrcTrafficController implements MrcInterface {
 
+    /**
+     * Create a new MrcTrafficController instance. Simple implementation.
+     */
     public MrcTrafficController() {
         super();
     }
@@ -37,13 +38,16 @@ public abstract class MrcTrafficController implements MrcInterface {
     }
 
     // Abstract methods for the MrcInterface
+    @Override
     abstract public boolean status();
 
+    @Override
     abstract public void sendMrcMessage(MrcMessage m);
 
     // The methods to implement adding and removing listeners
     protected Vector<MrcTrafficListenerFilter> trafficListeners = new Vector<MrcTrafficListenerFilter>();
 
+    @Override
     public synchronized void addTrafficListener(int mask, MrcTrafficListener l) {
         if (l == null) {
             throw new java.lang.NullPointerException();
@@ -56,6 +60,7 @@ public abstract class MrcTrafficController implements MrcInterface {
         }
     }
 
+    @Override
     public synchronized void removeTrafficListener(int mask, MrcTrafficListener l) {
         if (l == null) {
             throw new java.lang.NullPointerException();
@@ -67,6 +72,7 @@ public abstract class MrcTrafficController implements MrcInterface {
         }
     }
 
+    @Override
     public synchronized void changeTrafficListener(int mask, MrcTrafficListener l) {
         if (l == null) {
             throw new java.lang.NullPointerException();
@@ -134,6 +140,7 @@ public abstract class MrcTrafficController implements MrcInterface {
     /**
      * Monitor the number of MRC messaages received across the interface. This
      * includes the messages this client has sent.
+     * @return count of messages received
      */
     public int getReceivedMsgCount() {
         return receivedMsgCount;
@@ -143,6 +150,7 @@ public abstract class MrcTrafficController implements MrcInterface {
     /**
      * Monitor the number of bytes in MRC messaages received across the
      * interface. This includes the messages this client has sent.
+     * @return count of bytes in received messages
      */
     public int getReceivedByteCount() {
         return receivedByteCount;
@@ -151,6 +159,7 @@ public abstract class MrcTrafficController implements MrcInterface {
 
     /**
      * Monitor the number of MRC messaages transmitted across the interface.
+     * @return count of messages sent
      */
     public int getTransmittedMsgCount() {
         return transmittedMsgCount;
@@ -172,13 +181,13 @@ public abstract class MrcTrafficController implements MrcInterface {
 
     public String getSystemPrefix() {
         if (adaptermemo == null) {
-            return "MR"; //IN18N
+            return "M"; //IN18N
         }
         return adaptermemo.getSystemPrefix();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MrcTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MrcTrafficController.class);
 }
 
 
-/* @(#)MrcTrafficController.java */
+

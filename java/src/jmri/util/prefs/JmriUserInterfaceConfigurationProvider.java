@@ -40,7 +40,7 @@ public final class JmriUserInterfaceConfigurationProvider extends AbstractConfig
         }
     }
 
-    private static final HashMap<Profile, JmriUserInterfaceConfigurationProvider> providers = new HashMap<>();
+    private static final HashMap<Profile, JmriUserInterfaceConfigurationProvider> PROVIDERS = new HashMap<>();
 
     /**
      * Get the JmriPrefererncesProvider for the specified profile.
@@ -52,10 +52,10 @@ public final class JmriUserInterfaceConfigurationProvider extends AbstractConfig
      * @return The shared or private JmriPreferencesProvider for the project.
      */
     static synchronized JmriUserInterfaceConfigurationProvider findProvider(Profile project) {
-        if (providers.get(project) == null) {
-            providers.put(project, new JmriUserInterfaceConfigurationProvider(project));
+        if (PROVIDERS.get(project) == null) {
+            PROVIDERS.put(project, new JmriUserInterfaceConfigurationProvider(project));
         }
-        return providers.get(project);
+        return PROVIDERS.get(project);
     }
 
     /**

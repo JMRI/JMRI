@@ -1,41 +1,38 @@
-// MapleMenu.java
 package jmri.jmrix.maple;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**
- * Create a "Systems" menu containing the Jmri Maple-specific tools
+ * Create a "Systems" menu containing the Jmri Maple-specific tools.
  *
- * @author	Bob Jacobsen Copyright 2008
- * @version $Revision$
+ * @author Bob Jacobsen Copyright 2008
  */
 public class MapleMenu extends JMenu {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5496558545288767910L;
-
-    public MapleMenu(String name) {
-        this();
+    public MapleMenu(String name, MapleSystemConnectionMemo memo) {
+        this(memo);
         setText(name);
     }
 
-    public MapleMenu() {
+    public MapleMenu(MapleSystemConnectionMemo memo) {
 
         super();
+        if (memo != null) {
+            setText(memo.getUserName());
+        } else {
+            setText(Bundle.getMessage("MenuMaple"));
+        }
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.maple.MapleBundle");
-
-        setText(rb.getString("MenuMaple"));
-
-        add(new jmri.jmrix.maple.serialmon.SerialMonAction(rb.getString("MenuItemCommandMonitor")));
-        add(new jmri.jmrix.maple.packetgen.SerialPacketGenAction(rb.getString("MenuItemSendCommand")));
+        add(new jmri.jmrix.maple.serialmon.SerialMonAction(Bundle.getMessage("MenuItemCommandMonitor"), memo));
+        add(new jmri.jmrix.maple.packetgen.SerialPacketGenAction(Bundle.getMessage("MenuItemSendCommand"), memo));
         add(new javax.swing.JSeparator());
-        add(new jmri.jmrix.maple.nodeconfig.NodeConfigAction());
+        if (memo != null) {
+            add(new jmri.jmrix.maple.nodeconfig.NodeConfigAction(memo));
+        }
         add(new javax.swing.JSeparator());
-        add(new jmri.jmrix.maple.assignment.ListAction(rb.getString("MenuItemAssignments")));
+        if (memo != null) {
+            add(new jmri.jmrix.maple.assignment.ListAction(Bundle.getMessage("MenuItemAssignments"), memo));
+        }
     }
 
 }

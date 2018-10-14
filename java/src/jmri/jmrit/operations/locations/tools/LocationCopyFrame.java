@@ -1,6 +1,6 @@
-// LocationCopyFrame.java
 package jmri.jmrit.operations.locations.tools;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -31,18 +32,17 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2014
- * @version $Revision: 17977 $
  */
 public class LocationCopyFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-    LocationManager locationManager = LocationManager.instance();
+    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     // text field
     JTextField loctionNameTextField = new javax.swing.JTextField(Control.max_len_string_location_name);
 
     // major buttons
-    JButton copyButton = new javax.swing.JButton(Bundle.getMessage("Copy"));
-    JButton saveButton = new javax.swing.JButton(Bundle.getMessage("Save"));
+    JButton copyButton = new javax.swing.JButton(Bundle.getMessage("ButtonCopy"));
+    JButton saveButton = new javax.swing.JButton(Bundle.getMessage("ButtonSave"));
 
     // combo boxes
     JComboBox<Location> locationBox = locationManager.getComboBox();
@@ -116,7 +116,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     protected void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == copyButton) {
             log.debug("copy location button activated");
@@ -126,7 +126,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
 
             if (locationBox.getSelectedItem() == null) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationToCopy"), MessageFormat.format(Bundle
-                        .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("Copy")}), JOptionPane.ERROR_MESSAGE);
+                        .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -196,30 +196,30 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
     protected boolean checkName() {
         if (loctionNameTextField.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
-                    .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("Copy")}), JOptionPane.ERROR_MESSAGE);
+                    .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (TrainCommon.splitString(loctionNameTextField.getText()).length() > Control.max_len_string_location_name) {
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LocationNameLengthMax"),
                     new Object[]{Integer.toString(Control.max_len_string_location_name + 1)}), MessageFormat.format(Bundle
-                            .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("Copy")}), JOptionPane.ERROR_MESSAGE);
+                            .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         Location check = locationManager.getLocationByName(loctionNameTextField.getText());
         if (check != null) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("LocationAlreadyExists"), MessageFormat.format(Bundle
-                    .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("Copy")}), JOptionPane.ERROR_MESSAGE);
+                    .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
     }
 
     protected void moveRollingStock(Track fromTrack, Track toTrack) {
-        moveRollingStock(fromTrack, toTrack, CarManager.instance());
-        moveRollingStock(fromTrack, toTrack, EngineManager.instance());
+        moveRollingStock(fromTrack, toTrack, InstanceManager.getDefault(CarManager.class));
+        moveRollingStock(fromTrack, toTrack, InstanceManager.getDefault(EngineManager.class));
     }
 
-    private void moveRollingStock(Track fromTrack, Track toTrack, RollingStockManager manager) {
+    private void moveRollingStock(Track fromTrack, Track toTrack, RollingStockManager<? extends RollingStock> manager) {
         for (RollingStock rs : manager.getByIdList()) {
             if (rs.getTrack() == fromTrack) {
                 rs.setLocation(toTrack.getLocation(), toTrack, RollingStock.FORCE);
@@ -241,5 +241,5 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationCopyFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocationCopyFrame.class);
 }

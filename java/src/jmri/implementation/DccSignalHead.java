@@ -92,6 +92,7 @@ public class DccSignalHead extends AbstractSignalHead {
         }
     }
 
+    @Override
     public void setAppearance(int newAppearance) {
         int oldAppearance = mAppearance;
         mAppearance = newAppearance;
@@ -104,6 +105,7 @@ public class DccSignalHead extends AbstractSignalHead {
         }
     }
 
+    @Override
     public void setLit(boolean newLit) {
         boolean oldLit = mLit;
         mLit = newLit;
@@ -121,6 +123,7 @@ public class DccSignalHead extends AbstractSignalHead {
      * held parameter is a local variable which effects the aspect only via
      * higher-level logic
      */
+    @Override
     public void setHeld(boolean newHeld) {
         boolean oldHeld = mHeld;
         mHeld = newHeld;
@@ -132,7 +135,7 @@ public class DccSignalHead extends AbstractSignalHead {
 
     protected void updateOutput() {
         if (c != null) {
-            int aspect = 8;  // SignalHead.DARK, but default set below
+            int aspect = getOutputForAppearance(SignalHead.DARK);
 
             if (getLit()) {
                 Integer app = Integer.valueOf(mAppearance);
@@ -228,6 +231,7 @@ public class DccSignalHead extends AbstractSignalHead {
 
     int dccSignalDecoderAddress;
 
+    @Override
     boolean isTurnoutUsed(Turnout t) {
         return false;
     }

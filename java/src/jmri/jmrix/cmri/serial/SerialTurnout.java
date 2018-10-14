@@ -2,9 +2,11 @@ package jmri.jmrix.cmri.serial;
 
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+import javax.annotation.Nonnull;
+import javax.annotation.CheckReturnValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Turnout implementation for C/MRI serial systems.
@@ -43,9 +45,9 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
  * <a href="http://jmri.org/help/en/html/hardware/cmri/CMRI.shtml#options">documentation
  * page</a>.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2007, 2008
- * @author	David Duchamp Copyright (C) 2004, 2007
- * @author	Dan Boudreau Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2003, 2007, 2008
+ * @author David Duchamp Copyright (C) 2004, 2007
+ * @author Dan Boudreau Copyright (C) 2007
  */
 public class SerialTurnout extends AbstractTurnout {
 
@@ -56,13 +58,13 @@ public class SerialTurnout extends AbstractTurnout {
      * <P>
      * 'systemName' was previously validated in SerialTurnoutManager
      */
-    public SerialTurnout(String systemName, String userName,CMRISystemConnectionMemo memo) {
+    public SerialTurnout(@Nonnull String systemName, String userName, CMRISystemConnectionMemo memo) {
         super(systemName, userName);
         // Save system Name
         tSystemName = systemName;
         _memo = memo;
         // Extract the Bit from the name
-        tBit = SerialAddress.getBitFromSystemName(systemName);
+        tBit = _memo.getBitFromSystemName(systemName);
     }
 
     /**
@@ -70,12 +72,13 @@ public class SerialTurnout extends AbstractTurnout {
      *
      * @param newState desired new state, one of the Turnout class constants
      */
+     @Override
     protected void forwardCommandChangeToLayout(int newState) {
         // implementing classes will typically have a function/listener to get
         // updates from the layout, which will then call
-        //		public void firePropertyChange(String propertyName,
-        //				                Object oldValue,
-        //						Object newValue)
+        //  public void firePropertyChange(String propertyName,
+        //                    Object oldValue,
+        //      Object newValue)
         // _once_ if anything has changed state (or set the commanded state directly)
 
         // sort out states
@@ -98,10 +101,12 @@ public class SerialTurnout extends AbstractTurnout {
     /**
      * C/MRI turnouts do support inversion
      */
+     @Override
     public boolean canInvert() {
         return true;
     }
 
+     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
             log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton ");
@@ -125,10 +130,10 @@ public class SerialTurnout extends AbstractTurnout {
         // if a Pulse Timer is running, ignore the call
         if (!mPulseTimerOn) {
             if (tNode == null) {
-                tNode = (SerialNode) SerialAddress.getNodeFromSystemName(tSystemName,_memo.getTrafficController());
+                tNode = (SerialNode) _memo.getNodeFromSystemName(tSystemName, _memo.getTrafficController());
                 if (tNode == null) {
                     // node does not exist, ignore call
-                    log.error("Trying to set a C/MRI turnout that doesn't exist: " + tSystemName + " - ignored");
+                    log.error("Trying to set a C/MRI turnout that doesn't exist: {} - ignored", tSystemName);
                     return;
                 }
             }
@@ -153,6 +158,7 @@ public class SerialTurnout extends AbstractTurnout {
                                 // start a timer to finish setting this turnout
                                 if (mPulseClosedTimer == null) {
                                     mPulseClosedTimer = new javax.swing.Timer(tNode.getPulseWidth(), new java.awt.event.ActionListener() {
+                                        @Override
                                         public void actionPerformed(java.awt.event.ActionEvent e) {
                                             tNode.setOutputBit(tBit, true ^ getInverted());
                                             mPulseClosedTimer.stop();
@@ -172,6 +178,7 @@ public class SerialTurnout extends AbstractTurnout {
                                 // start a timer to finish setting this turnout
                                 if (mPulseThrownTimer == null) {
                                     mPulseThrownTimer = new javax.swing.Timer(tNode.getPulseWidth(), new java.awt.event.ActionListener() {
+                                        @Override
                                         public void actionPerformed(java.awt.event.ActionEvent e) {
                                             tNode.setOutputBit(tBit, false ^ getInverted());
                                             mPulseThrownTimer.stop();
@@ -197,6 +204,7 @@ public class SerialTurnout extends AbstractTurnout {
                         // Start a timer to return bit to off state
                         if (mPulseClosedTimer == null) {
                             mPulseClosedTimer = new javax.swing.Timer(iTime, new java.awt.event.ActionListener() {
+                                @Override
                                 public void actionPerformed(java.awt.event.ActionEvent e) {
                                     tNode.setOutputBit(tBit, true ^ getInverted());
                                     mPulseClosedTimer.stop();
@@ -226,6 +234,7 @@ public class SerialTurnout extends AbstractTurnout {
                         // Start a timer to return bit to off state
                         if (mPulseClosedTimer == null) {
                             mPulseClosedTimer = new javax.swing.Timer(iTime, new java.awt.event.ActionListener() {
+                                @Override
                                 public void actionPerformed(java.awt.event.ActionEvent e) {
                                     tNode.setOutputBit(tBit, true ^ getInverted());
                                     mPulseClosedTimer.stop();
@@ -242,6 +251,7 @@ public class SerialTurnout extends AbstractTurnout {
                         // Start a timer to return bit to off state
                         if (mPulseThrownTimer == null) {
                             mPulseThrownTimer = new javax.swing.Timer(iTime, new java.awt.event.ActionListener() {
+                                @Override
                                 public void actionPerformed(java.awt.event.ActionEvent e) {
                                     tNode.setOutputBit(tBit + 1, true ^ getInverted());
                                     mPulseThrownTimer.stop();
@@ -257,5 +267,17 @@ public class SerialTurnout extends AbstractTurnout {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
+    /**
+     * {@inheritDoc} 
+     * 
+     * Sorts by node number and then by bit
+     */
+    @CheckReturnValue
+     @Override
+    public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull jmri.NamedBean n) {
+        return CMRISystemConnectionMemo.compareSystemNameSuffix(suffix1, suffix2);
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnout.class);
+
 }

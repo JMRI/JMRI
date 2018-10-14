@@ -4,9 +4,6 @@
 # Author: Ken Cameron, copyright 2009
 # Part of the JMRI distribution
 #
-# The next line is maintained by CVS, please don't change it
-# $Revision$
-#
 # The start button is inactive until data has been entered.
 #
 # The test button is to force re-evaluation of all block and signal values.
@@ -99,6 +96,9 @@
 
 import jmri
 import java
+import java.awt
+import java.awt.event
+import java.beans
 import javax.swing
 
 HighDebug = 3
@@ -423,10 +423,10 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 # signal dropped, that's bad
                 self.msgText("signal dropped, same signal being watched.\n")
                 if (self.compareSignalAspects(self.haltOnSignalHeadAppearance, watchAspect) >= 0) : # Only stop on dropping below this
-                	self.findNewSpeed(self.currentBlock, self.nextBlock)
+                    self.findNewSpeed(self.currentBlock, self.nextBlock)
                 else :
-                	self.msgText("Signal dropped in front of train. Halting!!\n")
-                	self.doHalt()
+                    self.msgText("Signal dropped in front of train. Halting!!\n")
+                    self.doHalt()
             else :
                 #self.msgText("We moved, signal or aspect changed.\n")
                 self.findNewSpeed(self.currentBlock, self.nextBlock)

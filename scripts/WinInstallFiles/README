@@ -1,5 +1,10 @@
-To recreate the LaunchJMRI.exe:
+The definitive copy of LaunchJMRI.exe is kept in Git in this directory.  This keeps it stable in the interest of managing the large number of anti-virus approaches on Windows systems.
+
+Should you need to recreate the LaunchJMRI.exe use 'ant launchjmri.exe` or
 
 /opt/local/bin/makensis -V2 LaunchJMRI.nsi
 
+Note that this ant target is not included in the package-windows target: We  do not remake the LaunchJMRI.exe file as part of the build of the release packages.  
+
+Note that there have been problems reported doing this on macOS, though others have made it work. Check that the length of the created file is reasonable.
 

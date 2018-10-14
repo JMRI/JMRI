@@ -7,7 +7,7 @@ import javax.swing.AbstractAction;
  * Swing action to create and register a SimpleTurnoutCtrlFrame
  * object
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SimpleLightCtrlAction extends AbstractAction {
 
@@ -18,17 +18,17 @@ public class SimpleLightCtrlAction extends AbstractAction {
         if (jmri.InstanceManager.getNullableDefault(jmri.LightManager.class) == null) {
             setEnabled(false);
         }
-
     }
 
     public SimpleLightCtrlAction() {
-        this("Lights");
+        this(Bundle.getMessage("Lights"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         SimpleLightCtrlFrame f = new SimpleLightCtrlFrame();
         f.setVisible(true);
-
     }
+
 }

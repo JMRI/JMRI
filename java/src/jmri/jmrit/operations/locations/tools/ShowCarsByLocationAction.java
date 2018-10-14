@@ -1,4 +1,3 @@
-//ShowCarsByLocation.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.event.ActionEvent;
@@ -10,7 +9,6 @@ import jmri.jmrit.operations.rollingstock.cars.CarsTableFrame;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2009
- * @version $Revision$
  */
 public class ShowCarsByLocationAction extends AbstractAction {
 
@@ -36,4 +34,4 @@ public class ShowCarsByLocationAction extends AbstractAction {
     }
 }
 
-/* @(#)ShowCarsByLocation.java */
+

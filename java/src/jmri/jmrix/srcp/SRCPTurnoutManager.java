@@ -26,28 +26,26 @@ public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         _memo = memo;
     }
 
+    @Override
     public String getSystemPrefix() {
         return _memo.getSystemPrefix();
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
-        int addr = Integer.valueOf(systemName.substring(_memo.getSystemPrefix().length() + 1)).intValue();
+        int addr = Integer.parseInt(systemName.substring(_memo.getSystemPrefix().length() + 1));
         t = new SRCPTurnout(addr, _memo);
         t.setUserName(userName);
 
         return t;
     }
 
-    /*
-     * @deprecated since 4.3.5
-     */
-    @Deprecated
-    static public SRCPTurnoutManager instance() {
-        log.error("Deprecated instance() method called");
-        return null;
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPTurnout.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SRCPTurnout.class);
 
 }

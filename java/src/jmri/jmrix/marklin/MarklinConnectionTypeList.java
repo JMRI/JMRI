@@ -1,14 +1,16 @@
-// MarklinConnectionTypeList.java
 package jmri.jmrix.marklin;
 
+import jmri.jmrix.ConnectionTypeList;
+import org.openide.util.lookup.ServiceProvider;
+
 /**
- * Returns a list of valid ESU Marklin Connection Types
- * <P>
+ * Returns list of valid ESU Marklin Connection Types
+ *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 17977 $
  *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class MarklinConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String MARKLIN = "Marklin";
@@ -16,9 +18,7 @@ public class MarklinConnectionTypeList implements jmri.jmrix.ConnectionTypeList 
     @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
-            "jmri.jmrix.marklin.networkdriver.ConnectionConfig"/*,
-         "jmri.jmrix.ecos.csreloaded.ConnectionConfig",*/
-
+            "jmri.jmrix.marklin.networkdriver.ConnectionConfig"
         };
     }
 

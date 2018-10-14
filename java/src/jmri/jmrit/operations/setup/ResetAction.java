@@ -1,4 +1,3 @@
-// ResetAction.java
 package jmri.jmrit.operations.setup;
 
 import apps.Apps;
@@ -6,10 +5,11 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
-import jmri.jmrit.operations.ExceptionDisplayFrame;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.UnexpectedExceptionContext;
+import jmri.util.swing.ExceptionDisplayFrame;
+import jmri.util.swing.UnexpectedExceptionContext;
 
 /**
  * Swing action to load the operation demo files.
@@ -17,7 +17,6 @@ import jmri.jmrit.operations.UnexpectedExceptionContext;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
  * @author Gregory Madsen Copyright (C) 2012
- * @version $Revision$
  */
 public class ResetAction extends AbstractAction {
 
@@ -52,7 +51,7 @@ public class ResetAction extends AbstractAction {
             // now deregister shut down task
             // If Trains window was opened, then task is active
             // otherwise it is normal to not have the task running
-            OperationsManager.getInstance().setShutDownTask(null);
+            InstanceManager.getDefault(OperationsManager.class).setShutDownTask(null);
 
             JOptionPane.showMessageDialog(null, Bundle.getMessage("YouMustRestartAfterReset"),
                     Bundle.getMessage("ResetSuccessful"), JOptionPane.INFORMATION_MESSAGE);
@@ -62,11 +61,11 @@ public class ResetAction extends AbstractAction {
         } catch (IOException ex) {
             UnexpectedExceptionContext context = new UnexpectedExceptionContext(ex,
                     "Deleting Operations files"); // NOI18N
-            new ExceptionDisplayFrame(context);
+            new ExceptionDisplayFrame(context, null).setVisible(true);
         }
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(ResetAction.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(ResetAction.class);
 }
 
-/* @(#)ResetAction.java */
+

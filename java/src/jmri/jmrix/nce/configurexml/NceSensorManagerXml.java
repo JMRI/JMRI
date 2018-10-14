@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision$
  */
 public class NceSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
@@ -20,10 +19,12 @@ public class NceSensorManagerXml extends jmri.managers.configurexml.AbstractSens
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element sensors) {
         sensors.setAttribute("class", this.getClass().getName());
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -34,5 +35,5 @@ public class NceSensorManagerXml extends jmri.managers.configurexml.AbstractSens
         return loadSensors(shared);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceSensorManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceSensorManagerXml.class);
 }

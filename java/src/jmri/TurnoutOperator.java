@@ -5,7 +5,7 @@ import jmri.implementation.AbstractTurnout;
 /**
  * Some (not much) common machinery for the concrete turnout operator classes.
  *
- * @author John Harper	Copyright 2005
+ * @author John Harper Copyright 2005
  *
  */
 public abstract class TurnoutOperator extends Thread {
@@ -28,6 +28,6 @@ public abstract class TurnoutOperator extends Thread {
      * operator is running. This implies that another operation has been started
      * and that this one should just quietly stop doing its thing.
      */
-    static public class TurnoutOperatorException extends java.lang.Exception {
+    static public class TurnoutOperatorException extends Exception {
     }
 }

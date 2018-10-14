@@ -5,10 +5,9 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright ($Author$) 2009 -->
-  <!-- $Id$ -->
 
-  <title>JMRI: Signal Group Table</title><!-- Style -->
+  <title>JMRI: Signal Group Table</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -16,23 +15,26 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
 
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+<div class="nomenu" id="mBody">
+  <div id="mainContent">
 
-    <div id="mainContent">
-      <h1>JMRI: Signal Logic Source Frame</h1>From this window you
-      can see all the signal logics that effect the appearance of
+      <h1>JMRI: Signal Logic Source Frame</h1>
+      <p>From this window you
+      can see all the signal logics that affect the Appearance of
       the Signal Mast, along with being able to edit each
       logic.<br>
-      If the layout editor is being used, it is possible to
-      automatically discover all the signalmast logics based upon
-      the panel. <!--#include virtual="/Footer" -->
+      If the Layout Editor is being used, it is possible to
+      automatically discover all the Signal Mast Logics based upon
+      the Layout Editor Panel.</p>
+
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

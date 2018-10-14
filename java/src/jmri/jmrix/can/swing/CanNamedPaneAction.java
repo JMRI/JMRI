@@ -1,4 +1,3 @@
-// CbusNamedPaneAction.java
 package jmri.jmrix.can.swing;
 
 import javax.swing.Icon;
@@ -11,18 +10,12 @@ import org.slf4j.LoggerFactory;
 /**
  * Action to create and load a JmriPanel from just its name.
  *
- * @author	Bob Jacobsen Copyright (C) 2012
- * @version	$Revision: 17977 $
+ * @author Bob Jacobsen Copyright (C) 2012
  */
 public class CanNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = 5423896954824804035L;
-
-    /**
-     * Enhanced constructor for placing the pane in various GUIs
+     * Enhanced constructor for placing the pane in various GUIs.
      */
     public CanNamedPaneAction(String s, WindowInterface wi, String paneClass, CanSystemConnectionMemo memo) {
         super(s, wi, paneClass);
@@ -47,14 +40,12 @@ public class CanNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
             ((CanPanelInterface) p).initComponents(memo);
             return p;
         } catch (Exception ex) {
-            log.warn("could not init pane class: " + paneClass + " due to:" + ex);
-            ex.printStackTrace();
+            log.warn("could not init pane class: {}", paneClass, ex);
         }
 
         return p;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CanNamedPaneAction.class.getName());
-}
+    private final static Logger log = LoggerFactory.getLogger(CanNamedPaneAction.class);
 
-/* @(#)CbusNamedPaneAction.java */
+}

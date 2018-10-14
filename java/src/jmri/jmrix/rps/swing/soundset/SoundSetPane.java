@@ -47,6 +47,7 @@ public class SoundSetPane extends JPanel
     JCheckBox auto;
     JTextField gain;
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("vSound")) {
             // update sound display
@@ -84,6 +85,7 @@ public class SoundSetPane extends JPanel
         p.add(newval);
         JButton b = new JButton("Set");
         b.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 setPushed();
             }
@@ -133,10 +135,11 @@ public class SoundSetPane extends JPanel
 
     java.text.NumberFormat nf;
 
+    @Override
     public void notify(Reading r) {
         try {
             // right ID?
-            if (!r.getID().equals(id.getText())) {
+            if (!r.getId().equals(id.getText())) {
                 return;
             }
 
@@ -176,9 +179,10 @@ public class SoundSetPane extends JPanel
         }
     }
 
+    @Override
     public void notify(Measurement m) {
         // don't have to do anything
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SoundSetPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SoundSetPane.class);
 }

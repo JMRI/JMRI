@@ -1,5 +1,6 @@
 package jmri.jmrix.nce;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.CommandStation;
 import jmri.JmriException;
 import jmri.NmraPacket;
@@ -26,19 +27,25 @@ import org.slf4j.LoggerFactory;
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface, CommandStation {
 
+    /**
+     * Create a new NCE SerialTrafficController instance. Simple implementation.
+     */
     public NceTrafficController() {
         super();
     }
 
     // The methods to implement the NceInterface
+    @Override
     public synchronized void addNceListener(NceListener l) {
         this.addListener(l);
     }
 
+    @Override
     public synchronized void removeNceListener(NceListener l) {
         this.removeListener(l);
     }
 
+    @Override
     protected int enterProgModeDelayTime() {
         // we should to wait at least a second after enabling the programming track
         return 1000;
@@ -47,22 +54,51 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     /**
      * CommandStation implementation
      */
-    public void sendPacket(byte[] packet, int count) {
+    @Override
+    public boolean sendPacket(byte[] packet, int count) {
         NceMessage m;
-        if (NmraPacket.isAccSignalDecoderPkt(packet)) {
-            // intercept NMRA signal cmds
+
+        boolean isUsb = ((getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERCAB
+                || getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3
+                || getUsbSystem() == NceTrafficController.USB_SYSTEM_SB5
+                || getUsbSystem() == NceTrafficController.USB_SYSTEM_TWIN));
+
+        if (NmraPacket.isAccSignalDecoderPkt(packet)
+                && (NmraPacket.getAccSignalDecoderPktAddress(packet) > 0)
+                && (NmraPacket.getAccSignalDecoderPktAddress(packet) < 2048)) {
+            // intercept only those NMRA signal cmds we can handle with NCE binary commands
             int addr = NmraPacket.getAccSignalDecoderPktAddress(packet);
             int aspect = packet[2];
+            log.debug("isAccSignalDecoderPkt(packet) sigAddr ={}, aspect ={}", addr, aspect);
             m = NceMessage.createAccySignalMacroMessage(this, 5, addr, aspect);
+        } else if (isUsb && NmraPacket.isAccDecoderPktOpsMode(packet)) {
+            // intercept NMRA accessory decoder ops programming cmds to USB systems
+            int accyAddr = NmraPacket.getAccDecoderPktOpsModeAddress(packet);
+            int cvAddr = (((0x03 & packet[2]) << 8) | (0xFF & packet[3])) + 1;
+            int cvData = (0xFF & packet[4]);
+            log.debug("isAccDecoderPktOpsMode(packet) accyAddr ={}, cvAddr = {}, cvData ={}", accyAddr, cvAddr, cvData);
+            m = NceMessage.createAccDecoderPktOpsMode(this, accyAddr, cvAddr, cvData);
+        } else if (isUsb && NmraPacket.isAccDecoderPktOpsModeLegacy(packet)) {
+            // intercept NMRA accessory decoder ops programming cmds to USB systems
+            int accyAddr = NmraPacket.getAccDecoderPktOpsModeLegacyAddress(packet);
+            int cvData = (0xFF & packet[3]);
+            int cvAddr = (((0x03 & packet[1]) << 8) | (0xFF & packet[2])) + 1;
+            log.debug("isAccDecoderPktOpsModeLegacy(packet) accyAddr ={}, cvAddr = {}, cvData ={}", accyAddr, cvAddr, cvData);
+            m = NceMessage.createAccDecoderPktOpsMode(this, accyAddr, cvAddr, cvData);
         } else {
             m = NceMessage.sendPacketMessage(this, packet);
+            if (m == null) {
+                return false;
+            }
         }
         this.sendNceMessage(m, null);
+        return true;
     }
 
     /**
      * Forward a NceMessage to all registered NceInterface listeners.
      */
+    @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
         ((NceListener) client).message((NceMessage) m);
     }
@@ -70,6 +106,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     /**
      * Forward a NceReply to all registered NceInterface listeners.
      */
+    @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply r) {
         ((NceListener) client).reply((NceReply) r);
     }
@@ -145,12 +182,13 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #OPTION_FORCE_BINARY}
      * </UL>
      *
+     * @param val command station options
+     *
      */
     public void setCommandOptions(int val) {
         commandOptions = val;
         if (commandOptionSet) {
             log.warn("setCommandOptions called more than once");
-            //new Exception().printStackTrace(); TODO need to remove for testing
         }
         commandOptionSet = true;
     }
@@ -170,6 +208,8 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #OPTION_1_65}
      * <LI>{@link #OPTION_FORCE_BINARY}
      * </UL>
+     *
+     * @return command station options value
      *
      */
     public int getCommandOptions() {
@@ -221,12 +261,13 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #USB_SYSTEM_SB5}
      * </UL>
      *
+     * @param val usb command station options
+     *
      */
     public void setUsbSystem(int val) {
         usbSystem = val;
         if (usbSystemSet) {
             log.warn("setUsbSystem called more than once");
-            //new Exception().printStackTrace();
         }
         usbSystemSet = true;
     }
@@ -241,6 +282,8 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #USB_SYSTEM_TWIN}
      * <LI>{@link #USB_SYSTEM_SB5}
      * </UL>
+     *
+     * @return usb command station options
      *
      */
     public int getUsbSystem() {
@@ -315,12 +358,13 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #CMDS_ALL_SYS}
      * </UL>
      *
+     * @param val command group supported options
+     *
      */
     public void setCmdGroups(long val) {
         cmdGroups = val;
         if (cmdGroupsSet) {
             log.warn("setCmdGroups called more than once");
-            //new Exception().printStackTrace();
         }
         cmdGroupsSet = true;
     }
@@ -340,12 +384,14 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #CMDS_ALL_SYS}
      * </UL>
      *
+     * @return command group supported options
+     *
      */
     public long getCmdGroups() {
         return cmdGroups;
     }
 
-    private boolean nceProgMode = false;					// Do not use exit program mode unless active
+    private boolean nceProgMode = false;     // Do not use exit program mode unless active
 
     /**
      * Gets the state of the command station
@@ -368,6 +414,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     /**
      * Check NCE EPROM and start NCE CS accessory memory poll
      */
+    @Override
     protected AbstractMRMessage pollMessage() {
 
         // Check to see if command options are valid
@@ -413,6 +460,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
     boolean expectReplyEprom = false;
 
+    @Override
     protected AbstractMRListener pollReplyHandler() {
         // First time through, handle reply by checking EPROM revision
         // Second time through, handle AIU broadcast check
@@ -428,17 +476,18 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     /**
      * Forward a preformatted message to the actual interface.
      */
+    @Override
     public void sendNceMessage(NceMessage m, NceListener reply) {
         try {
             NceMessageCheck.checkMessage(getAdapterMemo(), m);
         } catch (JmriException e) {
-            log.error(e.getMessage());
-            new Exception().printStackTrace();
-            return;		// don't send bogus message to interface
+            log.error(e.getMessage(), e);
+            return;  // don't send bogus message to interface
         }
         sendMessage(m, reply);
     }
 
+    @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         replyBinary = m.isBinary();
         replyLen = ((NceMessage) m).getReplyLen();
@@ -449,31 +498,14 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     protected boolean replyBinary;
     protected boolean unsolicitedSensorMessageSeen = false;
 
+    @Override
     protected AbstractMRMessage enterProgMode() {
         return NceMessage.getProgMode(this);
     }
 
+    @Override
     protected AbstractMRMessage enterNormalMode() {
         return NceMessage.getExitProgMode(this);
-    }
-
-    /**
-     * static function returning the NceTrafficController instance to use.
-     *
-     * @return The registered NceTrafficController instance for general use, if
-     *         need be creating one.
-     */
-    @Deprecated
-    public static synchronized NceTrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new NceTrafficController object");
-            }
-            self = new NceTrafficController();
-            // set as command station too
-            jmri.InstanceManager.setCommandStation(self);
-        }
-        return self;
     }
 
     public void setAdapterMemo(NceSystemConnectionMemo adaptermemo) {
@@ -485,21 +517,8 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     }
 
     private NceSystemConnectionMemo memo = null;
-    static NceTrafficController self = null;
 
-    /**
-     * instance use of the traffic controller is no longer used for multiple
-     * connections
-     */
     @Override
-    @Deprecated
-    public void setInstance() {
-    }
-
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
-//    protected synchronized void setInstance() { self = this; }
-
     protected AbstractMRReply newReply() {
         NceReply reply = new NceReply(this);
         reply.setBinary(replyBinary);
@@ -507,6 +526,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     }
 
     // pre 2006 EPROMs can't stop AIU broadcasts so we have to accept them
+    @Override
     protected boolean canReceive() {
         if (getCommandOptions() < OPTION_2006) {
             return true;
@@ -520,6 +540,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         }
     }
 
+    @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         msg.setBinary(replyBinary);
         // first try boolean
@@ -547,7 +568,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
                 }
             }
             if (msg.getNumDataElements() >= replyLen) {
-                // reset reply length so we can detect an unsolicited AIU message 
+                // reset reply length so we can detect an unsolicited AIU message
                 replyLen = 0;
                 return true;
             } else {
@@ -594,6 +615,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 
     NceSystemConnectionMemo adaptermemo;
 
+    @Override
     public String getUserName() {
         if (adaptermemo == null) {
             return "NCE";
@@ -601,6 +623,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         return adaptermemo.getUserName();
     }
 
+    @Override
     public String getSystemPrefix() {
         if (adaptermemo == null) {
             return "N";
@@ -608,5 +631,5 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         return adaptermemo.getSystemPrefix();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceTrafficController.class);
 }

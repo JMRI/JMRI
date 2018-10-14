@@ -1,4 +1,3 @@
-// CanMutableFrame.java
 package jmri.jmrix.can;
 
 /**
@@ -13,7 +12,6 @@ package jmri.jmrix.can;
  * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2009, 2010
- * @version $Revision$
  */
 public interface CanMutableFrame extends CanFrame {
 
@@ -28,5 +26,3 @@ public interface CanMutableFrame extends CanFrame {
     public void setElement(int n, int v);
 
 }
-
-/* @(#)CanMutableFrame.java */

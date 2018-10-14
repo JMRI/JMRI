@@ -1,12 +1,10 @@
-// MrcInterface.java
 package jmri.jmrix.mrc;
 
 /**
  * Layout interface, similar to command station
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+ * @author Bob Jacobsen Copyright (C) 2001
+  */
 public interface MrcInterface {
 
     public void sendMrcMessage(MrcMessage msg);
@@ -63,4 +61,4 @@ public interface MrcInterface {
 }
 
 
-/* @(#)MrcInterface.java */
+

@@ -1,4 +1,3 @@
-// PrintTrainManifestAction.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.event.ActionEvent;
@@ -12,7 +11,6 @@ import jmri.jmrit.operations.trains.TrainEditFrame;
  * Action to print a train's manifest
  *
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision$
  */
 public class PrintTrainManifestAction extends AbstractAction {
 
@@ -58,5 +56,5 @@ public class PrintTrainManifestAction extends AbstractAction {
         }
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(PrintTrainManifestAction.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(PrintTrainManifestAction.class);
 }

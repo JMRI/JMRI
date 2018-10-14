@@ -2,6 +2,7 @@ package jmri.jmrit.operations.automation.actions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
@@ -39,7 +40,7 @@ public class WaitSwitchListAction extends Action implements PropertyChangeListen
      * Waiting for any location's switch list to change
      */
     private void checkForlocationChange() {
-        for (Location location : LocationManager.instance().getList()) {
+        for (Location location : InstanceManager.getDefault(LocationManager.class).getList()) {
             if (location != null && location.isSwitchListEnabled() && location.getStatus().equals(Location.MODIFIED)) {
                 removePropertyChangeLocations();
                 finishAction(true);
@@ -49,13 +50,13 @@ public class WaitSwitchListAction extends Action implements PropertyChangeListen
     }
     
     private synchronized void addPropertyChangeLocations() {
-        for (Location location : LocationManager.instance().getList()) {
+        for (Location location : InstanceManager.getDefault(LocationManager.class).getList()) {
             location.addPropertyChangeListener(this);
         }
     }
 
     private synchronized void removePropertyChangeLocations() {
-        for (Location location : LocationManager.instance().getList()) {
+        for (Location location : InstanceManager.getDefault(LocationManager.class).getList()) {
             location.removePropertyChangeListener(this);
         }
     }
@@ -79,6 +80,6 @@ public class WaitSwitchListAction extends Action implements PropertyChangeListen
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WaitTrainAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WaitTrainAction.class);
 
 }

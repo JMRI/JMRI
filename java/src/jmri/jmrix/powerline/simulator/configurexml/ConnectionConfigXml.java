@@ -16,7 +16,6 @@ import jmri.jmrix.powerline.simulator.SimulatorAdapter;
  *
  * @author Ken Cameron Copyright: Copyright (c) 2011 Copied from NCE simulator
  * by Bob Jacobsen
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -24,10 +23,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig) object).getAdapter();
     }
 
+    @Override
     protected void getInstance() {
         adapter = new SimulatorAdapter();
     }

@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id$ -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Not used">
-    <choice xml:lang="fr">Not used(fr)</choice>
+	<choice xml:lang="da">Anvendes ikke</choice>
+    <choice xml:lang="fr">Non utilisé</choice>
     <choice xml:lang="it">Non usato</choice>
+    <choice xml:lang="cs">Nepoužito</choice>
+    <choice xml:lang="da">Ikke brugt</choice>
+    <choice xml:lang="de">Nicht verwendet</choice>
+    <choice xml:lang="nl">Niet gebruikt</choice>  
   </enumChoice>
   <enumChoice choice="Enabled">
-    <choice xml:lang="fr">Enabled(fr)</choice>
+	<choice xml:lang="da">Aktiveret</choice>
+    <choice xml:lang="fr">Activé</choice>
     <choice xml:lang="it">Abilitato</choice>
+    <choice xml:lang="cs">Zpřístupněno</choice>
+    <choice xml:lang="da">Aktiveret</choice>
+    <choice xml:lang="de">Aktiviert</choice>
+    <choice xml:lang="nl">Ingeschakeld</choice>
   </enumChoice>
 </enumVal>

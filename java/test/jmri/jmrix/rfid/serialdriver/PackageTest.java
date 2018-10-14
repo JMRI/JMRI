@@ -2,14 +2,13 @@ package jmri.jmrix.rfid.serialdriver;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
    SerialDriverAdapterTest.class,
+   BundleTest.class,
    jmri.jmrix.rfid.serialdriver.configurexml.PackageTest.class
 })
 /**

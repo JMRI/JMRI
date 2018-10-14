@@ -1,4 +1,3 @@
-// SerialMessage.java
 package jmri.jmrix.grapevine;
 
 import jmri.util.StringUtil;
@@ -6,34 +5,50 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Contains the data payload of a serial packet.
+ * Contains the data payload of a serial packet. Note that it's _only_ the
+ * payload.
+ * <p>
+ * See the Grapevine <a href="package-summary.html">Binary Message Format Summary</a>
  *
- * @author Bob Jacobsen Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2001, 2003, 2006, 2007, 2008
+ * @author Egbert Broerse Copyright (C) 2018
  */
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
-    // is this logically an abstract class?
 
+    /**
+     * Create a new SerialMessage instance.
+     */
     public SerialMessage() {
-        super(4);  // most messages are four bytes, binary
+        super(4); // most Grapevine messages are four bytes, binary
         setBinary(true);
     }
 
+    /**
+     * Create a new SerialMessage instance of a given byte size.
+     *
+     * @param len number of elements in the message
+     */
     public SerialMessage(int len) {
-        super(len);  // most messages are four bytes, binary
+        super(len); // most Grapevine messages are four bytes, binary
         setBinary(true);
     }
 
-    // copy one
+    /**
+     * Copy a SerialMessage to a new instance.
+     *
+     * @param m the message to copy
+     */
     public SerialMessage(SerialMessage m) {
         super(m);
         setBinary(true);
     }
 
     /**
-     * This ctor interprets the String as the exact sequence to send,
+     * Create a new Message instance from a string.
+     * Interprets the String as the exact sequence to send,
      * byte-for-byte.
      *
+     * @param m String to use as message content
      */
     public SerialMessage(String m) {
         super(m);
@@ -41,7 +56,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * This ctor interprets the byte array as a sequence of characters to send.
+     * Interpret the byte array as a sequence of characters to send.
      *
      * @param a Array of bytes to send
      */
@@ -51,16 +66,19 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // no replies expected, don't wait for them
+    @Override
     public boolean replyExpected() {
         return false;
     }
 
     // static methods to recognize a message
+
     public int getAddr() {
         return getElement(0) & 0x7F;
     }
 
     // static methods to return a formatted message
+
     /**
      * For Grapevine, which doesn't have a data poll, the poll operation is only
      * used to see that the nodes are present. This is done by sending a "get
@@ -75,7 +93,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         m.setElement(1, 119);  // get software version
         m.setElement(2, addr | 0x80);  // read first two bytes
         m.setElement(3, 119);  // send twice, without parity
-        m.setReplyLen(2); // only two bytes come back
+        m.setReplyLen(2);      // only two bytes come back
         return m;
     }
 
@@ -146,10 +164,11 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
     /**
      * Provide a human-readable form of a message.
-     * <P>
+     * <p>
      * Used by both SerialMessage and SerialReply, because so much of it is
-     * common. That forces the passing of arguements as numbers. Short messages
-     * are signalled by having missing bytes put to -1 in the arguments.
+     * common. That forces the passing of arguments as numbers. Short messages
+     * are marked by having missing bytes put to -1 in the arguments.
+     * See the Grapevine <a href="package-summary.html">Binary Message Format Summary</a>
      */
     static String staticFormat(int b1, int b2, int b3, int b4) {
         String result;
@@ -196,7 +215,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
         // normal message
         result = "address: " + (b1 & 0x7F)
-                + " data bytes: 0x" + StringUtil.twoHexFromInt(b2)
+                + ", data bytes: 0x" + StringUtil.twoHexFromInt(b2)
                 + " 0x" + StringUtil.twoHexFromInt(b4)
                 + " => ";
 
@@ -261,7 +280,6 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         return colors[color];
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialMessage.class.getName());
-}
+    private final static Logger log = LoggerFactory.getLogger(SerialMessage.class);
 
-/* @(#)SerialMessage.java */
+}

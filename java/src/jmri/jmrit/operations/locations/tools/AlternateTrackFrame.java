@@ -1,4 +1,3 @@
-//AlternateTrackFrame.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Dimension;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * Frame that allows user to select alternate track and options.
  *
  * @author Daniel Boudreau Copyright (C) 2011, 2015
- * @version $Revision: 17977 $
  */
 class AlternateTrackFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -31,7 +29,7 @@ class AlternateTrackFrame extends OperationsFrame implements java.beans.Property
 
     // radio buttons
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     Track _track;
 
@@ -97,5 +95,5 @@ class AlternateTrackFrame extends OperationsFrame implements java.beans.Property
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AlternateTrackFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AlternateTrackFrame.class);
 }

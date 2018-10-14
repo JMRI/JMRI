@@ -11,6 +11,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JTable;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.TableCellRenderer;
+import jmri.InstanceManager;
 import jmri.Throttle;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.util.FileUtil;
@@ -23,6 +24,7 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
     private static final RosterIconFactory iconFactory = new RosterIconFactory(32);
     final static int height = 42;
 
+    @Override
     public Component getTableCellRendererComponent(JTable jtable, Object value, boolean bln, boolean bln1, int i, int i1) {
         JPanel retPanel = new JPanel();
         retPanel.setLayout(new BorderLayout());
@@ -33,17 +35,21 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
 
         ThrottleFrame tf = (ThrottleFrame) value;
         ImageIcon icon = null;
-        String text = null;
+        String text;
         if (tf.getRosterEntry() != null) {
             icon = iconFactory.getIcon(tf.getAddressPanel().getRosterEntry());
             text = tf.getAddressPanel().getRosterEntry().getId();
         } else if ((tf.getAddressPanel().getCurrentAddress() != null) && (tf.getAddressPanel().getThrottle() != null)) {
-            if (tf.getAddressPanel().getCurrentAddress().getNumber() == 0) {
-                text = Bundle.getMessage("ThrottleDCControl") + " - " + tf.getAddressPanel().getCurrentAddress();
-            } else if (tf.getAddressPanel().getCurrentAddress().getNumber() == 3) {
-                text = Bundle.getMessage("ThrottleDCCControl") + " - " + tf.getAddressPanel().getCurrentAddress();
-            } else {
-                text = Bundle.getMessage("ThrottleAddress") + " " + tf.getAddressPanel().getCurrentAddress();
+            switch (tf.getAddressPanel().getCurrentAddress().getNumber()) {
+                case 0:
+                    text = Bundle.getMessage("ThrottleDCControl") + " - " + tf.getAddressPanel().getCurrentAddress();
+                    break;
+                case 3:
+                    text = Bundle.getMessage("ThrottleDCCControl") + " - " + tf.getAddressPanel().getCurrentAddress();
+                    break;
+                default:
+                    text = Bundle.getMessage("ThrottleAddress") + " " + tf.getAddressPanel().getCurrentAddress();
+                    break;
             }
         } else {
             text = Bundle.getMessage("ThrottleNotAssigned");
@@ -63,8 +69,8 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
             ctrlPanel.setLayout(new BorderLayout());
             Throttle thr = tf.getAddressPanel().getThrottle();
             JLabel dir = new JLabel();
-            if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
-                    && jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon()) {
+            if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()
+                    && InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingFunctionIcon()) {
                 if (thr.getIsForward()) {
                     dir.setIcon(fwdIcon);
                 } else {
@@ -79,8 +85,8 @@ public class ThrottlesTableCellRenderer implements TableCellRenderer {
             }
             dir.setVerticalAlignment(JLabel.CENTER);
             ctrlPanel.add(dir, BorderLayout.WEST);
-            if (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()
-                    && jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingFunctionIcon()) {
+            if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()
+                    && InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingFunctionIcon()) {
                 if (thr.getSpeedSetting() == -1) {
                     JLabel estop = new JLabel();
                     estop.setPreferredSize(new Dimension(64, height - 8));

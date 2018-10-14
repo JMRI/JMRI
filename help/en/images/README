@@ -1,5 +1,10 @@
 This is the help/en/images directory.
 
-Eventually, we want to move _all_ the help images
+Eventually, we want to move _all_ the top level help images
 here, where they will form a common pool and reduce
 duplication.
+
+Usage:
+popup.gif is used in help/en/JHelpDev
+paneleditor.gif is used in help/en/package/apps/PanelPro/PanelPro.shtml and Panels.shtml
+SE8cExampleLogic.png is used in help/en/html/signaling/SimpleSignalExample and jmrit/blockboss/BlockBossLogic

@@ -16,217 +16,218 @@
 <!--                                                                        -->
 <!-- version 1 - initial file (Michael Mosher 2016-05-26)                   -->
 <!-- version 1.1 - update for electric (Alain Le Marchand 2016-06-04)       -->
+<!-- version 1.2 - update for electric (Alain Le Marchand 2018-02-18)       -->
 <!--                                                                        -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <variable CV="64" item="Master Brightness" default="255" tooltip="Adjust the brightness level of all lighting outputs">
-      <decVal/>
-      <label>Master Brightness</label>
+        <decVal/>
+        <label>Master Brightness</label>
     </variable>
     <variable CV="118" mask="XVVVVVVV" item="Advanced Group 1 Option 6">
-      <decVal max="127"/>
-      <label>Train Brake Rate</label>
+        <decVal max="127"/>
+        <label>Train Brake Rate</label>
     </variable>
     <variable CV="118" mask="VXXXXXXX" item="Advanced Group 1 Option 7">
-      <xi:include href="http://jmri.org/xml/decoders/parts/enum-AddSubtract2.xml"/>
-      <label>Train Brake Rate Sign</label>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-AddSubtract2.xml"/>
+        <label>Train Brake Rate Sign</label>
     </variable>
-    <variable CV="138" mask="VVVVVVVV" item="Sound Setting 11" default="128" exclude="884001">
-      <decVal/>
-      <label>Train Brake Apply/Release Volume</label>
+    <variable CV="138" mask="VVVVVVVV" item="Sound Setting 11" default="128" exclude="296,297,298"> <!-- should this be ="Tsunami2 Electric"? -->
+        <decVal/>
+        <label>Train Brake Apply/Release Volume</label>
     </variable>
-    <variable CV="138" mask="VVVVVVVV" item="Sound Setting 11" default="65" include="884001"> <!-- Steam -->
-      <decVal/>
-      <label>Train Brake Apply/Release Volume</label>
+    <variable CV="138" mask="VVVVVVVV" item="Sound Setting 11" default="65" include="296,297,298"> <!-- should this be ="Tsunami2 Electric"? --> <!-- Steam -->
+        <decVal/>
+        <label>Train Brake Apply/Release Volume</label>
     </variable>
     <variable CV="153" mask="VVVVVVVV" item="Sound Setting 26" default="150">
-      <decVal/>
-      <label>Clickety Clack Volume</label>
+        <decVal/>
+        <label>Clickety Clack Volume</label>
     </variable>
     <variable CV="154" mask="VVVVVVVV" item="Sound Setting 27" default="10">
-      <decVal/>
-      <label>Sander Valve Volume</label>
+        <decVal/>
+        <label>Sander Valve Volume</label>
     </variable>
-    <variable CV="155" mask="VVVVVVVV" item="Sound Setting 28" default="50" exclude="886001">
-      <decVal/>
-      <label>Fuel Loading Volume</label>
+    <variable CV="155" mask="VVVVVVVV" item="Sound Setting 28" default="50" exclude="296,297,298,299"> <!-- should this be ="Tsunami2 Electric"? -->
+        <decVal/>
+        <label>Fuel Loading Volume</label>
     </variable>
-    <variable CV="155" mask="VVVVVVVV" item="Sound Setting 28" default="55" include="886001"> <!-- Electrical -->
-      <decVal/>
-      <label>Electrical Arcing</label>
+    <variable CV="155" mask="VVVVVVVV" item="Sound Setting 28" default="55" include="296,297,298,299"> <!-- should this be ="Tsunami2 Electric"? --> <!-- Electrical -->
+        <decVal/>
+        <label>Electrical Arcing</label>
     </variable>
     <variable CV="157" mask="VVVVVVVV" item="Sound Setting 30" default="50">
-      <decVal/>
-      <label>Wrenches Volume</label>
+        <decVal/>
+        <label>Wrenches Volume</label>
     </variable>
     <variable CV="160" mask="VVVVVVVV" item="Sound Setting 33" default="60">
-      <decVal/>
-      <label>Cab Chatter Volume</label>
+        <decVal/>
+        <label>Cab Chatter Volume</label>
     </variable>
     <!-- Individual Reverb Output Level Controls follow -->
     <variable CV="162" mask="VVVVVVVV" item="Bell Reverb Level" default="0">
-      <decVal/>
-      <label>Bell Reverb Level</label>
+        <decVal/>
+        <label>Bell Reverb Level</label>
     </variable>
     <variable CV="169" mask="VVVVVVVV" item="Reverb169" default="0">
-      <decVal/>
-      <label>Coupler Reverb Level</label>
+        <decVal/>
+        <label>Coupler Reverb Level</label>
     </variable>
     <variable CV="170" mask="VVVVVVVV" item="Reverb170" default="0">
-      <decVal/>
-      <label>Train Brake Apply/Release Reverb Level</label>
+        <decVal/>
+        <label>Train Brake Apply/Release Reverb Level</label>
     </variable>
     <variable CV="171" mask="VVVVVVVV" item="Reverb171" default="0">
-      <decVal/>
-      <label>Independent Brake Apply Reverb Level</label>
+        <decVal/>
+        <label>Independent Brake Apply Reverb Level</label>
     </variable>
     <variable CV="172" mask="VVVVVVVV" item="Reverb172" default="0">
-      <decVal/>
-      <label>Independent Brake Release Reverb Level</label>
+        <decVal/>
+        <label>Independent Brake Release Reverb Level</label>
     </variable>
     <variable CV="180" mask="VVVVVVVV" item="Reverb180" default="0">
-      <decVal/>
-      <label>E-Brake App Reverb Level</label>
+        <decVal/>
+        <label>E-Brake App Reverb Level</label>
     </variable>
     <variable CV="181" mask="VVVVVVVV" item="Reverb181" default="0">
-      <decVal/>
-      <label>Glad Hand Release Reverb Level</label>
+        <decVal/>
+        <label>Glad Hand Release Reverb Level</label>
     </variable>
     <variable CV="182" mask="VVVVVVVV" item="Reverb182" default="0">
-      <decVal/>
-      <label>All Aboard/Coach Doors Reverb Level</label>
+        <decVal/>
+        <label>All Aboard/Coach Doors Reverb Level</label>
     </variable>
     <variable CV="185" mask="VVVVVVVV" item="Reverb185" default="0">
-      <decVal/>
-      <label>Clickety-Clack Reverb Level</label>
+        <decVal/>
+        <label>Clickety-Clack Reverb Level</label>
     </variable>
     <variable CV="186" mask="VVVVVVVV" item="Reverb186" default="0">
-      <decVal/>
-      <label>Sander Valve Reverb Level</label>
+        <decVal/>
+        <label>Sander Valve Reverb Level</label>
     </variable>
-    <variable CV="187" mask="VVVVVVVV" item="Reverb187" default="0" exclude="886001">
-      <decVal/>
-      <label>Fuel Loading Reverb Level</label>
+    <variable CV="187" mask="VVVVVVVV" item="Reverb187" default="0" exclude="296,297,298"> <!-- should this be ="Tsunami2 Electric"? -->
+        <decVal/>
+        <label>Fuel Loading Reverb Level</label>
     </variable>
-    <variable CV="187" mask="VVVVVVVV" item="Reverb187" default="0" include="886001"> <!-- Electrical -->
-      <decVal/>
-      <label>Electrical Arcing Reverb Level</label>
+    <variable CV="187" mask="VVVVVVVV" item="Reverb187" default="0" include="296,297,298"> <!-- should this be ="Tsunami2 Electric"? --> <!-- Electrical -->
+        <decVal/>
+        <label>Electrical Arcing Reverb Level</label>
     </variable>
     <variable CV="189" mask="VVVVVVVV" item="Reverb189" default="0">
-      <decVal/>
-      <label>Wrenches Reverb Level</label>
+        <decVal/>
+        <label>Wrenches Reverb Level</label>
     </variable>
-    <variable CV="190" mask="VVVVVVVV" item="Reverb190" default="0" exclude="886001"> <!-- exclude Electrical -->
-      <decVal/>
-      <label>Pneumatic Oilers Reverb Level</label>
+    <variable CV="190" mask="VVVVVVVV" item="Reverb190" default="0" exclude="296,297,298"> <!-- should this be ="Tsunami2 Electric"? --> <!-- exclude Electrical -->
+        <decVal/>
+        <label>Pneumatic Oilers Reverb Level</label>
     </variable>
     <variable CV="192" mask="VVVVVVVV" item="Reverb192" default="0">
-      <decVal/>
-      <label>Cab Chatter Reverb Level</label>
+        <decVal/>
+        <label>Cab Chatter Reverb Level</label>
     </variable>
     <variable CV="220" mask="VVVVVVVV" item="Advanced Group 1 Option 10" default="0" tooltip="&lt;html&gt;determines the fixed distance over which the locomotive will decelerate to a stop after setting the throttle to zero&lt;br&gt; Entering a value of 0 will disable the constant brake distance feature&lt;/html&gt;">
-      <decVal/>
-      <label>Constant Brake Distance (0-255)</label>
+        <decVal/>
+        <label>Constant Brake Distance (0-255)</label>
     </variable>
     <variable CV="224" mask="VVVVVVVV" item="High-Pass Filter Cutoff Frequency" default="20" tooltip="adjust the cutoff frequency of the decoder’s high-pass output filter 1=20Hz, 255=1kHz, 0=disabled">
-      <decVal/>
-      <label>High-Pass Filter Cutoff Frequency</label>
+        <decVal/>
+        <label>High-Pass Filter Cutoff Frequency</label>
     </variable>
     <variable CV="233" item="Reverb Control" mask="XXXXXVVV" default="1" tooltip="Selects one of the reverb presets or selects a user adjustable profile">
-      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumReverb.xml"/>
-      <label>Reverb Control</label>
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumReverb.xml"/>
+        <label>Reverb Control</label>
     </variable>
     <variable CV="234" item="Reverb Output Level" mask="VVVVVVVV" default="0" tooltip="Specifies a percentage of the reverb output that is mixed back into the original audio signal (255=100%).">
-      <decVal/>
-      <label>Reverb Output Level</label>
+        <decVal/>
+        <label>Reverb Output Level</label>
     </variable>
     <variable CV="235" item="Reverb Delay" mask="VVVVVVVV" default="0" tooltip="Specifies the total reverb delay time from 0 to 255 ms">
-      <decVal/>
-      <label>Reverb Delay</label>
+        <decVal/>
+        <label>Reverb Delay</label>
     </variable>
     <variable CV="236" item="Reverb Gain" mask="VVVVVVVV" default="0" tooltip="Specifies a percentage of the reverb output that is mixed back into the delay line (255=100%).">
-      <decVal/>
-      <label>Reverb Gain</label>
+        <decVal/>
+        <label>Reverb Gain</label>
     </variable>
     <variable CV="2.290" mask="VVVVVVVV" item="Alt Sound Setting 2" default="42" tooltip="Set the alternate volume levels of each sound effect">
-      <decVal/>
-      <label>Bell Alt Volume</label>
+        <decVal/>
+        <label>Bell Alt Volume</label>
     </variable>
     <variable CV="2.297" mask="VVVVVVVV" item="Alt Sound Setting 9" default="64" tooltip="Set the alternate volume levels of each sound effect">
-      <decVal/>
-      <label>Coupler Alt Volume</label>
+        <decVal/>
+        <label>Coupler Alt Volume</label>
     </variable>
-    <variable CV="2.299" mask="VVVVVVVV" item="Alt Sound Setting 11" default="50" tooltip="Set the alternate volume levels of each sound effect">
-      <decVal/>
-      <label>Independent Brake Apply Alt Volume</label>
+    <variable CV="2.299" mask="VVVVVVVV" item="Alt Sound Setting 12" default="50" tooltip="Set the alternate volume levels of each sound effect">
+        <decVal/>
+        <label>Independent Brake Apply Alt Volume</label>
     </variable>
-    <variable CV="2.300" mask="VVVVVVVV" item="Alt Sound Setting 12" default="35" tooltip="Set the alternate volume levels of each sound effect">
-      <decVal/>
-      <label>Independent Brake Release Alt Volume</label>
+    <variable CV="2.300" mask="VVVVVVVV" item="Alt Sound Setting 13" default="35" tooltip="Set the alternate volume levels of each sound effect">
+        <decVal/>
+        <label>Independent Brake Release Alt Volume</label>
     </variable>
-    <variable CV="2.308" mask="VVVVVVVV" item="Alt Sound Setting 20" default="35" tooltip="Set the alternate volume levels of each sound effect">
-      <decVal/>
-      <label>E-Brake App Alt Volume</label>
+    <variable CV="2.308" mask="VVVVVVVV" item="Alt Sound Setting 21" default="35" tooltip="Set the alternate volume levels of each sound effect">
+        <decVal/>
+        <label>E-Brake App Alt Volume</label>
     </variable>
-    <variable CV="2.309" mask="VVVVVVVV" item="Alt Sound Setting 21" default="75" tooltip="Set the alternate volume levels of each sound effect">
-      <decVal/>
-      <label>Glad Hand Release Alt Volume</label>
+    <variable CV="2.309" mask="VVVVVVVV" item="Alt Sound Setting 22" default="75" tooltip="Set the alternate volume levels of each sound effect">
+        <decVal/>
+        <label>Glad Hand Release Alt Volume</label>
     </variable>
-    <variable CV="2.310" mask="VVVVVVVV" item="Alt Sound Setting 22" default="96" tooltip="Set the alternate volume levels of each sound effect">
-      <decVal/>
-      <label>All Aboard!/Coach Doors Alt Volume</label>
+    <variable CV="2.310" mask="VVVVVVVV" item="Alt Sound Setting 23" default="96" tooltip="Set the alternate volume levels of each sound effect">
+        <decVal/>
+        <label>All Aboard!/Coach Doors Alt Volume</label>
     </variable>
-    <variable CV="2.317" mask="VVVVVVVV" item="Alt Sound Setting 29" default="25" tooltip="Set the alternate volume levels of each sound effect">
-      <decVal/>
-      <label>Wrenches Alt Volume</label>
+    <variable CV="2.317" mask="VVVVVVVV" item="Alt Sound Setting 30" default="25" tooltip="Set the alternate volume levels of each sound effect">
+        <decVal/>
+        <label>Wrenches Alt Volume</label>
     </variable>
-    <variable CV="2.320" mask="VVVVVVVV" item="Alt Sound Setting 32" default="30" tooltip="Set the alternate volume levels of each sound effect">
-      <decVal/>
-      <label>Cab Chatter Alt Volume</label>
+    <variable CV="2.320" mask="VVVVVVVV" item="Alt Sound Setting 33" default="30" tooltip="Set the alternate volume levels of each sound effect">
+        <decVal/>
+        <label>Cab Chatter Alt Volume</label>
     </variable>
     <variable item="DDE Filter Initial Frequency" CV="2.503" mask="VVVVVVVV" default="60" tooltip="determines the minimum load required by the motor to move the model">
-      <decVal/>
-      <label>DDE Load Offset</label>
+        <decVal/>
+        <label>DDE Load Offset</label>
     </variable>
     <variable item="DDE Filter Control Gain" CV="2.504" mask="VVVVVVVV" default="150" tooltip="determines the load required to increase the speed of the motor">
-      <decVal/>
-      <label>DDE Load Slope</label>
+        <decVal/>
+        <label>DDE Load Slope</label>
     </variable>
     <variable item="Attack Time Constant" CV="2.509" mask="VVVVVVVV" default="215" tooltip="&lt;html&gt;Determines the amount of time needed before the DDE processor will begin reshaping &lt;br&gt;      the audio signal once the motor or throttle input signal has begun to change.&lt;/html&gt;">
-      <decVal max="255"/>
-      <label>Attack Time Constant</label>
+        <decVal max="255"/>
+        <label>Attack Time Constant</label>
     </variable>
     <variable item="Release Time Constant" CV="2.510" mask="VVVVVVVV" default="215" tooltip="&lt;html&gt;Determines the amount of time needed before the DDE processor will stop reshaping&lt;br&gt;      the audio signal after the motor or throttle input signal has returned to normal.&lt;/html&gt;">
-      <decVal/>
-      <label>Release Time Constant</label>
+        <decVal/>
+        <label>Release Time Constant</label>
     </variable>
     <variable item="Throttle Gain" CV="2.511" mask="VVVVVVVV" default="10" tooltip="&lt;html&gt;Specifies the DDE sensitivity to the difference between the throttle&lt;br&gt;      setting and the actual locomotive speed.  Set to zero to disable.&lt;/html&gt;">
-      <decVal/>
-      <label>Throttle Sensitivity</label>
+        <decVal/>
+        <label>Throttle Sensitivity</label>
     </variable>
     <variable CV="3.257" mask="XXXXXXVV" item="Sound Group 1 Option 1" default="1" >
-      <enumVal>
-        <enumChoice value="1">
-              <choice>2 axles per truck</choice>
-        </enumChoice>
-        <enumChoice>
-              <choice>3 axles per truck</choice>
-        </enumChoice>
-      </enumVal>
-      <label>Clickety-Clack Axles per Truck</label>
+        <enumVal>
+            <enumChoice value="1">
+                <choice>2 axles per truck</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>3 axles per truck</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Clickety-Clack Axles per Truck</label>
     </variable>
     <variable CV="3.257" mask="XXXXVVXX" item="Sound Group 1 Option 2" default="1" >
-      <enumVal>
-        <enumChoice>
-              <choice>1 truck per car</choice>
-        </enumChoice>
-        <enumChoice>
-              <choice>2 trucks per car</choice>
-        </enumChoice>
-      </enumVal>
-      <label>Clickety-Clack Trucks per Car</label>
+        <enumVal>
+            <enumChoice>
+                <choice>1 truck per car</choice>
+            </enumChoice>
+            <enumChoice>
+                <choice>2 trucks per car</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Clickety-Clack Trucks per Car</label>
     </variable>
     <variable item="Sound Group 3 Option 8" CV="3.258" mask="VVVVVVVV" default="180" tooltip="Scale Speed (ft/s) = (Speed Step × CV 3.258) ÷ 100">
-      <decVal/>
-      <label>Clickety-Clack Sound Scalar</label>
+        <decVal/>
+        <label>Clickety-Clack Sound Scalar</label>
     </variable>
 </variables>

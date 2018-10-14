@@ -3,7 +3,6 @@ package jmri.jmrix.qsi.qsimon;
 import jmri.jmrix.qsi.QsiListener;
 import jmri.jmrix.qsi.QsiMessage;
 import jmri.jmrix.qsi.QsiReply;
-import jmri.jmrix.qsi.QsiTrafficController;
 import jmri.jmrix.qsi.QsiSystemConnectionMemo;
 
 /**
@@ -19,20 +18,24 @@ public class QsiMonFrame extends jmri.jmrix.AbstractMonFrame implements QsiListe
         _memo = memo;
     }
 
+    @Override
     protected String title() {
         return "QSI Command Monitor";
     }
 
+    @Override
     protected void init() {
         // connect to TrafficController
         _memo.getQsiTrafficController().addQsiListener(this);
     }
 
+    @Override
     public void dispose() {
         _memo.getQsiTrafficController().removeQsiListener(this);
         super.dispose();
     }
 
+    @Override
     public synchronized void message(QsiMessage l) {  // receive a message and log it
         int opcode = l.getElement(0);
         String text = null;
@@ -58,6 +61,7 @@ public class QsiMonFrame extends jmri.jmrix.AbstractMonFrame implements QsiListe
         nextLine("M: " + text + "\n", l.toString(_memo.getQsiTrafficController()));
     }
 
+    @Override
     public synchronized void reply(QsiReply l) {  // receive a reply message and log it
         String text;
 

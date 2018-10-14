@@ -1,5 +1,6 @@
 package jmri.util.swing;
 
+import java.awt.Container;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.annotation.CheckForNull;
@@ -51,7 +52,8 @@ public class JMenuUtil extends GuiUtilBase {
         return retval;
     }
 
-    static @Nonnull JMenu jMenuFromElement(@CheckForNull Element main, WindowInterface wi, Object context) {
+    static @Nonnull
+    JMenu jMenuFromElement(@CheckForNull Element main, WindowInterface wi, Object context) {
         boolean addSep = false;
         String name = "<none>";
         if (main == null) {
@@ -116,7 +118,8 @@ public class JMenuUtil extends GuiUtilBase {
         return menu;
     }
 
-    static @Nonnull JMenu createMenuGroupFromElement(@CheckForNull Element main, WindowInterface wi, Object context) {
+    static @Nonnull
+    JMenu createMenuGroupFromElement(@CheckForNull Element main, WindowInterface wi, Object context) {
         String name = "<none>";
         if (main == null) {
             log.warn("Menu from element called without an element");
@@ -162,6 +165,7 @@ public class JMenuUtil extends GuiUtilBase {
 
         try {
             methodListener.invoke(context, new PropertyChangeListener() {
+                @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     if (e.getPropertyName().equals(ref)) {
                         String method = (String) e.getOldValue();
@@ -174,13 +178,13 @@ public class JMenuUtil extends GuiUtilBase {
                 }
             });
         } catch (IllegalArgumentException ex) {
-            System.out.println("IllegalArgument " + ex);
+            log.error("IllegalArgument in setMenuItemInterAction ", ex);
         } catch (IllegalAccessException ex) {
-            System.out.println("IllegalAccess " + ex);
+            log.error("IllegalAccess in setMenuItemInterAction ", ex);
         } catch (java.lang.reflect.InvocationTargetException ex) {
-            System.out.println("InvocationTarget " + ref + " " + ex.getCause());
+            log.error("InvocationTarget {} in setMenuItemInterAction ", ref, ex);
         } catch (java.lang.NullPointerException ex) {
-            System.out.println("NPE " + context.getClass().getName() + " " + ex.toString());
+            log.error("NPE {} in setMenuItemInterAction ", context.getClass().getName(), ex);
         }
 
     }
@@ -191,5 +195,30 @@ public class JMenuUtil extends GuiUtilBase {
         return kcode;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JMenuUtil.class.getName());
-}
+    /**
+     * replace a menu item in its parent with another menu item
+     * <p>
+     * (at the same position in the parent menu)
+     *
+     * @param orginalMenuItem     the original menu item to be replaced
+     * @param replacementMenuItem the menu item to replace it with
+     * @return true if the original menu item was found and replaced
+     */
+    public static boolean replaceMenuItem(
+            @Nonnull JMenuItem orginalMenuItem,
+            @Nonnull JMenuItem replacementMenuItem) {
+        boolean result = false; // assume failure (pessimist!)
+        Container container = orginalMenuItem.getParent();
+        if (container != null) {
+            int index = container.getComponentZOrder(orginalMenuItem);
+            if (index > -1) {
+                container.remove(orginalMenuItem);
+                container.add(replacementMenuItem, index);
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(JMenuUtil.class);
+}   // class JMenuUtil

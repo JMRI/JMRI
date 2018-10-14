@@ -1,6 +1,6 @@
-// TrackLoadEditFrame.java
 package jmri.jmrit.operations.locations.tools;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -32,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of track loads
  *
  * @author Dan Boudreau Copyright (C) 2013, 2014, 2015
- * @version $Revision: 22371 $
+ * 
  */
 public class TrackLoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -80,10 +81,10 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
     JRadioButton shipLoadNameExclude = new JRadioButton(Bundle.getMessage("Exclude"));
 
     // combo box
-    JComboBox<String> comboBoxLoads = CarLoads.instance().getComboBox(null);
-    JComboBox<String> comboBoxShipLoads = CarLoads.instance().getComboBox(null);
-    JComboBox<String> comboBoxTypes = CarTypes.instance().getComboBox();
-    JComboBox<String> comboBoxShipTypes = CarTypes.instance().getComboBox();
+    JComboBox<String> comboBoxLoads = InstanceManager.getDefault(CarLoads.class).getComboBox(null);
+    JComboBox<String> comboBoxShipLoads = InstanceManager.getDefault(CarLoads.class).getComboBox(null);
+    JComboBox<String> comboBoxTypes = InstanceManager.getDefault(CarTypes.class).getComboBox();
+    JComboBox<String> comboBoxShipTypes = InstanceManager.getDefault(CarTypes.class).getComboBox();
 
     // labels
     JLabel trackName = new JLabel();
@@ -102,8 +103,8 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         // property changes
         _location.addPropertyChangeListener(this);
         // listen for car load name and type changes
-        CarLoads.instance().addPropertyChangeListener(this);
-        CarTypes.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarLoads.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
 
         // the following code sets the frame's initial state
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -260,9 +261,9 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
             _track.addPropertyChangeListener(this);
             trackName.setText(_track.getName());
             // only show ship loads for staging tracks
-            paneShipLoadControls.setVisible(_track.getTrackType().equals(Track.STAGING));
-            paneShipLoads.setVisible(_track.getTrackType().equals(Track.STAGING));
-            pOptions.setVisible(_track.getTrackType().equals(Track.SPUR));
+            paneShipLoadControls.setVisible(_track.isStaging());
+            paneShipLoads.setVisible(_track.isStaging());
+            pOptions.setVisible(_track.isSpur());
             holdCars.setSelected(_track.isHoldCarsWithCustomLoadsEnabled());
             updateButtons(true);
         } else {
@@ -342,7 +343,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     protected void save() {
         checkForErrors();
         _track.setHoldCarsWithCustomLoadsEnabled(holdCars.isSelected());
@@ -361,9 +362,11 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         loadNameExclude.setEnabled(enabled);
         loadAndTypeCheckBox.setEnabled(enabled);
 
+        // enable ship options if any of the three generate loads from staging is selected
+        // or if there are any ship load restrictions for this track
         boolean en = enabled
                 && (_track.isAddCustomLoadsAnyStagingTrackEnabled() || _track.isAddCustomLoadsAnySpurEnabled() || _track
-                .isAddCustomLoadsEnabled());
+                .isAddCustomLoadsEnabled() || !_track.getShipLoadOption().equals(Track.ALL_LOADS));
 
         shipLoadNameAll.setEnabled(en);
         shipLoadNameInclude.setEnabled(en);
@@ -410,9 +413,9 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 
     private void updateLoadComboBoxes() {
         String carType = (String) comboBoxTypes.getSelectedItem();
-        CarLoads.instance().updateComboBox(carType, comboBoxLoads);
+        InstanceManager.getDefault(CarLoads.class).updateComboBox(carType, comboBoxLoads);
         carType = (String) comboBoxShipTypes.getSelectedItem();
-        CarLoads.instance().updateComboBox(carType, comboBoxShipLoads);
+        InstanceManager.getDefault(CarLoads.class).updateComboBox(carType, comboBoxShipLoads);
     }
 
     private void updateLoadNames() {
@@ -502,7 +505,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
     }
 
     private void updateTypeComboBoxes() {
-        CarTypes.instance().updateComboBox(comboBoxTypes);
+        InstanceManager.getDefault(CarTypes.class).updateComboBox(comboBoxTypes);
         // remove car types not serviced by this location and track
         for (int i = comboBoxTypes.getItemCount() - 1; i >= 0; i--) {
             String type = comboBoxTypes.getItemAt(i);
@@ -510,7 +513,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
                 comboBoxTypes.removeItem(type);
             }
         }
-        CarTypes.instance().updateComboBox(comboBoxShipTypes);
+        InstanceManager.getDefault(CarTypes.class).updateComboBox(comboBoxShipTypes);
         // remove car types not serviced by this location and track
         for (int i = comboBoxShipTypes.getItemCount() - 1; i >= 0; i--) {
             String type = comboBoxShipTypes.getItemAt(i);
@@ -534,8 +537,8 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
             _track.removePropertyChangeListener(this);
         }
         _location.removePropertyChangeListener(this);
-        CarLoads.instance().removePropertyChangeListener(this);
-        CarTypes.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarLoads.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
         super.dispose();
     }
 
@@ -566,5 +569,5 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackLoadEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrackLoadEditFrame.class);
 }

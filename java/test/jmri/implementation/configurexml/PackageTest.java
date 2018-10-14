@@ -8,6 +8,21 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    DccSignalHeadXmlTest.class,
+    DccSignalMastXmlTest.class,
+    DoubleTurnoutSignalHeadXmlTest.class,
+    LsDecSignalHeadXmlTest.class,
+    MatrixSignalMastXmlTest.class,
+    MergSD2SignalHeadXmlTest.class,
+    QuadOutputSignalHeadXmlTest.class,
+    SE8cSignalHeadXmlTest.class,
+    SignalHeadSignalMastXmlTest.class,
+    SingleTurnoutSignalHeadXmlTest.class,
+    TripleOutputSignalHeadXmlTest.class,
+    TripleTurnoutSignalHeadXmlTest.class,
+    TurnoutSignalMastXmlTest.class,
+    VirtualSignalHeadXmlTest.class,
+    VirtualSignalMastXmlTest.class
 })
 /**
  * Tests for the jmri.implementation.configurexml package.
@@ -29,6 +44,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

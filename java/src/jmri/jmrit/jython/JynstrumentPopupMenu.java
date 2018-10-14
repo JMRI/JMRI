@@ -20,10 +20,12 @@ public class JynstrumentPopupMenu extends JPopupMenu {
         jynstrument = it;
         initMenu();
         it.addMouseListener(new MouseAdapter() {
+            @Override
             public void mousePressed(MouseEvent e) {
                 maybeShowPopup(e);
             }
 
+            @Override
             public void mouseReleased(MouseEvent e) {
                 maybeShowPopup(e);
             }
@@ -48,23 +50,24 @@ public class JynstrumentPopupMenu extends JPopupMenu {
         // Quit option
         JMenuItem quitMenuItem = new JMenuItem(jythonBundle.getString("JynstrumentPopupMenuQuit"));
         quitMenuItem.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 jynstrument.exit();
                 jynstrument = null;
             }
         });
         add(quitMenuItem);
-		// Edit option
-/*		JMenuItem editMenuItem = new JMenuItem(jythonBundle.getString("JynstrumentPopupMenuEdit"));
+  // Edit option
+/*  JMenuItem editMenuItem = new JMenuItem(jythonBundle.getString("JynstrumentPopupMenuEdit"));
          editMenuItem.addActionListener(new ActionListener() {
          public void actionPerformed(ActionEvent e) {
-         //			if (!java.awt.Desktop.isDesktopSupported()) //TODO: Need Java 6
-         //				    return;
+         //   if (!java.awt.Desktop.isDesktopSupported()) //TODO: Need Java 6
+         //        return;
          log.debug("Not implemented");
          } 
          } );
          editMenuItem.setEnabled(false);
-         add(editMenuItem);  		
+         add(editMenuItem);    
          // Reload option
          JMenuItem reloadMenuItem = new JMenuItem(jythonBundle.getString("JynstrumentPopupMenuReload"));
          reloadMenuItem.addActionListener(new ActionListener() {

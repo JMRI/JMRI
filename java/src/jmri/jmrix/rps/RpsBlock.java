@@ -1,7 +1,7 @@
-// RpsBlock.java
 package jmri.jmrix.rps;
 
 import java.util.List;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.SignalHead;
@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
  */
 public class RpsBlock implements java.beans.PropertyChangeListener, jmri.ThrottleListener {
 
@@ -38,6 +37,7 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
     SignalHead signal = null;
     RpsSensor sensor = null;
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         handleParameterChange(e.getPropertyName(),
                 e.getOldValue(), e.getNewValue(),
@@ -83,13 +83,21 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
         }
     }
 
+    @Override
     public void notifyThrottleFound(DccThrottle t) {
         // put in map
         Integer num = Integer.valueOf(((DccLocoAddress) t.getLocoAddress()).getNumber());
         throttleTable.put(num, t);
     }
 
-    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
+    @Override
+    public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
+    }
+
+    @Override
+    public void notifyStealThrottleRequired(LocoAddress address){
+        // this is an automatically stealing impelementation.
+        jmri.InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }
 
     void updateCurrentThrottles() {
@@ -134,8 +142,8 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
 
     static java.util.Hashtable<Integer, DccThrottle> throttleTable = new java.util.Hashtable<Integer, DccThrottle>();
 
-    private final static Logger log = LoggerFactory.getLogger(RpsBlock.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RpsBlock.class);
 
 }
 
-/* @(#)RpsBlock.java */
+

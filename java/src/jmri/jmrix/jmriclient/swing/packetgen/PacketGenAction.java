@@ -1,4 +1,3 @@
-// PacketGenAction.java
 package jmri.jmrix.jmriclient.swing.packetgen;
 
 import java.awt.event.ActionEvent;
@@ -10,14 +9,9 @@ import org.slf4j.LoggerFactory;
  * Swing action to create and register a PacketGenFrame object
  *
  * @author Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  */
 public class PacketGenAction extends AbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 36676032325616914L;
     jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo _memo = null;
 
     public PacketGenAction(String s, jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo memo) {
@@ -30,6 +24,7 @@ public class PacketGenAction extends AbstractAction {
 
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         PacketGenFrame f = new PacketGenFrame();
         try {
@@ -42,8 +37,8 @@ public class PacketGenAction extends AbstractAction {
         f.connect(_memo.getJMRIClientTrafficController());
         f.setVisible(true);
     }
-    private final static Logger log = LoggerFactory.getLogger(PacketGenAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PacketGenAction.class);
 }
 
 
-/* @(#)PacketGenAction.java */
+

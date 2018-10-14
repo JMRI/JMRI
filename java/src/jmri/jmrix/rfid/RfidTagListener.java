@@ -1,7 +1,5 @@
 package jmri.jmrix.rfid;
 
-import jmri.IdTag;
-
 /**
  * Connect to an IdTag
  * <hr>

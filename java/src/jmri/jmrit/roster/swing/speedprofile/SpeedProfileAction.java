@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register the Add Entry Exit Pair
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class SpeedProfileAction extends JmriAbstractAction {
 
@@ -32,8 +32,7 @@ public class SpeedProfileAction extends JmriAbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("Exception: " + ex.toString());
-            ex.printStackTrace();
+            log.error("Exception: ", ex);
         }
         f.setVisible(true);
     }

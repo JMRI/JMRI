@@ -9,10 +9,10 @@
   <title>JMRI Throttles Documentation</title>
   <meta name="keywords" content=
   "JMRI decoderpro dcc nmra throttle throttlepro">
-  <meta name="Description" content=
+  <meta name="description" content=
   "Throttle documentation for JMRI project">
-  <meta name="Author" content="Paul Fraker (paul@frakers.com)">
-  <meta name="Language" content="EN"><!-- Style -->
+  <meta name="author" content="Paul Fraker (paul@frakers.com)">
+  <!-- Style -->
   <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -81,7 +81,8 @@
       <hr>
 
       <p><a href="ThrottleChapter1.shtml">Throttles Help for JMRI v
-      1.x/2.x</a> <!--#include virtual="/Footer" --></p>
+      1.x/2.x</a></p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

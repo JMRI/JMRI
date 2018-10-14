@@ -1,14 +1,16 @@
-// UhlenbrockConnectionTypeList.java.java
 package jmri.jmrix.loconet.uhlenbrock;
 
+import jmri.jmrix.ConnectionTypeList;
+import org.openide.util.lookup.ServiceProvider;
+
 /**
- * Returns a list of valid Uhlenbrock Connection Types
- * <P>
+ * Returns a list of valid Uhlenbrock Connection Types.
+ *
  * @author Bob Jacobsen Copyright (C) 2010, 2014
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 17977 $
  *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class UhlenbrockConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String UHLEN = "Uhlenbrock";
@@ -17,8 +19,8 @@ public class UhlenbrockConnectionTypeList implements jmri.jmrix.ConnectionTypeLi
     public String[] getAvailableProtocolClasses() {
         // replace existing LocoNet protocol list with just our two
         String[] tempList = new String[]{
-            "jmri.jmrix.loconet.uhlenbrock.ConnectionConfig",
-            "jmri.jmrix.loconet.Intellibox.ConnectionConfig"};
+            "jmri.jmrix.loconet.uhlenbrock.ConnectionConfig", // NOI18N
+            "jmri.jmrix.loconet.Intellibox.ConnectionConfig"}; // NOI18N
         return tempList;
     }
 
@@ -26,4 +28,5 @@ public class UhlenbrockConnectionTypeList implements jmri.jmrix.ConnectionTypeLi
     public String[] getManufacturers() {
         return new String[]{UHLEN};
     }
+
 }

@@ -1,17 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <!-- translated by Herv&#233; Blorec le 2013-10-17-->
 <html lang="fr">
 <head>
- <TITLE>
+ <title>
       JMRI: Consist Tool
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Consist Tool">
+ </title>
+    <meta name="author" content="Bob Jacobsen">
+    <meta name="keywords" content="JMRI help Consist Tool">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -109,7 +107,7 @@ mettre en place un r&#233;gulateur JMRI pour cette adresse.
 </p>
 <p>
 Pour ajouter un nouveau couplage, vous pouvez s&#233;lectionner l'entr&#233;e vide dans le menu d&#233;roulant
-&#224; c&#244;t&#233;Â  de l'actuel ID du couplage.
+&#224; c&#244;t&#233;  de l'actuel ID du couplage.
 </p>
 <image src=images/ConsistTool-NewConsist.jpg alt="Select Nouveau Consist">
 <p>

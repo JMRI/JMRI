@@ -1,16 +1,15 @@
 package jmri.jmrix.pricom.downloader;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * JUnit tests for the PdiFile class
  *
  * @author	Bob Jacobsen Copyright 2005
- * @version	$Revision$
- */
+  */
 public class PdiFileTest extends TestCase {
 
     public void testCreate() {

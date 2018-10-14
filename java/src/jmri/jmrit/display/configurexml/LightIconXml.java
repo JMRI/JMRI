@@ -23,6 +23,7 @@ public class LightIconXml extends PositionableLabelXml {
      * @param o Object to store, of type LightIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         LightIcon p = (LightIcon) o;
@@ -51,6 +52,7 @@ public class LightIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o       Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         Editor p = (Editor) o;
@@ -108,5 +110,5 @@ public class LightIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.LIGHTS, element);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LightIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LightIconXml.class);
 }

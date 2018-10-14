@@ -6,7 +6,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright 2008 -->
-  <!-- $Id$ -->
   <!-- UpDated  by Blorec Hervé bzh56420@yahoo.fr 2013-11-14 -->
 
   <title>JMRI: SPROG V4 Update Tool</title><!-- Style -->
@@ -25,13 +24,12 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h2>JMRI: Outil de mise &Atilde;  jour SPROG V4</h2>L'outil
-      de mise &Atilde;  jour SPROG V4T vous permet de charger une
-      nouveau firmware dans un SPROG V4.
+      <h2>JMRI: Outil de mise &aacute;  jour SPROG V4</h2>
+      <p></p>L'outil
+      de mise &aacute;  jour SPROG V4T vous permet de charger une
+      nouveau firmware dans un SPROG V4.</div>
 
-      <p>Ceci est la page d'aide
-      package/jmri/jmrix/sprog/update/Sprogv4UpdateFrame. 
-      <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

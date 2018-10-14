@@ -1,4 +1,3 @@
-//TrainByCarTypeAction.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.event.ActionEvent;
@@ -10,7 +9,6 @@ import jmri.jmrit.operations.trains.Train;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision$
  */
 public class TrainByCarTypeAction extends AbstractAction {
 
@@ -29,4 +27,4 @@ public class TrainByCarTypeAction extends AbstractAction {
     }
 }
 
-/* @(#)TrainByCarTypeAction.java */
+

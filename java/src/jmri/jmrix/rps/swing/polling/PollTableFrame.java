@@ -1,28 +1,32 @@
-// PollTableFrame.java
 package jmri.jmrix.rps.swing.polling;
 
 import javax.swing.JDialog;
 import jmri.util.JmriJFrame;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 
 /**
  * Frame for control of RPS polling
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version $Revision$
  */
 public class PollTableFrame extends JmriJFrame {
 
+    RpsSystemConnectionMemo memo = null;
+
     PollTablePane pane;
 
-    public PollTableFrame() {
+    public PollTableFrame(RpsSystemConnectionMemo _memo) {
         super(Bundle.getMessage("TitlePolling"));
+        memo = _memo;
     }
 
+    @Override
     public void dispose() {
         pane.dispose(); // drop table
         super.dispose();
     }
 
+    @Override
     public void initComponents() {
         // only one, so keep around on close
         setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
@@ -41,6 +45,7 @@ public class PollTableFrame extends JmriJFrame {
         pack();
     }
 
+    @Override
     protected void storeValues() {
         pane.setDefaults();
         setModifiedFlag(false);

@@ -13,15 +13,19 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="B. Milhaupt" version="1.3" lastUpdated="20180823"/>
   <version author="td@teamdigital1.com" version="1.2" lastUpdated="20070709"/>
   <!-- Version 1 initial release 12/13/05-->
   <!-- Version 1.1 release 2/23/06 - correct logic cell 3 -->
   <!-- Version 1.2 release 6/9/07 - added option 5 and input toggle, requires version 17 or later of SIC24-->
+  <!-- Version 1.3 release, added "LOCONETOPSBOARD" programming token to allow LocoNet-connected boards to read CV values -->
   <decoder>
     <family name="SIC24" mfg="Team Digital" type="stationary" comment="SIC24 is not stationary decoder, but it can be programmed in the usual way">
       <model model="SIC24" lowVersionID="12"/>
     </family>
-    <programming direct="no" paged="yes" register="no" ops="yes"/>
+    <programming direct="no" paged="yes" register="no" ops="yes">
+        <mode>LOCONETOPSBOARD</mode>
+    </programming>
     <variables>
       <variable item="Output Addresses" CV="1" mask="VVVVVVVV" default="101" tooltip="Range 1-2040">
         <splitVal highCV="9" upperMask="XXXXVVVV"/>
@@ -5320,11 +5324,11 @@
       <label>
         <text>Enables SE8C signal message control</text>
       </label>
-      <display item="Op4" tooltip="This does not effect output control of the logic cells" format="checkbox"/>
+      <display item="Op4" tooltip="This does not affect output control of the logic cells" format="checkbox"/>
       <label>
-        <text>Enables use of common cathode LEDs with Smart programmming</text>
+        <text>Enables use of common cathode LEDs with Smart programming</text>
       </label>
-      <display item="Op5" tooltip="Send input status in rsponse to Digitrax interrogation request" format="checkbox"/>
+      <display item="Op5" tooltip="Send input status in response to Digitrax interrogation request" format="checkbox"/>
       <label>
         <text>Enables interrogation</text>
       </label>
@@ -5406,7 +5410,7 @@
       </label>
       <row>
         <column>
-          <display item="Primary Address 1" tooltip="Determines the input addess"/>
+          <display item="Primary Address 1" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="Tog P1" format="checkbox" tooltip="Each transition alternately sends a close/throw"/>
@@ -5424,14 +5428,14 @@
           </label>
         </column>
         <column>
-          <display item="Primary Type 1" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Type 1" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv P1" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Primary Transition 1" tooltip="Configures the input simulas"/>
-      <display item="Secondary Address 1" tooltip="Configures the input for specfic use"/>
+      <display item="Primary Transition 1" tooltip="Configures the input stimulas"/>
+      <display item="Secondary Address 1" tooltip="Configures the input for specific use"/>
       <row>
         <column>
           <label>
@@ -5439,13 +5443,13 @@
           </label>
         </column>
         <column>
-          <display item="Secondary Type 1" tooltip="Configures the input for specfic use"/>
+          <display item="Secondary Type 1" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv S1" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Secondary Transition 1" tooltip="Configures the input for specfic use"/>
+      <display item="Secondary Transition 1" tooltip="Configures the input for specific use"/>
       <label>
         <text> </text>
       </label>
@@ -5462,7 +5466,7 @@
           </label>
         </column>
         <column>
-          <display item="Primary Address 2" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Address 2" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Tog P2" format="checkbox" tooltip="Each transition alternately sends a close/throw"/>
@@ -5475,14 +5479,14 @@
           </label>
         </column>
         <column>
-          <display item="Primary Type 2" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Type 2" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv P2" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Primary Transition 2" tooltip="Configures the input for specfic use"/>
-      <display item="Secondary Address 2" tooltip="Configures the input for specfic use"/>
+      <display item="Primary Transition 2" tooltip="Configures the input for specific use"/>
+      <display item="Secondary Address 2" tooltip="Configures the input for specific use"/>
       <row>
         <column>
           <label>
@@ -5490,13 +5494,13 @@
           </label>
         </column>
         <column>
-          <display item="Secondary Type 2" tooltip="Configures the input for specfic use"/>
+          <display item="Secondary Type 2" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv S2" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Secondary Transition 2" tooltip="Configures the input for specfic use"/>
+      <display item="Secondary Transition 2" tooltip="Configures the input for specific use"/>
       <label>
         <text> </text>
       </label>
@@ -5513,7 +5517,7 @@
           </label>
         </column>
         <column>
-          <display item="Primary Address 3" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Address 3" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Tog P3" format="checkbox" tooltip="Each transition alternately sends a close/throw"/>
@@ -5526,14 +5530,14 @@
           </label>
         </column>
         <column>
-          <display item="Primary Type 3" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Type 3" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv P3" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Primary Transition 3" tooltip="Configures the input for specfic use"/>
-      <display item="Secondary Address 3" tooltip="Configures the input for specfic use"/>
+      <display item="Primary Transition 3" tooltip="Configures the input for specific use"/>
+      <display item="Secondary Address 3" tooltip="Configures the input for specific use"/>
       <row>
         <column>
           <label>
@@ -5541,13 +5545,13 @@
           </label>
         </column>
         <column>
-          <display item="Secondary Type 3" tooltip="Configures the input for specfic use"/>
+          <display item="Secondary Type 3" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv S3" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Secondary Transition 3" tooltip="Configures the input for specfic use"/>
+      <display item="Secondary Transition 3" tooltip="Configures the input for specific use"/>
       <label>
         <text> </text>
       </label>
@@ -5564,7 +5568,7 @@
           </label>
         </column>
         <column>
-          <display item="Primary Address 4" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Address 4" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Tog P4" format="checkbox" tooltip="Each transition alternately sends a close/throw"/>
@@ -5577,14 +5581,14 @@
           </label>
         </column>
         <column>
-          <display item="Primary Type 4" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Type 4" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv P4" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Primary Transition 4" tooltip="Configures the input for specfic use"/>
-      <display item="Secondary Address 4" tooltip="Configures the input for specfic use"/>
+      <display item="Primary Transition 4" tooltip="Configures the input for specific use"/>
+      <display item="Secondary Address 4" tooltip="Configures the input for specific use"/>
       <row>
         <column>
           <label>
@@ -5592,13 +5596,13 @@
           </label>
         </column>
         <column>
-          <display item="Secondary Type 4" tooltip="Configures the input for specfic use"/>
+          <display item="Secondary Type 4" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv S4" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Secondary Transition 4" tooltip="Configures the input for specfic use"/>
+      <display item="Secondary Transition 4" tooltip="Configures the input for specific use"/>
       <label>
         <text> </text>
       </label>
@@ -5615,7 +5619,7 @@
       </label>
       <row>
         <column>
-          <display item="Primary Address 5" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Address 5" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Tog P5" format="checkbox" tooltip="Each transition alternately sends a close/throw"/>
@@ -5633,14 +5637,14 @@
           </label>
         </column>
         <column>
-          <display item="Primary Type 5" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Type 5" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv P5" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Primary Transition 5" tooltip="Configures the input simulas"/>
-      <display item="Secondary Address 5" tooltip="Configures the input for specfic use"/>
+      <display item="Primary Transition 5" tooltip="Configures the input stimulas"/>
+      <display item="Secondary Address 5" tooltip="Configures the input for specific use"/>
       <row>
         <column>
           <label>
@@ -5648,13 +5652,13 @@
           </label>
         </column>
         <column>
-          <display item="Secondary Type 5" tooltip="Configures the input for specfic use"/>
+          <display item="Secondary Type 5" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv S5" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Secondary Transition 5" tooltip="Configures the input for specfic use"/>
+      <display item="Secondary Transition 5" tooltip="Configures the input for specific use"/>
       <label>
         <text> </text>
       </label>
@@ -5671,7 +5675,7 @@
           </label>
         </column>
         <column>
-          <display item="Primary Address 6" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Address 6" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Tog P6" format="checkbox" tooltip="Each transition alternately sends a close/throw"/>
@@ -5684,14 +5688,14 @@
           </label>
         </column>
         <column>
-          <display item="Primary Type 6" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Type 6" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv P6" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Primary Transition 6" tooltip="Configures the input for specfic use"/>
-      <display item="Secondary Address 6" tooltip="Configures the input for specfic use"/>
+      <display item="Primary Transition 6" tooltip="Configures the input for specific use"/>
+      <display item="Secondary Address 6" tooltip="Configures the input for specific use"/>
       <row>
         <column>
           <label>
@@ -5699,13 +5703,13 @@
           </label>
         </column>
         <column>
-          <display item="Secondary Type 6" tooltip="Configures the input for specfic use"/>
+          <display item="Secondary Type 6" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv S6" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Secondary Transition 6" tooltip="Configures the input for specfic use"/>
+      <display item="Secondary Transition 6" tooltip="Configures the input for specific use"/>
       <label>
         <text> </text>
       </label>
@@ -5722,7 +5726,7 @@
           </label>
         </column>
         <column>
-          <display item="Primary Address 7" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Address 7" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Tog P7" format="checkbox" tooltip="Each transition alternately sends a close/throw"/>
@@ -5735,14 +5739,14 @@
           </label>
         </column>
         <column>
-          <display item="Primary Type 7" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Type 7" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv P7" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Primary Transition 7" tooltip="Configures the input for specfic use"/>
-      <display item="Secondary Address 7" tooltip="Configures the input for specfic use"/>
+      <display item="Primary Transition 7" tooltip="Configures the input for specific use"/>
+      <display item="Secondary Address 7" tooltip="Configures the input for specific use"/>
       <row>
         <column>
           <label>
@@ -5750,13 +5754,13 @@
           </label>
         </column>
         <column>
-          <display item="Secondary Type 7" tooltip="Configures the input for specfic use"/>
+          <display item="Secondary Type 7" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv S7" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Secondary Transition 7" tooltip="Configures the input for specfic use"/>
+      <display item="Secondary Transition 7" tooltip="Configures the input for specific use"/>
       <label>
         <text> </text>
       </label>
@@ -5773,7 +5777,7 @@
           </label>
         </column>
         <column>
-          <display item="Primary Address 8" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Address 8" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Tog P8" format="checkbox" tooltip="Each transition alternately sends a close/throw"/>
@@ -5786,14 +5790,14 @@
           </label>
         </column>
         <column>
-          <display item="Primary Type 8" tooltip="Configures the input for specfic use"/>
+          <display item="Primary Type 8" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv P8" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Primary Transition 8" tooltip="Configures the input for specfic use"/>
-      <display item="Secondary Address 8" tooltip="Configures the input for specfic use"/>
+      <display item="Primary Transition 8" tooltip="Configures the input for specific use"/>
+      <display item="Secondary Address 8" tooltip="Configures the input for specific use"/>
       <row>
         <column>
           <label>
@@ -5801,13 +5805,13 @@
           </label>
         </column>
         <column>
-          <display item="Secondary Type 8" tooltip="Configures the input for specfic use"/>
+          <display item="Secondary Type 8" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="Inv S8" format="checkbox" tooltip="Inverts the normal state of True (close or hi) when input goes hi"/>
         </column>
       </row>
-      <display item="Secondary Transition 8" tooltip="Configures the input for specfic use"/>
+      <display item="Secondary Transition 8" tooltip="Configures the input for specific use"/>
       <label>
         <text> </text>
       </label>
@@ -5981,7 +5985,7 @@
               </label>
             </column>
           </row>
-          <display item="Eff1" tooltip="Configures the output for specfic effect"/>
+          <display item="Eff1" tooltip="Configures the output for specific effect"/>
           <display item="EffDu1" tooltip="Time is based on the type of effect"/>
           <label>
             <text> </text>
@@ -6062,7 +6066,7 @@
               </label>
             </column>
           </row>
-          <display item="Eff2" tooltip="Configures the output for specfic effect"/>
+          <display item="Eff2" tooltip="Configures the output for specific effect"/>
           <display item="EffDu2" tooltip="Time is based on the type of effect"/>
           <label>
             <text> </text>
@@ -6143,7 +6147,7 @@
               </label>
             </column>
           </row>
-          <display item="Eff3" tooltip="Configures the output for specfic effect"/>
+          <display item="Eff3" tooltip="Configures the output for specific effect"/>
           <display item="EffDu3" tooltip="Time is based on the type of effect"/>
           <label>
             <text> </text>
@@ -6224,7 +6228,7 @@
               </label>
             </column>
           </row>
-          <display item="Eff4" tooltip="Configures the output for specfic effect"/>
+          <display item="Eff4" tooltip="Configures the output for specific effect"/>
           <display item="EffDu4" tooltip="Time is based on the type of effect"/>
           <label>
             <text> </text>
@@ -6310,7 +6314,7 @@
               </label>
             </column>
           </row>
-          <display item="Eff5" tooltip="Configures the output for specfic effect"/>
+          <display item="Eff5" tooltip="Configures the output for specific effect"/>
           <display item="EffDu5" tooltip="Time is based on the type of effect"/>
           <label>
             <text> </text>
@@ -6391,7 +6395,7 @@
               </label>
             </column>
           </row>
-          <display item="Eff6" tooltip="Configures the output for specfic effect"/>
+          <display item="Eff6" tooltip="Configures the output for specific effect"/>
           <display item="EffDu6" tooltip="Time is based on the type of effect"/>
           <label>
             <text> </text>
@@ -6472,7 +6476,7 @@
               </label>
             </column>
           </row>
-          <display item="Eff7" tooltip="Configures the output for specfic effect"/>
+          <display item="Eff7" tooltip="Configures the output for specific effect"/>
           <display item="EffDu7" tooltip="Time is based on the type of effect"/>
           <label>
             <text> </text>
@@ -6553,7 +6557,7 @@
               </label>
             </column>
           </row>
-          <display item="Eff8" tooltip="Configures the output for specfic effect"/>
+          <display item="Eff8" tooltip="Configures the output for specific effect"/>
           <display item="EffDu8" tooltip="Time is based on the type of effect"/>
           <label>
             <text> </text>
@@ -6730,7 +6734,7 @@
               </label>
             </column>
           </row>
-          <display item="Eff9" tooltip="Configures the output for specfic effect"/>
+          <display item="Eff9" tooltip="Configures the output for specific effect"/>
           <display item="EffDu9" tooltip="Time is based on the type of effect"/>
           <label>
             <text> </text>
@@ -6811,7 +6815,7 @@
               </label>
             </column>
           </row>
-          <display item="Eff10" tooltip="Configures the output for specfic effect"/>
+          <display item="Eff10" tooltip="Configures the output for specific effect"/>
           <display item="EffDu10" tooltip="Time is based on the type of effect"/>
           <label>
             <text> </text>
@@ -6892,7 +6896,7 @@
               </label>
             </column>
           </row>
-          <display item="Eff11" tooltip="Configures the output for specfic effect"/>
+          <display item="Eff11" tooltip="Configures the output for specific effect"/>
           <display item="EffDu11" tooltip="Time is based on the type of effect"/>
           <label>
             <text> </text>
@@ -6973,7 +6977,7 @@
               </label>
             </column>
           </row>
-          <display item="Eff12" tooltip="Configures the output for specfic effect"/>
+          <display item="Eff12" tooltip="Configures the output for specific effect"/>
           <display item="EffDu12" tooltip="Time is based on the type of effect"/>
           <label>
             <text> </text>
@@ -7059,7 +7063,7 @@
               </label>
             </column>
           </row>
-          <display item="Eff13" tooltip="Configures the output for specfic effect"/>
+          <display item="Eff13" tooltip="Configures the output for specific effect"/>
           <display item="EffDu13" tooltip="Time is based on the type of effect"/>
           <label>
             <text> </text>
@@ -7140,7 +7144,7 @@
               </label>
             </column>
           </row>
-          <display item="Eff14" tooltip="Configures the output for specfic effect"/>
+          <display item="Eff14" tooltip="Configures the output for specific effect"/>
           <display item="EffDu14" tooltip="Time is based on the type of effect"/>
           <label>
             <text> </text>
@@ -7221,7 +7225,7 @@
               </label>
             </column>
           </row>
-          <display item="Eff15" tooltip="Configures the output for specfic effect"/>
+          <display item="Eff15" tooltip="Configures the output for specific effect"/>
           <display item="EffDu15" tooltip="Time is based on the type of effect"/>
           <label>
             <text> </text>
@@ -7302,7 +7306,7 @@
               </label>
             </column>
           </row>
-          <display item="Eff16" tooltip="Configures the output for specfic effect"/>
+          <display item="Eff16" tooltip="Configures the output for specific effect"/>
           <display item="EffDu16" tooltip="Time is based on the type of effect"/>
           <label>
             <text> </text>
@@ -7479,7 +7483,7 @@
               </label>
             </column>
           </row>
-          <display item="Eff17" tooltip="Configures the output for specfic effect"/>
+          <display item="Eff17" tooltip="Configures the output for specific effect"/>
           <display item="EffDu17" tooltip="Time is based on the type of effect"/>
           <label>
             <text> </text>
@@ -7560,7 +7564,7 @@
               </label>
             </column>
           </row>
-          <display item="Eff18" tooltip="Configures the output for specfic effect"/>
+          <display item="Eff18" tooltip="Configures the output for specific effect"/>
           <display item="EffDu18" tooltip="Time is based on the type of effect"/>
           <label>
             <text> </text>
@@ -7641,7 +7645,7 @@
               </label>
             </column>
           </row>
-          <display item="Eff19" tooltip="Configures the output for specfic effect"/>
+          <display item="Eff19" tooltip="Configures the output for specific effect"/>
           <display item="EffDu19" tooltip="Time is based on the type of effect"/>
           <label>
             <text> </text>
@@ -7722,7 +7726,7 @@
               </label>
             </column>
           </row>
-          <display item="Eff20" tooltip="Configures the output for specfic effect"/>
+          <display item="Eff20" tooltip="Configures the output for specific effect"/>
           <display item="EffDu20" tooltip="Time is based on the type of effect"/>
           <label>
             <text> </text>
@@ -7808,7 +7812,7 @@
               </label>
             </column>
           </row>
-          <display item="Eff21" tooltip="Configures the output for specfic effect"/>
+          <display item="Eff21" tooltip="Configures the output for specific effect"/>
           <display item="EffDu21" tooltip="Time is based on the type of effect"/>
           <label>
             <text> </text>
@@ -7889,7 +7893,7 @@
               </label>
             </column>
           </row>
-          <display item="Eff22" tooltip="Configures the output for specfic effect"/>
+          <display item="Eff22" tooltip="Configures the output for specific effect"/>
           <display item="EffDu22" tooltip="Time is based on the type of effect"/>
           <label>
             <text> </text>
@@ -7970,7 +7974,7 @@
               </label>
             </column>
           </row>
-          <display item="Eff23" tooltip="Configures the output for specfic effect"/>
+          <display item="Eff23" tooltip="Configures the output for specific effect"/>
           <display item="EffDu23" tooltip="Time is based on the type of effect"/>
           <label>
             <text> </text>
@@ -8051,7 +8055,7 @@
               </label>
             </column>
           </row>
-          <display item="Eff24" tooltip="Configures the output for specfic effect"/>
+          <display item="Eff24" tooltip="Configures the output for specific effect"/>
           <display item="EffDu24" tooltip="Time is based on the type of effect"/>
           <label>
             <text> </text>

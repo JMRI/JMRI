@@ -1,9 +1,12 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import com.digi.xbee.api.RemoteXBeeDevice;
+import com.digi.xbee.api.models.XBee16BitAddress;
+import com.digi.xbee.api.models.XBee64BitAddress;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * XBeeTurnoutTest.java
@@ -12,112 +15,90 @@ import junit.framework.TestSuite;
  *
  * @author	Paul Bender
  */
-public class XBeeTurnoutTest extends TestCase {
+public class XBeeTurnoutTest {
 
     XBeeTrafficController tc;
     XBeeConnectionMemo memo;
 
+    @Test
     public void testCtor() {
-        memo.setSystemPrefix("ABC");
-        memo.setTurnoutManager(new XBeeTurnoutManager(tc, "ABC"));
-        tc.setAdapterMemo(memo);
-        XBeeTurnout s = new XBeeTurnout("ABCT1234", "XBee Turnout Test", tc);
+        XBeeTurnout s = new XBeeTurnout("AT1234", "XBee Turnout Test", tc);
         Assert.assertNotNull("exists", s);
     }
 
+    @Test
     public void testCtorAddressPinName() {
-        memo.setSystemPrefix("ABC");
-        memo.setTurnoutManager(new XBeeTurnoutManager(tc, "ABC"));
-        tc.setAdapterMemo(memo);
-        XBeeTurnout s = new XBeeTurnout("ABCT123:4", "XBee Turnout Test", tc);
+        XBeeTurnout s = new XBeeTurnout("AT123:4", "XBee Turnout Test", tc);
         Assert.assertNotNull("exists", s);
     }
 
+    @Test
     public void testCtorAddress2PinName() {
-        memo.setSystemPrefix("ABC");
-        memo.setTurnoutManager(new XBeeTurnoutManager(tc, "ABC"));
-        tc.setAdapterMemo(memo);
-        XBeeTurnout s = new XBeeTurnout("ABCT123:4:5", "XBee Turnout Test", tc);
+        XBeeTurnout s = new XBeeTurnout("AT123:4:5", "XBee Turnout Test", tc);
         Assert.assertNotNull("exists", s);
     }
 
+    @Test
     public void testCtor16BitHexNodeAddress() {
-        memo.setSystemPrefix("ABC");
-        memo.setTurnoutManager(new XBeeTurnoutManager(tc, "ABC"));
-        tc.setAdapterMemo(memo);
-        XBeeTurnout s = new XBeeTurnout("ABCTABCD:4", "XBee Turnout Test", tc);
+        XBeeTurnout s = new XBeeTurnout("AT0002:4", "XBee Turnout Test", tc);
         Assert.assertNotNull("exists", s);
     }
-
+    
+    @Test
     public void testCtor16BitHexNodeAddress2pin() {
-        memo.setSystemPrefix("ABC");
-        memo.setTurnoutManager(new XBeeTurnoutManager(tc, "ABC"));
-        tc.setAdapterMemo(memo);
-        XBeeTurnout s = new XBeeTurnout("ABCTABCD:4:5", "XBee Turnout Test", tc);
+        XBeeTurnout s = new XBeeTurnout("AT0002:4:5", "XBee Turnout Test", tc);
         Assert.assertNotNull("exists", s);
     }
 
+    @Test
     public void testCtor16BitHexStringNodeAddress() {
-        memo.setSystemPrefix("ABC");
-        memo.setTurnoutManager(new XBeeTurnoutManager(tc, "ABC"));
-        tc.setAdapterMemo(memo);
-        XBeeTurnout s = new XBeeTurnout("ABCTAB CD:4", "XBee Turnout Test", tc);
+        XBeeTurnout s = new XBeeTurnout("AT00 02:4", "XBee Turnout Test", tc);
         Assert.assertNotNull("exists", s);
     }
 
+    @Test
     public void testCtor16BitHexStringNodeAddress2pin() {
-        memo.setSystemPrefix("ABC");
-        memo.setTurnoutManager(new XBeeTurnoutManager(tc, "ABC"));
-        tc.setAdapterMemo(memo);
-        XBeeTurnout s = new XBeeTurnout("ABCTAB CD:4:5", "XBee Turnout Test", tc);
+        XBeeTurnout s = new XBeeTurnout("AT00 02:4:5", "XBee Turnout Test", tc);
         Assert.assertNotNull("exists", s);
     }
 
+    @Test
     public void testCtor64BitHexStringNodeAddress() {
-        memo.setSystemPrefix("ABC");
-        memo.setTurnoutManager(new XBeeTurnoutManager(tc, "ABC"));
-        tc.setAdapterMemo(memo);
-        XBeeTurnout s = new XBeeTurnout("ABCT00 13 A2 00 40 A0 4D 2D:4", "XBee Turnout Test", tc);
+        XBeeTurnout s = new XBeeTurnout("AT00 13 A2 00 40 A0 4D 2D:4", "XBee Turnout Test", tc);
         Assert.assertNotNull("exists", s);
     }
 
+    @Test
     public void testCtor64BitHexStringNodeAddress2pin() {
-        memo.setSystemPrefix("ABC");
-        memo.setTurnoutManager(new XBeeTurnoutManager(tc, "ABC"));
-        tc.setAdapterMemo(memo);
-        XBeeTurnout s = new XBeeTurnout("ABCT00 13 A2 00 40 A0 4D 2D:4:5", "XBee Turnout Test", tc);
+        XBeeTurnout s = new XBeeTurnout("AT00 13 A2 00 40 A0 4D 2D:4:5", "XBee Turnout Test", tc);
         Assert.assertNotNull("exists", s);
-    }
-
-    // from here down is testing infrastructure
-    public XBeeTurnoutTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XBeeTurnoutTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XBeeTurnoutTest.class);
-        return suite;
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        tc = new XBeeTrafficController() {
-            public void setInstance() {
-            }
-        };
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+        tc = new XBeeInterfaceScaffold();
         memo = new XBeeConnectionMemo();
+        memo.setSystemPrefix("A");
+        memo.setTurnoutManager(new XBeeTurnoutManager(tc, "A"));
+        tc.setAdapterMemo(memo);
+        byte pan[] = {(byte) 0x00, (byte) 0x42};
+        byte uad[] = {(byte) 0x00, (byte) 0x02};
+        byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
+        XBeeNode node = new XBeeNode(pan,uad,gad);
+        RemoteXBeeDevice rd = new RemoteXBeeDevice(tc.getXBee(),
+             new XBee64BitAddress("0013A20040A04D2D"),
+             new XBee16BitAddress("0002"),
+             "Node 1");
+        node.setXBee(rd);
+        tc.registerNode(node);
     }
 
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+        tc.terminate();
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

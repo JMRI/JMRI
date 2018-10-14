@@ -1,36 +1,71 @@
 package jmri.jmrix.roco.z21.simulator;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
+
 
 /**
- * Tests for the jmri.jmrix.roco.z21.simulator package
+ * Z21SimulatorTest.java
  *
- * @author Paul Bender
+ * Description:	tests that determine if the Roco z21 Simulator is functional
+ * after configuration.
+ *
+ * @author	Paul Bender Copyright (C) 2016
  */
-public class Z21SimulatorTest extends TestCase {
+public class Z21SimulatorTest {
 
-    // from here down is testing infrastructure
-    public Z21SimulatorTest(String s) {
-        super(s);
+    private static Z21SimulatorAdapter a = null;
+
+
+    // verify there is a railComm manager
+    @Test
+    @Ignore("tests before this class are leaving the port open, need to close first")
+    public void testAddressedProgrammerManager() {
+        Assert.assertTrue(a.getSystemConnectionMemo().provides(jmri.AddressedProgrammerManager.class));
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {Z21SimulatorTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    // verify there is a Reporter manager
+    @Test
+    @Ignore("tests before this class are leaving the port open, need to close first")
+    public void testReporterManager() {
+        Assert.assertTrue(a.getSystemConnectionMemo().provides(jmri.ReporterManager.class));
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.roco.z21.simulator.z21SimulatorTest");  // no tests in this class itself
-        suite.addTest(new junit.framework.JUnit4TestAdapter(Z21SimulatorAdapterTest.class));
-        suite.addTest(new TestSuite(Z21XNetSimulatorAdapterTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(ConnectionConfigTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.roco.z21.simulator.configurexml.PackageTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(Z21SimulatorLocoDataTest.class));
-        return suite;
+
+
+    // one time configuration of the simulator.
+    @BeforeClass
+    static public void setUp() {
+        JUnitUtil.setUp();
+        JUnitUtil.initConfigureManager();
+        try {
+           java.net.InetAddress.getLocalHost(); // checking to see if it works
+        } catch(java.net.UnknownHostException uhe){
+            Assert.fail("Unable to create host localhost");
+        }
+        // create a new simulator.
+        a = new Z21SimulatorAdapter();
+        
+        // connect the port
+        try {
+           a.connect();
+        } catch(java.net.BindException be) {
+            Assert.fail("Exception binding to Socket");
+        } catch (java.lang.Exception e) {
+           Assert.fail("Exception configuring server port");
+        }
+        // and configure/start the simulator.
+        a.configure();
+    }
+
+    @AfterClass
+    static public void tearDown() {
+        a.dispose();
+        JUnitUtil.tearDown();
     }
 
 }

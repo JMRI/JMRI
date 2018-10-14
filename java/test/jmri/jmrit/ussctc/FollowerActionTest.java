@@ -1,40 +1,47 @@
 package jmri.jmrit.ussctc;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.awt.GraphicsEnvironment;
+import javax.swing.Action;
+import javax.swing.JFrame;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Tests for classes in the jmri.jmrit.ussctc.FollowerAction class
  *
  * @author	Bob Jacobsen Copyright 2003, 2007
- * @version	$Revision$
  */
-public class FollowerActionTest extends TestCase {
+public class FollowerActionTest {
 
+    @Test
     public void testFrameCreate() {
-        new FollowerAction("test");
+        Action a = new FollowerAction("test");
+        Assert.assertNotNull(a);
     }
 
+    @Test
     public void testActionCreateAndFire() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         new FollowerAction("test").actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("TitleFollower"), true, true);
+        Assert.assertNotNull(f);
+        JUnitUtil.dispose(f);
     }
 
-    // from here down is testing infrastructure
-    public FollowerActionTest(String s) {
-        super(s);
+    @Before
+    public void setUp() throws Exception {
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRouteManager();
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {FollowerActionTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @After
+    public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
     }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(FollowerActionTest.class);
-        return suite;
-    }
-
 }

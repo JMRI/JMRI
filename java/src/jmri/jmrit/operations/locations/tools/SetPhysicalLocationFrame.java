@@ -1,4 +1,3 @@
-// SetPhysicalLocationFrame.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Dimension;
@@ -10,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -26,11 +26,10 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
  * @author Mark Underwood Copyright (C) 2011
- * @version $Revision$
  */
 public class SetPhysicalLocationFrame extends OperationsFrame {
 
-    LocationManager locationManager = LocationManager.instance();
+    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     Location _location;
 
@@ -38,10 +37,10 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
     // text field
     // check boxes
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // combo boxes
-    JComboBox<Location> locationBox = LocationManager.instance().getComboBox();
+    JComboBox<Location> locationBox = InstanceManager.getDefault(LocationManager.class).getComboBox();
 
     // Spinners
     PhysicalLocationPanel physicalLocation;
@@ -153,7 +152,7 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
 
     // Unused. Carried over from SetTrainIconPosition or whatever it was
     // called...
-	/*
+ /*
      * private void spinnersEnable(boolean enable){ physicalLocation.setEnabled(enable); }
      */
     private void saveSpinnerValues(Location l) {
@@ -167,5 +166,5 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(SetPhysicalLocationFrame.class.getName());
+            .getLogger(SetPhysicalLocationFrame.class);
 }

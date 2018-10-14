@@ -1,38 +1,22 @@
 package jmri.jmrix.zimo.swing;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        jmri.jmrix.zimo.swing.packetgen.PackageTest.class,
+        BundleTest.class,
+        jmri.jmrix.zimo.swing.monitor.PackageTest.class,
+        Mx1ComponentFactoryTest.class,
+        Mx1MenuTest.class,
+        Mx1NamedPaneActionTest.class,
+})
 
 /**
  * Tests for the jmri.jmrix.zimo.swing package
  *
  * @author	Bob Jacobsen
  */
-public class PackageTest extends TestCase {
-
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.zimo.swing.PackageTest");  // no tests in this class itself
-
-        suite.addTest(jmri.jmrix.zimo.swing.packetgen.PackageTest.suite());
-        suite.addTest(BundleTest.suite());
-
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-        }
-
-        return suite;
-    }
-
+public class PackageTest  {
 }

@@ -42,12 +42,12 @@ public class RfidNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
             ((RfidPanelInterface) p).initComponents(memo);
             return p;
         } catch (Exception ex) {
-            log.warn("could not init pane class: " + paneClass + " due to:" + ex);
-            ex.printStackTrace();
+            log.warn("could not init pane class: {}", paneClass, ex);
         }
 
         return p;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(RfidNamedPaneAction.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(RfidNamedPaneAction.class);
+
 }

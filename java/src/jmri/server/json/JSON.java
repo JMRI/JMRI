@@ -2,10 +2,9 @@ package jmri.server.json;
 
 /**
  * Common and utility constants used in the JMRI JSON protocol starting with
- * protocol version 4.0.
+ * protocol version 4.1.
  *
- * @author Randall Wood (C) 2013, 2014, 2016
- * @see jmri.jmris.json.JSON
+ * @author Randall Wood (C) 2013, 2014, 2016, 2018
  */
 public final class JSON {
 
@@ -16,6 +15,8 @@ public final class JSON {
      * the protocol, while changes to the minor number represent an addition to
      * the protocol.
      * <p>
+     * Protocol version 4.1 was first introduced in JMRI 4.11.4.
+     * <p>
      * Protocol version 4.0 was first introduced in JMRI 4.3.4.
      * <p>
      * Prior to version 4.0, the JSON servers had a single definition for all
@@ -25,7 +26,7 @@ public final class JSON {
      * <p>
      * {@value #JSON_PROTOCOL_VERSION}
      */
-    public static final String JSON_PROTOCOL_VERSION = "4.0"; // NOI18N
+    public static final String JSON_PROTOCOL_VERSION = "4.1"; // NOI18N
 
     /* JSON structure */
     /**
@@ -106,7 +107,7 @@ public final class JSON {
     public static final String STATUS = "status"; // NOI18N
     /**
      * Numeric status value
-     *
+     * <p>
      * {@value #STATUS_CODE}
      */
     public static final String STATUS_CODE = "statusCode"; // NOI18N
@@ -114,6 +115,10 @@ public final class JSON {
      * {@value #PROPERTIES}
      */
     public static final String PROPERTIES = "properties"; // NOI18N
+    /**
+     * {@value #DEFAULT}
+     */
+    public static final String DEFAULT = "default"; // NOI18N
 
     /* JSON hello and metadata */
     /**
@@ -159,21 +164,9 @@ public final class JSON {
 
     /* JSON list types */
     /**
-     * {@value #CARS}
-     */
-    public static final String CARS = "cars"; // NOI18N
-    /**
-     * {@value #CONSISTS}
-     */
-    public static final String CONSISTS = "consists"; // NOI18N
-    /**
      * {@value #ENGINES}
      */
     public static final String ENGINES = "engines"; // NOI18N
-    /**
-     * {@value #LOCATIONS}
-     */
-    public static final String LOCATIONS = "locations"; // NOI18N
     /**
      * {@value #METADATA}
      */
@@ -187,35 +180,31 @@ public final class JSON {
      */
     public static final String ROUTES = "routes"; // NOI18N
     /**
-     * {@value #TRAINS}
-     */
-    public static final String TRAINS = "trains"; // NOI18N
-    /**
      * {@value #NETWORK_SERVICES}
      */
     public static final String NETWORK_SERVICES = "networkServices"; // NOI18N
+    /**
+     * {@value #CONFIG_PROFILES}
+     */
+    public static final String CONFIG_PROFILES = "configProfiles"; // NOI18N
+    /**
+     * {@value #UNIQUE_ID}
+     */
+    public static final String CONFIG_PROFILE = "configProfile"; // NOI18N
+    /**
+     * {@value #UNIQUE_ID}
+     */
+    public static final String UNIQUE_ID = "uniqueId"; // NOI18N
+    /**
+     * {@value #IS_ACTIVE_PROFILE}
+     */
+    public static final String IS_ACTIVE_PROFILE = "isActiveProfile"; // NOI18N
+    /**
+     * {@value #IS_AUTO_START}
+     */
+    public static final String IS_AUTO_START = "isAutoStart"; // NOI18N
 
     /* JSON data types */
-    /**
-     * {@value #CAR}
-     */
-    public static final String CAR = "car"; // NOI18N
-    /**
-     * {@value #CONSIST}
-     */
-    public static final String CONSIST = "consist"; // NOI18N
-    /**
-     * {@value #ENGINE}
-     */
-    public static final String ENGINE = "engine"; // NOI18N
-    /**
-     * {@value #LOCATION}
-     */
-    public static final String LOCATION = "location"; // NOI18N
-    /**
-     * {@value #LOCATION_ID}
-     */
-    public static final String LOCATION_ID = "locationId"; // NOI18N
     /**
      * {@value #NETWORK_SERVICE}
      *
@@ -238,10 +227,6 @@ public final class JSON {
      * {@value #THROTTLE}
      */
     public static final String THROTTLE = "throttle"; // NOI18N
-    /**
-     * {@value #TRAIN}
-     */
-    public static final String TRAIN = "train"; // NOI18N
 
     /* JSON operations tokens */
     /**
@@ -252,34 +237,6 @@ public final class JSON {
      * {@value #LENGTH}
      */
     public static final String LENGTH = "length"; // NOI18N
-    /**
-     * {@value #WEIGHT}
-     */
-    public static final String WEIGHT = "weight"; // NOI18N
-    /**
-     * {@value #LEAD_ENGINE}
-     */
-    public static final String LEAD_ENGINE = "leadEngine"; // NOI18N
-    /**
-     * {@value #CABOOSE}
-     */
-    public static final String CABOOSE = "caboose"; // NOI18N
-    /**
-     * {@value #TERMINATE}
-     */
-    public static final String TERMINATE = "terminate"; // NOI18N
-    /**
-     * {@value #TRACK}
-     *
-     * @since 1.1
-     */
-    public static final String TRACK = "track";
-    /**
-     * {@value #DATE}
-     *
-     * @since 1.1
-     */
-    public static final String DATE = "date";
 
     /* JSON panel tokens */
     /**
@@ -290,6 +247,10 @@ public final class JSON {
      * {@value #LAYOUT_PANEL}
      */
     public static final String LAYOUT_PANEL = "Layout"; // NOI18N
+    /**
+     * {@value #SWITCHBOARD_PANEL}
+     */
+    public static final String SWITCHBOARD_PANEL = "Switchboard"; // NOI18N
     /**
      * {@value #PANEL_PANEL}
      */
@@ -354,18 +315,6 @@ public final class JSON {
      * {@value #NUMBER}
      */
     public static final String NUMBER = "number"; // NOI18N
-    /**
-     * {@value #DESTINATION}
-     */
-    public static final String DESTINATION = "destination"; // NOI18N
-    /**
-     * {@value #DESTINATION_TRACK}
-     */
-    public static final String DESTINATION_TRACK = "dest&track"; // NOI18N
-    /**
-     * {@value #LOCATION_TRACK}
-     */
-    public static final String LOCATION_TRACK = "locationTrack"; // NOI18N
     /**
      * {@value #IS_LONG_ADDRESS}
      */
@@ -544,7 +493,7 @@ public final class JSON {
     public static final String OPTIONS = "options";
     /**
      * {@value #ADD}
-     *
+     * <p>
      * As an attribute of a {@link jmri.server.json.roster.JsonRoster#ROSTER},
      * this is an entry that has been added to the roster.
      *
@@ -553,10 +502,10 @@ public final class JSON {
     public static final String ADD = "add";
     /**
      * {@value #REMOVE}
-     *
+     * <p>
      * In operations, this indicates the dropping or setting out of a car or
      * engine.
-     *
+     * <p>
      * As an attribute of a {@link jmri.server.json.roster.JsonRoster#ROSTER},
      * this is an entry that has been removed from the roster.
      *
@@ -634,7 +583,7 @@ public final class JSON {
      */
     public static final String LIT = "lit"; // NOI18N
 
-    /* JSON throttle tokens */
+    /* Shared JSON consist, roster, and throttle tokens */
     /**
      * {@value #ADDRESS}
      */
@@ -644,40 +593,11 @@ public final class JSON {
      */
     public static final String FORWARD = "forward"; // NOI18N
     /**
-     * {@value #RELEASE}
-     */
-    public static final String RELEASE = "release"; // NOI18N
-    /**
-     * {@value #ESTOP}
-     */
-    public static final String ESTOP = "eStop"; // NOI18N
-    /**
-     * {@value #IDLE}
-     */
-    public static final String IDLE = "idle"; // NOI18N
-    /**
-     * {@value #SPEED}
-     */
-    public static final String SPEED = "speed"; // NOI18N
-    /**
-     * {@value #SPEED_STEPS}
-     */
-    public static final String SPEED_STEPS = "speedSteps"; // NOI18N
-    /**
      * Prefix for the throttle function keys (F0-F28).
      * <p>
      * {@value #F}
      */
     public static final String F = "F"; // NOI18N
-    /**
-     * Used by a {@link jmri.jmris.json.JsonThrottle} to notify clients of the
-     * number of clients controlling the same throttle.
-     * <p>
-     * {@value #CLIENTS}
-     *
-     * @since 2.0
-     */
-    public static final String CLIENTS = "clients"; // NOI18N
 
     /* JSON Sensor and Turnout Tokens */
     /**
@@ -840,6 +760,26 @@ public final class JSON {
      */
     public static final String SYSTEM_CONNECTIONS = "systemConnections"; // NOI18N
 
+    /* JSON Schema */
+    /**
+     * {@value #SCHEMA}
+     *
+     * @since 4.1
+     */
+    public static final String SCHEMA = "schema"; // NOI18N
+    /**
+     * {@value #SERVER}
+     *
+     * @since 4.1
+     */
+    public static final String SERVER = "server"; // NOI18N
+    /**
+     * {@value #CLIENT}
+     *
+     * @since 4.1
+     */
+    public static final String CLIENT = "client"; // NOI18N
+
     /* ZeroConf support */
     /**
      * {@value #ZEROCONF_SERVICE_TYPE} Not used within the protocol, but used to
@@ -849,5 +789,6 @@ public final class JSON {
 
     /* prevent the constructor from being documented */
     private JSON() {
+        throw new UnsupportedOperationException("There is no valid instance of this class");
     }
 }

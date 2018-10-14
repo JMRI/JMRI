@@ -1,47 +1,34 @@
 package jmri.util.swing;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
- * Checks of JMRI XML Schema for GUI definition files.
  *
- * @author Bob Jacobsen Copyright 2011, 2012
- * @since 2.9.3
+ * @author Paul Bender Copyright (C) 2017	
  */
-public class GuiUtilBaseTest extends jmri.configurexml.SchemaTestBase {
+public class GuiUtilBaseTest {
 
-    /**
-     * Recursive
-     */
-    static protected void doDirectory(TestSuite suite, String pathName) {
-        validateDirectory(suite, pathName);
-        java.io.File dir = new java.io.File(pathName);
-        java.io.File[] files = dir.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            if (files[i].getName().equals(".svn")) {
-                continue;
-            }
-            if (files[i].isDirectory()) {
-                doDirectory(suite, files[i].getPath());
-            }
-        }
+    @Test
+    public void testCTor() {
+        GuiUtilBase t = new GuiUtilBase();
+        Assert.assertNotNull("exists",t);
     }
 
-    // from here down is testing infrastructure
-    public GuiUtilBaseTest(String s) {
-        super(s);
+    // The minimal setup for log4J
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", GuiUtilBaseTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("GuiUtilBaseTest");
-        return suite;
-    }
+    // private final static Logger log = LoggerFactory.getLogger(GuiUtilBaseTest.class);
+
 }

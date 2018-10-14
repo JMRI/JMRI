@@ -4,8 +4,8 @@ import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import jmri.jmrix.srcp.SRCPMessage;
 import jmri.jmrix.srcp.SRCPReply;
-import jmri.jmrix.srcp.SRCPTrafficController;
 import jmri.jmrix.srcp.SRCPSystemConnectionMemo;
+import jmri.jmrix.srcp.SRCPTrafficController;
 
 /**
  * Description:	Frame for user input of SRCP messages
@@ -19,16 +19,18 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.s
     javax.swing.JButton sendButton = new javax.swing.JButton();
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(12);
 
-    private SRCPSystemConnectionMemo _memo = null;
     private SRCPTrafficController tc = null;
 
     public PacketGenFrame(SRCPSystemConnectionMemo memo) {
         super();
-        _memo = memo;
         tc = memo.getTrafficController();
     }
 
-    public void initComponents() throws Exception {
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void initComponents() {
         // the following code sets the frame's initial state
 
         jLabel1.setText("Command:");
@@ -53,6 +55,7 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.s
         getContentPane().add(sendButton);
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
@@ -72,12 +75,15 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.s
         tc.sendSRCPMessage(m, this);
     }
 
+    @Override
     public void message(SRCPMessage m) {
     }  // ignore replies
 
+    @Override
     public void reply(SRCPReply r) {
     } // ignore replies
 
+    @Override
     public void reply(jmri.jmrix.srcp.parser.SimpleNode n) {
     } // ignore replies
 }

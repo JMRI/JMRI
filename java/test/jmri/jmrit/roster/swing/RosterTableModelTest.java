@@ -3,11 +3,12 @@ package jmri.jmrit.roster.swing;
 import jmri.InstanceManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.jdom2.Element;
+import org.junit.Assert;
 
 /**
  * Tests for the roster.swing.RosterTableModel class.
@@ -55,8 +56,11 @@ public class RosterTableModelTest extends TestCase {
     static int NENTRIES = 3;
     static int NKEYS = 4;
 
+    @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
+        jmri.util.JUnitUtil.resetProfileManager();
 
         // Create empty test instance
         InstanceManager.reset(Roster.class);
@@ -85,6 +89,7 @@ public class RosterTableModelTest extends TestCase {
                 ); // end create element
 
         r = new RosterEntry(e) {
+            @Override
             protected void warnShortLong(String s) {
             }
         };
@@ -109,6 +114,7 @@ public class RosterTableModelTest extends TestCase {
                 ); // end create element
 
         r = new RosterEntry(e) {
+            @Override
             protected void warnShortLong(String s) {
             }
         };
@@ -136,6 +142,7 @@ public class RosterTableModelTest extends TestCase {
                 ); // end create element
 
         r = new RosterEntry(e) {
+            @Override
             protected void warnShortLong(String s) {
             }
         };
@@ -161,8 +168,9 @@ public class RosterTableModelTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

@@ -1,4 +1,3 @@
-// GridConnectDoubledMessage.java
 package jmri.jmrix.can.adapters.gridconnect.can2usbino;
 
 import jmri.jmrix.can.CanMessage;
@@ -8,18 +7,17 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Class for GridConnectDoubled messages for a CAN hardware adapter.
- * <P>
+ * <p>
  * The GridConnect protocol encodes messages as an ASCII string of up to 24
  * characters of the form: :ShhhhNd0d1d2d3d4d5d6d7; The S indicates a standard
  * CAN frame :XhhhhhhhhNd0d1d2d3d4d5d6d7; The X indicates an extended CAN frame
  * hhhh is the two byte header N or R indicates a normal or remote frame, in
  * position 6 or 10 d0 - d7 are the (up to) 8 data bytes
- * <P>
+ * <p>
  * On transmit, this is doubled and starts with an "!" character.
  *
  * @author Andrew Crosland Copyright (C) 2012
  * @author Andrew Crosland Copyright (C) 2008
- * @version	$Revision: 17977 $
  */
 public class GridConnectDoubledMessage extends GridConnectMessage {
 
@@ -50,28 +48,31 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
         int offset = isExtended() ? 11 : 6;
         setElement(offset + m.getNumDataElements() * 2, ';');
         setNumDataElements(offset + 1 + m.getNumDataElements() * 2);
-        if (log.isDebugEnabled()) {
-            log.debug("encoded as " + this.toString());
-        }
+        log.debug("encoded as {}", this.toString());
     }
 
     // accessors to the bulk data
+    @Override
     public int getNumDataElements() {
         return _nDataChars * 2;
     }
 
+    @Override
     public void setNumDataElements(int n) {
         _nDataChars = (n <= 28) ? n : 28;
     }
 
+    @Override
     public int getElement(int n) {
         return _dataChars[n / 2];
     }
 
+    @Override
     public void setElement(int n, int v) {
         _dataChars[n] = v;
     }
 
+    @Override
     public void setData(int[] d) {
         int len = (d.length <= 24) ? d.length : 24;
         for (int i = 0; i < len; i++) {
@@ -79,6 +80,7 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
         }
     }
 
+    @Override
     public void setExtended(boolean extended) {
         // Standard or extended frame
         this.extended = extended;
@@ -91,6 +93,7 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
 
     boolean extended;
 
+    @Override
     public boolean isExtended() {
         return extended;
     }
@@ -100,6 +103,7 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
      *
      * @param header A valid CAN header value
      */
+    @Override
     public void setHeader(int header) {
         if (isExtended()) {
             setHexDigit((header >> 28) & 0xF, 2);
@@ -117,6 +121,7 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
         }
     }
 
+    @Override
     public void setRtr(boolean rtr) {
         int offset = isExtended() ? 10 : 5;
         setElement(offset, rtr ? 'R' : 'N');
@@ -124,13 +129,14 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
 
     /**
      * Set a byte as two ASCII hex digits
-     * <P>
+     * <p>
      * Data bytes are encoded as two ASCII hex digits starting at byte 7 of the
      * message.
      *
      * @param val the value to set
      * @param n   the index of the byte to be set
      */
+    @Override
     public void setByte(int val, int n) {
         if ((n >= 0) && (n <= 7)) {
             int index = n * 2 + (isExtended() ? 11 : 6);
@@ -140,6 +146,7 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
     }
 
     // Set a hex digit at offset n in _dataChars
+    @Override
     protected void setHexDigit(int val, int n) {
         if ((val >= 0) && (val <= 15)) {
             if (val < 10) {
@@ -152,7 +159,6 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(GridConnectDoubledMessage.class.getName());
-}
+    private final static Logger log = LoggerFactory.getLogger(GridConnectDoubledMessage.class);
 
-/* @(#)GridConnectDoubledMessage.java */
+}

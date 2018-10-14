@@ -1,28 +1,35 @@
-/**
- * SerialMonFrameTest.java
- *
- * Description:	JUnit tests
- *
- * @author	Bob Jacobsen
- * @version
- */
 package jmri.jmrix.tmcc.serialmon;
 
+import java.awt.GraphicsEnvironment;
 import java.util.Vector;
 import jmri.jmrix.tmcc.SerialMessage;
 import jmri.jmrix.tmcc.SerialReply;
 import jmri.jmrix.tmcc.SerialTrafficController;
+import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SerialMonFrameTest extends TestCase {
+/**
+ * Tests for the jmri.jmrix.tmcc.serialmon.SerialMonFrame
+ * class
+ *
+ * @author Bob Jacobsen
+ */
+public class SerialMonFrameTest {
 
+    @Test
     public void testCreateAndShow() {
-        SerialMonFrame f = new SerialMonFrame();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        TmccSystemConnectionMemo memo = new TmccSystemConnectionMemo("T", "TMCC via Serial");
+        memo.setTrafficController(new SerialTrafficController(memo));
+        SerialMonFrame f = new SerialMonFrame(memo);
+        // MonFrame needs a TrafficController for dispose() in line 51
         try {
             f.initComponents();
         } catch (Exception ex) {
@@ -44,36 +51,43 @@ public class SerialMonFrameTest extends TestCase {
         f.dispose();
     }
 
-// Following are timing-specific, occasionally fail, so commented out    
-/*     public void testMsg() { */
-    /*         NceMessage m = new NceMessage(3); */
-    /*         m.setBinary(false); */
-    /*         m.setOpCode('L'); */
-    /*         m.setElement(1, '0'); */
-    /*         m.setElement(2, 'A'); */
-    /*          */
-    /*         NceMonFrame f = new NceMonFrame(); */
-    /*          */
-    /*         f.message(m); */
-    /*          */
-    /*         Assert.assertEquals("length ", "cmd: \"L0A\"\n".length(), f.getFrameText().length()); */
-    /*         Assert.assertEquals("display", "cmd: \"L0A\"\n", f.getFrameText()); */
-    /*     } */
-    /*      */
-    /*     public void testReply() { */
-    /*         NceReply m = new NceReply(); */
-    /*         m.setBinary(false); */
-    /*         m.setOpCode('C'); */
-    /*         m.setElement(1, 'o'); */
-    /*         m.setElement(2, ':'); */
-    /*          */
-    /*         NceMonFrame f = new NceMonFrame(); */
-    /*          */
-    /*         f.reply(m); */
-    /*          */
-    /*         Assert.assertEquals("display", "rep: \"Co:\"\n", f.getFrameText()); */
-    /*         Assert.assertEquals("length ", "rep: \"Co:\"\n".length(), f.getFrameText().length()); */
-    /*     } */
+    /*  When uncommented following cause compiler to fail
+    @Ignore("timing-specific, occasionally fail, so commented out")
+    @Test
+    public void testMsg() {
+        NceMessage m = new NceMessage(3);
+        m.setBinary(false);
+        m.setOpCode('L');
+        m.setElement(1, '0');
+        m.setElement(2, 'A');
+
+        NceMonFrame f = new NceMonFrame();
+
+        f.message(m);
+
+        Assert.assertEquals("length ", "cmd: \"L0A\"\n".length(), f.getFrameText().length());
+        Assert.assertEquals("display", "cmd: \"L0A\"\n", f.getFrameText());
+    }
+
+    @Ignore("timing-specific, occasionally fail, so commented out")
+    @Test
+    public void testReply() {
+        NceReply m = new NceReply();
+        m.setBinary(false);
+        m.setOpCode('C');
+        m.setElement(1, 'o');
+        m.setElement(2, ':');
+
+        NceMonFrame f = new NceMonFrame();
+
+        f.reply(m);
+
+        Assert.assertEquals("display", "rep: \"Co:\"\n", f.getFrameText());
+        Assert.assertEquals("length ", "rep: \"Co:\"\n".length(), f.getFrameText().length());
+    }
+     */
+    
+    @Test
     public void testWrite() {
 
         // infrastructure objects
@@ -86,18 +100,21 @@ public class SerialMonFrameTest extends TestCase {
     class SerialInterfaceScaffold extends SerialTrafficController {
 
         public SerialInterfaceScaffold() {
+            super(new TmccSystemConnectionMemo("T", "TMCC via Serial"));
         }
 
         // override some SerialInterfaceController methods for test purposes
+        @Override
         public boolean status() {
             return true;
         }
 
         /**
-         * record messages sent, provide access for making sure they are OK
+         * Record messages sent, provide access for making sure they are OK.
          */
         public Vector<SerialMessage> outbound = new Vector<SerialMessage>();  // public OK here, so long as this is a test class
 
+        @Override
         public void sendSerialMessage(SerialMessage m, jmri.jmrix.tmcc.SerialListener l) {
             if (log.isDebugEnabled()) {
                 log.debug("sendMessage [" + m + "]");
@@ -107,6 +124,7 @@ public class SerialMonFrameTest extends TestCase {
         }
 
         // test control member functions
+
         /**
          * forward a message to the listeners, e.g. test receipt
          */
@@ -128,7 +146,7 @@ public class SerialMonFrameTest extends TestCase {
             return;
         }
 
-        /*
+        /**
          * Check number of listeners, used for testing dispose()
          */
         public int numListeners() {
@@ -137,38 +155,19 @@ public class SerialMonFrameTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public SerialMonFrameTest(String s) {
-        super(s);
-    }
+    @Before
+    public void setUp() throws Exception {
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SerialMonFrameTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SerialMonFrameTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-
-        super.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
-    protected void tearDown() throws Exception {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
     }
-    
-    private final static Logger log = LoggerFactory.getLogger(SerialMonFrameTest.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(SerialMonFrameTest.class);
 
 }

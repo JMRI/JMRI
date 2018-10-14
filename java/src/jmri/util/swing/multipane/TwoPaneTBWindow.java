@@ -31,6 +31,10 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
 
     /**
      * Create and initialize a multi-pane GUI window.
+     *
+     * @param name        the name and title of the window
+     * @param menubarFile path to the XML file for the menubar
+     * @param toolbarFile path to the XML file for the toolbar
      */
     public TwoPaneTBWindow(String name, String menubarFile, String toolbarFile) {
         super(name);
@@ -184,8 +188,10 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Only close frame, etc, dispose() disposes of all cached panes
+     * Only close frame, etc.
+     * super.dispose() disposes of all cached panes.
      */
+    @Override
     public void dispose() {
         super.dispose();
     }
@@ -195,14 +201,17 @@ abstract public class TwoPaneTBWindow extends jmri.util.JmriJFrame {
      */
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
+    @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
 
+    @Override
     protected void firePropertyChange(String p, Object old, Object n) {
         if (pcs == null) {
             return;

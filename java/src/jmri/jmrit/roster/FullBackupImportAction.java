@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Reload the JMRI Roster ({@link jmri.jmrit.roster.Roster}) from a file
  * previously stored by {@link jmri.jmrit.roster.FullBackupExportAction}.
- *
+ * <p>
  * Does not currently handle importing the group(s) that the entry belongs to.
  *
  * @author Bob Jacobsen Copyright 2014
@@ -48,6 +48,7 @@ public class FullBackupImportAction extends ImportRosterItemAction {
         super(title, parent);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         // ensure preferences will be found for read
@@ -60,24 +61,25 @@ public class FullBackupImportAction extends ImportRosterItemAction {
         ZipInputStream zipper = null;
         FileInputStream inputfile = null;
 
+        JFileChooser chooser = new JFileChooser();
+
+        String roster_filename_extension = "roster";
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "JMRI full roster files", roster_filename_extension);
+        chooser.addChoosableFileFilter(filter);
+
+        int returnVal = chooser.showOpenDialog(mParent);
+        if (returnVal != JFileChooser.APPROVE_OPTION) {
+            return;
+        }
+
+        String filename = chooser.getSelectedFile().getAbsolutePath();
+
         try {
-
-            JFileChooser chooser = new JFileChooser();
-
-            String roster_filename_extension = "roster";
-            FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                    "JMRI full roster files", roster_filename_extension);
-            chooser.addChoosableFileFilter(filter);
-
-            int returnVal = chooser.showOpenDialog(mParent);
-            if (returnVal != JFileChooser.APPROVE_OPTION) {
-                return;
-            }
-
-            String filename = chooser.getSelectedFile().getAbsolutePath();
 
             inputfile = new FileInputStream(filename);
             zipper = new ZipInputStream(inputfile) {
+                @Override
                 public void close() {
                 } // SaxReader calls close when reading XML stream, ignore
                 // and close directly later
@@ -112,7 +114,7 @@ public class FullBackupImportAction extends ImportRosterItemAction {
                             null,
                             new Object[]{Bundle.getMessage("CancelImports"),
                                 Bundle.getMessage("Skip"),
-                                Bundle.getMessage("OK")},
+                                Bundle.getMessage("ButtonOK")},
                             null);
                     if (retval == 0) {
                         break;
@@ -133,7 +135,7 @@ public class FullBackupImportAction extends ImportRosterItemAction {
                                 null,
                                 new Object[]{Bundle.getMessage("CancelImports"),
                                     Bundle.getMessage("Skip"),
-                                    Bundle.getMessage("OK")},
+                                    Bundle.getMessage("ButtonOK")},
                                 null);
                         if (retval == 0) {
                             break;
@@ -157,20 +159,20 @@ public class FullBackupImportAction extends ImportRosterItemAction {
                     // use the new roster
                     Roster.getDefault().reloadRosterFile();
                 } catch (org.jdom2.JDOMException ex) {
-                    ex.printStackTrace();
+                    log.error("Unable to parse entry", ex);
                 }
             }
 
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
+            log.error("Unable to find {}", filename, ex);
         } catch (IOException ex) {
-            ex.printStackTrace();
+            log.error("Unable to read {}", filename, ex);
         } finally {
             if (inputfile != null) {
                 try {
                     inputfile.close(); // zipper.close() is meaningless, see above, but this will do
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    log.error("Unable to close {}", filename, ex);
                 }
             }
         }

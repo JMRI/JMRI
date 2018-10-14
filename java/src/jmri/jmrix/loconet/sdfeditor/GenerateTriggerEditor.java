@@ -1,4 +1,3 @@
-// GenerateTriggerEditor.java
 package jmri.jmrix.loconet.sdfeditor;
 
 import javax.swing.JLabel;
@@ -8,15 +7,9 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
  * Editor panel for the GENERATE_TRIGGER macro from the Digitrax sound
  * definition language
  *
- * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 class GenerateTriggerEditor extends SdfMacroEditor {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4809270548383400410L;
 
     public GenerateTriggerEditor(SdfMacro inst) {
         super(inst);
@@ -29,5 +22,3 @@ class GenerateTriggerEditor extends SdfMacroEditor {
     }
 
 }
-
-/* @(#)GenerateTriggerEditor.java */

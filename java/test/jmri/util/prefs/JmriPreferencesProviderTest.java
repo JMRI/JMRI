@@ -9,109 +9,112 @@ import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import jmri.profile.Profile;
 import jmri.util.FileUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TestName;
 
 /**
  *
- * @author Randall Wood 2015
+ * @author Randall Wood Copyright 2015, 2017
  */
-public class JmriPreferencesProviderTest extends TestCase {
-    
+public class JmriPreferencesProviderTest {
+
+    @Rule
+    public TestName name = new TestName();
     private Path workspace;
-    
-    public JmriPreferencesProviderTest(String testName) {
-        super(testName);
-    }
-    
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        this.workspace = Files.createTempDirectory(this.getName());
-    }
-    
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-        FileUtil.delete(this.workspace.toFile());
+
+    @Before
+    public void setUp() throws IOException {
+        JUnitUtil.setUp();
+        this.workspace = Files.createTempDirectory(this.getClass().getSimpleName());
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JmriPreferencesProviderTest.class);
-        return suite;
+    @After
+    public void tearDown() {
+        FileUtil.delete(this.workspace.toFile());
+        JUnitUtil.tearDown();
     }
 
     /**
      * Test of findProvider method, of class JmriPreferencesProvider.
+     *
      * @throws java.io.IOException
      */
+    @Test
     public void testFindProvider() throws IOException {
         String id = Long.toString((new Date()).getTime());
-        Profile p = new Profile(this.getName(), id, new File(this.workspace.toFile(), id));
+        Profile p = new Profile(name.getMethodName(), id, new File(this.workspace.toFile(), id));
         JmriPreferencesProvider shared = JmriPreferencesProvider.findProvider(p.getPath(), true);
         JmriPreferencesProvider privat = JmriPreferencesProvider.findProvider(p.getPath(), false);
-        assertNotNull(shared);
-        assertNotNull(privat);
-        assertNotSame(shared, privat);
+        Assert.assertNotNull(shared);
+        Assert.assertNotNull(privat);
+        Assert.assertNotSame(shared, privat);
         FileUtil.delete(p.getPath());
     }
 
     /**
      * Test of getPreferences method, of class JmriPreferencesProvider.
+     *
      * @throws java.io.IOException
      */
+    @Test
     public void testGetPreferences() throws IOException {
         String id = Long.toString((new Date()).getTime());
-        Profile project = new Profile(this.getName(), id, new File(this.workspace.toFile(), id));
+        Profile project = new Profile(name.getMethodName(), id, new File(this.workspace.toFile(), id));
         Class<?> clazz = this.getClass();
         Preferences shared = JmriPreferencesProvider.getPreferences(project, clazz, true);
         Preferences privat = JmriPreferencesProvider.getPreferences(project, clazz, false);
-        assertNotNull(shared);
-        assertNotNull(privat);
-        assertNotSame(shared, privat);
+        Assert.assertNotNull(shared);
+        Assert.assertNotNull(privat);
+        Assert.assertNotSame(shared, privat);
         try {
-            assertEquals(shared.keys().length, 0);
+            Assert.assertEquals(shared.keys().length, 0);
         } catch (BackingStoreException ex) {
-            assertNotNull(ex);
+            Assert.assertNotNull(ex);
         }
         try {
-            assertEquals(privat.keys().length, 0);
+            Assert.assertEquals(privat.keys().length, 0);
         } catch (BackingStoreException ex) {
-            assertNotNull(ex);
+            Assert.assertNotNull(ex);
         }
         FileUtil.delete(project.getPath());
     }
 
     /**
      * Test of isFirstUse method, of class JmriPreferencesProvider.
+     *
      * @throws java.io.IOException
      */
+    @Test
     public void testIsFirstUse() throws IOException {
         String id = Long.toString((new Date()).getTime());
-        Profile project = new Profile(this.getName(), id, new File(this.workspace.toFile(), id));
+        Profile project = new Profile(name.getMethodName(), id, new File(this.workspace.toFile(), id));
         JmriPreferencesProvider shared = JmriPreferencesProvider.findProvider(project.getPath(), true);
-        assertEquals(shared.isFirstUse(), true);
+        Assert.assertEquals(shared.isFirstUse(), true);
         Preferences prefs = shared.getPreferences(this.getClass());
         prefs.put("test", "test");
         try {
             prefs.flush(); // force write
         } catch (BackingStoreException ex) {
-            assertNull(ex);
+            Assert.assertNull(ex);
         }
         shared = new JmriPreferencesProvider(project.getPath(), true);
-        assertEquals(shared.isFirstUse(), false);
+        Assert.assertEquals(shared.isFirstUse(), false);
     }
 
     /**
      * Test of findCNBForClass method, of class JmriPreferencesProvider.
      */
+    @Test
     public void testFindCNBForClass() {
         Class<?> cls = this.getClass();
         String expResult = "jmri-util-prefs";
         String result = JmriPreferencesProvider.findCNBForClass(cls);
-        assertEquals(expResult, result);
+        Assert.assertEquals(expResult, result);
     }
-    
+
 }

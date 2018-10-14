@@ -6,8 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a XpaConfigureFrame object
- * <P>
+ * Swing action to create and register a XpaConfigureFrame object.
+ *
  * @author	Paul Bender Copyright (C) 2004
  */
 public class XpaConfigureAction extends AbstractAction {
@@ -19,6 +19,7 @@ public class XpaConfigureAction extends AbstractAction {
         memo = m;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         XpaConfigureFrame f = new XpaConfigureFrame(memo);
         try {
@@ -28,8 +29,7 @@ public class XpaConfigureAction extends AbstractAction {
         }
         f.setVisible(true);
     }
-    private final static Logger log = LoggerFactory.getLogger(XpaConfigureAction.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(XpaConfigureAction.class);
+
 }
-
-
-/* @(#)XpaPacketGenAction.java */

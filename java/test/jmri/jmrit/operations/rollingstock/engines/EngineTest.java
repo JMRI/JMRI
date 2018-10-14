@@ -1,16 +1,18 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations RollingStock Engine class Last manually
  * cross-checked on 20090131
- *
+ * <p>
  * Still to do: Engine: Destination Engine: Verify everything else EngineTypes:
  * get/set Names lists EngineModels: get/set Names lists EngineLengths:
  * Everything Consist: Everything Import: Everything EngineManager: Engine
@@ -20,22 +22,25 @@ import junit.framework.TestSuite;
  */
 public class EngineTest extends OperationsTestCase {
 
-     // test constroctors.
+    // test constroctors.
+    @Test
     public void test2ParmCtor() {
-      // test the constructor with roadname and roadnumer as parameters.
-      Engine e1 = new Engine("TESTROAD", "TESTNUMBER1");
-      Assert.assertNotNull("Two parameter Constructor",e1);
+        // test the constructor with roadname and roadnumer as parameters.
+        Engine e1 = new Engine("TESTROAD", "TESTNUMBER1");
+        Assert.assertNotNull("Two parameter Constructor", e1);
 
-      Assert.assertEquals("Engine Road", "TESTROAD", e1.getRoadName());
-      Assert.assertEquals("Engine Number", "TESTNUMBER1", e1.getNumber());
-      Assert.assertEquals("Engine ID", "TESTROAD" + "TESTNUMBER1", e1.getId());
+        Assert.assertEquals("Engine Road", "TESTROAD", e1.getRoadName());
+        Assert.assertEquals("Engine Number", "TESTNUMBER1", e1.getNumber());
+        Assert.assertEquals("Engine ID", "TESTROAD" + "TESTNUMBER1", e1.getId());
     }
-    public void testXmlConstructor(){
-       // test the constructor loading this car from an XML element.
 
-       // first, we need to build the XML element.
-       org.jdom2.Element e = new org.jdom2.Element("engines");
-       // set the rolling stock generic attributes.
+    @Test
+    public void testXmlConstructor() {
+        // test the constructor loading this car from an XML element.
+
+        // first, we need to build the XML element.
+        org.jdom2.Element e = new org.jdom2.Element("engines");
+        // set the rolling stock generic attributes.
         e.setAttribute("id", "TESTID");
         e.setAttribute("roadName", "TESTROAD1");
         e.setAttribute("roadNumber", "TESTNUMBER1");
@@ -45,39 +50,39 @@ public class EngineTest extends OperationsTestCase {
         e.setAttribute("weight", "TESTWEIGHT");
         e.setAttribute("weightTons", "TESTWEIGHTTONS");
         e.setAttribute("built", "TESTBUILT");
-        e.setAttribute("locationId","TESTLOCATION");
+        e.setAttribute("locationId", "TESTLOCATION");
         e.setAttribute("routeLocationId", "TESTROUTELOCATION");
         e.setAttribute("secLocationId", "TESTTRACK");
         e.setAttribute("destinationId", "TESTDESTINATION");
         e.setAttribute("routeDestinationId", "TESTROUTEDESTINATION");
         e.setAttribute("secDestionationId", "TESTDESTINATIONTRACK");
         e.setAttribute("lastRouteId", "SAVEDROUTE");
-        e.setAttribute("moves","5");
+        e.setAttribute("moves", "5");
 
         e.setAttribute("date", "2015/05/15 15:15:15");
-        e.setAttribute("selected",Xml.FALSE);
+        e.setAttribute("selected", Xml.FALSE);
         e.setAttribute("lastLocationId", "TESTLASTLOCATION");
         e.setAttribute("train", "TESTTRAIN");
         e.setAttribute("owner", "TESTOWNER");
         e.setAttribute("value", "TESTVALUE");
-        e.setAttribute("rifd","12345");
-        e.setAttribute("locUnknown",Xml.FALSE);
+        e.setAttribute("rifd", "12345");
+        e.setAttribute("locUnknown", Xml.FALSE);
         e.setAttribute("outOfService", Xml.FALSE);
         e.setAttribute("blocking", "5");
-        e.setAttribute("comment","Test Comment");
+        e.setAttribute("comment", "Test Comment");
 
         // set the engine specific attributes
-
         try {
-           Engine e1 = new Engine(e);
-           Assert.assertNotNull("Xml Element Constructor",e1);
-        } catch(java.lang.NullPointerException npe) {
-           Assert.fail("Null Pointer Exception while executing Xml Element Constructor");
+            Engine e1 = new Engine(e);
+            Assert.assertNotNull("Xml Element Constructor", e1);
+        } catch (java.lang.NullPointerException npe) {
+            Assert.fail("Null Pointer Exception while executing Xml Element Constructor");
         }
     }
 
     // test Engine Class
     // test Engine creation
+    @Test
     public void testCreate() {
         Engine e1 = new Engine("TESTROAD", "TESTNUMBER1");
         e1.setModel("TESTMODEL");
@@ -89,6 +94,7 @@ public class EngineTest extends OperationsTestCase {
         Assert.assertEquals("Engine Length", "TESTLENGTH", e1.getLength());
     }
 
+    @Test
     public void testSetLocation() {
         Engine e1 = new Engine("TESTROAD", "TESTNUMBER1");
         e1.setModel("TESTMODEL");
@@ -100,8 +106,8 @@ public class EngineTest extends OperationsTestCase {
         Track l2t1 = l2.addTrack("B", Track.SPUR);
         Location l3 = new Location("id3", "A");
         Track l3t1 = l3.addTrack("B", Track.SPUR);
- 
-       // add track lengths
+
+        // add track lengths
         l1t1.setLength(100);
         l1t1.setLength(100);
         l3t1.setLength(100);
@@ -113,7 +119,7 @@ public class EngineTest extends OperationsTestCase {
         l2t1.addTypeName("Diesel");
         l3t1.addTypeName("Diesel");
 
-        EngineTypes et = EngineTypes.instance();
+        EngineTypes et = InstanceManager.getDefault(EngineTypes.class);
         et.addName("Diesel");
 
         e1.setTypeName("Diesel");
@@ -121,11 +127,11 @@ public class EngineTest extends OperationsTestCase {
         // place engines on tracks
         Assert.assertEquals("place e1", Track.OKAY, e1.setLocation(l1, l1t1));
         // check for failure too.
-        Assert.assertFalse("fail place e1", Track.OKAY==e1.setLocation(l3, l2t1));
-
+        Assert.assertFalse("fail place e1", Track.OKAY == e1.setLocation(l3, l2t1));
 
     }
 
+    @Test
     public void testSetDestination() {
         Engine e1 = new Engine("TESTROAD", "TESTNUMBER1");
         e1.setModel("TESTMODEL");
@@ -150,48 +156,31 @@ public class EngineTest extends OperationsTestCase {
         l2t1.addTypeName("Diesel");
         l3t1.addTypeName("Diesel");
 
-        EngineTypes et = EngineTypes.instance();
+        EngineTypes et = InstanceManager.getDefault(EngineTypes.class);
         et.addName("Diesel");
 
         e1.setTypeName("Diesel");
 
-        e1.setLocation(l2,l2t1);
+        e1.setLocation(l2, l2t1);
 
         // set destination.
         Assert.assertEquals("destination set e1", Track.OKAY, e1.setDestination(l1, l1t1));
         // check for failure too.
-        Assert.assertFalse("fail to set destination e1", Track.OKAY==e1.setDestination(l3, l1t1));
+        Assert.assertFalse("fail to set destination e1", Track.OKAY == e1.setDestination(l3, l1t1));
     }
-
-
 
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
     }
 
-    public EngineTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", EngineTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(EngineTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
-       super.tearDown();
+    @After
+    public void tearDown() {
+        super.tearDown();
     }
-
 
 }

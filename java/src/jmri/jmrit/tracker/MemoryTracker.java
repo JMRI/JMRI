@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tracks train into memory object
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class MemoryTracker {
 
@@ -25,6 +25,7 @@ public class MemoryTracker {
         namedMemory = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(namePrefix + block.getSystemName(), m);
         // set listener in the block
         block.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
                 handleChange();
             }
@@ -49,5 +50,5 @@ public class MemoryTracker {
     //Memory m;
     Block block;
 
-    private final static Logger log = LoggerFactory.getLogger(MemoryTracker.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryTracker.class);
 }

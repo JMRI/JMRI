@@ -5,7 +5,7 @@ import javax.swing.BoxLayout;
 /**
  * Frame for uploading debugging information
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public class ReportFrame extends jmri.util.JmriJFrame {
 
@@ -14,7 +14,7 @@ public class ReportFrame extends jmri.util.JmriJFrame {
     }
 
     @Override
-    public void initComponents() throws Exception {
+    public void initComponents() {
 
         setTitle(java.util.ResourceBundle.getBundle("jmri.jmrit.mailreport.ReportBundle").getString("Title"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));

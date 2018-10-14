@@ -149,6 +149,6 @@ public class CoreIdRfidProtocol extends RfidProtocol {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(CoreIdRfidProtocol.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(CoreIdRfidProtocol.class);
 
 }

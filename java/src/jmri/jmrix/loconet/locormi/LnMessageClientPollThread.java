@@ -6,19 +6,20 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Alex Shepherd Copyright (c) 2002
- * @version $Revision$
  */
 class LnMessageClientPollThread extends Thread {
 
     LnMessageClient parent = null;
-    private final static Logger log = LoggerFactory.getLogger(LnMessageClientPollThread.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnMessageClientPollThread.class);
 
     LnMessageClientPollThread(LnMessageClient lnParent) {
         parent = lnParent;
         this.setDaemon(true);
+        this.setName("LnMessageClientPollThread "+lnParent);
         this.start();
     }
 
+    @Override
     public void run() {
         try {
             Object[] lnMessages = null;
@@ -27,7 +28,7 @@ class LnMessageClientPollThread extends Thread {
 
                 if (lnMessages != null) {
 
-                    log.debug("Recieved Message Array Size: " + lnMessages.length);
+                    log.debug("Received Message Array Size: {}", lnMessages.length);
                     for (int lnMessageIndex = 0; lnMessageIndex < lnMessages.length; lnMessageIndex++) {
                         LocoNetMessage message = (LocoNetMessage) lnMessages[lnMessageIndex];
                         parent.message(message);
@@ -35,7 +36,7 @@ class LnMessageClientPollThread extends Thread {
                 }
             }
         } catch (Exception ex) {
-            log.warn("Exception: " + ex);
+            log.warn("Exception: ", ex);
         }
     }
 }

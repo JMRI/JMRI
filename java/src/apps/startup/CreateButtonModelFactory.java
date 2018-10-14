@@ -1,11 +1,13 @@
 package apps.startup;
 
 import apps.CreateButtonModel;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Randall Wood 2016
  */
+@ServiceProvider(service = StartupModelFactory.class)
 public class CreateButtonModelFactory extends AbstractActionModelFactory {
 
     public CreateButtonModelFactory() {

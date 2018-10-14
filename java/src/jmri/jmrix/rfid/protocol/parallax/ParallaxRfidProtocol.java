@@ -88,6 +88,6 @@ public class ParallaxRfidProtocol extends RfidProtocol {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ParallaxRfidProtocol.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ParallaxRfidProtocol.class);
 
 }

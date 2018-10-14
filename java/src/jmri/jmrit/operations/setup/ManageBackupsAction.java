@@ -1,4 +1,3 @@
-// ManageAutoBackupsAction.java
 package jmri.jmrit.operations.setup;
 
 import java.awt.event.ActionEvent;
@@ -15,7 +14,7 @@ import javax.swing.AbstractAction;
  */
 public class ManageBackupsAction extends AbstractAction {
 
-//    private final static Logger log = LoggerFactory.getLogger(ManageBackupsAction.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(ManageBackupsAction.class);
 
     public ManageBackupsAction(String s) {
         super(s);

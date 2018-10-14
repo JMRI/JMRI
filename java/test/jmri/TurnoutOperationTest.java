@@ -1,12 +1,11 @@
 package jmri;
 
-import org.junit.Assert;
+import jmri.implementation.AbstractTurnout;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.util.JUnitUtil;
-import jmri.implementation.AbstractTurnout;
+import org.junit.Assert;
 
 /**
  * Tests for the TurnoutOperation class
@@ -17,18 +16,27 @@ public class TurnoutOperationTest extends TestCase {
 
     public void testEquals() {
         TurnoutOperation to1 = new TurnoutOperation("to1"){
+            @Override
             public TurnoutOperation makeCopy(String n) { return null; }
+            @Override
             public boolean equivalentTo(TurnoutOperation other) { return true; }
+            @Override
             public TurnoutOperator getOperator(AbstractTurnout t) { return null; }
         };
         TurnoutOperation to2 = new TurnoutOperation("to2"){
+            @Override
             public TurnoutOperation makeCopy(String n) { return null; }
+            @Override
             public boolean equivalentTo(TurnoutOperation other) { return true; }
+            @Override
             public TurnoutOperator getOperator(AbstractTurnout t) { return null; }
         };
         TurnoutOperation to2a = new TurnoutOperation("to2"){
+            @Override
             public TurnoutOperation makeCopy(String n) { return null; }
+            @Override
             public boolean equivalentTo(TurnoutOperation other) { return true; }
+            @Override
             public TurnoutOperator getOperator(AbstractTurnout t) { return null; }
         };
         
@@ -61,18 +69,18 @@ public class TurnoutOperationTest extends TestCase {
 
     // The minimal setup for log4J
 
+    @Override
     protected void setUp() throws Exception { 
-        apps.tests.Log4JFixture.setUp(); 
+        jmri.util.JUnitUtil.setUp(); 
         super.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
     }
 
+    @Override
     protected void tearDown() throws Exception { 
         super.tearDown();
-        apps.tests.Log4JFixture.tearDown(); 
-        JUnitUtil.resetTurnoutOperationManager();
-        JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.tearDown(); 
     }
 
 }

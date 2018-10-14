@@ -1,22 +1,21 @@
 package jmri.jmrix.rps;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * JUnit tests for the rps.Measurement class.
  *
  * @author	Bob Jacobsen Copyright 2006
- * @version	$Revision$
- */
+  */
 public class MeasurementTest extends TestCase {
 
     public void testCtorAndID() {
         Reading r = new Reading("21", new double[]{0., 0., 0.});
         Measurement m = new Measurement(r);
-        Assert.assertEquals("ID ok", "21", m.getID());
+        Assert.assertEquals("ID ok", "21", m.getId());
     }
 
     // from here down is testing infrastructure

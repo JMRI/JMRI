@@ -1,4 +1,3 @@
-// TrainManifest.java
 package jmri.jmrit.operations.trains;
 
 import java.io.BufferedWriter;
@@ -9,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * to their liking.
  *
  * @author Daniel Boudreau Copyright (C) 2011, 2012, 2013, 2015
- * @version $Revision: 1 $
+ *
  */
 public class TrainManifest extends TrainCommon {
 
@@ -37,7 +37,7 @@ public class TrainManifest extends TrainCommon {
 
     public TrainManifest(Train train) {
         // create manifest file
-        File file = TrainManagerXml.instance().createTrainManifestFile(train.getName());
+        File file = InstanceManager.getDefault(TrainManagerXml.class).createTrainManifestFile(train.getName());
         PrintWriter fileOut;
 
         try {
@@ -63,8 +63,7 @@ public class TrainManifest extends TrainCommon {
                     new Object[]{getDate(true)});
 
             if (Setup.isPrintTimetableNameEnabled()) {
-                TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(
-                        TrainManager.instance().getTrainScheduleActiveId());
+                TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getActiveSchedule();
                 if (sch != null) {
                     valid = valid + " (" + sch.getName() + ")";
                 }
@@ -244,7 +243,7 @@ public class TrainManifest extends TrainCommon {
                         if (train.isShowArrivalAndDepartureTimesEnabled()) {
                             if (rl == train.getRoute().getDepartsRouteLocation()) {
                                 s += MessageFormat.format(messageFormatText = TrainManifestText
-                                        .getStringDepartTime(), new Object[]{train.getDepartureTime()});
+                                        .getStringDepartTime(), new Object[]{train.getFormatedDepartureTime()});
                             } else if (!rl.getDepartureTime().equals(RouteLocation.NONE)) {
                                 s += MessageFormat.format(messageFormatText = TrainManifestText
                                         .getStringDepartTime(), new Object[]{rl.getFormatedDepartureTime()});
@@ -282,7 +281,7 @@ public class TrainManifest extends TrainCommon {
             newLine(fileOut, MessageFormat.format(Bundle.getMessage("ErrorIllegalArgument"), new Object[]{
                     Bundle.getMessage("TitleManifestText"), e.getLocalizedMessage()}));
             newLine(fileOut, messageFormatText);
-            e.printStackTrace();
+            log.error("Illegal argument", e);
         }
 
         fileOut.flush();
@@ -313,7 +312,9 @@ public class TrainManifest extends TrainCommon {
     }
 
     private void newLine(PrintWriter file, String string) {
-        newLine(file, string, IS_MANIFEST);
+        if (!string.isEmpty()) {
+            newLine(file, string, IS_MANIFEST);
+        }
     }
 
 }

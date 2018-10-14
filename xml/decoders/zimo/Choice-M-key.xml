@@ -17,6 +17,7 @@
         <choice>None</choice>
         <choice xml:lang="it">Nessuna</choice>
         <choice xml:lang="de">keine</choice>
+        <choice xml:lang="cs">Žádný</choice>
       </enumChoice>
       <enumChoice choice="F0" value="29">
         <choice>F0</choice>
@@ -107,89 +108,118 @@
       </enumChoice>
       <enumChoice choice="F0" value="157">
         <choice>F0 + F-key</choice>
+        <choice xml:lang="cs">F0 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F1" value="129">
         <choice>F1 + F-key</choice>
+        <choice xml:lang="cs">F1 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F2">
         <choice>F2 + F-key</choice>
+        <choice xml:lang="cs">F2 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F3">
         <choice>F3 + F-key</choice>
+        <choice xml:lang="cs">F3 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F4">
         <choice>F4 + F-key</choice>
+        <choice xml:lang="cs">F4 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F5">
         <choice>F5 + F-key</choice>
+        <choice xml:lang="cs">F5 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F6">
         <choice>F6 + F-key</choice>
+        <choice xml:lang="cs">F6 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F7">
         <choice>F7 + F-key</choice>
+        <choice xml:lang="cs">F7 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F8">
         <choice>F8 + F-key</choice>
+        <choice xml:lang="cs">F8 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F9">
         <choice>F9 + F-key</choice>
+        <choice xml:lang="cs">F9 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F10">
         <choice>F10 + F-key</choice>
+        <choice xml:lang="cs">F10 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F11">
         <choice>F11 + F-key</choice>
+        <choice xml:lang="cs">F11 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F12">
         <choice>F12 + F-key</choice>
+        <choice xml:lang="cs">F12 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F13">
         <choice>F13 + F-key</choice>
+        <choice xml:lang="cs">F13 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F14">
         <choice>F14 + F-key</choice>
+        <choice xml:lang="cs">F14 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F15">
         <choice>F15 + F-key</choice>
+        <choice xml:lang="cs">F15 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F16">
         <choice>F16 + F-key</choice>
+        <choice xml:lang="cs">F16 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F17">
         <choice>F17 + F-key</choice>
+        <choice xml:lang="cs">F17 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F18">
         <choice>F18 + F-key</choice>
+        <choice xml:lang="cs">F18 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F19">
         <choice>F19 + F-key</choice>
+        <choice xml:lang="cs">F19 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F20">
         <choice>F20 + F-key</choice>
+        <choice xml:lang="cs">F20 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F21">
         <choice>F21 + F-key</choice>
+        <choice xml:lang="cs">F21 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F22">
         <choice>F22 + F-key</choice>
+        <choice xml:lang="cs">F22 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F23">
         <choice>F23 + F-key</choice>
+        <choice xml:lang="cs">F23 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F24">
         <choice>F24 + F-key</choice>
+        <choice xml:lang="cs">F24 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F25">
         <choice>F25 + F-key</choice>
+        <choice xml:lang="cs">F25 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F26">
         <choice>F26 + F-key</choice>
+        <choice xml:lang="cs">F26 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F27">
         <choice>F27 + F-key</choice>
+        <choice xml:lang="cs">F27 + F-klávesa</choice>
       </enumChoice>
       <enumChoice choice="F28">
         <choice>F28 + F-key</choice>
+        <choice xml:lang="cs">F28 + F-klávesa</choice>
       </enumChoice>
 </enumChoiceGroup>

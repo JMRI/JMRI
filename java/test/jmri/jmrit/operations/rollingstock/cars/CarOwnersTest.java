@@ -1,10 +1,12 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import javax.swing.JComboBox;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations RollingStock Cars class Last manually cross-checked
@@ -14,8 +16,9 @@ import junit.framework.TestSuite;
  */
 public class CarOwnersTest extends OperationsTestCase {
 
-    public void testCarOwners() {
-        CarOwners co1 = CarOwners.instance();
+    @Test
+    public void testAddAndDeleteCarOwners() {
+        CarOwners co1 = InstanceManager.getDefault(CarOwners.class);
 
         co1.addName("Rich Guy 1");
         Assert.assertTrue("Car Owner Add", co1.containsName("Rich Guy 1"));
@@ -38,28 +41,14 @@ public class CarOwnersTest extends OperationsTestCase {
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
     }
 
-    public CarOwnersTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", CarOwnersTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(CarOwnersTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
-       super.tearDown();
+    @After
+    public void tearDown() {
+        super.tearDown();
     }
 }

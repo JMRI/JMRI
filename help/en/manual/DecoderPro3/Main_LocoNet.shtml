@@ -455,10 +455,6 @@
       <h4>Limitations</h4>Because of the way the DS64 board works,
       this tool can't change the basic address of the unit.
 
-      <p>At present, DS64 routes cannot be programmed by this tool.
-      It's possible, but nobody has written the code for it yet
-      because JMRI routes are more powerful and easier to use.</p>
-
       <p style="text-align: center;"><img src=
       "images/Main_Loconet07.png" alt="DS64 Programmer" border="4"
       height="624" width="466"></p>

@@ -17,8 +17,7 @@ import jmri.managers.DefaultPowerManager;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
- */
+  */
 public class PowerManagerScaffold extends DefaultPowerManager {
 
     @Override

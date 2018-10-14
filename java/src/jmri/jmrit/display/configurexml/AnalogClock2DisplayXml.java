@@ -1,9 +1,10 @@
 package jmri.jmrit.display.configurexml;
 
+import java.awt.Color;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.AnalogClock2Display;
-import jmri.jmrit.display.AnalogClock2Display.Colors;
 import jmri.jmrit.display.Editor;
+import jmri.util.ColorUtil;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,8 +40,8 @@ public class AnalogClock2DisplayXml
         element.setAttribute("x", "" + p.getX());
         element.setAttribute("y", "" + p.getY());
         element.setAttribute("scale", "" + p.getScale());
-        element.setAttribute("color", "" + p.getColor().name());
-        String link = p.getUrl();
+        element.setAttribute("color", "" + ColorUtil.colorToColorName(p.getColor()));
+        String link = p.getURL();
         if (link != null && link.trim().length() > 0) {
             element.setAttribute("link", link);
         }
@@ -73,7 +74,7 @@ public class AnalogClock2DisplayXml
         int x = 0;
         int y = 0;
         double scale = 1.0;
-        Colors color = Colors.Black;
+        Color color = Color.black;
         try {
             x = element.getAttribute("x").getIntValue();
             y = element.getAttribute("y").getIntValue();
@@ -81,13 +82,13 @@ public class AnalogClock2DisplayXml
                 scale = element.getAttribute("scale").getDoubleValue();
             }
             if (element.getAttribute("color") != null) {
-                color = Colors.valueOf(element.getAttribute("color").getValue());
+                color = ColorUtil.stringToColor(element.getAttribute("color").getValue());
             }
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert positional attribute");
         }
         if (element.getAttribute("link") != null) {
-            l.setUrl(element.getAttribute("link").getValue());
+            l.setULRL(element.getAttribute("link").getValue());
         }
         l.setOpaque(false);
         l.update();
@@ -102,5 +103,5 @@ public class AnalogClock2DisplayXml
         ed.putItem(l);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AnalogClock2DisplayXml.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AnalogClock2DisplayXml.class);
 }

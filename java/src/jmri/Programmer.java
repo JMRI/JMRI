@@ -9,8 +9,8 @@ import javax.annotation.Nonnull;
  * <P>
  * Programmers come in multiple types:
  * <UL>
- * <LI>Global, previously Service Mode, e.g. on a programming track
- * <LI>Addressed, previously Ops Mode, e.g. "programming on the main"
+ * <LI>Global, previously "Service Mode" or on a programming track
+ * <LI>Addressed, previously "Ops Mode" also known as "programming on the main"
  * </UL>
  * Different equipment may also require different programmers:
  * <ul>
@@ -23,8 +23,9 @@ import javax.annotation.Nonnull;
  * Depending on which type you have, only certain modes can be set. Valid modes
  * are specified by the class static constants.
  * <P>
- * You get a Programmer object from a {@link ProgrammerManager}, which in turn
- * can be located from the {@link InstanceManager}.
+ * You get a Programmer object from a {@link GlobalProgrammerManager} or an
+ * {@link AddressedProgrammerManager}, which in turn can be located from the
+ * {@link InstanceManager}.
  * <p>
  * Starting in JMRI 3.5.5, the CV addresses are Strings for generality. The
  * methods that use ints for CV addresses will later be deprecated.
@@ -39,8 +40,9 @@ import javax.annotation.Nonnull;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @see jmri.ProgrammerManager
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2013
+ * @see jmri.GlobalProgrammerManager
+ * @see jmri.AddressedProgrammerManager
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2013
  */
 public interface Programmer {
 
@@ -51,7 +53,10 @@ public interface Programmer {
      * Handles the legacy DCC case of a single-number address space.
      * <P>
      * Note that this returns before the write is complete; you have to provide
-     * a ProgListener to hear about completion. The exceptions will only be
+     * a ProgListener to hear about completion. For simplicity, expect the return to be on the 
+     * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">GUI thread</a>.
+     * <p>
+     * Exceptions will only be
      * thrown at the start, not during the actual programming sequence. A
      * typical exception would be due to an invalid mode (though that should be
      * prevented earlier)
@@ -63,7 +68,7 @@ public interface Programmer {
      * @deprecated As of 4.1.1, use #writeCV(java.lang.String, int,
      * jmri.ProgListener)
      */
-    @Deprecated
+    @Deprecated // 4.1.1
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException;
 
     /**
@@ -74,7 +79,10 @@ public interface Programmer {
      * defines the acceptable formats.
      * <P>
      * Note that this returns before the write is complete; you have to provide
-     * a ProgListener to hear about completion. The exceptions will only be
+     * a ProgListener to hear about completion. For simplicity, expect the return to be on the 
+     * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">GUI thread</a>.
+     * <p>
+     * Exceptions will only be
      * thrown at the start, not during the actual programming sequence. A
      * typical exception would be due to an invalid mode (though that should be
      * prevented earlier)
@@ -92,10 +100,13 @@ public interface Programmer {
      * <P>
      * Handles the legacy DCC case of a single-number address space.
      * <P>
-     * Note that this returns before the read is complete; you have to provide a
-     * ProgListener to hear about completion. The exceptions will only be thrown
-     * at the start, not during the actual programming sequence. A typical
-     * exception would be due to an invalid mode (though that should be
+     * Note that this returns before the write is complete; you have to provide
+     * a ProgListener to hear about completion. For simplicity, expect the return to be on the 
+     * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">GUI thread</a>.
+     * <p>
+     * Exceptions will only be
+     * thrown at the start, not during the actual programming sequence. A
+     * typical exception would be due to an invalid mode (though that should be
      * prevented earlier)
      *
      * @param CV the CV to read
@@ -104,7 +115,7 @@ public interface Programmer {
      * @deprecated As of 4.1.1, use #readCV(java.lang.String, int,
      * jmri.ProgListener)
      */
-    @Deprecated
+    @Deprecated // 4.1.1
     public void readCV(int CV, ProgListener p) throws ProgrammerException;
 
     /**
@@ -114,10 +125,13 @@ public interface Programmer {
      * Handles a general address space through a String address. Each programmer
      * defines the acceptable formats.
      * <P>
-     * Note that this returns before the read is complete; you have to provide a
-     * ProgListener to hear about completion. The exceptions will only be thrown
-     * at the start, not during the actual programming sequence. A typical
-     * exception would be due to an invalid mode (though that should be
+     * Note that this returns before the write is complete; you have to provide
+     * a ProgListener to hear about completion. For simplicity, expect the return to be on the 
+     * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">GUI thread</a>.
+     * <p>
+     * Exceptions will only be
+     * thrown at the start, not during the actual programming sequence. A
+     * typical exception would be due to an invalid mode (though that should be
      * prevented earlier)
      *
      * @param CV the CV to read
@@ -132,9 +146,12 @@ public interface Programmer {
      * <P>
      * Handles the legacy DCC case of a single-number address space.
      * <P>
-     * Note that this returns before the confirm is complete; you have to
-     * provide a ProgListener to hear about completion. The exceptions will only
-     * be thrown at the start, not during the actual programming sequence. A
+     * Note that this returns before the write is complete; you have to provide
+     * a ProgListener to hear about completion. For simplicity, expect the return to be on the 
+     * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">GUI thread</a>.
+     * <p>
+     * Exceptions will only be
+     * thrown at the start, not during the actual programming sequence. A
      * typical exception would be due to an invalid mode (though that should be
      * prevented earlier)
      *
@@ -145,7 +162,7 @@ public interface Programmer {
      * @deprecated As of 4.1.1, use #confirmCV(java.lang.String, int,
      * jmri.ProgListener)
      */
-    @Deprecated
+    @Deprecated // 4.1.1
     public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException;
 
     /**
@@ -155,9 +172,12 @@ public interface Programmer {
      * Handles a general address space through a String address. Each programmer
      * defines the acceptable formats.
      * <P>
-     * Note that this returns before the confirm is complete; you have to
-     * provide a ProgListener to hear about completion. The exceptions will only
-     * be thrown at the start, not during the actual programming sequence. A
+     * Note that this returns before the write is complete; you have to provide
+     * a ProgListener to hear about completion. For simplicity, expect the return to be on the 
+     * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">GUI thread</a>.
+     * <p>
+     * Exceptions will only be
+     * thrown at the start, not during the actual programming sequence. A
      * typical exception would be due to an invalid mode (though that should be
      * prevented earlier)
      *
@@ -224,10 +244,52 @@ public interface Programmer {
     /**
      * Checks the general write capability, regardless of mode, for a specific
      * address
+     *
      * @param addr the address to write to
      * @return true if the address can be written to; false otherwise
      */
     public boolean getCanWrite(String addr);
+
+    /**
+     * Learn about whether the programmer does any kind of verification of write
+     * operations
+     *
+     * @param addr A CV address to check (in case this varies with CV range) or
+     *             null for any
+     * @return The confirmation behavior that can be counted on (might be better
+     *         in some cases)
+     */
+    @Nonnull
+    public WriteConfirmMode getWriteConfirmMode(String addr);
+
+    enum WriteConfirmMode {
+        /**
+         * No verification available, writes are blind
+         */
+        NotVerified,
+        /**
+         * Programmer signals error if there's no reply from the device
+         */
+        DecoderReply,
+        /**
+         * Programmer does a read after write to verify
+         */
+        ReadAfterWrite
+    }
+
+    /**
+     * wrapper to call {@link jmri.ProgListener#programmingOpReply} that verifies
+     * the specified progListener is not null.
+     *
+     * @param p listener to notify
+     * @param value result value or CV
+     * @param status code from jmri.ProgListener 
+     */
+    default public void notifyProgListenerEnd(ProgListener p, int value, int status) {
+        if ( p != null ) {
+           p.programmingOpReply(value, status);
+        }
+    }
 
     public void addPropertyChangeListener(PropertyChangeListener p);
 
@@ -235,6 +297,7 @@ public interface Programmer {
 
     // error handling on request is via exceptions
     // results are returned via the ProgListener callback
+    @Nonnull
     public String decodeErrorCode(int i);
 
 }

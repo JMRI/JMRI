@@ -12,15 +12,15 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - new file includes for CSC files -->
-<!-- Panes to show Delay -->
+<!-- Panes to show delay -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-<name>Logic Cells 57-64 Delay</name>
+<name>Logic Cells 57-64 delay</name>
    <column>
    
 	<row>
 		<column>
 		<label label=" " />
-		<label label="------ The deLay is the time from a logic cell state change until the output actually changes ------"/>
+		<label label="------ The delay is the time from a logic cell state change until the output actually changes ------"/>
 		<label label=" " />
 		</column>
 	</row>
@@ -30,7 +30,7 @@
 	<column>
 			<label label="------ Logic Cell 57 ------"/>
 		<row>
-			<column> <display item="LC Delay 1" /> </column>	
+			<column> <display item="LC delay 1" /> </column>	
 		</row>
 	
 	</column>
@@ -41,7 +41,7 @@
 	<column>
 			<label label="------ Logic Cell 58 ------"/>
 		<row>
-			<column> <display item="LC Delay 2" /> </column>	
+			<column> <display item="LC delay 2" /> </column>	
 		</row>
 	</column>
 	</row>
@@ -52,7 +52,7 @@
 	<column>
 			<label label="------ Logic Cell 59 ------"/>
 		<row>
-			<column> <display item="LC Delay 3" /> </column>	
+			<column> <display item="LC delay 3" /> </column>	
 		</row>
 	</column>
 	</row>
@@ -63,7 +63,7 @@
 	<column>
 			<label label="------ Logic Cell 60 ------"/>
 		<row>
-			<column> <display item="LC Delay 4" /> </column>	
+			<column> <display item="LC delay 4" /> </column>	
 		</row>
 	</column>
 	</row>	
@@ -74,7 +74,7 @@
 	<column>	
 		<label label="------ Logic Cell 61 ------"/>
 		<row>
-			<column> <display item="LC Delay 5" /> </column>
+			<column> <display item="LC delay 5" /> </column>
 		</row>	
 	</column>
 	</row>
@@ -85,7 +85,7 @@
 	<column>
 			<label label="------ Logic Cell 62 ------"/>
 		<row>
-			<column> <display item="LC Delay 6" /> </column>	
+			<column> <display item="LC delay 6" /> </column>	
 		</row>
 	</column>
 	</row>
@@ -96,7 +96,7 @@
 	<column>
 			<label label="------ Logic Cell 63 ------"/>
 		<row>
-			<column> <display item="LC Delay 7" /> </column>
+			<column> <display item="LC delay 7" /> </column>
 		</row>
 	</column>
 	</row>
@@ -107,7 +107,7 @@
 	<column>
 			<label label="------ Logic Cell 64 ------"/>
 		<row>
-			<column> <display item="LC Delay 8" /> </column>	
+			<column> <display item="LC delay 8" /> </column>	
 		</row>
 	</column>
 	</row>

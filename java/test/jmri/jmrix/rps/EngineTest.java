@@ -1,16 +1,15 @@
 package jmri.jmrix.rps;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * JUnit tests for the rps.Engine class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version	$Revision$
- */
+  */
 public class EngineTest extends TestCase {
 
     public void testCtor() {
@@ -37,9 +36,18 @@ public class EngineTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite(EngineTest.class);
         return suite;
     }
+
+   @Override
+   public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+   }
+
+   @Override
+   public void tearDown(){
+        jmri.util.JUnitUtil.tearDown();
+   }
 
 }

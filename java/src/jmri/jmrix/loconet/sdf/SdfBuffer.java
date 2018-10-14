@@ -1,36 +1,34 @@
-// SdfBuffer.java
 package jmri.jmrix.loconet.sdf;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Provide tools for reading, writing and accessing Digitrax SPJ files.
- * <P>
+ * <p>
  * Maintains several representations:
- * <UL>
- * <LI>A byte array of the SDF contents after assembly. This is not complete, as
- * it can't contain information like contents, labels, etc. Nor can it
- * distinguish certain options with identical values (e.g. several constants
- * that boil down to a zero value)
- * <LI>An array of nested SdfMacro objects. These contain more detailed
- * representations of the macro source, in the limit containing the entire
- * thing.
- * </UL>
+ * <ul>
+ *   <li>A byte array of the SDF contents after assembly. This is not complete, as
+ *   it can't contain information like contents, labels, etc. Nor can it
+ *   distinguish certain options with identical values (e.g. several constants
+ *   that boil down to a zero value)
+ *   <li>An array of nested SdfMacro objects. These contain more detailed
+ *   representations of the macro source, in the limit containing the entire
+ *   thing.
+ * </ul>
  *
- * @author	Bob Jacobsen Copyright (C) 2007, 2008, 2010
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2007, 2008, 2010
  */
 public class SdfBuffer {
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
     public SdfBuffer(byte[] buffer) {
-        this.buffer = buffer;
+        this.buffer = Arrays.copyOf(buffer, buffer.length);
         loadMacroList();
     }
 
@@ -96,33 +94,30 @@ public class SdfBuffer {
             length += ops.get(i).totalLength();
         }
         buffer = new byte[length];
-        log.debug("create buffer of length " + length);
+        log.debug("create buffer of length {}", length);
         resetIndex();
         // recurse to store bytes
         for (int i = 0; i < ops.size(); i++) {
             ops.get(i).loadByteArray(this);
         }
         if (index != length) {
-            log.error("Lengths did not match: " + index + " " + length);
+            log.error("Lengths did not match: {} {}", index, length);
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
+    @Override
     public String toString() {
-        String out = "";
+        StringBuilder out = new StringBuilder("");
         for (int i = 0; i < ops.size(); i++) {
             SdfMacro m = ops.get(i);
 
-            out += m.allInstructionString("    ");
+            out.append(m.allInstructionString("    "));
         }
-        return out;
+        return out.toString();
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public byte[] getByteArray() {
-        return buffer;
+        return Arrays.copyOf(buffer, buffer.length);
     }
 
     public List<SdfMacro> getMacroList() {
@@ -131,7 +126,7 @@ public class SdfBuffer {
 
     void loadMacroList() {
         resetIndex();
-        ops = new ArrayList<SdfMacro>();
+        ops = new ArrayList<>();
         while (moreData()) {
             SdfMacro m = SdfMacro.decodeInstruction(this);
             ops.add(m);
@@ -144,8 +139,6 @@ public class SdfBuffer {
     // byte[] representation
     byte[] buffer;
 
-    private final static Logger log = LoggerFactory.getLogger(SdfBuffer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SdfBuffer.class);
 
 }
-
-/* @(#)SdfBuffer.java */

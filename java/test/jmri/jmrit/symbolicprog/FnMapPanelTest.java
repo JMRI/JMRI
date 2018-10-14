@@ -2,72 +2,61 @@ package jmri.jmrit.symbolicprog;
 
 import java.util.List;
 import javax.swing.JLabel;
-import jmri.progdebugger.ProgDebugger;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
 import org.jdom2.Element;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Base for tests of classes inheriting from FnMapPanel abstract class
  *
  * @author	Bob Jacobsen, Copyright 2009
  */
-public class FnMapPanelTest extends TestCase {
+public class FnMapPanelTest {
 
+    @Test
     public void testCtor() {
-        ProgDebugger p = new ProgDebugger();
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer();
         VariableTableModel tableModel = new VariableTableModel(
                 new JLabel(""),
                 new String[]{"Name", "Value"},
-                new CvTableModel(new JLabel(""), p),
-                new IndexedCvTableModel(new JLabel(""), p)
+                new CvTableModel(new JLabel(""), p)
         );
         List<Integer> varsUsed = null;
         Element model = new Element("model");
 
-        new FnMapPanel(tableModel, varsUsed, model);
+        FnMapPanel t = new FnMapPanel(tableModel, varsUsed, model);
+        Assert.assertNotNull("exists",t);
     }
 
+    @Test
     public void testLargeNumbers() {
-        ProgDebugger p = new ProgDebugger();
+        jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer();
         VariableTableModel tableModel = new VariableTableModel(
                 new JLabel(""),
                 new String[]{"Name", "Value"},
-                new CvTableModel(new JLabel(""), p),
-                new IndexedCvTableModel(new JLabel(""), p)
+                new CvTableModel(new JLabel(""), p)
         );
         List<Integer> varsUsed = null;
         Element model = new Element("model");
         model.setAttribute("numFns", "28");
 
-        new FnMapPanel(tableModel, varsUsed, model);
-    }
-
-    // from here down is testing infrastructure
-    public FnMapPanelTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", FnMapPanelTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests, including others in the package
-    public static Test suite() {
-        TestSuite suite = new TestSuite(FnMapPanelTest.class);
-        return suite;
+        FnMapPanel t = new FnMapPanel(tableModel, varsUsed, model);
+        Assert.assertNotNull("exists",t);
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initDebugProgrammerManager();
     }
 
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id$ -->
-
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -75,6 +73,8 @@
             <xs:attribute name="approachsensor1" type="beanNameType"/>
             <xs:attribute name="limitspeed1" type="xs:boolean"/>
             <xs:attribute name="limitspeed2" type="xs:boolean"/>
+            <xs:attribute name="restrictingspeed1" type="xs:boolean"/>
+            <xs:attribute name="restrictingspeed2" type="xs:boolean"/>
             <xs:attribute name="useflashyellow" type="xs:boolean"/>
             <xs:attribute name="distantsignal" type="xs:boolean"/>
           </xs:complexType>

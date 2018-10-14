@@ -1,61 +1,113 @@
 package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Hashtable;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.NamedBean;
 
 /**
  * Abstract base for the NamedBean interface.
- * <P>
+ * <p>
  * Implements the parameter binding support.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public abstract class AbstractNamedBean implements NamedBean, java.io.Serializable {
+public abstract class AbstractNamedBean implements NamedBean {
 
-    protected AbstractNamedBean(String sys) {
-        mSystemName = sys;
-        mUserName = null;
-    }
+    // force changes through setUserName() to ensure rules are applied
+    // as a side effect require reads through getUserName()
+    private String mUserName;
+    // final so does not need to be private to protect against changes
+    protected final String mSystemName;
 
-    protected AbstractNamedBean(String sys, String user) {
-        this(sys);
-        mUserName = user;
+    /**
+     * Create a new NamedBean instance using only a system name.
+     *
+     * @param sys the system name for this bean; must not be null and must
+     *            be unique within the layout
+     */
+    protected AbstractNamedBean(@Nonnull String sys) {
+        this(sys, null);
     }
 
     /**
-     * Get associated comment text.
+     * Create a new NamedBean instance using both a system name and
+     * (optionally) a user name.
+     * <p>
+     * Refuses construction if unable to use the normalized user name, to prevent
+     * subclass from overriding {@link #setUserName(java.lang.String)} during construction.
+     *
+     * @param sys  the system name for this bean; must not be null
+     * @param user the user name for this bean; will be normalized if needed; can be null
+     * @throws jmri.NamedBean.BadUserNameException   if the user name cannot be
+     *                                               normalized
+     * @throws jmri.NamedBean.BadSystemNameException if the system name is null
      */
-    public String getComment() {
+    protected AbstractNamedBean(@Nonnull String sys, @Nullable String user) throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
+        if (sys == null) {
+            throw new NamedBean.BadSystemNameException();
+        }
+        mSystemName = sys;
+        // normalize the user name or refuse construction if unable to
+        // use this form, to prevent subclass from overriding {@link #setUserName()}
+        // during construction
+        AbstractNamedBean.this.setUserName(user);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    final public String getComment() {
         return this.comment;
     }
 
     /**
-     * Set associated comment text.
-     * <p>
-     * Comments can be any valid text.
-     *
-     * @param comment Null means no comment associated.
+     * {@inheritDoc}
      */
-    public void setComment(String comment) {
+    @Override
+    final public void setComment(String comment) {
         String old = this.comment;
-        this.comment = comment;
+        if (comment == null || comment.trim().isEmpty()) {
+            this.comment = null;
+        } else {
+            this.comment = comment;
+        }
         firePropertyChange("Comment", old, comment);
     }
     private String comment;
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * It would be good to eventually make this final to 
+     * keep it consistent system-wide, but 
+     * we have some existing classes to update first.
+     * 
+     * @return user name if not null or empty, else return system name
+     */
+    @Override
     public String getDisplayName() {
         String name = getUserName();
-        if (name != null && name.length() > 0) {
+        if (name != null && !name.isEmpty()) {
             return name;
         } else {
             return getSystemName();
         }
     }
 
+    /**
+     * <p>
+     * It would be good to eventually make this final to 
+     * keep it consistent system-wide, but 
+     * we have some existing classes to update first.
+     */
+    @Override
     public String getFullyFormattedDisplayName() {
         String name = getUserName();
         if (name != null && name.length() > 0 && !name.equals(getSystemName())) {
@@ -68,16 +120,18 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
 
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
-    //		public void firePropertyChange(String propertyName,
-    //					       	Object oldValue,
-    //						Object newValue)
+    //  public void firePropertyChange(String propertyName,
+    //             Object oldValue,
+    //      Object newValue)
     // _once_ if anything has changed state
     // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
     // reflect to it
-    final java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-    final Hashtable<PropertyChangeListener, String> register = new Hashtable<>();
-    final Hashtable<PropertyChangeListener, String> listenerRefs = new Hashtable<>();
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    protected final HashMap<PropertyChangeListener, String> register = new HashMap<>();
+    protected final HashMap<PropertyChangeListener, String> listenerRefs = new HashMap<>();
 
+    @Override
+    @OverridingMethodsMustInvokeSuper
     public synchronized void addPropertyChangeListener(PropertyChangeListener l, String beanRef, String listenerRef) {
         pcs.addPropertyChangeListener(l);
         if (beanRef != null) {
@@ -88,10 +142,14 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         }
     }
 
+    @Override
+    @OverridingMethodsMustInvokeSuper
     public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
+    @Override
+    @OverridingMethodsMustInvokeSuper
     public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
         if (l != null) {
@@ -100,43 +158,47 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         }
     }
 
+    @Override
     public synchronized PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
         ArrayList<PropertyChangeListener> list = new ArrayList<>();
-        Enumeration<PropertyChangeListener> en = register.keys();
-        while (en.hasMoreElements()) {
-            PropertyChangeListener l = en.nextElement();
-            if (register.get(l).equals(name)) {
+        register.entrySet().forEach((entry) -> {
+            PropertyChangeListener l = entry.getKey();
+            if (entry.getValue().equals(name)) {
                 list.add(l);
             }
-        }
+        });
         return list.toArray(new PropertyChangeListener[list.size()]);
     }
 
-    /* This allows a meaning full list of places where the bean is in use!*/
+    /**
+     * Get a meaningful list of places where the bean is in use.
+     *
+     * @return ArrayList of the listeners
+     */
+    @Override
     public synchronized ArrayList<String> getListenerRefs() {
-        ArrayList<String> list = new ArrayList<String>();
-        Enumeration<PropertyChangeListener> en = listenerRefs.keys();
-        while (en.hasMoreElements()) {
-            PropertyChangeListener l = en.nextElement();
-            list.add(listenerRefs.get(l));
-        }
-        return list;
+        return new ArrayList<>(listenerRefs.values());
     }
 
+    @Override
+    @OverridingMethodsMustInvokeSuper
     public synchronized void updateListenerRef(PropertyChangeListener l, String newName) {
         if (listenerRefs.containsKey(l)) {
             listenerRefs.put(l, newName);
         }
     }
 
+    @Override
     public synchronized String getListenerRef(PropertyChangeListener l) {
         return listenerRefs.get(l);
     }
 
     /**
-     * Number of current listeners. May return -1 if the information is not
-     * available for some reason.
+     * Get the number of current listeners.
+     *
+     * @return -1 if the information is not available for some reason.
      */
+    @Override
     public synchronized int getNumPropertyChangeListeners() {
         return pcs.getPropertyChangeListeners().length;
     }
@@ -145,60 +207,95 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         return pcs.getPropertyChangeListeners();
     }
 
-    public String getSystemName() {
+    @Override
+    final public String getSystemName() {
         return mSystemName;
     }
 
-    public String getUserName() {
+    /**
+     * {@inheritDoc}
+     * <p>
+     * It would be good to eventually make this final to 
+     * keep it consistent system-wide, but 
+     * we have some existing classes to update first.
+     */
+    @Nonnull
+    @Override
+    public String toString() {
+        return getSystemName();
+    }
+
+    @Override
+    final public String getUserName() {
         return mUserName;
     }
 
-    public void setUserName(String s) {
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void setUserName(String s) throws NamedBean.BadUserNameException {
         String old = mUserName;
-        mUserName = s;
-        firePropertyChange("UserName", old, s);
+        mUserName = NamedBean.normalizeUserName(s);
+        firePropertyChange("UserName", old, mUserName);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC",
-            justification = "Sync of mUserName protected by ctor invocation")
-    protected String mUserName;
-
-    protected String mSystemName;
-
+    @OverridingMethodsMustInvokeSuper
     protected void firePropertyChange(String p, Object old, Object n) {
         pcs.firePropertyChange(p, old, n);
     }
 
+    @Override
+    @OverridingMethodsMustInvokeSuper
     public void dispose() {
         PropertyChangeListener[] listeners = pcs.getPropertyChangeListeners();
         for (PropertyChangeListener l : listeners) {
             pcs.removePropertyChangeListener(l);
             register.remove(l);
             listenerRefs.remove(l);
-       }
+        }
     }
 
+    @Override
+    @CheckReturnValue
+    public String describeState(int state) {
+        switch (state) {
+            case UNKNOWN:
+                return Bundle.getMessage("BeanStateUnknown");
+            case INCONSISTENT:
+                return Bundle.getMessage("BeanStateInconsistent");
+            default:
+                return Bundle.getMessage("BeanStateUnexpected", state);
+        }
+    }
+
+    @Override
+    @OverridingMethodsMustInvokeSuper
     public void setProperty(String key, Object value) {
         if (parameters == null) {
-            parameters = new HashMap<String, Object>();
+            parameters = new HashMap<>();
         }
         parameters.put(key, value);
     }
 
+    @Override
+    @OverridingMethodsMustInvokeSuper
     public Object getProperty(String key) {
         if (parameters == null) {
-            parameters = new HashMap<String, Object>();
+            parameters = new HashMap<>();
         }
         return parameters.get(key);
     }
 
+    @Override
+    @OverridingMethodsMustInvokeSuper
     public java.util.Set<String> getPropertyKeys() {
         if (parameters == null) {
-            parameters = new HashMap<String, Object>();
+            parameters = new HashMap<>();
         }
         return parameters.keySet();
     }
 
+    @Override
+    @OverridingMethodsMustInvokeSuper
     public void removeProperty(String key) {
         if (parameters == null || key == null) {
             return;
@@ -206,8 +303,55 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         parameters.remove(key);
     }
 
-    HashMap<String, Object> parameters = null;
+    private HashMap<String, Object> parameters = null;
 
+    @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
     }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation tests that 
+     * {@link jmri.NamedBean#getSystemName()}
+     * is equal for this and obj.
+     *
+     * @param obj the reference object with which to compare.
+     * @return {@code true} if this object is the same as the obj argument;
+     *         {@code false} otherwise.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;  // for efficiency
+        if (obj == null) return false; // by contract
+
+        if (obj instanceof AbstractNamedBean) {  // NamedBeans are not equal to things of other types
+            AbstractNamedBean b = (AbstractNamedBean) obj;
+            return this.getSystemName().equals(b.getSystemName());
+        }
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @return hash code value is based on sthe ystem name.
+     */
+    @Override
+    public int hashCode() {
+        return getSystemName().hashCode(); // as the 
+    }
+    
+    /**
+     * {@inheritDoc} 
+     * 
+     * By default, does an alphanumeric-by-chunks comparison.
+     */
+    @CheckReturnValue
+    @Override
+    public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n) {
+        jmri.util.AlphanumComparator ac = new jmri.util.AlphanumComparator();
+        return ac.compare(suffix1, suffix2);
+    }
+
 }

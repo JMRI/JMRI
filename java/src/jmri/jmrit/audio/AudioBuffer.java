@@ -18,7 +18,7 @@ import jmri.Audio;
  * Each AudioBuffer object has a two names. The "user" name is entirely free
  * form, and can be used for any purpose. The "system" name is provided by the
  * system-specific implementations, and provides a unique mapping to the layout
- * control system (e.g. LocoNet, NCE, etc) and address within that system.
+ * control system (for example LocoNet or NCE) and address within that system.
  * <BR>
  * <hr>
  * This file is part of JMRI.

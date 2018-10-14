@@ -1,4 +1,3 @@
-// TrainCsvSwitchLists.java
 package jmri.jmrit.operations.trains;
 
 import java.io.BufferedWriter;
@@ -9,8 +8,8 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
@@ -26,21 +25,21 @@ import org.slf4j.LoggerFactory;
  * railroad.
  *
  * @author Daniel Boudreau (C) Copyright 2011, 2013, 2014, 2015
- * @version $Revision: 1 $
+ *
  *
  */
 public class TrainCsvSwitchLists extends TrainCsvCommon {
 
     /**
      * builds a csv file containing the switch list for a location
+     * @param location The Location requesting a switch list.
      *
      * @return File
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "CarManager only provides Car Objects")
     public File buildSwitchList(Location location) {
 
         // create csv switch list file
-        File file = TrainManagerXml.instance().createCsvSwitchListFile(location.getName());
+        File file = InstanceManager.getDefault(TrainManagerXml.class).createCsvSwitchListFile(location.getName());
         PrintWriter fileOut = null;
 
         try {
@@ -68,7 +67,9 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
         }
         addLine(fileOut, VT + getDate(true));
 
-        for (Train train : TrainManager.instance().getTrainsByTimeList()) {
+        // get a list of trains sorted by arrival time
+        List<Train> trains = InstanceManager.getDefault(TrainManager.class).getTrainsArrivingThisLocationList(location);
+        for (Train train : trains) {
             if (!train.isBuilt()) {
                 continue; // train wasn't built so skip
             }
@@ -79,8 +80,8 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
             int dropCars = 0;
             int stops = 1;
             boolean trainDone = false;
-            List<Car> carList = CarManager.instance().getByTrainDestinationList(train);
-            List<Engine> enginesList = EngineManager.instance().getByTrainBlockingList(train);
+            List<Car> carList = InstanceManager.getDefault(CarManager.class).getByTrainDestinationList(train);
+            List<Engine> enginesList = InstanceManager.getDefault(EngineManager.class).getByTrainBlockingList(train);
             // does the train stop once or more at this location?
             Route route = train.getRoute();
             if (route == null) {
@@ -106,28 +107,28 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                 // the departure location
                 // the departure time
                 // the train's direction when it arrives
-                // if it terminate at this location
+                // if it terminates at this location
                 if (stops == 1) {
                     // newLine(fileOut);
-                    addLine(fileOut, TN + train.getName());
-                    addLine(fileOut, TM + train.getDescription());
+                    addLine(fileOut, TN + ESC + train.getName() + ESC);
+                    addLine(fileOut, TM + ESC + train.getDescription() + ESC);
 
                     if (train.isTrainEnRoute()) {
                         addLine(fileOut, TIR);
                         addLine(fileOut, ETE + expectedArrivalTime);
                     } else {
-                        addLine(fileOut, DL + splitString(splitString(train.getTrainDepartsName())));
-                        addLine(fileOut, DT + train.getDepartureTime());
+                        addLine(fileOut, DL + ESC + splitString(splitString(train.getTrainDepartsName())) + ESC);
+                        addLine(fileOut, DT + train.getFormatedDepartureTime());
                         if (rl == train.getRoute().getDepartsRouteLocation() && routeList.size() > 1) {
-                            addLine(fileOut, TD + splitString(rl.getName()) + DEL + rl.getTrainDirectionString());
+                            addLine(fileOut, TD + ESC + splitString(rl.getName()) + ESC + DEL + rl.getTrainDirectionString());
                         }
                         if (rl != train.getRoute().getDepartsRouteLocation()) {
                             addLine(fileOut, ETA + expectedArrivalTime);
-                            addLine(fileOut, TA + splitString(rl.getName()) + DEL + rl.getTrainDirectionString());
+                            addLine(fileOut, TA + ESC + splitString(rl.getName()) + ESC + DEL + rl.getTrainDirectionString());
                         }
                     }
                     if (rl == train.getRoute().getTerminatesRouteLocation()) {
-                        addLine(fileOut, TT + splitString(rl.getName()));
+                        addLine(fileOut, TT + ESC + splitString(rl.getName()) + ESC);
                     }
                 }
                 if (stops > 1) {
@@ -147,7 +148,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                         }
                         addLine(fileOut, TA + splitString(rl.getName()) + DEL + rl.getTrainDirectionString());
                         if (rl == train.getRoute().getTerminatesRouteLocation()) {
-                            addLine(fileOut, TT + splitString(rl.getName()));
+                            addLine(fileOut, TT + ESC + splitString(rl.getName()) + ESC);
                         }
                     } else {
                         stops--; // don't bump stop count, same location
@@ -213,28 +214,37 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                     }
                 }
                 stops++;
+                if (rl != train.getRoute().getTerminatesRouteLocation()) {
+                    addLine(fileOut, TL +
+                            train.getTrainLength(rl) +
+                            DEL +
+                            train.getNumberEmptyCarsInTrain(rl) +
+                            DEL +
+                            train.getNumberCarsInTrain(rl));
+                    addLine(fileOut, TW + train.getTrainWeight(rl));
+                }
             }
             if (trainDone && pickupCars == 0 && dropCars == 0) {
                 addLine(fileOut, TDONE);
-            } else {
-                if (stops > 1 && pickupCars == 0) {
+            } else if (stops > 1) {
+                if (pickupCars == 0) {
                     addLine(fileOut, NCPU);
                 }
-
-                if (stops > 1 && dropCars == 0) {
+                if (dropCars == 0) {
                     addLine(fileOut, NCSO);
                 }
+                addLine(fileOut, TEND + ESC + train.getName() + ESC); // done with this train
             }
         }
         addLine(fileOut, END); // done with switch list
-        
+
         // now list hold cars
-        List<RollingStock> rsByLocation = CarManager.instance().getByLocationList();
-        List<Car> carList = new ArrayList<Car>();
-        for (RollingStock rs : rsByLocation) {
-            if (rs.getLocation() != null && splitString(rs.getLocation().getName()).equals(splitString(location.getName())) 
+        List<Car> rsByLocation = InstanceManager.getDefault(CarManager.class).getByLocationList();
+        List<Car> carList = new ArrayList<>();
+        for (Car rs : rsByLocation) {
+            if (rs.getLocation() != null && splitString(rs.getLocation().getName()).equals(splitString(location.getName()))
                     && rs.getRouteLocation() == null) {
-                carList.add((Car)rs);
+                carList.add(rs);
             }
         }
         clearUtilityCarTypes(); // list utility cars by quantity
@@ -249,7 +259,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
             fileOutCsvCar(fileOut, car, HOLD, count);
         }
         addLine(fileOut, END); // done with hold cars
-        
+
         // Are there any cars that need to be found?
         listCarsLocationUnknown(fileOut);
         fileOut.flush();
@@ -258,5 +268,5 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
         return file;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainCsvSwitchLists.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainCsvSwitchLists.class);
 }

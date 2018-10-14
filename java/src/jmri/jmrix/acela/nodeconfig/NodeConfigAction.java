@@ -1,29 +1,31 @@
-// NodeConfigAction.java
 package jmri.jmrix.acela.nodeconfig;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.InstanceManager;
+import jmri.jmrix.acela.AcelaSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register a NodeConfigFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class NodeConfigAction extends AbstractAction {
 
-    private jmri.jmrix.acela.AcelaSystemConnectionMemo _memo = null;
+    private AcelaSystemConnectionMemo _memo = null;
 
-    public NodeConfigAction(String s,jmri.jmrix.acela.AcelaSystemConnectionMemo memo) {
+    public NodeConfigAction(String s, AcelaSystemConnectionMemo memo) {
         super(s);
         _memo = memo;
     }
 
     public NodeConfigAction() {
-        this("Configure Acela Nodes",jmri.InstanceManager.getDefault(jmri.jmrix.acela.AcelaSystemConnectionMemo.class));
+        this(Bundle.getMessage("ConfigNodesTitle"), InstanceManager.getDefault(AcelaSystemConnectionMemo.class));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         NodeConfigFrame f = new NodeConfigFrame(_memo);
         try {
@@ -34,8 +36,7 @@ public class NodeConfigAction extends AbstractAction {
         f.setLocation(100, 30);
         f.setVisible(true);
     }
-    private final static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigAction.class);
+
 }
-
-
-/* @(#)NodeConfigAction.java */

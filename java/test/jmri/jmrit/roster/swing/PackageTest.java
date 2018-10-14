@@ -1,48 +1,39 @@
 package jmri.jmrit.roster.swing;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        BundleTest.class,
+        RosterTableModelTest.class,
+        jmri.jmrit.roster.swing.attributetable.PackageTest.class,
+        jmri.jmrit.roster.swing.rostergroup.PackageTest.class,
+        jmri.jmrit.roster.swing.speedprofile.PackageTest.class,
+        jmri.jmrit.roster.swing.rostertree.PackageTest.class,
+        RosterFrameTest.class,
+        GlobalRosterEntryComboBoxTest.class,
+        RosterEntryComboBoxTest.class,
+        RosterEntryListCellRendererTest.class,
+        RosterEntrySelectorPanelTest.class,
+        RosterFrameActionTest.class,
+        RosterFrameStartupActionFactoryTest.class,
+        RosterGroupComboBoxTest.class,
+        RosterGroupsPanelTest.class,
+        RosterTableTest.class,
+        CopyRosterGroupActionTest.class,
+        CreateRosterGroupActionTest.class,
+        DeleteRosterGroupActionTest.class,
+        RenameRosterGroupActionTest.class,
+        RemoveRosterEntryToGroupActionTest.class,
+        RosterEntryToGroupActionTest.class,
+        RosterMenuTest.class,
+})
 
 /**
  * Tests for the jmrit.roster.swing package
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2012
  */
-public class PackageTest extends TestCase {
-
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrit.roster.swing.PackageTest");
-
-        suite.addTest(BundleTest.suite());
-        suite.addTest(RosterTableModelTest.suite());
-
-        suite.addTest(jmri.jmrit.roster.swing.attributetable.PackageTest.suite());
-        suite.addTest(jmri.jmrit.roster.swing.rostergroup.PackageTest.suite());
-        suite.addTest(jmri.jmrit.roster.swing.speedprofile.PackageTest.suite());
-
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-    }
-
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
-    }
-
+public class PackageTest  {
 }

@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: DispatcherPro Main Window</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help preferences">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -27,21 +27,28 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: DispatcherPro Main Window</h1><img src=
+      <h1>JMRI: DispatcherPro Main Window</h1>
+      <img src=
       "../../../../../resources/logo.gif" align="right" height=
-      "100" width="100"> The DispatcherPro main window gives you
-      access to all the capabilities of JMRI.
+      "100" width="100">
+      <p><b>Dispatcher</b> provides functions and organizes
+      information relating to dispatching trains on a model
+      railroad layout, allowing for automated running.</p>
+      <p>You access the DispatcherPro main window by starting
+      PanelPro or SoundPro and selecting
+      <a href="../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher...</a>
+      from the <a href="../../tools/index.shtml">Tools</a> menu.</p>
 
       <p>Help on specific menus:</p>
 
       <ul>
         <li>Edit - (<a href=
-        "../../../package/apps/TabbedPreferences.shtml">Preferences</a>)</li>
+        "../../package/apps/TabbedPreferences.shtml">Preferences</a>)</li>
 
         <li><a href="../../tools/index.shtml">Tools</a></li>
 
         <li><a href=
-        "../../../html/apps/DecoderPro/Roster.shtml#menu">Roster</a></li>
+        "../DecoderPro/Roster.shtml#menu">Roster</a></li>
       </ul>More information about the <a href=
       "../../setup/Files.shtml">JMRI Configuration Files</a> 
       <!--#include virtual="/Footer" -->

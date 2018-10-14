@@ -1,14 +1,12 @@
-//SprogVersion.java
 package jmri.jmrix.sprog.update;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Class to hold SPROG type and firmware version
+ * Class to hold SPROG type and firmware version.
  *
- * @author	Andrew crosland Copyright (C) 2012
- * @version	$Revision: $
+ * @author	Andrew Crosland Copyright (C) 2012
  */
 public class SprogVersion {
 
@@ -29,7 +27,7 @@ public class SprogVersion {
     }
 
     /**
-     * Construct a new SPROG version object from a SPROG type and version
+     * Construct a new SPROG version object from a SPROG type and version.
      *
      * @param t SprogType the type of SPROG
      * @param s String version in "major.minor" format, e.g. "3.1"
@@ -46,7 +44,7 @@ public class SprogVersion {
     }
 
     /**
-     * Return major version number for a known SPROG
+     * Return major version number for a known SPROG.
      *
      * @return major version
      */
@@ -64,7 +62,7 @@ public class SprogVersion {
     }
 
     /**
-     * Return minor version number for a known SPROG
+     * Return minor version number for a known SPROG.
      *
      * @return minor version
      */
@@ -84,7 +82,7 @@ public class SprogVersion {
     /**
      * Check if the SPROG has various extra features that were not present in
      * the original firmware. This means later SPROG II versions or any type
-     * equal or higher than SPROG 3
+     * equal or higher than SPROG 3.
      *
      * @return boolean if the current SPROG has extra features
      */
@@ -98,7 +96,7 @@ public class SprogVersion {
                 || ((major == 2) && (minor >= 1))
                 || (major >= 3))
                 || ((this.sprogType.sprogType >= SprogType.SPROGIIv3)
-                && (this.sprogType.sprogType < SprogType.NANO))) {
+                    && (this.sprogType.sprogType < SprogType.NANO))) {
             if (log.isDebugEnabled()) {
                 log.debug("This version has extra features");
             }
@@ -145,6 +143,7 @@ public class SprogVersion {
      *
      * @return String representation of SPROG version
      */
+    @Override
     public String toString() {
         return this.toString(this);
     }
@@ -160,7 +159,6 @@ public class SprogVersion {
         return (s.sprogType.toString() +" v"+ sprogVersion);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogVersion.class.getName());
-}
+    private final static Logger log = LoggerFactory.getLogger(SprogVersion.class);
 
-/* @(#)SprogVersion.java */
+}

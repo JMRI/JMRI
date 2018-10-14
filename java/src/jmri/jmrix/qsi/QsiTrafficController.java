@@ -1,12 +1,12 @@
 package jmri.jmrix.qsi;
 
-import gnu.io.SerialPort;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
 import jmri.jmrix.qsi.serialdriver.SerialDriverAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.SerialPort;
 
 /**
  * Converts Stream-based I/O to/from QSI messages. The "QsiInterface" side
@@ -23,16 +23,21 @@ import org.slf4j.LoggerFactory;
  */
 public class QsiTrafficController implements QsiInterface, Runnable {
 
+    /**
+     * Create a new QsiTrafficController instance.
+     */
     public QsiTrafficController() {
     }
 
 // The methods to implement the QsiInterface
     protected Vector<QsiListener> cmdListeners = new Vector<QsiListener>();
 
+    @Override
     public boolean status() {
         return (ostream != null && istream != null);
     }
 
+    @Override
     public synchronized void addQsiListener(QsiListener l) {
         // add only if not already registered
         if (l == null) {
@@ -43,6 +48,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
         }
     }
 
+    @Override
     public synchronized void removeQsiListener(QsiListener l) {
         if (cmdListeners.contains(l)) {
             cmdListeners.removeElement(l);
@@ -148,6 +154,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
     /**
      * Forward a preformatted message to the actual interface.
      */
+    @Override
     public void sendQsiMessage(QsiMessage m, QsiListener reply) {
         log.debug("sendQsiMessage message: [{}]", m);
         // remember who sent this
@@ -252,6 +259,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
      * via <code>connectPort</code>. Terminates with the input stream breaking
      * out of the try block.
      */
+    @Override
     public void run() {
         while (true) {   // loop permanently, stream close will exit via exception
             try {
@@ -285,15 +293,16 @@ public class QsiTrafficController implements QsiInterface, Runnable {
         log.debug("dispatch reply of length {}",i);
         {
             final QsiReply thisMsg = msg;
-            final QsiTrafficController thisTC = this;
+            final QsiTrafficController thisTc = this;
             // return a notification via the queue to ensure end
             Runnable r = new Runnable() {
                 QsiReply msgForLater = thisMsg;
-                QsiTrafficController myTC = thisTC;
+                QsiTrafficController myTc = thisTc;
 
+                @Override
                 public void run() {
                     log.debug("Delayed notify starts");
-                    myTC.notifyReply(msgForLater);
+                    myTc.notifyReply(msgForLater);
                 }
             };
             javax.swing.SwingUtilities.invokeLater(r);
@@ -326,5 +335,5 @@ public class QsiTrafficController implements QsiInterface, Runnable {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(QsiTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(QsiTrafficController.class);
 }

@@ -28,6 +28,9 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class RfidTrafficController extends AbstractMRTrafficController implements RfidInterface {
 
+    /**
+     * Create a new RfidTrafficController instance.
+     */
     public RfidTrafficController() {
         super();
         logDebug = log.isDebugEnabled();
@@ -39,7 +42,7 @@ abstract public class RfidTrafficController extends AbstractMRTrafficController 
 
     }
 
-    RfidSystemConnectionMemo adapterMemo;
+    protected RfidSystemConnectionMemo adapterMemo;
 
     public void setAdapterMemo(RfidSystemConnectionMemo memo) {
         adapterMemo = memo;
@@ -150,12 +153,6 @@ abstract public class RfidTrafficController extends AbstractMRTrafficController 
         return null;
     }
 
-    @Deprecated
-    @Override
-    protected void setInstance() {
-//        self = this;
-    }
-
     boolean sendInterlock = false; // send the 00 interlock when CRC received
     boolean expectLength = false;  // next byte is length of read
     boolean countingBytes = false; // counting remainingBytes into reply buffer
@@ -187,5 +184,5 @@ abstract public class RfidTrafficController extends AbstractMRTrafficController 
         return null;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(RfidTrafficController.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(RfidTrafficController.class);
 }

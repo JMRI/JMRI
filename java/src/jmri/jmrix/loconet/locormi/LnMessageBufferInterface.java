@@ -6,7 +6,6 @@ import jmri.jmrix.loconet.LocoNetMessage;
 
 /**
  * @author Bob Jacobsen, Alex Shepherd Copyright (c) 2002
- * @version $Revision$
  */
 public interface LnMessageBufferInterface extends Remote {
 
@@ -19,4 +18,5 @@ public interface LnMessageBufferInterface extends Remote {
     public Object[] getMessages(long timeout) throws RemoteException;
 
     public void sendLocoNetMessage(LocoNetMessage m) throws RemoteException;
+
 }

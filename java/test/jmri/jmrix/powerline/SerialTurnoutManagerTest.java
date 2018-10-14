@@ -1,8 +1,12 @@
 package jmri.jmrix.powerline;
 
 import jmri.Turnout;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import jmri.jmrix.powerline.simulator.SpecificSystemConnectionMemo;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,22 +18,31 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright 2004, 2008 Converted to multiple connection
  * @author kcameron Copyright (C) 2011
  */
-public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
-    private SerialInterfaceScaffold nis = null;
+    private SerialTrafficControlScaffold nis = null;
 
+    @Override
+    @Before
     public void setUp() {
+        JUnitUtil.setUp();
+        SpecificSystemConnectionMemo memo = new SpecificSystemConnectionMemo();
         // prepare an interface, register
-        nis = new SerialInterfaceScaffold();
+        nis = new SerialTrafficControlScaffold();
+        nis.setAdapterMemo(memo);
+        memo.setTrafficController(nis);
+        memo.setSerialAddress(new SerialAddress(memo));
         // create and register the manager object
         l = new SerialTurnoutManager(nis);
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
+    @Override
     public String getSystemName(int n) {
-        return "PT" + n;
+        return "PTB" + n;
     }
 
+    @Test
     public void testAsAbstractFactory() {
         // ask for a Turnout, and check type
         Turnout o = l.newTurnout("PTB1", "my name");
@@ -37,7 +50,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         if (log.isDebugEnabled()) {
             log.debug("received turnout value " + o);
         }
-        assertTrue(null != (SerialTurnout) o);
+        Assert.assertTrue(null != (SerialTurnout) o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
@@ -47,34 +60,46 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
             log.debug("by user name:   " + l.getByUserName("my name"));
         }
 
-        assertTrue(null != l.getBySystemName("PTB1"));
-        assertTrue(null != l.getByUserName("my name"));
+        Assert.assertTrue(null != l.getBySystemName("PTB1"));
+        Assert.assertTrue(null != l.getByUserName("my name"));
 
     }
 
-    // from here down is testing infrastructure
-    public SerialTurnoutManagerTest(String s) {
-        super(s);
+    @Override
+    @Test
+    public void testProvideName() {
+        // create
+        Turnout t = l.provide(getSystemName(getNumToTest1()));
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SerialTurnoutManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Override
+    @Test
+    public void testDefaultSystemName() {
+        // create
+        Turnout t = l.provideTurnout(getSystemName(getNumToTest1()));
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite(SerialTurnoutManagerTest.class);
-        return suite;
+    @Override
+    @Test
+    public void testUpperLower() {
+        Turnout t = l.provideTurnout(getSystemName(getNumToTest2()));
+
+        Assert.assertNull(l.getTurnout(t.getSystemName().toLowerCase()));
     }
+
 
     // The minimal setup for log4J
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerTest.class);
 
 }

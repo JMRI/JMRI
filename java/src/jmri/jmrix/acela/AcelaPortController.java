@@ -1,16 +1,14 @@
-// AcelaPortController.java
 package jmri.jmrix.acela;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
 /**
- * Abstract base for classes representing a CMRI communications port
+ * Abstract base for classes representing an Acela communications port
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- *
- * @author	Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
+ * @author Bob Jacobsen Copyright (C) 2001
+  *
+ * @author Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
 public abstract class AcelaPortController extends jmri.jmrix.AbstractSerialPortController {
@@ -37,6 +35,5 @@ public abstract class AcelaPortController extends jmri.jmrix.AbstractSerialPortC
     public AcelaSystemConnectionMemo getSystemConnectionMemo() {
         return (AcelaSystemConnectionMemo) super.getSystemConnectionMemo();
     }
-}
 
-/* @(#)AcelaPortController.java */
+}

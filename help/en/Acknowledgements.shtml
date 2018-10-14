@@ -1,7 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- This page is created from the content (not formatting) -->
-<!-- of http://jmri.org/community/index.html -->
 
 <html lang="en">
 <head>
@@ -9,12 +7,11 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Acknowledgements</title>
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "java model railroad JMRI CMRI decoderpro panelpro loconet lenz nce easydcc dcc nmra">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -71,9 +68,14 @@
         Wiki</a>, which lets a lot of people easily contribute to
         building better documentation</li>
 
+        <li>Chris Atkins helped improve the
+        <a href="http://jmri.org/help/en/html/tools/scripting/FAQ.shtml#newJython">instructions for using a separate jython install</a></li>
+
         <li>Ron W. Auld, whose llnmon program formed the basis for
         the LocoNet monitoring <a name="B" id="B"></a></li>
 
+        <li>Cees Baarda, who expanded the DigiRails DR4018/DR4024 decoder definitions</li>
+        
         <li>Harald Barth, who improved the SRCP implementation</li>
 
         <li>Michal Basta, who contributed the Czech
@@ -89,7 +91,7 @@
         Soundtraxx decoder definitions, created our Windows icons,
         has debugged several difficult problems, created several
         Tam Valley decoder definitions, and is a primary author of
-        EngineDriver.</li>
+        EngineDriver.</li><!-- n3ix on GitHub -->
 
         <li>John Bell, who improved the NCE instructions</li>
 
@@ -102,6 +104,12 @@
         general has made more contributions than can be
         counted.</li>
 
+        <li>
+        Daniel Bergqvist, <!-- danielb987 -->
+        who added the "ask before shutdown" code, 
+        improved the Bundle code, added to the Swedish translation,
+        and improved components of the LocoNet engine. 
+        
         <li>Andrew Berridge, who debugged and fixed problems with
         the SPROG serial interface</li>
 
@@ -187,9 +195,13 @@
         <a href="http://jmri.org/k/UDRP/index.shtml">despicable
         behavior</a>, and wrote a scripting example page</li>
 
-        <li>Egbert Broerse, who worked on translations, improved
-        the signaling help and website content and contributed the
-        Rio Grande 1965 signal definition</li>
+        <li><a href="https://github.com/JMRI/JMRI/pulls?utf8=✓&q=author%3Asilverailscolo+">Egbert Broerse</a>, 
+        who worked on translations, added
+        Switchboards, graphic state display in the tables,
+        the Output Matrix signal mast and the Rio Grande 1965
+        signal definition, localized hardware connection tools and 
+        improved the signaling help, website content and
+        the GUI for adding turnouts and signals.</li>
 
         <li>Dick Bronson, who created the great LocoBuffer-II and
         worked hard to make sure it worked well with JMRI. He also
@@ -202,6 +214,12 @@
 
         <li>Stephen Brooks, who did the initial testing of the
         Grapevine and Maple support</li>
+
+        <li>Stuart Brorson, who provided the decoder definition for the 
+            SDD-001 from BNM Hobbies</li>
+        
+        <li>Andy Brown, who helped solve a problem with NX
+        entry/exit pairs.</li>
 
         <li>Bill Brown, whose layout was used for the first NCE
         tests</li>
@@ -233,6 +251,9 @@
         <li>Paco Ca&ntilde;ada, who provided decoder definitions
         for <a href="http://www.ppp-digital.es/">PpP
         decoders</a>.</li>
+
+        <li>Claudio Capaccio of LaisDCC provided definitions
+        for their line of decoders</li>
 
         <li>Bill Carman, who located information on the MRC/Athearn
         F Unit and Challenger decoders</li>
@@ -273,18 +294,25 @@
 
         <li>Seth Cohen, who helped get serial sensors and NCE AIUs
         to work, and wrote the speedometer web page</li>
-
+            
         <li>Glen Colbert, who contributed the MRC AD370 decoder
         definition</li>
 
         <li>Bob Coleman added the CTI Acela support and did a huge
         amount of work on the operations code tests.</li>
 
+        <li>Jeff Collell, <!--- auctionsjeff --->
+            who added Light support for OpenLCB.<li>
+
+        <li>Joe Comuzzi <!-- jcomuzzi -->
+        added new icon tests</li>
+        
         <li>John Crellin contributed numerous new and improved
         decoder definitions for MRC decoders and the Kato
         FL11.</li>
 
-        <li>Peter Cressman provided a major improvement to Logix,
+        <li><a href="https://github.com/JMRI/JMRI/pulls?utf8=✓&q=author%3Apetecressman+">Peter Cressman</a>
+        provided a major improvement to Logix,
         improved Sensor Groups, fixed some problems in Routes, and
         provided the Warrant system for scripted running</li>
 
@@ -342,6 +370,10 @@
         <li>Michael Dunn, who provided a decoder definition for the
         MRC 1645 decoder <a name="E" id="E"></a></li>
 
+        <li>Mike Dunston, who provided 
+            <a href="https://github.com/JMRI/JMRI/pull/4533">several updates</a> 
+            for the DCC++ code</li>
+
         <li>Joe Ellis provided the DecoderPro configuration files
         for the Lenz LE077XF decoder and has done a fantastic job
         on the manual</li>
@@ -387,9 +419,14 @@
         Hobbyist</a> emagazine for putting the <a href=
         "http://model-railroad-hobbyist.com/mrht_decoderpro">JMRI
         clinics from the NMRA 2008 Anaheim convention</a> on the
-        web. <a name="G" id="G"></a></li>
+        web.
+
+        <a name="G" id="G"></a></li>
 
         <li>William C Gage provided an MRC decoder definition</li>
+
+        <li>Steve Gigiel, who fixed the XML definition of the block contents icon,
+        and helped fix the Transit implementation of comments.</li><!-- Pugwash1 -->
 
         <li>Brian Gilhuly, who helped debug a programmer problem in
         JMRI 3.11.1</li>
@@ -417,12 +454,25 @@
         the E-Z Command and Zimo MX61_N decoders; and updated the
         Digitrax definition for new types.</li>
 
+        <li>Tom Gretton,  <!-- tgretton -->
+            who helped with documentation and the Groups.io migration</li>
+
         <li>Walter Griffin, who provided graphics for signals and
         CTC panels</li>
 
+        <li>Costin Grigoras, <!-- costing -->
+            who added an option to start the DCC++ TCP server at startup
+            and updated the DCC++ implementation
+            to do a background refresh of the function values.</li>
+
+        <li>Jerry Grochow, <!-- jerryg2003 -->
+            who helped with the scripting documentation</li>
+            
         <li>Mark Gurries, who provided loaner equipment and great
-        ideas. He's currently working on decoder definitions for
-        DecoderPro <a name="H" id="H"></a></li>
+            ideas. He's currently working on decoder definitions for
+            DecoderPro </li>
+        
+        <a name="H" id="H"></a>
 
         <li>Victoria K. Hall led the legal action that held Matt
         Katzer responsible for his depredations against JMRI</li>
@@ -454,7 +504,8 @@
         <li>Ian Havercroft, who provided the correct identification
         codes for ESU decoders</li>
 
-        <li>David Heap, who provided a QSI decoder fix</li>
+        <li>David Heap, who provided a QSI decoder fix
+        and improved how signal head aspects are supported.</li>
 
         <li>Rob Heikens, who created ESU decoder definitions and
         programmer pages</li>
@@ -467,27 +518,38 @@
 
         <li>Brett Hoffman, who provided support for zero-config
         ("Bonjour"-like) networking and WiFi access to throttles.
-        <a name="I" id="I"></a></li>
+        </li>
+        
+        <a name="I" id="I"></a>
+
+        <li>Osvaldo Hojvat provided definitions for several
+                    <a href-"http://www.ldhtrenes.com.ar">LDH</a>
+                    decoders</li>
+                    
+        <li>Al Huberty, who organized our first users meeting at
+        the NMRA Toronto convention</li>
+        
+        <a name="J" id="J"></a>
 
         <li>AJ Ireland of Digitrax, who loaned equipment, answered
         questions and made valuable suggestions</li>
 
-        <li>Al Huberty, who organized our first users meeting at
-        the NMRA Toronto convention <a name="J" id="J"></a></li>
-
         <li>John Jabour, who created the excellent LocoBuffer and
         thereby made reliable LocoNet communications routine</li>
 
-        <li>Martin Jahner, who fixed the constant checkboxen</li>
-
+        <li>Brian Jackson <!-- brianjackson1 -->
+        who updated the Hornby TTS library</li>
+        
         <li>Bob Jacobsen, who wrote some of the early code and does
         packaging and user support</li>
 
-        <li>Martin Jahner, who built a replacement library for Mac
+        <li>Martin Jahner, who fixed the constant checkboxen
+        and built a replacement library for Mac
         OS X</li>
 
-        <li>Jay Janzen, who debugged a RobotThrottle problem and
-        provided improvements for Dispatcher.</li>
+        <li>Jay Janzen, who debugged a RobotThrottle problem, and
+        provided improvements for Dispatcher, including a fix to allow
+        dispatcher to allocate to the end block.</li>
 
         <li>Lionel Jeanson, who added images to the roster, updated
         the throttle to add preferences for displaying them,
@@ -511,6 +573,10 @@
         <li>Georg Kautzsch, who provided a decoder definition for
         the Uhlenbrock 67800 servo decoder.</li>
 
+        <li>
+        Klaus Killinger, who improved the sound support <!-- klk32003 -->
+            and has provided multiple sound projects</li>
+
         <li>Scott Kitts, who helped debug the new communications
         library for Mac OS X</li>
 
@@ -521,11 +587,15 @@
 
         <li>Tony Koester, who helped with signaling</li>
 
+        <li>W.D. Kok created and maintained some Umelec decoder definitions</li>
+        
         <li>James Koretsky, who contributed the Burlington Northern
         1989 signal definition</li>
 
         <li>Matjaz Krajnc, who provided better code and icons for
         the web throttle</li>
+        
+        <li>Andrew Kroll, who improved the Operations documentation</a>
 
         <li>Ross Kudlick, who researched options switches on
         Digitrax command stations</li>
@@ -554,12 +624,15 @@
 
         <li>Jim LeFevre, who did the testing on the TMCC
         implementation, including buying components so we could do
-        a more complete job, and coded the function support</li>
+        a more complete job, and coded the function support.
+        He's also put a lot of work into test and development
+        of the C/MRI support.</li>
 
         <li>Alain Le Marchand, who provided a number of decoder
-        definitions and updates</li>
+        definitions and updates</li><!-- GitHub: AlanUS -->
 
-        <li>Karl Johan Lisby, who made large improvements to the
+        <li>Karl Johan Lisby, <!-- kjlisby  -->
+        who made large improvements to the
         Uhlenbrock Intellibox support and contributed the Signal
         Controlled Warrant support</li>
 
@@ -612,18 +685,23 @@
 
         <li>Greg McCartney, who provided a <a href=
         "http://jmri.org/xml/signals/NW-1981/index.shtml">Norfolk
-        and Western signal definition</a> and a <a href=
+        and Western signal definition</a>, the <a href=
         "http://jmri.org/xml/signals/B&amp;O-1980/index.shtml">B&amp;O
-        1980 signal definition</a></li>
+        1980 signal definition</a>, and the
+        <a href="http://jmri.org/xml/signals/SOU-1981/index.shtml">Southern 1981 system</a>.
+        </li>
 
-        <li>David McGowan, who handled many aspects of JMRI legal
-        defense against Matt Katzer</li>
-
+        <li>Bob McCown, who helped with the migration of the jmriusers list to 
+            groups.io</li>
+        
         <li>David McDowell of the North Raleigh Model Railroad Club
         created a <a href=
         "http://www.trainweb.org/nrmrc/pubs/NRMRC_Test_Division_with_JMRI.pdf">
         clinic</a> covering Block Occupancy, Transponding and
         Simple Signal Logic.</li>
+
+        <li>David McGowan, who handled many aspects of JMRI legal
+        defense against Matt Katzer</li>
 
         <li>Randy McKenzie, who contributed some CTC panel
         background images</li>
@@ -690,9 +768,11 @@
         <li>Seth Neumann, who provided information on Wangrow
         decoders</li>
 
-        <li>Mark Noble, who found some broken links <a name="O" id=
-        "O"></a></li>
+        <li>Mark Noble, who found some broken links 
 
+        <a name="O" id="O"></a></li>
+        <li>John O'Duffy, who improved low-speed profiling</li>
+        
         <li>Glen Oberhauser, who added LocoNet throttles</li>
 
         <li>David Phillip Oster provided key information and a
@@ -743,10 +823,15 @@
         "R"></a></li>
 
         <li>Balazs Racz, who fixed a bug in startup and improved
-        our tech documentation, and updated the OpenLCB support to
-        their version 0.7</li>
+        our tech documentation, updated the OpenLCB support to
+        their version 0.7, and added support for bean properties
+        to the Tables</li>
 
-        <li>Steve Rawlinson, who fixed a bug in Layout Blocks.</li>
+        <li>Steve Rawlinson, who fixed a bug in Layout Blocks and
+        generously provides the <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Packages/">Jenkins server</a>
+        where we integrate our code and build the packages that we release to 
+        our users.
+        </li>
 
         <li>Simon Reader, who improved the throttle, added a check
         for completed status to Routes, and added the "invert"
@@ -787,6 +872,10 @@
         <li>Joe Salemi, who contributed the Atlas 345 decoder
         definition and updated the TCS Tx definition.</li>
 
+        <li><a href="https://github.com/JMRI/JMRI/pulls?utf8=✓&q=author%3Adsand47+">Dave Sand</a>, 
+        who's worked on Layout Editor, Logix, 
+        Entry/Exit signaling and other things.</li><!-- dsand47 -->
+        
         <li>Richard Sauerbrun provided a definition for the
         DN163K4B decoder.</li>
 
@@ -797,6 +886,8 @@
         <li>Mark Schutzer, who helped debug some significant NCE
         improvements and contributed the Lenz Gold decoder
         definition</li>
+        
+        <li>Thurgau Schweiz, who provided some Umelec decoder definitions.</li>
 
         <li>Knut Schwichtenberg, who contributed the FREDI
         definition files</li>
@@ -811,6 +902,8 @@
         <li>John Sebastian provided a decoder definition for the
         MRC Sound Brilliance 1957.</li>
 
+        <li>Josef Selinger, who updated the Czech translation</li>
+        
         <li>Fred Severson, who gave permission to use QSI manuals
         to make decoder definitions</li>
 
@@ -833,6 +926,10 @@
         <li>Dustin Shoup, who figured out how to preserve order in
         XML files</li>
 
+        <li>Petr Šídlo, <!-- sidlo64 -->
+        who provided a large update to the Czech
+        translations of JMRI</li>
+
         <li>Pekka Siiskonen, who suggested we add error numbers to
         error messages to make it easier to discuss which specific
         error is happening</li>
@@ -846,13 +943,17 @@
         <li>Don Smith, who ran down some NCE decoder
         information</li>
 
-        <li>John Socha-Leialoha, who improved the WiThrottle
+        <li>Ted Smith, who corrected some errors in sample scripts
+            and the basic two-searchlight definition</li>
+
+        <li>John Socha-Leialoha, <!-- JohnSL -->
+        who improved the WiThrottle
         protocol documentation</li>
 
         <li>Alfredo Sola provides the Spanish translation</li>
 
         <li>The good people at <a href=
-        "http://www.sf.net">SourceForge</a> who provide site
+        "http://www.sf.net">SourceForge</a> who provided the original site
         hosting, download servers and computing resources for JMRI
         development</li>
 
@@ -876,6 +977,11 @@
 
         <li>Francois Taburet, who provided the French translation
         for DecoderPro</li>
+
+        <LI>The good people at
+            <A HREF="http://www.tagadab.com">Tagadab</a>
+            who provide site hosting, and continuous integration resources
+            for JMRI development
 
         <li>Suzie Tall, who provided several North American and
         international signal definitions, including definitions for
@@ -912,8 +1018,8 @@
         "http://jmri.org/community/clinics/">clinic
         presentations</a>, created the <a href=
         "html/doc/Technical/XmlEditors.shtml">page on XML
-        editors</a>, and has done a large amount of work on decoder
-        definitions.</li>
+        editors</a>, has done a large amount of work on decoder
+        definitions, and helped solve a problem with the NX entry/exit implementation.</li>
 
         <li>Mark Underwood, who provided a fix for a problem with
         looping sounds and added support for the DCC++ hardware.
@@ -936,6 +1042,14 @@
 
         <li>Jack Walton, who created the Lenz LE080 decoder
         definition</li>
+
+        <li>George Warner, who changed all the TextFields to editable
+        comboboxes (with drop-down menus); added a 2nd turnout
+        circle for slips and added left, right & bottom options
+        for the toolbar (and re-laid out same) in the Layout Editor.
+        Added support for DMX512 lighting.
+        Also wrote all the slip code for the web server.
+        </li>
 
         <li>Mark Waters, who provided numerous Zimo decoder
         definitions and new Zimo MX620 definitions.</li>
@@ -989,6 +1103,11 @@
         <li>Mike Yawn, who provided the instructions for building
         under Eclipse <a name="Z" id="Z"></a></li>
 
+        <li>Steve Young, who helped with CBUS documentation and the Groups.io migration</li><!-- icklesteve -->
+
+        <li>Luis Zamora, who done a lot of work on the 
+        Catalan translation</li><!-- eldelinux --> 
+        
         <li>david zuhn, who provided instructions for installing
         the comm libraries on Linux, wrote startup scripts and
         configured Ant for compiling with warnings</li>
@@ -1008,7 +1127,9 @@
       files that make up a project. More information is available
       on the <a href=
       "http://jmri.org/community/codeswarm.shtml">Code Swarm</a>
-      page.</p><!--#include virtual="/Footer" -->
+      page.</p>
+      
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

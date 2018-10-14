@@ -6,7 +6,6 @@ import jmri.AddressedProgrammer;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +33,8 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
     /**
      * Forward a write request to an ops-mode write operation
      */
+    @Override
+    @Deprecated // 4.1.1
     public synchronized void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("write CV=" + CV + " val=" + val);
@@ -52,6 +53,8 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
 
     }
 
+    @Override
+    @Deprecated // 4.1.1
     public synchronized void readCV(int CV, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("read CV=" + CV);
@@ -60,6 +63,7 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
         throw new ProgrammerException();
     }
 
+    @Override
     public synchronized void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("confirm CV=" + CV);
@@ -69,6 +73,7 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
     }
 
     // add 200mSec between commands, so NCE command station queue doesn't get overrun
+    @Override
     protected void notifyProgListenerEnd(int value, int status) {
         if (log.isDebugEnabled()) {
             log.debug("TamsOpsModeProgrammer adds 200mSec delay to response");
@@ -87,7 +92,7 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
+        ret.add(ProgrammingMode.OPSBYTEMODE);
         return ret;
     }
 
@@ -102,14 +107,17 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
         return false;
     }
 
+    @Override
     public boolean getLongAddress() {
         return mLongAddr;
     }
 
+    @Override
     public int getAddressNumber() {
         return mAddress;
     }
 
+    @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
     }
@@ -120,10 +128,11 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
      * this routine does nothing except to replace the parent routine that does
      * something.
      */
+    @Override
     void cleanup() {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(TamsOpsModeProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TamsOpsModeProgrammer.class);
 
 }

@@ -1,8 +1,8 @@
-// TrainCsvCommon.java
 package jmri.jmrit.operations.trains;
 
 import java.io.PrintWriter;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * Contains the csv operators for manifests and switch lists
  *
  * @author Daniel Boudreau Copyright (C) 2011, 2013, 2015
- * @version $Revision: 1 $
+ * 
  *
  */
 public class TrainCsvCommon extends TrainCommon {
@@ -65,7 +65,7 @@ public class TrainCsvCommon extends TrainCommon {
 
     // switch list specific operators
     protected final static String DL = "DL" + DEL + Bundle.getMessage("csvDepartureLocationName") + DEL; // NOI18N
-    protected final static String END = "END" + DEL + Bundle.getMessage("csvEnd") + DEL; // NOI18N
+    protected final static String END = "END" + DEL + Bundle.getMessage("csvEnd"); // NOI18N
     protected final static String ETA = "ETA" + DEL + Bundle.getMessage("csvExpectedTimeArrival") + DEL; // NOI18N
     protected final static String ETE = "ETE" + DEL + Bundle.getMessage("csvEstimatedTimeEnroute") + DEL; // NOI18N
     protected final static String HOLD = "HOLD" + DEL + Bundle.getMessage("csvHoldCar"); // NOI18N
@@ -77,6 +77,7 @@ public class TrainCsvCommon extends TrainCommon {
     protected final static String TDC = "TDC" + DEL + Bundle.getMessage("csvTrainChangesDirection") + DEL; // NOI18N
     protected final static String TIR = "TIR" + DEL + Bundle.getMessage("csvTrainEnRoute"); // NOI18N
     protected final static String TDONE = "TDONE" + DEL + Bundle.getMessage("csvTrainHasAlreadyServiced"); // NOI18N
+    protected final static String TEND = "TEND" + DEL + Bundle.getMessage("csvTrainEnd") + DEL; // NOI18N
     protected final static String VN = "VN" + DEL + Bundle.getMessage("csvVisitNumber") + DEL; // NOI18N
 
     private final static Logger log = LoggerFactory.getLogger(TrainCsvCommon.class);
@@ -279,17 +280,17 @@ public class TrainCsvCommon extends TrainCommon {
                 if (pickup && setout && !track.getCommentBoth().equals(Track.NONE)) {
                     String[] comments = track.getCommentBoth().split(NEW_LINE);
                     for (String comment : comments) {
-                        addLine(fileOut, TKCB + comment);
+                        addLine(fileOut, TKCB + ESC + comment + ESC);
                     }
                 } else if (pickup && !setout && !track.getCommentPickup().equals(Track.NONE)) {
                     String[] comments = track.getCommentPickup().split(NEW_LINE);
                     for (String comment : comments) {
-                        addLine(fileOut, TKCP + comment);
+                        addLine(fileOut, TKCP + ESC + comment + ESC);
                     }
                 } else if (!pickup && setout && !track.getCommentSetout().equals(Track.NONE)) {
                     String[] comments = track.getCommentSetout().split(NEW_LINE);
                     for (String comment : comments) {
-                        addLine(fileOut, TKCS + comment);
+                        addLine(fileOut, TKCS + ESC + comment + ESC);
                     }
                 }
             }
@@ -297,7 +298,7 @@ public class TrainCsvCommon extends TrainCommon {
     }
 
     protected void listCarsLocationUnknown(PrintWriter fileOut) {
-        List<Car> cars = CarManager.instance().getCarsLocationUnknown();
+        List<Car> cars = InstanceManager.getDefault(CarManager.class).getCarsLocationUnknown();
         if (cars.size() == 0) {
             return; // no cars to search for!
         }

@@ -1,59 +1,109 @@
 package jmri;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
-import java.util.ArrayList;
+import java.beans.PropertyChangeListener;
+import java.util.List;
 
 /**
  * A Conditional is layout control logic, consisting of a logical expression and
  * an action.
- * <P>
+ * <p>
  * A Conditional does not exist on its own, but is part of a Logix. The system
  * name of each Conditional is set automatically when the conditional is
  * created. It begins with the system name of its parent Logix. There is no
  * Conditional Table. Conditionals are created, editted, and deleted via the
  * Logix Table.
- * <P>
+ * <p>
  * A Conditional has a "state", which changes depending on whether its logical
  * expression calculates to TRUE or FALSE. The "state" may not be changed by the
  * user. It only changes in response to changes in the "state variables" used in
  * its logical expression.
- * <P>
+ * <p>
  * Listeners may be set to monitor a change in the state of a conditional.
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
- * @author	Dave Duchamp Copyright (C) 2007, 2008
- * @author	Pete Cressman Copyright (C) 2009, 2010, 2011
+ * <p>
+ * @author Dave Duchamp Copyright (C) 2007, 2008
+ * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris copyright (c) 2009
  */
 public interface Conditional extends NamedBean {
 
-    // states 
-    public static final int TRUE = 0x01;
+    // states
+    /**
+     * @deprecated since 4.7.1; use {@link jmri.NamedBean#UNKNOWN} instead
+     */
+    @Deprecated
+    public static final int UNKNOWN = NamedBean.UNKNOWN;
     public static final int FALSE = 0x02;
-    public static final int UNKNOWN = 0x04;
+    public static final int TRUE = 0x04;
 
     // logic operators used in antecedent
     public static final int ALL_AND = 0x01;
     public static final int ALL_OR = 0x02;
     public static final int MIXED = 0x03;
 
-    // state variable definitions
+    public enum Operator {
+        NONE,
+        AND,
+        OR;
+        
+        // This method is used by DefaultConditionalManagerXml.store() for backward compatibility
+        public int getIntValue() {
+            switch (this) {
+                case NONE: return OPERATOR_NONE;
+                case AND: return OPERATOR_AND;
+                case OR: return OPERATOR_OR;
+                default: throw new IllegalArgumentException(String.format("operator %s is unknown", this.name()));
+            }
+        }
+        
+        // This method is used by DefaultConditionalManagerXml.loadConditionals() for backward compatibility
+        public static Operator getOperatorFromIntValue(int opern) {
+            switch (opern) {
+                case OPERATOR_AND: return Operator.AND;
+                case OPERATOR_NOT: return Operator.NONE;
+                case OPERATOR_AND_NOT: return Operator.AND;
+                case OPERATOR_NONE: return Operator.NONE;
+                case OPERATOR_OR: return Operator.OR;
+                case OPERATOR_OR_NOT: return Operator.OR;
+                default: throw new IllegalArgumentException(String.format("operator %d is unknown", opern));
+            }
+        }
+    }
+    
+    // state variable definitions. Keep these since they are needed
+    // for backward compatibility in DefaultConditionalManagerXml.
+    // But they are not used elsewhere.
     public static final int OPERATOR_AND = 1;
-    public static final int OPERATOR_NOT = 2;
-    public static final int OPERATOR_AND_NOT = 3;
     public static final int OPERATOR_NONE = 4;
     public static final int OPERATOR_OR = 5;
+    /**
+     * @deprecated since 4.13.4; It is not stored in the XML file since 4.13.4.
+     */
+    @Deprecated
+    public static final int OPERATOR_NOT = 2;
+    /**
+     * @deprecated since 4.13.4; It is not stored in the XML file since 4.13.4.
+     */
+    @Deprecated
+    public static final int OPERATOR_AND_NOT = 3;
+    /**
+     * @deprecated since 4.13.4; It is not stored in the XML file since 4.13.4.
+     */
+    @Deprecated
     public static final int OPERATOR_OR_NOT = 6;
+    
     // state variable types
     public static final int TYPE_NONE = 0;
     public static final int TYPE_SENSOR_ACTIVE = 1;
@@ -67,7 +117,7 @@ public interface Conditional extends NamedBean {
     public static final int TYPE_MEMORY_EQUALS = 9;
     public static final int TYPE_FAST_CLOCK_RANGE = 10;
 // Note - within the TYPE_SIGNAL_HEAD definitions, all must be together,
-//		RED must be first, and HELD must be last
+//  RED must be first, and HELD must be last
     public static final int TYPE_SIGNAL_HEAD_RED = 11;
     public static final int TYPE_SIGNAL_HEAD_YELLOW = 12;
     public static final int TYPE_SIGNAL_HEAD_GREEN = 13;
@@ -179,7 +229,11 @@ public interface Conditional extends NamedBean {
     public static final int ACTION_MANUAL_RUN_WARRANT = 48;
     public static final int ACTION_SET_TRAIN_NAME = 49;
     public static final int ACTION_SET_BLOCK_VALUE = 50;
-    public static final int NUM_ACTION_TYPES = 50;
+    // EntryExit Actions
+    public static final int ACTION_SET_NXPAIR_ENABLED = 51;
+    public static final int ACTION_SET_NXPAIR_DISABLED = 52;
+    public static final int ACTION_SET_NXPAIR_SEGMENT = 53;
+    public static final int NUM_ACTION_TYPES = 53;
 
     /**
      * ***********************************************************************************
@@ -213,7 +267,7 @@ public interface Conditional extends NamedBean {
      * *************** ConditionalVariable Maps *******************************
      */
     // Map state variable types to their item type
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
     // arrays. Someday...
     // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
@@ -255,10 +309,10 @@ public interface Conditional extends NamedBean {
         ITEM_TYPE_OBLOCK, // TYPE_BLOCK_STATUS_EQUALS = 34
         ITEM_TYPE_ENTRYEXIT, // TYPE_ENTRYEXIT_ACTIVE = 35
         ITEM_TYPE_ENTRYEXIT // TYPE_ENTRYEXIT_INACTIVE = 36
-};
+    };
 
     // Map SignalHead comboBox items to SignalHead Conditional variable types
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
     // arrays. Someday...
     // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
@@ -269,7 +323,7 @@ public interface Conditional extends NamedBean {
         TYPE_SIGNAL_HEAD_HELD};
 
     // Map SignalMAst comboBox items to SignalMast Conditional variable types
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
     // arrays. Someday...
     // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
@@ -280,7 +334,7 @@ public interface Conditional extends NamedBean {
         TYPE_SIGNAL_MAST_HELD};
 
     // Map Sensor state comboBox items to Sensor Conditional variable types
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
     // arrays. Someday...
     // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
@@ -288,7 +342,7 @@ public interface Conditional extends NamedBean {
     public static final int[] ITEM_TO_SENSOR_TEST = {TYPE_SENSOR_ACTIVE, TYPE_SENSOR_INACTIVE};
 
     // Map Turnout state comboBox items to Turnout Conditional variable types
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
     // arrays. Someday...
     // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
@@ -296,7 +350,7 @@ public interface Conditional extends NamedBean {
     public static final int[] ITEM_TO_TURNOUT_TEST = {TYPE_TURNOUT_THROWN, TYPE_TURNOUT_CLOSED};
 
     // Map Conditional state comboBox items to  Condition ConditionalVvariable types
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
     // arrays. Someday...
     // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
@@ -304,7 +358,7 @@ public interface Conditional extends NamedBean {
     public static final int[] ITEM_TO_CONDITIONAL_TEST = {TYPE_CONDITIONAL_TRUE, TYPE_CONDITIONAL_FALSE};
 
     // Map Memory state comboBox items to Light ConditionalVariable types
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
     // arrays. Someday...
     // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
@@ -312,7 +366,7 @@ public interface Conditional extends NamedBean {
     public static final int[] ITEM_TO_LIGHT_TEST = {TYPE_LIGHT_ON, TYPE_LIGHT_OFF};
 
     // Map Warrant state comboBox items to Warrant ConditionalVariable types
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
     // arrays. Someday...
     // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
@@ -321,7 +375,7 @@ public interface Conditional extends NamedBean {
         TYPE_ROUTE_OCCUPIED, TYPE_TRAIN_RUNNING};
 
     // Map Memory Compare Type comboBox items to Memory ConditionalVariable types
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
     // arrays. Someday...
     // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
@@ -329,17 +383,17 @@ public interface Conditional extends NamedBean {
     public static final int[] ITEM_TO_MEMORY_TEST = {TYPE_MEMORY_EQUALS, TYPE_MEMORY_EQUALS_INSENSITIVE,
         TYPE_MEMORY_COMPARE, TYPE_MEMORY_COMPARE_INSENSITIVE};
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY")
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY")
     public static final int[] ITEM_TO_OBLOCK_TEST = {TYPE_BLOCK_STATUS_EQUALS};
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY")
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY")
     public static final int[] ITEM_TO_ENTRYEXIT_TEST = {TYPE_ENTRYEXIT_ACTIVE, TYPE_ENTRYEXIT_INACTIVE};
 
     /**
      * *************** ConditionalAction Maps *******************************
      */
     // Map action type to the item type
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
     // arrays. Someday...
     // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
@@ -394,11 +448,14 @@ public interface Conditional extends NamedBean {
         ITEM_TYPE_OBLOCK, //  ACTION_SET_BLOCK_IN_SERVICE = 47;
         ITEM_TYPE_WARRANT, // ACTION_MANUAL_RUN_WARRANT 48
         ITEM_TYPE_WARRANT, // ACTION_SET_TRAIN_NAME 49
-        ITEM_TYPE_OBLOCK //ACTION_SET_BLOCK_VALUE
+        ITEM_TYPE_OBLOCK, //ACTION_SET_BLOCK_VALUE 50
+        ITEM_TYPE_ENTRYEXIT, //ACTION_SET_NXPAIR_ENABLED 51
+        ITEM_TYPE_ENTRYEXIT, //ACTION_SET_NXPAIR_DISABLED 52
+        ITEM_TYPE_ENTRYEXIT //ACTION_SET_NXPAIR_SEGMENT 53
 };
 
     // Map Sensor Type comboBox items to Sensor action types
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
     // arrays. Someday...
     // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
@@ -407,7 +464,7 @@ public interface Conditional extends NamedBean {
         ACTION_RESET_DELAYED_SENSOR, ACTION_CANCEL_SENSOR_TIMERS};
 
     // Map Turnout Type comboBox items to Turnout action types
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
     // arrays. Someday...
     // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
@@ -416,7 +473,7 @@ public interface Conditional extends NamedBean {
         ACTION_LOCK_TURNOUT, ACTION_CANCEL_TURNOUT_TIMERS, ACTION_RESET_DELAYED_TURNOUT};
 
     // Map Memory Type comboBox items to Memory action types
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
     // arrays. Someday...
     // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
@@ -424,7 +481,7 @@ public interface Conditional extends NamedBean {
     public static final int[] ITEM_TO_MEMORY_ACTION = {12, 26};
 
     // Map Light Type comboBox items to Light action types
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
     // arrays. Someday...
     // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
@@ -433,7 +490,7 @@ public interface Conditional extends NamedBean {
         ACTION_SET_LIGHT_TRANSITION_TIME};
 
     // Map FastClock Type comboBox items to FastClock action types
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
     // arrays. Someday...
     // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
@@ -442,7 +499,7 @@ public interface Conditional extends NamedBean {
         ACTION_START_FAST_CLOCK, ACTION_STOP_FAST_CLOCK};
 
     // Map Logix Type comboBox items to Logix action types
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
     // arrays. Someday...
     // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
@@ -450,7 +507,7 @@ public interface Conditional extends NamedBean {
     public static final int[] ITEM_TO_LOGIX_ACTION = {ACTION_ENABLE_LOGIX, ACTION_DISABLE_LOGIX};
 
     // Map Warrant Type comboBox items to Warrant action types
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
     // arrays. Someday...
     // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
@@ -460,13 +517,13 @@ public interface Conditional extends NamedBean {
         ACTION_MANUAL_RUN_WARRANT, ACTION_CONTROL_TRAIN, ACTION_SET_TRAIN_ID,
         ACTION_SET_TRAIN_NAME, ACTION_THROTTLE_FACTOR};
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY")
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY")
     public final static int[] ITEM_TO_OBLOCK_ACTION = {ACTION_DEALLOCATE_BLOCK,
         ACTION_SET_BLOCK_VALUE, ACTION_SET_BLOCK_ERROR, ACTION_CLEAR_BLOCK_ERROR,
         ACTION_SET_BLOCK_OUT_OF_SERVICE, ACTION_SET_BLOCK_IN_SERVICE};
 
     // Map Signal Head Type comboBox items to Signal Head action types
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
     // arrays. Someday...
     // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
@@ -476,7 +533,7 @@ public interface Conditional extends NamedBean {
         ACTION_SET_SIGNAL_DARK, ACTION_SET_SIGNAL_LIT};
 
     // Map Signal Mast Type comboBox items to Signal Mast action types
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
     // arrays. Someday...
     // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
@@ -486,7 +543,7 @@ public interface Conditional extends NamedBean {
         ACTION_SET_SIGNALMAST_DARK, ACTION_SET_SIGNALMAST_LIT};
 
     // Map Audio Type comboBox items to Audio action types
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
     // arrays. Someday...
     // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
@@ -494,15 +551,24 @@ public interface Conditional extends NamedBean {
     public static final int[] ITEM_TO_AUDIO_ACTION = {ACTION_PLAY_SOUND, ACTION_CONTROL_AUDIO};
 
     // Map Script Type comboBox items to Script action types
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
     // arrays. Someday...
     // WHAT IS EXPOSED IN A STATIC FINAL ARRAY 
     // OF STATIC FINAL ELEMENTS??
     public static final int[] ITEM_TO_SCRIPT_ACTION = {ACTION_RUN_SCRIPT, ACTION_JYTHON_COMMAND};
 
+    // Map EntryExit Type comboBox items to EntryExit action types
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure,
+    // just have to accept these exposed
+    // arrays. Someday...
+    // WHAT IS EXPOSED IN A STATIC FINAL ARRAY
+    // OF STATIC FINAL ELEMENTS??
+    public static final int[] ITEM_TO_ENTRYEXIT_ACTION = {ACTION_SET_NXPAIR_ENABLED,
+        ACTION_SET_NXPAIR_DISABLED, ACTION_SET_NXPAIR_SEGMENT};
+
     // Map Misc Type comboBox items to Misc action types
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY") // with existing code structure, 
     // just have to accept these exposed
     // arrays. Someday...
     public static final int[] ITEM_TO_OTHER_ACTION = {ACTION_TRIGGER_ROUTE};
@@ -511,16 +577,23 @@ public interface Conditional extends NamedBean {
      * set the logic type (all AND's all OR's or mixed AND's and OR's set the
      * antecedent expression - should be a well formed boolean statement with
      * parenthesis indicating the order of evaluation
+     *
+     * @param type       the type
+     * @param antecedent the expression
      */
     public void setLogicType(int type, String antecedent);
 
     /**
      * Get antecedent (boolean expression) of Conditional
+     *
+     * @return the expression
      */
     public String getAntecedentExpression();
 
     /**
      * Get type of operators in the antecedent statement
+     *
+     * @return the type
      */
     public int getLogicType();
 
@@ -539,49 +612,69 @@ public interface Conditional extends NamedBean {
 
     /**
      * Set list of actions
+     *
+     * @param arrayList the actions
      */
-    public void setAction(ArrayList<ConditionalAction> arrayList);
+    public void setAction(List<ConditionalAction> arrayList);
 
     /**
      * Make deep clone of actions
+     *
+     * @return a list of copies of actionss
      */
-    public ArrayList<ConditionalAction> getCopyOfActions();
+    public List<ConditionalAction> getCopyOfActions();
 
     /**
      * Set State Variables for this Conditional. Each state variable will
      * evaluate either True or False when this Conditional is calculated.
-     * <P>
+     * <p>
      * This method assumes that all information has been validated.
+     *
+     * @param arrayList the list of variables
      */
-    public void setStateVariables(ArrayList<ConditionalVariable> arrayList);
+    public void setStateVariables(List<ConditionalVariable> arrayList);
 
     /**
      * Make deep clone of variables
+     *
+     * @return a list containing copies of variables
      */
-    public ArrayList<ConditionalVariable> getCopyOfStateVariables();
+    public List<ConditionalVariable> getCopyOfStateVariables();
 
     /**
      * Calculate this Conditional, triggering either or both actions if the user
      * specified conditions are met, and the Logix is enabled. Sets the state of
      * the conditional. Returns the calculated state of this Conditional.
+     *
+     * @param enabled true if Logix should be enabled; false otherwise
+     * @param evt     event to trigger if true
+     * @return the new state
      */
     public int calculate(boolean enabled, PropertyChangeEvent evt);
 
     /**
      * Check that an antecedent is well formed. If not, returns an error
      * message. Otherwise returns null.
+     *
+     * @param ant          the expression
+     * @param variableList list of variables
+     * @return true if well formed; false otherwise
      */
-    public String validateAntecedent(String ant, ArrayList<ConditionalVariable> variableList);
+    public String validateAntecedent(String ant, List<ConditionalVariable> variableList);
 
     /**
      * Stop a sensor timer if one is actively delaying setting of the specified
      * sensor
+     *
+     * @param sname the name of the timer
      */
     public void cancelSensorTimer(String sname);
 
     /**
      * Stop a turnout timer if one is actively delaying setting of the specified
      * turnout
+     *
+     * @param sname the name of the timer
      */
     public void cancelTurnoutTimer(String sname);
 
@@ -590,22 +683,30 @@ public interface Conditional extends NamedBean {
      *
      * @return state value
      */
+    @Override
     public int getState();
 
     /**
      * Request a call-back when the bound KnownState property changes.
+     *
+     * @param l the listener
      */
-    public void addPropertyChangeListener(java.beans.PropertyChangeListener l);
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener l);
 
     /**
      * Remove a request for a call-back when a bound property changes.
+     *
+     * @param l the listener
      */
-    public void removePropertyChangeListener(java.beans.PropertyChangeListener l);
+    @Override
+    public void removePropertyChangeListener(PropertyChangeListener l);
 
     /**
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
      */
+    @Override
     public void dispose();  // remove _all_ connections!
 
 }

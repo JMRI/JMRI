@@ -1,9 +1,9 @@
 package jmri.jmrix.ieee802154;
 
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
 
 /**
  * IEEE802154ReplyTest.java
@@ -12,37 +12,20 @@ import junit.framework.TestSuite;
  *
  * @author	Paul Bender
  */
-public class IEEE802154ReplyTest extends TestCase {
-
-    public void testCtor() {
-        IEEE802154Reply m = new IEEE802154Reply();
-        Assert.assertNotNull(m);
-    }
-
-    // from here down is testing infrastructure
-    public IEEE802154ReplyTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", IEEE802154ReplyTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(IEEE802154ReplyTest.class);
-        return suite;
-    }
+public class IEEE802154ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        m = new IEEE802154Reply();
     }
 
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+	m = null;
+        JUnitUtil.tearDown();
     }
 
 }

@@ -1,9 +1,9 @@
 package jmri.jmrix.sprog.swing;
 
-import jmri.jmrix.sprog.SprogSystemConnectionMemo;
-import jmri.jmrix.sprog.SPROGMenu;
 import jmri.jmrix.sprog.SPROGCSMenu;
+import jmri.jmrix.sprog.SPROGMenu;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
  * Provide access to Swing components for the Sprog subsystem.
@@ -23,6 +23,7 @@ public class SprogComponentFactory extends jmri.jmrix.swing.ComponentFactory {
     /**
      * Provide a menu with all items attached to this system connection
      */
+    @Override
     public javax.swing.JMenu getMenu() {
         if (memo.getDisabled()) {
             return null;

@@ -45,7 +45,7 @@
       	  <label label=" "/>
       	  <label label=" "/>
       	  <label label=" "/>
-          <label label="Servo Test writes to the Vsersion ID but does not change it "/>
+          <label label="Servo Test writes to the Version ID but does not change it "/>
           <label label="To initiate a servo test, select the test and 'Write changes on sheet'"/>
       	  <label label=" "/>
       	  <display item="Servo Test" format="radiobuttons"/>

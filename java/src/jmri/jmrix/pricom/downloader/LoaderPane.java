@@ -1,8 +1,6 @@
 package jmri.jmrix.pricom.downloader;
 
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.FlowLayout;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -22,6 +20,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.*;
 
 /**
  * Pane for downloading software updates to PRICOM products
@@ -30,8 +29,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LoaderPane extends javax.swing.JPanel {
 
-    static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.pricom.downloader.Loader");
-
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
 
@@ -39,7 +36,7 @@ public class LoaderPane extends javax.swing.JPanel {
     //private     boolean opened = false;
     DataInputStream serialStream = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC",
+    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC",
             justification = "Class is no longer active, no hardware with which to test fix")
     OutputStream ostream = null;
 
@@ -61,7 +58,7 @@ public class LoaderPane extends javax.swing.JPanel {
     // populate the comm port part of GUI, invoked as part of startup
     protected void addCommGUI() {
         // load the port selection part
-        portBox.setToolTipText(res.getString("TipSelectPort"));
+        portBox.setToolTipText(Bundle.getMessage("TipSelectPort"));
         portBox.setAlignmentX(JLabel.LEFT_ALIGNMENT);
         Vector<String> v = getPortNames();
 
@@ -69,23 +66,24 @@ public class LoaderPane extends javax.swing.JPanel {
             portBox.addItem(v.elementAt(i));
         }
 
-        openPortButton.setText(res.getString("ButtonOpen"));
-        openPortButton.setToolTipText(res.getString("TipOpenPort"));
+        openPortButton.setText(Bundle.getMessage("ButtonOpen"));
+        openPortButton.setToolTipText(Bundle.getMessage("TipOpenPort"));
         openPortButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 try {
                     openPortButtonActionPerformed(evt);
                     //} catch (jmri.jmrix.SerialConfigException ex) {
                     //    log.error("Error while opening port.  Did you select the right one?\n"+ex);
                 } catch (java.lang.UnsatisfiedLinkError ex) {
-                    log.error("Error while opening port.  Did you select the right one?\n" + ex);
+                    log.error("Error while opening port. Did you select the right one?\n" + ex);
                 }
             }
         });
 
         JPanel p1 = new JPanel();
         p1.setLayout(new FlowLayout());
-        p1.add(new JLabel(res.getString("LabelSerialPort")));
+        p1.add(new JLabel(Bundle.getMessage("LabelSerialPort")));
         p1.add(portBox);
         p1.add(openPortButton);
         add(p1);
@@ -93,7 +91,7 @@ public class LoaderPane extends javax.swing.JPanel {
         {
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
-            JLabel l = new JLabel(res.getString("LabelTraffic"));
+            JLabel l = new JLabel(Bundle.getMessage("LabelTraffic"));
             l.setAlignmentX(JLabel.LEFT_ALIGNMENT);
             p.add(l);
             add(p);
@@ -116,17 +114,14 @@ public class LoaderPane extends javax.swing.JPanel {
         // Open the port
         openPort((String) portBox.getSelectedItem(), "JMRI");
         //
-        status.setText(res.getString("StatusSelectFile"));
+        status.setText(Bundle.getMessage("StatusSelectFile"));
         fileButton.setEnabled(true);
-        fileButton.setToolTipText(res.getString("TipFileEnabled"));
-        //
+        fileButton.setToolTipText(Bundle.getMessage("TipFileEnabled"));
         log.info("Open button processing complete");
     }
 
     synchronized void sendBytes(byte[] bytes) {
-        if (log.isDebugEnabled()) {
-            log.debug("Send " + bytes.length + ": " + jmri.util.StringUtil.hexStringFromBytes(bytes));
-        }
+        log.debug("Send {0}: {1}", bytes.length, jmri.util.StringUtil.hexStringFromBytes(bytes));
         try {
             // send the STX at the start
             byte startbyte = 0x02;
@@ -169,6 +164,7 @@ public class LoaderPane extends javax.swing.JPanel {
          * PortController via <code>connectPort</code>. Terminates with the
          * input stream breaking out of the try block.
          */
+        @Override
         public void run() {
             // have to limit verbosity!
 
@@ -189,6 +185,8 @@ public class LoaderPane extends javax.swing.JPanel {
         static final int maxMsg = 80;
         byte inBuffer[];
 
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SR_NOT_CHECKED",
+                                            justification="this is for skip-chars while loop: no matter how many, we're skipping")
         void nibbleIncomingData() throws java.io.IOException {
             long nibbled = 0;                         // total chars chucked
             serialStream = new DataInputStream(activeSerialPort.getInputStream());
@@ -201,10 +199,7 @@ public class LoaderPane extends javax.swing.JPanel {
                 nibbled += count;                     // add on this pass count
                 count = serialStream.available();     // any more left?
             }
-
-            if (log.isDebugEnabled()) {
-                log.debug("nibbled " + nibbled + " from input stream");
-            }
+            log.debug("nibbled {} from input stream", nibbled);
         }
 
         void handleIncomingData() throws java.io.IOException {
@@ -216,9 +211,7 @@ public class LoaderPane extends javax.swing.JPanel {
             int dataChar;
             while ((dataChar = serialStream.readByte()) != 0x02) {
                 mbuff.append(dataChar);
-                if (log.isDebugEnabled()) {
-                    log.debug(" rcv char " + dataChar);
-                }
+                log.debug(" rcv char {}", dataChar);
                 if (dataChar == 0x0d) {
                     // Queue the string for display
                     javax.swing.SwingUtilities.invokeLater(new Notify(mbuff));
@@ -237,9 +230,7 @@ public class LoaderPane extends javax.swing.JPanel {
                 }
                 inBuffer[i] = char1;
             }
-            if (log.isDebugEnabled()) {
-                log.debug("received " + (i + 1) + " bytes " + jmri.util.StringUtil.hexStringFromBytes(inBuffer));
-            }
+            log.debug("received {} bytes {}", (i + 1), jmri.util.StringUtil.hexStringFromBytes(inBuffer));
 
             // and process the message for possible replies, etc
             nextMessage(inBuffer, i);
@@ -267,14 +258,13 @@ public class LoaderPane extends javax.swing.JPanel {
 
             // see if its a request for more data
             if (!(isSendNext(buffer) || isUploadReady(buffer))) {
-                if (log.isDebugEnabled()) {
-                    log.debug("extra message, ignore");
-                }
+                log.debug("extra message, ignore");
                 return;
             }
 
             // update progress bar via the queue to ensure synchronization
             Runnable r = new Runnable() {
+                @Override
                 public void run() {
                     updateGUI();
                 }
@@ -298,6 +288,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
             // signal end to GUI via the queue to ensure synchronization
             r = new Runnable() {
+                @Override
                 public void run() {
                     enableGUI();
                 }
@@ -315,14 +306,12 @@ public class LoaderPane extends javax.swing.JPanel {
          * Should be invoked on the Swing thread
          */
         void updateGUI() {
-            if (log.isDebugEnabled()) {
-                log.debug("updateGUI with " + msgCount + " / " + (pdiFile.length() / msgSize));
-            }
+            log.debug("updateGUI with {} / {}", msgCount, (pdiFile.length() / msgSize));
             if (!init) {
                 return;
             }
 
-            status.setText(res.getString("StatusDownloading"));
+            status.setText(Bundle.getMessage("StatusDownloading"));
             // update progress bar
             msgCount++;
             bar.setValue(100 * msgCount * msgSize / pdiFile.length());
@@ -335,17 +324,15 @@ public class LoaderPane extends javax.swing.JPanel {
          * Should be invoked on the Swing thread
          */
         void enableGUI() {
-            if (log.isDebugEnabled()) {
-                log.debug("enableGUI");
-            }
+            log.debug("enableGUI");
             if (!init) {
                 log.error("enableGUI with init false");
             }
 
             // enable GUI
             loadButton.setEnabled(true);
-            loadButton.setToolTipText(res.getString("TipLoadEnabled"));
-            status.setText(res.getString("StatusDone"));
+            loadButton.setToolTipText(Bundle.getMessage("TipLoadEnabled"));
+            status.setText(Bundle.getMessage("StatusDone"));
         }
 
         class Notify implements Runnable {
@@ -371,6 +358,7 @@ public class LoaderPane extends javax.swing.JPanel {
             /**
              * when invoked, format and display the message
              */
+            @Override
             public void run() {
                 traffic.setText(message);
             }
@@ -401,7 +389,6 @@ public class LoaderPane extends javax.swing.JPanel {
         //opened = false;
     }
 
-    @SuppressWarnings("unchecked")
     public Vector<String> getPortNames() {
         // first, check that the comm package can be opened and ports seen
         portNameVector = new Vector<String>();
@@ -409,7 +396,7 @@ public class LoaderPane extends javax.swing.JPanel {
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = portIDs.nextElement();
-            // filter out line printers 
+            // filter out line printers
             if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
             {
                 portNameVector.addElement(id.getName());
@@ -418,6 +405,8 @@ public class LoaderPane extends javax.swing.JPanel {
         return portNameVector;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SR_NOT_CHECKED",
+                                        justification="this is for skip-chars while loop: no matter how many, we're skipping")
     public String openPort(String portName, String appName) {
         // open the port, check ability to set moderators
         try {
@@ -427,7 +416,7 @@ public class LoaderPane extends javax.swing.JPanel {
                 activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
             } catch (PortInUseException p) {
                 handlePortBusy(p, portName);
-                return "Port " + p + " in use already";
+                return "Port " + p + " already in use";
             }
 
             // try to set it for communication via SerialDriver
@@ -436,8 +425,8 @@ public class LoaderPane extends javax.swing.JPanel {
                 int speed = 9600;
                 // Doc says 7 bits, but 8 seems needed
                 activeSerialPort.setSerialPortParams(speed, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            } catch (gnu.io.UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+            } catch (UnsupportedCommOperationException e) {
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
@@ -449,8 +438,8 @@ public class LoaderPane extends javax.swing.JPanel {
             activeSerialPort.setFlowControlMode(0);
 
             // set timeout
-            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
-                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(),
+                    activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = new DataInputStream(activeSerialPort.getInputStream());
@@ -458,7 +447,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
             // purge contents, if any
             int count = serialStream.available();
-            log.debug("input stream shows " + count + " bytes available");
+            log.debug("input stream shows {} bytes available", count);
             while (count > 0) {
                 serialStream.skip(count);
                 count = serialStream.available();
@@ -477,16 +466,15 @@ public class LoaderPane extends javax.swing.JPanel {
             }
 
             //opened = true;
-        } catch (Exception ex) {
-            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
-            ex.printStackTrace();
+        } catch (NoSuchPortException | UnsupportedCommOperationException | IOException | RuntimeException ex) {
+            log.error("Unexpected exception while opening port {}", portName, ex);
             return "Unexpected error while opening port " + portName + ": " + ex;
         }
         return null; // indicates OK return
     }
 
-    void handlePortBusy(gnu.io.PortInUseException p, String port) {
-        log.error("Port " + p + " in use, cannot open");
+    void handlePortBusy(PortInUseException p, String port) {
+        log.error("Port {} in use, cannot open", p);
     }
 
     public LoaderPane() {
@@ -500,16 +488,17 @@ public class LoaderPane extends javax.swing.JPanel {
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
 
-            fileButton = new JButton(res.getString("ButtonSelect"));
+            fileButton = new JButton(Bundle.getMessage("ButtonSelect"));
             fileButton.setEnabled(false);
-            fileButton.setToolTipText(res.getString("TipFileDisabled"));
+            fileButton.setToolTipText(Bundle.getMessage("TipFileDisabled"));
             fileButton.addActionListener(new AbstractAction() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     selectInputFile();
                 }
             });
             p.add(fileButton);
-            p.add(new JLabel(res.getString("LabelInpFile")));
+            p.add(new JLabel(Bundle.getMessage("LabelInpFile")));
             p.add(inputFileName);
 
             add(p);
@@ -518,7 +507,7 @@ public class LoaderPane extends javax.swing.JPanel {
         {
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
-            JLabel l = new JLabel(res.getString("LabelFileComment"));
+            JLabel l = new JLabel(Bundle.getMessage("LabelFileComment"));
             l.setAlignmentX(JLabel.LEFT_ALIGNMENT);
             p.add(l);
             add(p);
@@ -535,11 +524,12 @@ public class LoaderPane extends javax.swing.JPanel {
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
 
-            loadButton = new JButton(res.getString("ButtonLoad"));
+            loadButton = new JButton(Bundle.getMessage("ButtonLoad"));
             loadButton.setEnabled(false);
-            loadButton.setToolTipText(res.getString("TipLoadDisabled"));
+            loadButton.setToolTipText(Bundle.getMessage("TipLoadDisabled"));
             p.add(loadButton);
             loadButton.addActionListener(new AbstractAction() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     doLoad();
                 }
@@ -556,12 +546,11 @@ public class LoaderPane extends javax.swing.JPanel {
         {
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
-            status.setText(res.getString("StatusSelectPort"));
+            status.setText(Bundle.getMessage("StatusSelectPort"));
             status.setAlignmentX(JLabel.LEFT_ALIGNMENT);
             p.add(status);
             add(p);
         }
-
     }
 
     void selectInputFile() {
@@ -581,16 +570,16 @@ public class LoaderPane extends javax.swing.JPanel {
         }
 
         comment.setText(pdiFile.getComment());
-        status.setText(res.getString("StatusDoDownload"));
+        status.setText(Bundle.getMessage("StatusDoDownload"));
         loadButton.setEnabled(true);
-        loadButton.setToolTipText(res.getString("TipLoadEnabled"));
+        loadButton.setToolTipText(Bundle.getMessage("TipLoadEnabled"));
         validate();
     }
 
     void doLoad() {
-        status.setText(res.getString("StatusRestartUnit"));
+        status.setText(Bundle.getMessage("StatusRestartUnit"));
         loadButton.setEnabled(false);
-        loadButton.setToolTipText(res.getString("TipLoadGoing"));
+        loadButton.setToolTipText(Bundle.getMessage("TipLoadGoing"));
         // start read/write thread
         readerThread = new LocalReader();
         readerThread.start();
@@ -619,7 +608,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
     /**
      * Insert the CRC for a block of characters in a buffer
-     * <P>
+     * <p>
      * The last two bytes of the buffer hold the checksum, and are not included
      * in the checksum.
      */
@@ -678,9 +667,7 @@ public class LoaderPane extends javax.swing.JPanel {
         if (buffer[4] != 22) {
             return false;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("OK isSendNext");
-        }
+        log.debug("OK isSendNext");
         return true;
     }
 
@@ -694,7 +681,7 @@ public class LoaderPane extends javax.swing.JPanel {
         if (buffer[4] == 45) {
             return 128;
         }
-        log.error("Bad length byte: " + buffer[3]);
+        log.error("Bad length byte: {}", buffer[3]);
         return 64;
     }
 
@@ -707,6 +694,6 @@ public class LoaderPane extends javax.swing.JPanel {
         return buffer;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LoaderPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LoaderPane.class);
 
 }

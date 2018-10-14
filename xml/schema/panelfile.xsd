@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id$ -->
-
-<!-- This schema is part of JMRI. Copyright 2009, 2010                      -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
-
+<!-- This schema is part of JMRI. Copyright 2009, 2010, 2017          -->
 
 <!-- Not in Venetian blind form                                       -->
 <!-- 'operation' element not complete                                 -->
@@ -45,27 +32,27 @@
         </xs:appinfo>
     </xs:annotation>
 
-  <xs:include schemaLocation="http://jmri.org/xml/schema/types/turnouts.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/types/sensors.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/types/lights.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/types/reporters.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/types/memories.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/types/blocks.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/types/oblocks.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/types/sections.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/types/transits.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/types/timebase.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalheads.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalmasts.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalgroups.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/types/layoutblocks.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalelements.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/types/audio.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/types/routes.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/types/logix.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/types/layouteditor.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/types/paneleditor.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/types/filehistory.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/turnouts-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/sensors-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/lights-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/reporters-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/memories-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/blocks-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/oblocks-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/sections-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/transits-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/timebase.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalheads-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalmasts-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalgroups-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/layoutblocks-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/signalelements.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/audio-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/routes-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/logix-2-9-6.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/layouteditor.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/paneleditor.xsd"/>
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/filehistory.xsd"/>
 
   <xs:element name="layout-config">
     <xs:complexType>

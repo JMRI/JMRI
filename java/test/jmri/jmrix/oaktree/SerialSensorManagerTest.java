@@ -1,9 +1,6 @@
 package jmri.jmrix.oaktree;
 
-import jmri.Sensor;
-import jmri.SensorManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,8 +11,9 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen Copyright 2003
  */
-public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
+    private OakTreeSystemConnectionMemo memo = null;
     private SerialNode n0 = null;
     private SerialNode n1 = null;
     private SerialNode n2 = null;
@@ -59,21 +57,21 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         // replace the SerialTrafficController to get clean reset
-        SerialTrafficController t = new SerialTrafficController() {
+        memo = new OakTreeSystemConnectionMemo("O", "Oak Tree");
+        SerialTrafficController t = new SerialTrafficController(memo) {
             SerialTrafficController test() {
-                setInstance();
                 return this;
             }
         }.test();
+        memo.setTrafficController(t);
         Assert.assertNotNull("exists", t);
 
         // construct nodes
-        n0 = new SerialNode(0, SerialNode.IO48);
-        n1 = new SerialNode(1, SerialNode.IO48);
-        n2 = new SerialNode(2, SerialNode.IO24);
+        n0 = new SerialNode(0, SerialNode.IO48,memo);
+        n1 = new SerialNode(1, SerialNode.IO48,memo);
+        n2 = new SerialNode(2, SerialNode.IO24,memo);
 
         l = new SerialSensorManager();
     }
@@ -81,8 +79,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     @After
     public void tearDown() {
         l.dispose();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

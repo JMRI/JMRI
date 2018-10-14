@@ -6,11 +6,11 @@ import java.io.DataOutputStream;
 /**
  * Provide an abstract implementation of a *StreamPortController for stream
  * based ports.
- * <P>
+ * <p>
  * Implementing classes need to implement status and configure from the
  * portAdapter interface, along with any system specific requirements.
- * <P>
- * @author	Paul Bender Copyright (C) 2014
+ *
+ * @author Paul Bender Copyright (C) 2014
  */
 public abstract class AbstractStreamPortController extends AbstractPortController {
 
@@ -25,13 +25,13 @@ public abstract class AbstractStreamPortController extends AbstractPortControlle
         output = out;
     }
 
-    // returns the InputStream from the port
+    // return the InputStream from the port
     @Override
     public DataInputStream getInputStream() {
         return input;
     }
 
-    // returns the outputStream to the port
+    // return the outputStream to the port
     @Override
     public DataOutputStream getOutputStream() {
         return output;
@@ -59,5 +59,6 @@ public abstract class AbstractStreamPortController extends AbstractPortControlle
         output = null;
     }
 
-    // static private final Logger log = LoggerFactory.getLogger(AbstractStreamPortController.class.getName());
+    // static private final Logger log = LoggerFactory.getLogger(AbstractStreamPortController.class);
+
 }

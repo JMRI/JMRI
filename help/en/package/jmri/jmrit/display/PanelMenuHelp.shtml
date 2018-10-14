@@ -66,8 +66,8 @@
         directly type scripting commands here.</li>
       </ul>
 
-      <p>This is the jmri.jmrit.display.PanelMenuHelp help page. 
-      <!--#include virtual="/Footer" --></p>
+      <p>This is the jmri.jmrit.display.PanelMenuHelp help page.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

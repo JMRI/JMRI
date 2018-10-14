@@ -85,7 +85,7 @@ public class RosterMediaPane extends JPanel {
         JTable jtAttributes = new JTable();
         jtAttributes.setModel(rosterAttributesModel);
         JScrollPane jsp = new JScrollPane(jtAttributes);
-//		jtAttributes.setFillsViewportHeight(true); // Java 1.6 only
+        jtAttributes.setFillsViewportHeight(true);
 
         JPanel mediap = new JPanel();
         GridBagLayout gbLayout = new GridBagLayout();
@@ -311,5 +311,5 @@ public class RosterMediaPane extends JPanel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RosterMediaPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RosterMediaPane.class);
 }

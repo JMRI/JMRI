@@ -1,60 +1,61 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test simple functioning of LayoutTurntable
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class LayoutTurntableTest extends TestCase {
+public class LayoutTurntableTest {
 
-    public void testCtor() {
-        LayoutTurntable  t = new LayoutTurntable("test",new Point2D.Double(0.0,0.0),new LayoutEditor());
-        Assert.assertNotNull("exists", t );
+    LayoutEditor layoutEditor = null;
+    LayoutTurntable lt = null;
+
+    @Test
+    public void testNew() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("exists", lt);
+    }
+
+    @Test
+    public void testToString() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        String ltString = lt.toString();
+        Assert.assertNotNull("ltString not null", ltString);
+        Assert.assertEquals("LayoutTurntable My Turntable", ltString);
     }
 
     // from here down is testing infrastructure
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
-        // reset the instance manager.
-        JUnitUtil.resetInstanceManager();
-    }
- 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-        // dispose of the single PanelMenu instance
-        jmri.jmrit.display.PanelMenu.dispose();
-        JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+    @Before
+    public void setUp() throws Exception {
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+
+        if(!GraphicsEnvironment.isHeadless()){
+
+            layoutEditor = new LayoutEditor();
+            Assert.assertNotNull("LayoutEditor not null", layoutEditor);
+
+            lt = new LayoutTurntable("My Turntable", new Point2D.Double(50.0, 100.0), layoutEditor);
+        }
     }
 
-
-
-    public LayoutTurntableTest(String s) {
-        super(s);
+    @After
+    public void tearDown() throws Exception {
+        if(layoutEditor!=null){
+           JUnitUtil.dispose(layoutEditor);
+        }
+        lt = null;
+        layoutEditor = null;
+        JUnitUtil.tearDown();
     }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LayoutTurntableTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LayoutTurntableTest.class);
-        return suite;
-    }
-
 }

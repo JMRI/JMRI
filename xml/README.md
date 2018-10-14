@@ -16,6 +16,8 @@ Certain configuration files appear in the top-level directory:
 		
  - names.xml - definition of standard names for use in the programmer files
 
+ - defaultPanelIcons.xml - describes the default icon tree structure for jmri.jmrit.catalog Icon Editors. Element names such as StateOff are picked up as properties key values for presentation and localization.
+ 
 The JMRI web page is located at http://jmri.org/
 
 More information on these configuration file is available at http://jmri.org/help/en/html/setup/Files.shtml

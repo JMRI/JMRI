@@ -3,28 +3,31 @@ package jmri.jmrit.operations.routes;
 import java.io.IOException;
 import java.util.List;
 import javax.swing.JComboBox;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.jdom2.JDOMException;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Route class Last manually cross-checked on 20090131
- *
+ * <p>
  * Still to do: Route: Route Location <-- Need to verify Route: XML read/write
  * RouteLocation: get/set Staging Track RouteLocation: location <--Need to
  * verify RouteLocation: XML read/write
- *
+ * <p>
  * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class OperationsRoutesTest extends OperationsTestCase {
 
     // test Route creation
+    @Test
     public void testCreate() {
         Route r1 = new Route("TESTROUTEID", "TESTROUTENAME");
         r1.setComment("TESTCOMMENT");
@@ -35,6 +38,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
     }
 
     // test Route public constants
+    @Test
     public void testConstants() {
         Route r1 = new Route("TESTROUTEID", "TESTROUTENAME");
 
@@ -52,6 +56,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
     }
 
     // test Route attributes
+    @Test
     public void testAttributes() {
         Route r1 = new Route("TESTROUTEID", "TESTROUTENAME");
 
@@ -64,6 +69,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
     }
 
     // test route location
+    @Test
     public void testRouteLocation() {
         Route r1 = new Route("TESTROUTEID", "TESTROUTENAME");
 
@@ -79,6 +85,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
     }
 
     // test public RouteLocation constants
+    @Test
     public void testRouteLocationConstants() {
         Route r1 = new Route("TESTROUTEID", "TESTROUTENAME");
 
@@ -95,10 +102,10 @@ public class OperationsRoutesTest extends OperationsTestCase {
         Assert.assertEquals("RouteLocation Constant NORTH", 4, RouteLocation.NORTH);
         Assert.assertEquals("RouteLocation Constant SOUTH", 8, RouteLocation.SOUTH);
 
-        Assert.assertEquals("RouteLocation Constant EAST_DIR", "East", RouteLocation.EAST_DIR);
-        Assert.assertEquals("RouteLocation Constant WEST_DIR", "West", RouteLocation.WEST_DIR);
-        Assert.assertEquals("RouteLocation Constant NORTH_DIR", "North", RouteLocation.NORTH_DIR);
-        Assert.assertEquals("RouteLocation Constant SOUTH_DIR", "South", RouteLocation.SOUTH_DIR);
+        Assert.assertEquals("RouteLocation Constant EAST_DIR", Bundle.getMessage("East"), RouteLocation.EAST_DIR);
+        Assert.assertEquals("RouteLocation Constant WEST_DIR", Bundle.getMessage("West"), RouteLocation.WEST_DIR);
+        Assert.assertEquals("RouteLocation Constant NORTH_DIR", Bundle.getMessage("North"), RouteLocation.NORTH_DIR);
+        Assert.assertEquals("RouteLocation Constant SOUTH_DIR", Bundle.getMessage("South"), RouteLocation.SOUTH_DIR);
 
         Assert.assertEquals("RouteLocation Constant DROP_CHANGED_PROPERTY", "dropChange",
                 RouteLocation.DROP_CHANGED_PROPERTY);
@@ -110,6 +117,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
     }
 
     // test RouteLocation attributes
+    @Test
     public void testRouteLocationAttributes() {
         Route r1 = new Route("TESTROUTEID", "TESTROUTENAME");
 
@@ -119,7 +127,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
         Location l1 = new Location("TESTLOCATIONID1", "TESTLOCATIONNAME1");
 
         RouteLocation rl1 = new RouteLocation("TESTROUTELOCATIONID", l1);
-        rl1.setSequenceId(4);
+        rl1.setSequenceNumber(4);
         rl1.setComment("TESTROUTELOCATIONCOMMENT");
         rl1.setMaxTrainLength(320);
         rl1.setTrainLength(220);
@@ -135,7 +143,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
         Assert.assertEquals("RouteLocation toString", "TESTLOCATIONNAME1", rl1.toString());
 
         Assert.assertEquals("RouteLocation Comment", "TESTROUTELOCATIONCOMMENT", rl1.getComment());
-        Assert.assertEquals("RouteLocation Sequence", 4, rl1.getSequenceId());
+        Assert.assertEquals("RouteLocation Sequence", 4, rl1.getSequenceNumber());
 
         Assert.assertEquals("RouteLocation Max Train Length", 320, rl1.getMaxTrainLength());
         Assert.assertEquals("RouteLocation Train Length", 220, rl1.getTrainLength());
@@ -178,6 +186,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
     }
 
     // test route location management
+    @Test
     public void testRouteLocationManagement() {
         Route r1 = new Route("TESTROUTEID", "TESTROUTENAME");
 
@@ -214,15 +223,15 @@ public class OperationsRoutesTest extends OperationsTestCase {
             rl1test = list.get(i);
             if (i == 0) {
                 Assert.assertEquals("List Location 1 before", "TESTLOCATIONNAME1", rl1test.getName());
-                Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceNumber());
             }
             if (i == 1) {
                 Assert.assertEquals("List Location 2 before", "TESTLOCATIONNAME2", rl1test.getName());
-                Assert.assertEquals("List Location 2 sequence id", 2, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 2 sequence id", 2, rl1test.getSequenceNumber());
             }
             if (i == 2) {
                 Assert.assertEquals("List Location 3 before", "TESTLOCATIONNAME3", rl1test.getName());
-                Assert.assertEquals("List Location 3 sequence id", 3, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 3 sequence id", 3, rl1test.getSequenceNumber());
             }
         }
 
@@ -238,19 +247,19 @@ public class OperationsRoutesTest extends OperationsTestCase {
             rl1test = list.get(i);
             if (i == 0) {
                 Assert.assertEquals("List Location 1 after", "TESTLOCATIONNAME1", rl1test.getName());
-                Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceNumber());
             }
             if (i == 1) {
                 Assert.assertEquals("List Location 2 after", "TESTLOCATIONNAME4", rl1test.getName());
-                Assert.assertEquals("List Location 2 sequence id", 2, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 2 sequence id", 2, rl1test.getSequenceNumber());
             }
             if (i == 2) {
                 Assert.assertEquals("List Location 3 after", "TESTLOCATIONNAME2", rl1test.getName());
-                Assert.assertEquals("List Location 3 sequence id", 3, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 3 sequence id", 3, rl1test.getSequenceNumber());
             }
             if (i == 3) {
                 Assert.assertEquals("List Location 4 after", "TESTLOCATIONNAME3", rl1test.getName());
-                Assert.assertEquals("List Location 4 sequence id", 4, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 4 sequence id", 4, rl1test.getSequenceNumber());
             }
         }
 
@@ -262,19 +271,19 @@ public class OperationsRoutesTest extends OperationsTestCase {
             rl1test = list.get(i);
             if (i == 0) {
                 Assert.assertEquals("List Location 1 after move up", "TESTLOCATIONNAME1", rl1test.getName());
-                Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceNumber());
             }
             if (i == 1) {
                 Assert.assertEquals("List Location 2 after move up", "TESTLOCATIONNAME4", rl1test.getName());
-                Assert.assertEquals("List Location 2 sequence id", 2, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 2 sequence id", 2, rl1test.getSequenceNumber());
             }
             if (i == 2) {
                 Assert.assertEquals("List Location 3 after move up", "TESTLOCATIONNAME3", rl1test.getName());
-                Assert.assertEquals("List Location 3 sequence id", 3, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 3 sequence id", 3, rl1test.getSequenceNumber());
             }
             if (i == 3) {
                 Assert.assertEquals("List Location 4 after move up", "TESTLOCATIONNAME2", rl1test.getName());
-                Assert.assertEquals("List Location 4 sequence id", 4, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 4 sequence id", 4, rl1test.getSequenceNumber());
             }
         }
 
@@ -287,19 +296,19 @@ public class OperationsRoutesTest extends OperationsTestCase {
             rl1test = list.get(i);
             if (i == 0) {
                 Assert.assertEquals("List Location 1 after move up", "TESTLOCATIONNAME4", rl1test.getName());
-                Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceNumber());
             }
             if (i == 1) {
                 Assert.assertEquals("List Location 2 after move up", "TESTLOCATIONNAME3", rl1test.getName());
-                Assert.assertEquals("List Location 2 sequence id", 2, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 2 sequence id", 2, rl1test.getSequenceNumber());
             }
             if (i == 2) {
                 Assert.assertEquals("List Location 3 after move up", "TESTLOCATIONNAME1", rl1test.getName());
-                Assert.assertEquals("List Location 3 sequence id", 3, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 3 sequence id", 3, rl1test.getSequenceNumber());
             }
             if (i == 3) {
                 Assert.assertEquals("List Location 4 after move up", "TESTLOCATIONNAME2", rl1test.getName());
-                Assert.assertEquals("List Location 4 sequence id", 4, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 4 sequence id", 4, rl1test.getSequenceNumber());
             }
         }
 
@@ -311,21 +320,22 @@ public class OperationsRoutesTest extends OperationsTestCase {
             rl1test = list.get(i);
             if (i == 0) {
                 Assert.assertEquals("List Location 1 after move up", "TESTLOCATIONNAME4", rl1test.getName());
-                Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 1 sequence id", 1, rl1test.getSequenceNumber());
             }
             if (i == 1) {
                 Assert.assertEquals("List Location 2 after move up", "TESTLOCATIONNAME1", rl1test.getName());
-                Assert.assertEquals("List Location 2 sequence id", 2, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 2 sequence id", 2, rl1test.getSequenceNumber());
             }
             if (i == 2) {
                 Assert.assertEquals("List Location 3 after move up", "TESTLOCATIONNAME2", rl1test.getName());
-                Assert.assertEquals("List Location 3 sequence id", 3, rl1test.getSequenceId());
+                Assert.assertEquals("List Location 3 sequence id", 3, rl1test.getSequenceNumber());
             }
         }
     }
 
+    @Test
     public void testRouteManager() {
-        RouteManager rm = RouteManager.instance();
+        RouteManager rm = InstanceManager.getDefault(RouteManager.class);
         List<Route> listById = rm.getRoutesByIdList();
         List<Route> listByName = rm.getRoutesByNameList();
 
@@ -482,35 +492,37 @@ public class OperationsRoutesTest extends OperationsTestCase {
     }
 
     // test route status
+    @Test
     public void testRouteStatus() {
-        RouteManager rm = RouteManager.instance();
+        RouteManager rm = InstanceManager.getDefault(RouteManager.class);
         Route r = rm.newRoute("TestRouteStatus");
         // note that the status strings are defined in JmritOperationsRoutesBundle.properties
         Assert.assertEquals("Route status error", "Error", r.getStatus());
 
         // now add a location to the route
-        Location l = LocationManager.instance().newLocation("TestRouteStatusLoc");
+        Location l = InstanceManager.getDefault(LocationManager.class).newLocation("TestRouteStatusLoc");
         r.addLocation(l);
         // note that the status strings are defined in JmritOperationsRoutesBundle.properties
         Assert.assertEquals("Route status ophan", "Orphan", r.getStatus());
 
         // now connect route to a train
-        Train t = TrainManager.instance().newTrain("TestRouteStatusTrain");
+        Train t = InstanceManager.getDefault(TrainManager.class).newTrain("TestRouteStatusTrain");
         t.setRoute(r);
         // note that the status strings are defined in JmritOperationsRoutesBundle.properties
-        Assert.assertEquals("Route status okay", "Okay", r.getStatus());
+        Assert.assertEquals("Route status okay", "OK", r.getStatus());
     }
 
     /**
      * Test route Xml create, read, and backup support. Originally written as
      * three separate tests, now combined into one as of 8/29/2013
      *
-     * @throws JDOMException
-     * @throws IOException
+     * @throws JDOMException exception
+     * @throws IOException exception
      */
+    @Test
     public void testXMLCreate() throws JDOMException, IOException {
 
-        RouteManager manager = RouteManager.instance();
+        RouteManager manager = InstanceManager.getDefault(RouteManager.class);
         List<Route> temprouteList = manager.getRoutesByIdList();
         Assert.assertEquals("Starting Number of Routes", 0, temprouteList.size());
 
@@ -521,7 +533,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
         temprouteList = manager.getRoutesByIdList();
         Assert.assertEquals("New Number of Routes", 3, temprouteList.size());
 
-        RouteManagerXml.instance().writeOperationsFile();
+        InstanceManager.getDefault(RouteManagerXml.class).writeOperationsFile();
 
         // Add some more routes and write file again
         // so we can test the backup facility
@@ -536,7 +548,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
         Assert.assertNotNull("route r5 exists", r5);
         Assert.assertNotNull("route r6 exists", r6);
 
-        LocationManager lmanager = LocationManager.instance();
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
         Location Acton = lmanager.newLocation("Acton");
         Location Bedford = lmanager.newLocation("Bedford");
         Location Chelmsford = lmanager.newLocation("Chelmsford");
@@ -598,15 +610,15 @@ public class OperationsRoutesTest extends OperationsTestCase {
         r5.setComment("r5 comment");
         r6.setComment("r6 comment");
 
-        RouteManagerXml.instance().writeOperationsFile();
+        InstanceManager.getDefault(RouteManagerXml.class).writeOperationsFile();
 
         // now perform read operation
         manager.dispose();
-        manager = RouteManager.instance();
+        manager = InstanceManager.getDefault(RouteManager.class);
         temprouteList = manager.getRoutesByIdList();
         Assert.assertEquals("Starting Number of Routes", 0, temprouteList.size());
 
-        RouteManagerXml.instance().readFile(RouteManagerXml.instance().getDefaultOperationsFilename());
+        InstanceManager.getDefault(RouteManagerXml.class).readFile(InstanceManager.getDefault(RouteManagerXml.class).getDefaultOperationsFilename());
         temprouteList = manager.getRoutesByIdList();
         Assert.assertEquals("Number of Routes", 6, temprouteList.size());
 
@@ -682,13 +694,13 @@ public class OperationsRoutesTest extends OperationsTestCase {
         // now test backup file
         manager.dispose();
         // change default file name to backup
-        RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml.bak");
+        InstanceManager.getDefault(RouteManagerXml.class).setOperationsFileName("OperationsJUnitTestRouteRoster.xml.bak");
 
-        manager = RouteManager.instance();
+        manager = InstanceManager.getDefault(RouteManager.class);
         temprouteList = manager.getRoutesByIdList();
         Assert.assertEquals("Starting Number of Routes", 0, temprouteList.size());
 
-        RouteManagerXml.instance().readFile(RouteManagerXml.instance().getDefaultOperationsFilename());
+        InstanceManager.getDefault(RouteManagerXml.class).readFile(InstanceManager.getDefault(RouteManagerXml.class).getDefaultOperationsFilename());
         temprouteList = manager.getRoutesByIdList();
         Assert.assertEquals("Number of Routes", 3, temprouteList.size());
 
@@ -708,34 +720,20 @@ public class OperationsRoutesTest extends OperationsTestCase {
 
     }
 
-	// TODO: Add tests for Route location track location
+    // TODO: Add tests for Route location track location
     // TODO: Add test to create xml file
     // TODO: Add test to read xml file
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
     }
 
-    public OperationsRoutesTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OperationsRoutesTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OperationsRoutesTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         super.tearDown();
     }
 }

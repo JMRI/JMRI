@@ -76,6 +76,6 @@ public class WaitTrainTerminatedAction extends Action implements PropertyChangeL
         trainUpdate(evt);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WaitTrainTerminatedAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WaitTrainTerminatedAction.class);
 
 }

@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!--  $Id$ -->
 <!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
 
 <html lang="fr">
@@ -9,9 +8,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Speedometer</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Route Add Edit">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -59,9 +56,7 @@
       c&ocirc;&eacute; droit du volet sont l'&eacute;tat des
       capteurs que vous avez s&eacute;lectionn&eacute;s.</p>
 
-      <p>Ceci est la page d'aide
-      help/en/package/jmri/jmrit/speedometer/SpeedometerFrame 
-      <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

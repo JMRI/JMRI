@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010, 2017 All rights reserved -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2017</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2017-12-10</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Derived from userID.xml rev.8 - Add tooltip for SoundTraxx Tsunami decoders</revremark>
+    </revision>
+    <revision>
+      <revnumber>1.1</revnumber>
+      <date>2018-01-03</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Minor tooltip update + change of labels</revremark>
+    </revision>
+  </revhistory>
+  <variable item="User Id #1" CV="105" default="0">
+    <decVal max="255"/>
+        <label>User ID #1 - firmware version</label>
+        <label xml:lang="it">Id Utente #1 - firmware version</label>
+        <label xml:lang="fr">CV Utilisateur #1 - firmware version</label>
+        <label xml:lang="de">Benutzer-CV #1 - firmware version</label>
+        <label xml:lang="cs">Uživatel ID #1 - firmware version</label>
+        <label xml:lang="nl">Gebruiker-CV #1 - firmware version</label>
+        <tooltip>&lt;html&gt;Contains firmware version.
+                 &lt;br&gt;Can be programmed to any value from 0 to 255.
+                 &lt;br&gt;Will return to the software’s revision code
+                 &lt;br&gt;when the decoder is reset to factory settings.
+                 &lt;/html&gt;</tooltip>
+  </variable>
+  <variable item="User Id #2" CV="106" default="0">
+    <decVal max="255"/>
+        <label>User ID #2 - default CV set</label>
+        <label xml:lang="it">Id Utente #2 - default CV set</label>
+        <label xml:lang="fr">CV Utilisateur #2 - default CV set</label>
+        <label xml:lang="de">Benutzer-CV #2 - default CV set</label>
+        <label xml:lang="cs">Uživatel ID #2 - default CV set</label>
+        <label xml:lang="nl">Gebruiker-CV #2 - default CV set</label>
+        <tooltip>&lt;html&gt;Contains the default CV set.
+                 &lt;br&gt;Can be used to determine the OEM part number.
+                 &lt;br&gt;Can be programmed to any value from 0 to 255.
+                 &lt;br&gt;Will return to the default CV set value
+                 &lt;br&gt;when the decoder is reset to factory settings.
+                 &lt;/html&gt;</tooltip>
+  </variable>
+</variables>

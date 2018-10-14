@@ -3,51 +3,51 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>1</minor>
-    <test>2</test>
-    <modifier>.2</modifier>
+    <minor>9</minor>
+    <test>1</test>
+    <modifier>ish</modifier>
   </jmriversion>
-  <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
-    <sensor systemName="IS0" inverted="false" userName="WestSensor">
+    <sensor inverted="false">
       <systemName>IS0</systemName>
       <userName>WestSensor</userName>
     </sensor>
-    <sensor systemName="IS1" inverted="false">
+    <sensor inverted="false">
       <systemName>IS1</systemName>
     </sensor>
-    <sensor systemName="IS10" inverted="false">
+    <sensor inverted="false">
       <systemName>IS10</systemName>
     </sensor>
-    <sensor systemName="IS2" inverted="false">
+    <sensor inverted="false">
       <systemName>IS2</systemName>
     </sensor>
-    <sensor systemName="IS3" inverted="false">
+    <sensor inverted="false">
       <systemName>IS3</systemName>
     </sensor>
-    <sensor systemName="IS4" inverted="false">
+    <sensor inverted="false">
       <systemName>IS4</systemName>
     </sensor>
-    <sensor systemName="IS5" inverted="false">
+    <sensor inverted="false">
       <systemName>IS5</systemName>
     </sensor>
-    <sensor systemName="IS6" inverted="false">
+    <sensor inverted="false">
       <systemName>IS6</systemName>
     </sensor>
-    <sensor systemName="IS7" inverted="false">
+    <sensor inverted="false">
       <systemName>IS7</systemName>
     </sensor>
-    <sensor systemName="IS8" inverted="false">
+    <sensor inverted="false">
       <systemName>IS8</systemName>
     </sensor>
-    <sensor systemName="IS9" inverted="false">
+    <sensor inverted="false">
       <systemName>IS9</systemName>
     </sensor>
-    <sensor systemName="ISCLOCKRUNNING" inverted="false">
+    <sensor inverted="false">
       <systemName>ISCLOCKRUNNING</systemName>
     </sensor>
   </sensors>
-  <turnouts class="jmri.managers.configurexml.InternalTurnoutManagerXml">
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
     <operations automate="false">
       <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
       <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
@@ -55,51 +55,51 @@
     </operations>
     <defaultclosedspeed>Normal</defaultclosedspeed>
     <defaultthrownspeed>Restricted</defaultthrownspeed>
-    <turnout systemName="IT1" feedback="DIRECT" inverted="false" automate="Off">
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT1</systemName>
     </turnout>
-    <turnout systemName="IT10" feedback="DIRECT" inverted="false" automate="Off">
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT10</systemName>
     </turnout>
-    <turnout systemName="IT2" feedback="DIRECT" inverted="false" automate="Off">
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT2</systemName>
     </turnout>
-    <turnout systemName="IT3" feedback="DIRECT" inverted="false" automate="Off">
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT3</systemName>
     </turnout>
-    <turnout systemName="IT4" feedback="DIRECT" inverted="false" automate="Off">
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT4</systemName>
     </turnout>
-    <turnout systemName="IT5" feedback="DIRECT" inverted="false" automate="Off">
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT5</systemName>
     </turnout>
-    <turnout systemName="IT6" feedback="DIRECT" inverted="false" automate="Off">
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT6</systemName>
     </turnout>
-    <turnout systemName="IT7" feedback="DIRECT" inverted="false" automate="Off">
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT7</systemName>
     </turnout>
-    <turnout systemName="IT8" feedback="DIRECT" inverted="false" automate="Off">
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT8</systemName>
     </turnout>
-    <turnout systemName="IT9" feedback="DIRECT" inverted="false" automate="Off">
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT9</systemName>
     </turnout>
   </turnouts>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory systemName="IMCURRENTTIME" value="11:00 PM">
+    <memory value="4:15 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
-    <memory systemName="IMRATEFACTOR" value="1.0">
+    <memory value="1.0">
       <systemName>IMRATEFACTOR</systemName>
     </memory>
   </memories>
   <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
   <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
   <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml">
-    <oblock systemName="OB0" userName="West" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
+    <oblock systemName="OB0" userName="West" length="254.0" units="false" curve="0" permissive="false" speedNotch="">
       <userName>West</userName>
-      <sensor systemName="IS0" />
+      <sensor systemName="WestSensor" />
       <path pathName="Main" blockName="OB0" toPortal="Enter" fromDirection="0" toDirection="0" length="0.0" />
       <portal systemName="IP1" portalName="Enter">
         <fromBlock blockName="OB0">
@@ -145,7 +145,7 @@
         </toBlock>
       </portal>
     </oblock>
-    <oblock systemName="OB10" userName="East" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
+    <oblock systemName="OB10" userName="East" length="254.0" units="false" curve="0" permissive="false" speedNotch="">
       <userName>East</userName>
       <sensor systemName="IS10" />
       <path pathName="Main" blockName="OB10" toPortal="Exit" fromDirection="0" toDirection="0" length="0.0" />
@@ -230,8 +230,8 @@
           <path pathName="Siding" blockName="OB8" />
         </fromBlock>
         <toBlock blockName="OB3">
-          <path pathName="SidingToSiding" blockName="OB3" />
           <path pathName="WestSiding" blockName="OB3" />
+          <path pathName="SidingToSiding" blockName="OB3" />
         </toBlock>
       </portal>
     </oblock>
@@ -337,8 +337,8 @@
           <path pathName="Siding" blockName="OB8" />
         </fromBlock>
         <toBlock blockName="OB3">
-          <path pathName="SidingToSiding" blockName="OB3" />
           <path pathName="WestSiding" blockName="OB3" />
+          <path pathName="SidingToSiding" blockName="OB3" />
         </toBlock>
       </portal>
       <portal systemName="IP11" portalName="6-8">
@@ -351,18 +351,13 @@
       </portal>
     </oblock>
   </oblocks>
-  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml">
-    <nxparams>
-      <maxspeed>0.3592744</maxspeed>
-      <haltstart>no</haltstart>
-    </nxparams>
-  </warrants>
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon May 18 10:30:41 PDT 2015" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon May 18 10:30:41 PDT 2015" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" showbutton="no" />
   <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
-  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="NXWarrantTest" x="1124" y="519" height="280" width="669" editable="no" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="none" redBackground="255" greenBackground="225" blueBackground="207" state="0" shapeSelect="yes">
+  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="NXWarrantTest" x="1177" y="564" height="280" width="669" editable="no" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="none" redBackground="255" greenBackground="225" blueBackground="207" state="0" shapeSelect="yes">
     <icons>
       <visible>
         <url>program:resources/icons/throttles/RoundRedCircle20.png</url>
@@ -1232,167 +1227,158 @@
       <tooltip>Portal "3-8" between OBlocks "OB8" and "null"</tooltip>
     </PortalIcon>
   </paneleditor>
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Sat Aug 22 22:56:48 PDT 2015</date>
+      <date>Thu Jul 13 16:10:23 PDT 2017</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Sat Aug 22 22:56:49 PDT 2015</date>
-      <filename>/C:/JmriUsers/Layoutsimulate/UserPrefsProfileConfig.xml</filename>
-    </operation>
-    <operation>
-      <type>Load OK</type>
-      <date>Sat Aug 22 22:56:50 PDT 2015</date>
-      <filename>/C:/JmriUsers/Layoutsimulate/ProfileConfig.xml</filename>
-    </operation>
-    <operation>
-      <type>Load OK</type>
-      <date>Sat Aug 22 22:56:59 PDT 2015</date>
-      <filename>/C:/JmriPanels/NXWarrantTest.xml</filename>
+      <date>Thu Jul 13 16:11:09 PDT 2017</date>
+      <filename>/C:/Git/JMRI/java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Sat Aug 22 22:46:07 PDT 2015</date>
+          <date>Sat Aug 22 22:56:48 PDT 2015</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Sat Aug 22 22:46:07 PDT 2015</date>
+          <date>Sat Aug 22 22:56:49 PDT 2015</date>
           <filename>/C:/JmriUsers/Layoutsimulate/UserPrefsProfileConfig.xml</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Sat Aug 22 22:46:08 PDT 2015</date>
+          <date>Sat Aug 22 22:56:50 PDT 2015</date>
           <filename>/C:/JmriUsers/Layoutsimulate/ProfileConfig.xml</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Sat Aug 22 22:46:15 PDT 2015</date>
+          <date>Sat Aug 22 22:56:59 PDT 2015</date>
           <filename>/C:/JmriPanels/NXWarrantTest.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Sat Aug 22 22:36:05 PDT 2015</date>
+              <date>Sat Aug 22 22:46:07 PDT 2015</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Sat Aug 22 22:36:05 PDT 2015</date>
+              <date>Sat Aug 22 22:46:07 PDT 2015</date>
               <filename>/C:/JmriUsers/Layoutsimulate/UserPrefsProfileConfig.xml</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Sat Aug 22 22:36:08 PDT 2015</date>
+              <date>Sat Aug 22 22:46:08 PDT 2015</date>
               <filename>/C:/JmriUsers/Layoutsimulate/ProfileConfig.xml</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Sat Aug 22 22:36:23 PDT 2015</date>
+              <date>Sat Aug 22 22:46:15 PDT 2015</date>
               <filename>/C:/JmriPanels/NXWarrantTest.xml</filename>
               <filehistory>
                 <operation>
                   <type>app</type>
-                  <date>Sat Aug 22 18:45:32 PDT 2015</date>
+                  <date>Sat Aug 22 22:36:05 PDT 2015</date>
                   <filename>JMRI program</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Sat Aug 22 18:45:32 PDT 2015</date>
+                  <date>Sat Aug 22 22:36:05 PDT 2015</date>
                   <filename>/C:/JmriUsers/Layoutsimulate/UserPrefsProfileConfig.xml</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Sat Aug 22 18:45:32 PDT 2015</date>
+                  <date>Sat Aug 22 22:36:08 PDT 2015</date>
                   <filename>/C:/JmriUsers/Layoutsimulate/ProfileConfig.xml</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Sat Aug 22 20:18:34 PDT 2015</date>
-                  <filename>/C:/wsJMRI/jmri/java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml</filename>
+                  <date>Sat Aug 22 22:36:23 PDT 2015</date>
+                  <filename>/C:/JmriPanels/NXWarrantTest.xml</filename>
                   <filehistory>
                     <operation>
                       <type>app</type>
-                      <date>Thu Aug 20 14:41:45 PDT 2015</date>
+                      <date>Sat Aug 22 18:45:32 PDT 2015</date>
                       <filename>JMRI program</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Thu Aug 20 14:41:46 PDT 2015</date>
+                      <date>Sat Aug 22 18:45:32 PDT 2015</date>
                       <filename>/C:/JmriUsers/Layoutsimulate/UserPrefsProfileConfig.xml</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Thu Aug 20 14:41:49 PDT 2015</date>
+                      <date>Sat Aug 22 18:45:32 PDT 2015</date>
                       <filename>/C:/JmriUsers/Layoutsimulate/ProfileConfig.xml</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Thu Aug 20 14:56:01 PDT 2015</date>
-                      <filename>/C:/JmriPanels/NXWarrantTest.xml</filename>
+                      <date>Sat Aug 22 20:18:34 PDT 2015</date>
+                      <filename>/C:/wsJMRI/jmri/java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml</filename>
                       <filehistory>
                         <operation>
                           <type>app</type>
-                          <date>Tue Aug 18 19:29:11 PDT 2015</date>
+                          <date>Thu Aug 20 14:41:45 PDT 2015</date>
                           <filename>JMRI program</filename>
                         </operation>
                         <operation>
                           <type>Load OK</type>
-                          <date>Tue Aug 18 19:29:11 PDT 2015</date>
+                          <date>Thu Aug 20 14:41:46 PDT 2015</date>
                           <filename>/C:/JmriUsers/Layoutsimulate/UserPrefsProfileConfig.xml</filename>
                         </operation>
                         <operation>
                           <type>Load OK</type>
-                          <date>Tue Aug 18 19:29:13 PDT 2015</date>
+                          <date>Thu Aug 20 14:41:49 PDT 2015</date>
                           <filename>/C:/JmriUsers/Layoutsimulate/ProfileConfig.xml</filename>
                         </operation>
                         <operation>
                           <type>Load OK</type>
-                          <date>Tue Aug 18 19:29:22 PDT 2015</date>
+                          <date>Thu Aug 20 14:56:01 PDT 2015</date>
                           <filename>/C:/JmriPanels/NXWarrantTest.xml</filename>
                         </operation>
                         <operation>
                           <type>Store</type>
-                          <date>Tue Aug 18 19:34:22 PDT 2015</date>
+                          <date>Thu Aug 20 15:06:02 PDT 2015</date>
                           <filename />
                         </operation>
                       </filehistory>
                     </operation>
                     <operation>
                       <type>Store</type>
-                      <date>Thu Aug 20 15:06:02 PDT 2015</date>
+                      <date>Sat Aug 22 20:19:43 PDT 2015</date>
                       <filename />
                     </operation>
                   </filehistory>
                 </operation>
                 <operation>
                   <type>Store</type>
-                  <date>Sat Aug 22 20:19:43 PDT 2015</date>
+                  <date>Sat Aug 22 22:38:13 PDT 2015</date>
                   <filename />
                 </operation>
               </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Sat Aug 22 22:38:13 PDT 2015</date>
+              <date>Sat Aug 22 22:51:56 PDT 2015</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Sat Aug 22 22:51:56 PDT 2015</date>
+          <date>Sat Aug 22 23:00:33 PDT 2015</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sat Aug 22 23:00:33 PDT 2015</date>
+      <date>Thu Jul 13 16:15:59 PDT 2017</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 20150823-0556-SVD on Sat Aug 22 23:00:33 PDT 2015 $Id: XmlFile.java 28771 2015-02-22 16:58:13Z rhwood $-->
+  <!--Written by JMRI version 4.9.1ish+SVD+20170713T2229Z+Rc466993 on Thu Jul 13 16:15:59 PDT 2017-->
 </layout-config>

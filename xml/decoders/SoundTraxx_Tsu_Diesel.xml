@@ -28,6 +28,7 @@
   <version author="Michael Mosher" version="13" lastUpdated="20130208"/>
   <version author="Alain Le Marchand" version="14" lastUpdated="20140530"/>
   <version author="Alain Le Marchand" version="15" lastUpdated="20140827"/>
+  <version author="Alain Le Marchand" version="16" lastUpdated="20180103"/>
   <!-- This file contains the Tsunami definitions for ALL of the internal combustion engine locomotives         -->
   <!-- version 1	Based on the "Soundtraxx_Tsu_(various diesels)" series of files.			-->
   <!--			Co-authored by Michael Mosher.	Special thanks to Bob Jacobsen and Phil Utley		-->
@@ -72,6 +73,8 @@
   <!--                    + default values from OEM versions doc. for 828071, 828074 (CV49 to 57 light effects) -->
   <!--                  (to be checked, likely not to be fully applicable to full fledged TSU-IM1000)		-->
   <!--                  Added TSU-GN1000 GEVO-12 (828059), TSU-KT1000 P42 (828068)      			-->
+  <!-- version 16 Specific UserID with tooltip indicating version number,
+                  from SoundTraxx Product Identification guide Rev.B                          -->
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
                 For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc.
@@ -2862,7 +2865,7 @@
         <decVal/>
         <label>Reverse Trim (0-255)</label>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUuserId.xml"/>
       <variable CV="112" mask="XXXXXXXV" item="Sound Option 6" default="0" tooltip="If using manual engine notching, set to Automatic as [RPM-] will be using this function">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumManAuto.xml"/>
         <label>Auto Air Compressor Enable</label>

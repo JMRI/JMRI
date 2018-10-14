@@ -6,8 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
-  <!-- UpDated  by Blorec Hervé 2013-09-19-->
+  <!-- Updated  by Blorec Hervé 2013-09-19-->
 
   <title>JMRI: Connecting to a TracTronics SECSI System</title>
   <!-- Style -->
@@ -34,8 +33,8 @@
       SECSI</a>.
 
       <p>La lettre syst&Atilde;&uml;me est "V", ainsi par exemple
-      le premier capteur sur le noeud 5 serait VS5001. 
-      <!--#include virtual="/Footer" --></p>
+      le premier capteur sur le noeud 5 serait VS5001.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

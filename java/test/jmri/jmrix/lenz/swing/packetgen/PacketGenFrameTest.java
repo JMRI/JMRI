@@ -1,31 +1,35 @@
 package jmri.jmrix.lenz.swing.packetgen;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.lenz.XNetMessage;
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.*;
 
 /**
  * Tests for the jmri.jmrix.lenz.packetgen.PacketGenFrame class
  *
  * @author	Bob Jacobsen Copyright (c) 2001, 2002
- * @version	$Revision$
  */
-public class PacketGenFrameTest extends TestCase {
+public class PacketGenFrameTest {
 
+    @Test
     public void testFrameCreate() {
-        new PacketGenFrame();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        PacketGenFrame packetGenFrame = new PacketGenFrame();
+        Assert.assertNotNull(packetGenFrame);
     }
 
+    @Test
     public void testPacketNull() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PacketGenFrame t = new PacketGenFrame();
         XNetMessage m = t.createPacket("");
         Assert.assertEquals("null pointer", null, m);
     }
 
+    @Test
     public void testPacketCreate() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PacketGenFrame t = new PacketGenFrame();
         AbstractMRMessage m = t.createPacket("12 34 AB 3 19 6 B B1");
         Assert.assertEquals("length", 8, m.getNumDataElements());
@@ -39,21 +43,13 @@ public class PacketGenFrameTest extends TestCase {
         Assert.assertEquals("7th byte", 0xB1, m.getElement(7) & 0xFF);
     }
 
-    // from here down is testing infrastructure
-    public PacketGenFrameTest(String s) {
-        super(s);
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {PacketGenFrameTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
     }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(PacketGenFrameTest.class);
-        return suite;
-    }
-
 }

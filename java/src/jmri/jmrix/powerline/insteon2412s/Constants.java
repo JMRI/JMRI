@@ -1,13 +1,11 @@
-// Constants.java
 package jmri.jmrix.powerline.insteon2412s;
 
 /**
  * Constants and functions specific to the Insteon 2412S interface
  *
- * @author	Bob Jacobsen Copyright (C) 2008, 2009
- * @author	Ken Cameron Copyright (C) 2010
- * @version	$Revision$
- */
+ * @author Bob Jacobsen Copyright (C) 2008, 2009
+ * @author Ken Cameron Copyright (C) 2010
+  */
 public class Constants {
 
     public static final int HEAD_STX = 0x02;
@@ -59,6 +57,8 @@ public class Constants {
 
     /**
      * Pretty-print a header code
+     * @param b header value
+     * @return  formated translation of header value
      */
     public static String formatHeaderByte(int b) {
         return "Dim: " + ((b >> 3) & 0x1F)
@@ -69,4 +69,4 @@ public class Constants {
 }
 
 
-/* @(#)Constants.java */
+

@@ -6,7 +6,7 @@ import jmri.jmrix.lenz.swing.AbstractXPressNetAction;
 /**
  * Swing action to create and register a StackMonFrame object
  *
- * @author	Paul Bender Copyright (C) 2005
+ * @author Paul Bender Copyright (C) 2005
  */
 public class StackMonAction extends AbstractXPressNetAction {
 
@@ -15,14 +15,15 @@ public class StackMonAction extends AbstractXPressNetAction {
     }
 
     public StackMonAction(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
-        this("Stack Monitor", memo);
+        this(Bundle.getMessage("MenuItemCSDatabaseManager"), memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         // create a StackMonFrame
         StackMonFrame f = new StackMonFrame(_memo);
         f.setVisible(true);
     }
-}
 
+}

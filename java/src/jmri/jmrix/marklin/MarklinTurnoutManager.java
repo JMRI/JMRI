@@ -1,4 +1,3 @@
-// MarklinTurnoutManager.java
 package jmri.jmrix.marklin;
 
 import jmri.Turnout;
@@ -7,12 +6,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager for Marklin systems.
- * <P>
- *
+ * <p>
  * Based on work by Bob Jacobsen
  *
- * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 19646 $
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
@@ -28,14 +25,16 @@ public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager 
 
     String prefix;
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr;
         try {
-            addr = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
+            addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         } catch (java.lang.NumberFormatException e) {
             log.error("failed to convert systemName " + systemName + " to a turnout address");
             return null;
@@ -45,9 +44,13 @@ public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager 
         return t;
     }
 
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
     boolean noWarnDelete = false;
 
-    private final static Logger log = LoggerFactory.getLogger(MarklinTurnoutManager.class.getName());
-}
+    private final static Logger log = LoggerFactory.getLogger(MarklinTurnoutManager.class);
 
-/* @(#)MarklinTurnoutManager.java */
+}

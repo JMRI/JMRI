@@ -4,7 +4,7 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
     <Property name="title" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-      <ResourceString bundle="jmri/profile/Bundle.properties" key="ProfileManagerDialog.title" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+      <ResourceString bundle="jmri/profile/Bundle.properties" key="ProfileManagerDialog.title" replaceFormat="Bundle.getMessage(&quot;{key}&quot;)"/>
     </Property>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[310, 110]"/>
@@ -17,7 +17,7 @@
   <Events>
     <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="formMousePressed"/>
     <EventHandler event="windowOpened" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowOpened"/>
-    <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
+    <EventHandler event="windowClosed" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosed"/>
   </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="1"/>
@@ -80,12 +80,12 @@
     <Component class="javax.swing.JLabel" name="listLabel">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="jmri/profile/Bundle.properties" key="ProfileManagerDialog.listLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="jmri/profile/Bundle.properties" key="ProfileManagerDialog.listLabel.text" replaceFormat="Bundle.getMessage(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
       <AccessibilityProperties>
         <Property name="AccessibleContext.accessibleName" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="jmri/profile/Bundle.properties" key="ProfileManagerDialog.listLabel.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="jmri/profile/Bundle.properties" key="ProfileManagerDialog.listLabel.text" replaceFormat="Bundle.getMessage(&quot;{key}&quot;)"/>
         </Property>
       </AccessibilityProperties>
     </Component>
@@ -103,7 +103,10 @@
             </Property>
             <Property name="selectionMode" type="int" value="0"/>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="jmri/profile/Bundle.properties" key="ProfileManagerDialog.profiles.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="jmri/profile/Bundle.properties" key="ProfileManagerDialog.profiles.toolTipText" replaceFormat="Bundle.getMessage(&quot;{key}&quot;)"/>
+            </Property>
+            <Property name="cellRenderer" type="javax.swing.ListCellRenderer" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new ProfileListCellRenderer()" type="code"/>
             </Property>
             <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
               <ComponentRef name="btnSelect"/>
@@ -111,7 +114,10 @@
           </Properties>
           <AccessibilityProperties>
             <Property name="AccessibleContext.accessibleName" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="jmri/profile/Bundle.properties" key="ProfileManagerDialog.profiles.AccessibleContext.accessibleName" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="jmri/profile/Bundle.properties" key="ProfileManagerDialog.profiles.AccessibleContext.accessibleName" replaceFormat="Bundle.getMessage(&quot;{key}&quot;)"/>
+            </Property>
+            <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="jmri/profile/Bundle.properties" key="ProfileManagerDialog.profiles.toolTipText" replaceFormat="Bundle.getMessage(&quot;{key}&quot;)"/>
             </Property>
           </AccessibilityProperties>
           <Events>
@@ -129,7 +135,7 @@
     <Component class="javax.swing.JButton" name="btnSelect">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="jmri/profile/Bundle.properties" key="ProfileManagerDialog.btnSelect.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="jmri/profile/Bundle.properties" key="ProfileManagerDialog.btnSelect.text" replaceFormat="Bundle.getMessage(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
       <Events>
@@ -139,10 +145,10 @@
     <Component class="javax.swing.JButton" name="btnCreate">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="jmri/profile/Bundle.properties" key="ProfileManagerDialog.btnCreate.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="jmri/profile/Bundle.properties" key="ProfileManagerDialog.btnCreate.text" replaceFormat="Bundle.getMessage(&quot;{key}&quot;)"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="jmri/profile/Bundle.properties" key="ProfilePreferencesPanel.btnCreateNewProfile.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="jmri/profile/Bundle.properties" key="ProfilePreferencesPanel.btnCreateNewProfile.toolTipText" replaceFormat="Bundle.getMessage(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
       <Events>
@@ -152,7 +158,7 @@
     <Component class="javax.swing.JButton" name="btnUseExisting">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="jmri/profile/Bundle.properties" key="ProfileManagerDialog.btnUseExisting.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="jmri/profile/Bundle.properties" key="ProfileManagerDialog.btnUseExisting.text" replaceFormat="Bundle.getMessage(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
       <Events>
@@ -162,10 +168,10 @@
     <Component class="javax.swing.JLabel" name="countDownLbl">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="jmri/profile/Bundle.properties" key="ProfileManagerDialog.countDownLbl.text" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="jmri/profile/Bundle.properties" key="ProfileManagerDialog.countDownLbl.text" replaceFormat="Bundle.getMessage(&quot;{key}&quot;)"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="jmri/profile/Bundle.properties" key="ProfileManagerDialog.countDownLbl.toolTipText" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+          <ResourceString bundle="jmri/profile/Bundle.properties" key="ProfileManagerDialog.countDownLbl.toolTipText" replaceFormat="Bundle.getMessage(&quot;{key}&quot;)"/>
         </Property>
       </Properties>
     </Component>

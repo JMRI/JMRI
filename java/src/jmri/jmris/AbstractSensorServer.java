@@ -36,15 +36,22 @@ abstract public class AbstractSensorServer {
 
     synchronized protected void addSensorToList(String sensorName) {
         if (!sensors.containsKey(sensorName)) {
-            sensors.put(sensorName, new SensorListener(sensorName));
-            InstanceManager.sensorManagerInstance().getSensor(sensorName).addPropertyChangeListener(sensors.get(sensorName));
+            Sensor s = InstanceManager.sensorManagerInstance().getSensor(sensorName);
+            if(s!=null) {
+               SensorListener sl = new SensorListener(sensorName);
+               s.addPropertyChangeListener(sl);
+               sensors.put(sensorName, sl );
+            }
         }
     }
 
     synchronized protected void removeSensorFromList(String sensorName) {
         if (sensors.containsKey(sensorName)) {
-            InstanceManager.sensorManagerInstance().getSensor(sensorName).removePropertyChangeListener(sensors.get(sensorName));
-            sensors.remove(sensorName);
+            Sensor s = InstanceManager.sensorManagerInstance().getSensor(sensorName);
+            if(s!=null) {
+               s.removePropertyChangeListener(sensors.get(sensorName));
+               sensors.remove(sensorName);
+            }
         }
     }
 
@@ -84,7 +91,10 @@ abstract public class AbstractSensorServer {
 
     public void dispose() {
         for (Map.Entry<String, SensorListener> sensor : this.sensors.entrySet()) {
-            InstanceManager.sensorManagerInstance().getSensor(sensor.getKey()).removePropertyChangeListener(sensor.getValue());
+            Sensor s = InstanceManager.sensorManagerInstance().getSensor(sensor.getKey());
+            if(s!=null) {
+               s.removePropertyChangeListener(sensor.getValue());
+            }
         }
         this.sensors.clear();
     }

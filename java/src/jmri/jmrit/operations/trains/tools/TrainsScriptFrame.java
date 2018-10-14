@@ -1,4 +1,3 @@
-// TrainsScriptFrame.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.GridBagLayout;
@@ -13,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Setup;
@@ -27,11 +27,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2004
  * @author Dan Boudreau Copyright (C) 2011
- * @version $Revision$
  */
 public class TrainsScriptFrame extends OperationsFrame {
 
-    TrainManager trainManager = TrainManager.instance();
+    TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
 
     // script panels
     JPanel pStartUpScript = new JPanel();
@@ -45,7 +44,7 @@ public class TrainsScriptFrame extends OperationsFrame {
     JButton addShutDownScriptButton = new JButton(Bundle.getMessage("AddScript"));
     JButton runStartUpScriptButton = new JButton(Bundle.getMessage("RunScripts"));
     JButton runShutDownScriptButton = new JButton(Bundle.getMessage("RunScripts"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     public TrainsScriptFrame() {
         super();

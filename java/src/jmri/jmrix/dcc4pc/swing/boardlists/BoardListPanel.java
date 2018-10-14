@@ -19,7 +19,6 @@ import javax.swing.table.TableRowSorter;
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
 import jmri.jmrix.dcc4pc.swing.Dcc4PcPanelInterface;
 import jmri.swing.RowSorterUtil;
-import jmri.util.SystemNameComparator;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -28,15 +27,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for Signal Mast Add / Edit Panel
  *
- * @author	Kevin Dickerson Copyright (C) 2011
- * @version $Revision: 19647 $
+ * @author Kevin Dickerson Copyright (C) 2011
+ * 
  */
 public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements PropertyChangeListener, Dcc4PcPanelInterface {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8283443350770492724L;
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.dcc4pc.swing.boardlists.BoardListBundle");
 
@@ -49,12 +43,14 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void initComponents(Dcc4PcSystemConnectionMemo memo) {
         super.initComponents(memo);
-        senMan = jmri.InstanceManager.getDefault(jmri.jmrix.dcc4pc.Dcc4PcSensorManager.class);
-        if (senMan != null) {
-            _boardListCount = senMan.getBoards();
-        }
+        senMan = memo.getSensorManager();
+        _boardListCount = senMan.getBoards();
 
         setLayout(new BorderLayout());
 
@@ -67,8 +63,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
 
         _BoardModel = new ReaderBoardModel();
         JTable boardTable = new JTable(_BoardModel);
-        TableRowSorter<ReaderBoardModel> sorter = new TableRowSorter<>();
-        sorter.setComparator(ReaderBoardModel.ADDRESS_COLUMN, new SystemNameComparator());
+        TableRowSorter<ReaderBoardModel> sorter = new TableRowSorter<>(_BoardModel); // leave default comparator for Integers
         RowSorterUtil.setSortOrder(sorter, ReaderBoardModel.ADDRESS_COLUMN, SortOrder.ASCENDING);
         
         boardTable.setRowSelectionAllowed(false);
@@ -83,23 +78,25 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         add(footer, BorderLayout.SOUTH);
     }
 
-    public void initComponents() throws Exception {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void initComponents() {
     }
 
     JLabel sourceLabel = new JLabel();
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-
     }
 
     private List<Integer> _boardListCount;
 
     public class ReaderBoardModel extends AbstractTableModel implements PropertyChangeListener {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = -3477572258901807384L;
 
         ReaderBoardModel() {
             super();
@@ -154,9 +151,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
                 case INPUTS_COLUMN:
                     return new JTextField(5).getPreferredSize().width;
                 case ENCODING_COLUMN:
-                    return new JTextField(22).getPreferredSize().width;
                 case DESCRIPTION_COLUMN: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
-                    return new JTextField(22).getPreferredSize().width;
                 case EDIT_COLUMN: // not actually used due to the configureTable, setColumnToHoldButton, configureButton
                     return new JTextField(22).getPreferredSize().width;
                 default:
@@ -183,7 +178,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
                 return rb.getString("ColumnDescription");
             }
             if (col == EDIT_COLUMN) {
-                return rb.getString(""); //no title above Edit buttons
+                return ""; //rb.getString(""); //no title above Edit buttons
             }
             return "";
         }
@@ -194,6 +189,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
             }
         }
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("length")) {
                 _boardListCount = senMan.getBoards();
@@ -236,6 +232,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
                     .setPreferredWidth((sample.getPreferredSize().width) + 4);
         }
 
+        @Override
         public int getColumnCount() {
             return 6;
         }
@@ -263,13 +260,9 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
                 return;
             }
             //Need some validation!
-            senMan.changeBoardAddress(boardAddress, Integer.valueOf(newAddressField.getText()));
+            senMan.changeBoardAddress(boardAddress, Integer.parseInt(newAddressField.getText()));
         }
 
-       //
-        //protected void deletePair(int r){
-            /*jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).removeSignalMastLogic(senMan, _boardListCount.get(r));*/
-        //}
         public static final int ADDRESS_COLUMN = 0;
         public static final int INPUTS_COLUMN = 1;
         public static final int ENCODING_COLUMN = 2;
@@ -280,6 +273,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         public void setSetToState(String x) {
         }
 
+        @Override
         public int getRowCount() {
             if (_boardListCount == null) {
                 return 0;
@@ -287,6 +281,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
             return _boardListCount.size();
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             if (senMan == null) {
                 return null;
@@ -337,11 +332,6 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
      */
     static public class Default extends jmri.jmrix.dcc4pc.swing.Dcc4PcNamedPaneAction {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6085890861522428975L;
-
         public Default() {
             super("Dcc4PC Command Monitor",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
@@ -350,6 +340,6 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BoardListPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(BoardListPanel.class);
 
 }

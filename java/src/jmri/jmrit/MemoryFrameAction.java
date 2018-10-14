@@ -1,5 +1,6 @@
 package jmri.jmrit;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -8,6 +9,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.Roster;
 import jmri.util.JmriJFrame;
@@ -15,7 +17,7 @@ import jmri.util.JmriJFrame;
 /**
  * Display memory usage on request
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2012
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2012
  */
 public class MemoryFrameAction extends AbstractAction {
 
@@ -45,6 +47,7 @@ public class MemoryFrameAction extends AbstractAction {
 
     java.text.NumberFormat nf;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         nf = java.text.NumberFormat.getInstance();
@@ -78,21 +81,24 @@ public class MemoryFrameAction extends AbstractAction {
         p.add(testButton);
 
         updateButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 updateDisplay();
             }
         });
         gcButton.addActionListener(new ActionListener() {
-            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_GC")  // Garbage collection OK here
+            @SuppressFBWarnings(value = "DM_GC")  // Garbage collection OK here
+            @Override
             public void actionPerformed(ActionEvent event) {
                 Runtime.getRuntime().gc();
                 updateDisplay();
             }
         });
         testButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent event) {
                 Roster.getDefault();
-                DecoderIndexFile.instance();
+                InstanceManager.getDefault(DecoderIndexFile.class);
                 updateDisplay();
             }
         });

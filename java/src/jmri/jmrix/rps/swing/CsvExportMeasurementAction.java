@@ -13,6 +13,7 @@ import jmri.jmrix.rps.Distributor;
 import jmri.jmrix.rps.Measurement;
 import jmri.jmrix.rps.MeasurementListener;
 import jmri.jmrix.rps.Reading;
+import jmri.jmrix.rps.RpsSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,12 +25,15 @@ import org.slf4j.LoggerFactory;
  */
 public class CsvExportMeasurementAction extends AbstractAction implements MeasurementListener {
 
-    public CsvExportMeasurementAction(String actionName) {
+    RpsSystemConnectionMemo memo = null;
+
+    public CsvExportMeasurementAction(String actionName,RpsSystemConnectionMemo _memo) {
         super(actionName);
+        memo = _memo;
     }
 
-    public CsvExportMeasurementAction() {
-        this("Start CSV Export Measurement...");
+    public CsvExportMeasurementAction(RpsSystemConnectionMemo _memo) {
+        this("Start CSV Export Measurement...",_memo);
     }
 
     JFrame mParent;
@@ -38,6 +42,7 @@ public class CsvExportMeasurementAction extends AbstractAction implements Measur
     PrintStream str;
     JFileChooser fileChooser;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (logging) {
             stopLogging(e);
@@ -92,12 +97,13 @@ public class CsvExportMeasurementAction extends AbstractAction implements Measur
         }
     }
 
+    @Override
     public void notify(Measurement m) {
         if (!logging || str == null) {
             return;
         }
         // first measurement info
-        str.print("" + m.getID() + "," + m.getX() + "," + m.getY() + "," + m.getZ() + "," + m.getCode() + ",");
+        str.print("" + m.getId() + "," + m.getX() + "," + m.getY() + "," + m.getZ() + "," + m.getCode() + ",");
         // then reading info
         Reading r = m.getReading();
         for (int i = 0; i < r.getNValues() - 1; i++) {
@@ -106,5 +112,5 @@ public class CsvExportMeasurementAction extends AbstractAction implements Measur
         str.println(r.getValue(r.getNValues() - 1));
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CsvExportMeasurementAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CsvExportMeasurementAction.class);
 }

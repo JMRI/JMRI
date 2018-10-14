@@ -1,4 +1,3 @@
-// EcosPanelInterface.java
 package jmri.jmrix.ecos.swing;
 
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
@@ -9,7 +8,6 @@ import jmri.jmrix.ecos.EcosSystemConnectionMemo;
  *
  * @author Kevin Dickerson Copyright 2010
  * @since 2.11.3
- * @version $Revision$
  */
 public interface EcosPanelInterface {
 
@@ -19,6 +17,6 @@ public interface EcosPanelInterface {
      * This needs to be connected to the initContext() method in implementing
      * classes.
      */
-    public void initComponents(EcosSystemConnectionMemo memo) throws Exception;
+    public void initComponents(EcosSystemConnectionMemo memo);
 
 }

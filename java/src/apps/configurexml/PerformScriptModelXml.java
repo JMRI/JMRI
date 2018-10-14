@@ -2,9 +2,7 @@ package apps.configurexml;
 
 import apps.PerformScriptModel;
 import apps.StartupActionsManager;
-import java.io.File;
 import jmri.InstanceManager;
-import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -28,6 +26,7 @@ public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter 
      * @param o Object to store, of type PerformActonModel
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element e = new Element("perform");
         PerformScriptModel g = (PerformScriptModel) o;
@@ -51,16 +50,10 @@ public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter 
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws Exception {
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         String fileName = shared.getAttribute("name").getValue();
         fileName = FileUtil.getAbsoluteFilename(fileName);
-        log.info("Run file " + fileName);
-
-            // run the script
-        JmriScriptEngineManager.getDefault().runScript(new File(fileName));
-
-        // leave an updated object around
         PerformScriptModel m = new PerformScriptModel();
         m.setFileName(fileName);
         InstanceManager.getDefault(StartupActionsManager.class).addAction(m);
@@ -73,10 +66,11 @@ public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter 
      * @param element Top level Element to unpack.
      * @param o       ignored
      */
+    @Override
     public void load(Element element, Object o) {
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(PerformScriptModelXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PerformScriptModelXml.class);
 
 }

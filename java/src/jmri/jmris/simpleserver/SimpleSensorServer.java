@@ -1,4 +1,3 @@
-//SimpleSensorServer.java
 package jmri.jmris.simpleserver;
 
 import java.io.DataInputStream;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * connection
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision$
  */
 public class SimpleSensorServer extends AbstractSensorServer {
 
@@ -93,5 +91,5 @@ public class SimpleSensorServer extends AbstractSensorServer {
             this.connection.sendMessage(message);
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(SimpleSensorServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleSensorServer.class);
 }

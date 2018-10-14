@@ -1,4 +1,3 @@
-// InitiateSound.java
 package jmri.jmrix.loconet.sdf;
 
 import java.util.ArrayList;
@@ -7,8 +6,7 @@ import java.util.ArrayList;
  * Implement the INITIATE_SOUND macro from the Digitrax sound definition
  * language
  *
- * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class InitiateSound extends SdfMacro {
 
@@ -19,8 +17,9 @@ public class InitiateSound extends SdfMacro {
         this.prempt = (byte1 & 0x7) + (byte2 & 0x80);
     }
 
+    @Override
     public String name() {
-        return "INITIATE_SOUND";
+        return "INITIATE_SOUND"; // NOI18N
     }
 
     int prempt;
@@ -46,6 +45,7 @@ public class InitiateSound extends SdfMacro {
         this.prempt = (byte1 & 0x7) + (byte2 & 0x80);
     }
 
+    @Override
     public int length() {
         return 2;
     }
@@ -59,7 +59,7 @@ public class InitiateSound extends SdfMacro {
         if (trigName != null) {
             return trigName;
         }
-        return "(trigger = 0x" + jmri.util.StringUtil.twoHexFromInt(trigger) + ")";
+        return "(trigger = 0x" + jmri.util.StringUtil.twoHexFromInt(trigger) + ")"; // NOI18N
     }
 
     static public SdfMacro match(SdfBuffer buff) {
@@ -110,6 +110,7 @@ public class InitiateSound extends SdfMacro {
     /**
      * Store into a buffer.
      */
+    @Override
     public void loadByteArray(SdfBuffer buffer) {
         // data
         buffer.setAtIndexAndInc(byte1);
@@ -119,14 +120,17 @@ public class InitiateSound extends SdfMacro {
         super.loadByteArray(buffer);
     }
 
+    @Override
     public String toString() {
         return "Define Sequence " + triggerVal() + "," + premptVal() + '\n';
     }
 
+    @Override
     public String oneInstructionString() {
         return name() + " " + triggerVal() + "," + premptVal() + '\n';
     }
 
+    @Override
     public String allInstructionString(String indent) {
         String output = indent + oneInstructionString();
         if (children == null) {
@@ -138,5 +142,3 @@ public class InitiateSound extends SdfMacro {
         return output;
     }
 }
-
-/* @(#)InitiateSound.java */

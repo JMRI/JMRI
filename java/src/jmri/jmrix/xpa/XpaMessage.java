@@ -1,18 +1,17 @@
-// XpaMessage.java
 package jmri.jmrix.xpa;
 
+import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Encodes a message to an XPressNet command station via an XPA and a modem.
+ * Encodes a message to an XpressNet command station via an XPA and a modem.
  *
  * @author	Paul Bender Copyright (C) 2004
- * @version	$Revision$
  */
 public class XpaMessage implements jmri.jmrix.Message {
 
-    public final static int maxSize = 64;
+    public final static int MAX_SIZE = 64;
 
     private int _nDataChars = 0;
     private byte _dataChars[] = null;
@@ -35,13 +34,12 @@ public class XpaMessage implements jmri.jmrix.Message {
         _dataChars = S.getBytes();
     }
 
-    // create a new one with default maxSize
+    // create a new one with default MAX_SIZE
     public XpaMessage() {
-        this(maxSize);
+        this(MAX_SIZE);
     }
 
     // copy one
-    @SuppressWarnings("null")
     public XpaMessage(XpaMessage m) {
         if (m == null) {
             log.error("copy ctor of null message");
@@ -49,43 +47,47 @@ public class XpaMessage implements jmri.jmrix.Message {
         }
         _nDataChars = m._nDataChars;
         _dataChars = new byte[_nDataChars];
-        for (int i = 0; i < _nDataChars; i++) {
-            _dataChars[i] = m._dataChars[i];
-        }
+        System.arraycopy(m._dataChars, 0, _dataChars, 0, _nDataChars);
     }
 
     // compare two XpaMessages.
-    boolean Equals(XpaMessage m){
-       if (m == null) {
-          return false;
-       } else if (m.getNumDataElements() != this.getNumDataElements() ) {
-          return false;
-       } else {
-         for(int i=0;i<this.getNumDataElements();i++){
-             if(m.getElement(i)!=this.getElement(i)) {
-                return false;
-             }
-         }
-       }
-       return true;
+    @Override
+    public boolean equals(Object m) {
+        if (m != null && m instanceof XpaMessage
+                && ((XpaMessage) m).getNumDataElements() == this.getNumDataElements()) {
+            return Arrays.equals(((XpaMessage) m)._dataChars, _dataChars);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 79 * hash + this._nDataChars;
+        hash = 79 * hash + Arrays.hashCode(this._dataChars);
+        return hash;
     }
 
     // accessors to the bulk data
+    @Override
     public int getNumDataElements() {
         return _nDataChars;
     }
 
+    @Override
     public int getElement(int n) {
         return _dataChars[n];
     }
 
+    @Override
     public void setElement(int n, int v) {
         _dataChars[n] = (byte) (v & 0x7F);
     }
 
     // display format
+    @Override
     public String toString() {
-        StringBuffer s = new StringBuffer();
+        StringBuilder s = new StringBuilder();
         for (int i = 0; i < _nDataChars; i++) {
             s.append((char) _dataChars[i]);
         }
@@ -127,7 +129,7 @@ public class XpaMessage implements jmri.jmrix.Message {
      calculations easy, this uses a single speed step increase
      */
     static XpaMessage getIncSpeedMsg(int Address, int steps) {
-        StringBuffer buf = new StringBuffer("ATDT#" + Address + "*");
+        StringBuilder buf = new StringBuilder("ATDT#" + Address + "*");
         String Message;
         for (int i = 0; i < steps; i++) {
             buf.append("3");
@@ -143,7 +145,7 @@ public class XpaMessage implements jmri.jmrix.Message {
      calculations easy, this uses a single speed step increase
      */
     static XpaMessage getDecSpeedMsg(int Address, int steps) {
-        StringBuffer buf = new StringBuffer("ATDT#" + Address + "*");
+        StringBuilder buf = new StringBuilder("ATDT#" + Address + "*");
         String Message;
         for (int i = 0; i < steps; i++) {
             buf.append("1");
@@ -207,8 +209,7 @@ public class XpaMessage implements jmri.jmrix.Message {
         return m;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XpaMessage.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XpaMessage.class
+            .getName());
 
 }
-
-/* @(#)XpaMessage.java */

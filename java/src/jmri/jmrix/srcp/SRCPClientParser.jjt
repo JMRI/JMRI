@@ -1,4 +1,4 @@
-/* This is a parser grammar for the responses to a client in 
+/* This is a parser grammar for the responses to a client in
 the SRCP protocol written for code generation with javacc */
 
 options {
@@ -15,20 +15,19 @@ package jmri.jmrix.srcp.parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/* 
+/*
  * This file defines a JavaTree/JavaCC parser implementation for
  * the SRCP protocol responses to the client.
- * 
+ *
  * @author Paul Bender Copyright (C) 2011
- * @version $Revision$
  */
 
 // This is generated code.  DO NOT ATTEMPT TO FIX ANY FINDBUGS WARNINGS
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"NM_METHOD_NAMING_CONVENTION","RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE"})
 
 public class SRCPClientParser {
-  
-   static Logger log = LoggerFactory.getLogger(SRCPClientParser.class.getName());
+
+   private final static Logger log = LoggerFactory.getLogger(SRCPClientParser.class.getName());
 
   }
 
@@ -66,7 +65,7 @@ TOKEN :
 | < DELAY: ("-")?(["0"-"9"])+>
 | < TIMESTAMP: (["0"-"9"])+((".")(["0"-"9"])+)? >
 | < ONOFF: (<ON>|<OFF>) >:IN_REASON
-| < #ON: <O><N>> 
+| < #ON: <O><N>>
 | < #OFF: <O>(<F>){2} >
 | < PROTOCOL: (<A>|<F>|<L>|<P>|<S>|<N>|<M>|<Z>) >
 
@@ -85,10 +84,7 @@ TOKEN :
 
 // Constants and commands used for handshake mode only.
 | < SRCP: <S><R><C><P>>
-| < GO: <G><O>>
 | < VERSION: (["0"-"9"])+"."(["0"-"9"])+"."(["0"-"9"])+>
-| <PROTOCOLLITTERAL: <P><R><O><T><O><C><O><L>>
-| <CONNECTIONMODELITTERAL: <C><O><N><N><E><C><T><I><O><N><M><O><D><E>>
 
 // Client return codes
 | < INFO: <I><N><F><O>>
@@ -136,7 +132,7 @@ SimpleNode handshakeresponse():{SimpleNode t; SimpleNode s;}
 {
   // this should match any valid response to the client in handshake
   // mode.
-  t=timestamp() ( s=serviceversion() | s=connectionmode() | s=inforesponse() )
+  t=timestamp() ( s=serviceversion() | s=inforesponse() )
   {
     jjtThis.jjtSetValue(s.jjtGetValue());
     log.debug("Handshake Response Production: "+jjtThis.jjtGetValue());
@@ -160,16 +156,6 @@ SimpleNode serviceversion():{Token t; Token s;}
   {
     log.debug("Service Version Production");
     jjtThis.jjtSetValue(t.image +" " + s.image);
-    return jjtThis;
-  }
-}
-
-SimpleNode connectionmode():{Token t;}
-{
-  (( t=<COMMAND> | t=<INFO> ) <EOL> )
-  {
-    log.debug("Connection Mode Production");
-    jjtThis.jjtSetValue(t.image);
     return jjtThis;
   }
 }
@@ -219,9 +205,9 @@ SimpleNode ok():{Token t;Token r;}
 
 SimpleNode commandresponse():{SimpleNode t; SimpleNode s; }
 {
-  // this should match any valid response to the client in 
+  // this should match any valid response to the client in
   // either command mode or info mode.
-  t=timestamp() ( s=inforesponse() ) 
+  t=timestamp() ( s=inforesponse() )
   {
     log.debug("Command Mode Response Production");
     jjtThis.jjtSetValue(s.jjtGetValue() );
@@ -229,17 +215,6 @@ SimpleNode commandresponse():{SimpleNode t; SimpleNode s; }
     return jjtThis;
   }
 }
-
-SimpleNode cvno():{SimpleNode s;}
-{
-  ( s=nonzeroaddress())
-  {
-    log.debug("CV Number Production "+ s.jjtGetValue());
-    jjtThis.jjtSetValue(s.jjtGetValue());
-    return jjtThis;
-  }
-}
-
 
 SimpleNode bus():{SimpleNode s;}
 {
@@ -308,7 +283,7 @@ SimpleNode port():{SimpleNode s;}
 
 SimpleNode devicegroup():{Token t;}
 {
-  ( t=<FB> | t=<GA> | t=<GL> | t=<SM> | t=<TIME> | t=<SESSION> | t=<SERVER> | 
+  ( t=<FB> | t=<GA> | t=<GL> | t=<SM> | t=<TIME> | t=<SESSION> | t=<SERVER> |
     t=<LOCK> | t=<POWER>| t=<DESCRIPTION> )
   {
     log.debug("DeviceGroup Production");
@@ -317,20 +292,9 @@ SimpleNode devicegroup():{Token t;}
   }
 }
 
-
-SimpleNode go():{Token t;}
-{
-  t=<GO> 
-  {
-     log.debug("GO Production");
-    jjtThis.jjtSetValue(t.image);
-     return jjtThis;
-  }
-}
-
 SimpleNode gl():{Token t;}
 {
-  t=<GL> address() ( (<DRIVEMODE>|address()) (address())+ | <PROTOCOL> (address() address())? )? 
+  t=<GL> address() ( (<DRIVEMODE>|address()) (address())+ | <PROTOCOL> (address() address())? )?
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;}
@@ -347,7 +311,7 @@ SimpleNode sm():{Token t;}
 SimpleNode ga():{Token t;}
 {
   t=<GA> address() ( ( <PROTOCOL> ) | (port() zeroone()) )?
-  { 
+  {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
   }
@@ -363,7 +327,7 @@ SimpleNode fb():{Token t;}
 
 SimpleNode time():{Token t;}
 {
-  t=<TIME> 
+  t=<TIME>
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
@@ -372,7 +336,7 @@ SimpleNode time():{Token t;}
 
 SimpleNode server():{Token t;Token r;}
 {
-  t=<SERVER> r=<EOL> 
+  t=<SERVER> r=<EOL>
   {
     jjtThis.jjtSetValue(t.image + " " + r.image);
     return jjtThis;
@@ -390,7 +354,7 @@ SimpleNode session():{Token t;}
 
 SimpleNode lock():{Token t;}
 {
-  t=<LOCK> devicegroup() ( address() )+ <EOL> 
+  t=<LOCK> devicegroup() ( address() )+ <EOL>
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
@@ -399,7 +363,7 @@ SimpleNode lock():{Token t;}
 
 SimpleNode description():{Token t;}
 {
- t=<DESCRIPTION> ( LOOKAHEAD(3) ( (devicegroup())+ <EOL> ) |  ( fb() <EOL> | ga() <EOL> | gl() <EOL> | sm() | time() | power() |session() | server() | lock() )) 
+ t=<DESCRIPTION> ( LOOKAHEAD(3) ( (devicegroup())+ <EOL> ) |  ( fb() <EOL> | ga() <EOL> | gl() <EOL> | sm() | time() | power() |session() | server() | lock() ))
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
@@ -423,56 +387,5 @@ void zeroone() #void:{SimpleNode s;}
      log.debug("ZeroOne Production ");
      //return jjtThis;
   }
-}
-
-SimpleNode delay():{Token t;}
-{
-  // time timeout is a non-zero integer.  It may be negative.
-  t=<DELAY>
-  {
-     log.debug("Delay Production " +t.image);
-     return jjtThis;
-  }
-}
-
-SimpleNode timeout():{Token t;}
-{
-  // the timeout is a non-negative integer.
-  address()
-  {
-     log.debug("Timeout Production ");
-     return jjtThis;
-  }
-}
-
-// service mode programming modes
-
-SimpleNode progmode():{SimpleNode s;}
-{
-  // programming mode has 3 possibilities
-  ( s=cvbit() | s=cv() | s=reg() )
-  {
-     log.debug("Programming Mode Production ");
-     return jjtThis;
-  }
-}
-
-
-SimpleNode cv():{}
-{
-  <CV>
-  {return jjtThis;}
-}
-
-SimpleNode cvbit():{}
-{
-  <CVBIT>
-  {return jjtThis;}
-}
-
-SimpleNode reg():{}
-{
-  <REG>
-  {return jjtThis;}
 }
 

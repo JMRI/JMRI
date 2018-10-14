@@ -8,10 +8,10 @@
 
   <title>JMRI Hardware Setup Support - MacOS Serial Port
   connections</title>
-  <meta content="Bob Jacobsen" name="Author">
-  <meta content="Dick Bronson" name="Author">
-  <meta content="Walter Thompson" name="Author">
-  <meta content="John Plocher" name="Author">
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="author" content="Dick Bronson">
+  <meta name="author" content="Walter Thompson">
+  <meta name="author" content="John Plocher">
   <meta name="keywords" content=
   "java model railroad JMRI install windows"><!-- Style -->
   <meta http-equiv="Content-Type" content=

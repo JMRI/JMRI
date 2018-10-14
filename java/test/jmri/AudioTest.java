@@ -1,9 +1,9 @@
 package jmri;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Audio class
@@ -198,6 +198,16 @@ public class AudioTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite(AudioTest.class);
         return suite;
+    }
+
+    @Override
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @Override
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

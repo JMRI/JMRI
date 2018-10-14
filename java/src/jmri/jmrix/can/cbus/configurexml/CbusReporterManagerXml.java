@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Mark Riddoch Copyright: Copyright (C) 2015
- * @version $Revision$
  * @since 2.3.1
  */
 public class CbusReporterManagerXml extends AbstractReporterManagerConfigXML {
@@ -48,5 +47,5 @@ public class CbusReporterManagerXml extends AbstractReporterManagerConfigXML {
         return loadReporters(shared);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(CbusReporterManagerXml.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(CbusReporterManagerXml.class);
 }

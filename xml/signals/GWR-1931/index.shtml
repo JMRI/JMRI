@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: Suzie_Tall $) 2014 -->
-<!-- $Id: index.shtml 23637 2013-06-13 21:46:27Z Suzie_Tall $ -->
 <title>JMRI: GWR-1931 Signaling Definition</title>
 
 <!-- Style -->
@@ -14,9 +13,9 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">

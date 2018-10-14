@@ -1,4 +1,3 @@
-// LocoGenPanel.java
 package jmri.jmrix.loconet.locogen;
 
 import java.awt.GridLayout;
@@ -18,25 +17,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * User interface for sending LocoNet messages to exercise the system
- * <P>
+ * User interface for sending LocoNet messages to exercise the system.
+ * <p>
  * When sending a sequence of operations:
- * <UL>
- * <LI>Send the next message
- * <LI>Wait until you hear the echo, then start a timer
- * <LI>When the timer trips, repeat if buttons still down.
- * </UL>
+ * <ul>
+ *   <li>Send the next message
+ *   <li>Wait until you hear the echo, then start a timer
+ *   <li>When the timer trips, repeat if buttons still down.
+ * </ul>
+ * @see jmri.jmrix.can.swing.send.CanSendPane
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2010
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2010
  */
 public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements LocoNetListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8721664131869665655L;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
@@ -51,34 +46,46 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     JTextField mPacketField[] = new JTextField[MAXSEQUENCE];
     JCheckBox mUseField[] = new JCheckBox[MAXSEQUENCE];
     JTextField mDelayField[] = new JTextField[MAXSEQUENCE];
-    JToggleButton mRunButton = new JToggleButton("Go");
+    JToggleButton mRunButton = new JToggleButton(Bundle.getMessage("ButtonGo"));
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.locogen.LocoGenFrame";
+        return "package.jmri.jmrix.loconet.locogen.LocoGenFrame"; // NOI18N
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getTitle() {
         return getTitle(Bundle.getMessage("MenuItemSendPacket"));
     }
 
-    public void initComponents() throws Exception {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void initComponents() {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // handle single-packet part
-        add(new JLabel("Send one packet:"));
+        add(new JLabel(Bundle.getMessage("LabelSendOne")));
         {
             JPanel pane1 = new JPanel();
             pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
 
-            jLabel1.setText("Packet:");
+            jLabel1.setText(Bundle.getMessage("MakeLabel", Bundle.getMessage("PacketLabel")));
             jLabel1.setVisible(true);
 
-            sendButton.setText("Send");
+            sendButton.setText(Bundle.getMessage("ButtonSend"));
             sendButton.setVisible(true);
-            sendButton.setToolTipText("Send packet");
+            sendButton.setToolTipText(Bundle.getMessage("TooltipSendPacket"));
 
-            packetTextField.setToolTipText("Enter packet as hex pairs, e.g. 82 7D; checksum should be present but is recalculated");
+            packetTextField.setToolTipText(Bundle.getMessage("EnterHexToolTip"));
 
             pane1.add(jLabel1);
             pane1.add(packetTextField);
@@ -86,6 +93,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
             pane1.add(Box.createVerticalGlue());
 
             sendButton.addActionListener(new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     sendButtonActionPerformed(e);
                 }
@@ -97,13 +105,13 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         add(new JSeparator());
 
         // Configure the sequence
-        add(new JLabel("Send sequence of packets:"));
+        add(new JLabel(Bundle.getMessage("SendSeqTitle")));
         JPanel pane2 = new JPanel();
         pane2.setLayout(new GridLayout(MAXSEQUENCE + 2, 4));
         pane2.add(new JLabel(""));
-        pane2.add(new JLabel("Send"));
-        pane2.add(new JLabel("packet"));
-        pane2.add(new JLabel("wait (msec)"));
+        pane2.add(new JLabel(Bundle.getMessage("ButtonSend")));
+        pane2.add(new JLabel(Bundle.getMessage("PacketLabel")));
+        pane2.add(new JLabel(Bundle.getMessage("WaitLabel")));
         for (int i = 0; i < MAXSEQUENCE; i++) {
             pane2.add(new JLabel(Integer.toString(i + 1)));
             mUseField[i] = new JCheckBox();
@@ -117,12 +125,17 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
         add(pane2);
 
         mRunButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 runButtonActionPerformed(e);
             }
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
 
@@ -140,10 +153,13 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     /**
      * Internal routine to handle timer starts {@literal &} restarts
+     * <p>
+     * @param delay in mSec
      */
     protected void restartTimer(int delay) {
         if (timer == null) {
             timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     sendNextItem();
                 }
@@ -157,7 +173,8 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     /**
      * Run button pressed down, start the sequence operation
-     *
+     *<p>
+     * @param e - a {@link java.awt.event.ActionEvent} to be triggered
      */
     public void runButtonActionPerformed(java.awt.event.ActionEvent e) {
         if (!mRunButton.isSelected()) {
@@ -180,11 +197,11 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     /**
-     * Process the incoming message to look for the needed echo
-     *
+     * {@inheritDoc}
      */
+    @Override
     public void message(LocoNetMessage m) {
-        log.debug("message");
+        log.debug("message"); // NOI18N
         // are we running?
         if (!mRunButton.isSelected()) {
             return;
@@ -201,7 +218,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
      * Echo has been heard, start delay for next packet
      */
     void startSequenceDelay() {
-        log.debug("startSequenceDelay");
+        log.debug("startSequenceDelay"); // NOI18N
         // at the start, mNextSequenceElement contains index we're
         // working on
         int delay = Integer.parseInt(mDelayField[mNextSequenceElement].getText());
@@ -216,7 +233,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
      * elapsed.
      */
     void sendNextItem() {
-        log.debug("sendNextItem");
+        log.debug("sendNextItem"); // NOI18N
         // check if still running
         if (!mRunButton.isSelected()) {
             return;
@@ -242,7 +259,12 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     /**
      * Create a well-formed LocoNet packet from a String
-     *
+     * <p>
+     * Well-formed generally means a space-separated string of hex values of
+     * two characters each, as defined in
+     * {@link jmri.util.StringUtil#bytesFromHexString(String s)} .
+     * <p>
+     * @param s - a string containing raw hex data of good form
      * @return The packet, with contents filled-in
      */
     LocoNetMessage createPacket(String s) {
@@ -261,11 +283,13 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     /**
      * When the window closes, stop any sequences running
      */
+    @Override
     public void dispose() {
         mRunButton.setSelected(false);
         super.dispose();
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LocoGenPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocoGenPanel.class);
+
 }

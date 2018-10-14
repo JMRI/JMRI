@@ -3,81 +3,71 @@
 
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
-  <!-- Updated by Blorec Herv&#233; 2013-10-05-->
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id$ -->
+<!-- Updated by Blorec Herv&#233; 2017-01-10-->
 
-  <title>JMRI: USS CTC Tools</title><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
-</head>
+<title>JMRI: USS CTC Tools</title>
 
-<body>
-  <!--#include virtual="/Header" -->
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h2>JMRI:Outils USS CTC</h2>JMRI contient quelques outils
-      pour aider &agrave; l'automatisation des panneaux USS CTT .
-      Ceux-ci peuvent &ecirc;tre utilis&eacute;s soit pour les
-      panneaux &agrave; base d'&eacute;cran , ou &agrave; piloter
-      un panneau physique avec de v&eacute;ritables leviers et des
-      voyants.
 
-      <dl>
-        <dt><a href=
-        "../../../package/jmri/jmrit/ussctc/FollowerFrame.shtml">Suiveur</a></dt>
 
-        <dd>Les esclaves d'un dispositif de sortie d'Aiguillage
-        pour suivre l'&eacute;tat d'un dispositif de capteur
-        d'entr&eacute;e. Cela pourrait, par exemple, &ecirc;tre un
-        aiguillage du r&eacute;seau suivi par un commutateur du
-        panneau de contr&ocirc;le reli&eacute; &agrave; un
-        Capteur.</dd>
+<h2>JMRI:Outils USS CTC </h2>
 
-        <dt><a href=
-        "../../../package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml">
-        OS Indicateur</a></dt>
 
-        <dd>Piloter les voyants d'occupation sur le panneau. Cela
-        prend l'entr&eacute;e d'un capteur pour montrer la section
-        de voie occup&eacute;e, et aussi &eacute;ventuellement peut
-        allumer le voyant si la section a &eacute;t&eacute;
-        d&eacute;bloqu&eacute;e.</dd>
+JMRI contient quelques outils pour aider &#224; l'automatisation des panneaux USS CTC.
+Ceux-ci peuvent &#234;tre utilis&#233;s soit pour les panneaux &#224; base d'&#233;cran , ou &#224;
+piloter un panneau physique avec de v&#233;ritables leviers et des voyants.
 
-        <dt><a href=
-        "../../../package/jmri/jmrit/ussctc/TurnoutLeverFrame.shtml">
-        Levier d' Aiguillage</a></dt>
+<dl>
 
-        <dd>Contr&ocirc;le un aiguillage depuis un levier
-        situ&eacute; sur le panneau, avec les deux voyants. (Pas
-        encore sorti)</dd>
+<dt>
+<a href="../../../package/jmri/jmrit/ussctc/FollowerFrame.shtml"> Suiveur </a>
+<dd>
+Asservissement d'un dispositif de sortie d'Aiguillage pour suivre l'&#233;tat d'un dispositif de capteur d'entr&#233;e.
+Cela pourrait, par exemple, &#234;tre un aiguillage du r&#233;seau suivi par un commutateur du panneau de contr&#244;le reli&#233; &#224; un Capteur.
 
-        <dt><a href=
-        "../../../package/jmri/jmrit/ussctc/SignalLeverFrame.shtml">
-        levier signal</a></dt>
+<dt>
+<a href="../../../package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml"> OS Indicateur </a>
+<dd>
+Pilotage des voyants d'occupation sur le panneau. Cela prend l'entr&#233;e d'un capteur
+pour montrer la section de voie occup&#233;e, et aussi &#233;ventuellement peut allumer le voyant
+si la section a &#233;t&#233; d&#233;bloqu&#233;e.
 
-        <dd>Contr&ocirc;les d'un ensemble de signaux provenant d'un
-        levier situ&eacute; sur le panneau, avec les trois voyants.
-        (Pas encore sorti)</dd>
+<dt>
+<a href="../../../package/jmri/jmrit/ussctc/TurnoutLeverFrame.shtml"> Levier d' Aiguillage </a>
+<dd>
+Commande un aiguillage depuis un levier situ&#233; sur le panneau, avec les deux
+voyants. (Pas encore sorti)
 
-        <dt><a href=
-        "../../../package/jmri/jmrit/ussctc/CodeButtonFrame.shtml">Bouton
-        code</a></dt>
+<dt>
+<a href="../../../package/jmri/jmrit/ussctc/SignalLeverFrame.shtml"> levier signal </a>
+<dd>
+Commandes d'un ensemble de signaux provenant d'un levier situ&#233; sur le panneau, avec les trois
+voyants. (Pas encore sorti)
 
-        <dd>Impl&eacute;mente le bouton de code et une lampe de
-        code. (Pas encore sorti) 
-        <!--#include virtual="/Footer" --></dd>
-      </dl>
-    </div>
-  </div>
+<dt>
+<a href="../../../package/jmri/jmrit/ussctc/CodeButtonFrame.shtml">Bouton code </a>
+<dd>
+Impl&#233;mente le bouton de code et une lampe de code. (Pas encore sorti)
+<dl>
+
+</dl>
+    
+<!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

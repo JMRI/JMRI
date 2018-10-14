@@ -2,9 +2,9 @@
 <?xml-stylesheet href="/xml/XSLT/operations-locations.xsl" type="text/xsl"?>
 <!DOCTYPE operations-config SYSTEM "/xml/DTD/operations-locations.dtd">
 <operations-config>
-  <!--Written by JMRI version 20150330-1700-Daniel Boudreau on Mon Apr 27 16:27:23 EDT 2015 $Id$-->
+  <!--Written by JMRI version 4.5.7ish-201611210453-Daniel Boudreau on Mon Dec 26 10:47:34 EST 2016 $Id$-->
   <locations>
-    <location id="6" name="Farmington" ops="1" dir="15" switchList="true" physicalLocation="(0.0, 0.0, 0.0)" comment="Small Town, only sidings" switchListComment="">
+    <location id="6" name="Farmington" ops="1" dir="15" switchList="true" comment="Small Town, only sidings" switchListComment="">
       <types>
         <carType name="Boxcar" />
         <carType name="FlatBHPp" />
@@ -17,22 +17,22 @@
         <carType name="HopGrain" />
         <locoType name="Diesel" />
       </types>
-      <track id="6s10" name="WH #88 Muldoun's" locType="Siding" dir="15" length="145" moves="8">
+      <track id="6s10" name="WH #88 Muldoun's" locType="Siding" dir="15" length="145" moves="8" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
         </types>
       </track>
-      <track id="6s11" name="#101 Evans Grist Mill" locType="Siding" dir="15" length="174" moves="28" schedule="Evans Grist Mill" scheduleId="2" itemId="2c1" itemCount="0" factor="100" scheduleMode="1">
+      <track id="6s11" name="#101 Evans Grist Mill" locType="Siding" dir="15" length="174" moves="28" blockingOrder="0" schedule="Evans Grist Mill" scheduleId="2" itemId="2c1" itemCount="0" factor="100" scheduleMode="1" holdCustomLoads="false">
         <types>
           <carType name="HopGrain" />
         </types>
       </track>
-      <track id="6s12" name="#181 Schmidt's Beer" locType="Siding" dir="15" length="55" moves="7">
+      <track id="6s12" name="#181 Schmidt's Beer" locType="Siding" dir="15" length="55" moves="7" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
         </types>
       </track>
-      <track id="6s13" name="#189 Standard Steel" locType="Siding" dir="15" length="65" moves="15">
+      <track id="6s13" name="#189 Standard Steel" locType="Siding" dir="15" length="65" moves="15" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -46,28 +46,28 @@
           <carType name="MOW" />
         </types>
       </track>
-      <track id="6s14" name="WH #86 Big Bug" locType="Siding" dir="15" length="133" moves="5">
+      <track id="6s14" name="WH #86 Big Bug" locType="Siding" dir="15" length="133" moves="5" blockingOrder="0">
         <types>
           <carType name="FlatBHPp" />
           <carType name="FlatBHWd" />
         </types>
       </track>
-      <track id="6s15" name="WH #89 Schramm.Mfg" locType="Siding" dir="15" length="44" moves="7">
+      <track id="6s15" name="WH #89 Schramm.Mfg" locType="Siding" dir="15" length="44" moves="7" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
         </types>
       </track>
-      <track id="6s16" name="#103 Opanski Organs" locType="Siding" dir="15" length="97" moves="7">
+      <track id="6s16" name="#103 Opanski Organs" locType="Siding" dir="15" length="97" moves="7" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
         </types>
       </track>
-      <track id="6s17" name="Engine Track" locType="Siding" dir="15" length="100" moves="0">
+      <track id="6s17" name="Engine Track" locType="Siding" dir="15" length="100" moves="0" blockingOrder="0">
         <types>
           <locoType name="Diesel" />
         </types>
       </track>
-      <track id="6s18" name="WH #89 Schramm Mfg" locType="Siding" dir="15" length="44" moves="7">
+      <track id="6s18" name="WH #89 Schramm Mfg" locType="Siding" dir="15" length="44" moves="7" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -78,7 +78,7 @@
           <carType name="MOW" />
         </types>
       </track>
-      <track id="6s4" name="#183 Chalker Crate &amp; Pal" locType="Siding" dir="15" length="290" moves="22">
+      <track id="6s4" name="#183 Chalker Crate &amp; Pal" locType="Siding" dir="15" length="290" moves="22" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
           <carType name="Flatcar" />
@@ -91,38 +91,38 @@
           <setout comment="" />
         </comments>
       </track>
-      <track id="6s5" name="#103 Jennings Lumber Co" locType="Siding" dir="15" length="280" moves="23">
+      <track id="6s5" name="#103 Jennings Lumber Co" locType="Siding" dir="15" length="280" moves="23" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
           <carType name="Flatcar" />
           <carType name="Gondola" />
         </types>
       </track>
-      <track id="6s6" name="WH #87 Cartwright" locType="Siding" dir="15" length="165" moves="17">
+      <track id="6s6" name="WH #87 Cartwright" locType="Siding" dir="15" length="165" moves="17" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
         </types>
       </track>
-      <track id="6s7" name="#185 Jennings Mechandise" locType="Siding" dir="15" length="246" moves="19">
+      <track id="6s7" name="#185 Jennings Mechandise" locType="Siding" dir="15" length="246" moves="19" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
           <carType name="FlatWood" />
           <carType name="Flatcar" />
         </types>
       </track>
-      <track id="6s8" name="WH #85 Big Bug" locType="Siding" dir="11" length="88" moves="2">
+      <track id="6s8" name="WH #85 Big Bug" locType="Siding" dir="11" length="88" moves="2" blockingOrder="0">
         <types>
           <carType name="FlatBHPp" />
           <carType name="FlatTimb" />
         </types>
       </track>
-      <track id="6s9" name="#103 Chippy Hollow HW Co" locType="Siding" dir="15" length="55" moves="7">
+      <track id="6s9" name="#103 Chippy Hollow HW Co" locType="Siding" dir="15" length="55" moves="7" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
         </types>
       </track>
     </location>
-    <location id="78" name="Bakersfield" ops="1" dir="15" switchList="false" physicalLocation="(0.0, 0.0, 0.0)" comment="Large Yard with Sidings and Interchange" switchListComment="">
+    <location id="78" name="Bakersfield" ops="1" dir="15" switchList="false" comment="Large Yard with Sidings and Interchange" switchListComment="">
       <types>
         <carType name="Baggage" />
         <carType name="Boxcar" />
@@ -165,7 +165,7 @@
         <locoType name="Diesel" />
         <locoType name="Steam" />
       </types>
-      <track id="78s1" name="yard" locType="Yard" dir="15" length="3600" moves="465" carRoadOption="Exclude">
+      <track id="78s1" name="yard" locType="Yard" dir="15" length="3600" moves="465" blockingOrder="0" carRoadOption="Exclude">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -204,12 +204,12 @@
         </types>
         <carRoads />
       </track>
-      <track id="78s10" name="#68 Heritage Furn" locType="Siding" dir="15" length="55" moves="33">
+      <track id="78s10" name="#68 Heritage Furn" locType="Siding" dir="15" length="55" moves="33" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
         </types>
       </track>
-      <track id="78s11" name="#67 Seeley's Milling Co" locType="Siding" dir="15" length="350" moves="37" schedule="Seeley" scheduleId="1" itemId="1c1" itemCount="0" factor="100" scheduleMode="1">
+      <track id="78s11" name="#67 Seeley's Milling Co" locType="Siding" dir="15" length="350" moves="37" blockingOrder="0" schedule="Seeley" scheduleId="1" itemId="1c1" itemCount="0" factor="100" scheduleMode="1" holdCustomLoads="false">
         <types>
           <carType name="Boxcar" />
           <carType name="Flatcar" />
@@ -222,12 +222,12 @@
           <setout comment="" />
         </comments>
       </track>
-      <track id="78s12" name="#68 Becker Chemical" locType="Siding" dir="15" length="90" moves="0">
+      <track id="78s12" name="#68 Becker Chemical" locType="Siding" dir="15" length="90" moves="0" blockingOrder="0">
         <types>
           <carType name="Tank Chem" />
         </types>
       </track>
-      <track id="78s13" name="SP SSW Interchange" locType="Interchange" dir="15" length="500" moves="62" carRoadOption="Include">
+      <track id="78s13" name="SP SSW Interchange" locType="Interchange" dir="15" length="500" moves="62" blockingOrder="0" carRoadOption="Include" onlyCarWithFD="false">
         <types>
           <carType name="Boxcar" />
           <carType name="Coal" />
@@ -268,12 +268,12 @@
           <carRoad name="SSW" />
         </carRoads>
       </track>
-      <track id="78s3" name="Caboose Track" locType="Yard" dir="15" length="300" moves="80">
+      <track id="78s3" name="Caboose Track" locType="Yard" dir="15" length="300" moves="80" blockingOrder="0">
         <types>
           <carType name="Caboose" />
         </types>
       </track>
-      <track id="78s4" name="#68 Pabsb&amp;Son Cold Strge" locType="Siding" dir="15" length="145" moves="48">
+      <track id="78s4" name="#68 Pabsb&amp;Son Cold Strge" locType="Siding" dir="15" length="145" moves="48" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
           <carType name="Reefer" />
@@ -281,27 +281,27 @@
           <carType name="ReeferIce" />
         </types>
       </track>
-      <track id="78s5" name="#80,81 Bkrsfld Oil" locType="Siding" dir="15" length="478" moves="48">
+      <track id="78s5" name="#80,81 Bkrsfld Oil" locType="Siding" dir="15" length="478" moves="48" blockingOrder="0">
         <types>
           <carType name="Tank Gas" />
           <carType name="Tank Kero" />
           <carType name="Tank Oil" />
         </types>
       </track>
-      <track id="78s6" name="#68 Bkrsfld Grain" locType="Siding" dir="15" length="145" moves="43" schedule="Bakersfield Grain" scheduleId="3" itemId="3c1" itemCount="0" factor="100" scheduleMode="1">
+      <track id="78s6" name="#68 Bkrsfld Grain" locType="Siding" dir="15" length="145" moves="43" blockingOrder="0" schedule="Bakersfield Grain" scheduleId="3" itemId="3c1" itemCount="0" factor="100" scheduleMode="1" holdCustomLoads="false">
         <types>
           <carType name="Boxcar" />
           <carType name="HopGrain" />
         </types>
       </track>
-      <track id="78s8" name="Engine Terminal" locType="Siding" dir="15" length="1150" moves="140">
+      <track id="78s8" name="Engine Terminal" locType="Siding" dir="15" length="1150" moves="140" blockingOrder="0">
         <types>
           <locoType name="Diesel" />
           <locoType name="Steam" />
         </types>
       </track>
     </location>
-    <location id="80" name="Danville" ops="1" dir="15" switchList="false" physicalLocation="(0.0, 0.0, 0.0)" comment="Small Town with yard and some sidings" switchListComment="">
+    <location id="80" name="Danville" ops="1" dir="15" switchList="false" comment="Small Town with yard and some sidings" switchListComment="">
       <types>
         <carType name="Baggage" />
         <carType name="Boxcar" />
@@ -342,7 +342,7 @@
         <locoType name="Diesel" />
         <locoType name="Steam" />
       </types>
-      <track id="80s1" name="yard" locType="Yard" dir="15" length="1500" moves="1088">
+      <track id="80s1" name="yard" locType="Yard" dir="15" length="1500" moves="1088" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -383,44 +383,44 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="80s2" name="#133 Kratz Mfg" locType="Siding" dir="15" length="217" moves="104">
+      <track id="80s2" name="#133 Kratz Mfg" locType="Siding" dir="15" length="217" moves="104" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
           <carType name="Flatcar" />
           <carType name="Gondola" />
         </types>
       </track>
-      <track id="80s3" name="#147 Drywell Ink" locType="Siding" dir="15" length="176" moves="76">
+      <track id="80s3" name="#147 Drywell Ink" locType="Siding" dir="15" length="176" moves="76" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
           <carType name="Tank Chem" />
           <carType name="Tank Oil" />
         </types>
       </track>
-      <track id="80s4" name="#131 Danville Depot" locType="Siding" dir="15" length="220" moves="100">
+      <track id="80s4" name="#131 Danville Depot" locType="Siding" dir="15" length="220" moves="100" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
         </types>
       </track>
-      <track id="80s5" name="#143 Borgner &amp; O'Brien" locType="Siding" dir="15" length="181" moves="119">
+      <track id="80s5" name="#143 Borgner &amp; O'Brien" locType="Siding" dir="15" length="181" moves="119" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
           <carType name="Flatcar" />
         </types>
       </track>
-      <track id="80s6" name="#133 Herald Star" locType="Siding" dir="15" length="123" moves="63">
+      <track id="80s6" name="#133 Herald Star" locType="Siding" dir="15" length="123" moves="63" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
         </types>
       </track>
-      <track id="80s7" name="#133 Boyd Bindery Co" locType="Siding" dir="15" length="123" moves="68">
+      <track id="80s7" name="#133 Boyd Bindery Co" locType="Siding" dir="15" length="123" moves="68" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
           <carType name="Tank Chem" />
         </types>
       </track>
     </location>
-    <location id="83" name="Hillsboro" ops="1" dir="15" switchList="false" physicalLocation="(0.0, 0.0, 0.0)" comment="Small town with yard and sidings" switchListComment="">
+    <location id="83" name="Hillsboro" ops="1" dir="15" switchList="false" comment="Small town with yard and sidings" switchListComment="">
       <types>
         <carType name="Baggage" />
         <carType name="Boxcar" />
@@ -459,7 +459,7 @@
         <carType name="Tank Veg" />
         <locoType name="Diesel" />
       </types>
-      <track id="83s1" name="yard" locType="Yard" dir="15" length="1300" moves="280">
+      <track id="83s1" name="yard" locType="Yard" dir="15" length="1300" moves="280" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
           <carType name="Caboose" />
@@ -492,7 +492,7 @@
           <locoType name="Diesel" />
         </types>
       </track>
-      <track id="83s2" name="Reefer Service" locType="Siding" dir="15" length="220" moves="16">
+      <track id="83s2" name="Reefer Service" locType="Siding" dir="15" length="220" moves="16" blockingOrder="0">
         <types>
           <carType name="Reefer" />
           <carType name="Reefer Meat" />
@@ -500,26 +500,26 @@
           <carType name="ReeferIce" />
         </types>
       </track>
-      <track id="83s3" name="Railroad Express" locType="Siding" dir="15" length="200" moves="24">
+      <track id="83s3" name="Railroad Express" locType="Siding" dir="15" length="200" moves="24" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
         </types>
       </track>
-      <track id="83s4" name="Temple Stuart" locType="Siding" dir="15" length="144" moves="15">
-        <types>
-          <carType name="Boxcar" />
-          <carType name="Flatcar" />
-          <carType name="Gondola" />
-        </types>
-      </track>
-      <track id="83s5" name="Carharts" locType="Siding" dir="15" length="203" moves="15">
+      <track id="83s4" name="Temple Stuart" locType="Siding" dir="15" length="144" moves="15" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
           <carType name="Flatcar" />
           <carType name="Gondola" />
         </types>
       </track>
-      <track id="83s6" name="Steam Engine Service" locType="Siding" dir="15" length="90" moves="22">
+      <track id="83s5" name="Carharts" locType="Siding" dir="15" length="203" moves="15" blockingOrder="0">
+        <types>
+          <carType name="Boxcar" />
+          <carType name="Flatcar" />
+          <carType name="Gondola" />
+        </types>
+      </track>
+      <track id="83s6" name="Steam Engine Service" locType="Siding" dir="15" length="90" moves="22" blockingOrder="0">
         <types>
           <carType name="HopCoal" />
           <carType name="HopSand" />
@@ -527,7 +527,7 @@
         </types>
       </track>
     </location>
-    <location id="84" name="Port Arthur" ops="1" dir="15" switchList="false" physicalLocation="(0.0, 0.0, 0.0)" comment="Small Town with yards and sidings" switchListComment="">
+    <location id="84" name="Port Arthur" ops="1" dir="15" switchList="false" comment="Small Town with yards and sidings" switchListComment="">
       <types>
         <carType name="Baggage" />
         <carType name="Boxcar" />
@@ -562,17 +562,17 @@
         <carType name="Tank Veg" />
         <locoType name="Diesel" />
       </types>
-      <track id="84s10" name="#46 Farmers Stock" locType="Siding" dir="11" length="165" moves="21">
+      <track id="84s10" name="#46 Farmers Stock" locType="Siding" dir="11" length="165" moves="21" blockingOrder="0">
         <types>
           <carType name="Stock" />
         </types>
       </track>
-      <track id="84s11" name="#46 Farmers Meats" locType="Siding" dir="15" length="88" moves="3">
+      <track id="84s11" name="#46 Farmers Meats" locType="Siding" dir="15" length="88" moves="3" blockingOrder="0">
         <types>
           <carType name="Reefer Meat" />
         </types>
       </track>
-      <track id="84s12" name="#47 Farmer's Yard" locType="Yard" dir="15" length="250" moves="59">
+      <track id="84s12" name="#47 Farmer's Yard" locType="Yard" dir="15" length="250" moves="59" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
           <carType name="Flatcar" />
@@ -582,23 +582,23 @@
           <locoType name="Diesel" />
         </types>
       </track>
-      <track id="84s13" name="#427 Majestic HW &amp; Feed" locType="Siding" dir="15" length="88" moves="39">
+      <track id="84s13" name="#427 Majestic HW &amp; Feed" locType="Siding" dir="15" length="88" moves="39" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
         </types>
       </track>
-      <track id="84s14" name="#45 Port Freight" locType="Siding" dir="15" length="55" moves="22">
+      <track id="84s14" name="#45 Port Freight" locType="Siding" dir="15" length="55" moves="22" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
         </types>
       </track>
-      <track id="84s15" name="#45 Port Machine" locType="Siding" dir="15" length="55" moves="18">
+      <track id="84s15" name="#45 Port Machine" locType="Siding" dir="15" length="55" moves="18" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
           <carType name="Gondola" />
         </types>
       </track>
-      <track id="84s16" name="#163 Siding" locType="Yard" dir="15" length="300" moves="90">
+      <track id="84s16" name="#163 Siding" locType="Yard" dir="15" length="300" moves="90" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
           <carType name="HopCoal" />
@@ -608,13 +608,13 @@
           <carType name="Tank Oil" />
         </types>
       </track>
-      <track id="84s17" name="#165 Service" locType="Yard" dir="15" length="145" moves="27">
+      <track id="84s17" name="#165 Service" locType="Yard" dir="15" length="145" moves="27" blockingOrder="0">
         <types>
           <carType name="HopSand" />
           <locoType name="Diesel" />
         </types>
       </track>
-      <track id="84s3" name="#153 Zane Mercantile" locType="Siding" dir="15" length="246" moves="58">
+      <track id="84s3" name="#153 Zane Mercantile" locType="Siding" dir="15" length="246" moves="58" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
           <carType name="FlatWood" />
@@ -623,7 +623,7 @@
           <carType name="Gondola" />
         </types>
       </track>
-      <track id="84s4" name="#157 MacKellear Coal&amp;Oil" locType="Siding" dir="15" length="217" moves="50">
+      <track id="84s4" name="#157 MacKellear Coal&amp;Oil" locType="Siding" dir="15" length="217" moves="50" blockingOrder="0">
         <types>
           <carType name="Coal" />
           <carType name="HopCoal" />
@@ -632,13 +632,13 @@
           <carType name="Tank Oil" />
         </types>
       </track>
-      <track id="84s5" name="#159 Baron Gould Co" locType="Siding" dir="15" length="88" moves="45">
+      <track id="84s5" name="#159 Baron Gould Co" locType="Siding" dir="15" length="88" moves="45" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
         </types>
       </track>
     </location>
-    <location id="89" name="Fremont" ops="1" dir="11" switchList="false" physicalLocation="(0.0, 0.0, 0.0)" comment="Small Town with yard and some sidings" switchListComment="">
+    <location id="89" name="Fremont" ops="1" dir="11" switchList="false" comment="Small Town with yard and some sidings" switchListComment="">
       <types>
         <carType name="Boxcar" />
         <carType name="Coal" />
@@ -672,7 +672,7 @@
         <carType name="Tank Oil" />
         <carType name="Tank Veg" />
       </types>
-      <track id="89s1" name="yard" locType="Yard" dir="15" length="440" moves="187">
+      <track id="89s1" name="yard" locType="Yard" dir="15" length="440" moves="187" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -710,7 +710,7 @@
           <carType name="Tank Veg" />
         </types>
       </track>
-      <track id="89s2" name="#237 Wood Manufacturing" locType="Siding" dir="15" length="110" moves="80">
+      <track id="89s2" name="#237 Wood Manufacturing" locType="Siding" dir="15" length="110" moves="80" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
           <carType name="FlatBH" />
@@ -719,245 +719,25 @@
           <carType name="Tank Oil" />
         </types>
       </track>
-      <track id="89s3" name="#237 Borden's Milk" locType="Siding" dir="15" length="55" moves="55">
+      <track id="89s3" name="#237 Borden's Milk" locType="Siding" dir="15" length="55" moves="55" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
           <carType name="ReeferIce" />
           <carType name="Tank Veg" />
         </types>
       </track>
-      <track id="89s4" name="#237 Deloge" locType="Siding" dir="15" length="55" moves="65">
+      <track id="89s4" name="#237 Deloge" locType="Siding" dir="15" length="55" moves="65" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
         </types>
       </track>
-      <track id="89s5" name="#237 Kingsten Shoe" locType="Siding" dir="15" length="55" moves="82">
+      <track id="89s5" name="#237 Kingsten Shoe" locType="Siding" dir="15" length="55" moves="82" blockingOrder="0">
         <types>
           <carType name="Boxcar" />
         </types>
       </track>
     </location>
-    <location id="91" name="Susanville" ops="2" dir="15" switchList="false" physicalLocation="(0.0, 0.0, 0.0)" comment="Staging" switchListComment="">
-      <types>
-        <carType name="Baggage" />
-        <carType name="Boxcar" />
-        <carType name="Caboose" />
-        <carType name="Coal" />
-        <carType name="Coilcar" />
-        <carType name="Flat Timber" />
-        <carType name="FlatBH" />
-        <carType name="FlatBHPp" />
-        <carType name="FlatBHWd" />
-        <carType name="FlatTimb" />
-        <carType name="FlatTrailer" />
-        <carType name="FlatWood" />
-        <carType name="Flatcar" />
-        <carType name="Gon-pipe" />
-        <carType name="Gon-scrap" />
-        <carType name="Gondola" />
-        <carType name="HopChem" />
-        <carType name="HopCmnt" />
-        <carType name="HopCoal" />
-        <carType name="HopCoal-E" />
-        <carType name="HopGrain" />
-        <carType name="HopSand" />
-        <carType name="Hopper" />
-        <carType name="MOW" />
-        <carType name="MOWBox" />
-        <carType name="Passenger" />
-        <carType name="Reefer" />
-        <carType name="Reefer Meat" />
-        <carType name="Reefer Milk" />
-        <carType name="ReeferIce" />
-        <carType name="Stock" />
-        <carType name="Tank Chem" />
-        <carType name="Tank Corn Sy" />
-        <carType name="Tank Food" />
-        <carType name="Tank Gas" />
-        <carType name="Tank Kero" />
-        <carType name="Tank Oil" />
-        <carType name="Tank Veg" />
-        <locoType name="Diesel" />
-        <locoType name="Steam" />
-      </types>
-      <track id="91s1" name="#82 Yard Track" locType="Staging" dir="15" length="800" moves="0" loadOptions="6">
-        <types>
-          <carType name="Baggage" />
-          <carType name="Boxcar" />
-          <carType name="Caboose" />
-          <carType name="Coal" />
-          <carType name="Coilcar" />
-          <carType name="Flat Timber" />
-          <carType name="FlatBH" />
-          <carType name="FlatBHPp" />
-          <carType name="FlatBHWd" />
-          <carType name="FlatTimb" />
-          <carType name="FlatTrailer" />
-          <carType name="FlatWood" />
-          <carType name="Flatcar" />
-          <carType name="Gon-pipe" />
-          <carType name="Gon-scrap" />
-          <carType name="Gondola" />
-          <carType name="HopChem" />
-          <carType name="HopCmnt" />
-          <carType name="HopCoal" />
-          <carType name="HopCoal-E" />
-          <carType name="HopGrain" />
-          <carType name="HopSand" />
-          <carType name="Hopper" />
-          <carType name="MOW" />
-          <carType name="MOWBox" />
-          <carType name="Passenger" />
-          <carType name="Reefer" />
-          <carType name="Reefer Meat" />
-          <carType name="Reefer Milk" />
-          <carType name="ReeferIce" />
-          <carType name="Stock" />
-          <carType name="Tank Chem" />
-          <carType name="Tank Corn Sy" />
-          <carType name="Tank Food" />
-          <carType name="Tank Gas" />
-          <carType name="Tank Kero" />
-          <carType name="Tank Oil" />
-          <carType name="Tank Veg" />
-          <locoType name="Diesel" />
-          <locoType name="Steam" />
-        </types>
-      </track>
-      <track id="91s2" name="#83 Yard Track" locType="Staging" dir="15" length="900" moves="83" loadOptions="6">
-        <types>
-          <carType name="Baggage" />
-          <carType name="Boxcar" />
-          <carType name="Caboose" />
-          <carType name="Coal" />
-          <carType name="Coilcar" />
-          <carType name="Flat Timber" />
-          <carType name="FlatBH" />
-          <carType name="FlatBHPp" />
-          <carType name="FlatBHWd" />
-          <carType name="FlatTimb" />
-          <carType name="FlatTrailer" />
-          <carType name="FlatWood" />
-          <carType name="Flatcar" />
-          <carType name="Gon-pipe" />
-          <carType name="Gon-scrap" />
-          <carType name="Gondola" />
-          <carType name="HopChem" />
-          <carType name="HopCmnt" />
-          <carType name="HopCoal" />
-          <carType name="HopCoal-E" />
-          <carType name="HopGrain" />
-          <carType name="HopSand" />
-          <carType name="Hopper" />
-          <carType name="MOW" />
-          <carType name="MOWBox" />
-          <carType name="Passenger" />
-          <carType name="Reefer" />
-          <carType name="Reefer Meat" />
-          <carType name="Reefer Milk" />
-          <carType name="ReeferIce" />
-          <carType name="Stock" />
-          <carType name="Tank Chem" />
-          <carType name="Tank Corn Sy" />
-          <carType name="Tank Food" />
-          <carType name="Tank Gas" />
-          <carType name="Tank Kero" />
-          <carType name="Tank Oil" />
-          <carType name="Tank Veg" />
-          <locoType name="Diesel" />
-          <locoType name="Steam" />
-        </types>
-      </track>
-      <track id="91s3" name="#84 Yard Track" locType="Staging" dir="15" length="900" moves="127" loadOptions="6">
-        <types>
-          <carType name="Baggage" />
-          <carType name="Boxcar" />
-          <carType name="Caboose" />
-          <carType name="Coal" />
-          <carType name="Coilcar" />
-          <carType name="Flat Timber" />
-          <carType name="FlatBH" />
-          <carType name="FlatBHPp" />
-          <carType name="FlatBHWd" />
-          <carType name="FlatTimb" />
-          <carType name="FlatTrailer" />
-          <carType name="FlatWood" />
-          <carType name="Flatcar" />
-          <carType name="Gon-pipe" />
-          <carType name="Gon-scrap" />
-          <carType name="Gondola" />
-          <carType name="HopChem" />
-          <carType name="HopCmnt" />
-          <carType name="HopCoal" />
-          <carType name="HopCoal-E" />
-          <carType name="HopGrain" />
-          <carType name="HopSand" />
-          <carType name="Hopper" />
-          <carType name="MOW" />
-          <carType name="MOWBox" />
-          <carType name="Passenger" />
-          <carType name="Reefer" />
-          <carType name="Reefer Meat" />
-          <carType name="Reefer Milk" />
-          <carType name="ReeferIce" />
-          <carType name="Stock" />
-          <carType name="Tank Chem" />
-          <carType name="Tank Corn Sy" />
-          <carType name="Tank Food" />
-          <carType name="Tank Gas" />
-          <carType name="Tank Kero" />
-          <carType name="Tank Oil" />
-          <carType name="Tank Veg" />
-          <locoType name="Diesel" />
-          <locoType name="Steam" />
-        </types>
-      </track>
-      <track id="91s4" name="#85 Yard Track" locType="Staging" dir="15" length="600" moves="122" loadOptions="6">
-        <types>
-          <carType name="Baggage" />
-          <carType name="Boxcar" />
-          <carType name="Caboose" />
-          <carType name="Coal" />
-          <carType name="Coilcar" />
-          <carType name="Flat Timber" />
-          <carType name="FlatBH" />
-          <carType name="FlatBHPp" />
-          <carType name="FlatBHWd" />
-          <carType name="FlatTimb" />
-          <carType name="FlatTrailer" />
-          <carType name="FlatWood" />
-          <carType name="Flatcar" />
-          <carType name="Gon-pipe" />
-          <carType name="Gon-scrap" />
-          <carType name="Gondola" />
-          <carType name="HopChem" />
-          <carType name="HopCmnt" />
-          <carType name="HopCoal" />
-          <carType name="HopCoal-E" />
-          <carType name="HopGrain" />
-          <carType name="HopSand" />
-          <carType name="Hopper" />
-          <carType name="MOW" />
-          <carType name="MOWBox" />
-          <carType name="Passenger" />
-          <carType name="Reefer" />
-          <carType name="Reefer Meat" />
-          <carType name="Reefer Milk" />
-          <carType name="ReeferIce" />
-          <carType name="Stock" />
-          <carType name="Tank Chem" />
-          <carType name="Tank Corn Sy" />
-          <carType name="Tank Food" />
-          <carType name="Tank Gas" />
-          <carType name="Tank Kero" />
-          <carType name="Tank Oil" />
-          <carType name="Tank Veg" />
-          <locoType name="Diesel" />
-          <locoType name="Steam" />
-        </types>
-      </track>
-    </location>
-    <location id="92" name="Lakeview" ops="2" dir="15" switchList="false" physicalLocation="(0.0, 0.0, 0.0)" comment="Staging" switchListComment="">
+    <location id="91" name="Susanville" ops="2" dir="15" switchList="false" comment="Staging" switchListComment="">
       <types>
         <carType name="Baggage" />
         <carType name="Boxcar" />
@@ -1000,7 +780,7 @@
         <locoType name="Diesel" />
         <locoType name="Steam" />
       </types>
-      <track id="92s1" name="#94 Yard Track" locType="Staging" dir="15" length="1300" moves="79" loadOptions="6">
+      <track id="91s1" name="#82 Yard Track" locType="Staging" dir="15" length="800" moves="0" blockingOrder="0" loadOptions="6">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -1044,7 +824,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="92s2" name="#95 Yard Track" locType="Staging" dir="15" length="1300" moves="91" loadOptions="6">
+      <track id="91s2" name="#83 Yard Track" locType="Staging" dir="15" length="900" moves="83" blockingOrder="0" loadOptions="6">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -1088,7 +868,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="92s3" name="#96 Yard Track" locType="Staging" dir="15" length="1300" moves="88" loadOptions="6">
+      <track id="91s3" name="#84 Yard Track" locType="Staging" dir="15" length="900" moves="127" blockingOrder="0" loadOptions="6">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -1132,95 +912,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="92s4" name="#97 Yard Track" locType="Staging" dir="15" length="1300" moves="105" loadOptions="6">
-        <types>
-          <carType name="Baggage" />
-          <carType name="Boxcar" />
-          <carType name="Caboose" />
-          <carType name="Coal" />
-          <carType name="Coilcar" />
-          <carType name="Flat Timber" />
-          <carType name="FlatBH" />
-          <carType name="FlatBHPp" />
-          <carType name="FlatBHWd" />
-          <carType name="FlatTimb" />
-          <carType name="FlatTrailer" />
-          <carType name="FlatWood" />
-          <carType name="Flatcar" />
-          <carType name="Gon-pipe" />
-          <carType name="Gon-scrap" />
-          <carType name="Gondola" />
-          <carType name="HopChem" />
-          <carType name="HopCmnt" />
-          <carType name="HopCoal" />
-          <carType name="HopCoal-E" />
-          <carType name="HopGrain" />
-          <carType name="HopSand" />
-          <carType name="Hopper" />
-          <carType name="MOW" />
-          <carType name="MOWBox" />
-          <carType name="Passenger" />
-          <carType name="Reefer" />
-          <carType name="Reefer Meat" />
-          <carType name="Reefer Milk" />
-          <carType name="ReeferIce" />
-          <carType name="Stock" />
-          <carType name="Tank Chem" />
-          <carType name="Tank Corn Sy" />
-          <carType name="Tank Food" />
-          <carType name="Tank Gas" />
-          <carType name="Tank Kero" />
-          <carType name="Tank Oil" />
-          <carType name="Tank Veg" />
-          <locoType name="Diesel" />
-          <locoType name="Steam" />
-        </types>
-      </track>
-      <track id="92s5" name="#98 Yard Track " locType="Staging" dir="15" length="1300" moves="124" loadOptions="6">
-        <types>
-          <carType name="Baggage" />
-          <carType name="Boxcar" />
-          <carType name="Caboose" />
-          <carType name="Coal" />
-          <carType name="Coilcar" />
-          <carType name="Flat Timber" />
-          <carType name="FlatBH" />
-          <carType name="FlatBHPp" />
-          <carType name="FlatBHWd" />
-          <carType name="FlatTimb" />
-          <carType name="FlatTrailer" />
-          <carType name="FlatWood" />
-          <carType name="Flatcar" />
-          <carType name="Gon-pipe" />
-          <carType name="Gon-scrap" />
-          <carType name="Gondola" />
-          <carType name="HopChem" />
-          <carType name="HopCmnt" />
-          <carType name="HopCoal" />
-          <carType name="HopCoal-E" />
-          <carType name="HopGrain" />
-          <carType name="HopSand" />
-          <carType name="Hopper" />
-          <carType name="MOW" />
-          <carType name="MOWBox" />
-          <carType name="Passenger" />
-          <carType name="Reefer" />
-          <carType name="Reefer Meat" />
-          <carType name="Reefer Milk" />
-          <carType name="ReeferIce" />
-          <carType name="Stock" />
-          <carType name="Tank Chem" />
-          <carType name="Tank Corn Sy" />
-          <carType name="Tank Food" />
-          <carType name="Tank Gas" />
-          <carType name="Tank Kero" />
-          <carType name="Tank Oil" />
-          <carType name="Tank Veg" />
-          <locoType name="Diesel" />
-          <locoType name="Steam" />
-        </types>
-      </track>
-      <track id="92s6" name="#99 Yard Track" locType="Staging" dir="15" length="1300" moves="92" loadOptions="6">
+      <track id="91s4" name="#85 Yard Track" locType="Staging" dir="15" length="600" moves="122" blockingOrder="0" loadOptions="6">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -1265,7 +957,315 @@
         </types>
       </track>
     </location>
-    <location id="93" name="Storage Box 1" ops="1" dir="15" switchList="true" physicalLocation="(0.0, 0.0, 0.0)" comment="Storage box that holds exactly 10 cars." switchListComment="">
+    <location id="92" name="Lakeview" ops="2" dir="15" switchList="false" comment="Staging" switchListComment="">
+      <types>
+        <carType name="Baggage" />
+        <carType name="Boxcar" />
+        <carType name="Caboose" />
+        <carType name="Coal" />
+        <carType name="Coilcar" />
+        <carType name="Flat Timber" />
+        <carType name="FlatBH" />
+        <carType name="FlatBHPp" />
+        <carType name="FlatBHWd" />
+        <carType name="FlatTimb" />
+        <carType name="FlatTrailer" />
+        <carType name="FlatWood" />
+        <carType name="Flatcar" />
+        <carType name="Gon-pipe" />
+        <carType name="Gon-scrap" />
+        <carType name="Gondola" />
+        <carType name="HopChem" />
+        <carType name="HopCmnt" />
+        <carType name="HopCoal" />
+        <carType name="HopCoal-E" />
+        <carType name="HopGrain" />
+        <carType name="HopSand" />
+        <carType name="Hopper" />
+        <carType name="MOW" />
+        <carType name="MOWBox" />
+        <carType name="Passenger" />
+        <carType name="Reefer" />
+        <carType name="Reefer Meat" />
+        <carType name="Reefer Milk" />
+        <carType name="ReeferIce" />
+        <carType name="Stock" />
+        <carType name="Tank Chem" />
+        <carType name="Tank Corn Sy" />
+        <carType name="Tank Food" />
+        <carType name="Tank Gas" />
+        <carType name="Tank Kero" />
+        <carType name="Tank Oil" />
+        <carType name="Tank Veg" />
+        <locoType name="Diesel" />
+        <locoType name="Steam" />
+      </types>
+      <track id="92s1" name="#94 Yard Track" locType="Staging" dir="15" length="1300" moves="96" blockingOrder="0" loadOptions="6">
+        <types>
+          <carType name="Baggage" />
+          <carType name="Boxcar" />
+          <carType name="Caboose" />
+          <carType name="Coal" />
+          <carType name="Coilcar" />
+          <carType name="Flat Timber" />
+          <carType name="FlatBH" />
+          <carType name="FlatBHPp" />
+          <carType name="FlatBHWd" />
+          <carType name="FlatTimb" />
+          <carType name="FlatTrailer" />
+          <carType name="FlatWood" />
+          <carType name="Flatcar" />
+          <carType name="Gon-pipe" />
+          <carType name="Gon-scrap" />
+          <carType name="Gondola" />
+          <carType name="HopChem" />
+          <carType name="HopCmnt" />
+          <carType name="HopCoal" />
+          <carType name="HopCoal-E" />
+          <carType name="HopGrain" />
+          <carType name="HopSand" />
+          <carType name="Hopper" />
+          <carType name="MOW" />
+          <carType name="MOWBox" />
+          <carType name="Passenger" />
+          <carType name="Reefer" />
+          <carType name="Reefer Meat" />
+          <carType name="Reefer Milk" />
+          <carType name="ReeferIce" />
+          <carType name="Stock" />
+          <carType name="Tank Chem" />
+          <carType name="Tank Corn Sy" />
+          <carType name="Tank Food" />
+          <carType name="Tank Gas" />
+          <carType name="Tank Kero" />
+          <carType name="Tank Oil" />
+          <carType name="Tank Veg" />
+          <locoType name="Diesel" />
+          <locoType name="Steam" />
+        </types>
+      </track>
+      <track id="92s2" name="#95 Yard Track" locType="Staging" dir="15" length="1300" moves="91" blockingOrder="0" loadOptions="6">
+        <types>
+          <carType name="Baggage" />
+          <carType name="Boxcar" />
+          <carType name="Caboose" />
+          <carType name="Coal" />
+          <carType name="Coilcar" />
+          <carType name="Flat Timber" />
+          <carType name="FlatBH" />
+          <carType name="FlatBHPp" />
+          <carType name="FlatBHWd" />
+          <carType name="FlatTimb" />
+          <carType name="FlatTrailer" />
+          <carType name="FlatWood" />
+          <carType name="Flatcar" />
+          <carType name="Gon-pipe" />
+          <carType name="Gon-scrap" />
+          <carType name="Gondola" />
+          <carType name="HopChem" />
+          <carType name="HopCmnt" />
+          <carType name="HopCoal" />
+          <carType name="HopCoal-E" />
+          <carType name="HopGrain" />
+          <carType name="HopSand" />
+          <carType name="Hopper" />
+          <carType name="MOW" />
+          <carType name="MOWBox" />
+          <carType name="Passenger" />
+          <carType name="Reefer" />
+          <carType name="Reefer Meat" />
+          <carType name="Reefer Milk" />
+          <carType name="ReeferIce" />
+          <carType name="Stock" />
+          <carType name="Tank Chem" />
+          <carType name="Tank Corn Sy" />
+          <carType name="Tank Food" />
+          <carType name="Tank Gas" />
+          <carType name="Tank Kero" />
+          <carType name="Tank Oil" />
+          <carType name="Tank Veg" />
+          <locoType name="Diesel" />
+          <locoType name="Steam" />
+        </types>
+      </track>
+      <track id="92s3" name="#96 Yard Track" locType="Staging" dir="15" length="1300" moves="88" blockingOrder="0" loadOptions="6">
+        <types>
+          <carType name="Baggage" />
+          <carType name="Boxcar" />
+          <carType name="Caboose" />
+          <carType name="Coal" />
+          <carType name="Coilcar" />
+          <carType name="Flat Timber" />
+          <carType name="FlatBH" />
+          <carType name="FlatBHPp" />
+          <carType name="FlatBHWd" />
+          <carType name="FlatTimb" />
+          <carType name="FlatTrailer" />
+          <carType name="FlatWood" />
+          <carType name="Flatcar" />
+          <carType name="Gon-pipe" />
+          <carType name="Gon-scrap" />
+          <carType name="Gondola" />
+          <carType name="HopChem" />
+          <carType name="HopCmnt" />
+          <carType name="HopCoal" />
+          <carType name="HopCoal-E" />
+          <carType name="HopGrain" />
+          <carType name="HopSand" />
+          <carType name="Hopper" />
+          <carType name="MOW" />
+          <carType name="MOWBox" />
+          <carType name="Passenger" />
+          <carType name="Reefer" />
+          <carType name="Reefer Meat" />
+          <carType name="Reefer Milk" />
+          <carType name="ReeferIce" />
+          <carType name="Stock" />
+          <carType name="Tank Chem" />
+          <carType name="Tank Corn Sy" />
+          <carType name="Tank Food" />
+          <carType name="Tank Gas" />
+          <carType name="Tank Kero" />
+          <carType name="Tank Oil" />
+          <carType name="Tank Veg" />
+          <locoType name="Diesel" />
+          <locoType name="Steam" />
+        </types>
+      </track>
+      <track id="92s4" name="#97 Yard Track" locType="Staging" dir="15" length="1300" moves="105" blockingOrder="0" loadOptions="6">
+        <types>
+          <carType name="Baggage" />
+          <carType name="Boxcar" />
+          <carType name="Caboose" />
+          <carType name="Coal" />
+          <carType name="Coilcar" />
+          <carType name="Flat Timber" />
+          <carType name="FlatBH" />
+          <carType name="FlatBHPp" />
+          <carType name="FlatBHWd" />
+          <carType name="FlatTimb" />
+          <carType name="FlatTrailer" />
+          <carType name="FlatWood" />
+          <carType name="Flatcar" />
+          <carType name="Gon-pipe" />
+          <carType name="Gon-scrap" />
+          <carType name="Gondola" />
+          <carType name="HopChem" />
+          <carType name="HopCmnt" />
+          <carType name="HopCoal" />
+          <carType name="HopCoal-E" />
+          <carType name="HopGrain" />
+          <carType name="HopSand" />
+          <carType name="Hopper" />
+          <carType name="MOW" />
+          <carType name="MOWBox" />
+          <carType name="Passenger" />
+          <carType name="Reefer" />
+          <carType name="Reefer Meat" />
+          <carType name="Reefer Milk" />
+          <carType name="ReeferIce" />
+          <carType name="Stock" />
+          <carType name="Tank Chem" />
+          <carType name="Tank Corn Sy" />
+          <carType name="Tank Food" />
+          <carType name="Tank Gas" />
+          <carType name="Tank Kero" />
+          <carType name="Tank Oil" />
+          <carType name="Tank Veg" />
+          <locoType name="Diesel" />
+          <locoType name="Steam" />
+        </types>
+      </track>
+      <track id="92s5" name="#98 Yard Track " locType="Staging" dir="15" length="1300" moves="124" blockingOrder="0" loadOptions="6">
+        <types>
+          <carType name="Baggage" />
+          <carType name="Boxcar" />
+          <carType name="Caboose" />
+          <carType name="Coal" />
+          <carType name="Coilcar" />
+          <carType name="Flat Timber" />
+          <carType name="FlatBH" />
+          <carType name="FlatBHPp" />
+          <carType name="FlatBHWd" />
+          <carType name="FlatTimb" />
+          <carType name="FlatTrailer" />
+          <carType name="FlatWood" />
+          <carType name="Flatcar" />
+          <carType name="Gon-pipe" />
+          <carType name="Gon-scrap" />
+          <carType name="Gondola" />
+          <carType name="HopChem" />
+          <carType name="HopCmnt" />
+          <carType name="HopCoal" />
+          <carType name="HopCoal-E" />
+          <carType name="HopGrain" />
+          <carType name="HopSand" />
+          <carType name="Hopper" />
+          <carType name="MOW" />
+          <carType name="MOWBox" />
+          <carType name="Passenger" />
+          <carType name="Reefer" />
+          <carType name="Reefer Meat" />
+          <carType name="Reefer Milk" />
+          <carType name="ReeferIce" />
+          <carType name="Stock" />
+          <carType name="Tank Chem" />
+          <carType name="Tank Corn Sy" />
+          <carType name="Tank Food" />
+          <carType name="Tank Gas" />
+          <carType name="Tank Kero" />
+          <carType name="Tank Oil" />
+          <carType name="Tank Veg" />
+          <locoType name="Diesel" />
+          <locoType name="Steam" />
+        </types>
+      </track>
+      <track id="92s6" name="#99 Yard Track" locType="Staging" dir="15" length="1300" moves="92" blockingOrder="0" loadOptions="6">
+        <types>
+          <carType name="Baggage" />
+          <carType name="Boxcar" />
+          <carType name="Caboose" />
+          <carType name="Coal" />
+          <carType name="Coilcar" />
+          <carType name="Flat Timber" />
+          <carType name="FlatBH" />
+          <carType name="FlatBHPp" />
+          <carType name="FlatBHWd" />
+          <carType name="FlatTimb" />
+          <carType name="FlatTrailer" />
+          <carType name="FlatWood" />
+          <carType name="Flatcar" />
+          <carType name="Gon-pipe" />
+          <carType name="Gon-scrap" />
+          <carType name="Gondola" />
+          <carType name="HopChem" />
+          <carType name="HopCmnt" />
+          <carType name="HopCoal" />
+          <carType name="HopCoal-E" />
+          <carType name="HopGrain" />
+          <carType name="HopSand" />
+          <carType name="Hopper" />
+          <carType name="MOW" />
+          <carType name="MOWBox" />
+          <carType name="Passenger" />
+          <carType name="Reefer" />
+          <carType name="Reefer Meat" />
+          <carType name="Reefer Milk" />
+          <carType name="ReeferIce" />
+          <carType name="Stock" />
+          <carType name="Tank Chem" />
+          <carType name="Tank Corn Sy" />
+          <carType name="Tank Food" />
+          <carType name="Tank Gas" />
+          <carType name="Tank Kero" />
+          <carType name="Tank Oil" />
+          <carType name="Tank Veg" />
+          <locoType name="Diesel" />
+          <locoType name="Steam" />
+        </types>
+      </track>
+    </location>
+    <location id="93" name="Storage Box 1" ops="1" dir="15" switchList="true" comment="Storage box that holds exactly 10 cars." switchListComment="">
       <types>
         <carType name="Baggage" />
         <carType name="Boxcar" />
@@ -1306,7 +1306,7 @@
         <carType name="Tank Oil" />
         <carType name="Tank Veg" />
       </types>
-      <track id="93s1" name="#1" locType="Yard" dir="15" length="110" moves="4">
+      <track id="93s1" name="#1" locType="Yard" dir="15" length="110" moves="4" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -1350,7 +1350,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="93s10" name="#10" locType="Yard" dir="15" length="110" moves="4">
+      <track id="93s10" name="#10" locType="Yard" dir="15" length="110" moves="4" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -1394,7 +1394,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="93s2" name="#2" locType="Yard" dir="15" length="110" moves="4">
+      <track id="93s2" name="#2" locType="Yard" dir="15" length="110" moves="4" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -1438,7 +1438,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="93s3" name="#3" locType="Yard" dir="15" length="110" moves="4">
+      <track id="93s3" name="#3" locType="Yard" dir="15" length="110" moves="4" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -1482,7 +1482,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="93s4" name="#4" locType="Yard" dir="15" length="110" moves="3">
+      <track id="93s4" name="#4" locType="Yard" dir="15" length="110" moves="3" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -1526,7 +1526,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="93s5" name="#5" locType="Yard" dir="15" length="110" moves="3">
+      <track id="93s5" name="#5" locType="Yard" dir="15" length="110" moves="3" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -1570,7 +1570,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="93s6" name="#6" locType="Yard" dir="15" length="110" moves="3">
+      <track id="93s6" name="#6" locType="Yard" dir="15" length="110" moves="3" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -1614,7 +1614,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="93s7" name="#7" locType="Yard" dir="15" length="110" moves="3">
+      <track id="93s7" name="#7" locType="Yard" dir="15" length="110" moves="3" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -1658,7 +1658,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="93s8" name="#8" locType="Yard" dir="15" length="110" moves="3">
+      <track id="93s8" name="#8" locType="Yard" dir="15" length="110" moves="3" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -1702,7 +1702,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="93s9" name="#9" locType="Yard" dir="15" length="110" moves="3">
+      <track id="93s9" name="#9" locType="Yard" dir="15" length="110" moves="3" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -1747,7 +1747,7 @@
         </types>
       </track>
     </location>
-    <location id="94" name="Storage Box 2" ops="1" dir="15" switchList="true" physicalLocation="(0.0, 0.0, 0.0)" comment="A storage box that is 3 feet long and has four rows to hold cars" switchListComment="">
+    <location id="94" name="Storage Box 2" ops="1" dir="15" switchList="true" comment="A storage box that is 3 feet long and has four rows to hold cars" switchListComment="">
       <types>
         <carType name="Baggage" />
         <carType name="Boxcar" />
@@ -1788,7 +1788,7 @@
         <carType name="Tank Oil" />
         <carType name="Tank Veg" />
       </types>
-      <track id="94s1" name="#1" locType="Yard" dir="15" length="261" moves="10">
+      <track id="94s1" name="#1" locType="Yard" dir="15" length="261" moves="10" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -1832,7 +1832,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="94s2" name="#2" locType="Yard" dir="15" length="261" moves="10">
+      <track id="94s2" name="#2" locType="Yard" dir="15" length="261" moves="10" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -1876,7 +1876,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="94s3" name="#3" locType="Yard" dir="15" length="261" moves="9">
+      <track id="94s3" name="#3" locType="Yard" dir="15" length="261" moves="9" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -1920,7 +1920,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="94s4" name="#4" locType="Yard" dir="15" length="261" moves="9">
+      <track id="94s4" name="#4" locType="Yard" dir="15" length="261" moves="9" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -1965,11 +1965,11 @@
         </types>
       </track>
     </location>
-    <location id="95" name="Storage box 3" ops="1" dir="15" switchList="true" physicalLocation="(0.0, 0.0, 0.0)" comment="Storage box that holds steam locomotives" switchListComment="">
+    <location id="95" name="Storage box 3" ops="1" dir="15" switchList="true" comment="Storage box that holds steam locomotives" switchListComment="">
       <types>
         <locoType name="Steam" />
       </types>
-      <track id="95s1" name="#1" locType="Yard" dir="15" length="140" moves="0">
+      <track id="95s1" name="#1" locType="Yard" dir="15" length="140" moves="0" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -2013,7 +2013,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="95s2" name="#2" locType="Yard" dir="15" length="140" moves="0">
+      <track id="95s2" name="#2" locType="Yard" dir="15" length="140" moves="0" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -2057,7 +2057,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="95s3" name="#3" locType="Yard" dir="15" length="140" moves="0">
+      <track id="95s3" name="#3" locType="Yard" dir="15" length="140" moves="0" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -2101,7 +2101,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="95s4" name="#4" locType="Yard" dir="15" length="140" moves="0">
+      <track id="95s4" name="#4" locType="Yard" dir="15" length="140" moves="0" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -2145,7 +2145,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="95s5" name="#5" locType="Yard" dir="15" length="140" moves="0">
+      <track id="95s5" name="#5" locType="Yard" dir="15" length="140" moves="0" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -2189,7 +2189,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="95s6" name="#6" locType="Yard" dir="15" length="140" moves="0">
+      <track id="95s6" name="#6" locType="Yard" dir="15" length="140" moves="0" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -2234,11 +2234,11 @@
         </types>
       </track>
     </location>
-    <location id="96" name="Storage box 4" ops="1" dir="15" switchList="true" physicalLocation="(0.0, 0.0, 0.0)" comment="Storage box that holds diesel locomotives" switchListComment="">
+    <location id="96" name="Storage box 4" ops="1" dir="15" switchList="true" comment="Storage box that holds diesel locomotives" switchListComment="">
       <types>
         <locoType name="Diesel" />
       </types>
-      <track id="96s1" name="#6" locType="Yard" dir="15" length="140" moves="2">
+      <track id="96s1" name="#6" locType="Yard" dir="15" length="140" moves="2" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -2282,7 +2282,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="96s2" name="#5" locType="Yard" dir="15" length="140" moves="2">
+      <track id="96s2" name="#5" locType="Yard" dir="15" length="140" moves="2" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -2326,7 +2326,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="96s3" name="#4" locType="Yard" dir="15" length="140" moves="2">
+      <track id="96s3" name="#4" locType="Yard" dir="15" length="140" moves="2" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -2370,7 +2370,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="96s4" name="#3" locType="Yard" dir="15" length="140" moves="2">
+      <track id="96s4" name="#3" locType="Yard" dir="15" length="140" moves="2" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -2414,7 +2414,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="96s5" name="#2" locType="Yard" dir="15" length="140" moves="2">
+      <track id="96s5" name="#2" locType="Yard" dir="15" length="140" moves="2" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -2458,7 +2458,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="96s6" name="#1" locType="Yard" dir="15" length="140" moves="2">
+      <track id="96s6" name="#1" locType="Yard" dir="15" length="140" moves="2" blockingOrder="0">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />

@@ -1,7 +1,6 @@
 package jmri.util.swing;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -53,8 +52,9 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
     /**
      * Enable or disable drag'n drop, dropped files will be copied in latest
      * used image path top folder when dnd enabled, also enable contextual menu
-     * with remove entry
+     * with remove entry.
      *
+     * @param dnd true to enable, false to disable
      */
     public void setDnd(boolean dnd) {
         if (dnd) {
@@ -73,21 +73,16 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
 
     //
     // For contextual menu remove
-    class MyMouseAdapter implements MouseListener {
+    static class MyMouseAdapter implements MouseListener {
 
         private final JPopupMenu popUpMenu;
         private final JMenuItem removeMenuItem;
-        private ResizableImagePanel rip;
 
         public MyMouseAdapter(ResizableImagePanel resizableImagePanel) {
-            rip = resizableImagePanel;
             popUpMenu = new JPopupMenu();
             removeMenuItem = new JMenuItem("Remove");
-            removeMenuItem.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    rip.setImagePath(null);
-                }
+            removeMenuItem.addActionListener((ActionEvent e) -> {
+                resizableImagePanel.setImagePath(null);
             });
             popUpMenu.add(removeMenuItem);
         }
@@ -161,5 +156,5 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
         setImagePath(dest.getPath());
     }
 
-    static private Logger log = LoggerFactory.getLogger(EditableResizableImagePanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EditableResizableImagePanel.class);
 }

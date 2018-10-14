@@ -1,4 +1,3 @@
-// EnginesTableAction.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.awt.event.ActionEvent;
@@ -9,7 +8,6 @@ import javax.swing.AbstractAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class EnginesTableAction extends AbstractAction {
 
@@ -28,4 +26,4 @@ public class EnginesTableAction extends AbstractAction {
     }
 }
 
-/* @(#)EnginesTableAction.java */
+

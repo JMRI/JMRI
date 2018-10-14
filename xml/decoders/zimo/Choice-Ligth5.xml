@@ -5,17 +5,21 @@
       <enumChoice choice="Speed or Load dependent Smoke/Sound for Steam Engines">
             <choice>Speed or Load dependent Smoke/Sound for Steam Engines</choice>
             <choice xml:lang="it">Suono/Fumo dipende da Velocità o Carico per loco a Vapore</choice>
+            <choice xml:lang="cs">Kouř/zvuk parní lokomotivy závisí na rychlosti nebo zátěži</choice>
           </enumChoice>
           <enumChoice choice="Smoke as above + Off after 10 Min.">
             <choice>Smoke as above + Off after 10 Min.</choice>
             <choice xml:lang="it">Fumo come sopra + Off dopo 10 Min.</choice>
+            <choice xml:lang="cs">Kouř jako výše + vypnout po 10 minutách</choice>
           </enumChoice>
           <enumChoice choice="Operation dependent Smoke/Sound for Diesels">
             <choice>Operation dependent Smoke/Sound for Diesels</choice>
             <choice xml:lang="it">Suono/Fumo dipende da operazioni per Diesels</choice>
+            <choice xml:lang="cs">Kouř/zvuk spalovacího motoru závisí na provozu</choice>
           </enumChoice>
           <enumChoice choice="Smoke as above + Off after 10 Min.">
             <choice>Smoke as above + Off after 10 Min.</choice>
             <choice xml:lang="it">Fumo come sopra + Off dopo 10 Min.</choice>
+            <choice xml:lang="cs">Kouř jako výše + vypnout po 10 minutách</choice>
           </enumChoice>
 </enumChoiceGroup>

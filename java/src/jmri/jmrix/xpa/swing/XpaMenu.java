@@ -1,6 +1,5 @@
 package jmri.jmrix.xpa.swing;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**
@@ -19,18 +18,17 @@ public class XpaMenu extends JMenu {
 
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
-        ResourceBundle rb1 = ResourceBundle.getBundle("jmri.jmrix.xpa.XpaBundle");
-        if(memo != null) {
+        if (memo != null) {
            setText(memo.getUserName());
         } else {
-           setText(rb1.getString("MenuXpa"));
+           setText(Bundle.getMessage("MenuXpa"));
         }
 
         add(new jmri.jmrix.xpa.swing.xpamon.XpaMonAction());
-        add(new jmri.jmrix.xpa.swing.packetgen.XpaPacketGenAction(rb.getString("MenuItemSendCommand"),memo));
-        add(new jmri.jmrix.xpa.swing.xpaconfig.XpaConfigureAction(rb1.getString("MenuItemXpaConfigTool"),memo));
-
+        if (memo != null) {
+            add(new jmri.jmrix.xpa.swing.packetgen.XpaPacketGenAction(Bundle.getMessage("MenuItemSendCommand"), memo));
+            add(new jmri.jmrix.xpa.swing.xpaconfig.XpaConfigureAction(Bundle.getMessage("MenuItemXpaConfigTool"), memo));
+        }
     }
 
 }

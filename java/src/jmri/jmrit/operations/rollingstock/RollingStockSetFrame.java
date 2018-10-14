@@ -1,6 +1,6 @@
-// RollingStockSetFrame.java
 package jmri.jmrit.operations.rollingstock;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -33,17 +34,15 @@ import org.slf4j.LoggerFactory;
  * Frame for user to place RollingStock on the layout
  *
  * @author Dan Boudreau Copyright (C) 2010, 2011, 2012, 2013
- * @version $Revision$
+ * @param <T> the type of RollingStock supported by this frame
  */
-public class RollingStockSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
+public class RollingStockSetFrame<T extends RollingStock> extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
 
-    RollingStockManager manager;
-
-    protected LocationManager locationManager = LocationManager.instance();
-    protected TrainManager trainManager = TrainManager.instance();
+    protected LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
+    protected TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
 
     RollingStock _rs;
     protected boolean _disableComboBoxUpdate = false;
@@ -53,17 +52,17 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
     JLabel textType = new JLabel();
 
     // major buttons
-    protected JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    public JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     protected JButton ignoreAllButton = new JButton(Bundle.getMessage("IgnoreAll"));
 
     // combo boxes
-    protected JComboBox<Location> locationBox = LocationManager.instance().getComboBox();
+    protected JComboBox<Location> locationBox = InstanceManager.getDefault(LocationManager.class).getComboBox();
     protected JComboBox<Track> trackLocationBox = new JComboBox<>();
-    protected JComboBox<Location> destinationBox = LocationManager.instance().getComboBox();
+    protected JComboBox<Location> destinationBox = InstanceManager.getDefault(LocationManager.class).getComboBox();
     protected JComboBox<Track> trackDestinationBox = new JComboBox<>();
-    protected JComboBox<Location> finalDestinationBox = LocationManager.instance().getComboBox();
+    protected JComboBox<Location> finalDestinationBox = InstanceManager.getDefault(LocationManager.class).getComboBox();
     protected JComboBox<Track> finalDestTrackBox = new JComboBox<>();
-    protected JComboBox<Train> trainBox = TrainManager.instance().getTrainComboBox();
+    protected JComboBox<Train> trainBox = InstanceManager.getDefault(TrainManager.class).getTrainComboBox();
 
     // check boxes
     protected JCheckBox autoTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
@@ -71,8 +70,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
     protected JCheckBox autoFinalDestTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
     protected JCheckBox autoTrainCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
 
-    protected JCheckBox locationUnknownCheckBox = new JCheckBox(Bundle.getMessage("LocationUnknown"));
-    protected JCheckBox outOfServiceCheckBox = new JCheckBox(Bundle.getMessage("OutOfService"));
+    public JCheckBox locationUnknownCheckBox = new JCheckBox(Bundle.getMessage("LocationUnknown"));
+    public JCheckBox outOfServiceCheckBox = new JCheckBox(Bundle.getMessage("OutOfService"));
 
     protected JCheckBox ignoreStatusCheckBox = new JCheckBox(Bundle.getMessage("Ignore"));
     protected JCheckBox ignoreLocationCheckBox = new JCheckBox(Bundle.getMessage("Ignore"));
@@ -246,7 +245,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
         ignoreTrainCheckBox.setToolTipText(Bundle.getMessage("TipIgnore"));
 
         // get notified if combo box gets modified
-        LocationManager.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(LocationManager.class).addPropertyChangeListener(this);
         // get notified if train combo box gets modified
         trainManager.addPropertyChangeListener(this);
 
@@ -259,8 +258,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
         textType.setText(_rs.getTypeName());
         locationUnknownCheckBox.setSelected(_rs.isLocationUnknown());
         outOfServiceCheckBox.setSelected(_rs.isOutOfService());
-        updateComboBoxes();		// load the location, destination, and final destination combo boxes
-        updateTrainComboBox();	// load the train combo box
+        updateComboBoxes();  // load the location, destination, and final destination combo boxes
+        updateTrainComboBox(); // load the train combo box
         enableComponents(!locationUnknownCheckBox.isSelected());
         // has the program generated a pick up and set out for this rolling stock?
         if (_rs.getRouteLocation() != null || _rs.getRouteDestination() != null) {
@@ -306,7 +305,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
     RouteLocation rl;
     RouteLocation rd;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     protected boolean change(RollingStock rs) {
         log.debug("Change button action for rs ({})", rs.toString());
         // save the auto buttons
@@ -326,7 +325,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
         }
         // check to see if rolling stock is in staging and out of service (also location unknown)
         if (outOfServiceCheckBox.isSelected() && rs.getTrack() != null
-                && rs.getTrack().getTrackType().equals(Track.STAGING)) {
+                && rs.getTrack().isStaging()) {
             JOptionPane.showMessageDialog(this, getRb().getString("rsNeedToRemoveStaging"), getRb()
                     .getString("rsInStaging"), JOptionPane.WARNING_MESSAGE);
             // clear the rolling stock's location
@@ -457,7 +456,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
                         || rs.getTrack() == null || !rs.getTrack().equals(trackLocationBox.getSelectedItem())) {
                     String status = rs.setLocation((Location) locationBox.getSelectedItem(),
                             (Track) trackLocationBox.getSelectedItem());
-                    rs.setSavedRouteId(RollingStock.NONE); // clear last route id
+                    rs.setLastRouteId(RollingStock.NONE); // clear last route id
                     if (!status.equals(Track.OKAY)) {
                         log.debug("Can't set rs's location because of {}", status);
                         JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
@@ -513,8 +512,10 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
                 if (trackDestinationBox.getSelectedItem() != null) {
                     destTrack = (Track) trackDestinationBox.getSelectedItem();
                 }
+                log.debug("changeDestination: {}, ({})", destinationBox.getSelectedItem(),
+                        destTrack);
                 if (destTrack != null && rs.getDestinationTrack() != destTrack
-                        && destTrack.getTrackType().equals(Track.STAGING)
+                        && destTrack.isStaging()
                         && (rs.getTrain() == null || !rs.getTrain().isBuilt())) {
                     log.debug("Destination track ({}) is staging", destTrack.getName());
                     JOptionPane.showMessageDialog(this, getRb().getString("rsDoNotSelectStaging"), getRb()
@@ -524,7 +525,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
                 // determine is user changed the destination track and is part of train
                 if (destTrack != null && rs.getDestinationTrack() != destTrack && rs.getTrain() != null
                         && rs.getTrain().isBuilt() && rs.getRouteLocation() != null) {
-                    log.debug("Rolling stock ({}) has new track destination in built train ({})", 
+                    log.debug("Rolling stock ({}) has new track destination in built train ({})",
                             rs.toString(), rs.getTrainName());
                     rs.getTrain().setModified(true);
                 }
@@ -607,7 +608,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
         updateDestinationComboBoxes();
     }
 
-    protected boolean updateGroup(List<RollingStock> list) {
+    protected boolean updateGroup(List<T> list) {
         for (RollingStock rs : list) {
             if (rs == _rs) {
                 continue;
@@ -750,22 +751,24 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
         if (destinationBox.getSelectedItem() == null) {
             trackDestinationBox.removeAllItems();
         } else {
-            log.debug("RollingStockFrame sees destination: {}", destinationBox.getSelectedItem());
-            Location loc = (Location) destinationBox.getSelectedItem();
+            log.debug("updateDestinationTrackComboBox destination: {}, ({})", destinationBox.getSelectedItem(),
+                    trackDestinationBox.getSelectedItem());
+            Location destination = (Location) destinationBox.getSelectedItem();
             Track track = null;
             if (trackDestinationBox.getSelectedItem() != null) {
                 track = (Track) trackDestinationBox.getSelectedItem();
             }
-            loc.updateComboBox(trackDestinationBox, _rs, autoDestinationTrackCheckBox.isSelected(), true);
+            destination.updateComboBox(trackDestinationBox, _rs, autoDestinationTrackCheckBox.isSelected(), true);
             // check for staging, add track if train is built and terminates into staging
             if (autoDestinationTrackCheckBox.isSelected() && trainBox.getSelectedItem() != null) {
                 Train train = (Train) trainBox.getSelectedItem();
                 if (train.isBuilt() && train.getTerminationTrack() != null
-                        && train.getTerminationTrack().getLocation() == loc) {
+                        && train.getTerminationTrack().getLocation() == destination) {
                     trackDestinationBox.addItem(train.getTerminationTrack());
+                    trackDestinationBox.setSelectedItem(track);
                 }
             }
-            if (_rs != null && _rs.getDestination() != null && _rs.getDestination().equals(loc)) {
+            if (_rs != null && _rs.getDestination() != null && _rs.getDestination().equals(destination)) {
                 if (_rs.getDestinationTrack() != null) {
                     trackDestinationBox.setSelectedItem(_rs.getDestinationTrack());
                 } else if (track != null) {
@@ -793,7 +796,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
         if (_rs != null) {
             _rs.removePropertyChangeListener(this);
         }
-        LocationManager.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(LocationManager.class).removePropertyChangeListener(this);
         trainManager.removePropertyChangeListener(this);
         super.dispose();
     }
@@ -820,5 +823,5 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RollingStockSetFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RollingStockSetFrame.class);
 }

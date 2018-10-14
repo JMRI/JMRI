@@ -1,9 +1,9 @@
 package jmri.jmrix.dcc4pc;
 
-import gnu.io.SerialPort;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Calendar;
-import jmri.CommandStation;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -11,24 +11,26 @@ import jmri.jmrix.AbstractMRTrafficController;
 import jmri.jmrix.dcc4pc.serialdriver.SerialDriverAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.SerialPort;
 
-/*import gnu.io.SerialPortEvent;
- import gnu.io.SerialPortEventListener;*/
 /**
  * Converts Stream-based I/O to/from DCC4PC messages. The "Dcc4PcInterface" side
  * sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a Dcc4PcPortController is via a pair of *Streams, which
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
- * <P>
- * This handles the state transistions, based on the necessary state in each
+ * <p>
+ * This handles the state transitions, based on the necessary state in each
  * message.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
-public class Dcc4PcTrafficController extends AbstractMRTrafficController implements Dcc4PcInterface, CommandStation/*, SerialPortEventListener*/ {
+public class Dcc4PcTrafficController extends AbstractMRTrafficController implements Dcc4PcInterface {
 
+    /**
+     * Create a new DccPcTrafficController instance.
+     */
     public Dcc4PcTrafficController() {
         super();
         if (log.isDebugEnabled()) {
@@ -43,10 +45,12 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
 
     Dcc4PcSystemConnectionMemo adaptermemo;
 
+    @Override
     public synchronized void addDcc4PcListener(Dcc4PcListener l) {
         this.addListener(l);
     }
 
+    @Override
     public synchronized void removeDcc4PcListener(Dcc4PcListener l) {
         this.removeListener(l);
     }
@@ -54,15 +58,9 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     public static final int RETRIEVINGDATA = 100;
 
     /**
-     * Not Supported
-     */
-    public void sendPacket(byte[] packet, int count) {
-        return;
-    }
-
-    /**
      * Forward a Dcc4PcMessage to all registered Dcc4PcInterface listeners.
      */
+    @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
         ((Dcc4PcListener) client).message((Dcc4PcMessage) m);
     }
@@ -70,14 +68,17 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     /**
      * Forward a Dcc4PcReply to all registered Dcc4PcInterface listeners.
      */
+    @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply r) {
         ((Dcc4PcListener) client).reply((Dcc4PcReply) r);
     }
 
+    @Override
     protected AbstractMRMessage pollMessage() {
         return null;
     }
 
+    @Override
     protected AbstractMRListener pollReplyHandler() {
         return null;
     }
@@ -85,6 +86,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     /**
      * Forward a preformatted message to the actual interface.
      */
+    @Override
     public void sendDcc4PcMessage(Dcc4PcMessage m, Dcc4PcListener reply) {
         sendMessage(m, reply);
     }
@@ -92,36 +94,18 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     protected boolean unsolicitedSensorMessageSeen = false;
 
     //Dcc4Pc doesn't support this function.
+    @Override
     protected AbstractMRMessage enterProgMode() {
         return Dcc4PcMessage.getProgMode();
     }
 
     //Dcc4Pc doesn't support this function!
+    @Override
     protected AbstractMRMessage enterNormalMode() {
         return Dcc4PcMessage.getExitProgMode();
     }
 
-    /**
-     * static function returning the Dcc4PcTrafficController instance to use.
-     *
-     * @return The registered Dcc4PcTrafficController instance for general use,
-     *         if need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public Dcc4PcTrafficController instance() {
-        return self;
-    }
-
-    //This can be removed once multi-connection is complete
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
     @Override
-    @Deprecated
-    public void setInstance() {
-    }
-
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
     }
 
@@ -129,8 +113,8 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT")
-    // FindBugs wants this package protected, but we're removing it when multi-connection
+    @SuppressFBWarnings(value = "MS_PKGPROTECT")
+    // SpotBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
     final static protected Dcc4PcTrafficController self = null;
 
@@ -223,7 +207,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                 // no stream connected
                 connectionWarn();
             }
-        } catch (Exception e) {
+        } catch (java.io.IOException | RuntimeException e) {
             // TODO Currently there's no port recovery if an exception occurs
             // must restart JMRI to clear xmtException.
             xmtException = true;
@@ -232,6 +216,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     }
     SerialPort port;
 
+    @Override
     public void connectPort(jmri.jmrix.AbstractPortController p) {
 
         super.connectPort(p);
@@ -239,6 +224,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
 
     }
 
+    @Override
     protected AbstractMRReply newReply() {
         Dcc4PcReply reply = new Dcc4PcReply();
         return reply;
@@ -250,6 +236,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         return true;
     }
 
+    @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         if (port.isDSR()) {
             return false;
@@ -273,8 +260,11 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         return !port.isDSR();
     }
 
+    @Override
     protected void handleTimeout(AbstractMRMessage msg, AbstractMRListener l) {
-        ((Dcc4PcListener) l).handleTimeout((Dcc4PcMessage) msg);
+        if(l != null){
+            ((Dcc4PcListener) l).handleTimeout((Dcc4PcMessage) msg);
+        }
         super.handleTimeout(msg, l);
     }
 
@@ -286,10 +276,11 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
 
     /**
      * Handle each reply when complete.
-     * <P>
+     * <p>
      * (This is public for testing purposes) Runs in the "Receive" thread.
      *
      */
+    @Override
     public void handleOneIncomingReply() throws java.io.IOException {
         // we sit in this until the message is complete, relying on
         // threading to let other stuff happen
@@ -300,11 +291,12 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         // message exists, now fill it
         loadChars(msg, istream);
         if (mLastSentMessage != null) {
+            ((Dcc4PcReply)msg).setOriginalRequest(mLastMessage);
             //log.debug(mLastMessage.getElement(0));
             if (mLastSentMessage.isForChildBoard()) {
                 if (log.isDebugEnabled()) {
                     log.debug("This is a message for a child board " + ((Dcc4PcReply) msg).toHexString());
-                    log.debug("Originate " + (mLastMessage).toHexString());
+                    log.debug("Originate " + mLastMessage.toString());
                 }
                 if ((mLastSentMessage.getNumDataElements() - 1) == msg.getElement(1)) {
                     log.debug("message lengths match");
@@ -348,9 +340,11 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                             }
                         }
                         //set the last incomplete message as the one to return
+                        log.debug("Reply set as lastIncomplete");
                         msg = lastIncomplete;
                     }
                     ((Dcc4PcReply) msg).setError(false);
+                    ((Dcc4PcReply)msg).setOriginalRequest(mLastMessage);
                     lastIncomplete = null;
                     waitingForMore = false;
                     mLastMessage = null;
@@ -402,16 +396,14 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
             log.debug("dispatch reply of length " + msg.getNumDataElements()
                     + " contains " + msg.toString() + " state " + mCurrentState);
         }
-
         // forward the message to the registered recipients,
         // which includes the communications monitor
         // return a notification via the Swing event queue to ensure proper thread
         Runnable r = newRcvNotifier(msg, mLastSender, this);
         try {
             javax.swing.SwingUtilities.invokeAndWait(r);
-        } catch (Exception e) {
-            log.error("Unexpected exception in invokeAndWait:" + e);
-            e.printStackTrace();
+        } catch (InterruptedException | InvocationTargetException e) {
+            log.error("Unexpected exception in invokeAndWait:", e);
         }
 
         if (log.isDebugEnabled()) {
@@ -421,8 +413,8 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
             // effect on transmit:
             switch (mCurrentState) {
                 case WAITMSGREPLYSTATE: {
-                    // check to see if the response was an error message we want 
-                    // to automatically handle by re-queueing the last sent 
+                    // check to see if the response was an error message we want
+                    // to automatically handle by re-queueing the last sent
                     // message, otherwise go on to the next message
                     if (msg.isRetransmittableErrorMsg()) {
                         if (log.isDebugEnabled()) {
@@ -480,8 +472,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                 }
                 default: {
                     replyInDispatch = false;
-                    log.error("reply complete in unexpected state: "
-                            + mCurrentState + " was " + msg.toString());
+                    unexpectedReplyStateError(mCurrentState,msg.toString());
                 }
             }
             // Unsolicited message
@@ -497,6 +488,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     boolean normalFlushReceiveChars = false;
 
     //Need a way to detect that the dsr has gone low.
+    @Override
     protected void loadChars(AbstractMRReply msg, DataInputStream istream)
             throws java.io.IOException {
         int i;
@@ -563,6 +555,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
 
     boolean readingData = false;
 
+    @Override
     protected void transmitWait(int waitTime, int state, String InterruptMessage) {
         // wait() can have spurious wakeup!
         // so we protect by making sure the entire timeout time is used
@@ -583,7 +576,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                     if (readingData) {
                         endTime = endTime + 10;
                     }
-                    //if we have received a packet and a seperate message has been sent to retrieve 
+                    //if we have received a packet and a seperate message has been sent to retrieve
                     //the reply we will add more time to our wait process.
                     if (waitingForMore) {
                         waitingForMore = false;
@@ -600,19 +593,5 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         log.debug("TIMEOUT in transmitWait, mCurrentState:" + mCurrentState + " " + state + " port dsr " + port.isDSR() + " wait time " + waitTime);
     }
 
-    public String getUserName() {
-        if (adaptermemo == null) {
-            return "DCC4PC";
-        }
-        return adaptermemo.getUserName();
-    }
-
-    public String getSystemPrefix() {
-        if (adaptermemo == null) {
-            return "PC";
-        }
-        return adaptermemo.getSystemPrefix();
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcTrafficController.class);
 }

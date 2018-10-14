@@ -7,18 +7,13 @@ import org.slf4j.LoggerFactory;
  * An extension of {@link javax.swing.JList} that supports drag and drop to
  * rearrange its contents and to move objects in and out of the list. The
  * objects in the list will be passed either as a String by calling the object's
- * <tt>toString()</tt> object, or if your drag and drop target accepts the
+ * {@code toString()} object, or if your drag and drop target accepts the
  * {@link TransferableObject#DATA_FLAVOR} data flavor then the actual object
  * will be passed.
- *
  * <p>
  * I'm releasing this code into the Public Domain. Enjoy.
- * </p>
- * <p>
- * <em>Original author: Robert Harder, rharder@usa.net</em></p>
  *
- * @author Robert Harder
- * @author rharder@usa.net
+ * @author Robert Harder rharder@usa.net
  * @version 1.1
  */
 public class DnDList<E>
@@ -88,6 +83,7 @@ public class DnDList<E>
     }   // end initComponents
 
     /* ********  D R A G   G E S T U R E   L I S T E N E R   M E T H O D S  ******** */
+    @Override
     public void dragGestureRecognized(java.awt.dnd.DragGestureEvent event) {   //System.out.println( "DragGestureListener.dragGestureRecognized" );
         final E selected = getSelectedValue();
         if (selected != null) {
@@ -98,6 +94,7 @@ public class DnDList<E>
                  * the very end. At this point we can remove the object from its
                  * original place in the list.
                  */
+                @Override
                 public E getObject() {
                     ((javax.swing.DefaultListModel<E>) getModel()).remove(sourceIndex);
                     return selected;
@@ -112,37 +109,47 @@ public class DnDList<E>
     }   // end dragGestureRecognized
 
     /* ********  D R A G   S O U R C E   L I S T E N E R   M E T H O D S  ******** */
+    @Override
     public void dragDropEnd(java.awt.dnd.DragSourceDropEvent evt) {   //System.out.println( "DragSourceListener.dragDropEnd" );
     }   // end dragDropEnd
 
+    @Override
     public void dragEnter(java.awt.dnd.DragSourceDragEvent evt) {   //System.out.println( "DragSourceListener.dragEnter" );
     }   // end dragEnter
 
+    @Override
     public void dragExit(java.awt.dnd.DragSourceEvent evt) {   //System.out.println( "DragSourceListener.dragExit" );
     }   // end dragExit
 
+    @Override
     public void dragOver(java.awt.dnd.DragSourceDragEvent evt) {   //System.out.println( "DragSourceListener.dragOver" );
     }   // end dragOver
 
+    @Override
     public void dropActionChanged(java.awt.dnd.DragSourceDragEvent evt) {   //System.out.println( "DragSourceListener.dropActionChanged" );
     }   // end dropActionChanged
 
     /* ********  D R O P   T A R G E T   L I S T E N E R   M E T H O D S  ******** */
+    @Override
     public void dragEnter(java.awt.dnd.DropTargetDragEvent evt) {   //System.out.println( "DropTargetListener.dragEnter" );
         evt.acceptDrag(java.awt.dnd.DnDConstants.ACTION_MOVE);
     }   // end dragEnter
 
+    @Override
     public void dragExit(java.awt.dnd.DropTargetEvent evt) {   //System.out.println( "DropTargetListener.dragExit" );
     }   // end dragExit
 
+    @Override
     public void dragOver(java.awt.dnd.DropTargetDragEvent evt) {   //System.out.println( "DropTargetListener.dragOver" );
     }   // end dragOver
 
+    @Override
     public void dropActionChanged(java.awt.dnd.DropTargetDragEvent evt) {   //System.out.println( "DropTargetListener.dropActionChanged" );
         evt.acceptDrag(java.awt.dnd.DnDConstants.ACTION_MOVE);
     }   // end dropActionChanged
 
     @SuppressWarnings("unchecked") // DnD starts with a generic Object
+    @Override
     public void drop(java.awt.dnd.DropTargetDropEvent evt) {   //System.out.println( "DropTargetListener.drop" );
         java.awt.datatransfer.Transferable transferable = evt.getTransferable();
 
@@ -152,13 +159,9 @@ public class DnDList<E>
             Object obj = null;
             try {
                 obj = transferable.getTransferData(TransferableObject.DATA_FLAVOR);
-            } // end try
-            catch (java.awt.datatransfer.UnsupportedFlavorException e) {
-                e.printStackTrace();
-            } // end catch
-            catch (java.io.IOException e) {
-                e.printStackTrace();
-            }   // end catch
+            } catch (java.awt.datatransfer.UnsupportedFlavorException | java.io.IOException e) {
+                log.error("Unable to transfer object", e);
+            }
 
             if (obj != null) {
                 // See where in the list we dropped the element.
@@ -186,7 +189,6 @@ public class DnDList<E>
         }
     }   // end drop
 
-    @SuppressWarnings("unused") // FIXME: Why is this logger hidden way down here and unused?
-    private final static Logger log = LoggerFactory.getLogger(DnDList.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DnDList.class);
 
 }   // end class DnDList

@@ -25,6 +25,7 @@ public class MultiSensorIconXml extends PositionableLabelXml {
      * @param o Object to store, of type MultiSensorIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         MultiSensorIcon p = (MultiSensorIcon) o;
@@ -55,6 +56,7 @@ public class MultiSensorIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o       an Editor an Object
      */
+    @Override
     public void load(Element element, Object o) {
         Editor pe = (Editor) o;
         MultiSensorIcon l = new MultiSensorIcon(pe);
@@ -178,6 +180,6 @@ public class MultiSensorIconXml extends PositionableLabelXml {
         return icon;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MultiSensorIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MultiSensorIconXml.class);
 
 }

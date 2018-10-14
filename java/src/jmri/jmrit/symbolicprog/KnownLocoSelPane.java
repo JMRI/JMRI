@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import jmri.GlobalProgrammerManager;
 import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.progsupport.ProgModeSelector;
@@ -27,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * (e.g. in a local anonymous class) to create the programmer frame you're
  * interested in.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public class KnownLocoSelPane extends LocoSelPane {
 
@@ -56,6 +57,7 @@ public class KnownLocoSelPane extends LocoSelPane {
         if (mCanIdent) {
             JButton idloco = new JButton(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("ReadAndSelect"));
             idloco.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     if (log.isDebugEnabled()) {
                         log.debug("Identify locomotive pressed");
@@ -76,6 +78,7 @@ public class KnownLocoSelPane extends LocoSelPane {
 
         JButton go2 = new JButton(Bundle.getMessage("OpenProgrammer"));
         go2.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (log.isDebugEnabled()) {
                     log.debug("Open programmer pressed");
@@ -115,22 +118,25 @@ public class KnownLocoSelPane extends LocoSelPane {
         if (selector != null && selector.isSelected()) p = selector.getProgrammer();
         if (p == null) {
             log.warn("Selector did not provide a programmer, use default");
-            p = jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
+            p = jmri.InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
         }
         IdentifyLoco id = new IdentifyLoco(p) {
             private KnownLocoSelPane who = me;
 
+            @Override
             protected void done(int dccAddress) {
                 // if Done, updated the selected decoder
                 who.selectLoco(dccAddress);
             }
 
+            @Override
             protected void message(String m) {
                 if (mStatusLabel != null) {
                     mStatusLabel.setText(m);
                 }
             }
 
+            @Override
             public void error() {
             }
         };
@@ -193,6 +199,6 @@ public class KnownLocoSelPane extends LocoSelPane {
         log.error("startProgrammer method in NewLocoSelPane should have been overridden");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(KnownLocoSelPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(KnownLocoSelPane.class);
 
 }

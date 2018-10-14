@@ -1,90 +1,84 @@
 package jmri;
 
+import java.util.Objects;
+import jmri.util.NamedBeanExpectedState;
 
 /**
- * Represent a Named Bean (e.g.&nbsp;Turnout) and specific setting for it. These
- * can be used e.g. to represent part of a particular path through a layout, or
- * a condition that has to be true as part of something.
+ * Represent a NamedBean (such as a Turnout) and specific desired setting for
+ * it. These can be used to represent the setting a NamedBean has as part of a
+ * particular path through a layout, or a condition that has to be true as part
+ * of something.
  * <p>
  * Objects of this class are immutable, in that once created the selected bean
  * and required setting cannot be changed. However, the value of the
- * <code><a href="#check()">check</a></code> method does change, because it's a
- * function of the current bean setting(s).
+ * {@link #check} method does change, because it's a function of the current
+ * bean setting(s).
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008, 2010
+ * @author Bob Jacobsen Copyright (C) 2006, 2008, 2010
  */
-@net.jcip.annotations.Immutable
-public class BeanSetting {
+@javax.annotation.concurrent.Immutable
+public class BeanSetting extends NamedBeanExpectedState<NamedBean> {
 
-    public BeanSetting(jmri.NamedBean t, String pName, int setting) {
-        _setting = setting;
-        if (t == null) {
-            _namedBean = null;
-            return;
-        }
-        _namedBean = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, t);
+    public BeanSetting(NamedBean t, String pName, int setting) {
+        super(t, pName, setting);
     }
 
-    public BeanSetting(jmri.NamedBean t, int setting) {
-        _setting = setting;
-        if (t == null) {
-            _namedBean = null;
-            return;
-        }
-        _namedBean = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(t.getDisplayName(), t);
+    public BeanSetting(NamedBean t, int setting) {
+        super(t, setting);
     }
 
     /**
-     * Convenience method; check if the Bean currently has the desired setting
+     * Convenience method; check if the Bean currently has the desired setting.
+     *
+     * @return true if bean has expected setting; false otherwise
      */
     public boolean check() {
-        if (_namedBean == null) {
-            return false;
-        }
-        return _namedBean.getBean().getState() == _setting;
+        return getObject().getState() == getExpectedState();
     }
 
     public NamedBean getBean() {
-        if (_namedBean == null) {
-            return null;
-        }
-        return _namedBean.getBean();
+        return getObject();
     }
 
     public String getBeanName() {
-        if (_namedBean == null) {
-            return "";
-        }
-        return _namedBean.getName();
+        return super.getName();
     }
 
     public int getSetting() {
-        return _setting;
+        return getExpectedState();
     }
 
-    private final NamedBeanHandle<NamedBean> _namedBean;
-    final private int _setting;
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation always throws an UnsupportedOperationException since
+     * a BeanSetting is immutable.
+     *
+     * @throws UnsupportedOperationException if called
+     */
+    @Override
+    public void setExpectedState(Integer state) {
+        throw new UnsupportedOperationException("The expected state of a BeanSetting is immutable");
+    }
 
-    // include _namedBean and _setting in equals() and hashCode() because they can't 
+    // include bean and expected state in equals() and hashCode() because they can't
     // change after construction
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
-        }
-        if (obj == null) {
+        } else if (obj == null) {
             return false;
-        }
-
-        if (!(getClass() == obj.getClass())) {
+        } else if (!Objects.equals(getClass(), obj.getClass())) {
             return false;
         } else {
-            BeanSetting p = (BeanSetting)obj;
-            if (p._setting != this._setting) return false;
-
-            if (p._namedBean == null &&  this._namedBean != null) return false;
-            if (p._namedBean != null &&  this._namedBean == null) return false;
-            if (p._namedBean != null &&  this._namedBean != null && !p._namedBean.equals(this._namedBean)) return false;
+            BeanSetting p = (BeanSetting) obj;
+            if (p.getSetting() != this.getSetting()) {
+                return false;
+            }
+            if (!p.getBean().equals(this.getBean())) {
+                return false;
+            }
 
         }
         return true;
@@ -92,8 +86,8 @@ public class BeanSetting {
 
     @Override
     public int hashCode() {
-        int hash = _setting*1000;
-        if (_namedBean != null) hash += _namedBean.hashCode();
+        int hash = getSetting() * 1000;
+        hash += getBean().hashCode();
         return hash;
     }
 }

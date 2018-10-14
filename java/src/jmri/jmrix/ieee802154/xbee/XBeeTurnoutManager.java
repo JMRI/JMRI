@@ -1,6 +1,6 @@
-// XBeeTurnoutManager.java
 package jmri.jmrix.ieee802154.xbee;
 
+import javax.annotation.*;
 import jmri.JmriException;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
@@ -9,10 +9,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager for XBee connections
- * <p>
  *
  * @author Paul Bender Copyright (C) 2014
- * @version $Revision$
  */
 public class XBeeTurnoutManager extends AbstractTurnoutManager {
 
@@ -25,16 +23,19 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
         this.prefix = prefix;
     }
 
+    @Override
     public String getSystemPrefix() {
         return prefix;
     }
 
-    // for now, set this to false. multiple additions currently works 
+    // for now, set this to false. Multiple additions currently works
     // partially, but not for all possible cases.
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return false;
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         XBeeNode curNode = null;
         String name = addressFromSystemName(systemName);
@@ -73,27 +74,29 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Validate system name for the current hardware configuration returns
-     * 'true' if system name has a valid meaning in current configuration, else
-     * returns 'false'
+     * Public method to validate system name format.
+     *
+     * @param systemName Xbee id format with pins to be checked
+     * @return 'true' if system name has a valid format, else returns 'false'
      */
-    public boolean validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         if (tc.getNodeFromName(addressFromSystemName(systemName)) == null
                 && tc.getNodeFromAddress(addressFromSystemName(systemName)) == null) {
             try {
                 if (tc.getNodeFromAddress(Integer.parseInt(addressFromSystemName(systemName))) == null) {
-                    return false;
+                    return NameValidity.INVALID;
                 } else {
                     return (pinFromSystemName(systemName) >= 0
                             && pinFromSystemName(systemName) <= 7
                             && (pin2FromSystemName(systemName) == -1
                             || (pin2FromSystemName(systemName) >= 0
-                            && pin2FromSystemName(systemName) <= 7)));
+                            && pin2FromSystemName(systemName) <= 7))) ? NameValidity.VALID : NameValidity.INVALID;
                 }
             } catch (java.lang.NumberFormatException nfe) {
                 // if there was a number format exception, we couldn't
                 // find the node.
-                return false;
+                log.error("Unable to convert " + systemName + " into the Xbee node and pin format of nn:xx");
+                return NameValidity.INVALID;
             }
 
         } else {
@@ -101,7 +104,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
                     && pinFromSystemName(systemName) <= 7
                     && (pin2FromSystemName(systemName) == -1
                     || (pin2FromSystemName(systemName) >= 0
-                    && pin2FromSystemName(systemName) <= 7)));
+                    && pin2FromSystemName(systemName) <= 7))) ? NameValidity.VALID : NameValidity.INVALID;
         }
     }
 
@@ -132,12 +135,12 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
             int len = systemName.length();
             try {
                 if ((seperator2 >= 0) && (seperator2 <= len)) {
-                    input = Integer.valueOf(systemName.substring(seperator + 1, seperator2)).intValue();
+                    input = Integer.parseInt(systemName.substring(seperator + 1, seperator2));
                 } else {
-                    input = Integer.valueOf(systemName.substring(seperator + 1, len)).intValue();
+                    input = Integer.parseInt(systemName.substring(seperator + 1, len));
                 }
             } catch (NumberFormatException ex) {
-                log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
+                log.debug("Unable to convert {} into the XBee node and pin format of nn:xx", systemName);
                 return -1;
             }
         } else {
@@ -145,7 +148,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
                 iName = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
                 input = iName % 10;
             } catch (NumberFormatException ex) {
-                log.debug("Unable to convert " + systemName + " Hardware Address to a number");
+                log.debug("Unable to convert " + systemName + " system name to a number");
                 return -1;
             }
         }
@@ -163,7 +166,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
             int seperator = systemName.indexOf(":");
             int seperator2 = systemName.indexOf(":", seperator + 1);
             try {
-                input = Integer.valueOf(systemName.substring(seperator2 + 1)).intValue();
+                input = Integer.parseInt(systemName.substring(seperator2 + 1));
             } catch (NumberFormatException ex) {
                 log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
                 return -1;
@@ -179,7 +182,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
     }
 
     @Override
-    public void deregister(jmri.NamedBean s) {
+    public void deregister(jmri.Turnout s) {
         super.deregister(s);
         // remove the specified turnout from the associated XBee pin.
         String systemName = s.getSystemName();
@@ -191,8 +194,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
                 try {
                     curNode = (XBeeNode) tc.getNodeFromAddress(Integer.parseInt(name));
                 } catch (java.lang.NumberFormatException nfe) {
-                    // if there was a number format exception, we couldn't
-                    // find the node.
+                    // if there was a number format exception, we couldn't find the node.
                     curNode = null;
                 }
             }
@@ -207,6 +209,26 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeTurnoutManager.class.getName());
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @CheckReturnValue
+    @Override
+    public @Nonnull
+    String normalizeSystemName(@Nonnull String inputName) {
+        return inputName; // toUpperCase and trim don't behave well with 
+                          // the XBee Node Identifier based addresses.
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(XBeeTurnoutManager.class);
 
 }

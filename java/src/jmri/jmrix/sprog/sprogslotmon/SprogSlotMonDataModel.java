@@ -3,7 +3,6 @@ package jmri.jmrix.sprog.sprogslotmon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import jmri.jmrix.sprog.SprogCommandStation;
 import jmri.jmrix.sprog.SprogConstants;
 import jmri.jmrix.sprog.SprogSlot;
 import jmri.jmrix.sprog.SprogSlotListener;
@@ -12,10 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Table data model for display of slot manager contents
+ * Table data model for display of slot manager contents.
  *
  * @author	Bob Jacobsen Copyright (C) 2001 
- * @author      Andrew Crosland (C) 2006 ported to SPROG
+ * @author  Andrew Crosland (C) 2006 ported to SPROG
  */
 public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel implements SprogSlotListener {
 
@@ -36,14 +35,31 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
     }
 
     /**
-     * Returns the number of rows to be displayed. This can vary depending on
+     * Check the requested number of slots against limits and return a valid slot
+     * count.
+     * 
+     * @return validated number of slots
+     */
+    public static int getSlotCount() {
+        int numSlots = SprogConstants.MAX_SLOTS;
+        if (numSlots < SprogConstants.MIN_SLOTS) {
+            numSlots = SprogConstants.MIN_SLOTS;
+        } else if (numSlots > SprogConstants.SLOTS_LIMIT) {
+            numSlots = SprogConstants.SLOTS_LIMIT;
+        }
+        return numSlots;
+    }
+    
+    /**
+     * Return the number of rows to be displayed. This can vary depending on
      * whether only active rows are displayed.
-     * <P>
+     * <p>
      * This should probably use a local cache instead of counting/searching each
      * time.
      */
+    @Override
     public int getRowCount() {
-        int nMax = SprogConstants.MAX_SLOTS;
+        int nMax = getSlotCount();
         if (_allSlots) {
             // will show the entire set, so don't bother counting
             return nMax;
@@ -59,33 +75,37 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         return n;
     }
 
+    @Override
     public int getColumnCount() {
         return NUMCOLUMN;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case SLOTCOLUMN:
-                return "Slot";
+                return Bundle.getMessage("SlotCol");
 //        case ESTOPCOLUMN: return "";     // no heading, as button is clear
             case ADDRCOLUMN:
-                return "Address";
+                return Bundle.getMessage("AddressCol");
             case SPDCOLUMN:
-                return "Speed";
+                return Bundle.getMessage("SpeedCol");
             case STATCOLUMN:
-                return "Use";
+                return Bundle.getMessage("StatusCol");
 //        case CONSCOLUMN: return "Consisted";
             case DIRCOLUMN:
-                return "Dir";
+                return Bundle.getMessage("DirectionCol");
 //        case DISPCOLUMN: return "";     // no heading, as button is clear
             default:
-                return "unknown";
+                return "unknown"; // NOI18N
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case SLOTCOLUMN:
+                return Integer.class;
             case ADDRCOLUMN:
             case SPDCOLUMN:
             case STATCOLUMN:
@@ -100,6 +120,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
 //        case ESTOPCOLUMN:
@@ -114,6 +135,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
     static final Boolean False = Boolean.valueOf("False");
 
     @SuppressWarnings("null")
+    @Override
     public Object getValueAt(int row, int col) {
         SprogSlot s = _memo.getCommandStation().slot(slotNum(row));
         if (s == null) {
@@ -128,11 +150,11 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
             case ADDRCOLUMN:  //
                     switch (s.slotStatus()) {
                         case SprogConstants.SLOT_IN_USE:
-                            return Integer.toString(s.getAddr()) + "("+ (s.getIsLong() ? "L" : "S") + ")";
+                            return Integer.toString(s.getAddr()) + "("+ (s.getIsLong() ? Bundle.getMessage("LongAddressChar") : Bundle.getMessage("ShortAddressChar")) + ")";
                         case SprogConstants.SLOT_FREE:
                             return "-";
                         default:
-                            return "<error>";
+                            return Bundle.getMessage("StateError");
                     }
             case SPDCOLUMN:  //
                 switch (s.slotStatus()) {
@@ -154,46 +176,48 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
                             }
                             return t.substring(t.length() - 9, t.length()); // 9 comes from (estop)
                         } else {
-                          return "<error>";
+                          return Bundle.getMessage("StateError");
                         }
                     case SprogConstants.SLOT_FREE:
                         return "-";
                     default:
-                        return "<error>";
+                        return Bundle.getMessage("StateError");
                 }
             case STATCOLUMN:  //
                 switch (s.slotStatus()) {
                     case SprogConstants.SLOT_IN_USE:
-                        return "In Use";
+                        return Bundle.getMessage("StateInUse");
                     case SprogConstants.SLOT_FREE:
-                        return "Free";
+                        return Bundle.getMessage("StateFree");
                     default:
-                        return "<error>";
+                        return Bundle.getMessage("StateError");
                 }
 //        case CONSCOLUMN:  //
 //            return "<n/a>";
 //        case DISPCOLUMN:  //
-//            return "Free";          // will be name of button in default GUI
+//            return Bundle.getMessage("ButtonRelease"); // will be name of button in default GUI
             case DIRCOLUMN:  //
                     switch (s.slotStatus()) {
                         case SprogConstants.SLOT_IN_USE:
                             if (s.isSpeedPacket()) {
-                                return (s.isForward() ? "Fwd" : "Rev");
+                                return (s.isForward() ? Bundle.getMessage("DirColForward") : Bundle.getMessage("DirColReverse"));
                             } else {
                                 return "-";                               
                             }
                         case SprogConstants.SLOT_FREE:
                             return "-";
                         default:
-                            return "<error>";
+                            return Bundle.getMessage("StateError");
                     }
 
             default:
-                log.error("internal state inconsistent with table requst for " + row + " " + col);
+                log.error("internal state inconsistent with table request for row {}, col {}", row, col);
                 return null;
         }
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES", 
+                        justification="better to keep cases in column order rather than to combine")
     public int getPreferredWidth(int col) {
         switch (col) {
             case SLOTCOLUMN:
@@ -211,12 +235,13 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
             case DIRCOLUMN:
                 return new JTextField(3).getPreferredSize().width;
 //        case DISPCOLUMN:
-//            return new JButton("Free").getPreferredSize().width;
+//            return new JButton(Bundle.getMessage("ButtonRelease")).getPreferredSize().width;
             default:
-                return new JLabel(" <unknown> ").getPreferredSize().width;
+                return new JLabel(" <unknown> ").getPreferredSize().width; // NOI18N
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         // check for in use
         SprogSlot s = _memo.getCommandStation().slot(slotNum(row));
@@ -225,11 +250,11 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
             return;
         }
 //        if (col == ESTOPCOLUMN) {
-//            log.debug("Start estop in slot "+row);
+//            log.debug("Start eStop in slot "+row);
 //            _memo.getSlotManager().estopSlot(row);
 //        }
 //        else if (col == DISPCOLUMN) {
-//            log.debug("Start freeing slot "+row);
+//            log.debug("Start freeing slot {}", row);
 //            fireTableRowsUpdated(row,row);
 //        }
     }
@@ -291,6 +316,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
 //			.setPreferredWidth(new JButton("  "+getValueAt(1, column)).getPreferredSize().width);
 //    }
     // methods to communicate with SprogSlotManager
+    @Override
     public synchronized void notifyChangedSlot(SprogSlot s) {
         // update model from this slot
 
@@ -314,6 +340,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
             _model = model;
         }
 
+        @Override
         public void run() {
             if (-1 == _row) {  // notify about entire table
                 _model.fireTableDataChanged();  // just that row
@@ -332,8 +359,8 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
     }
 
     /**
-     * Returns slot number for a specific row.
-     * <P>
+     * Return slot number for a specific row.
+     * <p>
      * This should probably use a local cache instead of counting/searching each
      * time.
      *
@@ -344,7 +371,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         int slotNum;
         int n = -1;   // need to find a used slot to have the 0th one!
         int nMin = 0;
-        int nMax = SprogConstants.MAX_SLOTS;
+        int nMax = getSlotCount();
         for (slotNum = nMin; slotNum < nMax; slotNum++) {
             SprogSlot s = _memo.getCommandStation().slot(slotNum);
             if (_allSlots || s.slotStatus() != SprogConstants.SLOT_FREE) {
@@ -363,6 +390,6 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         // table = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogSlotMonDataModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogSlotMonDataModel.class);
 
 }

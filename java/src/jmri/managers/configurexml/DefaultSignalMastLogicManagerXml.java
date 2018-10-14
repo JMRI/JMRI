@@ -1,10 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.managers.configurexml;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import jmri.Block;
@@ -28,25 +23,23 @@ import org.slf4j.LoggerFactory;
 public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
     public DefaultSignalMastLogicManagerXml() {
-        debug = log.isDebugEnabled();
     }
-
-    private boolean debug;
 
     protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
+    @Override
     public Element store(Object o) {
         Element signalMastLogic = new Element("signalmastlogics");
         setStoreElementClass(signalMastLogic);
         SignalMastLogicManager smlm = (SignalMastLogicManager) o;
         signalMastLogic.addContent(new Element("logicDelay").addContent(Long.toString(smlm.getSignalLogicDelay())));
-        ArrayList<SignalMastLogic> sml = smlm.getSignalMastLogicList();
+        List<SignalMastLogic> sml = smlm.getSignalMastLogicList();
         for (int i = 0; i < sml.size(); i++) {
             SignalMastLogic sm = sml.get(i);
             Element source = new Element("signalmastlogic");
             source.setAttribute("source", sm.getSourceMast().getDisplayName());// added purely to make human reading of the xml easier
             source.addContent(new Element("sourceSignalMast").addContent(sm.getSourceMast().getDisplayName()));
-            ArrayList<SignalMast> destination = sm.getDestinationList();
+            List<SignalMast> destination = sm.getDestinationList();
             if (destination.size() != 0) {
                 for (int k = 0; k < destination.size(); k++) {
                     SignalMast dest = destination.get(k);
@@ -95,7 +88,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                         }
 
                         if (sml.get(i).getStoreState(dest) == SignalMastLogic.STOREALL) {
-                            ArrayList<Block> blocks = sm.getBlocks(dest);
+                            List<Block> blocks = sm.getBlocks(dest);
                             if (blocks.size() > 0) {
                                 Element blockElement = new Element("blocks");
                                 for (int j = 0; j < blocks.size(); j++) {
@@ -112,7 +105,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                 }
                                 elem.addContent(blockElement);
                             }
-                            ArrayList<NamedBeanHandle<Turnout>> turnouts = sm.getNamedTurnouts(dest);
+                            List<NamedBeanHandle<Turnout>> turnouts = sm.getNamedTurnouts(dest);
                             if (turnouts.size() > 0) {
                                 Element turnoutElement = new Element("turnouts");
                                 for (int j = 0; j < turnouts.size(); j++) {
@@ -127,7 +120,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                 }
                                 elem.addContent(turnoutElement);
                             }
-                            ArrayList<NamedBeanHandle<Sensor>> sensors = sm.getNamedSensors(dest);
+                            List<NamedBeanHandle<Sensor>> sensors = sm.getNamedSensors(dest);
                             if (sensors.size() > 0) {
                                 Element sensorElement = new Element("sensors");
                                 for (int j = 0; j < sensors.size(); j++) {
@@ -142,7 +135,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                 }
                                 elem.addContent(sensorElement);
                             }
-                            ArrayList<SignalMast> masts = sm.getSignalMasts(dest);
+                            List<SignalMast> masts = sm.getSignalMasts(dest);
                             if (masts.size() > 0) {
                                 Element mastElement = new Element("masts");
                                 for (int j = 0; j < masts.size(); j++) {
@@ -167,6 +160,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         signalMastLogic.setAttribute("class", "jmri.managers.configurexml.DefaultSignalMastLogicManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -187,7 +181,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         SignalMastLogicManager sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
         try {
             String logicDelay = signalMastLogic.getChild("logicDelay").getText();
-            sml.setSignalLogicDelay(Long.parseLong(logicDelay));
+            sml.setSignalLogicDelay(Integer.parseInt(logicDelay));
         } catch (java.lang.NullPointerException e) {
             //Considered normal if it doesn't exists
         }
@@ -274,10 +268,8 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                     if (turn != null) {
                                         NamedBeanHandle<Turnout> namedTurnout = nbhm.getNamedBeanHandle(turnout, turn);
                                         list.put(namedTurnout, value);
-                                    } else if (debug) {
-                                        log.debug("Unable to add Turnout " + turnout + " as it does not exist in the panel file");
                                     }
-
+                                    log.debug("Unable to add Turnout {} as it does not exist in the panel file", turnout);
                                 }
                                 logic.setTurnouts(list, dest);
                             }
@@ -299,10 +291,8 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                     if (sen != null) {
                                         NamedBeanHandle<Sensor> namedSensor = nbhm.getNamedBeanHandle(sensorName, sen);
                                         list.put(namedSensor, value);
-                                    } else if (debug) {
-                                        log.debug("Unable to add sensor " + sensorName + " as it does not exist in the panel file");
                                     }
-
+                                    log.debug("Unable to add sensor {} as it does not exist in the panel file", sensorName);
                                 }
                                 logic.setSensors(list, dest);
                             }
@@ -325,9 +315,8 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                     Block blk = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(block);
                                     if (blk != null) {
                                         list.put(blk, value);
-                                    } else if (debug) {
-                                        log.debug("Unable to add Block " + block + " as it does not exist in the panel file");
                                     }
+                                    log.debug("Unable to add Block {} as it does not exist in the panel file", block);
                                 }
                                 logic.setBlocks(list, dest);
                             }
@@ -343,10 +332,8 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                     SignalMast mst = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(mast);
                                     if (mst != null) {
                                         list.put(mst, state);
-                                    } else if (debug) {
-                                        log.debug("Unable to add Signal Mast  " + mast + " as it does not exist in the panel file");
                                     }
-
+                                    log.debug("Unable to add Signal Mast {} as it does not exist in the panel file", mast);
                                 }
                                 logic.setMasts(list, dest);
                             }
@@ -365,9 +352,10 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         return loadOk;
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManagerXml.class);
 }

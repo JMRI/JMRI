@@ -1,346 +1,267 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated by Blorec Herv&#233; le 2011-15-07-->
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!--Updated by Blorec Herv&#233; le 2016-09-28-->
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+<title>Basic Throttle window usage</title>
 
-  <title>Basic throttle window usage</title>
-  <meta name="keywords" content=
-  "JMRI decoderpro dcc nmra throttlepro">
-  <meta name="Description" content=
-  "Throttle documentation for JMRI project">
-  <meta name="Keywords" content="JMRI">
-  <meta name="Author" content="Lionel Jeanson">
-  <meta name="Language" content="fr">
-  <meta name="Robots" content="Index, Follow">
+<meta name="keywords" content="JMRI decoderpro dcc nmra throttlepro">
+<meta name="Description" content="Throttle documentation for JMRI project">
+<meta name="Author" content="Lionel Jeanson">
+<meta name="Language" content="EN">
+<meta name="Robots" content="Index, Follow">
+
   <meta name="Revisit-After" content="7 Days">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments --><!-- are an arbitrary design pattern used by the update.pl script to --><!-- easily replace the common header/footer code for all the web pages --><!-- delete the following 2 Defines if you want to use the default JMRI logo --><!-- or change them to reflect your alternative logo --><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+  <!-- are an arbitrary design pattern used by the update.pl script to -->
+  <!-- easily replace the common header/footer code for all the web pages -->
+  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+  <!-- or change them to reflect your alternative logo -->
+  <!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+<div id="mainContent
+<h1>L'utilisation de la Fen&#234;tre R&#233;gulateur  </h1>
 
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+<img src="images/BasicThrottleWindow.png" alt="BasicThrottleWindow.png"> <br>
 
-    <div id="mainContent">
-      <h1>L'utilisation de la Fen&ecirc;tre
-      R&eacute;gulateur</h1><img src=
-      "images/BasicThrottleWindow.png" alt=
-      "BasicThrottleWindow.png"><br>
+<h1>Utilisation du Volet R&#233;gulateur</h1>
 
-      <h2>Structure de Base d'une Fen&ecirc;tre
-      R&eacute;gulateur</h2>Il ya trois panneaux (ou
-      sous-fen&ecirc;tres) associ&eacute;s &agrave; chacune des
-      fen&ecirc;tres R&eacute;gulateurs . Ils sont
-      identifi&eacute;s comme &eacute;tant:<br>
+Il ya trois panneaux (ou sous-fen&#234;tres) associ&#233;s &#224; chacune des fen&#234;tres R&#233;gulateurs. 
+Ils sont identifi&#233;s comm: <br>
 
-      <ul>
-        <li>Le panneau de configuration - contient un curseur
-        d'acc&eacute;l&eacute;rateur pour contr&ocirc;ler la
-        vitesse de la locomotive, d'un s&eacute;lecteur de marche
-        avant et arri&egrave;re, une bouton d'arr&ecirc;t d'urgence
-        et un bouton Arr&ecirc;t (principalement utilis&eacute;
-        pour les d&eacute;codeurs son).</li>
+<ul>
+ 	<li>Le Panneau de Commande &#8212; contient un curseur d'acc&#233;l&#233;rateur pour contr&#244;ler la vitesse
+	de la locomotive, d'un s&#233;lecteur de marche avant et inverse, une bouton d'arr&#234;t d'urgence
+ 	et un bouton Arr&#234;t (principalement utilis&#233; pour les d&#233;codeurs son). </li>
+ 	<li> Le Panneau Fonction  &#8212; est utilis&#233; pour associer les touches de fonction avec
+	les fonctions de sortie actives du d&#233;codeur. </li>
+  	<li>Le Panneau Adresse &#8212; est utilis&#233; pour identifier l'adresse du d&#233;codeur, et 
+	distribuer ou lib&#233;rer l'adresse identifi&#233;e. </li>
+</ul>
 
-        <li>Le panneau Fonction - est utilis&eacute; pour associer
-        les touches de fonction avec les fonctions de sortie active
-        du d&eacute;codeur.</li>
+Notez que ces trois panneaux sont en fait des fen&#234;tres actuellement d&#233;finies au sein d'une 
+fen&#234;tre globale, chacun de ces panneaux contient ses propres boutons "minimiser" et
+"fermer" &#8212; ainsi ils peuvent &#234;tre redimensionn&#233;s. Vous pouvez effectivement
+minimiser un ou plusieurs de ces panneaux dans la fen&#234;tre du r&#233;gulateur. Lorsque
+une de ces sous-fen&#234;tres est ferm&#233;e, elle peut &#234;tre r&#233;ouverte par le biais< a  href="ThrottleWindowMenus.shtml"> du menu Affichage </a>.<br>
+<br>
 
-        <li>Le panneau Adresse - est utilis&eacute; pour identifier
-        l'adresse du d&eacute;codeur, et d' exp&eacute;dition ou de
-        lib&eacute;rationr de l'adresse identifi&eacute;e.</li>
-      </ul>Notez que ces trois panneaux sont en fait des
-      fen&ecirc;tres d&eacute;finies au sein d'une fen&ecirc;tre
-      globale, chacun de ces panneaux contient ses propres boutons
-      "minimiser" et "fermer" - ainsi ils peuvent &ecirc;tre
-      redimensionn&eacute;s. Vous pouvez effectivement minimiser un
-      ou plusieurs de ces panneaux dans la fen&ecirc;tre du
-      r&eacute;gulateur. Lorsque une de ces sous-fen&ecirc;tres est
-      ferm&eacute;e, elle peut &ecirc;tre r&eacute;ouverte par le
-      biais <a href="ThrottleWindowMenus.shtml">du menu
-      Affichage</a> .<br>
-      <br>
-      Pour plus de d&eacute;tails sur l'utilisation du
-      R&eacute;gulateur <a href="ThrottleWindowMenus.shtml">voir
-      l&agrave;, les menus de la fen&ecirc;tre</a> .<br>
-      Pour plus de d&eacute;tails sur l'utilisation du
-      r&eacute;gulateur <a href="ThrottleToolBar.shtml">voir
-      l&agrave;, barre d'outils de la fen&ecirc;tre</a> .<br>
-      Pour plus de d&eacute;tails sur l'utilisation des
-      pr&eacute;f&eacute;rences manettes <a href=
-      "ThrottlesPreferencesPane.shtml">voir l&agrave;, les
-      pr&eacute;f&eacute;rences de R&eacute;gulateur</a> .<br>
-      <br>
-      Pour un contr&ocirc;le<a href=
-      "AdvancedThrottleControl.shtml">, avanc&eacute; d'un
-      R&eacute;gulateur,</a><br>
+Pour plus de d&#233;tails sur l'utilisation du R&#233;gulateur <a
+<a href="ThrottleWindowMenus.shtml"> voir l&#224;, les menus de la fen&#234;tre </a>.
+<br>
+Pour plus de d&#233;tails sur l'utilisation du r&#233;gulateur  <a
+<a href="ThrottleToolBar.shtml"> voir l&#224;, barre d'outils de la fen&#234;tre </a>.
+<br>
+Pour plus de d&#233;tails sur l'utilisation des pr&#233;f&#233;rences manettes <a href="ThrottlesPreferencesPane.shtml"> voir l&#224;, les pr&#233;f&#233;rences de R&#233;gulateur </a>.<br>
+<br>
+Pour un contr&#244;le<a href="AdvancedThrottleControl.shtml">, avanc&#233; d'un R&#233;gulateur,</a>
 
-      <h2>Panneau Adresse - Attribuer une adresse du
-      d&eacute;codeur &agrave; un R&eacute;gulateur</h2><br>
-      La premi&egrave;re chose a faire pour activer les options ou
-      les boutons quand la fen&ecirc;tre devient active, est
-      d'assigner l'adresse d'un d&eacute;codeur dans le "Panneau
-      d'adresses". Il y a deux fa&ccedil;ons pour accomplir
-      cela.<br>
-      Saisissez manuellement l'adresse du d&eacute;codeur dans la
-      grande zone de texte ou s&eacute;lectionnez une entr&eacute;e
-      Liste (Roster) existante par l'interm&eacute;diaire du menu
-      COMBOX, puis cliquez sur le bouton "D&eacute;finir"(Set).<br>
-      Lorsque vous saisissez manuellement une adresse, n'oubliez
-      pas de cliquer sur le bouton Validation (Set). Sans cette
-      &eacute;tape, toutes les actions du r&eacute;gulateurs sont
-      d&eacute;sactiv&eacute;es.<br>
-      <br>
-      Notez qu'il y a une option dans le <a href=
-      "ThrottlesPreferencesPane.shtml">panneau des
-      pr&eacute;f&eacute;rences R&eacute;gulateurs</a> qui
-      permettra un regard automatiques de retour dans la Liste DB
-      quand une adresse est entr&eacute;e, et &eacute;ventuellement
-      d&eacute;clencher automatiquement l'affichage d'un jeu de
-      r&eacute;gulateurs, si aucune entr&eacute;e Roster
-      correspondante n'est trouv&eacute;e.<br>
-      Apr&egrave;s qu'une adresse ait &eacute;t&eacute;
-      s&eacute;lectionn&eacute;e, toutes les autres commandes et
-      options de la fen&ecirc;tre r&eacute;gulateur seront
-      activ&eacute;es:<br>
+<br>
 
-      <ul>
-        <li>Envoi - Communication de l'adresse du d&eacute;codeur
-        vers la centrale de commande en mode "exp&eacute;dition" .
-        Habituellement, une seule adresse peut &ecirc;tre dans
-        l'&eacute;tat d'exp&eacute;dition vers la centrale de
-        commande - toutes les autres sont soit "utilis&eacute;es"
-        ou "inactives" (lib&eacute;r&eacute;). Les commandes et les
-        options de la fen&ecirc;tre de R&eacute;gulateur
-        deviendront d&eacute;sactiv&eacute;es jusqu'&agrave; ce
-        qu'une autre adresse soit "D&eacute;finie"(Set).</li>
+<h2>Panneau Adresse - Attribuer une adresse d&#233;codeur &#224; un R&#233;gulateur</h2>
 
-        <li>Programme - ouvre un programmateur DecoderPro en
-        Mode-ops-mode (programmation sur la voie principale)
-        DecoderPro programmateur en Mode-ops pour la locomotive
-        s&eacute;lectionn&eacute;e. Il est seulement actif quand
-        une entr&eacute;e de registre a &eacute;t&eacute;
-        s&eacute;lectionn&eacute;e sur le r&eacute;gulateur.</li>
-      </ul>
+La premi&#232;re chose a faire pour activer les options ou les boutons quand 
+la fen&#234;tre devient active, est d'assigner l'adresse d&#233;codeur dans le
+"Panneau Adresses". Il y a deux fa&#231;ons pour accomplir cela. 
 
-      <h2>Panneau de configuration - Faisons circuler un
-      train</h2>Maintenant que vous avez cr&eacute;&eacute; une
-      adresse pour le r&eacute;gulateur, vous devriez &ecirc;tre
-      capable de faire circuler le train sur votre r&eacute;seau
-      (si votre r&eacute;seau est actif et que l'adresse que vous
-      avez entr&eacute;e est valide pour une locomotive sur la
-      voie). Vous devez faire cela en utilisant le "Panneau
-      Contr&ocirc;le" .<br>
+<br>
 
-      <ul>
-        <li>Le curseur de contr&ocirc;le de la vitesse
-        d'acc&eacute;l&eacute;ration.</li>
+Saisissez manuellement l'adresse du d&#233;codeur dans la grande zone de texte ou s&#233;lectionnez une
+entr&#233;e Inventaire existante par l'interm&#233;diaire du menu COMBOX, puis cliquez sur le bouton 
+"Configurer". <br>
 
-        <li>Le bouton de direction marche avant et
-        arri&egrave;re.</li>
+Lorsque vous saisissez manuellement une adresse, n'oubliez pas de cliquer sur le bouton Configurer
+Sans cette &#233;tape, toutes les actions du r&#233;gulateurs sont d&#233;sactiv&#233;es.<br>
+<br>
+Notez qu'il y a une option dans le <a href="ThrottlesPreferencesPane.shtml">  panneau des pr&#233;f&#233;rences R&#233;gulateurs </a>
+qui permettra un regard automatiques de retour dans la Liste DB quand une
+adresse est entr&#233;e, et &#233;ventuellement d&#233;clencher une configuration automatis&#233;e de 
+r&#233;gulateurs, si une entr&#233;e Inventaire correspondante est trouv&#233;e. <br>
 
-        <li>Le STOP! Ce bouton enverra un message d'arr&ecirc;t
-        d'urgence (vitesse de DCC &agrave; -1) &agrave; la
-        locomotive.</li>
+<br>
 
-        <li>l'Arr&ecirc;t (Idle) va arr&ecirc;ter la locomotive
-        progressivement (vitesse de DCC &agrave; 0) (si le
-        d&eacute;codeur a ses rampe d'acc&eacute;l&eacute;ration ou
-        de freinage activ&eacute;es, la locomotive permettra
-        d'acc&eacute;l&eacute;rer ou de ralentir en
-        cons&eacute;quence. Si aucune valeur dynamique n'est
-        activ&eacute;e, la loco va acc&eacute;l&eacute;rer ou
-        ralentir brusquement .).</li>
-      </ul>Attention o&ugrave; vous cliquez avec le pointeur de
-      votre souris dans le Panneau de configuration. Si vous
-      cliquez n'importe o&ugrave; &agrave; proximit&eacute; du
-      curseur, votre loco peut d&eacute;marrer d'une fa&ccedil;on
-      inattendue (voir plus bas). Si vous cliquez n'importe
-      o&ugrave; sur les mots "Avant" ou "Arri&egrave;re", vous
-      pouvez changer la direction du train
+Apr&#232;s une adresse est  s&#233;lectionn&#233;e, toutes les autres commandes et options de la
+fen&#234;tre r&#233;gulateur seront activ&#233;es:<br>
+<ul>
+   <li>
 
-      <h3>Configuration du volet Panneau de
-      Contr&ocirc;le</h3><img src=
-      "images/ControlPanelPreferences.png" alt=
-      "ControlPanelPreferences.png"><br>
-      Ce volet accessible par un clic droit dans le volet Panneau
-      de configuration et l'ouverture entr&eacute;e du menu
-      Propri&eacute;t&eacute;s<br>
+Exp&#233;dition &#8212; lib&#232;re l'adresse du d&#233;codeur vers la centrale de commande en 
+mode "exp&#233;dition". Habituellement, une seule adresse peut &#234;tre en &#233;tat exp&#233;dition 
+&#224; la centrale de commande &#8212; toutes les autres sont soit "en service" soit "libre"
+( lib&#233;r&#233;e ). Les commandes et et options dans la fen&#234;tre r&#233;gulateur deviendra 
+d&#233;sactiv&#233;e jusqu'&#224; ce qu'une autre adresse soit "Configurer".</li>
+<li>
+Lib&#233;ration &#8212; lib&#232;re l'adresse du d&#233;codeur vers la centrale de commande comme
+"n'est plus n&#233;cessaire". Les commandes et et options dans la fen&#234;tre r&#233;gulateur deviendra 
+d&#233;sactiv&#233;e jusqu'&#224; ce qu'une autre adresse soit "Configurer".</li>
+<li> Programme&#8212;&nbsp;
+ouvre un programmateur DecoderPro en Mode&#8212;ops-mode (programmation sur la voie principale) 
+pour la locomotive s&#233;lectionn&#233;e. Il est seulement actif quand
+une entr&#233;e inventaire a &#233;t&#233; s&#233;lectionn&#233;e sur le r&#233;gulateur. </li>
+</ul>
 
-      <h2>Le Groupe Fonction</h2>
+ <h2>Panneau de configuration &#8212; Faisons circuler un train</h2>
 
-      <p>Le Groupe dispose de 28 touches de Fonctions disponibles
-      par R&eacute;gulateur. La plupart des d&eacute;codeurs
-      actuellement ne traitent pas les 28 fonctions. Le panneau de
-      fonction affiche les boutons en deux groupes, appuyez sur la
-      touche "*" dans le coin gauche dans la partie
-      inf&eacute;rieure pour voir la deuxi&egrave;me s&eacute;rie
-      de boutons de fonction.</p>
+Maintenant que vous avez cr&#233;&#233; une adresse pour le r&#233;gulateur, vous devriez
+&#234;tre capable de faire circuler le train sur votre r&#233;seau (si votre r&#233;seau est actif et que
+l'adresse que vous avez entr&#233;e est valide pour une locomotive sur la voie). Vous devez 
+faire cela en utilisant le "Panneau Contr&#244;le" .<br>
 
-      <p>Cliquer sur les boutons de fonctions en corr&eacute;lation
-      avec l'apui sur les m&ecirc;mes boutons de fonction sur un
-      r&eacute;gulateur &agrave; main. La fonction F0 est
-      normalement utilis&eacute; pour les feux.</p>
+<ul>
+   <li> Le curseur de contr&#244;le de la vitesse d'acc&#233;l&#233;ration. </li>
+   <li> Le bouton de  direction marche Avant et Inverse. </li>
+   <li> Le STOP! Ce bouton enverra un message d'arr&#234;t d'urgence (vitesse de DCC &#224; -1)
+&#224; la locomotive. </li>
+   <li> l'Arr&#234;t (Idle) va arr&#234;ter la locomotive progressivement (vitesse de DCC &#224; 0)
+(si le d&#233;codeur a ses rampe d'acc&#233;l&#233;ration ou de freinage activ&#233;es, la locomotive
+permettra d'acc&#233;l&#233;rer ou de ralentir en cons&#233;quence. Si aucune valeur dynamique n'est
+activ&#233;e, la loco va acc&#233;l&#233;rer ou  ralentir brusquement .).</li>
+</ul>
 
-      <p>Il s'agit de la fonctionnalit&eacute; de base du Groupe de
-      fonction. Tous les boutons fonctionnent comme une bascule
-      marche/arr&ecirc;t - cliquez une fois pour activer "Marche"
-      et cliquez de nouveau pour basculer sur "Arr&ecirc;t".</p>
+Attention o&#249; vous cliquez avec le pointeur de votre souris dans le Panneau de configuration.
+Si vous cliquez n'importe o&#249; &#224; proximit&#233; du curseur, votre loco peut d&#233;marrer d'une fa&#231;on
+inattendue (voir plus bas). Si vous cliquez n'importe o&#249; sur les mots
+"Avant" ou "Inverse", vous pouvez changer la direction du train
+<br>
+<br>
 
-      <h3>Fonction bouton configuration volet</h3><img src=
-      "images/FunctionButtonProperties.png" alt=
-      "FunctionButtonProperties.png"><br>
-      Ce volet s'il est accessible par un clic droit dans le volet
-      AddressPanel, sur une Touche de Fonction sp&eacute;cifique et
-      ouvrant une entr&eacute;e du menu
-      Propri&eacute;t&eacute;s.<br>
-      <br>
-      Notez que pour les R&eacute;gulateurs qui ont une Liste
-      associ&eacute;e, il est pr&eacute;f&eacute;rable de
-      d&eacute;finir ces param&egrave;tres dans la Fonction
-      <a href="RostersMediaPane.shtml">volet &eacute;tiquettes dans
-      DecoderPro</a> . (Mais si vous les modifiez ici, vous pouvez
-      toujours exporter ces changements gr&acirc;ce &agrave;
-      <a href="ThrottleWindowMenus.shtml">l'exportation dans le
-      menu entr&eacute;es de la Liste</a> )<br>
-      <br>
+<h3>Configuration du volet Panneau de Contr&#244;le </h3>
 
-      <ul>
-        <li>Num&eacute;ro de la fonction - associe le bouton avec
-        un num&eacute;ro de fonction</li>
+<img src="images/ControlPanelPreferences.png" alt="ControlPanelPreferences.png"><br>
 
-        <li>texte - personnalisation du texte de l'&eacute;tiquette
-        du bouton</li>
+Ce volet accessible par un clic droit dans le volet Panneau de configuration et
+l'ouverture entr&#233;e du menu Propri&#233;t&#233;s<br> 
 
-        <li>Taille de la police - taille du texte affich&eacute;
-        sur le bouton</li>
+<br>
 
-        <li>verrouillable - indique si le bouton agit comme un
-        interrupteur &agrave; bascule "Marche/Arr&ecirc;t" , ou
-        comme un commutateur momentan&eacute;</li>
+<h2>Le Volet Fonction</h2>
+Le Volet dispose de 28 touches de Fonctions disponibles par R&#233;gulateur.
+La plupart des d&#233;codeurs actuellement ne traitent pas les 28 fonctions. Le panneau de fonction
+affiche les boutons en deux groupes, appuyez sur la touche "*" dans le coin gauche dans la partie inf&#233;rieure
+pour voir la deuxi&#232;me s&#233;rie de boutons de fonction. <br>
 
-        <li>Visible - indique si le bouton est visible dans la
-        fen&ecirc;tre Panneau Fonction</li>
-      </ul>Par d&eacute;faut, le Num&eacute;ro de Fonction est
-      associ&eacute; au num&eacute;ro de bouton o&ugrave; vous avez
-      initialement fait un clic droit dessus. Par exemple, dans les
-      chiffres indiqu&eacute;s ci-dessus, le num&eacute;ro de la
-      fonction "3" (F3) est en cours d'&eacute;dition. Il est
-      recommand&eacute; que vous laissez ce num&eacute;ro comme il
-      est, cependant, vous pouvez changer cela en un num&eacute;ro
-      de fonction diff&eacute;rent si vous voulez vraiment. Un
-      exemple de pourquoi vous voudrez peut-&ecirc;tre le faire est
-      si vous voulez vraiment que le bouton "lumi&egrave;res" - qui
-      est g&eacute;n&eacute;ralement F0 (situ&eacute; comme le
-      dernier bouton/bas par d&eacute;faut) - soit situ&eacute;
-      aussi sur le premier bouton dans le panneau de fonction.<br>
-      <br>
-      <span style="font-weight: bold;">Attention!</span> Si toutes
-      les modifications sont fait pour le champs "Num&eacute;ro de
-      la fonction", v&eacute;rifiez pour vous assurer que deux
-      boutons ne soient pas affect&eacute;s au m&ecirc;me
-      num&eacute;ro de fonction - certaines cons&eacute;quences
-      ind&eacute;sirables oeurraient se produire.<br>
-      <br>
-      Les Champ Texte seront les bienvenus et modifi&eacute;s. Par
-      d&eacute;faut, ils sont d&eacute;fini pour un
-      r&eacute;gulateur &agrave; main similaire : F1 ... F2 F3 ...
-      ... etc le contenu du champ est assez largement ouverte
-      &agrave; l'imagination, cependant, il va &ecirc;tre un point
-      o&ugrave; la longueur du texte ne va pas s'adapter au bouton.
-      Le champ Taille de la police est disponible aussi pour aider
-      &agrave; obtenir le texte voulu pour l'adapter au bouton. Un
-      peu d'exp&eacute;rimentation sera n&eacute;cessaire ici pour
-      d&eacute;terminer ce qui semble bon pour vous - et ce sera
-      bon<br>
-      .<br>
-      La case &agrave; cocher verrouillable peut &ecirc;tre un peu
-      d&eacute;routante au premier abord. Lorsqu'elle est
-      activ&eacute;e - Comme elle l'est par d&eacute;faut - cela
-      signifie simplement que lorsque le bouton est cliqu&eacute; ,
-      il va se "verrouiller" lui-m&ecirc;me soit dans un
-      &eacute;tat "marche" ou un &eacute;tat "arr&ecirc;t".
-      Autrement dit, le bouton agira comme un interrupteur &agrave;
-      bascule- cliquez une fois pour activer la fonction "marche";
-      cliquez &agrave; nouveau pour activer la fonction
-      "arr&ecirc;t". l' oppos&eacute; de cette action est ce qui
-      arrive lorsque la case &agrave; cocher est
-      d&eacute;sactiv&eacute;e. Puis le bouton agit comme un
-      interrupteur momentan&eacute; - fournissant une commande
-      passag&egrave;re "marche" pour aussi longtemps que le bouton
-      de la souris est cliqu&eacute;e maintenue sur le bouton.
-      Lorsque le bouton de la souris est rel&acirc;ch&eacute;, une
-      commande "arr&ecirc;t" est envoy&eacute; &agrave; la
-      fonction. Un bon exemple de l'endroit o&ugrave; on pourrait
-      vouloir l'utiliser c'est lors de la personnalisation d'une
-      configuration d'un r&eacute;gulateur pour un d&eacute;codeur
-      sonore. La corne/sifflet est plus proche du fonctionnel
-      lorsque cette option est d&eacute;sactiv&eacute;e. Selon la
-      vitesse du syst&egrave;me informatique et le syst&egrave;me
-      DCC, un clic court et rapide donnerait un bref coup de klaxon
-      ou de coup de sifflet. Maintenez la touche un peu plus
-      longtemps produirait un coup de sifflet plus long.<br>
-      <br>
-      La case &agrave; cocher Visible permet de "retirer" les
-      boutons inutiles. Par d&eacute;faut, tous les boutons de
-      fonction sont activ&eacute;s comme "visible" de sorte qu'ils
-      puissent &eacute;videmment &ecirc;tre vus. Mais s'il y a une
-      seule fonction d'utilis&eacute;e - par exemple les
-      "lumi&egrave;res" (F0) -, alors cette option fournit les
-      capacit&eacute; &agrave; "cacher" l'ensemble des autres
-      boutons.<br>
-      <br>
-      <span style="font-weight: bold;">Attention!</span>
-      D&eacute;sactiver la case &agrave; cocher "Visible" doit
-      &ecirc;tre l'une des derni&egrave;res &eacute;tapes
-      effectu&eacute;es pendant ce processus de personnalisation.
-      La raison en est qu'une fois que le bouton est marqu&eacute;
-      comme "invisible" (en supprimant la case &agrave; cocher), il
-      est en effet invisible pour l'utilisateur et ne peut pas donc
-      obtenir la "Fonction Modifier bouton" par un clic droit avec
-      la souris . Pour rendre tous les boutons visibles <a href=
-      "ThrottleWindowMenus.shtml">s&eacute;lectionner "View-&gt;
-      Show Toutes les touches de fonction. "</a><br>
-      <br>
-      <br>
+<br>
 
-      <h2>Jynstruments</h2>Voir <a href=
-      "../scripting/Jynstruments.shtml">l&agrave; pour plus
-      d'informations sur Jynstruments</a> .<br>
-      <br>
-      La fen&ecirc;tre du R&eacute;gulateur est jynstrumentable, en
-      particulier avec des commandes de fonction plus
-      avanc&eacute;es.<br>
-      <br>
-      A l'heure actuelle <a href=
-      "http://jmri.org/jython/Jynstruments/ThrottleFrame/">3
-      &eacute;chantillons Jynstruments sont livr&eacute;s</a> , un
-      pour la lumi&egrave;re, l'un pour la corne et un pour le
-      sifflet (fonction 0, 1 et 2). Mais ce n'est qu'un
-      &eacute;chantillon, ayez un oeil sur le code et personnaliser
-      le pour vos besoins sp&eacute;cifiques sur votre
-      d&eacute;codeur.<br>
-      <br>
-      <span style="font-style: italic;">Notez que la barre d'outils
-      Fen&ecirc;tre R&eacute;gulateur est Jynstrumentable aussi,
-      donc ici nous d&eacute;posons le Jynstruments sur</span>
-      <span style="font-style: italic;">le contenu
-      fen&ecirc;tre</span> <span style=
-      "font-style: italic;">lui-m&ecirc;me, non pas sur la barre
-      d'outils.<br></span>
-    </div><!--#include virtual="/Footer" -->
-  </div>
+Cliquer sur les boutons de fonctions correspond &#224; l'apui sur les m&#234;mes
+boutons de fonction sur un r&#233;gulateur &#224; main. La fonction F0 est normalement
+utilis&#233; pour les feux.<br> 
+
+<br>
+
+Il s'agit de la fonctionnalit&#233; de base du Volet de Fonction. Tous les boutons
+fonctionnent comme une bascule marche/arr&#234;t &#8212;  cliquez une fois pour activer "Marche" et cliquez de nouveau
+pour basculer sur "Arr&#234;t". <br>
+
+<h3> Configuration du volet Bouton de Fonction</h3>
+
+<img src="images/FunctionButtonProperties.png" alt="FunctionButtonProperties.png"> <br>
+
+Ce volet est accessible par un clic droit dans le volet AddressPanel, sur
+une Touche de Fonction sp&#233;cifique et ouvrant une entr&#233;e du menu Propri&#233;t&#233;s.<br>
+<br>
+Notez que pour les R&#233;gulateurs qui ont un Inventaire associ&#233;e, il est pr&#233;f&#233;rable de
+d&#233;finir ces param&#232;tres dans le <a  href="RostersMediaPane.shtml"> volet label Fonction   dans DecoderPro </a>. (Mais si vous les modifiez ici, vous pouvez toujours exporter ces changements  dans l'inventaire gr&#226;ce &#224; <a href="ThrottleWindowMenus.shtml"> l'exportation dans le menu entr&#233;es de l'Inventaire </a>)<br
+<br>
+
+<ul>
+
+ 	<li>Num&#233;ro de la fonction   &#8212; associe le bouton avec un num&#233;ro de fonction </li>
+   	<li>Texte &#8212;  personnalisation du texte de l'&#233;tiquette du bouton </li>
+  	<li>Taille de la police &#8212; taille du texte affich&#233; sur le bouton </li>
+   	<li>verrouillable &#8212; indique si le bouton agit comme un interrupteur &#224; bascule "Marche/Arr&#234;t", 
+ 	ou comme un commutateur momentan&#233; </li>
+   	<li>Visible &#8212; indique si le bouton est visible dans la fen&#234;tre
+	Panneau Fonction </li>
+</ul>
+
+Par d&#233;faut, le Num&#233;ro de Fonction est associ&#233; au num&#233;ro de bouton
+o&#249; vous avez initialement fait un clic droit dessus. Par exemple, dans les chiffres indiqu&#233;s
+ci-dessus, le num&#233;ro de la fonction "3" (F3) est en cours d'&#233;dition. Il est recommand&#233; que
+vous laissez ce num&#233;ro comme il est, cependant, vous pouvez changer cela en un
+num&#233;ro de fonction diff&#233;rent si vous voulez vraiment. Un exemple de pourquoi vous
+voudrez peut-&#234;tre le faire est si vous voulez vraiment que le bouton "lumi&#232;res" &#8212; qui
+est g&#233;n&#233;ralement F0 (situ&#233; comme le dernier bouton/bas par d&#233;faut) &#8212; soit
+situ&#233; aussi sur le premier bouton dans le panneau de fonction. <br>
+
+<br>
+
+<span style="font-weight: bold;"> Attention! </span> Si toutes les modifications
+sont faites pour le champs "Num&#233;ro Fonction", v&#233;rifiez pour vous assurer que
+deux boutons ne sont pas affect&#233;s au m&#234;me num&#233;ro de fonction &#8212; certaines 
+cons&#233;quences ind&#233;sirables pourraient se produire. <br>
+
+<br>
+Les Champ Texte seront les bienvenus  et modifi&#233;s. Par d&#233;faut,
+ils sont configur&#233;s pour un r&#233;gulateur &#224; main similaire : F1 ... F2.. F3 ...etc. Le
+contenu du champ est assez largement ouvert &#224; l'imagination, cependant,
+il va &#234;tre un point o&#249; la longueur du texte ne va pas
+s'adapter au bouton. Le champ Taille de la police est disponible aussi pour aider
+&#224; obtenir le texte voulu pour l'adapter au bouton. Un peu
+d'exp&#233;rimentation sera n&#233;cessaire ici pour d&#233;terminer ce qui semble bon pour
+vous &#8212;.<br>.
+
+<br>
+
+La case &#224; cocher Verrouillable peut &#234;tre un peu d&#233;routante au premier abord. Lorsqu'elle est activ&#233;e
+&#8212; Comme elle l'est par d&#233;faut &#8212; cela signifie simplement que lorsque le bouton est cliqu&#233;, 
+il va se "verrouiller" lui-m&#234;me soit dans un &#233;tat "marche" ou un &#233;tat "arr&#234;t". 
+Autrement dit, le bouton agira comme un interrupteur &#224; bascule&#8212;  cliquez une fois pour
+activer la fonction "Marche"; cliquez &#224; nouveau pour activer la fonction "Arr&#234;t". l'
+oppos&#233; de cette action est ce qui arrive lorsque la case &#224; cocher est d&#233;sactiv&#233;e.
+Le bouton agit comme un bouton &#224; impulsion &#8212; fournissant une commande passag&#232;re
+"Marche" pour aussi longtemps que le bouton de la souris est cliqu&#233;e maintenue sur le bouton. Lorsque le bouton de la souris est rel&#226;ch&#233;, une commande  "Arr&#234;t" est envoy&#233; &#224; la fonction. Un bon exemple de l'endroit o&#249; on pourrait vouloir
+l'utiliser c'est lors de la personnalisation d'une configuration d'un r&#233;gulateur pour un d&#233;codeur sonore.
+Selon la vitesse du syst&#232;me informatique et le syst&#232;me DCC, un clic court
+et rapide donnerait un bref coup de klaxon ou de coup de sifflet. Maintenez la touche un peu plus longtemps produirait un coup de sifflet plus
+long.<br>
+
+<br>
+
+La case &#224; cocher Visible permet de "retirer" les boutons inutiles. Par
+d&#233;faut, tous les boutons de fonction sont activ&#233;s comme "visible" de sorte qu'ils puissent
+&#233;videmment &#234;tre vus. Mais s'il y a une seule fonction d'utilis&#233;e &#8212;
+par exemple les "lumi&#232;res" (F0) &#8212;, alors cette option fournit les
+capacit&#233; &#224; "cacher" l'ensemble des autres boutons. <br>
+
+<br>
+
+<span style="font-weight: bold;"> Attention! </span> D&#233;sactiver
+la case &#224; cocher "Visible"  doit &#234;tre l'une des derni&#232;res &#233;tapes effectu&#233;es
+pendant ce processus de personnalisation. La raison en est qu'une fois que le
+bouton est marqu&#233; comme "invisible" (en supprimant la case &#224; cocher), il est
+en effet invisible pour l'utilisateur et ne peut pas donc obtenir la "Fonction Modifier bouton" par un clic droit avec la souris .
+Pour rendre tous les boutons visibles <a  href="ThrottleWindowMenus.shtml"> s&#233;lectionner "View-> Show
+Toutes les touches de fonction. "</A> <br>
+<br>
+
+
+<br>
+<h2>Jynstruments</h2>
+Voir <a href="../scripting/Jynstruments.shtml"> l&#224; pour plus d'informations sur Jynstruments </a>. <br>
+<br>
+La fen&#234;tre du R&#233;gulateur est jynstrumentable, en particulier avec des commandes de fonction plus avanc&#233;es. <br>
+<br>
+A l'heure actuelle <a href="http://jmri.org/jython/Jynstruments/ThrottleFrame/"> 3 &#233;chantillons Jynstruments  sont livr&#233;s </a>,
+un pour la lumi&#232;re, l'un pour la corne et un pour le sifflet (fonction 0, 1 et 2).
+Mais ce n'est qu'un &#233;chantillon, ayez un &#339;il sur le code et personnalisez le pour vos besoins sp&#233;cifiques sur votre d&#233;codeur. <br>
+
+<br>
+<span style="font-style: italic;"> Notez que la barre d'outils Fen&#234;tre R&#233;gulateur est aussi
+Jynstrumentable, donc ici nous d&#233;posons le Jynstruments sur </span> <span style="font-style: italic;"> le contenu fen&#234;tre </span> <span style="font-style: italic;">
+lui-m&#234;me, non pas sur la barre d'outils. <br>
+</span>
+<!--#include virtual="/Footer" -->
+
+      </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
 </body>
 </html>

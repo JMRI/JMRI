@@ -6,7 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI Hardware Support - XPressNet - Lenz Feedback Bus
+  <title>JMRI Hardware Support - XpressNet - Lenz Feedback Bus
   Addressing</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -23,7 +23,7 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Hardware Support: XPressNet - Lenz Feedback Bus
+      <h1>Hardware Support: XpressNet - Lenz Feedback Bus
       Addressing</h1>
 
       <p>On Lenz systems, feedback from input devices is handled by
@@ -32,7 +32,60 @@
       Lenz accessory decoders which provide feedback capabilities
       (the LS100 for example).</p>
 
-      <h2>Addressing Accessory Decoders with XPressNet in JMRI</h2>
+      <h2>Adding an item to the table</h2>
+      <p>When you add an item to one of the tables, many times you only
+        have to fill in the numbers to have JMRI construct
+        the complete system name.<br>
+        Here's a summary, split up for
+        outputs (eg. Turnouts) and inputs (eg. Sensors):</p>
+
+      <table>
+        <tbody><tr>
+          <th>In/Out</th>
+          <th>Entry</th>
+          <th>Meaning</th>
+          <th>makes System Name</th>
+          <th>Mask</th>
+          <th>Equivalent</th>
+          <th>Minimum</th>
+          <th>Maximum</th>
+        </tr>
+        <tr>
+          <td>in</td>
+          <td>3</td>
+          <td>Feedback module 1, input 3</td>
+          <td>XS3</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>1024</td>
+        </tr>
+        <tr>
+          <td>in</td>
+          <td>99:3</td>
+          <td>Feedback module 99, input 3</td>
+          <td>XS787</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>1024</td>
+        </tr>
+        <tr>
+          <td>out</td>
+          <td>3</td>
+          <td>Turnout 3</td>
+          <td>XT3</td>
+          <td> </td>
+          <td> </td>
+          <td>1</td>
+          <td>1024</td>
+        </tr>
+        </tbody></table>
+      <!-- this table is an excerpt from the table in the help/en/html/doc/Technical/Names.shtml
+      based on information from the Hardware help pages
+      by Egbert Broerse @silverailscolo July 2017 -->
+
+      <h2>Addressing Accessory Decoders with XpressNet in JMRI</h2>
 
       <p>Each accessory decoder is addressed by giving it an
       address in the address space allocated by the NMRA for
@@ -40,8 +93,8 @@
       from 1 to 1024.</p>
 
       <p>In JMRI's tools, you can prefix the address with XT to
-      tell system the decoder is accessed via an XPressNet based
-      system. If you only have an XPressNet based system
+      tell system the decoder is accessed via an XpressNet based
+      system. If you only have an XpressNet based system
       configured, you can just use the address, and the programs
       will automatically assign an XT prefix for you.</p>
 
@@ -72,7 +125,7 @@
 
       <h2>Addressing Lenz Feedback Bus Sensors in JMRI</h2>
 
-      <p>the Lenz LR100 and LR101 Feedback Encoders are allowed to
+      <p>The Lenz LR100 and LR101 Feedback Encoders are allowed to
       have feedback addresses from 1 to 128. Lenz Recommends
       starting at address 65 and going up to avoid conflicts with
       turnouts providing feedback.</p>
@@ -81,7 +134,7 @@
       two addresses.</p>
 
       <p>Each feedback encoder includes 8 inputs. These inputs are
-      either either on or off. Each input is numbered from 1 to 8
+      either either On or Off. Each input is numbered from 1 to 8
       on the Feedback Encoder.</p>
 
       <p>To determine what feedback address is being reported by
@@ -106,16 +159,17 @@
       would enter <b>99:3</b></p>
 
       <p>In JMRI's tools, you can prefix the address with "XS" to
-      tell system the Sensor is accessed via an XPressNet based
-      system. If you only have an XPressNet system connection
+      tell the program the Sensor is accessed via an XpressNet based
+      system. If you only have an XpressNet system connection
       configured, you can just enter the address, and the programs
       will automatically assign an "XS" prefix for you.</p>
 
-      <p>Back to the <a href="index.shtml">XPressNet Help</a>
+      <p>Back to the <a href="index.shtml">XpressNet Help</a>
       page</p>
       <hr>
       Paul Bender<br>
-      paul.bender@acm.org <!--#include virtual="/Footer" -->
+      paul.bender@acm.org
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

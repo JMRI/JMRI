@@ -1,15 +1,17 @@
-// SpeedoConnectionTypeList.java
 package jmri.jmrix.bachrus;
 
+import jmri.jmrix.ConnectionTypeList;
+import org.openide.util.lookup.ServiceProvider;
+
 /**
- * Returns a list of valid BAchrus Connection Types
+ * Returns a list of valid Bachrus Connection Types
  * <P>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
  * @author Andrew Crosland Copyright (C) 2010
- * @version	$Revision$
- *
+  *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class SpeedoConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String BACHRUS = "Bachrus";

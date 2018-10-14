@@ -1,4 +1,3 @@
-// TamsComponentFactory.java
 package jmri.jmrix.tams.swing;
 
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
@@ -18,6 +17,7 @@ public class TamsComponentFactory extends jmri.jmrix.swing.ComponentFactory {
     /**
      * Provide a menu with all items attached to this system connection
      */
+    @Override
     public javax.swing.JMenu getMenu() {
         if (memo.getDisabled()) {
             return null;

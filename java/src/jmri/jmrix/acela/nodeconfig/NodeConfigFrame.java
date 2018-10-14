@@ -3,7 +3,8 @@ package jmri.jmrix.acela.nodeconfig;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
-import java.util.ResourceBundle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
@@ -16,20 +17,20 @@ import javax.swing.border.Border;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import jmri.jmrix.acela.AcelaNode;
-import jmri.jmrix.acela.AcelaTrafficController;
+import jmri.jmrix.acela.AcelaSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user configuration of Acela nodes
  *
- * @author	Bob Jacobsen Copyright (C) 2004, 2007, 2008
- * @author	Dave Duchamp Copyright (C) 2004, 2006
+ * @author Bob Jacobsen Copyright (C) 2004, 2007, 2008
+ * @author Dave Duchamp Copyright (C) 2004, 2006
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
-    private jmri.jmrix.acela.AcelaSystemConnectionMemo _memo = null;
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.acela.nodeconfig.NodeConfigBundle");
+    private AcelaSystemConnectionMemo _memo = null;
+
     protected Container contentPane;
     protected NodeConfigModel d8outputConfigModel;
     protected NodeConfigModel swoutputConfigModel;
@@ -40,68 +41,68 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     protected NodeConfigModel wmsensorConfigModel;
     protected NodeConfigModel sysensorConfigModel;
 
-    protected javax.swing.JLabel thenodesStaticH = new javax.swing.JLabel("  00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19");
-    protected javax.swing.JLabel thenodesStaticC = new javax.swing.JLabel("");
-    protected javax.swing.JLabel thenodesStaticP = new javax.swing.JLabel("              Hardware Polling Double Check Not Supported Yet");
+    protected JLabel thenodesStaticH = new JLabel("  00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19");
+    protected JLabel thenodesStaticC = new JLabel("");
+    protected JLabel thenodesStaticP = new JLabel("              " + Bundle.getMessage("HwNotYet"));
 
     protected javax.swing.JTextField nodeAddrField = new javax.swing.JTextField(3);
-    protected javax.swing.JLabel nodeAddrStatic = new javax.swing.JLabel("000");
-    protected javax.swing.JLabel nodeTypeStatic = new javax.swing.JLabel("Acela");
+    protected JLabel nodeAddrStatic = new JLabel("000");
+    protected JLabel nodeTypeStatic = new JLabel("Acela"); // NOI18N
     protected javax.swing.JComboBox<String> nodeAddrBox;
     protected javax.swing.JComboBox<String> nodeTypeBox;
 
-    protected javax.swing.JButton addButton = new javax.swing.JButton(rb.getString("ButtonAdd"));
-    protected javax.swing.JButton editButton = new javax.swing.JButton(rb.getString("ButtonEdit"));
-    protected javax.swing.JButton deleteButton = new javax.swing.JButton(rb.getString("ButtonDelete"));
-    protected javax.swing.JButton doneButton = new javax.swing.JButton(rb.getString("ButtonDone"));
-    protected javax.swing.JButton updateButton = new javax.swing.JButton(rb.getString("ButtonUpdate"));
-    protected javax.swing.JButton cancelButton = new javax.swing.JButton(rb.getString("ButtonCancel"));
+    protected javax.swing.JButton addButton = new javax.swing.JButton(Bundle.getMessage("ButtonAdd"));
+    protected javax.swing.JButton editButton = new javax.swing.JButton(Bundle.getMessage("ButtonEdit"));
+    protected javax.swing.JButton deleteButton = new javax.swing.JButton(Bundle.getMessage("ButtonDelete"));
+    protected javax.swing.JButton doneButton = new javax.swing.JButton(Bundle.getMessage("ButtonDone"));
+    protected javax.swing.JButton updateButton = new javax.swing.JButton(Bundle.getMessage("ButtonUpdate"));
+    protected javax.swing.JButton cancelButton = new javax.swing.JButton(Bundle.getMessage("ButtonCancel"));
 
-    protected javax.swing.JLabel statusText1 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusText2 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusText3 = new javax.swing.JLabel();
+    protected JLabel statusText1 = new JLabel();
+    protected JLabel statusText2 = new JLabel();
+    protected JLabel statusText3 = new JLabel();
 
-    protected javax.swing.JLabel statusTextAcela1 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextAcela2 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextAcela3 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextAcela4 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextAcela5 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextAcela6 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextAcela7 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextAcela8 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextAcela9 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextAcela10 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextAcela11 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextTBrain1 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextTBrain2 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextTBrain3 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextDash81 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextDash82 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextDash83 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextWatchman1 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextWatchman2 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextWatchman3 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextSignalman1 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextSignalman2 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextSignalman3 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextSwitchman1 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextSwitchman2 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextSwitchman3 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextYardMaster1 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextYardMaster2 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextYardMaster3 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextSentry1 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextSentry2 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusTextSentry3 = new javax.swing.JLabel();
+    protected JLabel statusTextAcela1 = new JLabel();
+    protected JLabel statusTextAcela2 = new JLabel();
+    protected JLabel statusTextAcela3 = new JLabel();
+    protected JLabel statusTextAcela4 = new JLabel();
+    protected JLabel statusTextAcela5 = new JLabel();
+    protected JLabel statusTextAcela6 = new JLabel();
+    protected JLabel statusTextAcela7 = new JLabel();
+    protected JLabel statusTextAcela8 = new JLabel();
+    protected JLabel statusTextAcela9 = new JLabel();
+    protected JLabel statusTextAcela10 = new JLabel();
+    protected JLabel statusTextAcela11 = new JLabel();
+    protected JLabel statusTextTBrain1 = new JLabel();
+    protected JLabel statusTextTBrain2 = new JLabel();
+    protected JLabel statusTextTBrain3 = new JLabel();
+    protected JLabel statusTextDash81 = new JLabel();
+    protected JLabel statusTextDash82 = new JLabel();
+    protected JLabel statusTextDash83 = new JLabel();
+    protected JLabel statusTextWatchman1 = new JLabel();
+    protected JLabel statusTextWatchman2 = new JLabel();
+    protected JLabel statusTextWatchman3 = new JLabel();
+    protected JLabel statusTextSignalman1 = new JLabel();
+    protected JLabel statusTextSignalman2 = new JLabel();
+    protected JLabel statusTextSignalman3 = new JLabel();
+    protected JLabel statusTextSwitchman1 = new JLabel();
+    protected JLabel statusTextSwitchman2 = new JLabel();
+    protected JLabel statusTextSwitchman3 = new JLabel();
+    protected JLabel statusTextYardMaster1 = new JLabel();
+    protected JLabel statusTextYardMaster2 = new JLabel();
+    protected JLabel statusTextYardMaster3 = new JLabel();
+    protected JLabel statusTextSentry1 = new JLabel();
+    protected JLabel statusTextSentry2 = new JLabel();
+    protected JLabel statusTextSentry3 = new JLabel();
 
-    protected javax.swing.JPanel panelAcela = new JPanel();
-    protected javax.swing.JPanel panelTBrain = new JPanel();
-    protected javax.swing.JPanel panelDash8 = new JPanel();
-    protected javax.swing.JPanel panelWatchman = new JPanel();
-    protected javax.swing.JPanel panelSignalman = new JPanel();
-    protected javax.swing.JPanel panelSwitchman = new JPanel();
-    protected javax.swing.JPanel panelYardMaster = new JPanel();
-    protected javax.swing.JPanel panelSentry = new JPanel();
+    protected JPanel panelAcela = new JPanel();
+    protected JPanel panelTBrain = new JPanel();
+    protected JPanel panelDash8 = new JPanel();
+    protected JPanel panelWatchman = new JPanel();
+    protected JPanel panelSignalman = new JPanel();
+    protected JPanel panelSwitchman = new JPanel();
+    protected JPanel panelYardMaster = new JPanel();
+    protected JPanel panelSentry = new JPanel();
 
     protected boolean changedNode = false;  // true if a node was changed, deleted, or added
     protected boolean editMode = false;     // true if in edit mode
@@ -112,54 +113,54 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
     protected boolean errorInStatus1 = false;
     protected boolean errorInStatus2 = false;
-    protected String stdStatus1 = rb.getString("NotesStd1");
-    protected String stdStatus2 = rb.getString("NotesStd2");
-    protected String stdStatus3 = rb.getString("NotesStd3");
-    protected String stdStatusAcela1 = rb.getString("NotesStdAcela1");
-    protected String stdStatusAcela2 = rb.getString("NotesStdAcela2");
-    protected String stdStatusAcela3 = rb.getString("NotesStdAcela3");
-    protected String stdStatusAcela4 = rb.getString("NotesStdAcela4");
-    protected String stdStatusAcela5 = rb.getString("NotesStdAcela5");
-    protected String stdStatusAcela6 = rb.getString("NotesStdAcela6");
-    protected String stdStatusAcela7 = rb.getString("NotesStdAcela7");
-    protected String stdStatusAcela8 = rb.getString("NotesStdAcela8");
-    protected String stdStatusAcela9 = rb.getString("NotesStdAcela9");
-    protected String stdStatusAcela10 = rb.getString("NotesStdAcela10");
-    protected String stdStatusAcela11 = rb.getString("NotesStdAcela11");
-    protected String stdStatusTBrain1 = rb.getString("NotesStdTBrain1");
-    protected String stdStatusTBrain2 = rb.getString("NotesStdTBrain2");
-    protected String stdStatusTBrain3 = rb.getString("NotesStdTBrain3");
-    protected String stdStatusDash81 = rb.getString("NotesStdDash81");
-    protected String stdStatusDash82 = rb.getString("NotesStdDash82");
-    protected String stdStatusDash83 = rb.getString("NotesStdDash83");
-    protected String stdStatusWatchman1 = rb.getString("NotesStdWatchman1");
-    protected String stdStatusWatchman2 = rb.getString("NotesStdWatchman2");
-    protected String stdStatusWatchman3 = rb.getString("NotesStdWatchman3");
-    protected String stdStatusSignalman1 = rb.getString("NotesStdSignalman1");
-    protected String stdStatusSignalman2 = rb.getString("NotesStdSignalman2");
-    protected String stdStatusSignalman3 = rb.getString("NotesStdSignalman3");
-    protected String stdStatusSwitchman1 = rb.getString("NotesStdSwitchman1");
-    protected String stdStatusSwitchman2 = rb.getString("NotesStdSwitchman2");
-    protected String stdStatusSwitchman3 = rb.getString("NotesStdSwitchman3");
-    protected String stdStatusYardMaster1 = rb.getString("NotesStdYardMaster1");
-    protected String stdStatusYardMaster2 = rb.getString("NotesStdYardMaster2");
-    protected String stdStatusYardMaster3 = rb.getString("NotesStdYardMaster3");
-    protected String stdStatusSentry1 = rb.getString("NotesStdSentry1");
-    protected String stdStatusSentry2 = rb.getString("NotesStdSentry2");
-    protected String stdStatusSentry3 = rb.getString("NotesStdSentry3");
-    protected String editStatus1 = rb.getString("NotesEdit1");
-    protected String editStatus2 = rb.getString("NotesEdit2");
-    protected String editStatus3 = rb.getString("NotesEdit3");
-    protected String infoStatus1 = rb.getString("NotesStd1");
-    protected String infoStatus2 = rb.getString("NotesStd2");
-    protected String infoStatus3 = rb.getString("NotesStd3");
+    protected String stdStatus1 = Bundle.getMessage("NotesStd1");
+    protected String stdStatus2 = Bundle.getMessage("NotesStd2");
+    protected String stdStatus3 = Bundle.getMessage("NotesStd3");
+    protected String stdStatusAcela1 = Bundle.getMessage("NotesStdAcela1");
+    protected String stdStatusAcela2 = Bundle.getMessage("NotesStdAcela2");
+    protected String stdStatusAcela3 = Bundle.getMessage("NotesStdAcela3");
+    protected String stdStatusAcela4 = Bundle.getMessage("NotesStdAcela4");
+    protected String stdStatusAcela5 = Bundle.getMessage("NotesStdAcela5");
+    protected String stdStatusAcela6 = Bundle.getMessage("NotesStdAcela6");
+    protected String stdStatusAcela7 = Bundle.getMessage("NotesStdAcela7");
+    protected String stdStatusAcela8 = Bundle.getMessage("NotesStdAcela8");
+    protected String stdStatusAcela9 = Bundle.getMessage("NotesStdAcela9");
+    protected String stdStatusAcela10 = Bundle.getMessage("NotesStdAcela10");
+    protected String stdStatusAcela11 = Bundle.getMessage("NotesStdAcela11");
+    protected String stdStatusTBrain1 = Bundle.getMessage("NotesStdTBrain1");
+    protected String stdStatusTBrain2 = Bundle.getMessage("NotesStdTBrain2");
+    protected String stdStatusTBrain3 = Bundle.getMessage("NotesStdTBrain3");
+    protected String stdStatusDash81 = Bundle.getMessage("NotesStdDash81");
+    protected String stdStatusDash82 = Bundle.getMessage("NotesStdDash82");
+    protected String stdStatusDash83 = Bundle.getMessage("NotesStdDash83");
+    protected String stdStatusWatchman1 = Bundle.getMessage("NotesStdWatchman1");
+    protected String stdStatusWatchman2 = Bundle.getMessage("NotesStdWatchman2");
+    protected String stdStatusWatchman3 = Bundle.getMessage("NotesStdWatchman3");
+    protected String stdStatusSignalman1 = Bundle.getMessage("NotesStdSignalman1");
+    protected String stdStatusSignalman2 = Bundle.getMessage("NotesStdSignalman2");
+    protected String stdStatusSignalman3 = Bundle.getMessage("NotesStdSignalman3");
+    protected String stdStatusSwitchman1 = Bundle.getMessage("NotesStdSwitchman1");
+    protected String stdStatusSwitchman2 = Bundle.getMessage("NotesStdSwitchman2");
+    protected String stdStatusSwitchman3 = Bundle.getMessage("NotesStdSwitchman3");
+    protected String stdStatusYardMaster1 = Bundle.getMessage("NotesStdYardMaster1");
+    protected String stdStatusYardMaster2 = Bundle.getMessage("NotesStdYardMaster2");
+    protected String stdStatusYardMaster3 = Bundle.getMessage("NotesStdYardMaster3");
+    protected String stdStatusSentry1 = Bundle.getMessage("NotesStdSentry1");
+    protected String stdStatusSentry2 = Bundle.getMessage("NotesStdSentry2");
+    protected String stdStatusSentry3 = Bundle.getMessage("NotesStdSentry3");
+    protected String editStatus1 = Bundle.getMessage("NotesEdit1");
+    protected String editStatus2 = Bundle.getMessage("NotesEdit2");
+    protected String editStatus3 = Bundle.getMessage("NotesEdit3");
+    protected String infoStatus1 = Bundle.getMessage("NotesStd1");
+    protected String infoStatus2 = Bundle.getMessage("NotesStd2");
+    protected String infoStatus3 = Bundle.getMessage("NotesStd3");
 
     protected javax.swing.JTextField receiveDelayField = new javax.swing.JTextField(3);
 
     /**
      * Constructor method
      */
-    public NodeConfigFrame(jmri.jmrix.acela.AcelaSystemConnectionMemo memo) {
+    public NodeConfigFrame(AcelaSystemConnectionMemo memo) {
         super();
         _memo = memo;
     }
@@ -167,13 +168,10 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Initialize the config window
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
+    @Override
     public void initComponents() {
-        setTitle(rb.getString("WindowTitle"));
+        setTitle(Bundle.getMessage("ConfigNodesTitle"));
 
-//        Container contentPane = getContentPane();
         contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
@@ -182,14 +180,14 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
 
         // Copy and pasted from the info button
-        String nodesstring = "";
+        StringBuilder nodesstring = new StringBuilder("");
         int tempnumnodes = _memo.getTrafficController().getNumNodes();
         for (int i = 0; i < tempnumnodes; i++) {
             AcelaNode tempnode;
             tempnode = (AcelaNode) _memo.getTrafficController().getNodeFromAddress(i);
-            nodesstring = nodesstring + " " + tempnode.getNodeTypeString();
+            nodesstring.append(" ").append(tempnode.getNodeTypeString());
         }
-        thenodesStaticC.setText(nodesstring);
+        thenodesStaticC.setText(nodesstring.toString());
 
         // panelthenodes displays the current node configuration and polling result
         JPanel panelthenodes = new JPanel();
@@ -197,25 +195,25 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
         JPanel panelthenodes1 = new JPanel();
         panelthenodes1.setLayout(new FlowLayout());
-        panelthenodes1.add(new JLabel("    The nodes: "));
+        panelthenodes1.add(new JLabel(Bundle.getMessage("NodesLabel") + " "));
         panelthenodes1.add(thenodesStaticH);
         panelthenodes.add(panelthenodes1);
 
         JPanel panelthenodes2 = new JPanel();
         panelthenodes2.setLayout(new FlowLayout());
-        panelthenodes2.add(new JLabel("As Configured: "));
+        panelthenodes2.add(new JLabel(Bundle.getMessage("AsConfiguredLabel") + " "));
         panelthenodes2.add(thenodesStaticC);
         panelthenodes.add(panelthenodes2);
 
         JPanel panelthenodes3 = new JPanel();
         panelthenodes3.setLayout(new FlowLayout());
-        panelthenodes3.add(new JLabel("    As Polled: "));
+        panelthenodes3.add(new JLabel(Bundle.getMessage("AsPolledLabel") + " "));
         panelthenodes3.add(thenodesStaticP);
         panelthenodes.add(panelthenodes3);
 
         Border panelthenodesBorder = BorderFactory.createEtchedBorder();
         Border panelthenodesTitled = BorderFactory.createTitledBorder(panelthenodesBorder,
-                rb.getString("BoxLabelNodes"));
+                Bundle.getMessage("BoxLabelNodes"));
         panelthenodes.setBorder(panelthenodesTitled);
 
         contentPane.add(panelthenodes);
@@ -224,16 +222,17 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         JPanel panel11 = new JPanel();
         panel11.setLayout(new FlowLayout());
 
-        panel11.add(new JLabel(rb.getString("LabelNodeAddress") + " "));
+        panel11.add(new JLabel(Bundle.getMessage("LabelNodeAddress") + " "));
         nodeAddrBox = new JComboBox<String>(AcelaNode.getNodeNames());
-        nodeAddrBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent event) {
+        nodeAddrBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
                 infoButtonActionPerformed();
             }
         });
         panel11.add(nodeAddrBox);
         panel11.add(nodeAddrField);
-//        nodeAddrField.setToolTipText(rb.getString("TipNodeAddress"));
+//        nodeAddrField.setToolTipText(Bundle.getMessage("TipNodeAddress"));
         nodeAddrField.setText("0");
         panel11.add(nodeAddrStatic);
         nodeAddrField.setVisible(false);
@@ -243,10 +242,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         // panelNodeInfo is the node type
         JPanel panelNodeInfo = new JPanel();
 
-        panelNodeInfo.add(new JLabel("   " + rb.getString("LabelNodeType") + " "));
+        panelNodeInfo.add(new JLabel("   " + Bundle.getMessage("LabelNodeType") + " "));
         nodeTypeBox = new JComboBox<String>(AcelaNode.getModuleNames());
-        nodeTypeBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent event) {
+        nodeTypeBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
                 String s = (String) nodeTypeBox.getSelectedItem();
                 if (s.equals("Acela")) {
                     panelAcela.setVisible(true);
@@ -334,7 +334,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             }
         });
         panelNodeInfo.add(nodeTypeBox);
-        nodeTypeBox.setToolTipText(rb.getString("TipNodeType"));
+        nodeTypeBox.setToolTipText(Bundle.getMessage("TipNodeType"));
         panelNodeInfo.add(nodeTypeStatic);
         nodeTypeBox.setVisible(false);
         nodeTypeStatic.setVisible(true);
@@ -411,7 +411,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
         Border panelAcelaBorder = BorderFactory.createEtchedBorder();
         Border panelAcelaTitled = BorderFactory.createTitledBorder(panelAcelaBorder,
-                rb.getString("BoxLabelNodeSpecific"));
+                Bundle.getMessage("BoxLabelNodeSpecific"));
         panelAcela.setBorder(panelAcelaTitled);
 
         contentPane.add(panelAcela);
@@ -448,17 +448,17 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         d8outputConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180, 125));
 
         JComboBox<String> d8outputWiredCombo = new JComboBox<String>();
-        d8outputWiredCombo.addItem(rb.getString("OutputWiredNC"));
-        d8outputWiredCombo.addItem(rb.getString("OutputWiredNO"));
+        d8outputWiredCombo.addItem(Bundle.getMessage("OutputWiredNC"));
+        d8outputWiredCombo.addItem(Bundle.getMessage("OutputWiredNO"));
 
         JComboBox<String> d8initialStateCombo = new JComboBox<String>();
-        d8initialStateCombo.addItem(rb.getString("InitialStateOn"));
-        d8initialStateCombo.addItem(rb.getString("InitialStateOff"));
+        d8initialStateCombo.addItem(Bundle.getMessage("InitialStateOn"));
+        d8initialStateCombo.addItem(Bundle.getMessage("InitialStateOff"));
 
         JComboBox<String> d8outputTypeCombo = new JComboBox<String>();
-        d8outputTypeCombo.addItem(rb.getString("OutputTypeONOFF"));
-        d8outputTypeCombo.addItem(rb.getString("OutputTypePULSE"));
-        d8outputTypeCombo.addItem(rb.getString("OutputTypeBLINK"));
+        d8outputTypeCombo.addItem(Bundle.getMessage("OutputTypeONOFF"));
+        d8outputTypeCombo.addItem(Bundle.getMessage("OutputTypePULSE"));
+        d8outputTypeCombo.addItem(Bundle.getMessage("OutputTypeBLINK"));
 
         JComboBox<String> d8outputLengthCombo = new JComboBox<String>();
         for (int t = 0; t < 255; t++) {
@@ -504,7 +504,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
         Border panelDash8Border = BorderFactory.createEtchedBorder();
         Border panelDash8Titled = BorderFactory.createTitledBorder(panelDash8Border,
-                rb.getString("BoxLabelNodeSpecific"));
+                Bundle.getMessage("BoxLabelNodeSpecific"));
         panelDash8.setBorder(panelDash8Titled);
 
         panelDash8.setVisible(false);
@@ -538,17 +538,17 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         TBoutputConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180, 62));
 
         JComboBox<String> TBoutputWiredCombo = new JComboBox<String>();
-        TBoutputWiredCombo.addItem(rb.getString("OutputWiredNC"));
-        TBoutputWiredCombo.addItem(rb.getString("OutputWiredNO"));
+        TBoutputWiredCombo.addItem(Bundle.getMessage("OutputWiredNC"));
+        TBoutputWiredCombo.addItem(Bundle.getMessage("OutputWiredNO"));
 
         JComboBox<String> TBoutputTypeCombo = new JComboBox<String>();
-        TBoutputTypeCombo.addItem(rb.getString("OutputTypeONOFF"));
-        TBoutputTypeCombo.addItem(rb.getString("OutputTypePULSE"));
-        TBoutputTypeCombo.addItem(rb.getString("OutputTypeBLINK"));
+        TBoutputTypeCombo.addItem(Bundle.getMessage("OutputTypeONOFF"));
+        TBoutputTypeCombo.addItem(Bundle.getMessage("OutputTypePULSE"));
+        TBoutputTypeCombo.addItem(Bundle.getMessage("OutputTypeBLINK"));
 
         JComboBox<String> TBinitialStateCombo = new JComboBox<String>();
-        TBinitialStateCombo.addItem(rb.getString("InitialStateOn"));
-        TBinitialStateCombo.addItem(rb.getString("InitialStateOff"));
+        TBinitialStateCombo.addItem(Bundle.getMessage("InitialStateOn"));
+        TBinitialStateCombo.addItem(Bundle.getMessage("InitialStateOff"));
 
         JComboBox<String> TBoutputLengthCombo = new JComboBox<String>();
         for (int t = 0; t < 255; t++) {
@@ -600,14 +600,14 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         TBsensorConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180, 62));
 
         JComboBox<String> TBfilterTypeCombo = new JComboBox<String>();
-        TBfilterTypeCombo.addItem(rb.getString("FilterTypeNoise"));
-        TBfilterTypeCombo.addItem(rb.getString("FilterTypeDebounce"));
-        TBfilterTypeCombo.addItem(rb.getString("FilterTypeCarGap"));
-        TBfilterTypeCombo.addItem(rb.getString("FilterTypeDirtyTrack"));
+        TBfilterTypeCombo.addItem(Bundle.getMessage("FilterTypeNoise"));
+        TBfilterTypeCombo.addItem(Bundle.getMessage("FilterTypeDebounce"));
+        TBfilterTypeCombo.addItem(Bundle.getMessage("FilterTypeCarGap"));
+        TBfilterTypeCombo.addItem(Bundle.getMessage("FilterTypeDirtyTrack"));
 
         JComboBox<String> TBfilterPolarityCombo = new JComboBox<String>();
-        TBfilterPolarityCombo.addItem(rb.getString("FilterNormalPolarity"));
-        TBfilterPolarityCombo.addItem(rb.getString("FilterInversePolarity"));
+        TBfilterPolarityCombo.addItem(Bundle.getMessage("FilterNormalPolarity"));
+        TBfilterPolarityCombo.addItem(Bundle.getMessage("FilterInversePolarity"));
 
         JComboBox<String> TBfilterThresholdCombo = new JComboBox<String>();
         for (int t = 0; t < 32; t++) {
@@ -648,7 +648,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         // Finish Set up the TrainBrain nodes
         Border panelTBrainBorder = BorderFactory.createEtchedBorder();
         Border panelTBrainTitled = BorderFactory.createTitledBorder(panelTBrainBorder,
-                rb.getString("BoxLabelNodeSpecific"));
+                Bundle.getMessage("BoxLabelNodeSpecific"));
         panelTBrain.setBorder(panelTBrainTitled);
 
         contentPane.add(panelTBrain);
@@ -686,14 +686,14 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         wmsensorConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180, 125));
 
         JComboBox<String> wmfilterTypeCombo = new JComboBox<String>();
-        wmfilterTypeCombo.addItem(rb.getString("FilterTypeNoise"));
-        wmfilterTypeCombo.addItem(rb.getString("FilterTypeDebounce"));
-        wmfilterTypeCombo.addItem(rb.getString("FilterTypeCarGap"));
-        wmfilterTypeCombo.addItem(rb.getString("FilterTypeDirtyTrack"));
+        wmfilterTypeCombo.addItem(Bundle.getMessage("FilterTypeNoise"));
+        wmfilterTypeCombo.addItem(Bundle.getMessage("FilterTypeDebounce"));
+        wmfilterTypeCombo.addItem(Bundle.getMessage("FilterTypeCarGap"));
+        wmfilterTypeCombo.addItem(Bundle.getMessage("FilterTypeDirtyTrack"));
 
         JComboBox<String> wmfilterPolarityCombo = new JComboBox<String>();
-        wmfilterPolarityCombo.addItem(rb.getString("FilterNormalPolarity"));
-        wmfilterPolarityCombo.addItem(rb.getString("FilterInversePolarity"));
+        wmfilterPolarityCombo.addItem(Bundle.getMessage("FilterNormalPolarity"));
+        wmfilterPolarityCombo.addItem(Bundle.getMessage("FilterInversePolarity"));
 
         JComboBox<String> wmfilterThresholdCombo = new JComboBox<String>();
         for (int t = 0; t < 32; t++) {
@@ -733,7 +733,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
         Border panelWatchmanBorder = BorderFactory.createEtchedBorder();
         Border panelWatchmanTitled = BorderFactory.createTitledBorder(panelWatchmanBorder,
-                rb.getString("BoxLabelNodeSpecific"));
+                Bundle.getMessage("BoxLabelNodeSpecific"));
         panelWatchman.setBorder(panelWatchmanTitled);
 
         contentPane.add(panelWatchman);
@@ -771,17 +771,17 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         smoutputConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180, 125));
 
         JComboBox<String> smoutputWiredCombo = new JComboBox<String>();
-        smoutputWiredCombo.addItem(rb.getString("OutputWiredNC"));
-        smoutputWiredCombo.addItem(rb.getString("OutputWiredNO"));
+        smoutputWiredCombo.addItem(Bundle.getMessage("OutputWiredNC"));
+        smoutputWiredCombo.addItem(Bundle.getMessage("OutputWiredNO"));
 
         JComboBox<String> sminitialStateCombo = new JComboBox<String>();
-        sminitialStateCombo.addItem(rb.getString("InitialStateOn"));
-        sminitialStateCombo.addItem(rb.getString("InitialStateOff"));
+        sminitialStateCombo.addItem(Bundle.getMessage("InitialStateOn"));
+        sminitialStateCombo.addItem(Bundle.getMessage("InitialStateOff"));
 
         JComboBox<String> smoutputTypeCombo = new JComboBox<String>();
-        smoutputTypeCombo.addItem(rb.getString("OutputTypeONOFF"));
-        smoutputTypeCombo.addItem(rb.getString("OutputTypePULSE"));
-        smoutputTypeCombo.addItem(rb.getString("OutputTypeBLINK"));
+        smoutputTypeCombo.addItem(Bundle.getMessage("OutputTypeONOFF"));
+        smoutputTypeCombo.addItem(Bundle.getMessage("OutputTypePULSE"));
+        smoutputTypeCombo.addItem(Bundle.getMessage("OutputTypeBLINK"));
 
         JComboBox<String> smoutputLengthCombo = new JComboBox<String>();
         for (int t = 0; t < 255; t++) {
@@ -827,7 +827,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
         Border panelSignalmanBorder = BorderFactory.createEtchedBorder();
         Border panelSignalmanTitled = BorderFactory.createTitledBorder(panelSignalmanBorder,
-                rb.getString("BoxLabelNodeSpecific"));
+                Bundle.getMessage("BoxLabelNodeSpecific"));
         panelSignalman.setBorder(panelSignalmanTitled);
 
         panelSignalman.setVisible(false);
@@ -865,17 +865,17 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         ymoutputConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180, 125));
 
         JComboBox<String> ymoutputWiredCombo = new JComboBox<String>();
-        ymoutputWiredCombo.addItem(rb.getString("OutputWiredNC"));
-        ymoutputWiredCombo.addItem(rb.getString("OutputWiredNO"));
+        ymoutputWiredCombo.addItem(Bundle.getMessage("OutputWiredNC"));
+        ymoutputWiredCombo.addItem(Bundle.getMessage("OutputWiredNO"));
 
         JComboBox<String> yminitialStateCombo = new JComboBox<String>();
-        yminitialStateCombo.addItem(rb.getString("InitialStateOn"));
-        yminitialStateCombo.addItem(rb.getString("InitialStateOff"));
+        yminitialStateCombo.addItem(Bundle.getMessage("InitialStateOn"));
+        yminitialStateCombo.addItem(Bundle.getMessage("InitialStateOff"));
 
         JComboBox<String> ymoutputTypeCombo = new JComboBox<String>();
-        ymoutputTypeCombo.addItem(rb.getString("OutputTypeONOFF"));
-        ymoutputTypeCombo.addItem(rb.getString("OutputTypePULSE"));
-        ymoutputTypeCombo.addItem(rb.getString("OutputTypeBLINK"));
+        ymoutputTypeCombo.addItem(Bundle.getMessage("OutputTypeONOFF"));
+        ymoutputTypeCombo.addItem(Bundle.getMessage("OutputTypePULSE"));
+        ymoutputTypeCombo.addItem(Bundle.getMessage("OutputTypeBLINK"));
 
         JComboBox<String> ymoutputLengthCombo = new JComboBox<String>();
         for (int t = 0; t < 255; t++) {
@@ -921,7 +921,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
         Border panelYardMasterBorder = BorderFactory.createEtchedBorder();
         Border panelYardMasterTitled = BorderFactory.createTitledBorder(panelYardMasterBorder,
-                rb.getString("BoxLabelNodeSpecific"));
+                Bundle.getMessage("BoxLabelNodeSpecific"));
         panelYardMaster.setBorder(panelYardMasterTitled);
 
         panelYardMaster.setVisible(false);
@@ -959,17 +959,17 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         swoutputConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180, 125));
 
         JComboBox<String> swoutputWiredCombo = new JComboBox<String>();
-        swoutputWiredCombo.addItem(rb.getString("OutputWiredNC"));
-        swoutputWiredCombo.addItem(rb.getString("OutputWiredNO"));
+        swoutputWiredCombo.addItem(Bundle.getMessage("OutputWiredNC"));
+        swoutputWiredCombo.addItem(Bundle.getMessage("OutputWiredNO"));
 
         JComboBox<String> swinitialStateCombo = new JComboBox<String>();
-        swinitialStateCombo.addItem(rb.getString("InitialStateOn"));
-        swinitialStateCombo.addItem(rb.getString("InitialStateOff"));
+        swinitialStateCombo.addItem(Bundle.getMessage("InitialStateOn"));
+        swinitialStateCombo.addItem(Bundle.getMessage("InitialStateOff"));
 
         JComboBox<String> swoutputTypeCombo = new JComboBox<String>();
-        swoutputTypeCombo.addItem(rb.getString("OutputTypeONOFF"));
-        swoutputTypeCombo.addItem(rb.getString("OutputTypePULSE"));
-        swoutputTypeCombo.addItem(rb.getString("OutputTypeBLINK"));
+        swoutputTypeCombo.addItem(Bundle.getMessage("OutputTypeONOFF"));
+        swoutputTypeCombo.addItem(Bundle.getMessage("OutputTypePULSE"));
+        swoutputTypeCombo.addItem(Bundle.getMessage("OutputTypeBLINK"));
 
         JComboBox<String> swoutputLengthCombo = new JComboBox<String>();
         for (int t = 0; t < 255; t++) {
@@ -1015,7 +1015,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
         Border panelSwitchmanBorder = BorderFactory.createEtchedBorder();
         Border panelSwitchmanTitled = BorderFactory.createTitledBorder(panelSwitchmanBorder,
-                rb.getString("BoxLabelNodeSpecific"));
+                Bundle.getMessage("BoxLabelNodeSpecific"));
         panelSwitchman.setBorder(panelSwitchmanTitled);
 
         panelSwitchman.setVisible(false);
@@ -1053,14 +1053,14 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         sysensorConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(180, 125));
 
         JComboBox<String> syfilterTypeCombo = new JComboBox<String>();
-        syfilterTypeCombo.addItem(rb.getString("FilterTypeNoise"));
-        syfilterTypeCombo.addItem(rb.getString("FilterTypeDebounce"));
-        syfilterTypeCombo.addItem(rb.getString("FilterTypeCarGap"));
-        syfilterTypeCombo.addItem(rb.getString("FilterTypeDirtyTrack"));
+        syfilterTypeCombo.addItem(Bundle.getMessage("FilterTypeNoise"));
+        syfilterTypeCombo.addItem(Bundle.getMessage("FilterTypeDebounce"));
+        syfilterTypeCombo.addItem(Bundle.getMessage("FilterTypeCarGap"));
+        syfilterTypeCombo.addItem(Bundle.getMessage("FilterTypeDirtyTrack"));
 
         JComboBox<String> syfilterPolarityCombo = new JComboBox<String>();
-        syfilterPolarityCombo.addItem(rb.getString("FilterNormalPolarity"));
-        syfilterPolarityCombo.addItem(rb.getString("FilterInversePolarity"));
+        syfilterPolarityCombo.addItem(Bundle.getMessage("FilterNormalPolarity"));
+        syfilterPolarityCombo.addItem(Bundle.getMessage("FilterInversePolarity"));
 
         JComboBox<String> syfilterThresholdCombo = new JComboBox<String>();
         for (int t = 0; t < 32; t++) {
@@ -1100,7 +1100,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
         Border panelSentryBorder = BorderFactory.createEtchedBorder();
         Border panelSentryTitled = BorderFactory.createTitledBorder(panelSentryBorder,
-                rb.getString("BoxLabelNodeSpecific"));
+                Bundle.getMessage("BoxLabelNodeSpecific"));
         panelSentry.setBorder(panelSentryTitled);
 
         contentPane.add(panelSentry);
@@ -1129,69 +1129,75 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         panel3.add(panel33);
         Border panel3Border = BorderFactory.createEtchedBorder();
         Border panel3Titled = BorderFactory.createTitledBorder(panel3Border,
-                rb.getString("BoxLabelNotes"));
+                Bundle.getMessage("BoxLabelNotes"));
         panel3.setBorder(panel3Titled);
         contentPane.add(panel3);
 
         // Set up buttons
         JPanel panel4 = new JPanel();
         panel4.setLayout(new FlowLayout());
-        addButton.setText(rb.getString("ButtonAdd"));
+        addButton.setText(Bundle.getMessage("ButtonAdd"));
         addButton.setVisible(true);
-        addButton.setToolTipText(rb.getString("TipAddButton"));
-        addButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+        addButton.setToolTipText(Bundle.getMessage("TipAddButton"));
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 addButtonActionPerformed();
             }
         });
         panel4.add(addButton);
-        editButton.setText(rb.getString("ButtonEdit"));
+        editButton.setText(Bundle.getMessage("ButtonEdit"));
         editButton.setVisible(true);
-        editButton.setToolTipText(rb.getString("TipEditButton"));
+        editButton.setToolTipText(Bundle.getMessage("TipEditButton"));
         panel4.add(editButton);
-        editButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+        editButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 editButtonActionPerformed();
             }
         });
         panel4.add(deleteButton);
-        deleteButton.setText(rb.getString("ButtonDelete"));
+        deleteButton.setText(Bundle.getMessage("ButtonDelete"));
         deleteButton.setVisible(true);
-        deleteButton.setToolTipText(rb.getString("TipDeleteButton"));
+        deleteButton.setToolTipText(Bundle.getMessage("TipDeleteButton"));
         panel4.add(deleteButton);
-        deleteButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 deleteButtonActionPerformed();
             }
         });
         panel4.add(doneButton);
-        doneButton.setText(rb.getString("ButtonDone"));
+        doneButton.setText(Bundle.getMessage("ButtonDone"));
         doneButton.setVisible(true);
-        doneButton.setToolTipText(rb.getString("TipDoneButton"));
+        doneButton.setToolTipText(Bundle.getMessage("TipDoneButton"));
         panel4.add(doneButton);
-        doneButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+        doneButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 doneButtonActionPerformed();
             }
         });
         panel4.add(updateButton);
-        updateButton.setText(rb.getString("ButtonUpdate"));
+        updateButton.setText(Bundle.getMessage("ButtonUpdate"));
         updateButton.setVisible(true);
-        updateButton.setToolTipText(rb.getString("TipUpdateButton"));
+        updateButton.setToolTipText(Bundle.getMessage("TipUpdateButton"));
         panel4.add(updateButton);
-        updateButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 updateButtonActionPerformed();
             }
         });
         updateButton.setVisible(false);
         panel4.add(cancelButton);
-        cancelButton.setText(rb.getString("ButtonCancel"));
+        cancelButton.setText(Bundle.getMessage("ButtonCancel"));
         cancelButton.setVisible(true);
-        cancelButton.setToolTipText(rb.getString("TipCancelButton"));
+        cancelButton.setToolTipText(Bundle.getMessage("TipCancelButton"));
         panel4.add(cancelButton);
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 cancelButtonActionPerformed();
             }
         });
@@ -1211,8 +1217,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */
     public void addButtonActionPerformed() {
         javax.swing.JOptionPane.showMessageDialog(this,
-                rb.getString("NotSupported1") + "\n" + rb.getString("NotSupported2"),
-                rb.getString("NotSupportedTitle"),
+                Bundle.getMessage("NotSupported1") + "\n" + Bundle.getMessage("NotSupported2"),
+                Bundle.getMessage("NotSupportedTitle"),
                 javax.swing.JOptionPane.INFORMATION_MESSAGE);
         resetNotes();
         return;
@@ -1221,20 +1227,17 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Method to handle info state
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     public void infoButtonActionPerformed() {
 
         // lookup the nodes
-        String nodesstring = "";
+        StringBuilder nodesstring = new StringBuilder("");
         int tempnumnodes = _memo.getTrafficController().getNumNodes();
         for (int i = 0; i < tempnumnodes; i++) {
             AcelaNode tempnode;
             tempnode = (AcelaNode) _memo.getTrafficController().getNodeFromAddress(i);
-            nodesstring = nodesstring + " " + tempnode.getNodeTypeString();
+            nodesstring.append(" ").append(tempnode.getNodeTypeString());
         }
-        thenodesStaticC.setText(nodesstring);
+        thenodesStaticC.setText(nodesstring.toString());
 
         // Find Acela Node address
         nodeAddress = readNodeAddress();
@@ -1244,7 +1247,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         // get the AcelaNode corresponding to this node address
         curNode = (AcelaNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
         if (curNode == null) {
-            statusText1.setText(rb.getString("Error4"));
+            statusText1.setText(Bundle.getMessage("Error4"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
             resetNotes2();
@@ -1268,23 +1271,23 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             // set up output types
             for (int o = 0; o < numoutputbits; o++) {
                 if (curNode.getOutputInit(o) == 0) {
-                    initialState[o] = rb.getString("InitialStateOff");
+                    initialState[o] = Bundle.getMessage("InitialStateOff");
                 } else { // if (curNode.getOutputInit(o) == 1) {
-                    initialState[o] = rb.getString("InitialStateOn");
+                    initialState[o] = Bundle.getMessage("InitialStateOn");
                 }
                 if (curNode.getOutputWired(o) == 0) {
-                    outputWired[o] = rb.getString("OutputWiredNO");
+                    outputWired[o] = Bundle.getMessage("OutputWiredNO");
                 } else { // if (curNode.getOutputWired(o) == 1) {
-                    outputWired[o] = rb.getString("OutputWiredNC");
+                    outputWired[o] = Bundle.getMessage("OutputWiredNC");
                 }
 
                 if (curNode.getOutputType(o) == 0) {
-                    outputType[o] = rb.getString("OutputTypeONOFF");
+                    outputType[o] = Bundle.getMessage("OutputTypeONOFF");
                 } else {
                     if (curNode.getOutputType(o) == 1) {
-                        outputType[o] = rb.getString("OutputTypePULSE");
+                        outputType[o] = Bundle.getMessage("OutputTypePULSE");
                     } else { // if (curNode.getOutputType(o) == 2) {
-                        outputType[o] = rb.getString("OutputTypeBLINK");
+                        outputType[o] = Bundle.getMessage("OutputTypeBLINK");
                     }
                 }
 
@@ -1298,19 +1301,19 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             // set up sensor types
             for (int i = 0; i < numsensorbits; i++) {
                 if (curNode.getSensorType(i) == 0) {
-                    filterType[i] = rb.getString("FilterTypeNoise");
+                    filterType[i] = Bundle.getMessage("FilterTypeNoise");
                 } else if (curNode.getSensorType(i) == 1) {
-                    filterType[i] = rb.getString("FilterTypeDebounce");
+                    filterType[i] = Bundle.getMessage("FilterTypeDebounce");
                 } else if (curNode.getSensorType(i) == 2) {
-                    filterType[i] = rb.getString("FilterTypeCarGap");
+                    filterType[i] = Bundle.getMessage("FilterTypeCarGap");
                 } else {
-                    filterType[i] = rb.getString("FilterTypeDirtyTrack");
+                    filterType[i] = Bundle.getMessage("FilterTypeDirtyTrack");
                 }
 
                 if (curNode.getSensorPolarity(i) == 0) {
-                    filterPolarity[i] = rb.getString("FilterNormalPolarity");
+                    filterPolarity[i] = Bundle.getMessage("FilterNormalPolarity");
                 } else {
-                    filterPolarity[i] = rb.getString("FilterInversePolarity");
+                    filterPolarity[i] = Bundle.getMessage("FilterInversePolarity");
                 }
 
                 filterThreshold[i] = String.valueOf(curNode.getSensorThreshold(i));
@@ -1353,7 +1356,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         // get the AcelaNode corresponding to this node address
         curNode = (AcelaNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
         if (curNode == null) {
-            statusText1.setText(rb.getString("Error4"));
+            statusText1.setText(Bundle.getMessage("Error4"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
             resetNotes2();
@@ -1377,23 +1380,23 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             // set up output types
             for (int o = 0; o < numoutputbits; o++) {
                 if (curNode.getOutputInit(o) == 0) {
-                    initialState[o] = rb.getString("InitialStateOff");
+                    initialState[o] = Bundle.getMessage("InitialStateOff");
                 } else { // if (curNode.getOutputInit(o) == 1) {
-                    initialState[o] = rb.getString("InitialStateOn");
+                    initialState[o] = Bundle.getMessage("InitialStateOn");
                 }
                 if (curNode.getOutputWired(o) == 0) {
-                    outputWired[o] = rb.getString("OutputWiredNO");
+                    outputWired[o] = Bundle.getMessage("OutputWiredNO");
                 } else { // if (curNode.getOutputWired(o) == 1) {
-                    outputWired[o] = rb.getString("OutputWiredNC");
+                    outputWired[o] = Bundle.getMessage("OutputWiredNC");
                 }
 
                 if (curNode.getOutputType(o) == 0) {
-                    outputType[o] = rb.getString("OutputTypeONOFF");
+                    outputType[o] = Bundle.getMessage("OutputTypeONOFF");
                 } else {
                     if (curNode.getOutputType(o) == 1) {
-                        outputType[o] = rb.getString("OutputTypePULSE");
+                        outputType[o] = Bundle.getMessage("OutputTypePULSE");
                     } else { // if (curNode.getOutputType(o) == 2) {
-                        outputType[o] = rb.getString("OutputTypeBLINK");
+                        outputType[o] = Bundle.getMessage("OutputTypeBLINK");
                     }
                 }
 
@@ -1407,19 +1410,19 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             // set up sensor types
             for (int i = 0; i < numsensorbits; i++) {
                 if (curNode.getSensorType(i) == 0) {
-                    filterType[i] = rb.getString("FilterTypeNoise");
+                    filterType[i] = Bundle.getMessage("FilterTypeNoise");
                 } else if (curNode.getSensorType(i) == 1) {
-                    filterType[i] = rb.getString("FilterTypeDebounce");
+                    filterType[i] = Bundle.getMessage("FilterTypeDebounce");
                 } else if (curNode.getSensorType(i) == 2) {
-                    filterType[i] = rb.getString("FilterTypeCarGap");
+                    filterType[i] = Bundle.getMessage("FilterTypeCarGap");
                 } else {
-                    filterType[i] = rb.getString("FilterTypeDirtyTrack");
+                    filterType[i] = Bundle.getMessage("FilterTypeDirtyTrack");
                 }
 
                 if (curNode.getSensorPolarity(i) == 0) {
-                    filterPolarity[i] = rb.getString("FilterNormalPolarity");
+                    filterPolarity[i] = Bundle.getMessage("FilterNormalPolarity");
                 } else {
-                    filterPolarity[i] = rb.getString("FilterInversePolarity");
+                    filterPolarity[i] = Bundle.getMessage("FilterInversePolarity");
                 }
 
                 filterThreshold[i] = String.valueOf(curNode.getSensorThreshold(i));
@@ -1457,8 +1460,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     public void deleteButtonActionPerformed() {
 
         javax.swing.JOptionPane.showMessageDialog(this,
-                rb.getString("NotSupported1") + "\n" + rb.getString("NotSupported2"),
-                rb.getString("NotSupportedTitle"),
+                Bundle.getMessage("NotSupported1") + "\n" + Bundle.getMessage("NotSupported2"),
+                Bundle.getMessage("NotSupportedTitle"),
                 javax.swing.JOptionPane.INFORMATION_MESSAGE);
         resetNotes();
         return;
@@ -1469,7 +1472,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */
     public void doneButtonActionPerformed() {
         if (editMode) {
-            // Reset 
+            // Reset
             editMode = false;
             curNode = null;
             // Switch buttons
@@ -1488,8 +1491,8 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         if (changedNode) {
             // Remind user to Save new configuration
             javax.swing.JOptionPane.showMessageDialog(this,
-                    rb.getString("Reminder1") + "\n" + rb.getString("Reminder2"),
-                    rb.getString("ReminderTitle"),
+                    Bundle.getMessage("Reminder1") + "\n" + Bundle.getMessage("Reminder2"),
+                    Bundle.getMessage("ReminderTitle"),
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
         }
         setVisible(false);
@@ -1519,7 +1522,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         doneButton.setVisible(true);
         updateButton.setVisible(false);
         cancelButton.setVisible(false);
-        // make node address editable again	
+        // make node address editable again
         nodeAddrBox.setVisible(true);
 //        nodeAddrField.setVisible(true);
         nodeAddrStatic.setVisible(false);
@@ -1529,7 +1532,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         statusText2.setText(stdStatus2);
         statusText3.setText(stdStatus3);
         // provide user feedback
-        statusText1.setText(rb.getString("FeedBackUpdate") + " "
+        statusText1.setText(Bundle.getMessage("FeedBackUpdate") + " "
                 + Integer.toString(nodeAddress));
         errorInStatus1 = true;
 
@@ -1549,23 +1552,20 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Method to handle cancel button
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     public void cancelButtonActionPerformed() {
-        // Reset 
+        // Reset
         editMode = false;
         curNode = null;
 
         // lookup the nodes
-        String nodesstring = "";
+        StringBuilder nodesstring = new StringBuilder("");
         int tempnumnodes = _memo.getTrafficController().getNumNodes();
         for (int i = 0; i < tempnumnodes; i++) {
             AcelaNode tempnode;
             tempnode = (AcelaNode) _memo.getTrafficController().getNodeFromAddress(i);
-            nodesstring = nodesstring + " " + tempnode.getNodeTypeString();
+            nodesstring.append(" ").append(tempnode.getNodeTypeString());
         }
-        thenodesStaticC.setText(nodesstring);
+        thenodesStaticC.setText(nodesstring.toString());
 
         // Find Acela Node address
         nodeAddress = readNodeAddress();
@@ -1575,7 +1575,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         // get the AcelaNode corresponding to this node address
         curNode = (AcelaNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
         if (curNode == null) {
-            statusText1.setText(rb.getString("Error4"));
+            statusText1.setText(Bundle.getMessage("Error4"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
             resetNotes2();
@@ -1599,23 +1599,23 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             // set up output types
             for (int o = 0; o < numoutputbits; o++) {
                 if (curNode.getOutputInit(o) == 0) {
-                    initialState[o] = rb.getString("InitialStateOff");
+                    initialState[o] = Bundle.getMessage("InitialStateOff");
                 } else { // if (curNode.getOutputInit(o) == 1) {
-                    initialState[o] = rb.getString("InitialStateOn");
+                    initialState[o] = Bundle.getMessage("InitialStateOn");
                 }
                 if (curNode.getOutputWired(o) == 0) {
-                    outputWired[o] = rb.getString("OutputWiredNO");
+                    outputWired[o] = Bundle.getMessage("OutputWiredNO");
                 } else { // if (curNode.getOutputWired(o) == 1) {
-                    outputWired[o] = rb.getString("OutputWiredNC");
+                    outputWired[o] = Bundle.getMessage("OutputWiredNC");
                 }
 
                 if (curNode.getOutputType(o) == 0) {
-                    outputType[o] = rb.getString("OutputTypeONOFF");
+                    outputType[o] = Bundle.getMessage("OutputTypeONOFF");
                 } else {
                     if (curNode.getOutputType(o) == 1) {
-                        outputType[o] = rb.getString("OutputTypePULSE");
+                        outputType[o] = Bundle.getMessage("OutputTypePULSE");
                     } else { // if (curNode.getOutputType(o) == 2) {
-                        outputType[o] = rb.getString("OutputTypeBLINK");
+                        outputType[o] = Bundle.getMessage("OutputTypeBLINK");
                     }
                 }
 
@@ -1629,19 +1629,19 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             // set up sensor types
             for (int i = 0; i < numsensorbits; i++) {
                 if (curNode.getSensorType(i) == 0) {
-                    filterType[i] = rb.getString("FilterTypeNoise");
+                    filterType[i] = Bundle.getMessage("FilterTypeNoise");
                 } else if (curNode.getSensorType(i) == 1) {
-                    filterType[i] = rb.getString("FilterTypeDebounce");
+                    filterType[i] = Bundle.getMessage("FilterTypeDebounce");
                 } else if (curNode.getSensorType(i) == 2) {
-                    filterType[i] = rb.getString("FilterTypeCarGap");
+                    filterType[i] = Bundle.getMessage("FilterTypeCarGap");
                 } else {
-                    filterType[i] = rb.getString("FilterTypeDirtyTrack");
+                    filterType[i] = Bundle.getMessage("FilterTypeDirtyTrack");
                 }
 
                 if (curNode.getSensorPolarity(i) == 0) {
-                    filterPolarity[i] = rb.getString("FilterNormalPolarity");
+                    filterPolarity[i] = Bundle.getMessage("FilterNormalPolarity");
                 } else {
-                    filterPolarity[i] = rb.getString("FilterInversePolarity");
+                    filterPolarity[i] = Bundle.getMessage("FilterInversePolarity");
                 }
 
                 filterThreshold[i] = String.valueOf(curNode.getSensorThreshold(i));
@@ -1676,6 +1676,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Do the done action if the window is closed early.
      */
+    @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         doneButtonActionPerformed();
     }
@@ -1693,24 +1694,24 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         if (numoutputbits > 0) {
             // set up output types
             for (int o = 0; o < numoutputbits; o++) {
-                if (initialState[o].contentEquals(rb.getString("InitialStateOff"))) {
+                if (initialState[o].contentEquals(Bundle.getMessage("InitialStateOff"))) {
                     curNode.setOutputInit(o, 0);
-                } else { // if (initialState[o].contentEquals(rb.getString("InitialStateOn"))) {
+                } else { // if (initialState[o].contentEquals(Bundle.getMessage("InitialStateOn"))) {
                     curNode.setOutputInit(o, 1);
                 }
 
-                if (outputWired[o].contentEquals(rb.getString("OutputWiredNO"))) {
+                if (outputWired[o].contentEquals(Bundle.getMessage("OutputWiredNO"))) {
                     curNode.setOutputWired(o, 0);
-                } else { // if (outputWired[o].contentEquals(rb.getString("OutputWiredNC"))) {
+                } else { // if (outputWired[o].contentEquals(Bundle.getMessage("OutputWiredNC"))) {
                     curNode.setOutputWired(o, 1);
                 }
 
-                if (outputType[o].contentEquals(rb.getString("OutputTypeONOFF"))) {
+                if (outputType[o].contentEquals(Bundle.getMessage("OutputTypeONOFF"))) {
                     curNode.setOutputType(o, 0);
                 } else {
-                    if (outputType[o].contentEquals(rb.getString("OutputTypePULSE"))) {
+                    if (outputType[o].contentEquals(Bundle.getMessage("OutputTypePULSE"))) {
                         curNode.setOutputType(o, 1);
-                    } else { // if (outputType[o].contentEquals(rb.getString("OutputTypeBLINK"))) {
+                    } else { // if (outputType[o].contentEquals(Bundle.getMessage("OutputTypeBLINK"))) {
                         curNode.setOutputType(o, 2);
                     }
                 }
@@ -1725,19 +1726,19 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
             // set up sensor types
             for (int i = 0; i < numsensorbits; i++) {
-                if (filterType[i].contentEquals(rb.getString("FilterTypeNoise"))) {
+                if (filterType[i].contentEquals(Bundle.getMessage("FilterTypeNoise"))) {
                     curNode.setSensorType(i, 0);
-                } else if (filterType[i].contentEquals(rb.getString("FilterTypeDebounce"))) {
+                } else if (filterType[i].contentEquals(Bundle.getMessage("FilterTypeDebounce"))) {
                     curNode.setSensorType(i, 1);
-                } else if (filterType[i].contentEquals(rb.getString("FilterTypeCarGap"))) {
+                } else if (filterType[i].contentEquals(Bundle.getMessage("FilterTypeCarGap"))) {
                     curNode.setSensorType(i, 2);
-                } else { // filterType[i].contentEquals(rb.getString("FilterTypeDirtyTrack"))
+                } else { // filterType[i].contentEquals(Bundle.getMessage("FilterTypeDirtyTrack"))
                     curNode.setSensorType(i, 3);
                 }
 
-                if (filterPolarity[i].contentEquals(rb.getString("FilterNormalPolarity"))) {
+                if (filterPolarity[i].contentEquals(Bundle.getMessage("FilterNormalPolarity"))) {
                     curNode.setSensorPolarity(i, 0);
-                } else { // filterPolarity[i].contentEquals(rb.getString("FilterInversePolarity"))
+                } else { // filterPolarity[i].contentEquals(Bundle.getMessage("FilterInversePolarity"))
                     curNode.setSensorPolarity(i, 1);
                 }
 
@@ -1789,14 +1790,14 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             addr = nodeAddrBox.getSelectedIndex();
 //            addr = Integer.parseInt(nodeAddrField.getText());
         } catch (Exception e) {
-            statusText1.setText(rb.getString("Error5"));
+            statusText1.setText(Bundle.getMessage("Error5"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
             resetNotes2();
             return -1;
         }
         if ((addr < 0) || (addr > 255)) {
-            statusText1.setText(rb.getString("Error6"));
+            statusText1.setText(Bundle.getMessage("Error6"));
             statusText1.setVisible(true);
             errorInStatus1 = true;
             resetNotes2();
@@ -1812,39 +1813,42 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 //    public class SensorConfigModel extends AbstractTableModel
     public class SensorConfigModel extends NodeConfigModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8903322968361854433L;
-
+        @Override
         public String getColumnName(int c) {
             return sensorConfigColumnNames[c];
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             return String.class;
         }
 
+        @Override
         public int getColumnCount() {
             return 5;
         }
 
+        @Override
         public int getRowCount() {
             return numrows;
         }
 
+        @Override
         public void setNumRows(int r) {
             numrows = r;
         }
 
+        @Override
         public void setEditMode(boolean b) {
             editmode = b;
         }
 
+        @Override
         public boolean getEditMode() {
             return editmode;
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             if (c == 0) {
                 return Integer.toString(r);
@@ -1863,7 +1867,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                 // get the AcelaNode corresponding to this node address
                 curNode = (AcelaNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
                 if (curNode == null) {
-                    statusText1.setText(rb.getString("Error4"));
+                    statusText1.setText(Bundle.getMessage("Error4"));
                     statusText1.setVisible(true);
                     errorInStatus1 = true;
                     resetNotes2();
@@ -1874,6 +1878,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             return "";
         }
 
+        @Override
         public void setValueAt(Object type, int r, int c) {
             if (c == 1) {
                 filterType[r] = (String) type;
@@ -1886,6 +1891,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             }
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             if ((c == 1) && editmode) {
                 return (true);
@@ -1905,11 +1911,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         public static final int THRESHOLD_COLUMN = 3;
         public static final int SENSORADDRESS_COLUMN = 0;
     }
-    private String[] sensorConfigColumnNames = {rb.getString("HeadingSensorCircuitAddress"),
-        rb.getString("HeadingFilterType"),
-        rb.getString("HeadingFilterPolarity"),
-        rb.getString("HeadingFilterThreshold"),
-        rb.getString("HeadingSensorAddress")};
+    private String[] sensorConfigColumnNames = {Bundle.getMessage("HeadingSensorCircuitAddress"),
+        Bundle.getMessage("HeadingFilterType"),
+        Bundle.getMessage("HeadingFilterPolarity"),
+        Bundle.getMessage("HeadingFilterThreshold"),
+        Bundle.getMessage("HeadingSensorAddress")};
     private String[] filterType = new String[16];
     private String[] filterPolarity = new String[16];
     private String[] filterThreshold = new String[16];
@@ -1920,39 +1926,42 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
      */
     public class OutputConfigModel extends NodeConfigModel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -6592677373811166261L;
-
+        @Override
         public String getColumnName(int c) {
             return outputConfigColumnNames[c];
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             return String.class;
         }
 
+        @Override
         public int getColumnCount() {
             return 6;
         }
 
+        @Override
         public int getRowCount() {
             return numrows;
         }
 
+        @Override
         public void setNumRows(int r) {
             numrows = r;
         }
 
+        @Override
         public void setEditMode(boolean b) {
             editmode = b;
         }
 
+        @Override
         public boolean getEditMode() {
             return editmode;
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             if (c == 0) {
                 return Integer.toString(r);
@@ -1973,7 +1982,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
                 // get the AcelaNode corresponding to this node address
                 curNode = (AcelaNode) _memo.getTrafficController().getNodeFromAddress(nodeAddress);
                 if (curNode == null) {
-                    statusText1.setText(rb.getString("Error4"));
+                    statusText1.setText(Bundle.getMessage("Error4"));
                     statusText1.setVisible(true);
                     errorInStatus1 = true;
                     resetNotes2();
@@ -1984,6 +1993,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             return "";
         }
 
+        @Override
         public void setValueAt(Object type, int r, int c) {
             if (c == 1) {
                 outputWired[r] = (String) type;
@@ -1999,6 +2009,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             }
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             if ((c == 1) && editmode) {
                 return (true);
@@ -2022,16 +2033,17 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         public static final int OUTPUTLENGTH_COLUMN = 4;
         public static final int OUTPUTADDRESS_COLUMN = 5;
     }
-    private String[] outputConfigColumnNames = {rb.getString("HeadingOutputCircuitAddress"),
-        rb.getString("HeadingOutputWired"),
-        rb.getString("HeadingInitialState"),
-        rb.getString("HeadingOutputType"),
-        rb.getString("HeadingOutputLength"),
-        rb.getString("HeadingOutputAddress")};
+    private String[] outputConfigColumnNames = {Bundle.getMessage("HeadingOutputCircuitAddress"),
+        Bundle.getMessage("HeadingOutputWired"),
+        Bundle.getMessage("HeadingInitialState"),
+        Bundle.getMessage("HeadingOutputType"),
+        Bundle.getMessage("HeadingOutputLength"),
+        Bundle.getMessage("HeadingOutputAddress")};
     private String[] outputWired = new String[16];
     private String[] initialState = new String[16];
     private String[] outputType = new String[16];
     private String[] outputLength = new String[16];
 
-    private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class);
+
 }

@@ -1,16 +1,16 @@
 package jmri;
 
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the NamedBeanHandleManager class
  *
  * @author	Kevin Dickerson Copyright (C) 2006
- * @version $Revision: 18111 $
+ * 
  */
 public class NamedBeanHandleManagerTest extends TestCase {
 
@@ -18,8 +18,8 @@ public class NamedBeanHandleManagerTest extends TestCase {
     }
 
     public void testNameBeanManager() throws JmriException {
-        SensorManager sm = new jmri.managers.InternalSensorManager();
-        TurnoutManager tm = new jmri.managers.InternalTurnoutManager();
+        SensorManager sm = jmri.InstanceManager.sensorManagerInstance();
+        TurnoutManager tm = jmri.InstanceManager.turnoutManagerInstance();
         MemoryManager mm = jmri.InstanceManager.memoryManagerInstance();
 
         String name = "MyUserName";
@@ -104,17 +104,17 @@ public class NamedBeanHandleManagerTest extends TestCase {
 
     jmri.NamedBeanHandleManager nbhm;
 
+    @Override
     protected void setUp() throws Exception {
+        JUnitUtil.setUp();
         super.setUp();
         JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.setUp();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
     }
 
+    @Override
     protected void tearDown() throws Exception {
-        JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

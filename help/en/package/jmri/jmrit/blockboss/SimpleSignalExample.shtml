@@ -6,7 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Simple Signal Logic Example</title><!-- Style -->
+  <title>JMRI: Simple Signal Logic Example</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -30,9 +31,9 @@
 
       <p>Go to the <a href=
       "../../../../html/tools/signaling/SimpleSignalExample.shtml">Simple
-      Signal Logic example</a>. 
+      Signal Logic example</a>.</p>
       <!-- Keep file in place to receive old hyperlinks, but no content on this page, just a pointer from the 2015 block boss -->
-       <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

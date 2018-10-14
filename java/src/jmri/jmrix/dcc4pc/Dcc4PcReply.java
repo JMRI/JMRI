@@ -1,4 +1,3 @@
-// Dcc4PcReply.java
 package jmri.jmrix.dcc4pc;
 
 import jmri.jmrix.AbstractMRReply;
@@ -8,11 +7,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Dcc4PcReply.java
  *
- * Description:	Carries the reply to a Dcc4PcMessage
+ * Description: Carries the reply to a Dcc4PcMessage
  *
  * @author Kevin Dickerson Copyright (C) 2012
- * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 18133 $
+ * @author Bob Jacobsen Copyright (C) 2001
+ * 
  */
 public class Dcc4PcReply extends AbstractMRReply {
 
@@ -36,6 +35,7 @@ public class Dcc4PcReply extends AbstractMRReply {
     }
 
     // no need to do anything
+    @Override
     protected int skipPrefix(int index) {
         return index;
     }
@@ -45,7 +45,6 @@ public class Dcc4PcReply extends AbstractMRReply {
      *
      * @param m the Dcc4PcReply to copy
      */
-    @SuppressWarnings("null")
     public Dcc4PcReply(Dcc4PcReply m) {
         this();
         if (m == null) {
@@ -125,6 +124,7 @@ public class Dcc4PcReply extends AbstractMRReply {
     /**
      * Returns the index of String s in the reply
      */
+    @Override
     public int match(String s) {
         // find a specific string in the reply
         String rep = new String(_dataChars, 0, _nDataChars);
@@ -147,13 +147,35 @@ public class Dcc4PcReply extends AbstractMRReply {
         return msg;
     }
 
+    @Override
     public int maxSize() {
         return maxSize;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcReply.class.getName());
+    
+    Dcc4PcMessage origMsg;
+    
+    public Dcc4PcMessage getOriginalRequest(){
+        return origMsg;
+    }
+    
+    protected void setOriginalRequest(Dcc4PcMessage msg){
+        origMsg = msg;
+    }
+    
+    
+    public int getBoard() { 
+        if(origMsg!=null){
+            return origMsg.getBoard();
+        }
+        return -1; 
+    }
+    
+    public int getMessageType(){
+        if(origMsg!=null){
+            return origMsg.getMessageType();
+        }
+        return -1;
+    }
+    private final static Logger log = LoggerFactory.getLogger(Dcc4PcReply.class);
 
 }
-
-
-/* @(#)Dcc4PcReply.java */

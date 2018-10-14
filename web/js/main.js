@@ -14,6 +14,9 @@ function getPanels() {
         url: "/panel?format=json",
         data: {},
         success: function (data) {
+            if (!Array.isArray(data)) {
+                data = [data];
+            }
             $(".navbar-panel-item").remove();
             if (data.length !== 0) {
                 $("#empty-panel-list").addClass("hidden").removeClass("show");
@@ -32,6 +35,9 @@ function getRosterGroups() {
         url: "/json/rosterGroups",
         data: {},
         success: function (data) {
+            if (!Array.isArray(data)) {
+                data = [data];
+            }
             $(".navbar-roster-group-item").remove();
             if (data.length !== 0) {
                 $.each(data, function (index, value) {
@@ -50,6 +56,9 @@ function getNetworkServices() {
         url: "/json/networkServices",
         data: {},
         success: function (data) {
+            if (!Array.isArray(data)) {
+                data = [data];
+            }
             // show all hidden when service is available elements 
             $(".hidden-jmri_jmri-json").addClass("show").removeClass("hidden");
             $(".hidden-jmri_jmri-locormi").addClass("show").removeClass("hidden");
@@ -291,6 +300,12 @@ $(document).ready(function () {
     nbJmri = $.JMRI({
         open: function () {
             nbJmri.getPower();
+        },
+    	hello: function(data) {
+    		nbJmri.getList("rosterGroups"); // request updates to the rosterGroups via websocket 
+        },
+        rosterGroups: function (name, data) {
+            getRosterGroups(); // refresh the roster groups in menu
         },
         power: function (state) {
             $('#navbar-power').data('power', state);

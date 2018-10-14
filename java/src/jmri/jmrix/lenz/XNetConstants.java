@@ -1,23 +1,20 @@
-/**
- * XNetConstants.java
- *
- * Description:	Constants to represent values seen in XpressNet traffic
- *
- * @author	Paul Bender Copyright (C) 2003-2009
- * @version $ Revision: 1.9 $
- *
- * Variable prefix abreviation keys: ACC_ is for accessory messages BC_ is for
- * broadcast messages CS_ is for command station messages PROG_ is for
- * programing related messages LOCO_ is for locomotive related commands
- * OPS_MODE_ is for operations mode programing commands LI_ is for commands that
- * are for messages to and from the computer interface LI101_ is for commands
- * specific to the LI101
- *
- * A few variables don't have a prefix. The name should be self explanitory, but
- * a prefix may be added later.
- */
 package jmri.jmrix.lenz;
 
+/**
+ * Constants to represent values seen in XpressNet traffic.
+ * <p>
+ * Variable prefix abreviation keys: ACC_ is for accessory messages BC_ is for
+ * broadcast messages CS_ is for command station messages PROG_ is for
+ * programming related messages LOCO_ is for locomotive related commands
+ * OPS_MODE_ is for operations mode programming commands LI_ is for commands that
+ * are for messages to and from the computer interface LI101_ is for commands
+ * specific to the LI101.
+ * <p>
+ * A few variables don't have a prefix. The name should be self explanitory, but
+ * a prefix may be added later.
+ *
+ * @author Paul Bender Copyright (C) 2003-2009
+ */
 public final class XNetConstants {
 
     /* Commands send from the command station to the computer*/
@@ -88,7 +85,7 @@ public final class XNetConstants {
     /* CS_SOFTWARE_VERSION (0x21) is a valid byte 2 command for 0x62 */
     public final static int CS_STATUS_RESPONSE = 0x22; /* command station status */
 
-    /* Deinfed Command Station Type values */
+    /* Different Command Station Type values */
     public final static int CS_TYPE_LZ100 = 0x00;  // Lenz LZ100/LZV100
     public final static int CS_TYPE_LH200 = 0x01;  // Lenz LH200
     public final static int CS_TYPE_COMPACT = 0x02; // Lenz Compact/Atlas Commander
@@ -106,8 +103,8 @@ public final class XNetConstants {
     public final static int BC_FEEDBACK = 0x40;
 
     /* Accessory information response 
-     * NOTE:  This is identical to the feedback {@link BC_FEEDBACK} when
-     *  there is only one address byte/data byte pair
+     * NOTE: This is identical to the feedback {@link BC_FEEDBACK} when
+     * there is only one address byte/data byte pair
      */
     public final static int ACC_INFO_RESPONSE = 0x42;
 
@@ -155,7 +152,7 @@ public final class XNetConstants {
     public final static int LOCO_DH_AVAILABLE = 0x04;
     public final static int LOCO_DH_NOT_AVAILABLE = 0x05;
 
-    /* XPressNet MU or DH Error Message */
+    /* XpressNet MU or DH Error Message */
     public final static int LOCO_MU_DH_ERROR = 0xE1;
 
     /* Commands send from the computer to the command station */
@@ -193,7 +190,7 @@ public final class XNetConstants {
     /* Program mode read requests */
     public final static int PROG_READ_REQUEST = 0x22;
 
-    /* programing modes to be used with PROG_READ_REQUEST */
+    /* programming modes to be used with PROG_READ_REQUEST */
     public final static int PROG_READ_MODE_REGISTER = 0x11;
     public final static int PROG_READ_MODE_CV = 0x15;
     public final static int PROG_READ_MODE_PAGED = 0x14;
@@ -202,7 +199,7 @@ public final class XNetConstants {
     /* Program mode read requests */
     public final static int PROG_WRITE_REQUEST = 0x23;
 
-    /* programing modes to be used with PROG_WRITE_REQUEST */
+    /* programming modes to be used with PROG_WRITE_REQUEST */
     public final static int PROG_WRITE_MODE_REGISTER = 0x12;
     public final static int PROG_WRITE_MODE_CV = 0x16;
     public final static int PROG_WRITE_MODE_PAGED = 0x17;
@@ -324,7 +321,7 @@ public final class XNetConstants {
     public final static int LOCO_DOUBLEHEAD = 0xE5;
     public final static int LOCO_DOUBLEHEAD_BYTE2 = 0x43;
 
-    /* Operations mode programing */
+    /* Operations mode programming */
     public final static int OPS_MODE_PROG_REQ = 0xE6;
 
     /* Write requests (second byte for above) */
@@ -351,7 +348,7 @@ public final class XNetConstants {
     /* Now, we have a response indicating what was sent was OK */
     public final static int LI_MESSAGE_RESPONSE_SEND_SUCCESS = 0x04;
     /* and a message indicating the LI10x doesn't have a timeslot on the 
-     Xpressnet (possibly too many devices connected) */
+     XpressNet (possibly too many devices connected) */
     public final static int LI_MESSAGE_RESPONSE_TIMESLOT_ERROR = 0x05;
     /* Last, there is an error for an LI10x buffer overflow */
     public final static int LI_MESSAGE_RESPONSE_BUFFER_OVERFLOW = 0x06;
@@ -375,6 +372,3 @@ public final class XNetConstants {
     public final static int LIUSB_RETRANSMIT_REQUEST = 0x0A;
 
 }
-
-
-/* @(#)XNetConstants.java */

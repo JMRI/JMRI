@@ -13,11 +13,11 @@ import jmri.implementation.DefaultRoute;
  * <P>
  *
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class Follower implements Constants {
 
-    final static String namePrefix = commonNamePrefix + "Follower" + commonNameSuffix;
+    final static String namePrefix = commonNamePrefix + "FOLLOWER" + commonNameSuffix; // NOI18N
 
     /**
      * Nobody can build anonymous object
@@ -95,12 +95,12 @@ public class Follower implements Constants {
         this.output = outputName;
 
         // find existing thrown route to get info
-        String nameT = namePrefix + "T" + nameDivider + output;
+        String nameT = namePrefix + "T" + nameDivider + output;        
 
         RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
         Route r = rm.getBySystemName(nameT);
         if (r == null) {
-            throw new jmri.JmriException("Route does not exist");
+            throw new jmri.JmriException("Route does not exist");   // NOI18N
         }
 
         // and load internals from the route

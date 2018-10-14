@@ -1,20 +1,13 @@
-/*
- * LocoIOMode.java
- *
- * Created on January 3, 2007, 9:29 PM
- *
- * Created by John Plocher
- */
 package jmri.jmrix.loconet.locoio;
 
 /**
  *
- * @author John Plocher
+ * @author John Plocher, January 3, 2007
  */
 public class LocoIOMode {
 
     /**
-     * Creates a new instance of LocoIOMode
+     * Create a new instance of LocoIOMode.
      */
     public LocoIOMode(int isOutput, int opcode, int sv0, int sv2, String mode) {
         this.isOutput = isOutput;
@@ -41,7 +34,7 @@ public class LocoIOMode {
         return isOutput;
     }
 
-    public int getOpcode() {
+    public int getOpCode() {
         return opcode;
     }
 
@@ -52,4 +45,5 @@ public class LocoIOMode {
     public int getV2() {
         return sv2;
     }
+
 }

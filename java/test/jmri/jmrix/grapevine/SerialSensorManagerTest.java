@@ -1,24 +1,21 @@
 package jmri.jmrix.grapevine;
 
-import jmri.Sensor;
-import jmri.SensorManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-
 /**
  * JUnit tests for the SerialSensorManager class.
  *
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
-public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
-    private SerialNode n1 = null; 
+    private GrapevineSystemConnectionMemo memo = null; 
+    private SerialNode n1 = null;
     private SerialNode n2 = null;
     private SerialNode n3 = null;
 
@@ -64,35 +61,29 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        // replace the SerialTrafficController to get clean reset
-        SerialTrafficController t = new SerialTrafficController() {
-            SerialTrafficController test() {
-                setInstance();
-                return this;
-            }
-        }.test();
+        JUnitUtil.setUp();
+        memo = new GrapevineSystemConnectionMemo();
+        SerialTrafficController t = new SerialTrafficControlScaffold(memo);
+        memo.setTrafficController(t);
         Assert.assertNotNull("exists", t);
 
         // construct nodes
-        n1 = new SerialNode(1, SerialNode.NODE2002V6);
-        n2 = new SerialNode(2, SerialNode.NODE2002V6);
-        n3 = new SerialNode(3, SerialNode.NODE2002V1);
+        n1 = new SerialNode(1, SerialNode.NODE2002V6, t);
+        n2 = new SerialNode(2, SerialNode.NODE2002V6, t);
+        n3 = new SerialNode(3, SerialNode.NODE2002V1, t);
 
-        l = new SerialSensorManager();
+        l = new SerialSensorManager(memo);
     }
 
     // The minimal setup for log4J
     @After
     public void tearDown() {
         l.dispose();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
     @Override
-        /**
+    /**
      * Number of sensor to test. Made a separate method so it can be overridden
      * in subclasses that do or don't support various numbers
      */
@@ -100,9 +91,9 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         return 1009;
     }
 
+    @Override
     protected int getNumToTest2() {
         return 1007;
     }
-
 
 }

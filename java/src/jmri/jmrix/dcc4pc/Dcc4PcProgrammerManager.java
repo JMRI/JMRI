@@ -1,92 +1,87 @@
-/* Dcc4PcProgrammerManager.java */
 package jmri.jmrix.dcc4pc;
 
+import javax.annotation.Nonnull;
 import jmri.AddressedProgrammer;
+import jmri.AddressedProgrammerManager;
+import jmri.GlobalProgrammerManager;
 import jmri.Programmer;
-import jmri.ProgrammerManager;
 import jmri.managers.DefaultProgrammerManager;
 
 /**
  * DCC4PC Programmer acts as a proxy for ops mode programming. Extend
- * DefaultProgrammerManager to provide ops mode programmers on XPressNet
+ * DefaultProgrammerManager to provide ops mode programmers on XpressNet
  *
- * @see jmri.ProgrammerManager
- * @author	Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 18841 $
+ * @see jmri.managers.DefaultProgrammerManager
+ * @author Kevin Dickerson Copyright (C) 2012
+ *
  */
 public class Dcc4PcProgrammerManager extends DefaultProgrammerManager {
 
-    private ProgrammerManager defaultManager;
+    private final GlobalProgrammerManager manager;
 
-    public Dcc4PcProgrammerManager(ProgrammerManager dpm) {
-        super(dpm.getGlobalProgrammer());
-        defaultManager = dpm;
+    public <T extends AddressedProgrammerManager & GlobalProgrammerManager> Dcc4PcProgrammerManager(@Nonnull T manager) {
+        super(manager.getGlobalProgrammer());
+        this.manager = manager;
     }
 
+    @Override
     public Programmer getGlobalProgrammer() {
-        if (defaultManager == null) {
-            return null;
-        }
-        return defaultManager.getGlobalProgrammer();
+        return manager.getGlobalProgrammer();
     }
 
+    @Override
     public String getUserName() {
-        return defaultManager.getUserName();
+        return manager.getUserName();
     }
 
     /**
-     * XPressNet command station does provide Ops Mode We should make this
+     * XpressNet command station does provide Ops Mode We should make this
      * return false based on what command station we're using but for now, we'll
      * return true
      */
+    @Override
     public boolean isAddressedModePossible() {
-        if (defaultManager == null) {
-            return false;
+        if (manager instanceof AddressedProgrammerManager) {
+            return ((AddressedProgrammerManager) manager).isAddressedModePossible();
         }
-        return defaultManager.isAddressedModePossible();
+        return false;
     }
 
+    @Override
     public boolean isGlobalProgrammerAvailable() {
-        if (defaultManager == null) {
-            return false;
-        }
-        return defaultManager.isGlobalProgrammerAvailable();
+        return manager.isGlobalProgrammerAvailable();
     }
 
+    @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
-        if (defaultManager == null) {
-            return null;
+        if (manager instanceof AddressedProgrammerManager) {
+            return new Dcc4PcOpsModeProgrammer(pLongAddress, pAddress, (AddressedProgrammerManager) manager);
         }
-        return new Dcc4PcOpsModeProgrammer(pLongAddress, pAddress, defaultManager);
+        return null;
     }
 
+    @Override
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
-        if (defaultManager == null) {
-            return null;
+        if (manager instanceof AddressedProgrammerManager) {
+            return ((AddressedProgrammerManager) manager).reserveAddressedProgrammer(pLongAddress, pAddress);
         }
-        return defaultManager.reserveAddressedProgrammer(pLongAddress, pAddress);
+        return null;
     }
 
+    @Override
     public void releaseAddressedProgrammer(AddressedProgrammer p) {
-        if (defaultManager == null) {
-            return;
+        if (manager instanceof AddressedProgrammerManager) {
+            ((AddressedProgrammerManager) manager).releaseAddressedProgrammer(p);
         }
-        defaultManager.releaseAddressedProgrammer(p);
     }
 
+    @Override
     public Programmer reserveGlobalProgrammer() {
-        if (defaultManager == null) {
-            return null;
-        }
-        return defaultManager.reserveGlobalProgrammer();
+        return manager.reserveGlobalProgrammer();
     }
 
+    @Override
     public void releaseGlobalProgrammer(Programmer p) {
-        if (defaultManager == null) {
-            return;
-        }
-        defaultManager.releaseGlobalProgrammer(p);
+        manager.releaseGlobalProgrammer(p);
     }
 }
-
-/* @(#)DefaultProgrammerManager.java */

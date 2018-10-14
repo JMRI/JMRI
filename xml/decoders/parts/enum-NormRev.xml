@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id$ -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="normal">
     <choice>normal</choice>
+	<choice xml:lang="da">Normal</choice>
     <choice xml:lang="it">normale</choice>
     <choice xml:lang="fr">normal</choice>
     <choice xml:lang="de">Normal</choice>
+    <choice xml:lang="cs">normální</choice>
+    <choice xml:lang="nl">Normaal</choice>
   </enumChoice>
   <enumChoice choice="reversed">
     <choice>reversed</choice>
+	<choice xml:lang="da">Omvendt</choice>
     <choice xml:lang="it">invertita</choice>
     <choice xml:lang="fr">inversé</choice>
     <choice xml:lang="de">Invertiert</choice>
+    <choice xml:lang="cs">otočený</choice>
+    <choice xml:lang="nl">Omgekeerd</choice>
   </enumChoice>
 </enumVal>

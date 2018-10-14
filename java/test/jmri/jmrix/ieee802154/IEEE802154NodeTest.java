@@ -1,12 +1,12 @@
 package jmri.jmrix.ieee802154;
 
+import jmri.jmrix.AbstractMRListener;
+import jmri.jmrix.AbstractMRMessage;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import jmri.jmrix.AbstractMRListener;
-import jmri.jmrix.AbstractMRMessage;
 
 /**
  * IEEE802154NodeTest.java
@@ -71,20 +71,25 @@ public class IEEE802154NodeTest{
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         m = new IEEE802154Node() {
+            @Override
             public AbstractMRMessage createInitPacket() {
                 return null;
             }
+            @Override
             public AbstractMRMessage createOutPacket() {
                 return null;
             }
+            @Override
             public boolean getSensorsActive(){
                    return false;
             }
+            @Override
             public boolean handleTimeout(AbstractMRMessage m, AbstractMRListener l){
                    return false;
             }
+            @Override
             public void resetTimeout(AbstractMRMessage m){
             }
         };
@@ -92,7 +97,7 @@ public class IEEE802154NodeTest{
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

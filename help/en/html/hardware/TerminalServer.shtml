@@ -8,8 +8,8 @@
 
   <title>JMRI Hardware Setup Support - Terminal Server
   Connection</title>
-  <meta content="David D Zuhn" name="Author">
-  <meta content="John Plocher" name="Author">
+  <meta name="author" content="David D Zuhn">
+  <meta name="author" content="John Plocher">
   <meta name="keywords" content=
   "EasyDCC Lantronix terminal server java model railroad JMRI install">
   <!-- Style -->
@@ -95,7 +95,8 @@
 
       <p>Start JMRI. If everything is OK, the application will
       start and tell you on the splash screen it's properly
-      connected. <!--#include virtual="/Footer" --></p>
+      connected.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

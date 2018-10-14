@@ -1,12 +1,12 @@
 # Adapter to xAP automation protocol
 #
-# Uses xAPlib to listen to the network, creating and 
-# maintaining internal Turnout and Sensor objects that 
+# Uses xAPlib to listen to the network, creating and
+# maintaining internal Turnout and Sensor objects that
 # reflect what is seen.
 #
-# The Turnouts' commanded state is updated, not the 
+# The Turnouts' commanded state is updated, not the
 # known state, so feedback needs to be considered in
-# any more permanent implementation.  Note that 
+# any more permanent implementation.  Note that
 # this does not yet send anything on modification,
 # due to race conditions.
 #
@@ -15,17 +15,17 @@
 # Ver 1.2 01/11/2011 NW Changes to the input code
 # Ver 1.3 07/11/2011 NW Added a "Type" to the BSC message format
 # Ver 1.4 07/12/2011 NW Changes to xAP Tx Message area
-#			 
-#			   
-#			   
+#
+#
+#
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision$
 
 import jarray
 import jmri
 import xAPlib
 import java
+import java.beans
 
 # create the network
 print "opening "
@@ -34,14 +34,14 @@ myNetwork = xAPlib.xAPNetwork("listener.xap")
 
 # display some info
 properties = myNetwork.getProperties()
-print "getBroadcastIP()", properties.getBroadcastIP() 
+print "getBroadcastIP()", properties.getBroadcastIP()
 print "getHeartbeatInterval()", properties.getHeartbeatInterval()
-print "getInstance() ", properties.getInstance() 
-print "getPort() ", properties.getPort() 
-print "getSource() ", properties.getSource() 
-print "getUID() ", properties.getUID() 
-print "getVendor() ", properties.getVendor() 
-print "getxAPAddress() ", properties.getxAPAddress() 
+print "getInstance() ", properties.getInstance()
+print "getPort() ", properties.getPort()
+print "getSource() ", properties.getSource()
+print "getUID() ", properties.getUID()
+print "getVendor() ", properties.getVendor()
+print "getxAPAddress() ", properties.getxAPAddress()
 print
 
 
@@ -60,31 +60,31 @@ class InputListener(xAPlib.xAPRxEventListener):
     print "uid:    ", fmtMsg.getUID()
     if (fmtMsg.getClassName() == "xAPBSC.info" or fmtMsg.getClassName() == "xAPBSC.event") :
         print "    --- Acting on "+fmtMsg.getClassName()+" ---"
-        
+
         if (fmtMsg.getNameValuePair("output.state","Type") != None) :
             print "        --- Acting on output.state ---"
             pair = fmtMsg.getNameValuePair("output.state","Type")
             if (pair == None) :
               print "No Type, ending"
               return
-    	    type = pair.getValue().upper()
+            type = pair.getValue().upper()
             print "NWE Type:", type,":"
             if (type == "TURNOUT" or type == "SIGNAL") :
                 print "NWE Turnout/Signal"
-            	self.processTurnout(fmtMsg, message)
-            
+                self.processTurnout(fmtMsg, message)
+
         if (fmtMsg.getNameValuePair("input.state","Type") != None) :
             pair = fmtMsg.getNameValuePair("input.state","Type")
-    	    type = pair.getValue().upper()
+            type = pair.getValue().upper()
             if (type == "SENSOR") :
                 print "NWE Sensor"
-            	print "        --- Acting on input.state ---"
-            	self.processSensor(fmtMsg, message)
+                print "        --- Acting on input.state ---"
+                self.processSensor(fmtMsg, message)
     print "=============="
     return
 
 
-# Process Turnout 
+# Process Turnout
   def processTurnout(self, fmtMsg, message) :
     pair = fmtMsg.getNameValuePair("output.state","Name")
     if (pair == None) :
@@ -119,7 +119,7 @@ class InputListener(xAPlib.xAPRxEventListener):
     turnout.setCommandedState(value)
     print "    set turnout IT:XAP:XAPBSC:"+fmtMsg.getSource()+" to", value
     return
-    
+
 # Process Sensor
   def processSensor(self, fmtMsg, message) :
     pair = fmtMsg.getNameValuePair("input.state","Name")
@@ -151,7 +151,7 @@ class InputListener(xAPlib.xAPRxEventListener):
         print "    create x sensor IS:XAP:XAPBSC:"+fmtMsg.getSource()
         sensor = sensors.provideSensor("IS:XAP:XAPBSC:"+fmtMsg.getSource())
         if (name != None) :
-        	sensor.setUserName(name)
+            sensor.setUserName(name)
     sensor.setState(value)
     print "    set sensor IS:XAP:XAPBSC:"+fmtMsg.getSource()+" to ", value
     return
@@ -167,23 +167,23 @@ class TurnoutListener(java.beans.PropertyChangeListener):
     print "source systemName", event.source.systemName
     print "source userName", event.source.userName
     # format and send the message
-	# the final message will look like this on the wire:
-	#  
-	#						xap-header
-	#						{
-	#						v=12
-	#						hop=1
-	#						uid=FFFF0000
-	#						class=xAPBSC.cmd
-	#						source=JMRI.DecoderPro.1
-	#						destination=NWE.EVA485.DEFAULT:08
-	#						}
-	#						output.state.1
-	#						{
-	#						ID=08
-	#						State=ON
-	#						}
-	#	                                                     *                                                     
+    # the final message will look like this on the wire:
+    #
+    #                       xap-header
+    #                       {
+    #                       v=12
+    #                       hop=1
+    #                       uid=FFFF0000
+    #                       class=xAPBSC.cmd
+    #                       source=JMRI.DecoderPro.1
+    #                       destination=NWE.EVA485.DEFAULT:08
+    #                       }
+    #                       output.state.1
+    #                       {
+    #                       ID=08
+    #                       State=ON
+    #                       }
+    #                                                        *
     myProperties = myNetwork.getProperties()
     myMessage = xAPlib.xAPMessage("xAPBSC.cmd", myProperties.getxAPAddress())
     myMessage.setUID(self.uid)
@@ -199,8 +199,8 @@ class TurnoutListener(java.beans.PropertyChangeListener):
     myNetwork.sendMessage(myMessage)
     print myMessage.toString()
     return
-    
-    
+
+
 def defineTurnout(name, uid, id, target) :
     t = turnouts.provideTurnout(name)
     m = TurnoutListener()

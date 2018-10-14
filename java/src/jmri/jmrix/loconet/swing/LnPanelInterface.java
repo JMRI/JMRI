@@ -1,4 +1,3 @@
-// LnPanelInterface.java
 package jmri.jmrix.loconet.swing;
 
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -9,7 +8,6 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
- * @version $Revision$
  */
 public interface LnPanelInterface {
 
@@ -18,7 +16,9 @@ public interface LnPanelInterface {
      * <p>
      * This needs to be connected to the initContext() method in implementing
      * classes.
+     * <p>
+     * @param memo - a {@link jmri.jmrix.loconet.LocoNetSystemConnectionMemo} object
      */
-    public void initComponents(LocoNetSystemConnectionMemo memo) throws Exception;
+    public void initComponents(LocoNetSystemConnectionMemo memo);
 
 }

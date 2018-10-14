@@ -1,4 +1,3 @@
-// LNCPSignalMast.java
 package jmri.jmrix.loconet;
 
 import jmri.NmraPacket;
@@ -8,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extend jmri.SignalMast for signals implemented by an LNCP
- * <P>
+ * <p>
  * This implementation writes out to the physical signal when it's commanded to
  * change appearance, and updates its internal state when it hears commands from
  * other places.
@@ -17,25 +16,19 @@ import org.slf4j.LoggerFactory;
  * more general implementation, which can work with any system(s), is available
  * in {@link jmri.implementation.DccSignalMast}.
  *
- * @author	Kevin Dickerson Copyright (C) 2002
- * @version	$Revision: 17977 $
+ * @author Kevin Dickerson Copyright (C) 2002
  */
 public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4564372505227894262L;
-
     public LNCPSignalMast(String sys, String user) {
-        super(sys, user, "F$lncpsm");
+        super(sys, user, "F$lncpsm"); // NOI18N
         packetRepeatCount = 1;
         configureFromName(sys);
         init();
     }
 
     public LNCPSignalMast(String sys) {
-        super(sys, null, "F$lncpsm");
+        super(sys, null, "F$lncpsm"); // NOI18N
         packetRepeatCount = 1;
         configureFromName(sys);
         init();
@@ -48,7 +41,7 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
             tc = jmri.InstanceManager.getDefault(LnTrafficController.class);
         }
 
-        //We cheat, and store the two bytes that make up an NMRA packet for later use in decoding a message from the loconet
+        //We cheat, and store the two bytes that make up an NMRA packet for later use in decoding a message from the LocoNet
         int lowAddr = ((dccSignalDecoderAddress - 1) & 0x03);  // Output Pair Address
         int boardAddr = ((dccSignalDecoderAddress - 1) >> 2); // Board Address
         int midAddr = boardAddr & 0x3F;
@@ -64,10 +57,11 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
 
     // implementing classes will typically have a function/listener to get
     // updates from the layout, which will then call
-    //		public void firePropertyChange(String propertyName,
-    //						Object oldValue,
-    //						Object newValue)
+    //  public void firePropertyChange(String propertyName,
+    //      Object oldValue,
+    //      Object newValue)
     // _once_ if anything has changed state (or set the commanded state directly)
+    @Override
     public void message(LocoNetMessage l) {
         if (l.getOpCode() != LnConstants.OPC_IMM_PACKET) {
             return;
@@ -106,6 +100,7 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
         }
     }
 
+    @Override
     public void setAspect(String aspect) {
         if (appearanceToOutput.containsKey(aspect) && appearanceToOutput.get(aspect) != -1) {
             c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, appearanceToOutput.get(aspect)), packetRepeatCount);
@@ -117,10 +112,11 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
     public void setKnownState(String aspect) {
         String oldAspect = this.aspect;
         this.aspect = aspect;
-        this.speed = (String) getSignalSystem().getProperty(aspect, "speed");
-        firePropertyChange("Aspect", oldAspect, aspect);
+        this.speed = (String) getSignalSystem().getProperty(aspect, "speed"); // NOI18N
+        firePropertyChange("Aspect", oldAspect, aspect); // NOI18N
     }
 
+    @Override
     public void dispose() {
         tc.removeLocoNetListener(~0, this);
     }
@@ -138,9 +134,6 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LNCPSignalMast.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LNCPSignalMast.class);
 
 }
-
-
-/* @(#)LNCPSignalMast.java */

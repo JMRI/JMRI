@@ -1,4 +1,3 @@
-// ComponentFactory.java
 package jmri.jmrix.swing;
 
 import javax.swing.JMenu;
@@ -10,7 +9,6 @@ import javax.swing.JMenu;
  * activate their particular system.
  *
  * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
  * @since 2.9.4
  */
 abstract public class ComponentFactory {
@@ -21,5 +19,3 @@ abstract public class ComponentFactory {
     abstract public JMenu getMenu();
 
 }
-
-/* @(#)ComponentFactory.java */

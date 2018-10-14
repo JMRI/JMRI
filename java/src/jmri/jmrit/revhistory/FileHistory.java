@@ -1,6 +1,7 @@
 package jmri.jmrit.revhistory;
 
 import java.util.ArrayList;
+import jmri.InstanceManagerAutoDefault;
 
 /**
  * Memo class to remember a file revision history.
@@ -8,21 +9,20 @@ import java.util.ArrayList;
  * These can be nested: A revision can come with a history.
  *
  * @author Bob Jacobsen Copyright (c) 2010
- * @version $Revision$
  */
-public class FileHistory {
+public class FileHistory implements InstanceManagerAutoDefault {
 
-    ArrayList<OperationMemo> list = new ArrayList<OperationMemo>();
+    ArrayList<OperationMemo> list = new ArrayList<>();
 
     /**
-     * Used to add a revision form complete information created elsewhere
+     * Add a revision from complete information created elsewhere.
+     *
+     * @param type     operation type
+     * @param date     operation date
+     * @param filename file operated on
+     * @param history  source history instance
      */
-    public void addOperation(
-            String type,
-            String date,
-            String filename,
-            FileHistory history
-    ) {
+    public void addOperation(String type, String date, String filename, FileHistory history) {
         OperationMemo r = new OperationMemo();
         r.type = type;
         r.date = date;
@@ -36,11 +36,7 @@ public class FileHistory {
         list.add(r);
     }
 
-    public void addOperation(
-            String type,
-            String filename,
-            FileHistory history
-    ) {
+    public void addOperation(String type, String filename, FileHistory history) {
         OperationMemo r = new OperationMemo();
         r.type = type;
         r.date = (new java.util.Date()).toString();
@@ -66,17 +62,17 @@ public class FileHistory {
     }
 
     public String toString(String prefix) {
-        String retval = "";
-        for (int i = 0; i < list.size(); i++) {
-            OperationMemo r = list.get(i);
-            retval += prefix + r.date + ": " + r.type + " " + r.filename + "\n";
+        StringBuilder retval = new StringBuilder();
+        list.stream().forEachOrdered((r) -> {
+            retval.append(prefix).append(r.date).append(": ").append(r.type).append(" ").append(r.filename).append("\n");
             if (r.history != null) {
-                retval += r.history.toString(prefix + "    ");
+                retval.append(r.history.toString(prefix + "    "));
             }
-        }
-        return retval;
+        });
+        return retval.toString();
     }
 
+    @Override
     public String toString() {
         return toString("");
     }
@@ -86,7 +82,7 @@ public class FileHistory {
     }
 
     /**
-     * Memo class for each revision itself
+     * Memo class for each revision itself.
      */
     public class OperationMemo {
 

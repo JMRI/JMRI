@@ -60,8 +60,6 @@ public class PhysicalLocationPanel extends JPanel {
         initComponents(title);
     }
 
-    // FIXME: Why does the if statement in this method include a direct false?
-    @SuppressWarnings("unused")
     private GridBagConstraints setConstraints(int x, int y, boolean fill) {
         GridBagConstraints gbc1 = new GridBagConstraints();
         gbc1.insets = new Insets(2, 2, 2, 2);
@@ -72,9 +70,6 @@ public class PhysicalLocationPanel extends JPanel {
         gbc1.weighty = 100.0;
         gbc1.gridwidth = 1;
         gbc1.anchor = GridBagConstraints.LINE_START;
-        if (fill && false) {
-            gbc1.fill = GridBagConstraints.HORIZONTAL;
-        }
         return (gbc1);
     }
 
@@ -159,6 +154,6 @@ public class PhysicalLocationPanel extends JPanel {
 
     }
 
-    private static final Logger log = LoggerFactory.getLogger(PhysicalLocationPanel.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(PhysicalLocationPanel.class);
 
 }

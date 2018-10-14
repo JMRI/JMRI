@@ -19,13 +19,15 @@ import javax.swing.JPanel;
  * expose the object by installing any listeners, etc.
  * <li>initComponents() is called, which initializes Swing components and can
  * make other external references.
- * <li>initContext(Object context) is called, which can make outside connections
- * <li>Optionally, other usage-specific initialization methods can be called to
- * e.g. connect to protocol handlers.
+ * <li>initContext(Object context) is called, which can make outside
+ * connections.
+ * <li>Optionally, other usage-specific initialization methods can be called as
+ * needed.
  * </ol>
  * <p>
  * A {@link WindowInterface} property is provided for use when the JmriPanel's
- * controller logic wants to pop a subwindow.
+ * controller logic wants to open a window or dialog in a position relative to
+ * this panel.
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.9.4
@@ -87,21 +89,16 @@ public class JmriPanel extends JPanel {
 
     /**
      * 2nd stage of initialization, invoked after the constructor is complete.
-     *
-     * @throws java.lang.Exception if there is an exception initializing the
-     *                             components
      */
-    public void initComponents() throws Exception {
+    public void initComponents() {
     }
 
     /**
      * 3rd stage of initialization, invoked after Swing components exist.
      *
      * @param context the context that this panel may be initialized with
-     * @throws java.lang.Exception if there is an exception initializing the
-     *                             context
      */
-    public void initContext(Object context) throws Exception {
+    public void initContext(Object context) {
     }
 
     public void dispose() {

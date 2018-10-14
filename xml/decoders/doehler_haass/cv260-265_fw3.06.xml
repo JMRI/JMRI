@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id$                -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- no need to translate the following, as it generally only appears -->
+<!-- in the function map selection pane -->  
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Ronald</firstname>
+        <surname>Kuhn</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2016-12-14</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>Creation, added for fw 3.06 and 3.07</revremark>
+    </revision>
+   </revhistory>
+    <variable item="Manufacturer 2" CV="260" readOnly="yes" default="97">
+      <decVal min="97" max="97"/>
+        <label>Manufacturer</label>
+        <label xml:lang="de">Herstellerkennung</label>
+        <label xml:lang="ca">Fabricant</label>
+    </variable>
+    <variable item="Decoder ID" CV="261" readOnly="yes" default="0">
+      <decVal min="0" max="250"/>
+        <label>Decoder ID</label>
+        <label xml:lang="de">Decoderkennzeichen</label>
+        <label xml:lang="ca">ID del decoder</label>
+    </variable>
+    <variable item="Decoder Version 2" CV="262" readOnly="yes" default="0">
+      <decVal min="0" max="250"/>
+        <label>Firmware Version</label>
+        <label xml:lang="de">Versionsnummer</label>
+         <label xml:lang="ca">Versió número</label>
+    </variable>
+    <variable item="Date 1" CV="263" readOnly="yes" default="0">
+      <decVal min="0" max="255"/>
+        <label>Date</label>
+        <label xml:lang="de">Datum</label>
+         <label xml:lang="ca">Data</label>
+    </variable>
+    <variable item="Revision 2" CV="264" readOnly="yes" default="0">
+      <decVal min="0" max="255"/>
+        <label>Revision</label>
+        <label xml:lang="de">Revisionsnummer</label>
+         <label xml:lang="ca">Número de revisió</label>
+    </variable>
+    <variable item="Date 2" CV="265" readOnly="yes" default="0">
+      <decVal min="0" max="255"/>
+        <label>Date</label>
+        <label xml:lang="de">Datum</label>
+         <label xml:lang="ca">Data</label>
+    </variable>
+</variables>

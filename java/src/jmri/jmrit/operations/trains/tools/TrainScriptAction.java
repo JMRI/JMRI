@@ -1,4 +1,3 @@
-// TrainScriptAction.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Frame;
@@ -11,7 +10,6 @@ import jmri.jmrit.operations.trains.TrainEditFrame;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision$
  */
 public class TrainScriptAction extends AbstractAction {
 
@@ -20,7 +18,7 @@ public class TrainScriptAction extends AbstractAction {
         this.frame = frame;
     }
 
-    TrainEditFrame frame;	// the parent frame that is launching the TrainScriptFrame.
+    TrainEditFrame frame; // the parent frame that is launching the TrainScriptFrame.
 
     TrainScriptFrame f = null;
 
@@ -34,8 +32,7 @@ public class TrainScriptAction extends AbstractAction {
         f.setLocation(frame.getLocation());
         f.initComponents(frame);
         f.setExtendedState(Frame.NORMAL);
-        f.setTitle(Bundle.getMessage("MenuItemScripts"));
     }
 }
 
-/* @(#)TrainScriptAction.java */
+

@@ -1,82 +1,79 @@
-package jmri.jmrit.progsupport;
+ package jmri.jmrit.progsupport;
 
+import java.awt.GraphicsEnvironment;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import jmri.InstanceManager;
 import jmri.ProgrammerScaffold;
+import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
+import jmri.util.JUnitUtil;
+import jmri.util.JmriJFrame;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the ProgServiceModePane
  *
  * @author	Bob Jacobsen 2008
  */
-public class ProgServiceModePaneTest extends TestCase {
+public class ProgServiceModePaneTest {
 
+    @Test
     public void testCreateHorizontalNone() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // create and show
-        jmri.util.JmriJFrame f = new jmri.util.JmriJFrame("Horizontal None");
+        JmriJFrame f = new JmriJFrame("Horizontal None");
         f.getContentPane().add(
                 new ProgServiceModePane(BoxLayout.X_AXIS));
         f.pack();
         f.setLocation(0, 0);
         f.setVisible(true);
+        JUnitUtil.dispose(f);
     }
 
+    @Test
     public void testCreateHorizontalDIRECTBYTEMODE() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // add dummy DCC
-        InstanceManager.setProgrammerManager(new DefaultProgrammerManager(
-                (new ProgrammerScaffold(DefaultProgrammerManager.DIRECTBYTEMODE))));
-        Assert.assertTrue("programer manager available", InstanceManager.getDefault(jmri.ProgrammerManager.class) != null);
+        InstanceManager.setAddressedProgrammerManager(new DefaultProgrammerManager(
+                (new ProgrammerScaffold(ProgrammingMode.DIRECTBYTEMODE))));
+        Assert.assertNotNull("programer manager available", InstanceManager.getDefault(jmri.AddressedProgrammerManager.class));
         // create and show
-        jmri.util.JmriJFrame f = new jmri.util.JmriJFrame("Horizontal DIRECTBYTEMODE");
+        JmriJFrame f = new JmriJFrame("Horizontal DIRECTBYTEMODE");
         f.getContentPane().add(
                 new ProgServiceModePane(BoxLayout.X_AXIS));
         f.pack();
         f.setLocation(0, 100);
         f.setVisible(true);
+        JUnitUtil.dispose(f);
     }
 
+    @Test
     public void testCreateVerticalNone() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // create and show
-        jmri.util.JmriJFrame f = new jmri.util.JmriJFrame("Vertical None");
+        JmriJFrame f = new JmriJFrame("Vertical None");
         f.getContentPane().add(
                 new ProgServiceModePane(BoxLayout.Y_AXIS,
                         new ButtonGroup()));
         f.pack();
         f.setLocation(0, 200);
         f.setVisible(true);
+        JUnitUtil.dispose(f);
     }
 
-    // from here down is testing infrastructure
-    public ProgServiceModePaneTest(String s) {
-        super(s);
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {ProgServiceModePaneTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(ProgServiceModePaneTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        // clear InstanceManager
-        jmri.util.JUnitUtil.resetInstanceManager();
-    }
-
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 }

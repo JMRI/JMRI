@@ -7,18 +7,20 @@ import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.Route;
 import jmri.RouteManager;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Factory to create {@link apps.startup.TriggerRouteModel} objects.
- * 
+ *
  * @author Randall Wood (C) 2016
  */
+@ServiceProvider(service = StartupModelFactory.class)
 public class TriggerRouteModelFactory implements StartupModelFactory {
 
-    private final static Logger log = LoggerFactory.getLogger(TriggerRouteModelFactory.class.getName());
-    
+    private final static Logger log = LoggerFactory.getLogger(TriggerRouteModelFactory.class);
+
     @Override
     public Class<? extends StartupModel> getModelClass() {
         return TriggerRouteModel.class;

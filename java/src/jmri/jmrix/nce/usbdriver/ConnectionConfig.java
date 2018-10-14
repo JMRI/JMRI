@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.nce.usbdriver;
 
 import jmri.util.SystemType;
@@ -9,8 +8,7 @@ import jmri.util.SystemType;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Daniel Boudreau Copyright (C) 2007
- * @version	$Revision$
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     public final static String NAME = "NCE USB";
@@ -18,6 +16,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     * @param p SerialPortAdapter to configure
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
@@ -30,6 +29,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @Override
     public String name() {
         return NAME;
     }
@@ -38,6 +38,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return false;
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new UsbDriverAdapter();

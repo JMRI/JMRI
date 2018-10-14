@@ -1,4 +1,3 @@
-// JMRIClientReply.java
 package jmri.jmrix.jmriclient;
 
 import org.slf4j.Logger;
@@ -7,8 +6,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Carries the reply to an JMRIClientMessage.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2004, 2008
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2001, 2004, 2008
  */
 public class JMRIClientReply extends jmri.jmrix.AbstractMRReply {
 
@@ -36,6 +34,7 @@ public class JMRIClientReply extends jmri.jmrix.AbstractMRReply {
         return part[1];
     }
 
+    @Override
     protected int skipPrefix(int index) {
         // start at index, passing any whitespace & control characters at the start of the buffer
         while (index < getNumDataElements() - 1
@@ -50,6 +49,7 @@ public class JMRIClientReply extends jmri.jmrix.AbstractMRReply {
      * can't be parsed. Expects a message of the form 1264343601.156 100 INFO 1
      * SM -1 CV 8 99
      */
+    @Override
     public int value() {
         String s = toString();
         String[] part = s.split("\\s", 10);
@@ -64,6 +64,7 @@ public class JMRIClientReply extends jmri.jmrix.AbstractMRReply {
         return val;
     }
 
+    @Override
     public boolean isUnsolicited() {
         String s = toString();
         // Split in 7 is enough for initial handshake 
@@ -77,9 +78,9 @@ public class JMRIClientReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JMRIClientReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIClientReply.class);
 
 }
 
 
-/* @(#)JMRIClientReply.java */
+

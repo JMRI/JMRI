@@ -1,4 +1,3 @@
-// SchedulesTableAction.java
 package jmri.jmrit.operations.locations.schedules;
 
 import java.awt.Frame;
@@ -10,7 +9,6 @@ import javax.swing.AbstractAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2009
- * @version $Revision$
  */
 public class SchedulesTableAction extends AbstractAction {
 
@@ -27,8 +25,8 @@ public class SchedulesTableAction extends AbstractAction {
             f = new SchedulesTableFrame();
         }
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 }
 
-/* @(#)SchedulesTableAction.java */
+

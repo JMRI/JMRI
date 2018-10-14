@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision$
  */
 public class JMRIClientSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
@@ -21,10 +20,12 @@ public class JMRIClientSensorManagerXml extends jmri.managers.configurexml.Abstr
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element sensors) {
         sensors.setAttribute("class", "jmri.jmrix.jmriclient.configurexml.JMRIClientSensorManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -36,5 +37,5 @@ public class JMRIClientSensorManagerXml extends jmri.managers.configurexml.Abstr
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(JMRIClientSensorManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIClientSensorManagerXml.class);
 }

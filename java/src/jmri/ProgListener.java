@@ -5,6 +5,11 @@ package jmri;
  * <P>
  * This allows a {@link Programmer} object to return delayed status, including
  * the CV value from a read operation.
+ * For simplicity, expect these to be returned to be on the
+ * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">GUI thread</a>.
+ * See the discussion in the {@link Programmer#readCV(String CV, ProgListener p) Programmer.readCV(...)}, 
+ * {@link Programmer#writeCV(String CV, int val, ProgListener p) Programmer.writeCV(...)} and
+ * {@link Programmer#confirmCV(String CV, int val, ProgListener p) Programmer.confirmCV(...)} methods.
  *
  * <hr>
  * This file is part of JMRI.
@@ -18,7 +23,7 @@ package jmri;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public interface ProgListener extends java.util.EventListener {
 
@@ -85,19 +90,19 @@ public interface ProgListener extends java.util.EventListener {
     public final int FailedTimeout = 0x80;
 
     /**
-     * Constant denoting that a short circuit occured while programming
+     * Constant denoting that a short circuit occurred while programming
      */
     public final int ProgrammingShort = 0x100;
 
     /**
      * Constant denoting that there was an error with the programming sequence
-     * (e.g. early exit)
+     * (such as early exit)
      */
     public final int SequenceError = 0x200;
 
     /**
-     * Constant denoting that a communications error occured between the command
-     * station and the PC durring programming
+     * Constant denoting that a communications error occurred between the command
+     * station and the PC during programming
      */
     public final int CommError = 0x400;
 }

@@ -19,22 +19,22 @@ public class SRCPTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element turnouts) {
         turnouts.setAttribute("class", this.getClass().getName());
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
 
     @Override
     public boolean load(Element shared, Element perNode) {
-        // create the master object
-        SRCPTurnoutManager.instance();
         // load individual turnouts
         return loadTurnouts(shared, perNode);
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SRCPTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPTurnoutManagerXml.class);
 }

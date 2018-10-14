@@ -32,6 +32,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
      * @param o Object to store, of type SensorManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element sensors = new Element("sensors");
         return store(o, sensors);
@@ -46,8 +47,8 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             elem.addContent(new Element("goingInActive").addContent(String.valueOf(tm.getDefaultSensorDebounceGoingInActive())));
             sensors.addContent(elem);
         }
-        java.util.Iterator<String> iter
-                = tm.getSystemNameList().iterator();
+
+        java.util.Iterator<String> iter = tm.getSystemNameAddedOrderList().iterator();
 
         // don't return an element if there are not sensors to include
         if (!iter.hasNext()) {
@@ -62,11 +63,14 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             String inverted = s.getInverted() ? "true" : "false";
 
             Element elem = new Element("sensor")
-                    .setAttribute("systemName", sname) // deprecated for 2.9.* series
                     .setAttribute("inverted", inverted);
             elem.addContent(new Element("systemName").addContent(sname));
+
+            // store common part
+            storeCommon(s, elem);
+
             log.debug("store sensor " + sname);
-            if (s.useDefaultTimerSettings()) {
+            if (s.getUseDefaultTimerSettings()) {
                 elem.addContent(new Element("useGlobalDebounceTimer").addContent("yes"));
             } else {
                 if (s.getSensorDebounceGoingActiveTimer() > 0 || s.getSensorDebounceGoingInActiveTimer() > 0) {
@@ -76,8 +80,10 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                     elem.addContent(timer);
                 }
             }
-            // store common part
-            storeCommon(s, elem);
+            if (tm.isPullResistanceConfigurable()) {
+                // store the sensor's value for pull resistance.
+                elem.addContent(new Element("pullResistance").addContent(s.getPullResistance().getShortName()));
+            }
 
             sensors.addContent(elem);
 
@@ -114,7 +120,6 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
      * @param sensors Element containing the Sensor elements to load.
      * @return true if succeeded
      */
-    @SuppressWarnings("unchecked")
     public boolean loadSensors(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
         boolean result = true;
         List<Element> sensorList = sensors.getChildren("sensor");
@@ -122,6 +127,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             log.debug("Found " + sensorList.size() + " sensors");
         }
         SensorManager tm = InstanceManager.sensorManagerInstance();
+        tm.setDataListenerMute(true);
         long goingActive = 0L;
         long goingInActive = 0L;
         if (sensors.getChild("globalDebounceTimers") != null) {
@@ -129,7 +135,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             try {
                 if (timer.getChild("goingActive") != null) {
                     String active = timer.getChild("goingActive").getText();
-                    goingActive = Long.valueOf(active);
+                    goingActive = Long.parseLong(active);
                     tm.setDefaultSensorDebounceGoingActive(goingActive);
                 }
             } catch (NumberFormatException ex) {
@@ -139,7 +145,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             try {
                 if (timer.getChild("goingInActive") != null) {
                     String inActive = timer.getChild("goingInActive").getText();
-                    goingInActive = Long.valueOf(inActive);
+                    goingInActive = Long.parseLong(inActive);
                     tm.setDefaultSensorDebounceGoingInActive(goingInActive);
                 }
             } catch (NumberFormatException ex) {
@@ -151,14 +157,16 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         for (int i = 0; i < sensorList.size(); i++) {
             String sysName = getSystemName(sensorList.get(i));
             if (sysName == null) {
-                creationErrorEncountered("Unexpected missing system name while loading sensors",
-                        null, null, null);
+                handleException("Unexpected missing system name while loading sensors",
+                        null, null, null, null);
                 result = false;
                 break;
             }
             boolean inverted = false;
 
             String userName = getUserName(sensorList.get(i));
+
+            checkNameNormalization(sysName, userName, tm);
 
             if (sensorList.get(i).getAttribute("inverted") != null) {
                 if (sensorList.get(i).getAttribute("inverted").getValue().equals("true")) {
@@ -171,12 +179,11 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
             }
 
             Sensor s;
-            
+
             try {
                 s = tm.newSensor(sysName, userName);
             } catch (IllegalArgumentException e) {
-                creationErrorEncountered("Could not create sensor",
-                        sysName, userName, null);
+                handleException("Could not create sensor", null, sysName, userName, null);
                 result = false;
                 continue;
             }
@@ -189,7 +196,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                 try {
                     if (timer.getChild("goingActive") != null) {
                         String active = timer.getChild("goingActive").getText();
-                        s.setSensorDebounceGoingActiveTimer(Long.valueOf(active));
+                        s.setSensorDebounceGoingActiveTimer(Long.parseLong(active));
                     }
                 } catch (NumberFormatException ex) {
                     log.error(ex.toString());
@@ -198,7 +205,7 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                 try {
                     if (timer.getChild("goingInActive") != null) {
                         String inActive = timer.getChild("goingInActive").getText();
-                        s.setSensorDebounceGoingInActiveTimer(Long.valueOf(inActive));
+                        s.setSensorDebounceGoingInActiveTimer(Long.parseLong(inActive));
                     }
                 } catch (NumberFormatException ex) {
                     log.error(ex.toString());
@@ -207,17 +214,26 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
 
             if (sensorList.get(i).getChild("useGlobalDebounceTimer") != null) {
                 if (sensorList.get(i).getChild("useGlobalDebounceTimer").getText().equals("yes")) {
-                    s.useDefaultTimerSettings(true);
+                    s.setUseDefaultTimerSettings(true);
                 }
             }
             s.setInverted(inverted);
+
+            if (sensorList.get(i).getChild("pullResistance") != null) {
+                String pull = sensorList.get(i).getChild("pullResistance")
+                        .getText();
+                log.debug("setting pull to {} for sensor {}", pull, s);
+                s.setPullResistance(jmri.Sensor.PullResistance.getByShortName(pull));
+            }
         }
+        tm.setDataListenerMute(false);
         return result;
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.sensorManagerInstance().getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractSensorManagerConfigXML.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractSensorManagerConfigXML.class);
 }

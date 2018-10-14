@@ -1,4 +1,3 @@
-// SpecificSensorManagerXml.java
 package jmri.jmrix.powerline.cm11.configurexml;
 
 /**
@@ -15,7 +14,6 @@ package jmri.jmrix.powerline.cm11.configurexml;
  *
  * @author Bob Jacobsen 2008
  * @author Ken Cameron, (C) 2009, add sensors from poll replies
- * @version $Revision$
  */
 public class SpecificSensorManagerXml extends jmri.jmrix.powerline.configurexml.SerialSensorManagerXml {
 

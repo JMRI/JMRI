@@ -1,28 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
+<!-- version 1.1 - Ronald Kuhn - add german translation -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Speed Regulation</name>
+  <name xml:lang="it">Regolazione velocità</name>
+  <name xml:lang="cs">Regulace rychlosti</name>
+  <name xml:lang="de">ZIMO km/h-Regelung</name>
   <column>
+    <label>
+      <text> </text>
+      <text xml:lang="de">Die „km/h – Regelung“ ist ein alternatives Prinzip zum Fahren mit vorbildmäßigen Geschwindigkeiten</text>
+    </label>
+    <label>
+      <text> </text>
+      <text xml:lang="de">in allen Betriebssituationen: die Fahrstufen des Reglers oder Fahrpultes (1 bis 126 im sogenannten</text>
+    </label>
+    <label>
+      <text> </text>
+      <text xml:lang="de">„128-Fahrstufen“-System) werden dabei direkt als km/h - Werte interpretiert.</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
     <label>
       <text>To calibrate the speed regulation, mark a scale tenth of a unit (Mile or Kilometre), place loco</text>
       <text xml:lang="it">Per calibrare la velocità, segnare un decimo di unità in scala (Milgio o Km)</text>
+      <text xml:lang="cs">Pro kalibraci regulace rychlosti, označte v měřítku úsek desetinu jednotky (kilometr nebo míli), umístěte lokomotivu</text>
+      <text xml:lang="de">Um die "km/h – Regelung" vorzubereiten markieren Sie eine maßstäbliche Strecke</text>
     </label>
     <label>
       <text>on track with correct direction set, F0 turned off and enough distance from the Start marker</text>
       <text xml:lang="it">sulle rotaie,con F0 in Off e a distanza sufficente dal segno di inizio tratta</text>
+      <text xml:lang="cs">na kolej se správně nastaveným směrem a v dostatečné vzdálenosti od značky Start, F0 přepněte na vypnuto</text>
+      <text xml:lang="de">von 100 m an Anfang und Ende. Die Lok wird 1 bis 2 m vor dem Startpunkt aufgestellt,</text>
     </label>
     <label>
       <text>to allow for the acceleration (change momentum settings if neccessary). Write '1' to CV 135</text>
       <text xml:lang="it">per permetterle di accellerare (azzerare l'inerzia se necessario). Scrivere un '1' in CV 135</text>
+      <text xml:lang="cs">pro umožnění zrychlení (pokud je to nezbytné tak změňte zrychlení). Zapiště '1' do CV135</text>
+      <text xml:lang="de">passende Fahrtrichtung vorbereitet, Funktion F0 (Stirnlampen) ausgeschaltet.</text>
     </label>
     <label>
       <text>using a cab or the Single CV Programmer, then drive the loco through the marked section at</text>
       <text xml:lang="it">usando un Cab o il Programmatore per le singole CV. Far avanzare a velocità media la loco</text>
+      <text xml:lang="cs">s použitím ovladače nebo jednoduchého programátoru CV, potom projeďte s lokomotivou označený úsek</text>
+      <text xml:lang="de">Beschleunigungszeiten (sowohl CV #3 im Decoder als auch im Fahrpult) sollten auf 0 oder</text>
     </label>
     <label>
       <text>a mid speed, turning F0 on at the Start marker and off at the End marker.</text>
       <text xml:lang="it">lungo il tratto. Premere F0 all'inizio del tratto e alla fine</text>
+      <text xml:lang="cs">na střední rychlosti, přepněte F0 na zapnuto na značce Start a přepněte na vypnuto na značce Konec.</text>
+      <text xml:lang="de">kleinen Wert gesetzt sein. Schreiben Sie in CV135 den Wert '1' und fahren die Lok mit</text>
+    </label>
+    <label>
+      <text> </text>
+      <text xml:lang="de">mittlerer Geschwindigkeit durch die markierte Strecke.</text>
+    </label>
+    <label>
+      <text> </text>
+      <text xml:lang="de">Am Beginn der Messstrecke schalten Sie mit F0 das Licht ein und am Ende wieder aus.</text>
     </label>
     <label>
       <text> </text>
@@ -30,17 +67,35 @@
     <label>
       <text>If several calibration runs are performed at different speeds and the Calibration Result read</text>
       <text xml:lang="it">Se si eseguono diverse calibrazioni a varie velocità, leggendo il risultato della calibrazione</text>
+      <text xml:lang="cs">Pokud je provedeno více kalibračních jízd s různými rychlostmi a Výsledek kalibrace je přečten</text>
+      <text xml:lang="de">Nachdem einige Messfahrten mit unterschiedlichen Geschwindigkeiten durchgeführt wurden</text>
     </label>
     <label>
       <text>after each one, the Calibration Result should be approximately the same</text>
       <text xml:lang="it">dopo ognuna, i risultati dovrebbero essere simili tra loro</text>
+      <text xml:lang="cs">po každé z nich, potom by Výsledek kalibrace by měl být přibližně stejný.</text>
+      <text xml:lang="de">sollte die Kontrollzahl in CV136 nach jeder Fahrt annähernd gleich sein.</text>
     </label>
     <label>
       <text> </text>
     </label>
-    <display item="km/h speed regulation control number readout" label="Calibration Result" tooltip="Read Only">
-       <label xml:lang="it">Risultati Calibrazione</label>
-    </display>
+
+    <row>
+     <label>
+      <text> </text>
+     </label>
+      <column>
+      <display item="km/h speed regulation control number readout">
+        <label>Calibration Result</label>
+        <label xml:lang="it">Risultati Calibrazione</label>
+        <label xml:lang="cs">Výsledek kalibrace</label>
+        <label xml:lang="de">Kontrollzahl</label>
+        <tooltip>Read Only</tooltip>
+        <tooltip xml:lang="de">Nur lesend</tooltip>
+      </display>
+      </column>
+    </row>
+
     <label>
       <text> </text>
     </label>
@@ -49,17 +104,20 @@
     </label>
     <row>
       <column>
-        <display item="km/h speed regulation control and range" label="Speed Regulation Control">
-          <label xml:lang="it">Controllo regolazione velocità</label>
+        <display item="km/h speed regulation control and range">
+          <!--label xml:lang="it">Controllo regolazione velocità</label-->
+          <label xml:lang="cs">Ovladač nastavení rychlosti</label>
+          <label xml:lang="de">bei 128 Fahrstufen entspricht jede Fahrstufe:</label>
         </display>
       </column>
       <column>
         <label>
           <text> Miles or Kilometres per hour per (128) Speed Step</text>
           <text xml:lang="it">Miglia o Kilometri all'ora per (128) Step di Velocità</text>
+          <text xml:lang="cs"> kilometry nebo míle za hodinu na rychlostní stupeň (128)</text>
+          <text xml:lang="de">  km/h</text>
         </label>
       </column>
     </row>
   </column>
-  <name xml:lang="it">Regolazione velocità</name>
 </pane>

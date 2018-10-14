@@ -1,38 +1,36 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * XBeeSensorTest.java
  *
  * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeSensor class
  *
- * @author	Paul Bender
+ * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class XBeeSensorTest extends TestCase {
+public class XBeeSensorTest extends jmri.implementation.AbstractSensorTestBase {
+
+    @Override
+    public int numListeners() {return 0;}
+
+    @Override
+    public void checkOnMsgSent() {}
+
+    @Override
+    public void checkOffMsgSent() {}
+
+    @Override
+    public void checkStatusRequestMsgSent() {}
 
     XBeeTrafficController tc;
     XBeeConnectionMemo memo;
 
-    public void testCtor() {
-        memo.setSystemPrefix("ABC");
-        memo.setSensorManager(new XBeeSensorManager(tc, "ABC"));
-        tc.setAdapterMemo(memo);
-        XBeeSensor s = new XBeeSensor("ABCS1234", "XBee Sensor Test", tc) {
-            @Override
-            public void requestUpdateFromLayout() {
-            }
-        };
-        Assert.assertNotNull("exists", s);
-    }
-
+    @Test
     public void testCtorAddressPinName() {
-        memo.setSystemPrefix("ABC");
-        memo.setSensorManager(new XBeeSensorManager(tc, "ABC"));
-        tc.setAdapterMemo(memo);
         XBeeSensor s = new XBeeSensor("ABCS123:4", "XBee Sensor Test", tc) {
             @Override
             public void requestUpdateFromLayout() {
@@ -41,10 +39,8 @@ public class XBeeSensorTest extends TestCase {
         Assert.assertNotNull("exists", s);
     }
 
+    @Test
     public void testCtor16BitHexNodeAddress() {
-        memo.setSystemPrefix("ABC");
-        memo.setSensorManager(new XBeeSensorManager(tc, "ABC"));
-        tc.setAdapterMemo(memo);
         XBeeSensor s = new XBeeSensor("ABCSABCD:4", "XBee Sensor Test", tc) {
             @Override
             public void requestUpdateFromLayout() {
@@ -53,10 +49,8 @@ public class XBeeSensorTest extends TestCase {
         Assert.assertNotNull("exists", s);
     }
 
+    @Test
     public void testCtor16BitHexStringNodeAddress() {
-        memo.setSystemPrefix("ABC");
-        memo.setSensorManager(new XBeeSensorManager(tc, "ABC"));
-        tc.setAdapterMemo(memo);
         XBeeSensor s = new XBeeSensor("ABCSAB CD:4", "XBee Sensor Test", tc) {
             @Override
             public void requestUpdateFromLayout() {
@@ -65,10 +59,8 @@ public class XBeeSensorTest extends TestCase {
         Assert.assertNotNull("exists", s);
     }
 
+    @Test
     public void testCtor64BitHexStringNodeAddress() {
-        memo.setSystemPrefix("ABC");
-        memo.setSensorManager(new XBeeSensorManager(tc, "ABC"));
-        tc.setAdapterMemo(memo);
         XBeeSensor s = new XBeeSensor("ABCS00 13 A2 00 40 A0 4D 2D:4", "XBee Sensor Test", tc) {
             @Override
             public void requestUpdateFromLayout() {
@@ -77,35 +69,31 @@ public class XBeeSensorTest extends TestCase {
         Assert.assertNotNull("exists", s);
     }
 
-    // from here down is testing infrastructure
-    public XBeeSensorTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XBeeSensorTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XBeeSensorTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        tc = new XBeeTrafficController() {
-            public void setInstance() {
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+        tc = new XBeeInterfaceScaffold();
+        memo = new XBeeConnectionMemo();
+        memo.setSystemPrefix("ABC");
+        memo.setSensorManager(new XBeeSensorManager(tc, "ABC"));
+        tc.setAdapterMemo(memo);
+        t = new XBeeSensor("ABCS1234", "XBee Sensor Test", tc) {
+            @Override
+            public void requestUpdateFromLayout() {
+            }
+	    @Override
+	    public PullResistance getPullResistance(){
+		    return PullResistance.PULL_OFF;
             }
         };
-        memo = new XBeeConnectionMemo();
     }
 
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+	t.dispose();
+        tc.terminate();
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

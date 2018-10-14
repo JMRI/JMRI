@@ -1,5 +1,6 @@
 package jmri.jmrit.audio;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.List;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Mixer;
@@ -89,7 +90,7 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "OK to write to static variable mixer as we are cleaning up")
     public void cleanup() {
         // Stop the command thread
@@ -107,7 +108,7 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
                     log.debug("Removing JavaSoundAudioSource: " + audioName);
                 }
                 // Cast to JavaSoundAudioSource and cleanup
-                ((JavaSoundAudioSource) audio).cleanUp();
+                ((JavaSoundAudioSource) audio).cleanup();
             }
         }
 
@@ -120,7 +121,7 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
                     log.debug("Removing JavaSoundAudioBuffer: " + audioName);
                 }
                 // Cast to JavaSoundAudioBuffer and cleanup
-                ((JavaSoundAudioBuffer) audio).cleanUp();
+                ((JavaSoundAudioBuffer) audio).cleanup();
             }
         }
 
@@ -133,7 +134,7 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
                     log.debug("Removing JavaSoundAudioListener: " + audioName);
                 }
                 // Cast to JavaSoundAudioListener and cleanup
-                ((JavaSoundAudioListener) audio).cleanUp();
+                ((JavaSoundAudioListener) audio).cleanup();
             }
         }
 
@@ -172,6 +173,6 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
         return mixer;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(JavaSoundAudioFactory.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JavaSoundAudioFactory.class);
 
 }

@@ -1,23 +1,23 @@
 package jmri.jmrit.sound;
 
+import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Wrap a byte array to provide WAV file functionality
  *
- * @author	Bob Jacobsen Copyright (C) 2006
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class WavBuffer {
 
     /**
-     * Create from already existing byte array. The array is expected to be in
-     * .wav format, starting with a RIFF header.
+     * Create from already existing byte array.
+     *
+     * @param content a WAV format byte array, starting with a RIFF header
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
     public WavBuffer(byte[] content) {
-        buffer = content;
+        buffer = Arrays.copyOf(content, content.length);
 
         initFmt();
         initData();
@@ -36,7 +36,10 @@ public class WavBuffer {
 
         try {
             buffer = new byte[(int) file.length()];
-            s.read(buffer);
+            int count = s.read(buffer);
+            if (count != buffer.length) {
+                log.warn("Excepted {} bytes but read {} from file {}", buffer.length, count, file.getName());
+            }
 
             initFmt();
             initData();
@@ -158,10 +161,9 @@ public class WavBuffer {
                 + (buffer[index + 3] & 0xFF) * 256 * 256 * 256;
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public byte[] getByteArray() {
-        return buffer;
+        return Arrays.copyOf(buffer, buffer.length);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WavBuffer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WavBuffer.class);
 }

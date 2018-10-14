@@ -1,4 +1,3 @@
-// ScheduleEditFrame.java
 package jmri.jmrit.operations.locations.schedules;
 
 import java.awt.Dimension;
@@ -37,7 +36,6 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of a schedule
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011
- * @version $Revision$
  */
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -88,8 +86,8 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         _track = track;
 
         // load managers
-        manager = ScheduleManager.instance();
-        managerXml = LocationManagerXml.instance();
+        manager = InstanceManager.getDefault(ScheduleManager.class);
+        managerXml = InstanceManager.getDefault(LocationManagerXml.class);
 
         // Set up the jtable in a Scroll Pane..
         schedulePane = new JScrollPane(scheduleTable);
@@ -209,7 +207,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         addHelpMenu("package.jmri.jmrit.operations.Operations_Schedules", true); // NOI18N
 
         // get notified if car types or roads are changed
-        CarTypes.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
         _location.addPropertyChangeListener(this);
         _track.addPropertyChangeListener(this);
 
@@ -321,13 +319,18 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         }
         if (_track != null) {
             if (!_track.getScheduleId().equals(_schedule.getId())) {
-                LocationManager.instance().resetMoves();
+                InstanceManager.getDefault(LocationManager.class).resetMoves();
             }
-            _track.setScheduleId(_schedule.getId());
+            _track.setSchedule(_schedule);
             if (sequentialRadioButton.isSelected()) {
                 _track.setScheduleMode(Track.SEQUENTIAL);
             } else {
                 _track.setScheduleMode(Track.MATCH);
+            }
+            // check for errors, ignore no schedule items error when creating a new schedule
+            String status = _track.checkScheduleValid();
+            if (_schedule.getItemsBySequenceList().size() != 0 && !status.equals(Track.SCHEDULE_OKAY)) {
+                JOptionPane.showMessageDialog(this, status, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
         }
 
@@ -337,7 +340,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 
     private void loadTypeComboBox() {
         typeBox.removeAllItems();
-        for (String typeName : CarTypes.instance().getNames()) {
+        for (String typeName : InstanceManager.getDefault(CarTypes.class).getNames()) {
             if (_track.acceptsTypeName(typeName)) {
                 typeBox.addItem(typeName);
             }
@@ -385,7 +388,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 
     @Override
     public void dispose() {
-        CarTypes.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
         _location.removePropertyChangeListener(this);
         _track.removePropertyChangeListener(this);
         scheduleModel.dispose();

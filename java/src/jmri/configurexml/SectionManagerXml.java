@@ -27,6 +27,7 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
      * @param o Object to store, of type SectionManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element sections = new Element("sections");
         setStoreElementClass(sections);
@@ -49,9 +50,15 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
                     log.debug("Section system name is " + sname);
                     Section x = tm.getBySystemName(sname);
                     if (x.getSectionType() != Section.DYNAMICADHOC) {
-                        Element elem = new Element("section")
-                                .setAttribute("systemName", sname);
+                        Element elem = new Element("section");
+                        elem.addContent(new Element("systemName").addContent(sname));
 
+                        // As a work-around for backward compatibility, store systemName and username as attribute.
+                        // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
+                        elem.setAttribute("systemName", sname);
+                        String uname = x.getUserName();
+                        if (uname !=null && !uname.equals("")) elem.setAttribute("userName", uname);
+                            
                         // store common part
                         storeCommon(x, elem);
                         String txt = "userdefined";
@@ -133,6 +140,7 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
         sections.setAttribute("class", "jmri.configurexml.SectionManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -167,18 +175,11 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
             log.debug("Found " + sectionList.size() + " sections");
         }
         SectionManager tm = InstanceManager.getDefault(jmri.SectionManager.class);
-
+        tm.setDataListenerMute(true);
+        
         for (int i = 0; i < sectionList.size(); i++) {
-            if (sectionList.get(i).getAttribute("systemName") == null) {
-                log.warn("unexpected null in systemName " + sectionList.get(i) + " "
-                        + (sectionList.get(i)).getAttributes());
-                break;
-            }
-            String sysName = (sectionList.get(i)).getAttribute("systemName").getValue();
-            String userName = null;
-            if (sectionList.get(i).getAttribute("userName") != null) {
-                userName = (sectionList.get(i)).getAttribute("userName").getValue();
-            }
+            String sysName = getSystemName(sectionList.get(i));
+            String userName = getUserName(sectionList.get(i));
             Section x = tm.createNewSection(sysName, userName);
             if (x != null) {
                 // load common part
@@ -249,11 +250,14 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
                 }
             }
         }
+
+        tm.setDataListenerMute(false);
     }
 
+    @Override
     public int loadOrder() {
         return InstanceManager.getDefault(jmri.SectionManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SectionManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SectionManagerXml.class);
 }

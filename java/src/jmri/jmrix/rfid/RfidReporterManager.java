@@ -32,6 +32,6 @@ abstract public class RfidReporterManager extends AbstractReporterManager implem
         log.warn("Unexpected message received: " + m);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(RfidReporterManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(RfidReporterManager.class);
 
 }

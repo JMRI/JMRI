@@ -1,62 +1,50 @@
 package jmri.jmrix.pricom.pockettester;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * JUnit tests for the MonitorFrame class
  *
  * @author	Bob Jacobsen Copyright 2005
- * @version	$Revision$
  */
-public class MonitorFrameTest extends TestCase {
+public class MonitorFrameTest {
 
+    @Test
     public void testCreate() {
-        new MonitorFrame();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        MonitorFrame monitorFrame = new MonitorFrame();
+        Assert.assertNotNull(monitorFrame);
     }
 
     // create and show, with some data present
+    @Test
     public void testShow() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         MonitorFrame f = new MonitorFrame();
         f.initComponents();
         f.setVisible(true);
-        f.asciiFormattedMessage(PocketTesterTest.version);
-        f.asciiFormattedMessage(PocketTesterTest.speed0003A);
-        f.asciiFormattedMessage(PocketTesterTest.idlePacket);
-
+        f.asciiFormattedMessage(PackageTest.version);
+        f.asciiFormattedMessage(PackageTest.speed0003A);
+        f.asciiFormattedMessage(PackageTest.idlePacket);
         f.dispose();
     }
 
-    // from here down is testing infrastructure
-    public MonitorFrameTest(String s) {
-        super(s);
-    }
+    @Before
+    public void setUp() throws Exception {
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {MonitorFrameTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(MonitorFrameTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-
-        super.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
-    protected void tearDown() throws Exception {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
     }
 }

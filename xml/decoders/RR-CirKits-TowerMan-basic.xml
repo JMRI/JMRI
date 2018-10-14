@@ -13,14 +13,18 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
-  <version author="dick@rr-cirkits.com" version="0.16" lastUpdated="20160310"/>
+  <version author="dick@rr-cirkits.com" version="1.0" lastUpdated="20161209"/>
   <!-- Version 0.01  Working version modified from SignalMan -->
   <!-- Version 0.16  TowerMan version -->
+  <!-- Version 1.0   Fixed initialize error to prevent lock up of the LocoNet, added Inv option to outputs, and added trigger options in logic -->
+
   <decoder>
-    <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The TowerMan is normally programmed in OPs mode">
+    <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The TowerMan is programmed in OPs mode">
       <model model="TowerMan" comment="16 Line I/O Driver" lowVersionID="10"/>
     </family>
-    <programming direct="no" paged="yes" register="no" ops="yes"/>
+    <programming direct="no" paged="yes" register="no" ops="no">
+        <mode>LOCONETOPSBOARD</mode>
+    </programming>
     <variables>
       <variable item="Primary Address" CV="1" comment="Short address">
         <shortAddressVal/>
@@ -109,194 +113,99 @@
         <splitVal highCV="115" upperMask="VVVVVVVV"/>
         <label>Flash Write MSB</label>
       </variable>
-      <variable item="Stepper 1" CV="116" mask="XXXXXXXV" default="0">
-        <enumVal>
-          <enumChoice choice="No     "/>
-          <enumChoice choice="Enable"/>
-        </enumVal>
-        <label>Stepper 1</label>
-      </variable>
-      <variable item="Stepper 2" CV="116" mask="XXXXXXVX" default="0">
-        <enumVal>
-          <enumChoice choice="No     "/>
-          <enumChoice choice="Enable"/>
-        </enumVal>
-        <label>Stepper 2</label>
-      </variable>
-      <variable item="Stepper 3" CV="116" mask="XXXXXVXX" default="0">
-        <enumVal>
-          <enumChoice choice="No     "/>
-          <enumChoice choice="Enable"/>
-        </enumVal>
-        <label>Stepper 3</label>
-      </variable>
-      <variable item="Stepper 4" CV="116" mask="XXXXVXXX" default="0">
-        <enumVal>
-          <enumChoice choice="No     "/>
-          <enumChoice choice="Enable"/>
-        </enumVal>
-        <label>Stepper 4</label>
-      </variable>
-      <variable item="Stepper 5" CV="116" mask="XXXVXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="No     "/>
-          <enumChoice choice="Enable"/>
-        </enumVal>
-        <label>Stepper 5</label>
-      </variable>
-      <variable item="Stepper 6" CV="116" mask="XXVXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="No     "/>
-          <enumChoice choice="Enable"/>
-        </enumVal>
-        <label>Stepper 6</label>
-      </variable>
-      <variable item="Stepper 7" CV="116" mask="XVXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="No     "/>
-          <enumChoice choice="Enable"/>
-        </enumVal>
-        <label>Stepper 7</label>
-      </variable>
-      <variable item="Stepper 8" CV="116" mask="VXXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="No     "/>
-          <enumChoice choice="Enable"/>
-        </enumVal>
-        <label>Stepper 8</label>
-      </variable>
-      <variable item="Stepper 9" CV="117" mask="XXXXXXXV" default="0">
-        <enumVal>
-          <enumChoice choice="No     "/>
-          <enumChoice choice="Enable"/>
-        </enumVal>
-        <label>Stepper 9</label>
-      </variable>
-      <variable item="Stepper 10" CV="117" mask="XXXXXXVX" default="0">
-        <enumVal>
-          <enumChoice choice="No     "/>
-          <enumChoice choice="Enable"/>
-        </enumVal>
-        <label>Stepper 10</label>
-      </variable>
-      <variable item="Stepper 11" CV="117" mask="XXXXXVXX" default="0">
-        <enumVal>
-          <enumChoice choice="No     "/>
-          <enumChoice choice="Enable"/>
-        </enumVal>
-        <label>Stepper 11</label>
-      </variable>
-      <variable item="Stepper 12" CV="117" mask="XXXXVXXX" default="0">
-        <enumVal>
-          <enumChoice choice="No     "/>
-          <enumChoice choice="Enable"/>
-        </enumVal>
-        <label>Stepper 12</label>
-      </variable>
-      <variable item="Stepper 13" CV="117" mask="XXXVXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="No     "/>
-          <enumChoice choice="Enable"/>
-        </enumVal>
-        <label>Stepper 13</label>
-      </variable>
-      <variable item="Stepper 14" CV="117" mask="XXVXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="No     "/>
-          <enumChoice choice="Enable"/>
-        </enumVal>
-        <label>Stepper 14</label>
-      </variable>
-      <variable item="Stepper 15" CV="117" mask="XVXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="No     "/>
-          <enumChoice choice="Enable"/>
-        </enumVal>
-        <label>Stepper 15</label>
-      </variable>
-      <variable item="Stepper 16" CV="117" mask="VXXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="No     "/>
-          <enumChoice choice="Enable"/>
-        </enumVal>
-        <label>Stepper 16</label>
-      </variable>
+
       <!-- I/O Table entries -->
       <!-- Input #1 -->
-      <variable item="PA1 Base Address" CV="129" mask="VVVVVVVV" default="0">
+      <variable label="PA1 Base Address" CV="129" mask="VVVVVVVV" default="0">
         <splitVal highCV="130" upperMask="XXXXVVVV" offset="1"/>
-        <label>PA1 Base Address</label>
       </variable>
-      <variable item="PA1 Mode" CV="130" mask="XXVVXXXX" default="2">
+
+      <variable label="PA1 Mode" CV="130" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>PA1 Mode</label>
       </variable>
-      <variable item="PA1 Output-Input" CV="131" mask="XVXXXXXX">
+
+      <variable label="PA1 Output-Input" CV="131" mask="XVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
-        <label>PA1 Output-Input</label>
       </variable>
-      <variable item="PA1 Input Direction" CV="131" mask="VXXXXXXX">
+
+      <variable label="PA1 Input Direction" CV="131" mask="VXXXXXXX">
         <qualifier>
           <variableref>PA1 Output-Input</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputPolarity.xml"/><label>PA1 Input Direction</label></variable>
-      <variable item="PA1 Output Direction" CV="131" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputPolarity.xml"/></variable>
+
+      <variable label="PA1 Output Direction" CV="131" mask="VXXXXXXX">
         <qualifier>
           <variableref>PA1 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutPolarity.xml"/><label>PA1 Output Direction</label></variable>
-      <variable item="PA1 Secondary 1" CV="131" mask="XXXXVVXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutPolarity.xml"/></variable>
+
+      <variable label="PA1 Secondary 1" CV="131" mask="XXXXVVXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
-        <label>PA1 Secondary 1</label>
       </variable>
-      <variable item="PA1 Secondary 2" CV="131" mask="XXVVXXXX">
+      <variable label="PA1 Secondary 2" CV="131" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice3Transition.xml"/>
-        <label>PA1 Secondary 2</label>
       </variable>
-      <variable item="PA1 Transition" CV="131" mask="XXXXXXVV" default="3">
+      <variable label="PA1 Transition" CV="131" mask="XXXXXXVV" default="3">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice1Transition.xml"/>
-        <label>PA1 Transition</label>
       </variable>
-      <variable item="PA1 Paired" CV="130" mask="VVXXXXXX">
+
+      <variable label="PA1 Paired" CV="130" mask="VVXXXXXX">
         <qualifier>
           <variableref>PA1 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedOutA.xml"/><label>PA1 Paired</label></variable>
-      <variable item="PA1 Paired-I" CV="130" mask="VVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedOutA.xml"/></variable>
+
+      <variable label="PA1 Paired-I" CV="130" mask="VVXXXXXX">
         <qualifier>
           <variableref>PA1 Output-Input</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PA1 Paired-I</label></variable>
-      <variable item="PA1 Type" CV="132" mask="VVVVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/></variable>
+
+      <variable label="PA1 Type" CV="132" mask="XVVVXXXX">
         <qualifier>
           <variableref>PA1 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PA1 Type</label></variable>
-      <variable item="PA1 Length" CV="132" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/></variable>
+
+      <variable label="PA1 Inv" CV="132" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PA1 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
+      <variable label="PA1 Length" CV="132" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
           <enumChoice choice="long"/>
         </enumVal>
-        <label>PA1 Length</label>
       </variable>
-      <variable item="PA1 Timing" CV="132" mask="XXXXVVVV">
+
+      <variable label="PA1 Timing" CV="132" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA1 Output-Input</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTiming.xml"/><label>PA1 Timing</label></variable>
-      <variable item="PA1 TimingA" CV="132" mask="XXXXVVVV">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTiming.xml"/></variable>
+
+      <variable label="PA1 TimingA" CV="132" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA1 Output-Input</variableref>
           <relation>eq</relation>
@@ -306,8 +215,9 @@
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/><label>PA1 TimingA</label></variable>
-      <variable item="PA1 TimingB" CV="132" mask="XXXXVVVV">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/></variable>
+
+      <variable label="PA1 TimingB" CV="132" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA1 Output-Input</variableref>
           <relation>eq</relation>
@@ -317,106 +227,113 @@
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingB.xml"/><label>PA1 TimingB</label></variable>
-      <variable item="PA1 Secondary 1 Address" CV="133" mask="VVVVVVVV">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingB.xml"/></variable>
+
+      <variable label="PA1 Secondary 1 Address" CV="133" mask="VVVVVVVV">
         <splitVal highCV="134" upperMask="XXXXVVVV" offset="1"/>
-        <label>PA1 Secondary 1 Address</label>
       </variable>
-      <variable item="PA1 Secondary 1 Polarity" CV="134" mask="VVXXXXXX">
+      <variable label="PA1 Secondary 1 Polarity" CV="134" mask="VVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePolarity.xml"/>
-        <label>PA1 Secondary 1 Polarity</label>
       </variable>
-      <variable item="PA1 Secondary 1 Type" CV="134" mask="XXVVXXXX">
+      <variable label="PA1 Secondary 1 Type" CV="134" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>PA1 Secondary 1 Type</label>
       </variable>
-      <variable item="PA1 Secondary 2 Address" CV="135" mask="VVVVVVVV">
+      <variable label="PA1 Secondary 2 Address" CV="135" mask="VVVVVVVV">
         <splitVal highCV="136" upperMask="XXXXVVVV" offset="1"/>
-        <label>PA1 Secondary 2 Address</label>
       </variable>
-      <variable item="PA1 Secondary 2 Polarity" CV="136" mask="VVXXXXXX">
+      <variable label="PA1 Secondary 2 Polarity" CV="136" mask="VVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePolarity.xml"/>
-        <label>PA1 Secondary 2 Polarity</label>
       </variable>
-      <variable item="PA1 Secondary 2 Type" CV="136" mask="XXVVXXXX">
+      <variable label="PA1 Secondary 2 Type" CV="136" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>PA1 Secondary 2 Type</label>
       </variable>
+
       <!-- Input #2 -->
-      <variable item="PA2 Base Address" CV="137" mask="VVVVVVVV" default="0">
+      <variable label="PA2 Base Address" CV="137" mask="VVVVVVVV" default="0">
         <splitVal highCV="138" upperMask="XXXXVVVV" offset="1"/>
-        <label>PA2 Base Address</label>
       </variable>
-      <variable item="PA2 Mode" CV="138" mask="XXVVXXXX" default="2">
+      <variable label="PA2 Mode" CV="138" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>PA2 Mode</label>
       </variable>
-      <variable item="PA2 Output-Input" CV="139" mask="XVXXXXXX">
+      <variable label="PA2 Output-Input" CV="139" mask="XVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
-        <label>PA2 Output-Input</label>
       </variable>
-      <variable item="PA2 Input Direction" CV="139" mask="VXXXXXXX">
+      <variable label="PA2 Input Direction" CV="139" mask="VXXXXXXX">
         <qualifier>
           <variableref>PA2 Output-Input</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputPolarity.xml"/><label>PA2 Input Direction</label></variable>
-      <variable item="PA2 Output Direction" CV="139" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputPolarity.xml"/></variable>
+      <variable label="PA2 Output Direction" CV="139" mask="VXXXXXXX">
         <qualifier>
           <variableref>PA2 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutPolarity.xml"/><label>PA2 Output Direction</label></variable>
-      <variable item="PA2 Secondary 1" CV="139" mask="XXXXVVXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutPolarity.xml"/></variable>
+      <variable label="PA2 Secondary 1" CV="139" mask="XXXXVVXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
-        <label>PA2 Secondary 1</label>
       </variable>
-      <variable item="PA2 Secondary 2" CV="139" mask="XXVVXXXX">
+      <variable label="PA2 Secondary 2" CV="139" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice3Transition.xml"/>
-        <label>PA2 Secondary 2</label>
       </variable>
-      <variable item="PA2 Transition" CV="139" mask="XXXXXXVV" default="3">
+      <variable label="PA2 Transition" CV="139" mask="XXXXXXVV" default="3">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice1Transition.xml"/>
-        <label>PA2 Transition</label>
       </variable>
-      <variable item="PA2 Paired" CV="138" mask="VVXXXXXX">
+
+      <variable label="PA2 Paired" CV="138" mask="VVXXXXXX">
         <qualifier>
           <variableref>PA2 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedOutA.xml"/><label>PA2 Paired</label></variable>
-      <variable item="PA2 Paired-I" CV="138" mask="VVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedOutA.xml"/></variable>
+
+      <variable label="PA2 Paired-I" CV="138" mask="VVXXXXXX">
         <qualifier>
           <variableref>PA2 Output-Input</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PA2 Paired-I</label></variable>
-      <variable item="PA2 Type" CV="140" mask="VVVVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/></variable>
+
+      <variable label="PA2 Type" CV="140" mask="XVVVXXXX">
         <qualifier>
           <variableref>PA2 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PA2 Type</label></variable>
-      <variable item="PA2 Length" CV="140" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/></variable>
+
+      <variable label="PA2 Inv" CV="140" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PA2 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
+      <variable label="PA2 Length" CV="140" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
           <enumChoice choice="long"/>
         </enumVal>
-        <label>PA2 Length</label>
       </variable>
-      <variable item="PA2 Timing" CV="140" mask="XXXXVVVV">
+
+      <variable label="PA2 Timing" CV="140" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA2 Output-Input</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTiming.xml"/><label>PA2 Timing</label></variable>
-      <variable item="PA2 TimingA" CV="140" mask="XXXXVVVV">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTiming.xml"/></variable>
+
+      <variable label="PA2 TimingA" CV="140" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA2 Length</variableref>
           <relation>eq</relation>
@@ -426,8 +343,9 @@
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/><label>PA2 TimingA</label></variable>
-      <variable item="PA2 TimingB" CV="140" mask="XXXXVVVV">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/></variable>
+
+      <variable label="PA2 TimingB" CV="140" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA2 Length</variableref>
           <relation>eq</relation>
@@ -437,106 +355,113 @@
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingB.xml"/><label>PA2 TimingB</label></variable>
-      <variable item="PA2 Secondary 1 Address" CV="141" mask="VVVVVVVV">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingB.xml"/></variable>
+
+      <variable label="PA2 Secondary 1 Address" CV="141" mask="VVVVVVVV">
         <splitVal highCV="142" upperMask="XXXXVVVV" offset="1"/>
-        <label>PA2 Secondary 1 Address</label>
       </variable>
-      <variable item="PA2 Secondary 1 Polarity" CV="142" mask="VVXXXXXX">
+      <variable label="PA2 Secondary 1 Polarity" CV="142" mask="VVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePolarity.xml"/>
-        <label>PA2 Secondary 1 Polarity</label>
       </variable>
-      <variable item="PA2 Secondary 1 Type" CV="142" mask="XXVVXXXX">
+      <variable label="PA2 Secondary 1 Type" CV="142" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>PA2 Secondary 1 Type</label>
       </variable>
-      <variable item="PA2 Secondary 2 Address" CV="143" mask="VVVVVVVV">
+      <variable label="PA2 Secondary 2 Address" CV="143" mask="VVVVVVVV">
         <splitVal highCV="144" upperMask="XXXXVVVV" offset="1"/>
-        <label>PA2 Secondary 2 Address</label>
       </variable>
-      <variable item="PA2 Secondary 2 Polarity" CV="144" mask="VVXXXXXX">
+      <variable label="PA2 Secondary 2 Polarity" CV="144" mask="VVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePolarity.xml"/>
-        <label>PA2 Secondary 2 Polarity</label>
       </variable>
-      <variable item="PA2 Secondary 2 Type" CV="144" mask="XXVVXXXX">
+      <variable label="PA2 Secondary 2 Type" CV="144" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>PA2 Secondary 2 Type</label>
       </variable>
+
       <!-- Input #3 -->
-      <variable item="PA3 Base Address" CV="145" mask="VVVVVVVV" default="0">
+      <variable label="PA3 Base Address" CV="145" mask="VVVVVVVV" default="0">
         <splitVal highCV="146" upperMask="XXXXVVVV" offset="1"/>
-        <label>PA3 Base Address</label>
       </variable>
-      <variable item="PA3 Mode" CV="146" mask="XXVVXXXX" default="2">
+      <variable label="PA3 Mode" CV="146" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>PA3 Mode</label>
       </variable>
-      <variable item="PA3 Output-Input" CV="147" mask="XVXXXXXX">
+      <variable label="PA3 Output-Input" CV="147" mask="XVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
-        <label>PA3 Output-Input</label>
       </variable>
-      <variable item="PA3 Input Direction" CV="147" mask="VXXXXXXX">
+      <variable label="PA3 Input Direction" CV="147" mask="VXXXXXXX">
         <qualifier>
           <variableref>PA3 Output-Input</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputPolarity.xml"/><label>PA3 Input Direction</label></variable>
-      <variable item="PA3 Output Direction" CV="147" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputPolarity.xml"/></variable>
+      <variable label="PA3 Output Direction" CV="147" mask="VXXXXXXX">
         <qualifier>
           <variableref>PA3 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutPolarity.xml"/><label>PA3 Output Direction</label></variable>
-      <variable item="PA3 Secondary 1" CV="147" mask="XXXXVVXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutPolarity.xml"/></variable>
+      <variable label="PA3 Secondary 1" CV="147" mask="XXXXVVXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
-        <label>PA3 Secondary 1</label>
       </variable>
-      <variable item="PA3 Secondary 2" CV="147" mask="XXVVXXXX">
+      <variable label="PA3 Secondary 2" CV="147" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice3Transition.xml"/>
-        <label>PA3 Secondary 2</label>
       </variable>
-      <variable item="PA3 Transition" CV="147" mask="XXXXXXVV" default="3">
+      <variable label="PA3 Transition" CV="147" mask="XXXXXXVV" default="3">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice1Transition.xml"/>
-        <label>PA3 Transition</label>
       </variable>
-      <variable item="PA3 Paired" CV="146" mask="VVXXXXXX">
+
+      <variable label="PA3 Paired" CV="146" mask="VVXXXXXX">
         <qualifier>
           <variableref>PA3 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedOutA.xml"/><label>PA3 Paired</label></variable>
-      <variable item="PA3 Paired-I" CV="146" mask="VVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedOutA.xml"/></variable>
+
+      <variable label="PA3 Paired-I" CV="146" mask="VVXXXXXX">
         <qualifier>
           <variableref>PA3 Output-Input</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PA3 Paired-I</label></variable>
-      <variable item="PA3 Type" CV="148" mask="VVVVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/></variable>
+
+      <variable label="PA3 Type" CV="148" mask="XVVVXXXX">
         <qualifier>
           <variableref>PA3 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PA3 Type</label></variable>
-      <variable item="PA3 Length" CV="148" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/></variable>
+
+      <variable label="PA3 Inv" CV="148" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PA3 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
+      <variable label="PA3 Length" CV="148" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
           <enumChoice choice="long"/>
         </enumVal>
-        <label>PA3 Length</label>
       </variable>
-      <variable item="PA3 Timing" CV="148" mask="XXXXVVVV">
+
+      <variable label="PA3 Timing" CV="148" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA3 Output-Input</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTiming.xml"/><label>PA3 Timing</label></variable>
-      <variable item="PA3 TimingA" CV="148" mask="XXXXVVVV">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTiming.xml"/></variable>
+
+      <variable label="PA3 TimingA" CV="148" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA3 Length</variableref>
           <relation>eq</relation>
@@ -546,8 +471,9 @@
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/><label>PA3 TimingA</label></variable>
-      <variable item="PA3 TimingB" CV="148" mask="XXXXVVVV">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/></variable>
+
+      <variable label="PA3 TimingB" CV="148" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA3 Length</variableref>
           <relation>eq</relation>
@@ -557,106 +483,113 @@
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingB.xml"/><label>PA3 TimingB</label></variable>
-      <variable item="PA3 Secondary 1 Address" CV="149" mask="VVVVVVVV">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingB.xml"/></variable>
+
+      <variable label="PA3 Secondary 1 Address" CV="149" mask="VVVVVVVV">
         <splitVal highCV="150" upperMask="XXXXVVVV" offset="1"/>
-        <label>PA3 Secondary 1 Address</label>
       </variable>
-      <variable item="PA3 Secondary 1 Polarity" CV="150" mask="VVXXXXXX">
+      <variable label="PA3 Secondary 1 Polarity" CV="150" mask="VVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePolarity.xml"/>
-        <label>PA3 Secondary 1 Polarity</label>
       </variable>
-      <variable item="PA3 Secondary 1 Type" CV="150" mask="XXVVXXXX">
+      <variable label="PA3 Secondary 1 Type" CV="150" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>PA3 Secondary 1 Type</label>
       </variable>
-      <variable item="PA3 Secondary 2 Address" CV="151" mask="VVVVVVVV">
+      <variable label="PA3 Secondary 2 Address" CV="151" mask="VVVVVVVV">
         <splitVal highCV="152" upperMask="XXXXVVVV" offset="1"/>
-        <label>PA3 Secondary 2 Address</label>
       </variable>
-      <variable item="PA3 Secondary 2 Polarity" CV="152" mask="VVXXXXXX">
+      <variable label="PA3 Secondary 2 Polarity" CV="152" mask="VVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePolarity.xml"/>
-        <label>PA3 Secondary 2 Polarity</label>
       </variable>
-      <variable item="PA3 Secondary 2 Type" CV="152" mask="XXVVXXXX">
+      <variable label="PA3 Secondary 2 Type" CV="152" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>PA3 Secondary 2 Type</label>
       </variable>
+
       <!-- Input #4 -->
-      <variable item="PA4 Base Address" CV="153" mask="VVVVVVVV" default="0">
+      <variable label="PA4 Base Address" CV="153" mask="VVVVVVVV" default="0">
         <splitVal highCV="154" upperMask="XXXXVVVV" offset="1"/>
-        <label>PA4 Base Address</label>
       </variable>
-      <variable item="PA4 Mode" CV="154" mask="XXVVXXXX" default="2">
+      <variable label="PA4 Mode" CV="154" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>PA4 Mode</label>
       </variable>
-      <variable item="PA4 Output-Input" CV="155" mask="XVXXXXXX">
+      <variable label="PA4 Output-Input" CV="155" mask="XVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
-        <label>PA4 Output-Input</label>
       </variable>
-      <variable item="PA4 Input Direction" CV="155" mask="VXXXXXXX">
+      <variable label="PA4 Input Direction" CV="155" mask="VXXXXXXX">
         <qualifier>
           <variableref>PA4 Output-Input</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputPolarity.xml"/><label>PA4 Input Direction</label></variable>
-      <variable item="PA4 Output Direction" CV="155" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputPolarity.xml"/></variable>
+      <variable label="PA4 Output Direction" CV="155" mask="VXXXXXXX">
         <qualifier>
           <variableref>PA4 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutPolarity.xml"/><label>PA4 Output Direction</label></variable>
-      <variable item="PA4 Secondary 1" CV="155" mask="XXXXVVXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutPolarity.xml"/></variable>
+      <variable label="PA4 Secondary 1" CV="155" mask="XXXXVVXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
-        <label>PA4 Secondary 1</label>
       </variable>
-      <variable item="PA4 Secondary 2" CV="155" mask="XXVVXXXX">
+      <variable label="PA4 Secondary 2" CV="155" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice3Transition.xml"/>
-        <label>PA4 Secondary 2</label>
       </variable>
-      <variable item="PA4 Transition" CV="155" mask="XXXXXXVV" default="3">
+      <variable label="PA4 Transition" CV="155" mask="XXXXXXVV" default="3">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice1Transition.xml"/>
-        <label>PA4 Transition</label>
       </variable>
-      <variable item="PA4 Paired" CV="154" mask="VVXXXXXX">
+
+      <variable label="PA4 Paired" CV="154" mask="VVXXXXXX">
         <qualifier>
           <variableref>PA4 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedOutA.xml"/><label>PA4 Paired</label></variable>
-      <variable item="PA4 Paired-I" CV="154" mask="VVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedOutA.xml"/></variable>
+
+      <variable label="PA4 Paired-I" CV="154" mask="VVXXXXXX">
         <qualifier>
           <variableref>PA4 Output-Input</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PA4 Paired-I</label></variable>
-      <variable item="PA4 Type" CV="156" mask="VVVVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/></variable>
+
+      <variable label="PA4 Type" CV="156" mask="XVVVXXXX">
         <qualifier>
           <variableref>PA4 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PA4 Type</label></variable>
-      <variable item="PA4 Length" CV="156" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/></variable>
+
+      <variable label="PA4 Inv" CV="156" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PA4 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
+      <variable label="PA4 Length" CV="156" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
           <enumChoice choice="long"/>
         </enumVal>
-        <label>PA4 Length</label>
       </variable>
-      <variable item="PA4 Timing" CV="156" mask="XXXXVVVV">
+
+      <variable label="PA4 Timing" CV="156" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA4 Output-Input</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTiming.xml"/><label>PA4 Timing</label></variable>
-      <variable item="PA4 TimingA" CV="156" mask="XXXXVVVV">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTiming.xml"/></variable>
+
+      <variable label="PA4 TimingA" CV="156" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA4 Length</variableref>
           <relation>eq</relation>
@@ -666,8 +599,9 @@
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/><label>PA4 TimingA</label></variable>
-      <variable item="PA4 TimingB" CV="156" mask="XXXXVVVV">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/></variable>
+
+      <variable label="PA4 TimingB" CV="156" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA4 Length</variableref>
           <relation>eq</relation>
@@ -677,106 +611,118 @@
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingB.xml"/><label>PA4 TimingB</label></variable>
-      <variable item="PA4 Secondary 1 Address" CV="157" mask="VVVVVVVV">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingB.xml"/></variable>
+
+      <variable label="PA4 Secondary 1 Address" CV="157" mask="VVVVVVVV">
         <splitVal highCV="158" upperMask="XXXXVVVV" offset="1"/>
-        <label>PA4 Secondary 1 Address</label>
       </variable>
-      <variable item="PA4 Secondary 1 Polarity" CV="158" mask="VVXXXXXX">
+      <variable label="PA4 Secondary 1 Polarity" CV="158" mask="VVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePolarity.xml"/>
-        <label>PA4 Secondary 1 Polarity</label>
       </variable>
-      <variable item="PA4 Secondary 1 Type" CV="158" mask="XXVVXXXX">
+      <variable label="PA4 Secondary 1 Type" CV="158" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>PA4 Secondary 1 Type</label>
       </variable>
-      <variable item="PA4 Secondary 2 Address" CV="159" mask="VVVVVVVV">
+      <variable label="PA4 Secondary 2 Address" CV="159" mask="VVVVVVVV">
         <splitVal highCV="160" upperMask="XXXXVVVV" offset="1"/>
-        <label>PA4 Secondary 2 Address</label>
       </variable>
-      <variable item="PA4 Secondary 2 Polarity" CV="160" mask="VVXXXXXX">
+      <variable label="PA4 Secondary 2 Polarity" CV="160" mask="VVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePolarity.xml"/>
-        <label>PA4 Secondary 2 Polarity</label>
       </variable>
-      <variable item="PA4 Secondary 2 Type" CV="160" mask="XXVVXXXX">
+      <variable label="PA4 Secondary 2 Type" CV="160" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>PA4 Secondary 2 Type</label>
       </variable>
+
       <!-- Input #5 -->
-      <variable item="PA5 Base Address" CV="161" mask="VVVVVVVV" default="0">
+      <variable label="PA5 Base Address" CV="161" mask="VVVVVVVV" default="0">
         <splitVal highCV="162" upperMask="XXXXVVVV" offset="1"/>
-        <label>PA5 Base Address</label>
       </variable>
-      <variable item="PA5 Mode" CV="162" mask="XXVVXXXX" default="2">
+
+      <variable label="PA5 Mode" CV="162" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>PA5 Mode</label>
       </variable>
-      <variable item="PA5 Output-Input" CV="163" mask="XVXXXXXX">
+
+      <variable label="PA5 Output-Input" CV="163" mask="XVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
-        <label>PA5 Output-Input</label>
       </variable>
-      <variable item="PA5 Input Direction" CV="163" mask="VXXXXXXX">
+
+      <variable label="PA5 Input Direction" CV="163" mask="VXXXXXXX">
         <qualifier>
           <variableref>PA5 Output-Input</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputPolarity.xml"/><label>PA5 Input Direction</label></variable>
-      <variable item="PA5 Output Direction" CV="163" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputPolarity.xml"/></variable>
+
+      <variable label="PA5 Output Direction" CV="163" mask="VXXXXXXX">
         <qualifier>
           <variableref>PA5 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutPolarity.xml"/><label>PA5 Output Direction</label></variable>
-      <variable item="PA5 Secondary 1" CV="163" mask="XXXXVVXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutPolarity.xml"/></variable>
+
+      <variable label="PA5 Secondary 1" CV="163" mask="XXXXVVXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
-        <label>PA5 Secondary 1</label>
       </variable>
-      <variable item="PA5 Secondary 2" CV="163" mask="XXVVXXXX">
+      <variable label="PA5 Secondary 2" CV="163" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice3Transition.xml"/>
-        <label>PA5 Secondary 2</label>
       </variable>
-      <variable item="PA5 Transition" CV="163" mask="XXXXXXVV" default="3">
+      <variable label="PA5 Transition" CV="163" mask="XXXXXXVV" default="3">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice1Transition.xml"/>
-        <label>PA5 Transition</label>
       </variable>
-      <variable item="PA5 Paired" CV="162" mask="VVXXXXXX">
+
+      <variable label="PA5 Paired" CV="162" mask="VVXXXXXX">
         <qualifier>
           <variableref>PA5 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedOutA.xml"/><label>PA5 Paired</label></variable>
-      <variable item="PA5 Paired-I" CV="162" mask="VVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedOutA.xml"/></variable>
+
+      <variable label="PA5 Paired-I" CV="162" mask="VVXXXXXX">
         <qualifier>
           <variableref>PA5 Output-Input</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PA5 Paired-I</label></variable>
-      <variable item="PA5 Type" CV="164" mask="VVVVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/></variable>
+
+      <variable label="PA5 Type" CV="164" mask="XVVVXXXX">
         <qualifier>
           <variableref>PA5 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PA5 Type</label></variable>
-      <variable item="PA5 Length" CV="164" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/></variable>
+
+      <variable label="PA5 Inv" CV="164" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PA5 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
+      <variable label="PA5 Length" CV="164" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
           <enumChoice choice="long"/>
         </enumVal>
-        <label>PA5 Length</label>
       </variable>
-      <variable item="PA5 Timing" CV="164" mask="XXXXVVVV">
+
+      <variable label="PA5 Timing" CV="164" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA5 Output-Input</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTiming.xml"/><label>PA5 Timing</label></variable>
-      <variable item="PA5 TimingA" CV="164" mask="XXXXVVVV">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTiming.xml"/></variable>
+
+      <variable label="PA5 TimingA" CV="164" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA5 Output-Input</variableref>
           <relation>eq</relation>
@@ -786,8 +732,9 @@
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/><label>PA5 TimingA</label></variable>
-      <variable item="PA5 TimingB" CV="164" mask="XXXXVVVV">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/></variable>
+
+      <variable label="PA5 TimingB" CV="164" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA5 Output-Input</variableref>
           <relation>eq</relation>
@@ -797,106 +744,113 @@
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingB.xml"/><label>PA5 TimingB</label></variable>
-      <variable item="PA5 Secondary 1 Address" CV="165" mask="VVVVVVVV">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingB.xml"/></variable>
+
+      <variable label="PA5 Secondary 1 Address" CV="165" mask="VVVVVVVV">
         <splitVal highCV="166" upperMask="XXXXVVVV" offset="1"/>
-        <label>PA5 Secondary 1 Address</label>
       </variable>
-      <variable item="PA5 Secondary 1 Polarity" CV="166" mask="VVXXXXXX">
+      <variable label="PA5 Secondary 1 Polarity" CV="166" mask="VVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePolarity.xml"/>
-        <label>PA5 Secondary 1 Polarity</label>
       </variable>
-      <variable item="PA5 Secondary 1 Type" CV="166" mask="XXVVXXXX">
+      <variable label="PA5 Secondary 1 Type" CV="166" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>PA5 Secondary 1 Type</label>
       </variable>
-      <variable item="PA5 Secondary 2 Address" CV="167" mask="VVVVVVVV">
+      <variable label="PA5 Secondary 2 Address" CV="167" mask="VVVVVVVV">
         <splitVal highCV="168" upperMask="XXXXVVVV" offset="1"/>
-        <label>PA5 Secondary 2 Address</label>
       </variable>
-      <variable item="PA5 Secondary 2 Polarity" CV="168" mask="VVXXXXXX">
+      <variable label="PA5 Secondary 2 Polarity" CV="168" mask="VVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePolarity.xml"/>
-        <label>PA5 Secondary 2 Polarity</label>
       </variable>
-      <variable item="PA5 Secondary 2 Type" CV="168" mask="XXVVXXXX">
+      <variable label="PA5 Secondary 2 Type" CV="168" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>PA5 Secondary 2 Type</label>
       </variable>
+
       <!-- Input #6 -->
-      <variable item="PA6 Base Address" CV="169" mask="VVVVVVVV" default="0">
+      <variable label="PA6 Base Address" CV="169" mask="VVVVVVVV" default="0">
         <splitVal highCV="170" upperMask="XXXXVVVV" offset="1"/>
-        <label>PA6 Base Address</label>
       </variable>
-      <variable item="PA6 Mode" CV="170" mask="XXVVXXXX" default="2">
+      <variable label="PA6 Mode" CV="170" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>PA6 Mode</label>
       </variable>
-      <variable item="PA6 Output-Input" CV="171" mask="XVXXXXXX">
+      <variable label="PA6 Output-Input" CV="171" mask="XVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
-        <label>PA6 Output-Input</label>
       </variable>
-      <variable item="PA6 Input Direction" CV="171" mask="VXXXXXXX">
+      <variable label="PA6 Input Direction" CV="171" mask="VXXXXXXX">
         <qualifier>
           <variableref>PA6 Output-Input</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputPolarity.xml"/><label>PA6 Input Direction</label></variable>
-      <variable item="PA6 Output Direction" CV="171" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputPolarity.xml"/></variable>
+      <variable label="PA6 Output Direction" CV="171" mask="VXXXXXXX">
         <qualifier>
           <variableref>PA6 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutPolarity.xml"/><label>PA6 Output Direction</label></variable>
-      <variable item="PA6 Secondary 1" CV="171" mask="XXXXVVXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutPolarity.xml"/></variable>
+      <variable label="PA6 Secondary 1" CV="171" mask="XXXXVVXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
-        <label>PA6 Secondary 1</label>
       </variable>
-      <variable item="PA6 Secondary 2" CV="171" mask="XXVVXXXX">
+      <variable label="PA6 Secondary 2" CV="171" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice3Transition.xml"/>
-        <label>PA6 Secondary 2</label>
       </variable>
-      <variable item="PA6 Transition" CV="171" mask="XXXXXXVV" default="3">
+      <variable label="PA6 Transition" CV="171" mask="XXXXXXVV" default="3">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice1Transition.xml"/>
-        <label>PA6 Transition</label>
       </variable>
-      <variable item="PA6 Paired" CV="170" mask="VVXXXXXX">
+
+      <variable label="PA6 Paired" CV="170" mask="VVXXXXXX">
         <qualifier>
           <variableref>PA6 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedOutA.xml"/><label>PA6 Paired</label></variable>
-      <variable item="PA6 Paired-I" CV="170" mask="VVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedOutA.xml"/></variable>
+
+      <variable label="PA6 Paired-I" CV="170" mask="VVXXXXXX">
         <qualifier>
           <variableref>PA6 Output-Input</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PA6 Paired-I</label></variable>
-      <variable item="PA6 Type" CV="172" mask="VVVVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/></variable>
+
+      <variable label="PA6 Type" CV="172" mask="XVVVXXXX">
         <qualifier>
           <variableref>PA6 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PA6 Type</label></variable>
-      <variable item="PA6 Length" CV="172" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/></variable>
+
+      <variable label="PA6 Inv" CV="172" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PA6 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
+      <variable label="PA6 Length" CV="172" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
           <enumChoice choice="long"/>
         </enumVal>
-        <label>PA6 Length</label>
       </variable>
-      <variable item="PA6 Timing" CV="172" mask="XXXXVVVV">
+
+      <variable label="PA6 Timing" CV="172" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA6 Output-Input</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTiming.xml"/><label>PA6 Timing</label></variable>
-      <variable item="PA6 TimingA" CV="172" mask="XXXXVVVV">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTiming.xml"/></variable>
+
+      <variable label="PA6 TimingA" CV="172" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA6 Length</variableref>
           <relation>eq</relation>
@@ -906,8 +860,9 @@
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/><label>PA6 TimingA</label></variable>
-      <variable item="PA6 TimingB" CV="172" mask="XXXXVVVV">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/></variable>
+
+      <variable label="PA6 TimingB" CV="172" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA6 Length</variableref>
           <relation>eq</relation>
@@ -917,106 +872,113 @@
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingB.xml"/><label>PA6 TimingB</label></variable>
-      <variable item="PA6 Secondary 1 Address" CV="173" mask="VVVVVVVV">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingB.xml"/></variable>
+
+      <variable label="PA6 Secondary 1 Address" CV="173" mask="VVVVVVVV">
         <splitVal highCV="174" upperMask="XXXXVVVV" offset="1"/>
-        <label>PA6 Secondary 1 Address</label>
       </variable>
-      <variable item="PA6 Secondary 1 Polarity" CV="174" mask="VVXXXXXX">
+      <variable label="PA6 Secondary 1 Polarity" CV="174" mask="VVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePolarity.xml"/>
-        <label>PA6 Secondary 1 Polarity</label>
       </variable>
-      <variable item="PA6 Secondary 1 Type" CV="174" mask="XXVVXXXX">
+      <variable label="PA6 Secondary 1 Type" CV="174" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>PA6 Secondary 1 Type</label>
       </variable>
-      <variable item="PA6 Secondary 2 Address" CV="175" mask="VVVVVVVV">
+      <variable label="PA6 Secondary 2 Address" CV="175" mask="VVVVVVVV">
         <splitVal highCV="176" upperMask="XXXXVVVV" offset="1"/>
-        <label>PA6 Secondary 2 Address</label>
       </variable>
-      <variable item="PA6 Secondary 2 Polarity" CV="176" mask="VVXXXXXX">
+      <variable label="PA6 Secondary 2 Polarity" CV="176" mask="VVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePolarity.xml"/>
-        <label>PA6 Secondary 2 Polarity</label>
       </variable>
-      <variable item="PA6 Secondary 2 Type" CV="176" mask="XXVVXXXX">
+      <variable label="PA6 Secondary 2 Type" CV="176" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>PA6 Secondary 2 Type</label>
       </variable>
+
       <!-- Input #7 -->
-      <variable item="PA7 Base Address" CV="177" mask="VVVVVVVV" default="0">
+      <variable label="PA7 Base Address" CV="177" mask="VVVVVVVV" default="0">
         <splitVal highCV="178" upperMask="XXXXVVVV" offset="1"/>
-        <label>PA7 Base Address</label>
       </variable>
-      <variable item="PA7 Mode" CV="178" mask="XXVVXXXX" default="2">
+      <variable label="PA7 Mode" CV="178" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>PA7 Mode</label>
       </variable>
-      <variable item="PA7 Output-Input" CV="179" mask="XVXXXXXX">
+      <variable label="PA7 Output-Input" CV="179" mask="XVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
-        <label>PA7 Output-Input</label>
       </variable>
-      <variable item="PA7 Input Direction" CV="179" mask="VXXXXXXX">
+      <variable label="PA7 Input Direction" CV="179" mask="VXXXXXXX">
         <qualifier>
           <variableref>PA7 Output-Input</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputPolarity.xml"/><label>PA7 Input Direction</label></variable>
-      <variable item="PA7 Output Direction" CV="179" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputPolarity.xml"/></variable>
+      <variable label="PA7 Output Direction" CV="179" mask="VXXXXXXX">
         <qualifier>
           <variableref>PA7 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutPolarity.xml"/><label>PA7 Output Direction</label></variable>
-      <variable item="PA7 Secondary 1" CV="179" mask="XXXXVVXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutPolarity.xml"/></variable>
+      <variable label="PA7 Secondary 1" CV="179" mask="XXXXVVXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
-        <label>PA7 Secondary 1</label>
       </variable>
-      <variable item="PA7 Secondary 2" CV="179" mask="XXVVXXXX">
+      <variable label="PA7 Secondary 2" CV="179" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice3Transition.xml"/>
-        <label>PA7 Secondary 2</label>
       </variable>
-      <variable item="PA7 Transition" CV="179" mask="XXXXXXVV" default="3">
+      <variable label="PA7 Transition" CV="179" mask="XXXXXXVV" default="3">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice1Transition.xml"/>
-        <label>PA7 Transition</label>
       </variable>
-      <variable item="PA7 Paired" CV="178" mask="VVXXXXXX">
+
+      <variable label="PA7 Paired" CV="178" mask="VVXXXXXX">
         <qualifier>
           <variableref>PA7 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedOutA.xml"/><label>PA7 Paired</label></variable>
-      <variable item="PA7 Paired-I" CV="178" mask="VVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedOutA.xml"/></variable>
+
+      <variable label="PA7 Paired-I" CV="178" mask="VVXXXXXX">
         <qualifier>
           <variableref>PA7 Output-Input</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PA7 Paired-I</label></variable>
-      <variable item="PA7 Type" CV="180" mask="VVVVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/></variable>
+
+      <variable label="PA7 Type" CV="180" mask="XVVVXXXX">
         <qualifier>
           <variableref>PA7 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PA7 Type</label></variable>
-      <variable item="PA7 Length" CV="180" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/></variable>
+
+      <variable label="PA7 Inv" CV="180" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PA7 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
+      <variable label="PA7 Length" CV="180" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
           <enumChoice choice="long"/>
         </enumVal>
-        <label>PA7 Length</label>
       </variable>
-      <variable item="PA7 Timing" CV="180" mask="XXXXVVVV">
+
+      <variable label="PA7 Timing" CV="180" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA7 Output-Input</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTiming.xml"/><label>PA7 Timing</label></variable>
-      <variable item="PA7 TimingA" CV="180" mask="XXXXVVVV">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTiming.xml"/></variable>
+
+      <variable label="PA7 TimingA" CV="180" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA7 Length</variableref>
           <relation>eq</relation>
@@ -1026,8 +988,9 @@
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/><label>PA7 TimingA</label></variable>
-      <variable item="PA7 TimingB" CV="180" mask="XXXXVVVV">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/></variable>
+
+      <variable label="PA7 TimingB" CV="180" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA7 Length</variableref>
           <relation>eq</relation>
@@ -1037,106 +1000,113 @@
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingB.xml"/><label>PA7 TimingB</label></variable>
-      <variable item="PA7 Secondary 1 Address" CV="181" mask="VVVVVVVV">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingB.xml"/></variable>
+
+      <variable label="PA7 Secondary 1 Address" CV="181" mask="VVVVVVVV">
         <splitVal highCV="182" upperMask="XXXXVVVV" offset="1"/>
-        <label>PA7 Secondary 1 Address</label>
       </variable>
-      <variable item="PA7 Secondary 1 Polarity" CV="182" mask="VVXXXXXX">
+      <variable label="PA7 Secondary 1 Polarity" CV="182" mask="VVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePolarity.xml"/>
-        <label>PA7 Secondary 1 Polarity</label>
       </variable>
-      <variable item="PA7 Secondary 1 Type" CV="182" mask="XXVVXXXX">
+      <variable label="PA7 Secondary 1 Type" CV="182" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>PA7 Secondary 1 Type</label>
       </variable>
-      <variable item="PA7 Secondary 2 Address" CV="183" mask="VVVVVVVV">
+      <variable label="PA7 Secondary 2 Address" CV="183" mask="VVVVVVVV">
         <splitVal highCV="184" upperMask="XXXXVVVV" offset="1"/>
-        <label>PA7 Secondary 2 Address</label>
       </variable>
-      <variable item="PA7 Secondary 2 Polarity" CV="184" mask="VVXXXXXX">
+      <variable label="PA7 Secondary 2 Polarity" CV="184" mask="VVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePolarity.xml"/>
-        <label>PA7 Secondary 2 Polarity</label>
       </variable>
-      <variable item="PA7 Secondary 2 Type" CV="184" mask="XXVVXXXX">
+      <variable label="PA7 Secondary 2 Type" CV="184" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>PA7 Secondary 2 Type</label>
       </variable>
+
       <!-- Input #8 -->
-      <variable item="PA8 Base Address" CV="185" mask="VVVVVVVV" default="0">
+      <variable label="PA8 Base Address" CV="185" mask="VVVVVVVV" default="0">
         <splitVal highCV="186" upperMask="XXXXVVVV" offset="1"/>
-        <label>PA8 Base Address</label>
       </variable>
-      <variable item="PA8 Mode" CV="186" mask="XXVVXXXX" default="2">
+      <variable label="PA8 Mode" CV="186" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>PA8 Mode</label>
       </variable>
-      <variable item="PA8 Output-Input" CV="187" mask="XVXXXXXX">
+      <variable label="PA8 Output-Input" CV="187" mask="XVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
-        <label>PA8 Output-Input</label>
       </variable>
-      <variable item="PA8 Input Direction" CV="187" mask="VXXXXXXX">
+      <variable label="PA8 Input Direction" CV="187" mask="VXXXXXXX">
         <qualifier>
           <variableref>PA8 Output-Input</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputPolarity.xml"/><label>PA8 Input Direction</label></variable>
-      <variable item="PA8 Output Direction" CV="187" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputPolarity.xml"/></variable>
+      <variable label="PA8 Output Direction" CV="187" mask="VXXXXXXX">
         <qualifier>
           <variableref>PA8 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutPolarity.xml"/><label>PA8 Output Direction</label></variable>
-      <variable item="PA8 Secondary 1" CV="187" mask="XXXXVVXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutPolarity.xml"/></variable>
+      <variable label="PA8 Secondary 1" CV="187" mask="XXXXVVXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
-        <label>PA8 Secondary 1</label>
       </variable>
-      <variable item="PA8 Secondary 2" CV="187" mask="XXVVXXXX">
+      <variable label="PA8 Secondary 2" CV="187" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice3Transition.xml"/>
-        <label>PA8 Secondary 2</label>
       </variable>
-      <variable item="PA8 Transition" CV="187" mask="XXXXXXVV" default="3">
+      <variable label="PA8 Transition" CV="187" mask="XXXXXXVV" default="3">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice1Transition.xml"/>
-        <label>PA8 Transition</label>
       </variable>
-      <variable item="PA8 Paired" CV="186" mask="VVXXXXXX">
+
+      <variable label="PA8 Paired" CV="186" mask="VVXXXXXX">
         <qualifier>
           <variableref>PA8 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedOutA.xml"/><label>PA8 Paired</label></variable>
-      <variable item="PA8 Paired-I" CV="186" mask="VVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedOutA.xml"/></variable>
+
+      <variable label="PA8 Paired-I" CV="186" mask="VVXXXXXX">
         <qualifier>
           <variableref>PA8 Output-Input</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PA8 Paired-I</label></variable>
-      <variable item="PA8 Type" CV="188" mask="VVVVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/></variable>
+
+      <variable label="PA8 Type" CV="188" mask="XVVVXXXX">
         <qualifier>
           <variableref>PA8 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PA8 Type</label></variable>
-      <variable item="PA8 Length" CV="188" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/></variable>
+
+      <variable label="PA8 Inv" CV="188" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PA8 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
+      <variable label="PA8 Length" CV="188" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
           <enumChoice choice="long"/>
         </enumVal>
-        <label>PA8 Length</label>
       </variable>
-      <variable item="PA8 Timing" CV="188" mask="XXXXVVVV">
+
+      <variable label="PA8 Timing" CV="188" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA8 Output-Input</variableref>
           <relation>eq</relation>
           <value>1</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTiming.xml"/><label>PA8 Timing</label></variable>
-      <variable item="PA8 TimingA" CV="188" mask="XXXXVVVV">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTiming.xml"/></variable>
+
+      <variable label="PA8 TimingA" CV="188" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA8 Length</variableref>
           <relation>eq</relation>
@@ -1146,8 +1116,9 @@
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/><label>PA8 TimingA</label></variable>
-      <variable item="PA8 TimingB" CV="188" mask="XXXXVVVV">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/></variable>
+
+      <variable label="PA8 TimingB" CV="188" mask="XXXXVVVV">
         <qualifier>
           <variableref>PA8 Length</variableref>
           <relation>eq</relation>
@@ -1157,44 +1128,43 @@
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingB.xml"/><label>PA8 TimingB</label></variable>
-      <variable item="PA8 Secondary 1 Address" CV="189" mask="VVVVVVVV">
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingB.xml"/></variable>
+
+      <variable label="PA8 Secondary 1 Address" CV="189" mask="VVVVVVVV">
         <splitVal highCV="190" upperMask="XXXXVVVV" offset="1"/>
-        <label>PA8 Secondary 1 Address</label>
       </variable>
-      <variable item="PA8 Secondary 1 Polarity" CV="190" mask="VVXXXXXX">
+      <variable label="PA8 Secondary 1 Polarity" CV="190" mask="VVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePolarity.xml"/>
-        <label>PA8 Secondary 1 Polarity</label>
       </variable>
-      <variable item="PA8 Secondary 1 Type" CV="190" mask="XXVVXXXX">
+      <variable label="PA8 Secondary 1 Type" CV="190" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>PA8 Secondary 1 Type</label>
       </variable>
-      <variable item="PA8 Secondary 2 Address" CV="191" mask="VVVVVVVV">
+      <variable label="PA8 Secondary 2 Address" CV="191" mask="VVVVVVVV">
         <splitVal highCV="192" upperMask="XXXXVVVV" offset="1"/>
-        <label>PA8 Secondary 2 Address</label>
       </variable>
-      <variable item="PA8 Secondary 2 Polarity" CV="192" mask="VVXXXXXX">
+      <variable label="PA8 Secondary 2 Polarity" CV="192" mask="VVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePolarity.xml"/>
-        <label>PA8 Secondary 2 Polarity</label>
       </variable>
-      <variable item="PA8 Secondary 2 Type" CV="192" mask="XXVVXXXX">
+      <variable label="PA8 Secondary 2 Type" CV="192" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
-        <label>PA8 Secondary 2 Type</label>
       </variable>
+
       <!-- Input #9 -->
       <variable item="PB1 Base Address" CV="193" mask="VVVVVVVV" default="0">
         <splitVal highCV="194" upperMask="XXXXVVVV" offset="1"/>
         <label>PB1 Base Address</label>
       </variable>
+
       <variable item="PB1 Mode" CV="194" mask="XXVVXXXX" default="2">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/>
         <label>PB1 Mode</label>
       </variable>
+
       <variable item="PB1 Output-Input" CV="195" mask="XVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputInput.xml"/>
         <label>PB1 Output-Input</label>
       </variable>
+
       <variable item="PB1 Input Direction" CV="195" mask="VXXXXXXX">
         <qualifier>
           <variableref>PB1 Output-Input</variableref>
@@ -1202,6 +1172,7 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceInputPolarity.xml"/><label>PB1 Input Direction</label></variable>
+
       <variable item="PB1 Output Direction" CV="195" mask="VXXXXXXX">
         <qualifier>
           <variableref>PB1 Output-Input</variableref>
@@ -1209,18 +1180,22 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutPolarity.xml"/><label>PB1 Output Direction</label></variable>
+
       <variable item="PB1 Secondary 1" CV="195" mask="XXXXVVXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
         <label>PB1 Secondary 1</label>
       </variable>
+
       <variable item="PB1 Secondary 2" CV="195" mask="XXVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice3Transition.xml"/>
         <label>PB1 Secondary 2</label>
       </variable>
+
       <variable item="PB1 Transition" CV="195" mask="XXXXXXVV" default="3">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice1Transition.xml"/>
         <label>PB1 Transition</label>
       </variable>
+
       <variable item="PB1 Paired" CV="194" mask="VVXXXXXX">
         <qualifier>
           <variableref>PB1 Output-Input</variableref>
@@ -1228,6 +1203,7 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedOutA.xml"/><label>PB1 Paired</label></variable>
+
       <variable item="PB1 Paired-I" CV="194" mask="VVXXXXXX">
         <qualifier>
           <variableref>PB1 Output-Input</variableref>
@@ -1235,13 +1211,27 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PB1 Paired-I</label></variable>
-      <variable item="PB1 Type" CV="196" mask="VVVVXXXX">
+
+      <variable item="PB1 Type" CV="196" mask="XVVVXXXX">
         <qualifier>
           <variableref>PB1 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PB1 Type</label></variable>
+
+      <variable label="PB1 Inv" CV="196" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PB1 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PB1 Length" CV="196" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -1249,6 +1239,7 @@
         </enumVal>
         <label>PB1 Length</label>
       </variable>
+
       <variable item="PB1 Timing" CV="196" mask="XXXXVVVV">
         <qualifier>
           <variableref>PB1 Output-Input</variableref>
@@ -1355,13 +1346,31 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PB2 Paired-I</label></variable>
-      <variable item="PB2 Type" CV="204" mask="VVVVXXXX">
+      <variable item="PB2 Type" CV="204" mask="XVVVXXXX">
         <qualifier>
           <variableref>PB2 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PB2 Type</label></variable>
+
+      <variable label="PB2 Inv" CV="204" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PB2 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <qualifier>
+          <variableref>PB1 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PB2 Length" CV="204" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -1475,13 +1484,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PB3 Paired-I</label></variable>
-      <variable item="PB3 Type" CV="212" mask="VVVVXXXX">
+      <variable item="PB3 Type" CV="212" mask="XVVVXXXX">
         <qualifier>
           <variableref>PB3 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PB3 Type</label></variable>
+
+      <variable label="PB3 Inv" CV="212" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PB3 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PB3 Length" CV="212" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -1595,13 +1617,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PB4 Paired-I</label></variable>
-      <variable item="PB4 Type" CV="220" mask="VVVVXXXX">
+      <variable item="PB4 Type" CV="220" mask="XVVVXXXX">
         <qualifier>
           <variableref>PB4 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PB4 Type</label></variable>
+
+      <variable label="PB4 Inv" CV="220" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PB4 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PB4 Length" CV="220" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -1715,13 +1750,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PB5 Paired-I</label></variable>
-      <variable item="PB5 Type" CV="228" mask="VVVVXXXX">
+      <variable item="PB5 Type" CV="228" mask="XVVVXXXX">
         <qualifier>
           <variableref>PB5 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PB5 Type</label></variable>
+
+      <variable label="PB5 Inv" CV="228" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PB5 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PB5 Length" CV="228" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -1835,13 +1883,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PB6 Paired-I</label></variable>
-      <variable item="PB6 Type" CV="236" mask="VVVVXXXX">
+      <variable item="PB6 Type" CV="236" mask="XVVVXXXX">
         <qualifier>
           <variableref>PB6 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PB6 Type</label></variable>
+
+      <variable label="PB6 Inv" CV="236" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PB6 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PB6 Length" CV="236" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -1955,13 +2016,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PB7 Paired-I</label></variable>
-      <variable item="PB7 Type" CV="244" mask="VVVVXXXX">
+      <variable item="PB7 Type" CV="244" mask="XVVVXXXX">
         <qualifier>
           <variableref>PB7 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PB7 Type</label></variable>
+
+      <variable label="PB7 Inv" CV="244" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PB7 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PB7 Length" CV="244" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -2075,13 +2149,26 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoicePairedInA.xml"/><label>PB8 Paired-I</label></variable>
-      <variable item="PB8 Type" CV="252" mask="VVVVXXXX">
+      <variable item="PB8 Type" CV="252" mask="XVVVXXXX">
         <qualifier>
           <variableref>PB8 Output-Input</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/><label>PB8 Type</label></variable>
+
+      <variable label="PB8 Inv" CV="252" mask="VXXXXXXX">
+        <qualifier>
+          <variableref>PB8 Output-Input</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <enumVal>
+          <enumChoice choice="Norm"/>
+          <enumChoice choice="Inv"/>
+        </enumVal>
+      </variable>
+
       <variable item="PB8 Length" CV="252" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="short"/>
@@ -2143,6 +2230,7 @@
         <label>PB8 Secondary 2 Type</label>
       </variable>
       <!-- End Outputs -->
+
       <!-- Logic Table entry #1 -->
       <variable item="LT1 Block End" CV="257" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceEnd.xml"/>
@@ -2164,7 +2252,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
         <label>LT1 Var2 Mode</label>
       </variable>
-      <variable CV="257" default="0" item="LT1 Opcode" mask="XXXXXVVV">
+      <variable item="LT1 Opcode" CV="257" default="0" mask="XXXXXVVV">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOpcode.xml"/>
         <label>LT1 Opcode</label>
       </variable>
@@ -2172,9 +2260,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT1 Function</label>
       </variable>
-      <variable item="LT1 Re-trigger" CV="258" default="0" mask="VXXXXXXX">
+      <variable item="LT1 Reset" CV="258" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT1 Re-trigger</label>
+        <label>LT1 Reset</label>
       </variable>
       <variable item="LT1 Multiplier" CV="258" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -2254,13 +2342,22 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT1 Var1 CT</label></variable>
-      <variable item="LT1 Var1 Type" CV="262" mask="XXVVXXXX" default="0">
+      <variable item="LT1 Var1 Type" CV="262" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT1 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT1 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT1 Var1 Type</label></variable>
+
+      <variable item="LT1 Var1 Event" CV="262" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT1 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT1 Var1 Event</label></variable>
+
       <variable item="LT1 Var1 Aspect" CV="262" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT1 Var1 Mode</variableref>
@@ -2296,13 +2393,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT1 Var2 CT</label></variable>
-      <variable item="LT1 Var2 Type" CV="264" mask="XXVVXXXX" default="0">
+      <variable item="LT1 Var2 Type" CV="264" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT1 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT1 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT1 Var2 Type</label></variable>
+      <variable item="LT1 Var2 Event" CV="264" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT1 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT1 Var2 Event</label></variable>
       <variable item="LT1 Var2 Aspect" CV="264" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT1 Var2 Mode</variableref>
@@ -2339,9 +2443,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT2 Function</label>
       </variable>
-      <variable item="LT2 Re-trigger" CV="266" default="0" mask="VXXXXXXX">
+      <variable item="LT2 Reset" CV="266" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT2 Re-trigger</label>
+        <label>LT2 Reset</label>
       </variable>
       <variable item="LT2 Multiplier" CV="266" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -2421,13 +2525,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT2 Var1 CT</label></variable>
-      <variable item="LT2 Var1 Type" CV="270" mask="XXVVXXXX" default="0">
+      <variable item="LT2 Var1 Type" CV="270" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT2 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT2 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT2 Var1 Type</label></variable>
+      <variable item="LT2 Var1 Event" CV="270" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT2 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT2 Var1 Event</label></variable>
       <variable item="LT2 Var1 Aspect" CV="270" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT2 Var1 Mode</variableref>
@@ -2463,13 +2574,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT2 Var2 CT</label></variable>
-      <variable item="LT2 Var2 Type" CV="272" mask="XXVVXXXX" default="0">
+      <variable item="LT2 Var2 Type" CV="272" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT2 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT2 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT2 Var2 Type</label></variable>
+      <variable item="LT2 Var2 Event" CV="272" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT2 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT2 Var2 Event</label></variable>
       <variable item="LT2 Var2 Aspect" CV="272" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT2 Var2 Mode</variableref>
@@ -2506,9 +2624,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT3 Function</label>
       </variable>
-      <variable item="LT3 Re-trigger" CV="274" default="0" mask="VXXXXXXX">
+      <variable item="LT3 Reset" CV="274" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT3 Re-trigger</label>
+        <label>LT3 Reset</label>
       </variable>
       <variable item="LT3 Multiplier" CV="274" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -2588,13 +2706,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT3 Var1 CT</label></variable>
-      <variable item="LT3 Var1 Type" CV="278" mask="XXVVXXXX" default="0">
+      <variable item="LT3 Var1 Type" CV="278" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT3 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT3 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT3 Var1 Type</label></variable>
+      <variable item="LT3 Var1 Event" CV="278" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT3 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT3 Var1 Event</label></variable>
       <variable item="LT3 Var1 Aspect" CV="278" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT3 Var1 Mode</variableref>
@@ -2630,13 +2755,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT3 Var2 CT</label></variable>
-      <variable item="LT3 Var2 Type" CV="280" mask="XXVVXXXX" default="0">
+      <variable item="LT3 Var2 Type" CV="280" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT3 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT3 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT3 Var2 Type</label></variable>
+      <variable item="LT3 Var2 Event" CV="280" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT3 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT3 Var2 Event</label></variable>
       <variable item="LT3 Var2 Aspect" CV="280" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT3 Var2 Mode</variableref>
@@ -2673,9 +2805,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT4 Function</label>
       </variable>
-      <variable item="LT4 Re-trigger" CV="282" default="0" mask="VXXXXXXX">
+      <variable item="LT4 Reset" CV="282" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT4 Re-trigger</label>
+        <label>LT4 Reset</label>
       </variable>
       <variable item="LT4 Multiplier" CV="282" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -2755,13 +2887,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT4 Var1 CT</label></variable>
-      <variable item="LT4 Var1 Type" CV="286" mask="XXVVXXXX" default="0">
+      <variable item="LT4 Var1 Type" CV="286" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT4 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT4 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT4 Var1 Type</label></variable>
+      <variable item="LT4 Var1 Event" CV="286" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT4 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT4 Var1 Event</label></variable>
       <variable item="LT4 Var1 Aspect" CV="286" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT4 Var1 Mode</variableref>
@@ -2797,13 +2936,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT4 Var2 CT</label></variable>
-      <variable item="LT4 Var2 Type" CV="288" mask="XXVVXXXX" default="0">
+      <variable item="LT4 Var2 Type" CV="288" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT4 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT4 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT4 Var2 Type</label></variable>
+      <variable item="LT4 Var2 Event" CV="288" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT4 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT4 Var2 Event</label></variable>
       <variable item="LT4 Var2 Aspect" CV="288" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT4 Var2 Mode</variableref>
@@ -2840,9 +2986,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT5 Function</label>
       </variable>
-      <variable item="LT5 Re-trigger" CV="290" default="0" mask="VXXXXXXX">
+      <variable item="LT5 Reset" CV="290" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT5 Re-trigger</label>
+        <label>LT5 Reset</label>
       </variable>
       <variable item="LT5 Multiplier" CV="290" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -2922,13 +3068,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT5 Var1 CT</label></variable>
-      <variable item="LT5 Var1 Type" CV="294" mask="XXVVXXXX" default="0">
+      <variable item="LT5 Var1 Type" CV="294" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT5 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT5 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT5 Var1 Type</label></variable>
+      <variable item="LT5 Var1 Event" CV="294" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT5 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT5 Var1 Event</label></variable>
       <variable item="LT5 Var1 Aspect" CV="294" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT5 Var1 Mode</variableref>
@@ -2964,13 +3117,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT5 Var2 CT</label></variable>
-      <variable item="LT5 Var2 Type" CV="296" mask="XXVVXXXX" default="0">
+      <variable item="LT5 Var2 Type" CV="296" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT5 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT5 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT5 Var2 Type</label></variable>
+      <variable item="LT5 Var2 Event" CV="296" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT5 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT5 Var2 Event</label></variable>
       <variable item="LT5 Var2 Aspect" CV="296" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT5 Var2 Mode</variableref>
@@ -3007,9 +3167,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT6 Function</label>
       </variable>
-      <variable item="LT6 Re-trigger" CV="298" default="0" mask="VXXXXXXX">
+      <variable item="LT6 Reset" CV="298" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT6 Re-trigger</label>
+        <label>LT6 Reset</label>
       </variable>
       <variable item="LT6 Multiplier" CV="298" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -3089,13 +3249,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT6 Var1 CT</label></variable>
-      <variable item="LT6 Var1 Type" CV="302" mask="XXVVXXXX" default="0">
+      <variable item="LT6 Var1 Type" CV="302" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT6 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT6 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT6 Var1 Type</label></variable>
+      <variable item="LT6 Var1 Event" CV="302" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT6 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT6 Var1 Event</label></variable>
       <variable item="LT6 Var1 Aspect" CV="302" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT6 Var1 Mode</variableref>
@@ -3131,13 +3298,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT6 Var2 CT</label></variable>
-      <variable item="LT6 Var2 Type" CV="304" mask="XXVVXXXX" default="0">
+      <variable item="LT6 Var2 Type" CV="304" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT6 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT6 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT6 Var2 Type</label></variable>
+      <variable item="LT6 Var2 Event" CV="304" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT6 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT6 Var2 Event</label></variable>
       <variable item="LT6 Var2 Aspect" CV="304" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT6 Var2 Mode</variableref>
@@ -3174,9 +3348,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT7 Function</label>
       </variable>
-      <variable item="LT7 Re-trigger" CV="306" default="0" mask="VXXXXXXX">
+      <variable item="LT7 Reset" CV="306" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT7 Re-trigger</label>
+        <label>LT7 Reset</label>
       </variable>
       <variable item="LT7 Multiplier" CV="306" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -3256,13 +3430,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT7 Var1 CT</label></variable>
-      <variable item="LT7 Var1 Type" CV="310" mask="XXVVXXXX" default="0">
+      <variable item="LT7 Var1 Type" CV="310" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT7 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT7 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT7 Var1 Type</label></variable>
+      <variable item="LT7 Var1 Event" CV="310" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT7 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT7 Var1 Event</label></variable>
       <variable item="LT7 Var1 Aspect" CV="310" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT7 Var1 Mode</variableref>
@@ -3298,13 +3479,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT7 Var2 CT</label></variable>
-      <variable item="LT7 Var2 Type" CV="312" mask="XXVVXXXX" default="0">
+      <variable item="LT7 Var2 Type" CV="312" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT7 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT7 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT7 Var2 Type</label></variable>
+      <variable item="LT7 Var2 Event" CV="312" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT7 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT7 Var2 Event</label></variable>
       <variable item="LT7 Var2 Aspect" CV="312" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT7 Var2 Mode</variableref>
@@ -3341,9 +3529,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT8 Function</label>
       </variable>
-      <variable item="LT8 Re-trigger" CV="314" default="0" mask="VXXXXXXX">
+      <variable item="LT8 Reset" CV="314" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT8 Re-trigger</label>
+        <label>LT8 Reset</label>
       </variable>
       <variable item="LT8 Multiplier" CV="314" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -3423,13 +3611,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT8 Var1 CT</label></variable>
-      <variable item="LT8 Var1 Type" CV="318" mask="XXVVXXXX" default="0">
+      <variable item="LT8 Var1 Type" CV="318" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT8 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT8 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT8 Var1 Type</label></variable>
+      <variable item="LT8 Var1 Event" CV="318" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT8 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT8 Var1 Event</label></variable>
       <variable item="LT8 Var1 Aspect" CV="318" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT8 Var1 Mode</variableref>
@@ -3465,13 +3660,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT8 Var2 CT</label></variable>
-      <variable item="LT8 Var2 Type" CV="320" mask="XXVVXXXX" default="0">
+      <variable item="LT8 Var2 Type" CV="320" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT8 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT8 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT8 Var2 Type</label></variable>
+      <variable item="LT8 Var2 Event" CV="320" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT8 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT8 Var2 Event</label></variable>
       <variable item="LT8 Var2 Aspect" CV="320" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT8 Var2 Mode</variableref>
@@ -3508,9 +3710,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT9 Function</label>
       </variable>
-      <variable item="LT9 Re-trigger" CV="322" default="0" mask="VXXXXXXX">
+      <variable item="LT9 Reset" CV="322" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT9 Re-trigger</label>
+        <label>LT9 Reset</label>
       </variable>
       <variable item="LT9 Multiplier" CV="322" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -3590,13 +3792,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT9 Var1 CT</label></variable>
-      <variable item="LT9 Var1 Type" CV="326" mask="XXVVXXXX" default="0">
+      <variable item="LT9 Var1 Type" CV="326" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT9 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT9 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT9 Var1 Type</label></variable>
+      <variable item="LT9 Var1 Event" CV="326" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT9 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT9 Var1 Event</label></variable>
       <variable item="LT9 Var1 Aspect" CV="326" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT9 Var1 Mode</variableref>
@@ -3632,13 +3841,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT9 Var2 CT</label></variable>
-      <variable item="LT9 Var2 Type" CV="328" mask="XXVVXXXX" default="0">
+      <variable item="LT9 Var2 Type" CV="328" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT9 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT9 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT9 Var2 Type</label></variable>
+      <variable item="LT9 Var2 Event" CV="328" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT9 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT9 Var2 Event</label></variable>
       <variable item="LT9 Var2 Aspect" CV="328" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT9 Var2 Mode</variableref>
@@ -3675,9 +3891,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT10 Function</label>
       </variable>
-      <variable item="LT10 Re-trigger" CV="330" default="0" mask="VXXXXXXX">
+      <variable item="LT10 Reset" CV="330" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT10 Re-trigger</label>
+        <label>LT10 Reset</label>
       </variable>
       <variable item="LT10 Multiplier" CV="330" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -3757,13 +3973,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT10 Var1 CT</label></variable>
-      <variable item="LT10 Var1 Type" CV="334" mask="XXVVXXXX" default="0">
+      <variable item="LT10 Var1 Type" CV="334" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT10 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT10 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT10 Var1 Type</label></variable>
+      <variable item="LT10 Var1 Event" CV="334" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT10 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT10 Var1 Event</label></variable>
       <variable item="LT10 Var1 Aspect" CV="334" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT10 Var1 Mode</variableref>
@@ -3799,13 +4022,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT10 Var2 CT</label></variable>
-      <variable item="LT10 Var2 Type" CV="336" mask="XXVVXXXX" default="0">
+      <variable item="LT10 Var2 Type" CV="336" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT10 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT10 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT10 Var2 Type</label></variable>
+      <variable item="LT10 Var2 Event" CV="336" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT10 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT10 Var2 Event</label></variable>
       <variable item="LT10 Var2 Aspect" CV="336" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT10 Var2 Mode</variableref>
@@ -3842,9 +4072,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT11 Function</label>
       </variable>
-      <variable item="LT11 Re-trigger" CV="338" default="0" mask="VXXXXXXX">
+      <variable item="LT11 Reset" CV="338" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT11 Re-trigger</label>
+        <label>LT11 Reset</label>
       </variable>
       <variable item="LT11 Multiplier" CV="338" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -3924,13 +4154,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT11 Var1 CT</label></variable>
-      <variable item="LT11 Var1 Type" CV="342" mask="XXVVXXXX" default="0">
+      <variable item="LT11 Var1 Type" CV="342" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT11 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT11 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT11 Var1 Type</label></variable>
+      <variable item="LT11 Var1 Event" CV="342" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT11 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT11 Var1 Event</label></variable>
       <variable item="LT11 Var1 Aspect" CV="342" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT11 Var1 Mode</variableref>
@@ -3966,13 +4203,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT11 Var2 CT</label></variable>
-      <variable item="LT11 Var2 Type" CV="344" mask="XXVVXXXX" default="0">
+      <variable item="LT11 Var2 Type" CV="344" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT11 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT11 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT11 Var2 Type</label></variable>
+      <variable item="LT11 Var2 Event" CV="344" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT11 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT11 Var2 Event</label></variable>
       <variable item="LT11 Var2 Aspect" CV="344" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT11 Var2 Mode</variableref>
@@ -4009,9 +4253,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT12 Function</label>
       </variable>
-      <variable item="LT12 Re-trigger" CV="346" default="0" mask="VXXXXXXX">
+      <variable item="LT12 Reset" CV="346" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT12 Re-trigger</label>
+        <label>LT12 Reset</label>
       </variable>
       <variable item="LT12 Multiplier" CV="346" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -4091,13 +4335,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT12 Var1 CT</label></variable>
-      <variable item="LT12 Var1 Type" CV="350" mask="XXVVXXXX" default="0">
+      <variable item="LT12 Var1 Type" CV="350" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT12 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT12 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT12 Var1 Type</label></variable>
+      <variable item="LT12 Var1 Event" CV="350" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT12 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT12 Var1 Event</label></variable>
       <variable item="LT12 Var1 Aspect" CV="350" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT12 Var1 Mode</variableref>
@@ -4133,13 +4384,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT12 Var2 CT</label></variable>
-      <variable item="LT12 Var2 Type" CV="352" mask="XXVVXXXX" default="0">
+      <variable item="LT12 Var2 Type" CV="352" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT12 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT12 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT12 Var2 Type</label></variable>
+      <variable item="LT12 Var2 Event" CV="352" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT12 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT12 Var2 Event</label></variable>
       <variable item="LT12 Var2 Aspect" CV="352" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT12 Var2 Mode</variableref>
@@ -4176,9 +4434,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT13 Function</label>
       </variable>
-      <variable item="LT13 Re-trigger" CV="354" default="0" mask="VXXXXXXX">
+      <variable item="LT13 Reset" CV="354" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT13 Re-trigger</label>
+        <label>LT13 Reset</label>
       </variable>
       <variable item="LT13 Multiplier" CV="354" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -4258,13 +4516,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT13 Var1 CT</label></variable>
-      <variable item="LT13 Var1 Type" CV="358" mask="XXVVXXXX" default="0">
+      <variable item="LT13 Var1 Type" CV="358" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT13 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT13 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT13 Var1 Type</label></variable>
+      <variable item="LT13 Var1 Event" CV="358" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT13 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT13 Var1 Event</label></variable>
       <variable item="LT13 Var1 Aspect" CV="358" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT13 Var1 Mode</variableref>
@@ -4300,13 +4565,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT13 Var2 CT</label></variable>
-      <variable item="LT13 Var2 Type" CV="360" mask="XXVVXXXX" default="0">
+      <variable item="LT13 Var2 Type" CV="360" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT13 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT13 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT13 Var2 Type</label></variable>
+      <variable item="LT13 Var2 Event" CV="360" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT13 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT13 Var2 Event</label></variable>
       <variable item="LT13 Var2 Aspect" CV="360" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT13 Var2 Mode</variableref>
@@ -4343,9 +4615,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT14 Function</label>
       </variable>
-      <variable item="LT14 Re-trigger" CV="362" default="0" mask="VXXXXXXX">
+      <variable item="LT14 Reset" CV="362" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT14 Re-trigger</label>
+        <label>LT14 Reset</label>
       </variable>
       <variable item="LT14 Multiplier" CV="362" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -4425,13 +4697,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT14 Var1 CT</label></variable>
-      <variable item="LT14 Var1 Type" CV="366" mask="XXVVXXXX" default="0">
+      <variable item="LT14 Var1 Type" CV="366" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT14 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT14 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT14 Var1 Type</label></variable>
+      <variable item="LT14 Var1 Event" CV="366" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT14 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT14 Var1 Event</label></variable>
       <variable item="LT14 Var1 Aspect" CV="366" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT14 Var1 Mode</variableref>
@@ -4467,13 +4746,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT14 Var2 CT</label></variable>
-      <variable item="LT14 Var2 Type" CV="368" mask="XXVVXXXX" default="0">
+      <variable item="LT14 Var2 Type" CV="368" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT14 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT14 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT14 Var2 Type</label></variable>
+      <variable item="LT14 Var2 Event" CV="368" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT14 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT14 Var2 Event</label></variable>
       <variable item="LT14 Var2 Aspect" CV="368" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT14 Var2 Mode</variableref>
@@ -4510,9 +4796,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT15 Function</label>
       </variable>
-      <variable item="LT15 Re-trigger" CV="370" default="0" mask="VXXXXXXX">
+      <variable item="LT15 Reset" CV="370" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT15 Re-trigger</label>
+        <label>LT15 Reset</label>
       </variable>
       <variable item="LT15 Multiplier" CV="370" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -4592,13 +4878,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT15 Var1 CT</label></variable>
-      <variable item="LT15 Var1 Type" CV="374" mask="XXVVXXXX" default="0">
+      <variable item="LT15 Var1 Type" CV="374" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT15 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT15 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT15 Var1 Type</label></variable>
+      <variable item="LT15 Var1 Event" CV="374" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT15 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT15 Var1 Event</label></variable>
       <variable item="LT15 Var1 Aspect" CV="374" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT15 Var1 Mode</variableref>
@@ -4634,13 +4927,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT15 Var2 CT</label></variable>
-      <variable item="LT15 Var2 Type" CV="376" mask="XXVVXXXX" default="0">
+      <variable item="LT15 Var2 Type" CV="376" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT15 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT15 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT15 Var2 Type</label></variable>
+      <variable item="LT15 Var2 Event" CV="376" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT15 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT15 Var2 Event</label></variable>
       <variable item="LT15 Var2 Aspect" CV="376" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT15 Var2 Mode</variableref>
@@ -4677,9 +4977,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT16 Function</label>
       </variable>
-      <variable item="LT16 Re-trigger" CV="378" default="0" mask="VXXXXXXX">
+      <variable item="LT16 Reset" CV="378" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT16 Re-trigger</label>
+        <label>LT16 Reset</label>
       </variable>
       <variable item="LT16 Multiplier" CV="378" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -4759,13 +5059,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT16 Var1 CT</label></variable>
-      <variable item="LT16 Var1 Type" CV="382" mask="XXVVXXXX" default="0">
+      <variable item="LT16 Var1 Type" CV="382" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT16 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT16 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT16 Var1 Type</label></variable>
+      <variable item="LT16 Var1 Event" CV="382" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT16 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT16 Var1 Event</label></variable>
       <variable item="LT16 Var1 Aspect" CV="382" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT16 Var1 Mode</variableref>
@@ -4801,13 +5108,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT16 Var2 CT</label></variable>
-      <variable item="LT16 Var2 Type" CV="384" mask="XXVVXXXX" default="0">
+      <variable item="LT16 Var2 Type" CV="384" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT16 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT16 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT16 Var2 Type</label></variable>
+      <variable item="LT16 Var2 Event" CV="384" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT16 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT16 Var2 Event</label></variable>
       <variable item="LT16 Var2 Aspect" CV="384" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT16 Var2 Mode</variableref>
@@ -4844,9 +5158,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT17 Function</label>
       </variable>
-      <variable item="LT17 Re-trigger" CV="386" default="0" mask="VXXXXXXX">
+      <variable item="LT17 Reset" CV="386" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT17 Re-trigger</label>
+        <label>LT17 Reset</label>
       </variable>
       <variable item="LT17 Multiplier" CV="386" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -4926,13 +5240,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT17 Var1 CT</label></variable>
-      <variable item="LT17 Var1 Type" CV="390" mask="XXVVXXXX" default="0">
+      <variable item="LT17 Var1 Type" CV="390" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT17 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT17 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT17 Var1 Type</label></variable>
+      <variable item="LT17 Var1 Event" CV="390" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT17 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT17 Var1 Event</label></variable>
       <variable item="LT17 Var1 Aspect" CV="390" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT17 Var1 Mode</variableref>
@@ -4968,13 +5289,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT17 Var2 CT</label></variable>
-      <variable item="LT17 Var2 Type" CV="392" mask="XXVVXXXX" default="0">
+      <variable item="LT17 Var2 Type" CV="392" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT17 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT17 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT17 Var2 Type</label></variable>
+      <variable item="LT17 Var2 Event" CV="392" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT17 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT17 Var2 Event</label></variable>
       <variable item="LT17 Var2 Aspect" CV="392" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT17 Var2 Mode</variableref>
@@ -5011,9 +5339,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT18 Function</label>
       </variable>
-      <variable item="LT18 Re-trigger" CV="394" default="0" mask="VXXXXXXX">
+      <variable item="LT18 Reset" CV="394" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT18 Re-trigger</label>
+        <label>LT18 Reset</label>
       </variable>
       <variable item="LT18 Multiplier" CV="394" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -5093,13 +5421,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT18 Var1 CT</label></variable>
-      <variable item="LT18 Var1 Type" CV="398" mask="XXVVXXXX" default="0">
+      <variable item="LT18 Var1 Type" CV="398" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT18 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT18 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT18 Var1 Type</label></variable>
+      <variable item="LT18 Var1 Event" CV="398" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT18 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT18 Var1 Event</label></variable>
       <variable item="LT18 Var1 Aspect" CV="398" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT18 Var1 Mode</variableref>
@@ -5135,13 +5470,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT18 Var2 CT</label></variable>
-      <variable item="LT18 Var2 Type" CV="400" mask="XXVVXXXX" default="0">
+      <variable item="LT18 Var2 Type" CV="400" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT18 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT18 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT18 Var2 Type</label></variable>
+      <variable item="LT18 Var2 Event" CV="400" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT18 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT18 Var2 Event</label></variable>
       <variable item="LT18 Var2 Aspect" CV="400" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT18 Var2 Mode</variableref>
@@ -5178,9 +5520,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT19 Function</label>
       </variable>
-      <variable item="LT19 Re-trigger" CV="402" default="0" mask="VXXXXXXX">
+      <variable item="LT19 Reset" CV="402" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT19 Re-trigger</label>
+        <label>LT19 Reset</label>
       </variable>
       <variable item="LT19 Multiplier" CV="402" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -5260,13 +5602,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT19 Var1 CT</label></variable>
-      <variable item="LT19 Var1 Type" CV="406" mask="XXVVXXXX" default="0">
+      <variable item="LT19 Var1 Type" CV="406" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT19 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT19 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT19 Var1 Type</label></variable>
+      <variable item="LT19 Var1 Event" CV="406" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT19 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT19 Var1 Event</label></variable>
       <variable item="LT19 Var1 Aspect" CV="406" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT19 Var1 Mode</variableref>
@@ -5302,13 +5651,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT19 Var2 CT</label></variable>
-      <variable item="LT19 Var2 Type" CV="408" mask="XXVVXXXX" default="0">
+      <variable item="LT19 Var2 Type" CV="408" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT19 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT19 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT19 Var2 Type</label></variable>
+      <variable item="LT19 Var2 Event" CV="408" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT19 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT19 Var2 Event</label></variable>
       <variable item="LT19 Var2 Aspect" CV="408" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT19 Var2 Mode</variableref>
@@ -5345,9 +5701,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT20 Function</label>
       </variable>
-      <variable item="LT20 Re-trigger" CV="410" default="0" mask="VXXXXXXX">
+      <variable item="LT20 Reset" CV="410" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT20 Re-trigger</label>
+        <label>LT20 Reset</label>
       </variable>
       <variable item="LT20 Multiplier" CV="410" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -5427,13 +5783,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT20 Var1 CT</label></variable>
-      <variable item="LT20 Var1 Type" CV="414" mask="XXVVXXXX" default="0">
+      <variable item="LT20 Var1 Type" CV="414" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT20 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT20 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT20 Var1 Type</label></variable>
+      <variable item="LT20 Var1 Event" CV="414" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT20 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT20 Var1 Event</label></variable>
       <variable item="LT20 Var1 Aspect" CV="414" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT20 Var1 Mode</variableref>
@@ -5469,13 +5832,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT20 Var2 CT</label></variable>
-      <variable item="LT20 Var2 Type" CV="416" mask="XXVVXXXX" default="0">
+      <variable item="LT20 Var2 Type" CV="416" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT20 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT20 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT20 Var2 Type</label></variable>
+      <variable item="LT20 Var2 Event" CV="416" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT20 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT20 Var2 Event</label></variable>
       <variable item="LT20 Var2 Aspect" CV="416" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT20 Var2 Mode</variableref>
@@ -5512,9 +5882,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT21 Function</label>
       </variable>
-      <variable item="LT21 Re-trigger" CV="418" default="0" mask="VXXXXXXX">
+      <variable item="LT21 Reset" CV="418" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT21 Re-trigger</label>
+        <label>LT21 Reset</label>
       </variable>
       <variable item="LT21 Multiplier" CV="418" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -5594,13 +5964,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT21 Var1 CT</label></variable>
-      <variable item="LT21 Var1 Type" CV="422" mask="XXVVXXXX" default="0">
+      <variable item="LT21 Var1 Type" CV="422" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT21 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT21 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT21 Var1 Type</label></variable>
+      <variable item="LT21 Var1 Event" CV="422" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT21 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT21 Var1 Event</label></variable>
       <variable item="LT21 Var1 Aspect" CV="422" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT21 Var1 Mode</variableref>
@@ -5636,13 +6013,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT21 Var2 CT</label></variable>
-      <variable item="LT21 Var2 Type" CV="424" mask="XXVVXXXX" default="0">
+      <variable item="LT21 Var2 Type" CV="424" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT21 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT21 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT21 Var2 Type</label></variable>
+      <variable item="LT21 Var2 Event" CV="424" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT21 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT21 Var2 Event</label></variable>
       <variable item="LT21 Var2 Aspect" CV="424" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT21 Var2 Mode</variableref>
@@ -5679,9 +6063,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT22 Function</label>
       </variable>
-      <variable item="LT22 Re-trigger" CV="426" default="0" mask="VXXXXXXX">
+      <variable item="LT22 Reset" CV="426" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT22 Re-trigger</label>
+        <label>LT22 Reset</label>
       </variable>
       <variable item="LT22 Multiplier" CV="426" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -5761,13 +6145,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT22 Var1 CT</label></variable>
-      <variable item="LT22 Var1 Type" CV="430" mask="XXVVXXXX" default="0">
+      <variable item="LT22 Var1 Type" CV="430" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT22 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT22 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT22 Var1 Type</label></variable>
+      <variable item="LT22 Var1 Event" CV="430" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT22 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT22 Var1 Event</label></variable>
       <variable item="LT22 Var1 Aspect" CV="430" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT22 Var1 Mode</variableref>
@@ -5803,13 +6194,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT22 Var2 CT</label></variable>
-      <variable item="LT22 Var2 Type" CV="432" mask="XXVVXXXX" default="0">
+      <variable item="LT22 Var2 Type" CV="432" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT22 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT22 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT22 Var2 Type</label></variable>
+      <variable item="LT22 Var2 Event" CV="432" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT22 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT22 Var2 Event</label></variable>
       <variable item="LT22 Var2 Aspect" CV="432" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT22 Var2 Mode</variableref>
@@ -5846,9 +6244,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT23 Function</label>
       </variable>
-      <variable item="LT23 Re-trigger" CV="434" default="0" mask="VXXXXXXX">
+      <variable item="LT23 Reset" CV="434" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT23 Re-trigger</label>
+        <label>LT23 Reset</label>
       </variable>
       <variable item="LT23 Multiplier" CV="434" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -5928,13 +6326,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT23 Var1 CT</label></variable>
-      <variable item="LT23 Var1 Type" CV="438" mask="XXVVXXXX" default="0">
+      <variable item="LT23 Var1 Type" CV="438" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT23 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT23 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT23 Var1 Type</label></variable>
+      <variable item="LT23 Var1 Event" CV="438" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT23 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT23 Var1 Event</label></variable>
       <variable item="LT23 Var1 Aspect" CV="438" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT23 Var1 Mode</variableref>
@@ -5970,13 +6375,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT23 Var2 CT</label></variable>
-      <variable item="LT23 Var2 Type" CV="440" mask="XXVVXXXX" default="0">
+      <variable item="LT23 Var2 Type" CV="440" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT23 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT23 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT23 Var2 Type</label></variable>
+      <variable item="LT23 Var2 Event" CV="440" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT23 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT23 Var2 Event</label></variable>
       <variable item="LT23 Var2 Aspect" CV="440" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT23 Var2 Mode</variableref>
@@ -6013,9 +6425,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT24 Function</label>
       </variable>
-      <variable item="LT24 Re-trigger" CV="442" default="0" mask="VXXXXXXX">
+      <variable item="LT24 Reset" CV="442" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT24 Re-trigger</label>
+        <label>LT24 Reset</label>
       </variable>
       <variable item="LT24 Multiplier" CV="442" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -6095,13 +6507,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT24 Var1 CT</label></variable>
-      <variable item="LT24 Var1 Type" CV="446" mask="XXVVXXXX" default="0">
+      <variable item="LT24 Var1 Type" CV="446" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT24 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT24 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT24 Var1 Type</label></variable>
+      <variable item="LT24 Var1 Event" CV="446" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT24 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT24 Var1 Event</label></variable>
       <variable item="LT24 Var1 Aspect" CV="446" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT24 Var1 Mode</variableref>
@@ -6137,13 +6556,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT24 Var2 CT</label></variable>
-      <variable item="LT24 Var2 Type" CV="448" mask="XXVVXXXX" default="0">
+      <variable item="LT24 Var2 Type" CV="448" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT24 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT24 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT24 Var2 Type</label></variable>
+      <variable item="LT24 Var2 Event" CV="448" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT24 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT24 Var2 Event</label></variable>
       <variable item="LT24 Var2 Aspect" CV="448" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT24 Var2 Mode</variableref>
@@ -6180,9 +6606,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT25 Function</label>
       </variable>
-      <variable item="LT25 Re-trigger" CV="450" default="0" mask="VXXXXXXX">
+      <variable item="LT25 Reset" CV="450" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT25 Re-trigger</label>
+        <label>LT25 Reset</label>
       </variable>
       <variable item="LT25 Multiplier" CV="450" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -6262,13 +6688,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT25 Var1 CT</label></variable>
-      <variable item="LT25 Var1 Type" CV="454" mask="XXVVXXXX" default="0">
+      <variable item="LT25 Var1 Type" CV="454" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT25 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT25 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT25 Var1 Type</label></variable>
+      <variable item="LT25 Var1 Event" CV="454" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT25 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT25 Var1 Event</label></variable>
       <variable item="LT25 Var1 Aspect" CV="454" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT25 Var1 Mode</variableref>
@@ -6304,13 +6737,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT25 Var2 CT</label></variable>
-      <variable item="LT25 Var2 Type" CV="456" mask="XXVVXXXX" default="0">
+      <variable item="LT25 Var2 Type" CV="456" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT25 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT25 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT25 Var2 Type</label></variable>
+      <variable item="LT25 Var2 Event" CV="456" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT25 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT25 Var2 Event</label></variable>
       <variable item="LT25 Var2 Aspect" CV="456" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT25 Var2 Mode</variableref>
@@ -6347,9 +6787,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT26 Function</label>
       </variable>
-      <variable item="LT26 Re-trigger" CV="458" default="0" mask="VXXXXXXX">
+      <variable item="LT26 Reset" CV="458" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT26 Re-trigger</label>
+        <label>LT26 Reset</label>
       </variable>
       <variable item="LT26 Multiplier" CV="458" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -6429,13 +6869,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT26 Var1 CT</label></variable>
-      <variable item="LT26 Var1 Type" CV="462" mask="XXVVXXXX" default="0">
+      <variable item="LT26 Var1 Type" CV="462" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT26 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT26 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT26 Var1 Type</label></variable>
+      <variable item="LT26 Var1 Event" CV="462" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT26 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT26 Var1 Event</label></variable>
       <variable item="LT26 Var1 Aspect" CV="462" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT26 Var1 Mode</variableref>
@@ -6471,13 +6918,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT26 Var2 CT</label></variable>
-      <variable item="LT26 Var2 Type" CV="464" mask="XXVVXXXX" default="0">
+      <variable item="LT26 Var2 Type" CV="464" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT26 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT26 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT26 Var2 Type</label></variable>
+      <variable item="LT26 Var2 Event" CV="464" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT26 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT26 Var2 Event</label></variable>
       <variable item="LT26 Var2 Aspect" CV="464" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT26 Var2 Mode</variableref>
@@ -6514,9 +6968,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT27 Function</label>
       </variable>
-      <variable item="LT27 Re-trigger" CV="466" default="0" mask="VXXXXXXX">
+      <variable item="LT27 Reset" CV="466" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT27 Re-trigger</label>
+        <label>LT27 Reset</label>
       </variable>
       <variable item="LT27 Multiplier" CV="466" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -6596,13 +7050,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT27 Var1 CT</label></variable>
-      <variable item="LT27 Var1 Type" CV="470" mask="XXVVXXXX" default="0">
+      <variable item="LT27 Var1 Type" CV="470" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT27 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT27 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT27 Var1 Type</label></variable>
+      <variable item="LT27 Var1 Event" CV="470" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT27 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT27 Var1 Event</label></variable>
       <variable item="LT27 Var1 Aspect" CV="470" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT27 Var1 Mode</variableref>
@@ -6638,13 +7099,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT27 Var2 CT</label></variable>
-      <variable item="LT27 Var2 Type" CV="472" mask="XXVVXXXX" default="0">
+      <variable item="LT27 Var2 Type" CV="472" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT27 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT27 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT27 Var2 Type</label></variable>
+      <variable item="LT27 Var2 Event" CV="472" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT27 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT27 Var2 Event</label></variable>
       <variable item="LT27 Var2 Aspect" CV="472" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT27 Var2 Mode</variableref>
@@ -6681,9 +7149,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT28 Function</label>
       </variable>
-      <variable item="LT28 Re-trigger" CV="474" default="0" mask="VXXXXXXX">
+      <variable item="LT28 Reset" CV="474" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT28 Re-trigger</label>
+        <label>LT28 Reset</label>
       </variable>
       <variable item="LT28 Multiplier" CV="474" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -6763,13 +7231,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT28 Var1 CT</label></variable>
-      <variable item="LT28 Var1 Type" CV="478" mask="XXVVXXXX" default="0">
+      <variable item="LT28 Var1 Type" CV="478" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT28 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT28 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT28 Var1 Type</label></variable>
+      <variable item="LT28 Var1 Event" CV="478" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT28 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT28 Var1 Event</label></variable>
       <variable item="LT28 Var1 Aspect" CV="478" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT28 Var1 Mode</variableref>
@@ -6805,13 +7280,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT28 Var2 CT</label></variable>
-      <variable item="LT28 Var2 Type" CV="480" mask="XXVVXXXX" default="0">
+      <variable item="LT28 Var2 Type" CV="480" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT28 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT28 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT28 Var2 Type</label></variable>
+      <variable item="LT28 Var2 Event" CV="480" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT28 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT28 Var2 Event</label></variable>
       <variable item="LT28 Var2 Aspect" CV="480" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT28 Var2 Mode</variableref>
@@ -6848,9 +7330,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT29 Function</label>
       </variable>
-      <variable item="LT29 Re-trigger" CV="482" default="0" mask="VXXXXXXX">
+      <variable item="LT29 Reset" CV="482" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT29 Re-trigger</label>
+        <label>LT29 Reset</label>
       </variable>
       <variable item="LT29 Multiplier" CV="482" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -6930,13 +7412,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT29 Var1 CT</label></variable>
-      <variable item="LT29 Var1 Type" CV="486" mask="XXVVXXXX" default="0">
+      <variable item="LT29 Var1 Type" CV="486" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT29 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT29 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT29 Var1 Type</label></variable>
+      <variable item="LT29 Var1 Event" CV="486" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT29 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT29 Var1 Event</label></variable>
       <variable item="LT29 Var1 Aspect" CV="486" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT29 Var1 Mode</variableref>
@@ -6972,13 +7461,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT29 Var2 CT</label></variable>
-      <variable item="LT29 Var2 Type" CV="488" mask="XXVVXXXX" default="0">
+      <variable item="LT29 Var2 Type" CV="488" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT29 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT29 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT29 Var2 Type</label></variable>
+      <variable item="LT29 Var2 Event" CV="488" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT29 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT29 Var2 Event</label></variable>
       <variable item="LT29 Var2 Aspect" CV="488" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT29 Var2 Mode</variableref>
@@ -7015,9 +7511,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT30 Function</label>
       </variable>
-      <variable item="LT30 Re-trigger" CV="490" default="0" mask="VXXXXXXX">
+      <variable item="LT30 Reset" CV="490" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT30 Re-trigger</label>
+        <label>LT30 Reset</label>
       </variable>
       <variable item="LT30 Multiplier" CV="490" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -7097,13 +7593,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT30 Var1 CT</label></variable>
-      <variable item="LT30 Var1 Type" CV="494" mask="XXVVXXXX" default="0">
+      <variable item="LT30 Var1 Type" CV="494" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT30 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT30 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT30 Var1 Type</label></variable>
+      <variable item="LT30 Var1 Event" CV="494" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT30 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT30 Var1 Event</label></variable>
       <variable item="LT30 Var1 Aspect" CV="494" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT30 Var1 Mode</variableref>
@@ -7139,13 +7642,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT30 Var2 CT</label></variable>
-      <variable item="LT30 Var2 Type" CV="496" mask="XXVVXXXX" default="0">
+      <variable item="LT30 Var2 Type" CV="496" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT30 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT30 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT30 Var2 Type</label></variable>
+      <variable item="LT30 Var2 Event" CV="496" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT30 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT30 Var2 Event</label></variable>
       <variable item="LT30 Var2 Aspect" CV="496" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT30 Var2 Mode</variableref>
@@ -7182,9 +7692,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT31 Function</label>
       </variable>
-      <variable item="LT31 Re-trigger" CV="498" default="0" mask="VXXXXXXX">
+      <variable item="LT31 Reset" CV="498" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT31 Re-trigger</label>
+        <label>LT31 Reset</label>
       </variable>
       <variable item="LT31 Multiplier" CV="498" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -7264,13 +7774,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT31 Var1 CT</label></variable>
-      <variable item="LT31 Var1 Type" CV="502" mask="XXVVXXXX" default="0">
+      <variable item="LT31 Var1 Type" CV="502" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT31 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT31 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT31 Var1 Type</label></variable>
+      <variable item="LT31 Var1 Event" CV="502" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT31 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT31 Var1 Event</label></variable>
       <variable item="LT31 Var1 Aspect" CV="502" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT31 Var1 Mode</variableref>
@@ -7306,13 +7823,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT31 Var2 CT</label></variable>
-      <variable item="LT31 Var2 Type" CV="504" mask="XXVVXXXX" default="0">
+      <variable item="LT31 Var2 Type" CV="504" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT31 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT31 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT31 Var2 Type</label></variable>
+      <variable item="LT31 Var2 Event" CV="504" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT31 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT31 Var2 Event</label></variable>
       <variable item="LT31 Var2 Aspect" CV="504" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT31 Var2 Mode</variableref>
@@ -7349,9 +7873,9 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOp.xml"/>
         <label>LT32 Function</label>
       </variable>
-      <variable item="LT32 Re-trigger" CV="506" default="0" mask="VXXXXXXX">
+      <variable item="LT32 Reset" CV="506" default="0" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>LT32 Re-trigger</label>
+        <label>LT32 Reset</label>
       </variable>
       <variable item="LT32 Multiplier" CV="506" default="0" mask="XVVVVXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
@@ -7431,13 +7955,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT32 Var1 CT</label></variable>
-      <variable item="LT32 Var1 Type" CV="510" mask="XXVVXXXX" default="0">
+      <variable item="LT32 Var1 Type" CV="510" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT32 Var1 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT32 Var1 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT32 Var1 Type</label></variable>
+      <variable item="LT32 Var1 Event" CV="510" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT32 Var1 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT32 Var1 Event</label></variable>
       <variable item="LT32 Var1 Aspect" CV="510" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT32 Var1 Mode</variableref>
@@ -7473,13 +8004,20 @@
           <value>0</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceCT.xml"/><label>LT32 Var2 CT</label></variable>
-      <variable item="LT32 Var2 Type" CV="512" mask="XXVVXXXX" default="0">
+      <variable item="LT32 Var2 Type" CV="512" mask="XXVXXXXX" default="0">
         <qualifier>
           <variableref>LT32 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMode.xml"/><label>LT32 Var2 Type</label></variable>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT32 Var2 Type</label></variable>
+      <variable item="LT32 Var2 Event" CV="512" mask="XXXVXXXX" default="0">
+        <qualifier>
+          <variableref>LT32 Var2 Mode</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT32 Var2 Event</label></variable>
       <variable item="LT32 Var2 Aspect" CV="512" mask="VVVVVXXX" default="0">
         <qualifier>
           <variableref>LT32 Var2 Mode</variableref>
@@ -7487,7 +8025,9 @@
           <value>1</value>
         </qualifier>
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceAspect.xml"/><label>LT32 Var2 Aspect</label></variable>
+
       <!-- End of Logic Table Variables -->
+
       <!-- Presets for Composite Variables -->
       <variable item="IP1 Type">
         <compositeVal>
@@ -9890,20 +10430,26 @@
               <value>22</value>
             </qualifier>
           </label>
-          <label>
-            <text>&lt;html&gt;&lt;span style="color: red;"&gt;&lt;strong&gt;Warning!&lt;/span&gt; This unit may require a firmware upgrade. Firmware Version 18 is now available.&lt;/strong&gt;&lt;/html&gt;</text>
+          <label label="&lt;html&gt;&lt;span style=&quot;color: blue;&quot;&gt;&lt;strong&gt;See yellow backgrounds? First do a 'Read full sheet' to validate these values. &lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
             <qualifier>
               <variableref>Firmware Version</variableref>
               <relation>lt</relation>
-              <value>18</value>
+              <value>19</value>
             </qualifier>
           </label>
           <label>
-            <text>  Do a 'Read full sheet' to update values.</text>
+            <text>&lt;html&gt;&lt;span style="color: red;"&gt;&lt;strong&gt;Warning!&lt;/span&gt; This unit may require a firmware upgrade. Firmware Version 19 is now available.&lt;/strong&gt;&lt;/html&gt;</text>
             <qualifier>
               <variableref>Firmware Version</variableref>
               <relation>lt</relation>
-              <value>18</value>
+              <value>19</value>
+            </qualifier>
+          </label>
+          <label label="&lt;html&gt;&lt;span style=&quot;color: red;&quot;&gt;&lt;strong&gt;Due to internal changes, check for proper message and logic operation following this upgrade.&lt;/span&gt;&lt;/strong&gt;&lt;/html&gt;">
+            <qualifier>
+              <variableref>Firmware Version</variableref>
+              <relation>lt</relation>
+              <value>19</value>
             </qualifier>
           </label>
         </column>
@@ -9914,10 +10460,10 @@
             <text> </text>
           </label>
           <label>
-            <text>Use DecoderPro Version 4.2.1 or later.</text>
+            <text>Use DecoderPro Version 4.6 or later.</text>
           </label>
           <label>
-            <text>Decoder File Version: 0.16</text>
+            <text>Decoder File Version: 0.17</text>
           </label>
         </column>
       </row>
@@ -9927,9 +10473,9 @@
   <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneIOA2.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneIOB1.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneIOB2.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPLogicA.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPLogicB.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPLogicC.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPLogicD.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLogicA.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLogicB.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLogicC.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLogicD.xml"/>
   <!--</programmer>-->
 </decoder-config>

@@ -19,6 +19,7 @@ import jmri.InstanceManager;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Provide GUI to configure Roster defaults.
@@ -26,6 +27,7 @@ import jmri.util.FileUtil;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2007
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class RosterConfigPane extends JPanel implements PreferencesPanel {
 
     JLabel filename;

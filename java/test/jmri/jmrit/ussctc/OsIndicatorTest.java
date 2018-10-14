@@ -4,17 +4,16 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.Turnout;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for classes in the jmri.jmrit.ussctc.OsIndicator class
  *
  * @author	Bob Jacobsen Copyright 2003, 2007, 2015
- * @version	$Revision$
- */
+  */
 public class OsIndicatorTest extends TestCase {
 
     public void testCreate() {
@@ -145,7 +144,8 @@ public class OsIndicatorTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
         super.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
@@ -154,9 +154,7 @@ public class OsIndicatorTest extends TestCase {
 
     @Override
     protected void tearDown() throws Exception {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

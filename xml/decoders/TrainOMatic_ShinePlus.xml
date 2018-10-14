@@ -2019,6 +2019,8 @@
 
   <pane>
     <name>Output Configuration</name>
+    <name xml:lang="de">Ausgangskonfiguration</name>
+    <name xml:lang="nl">Uitgangen instellen</name>
     <column>
       <row>
         <display item="Out 1 Light intensity" label="Out 1 " tooltip=""/>

@@ -35,6 +35,7 @@ public class EnablingCheckboxRenderer extends JCheckBox implements TableCellRend
      * @param column     the column number
      * @return the JCheckBox to display
      */
+    @Override
     public Component getTableCellRendererComponent(JTable table, java.lang.Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         setSelected(value != null && ((Boolean) value).booleanValue());
         setEnabled(table.isCellEditable(row, column));

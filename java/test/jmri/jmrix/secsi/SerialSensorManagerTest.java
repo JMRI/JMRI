@@ -1,22 +1,21 @@
 package jmri.jmrix.secsi;
 
-import jmri.Sensor;
-import jmri.SensorManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-
 /**
  * JUnit tests for the SerialSensorManager class.
  *
  * @author	Bob Jacobsen Copyright 2003, 2007
- * @author      Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
-public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest {
+public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
+
+    private SerialTrafficControlScaffold tcis = null;
+    private SecsiSystemConnectionMemo memo = null;
 
     private SerialNode n0 = null;
     private SerialNode n1 = null;
@@ -26,7 +25,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     public String getSystemName(int i) {
         return "VS" + i;
     }
-    
+
     @Test
     public void testSensorCreationAndRegistration() {
         Assert.assertTrue("none expected A0", !(n0.getSensorsActive()));
@@ -61,29 +60,24 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        // replace the SerialTrafficController to get clean reset
-        SerialTrafficController t = new SerialTrafficController() {
-            SerialTrafficController test() {
-                setInstance();
-                return this;
-            }
-        }.test();
+        JUnitUtil.setUp();
+
+        memo = new SecsiSystemConnectionMemo();
+        tcis = new SerialTrafficControlScaffold(memo);
+        memo.setTrafficController(tcis);
 
         // construct nodes
-        n0 = new SerialNode(0, SerialNode.DAUGHTER);
-        n1 = new SerialNode(1, SerialNode.DAUGHTER);
-        n2 = new SerialNode(2, SerialNode.CABDRIVER);
+        n0 = new SerialNode(0, SerialNode.DAUGHTER,tcis);
+        n1 = new SerialNode(1, SerialNode.DAUGHTER,tcis);
+        n2 = new SerialNode(2, SerialNode.CABDRIVER,tcis);
 
-        l = new SerialSensorManager();
+        l = new SerialSensorManager(memo);
     }
 
     @After
     public void tearDown() {
         l.dispose();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

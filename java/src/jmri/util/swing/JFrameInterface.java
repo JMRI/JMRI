@@ -1,4 +1,3 @@
-// JFrameInterface.java
 package jmri.util.swing;
 
 import java.awt.Frame;

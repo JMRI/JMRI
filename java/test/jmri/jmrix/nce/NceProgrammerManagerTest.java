@@ -1,11 +1,10 @@
 package jmri.jmrix.nce;
 
-import org.junit.Assert;
+import jmri.GlobalProgrammerManager;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.GlobalProgrammerManager;
+import org.junit.Assert;
 
 /**
  * JUnit tests for the NceProgrammerManager class
@@ -60,18 +59,21 @@ public class NceProgrammerManagerTest extends TestCase {
     }
 
     // The minimal setup is for log4J
+    @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp(); 
+        jmri.util.JUnitUtil.setUp(); 
         jmri.util.JUnitUtil.resetInstanceManager();
         
         memo = new NceSystemConnectionMemo();
         memo.setNceTrafficController(new NceTrafficController());
     }
 
-    public void tearDown() {        
-        apps.tests.Log4JFixture.tearDown();
+    @Override
+    public void tearDown() {
+        memo = null;     
+        jmri.util.JUnitUtil.tearDown();
     }
 
-    //private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceProgrammerManagerTest.class.getName());
+    //private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceProgrammerManagerTest.class);
 
 }

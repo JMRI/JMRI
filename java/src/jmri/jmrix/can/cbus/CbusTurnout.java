@@ -4,6 +4,7 @@ import jmri.Turnout;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.TrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,6 +73,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
      *
      * @param s new state value
      */
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         CanMessage m;
         if (s == Turnout.THROWN) {
@@ -83,6 +85,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
         }
     }
 
+    @Override
     public void message(CanMessage f) {
         if (addrThrown.match(f)) {
             newCommandedState(THROWN);
@@ -91,7 +94,10 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
         }
     }
 
+    @Override
     public void reply(CanReply f) {
+        // convert response events to normal
+        f = CbusMessage.opcRangeToStl(f);
         if (addrThrown.match(f)) {
             newCommandedState(THROWN);
         } else if (addrClosed.match(f)) {
@@ -99,8 +105,9 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
         }
     }
 
+    @Override
     protected void turnoutPushbuttonLockout(boolean locked) {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusTurnout.class);
 }

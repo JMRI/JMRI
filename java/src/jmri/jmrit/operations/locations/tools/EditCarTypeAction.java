@@ -1,18 +1,15 @@
-// EditCarTypeAction.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import jmri.jmrit.operations.rollingstock.cars.CarAttributeEditFrame;
-import jmri.jmrit.operations.rollingstock.cars.CarEditFrame;
+import jmri.jmrit.operations.rollingstock.cars.tools.CarAttributeEditFrame;
 
 /**
  * Swing action to create and register a LocationCopyFrame object.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2014
- * @version $Revision: 17977 $
  */
 public class EditCarTypeAction extends AbstractAction {
 
@@ -28,10 +25,10 @@ public class EditCarTypeAction extends AbstractAction {
         if (f == null || !f.isVisible()) {
             f = new CarAttributeEditFrame();
         }
-        f.initComponents(CarEditFrame.TYPE, null);
+        f.initComponents(CarAttributeEditFrame.TYPE, null);
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 }
 
-/* @(#)EditCarTypeAction.java */
+

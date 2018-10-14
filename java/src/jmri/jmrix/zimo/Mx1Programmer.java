@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +43,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.PAGEMODE);
+        ret.add(ProgrammingMode.PAGEMODE);
         return ret;
     }
 
@@ -58,6 +57,8 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
     int _cv;	// remember the cv being read/written
 
     // programming interface
+    @Override
+    @Deprecated // 4.1.1
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
@@ -71,7 +72,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         // start the error timer
         startShortTimer();
         // format and send message to go to program mode
-        if (getMode() == DefaultProgrammerManager.PAGEMODE) {
+        if (getMode() == ProgrammingMode.PAGEMODE) {
             if (tc.getProtocol() == Mx1Packetizer.ASCII) {
                 if (firstTime) {
                     tc.sendMx1Message(tc.getCommandStation().resetModeMsg(), this);
@@ -84,10 +85,13 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         }
     }
 
+    @Override
     public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
+    @Override
+    @Deprecated // 4.1.1
     synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
@@ -100,7 +104,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         // start the error timer
         startShortTimer();
         // format and send message to go to program mode
-        if (getMode() == DefaultProgrammerManager.PAGEMODE) {
+        if (getMode() == ProgrammingMode.PAGEMODE) {
             if (tc.getProtocol() == Mx1Packetizer.ASCII) {
                 if (firstTime) {
                     tc.sendMx1Message(tc.getCommandStation().resetModeMsg(), this);
@@ -129,6 +133,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         }
     }
 
+    @Override
     synchronized public void message(Mx1Message m) {
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
@@ -187,6 +192,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
     /**
      * Internal routine to handle a timeout
      */
+    @Override
     synchronized protected void timeout() {
         if (progState != NOTPROGRAMMING) {
             // we're programming, time to stop
@@ -212,7 +218,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         // clear the current listener _first_
         jmri.ProgListener temp = _usingProgrammer;
         _usingProgrammer = null;
-        temp.programmingOpReply(value, status);
+        notifyProgListenerEnd(temp, value, status);
     }
 
     public int ascToBcd(int hex) {
@@ -254,6 +260,6 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1Programmer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Mx1Programmer.class);
 
 }

@@ -33,6 +33,18 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>8</revnumber>
+      <date>2016-12-09</date>
+      <authorinitials>JCA</authorinitials>
+      <revremark>Catalan translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>7</revnumber>
+      <date>2016-10-09</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>6</revnumber>
       <date>2014-05-18</date>
       <authorinitials>Ba</authorinitials>
@@ -55,6 +67,12 @@
 	<label xml:lang="de">Motor Timeout bei nicht vorhandenem DCC</label>
 	<comment xml:lang="de">Wertebereich 0-255</comment>
 	<tooltip xml:lang="de">Motor Timeout t = Wert * 16 ms</tooltip>
+	<label xml:lang="cs">Timeout motoru při ztrátě DDC</label>
+	<comment xml:lang="cs">Meze 0-255</comment>
+	<tooltip xml:lang="cs">Timeout motoru t = hodnota * 16 ms</tooltip>
+	<label xml:lang="ca">Timeout del Motor per manca de DCC</label>
+	<comment xml:lang="ca">Rang 0-255</comment>
+	<tooltip xml:lang="ca">Timeout del motor t = Valor * 16 ms</tooltip>
   </variable>
   <variable CV="113" item="Minimum PWM Value" default="40" comment="Range 0-255">
 	<decVal min="0" max="255"/>
@@ -64,6 +82,10 @@
 	<comment xml:lang="it">Valori da 0 a 255</comment>
 	<label xml:lang="de">Miniamler PWM Wert (Motortyp 4 und 5) (0-255)</label>
 	<comment xml:lang="de">Wertebereich 0-255</comment>
+    <label xml:lang="cs">Minimální hodnota PWM (pouze motory typu 4 a 5)</label>
+    <comment xml:lang="cs">Meze 0-255</comment>
+    <label xml:lang="ca">PWM mínim (només tipus 4 i 5)</label>
+    <comment xml:lang="ca">Rang 0-255</comment>
   </variable>
   <variable CV="114" item="Motor Duty Cycle" default="10" comment="Range 0-255">
 	<decVal min="0" max="255"/>
@@ -73,6 +95,9 @@
 	<comment xml:lang="it">Valori da 0 a 255</comment>
 	<label xml:lang="de">Motor Duty Cycle (Motortyp 4 und 5) (0-255)</label>
 	<comment xml:lang="de">Wertebereich 0-255</comment>
+    <label xml:lang="cs">Pracovní cyklus (pouze motory typu 4 a 5)</label>
+    <comment xml:lang="cs">Meze 0-255</comment>
+    <label xml:lang="ca">Temps de cicle (Tipus de motor 4 o 5)</label>
+    <comment xml:lang="ca">Rang 0-255</comment>
   </variable>
-  
 </variables>

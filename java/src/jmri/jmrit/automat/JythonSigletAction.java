@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 /**
  * Swing action to create and register a JythonSiglet object
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2007
+ * @author Bob Jacobsen Copyright (C) 2003, 2007
  */
 public class JythonSigletAction extends AbstractAction {
 
@@ -20,6 +20,7 @@ public class JythonSigletAction extends AbstractAction {
 
     JPanel _who;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a SampleAutomaton
         JFileChooser fci = jmri.jmrit.XmlFile.userFileChooser("Python script files", "py");

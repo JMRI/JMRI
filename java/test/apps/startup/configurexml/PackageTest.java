@@ -11,7 +11,8 @@ import org.slf4j.LoggerFactory;
    ScriptButtonModelXmlTest.class,
    StartupActionsPreferencesPanelXmlTest.class,
    StartupPauseModelXmlTest.class,
-   TriggerRouteModelXmlTest.class
+   TriggerRouteModelXmlTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the apps.startup.configurexml package.
@@ -33,6 +34,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

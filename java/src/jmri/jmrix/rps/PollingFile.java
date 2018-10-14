@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * Persist RPS polling information
  * <P>
  * @author Bob Jacobsen Copyright 2008
- * @version $Revision$
  */
 public class PollingFile extends XmlFile {
 
@@ -56,9 +55,9 @@ public class PollingFile extends XmlFile {
         if (Engine.instance().getTransmitter(r).getRosterName() != null) {
             e.setAttribute("rostername", Engine.instance().getTransmitter(r).getRosterName());
         } else {
-            e.setAttribute("id", Engine.instance().getTransmitter(r).getID());
+            e.setAttribute("id", Engine.instance().getTransmitter(r).getId());
         }
-        e.setAttribute("id", Engine.instance().getTransmitter(r).getID());
+        e.setAttribute("id", Engine.instance().getTransmitter(r).getId());
         e.setAttribute("address", "" + Engine.instance().getTransmitter(r).getAddress());
         e.setAttribute("long", Engine.instance().getTransmitter(r).isLongAddress() ? "true" : "false");
         e.setAttribute("poll", Engine.instance().getTransmitter(r).isPolled() ? "true" : "false");
@@ -124,7 +123,6 @@ public class PollingFile extends XmlFile {
     /**
      * Get the transmitters from the file
      */
-    @SuppressWarnings("unchecked")
     public void getTransmitters(Engine engine) {
         List<Element> l = root.getChildren("transmitter");
 
@@ -146,7 +144,7 @@ public class PollingFile extends XmlFile {
                         poll = true;
                     }
                     engine.getTransmitter(j).setPolled(poll);
-                    engine.getTransmitter(j).setID(e.getAttribute("id").getValue());
+                    engine.getTransmitter(j).setId(e.getAttribute("id").getValue());
                     break;
                 }
             }
@@ -166,5 +164,5 @@ public class PollingFile extends XmlFile {
     }
 
     // initialize logging
-    static private Logger log = LoggerFactory.getLogger(PollingFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PollingFile.class);
 }

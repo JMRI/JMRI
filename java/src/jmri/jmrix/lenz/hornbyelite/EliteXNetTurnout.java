@@ -1,23 +1,15 @@
-/**
- * EliteXNetTurnout.java
- *
- * Description:	extend jmri.jmrix.XNetTurnout to handle turnouts on Hornby Elite
- * connections. See XNetTurnout for further documentation.
- * </P>
- *
- * @author	Paul Bender Copyright (C) 2008
- * @version	$Revision$
- */
 package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.jmrix.lenz.XNetTrafficController;
 
+/**
+ * Extend jmri.jmrix.XNetTurnout to handle turnouts on Hornby Elite
+ * connections.
+ * @see jmri.jmrix.lenz.XNetTurnout for further documentation.
+ *
+ * @author Paul Bender Copyright (C) 2008
+ */
 public class EliteXNetTurnout extends jmri.jmrix.lenz.XNetTurnout {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5782238848095109815L;
 
     public EliteXNetTurnout(String prefix, int pNumber, XNetTrafficController tc) {  // a human-readable turnout number must be specified!
         super(prefix, pNumber, tc);
@@ -26,16 +18,17 @@ public class EliteXNetTurnout extends jmri.jmrix.lenz.XNetTurnout {
         // 1 on the Elite.
     }
 
-    /* Send an "Off" message to the decoder for this output  */
+    /**
+     * Send an "Off" message to the decoder for this output.
+     */
+    @Override
     protected synchronized void sendOffMessage() {
         // The Elite appears to react to the on and off messages
         // in the same manner, and does not handle feedback properly
-        // Set the known state to the command state and the internalState               // to idlestate.
+        // Set the known state to the command state and the internalState
+        // to idlestate.
         newKnownState(getCommandedState());
         internalState = jmri.jmrix.lenz.XNetTurnout.IDLE;
     }
 
 }
-
-
-/* @(#)EliteXNetTurnout.java */

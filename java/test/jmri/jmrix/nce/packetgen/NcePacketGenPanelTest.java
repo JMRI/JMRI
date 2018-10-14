@@ -1,30 +1,29 @@
 package jmri.jmrix.nce.packetgen;
 
 import jmri.jmrix.nce.NceMessage;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.nce.packetgen.NcePacketGenPanel class
  *
  * @author	Bob Jacobsen
  */
-public class NcePacketGenPanelTest extends TestCase {
+public class NcePacketGenPanelTest extends jmri.util.swing.JmriPanelTest {
 
-    public void testPanelCreate() {
-        new NcePacketGenPanel();
-    }
-
+    @Test
     public void testPacketNull() {
-        NcePacketGenPanel t = new NcePacketGenPanel();
+        NcePacketGenPanel t = (NcePacketGenPanel) panel;
         NceMessage m = t.createPacket("");
         Assert.assertEquals("null pointer", null, m);
     }
 
+    @Test
     public void testPacketCreate() {
-        NcePacketGenPanel t = new NcePacketGenPanel();
+        NcePacketGenPanel t = (NcePacketGenPanel) panel;
         NceMessage m = t.createPacket("12 34 AB 3 19 6 B B1");
         Assert.assertEquals("length", 8, m.getNumDataElements());
         Assert.assertEquals("0th byte", 0x12, m.getElement(0) & 0xFF);
@@ -37,21 +36,17 @@ public class NcePacketGenPanelTest extends TestCase {
         Assert.assertEquals("7th byte", 0xB1, m.getElement(7) & 0xFF);
     }
 
-    // from here down is testing infrastructure
-    public NcePacketGenPanelTest(String s) {
-        super(s);
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        panel = new NcePacketGenPanel();
+        title="NCE_: " + Bundle.getMessage("Title");
+        helpTarget="package.jmri.jmrix.nce.packetgen.NcePacketGenFrame";
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {NcePacketGenPanelTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(NcePacketGenPanelTest.class);
-        return suite;
-    }
+    @Override
+    @After
+    public void tearDown() {        JUnitUtil.tearDown();    }
 
 }

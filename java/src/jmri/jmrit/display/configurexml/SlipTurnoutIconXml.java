@@ -5,6 +5,8 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SlipTurnoutIcon;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuration for display.TurnoutIcon objects.
@@ -24,6 +26,7 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
      * @param o Object to store, of type TurnoutIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         SlipTurnoutIcon p = (SlipTurnoutIcon) o;
@@ -31,8 +34,7 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
             return null;  // if flagged as inactive, don't store
         }
         Element element = new Element("slipturnouticon");
-        //element.setAttribute("turnoutEast", p.getNamedTurnout(SlipTurnoutIcon.WEST).getName());
-        //element.setAttribute("turnoutWest", p.getNamedTurnout(SlipTurnoutIcon.EAST).getName());
+
         element.addContent(new Element("turnoutEast").addContent(p.getNamedTurnout(SlipTurnoutIcon.EAST).getName()));
         element.addContent(new Element("turnoutWest").addContent(p.getNamedTurnout(SlipTurnoutIcon.WEST).getName()));
 
@@ -59,7 +61,10 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
                 }
                 element.addContent(storeIcon("lowerWestToLowerEast", p.getLowerWestToLowerEastIcon(), p.getLWLEText()));
                 element.setAttribute("turnoutType", "scissor");
-
+                break;
+            default:
+                log.warn("Unhandled turnout type: {}", p.getTurnoutType());
+                break;
         }
 
         storeCommonAttributes(p, element);
@@ -91,7 +96,7 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o       Editor as an Object
      */
-    @SuppressWarnings("null")
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         Editor p = (Editor) o;
@@ -234,4 +239,5 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
             }
         }
     }
+    private final static Logger log = LoggerFactory.getLogger(SlipTurnoutIconXml.class);
 }

@@ -3,14 +3,15 @@ package jmri.jmrix.cmri.serial.sim;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
+import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
 
 /**
- * Definition of objects to handle configuring a layout connection via an C/MRI
+ * Definition of objects to handle configuring a layout connection via a C/MRI
  * Simulator object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008
+ * @author Chuck Catania Copyright (C) 2017
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
@@ -23,13 +24,17 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no preexisting adapter
      */
     public ConnectionConfig() {
         super();
     }
 
+    @Override
     public void loadDetails(JPanel details) {
+
+        setInstance();
+
         // have to embed the usual one in a new JPanel
 
         JPanel p = new JPanel();
@@ -39,24 +44,21 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         details.add(p);
 
         // add another button
-        JButton b = new JButton("Configure C/MRI nodes");
+        JButton b = new JButton(Bundle.getMessage("ConfigureNodesTitle"));
 
         details.add(b);
 
-        b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
+        b.addActionListener(new NodeConfigManagerAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
+        // b.addActionListener(new NodeConfigAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
 
     }
 
-    /*protected Vector<String> getPortNames() {
-     Vector<String> portNameVector = new Vector<>();
-     portNameVector.addElement("(None)");
-     return portNameVector;
-     }*/
-    //public boolean isPortAdvanced() { return true; }
+    @Override
     public String name() {
         return "Simulator";
     }
 
+    @Override
     protected void setInstance() {
         if(adapter == null ) {
            adapter = new SimDriverAdapter();

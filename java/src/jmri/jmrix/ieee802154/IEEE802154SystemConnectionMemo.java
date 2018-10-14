@@ -1,9 +1,7 @@
-// IEEE802154SystemConnectionMemo.java
 package jmri.jmrix.ieee802154;
 
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
-import jmri.ProgrammerManager;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -12,12 +10,11 @@ import jmri.ProgrammerManager;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010 copied from NCE into PowerLine for
+ * @author Bob Jacobsen Copyright (C) 2010 copied from NCE into PowerLine for
  * multiple connections by
- * @author	Ken Cameron Copyright (C) 2011 copied from PowerLine into IEEE802154
+ * @author Ken Cameron Copyright (C) 2011 copied from PowerLine into IEEE802154
  * by
- * @author	Paul Bender Copyright (C) 2013
- * @version $Revision$
+ * @author Paul Bender Copyright (C) 2013
  */
 public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -33,7 +30,7 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     }
 
     /*
-     * Override the init function for any subtype specific 
+     * Override the init function for any subtype specific
      * registration into init.  init is called by the generic contstructor.
      */
     protected void init() {
@@ -47,6 +44,7 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionM
 
     /**
      * Traffic Controller for this instance.
+     * @param newtc tc to save for connection
      */
     public void setTrafficController(IEEE802154TrafficController newtc) {
         _tc = newtc;
@@ -58,22 +56,9 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     private IEEE802154TrafficController _tc = null;
 
     /**
-     * Always null as ieee802154 doesn't have a programmer
+     * Tells which managers this class provides.
      */
-    @SuppressWarnings("deprecation")
-    public ProgrammerManager getProgrammerManager() {
-        //Do not want to return a programmer ever
-        return null;
-    }
-
-    @SuppressWarnings("deprecation")
-    public void setProgrammerManager(ProgrammerManager p) {
-        // no programmer supported, should I throw an Exception??
-    }
-
-    /**
-     * Tells which managers this provides by class
-     */
+    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
@@ -84,6 +69,7 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     /**
      * Provide manager by class
      */
+    @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
@@ -99,16 +85,15 @@ public class IEEE802154SystemConnectionMemo extends jmri.jmrix.SystemConnectionM
         // now does nothing here, it's done by the specific class
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.ieee802154.IEEE802154ActionListBundle");
     }
 
+    @Override
     public void dispose() {
         InstanceManager.deregister(this, IEEE802154SystemConnectionMemo.class);
         super.dispose();
     }
 
 }
-
-
-/* @(#)IEEE802154SystemConnectionMemo.java */

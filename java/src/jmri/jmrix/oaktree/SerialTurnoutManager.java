@@ -1,4 +1,3 @@
-// SerialTurnoutManager.java
 package jmri.jmrix.oaktree;
 
 import jmri.Turnout;
@@ -8,25 +7,34 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager for Oak Tree systems
- * <P>
+ * <p>
  * System names are "OTnnn", where nnn is the turnout number without padding.
  *
- * @author	Bob Jacobsen Copyright (C) 2003, 2006
- * @version	$Revision$
- */
+ * @author Bob Jacobsen Copyright (C) 2003, 2006
+  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
-    public SerialTurnoutManager() {
+    OakTreeSystemConnectionMemo _memo = null;
+    protected String prefix = "O";
 
+    public SerialTurnoutManager(OakTreeSystemConnectionMemo memo) {
+        _memo = memo;
+        prefix = getSystemPrefix();
     }
 
+    /**
+     * Return the Oak Tree system prefix
+     */
+    @Override
     public String getSystemPrefix() {
-        return "O";
+        return _memo.getSystemPrefix();
+
     }
 
+    @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
-        String sName = SerialAddress.normalizeSystemName(systemName);
+        String sName = SerialAddress.normalizeSystemName(systemName, prefix);
         if (sName.equals("")) {
             // system name is not valid
             return null;
@@ -37,32 +45,56 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             return null;
         }
         // check under alternate name
-        String altName = SerialAddress.convertSystemNameToAlternate(sName);
+        String altName = SerialAddress.convertSystemNameToAlternate(sName, prefix);
         t = getBySystemName(altName);
         if (t != null) {
             return null;
         }
         // create the turnout
-        t = new SerialTurnout(sName, userName);
+        t = new SerialTurnout(sName, userName, _memo);
 
         // does system name correspond to configured hardware
-        if (!SerialAddress.validSystemNameConfig(sName, 'T')) {
+        if (!SerialAddress.validSystemNameConfig(sName, 'T', _memo)) {
             // system name does not correspond to configured hardware
-            log.warn("Turnout '" + sName + "' refers to an undefined Serial Node.");
+            log.warn("Turnout '{}' refers to an undefined Serial Node.", sName);
         }
         return t;
     }
 
-    static public SerialTurnoutManager instance() {
-        if (_instance == null) {
-            _instance = new SerialTurnoutManager();
-        }
-        return _instance;
+    /**
+     * Public method to validate system name format.
+     *
+     * @return VALID if system name has a valid format, else return INVALID
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (SerialAddress.validSystemNameFormat(systemName, 'T', prefix));
     }
-    static SerialTurnoutManager _instance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class.getName());
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
+        return entryToolTip;
+    }
+
+    /**
+     * Allow access to SerialTurnoutManager.
+     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
+     */
+    @Deprecated
+    static public SerialTurnoutManager instance() {
+        return null;
+    }
+
+
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);
 
 }
-
-/* @(#)SerialTurnoutManager.java */

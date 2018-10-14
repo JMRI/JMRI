@@ -1,4 +1,3 @@
-// SerialTrafficController.java
 package jmri.jmrix.powerline;
 
 import jmri.jmrix.AbstractMRListener;
@@ -23,13 +22,15 @@ import org.slf4j.LoggerFactory;
  * configuring nodes, etc, during the initial configuration. A subclass must be
  * instantiated to actually communicate with an adapter.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2005, 2006, 2008 Converted to
+ * @author Bob Jacobsen Copyright (C) 2001, 2003, 2005, 2006, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision$
- */
+  */
 abstract public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
+    /**
+     * Create a new TrafficController instance. Simple implementation.
+     */
     public SerialTrafficController() {
         super();
         logDebug = log.isDebugEnabled();
@@ -42,21 +43,14 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
     }
 
     /**
-     * instance use of the traffic controller is no longer used for multiple
-     * connections
-     */
-    @Deprecated
-    @Override
-    public void setInstance() {
-    }
-
-    /**
      * Send a sequence of X10 messages to an adapter.
      * <p>
      * Makes them into the local messages and then queues in order.
      * <p>
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
+     * @param s sequence to send
+     * @param l listener for reply
      */
     public void sendX10Sequence(X10Sequence s, SerialListener l) {
     }
@@ -68,6 +62,8 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
      * <p>
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
+     * @param s sequence to send
+     * @param l listener for reply
      */
     public void sendInsteonSequence(InsteonSequence s, SerialListener l) {
     }
@@ -86,6 +82,8 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
      * <p>
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
+     * @param length message size
+     * @return null
      */
     public SerialMessage getSerialMessage(int length) {
         return null;
@@ -96,14 +94,17 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
     protected boolean logDebug = false;
 
     // The methods to implement the SerialInterface
+    @Override
     public synchronized void addSerialListener(SerialListener l) {
         this.addListener(l);
     }
 
+    @Override
     public synchronized void removeSerialListener(SerialListener l) {
         this.removeListener(l);
     }
 
+    @Override
     protected int enterProgModeDelayTime() {
         // we should to wait at least a second after enabling the programming track
         return 1000;
@@ -112,6 +113,7 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
     /**
      * Forward a SerialMessage to all registered SerialInterface listeners.
      */
+    @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
         ((SerialListener) client).message((SerialMessage) m);
     }
@@ -119,6 +121,7 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
     /**
      * Forward a reply to all registered SerialInterface listeners.
      */
+    @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply r) {
         ((SerialListener) client).reply((SerialReply) r);
     }
@@ -136,11 +139,13 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
     /**
      * Eventually, do initialization if needed
      */
+    @Override
     protected AbstractMRMessage pollMessage() {
         return null;
 
     }
 
+    @Override
     protected AbstractMRListener pollReplyHandler() {
         return null;
     }
@@ -148,10 +153,12 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
     /**
      * Forward a preformatted message to the actual interface.
      */
+    @Override
     public void sendSerialMessage(SerialMessage m, SerialListener reply) {
         sendMessage(m, reply);
     }
 
+    @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (logDebug) {
             log.debug("forward " + m);
@@ -160,10 +167,12 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
         super.forwardToPort(m, reply);
     }
 
+    @Override
     protected AbstractMRMessage enterProgMode() {
         return null;
     }
 
+    @Override
     protected AbstractMRMessage enterNormalMode() {
         return null;
     }
@@ -189,7 +198,7 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
         return memo;
     }
 
-    private SerialSystemConnectionMemo memo = null;
+    protected SerialSystemConnectionMemo memo = null;
     SerialTrafficController self = null;
 
     boolean sendInterlock = false; // send the 00 interlock when CRC received
@@ -202,6 +211,7 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
      */
+    @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         return true;
     }
@@ -211,13 +221,14 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
      * This is a default, null implementation, which must be overridden in an
      * adapter-specific subclass.
      */
+    @Override
     protected AbstractMRReply newReply() {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTrafficController.class);
 
 }
 
 
-/* @(#)SerialTrafficController.java */
+

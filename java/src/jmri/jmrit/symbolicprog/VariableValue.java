@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Represents a single Variable value; abstract base class.
- *
  * <p>
  * The "changed" parameter (non-bound, accessed via isChanged) indicates whether
  * a "write changes" or "read changes" operation should handle this object.
@@ -34,7 +33,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     // Instead, you usually get a (Object) representation for display in
     // a table, etc. Modification of the state of that object then
     // gets reflected back, causing the underlying CV objects to change.
-    abstract public Component getCommonRep();	// and thus should be called a limited number of times
+    abstract public Component getCommonRep(); // and thus should be called a limited number of times
 
     abstract public Component getNewRep(String format); // this one is returning a new object
 
@@ -161,6 +160,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     }
 
     // handle incoming parameter notification
+    @Override
     abstract public void propertyChange(java.beans.PropertyChangeEvent e);
 
     abstract public void dispose();
@@ -309,6 +309,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * Simple implementation for the case of a single CV. Intended to be
      * sufficient for many subclasses.
      */
+    @Override
     public void setToRead(boolean state) {
         boolean newState = state;
 
@@ -334,6 +335,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * Simple implementation for the case of a single CV. Intended to be
      * sufficient for many subclasses.
      */
+    @Override
     public boolean isToRead() {
         return _cvMap.get(getCvNum()).isToRead();
     }
@@ -342,6 +344,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * Simple implementation for the case of a single CV. Intended to be
      * sufficient for many subclasses.
      */
+    @Override
     public void setToWrite(boolean state) {
         boolean newState = state;
 
@@ -367,6 +370,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * Simple implementation for the case of a single CV. Intended to be
      * sufficient for many subclasses.
      */
+    @Override
     public boolean isToWrite() {
         return _cvMap.get(getCvNum()).isToWrite();
     }
@@ -411,8 +415,8 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     }
 
     /**
-     * Find number of places to shift a value left to align if with a mask. For
-     * example, as mask of "XXVVVXXX" means that the value 5 needs to be shifted
+     * Find number of places to shift a value left to align it with a mask. For
+     * example, a mask of "XXVVVXXX" means that the value 5 needs to be shifted
      * left 3 places before being masked and stored as XX101XXX
      */
     protected int offsetVal(String maskString) {
@@ -445,6 +449,6 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     abstract public CvValue[] usesCVs();
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(VariableValue.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(VariableValue.class);
 
 }

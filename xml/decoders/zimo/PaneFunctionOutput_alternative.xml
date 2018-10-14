@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - for Function Decoder - Ronald Kuhn-->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <column>
+    <row>
+      <column>
+        <display item="Uncoupler"/>
+      </column>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+      <column>
+        <label>
+          <text>Tens digit = Pull In time (0-9)</text>
+          <text xml:lang="it">Decine = Tempo avvicinamento (0-9)</text>
+          <text xml:lang="de">Zehnerstelle = Anzugszeit (0-9)</text>
+        </label>
+        <label>
+          <text>Ones digit = Hold power % x10 (0-9)</text>
+          <text xml:lang="it">Unità = Tempo sosta % x10(0-9)</text>
+          <text xml:lang="de">Einerstelle = Halterate (0-9)</text>
+        </label>
+      </column>
+    </row>
+        <label>
+          <text> </text>
+        </label>
+      <separator/>
+        <label>
+          <text> </text>
+        </label>
+     <row>
+    <column>
+       <display item="Dim Front Light" format="checkbox"/>
+       <display item="Dim Rear Light" format="checkbox"/>
+       <display item="Dim function output 1" format="checkbox"/>
+       <display item="Dim function output 2" format="checkbox"/>
+       <display item="Dim function output 3" format="checkbox"/>
+       <display item="Dim function output 4" format="checkbox"/>
+       <display item="Dim function output 5" format="checkbox"/>
+       <display item="Dim function output 6" format="checkbox"/>
+       <display item="Dim function output 7" format="checkbox"/>
+       <display item="Dim function output 8" format="checkbox"/>
+       <display item="Dim function output 9" format="checkbox"/>
+       <display item="Dim function output 10" format="checkbox"/>
+       <display item="Dim function output 11" format="checkbox"/>
+       <display item="Dim function output 12" format="checkbox"/>
+    </column>
+    <column>
+       <row>
+    <column>
+         <display item="Output Level"/>
+         <label>
+          <text> </text>
+         </label>
+         <label>
+          <text> </text>
+         </label>
+    </column>
+    <column>
+         <display item="Output Level" format="hslider" label="">
+          <label/>
+         </display>
+         <label>
+          <text> </text>
+         </label>
+         <label>
+          <text> </text>
+         </label>
+    </column>
+       </row>
+       <row>
+    <column>
+         <display item="F6 dims front light" format="checkbox"/>
+         <display item="F6 dims rear light" format="checkbox"/>
+         <display item="F6 dims function output 1" format="checkbox"/>
+         <display item="F6 dims function output 2" format="checkbox"/>
+         <display item="F6 dims function output 3" format="checkbox"/>
+         <display item="F6 dims function output 4" format="checkbox"/>
+         <display item="F6 inverted" format="checkbox"/>
+    </column>
+    <column>
+         <display item="F7 dims front light" format="checkbox"/>
+         <display item="F7 dims rear light" format="checkbox"/>
+         <display item="F7 dims function output 1" format="checkbox"/>
+         <display item="F7 dims function output 2" format="checkbox"/>
+         <display item="F7 dims function output 3" format="checkbox"/>
+         <display item="F7 dims function output 4" format="checkbox"/>
+         <display item="F7 inverted" format="checkbox"/>
+    </column>
+    <column>
+         <label>
+          <text>       </text>
+         </label>
+    </column>
+       </row>
+    </column>
+      <separator/>
+    <column>
+       <label>
+        <text>        </text>
+       </label>
+    </column>
+    <column>
+       <row>
+    <column>
+         <label>
+          <text>     </text>
+         </label>
+    </column>
+    <column>
+         <display item="Flash Rate"/>
+    </column>
+    <column>
+         <label>
+          <text>    </text>
+         </label>
+    </column>
+    <column>
+         <label>
+          <text>Tens digit = on time</text>
+          <text xml:lang="it">Numero decine= tempo On</text>
+          <text xml:lang="de">Zehnerstelle: Einschaltphase</text>
+         </label>
+         <label>
+          <text>Ones digit = Off time</text>
+          <text xml:lang="it">Numero unità= tempo Off</text>
+          <text xml:lang="de">Einerstelle: Ausschaltphase</text>
+         </label>
+         <label>
+          <text>(0 = 100ms, 9 = 1s)</text>
+          <text xml:lang="it">(0 = 100ms, 9 = 1s)</text>
+          <text xml:lang="de">(0 = 100ms, 9 = 1s)</text>
+         </label>
+    </column>
+       </row>
+       <label>
+        <text> </text>
+       </label>
+       <display item="Flash front light" format="checkbox"/>
+       <display item="Flash rear light" format="checkbox"/>
+       <display item="Flash function output 1" format="checkbox"/>
+       <display item="Flash function output 2" format="checkbox"/>
+       <display item="Flash function output 3" format="checkbox"/>
+       <display item="Flash function output 4" format="checkbox"/>
+       <display item="Inverse Flash Output 2" format="checkbox"/>
+       <display item="Inverse Flash Output 4" format="checkbox"/>
+       <display item="Flash Rate Off Time"/>
+       <display item="Flash Rate On Time"/>
+       <label>
+        <text> </text>
+       </label>
+    </column>
+     </row>
+     <separator/>
+     <label>
+      <text>                    Lighting Effects Adjustments (Mars, Gyralight etc)</text>
+      <text xml:lang="it">                   Regolazioni Effetti luminosi  (Mars, Gyralight etc)</text>
+      <text xml:lang="de">                  Modifizieren der Lichteffekte  (Mars, Gyralight etc)</text>
+     </label>
+     <row>
+    <column>
+       <label>
+        <text> </text>
+       </label>
+       <display item="Minimum Dimming Value"/>
+       <label>
+        <text> </text>
+       </label>
+       <display item="Global lighting option 2"/>
+       <label>
+        <text> </text>
+       </label>
+       <display item="Ditch Light Off Time"/>
+       <label>
+        <text> </text>
+       </label>
+    </column>
+    <column>
+       <label>
+        <text>   </text>
+       </label>
+    </column>
+    <column>
+       <label>
+        <text> </text>
+       </label>
+       <label>
+        <text>Tens digit sets cycle time(0-9), or start up time for soft start (0-9 = 0 - 0.9s)</text>
+        <text xml:lang="it">Decine= tempo di ciclo(0-9), o tempo per partenza graduale(0-0.9s)</text>
+        <text xml:lang="de">Zehnerstelle: Veränderung der Zykluszeit (0-9 = 0 - 0.9s)</text>
+       </label>
+       <label>
+        <text>Ones digit extends Off time(0-9)</text>
+        <text xml:lang="it">Unità= Estende tempo Off(0-9)</text>
+        <text xml:lang="de">Einerstelle: Ausschaltzeit-Verlängerung (0-9)</text>
+       </label>
+       <label>
+        <text>Auto Turn Off delay time (0-255 = 0 - 25.5 sec)</text>
+        <text xml:lang="it">Ritardo Off-Automatico (0-255 = 0 - 25.5 sec)</text>
+        <text xml:lang="de">Nachleuchten in Zehntel-sek (0-255 = 0 - 25.5 sec)</text>
+       </label>
+       <label>
+        <text> </text>
+       </label>
+    </column>
+     </row>
+    </column>
+    <name>Function Output</name>
+    <name xml:lang="it">Funzione Uscita</name>
+    <name xml:lang="de">Effekte für Funktions-Ausgänge</name>
+</pane>

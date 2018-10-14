@@ -14,31 +14,41 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 - added groups 11 to 13, Main Beam and Speed Dependant Headlight, Mark Waters 26 Jan 2015  -->
+<!-- version 1.2 - Ronald Kuhn - add german translation -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Swiss Mapping</name>
+  <name xml:lang="it">Mappatura Svizzera</name>
+  <name xml:lang="cs">Švýcarské přiřazení</name>
+  <name xml:lang="de">Schweizer Mapping</name>
   <column>
     <row>
       <column>
         <label>
           <text>The F-Key operates the selected outputs</text>
          <text xml:lang="it">Tasto F opera l'uscita selezionata</text>
+         <text xml:lang="cs">F-klávesa obsluhuje vybraný výstup</text>
+         <text xml:lang="de">F-Taste löst Funktion aus.</text>
         </label>
         <label>
           <text> </text>
         </label>
         <label>
           <text>The M-key turns off the 'normal' function mapping.</text>
+          <text xml:lang="cs">M-klávesa vypíná 'normální' přiřazení funkcí.</text>
+          <text xml:lang="de">M-Taste schaltet das 'normale' Funktionsmapping aus.</text>
         </label>
         <label>
           <text> </text>
         </label>
         <label>
           <text>If the M-key + F-key option is selected, the specified outputs are on when both the M-Key and F-Key are operated</text>
+          <text xml:lang="cs">Pokud je volba M-klávesa + F-klávesa vybraná, tak určený výstup je obsluhován oběma M-klávesou a F-klávesou.</text>
+          <text xml:lang="de">Wenn eine M- und F-Taste definiert ist wird die entsprechnde Funktion nur ausgelöst, wenn beide Tasten geschaltet werden</text>
         </label>
         <label>
           <text> </text>
         </label>
-	<group>
+    <group>
         <qualifier>
           <variableref>Decoder Version</variableref>
           <relation>ge</relation>
@@ -46,14 +56,18 @@
         </qualifier>
          <label>
           <text>With the High Beam option, the M-key turns off the dimming (CV60) for the specified outputs and allows use of Speed Dependant Headlights</text>
+          <text xml:lang="cs">S volbou dálkové světlo, M-klávesa vypne stmívání (CV60) pro určený výstup a umožňí použití světla závislá na rychlosti.</text>
+          <text xml:lang="de">Mit der Fernlichtfunktion schaltet die M-Taste die Dimmung (CV60) für den entsprechenden Ausgang ab und erlaubt so die geschwindigkeitsabhängige Fernlichtfunktion.</text>
          </label>
-	</group>
+    </group>
         <label>
           <text> </text>
         </label>
         <label>
           <text>                                                                                                         Function Output</text>
           <text xml:lang="it">                                                                                                         Funzioni Uscita</text>
+          <text xml:lang="cs">                                                                                                         Funkční výstup</text>
+          <text xml:lang="de">                                                                                                        Funktionsausgang</text>
         </label>
       </column>
     </row>
@@ -62,10 +76,14 @@
         <label>
           <text>                      F-Key</text>
           <text xml:lang="it">                      Tasto F</text>
+          <text xml:lang="cs">                      F klávesa</text>
+          <text xml:lang="de">                      F-Taste</text>
         </label>
         <display item="Swiss Mapping Group 1 F-key" label="Group 1   ">
           <label>Group  1  </label>
           <label xml:lang="it">Gruppo  1  </label>
+          <label xml:lang="cs">Skupina  1  </label>
+          <label xml:lang="de">Gruppe  1  </label>
         </display>
       </column>
       <label>
@@ -75,6 +93,8 @@
         <label>
           <text>    M-Key</text>
           <text xml:lang="it">    Tasto M</text>
+          <text xml:lang="cs">    M klávesa</text>
+          <text xml:lang="de">    M-Taste</text>
         </label>
         <display item="Swiss Mapping Group 1 M-key v33" label="">
           <label> </label>
@@ -90,6 +110,8 @@
         <label>
           <text>     A1 Forward</text>
           <text xml:lang="it">     A1 Avanti</text>
+          <text xml:lang="cs">     A1 vpřed</text>
+          <text xml:lang="de">   A1 Vorwärts</text>
         </label>
         <display item="Swiss Mapping Group 1 A1 Fw" label="">
           <label></label>
@@ -102,6 +124,8 @@
         <label>
           <text>     A2 Forward</text>
           <text xml:lang="it">     A2 Avanti</text>
+          <text xml:lang="cs">     A2 vpřed</text>
+          <text xml:lang="de">   A2 Vorwärts</text>
         </label>
         <display item="Swiss Mapping Group 1 A2 Fw" label="">
           <label></label>
@@ -114,6 +138,8 @@
         <label>
           <text>     A1 Reverse</text>
           <text xml:lang="it">     A1 Retro</text>
+          <text xml:lang="cs">     A1 vzad</text>
+          <text xml:lang="de"> A1 Rückwärts</text>
         </label>
         <display item="Swiss Mapping Group 1 A1 Rw" label="">
           <label></label>
@@ -126,6 +152,8 @@
         <label>
           <text>     A2 Reverse</text>
           <text xml:lang="it">     A2 Retro</text>
+          <text xml:lang="cs">     A2 vzad</text>
+          <text xml:lang="de"> A2 Rückwärts</text>
         </label>
         <display item="Swiss Mapping Group 1 A2 Rw" label="">
           <label></label>
@@ -137,6 +165,8 @@
         <display item="Swiss Mapping Group 2 F-key" label="Group 2   ">
           <label>Group  2  </label>
          <label xml:lang="it">Gruppo  2  </label>
+          <label xml:lang="cs">Skupina  2  </label>
+         <label xml:lang="de">Gruppe  2  </label>
         </display>
       </column>
       <label>
@@ -188,6 +218,8 @@
         <display item="Swiss Mapping Group 3 F-key" label="Group 3   ">
           <label>Group  3  </label>
          <label xml:lang="it">Gruppo  3  </label>
+          <label xml:lang="cs">Skupina  3  </label>
+         <label xml:lang="de">Gruppe  3  </label>
         </display>
       </column>
       <label>
@@ -239,6 +271,8 @@
         <display item="Swiss Mapping Group 4 F-key" label="Group 4   ">
           <label>Group  4  </label>
           <label xml:lang="it">Gruppo  4  </label>
+          <label xml:lang="cs">Skupina  4  </label>
+          <label xml:lang="de">Gruppe  4  </label>
         </display>
       </column>
       <label>
@@ -290,6 +324,8 @@
         <display item="Swiss Mapping Group 5 F-key" label="Group 5   ">
           <label>Group  5  </label>
           <label xml:lang="it">Gruppo  5  </label>
+          <label xml:lang="cs">Skupina  5  </label>
+          <label xml:lang="de">Gruppe  5  </label>
         </display>
       </column>
       <label>
@@ -341,6 +377,8 @@
         <display item="Swiss Mapping Group 6 F-key" label="Group 6   ">
           <label>Group  6  </label>
           <label xml:lang="it">Gruppo  6  </label>
+          <label xml:lang="cs">Skupina  6  </label>
+          <label xml:lang="de">Gruppe  6  </label>
         </display>
       </column>
       <label>
@@ -392,6 +430,8 @@
         <display item="Swiss Mapping Group 7 F-key" label="Group 7   ">
           <label>Group  7  </label>
           <label xml:lang="it">Gruppo  7  </label>
+          <label xml:lang="cs">Skupina  7  </label>
+          <label xml:lang="de">Gruppe  7  </label>
         </display>
       </column>
       <label>
@@ -443,6 +483,8 @@
         <display item="Swiss Mapping Group 8 F-key" label="Group 8   ">
           <label>Group  8  </label>
           <label xml:lang="it">Gruppo  8  </label>
+          <label xml:lang="cs">Skupina  8  </label>
+          <label xml:lang="de">Gruppe  8  </label>
         </display>
       </column>
       <label>
@@ -494,6 +536,8 @@
         <display item="Swiss Mapping Group 9 F-key" label="Group 9   ">
           <label>Group  9  </label>
           <label xml:lang="it">Gruppo  9  </label>
+          <label xml:lang="cs">Skupina  9  </label>
+          <label xml:lang="de">Gruppe  9  </label>
         </display>
       </column>
       <label>
@@ -545,6 +589,8 @@
         <display item="Swiss Mapping Group 10 F-key" label="Group 10">
           <label>Group 10 </label>
           <label xml:lang="it">Gruppo 10 </label>
+          <label xml:lang="cs">Skupina  10  </label>
+          <label xml:lang="de">Gruppe 10  </label>
         </display>
       </column>
       <column>
@@ -581,6 +627,8 @@
         <display item="Swiss Mapping Group 11 F-key" label="Group 11">
           <label>Group 11 </label>
           <label xml:lang="it">Gruppo 11 </label>
+          <label xml:lang="cs">Skupina  11  </label>
+          <label xml:lang="de">Gruppe 11  </label>
         </display>
       </column>
       <column>
@@ -614,6 +662,8 @@
         <display item="Swiss Mapping Group 12 F-key" label="Group 12">
           <label>Group 12 </label>
           <label xml:lang="it">Gruppo 12 </label>
+          <label xml:lang="cs">Skupina  12  </label>
+          <label xml:lang="de">Gruppe 12  </label>
         </display>
       </column>
       <column>
@@ -647,6 +697,8 @@
         <display item="Swiss Mapping Group 13 F-key" label="Group 13">
           <label>Group 13 </label>
           <label xml:lang="it">Gruppo 13 </label>
+          <label xml:lang="cs">Skupina  13  </label>
+          <label xml:lang="de">Gruppe 13  </label>
         </display>
       </column>
       <column>
@@ -681,9 +733,10 @@
         </label>
     </row>
     <row>
-	<column>
+    <column>
         <display item="Speed Dependant Headlights">
-          <label>Speed Dependant Headlights</label>
+          <!--label>Speed Dependant Headlights</label-->
+          <!--label xml:lang="cs">Světla závislá na rychlosti</label-->
         </display>
       </column>
         <label>
@@ -697,9 +750,10 @@
         </qualifier>
         <label>
           <text>When the (internal) speed step reaches this value the High Beam is turned on (0-255)</text>
-        </label>	
-	</column>
+          <text xml:lang="cs">Když (interní) rychlostní stupeň dosáhne této hodnoty tak se zapne dálkové světlo (0-255).</text>
+          <text xml:lang="de">Wenn die (interne) Fahrstufe den Wert erreicht wird das Fernlicht eingeschaltet. (0-255)</text>
+        </label>
+    </column>
     </row>
   </column>
-<name xml:lang="it">Mappatura Svizzera</name>
 </pane>

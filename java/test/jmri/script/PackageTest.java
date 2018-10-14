@@ -7,30 +7,16 @@
  */
 package jmri.script;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-public class PackageTest extends TestCase {
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        BundleTest.class,
+        JmriScriptEngineManagerTest.class,
+        ScriptFileChooserTest.class,
+        ScriptOutputTest.class,
+})
 
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.script");   // no tests in this class itself
-
-        suite.addTest(BundleTest.suite());
-
-        return suite;
-    }
-
+public class PackageTest  {
 }

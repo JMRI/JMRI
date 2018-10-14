@@ -1,4 +1,3 @@
-//JmriSRCPTurnoutServer.java
 package jmri.jmris.srcp;
 
 import java.beans.PropertyChangeEvent;
@@ -17,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * connection
  *
  * @author Paul Bender Copyright (C) 2010-2013
- * @version $Revision$
  */
 public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
 
@@ -28,17 +26,10 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
         output = outStream;
     }
 
-    @Override
-    synchronized protected void addTurnoutToList(String turnoutName) {
-        if (!turnouts.containsKey(turnoutName)) {
-            turnouts.put(turnoutName, new TurnoutListener(turnoutName));
-            InstanceManager.turnoutManagerInstance().getTurnout(turnoutName).addPropertyChangeListener(turnouts.get(turnoutName));
-        }
-    }
-
     /*
      * Protocol Specific Abstract Functions
      */
+    @Override
     public void sendStatus(String turnoutName, int Status) throws IOException {
         TimeStampedOutput.writeTimestamp(output, "499 ERROR unspecified error\n\r");
     }
@@ -73,10 +64,12 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
         }
     }
 
+    @Override
     public void sendErrorStatus(String turnoutName) throws IOException {
         TimeStampedOutput.writeTimestamp(output, "499 ERROR unspecified error\n\r");
     }
 
+    @Override
     public void parseStatus(String statusString) throws jmri.JmriException, java.io.IOException {
         TimeStampedOutput.writeTimestamp(output, "499 ERROR unspecified error\n\r");
     }
@@ -168,5 +161,5 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
             }
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(JmriSRCPTurnoutServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriSRCPTurnoutServer.class);
 }

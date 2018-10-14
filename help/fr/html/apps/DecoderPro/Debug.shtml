@@ -3,21 +3,18 @@
 
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright Bob Jacobsen 2008 -->
-  <!--Translated by Herv&#233; Blorec le 2013-08-30 -->
+<!-- Copyright Bob Jacobsen 2008 -->
+<!--  $Id: Debug.shtml 21896 2012-12-19 12:12:05Z rhwood  -->
+ <!-- Translated by Herv&#233. BLOREC <bzh56420@yahoo.fr> on 2017-10-10 -->
+<title>JMRI: DecoderPro User Guide - Debugging</title>
 
-  <title>JMRI: DecoderPro User Guide - D&eacute;bogage</title>
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-utf-8">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
 
 <body>
@@ -33,81 +30,67 @@
         <dt class="left">Pendant que le programme
         s'ex&eacute;cute</dt>
 
-        <dd class="first">
-          <p>Pendant que le programme s'ex&eacute;cute,
-          l'information de d&eacute;bogage est imprim&eacute;e sur
-          une "sortie standard", qui est &aacute; diff&eacute;rent
-          endroits suivant le syst&egrave;me d'exploitation que
-          vous utilisez et comment vous d&eacute;marrez le
-          programme. Sur un Macintosh classique, Elle apparait dans
-          une fen&ecirc;tre qui est cr&eacute;&eacute;e avec le
-          premier message d'erreur. Avec Mac OS X, elle peut
-          apparaitre dans une nouvelle fen&ecirc;tre, ou vous
-          pouvez devoir lancer l'application "Console" pour la
-          voir. Sur Windows, Vous devez ex&eacute;cuter des
-          fichiers batch "Debug" pour voir les messages d'erreur;
-          regardez les dans le r&eacute;pertoire applications.</p>
+<H1>Guide Utilisateur DecoderPro </H1>
+<H2>D&#233;bogage</H2>
 
-          <p>L'erreur de connexion est contr&ocirc;ler par le
-          fichier "default.lcf". Il y a un lots de commentaires sur
-          ce que signifient les termes vari&eacute;s. Si vous
-          n'aimez pas les messages reli&eacute;s &aacute; un
-          fichier, changer la ligne.</p>
+<DL>
+<dt class=left>Pendant que le programme s'ex&#233;cute</dt>
+<dd class=first>
+<p>Pendant que le programme s'ex&#233;cute,
+l'information de d&#233;bogage est imprim&#233;e sur une "sortie standard", qui est &#225; diff&#233;rents
+endroits suivant le syst&#232;me d'exploitation que vous utilisez et comment vous d&#233;marrez le programme.
+Sur un Macintosh classique, Elle apparait dans une fen&#234;tre qui est cr&#233;&#233;e avec le premier 
+essage d'erreur. Avec Mac OS X, elle peut apparaitre dans une nouvelle fen&#234;tre, ou vous pouvez devoir
+lancer l'application  "Console" pour la voir. Sur Windows, vous devrez peut-être ex&#233;cuter un des fichiers de commandes "Debug" pour voir les messages d'erreur;
+recherchez-les dans le r&#233;pertoire de l'application. </p>
 
-          <p class="example">log4j.rootCategory= WARN, A1</p>
+<p>L'erreur de connexion est contr&#244;l&#233;e par le fichier"default.lcf". Il y a un lots de commentaires 
+sur ce que signifient les termes. Si vous n'aimez pas les messages reli&#233;s &#225; un fichier,
+changer la ligne.</p>
 
-          <p>Pour inclure la destination enregistrement
-          suppl&eacute;mentaire "R":</p>
+<p class=example>
+log4j.rootCategory= WARN, A1
+</p>
+<p>Pour inclure la destination enregistrement suppl&#233;mentaire "R":
+<p class=example>
+log4j.rootCategory= WARN, A1,R
+</p>
+<p>R est d&#233;fini plus tard dans default.lcf comme connexion pour le fichier "example.log" .
+Vous pouvez aussi obtenir beaucoup d'informations suppl&#233;mentaires sur ce que fait le programme
+ en r&#233;glant le niveau de connexion soit &#225; INFO ou DEBUG par exemple. </p>
 
           <p class="example">log4j.rootCategory= WARN, A1,R</p>
 
-          <p>R est d&eacute;fini plus tard dans default.lcf comme
-          connexion pour le fichier "example.log" . Vous pouvez
-          aussi obtenir beaucoup d'informations additionnelles sur
-          ce que fait le programme en r&eacute;glant le niveau de
-          connexion soit &aacute; INFO ou DEBUG par exemple.</p>
+<p>Notez que le niveau DEBUG sortira beaucoup d'informations,et ralentira significativement 
+l'ex&#233;cution du programme. Il est possible aussi de requ&#233;rir plus d'informations 
+juste sur des parties du programme, mais dans l'optique que cela vous soit utile vous 
+devrez passer du temps &#225; apprendre au sujet des parties internes.</p>
+</dd>
 
-          <p class="example">log4j.rootCategory= INFO, A1</p>
+<dt class=left>D&#233;bogage des probl&#232;mes avec les fichiers XML</dt>
+<dd>
+<p>Quand un fichier XML ne peut pas &#234;tre analyser, vous obtiendrez des messages d'erreur 
+difficiles &#225; comprendre. La partie la plus importante de ceux-ci est le num&#233;ro de ligne.
+ Utilisez le pour commencer &#225; voir le probl&#232;me. 
 
-          <p>Notez que le niveau DEBUG sortira beaucoup
-          d'informations,et ralentira significativement
-          l'ex&eacute;cution du programme. Il est possible aussi de
-          requ&eacute;rir plus d'informations juste sur des parties
-          du programme, mais dans l'optique que cela vous soit
-          utile vous devrez passer du temps &aacute; apprendre au
-          sujet des parties internes.</p>
-        </dd>
+<p>Vous pourriez &#234;tre capable d'obtenir de meilleures informations en essayant 
+d'ouvrir le fichier avec Internet Explorer. Les informations de d&#233;bogage qu'il
+fournit sont g&#233;n&#233;ralement plus d&#233;taill&#233;es que celles fournit par les 
+routines XML dans les librairies JDOM utilis&#233;es par JMRI et DecoderPRo.</p>
 
-        <dt class="left">D&eacute;bogage des probl&egrave;mes avec
-        les fichiers XML</dt>
+<p>Notez que Explorer &#225; besoin de voir le fichier .xml et en plus des 
+informations de d&#233;finitions dans le fichier .dtd. Si vous obtenez un message comme
+"error in system resource", vous avez besoin de mettre une copie du fichier .dtd 
+associ&#233; ( exemple decoder-config.dtd ) dans le r&#233;pertoire avec votre nouveau 
+fichier. DTD peut &#234;tre trouv&#233; dans le sous-r&#233;pertoire dtd du r&#233;pertoire xml.
+</p>
 
-        <dd>
-          <p>Quand un fichier XML ne peut pas &ecirc;tre analyser,
-          vous obtiendrez des messages d'erreur difficiles &aacute;
-          comprendre. La partie la plus importante de ceci est le
-          num&eacute;ro de ligne. Utilisez le pour commencer
-          &aacute; voir le probl&egrave;me.</p>
-
-          <p>Vous pourriez &ecirc;tre capable d'obtenir de
-          meilleures informations en essayant d'ouvrir le fichier
-          avec Internet Explorer. Les informations de
-          d&eacute;bogage qu'il fournit sont
-          g&eacute;n&eacute;ralement plus d&eacute;taill&eacute;es
-          que celles fournit par les routines XML dans les
-          librairies JDOM utilis&eacute;es par JMRI et
-          DecoderPRo.</p>
-
-          <p>Notez que Explorer &aacute; besoin de voir le fichier
-          .xml et en plus des informations de d&eacute;finitions
-          dans le fichier .dtd. Si vous obtenez un message comme
-          "error in system resource", vous avez besoin de mettre
-          une copie du fichier .dtd (exemple decoder-config.dtd)
-          dans le r&eacute;pertoire avec votre nouveau fichier. DTD
-          peut &ecirc;tre trouv&eacute; dans le
-          sous-r&eacute;pertoire dtd du r&eacute;pertoire xml.</p>
+          
         </dd>
       </dl><!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>
 </html>
+
+

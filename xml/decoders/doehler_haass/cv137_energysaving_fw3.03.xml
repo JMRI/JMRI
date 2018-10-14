@@ -26,6 +26,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>2</revnumber>
+      <date>2017-08-16</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>little correction in german translation.</revremark>
+    </revision>
+    <revision>
       <revnumber>1</revnumber>
       <date>2014-02-20</date>
       <authorinitials>PB</authorinitials>
@@ -36,7 +42,8 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Deactivate energy saving mode</label>
     <label xml:lang="fr">Désactiver économie d'énergie</label>
-    <label xml:lang="de">Energiesparmodus ausschlaten</label>
+    <label xml:lang="de">Energiesparmodus ausschalten</label>
     <label xml:lang="it">Disattiva modalità risparmio energetico</label>
+    <label xml:lang="ca">Desactiva modalitat de baix consum</label>
   </variable>
 </variables>

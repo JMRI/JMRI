@@ -27,9 +27,9 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Pete Cressman (C) 2010
+ * @author Pete Cressman (C) 2010
  */
-public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
+public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Portal> {
 
     public static final int FROM_BLOCK_COLUMN = 0;
     public static final int NAME_COLUMN = 1;
@@ -59,18 +59,18 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
     }
 
     @Override
-    public Manager getManager() {
+    public Manager<Portal> getManager() {
         _manager = InstanceManager.getDefault(PortalManager.class);
         return _manager;
     }
 
     @Override
-    public NamedBean getBySystemName(String name) {
+    public Portal getBySystemName(String name) {
         return _manager.getBySystemName(name);
     }
 
     @Override
-    public NamedBean getByUserName(String name) {
+    public Portal getByUserName(String name) {
         return _manager.getByUserName(name);
     }
 
@@ -85,7 +85,7 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
     }
 
     @Override
-    public void clickOn(NamedBean t) {
+    public void clickOn(Portal t) {
     }
 
     @Override
@@ -112,6 +112,9 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                 return Bundle.getMessage("PortalName");
             case TO_BLOCK_COLUMN:
                 return Bundle.getMessage("BlockName");
+            default:
+                // fall through
+                break;
         }
         return "";
     }
@@ -144,6 +147,9 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                     return portal.getToBlockName();
                 case DELETE_COL:
                     return Bundle.getMessage("ButtonDelete");
+                default:
+                    // fall through
+                    break;
             }
         }
         return "";
@@ -210,7 +216,7 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
         Portal portal = _manager.getBySystemName(name);
         if (portal == null) {
             log.error("Portal null, getValueAt row= " + row + ", col= " + col + ", "
-                    + "portalListSize= " + _manager.getSystemNameArray().length);
+                    + "portalListSize= " + _manager.getObjectCount());
             return;
         }
 
@@ -277,6 +283,10 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                 if (deletePortal(portal)) {
                     fireTableDataChanged();
                 }
+                break;
+            default:
+                log.warn("Unhandled column: {}", col);
+                break;
         }
         if (msg != null) {
             JOptionPane.showMessageDialog(null, msg,
@@ -290,10 +300,9 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                         portal.getName()), Bundle.getMessage("WarningTitle"),
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                 == JOptionPane.YES_OPTION) {
-            OBlockManager OBlockMgr = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-            String[] sysNames = OBlockMgr.getSystemNameArray();
-            for (int i = 0; i < sysNames.length; i++) {
-                OBlockMgr.getBySystemName(sysNames[i]).removePortal(portal);
+            OBlockManager oBlockMgr = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
+            for (OBlock oblock : oBlockMgr.getNamedBeanSet()) {
+                oblock.removePortal(portal);
             }
             portal.dispose();
             return true;
@@ -314,6 +323,8 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
         return String.class;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
+                                justification="better to keep cases in column order rather than to combine")
     @Override
     public int getPreferredWidth(int col) {
         switch (col) {
@@ -324,9 +335,12 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                 return new JTextField(20).getPreferredSize().width;
             case DELETE_COL:
                 return new JButton("DELETE").getPreferredSize().width;
+            default:
+                // fall through
+                break;
         }
         return 5;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PortalTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PortalTableModel.class);
 }

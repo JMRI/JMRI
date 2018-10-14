@@ -21,7 +21,7 @@
 <ul>
  
 <li>
-<a href="index.html">JMRI Help Main Page </a>
+<a href="index.shtml">JMRI Help Main Page </a>
 <ul></ul>
 </li>
 
@@ -56,6 +56,12 @@
   
 <li>
 <a href="html/setup/profiles.shtml">Configuration Profiles </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/apps/SystemConsole.shtml">System Console </a>
 <ul></ul>
 </li>
 
@@ -98,7 +104,7 @@
 
   
 <li>
-<a href="html/hardware/can/index.shtml">CAN Bus </a>
+<a href="html/hardware/can/index.shtml">CAN Bus Overview </a>
 <ul></ul>
 </li>
 
@@ -319,13 +325,13 @@
 <ul>
      
 <li>
-<a href="">Set Up </a>
+<a href="manual/DecoderPro3/Programmer_Setup.shtml#newloco">Set Up </a>
 <ul></ul>
 </li>
 
      
 <li>
-<a href="">Choose Decoder </a>
+<a href="manual/DecoderPro3/Programmer_Setup.shtml#newloco">Choose Decoder </a>
 <ul></ul>
 </li>
 
@@ -354,25 +360,7 @@
 
      
 <li>
-<a href="manual/DecoderPro/Basic_BasicPane.shtml#Read Data">Reading Data </a>
-<ul></ul>
-</li>
-
-     
-<li>
-<a href="manual/DecoderPro/Basic_BasicPane.shtml#Write Data">Writing to Decoder </a>
-<ul></ul>
-</li>
-
-     
-<li>
-<a href="manual/DecoderPro/Basic_BasicPane.shtml#Save Data">Saving to a File </a>
-<ul></ul>
-</li>
-
-     
-<li>
-<a href="">What Next? </a>
+<a href="manual/DecoderPro3/Basic_BasicPane.shtml#DoMore">What Next? </a>
 <ul></ul>
 </li>
 
@@ -574,6 +562,12 @@
 </li>
   
 <li>
+<a href="html/apps/ManifestCreator/index.shtml">Manifest Creator </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="package/jmri/jmrit/operations/Operations.shtml">OperationsPro </a>
 <ul>
    
@@ -702,6 +696,12 @@
   
 </ul>
 </li>
+  
+<li>
+<a href="html/apps/TrainCrew/index.shtml">TrainCrew </a>
+<ul></ul>
+</li>
+
  
 </ul>
 </li>
@@ -724,6 +724,12 @@
   
 <li>
 <a href="html/apps/PanelPro/ShowPanel.shtml">Displaying Panel Files </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/configurexml/ErrorHandler.shtml">Handling Errors </a>
 <ul></ul>
 </li>
 
@@ -829,7 +835,7 @@
 
    
 <li>
-<a href="">Add/Edit Blocks </a>
+<a href="html/tools/Blocks.shtml#addBlock">Add/Edit Blocks </a>
 <ul></ul>
 </li>
 
@@ -916,7 +922,19 @@
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/ConditionalAddEdit.shtml">Add/Edit Conditional </a>
+<a href="package/jmri/jmrit/conditional/ConditionalListEditor.shtml">Add/Edit Conditionals using the List Editor </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/conditional/ConditionalTreeEditor.shtml">Add/Edit Conditionals using the Tree Editor </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/conditional/StateVariableActionList.shtml">Conditional State Variable and Action List </a>
 <ul></ul>
 </li>
 
@@ -1285,7 +1303,7 @@
 
    
 <li>
-<a href="package/jmri/jmrit/logix/SCWarrant.shtml">Signal Controlled Warrants </a>
+<a href="package/jmri/jmrit/logix/SpeedChanges.shtml">When Warrant Speeds Are Modified </a>
 <ul></ul>
 </li>
 
@@ -1308,24 +1326,6 @@
 <li>
 <a href="html/tools/uss/index.shtml">USS CTC Tools </a>
 <ul>
-   
-<li>
-<a href="package/jmri/jmrit/ussctc/TurnoutLeverFrame.shtml">Turnout Lever </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="package/jmri/jmrit/ussctc/SignalLeverFrame.shtml">Signal Lever </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="package/jmri/jmrit/ussctc/CodeButtonFrame.shtml">Code Button </a>
-<ul></ul>
-</li>
-
    
 <li>
 <a href="package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml">OS Indicator </a>
@@ -1377,23 +1377,53 @@
 </li>
   
 <li>
-<a href="html/hardware/can/index.shtml">CBUS </a>
+<a href="html/hardware/can/cbus/index.shtml">MERG (CBUS) </a>
 <ul>
    
 <li>
-<a href="package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console </a>
+<a href="package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console Tool </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Config Tool </a>
+<a href="package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Send Frame / Event Tool </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="html/hardware/can/index.shtml">CAN Bus </a>
+<a href="package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Event Capture Tool </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml">Event Table Tool </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">Node Config Tool </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/hardware/can/cbus/Names.shtml">Naming Events </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/hardware/can/cbus/Details.shtml">Connection Details </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/hardware/can/index.shtml">CAN Networks </a>
 <ul></ul>
 </li>
 
@@ -1416,7 +1446,7 @@
 
    
 <li>
-<a href="package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64 Configuration Tool </a>
+<a href="package/jmri/jmrix/loconet/ds64/DS64TabbedPanel.shtml">DS64 Configuration Tool </a>
 <ul></ul>
 </li>
 
@@ -1584,6 +1614,12 @@
 
    
 <li>
+<a href="html/hardware/openlcb/OlcbSignalMast.shtml">Signal Masts </a>
+<ul></ul>
+</li>
+
+   
+<li>
 <a href="package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml">Configure Nodes </a>
 <ul></ul>
 </li>
@@ -1703,7 +1739,13 @@
 
    
 <li>
-<a href="html/doc/Technical/IntroStructure.shtml">JMRI Program Structure </a>
+<a href="html/doc/Technical/IntroStructure.shtml">JMRI Library Structure </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/doc/Technical/AppStructure.shtml">JMRI Program Structure </a>
 <ul></ul>
 </li>
 
@@ -1727,7 +1769,13 @@
 
    
 <li>
-<a href="html/doc/Technical/Threads.shtml">External Connection Structure </a>
+<a href="html/doc/Technical/SystemStructure.shtml">External Connection Structure </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/doc/Technical/Threads.shtml">Threads and Threading </a>
 <ul></ul>
 </li>
 
@@ -1739,7 +1787,7 @@
 
    
 <li>
-<a href="html/doc/Technical/JavaDoc.shtml">Documentation with JavaDoc and UML </a>
+<a href="html/doc/Technical/Javadoc.shtml">Documentation with Javadoc and UML </a>
 <ul></ul>
 </li>
 

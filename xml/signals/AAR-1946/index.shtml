@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
 <title>JMRI: AAR-1946 Signaling Definition</title>
 
 <!-- Style -->
@@ -14,9 +13,9 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -25,11 +24,11 @@
 JMRI: AAR-1946 Signaling Definition
 </h1>
 
-This directory contains signaling definitions corresponding to 
+<p>This directory contains signaling definitions corresponding to
 the 1946 AAR rules as described in the 
 August 1946 version of the 
 AAR publication "American Railway Signaling Principles and Practices", 
-chapter II.
+chapter II.</p>
 
 <p>
 See the 
@@ -51,6 +50,7 @@ Signal Mast definitions:
 <li><a href="appearance-PL-1-low.xml">Single position light dwarf signal</a>
 <li><a href="appearance-CPL.xml">Color position light signal</a>
 </ul>
+
     </div>
 </div>
 <!--#include virtual="/Footer" -->

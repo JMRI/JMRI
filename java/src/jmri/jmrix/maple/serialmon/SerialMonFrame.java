@@ -1,56 +1,57 @@
-// SerialMonFrame.java
 package jmri.jmrix.maple.serialmon;
 
 import jmri.jmrix.maple.SerialListener;
 import jmri.jmrix.maple.SerialMessage;
 import jmri.jmrix.maple.SerialReply;
-import jmri.jmrix.maple.SerialTrafficController;
+import jmri.jmrix.maple.MapleSystemConnectionMemo;
 
 /**
- * Frame displaying (and logging) serial command messages
+ * Frame displaying (and logging) serial command messages.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3307375334972355695L;
+    private MapleSystemConnectionMemo _memo = null;
 
-    public SerialMonFrame() {
+    public SerialMonFrame(MapleSystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
+    @Override
     protected String title() {
         return "Maple Serial Command Monitor";
-    }
+    } // TODO I18N
 
+    @Override
     protected void init() {
         // connect to TrafficController
-        SerialTrafficController.instance().addSerialListener(this);
+        _memo.getTrafficController().addSerialListener(this);
     }
 
+    @Override
     public void dispose() {
-        SerialTrafficController.instance().removeSerialListener(this);
+        _memo.getTrafficController().removeSerialListener(this);
         super.dispose();
     }
 
-    protected void addHelpMenu() {
+    /**
+     * Define system-specific help item
+     */
+    @Override
+    protected void setHelp() {
         addHelpMenu("package.jmri.jmrix.maple.serialmon.SerialMonFrame", true);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "string concatenation, efficiency not as important as clarity here")
-    public synchronized void message(SerialMessage l) {  // receive a message and log it
+    @Override
+    public synchronized void message(SerialMessage l) { // receive a message and log it
         // check for valid length
         if (l.getNumDataElements() < 2) {
-            nextLine("Truncated message of length " + l.getNumDataElements() + "\n",
-                    l.toString());
-            return;
+            nextLine("Truncated message of length " + l.getNumDataElements() + "\n", l.toString());
         } else if (l.isPoll()) {
             if ((l.getNumDataElements() <= 6) && (l.getElement(0) == 15)) {
-                nextLine("Poll Reply - NAK (error)", l.toString());
+                nextLine("Poll Reply - NAK (error)", l.toString()); // TODO I18N
             } else {
                 nextLine("Poll node " + l.getUA() + "\n", l.toString());
             }
@@ -58,37 +59,36 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             if (l.getNumDataElements() > 12) {
                 // this is the write command
                 int n = l.getNumItems();
-                String s = "Transmit node=" + l.getUA() + " ADDR = " + l.getAddress() + " N = " + n + " OB=";
+                StringBuilder s = new StringBuilder(String.format("Transmit node=%d ADDR = %d N = %d OB=", l.getUA(), l.getAddress(), n));
                 int i = 11;
                 while (n > 0) {
                     for (int j = 0; (j < 8) && (n > 0); j++, n--) {
-                        s += (((l.getElement(i) & 0x01) != 0) ? "1" : "0");
+                        s.append((((l.getElement(i) & 0x01) != 0) ? "1" : "0"));
                         i++;
                     }
-                    s += " ";
+                    s.append(" ");
                 }
-                nextLine(s + "\n", l.toString());
+                nextLine(s.append("\n").toString(), l.toString());
             } else {
                 // this is the reply to the write command
-                String s = "Transmit Reply - ";
+                StringBuilder s = new StringBuilder("Transmit Reply - ");
                 if (l.getElement(0) == 6) {
-                    s = s + "ACK (OK)";
+                    s.append("ACK (OK)");
                 } else if (l.getElement(0) == 15) {
-                    s = s + "NAK (error)";
+                    s.append("NAK (error)");
                 }
-                nextLine(s + "\n", l.toString());
+                nextLine(s.append("\n").toString(), l.toString());
             }
         } else {
             nextLine("unrecognized cmd: \"" + l.toString() + "\"\n", "");
         }
     }
 
+    @Override
     public synchronized void reply(SerialReply l) {  // receive a reply message and log it
         // check for valid length
         if (l.getNumDataElements() < 2) {
-            nextLine("Truncated reply of length " + l.getNumDataElements() + "\n",
-                    l.toString());
-            return;
+            nextLine("Truncated reply of length " + l.getNumDataElements() + "\n", l.toString());
         } else if (l.isRcv()) {
             String s = "Receive node=" + l.getUA() + " IB=";
             for (int i = 2; i < l.getNumDataElements(); i++) {

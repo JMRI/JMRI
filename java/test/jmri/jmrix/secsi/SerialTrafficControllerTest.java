@@ -6,31 +6,26 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * JUnit tests for the SerialTrafficController class
  *
- * @author	Bob Jacobsen Copyright 2005, 2007, 2008
+ * @author Bob Jacobsen Copyright 2005, 2007, 2008
  */
-public class SerialTrafficControllerTest extends TestCase {
-
-    public void testCreate() {
-        SerialTrafficController m = new SerialTrafficController();
-        Assert.assertNotNull("exists", m);
-    }
+public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTrafficControllerTest {
 
     public void testSerialNodeEnumeration() {
-        SerialTrafficController c = new SerialTrafficController();
-        SerialNode b = new SerialNode(1, SerialNode.DAUGHTER);
-        SerialNode f = new SerialNode(3, SerialNode.CABDRIVER);
-        SerialNode d = new SerialNode(2, SerialNode.CABDRIVER);
-        SerialNode e = new SerialNode(6, SerialNode.DAUGHTER);
+        SerialTrafficController c = (SerialTrafficController)tc;
+        SerialNode b = new SerialNode(1, SerialNode.DAUGHTER,c);
+        SerialNode f = new SerialNode(3, SerialNode.CABDRIVER,c);
+        SerialNode d = new SerialNode(2, SerialNode.CABDRIVER,c);
+        SerialNode e = new SerialNode(6, SerialNode.DAUGHTER,c);
         Assert.assertEquals("1st Node", b, c.getNode(0));
         Assert.assertEquals("2nd Node", f, c.getNode(1));
         Assert.assertEquals("3rd Node", d, c.getNode(2));
@@ -54,24 +49,14 @@ public class SerialTrafficControllerTest extends TestCase {
     }
 
     public void testSerialOutput() {
-        SerialTrafficController c = new SerialTrafficController();
-        SerialNode a = new SerialNode();
+        SerialTrafficController c = (SerialTrafficController)tc;
+        SerialNode a = new SerialNode(c);
         Assert.assertNotNull("exists", a);
-        SerialNode g = new SerialNode(5, SerialNode.DAUGHTER);
+        SerialNode g = new SerialNode(5, SerialNode.DAUGHTER,c);
         Assert.assertTrue("must Send", g.mustSend());
         g.resetMustSend();
         Assert.assertTrue("must Send off", !(g.mustSend()));
-        c.setSerialOutput("VL5B2", false);
-        c.setSerialOutput("VL5B1", false);
-        c.setSerialOutput("VL5B23", false);
-        c.setSerialOutput("VL5B22", false);
-        c.setSerialOutput("VL5B21", false);
-        c.setSerialOutput("VL5B2", true);
-        c.setSerialOutput("VL5B19", false);
-        c.setSerialOutput("VL5B5", false);
-        c.setSerialOutput("VL5B20", false);
-        c.setSerialOutput("VL5B17", true);
-        Assert.assertTrue("must Send on", g.mustSend());
+        // c.setSerialOutput("VL5B2", false); // test and 12 year old method removed, called nowhere as of 4.9.4
         AbstractMRMessage m = g.createOutPacket();
         Assert.assertEquals("packet size", 9, m.getNumDataElements());
         Assert.assertEquals("node address", 5, m.getElement(0));
@@ -113,10 +98,12 @@ public class SerialTrafficControllerTest extends TestCase {
             rcvdMsg = null;
         }
 
+        @Override
         public void message(SerialMessage m) {
             rcvdMsg = m;
         }
 
+        @Override
         public void reply(SerialReply r) {
             rcvdReply = r;
         }
@@ -127,17 +114,21 @@ public class SerialTrafficControllerTest extends TestCase {
     // internal class to simulate a PortController
     class SerialPortControllerScaffold extends SerialPortController {
 
+        @Override
         public java.util.Vector<String> getPortNames() {
             return null;
         }
 
+        @Override
         public String openPort(String portName, String appName) {
             return null;
         }
 
+        @Override
         public void configure() {
         }
 
+        @Override
         public String[] validBaudRates() {
             return null;
         }
@@ -154,16 +145,19 @@ public class SerialTrafficControllerTest extends TestCase {
         }
 
         // returns the InputStream from the port
+        @Override
         public DataInputStream getInputStream() {
             return istream;
         }
 
         // returns the outputStream to the port
+        @Override
         public DataOutputStream getOutputStream() {
             return ostream;
         }
 
         // check that this object is ready to operate
+        @Override
         public boolean status() {
             return true;
         }
@@ -179,32 +173,21 @@ public class SerialTrafficControllerTest extends TestCase {
     static DataOutputStream tistream; // tests write to this
     static DataInputStream istream;  // so the traffic controller can read from this
 
-    // from here down is testing infrastructure
-    public SerialTrafficControllerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SerialTrafficControllerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SerialTrafficControllerTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Override
+    @Before
+    public  void setUp() {
+        JUnitUtil.setUp();
+        SecsiSystemConnectionMemo memo = new SecsiSystemConnectionMemo();
+        tc = new SerialTrafficController(memo);
     }
 
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @Override
+    @After
+    public  void tearDown() {
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class);
 
 }

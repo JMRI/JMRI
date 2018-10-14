@@ -1,6 +1,7 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -25,70 +26,112 @@ import jmri.SignalAppearanceMap;
 import jmri.SignalMast;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SignalMastIcon;
 import jmri.jmrit.picker.PickListModel;
-import jmri.util.JmriJFrame;
+import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SignalMastItemPanel extends TableItemPanel implements ListSelectionListener {
+/**
+ * TableItemPanel extension for placing of SignalMast items with a fixed set of icons.
+ *
+ * @author Pete Cressman Copyright (c) 2010, 2011
+ * @author Egbert Broerse 2017
+ */
+public class SignalMastItemPanel extends TableItemPanel<SignalMast> implements ListSelectionListener {
 
     SignalMast _mast;
+    private HashMap<String, NamedIcon> _iconMastMap;
+    JLabel _promptLabel;
+    JPanel _blurb;
 
-    public SignalMastItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
+    public SignalMastItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<jmri.SignalMast> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
     }
 
+    @Override
     public void init() {
-        super.init();
+        if (!_initialized) {
+            super.init();
+            _table.getSelectionModel().addListSelectionListener(this);
+            _showIconsButton.setEnabled(false);
+            _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipPickRowToShowIcon"));
+            add(_iconFamilyPanel, 1);
+        }
+    }
+
+    @Override
+    public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
+        super.init(doneAction, iconMap);
         _table.getSelectionModel().addListSelectionListener(this);
-        _showIconsButton.setEnabled(false);
-        _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipPickRowToShowIcon"));
-        initIconFamiliesPanel();
-        add(_iconFamilyPanel, 1);
+        _previewPanel.setVisible(false);
     }
 
     protected JPanel instructions() {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(Bundle.getMessage("AddToPanel")));
-        blurb.add(new JLabel(Bundle.getMessage("DragIconPanel")));
-        blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(Bundle.getMessage("ToolTipPickRowToShowIcon")));
+        blurb.add(new JLabel(Bundle.getMessage("PickRowMast")));
+        blurb.add(new JLabel(Bundle.getMessage("DragReporter")));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
         panel.add(blurb);
         return panel;
     }
 
+    @Override
     protected void initIconFamiliesPanel() {
-        _iconFamilyPanel = new JPanel();
-        _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
-        if (!_update) {
-            _iconFamilyPanel.add(instructions());
+        if (log.isDebugEnabled()) {
+            log.debug("initIconFamiliesPanel for= {}, {}", _itemType, _family);
         }
         if (_table != null) {
             int row = _table.getSelectedRow();
-            getIconMap(row);        // sets _currentIconMap & _mast, if they exist.
+            getIconMap(row); // sets _iconMastMap + _mast, if they exist.
         }
-        _dragIconPanel = new JPanel();
-        makeDndIconPanel(null, null);
-        _iconPanel = new JPanel();
-        addIconsToPanel(_currentIconMap);
-        _iconFamilyPanel.add(_dragIconPanel);
-        JPanel panel = new JPanel();
+        if (_iconFamilyPanel == null) {
+            log.debug("new _iconFamilyPanel created");
+            _iconFamilyPanel = new JPanel();
+            _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
+            _iconFamilyPanel.setOpaque(true);
+            if (!_update) {
+                _blurb = instructions();
+                _iconFamilyPanel.add(_blurb);
+            }
+        }
+        if (!_update) {
+            makeDragIconPanel(1);
+            makeDndIconPanel(null, null);
+        }
+
+        if (_iconPanel == null) { // keep an existing panel
+            _iconPanel = new ImagePanel();
+            _iconPanel.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+            _promptLabel = new JLabel();
+            JPanel panel = new JPanel();
+            panel.add(_promptLabel);
+            _iconFamilyPanel.add(panel);
+            if (!_update) {
+                _previewPanel = makePreviewPanel(_iconPanel, _dragIconPanel);
+            } else {
+                _previewPanel = makePreviewPanel(_iconPanel, null);
+            }
+            _iconFamilyPanel.add(_previewPanel);
+        }
+
+        addIconsToPanel(_iconMastMap, _iconPanel, false);
+
         if (_mast != null) {
-            panel.add(new JLabel(Bundle.getMessage("IconSetName") + " "
-                    + _mast.getSignalSystem().getSystemName()));
+            _promptLabel.setText(Bundle.getMessage("IconSetName", _mast.getSignalSystem().getSystemName()));
+        } else {
+            _promptLabel.setText(Bundle.getMessage("PickRowMast"));
         }
-        _iconFamilyPanel.add(panel);
-        _iconFamilyPanel.add(_iconPanel);
+
         _iconPanel.setVisible(false);
-        hideIcons();
     }
 
+    @Override
     protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
         if (_update) {
             return;
@@ -97,30 +140,36 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
 
         NamedIcon icon = getDragIcon();
         JPanel panel = new JPanel();
+        panel.setOpaque(false);
         String borderName = ItemPalette.convertText("dragToPanel");
         panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                 borderName));
         JLabel label;
         try {
-            label = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
+            label = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR), icon);
+            label.setOpaque(false);
             label.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         } catch (java.lang.ClassNotFoundException cnfe) {
-            cnfe.printStackTrace();
+            log.error("Unable to find class supporting {}", Editor.POSITIONABLE_FLAVOR, cnfe);
             label = new JLabel();
         }
-        label.setIcon(icon);
         label.setName(borderName);
         panel.add(label);
         int width = Math.max(100, panel.getPreferredSize().width);
         panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
         panel.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         _dragIconPanel.add(panel);
+        if (log.isDebugEnabled()) {
+            log.debug("makeDndIconPanel for= {}, {} visible {}", _itemType, _family, _dragIconPanel.isVisible());
+        }
     }
 
-    protected void makeBottomPanel() {
+    @Override
+    protected void makeBottomPanel(ActionListener doneAction) {
         JPanel panel = new JPanel();
         _showIconsButton = new JButton(Bundle.getMessage("ShowIcons"));
         _showIconsButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (_iconPanel.isVisible()) {
                     hideIcons();
@@ -131,79 +180,165 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         });
         _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipShowIcons"));
         panel.add(_showIconsButton);
-        JPanel bottomPanel = new JPanel(new FlowLayout());
-        bottomPanel.add(panel);
-        add(bottomPanel);
+        _bottom1Panel = new JPanel(new FlowLayout());
+        _bottom1Panel.add(panel);
+        if (doneAction != null) {
+            addUpdateButtonToBottom(doneAction);
+        }
+        initIconFamiliesPanel(); // (if null: creates and) adds a new _iconFamilyPanel for the new mast map
+        add(_bottom1Panel);
     }
 
     private void getIconMap(int row) {
         if (row < 0) {
-            _currentIconMap = null;
+            _iconMastMap = null;
             _family = null;
             return;
         }
-        NamedBean bean = _model.getBeanAt(row);
+        NamedBean bean = _model.getBySystemName((String) _table.getValueAt(row, 0));
+
 
         if (bean == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("getIconMap: NamedBean is null at row " + row);
-            }
-            _currentIconMap = null;
+            log.debug("getIconMap: NamedBean is null at row {}", row);
+            _mast = null;
+            _iconMastMap = null;
             _family = null;
             return;
         }
-        
+
         try {
             _mast = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(bean.getDisplayName());
         } catch (IllegalArgumentException ex) {
-            log.error("getIconMap: No SignalMast called " + bean.getDisplayName());
-            _currentIconMap = null;
+            log.error("getIconMap: No SignalMast called {}", bean.getDisplayName());
+            _iconMastMap = null;
             return;
         }
         _family = _mast.getSignalSystem().getSystemName();
-        _currentIconMap = new HashMap<String, NamedIcon>();
+        _iconMastMap = new HashMap<>();
         SignalAppearanceMap appMap = _mast.getAppearanceMap();
         Enumeration<String> e = _mast.getAppearanceMap().getAspects();
         while (e.hasMoreElements()) {
             String aspect = e.nextElement();
-            String s = appMap.getProperty(aspect, "imagelink");
-            NamedIcon n = new NamedIcon(s, s);
-            _currentIconMap.put(aspect, n);
+            String s = appMap.getImageLink(aspect, _family);
+            if (s !=null && !s.equals("")) {
+                if (!s.contains("preference:")) {
+                    s = s.substring(s.indexOf("resources"));
+                }
+                NamedIcon n = new NamedIcon(s, s);
+                _iconMastMap.put(aspect, n);
+            }
         }
         if (log.isDebugEnabled()) {
-            log.debug("getIconMap: for " + _family
-                    + " size= " + _currentIconMap.size());
+            log.debug("getIconMap for {}  size= {}", _family, _iconMastMap.size());
         }
     }
 
     private NamedIcon getDragIcon() {
-        if (_currentIconMap != null) {
-            if (_currentIconMap.keySet().contains("Stop")) {
-                return _currentIconMap.get("Stop");
+        if (_iconMastMap != null) {
+            if (_iconMastMap.keySet().contains("Stop")) {
+                return _iconMastMap.get("Stop");
             }
-            Iterator<String> e = _currentIconMap.keySet().iterator();
+            Iterator<String> e = _iconMastMap.keySet().iterator();
             if (e.hasNext()) {
-                return _currentIconMap.get(e.next());
+                return _iconMastMap.get(e.next());
             }
         }
         String fileName = "resources/icons/misc/X-red.gif";
         return new NamedIcon(fileName, fileName);
     }
 
+    @Override
+    protected void setFamily(String family) {
+        _family = family;
+        _iconPanel.removeAll(); // just clear contents
+        HashMap<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
+        if (map != null) {
+            _iconMastMap = map;
+        } else {
+            log.warn("Family \"{}\" for type \"{}\" for not found in Catalog.", _family, _itemType);
+        }
+        if (!_suppressDragging) {
+            makeDragIconPanel(0);
+            makeDndIconPanel(_iconMastMap, ""); // empty key OK, this uses getDragIcon()
+        }
+        if (_iconMastMap != null) {
+            addIconsToPanel(_iconMastMap, _iconPanel, false);
+        }
+    }
+
+    @Override
+    protected void showIcons() {
+        if (log.isDebugEnabled()) {
+            log.debug("showIcons for= {}, {}", _itemType, _family);
+        }
+        boolean isPalette = (_paletteFrame instanceof ItemPalette);
+        Dimension totalDim;
+        if (isPalette) {
+            totalDim = ItemPalette._tabPane.getSize();
+        } else {
+            totalDim = _paletteFrame.getSize();
+        }
+        Dimension oldDim = getSize();
+        _iconPanel.setVisible(true);
+        _iconPanel.invalidate();
+        _previewPanel.setVisible(true);
+        _previewPanel.invalidate();
+        if (!_update) {
+            _dragIconPanel.removeAll();
+            _dragIconPanel.setVisible(false);
+            _dragIconPanel.invalidate();
+            _blurb.setVisible(false);
+            _blurb.invalidate();
+
+        }
+        reSizeDisplay(isPalette, oldDim, totalDim);
+        _showIconsButton.setText(Bundle.getMessage("HideIcons"));
+    }
+
+    @Override
+    protected void hideIcons() {
+        if (log.isDebugEnabled()) {
+            log.debug("hideIcons for= {}, {}", _itemType, _family);
+        }
+        boolean isPalette = (_paletteFrame instanceof ItemPalette);
+        Dimension totalDim;
+        if (isPalette) {
+            totalDim = ItemPalette._tabPane.getSize();
+        } else {
+            totalDim = _paletteFrame.getSize();
+        }
+        Dimension oldDim = getSize();
+        _iconPanel.setVisible(false);
+        _iconPanel.invalidate();
+        if (!_update) {
+            _dragIconPanel.setVisible(true);
+            makeDndIconPanel(null, null);
+            _dragIconPanel.invalidate();
+            _blurb.setVisible(true);
+            _blurb.invalidate();
+            _previewPanel.setVisible(true);
+            _previewPanel.invalidate();
+        } else {
+            _previewPanel.setVisible(false);
+            _previewPanel.invalidate();
+        }
+        reSizeDisplay(isPalette, oldDim, totalDim);
+        _showIconsButton.setText(Bundle.getMessage("ShowIcons"));
+    }
+
     /**
-     * ListSelectionListener action
+     * ListSelectionListener action.
      */
+    @Override
     public void valueChanged(ListSelectionEvent e) {
         if (_table == null) {
             return;
         }
         int row = _table.getSelectedRow();
-        if (log.isDebugEnabled()) {
-            log.debug("Table valueChanged: row= " + row);
-        }
-        remove(_iconFamilyPanel);
-        initIconFamiliesPanel();
-        add(_iconFamilyPanel, 1);
+        log.debug("Table valueChanged: row= {}", row);
+
+        // update the family icons
+        _iconPanel.removeAll();
         if (row >= 0) {
             if (_updateButton != null) {
                 _updateButton.setEnabled(true);
@@ -216,44 +351,61 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
                 _updateButton.setEnabled(false);
                 _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
             }
+            _mast = null;
             _showIconsButton.setEnabled(false);
             _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipPickRowToShowIcon"));
         }
+        initIconFamiliesPanel(); // (if null: creates and) adds a new _iconFamilyPanel for the new mast map
         validate();
     }
 
-    protected JLabel getDragger(DataFlavor flavor) {
-        return new IconDragJLabel(flavor);
+    protected JLabel getDragger(DataFlavor flavor, NamedIcon icon) {
+        return new IconDragJLabel(flavor, icon);
     }
 
     protected class IconDragJLabel extends DragJLabel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2350506428940610321L;
-
-        public IconDragJLabel(DataFlavor flavor) {
-            super(flavor);
+        public IconDragJLabel(DataFlavor flavor, NamedIcon icon) {
+            super(flavor, icon);
         }
 
+        @Override
+        protected boolean okToDrag() {
+            NamedBean bean = getDeviceNamedBean();
+            if (bean == null) {
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                return false;
+            }
+            return true;
+        }
+
+        @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {
                 return null;
             }
-            NamedBean bean = getNamedBean();
+            NamedBean bean = getDeviceNamedBean();
             if (bean == null) {
-                JOptionPane.showMessageDialog(null, Bundle.getMessage("noRowSelected"),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }
 
-            SignalMastIcon sm = new SignalMastIcon(_editor);
-            sm.setSignalMast(bean.getDisplayName());
-            sm.setLevel(Editor.SIGNALS);
-            return sm;
+            if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
+                SignalMastIcon sm = new SignalMastIcon(_editor);
+                sm.setSignalMast(bean.getDisplayName());
+                sm.setLevel(Editor.SIGNALS);
+                return sm;
+            } else if (DataFlavor.stringFlavor.equals(flavor)) {
+                StringBuilder sb = new StringBuilder(_itemType);
+                sb.append(" icons for \"");
+                sb.append(bean.getDisplayName());
+                sb.append("\"");
+                return sb.toString();
+            }
+            return null;
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalMastItemPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalMastItemPanel.class);
+
 }

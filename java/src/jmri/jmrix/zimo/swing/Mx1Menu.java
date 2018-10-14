@@ -1,10 +1,11 @@
 package jmri.jmrix.zimo.swing;
 
+import javax.annotation.Nonnull;
 import javax.swing.JMenu;
 import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
 
 /**
- * Create a "Systems" menu containing the JMRI MRC-specific tools.
+ * Create a "Systems" menu containing the JMRI Zimo-specific tools.
  *
  * @author	Bob Jacobsen Copyright 2003, 2010 Copied from nce.swing
  * @author Ken Cameron 2014
@@ -13,17 +14,12 @@ import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
 public class Mx1Menu extends JMenu {
 
     /**
-     * Create a MRC menu. And loads the MrcSystemConnectionMemo to the various
-     * actions. Actions will open new windows.
+     * Create a Zimo menu.
+     *
+     * @param memo the connection to associate actions with
      */
-    public Mx1Menu(Mx1SystemConnectionMemo memo) {
+    public Mx1Menu(@Nonnull Mx1SystemConnectionMemo memo) {
         super();
-
-        // memo can not be null!
-        if (memo == null) {
-            new Exception().printStackTrace();
-            return;
-        }
 
         setText(memo.getUserName());
 
@@ -38,15 +34,15 @@ public class Mx1Menu extends JMenu {
             }
         }
 
-        // do we have a MrcTrafficController?
+        // do we have an Mx1TrafficController?
         setEnabled(memo.getMx1TrafficController() != null);	// disable menu, no connection, no tools!
 
         add(new javax.swing.JSeparator());
     }
 
     private Item[] panelItems = new Item[]{
-        new Item("MenuItemCommandMonitor", "jmri.jmrix.zimo.swing.monitor.Mx1MonPanel"), //IN18N
-        new Item("MenuItemSendCommand", "jmri.jmrix.zimo.swing.packetgen.Mx1PacketGenPanel"), //IN18N
+        new Item("MenuItemCommandMonitor", "jmri.jmrix.zimo.swing.monitor.Mx1MonPanel"), // NOI18N
+        new Item("MenuItemSendCommand", "jmri.jmrix.zimo.swing.packetgen.Mx1PacketGenPanel"), // NOI18N
     };
 
     static class Item {
@@ -58,4 +54,5 @@ public class Mx1Menu extends JMenu {
         String name;
         String load;
     }
+
 }

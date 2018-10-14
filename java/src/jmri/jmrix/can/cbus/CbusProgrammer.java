@@ -14,15 +14,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Implements the jmri.Programmer interface via commands for CBUS.
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class CbusProgrammer extends AbstractProgrammer implements CanListener, AddressedProgrammer {
-
-    public CbusProgrammer() {
-        Exception e = new Exception("Dummy method called");
-        e.printStackTrace();
-        // throw e;
-    }
 
     public CbusProgrammer(int nodenumber, TrafficController tc) {
         this.nodenumber = nodenumber;
@@ -51,13 +45,14 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
     // members for handling the programmer interface
     int progState = 0;
     static final int NOTPROGRAMMING = 0;// is notProgramming
-    static final int COMMANDSENT = 2; 	// read/write command sent, waiting reply
+    static final int COMMANDSENT = 2;  // read/write command sent, waiting reply
     boolean programmerReadOperation = false;  // true reading, false if writing
-    int operationValue;	 // remember the value being read/written for confirmative reply
+    int operationValue;  // remember the value being read/written for confirmative reply
     int operationVariableNumber; // remember the variable number being read/written
 
     // programming interface
     @Override
+    @Deprecated // 4.1.1
     synchronized public void writeCV(int varnum, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("write " + varnum + " listens " + p);
@@ -85,6 +80,7 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
     }
 
     @Override
+    @Deprecated // 4.1.1
     synchronized public void readCV(int varnum, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + varnum + " listens " + p);
@@ -120,10 +116,12 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
         }
     }
 
+    @Override
     public void message(CanMessage m) {
         log.debug("message received and ignored: " + m.toString());
     }
 
+    @Override
     synchronized public void reply(jmri.jmrix.can.CanReply m) {
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
@@ -157,6 +155,7 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
     /**
      * Internal routine to handle a timeout
      */
+    @Override
     synchronized protected void timeout() {
         if (progState != NOTPROGRAMMING) {
             // we're programming, time to stop
@@ -170,14 +169,17 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
         }
     }
 
+    @Override
     public boolean getLongAddress() {
         return false;
     }
 
+    @Override
     public int getAddressNumber() {
         return nodenumber;
     }
 
+    @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
     }
@@ -201,8 +203,8 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
         // clear the current listener _first_
         jmri.ProgListener temp = programmerUser;
         programmerUser = null;
-        temp.programmingOpReply(value, status);
+        notifyProgListenerEnd(temp,value,status);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusProgrammer.class);
 }

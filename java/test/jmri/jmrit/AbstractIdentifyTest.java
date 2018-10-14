@@ -1,24 +1,24 @@
 package jmri.jmrit;
 
-import org.junit.Assert;
+import jmri.Programmer;
+import jmri.ProgrammingMode;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.Programmer;
+import org.junit.Assert;
 
 /**
  * Test the AbstractIdentify class. Since that's an abstract base class, we
  * define a local subclass here for the tests.
  *
  * @author	Bob Jacobsen Copyright 2001
- * @version	$Revision$
- */
+  */
 public class AbstractIdentifyTest extends TestCase {
 
     public void testFullSequence() {
         // walk through all 8 steps
-        AITest a = new AITest(new jmri.ProgrammerScaffold(jmri.managers.DefaultProgrammerManager.DIRECTMODE));
+        AITest a = new AITest(new jmri.ProgrammerScaffold(ProgrammingMode.DIRECTMODE));
 
         retval = false;
         invoked = -1;
@@ -78,7 +78,7 @@ public class AbstractIdentifyTest extends TestCase {
 
     public void testShortSequence() {
         // walk through just 4 steps
-        AITest a = new AITest(new jmri.ProgrammerScaffold(jmri.managers.DefaultProgrammerManager.DIRECTMODE));
+        AITest a = new AITest(new jmri.ProgrammerScaffold(ProgrammingMode.DIRECTMODE));
 
         retval = false;
         invoked = -1;
@@ -121,63 +121,74 @@ public class AbstractIdentifyTest extends TestCase {
     // internal class for testing
     class AITest extends AbstractIdentify {
         public AITest(Programmer p) { super(p);}
-        
+
+        @Override
         public boolean test1() {
             invoked = 1;
             return retval;
         }
 
+        @Override
         public boolean test2(int value) {
             invoked = 2;
             ivalue = value;
             return retval;
         }
 
+        @Override
         public boolean test3(int value) {
             invoked = 3;
             ivalue = value;
             return retval;
         }
 
+        @Override
         public boolean test4(int value) {
             invoked = 4;
             ivalue = value;
             return retval;
         }
 
+        @Override
         public boolean test5(int value) {
             invoked = 5;
             ivalue = value;
             return retval;
         }
 
+        @Override
         public boolean test6(int value) {
             invoked = 6;
             ivalue = value;
             return retval;
         }
 
+        @Override
         public boolean test7(int value) {
             invoked = 7;
             ivalue = value;
             return retval;
         }
 
+        @Override
         public boolean test8(int value) {
             invoked = 8;
             ivalue = value;
             return retval;
         }
 
+        @Override
         public boolean test9(int value) {
             invoked = 8;
             ivalue = value;
             return retval;
         }
 
+        @Override
         protected void statusUpdate(String s) {
         }
 
+        @Override
         public void error() {
         }
 
@@ -205,13 +216,15 @@ public class AbstractIdentifyTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
+    @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-	// static private Logger log = LoggerFactory.getLogger(AbstractIdentifyTest.class.getName());
+	// private final static Logger log = LoggerFactory.getLogger(AbstractIdentifyTest.class);
 }

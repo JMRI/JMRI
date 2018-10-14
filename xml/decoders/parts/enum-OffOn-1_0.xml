@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id$ -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Off" value="1">
     <choice>Off</choice>
     <choice xml:lang="it">Off</choice>
-    <choice xml:lang="fr">Eteint</choice>
+    <choice xml:lang="fr">Éteint</choice>
     <choice xml:lang="de">Aus</choice>
     <choice xml:lang="es">De</choice>
+    <choice xml:lang="cs">Vypnuto</choice>
+    <choice xml:lang="nl">Uit</choice>
   </enumChoice>
   <enumChoice choice="On" value="0">
     <choice>On</choice>
     <choice xml:lang="it">On</choice>
     <choice xml:lang="fr">Allumé</choice>
-    <choice xml:lang="de">An</choice>
+    <choice xml:lang="de">Ein</choice>
     <choice xml:lang="es">En</choice>
+    <choice xml:lang="cs">Zapnuto</choice>
+    <choice xml:lang="nl">Aan</choice>
   </enumChoice>
 </enumVal>

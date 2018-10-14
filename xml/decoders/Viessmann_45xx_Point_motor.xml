@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2017 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <version author="Alain Le Marchand" version="1" lastUpdated="20170107"/>
+	<!-- Version 1 (Alain Le Marchand) Initial version
+			Added 4557, 4558, 4559 and 4560		-->
+<decoder>
+    <family name="Point Motor Decoders" mfg="Viessmann Modellspielwaren GmbH" lowVersionID="2" highVersionID="5" comment="NMRA DCC &amp; Märklin Motorola protocols, RailCom">
+      <model model="4557" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="TT" connector="other" productID="4557" comment="TT Point motor for Tillig road bed point">
+        <size length="68.4" width="24.5" height="5.3" units="mm"/>
+      </model>
+      <model model="4558" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="HO" connector="other" productID="4558" comment="H0 Point motor for Märklin/Trix C track">
+        <size length="104.9" width="24.5" height="5.3" units="mm"/>
+      </model>
+      <model model="4559" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="HO" connector="other" productID="4559" comment="H0 Point motor for Roco geo-Line points">
+        <size length="68.4" width="24.2" height="5.3" units="mm"/>
+      </model>
+      <model model="4560" numOuts="0" numFns="0" maxMotorCurrent="30mA (peak 100mA)" formFactor="all" connector="other" productID="4560" comment="Motorized point and universal drive (scale independent)">
+        <size length="50" width="20.2" height="5.8" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="no" register="no" ops="yes"/>
+    <variables>
+        <variable CV="1" item="Short Address" default="1">
+          <splitVal highCV="9" upperMask="XXXXXVVV"/>
+          <label>Address</label>
+          <label xml:lang="de">Adresse</label>
+          <tooltip>&lt;html&gt;DCC format: 1-2047&lt;br&gt;Motorola format: 1- 320 (1020 with appropriate command station)&lt;/html&gt;</tooltip>
+          <tooltip xml:lang="de">&lt;html&gt;DCC format: 1-2047&lt;br&gt;Motorola format: 1- 320 (1020 bei entsprechender Zentrale)&lt;/html&gt;</tooltip>
+        </variable>
+        <variable item="Decoder Version" CV="7" readOnly="yes" default="2">
+          <decVal/>
+          <label>Manufacturer Version No: </label>
+          <label xml:lang="it">Versione Decoder: </label>
+          <label xml:lang="fr">Version décodeur: </label>
+          <label xml:lang="de">Decoder Version: </label>
+        </variable>
+        <variable item="Manufacturer" CV="8" readOnly="yes" default="109">
+          <decVal/>
+          <label>Manufacturer ID: </label>
+          <label xml:lang="it">ID Costruttore: </label>
+          <label xml:lang="fr">ID constructeur: </label>
+          <label xml:lang="de">Hersteller ID: </label>
+        </variable>
+        <!-- CV29 -->
+        <!-- RailCom -->
+        <variable CV="29" mask="XXXXVXXX" item="User Id #1" default="1">  <!-- Utilizing basic pane with different information, as regular one not used -->
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+          <label>RailCom</label>
+          <label xml:lang="de">RailCom</label>
+          <tooltip>RailCom</tooltip>
+          <tooltip xml:lang="de">RailCom</tooltip>
+        </variable>
+        <!-- Compliant to NMRA, created specifically for Viessmann decoder -->
+        <variable CV="29" mask="VXXXXXXX" item="Address Format" default="1">
+          <enumVal>
+            <enumChoice choice="Locomotive">
+              <choice>Locomotive functions</choice>
+              <choice xml:lang="de">Lokfunktionen</choice>
+            </enumChoice>
+            <enumChoice choice="Accessory">
+              <choice>Accessory commands</choice>
+              <choice xml:lang="de">Schaltartikelbefehle</choice>
+            </enumChoice>
+          </enumVal>
+          <label>Decoder Type</label>
+          <label xml:lang="de">Decodertyp</label>
+          <tooltip>Decoder responds to Locomotive functions or Accessory commands</tooltip>
+          <tooltip xml:lang="de">Decoder schaltet auf Lokfunktionen oder Schaltartikelbefehle</tooltip>
+        </variable>
+        <!-- Turnout control -->
+        <variable CV="33" item="Speed Step Mode" readOnly="yes" default="0"> <!-- Utilizing basic pane with different information, as regular one not used -->
+          <decVal max="255"/>
+          <label>Turnout Position</label>
+          <label xml:lang="de">Weichenstellung</label>
+          <tooltip>Used by some command stations for reading of switch positions.</tooltip>
+          <tooltip xml:lang="de">Wird von einigen Zentralen zur Auslesung von Weichenstellungen benutzt.</tooltip>
+        </variable>
+        <variable CV="36" mask="XXXXXXXV" item="Locomotive Direction" default="0"> <!-- Utilizing basic pane with different information, as regular one not used -->
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
+          <label>Turnout Direction</label>
+          <label xml:lang="de">Weichenrichtung</label>
+          <tooltip>Sets the relative direction of the turnout</tooltip>
+          <tooltip xml:lang="de">Legt die relative Weichenrichtung.</tooltip>
+        </variable>
+
+        <variable item="Accel" CV="37" default="25"> <!-- Utilizing motor pane with different information, as regular one not used -->
+          <decVal max="50"/>
+          <label>Regulating time</label>
+          <label xml:lang="de">Stellzeit</label>
+          <tooltip>&lt;html&gt;Running time of the drive in steps of 0.1 seconds (max. 5s).&lt;br&gt; Subject to the mechanics of the point very small or very large values&lt;br&gt; will be limited either to the fastest or slowest possible movement.&lt;/html&gt;</tooltip>
+          <tooltip xml:lang="de">&lt;html&gt;Laufzeit des Antriebs in Schritten von 0,1 Sekunden (max 5s).&lt;br&gt; Abhängig von der Weichenmechanik werden sehr kleine oder sehr große Werte&lt;br&gt; auf die möglichst schnellsten bzw. langsamsten Bewegungen begrenzt.&lt;/html&gt;</tooltip>
+        </variable>
+
+        <!-- Function output -->
+        <variable CV="38" item="Function Map Option 1" default="1">
+          <enumVal>
+            <enumChoice value="0">
+              <choice>Inactive</choice>
+              <choice xml:lang="de">Inaktiv</choice>
+            </enumChoice>
+            <enumChoice value="1">
+              <choice>When movement finishes</choice>
+              <choice xml:lang="de">Wenn Bewegung beendet</choice>
+            </enumChoice>
+            <enumChoice value="2">
+              <choice>When movement commences</choice>
+              <choice xml:lang="de">Wenn Bewegung startet</choice>
+            </enumChoice>
+            <enumChoice value="3">
+              <choice>Displays current status (off)</choice>
+              <choice xml:lang="de">Zeigt aktuellen Zustand (aus)</choice>
+            </enumChoice>
+            <enumChoice value="4">
+              <choice>Displays current status (previous)</choice>
+              <choice xml:lang="de">Zeigt aktuellen Zustand (alte)</choice>
+            </enumChoice>
+            <enumChoice value="5">
+              <choice>Displays current status (new)</choice>
+              <choice xml:lang="de">Zeigt aktuellen Zustand (neue)</choice>
+            </enumChoice>
+            <enumChoice value="6">
+              <choice>Switch w. decoder address+1</choice>
+              <choice xml:lang="de">Decoderadresse+1 schaltet</choice>
+            </enumChoice>
+            <enumChoice value="8">
+              <choice>Core polarisation at 40% movement</choice>
+              <choice xml:lang="de">Herzstückpolarisier. bei 40% Weges</choice>
+            </enumChoice>
+            <enumChoice value="9">
+              <choice>Core polarisation at 50% movement</choice>
+              <choice xml:lang="de">Herzstückpolarisier. bei 50% Weges</choice>
+            </enumChoice>
+            <enumChoice value="10">
+              <choice>Core polarisation at 60% movement</choice>
+              <choice xml:lang="de">Herzstückpolarisier. bei 60% Weges</choice>
+            </enumChoice>
+            <enumChoice value="11">
+              <choice>Core polarisation at 70% movement</choice>
+              <choice xml:lang="de">Herzstückpolarisier. bei 70% Weges</choice>
+            </enumChoice>
+          </enumVal>
+          <label>Function output</label>
+          <label xml:lang="de">Schaltausgang</label>
+          <tooltip>&lt;html&gt;The switch outputs can be configured to suit various functionalities.&lt;br&gt;The outputs are intended for relays, but can also power small loads such as LEDs.&lt;br&gt;For "Displays current status", status in brackets () indicates value during movement.&lt;/html&gt;</tooltip>
+          <tooltip xml:lang="de">&lt;html&gt;Die Schaltausgänge können auf verschiedene Funktionalitäten konfiguriert werden.&lt;br&gt;Sie sind vorgesehen zum Schalten von Relais, können aber auch kleine Verbraucher wie LEDs direkt schalten.&lt;br&gt;Bei "Zeigt aktuellen Zustand" gibt der Status in Klammern () den Wert während der Bewegung an.&lt;/html&gt;</tooltip>
+        </variable>
+
+        <!-- Protocol -->
+        <variable CV="40" mask="XXXXXXXV" item="User Id #2" default="1"> <!-- Utilizing basic pane with different information, as regular one not used -->
+          <enumVal>
+            <enumChoice value="0">
+              <choice>DCC</choice>
+              <choice xml:lang="de">DCC</choice>
+            </enumChoice>
+            <enumChoice value="1">
+              <choice>Motorola</choice>
+              <choice xml:lang="de">Motorola</choice>
+            </enumChoice>
+          </enumVal>
+          <label>Protocol</label>
+          <label xml:lang="de">Protokoll</label>
+          <tooltip>Protocol</tooltip>
+          <tooltip xml:lang="de">Protokoll</tooltip>
+        </variable>
+
+        <!-- Motor Control -->
+        <variable item="EMF Static Config" CV="51" default="75">
+          <decVal max="255"/>
+          <label>Motor regulation P Constant</label>
+          <label xml:lang="de">Motorregelung P-Konstante</label>
+        </variable>
+            <variable item="EMF Dynamic Config" CV="52" default="40">
+          <decVal max="255"/>
+          <label>Motor regulation I Constant</label>
+          <label xml:lang="de">Motorregelung I-Konstante</label>
+        </variable>
+        <variable item="EMF Droop Config" CV="53" default="10">
+          <decVal max="255"/>
+          <label>Motor regulation D Constant</label>
+          <label xml:lang="de">Motorregelung D-Konstante</label>
+        </variable>
+            <variable item="EMF Option 1" CV="54" default="8">
+          <decVal max="255"/>
+          <label>EMF measurements</label>
+          <label xml:lang="de">EMK Messungen</label>
+          <tooltip>&lt;html&gt;Number of EMF measurements per cycle.&lt;br&gt; The first two measurements will be automatically ignored.&lt;/html&gt;</tooltip>
+          <tooltip xml:lang="de">&lt;html&gt;Anzahl von EMK Messungen, je Zyklus.&lt;br&gt; Die ersten 2 Messungen werden automatisch ignoriert.&lt;/html&gt;</tooltip>
+        </variable>
+        <variable item="EMF Option 2" CV="55" default="8">
+          <decVal max="255"/>
+          <label>Motor control period</label>
+          <label xml:lang="de">Motorregelung Periode</label>
+          <tooltip>&lt;html&gt;Entire control period in 0.5 msec.&lt;/html&gt;</tooltip>
+          <tooltip xml:lang="de">&lt;html&gt;Gesamte Reglerperiode in 0,5 ms.&lt;/html&gt;</tooltip>
+        </variable>
+        <variable item="EMF Option 3" CV="56" default="100">
+          <decVal max="255"/>
+          <label>Blocking detection time</label>
+          <label xml:lang="de">Erkannten Blockierung Zeit</label>
+          <tooltip>&lt;html&gt;Time in 10 ms that the motor keeps running after having detected a mechanical resistance (blocking).&lt;br&gt; It is only active if less than 3/4 of the entire movement have been completed.&lt;br&gt; In the last quarter the motor will be turned off immediately if blocked.&lt;/html&gt;</tooltip>
+          <tooltip xml:lang="de">&lt;html&gt;Zeit in 10 ms wie lange der Motor nach einer erkannten Blockierung weiter angetrieben wird.&lt;br&gt; Es ist nur dann aktiv, wenn weniger als 3/4 des Gesamtwegs gefahren sind.&lt;br&gt; In dem letzten Viertel wird der Motor bei einer Blockierung sofort abgeschaltet.&lt;/html&gt;</tooltip>
+        </variable>
+        <variable item="EMF Option 4" CV="57" default="150">
+          <decVal max="255"/>
+          <label>Blocking detection start cycle</label>
+          <label xml:lang="de">Erkannten Blockierung Startzyklus</label>
+          <tooltip>&lt;html&gt;Number of control cycles after the motor has started&lt;br&gt; from which point on the motor blocking detection is active.&lt;/html&gt;</tooltip>
+          <tooltip xml:lang="de">&lt;html&gt;Anzahl der Reglerzyklen nach dem Motorstart,&lt;br&gt; ab wann die Blockierungsdetektierung aktiviert wird.&lt;/html&gt;</tooltip>
+        </variable>
+        <variable item="Motor Option 1" CV="58" default="255">
+          <decVal max="255"/>
+          <label>Max. motor power at 1/8</label>
+          <label xml:lang="de">Max. Motorleistung bei 1/8</label>
+          <tooltip>&lt;html&gt;Will be reduced to this value as soon as &lt;br&gt; 1/8 of the movement has been completed.&lt;/html&gt;</tooltip>
+          <tooltip xml:lang="de">&lt;html&gt;Wird auf diesen Wert reduziert, sobald&lt;br&gt; 1/8 des Weges absolviert wurden.&lt;/html&gt;</tooltip>
+        </variable>
+        <variable item="Motor Option 2" CV="59" default="220">
+          <decVal max="255"/>
+          <label>Max. motor power at 6/8</label>
+          <label xml:lang="de">Max. Motorleistung bei 6/8</label>
+          <tooltip>&lt;html&gt;Will be reduced to this value as soon as &lt;br&gt; 6/8 of the movement has been completed.&lt;/html&gt;</tooltip>
+          <tooltip xml:lang="de">&lt;html&gt;Wird auf diesen Wert reduziert, sobald&lt;br&gt; 6/8 des Weges absolviert wurden.&lt;/html&gt;</tooltip>
+        </variable>
+        <variable item="Motor Option 3" CV="60" default="180">
+          <decVal max="255"/>
+          <label>Max. motor power at 7/8</label>
+          <label xml:lang="de">Max. Motorleistung bei 7/8</label>
+          <tooltip>&lt;html&gt;Will be reduced to this value as soon as &lt;br&gt; 7/8 of the movement has been completed.&lt;/html&gt;</tooltip>
+          <tooltip xml:lang="de">&lt;html&gt;Wird auf diesen Wert reduziert, sobald&lt;br&gt; 7/8 des Weges absolviert wurden.&lt;/html&gt;</tooltip>
+        </variable>
+        <variable item="Motor Option 4" CV="61" default="100">
+          <decVal max="255"/>
+          <label>Max. motor power at 8/8</label>
+          <label xml:lang="de">Max. Motorleistung bei 8/8</label>
+          <tooltip>&lt;html&gt;Will be reduced to this value as soon as &lt;br&gt; 8/8 of the movement has been completed.&lt;/html&gt;</tooltip>
+          <tooltip xml:lang="de">&lt;html&gt;Wird auf diesen Wert reduziert, sobald&lt;br&gt; 8/8 des Weges absolviert wurden.&lt;/html&gt;</tooltip>
+        </variable>
+
+        <!-- Calibration -->
+        <variable item="DC Brake Momentum" CV="63" mask="XXXXXXXV" readOnly="yes" default="0"> <!-- Utilizing motor pane with different information, as regular one not used -->
+          <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+          <label>Point calibration status</label>
+          <label xml:lang="de">Weichenkalibrierungstatus</label>
+          <tooltip>&lt;html&gt;Its value changes automatically to 1 (Yes) when the decoder&lt;br&gt; has successfully calibrated itself to a given turnout.&lt;br&gt; If you reset the value to 0 (No), the old calibration values are deleted,&lt;br&gt; and a new calibration can begin.&lt;br&gt;Please use the Reset menu to launch a new calibration order.&lt;/html&gt;</tooltip>
+          <tooltip xml:lang="de">&lt;html&gt;Dieser Wert wirt automatisch auf 1 (Ja) gesetzt, wenn sich der Antrieb&lt;br&gt; auf eine Weiche kalibriert hat.&lt;br&gt; Wenn dieser Wert wieder auf Null (Nein) gesetzt wird,&lt;br&gt; ist der Antrieb bereit für eine neue Kalibrierung.&lt;br&gt;Verwenden Sie das Zurücksetzen-Menü, um einen Kalibrierungsauftrag zu starten.&lt;/html&gt;</tooltip>
+        </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8">
+         <label xml:lang="de">Setzt alle Werte auf Auslieferungszustand zurück</label>
+      </factReset>
+      <factReset label="Reset All CVs except address" CV="8" default="9">
+         <label xml:lang="de">Setzt alle Werte außer Lokadresse auf Auslieferungszustand zurück</label>
+      </factReset>
+      <factReset label="Motor calibration (CV 62)" CV="62" default="206">
+         <label xml:lang="de">Motorkalibrierung (CV 62)</label>
+      </factReset>
+      <factReset label="Point calibration (CV 63)" CV="63" default="0">
+         <label xml:lang="de">Weichenkalibrierung (CV 63)</label>
+      </factReset>
+    </resets>
+  </decoder>
+</decoder-config>

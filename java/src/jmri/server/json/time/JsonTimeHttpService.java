@@ -10,10 +10,13 @@ import static jmri.server.json.time.JsonTimeServiceFactory.TIME;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import java.text.ParseException;
 import java.util.Locale;
+import javax.annotation.Nullable;
+import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
@@ -29,7 +32,8 @@ public class JsonTimeHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
+    // using @Nullable to override @Nonnull in super class
+    public JsonNode doGet(String type, @Nullable String name, Locale locale) throws JsonException {
         ObjectNode root = this.mapper.createObjectNode();
         root.put(TYPE, TIME);
         ObjectNode data = root.putObject(DATA);
@@ -40,7 +44,8 @@ public class JsonTimeHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
+    // using @Nullable to override @Nonnull in super class
+    public JsonNode doPost(String type, @Nullable String name, JsonNode data, Locale locale) throws JsonException {
         try {
             if (data.path(TIME).isTextual()) {
                 InstanceManager.getDefault(jmri.Timebase.class).setTime(new ISO8601DateFormat().parse(data.path(TIME).asText()));
@@ -58,7 +63,22 @@ public class JsonTimeHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGetList(String type, Locale locale) throws JsonException {
-        return this.doGet(type, null, locale);
+    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
+        ArrayNode result = this.mapper.createArrayNode();
+        result.add(this.doGet(type, null, locale));
+        return result;
+    }
+
+    @Override
+    public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
+        switch (type) {
+            case TIME:
+                return doSchema(type,
+                        server,
+                        "jmri/server/json/time/time-server.json",
+                        "jmri/server/json/time/time-client.json");
+            default:
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
+        }
     }
 }

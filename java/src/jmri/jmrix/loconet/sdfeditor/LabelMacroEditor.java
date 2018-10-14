@@ -1,4 +1,3 @@
-// LabelMacroEditor.java
 package jmri.jmrix.loconet.sdfeditor;
 
 import javax.swing.JLabel;
@@ -7,15 +6,9 @@ import jmri.jmrix.loconet.sdf.SdfMacro;
 /**
  * Editor panel for the SdfMacro for carrying a comment
  *
- * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 class LabelMacroEditor extends SdfMacroEditor {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3358357325534061565L;
 
     public LabelMacroEditor(SdfMacro inst) {
         super(inst);
@@ -28,5 +21,3 @@ class LabelMacroEditor extends SdfMacroEditor {
     }
 
 }
-
-/* @(#)LabelMacroEditor.java */

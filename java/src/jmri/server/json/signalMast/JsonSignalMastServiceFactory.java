@@ -5,15 +5,15 @@ import static jmri.server.json.signalMast.JsonSignalMast.SIGNAL_MASTS;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.server.json.JsonConnection;
-import jmri.server.json.JsonHttpService;
-import jmri.server.json.JsonSocketService;
 import jmri.spi.JsonServiceFactory;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Randall Wood (C) 2016
  */
-public class JsonSignalMastServiceFactory implements JsonServiceFactory {
+@ServiceProvider(service = JsonServiceFactory.class)
+public class JsonSignalMastServiceFactory implements JsonServiceFactory<JsonSignalMastHttpService, JsonSignalMastSocketService> {
 
     @Override
     public String[] getTypes() {
@@ -21,12 +21,12 @@ public class JsonSignalMastServiceFactory implements JsonServiceFactory {
     }
 
     @Override
-    public JsonSocketService getSocketService(JsonConnection connection) {
+    public JsonSignalMastSocketService getSocketService(JsonConnection connection) {
         return new JsonSignalMastSocketService(connection);
     }
 
     @Override
-    public JsonHttpService getHttpService(ObjectMapper mapper) {
+    public JsonSignalMastHttpService getHttpService(ObjectMapper mapper) {
         return new JsonSignalMastHttpService(mapper);
     }
 

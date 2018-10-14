@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!-- %3$s is the Railroad name -->
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" data-railroad="%3$s"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" data-railroad="%3$s"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" data-railroad="%3$s"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" data-railroad="%3$s" data-train="%5$s"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>%1$s</title><!-- %1$s is the title from the servlet -->
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/user.css">
+
+        <script src="/js/jquery-1.11.2.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="/js/json2.js"></script>
+        <script src="/js/jquery.websocket.js"></script>
+        <script src="/js/jquery.jmri.js"></script>
+        <script src="/js/main.js"></script>
+        <script src="/js/user.js"></script>
+        <script src="/js/operations.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+        <p class="chromeframe">U gebruikt een <strong>verouderde</strong> Browser. <a href="http://browsehappy.com/">werk uw browser bij</a> of <a href="http://www.google.com/chromeframe/?redirect=true">activeer Google Chrome Frame</a> om de gebruikerservaring te verbeteren.</p>
+        <![endif]-->
+        <div id="wrap">
+            <!-- Navigation Bar %2$s -->
+
+            <div class="container">
+
+                <div id="activity-alert" class="alert alert-info alert-dismissable">Treinen lezen...</div>
+                <div id="warning-no-trains" class="alert alert-warning hidden">Geen Treinen ingevoerd voor Operations.</div>
+                <div id="warning-no-trains-built" class="alert alert-warning hidden">Geen Treinen samengesteld voor Operations.</div>
+                <div id="error-listing-trains" class="alert alert-error hidden">Fout bij het ophalen van Treinlijst:<br></div>
+
+                <table id="trains" class="table table-hover hidden">
+                    <thead>
+                        <tr>
+                            <th>Naam</th>
+                            <th>Omschrijving</th>
+                            <th>Stuurloc</th>
+                            <th>Vertrekt</th>
+                            <th class='hideable'>Tijd</th>
+                            <th>Status</th>
+                            <th class='hideable'>Actueel</th>
+                            <th class='hideable'>Eindigt</th>
+                            <th class='hideable'>Route</th>
+                        </tr>
+                    </thead>
+                    <tbody><!-- list of trains goes here --></tbody>
+                </table>
+                <form id="trains-options" class="form-inline hidden" role="form">
+                    <div class="checkbox">
+                        <label id="show-all-trains">
+                            <input type="checkbox">
+                            <span title="Toon alle Treinen, ook indien zonder wagons of beëindigd." data-toggle="tooltip" data-placement="auto top" data-delay='{"show":"5000", "hide":"3000"}'>
+                                Toon alle Treinen
+                            </span>
+                        </label>
+                    </div>
+                </form>
+
+                <div id="manifest" class="hidden"><!-- train manifest goes here --></div>
+
+                <div id="conductor" class="hidden"><!-- conductor goes here --></div>
+
+            </div> <!-- /container -->
+        </div> <!-- /wrap -->
+        <!-- Footer %4$s -->
+    </body>
+</html>

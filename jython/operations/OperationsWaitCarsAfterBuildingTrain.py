@@ -7,52 +7,50 @@
 # Use this script after the train has been built.
 #
 # Author: Daniel Boudreau, copyright 2011, 2012
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 #
-# To use this script you must assign the train that you want the cars waited, 
-# and the wait value.  
+# To use this script you must assign the train that you want the cars waited,
+# and the wait value.
 #
 
 import jmri
 
-class WaitCars(jmri.jmrit.automat.AbstractAutomaton):      
+class WaitCars(jmri.jmrit.automat.AbstractAutomaton):
   def init(self):
-  
+
     # train (use train name)
     self.trainName = "Green Bay Hauler"
-    
+
     # wait value
     self.wait = 3
-    
+
     return
 
-  def handle(self):   
-  	
+  def handle(self):
+
     # get the train and car managers
-    tm = jmri.jmrit.operations.trains.TrainManager.instance()
-    cm = jmri.jmrit.operations.rollingstock.cars.CarManager.instance()
-    
+    tm = jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
+    cm = jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarManager)
+
     # the following code checks the values entered
     train = tm.getTrainByName(self.trainName)
     if (train == None):
         print "Train (", self.trainName, ") does not exist!"
-        return False  
+        return False
     if not (train.isBuilt()):
         print "Train (", self.trainName, ") not built!"
-        return False 
-    
+        return False
+
     # get a list of cars in this train
     carList = cm.getByTrainDestinationList(train)
     print "Train (", self.trainName,") has ", carList.size(), " cars assigned to it"
-    
+
     for car in carList:
         if (car.getNextWait() == 0):
             car.setNextWait(self.wait)
             print "Setting next wait to ", self.wait, " for car ", car.toString()
         else:
             print "Car ",car.toString(), " has next wait value ", car.getNextWait()
- 
+
     print "Done"
     return False              # all done, don't repeat again
 

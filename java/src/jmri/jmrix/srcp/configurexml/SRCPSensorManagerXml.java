@@ -20,10 +20,12 @@ public class SRCPSensorManagerXml extends jmri.managers.configurexml.AbstractSen
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element sensors) {
         sensors.setAttribute("class", this.getClass().getName());
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -36,5 +38,5 @@ public class SRCPSensorManagerXml extends jmri.managers.configurexml.AbstractSen
         return loadSensors(shared);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPSensorManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPSensorManagerXml.class);
 }

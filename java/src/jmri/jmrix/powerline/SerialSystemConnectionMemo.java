@@ -1,9 +1,7 @@
-// SerialSystemConnectionMemo.java
 package jmri.jmrix.powerline;
 
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
-import jmri.ProgrammerManager;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -12,10 +10,9 @@ import jmri.ProgrammerManager;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010 copied from NCE into Powerline for
+ * @author Bob Jacobsen Copyright (C) 2010 copied from NCE into Powerline for
  * multiple connections by
- * @author	Ken Cameron Copyright (C) 2011
- * @version $Revision$
+ * @author Ken Cameron Copyright (C) 2011
  */
 public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -33,45 +30,36 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     *
+     * @return tc
      */
     public SerialTrafficController getTrafficController() {
-        return SerialTrafficController;
+        return serialTrafficController;
     }
-    private SerialTrafficController SerialTrafficController;
+    private SerialTrafficController serialTrafficController;
 
     public void setTrafficController(SerialTrafficController tc) {
-        SerialTrafficController = tc;
+        serialTrafficController = tc;
     }
 
     /**
-     * Provide access to a SerialAddress for this particular connection
+     * Provide access to a serialAddress for this particular connection
+     *
+     * @return serialAddress
      */
     public SerialAddress getSerialAddress() {
-        return SerialAddress;
+        return serialAddress;
     }
-    private SerialAddress SerialAddress;
+    private SerialAddress serialAddress;
 
     public void setSerialAddress(SerialAddress sa) {
-        SerialAddress = sa;
+        serialAddress = sa;
     }
 
     /**
-     * Always null as powerline doesn't have a programmer
+     * Tells which managers this class provides.
      */
-    @SuppressWarnings("deprecation")
-    public ProgrammerManager getProgrammerManager() {
-        //Do not want to return a programmer ever
-        return null;
-    }
-
-    @SuppressWarnings("deprecation")
-    public void setProgrammerManager(ProgrammerManager p) {
-        // no programmer supported, should I throw an Exception??
-    }
-
-    /**
-     * Tells which managers this provides by class
-     */
+    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
@@ -92,6 +80,7 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
      * Provide manager by class
      */
     @SuppressWarnings("unchecked")
+    @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
@@ -108,9 +97,9 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
         return null; // nothing, by default
     }
 
-    private SerialTurnoutManager turnoutManager;
-    private SerialLightManager lightManager;
-    private SerialSensorManager sensorManager;
+    protected SerialTurnoutManager turnoutManager;
+    protected SerialLightManager lightManager;
+    protected SerialSensorManager sensorManager;
 
     /**
      * Configure the common managers for Powerline connections. This puts the
@@ -144,12 +133,14 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
         sensorManager = m;
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.powerline.PowerlineActionListBundle");
     }
 
+    @Override
     public void dispose() {
-        SerialTrafficController = null;
+        serialTrafficController = null;
         InstanceManager.deregister(this, SerialSystemConnectionMemo.class);
         if (turnoutManager != null) {
             InstanceManager.deregister(turnoutManager, jmri.jmrix.powerline.SerialTurnoutManager.class);
@@ -164,6 +155,3 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
     }
 
 }
-
-
-/* @(#)SerialSystemConnectionMemo.java */

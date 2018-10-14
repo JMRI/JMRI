@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="7.1" lastUpdated="20170218"/>
   <version author="Alain Le Marchand" version="7" lastUpdated="20140427"/>
   <version author="Steve Lowens" version="6" lastUpdated="20120515"/>
   <version author="Steve Lowens" version="5" lastUpdated="20110326"/>
@@ -44,45 +45,49 @@
   <!--    Added missing read-only variables CV121 to 128, CV160            -->
   <!--        and created a new pane "Digitrax Sound Info" to display them -->
   <!--    Added function labels + updated comments and sizes               -->
+  <!--    Version 7.1 (Alain Le Marchand) -                                -->
+  <!--    Size information for SDN144K1E
+          Function number = 12 for all decoders
+          (for consist advanced function behavior )                        -->
   <!--                                             -->
   <decoder>
     <family name="SFX Sound Decoders" mfg="Digitrax">
-      <model model="SDN144A0" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" productID="1444" comment="for Atlas N-Scale GP38 &amp; similar locos">
+      <model model="SDN144A0" numOuts="4" numFns="12" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" productID="1444" comment="for Atlas N-Scale GP38 &amp; similar locos">
         <output name="1" label="F0F Pad" connection="LED"/>
         <output name="2" label="F0R Pad" connection="LED"/>
         <output name="3" label="F1 Pad" connection="solder"/>
         <output name="4" label="F2 Pad" connection="solder"/>
         <size length="2.63" width="0.37" height="0.128" units="inches"/>
       </model>
-      <model model="SDN144A1" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="N" connector="DropIn" productID="1445" comment="for Atlas N-Scale SD50/60">
+      <model model="SDN144A1" numOuts="4" numFns="12" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="N" connector="DropIn" productID="1445" comment="for Atlas N-Scale SD50/60">
         <output name="1" label="F0F Pad" connection="LED"/>
         <output name="2" label="F0R Pad" connection="LED"/>
         <output name="3" label="F1 Pad" connection="solder"/>
         <output name="4" label="F2 Pad" connection="solder"/>
         <size length="3.26" width="0.669" height="0.132" units="inches"/>
       </model>
-      <model model="SDN144K0A" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="N" connector="DropIn" productID="1442" comment="for Kato N-Scale P42, E8, PA1, F40 &amp; similar locos">
+      <model model="SDN144K0A" numOuts="4" numFns="12" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="N" connector="DropIn" productID="1442" comment="for Kato N-Scale P42, E8, PA1, F40 &amp; similar locos">
         <output name="1" label="F0F Pad" connection="LED"/>
         <output name="2" label="F0R Pad" connection="solder"/>
         <output name="3" label="F1 Pad" connection="solder"/>
         <output name="4" label="F2 Pad" connection="solder"/>
         <size length="2.22" width="0.55" height="0.10" units="inches"/>
       </model>
-      <model model="SDN144K1E" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" productID="1443" comment="for Kato N-Scale SD40-2 &amp; similar locos">
+      <model model="SDN144K1E" numOuts="4" numFns="12" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" productID="1443" comment="for Kato N-Scale SD40-2 &amp; similar locos">
         <output name="1" label="F0F Pad" connection="LED"/>
         <output name="2" label="F0R Pad" connection="LED"/>
         <output name="3" label="F1 Pad" connection="solder"/>
         <output name="4" label="F2 Pad" connection="solder"/>
-        <size length="x.x" width="x.x" height="x.x" units="inches"/>
+        <size length="2.97" width="0.40" height="0.11" units="inches"/>
       </model>
-      <model model="SDN144PS" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="NMRAmedium" productID="1441" comment="N-Scale, with medium plug, SoundFX">
+      <model model="SDN144PS" numOuts="4" numFns="12" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="NMRAmedium" productID="1441" comment="N-Scale, with medium plug, SoundFX">
         <output name="1" label="F0F Pad" connection="plug"/>
         <output name="2" label="F0R Pad" connection="plug"/>
         <output name="3" label="F1 Pad" connection="plug"/>
         <output name="4" label="F2 Pad" connection="plug"/>
         <size length="1.22" width="0.4" height="0.164" units="inches"/>
       </model>
-      <model model="SDH164D" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="1641" comment="HO-Scale, wired, SoundFX">
+      <model model="SDH164D" numOuts="6" numFns="12" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="1641" comment="HO-Scale, wired, SoundFX">
         <output name="1" label="F0F Pad" connection="solder"/>
         <output name="2" label="F0R Pad" connection="solder"/>
         <output name="3" label="F1 Pad" connection="solder"/>
@@ -91,7 +96,7 @@
         <output name="6" label="F4 Pad" connection="solder"/>
         <size length="1.28" width="0.67" height="0.25" units="inches"/>
       </model>
-      <model model="SDH164K1A" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="HO" connector="DropIn" productID="1642" comment="for Kato HO-Scale AC4400 Locos">
+      <model model="SDH164K1A" numOuts="6" numFns="12" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="HO" connector="DropIn" productID="1642" comment="for Kato HO-Scale AC4400 Locos">
         <output name="1" label="F0F Pad" connection="LED"/>
         <output name="2" label="F0R Pad" connection="LED"/>
         <output name="3" label="F1 Pad" connection="solder"/>
@@ -100,7 +105,7 @@
         <output name="6" label="F4 Pad" connection="solder"/>
         <size length="2.877" width="0.667" height="0.173" units="inches"/>
       </model>
-      <model model="SDH164K1B" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="HO" connector="DropIn" productID="1643" comment="for Kato HO-Scale SD38-2 locos">
+      <model model="SDH164K1B" numOuts="6" numFns="12" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="HO" connector="DropIn" productID="1643" comment="for Kato HO-Scale SD38-2 locos">
         <output name="1" label="F0F Pad" connection="LED"/>
         <output name="2" label="F0R Pad" connection="solder"/>
         <output name="3" label="F1 Pad" connection="solder"/>
@@ -109,7 +114,7 @@
         <output name="6" label="F4 Pad" connection="solder"/>
         <size length="3.11" width="0.64" height="0.23" units="inches"/>
       </model>
-      <model model="SDH164K1C" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="HO" connector="DropIn" productID="1644" comment="for Kato HO-Scale F40PH Locos">
+      <model model="SDH164K1C" numOuts="6" numFns="12" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=1.3A)" formFactor="HO" connector="DropIn" productID="1644" comment="for Kato HO-Scale F40PH Locos">
         <output name="1" label="F0F Pad" connection="LED"/>
         <output name="2" label="F0R Pad" connection="LED"/>
         <output name="3" label="F1 Pad" connection="solder"/>
@@ -118,7 +123,7 @@
         <output name="6" label="F4 Pad" connection="solder"/>
         <size length="3.35" width="0.64" height="0.23" units="inches"/>
       </model>
-      <model model="EVO GE Diesel" numOuts="12" numFns="14" lowVersionID="16" highVersionID="49" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" productID="1041" comment="SDH104T1">
+      <model model="EVO GE Diesel" numOuts="12" numFns="12" lowVersionID="16" highVersionID="49" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" productID="1041" comment="SDH104T1">
         <output name="1" label="F0F Pad" connection="solder"/>
         <output name="2" label="F0R Pad" connection="solder"/>
         <output name="3" label="F1 Pad" connection="solder"/>

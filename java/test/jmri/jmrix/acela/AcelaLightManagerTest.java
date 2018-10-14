@@ -1,12 +1,11 @@
 package jmri.jmrix.acela;
 
+import jmri.Light;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import jmri.Light;
-import jmri.LightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,11 +14,12 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Coleman Copyright 2008
  */
-public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTest {
+public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTestBase {
 
     private AcelaSystemConnectionMemo _memo = null;
     private AcelaTrafficControlScaffold tcis = null;
 
+    @Override
     public String getSystemName(int i) {
         return "AL" + i;
     }
@@ -54,9 +54,9 @@ public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
         tcis = new AcelaTrafficControlScaffold();
         _memo = new jmri.jmrix.acela.AcelaSystemConnectionMemo(tcis);
         // create and register the manager object
@@ -76,10 +76,9 @@ public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTest {
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaLightManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AcelaLightManagerTest.class);
 
 }

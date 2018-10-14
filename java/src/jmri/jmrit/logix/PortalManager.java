@@ -1,6 +1,8 @@
 package jmri.jmrit.logix;
 
 import jmri.managers.AbstractManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Basic Implementation of a PortalManager.
@@ -28,40 +30,36 @@ import jmri.managers.AbstractManager;
  *
  * @author Pete Cressman Copyright (C) 2014
  */
-public class PortalManager extends AbstractManager
+public class PortalManager extends AbstractManager<Portal>
         implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
 
-    private static int _nextSName = 1;
+    private int _nextSName = 1;
 
     public PortalManager() {
         super();
     }
-    /*    
-     public void setNextSysNum(int next) {
-     _nextSName = next;
-     }
-     public int getNextSysNum() {
-     return _nextSName;
-     }
-     */
 
+    @Override
     public int getXMLOrder() {
         return jmri.Manager.OBLOCKS;
     }
 
+    @Override
     public String getSystemPrefix() {
         return "I";
     }
 
+    @Override
     public char typeLetter() {
         return 'P';
     }
 
-    /**
-     * Method to create a new Portal if it does not exist Returns null if a
-     * Portal with the same systemName or userName already exists, or if there
-     * is trouble creating a new Portal. Generate a systemName if called with
-     * sName==null
+    /*
+     * Method to create a new Portal. Returns null if a
+     * Portal with the same systemName or userName already exists. 
+     *
+     * Generate a systemName if called with sName == null and 
+     * non null userName.
      */
     public Portal createNewPortal(String sName, String userName) {
         // Check that Portal does not already exist
@@ -76,6 +74,8 @@ public class PortalManager extends AbstractManager
         }
         if (sName == null) {
             sName = generateSystemName();
+        } else {
+            if (log.isDebugEnabled()) log.debug("createNewPortal called with system name \"{}\"", sName);
         }
         if (!sName.startsWith("IP")) {
             sName = "IP" + sName;
@@ -99,63 +99,72 @@ public class PortalManager extends AbstractManager
         do {
             name = "IP" + Integer.toString(_nextSName++);
         } while (getBySystemName(name) != null);
-        return name;
+        if (log.isDebugEnabled()) log.debug("generateSystemName \"{}\"", name);
+       return name;
     }
 
     /**
      * Method to get an existing Portal. First looks up assuming that name is a
      * User Name. If this fails looks up assuming that name is a System Name. If
      * both fail, returns null.
+     * @param name - either System name or user name
+     * @return Portal, if found
      */
     public Portal getPortal(String name) {
+        if (name == null) {
+            return null;
+        }
         Portal portal = getByUserName(name);
         if (portal != null) {
+            if (log.isDebugEnabled()) log.debug("getPortal with User Name \"{}\"", name);
             return portal;
         }
-        return getBySystemName(name);
+        if (name.length() > 2 && name.startsWith("IP")) {
+            portal = getBySystemName(name);
+            if (portal != null) {
+                if (log.isDebugEnabled()) log.debug("getPortal with System Name \"{}\"", name);
+                return portal;
+            }
+        }
+        return null;
     }
 
     public Portal getBySystemName(String name) {
         if (name == null || name.trim().length() == 0) {
             return null;
         }
-        return (Portal) _tsys.get(name);
+        return _tsys.get(name);
     }
 
     public Portal getByUserName(String key) {
         if (key == null || key.trim().length() == 0) {
             return null;
         }
-        return (Portal) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     public Portal providePortal(String name) {
         if (name == null || name.trim().length() == 0) {
             return null;
         }
-        Portal portal = getByUserName(name);
+        Portal portal = getPortal(name);
         if (portal == null) {
             portal = createNewPortal(null, name);
         }
         return portal;
     }
 
+    @Override
     protected void registerSelf() {
         // Override, don't register, OBlockManager does store and load of Portals
     }
 
-    static PortalManager _instance = null;
-
-    static public PortalManager instance() {
-        if (_instance == null) {
-            _instance = new PortalManager();
-        }
-        return (_instance);
-    }
-
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNamePortal");
     }
+
+    private final static Logger log = LoggerFactory.getLogger(PortalManager.class);
 }
 
-/* @(#)PortalManager.java */
+

@@ -1,4 +1,3 @@
-//TrainManifestOptionAction.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Frame;
@@ -11,7 +10,6 @@ import jmri.jmrit.operations.trains.TrainEditFrame;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision$
  */
 public class TrainManifestOptionAction extends AbstractAction {
 
@@ -32,10 +30,10 @@ public class TrainManifestOptionAction extends AbstractAction {
             f.initComponents(frame);
         }
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(TrainManifestOptionAction.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(TrainManifestOptionAction.class);
 }
 
-/* @(#)TrainManifestOptionAction.java */
+

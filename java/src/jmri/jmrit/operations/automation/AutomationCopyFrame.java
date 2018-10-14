@@ -1,4 +1,3 @@
-// AutomationCopyFrame.java
 package jmri.jmrit.operations.automation;
 
 import java.awt.Dimension;
@@ -9,6 +8,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
 import org.slf4j.Logger;
@@ -19,21 +19,20 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2016
- * @version $Revision: 17977 $
  */
 public class AutomationCopyFrame extends OperationsFrame {
 
-    AutomationManager automationManager = AutomationManager.instance();
+    AutomationManager automationManager = InstanceManager.getDefault(AutomationManager.class);
 
     // labels
     // text field
     javax.swing.JTextField automationNameTextField = new javax.swing.JTextField(Control.max_len_string_automation_name);
 
     // major buttons
-    javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getMessage("Copy"));
+    javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getMessage("ButtonCopy"));
 
     // combo boxes
-    JComboBox<Automation> automationBox = AutomationManager.instance().getComboBox();
+    JComboBox<Automation> automationBox = InstanceManager.getDefault(AutomationManager.class).getComboBox();
 
     public AutomationCopyFrame(Automation automation) {
         // general GUI config
@@ -139,5 +138,5 @@ public class AutomationCopyFrame extends OperationsFrame {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutomationCopyFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AutomationCopyFrame.class);
 }

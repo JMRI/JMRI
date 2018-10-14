@@ -4,17 +4,18 @@ import java.beans.PropertyChangeListener;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
-import org.junit.Assert;
+import jmri.jmrix.internal.InternalLightManager;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Test the ProxyLightManager
  *
  * @author	Bob Jacobsen 2003, 2006, 2008
- * @version	$Revision$
- */
+  */
 public class ProxyLightManagerTest extends TestCase {
 
     public String getSystemName(int i) {
@@ -27,6 +28,7 @@ public class ProxyLightManagerTest extends TestCase {
 
     protected class Listen implements PropertyChangeListener {
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             listenerResult = true;
         }
@@ -53,16 +55,23 @@ public class ProxyLightManagerTest extends TestCase {
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
+    public void testNormalizeName() {
+        // create
+        String name = l.provideLight("" + getNumToTest1()).getSystemName();
+        // check
+        Assert.assertEquals(name, l.normalizeSystemName(name));
+    }
+
     public void testProvideFailure() {
         boolean correct = false;
         try {
-            Light t = l.provideLight("");
+            l.provideLight("");
             Assert.fail("didn't throw");
         } catch (IllegalArgumentException ex) {
             correct = true;
         }
         Assert.assertTrue("Exception thrown properly", correct);
-        
+
     }
 
     public void testSingleObject() {
@@ -146,6 +155,7 @@ public class ProxyLightManagerTest extends TestCase {
 
         InternalLightManager m = new InternalLightManager() {
 
+            @Override
             public String getSystemPrefix() {
                 return "J";
             }
@@ -186,10 +196,12 @@ public class ProxyLightManagerTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         // create and register the manager object
         l = new InternalLightManager() {
+            @Override
             public String getSystemPrefix() {
                 return "J";
             }
@@ -199,7 +211,7 @@ public class ProxyLightManagerTest extends TestCase {
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

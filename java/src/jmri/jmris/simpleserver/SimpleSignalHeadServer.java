@@ -1,4 +1,3 @@
-//SimpleSignalHeadServer.java
 package jmri.jmris.simpleserver;
 
 import java.io.DataInputStream;
@@ -15,7 +14,6 @@ import jmri.jmris.JmriConnection;
  * connection
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision$
  */
 public class SimpleSignalHeadServer extends AbstractSignalHeadServer {
 
@@ -52,7 +50,11 @@ public class SimpleSignalHeadServer extends AbstractSignalHeadServer {
             this.setSignalHeadAppearance(status[1], status[2]);
         } else {
             SignalHead signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(status[1]);
-            this.sendStatus(signalHead.getSystemName(), signalHead.getAppearance());
+            if(signalHead != null) {
+               this.sendStatus(signalHead.getSystemName(), signalHead.getAppearance());
+            } else {
+               sendErrorStatus(status[1]);
+            }
         }
     }
 

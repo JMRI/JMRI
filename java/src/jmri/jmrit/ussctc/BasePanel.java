@@ -6,24 +6,19 @@ import jmri.*;
 /**
  * Refactored common routines and data for the GUI panels in this package.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class BasePanel extends JPanel implements Constants {
 
     BasePanel() {
-        if (rb == null) {
-            rb = java.util.ResourceBundle.getBundle("jmri.jmrit.ussctc.UssCtcBundle");
-        }
     }
-
-    static java.util.ResourceBundle rb = null;
 
     void complain(String message, String value) {
         javax.swing.JOptionPane.showMessageDialog(this,
                 java.text.MessageFormat.format(
-                        rb.getString(message),
+                        Bundle.getMessage(message),
                         new Object[]{value}),
-                rb.getString("ErrorTitle"),
+                Bundle.getMessage("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
@@ -72,5 +67,5 @@ public class BasePanel extends JPanel implements Constants {
         return true;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BasePanel.class.getName());
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BasePanel.class);
 }

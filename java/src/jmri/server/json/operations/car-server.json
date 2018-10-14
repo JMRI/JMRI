@@ -1,0 +1,62 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-car-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"car\"",
+    "properties": {
+        "id": {
+            "type": "string",
+            "description": "Id for car"
+        },
+        "number": {
+            "type": "string",
+            "description": "The car number"
+        },
+        "road": {
+            "type": "string",
+            "description": "The car owning railroad"
+        },
+        "type": {
+            "type": "string",
+            "description": "The car type"
+        },
+        "length": {
+            "type": "int",
+            "description": "Current car length for available siding calculations"
+        },
+        "color": {
+            "type": "string",
+            "description": "The color of the car"
+        },
+        "owner": {
+            "type": "string",
+            "description": "The car owner"
+        },
+        "comment": {
+            "type": "string",
+            "description": "Freeform comment concerning car"
+        },
+        "location": {
+            "type": "string",
+            "description": "The current location of the car"
+        },
+        "destination": {
+            "type": "string",
+            "description": "the current destination of the car"
+        },
+        "model": {
+            "type": "string",
+            "description": "The model of car"
+        },
+        "consist": {
+            "type": "string",
+            "description": "The name of the consist the car is in"
+        },
+        "status": {
+            "type": "string",
+            "description": "The status symbol of the car"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["id", "number", "road", "type", "length", "owner", "comment", "model", "consist"]
+}

@@ -1,4 +1,3 @@
-// SerialPacketGenFrame.java
 package jmri.jmrix.powerline.swing.packetgen;
 
 import java.awt.Dimension;
@@ -14,17 +13,12 @@ import jmri.util.StringUtil;
 /**
  * Frame for user input of serial messages
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2003, 2006, 2007, 2008 Converted to
+ * @author Bob Jacobsen Copyright (C) 2002, 2003, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision$
- */
+  */
 public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.powerline.SerialListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8184007693386088447L;
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
     javax.swing.JButton sendButton = new javax.swing.JButton();
@@ -37,7 +31,11 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     }
     SerialTrafficController tc = null;
 
-    public void initComponents() throws Exception {
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void initComponents() {
         // the following code sets the frame's initial state
 
         jLabel1.setText("Command:");
@@ -68,6 +66,7 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         getContentPane().add(p2);
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
@@ -94,9 +93,19 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
         return m;
     }
 
+    /** 
+     * {@inheritDoc}
+     * Ignores messages.
+     */
+    @Override
     public void message(SerialMessage m) {
-    }  // ignore replies
+    }
 
+    /** 
+     * {@inheritDoc}
+     * Ignores replies.
+     */
+    @Override
     public void reply(SerialReply r) {
-    } // ignore replies
+    }
 }

@@ -1,4 +1,3 @@
-// EcosPanel.java
 package jmri.jmrix.ecos.swing;
 
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
@@ -11,19 +10,15 @@ import jmri.jmrix.ecos.EcosSystemConnectionMemo;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.11.3
- * @version $Revision$
  */
 abstract public class EcosPanel extends jmri.util.swing.JmriPanel implements EcosPanelInterface {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -7196545038127365848L;
-    /**
-     * make "memo" object available as convenience
+     * Make "memo" object available as convenience.
      */
     protected EcosSystemConnectionMemo memo;
 
+    @Override
     public void initComponents(EcosSystemConnectionMemo memo) {
         this.memo = memo;
     }

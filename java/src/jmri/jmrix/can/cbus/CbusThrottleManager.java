@@ -19,8 +19,8 @@ import org.slf4j.LoggerFactory;
 /**
  * CBUS implementation of a ThrottleManager.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Andrew Crosland Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Andrew Crosland Copyright (C) 2009
  */
 public class CbusThrottleManager extends AbstractThrottleManager implements ThrottleManager, CanListener {
 
@@ -147,28 +147,32 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                 // TODO: should be a better way to do this with constants or properties
                 switch (errCode) {
                     case CbusConstants.ERR_LOCO_STACK_FULL:
-                        errStr = "loco stack full for address " + rcvdIntAddr;
+                        errStr = Bundle.getMessage("ERR_LOCO_STACK_FULL") + " " + rcvdIntAddr;
                         break;
                     case CbusConstants.ERR_LOCO_ADDRESS_TAKEN:
-                        errStr = "loco address taken for address " + rcvdIntAddr;
+                        errStr = Bundle.getMessage("ERR_LOCO_ADDRESS_TAKEN") + " " + rcvdIntAddr;
                         break;
                     case CbusConstants.ERR_INVALID_REQUEST:
-                        errStr = "invalid request for address " + rcvdIntAddr;
+                        errStr = Bundle.getMessage("ERR_INVALID_REQUEST") + " " + rcvdIntAddr;
                         break;
                     case CbusConstants.ERR_SESSION_NOT_PRESENT:
-                        errStr = "session not present for session " + handle;
+                        errStr = Bundle.getMessage("ERR_SESSION_NOT_PRESENT") + " " + handle;
                         break;
                     case CbusConstants.ERR_CONSIST_EMPTY:
-                        errStr = "consist empty for consist " + handle;
+                        errStr = Bundle.getMessage("ERR_CONSIST_EMPTY") + " " + handle;
                         break;
                     case CbusConstants.ERR_LOCO_NOT_FOUND:
-                        errStr = "loco not found for session " + handle;
+                        errStr = Bundle.getMessage("ERR_LOCO_NOT_FOUND") + " " + handle;
                         break;
                     case CbusConstants.ERR_CAN_BUS_ERROR:
-                        errStr = "CAN bus error";
+                        errStr = Bundle.getMessage("ERR_CAN_BUS_ERROR") + " ";
                         break;
                     case CbusConstants.ERR_SESSION_CANCELLED:
-                        errStr = "Throttle session cancelled for loco ";
+                        errStr = Bundle.getMessage("ERR_SESSION_CANCELLED") + " ";
+                        break;
+                    default:
+                        errStr = Bundle.getMessage("ERR_UNKNOWN") + " ";
+                        log.warn("Unhandled error code: {}", errCode);
                         break;
                 }
 
@@ -183,8 +187,8 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                             log.debug("Failed throttle request due to ERR");
                             _handleExpected = false;
                             throttleRequestTimer.stop();
-                            JOptionPane.showMessageDialog(null, "CBUS ERR:" + errStr);
-                            failedThrottleRequest(_dccAddr, "CBUS ERR:" + errStr);
+                            JOptionPane.showMessageDialog(null, Bundle.getMessage("CBUS_ERROR") + errStr);
+                            failedThrottleRequest(_dccAddr, Bundle.getMessage("CBUS_ERROR") + errStr);
                         } else {
                             log.debug("ERR address not matched");
                         }
@@ -195,7 +199,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                             // We were expecting an engine report and it matches our address
                             _handleExpected = false;
                         }
-                        JOptionPane.showMessageDialog(null, "CBUS ERR:" + errStr);
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("CBUS_ERROR") + errStr);
                         break;
 
                     case CbusConstants.ERR_CONSIST_EMPTY:
@@ -206,7 +210,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
 
                     case CbusConstants.ERR_CAN_BUS_ERROR:
                     case CbusConstants.ERR_INVALID_REQUEST:
-                        JOptionPane.showMessageDialog(null, "CBUS ERR:" + errStr);
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("CBUS_ERROR") + errStr);
                         break;
 
                     case CbusConstants.ERR_SESSION_CANCELLED:
@@ -371,7 +375,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
      */
     synchronized protected void timeout() {
         log.debug("Throttle request (RLOC) timed out");
-        failedThrottleRequest(_dccAddr, "Throttle request (RLOC) timed out");
+        failedThrottleRequest(_dccAddr, Bundle.getMessage("ERR_THROTTLE_TIMEOUT"));
         throttleRequestTimer.stop();
     }
 
@@ -397,5 +401,5 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusThrottleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusThrottleManager.class);
 }

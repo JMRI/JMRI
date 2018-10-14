@@ -1,7 +1,6 @@
 package jmri;
 
 import java.util.List;
-
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -26,9 +25,10 @@ import javax.annotation.Nonnull;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public interface SignalHeadManager extends Manager {
+public interface SignalHeadManager extends Manager<SignalHead> {
 
     // to free resources when no longer used
+    @Override
     public void dispose();
 
     /**
@@ -39,17 +39,12 @@ public interface SignalHeadManager extends Manager {
      * @return null if no match found
      */
     @CheckReturnValue
-    public @CheckForNull SignalHead getSignalHead(@Nonnull String name);
+    @CheckForNull public SignalHead getSignalHead(@Nonnull String name);
 
     @CheckReturnValue
-    public @CheckForNull SignalHead getByUserName(@Nonnull String s);
+    @CheckForNull public SignalHead getByUserName(@Nonnull String s);
 
     @CheckReturnValue
-    public @CheckForNull SignalHead getBySystemName(@Nonnull String s);
-
-    /**
-     * Get a list of all SignalHead system names.
-     */
-    public @Nonnull List<String> getSystemNameList();
+    @CheckForNull public SignalHead getBySystemName(@Nonnull String s);
 
 }

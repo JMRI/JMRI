@@ -4,7 +4,7 @@ package jmri.jmrit.operations.trains.excel;
  * A convenient place to access operations xml element and attribute names.
  *
  * @author Daniel Boudreau Copyright (C) 2013
- * @version $Revision: 22156 $
+ * 
  *
  */
 public class Xml {

@@ -1,8 +1,10 @@
 package jmri.jmrix;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.HashMap;
+import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import org.slf4j.Logger;
@@ -10,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provide an abstract base for *PortController classes.
- * <P>
+ * <p>
  * This is complicated by the lack of multiple inheritance. SerialPortAdapter is
  * an Interface, and its implementing classes also inherit from various
  * PortController types. But we want some common behaviors for those, so we put
@@ -18,15 +20,19 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.jmrix.SerialPortAdapter
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 abstract public class AbstractPortController implements PortAdapter {
 
-    // returns the InputStream from the port
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public abstract DataInputStream getInputStream();
 
-    // returns the outputStream to the port
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public abstract DataOutputStream getOutputStream();
 
@@ -34,7 +40,7 @@ abstract public class AbstractPortController implements PortAdapter {
 
     // By making this private, and not protected, we are able to require that
     // all access is through the getter and setter, and that subclasses that
-    // override the getter and setter must call the super implemenations of the
+    // override the getter and setter must call the super implementations of the
     // getter and setter. By channelling setting through a single method, we can
     // ensure this is never null.
     private SystemConnectionMemo connectionMemo;
@@ -57,7 +63,9 @@ abstract public class AbstractPortController implements PortAdapter {
         this.getSystemConnectionMemo().dispose();
     }
 
-    // check that this object is ready to operate
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean status() {
         return opened;
@@ -81,8 +89,9 @@ abstract public class AbstractPortController implements PortAdapter {
 
     @Override
     abstract public String getCurrentPortName();
+
     /*
-     The next set of configureOptions are to support the old configuration files.
+     * The next set of configureOptions are to support the old configuration files.
      */
 
     @Override
@@ -114,8 +123,9 @@ abstract public class AbstractPortController implements PortAdapter {
     }
 
     /*
-     The next set of getOption Names are to support legacy configuration files
+     * The next set of getOption Names are to support legacy configuration files
      */
+
     @Override
     public String getOption1Name() {
         return option1Name;
@@ -139,19 +149,21 @@ abstract public class AbstractPortController implements PortAdapter {
     /**
      * Get a list of all the options configured against this adapter.
      *
-     * @return Array of option identifiers
+     * @return Array of option identifier strings
      */
     @Override
     public String[] getOptions() {
-        String[] arr = options.keySet().toArray(new String[0]);
-        java.util.Arrays.sort(arr);
-        return arr;
-
+        Set<String> keySet = options.keySet();
+        String[] result = keySet.toArray(new String[keySet.size()]);
+        java.util.Arrays.sort(result);
+        return result;
     }
 
     /**
-     * Set the value of an option
+     * Set the value of an option.
      *
+     * @param option the name string of the option
+     * @param value the string value to set the option to
      */
     @Override
     public void setOptionState(String option, String value) {
@@ -161,8 +173,9 @@ abstract public class AbstractPortController implements PortAdapter {
     }
 
     /**
-     * Get the value of a specific option.
+     * Get the string value of a specific option.
      *
+     * @param option the name of the option to query
      * @return the option value
      */
     @Override
@@ -174,8 +187,9 @@ abstract public class AbstractPortController implements PortAdapter {
     }
 
     /**
-     * Return a list of the various choices allowed with an option.
+     * Get a list of the various choices allowed with an given option.
      *
+     * @param option the name of the option to query
      * @return list of valid values for the option
      */
     @Override
@@ -207,6 +221,14 @@ abstract public class AbstractPortController implements PortAdapter {
     static protected class Option {
 
         String currentValue = null;
+        
+        /** 
+         * As a heuristic, we consider the 1st non-null
+         * currentValue as the configured value. Changes away from that
+         * mark an Option object as "dirty".
+         */
+        String configuredValue = null;
+        
         String displayText;
         String[] options;
         Boolean advancedOption = true;
@@ -223,6 +245,7 @@ abstract public class AbstractPortController implements PortAdapter {
         }
 
         void configure(String value) {
+            if (configuredValue == null ) configuredValue = value;
             currentValue = value;
         }
 
@@ -246,13 +269,13 @@ abstract public class AbstractPortController implements PortAdapter {
         }
 
         boolean isDirty() {
-            return (currentValue != null && !currentValue.equals(options[0]));
+            return (currentValue != null && !currentValue.equals(configuredValue));
         }
     }
 
     @Override
     public String getManufacturer() {
-        return this.manufacturerName;
+        return manufacturerName;
     }
 
     @Override
@@ -347,7 +370,7 @@ abstract public class AbstractPortController implements PortAdapter {
      * Service method to purge a stream of initial contents
      * while opening the connection.
      */
-     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SR_NOT_CHECKED", justification = "skipping all, don't care what skip() returns")
+     @SuppressFBWarnings(value = "SR_NOT_CHECKED", justification = "skipping all, don't care what skip() returns")
      protected void purgeStream(@Nonnull java.io.InputStream serialStream) throws java.io.IOException {
         int count = serialStream.available();
         log.debug("input stream shows " + count + " bytes available");
@@ -360,7 +383,7 @@ abstract public class AbstractPortController implements PortAdapter {
     /**
      * Get the {@link jmri.jmrix.SystemConnectionMemo} associated with this
      * object.
-     *
+     * <p>
      * This method should only be overridden to ensure that a specific subclass
      * of SystemConnectionMemo is returned. The recommended pattern is: <code>
      * public MySystemConnectionMemo getSystemConnectionMemo() {
@@ -368,7 +391,7 @@ abstract public class AbstractPortController implements PortAdapter {
      * }
      * </code>
      *
-     * @return a SystemConnectionMemo
+     * @return the currently associated SystemConnectionMemo
      */
     @Override
     public SystemConnectionMemo getSystemConnectionMemo() {
@@ -378,11 +401,12 @@ abstract public class AbstractPortController implements PortAdapter {
     /**
      * Set the {@link jmri.jmrix.SystemConnectionMemo} associated with this
      * object.
-     *
+     * <p>
      * Overriding implementations must call
      * <code>super.setSystemConnectionMemo(memo)</code> at some point to ensure
      * the SystemConnectionMemo gets set.
      *
+     * @param connectionMemo the SystemConnectionMemo to associate with this PortController
      */
     @Override
     @OverridingMethodsMustInvokeSuper
@@ -393,6 +417,6 @@ abstract public class AbstractPortController implements PortAdapter {
         this.connectionMemo = connectionMemo;
     }
 
-    static private Logger log = LoggerFactory.getLogger(AbstractPortController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractPortController.class);
 
 }

@@ -1,4 +1,3 @@
-// ConfigurationManager.java
 package jmri.jmrix.can.nmranet;
 
 import java.util.ResourceBundle;
@@ -8,8 +7,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 /**
  * Does configuration for Nmra Net communications implementations.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision: 17977 $
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class NmraConfigurationManager extends jmri.jmrix.can.ConfigurationManager {
 
@@ -22,12 +20,14 @@ public class NmraConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
     jmri.jmrix.swing.ComponentFactory cf = null;
 
+    @Override
     public void configureManagers() {
     }
 
     /**
-     * Tells which managers this provides by class
+     * Tells which managers this class provides.
      */
+    @Override
     public boolean provides(Class<?> type) {
         if (adapterMemo.getDisabled()) {
             return false;
@@ -35,7 +35,7 @@ public class NmraConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         return false; // nothing, by default
     }
 
-    @SuppressWarnings("unchecked")
+    @Override
     public <T> T get(Class<?> T) {
         if (adapterMemo.getDisabled()) {
             return null;
@@ -43,6 +43,7 @@ public class NmraConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         return null; // nothing, by default
     }
 
+    @Override
     public void dispose() {
         if (cf != null) {
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
@@ -50,11 +51,10 @@ public class NmraConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         InstanceManager.deregister(this, NmraConfigurationManager.class);
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         //No actions that can be loaded at startup
         return null;
     }
 
 }
-
-/* @(#)ConfigurationManager.java */

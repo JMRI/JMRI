@@ -132,5 +132,5 @@ public class SystemType {
     }
 
     // initialize logging
-    static private Logger log = LoggerFactory.getLogger(SystemType.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SystemType.class);
 }

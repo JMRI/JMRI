@@ -8,7 +8,6 @@ import jmri.jmrix.AbstractProgrammerFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * Programmer facade for single index multi-CV access.
  * <p>
@@ -18,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * <li> T2CV.11.12 <BR>
  * The write operation writes 11 to the first index CV (201), 12 to the 2nd
  * index CV (202), then writes the data to CV 203 (MSB) and 204 (LSB).<BR>
- * The read operation is slightly different, writing 111 (100+11) to CV201, then
+ * The read operation is slightly different, writing 111 (100+11) to CV201,
  * then 12 to the 2nd index CV (202), then writes 100 to CV204, then reads the
  * two values from CV203 and CV204.
  * <li> T3CV.11.12.13 <BR>
@@ -38,6 +37,7 @@ import org.slf4j.LoggerFactory;
 public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**
+     * @param prog the programmer this facade is attached to
      */
     public TwoIndexTcsProgrammerFacade(Programmer prog) {
         super(prog);
@@ -55,8 +55,8 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
     static final int readOffset = 100;
 
     // members for handling the programmer interface
-    int _val;	// remember the value being read/written for confirmative reply
-    String _cv;	// remember the cv number being read/written
+    int _val; // remember the value being read/written for confirmative reply
+    String _cv; // remember the cv number being read/written
     int valuePI;   //  value to write to PI or -1
     int valueSI;   //  value to write to SI or -1
     int valueMSB;  //  value to write to MSB or -1
@@ -83,6 +83,7 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
     }
 
     // programming interface
+    @Override
     synchronized public void writeCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         _val = val;
         useProgrammer(p);
@@ -98,10 +99,7 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
         }
     }
 
-    synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        readCV(CV, p);
-    }
-
+    @Override
     synchronized public void readCV(String CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         useProgrammer(p);
         parseCV(CV);
@@ -132,7 +130,6 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
             throw new jmri.ProgrammerException("programmer in use");
         } else {
             _usingProgrammer = p;
-            return;
         }
     }
 
@@ -157,13 +154,16 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
 
     // get notified of the final result
     // Note this assumes that there's only one phase to the operation
+    @Override
     public void programmingOpReply(int value, int status) {
         if (log.isDebugEnabled()) {
             log.debug("notifyProgListenerEnd value " + value + " status " + status);
         }
 
         if (_usingProgrammer == null) {
-            log.error("No listener to notify");
+            log.error("No listener to notify, reset and ignore");
+            state = ProgState.NOTPROGRAMMING;
+            return;
         }
         
         // Complete processing later so that WOWDecoder will go through a complete power on reset and not brown out between CV read/writes
@@ -171,6 +171,7 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
         ActionListener taskPerformer = new ActionListener() {
             final int myValue = value;
             final int myStatus = status;
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 processProgrammingOpReply(myValue, myStatus);
             }
@@ -179,10 +180,19 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
         t.setRepeats(false);
         t.start();
     }
-    /**
-     * After a Swing delay, this processes the reply
-     */
+    
+    // After a Swing delay, this processes the reply
     protected void processProgrammingOpReply(int value, int status) {
+        if (status != OK ) {
+            // pass abort up
+            log.debug("Reset and pass abort up");
+            jmri.ProgListener temp = _usingProgrammer;
+            _usingProgrammer = null; // done
+            state = ProgState.NOTPROGRAMMING;
+            temp.programmingOpReply(value, status);
+            return;
+        }
+
         switch (state) {
             case DOSIFORREAD:
                 try {
@@ -205,7 +215,7 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
                     state = ProgState.FINISHREAD;
                     prog.readCV(valMSB, this);
                 } catch (jmri.ProgrammerException e) {
-                    log.error("Exception doing write strobe for read", e);
+                    log.error("Exception doing read first", e);
                 }
                 break;
             case FINISHREAD:
@@ -314,6 +324,6 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TwoIndexTcsProgrammerFacade.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TwoIndexTcsProgrammerFacade.class);
 
 }

@@ -4,7 +4,7 @@ package jmri;
  * Provide values and methods related to layout scale.
  * <P>
  * *
- * @author	Dave Duchamp Copyright (C) 2009
+ * @author Dave Duchamp Copyright (C) 2009
  * @since 2.5.4
  */
 public class Scale {
@@ -13,12 +13,12 @@ public class Scale {
     }
 
     // Scale definitions
-    public static final int Z = 0x01;	//  1:220
-    public static final int N = 0x02;	//  1:160	
-    public static final int TT = 0x03;	//  1:120
+    public static final int Z = 0x01; //  1:220
+    public static final int N = 0x02; //  1:160 
+    public static final int TT = 0x03; //  1:120
     public static final int HO = 0x04;  //  1:87
     public static final int S = 0x05;   //  1:64
-    public static final int O = 0x06;	//  1:48
+    public static final int O = 0x06; //  1:48
     public static final int G = 0x07;   //  1:24
     public static final int UK_N = 0x08;  //  1:148
     public static final int UK_OO = 0x09; //  1:76.2
@@ -27,8 +27,11 @@ public class Scale {
     public static final int NUM_SCALES = 10;
 
     /**
-     * scaleFactor is a number less than 1 representing the reduction from full
-     * size.
+     * Get the scaleFactor as a number less than 1 representing the reduction
+     * from full size.
+     *
+     * @param scale the scale constant
+     * @return the ratio expressed as a real number
      */
     public static double getScaleFactor(int scale) {
         switch (scale) {
@@ -60,6 +63,9 @@ public class Scale {
     /**
      * Provide a standard human-readable indication of scale that includes both
      * name (letter) and reduction ratio.
+     *
+     * @param scale the scale constant
+     * @return the scale name and ratio for presentation
      */
     public static String getScaleID(int scale) {
         switch (scale) {
@@ -90,6 +96,8 @@ public class Scale {
 
     /**
      * Provide the short name for the scale.
+     * @param scale the scale constant
+     * @return the scale name
      */
     public static String getShortScaleID(int scale) {
         switch (scale) {

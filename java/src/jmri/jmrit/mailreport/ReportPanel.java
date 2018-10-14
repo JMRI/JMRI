@@ -8,8 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import javax.mail.internet.AddressException;
@@ -41,9 +40,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ReportPanel extends JPanel {
 
-    static java.util.ResourceBundle rb = null;
-
-    // member declarations
     JButton sendButton;
     JTextField emailField = new JTextField(40);
     JTextField summaryField = new JTextField(40);
@@ -57,12 +53,10 @@ public class ReportPanel extends JPanel {
 
     // Define which profile sub-directories to include
     // In lowercase as I was too lazy to do a proper case-insensitive check...
-    String[] profDirs = {"networkservices", "programmers", "throttle"};
+    String[] profDirs = {"networkservices", "profile", "programmers", "throttle"};
 
     public ReportPanel() {
-        if (rb == null) {
-            rb = java.util.ResourceBundle.getBundle("jmri.jmrit.mailreport.ReportBundle");
-        }
+        ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.mailreport.ReportBundle");
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -147,11 +141,14 @@ public class ReportPanel extends JPanel {
             }
         });
         add(sendButton);
-
     }
+    
+    // made static, public, not final so can be changed via script
+    static public String requestURL = "http://jmri.org/problem-report.php";  //NOI18N
 
     @SuppressWarnings("unchecked")
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
+        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.mailreport.ReportBundle");
         try {
             sendButton.setEnabled(false);
             log.debug("initial checks");
@@ -160,7 +157,6 @@ public class ReportPanel extends JPanel {
 
             log.debug("start send");
             String charSet = "UTF-8";  //NO18N
-            String requestURL = "http://jmri.org/problem-report.php";  //NOI18N
 
             MultipartMessage msg = new MultipartMessage(requestURL, charSet);
 
@@ -271,7 +267,7 @@ public class ReportPanel extends JPanel {
                 // close containing Frame
                 getTopLevelAncestor().setVisible(false);
             } else {
-                JOptionPane.showMessageDialog(null, rb.getString("ErrMessage"), rb.getString("ErrTitle"), JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, rb.getString("ErrMessage"), rb.getString("ErrTitle"), JOptionPane.ERROR_MESSAGE); // TODO add Bundle to folder and use ErrorTitle key in NamedBeanBundle props
                 sendButton.setEnabled(true);
             }
 
@@ -280,7 +276,7 @@ public class ReportPanel extends JPanel {
             sendButton.setEnabled(true);
         } catch (AddressException ex) {
             log.error("Invalid email address: " + ex);
-            JOptionPane.showMessageDialog(null, rb.getString("ErrAddress"), rb.getString("ErrTitle"), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, rb.getString("ErrAddress"), rb.getString("ErrTitle"), JOptionPane.ERROR_MESSAGE); // TODO add Bundle to folder and use ErrorTitle key in NamedBeanBundle props
             sendButton.setEnabled(true);
         }
     }
@@ -318,15 +314,16 @@ public class ReportPanel extends JPanel {
                 if (!directory.equals("") || file.getName().toLowerCase().matches(".*(config\\.xml|\\.properties)")) {
                     log.debug("Add file: {}{}", directory, file.getName());
                     byte[] buffer = new byte[1024];
-                    FileInputStream in = new FileInputStream(file);
-                    out.putNextEntry(new ZipEntry(directory + file.getName()));
+                    try (FileInputStream in = new FileInputStream(file)) {
+                        out.putNextEntry(new ZipEntry(directory + file.getName()));
 
-                    int length;
-                    while ((length = in.read(buffer)) > 0) {
-                        out.write(buffer, 0, length);
+                        int length;
+                        while ((length = in.read(buffer)) > 0) {
+                            out.write(buffer, 0, length);
+                        }
+                        out.closeEntry();
+                        in.close();
                     }
-                    out.closeEntry();
-                    in.close();
                 } else {
                     log.debug("Skip file: {}{}", directory, file.getName());
                 }
@@ -338,5 +335,5 @@ public class ReportPanel extends JPanel {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ReportPanel.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ReportPanel.class);
 }

@@ -1,4 +1,3 @@
-// SetupExcelProgramSwitchListFrameAction.java
 package jmri.jmrit.operations.trains.excel;
 
 import java.awt.Frame;
@@ -9,7 +8,7 @@ import javax.swing.AbstractAction;
  * Swing action to create a SetupExcelProgramSwitchListFrame.
  *
  * @author Daniel Boudreau Copyright (C) 2013
- * @version $Revision: 22219 $
+ * 
  */
 public class SetupExcelProgramSwitchListFrameAction extends AbstractAction {
 
@@ -31,4 +30,4 @@ public class SetupExcelProgramSwitchListFrameAction extends AbstractAction {
     }
 }
 
-/* @(#)SetupExcelProgramSwitchListFrameAction.java */
+

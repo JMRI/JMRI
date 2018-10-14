@@ -1,77 +1,64 @@
 package jmri.jmrit.display;
 
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * PanelEditorTest.java
- *
+ * <p>
  * Description:
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
  */
-public class PanelEditorTest extends TestCase {
+public class PanelEditorTest {
 
-    TurnoutIcon to = null;
-
+    @Test
     public void testShow() throws Exception {
-
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // load and display
         File f = new File("java/test/jmri/jmrit/display/verify/PanelEditorTest1.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-
     }
 
+    @Test
     public void testShow2() throws Exception {
-
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // load and display
         File f = new File("java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
 
     }
 
+    @Test
     public void testShow3() throws Exception {
-
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // load and display
         File f = new File("java/test/jmri/jmrit/display/configurexml/load/OneOfEach.3.3.3.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
 
     }
 
-    // from here down is testing infrastructure
-    public PanelEditorTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", PanelEditorTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(PanelEditorTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initConfigureManager();
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initConfigureManager();
     }
 
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
-	// static private Logger log = LoggerFactory.getLogger(TurnoutIconTest.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);
 }

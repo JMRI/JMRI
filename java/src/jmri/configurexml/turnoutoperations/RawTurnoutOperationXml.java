@@ -24,6 +24,7 @@ public class RawTurnoutOperationXml extends CommonTurnoutOperationXml {
      *
      * @param e the XML element of type "turnoutOperation"
      */
+    @Override
     public TurnoutOperation loadOne(Element e) {
         try {
             Class<?> myOpClass = Class.forName("jmri.RawTurnoutOperation");
@@ -39,5 +40,5 @@ public class RawTurnoutOperationXml extends CommonTurnoutOperationXml {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RawTurnoutOperation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RawTurnoutOperation.class);
 }

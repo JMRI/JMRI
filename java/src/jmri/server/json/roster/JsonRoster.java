@@ -23,10 +23,19 @@ public class JsonRoster {
      * {@value #ROSTER_GROUPS}
      */
     public static final String ROSTER_GROUPS = "rosterGroups"; // NOI18N
+    /**
+     * {@value #ATTRIBUTES}
+     */
+    public static final String ATTRIBUTES = "attributes"; // NOI18N
+    /**
+     * {@value #DATE_MODIFIED}
+     */
+    public static final String DATE_MODIFIED = "dateModified"; // NOI18N
 
     /**
-     * Unusable constructor, made private to avoid public documentation.
+     * Prevent instantiation, since this class only contains static values
      */
     private JsonRoster() {
+        throw new UnsupportedOperationException("There is no valid instance of this class");
     }
 }

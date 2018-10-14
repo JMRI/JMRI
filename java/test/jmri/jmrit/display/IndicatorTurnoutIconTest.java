@@ -1,89 +1,85 @@
 package jmri.jmrit.display;
 
+import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
+import jmri.jmrit.display.panelEditor.PanelEditor;
+import jmri.util.JUnitUtil;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * IndicatorTurnoutIconTest.java
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
-public class IndicatorTurnoutIconTest extends jmri.util.SwingTestCase {
+public class IndicatorTurnoutIconTest extends PositionableIconTest {
 
-    IndicatorTurnoutIcon to;
-    jmri.jmrit.display.panelEditor.PanelEditor panel;
-
+    @Test
     public void testEquals() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame jf = new JFrame();
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
-        to = new IndicatorTurnoutIcon(panel);
+        IndicatorTurnoutIcon to = new IndicatorTurnoutIcon(editor);
         jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
-        to.setTurnout(new jmri.NamedBeanHandle<jmri.Turnout>("IT1", turnout));
+        to.setTurnout(new jmri.NamedBeanHandle<>("IT1", turnout));
 
-        IndicatorTurnoutIcon to2 = new IndicatorTurnoutIcon(panel);
+        IndicatorTurnoutIcon to2 = new IndicatorTurnoutIcon(editor);
         turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
-        to2.setTurnout(new jmri.NamedBeanHandle<jmri.Turnout>("IT1", turnout));
+        to2.setTurnout(new jmri.NamedBeanHandle<>("IT1", turnout));
 
         Assert.assertTrue("identity", to.equals(to));
         Assert.assertFalse("object (not content) equality", to2.equals(to));
-        Assert.assertFalse("object (not content) equality commutes", to.equals(to2));        
+        Assert.assertFalse("object (not content) equality commutes", to.equals(to2));
     }
 
+    @Test
     public void testClone() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         JFrame jf = new JFrame();
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
-        to = new IndicatorTurnoutIcon(panel);
-        jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
-        to.setTurnout(new jmri.NamedBeanHandle<jmri.Turnout>("IT1", turnout));
+        IndicatorTurnoutIcon to = (IndicatorTurnoutIcon)p; 
 
         IndicatorTurnoutIcon to2 = (IndicatorTurnoutIcon) to.deepClone();
 
         Assert.assertFalse("clone object (not content) equality", to2.equals(to));
-        
+
         Assert.assertTrue("class type equality", to2.getClass().equals(to.getClass()));
-        
-    }
-    
 
-    // from here down is testing infrastructure
-    public IndicatorTurnoutIconTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", IndicatorTurnoutIconTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(IndicatorTurnoutIconTest.class);
-        return suite;
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-    
-        jmri.util.JUnitUtil.resetInstanceManager();
-        panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test IndicatorTurnoutIcon Panel");
-        to = null;
-    }
-
-    protected void tearDown() {
-        // now close panel window
-        java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
-        for (int i = 0; i < listeners.length; i++) {
-            panel.getTargetFrame().removeWindowListener(listeners[i]);
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+        if (!GraphicsEnvironment.isHeadless()) {
+            editor = new PanelEditor("Test IndicatorTurnoutIcon Panel");
+            IndicatorTurnoutIcon to = new IndicatorTurnoutIcon(editor);
+            jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
+            to.setTurnout(new jmri.NamedBeanHandle<>("IT1", turnout));
+            p = to;
         }
-        junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
-        apps.tests.Log4JFixture.tearDown();
     }
 
-	// static private Logger log = LoggerFactory.getLogger(IndicatorTurnoutIconTest.class.getName());
+    @Test
+    @Ignore("unreliable on CI servers")
+    @Override
+    public void testGetAndSetPositionable() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertTrue("Defalt Positionable", p.isPositionable());
+        p.setPositionable(false);
+        Assert.assertFalse("Positionable after set false", p.isPositionable());
+        p.setPositionable(true);
+        Assert.assertTrue("Positionable after set true", p.isPositionable());
+    }
+
+    // private final static Logger log = LoggerFactory.getLogger(IndicatorTurnoutIconTest.class);
+
 }

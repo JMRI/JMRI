@@ -9,7 +9,9 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
-   jmri.jmrix.dccpp.simulator.configurexml.PackageTest.class
+   jmri.jmrix.dccpp.simulator.configurexml.PackageTest.class,
+   DCCppSimulatorAdapterTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.dccpp.simulator package.
@@ -31,6 +33,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

@@ -1,110 +1,94 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
+
 
 /**
  * XBeeReplyTest.java
  *
  * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeReply class
  *
- * @author	Paul Bender
+ * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class XBeeReplyTest extends TestCase {
+public class XBeeReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
-    public void testCtor() {
-        XBeeReply m = new XBeeReply();
-        Assert.assertNotNull("exists", m);
-    }
-
+    @Test
     public void testStringCtor(){
-        XBeeReply m = new XBeeReply("000A8300072B00010011001028");
+        m = new XBeeReply("000A8300072B00010011001028");
         Assert.assertNotNull("exists", m);
     }
 
+    @Test
     public void testCopyCtor(){
-        XBeeReply m = new XBeeReply("000A8300072B00010011001028");
-        XBeeReply c = new XBeeReply(m);
+        XBeeReply msg = new XBeeReply("000A8300072B00010011001028");
+        XBeeReply c = new XBeeReply(msg);
         Assert.assertNotNull("exists", c);
     }
 
+    @Test
     public void testXBeeResponseCtor(){
         String s = new String("000A8300072B00010011001028");
-        com.rapplogic.xbee.api.GenericResponse xbresponse = new com.rapplogic.xbee.api.GenericResponse();
         byte ba[] = jmri.util.StringUtil.bytesFromHexString(s);
-        int ia[] = new int[ba.length];
-        for (int i = 0; i < ba.length; i++) {
-            ia[i] = ba[i];
-        }
-        xbresponse.setRawPacketBytes(ia);
-
-        XBeeReply m = new XBeeReply(xbresponse);
+        com.digi.xbee.api.packet.UnknownXBeePacket xbresponse = com.digi.xbee.api.packet.UnknownXBeePacket.createPacket(ba);
+        m = new XBeeReply(xbresponse);
         Assert.assertNotNull("exists", m);
     }
 
+    @Test
+    @Override
     public void testToString(){
-        XBeeReply m = new XBeeReply("000A8300072B00010011001028");
-        Assert.assertTrue("ToString Return",
-                          m.toString().equals("000A8300072B00010011001028"));
+        XBeeReply msg = new XBeeReply("000A8300072B00010011001028");
+        // the Digi XBee API method of doing this adds readio
+        // header and trailer information to the ouptut.
+        Assert.assertEquals("ToString Return","7E000D000A8300072B00010011001028F6",
+                          msg.toString());
     }
 
+    @Test
+    @Override
     public void testToMonitorString(){
-        XBeeReply m = new XBeeReply("000A8300072B00010011001028");
+        XBeeReply msg = new XBeeReply("000A8300072B00010011001028");
         // since we're letting the XBee API generate the monitor string, just 
         // check to make sure the monitor string is not null.
-        Assert.assertNotNull("ToMonitorString Return",m.toMonitorString());
+        Assert.assertNotNull("ToMonitorString Return",msg.toMonitorString());
     }
 
+    @Test
     public void testGetXBeeResponse(){
-        XBeeReply m = new XBeeReply("000A8300072B00010011001028");
+        XBeeReply msg = new XBeeReply("000A8300072B00010011001028");
         // make sure the XBeeResponse is not null.
-        Assert.assertNotNull("getXBeeResponse return",m.getXBeeResponse());
+        Assert.assertNotNull("getXBeeResponse return",msg.getXBeeResponse());
     }
 
+    @Test
     public void testSetXBeeResponse(){
-        XBeeReply m = new XBeeReply();
+        XBeeReply msg = new XBeeReply();
         String s = new String("000A8300072B00010011001028");
-        com.rapplogic.xbee.api.GenericResponse xbresponse = new com.rapplogic.xbee.api.GenericResponse();
         byte ba[] = jmri.util.StringUtil.bytesFromHexString(s);
-        int ia[] = new int[ba.length];
-        for (int i = 0; i < ba.length; i++) {
-            ia[i] = ba[i];
-        }
-        xbresponse.setRawPacketBytes(ia);
+        com.digi.xbee.api.packet.UnknownXBeePacket xbresponse = com.digi.xbee.api.packet.UnknownXBeePacket.createPacket(ba);
        
-        m.setXBeeResponse(xbresponse);
+        msg.setXBeeResponse(xbresponse);
  
         // make sure the XBeeResponse is not null.
-        Assert.assertNotNull("getXBeeRsponse after Set",m.getXBeeResponse());
-        Assert.assertEquals("xbee response after set",xbresponse,m.getXBeeResponse());
-    }
-
-    // from here down is testing infrastructure
-    public XBeeReplyTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XBeeReplyTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XBeeReplyTest.class);
-        return suite;
+        Assert.assertNotNull("getXBeeRsponse after Set",msg.getXBeeResponse());
+        Assert.assertEquals("xbee response after set",xbresponse,msg.getXBeeResponse());
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        m = new XBeeReply();
     }
 
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+	m = null;
+        JUnitUtil.tearDown();
     }
 
 }

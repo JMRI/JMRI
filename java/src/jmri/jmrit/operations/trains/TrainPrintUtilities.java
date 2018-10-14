@@ -1,4 +1,3 @@
-// TrainPrintUtilities
 package jmri.jmrit.operations.trains;
 
 import java.awt.Color;
@@ -20,6 +19,7 @@ import javax.print.PrintServiceLookup;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
  * Train print utilities. Used for train manifests and build reports.
  *
  * @author Daniel Boudreau (C) 2010
- * @version $Revision$
  *
  */
 public class TrainPrintUtilities {
@@ -42,15 +41,15 @@ public class TrainPrintUtilities {
     /**
      * Print or preview a train manifest, build report, or switch list.
      *
-     * @param file File to be printed or previewed
-     * @param name Title of document
-     * @param isPreview true if preview
-     * @param fontName optional font to use when printing document
+     * @param file          File to be printed or previewed
+     * @param name          Title of document
+     * @param isPreview     true if preview
+     * @param fontName      optional font to use when printing document
      * @param isBuildReport true if build report
-     * @param logoURL optional pathname for logo
-     * @param printerName optional default printer name
-     * @param orientation Setup.LANDSCAPE, Setup.PORTRAIT, or Setup.HANDHELD
-     * @param fontSize font size
+     * @param logoURL       optional pathname for logo
+     * @param printerName   optional default printer name
+     * @param orientation   Setup.LANDSCAPE, Setup.PORTRAIT, or Setup.HANDHELD
+     * @param fontSize      font size
      */
     public static void printReport(File file, String name, boolean isPreview, String fontName,
             boolean isBuildReport, String logoURL, String printerName, String orientation, int fontSize) {
@@ -124,7 +123,7 @@ public class TrainPrintUtilities {
                 }
                 break;
             }
-            //			log.debug("Line: {}", line.toString());
+            //   log.debug("Line: {}", line.toString());
             // check for build report print level
             if (isBuildReport) {
                 line = filterBuildReport(line, false); // no indent
@@ -164,23 +163,23 @@ public class TrainPrintUtilities {
                 if ((!Setup.getPickupEnginePrefix().equals("") && line.startsWith(Setup
                         .getPickupEnginePrefix()))
                         || (!Setup.getPickupCarPrefix().equals("") && line.startsWith(Setup
-                                .getPickupCarPrefix()))
+                        .getPickupCarPrefix()))
                         || (!Setup.getSwitchListPickupCarPrefix().equals("") && line
-                                .startsWith(Setup.getSwitchListPickupCarPrefix()))) {
+                        .startsWith(Setup.getSwitchListPickupCarPrefix()))) {
                     // log.debug("found a pickup line");
                     c = Setup.getPickupColor();
                 } else if ((!Setup.getDropEnginePrefix().equals("") && line.startsWith(Setup
                         .getDropEnginePrefix()))
                         || (!Setup.getDropCarPrefix().equals("") && line.startsWith(Setup
-                                .getDropCarPrefix()))
+                        .getDropCarPrefix()))
                         || (!Setup.getSwitchListDropCarPrefix().equals("") && line.startsWith(Setup
-                                .getSwitchListDropCarPrefix()))) {
+                        .getSwitchListDropCarPrefix()))) {
                     // log.debug("found a drop line");
                     c = Setup.getDropColor();
                 } else if ((!Setup.getLocalPrefix().equals("") && line.startsWith(Setup
                         .getLocalPrefix()))
                         || (!Setup.getSwitchListLocalPrefix().equals("") && line.startsWith(Setup
-                                .getSwitchListLocalPrefix()))) {
+                        .getSwitchListLocalPrefix()))) {
                     // log.debug("found a drop line");
                     c = Setup.getLocalColor();
                 } else if (!line.startsWith(TrainCommon.TAB)) {
@@ -232,7 +231,7 @@ public class TrainPrintUtilities {
             return;
         }
         PrintWriter out;
-        File buildReport = TrainManagerXml.instance().createTrainBuildReportFile(
+        File buildReport = InstanceManager.getDefault(TrainManagerXml.class).createTrainBuildReportFile(
                 Bundle.getMessage("Report") + " " + name);
         try {
             out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
@@ -269,8 +268,8 @@ public class TrainPrintUtilities {
             log.debug("Close failed");
         }
         out.close();
-        // open editor
-        openDesktopEditor(buildReport);
+        // open the file
+        TrainUtilities.openDesktop(buildReport);
     }
 
     /*
@@ -336,32 +335,6 @@ public class TrainPrintUtilities {
         }
     }
 
-    /**
-     * This method uses Desktop which is supported in Java 1.6.
-     */
-    public static void openDesktopEditor(File file) {
-        if (!java.awt.Desktop.isDesktopSupported()) {
-            log.warn("desktop not supported");
-            return;
-        }
-        java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
-        if (desktop.isSupported(java.awt.Desktop.Action.EDIT)) {
-            try {
-                desktop.edit(file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else if (desktop.isSupported(java.awt.Desktop.Action.OPEN)) {
-            try {
-                desktop.open(file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            log.warn("desktop edit or open not supported");
-        }
-    }
-
     public static JComboBox<String> getPrinterJComboBox() {
         JComboBox<String> box = new JComboBox<>();
         PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
@@ -382,5 +355,5 @@ public class TrainPrintUtilities {
         return ""; // no default printer specified
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainPrintUtilities.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainPrintUtilities.class);
 }

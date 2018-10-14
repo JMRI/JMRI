@@ -10,8 +10,8 @@ import jmri.util.StringUtil;
 /**
  * Frame for user input of Mrc messages
  *
- * @author	Ken Cameron	Copyright (C) 2010 derived from:
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Ken Cameron Copyright (C) 2010 derived from:
+ * @author Bob Jacobsen Copyright (C) 2001
  * @author Dan Boudreau Copyright (C) 2007
  */
 public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
@@ -27,20 +27,28 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
         super();
     }
 
-    public void initContext(Object context) throws Exception {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void initContext(Object context) {
         if (context instanceof MrcSystemConnectionMemo) {
-            try {
-                initComponents((MrcSystemConnectionMemo) context);
-            } catch (Exception e) {
-                //log.error("BoosterProg initContext failed");
-            }
+            initComponents((MrcSystemConnectionMemo) context);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.mrc.swing.packetgen.MrcPacketGenPanel";
-    }//NOI18N
+        return "package.jmri.jmrix.mrc.swing.packetgen.MrcPacketGenPanel"; //NOI18N
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getTitle() {
         StringBuilder x = new StringBuilder();
         if (memo != null) {
@@ -53,7 +61,11 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
         return x.toString();
     }
 
-    public void initComponents(MrcSystemConnectionMemo m) throws Exception {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void initComponents(MrcSystemConnectionMemo m) {
         this.memo = m;
         this.tc = m.getMrcTrafficController();
 
@@ -77,6 +89,7 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
         add(sendButton);
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
@@ -116,12 +129,6 @@ public class MrcPacketGenPanel extends jmri.jmrix.mrc.swing.MrcPanel {
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.mrc.swing.MrcNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 3767753843735978274L;
-
         public Default() {
             super("Open MRC Send Binary Command",
                     new jmri.util.swing.sdi.JmriJFrameInterface(),

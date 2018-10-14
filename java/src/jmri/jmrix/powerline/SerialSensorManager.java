@@ -1,4 +1,3 @@
-// SerialSensorManager.java
 package jmri.jmrix.powerline;
 
 import jmri.Sensor;
@@ -11,12 +10,11 @@ import org.slf4j.LoggerFactory;
  * System names are: Powerline - "PSann", where a is the house code and nn is
  * the unit number without padding.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @author	Ken Cameron, (C) 2009, sensors from poll replies Converted to
+ * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
+ * @author Ken Cameron, (C) 2009, sensors from poll replies Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
- * @version	$Revision$
- */
+  */
 abstract public class SerialSensorManager extends jmri.managers.AbstractSensorManager implements SerialListener {
 
     SerialTrafficController tc = null;
@@ -30,11 +28,13 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
     /**
      * Return the system letter
      */
+    @Override
     public String getSystemPrefix() {
         return tc.getAdapterMemo().getSystemPrefix();
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() {
         super.dispose();
     }
@@ -50,13 +50,13 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
         String sName = tc.getAdapterMemo().getSerialAddress().normalizeSystemName(systemName);
         if (sName.equals("")) {
             // system name is not valid
-            log.error("Invalid Sensor system name - " + systemName);
+            log.error("Invalid Sensor system name - {}", systemName);
             return null;
         }
         // does this Sensor already exist
         s = getBySystemName(sName);
         if (s != null) {
-            log.error("Sensor with this name already exists - " + systemName);
+            log.error("Sensor with this name already exists - {}", systemName);
             return null;
         }
         // Sensor system name is valid and Sensor doesn't exist, make a new one
@@ -72,6 +72,7 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
     /**
      * Dummy routine
      */
+    @Override
     public void message(SerialMessage r) {
         // this happens during some polls from sensor messages
         //log.warn("unexpected message");
@@ -80,15 +81,18 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
     /**
      * Process a reply to a poll of Sensors of one node
      */
+    @Override
     abstract public void reply(SerialReply r);
 
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         return false;
     }
 
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) {
 
-        //If the hardware address past does not already exist then this can
+        //If the hardware address passed does not already exist then this can
         //be considered the next valid address.
         Sensor s = getBySystemName(prefix + typeLetter() + curAddress);
         if (s == null) {
@@ -102,9 +106,10 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
         try {
             iName = Integer.parseInt(curAddress.substring(1));
         } catch (NumberFormatException ex) {
-            log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+            log.error("Unable to convert {} Hardware Address to a number", curAddress);
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
+                    showErrorMessage(Bundle.getMessage("ErrorTitle"),
+                            Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
 
@@ -125,7 +130,26 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class.getName());
-}
+    /**
+     * Public method to validate system name format.
+     *
+     * @return 'true' if system name has a valid format, else returns 'false'
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        return (tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, 'S'));
 
-/* @(#)SerialSensorManager.java */
+    }
+
+    /**
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
+        return entryToolTip;
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class);
+
+}

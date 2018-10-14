@@ -1,0 +1,49 @@
+<!-- Sidebar -->
+<!-- Updated by Blorec Herv&#233;<bzh5620@yahoo.fr> le 2016-09-09-->
+<html lang="fr">  
+	  < <hr class="hide">
+	  <div id="mBody">
+	  <div id="side"> <!-- Block of text on left side of page -->
+	  <div style="text-align: center">JMRI is...</div>
+	  <dl>
+		<dt><h3><a href="../index.shtml">Outils</a></h3></dt>
+		<dd>JMRI fournit des outils puissants pour travailler avec vos r&#233;seaux.
+		    <UL>
+				<li><dfn><a href="../Turnouts.shtml">Aiguillages</a></dfn>
+				<li><dfn><a href="../Lights.shtml">Lumi&#232;res</a></dfn>
+				<li><dfn><a href="../Sensors.shtml">Capteurs</a></dfn>
+				<li><dfn><a href="../throttle/ThrottleMain.shtml">R&#233;gulateurs</a></dfn>
+				<li><dfn><a href="../consisttool/ConsistTool.shtml">Couplage</a></dfn>
+				<li><dfn><a href="../signaling/index.shtml">Signalisation</a></dfn>
+				<li><dfn><a href="../Blocks.shtml">Cantons</a></dfn>
+				<li><dfn><a href="../Reporters.shtml">Rapports</a></dfn>
+				<li><dfn><a href="../Memories.shtml">Variables M&#233;moire</a></dfn>
+				<li><dfn><a href="../Routes.shtml">Itin&#233;raires</a></dfn>
+				<li><dfn><a href="../LRoutes.shtml">LItin&#233;raires</a></dfn>
+		    <li><dfn><a href="../Sections.shtml">Sections</a></dfn>
+				<li><dfn><a href="../Logix.shtml">Logix</a></dfn>
+				<li><dfn><a href="../fastclock/index.shtml">Horloges Rapides</a></dfn>
+				<li><dfn><a href="../speedometer/index.shtml">Compteur</a></dfn>
+				<li><dfn><a href="../Audio.shtml">Audio</a></dfn>
+				<li><dfn><a href="../IdTags.shtml">Etiquettes IDs</a></dfn>
+		
+		    <li><dfn><a href="../index.shtml#systemSpecificTools">Syst&#232;me-sp&#233;cifique...</a></dfn>
+		    </ul>
+		</dd>
+
+			<dt><h3><a href="../automation/index.shtml">Automatisation du R&#233;seau</a></h3></dt>
+	   	<dd>JMRI peut être utilis&#233; pour automatiser des parties 
+			de votre r&#233;seau, depuis le simple contr&#244;le d'un croisement 
+			&#224; la circulation de trains en toile de fond.
+		<ul>
+	    <li><dfn><a href="../signaling/index.shtml">Signalisation</a></dfn>
+			<li><dfn><a href="../signaling/EntryExit.shtml">Entr&#233;e Sortie (NX)</a></dfn>
+			<li><dfn><a href="../Routes.shtml">Itin&#233;raires</a></dfn>
+	    <li><dfn><a href="../fastclock/index.shtml">Horloges Rapides</a></dfn>
+	    <li><dfn><a href="../scripting/index.shtml">Script</a></dfn>
+	    </ul>
+		</dd>
+
+	  </dl>
+
+</div> <!-- closes #side -->

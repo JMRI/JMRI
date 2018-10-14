@@ -10,7 +10,6 @@ import javax.swing.JMenu;
  *
  * @author Bob Jacobsen Copyright 2003
  * @author Daniel Boudreau Copyright 2008
- * @version $Revision$
  */
 public class OperationsMenu extends JMenu {
 
@@ -33,5 +32,5 @@ public class OperationsMenu extends JMenu {
 
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(OperationsMenu.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(OperationsMenu.class);
 }

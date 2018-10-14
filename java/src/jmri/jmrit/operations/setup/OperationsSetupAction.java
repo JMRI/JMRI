@@ -1,6 +1,6 @@
-// OperationsSetupAction.java
 package jmri.jmrit.operations.setup;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
@@ -10,7 +10,6 @@ import javax.swing.AbstractAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class OperationsSetupAction extends AbstractAction {
 
@@ -19,13 +18,13 @@ public class OperationsSetupAction extends AbstractAction {
     }
 
     public OperationsSetupAction() {
-        this(Bundle.getMessage("MenuSetup"));	// NOI18N
+        this(Bundle.getMessage("MenuSetup")); // NOI18N
     }
 
     static OperationsSetupFrame operationsSetupFrame = null;
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Only one OperationsSetupFrame")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Only one OperationsSetupFrame")
     public void actionPerformed(ActionEvent e) {
         // create a settings frame
         if (operationsSetupFrame == null || !operationsSetupFrame.isVisible()) {
@@ -33,8 +32,8 @@ public class OperationsSetupAction extends AbstractAction {
             operationsSetupFrame.initComponents();
         }
         operationsSetupFrame.setExtendedState(Frame.NORMAL);
-        operationsSetupFrame.setVisible(true);	// this also brings the frame into focus
+        operationsSetupFrame.setVisible(true); // this also brings the frame into focus
     }
 }
 
-/* @(#)OperationsSetupAction.java */
+

@@ -1,4 +1,3 @@
-// Transmitter.java
 package jmri.jmrix.rps;
 
 import jmri.DccThrottle;
@@ -12,23 +11,22 @@ import jmri.ThrottleListener;
  * name (ID) of the roster entry this was originally created from.
  *
  * @author	Bob Jacobsen Copyright (C) 2006, 2008
- * @version $Revision$
  */
 public class Transmitter implements ThrottleListener {
 
     Transmitter(String id, boolean polled, int address, boolean longAddress) {
-        setID(id);
+        setId(id);
         setPolled(polled);
         setAddress(address);
         setLongAddress(longAddress);
     }
 
-    public String getID() {
+    public String getId() {
         return id;
     }
     String id;
 
-    public void setID(String id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -98,11 +96,19 @@ public class Transmitter implements ThrottleListener {
         return false;
     }
 
+    @Override
     public void notifyThrottleFound(DccThrottle t) {
         needReqThrottle = false;
         throttle = t;
     }
 
-    public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason) {
+    @Override
+    public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
+    }
+
+    @Override
+    public void notifyStealThrottleRequired(jmri.LocoAddress address){
+        // this is an automatically stealing impelementation.
+        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }
 }

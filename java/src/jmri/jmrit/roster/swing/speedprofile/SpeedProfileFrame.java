@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 /**
  * Frame Entry Exit Frames
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class SpeedProfileFrame extends jmri.util.JmriJFrame {
 
@@ -16,7 +16,8 @@ public class SpeedProfileFrame extends jmri.util.JmriJFrame {
 
     SpeedProfilePanel spPanel;
 
-    public void initComponents() throws Exception {
+    @Override
+    public void initComponents() {
         // the following code sets the frame's initial state
 
         spPanel = new SpeedProfilePanel();
@@ -51,4 +52,5 @@ public class SpeedProfileFrame extends jmri.util.JmriJFrame {
             spPanel.table.dispose();
         }
     }
+
 }

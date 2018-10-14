@@ -73,6 +73,7 @@ public class MultiIconEditor extends JPanel {
             super(init);
             savedIndex = index;
             addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent a) {
                     pickIcon();
                 }

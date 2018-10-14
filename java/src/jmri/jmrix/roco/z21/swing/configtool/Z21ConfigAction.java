@@ -35,6 +35,7 @@ public class Z21ConfigAction extends AbstractAction {
         this("Z21 Configuration Tool");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a Z21ConfigFrame
         Z21ConfigFrame f = new Z21ConfigFrame(_memo);

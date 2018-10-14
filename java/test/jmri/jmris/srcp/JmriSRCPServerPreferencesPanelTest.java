@@ -1,11 +1,10 @@
 package jmri.jmris.srcp;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 
 /**
@@ -16,19 +15,17 @@ import java.awt.GraphicsEnvironment;
 public class JmriSRCPServerPreferencesPanelTest {
 
     @Test public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriSRCPServerPreferencesPanel a = new JmriSRCPServerPreferencesPanel();
         Assert.assertNotNull(a);
     }
 
     @Before public void setUp() {
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
     }
 
     @After public void tearDown() throws Exception {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

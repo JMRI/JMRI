@@ -3,17 +3,17 @@ package jmri.implementation;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.progdebugger.ProgDebugger;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author	Bob Jacobsen Copyright 2014
- * @version $Revision: 24246 $
+ * 
  */
 public class TwoIndexTcsProgrammerFacadeTest extends TestCase {
 
@@ -25,6 +25,7 @@ public class TwoIndexTcsProgrammerFacadeTest extends TestCase {
         ProgDebugger dp = new ProgDebugger();
         Programmer p = new TwoIndexTcsProgrammerFacade(dp);
         ProgListener l = new ProgListener() {
+            @Override
             public void programmingOpReply(int value, int status) {
                 log.debug("callback value=" + value + " status=" + status);
                 replied = true;
@@ -48,6 +49,7 @@ public class TwoIndexTcsProgrammerFacadeTest extends TestCase {
         ProgDebugger dp = new ProgDebugger();
         Programmer p = new TwoIndexTcsProgrammerFacade(dp);
         ProgListener l = new ProgListener() {
+            @Override
             public void programmingOpReply(int value, int status) {
                 log.debug("callback value=" + value + " status=" + status);
                 replied = true;
@@ -86,6 +88,7 @@ public class TwoIndexTcsProgrammerFacadeTest extends TestCase {
         ProgDebugger dp = new ProgDebugger();
         Programmer p = new TwoIndexTcsProgrammerFacade(dp);
         ProgListener l = new ProgListener() {
+            @Override
             public void programmingOpReply(int value, int status) {
                 log.debug("callback value=" + value + " status=" + status);
                 replied = true;
@@ -149,11 +152,20 @@ public class TwoIndexTcsProgrammerFacadeTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite(TwoIndexTcsProgrammerFacadeTest.class);
         return suite;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TwoIndexTcsProgrammerFacadeTest.class.getName());
+    @Override
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @Override
+    public void tearDown(){
+        jmri.util.JUnitUtil.tearDown();
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(TwoIndexTcsProgrammerFacadeTest.class);
 
 }

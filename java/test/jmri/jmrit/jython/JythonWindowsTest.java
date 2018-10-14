@@ -1,10 +1,14 @@
 package jmri.jmrit.jython;
 
+import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Invokes complete set of tests in the jmri.jmrit.jython tree
@@ -13,10 +17,12 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen Copyright 2009, 2016
  */
-public class JythonWindowsTest extends TestCase {
+public class JythonWindowsTest {
 
     // Really a check of Jython init, including the defaults file
+    @Test
     public void testExec() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.util.JUnitAppender.clearBacklog();
         // open output window
         JythonWindow outputWindow;  // actually an Action class
@@ -36,11 +42,11 @@ public class JythonWindowsTest extends TestCase {
         } catch (Exception e) {
             Assert.fail("exception during execution: " + e);
         }
-        
+
         // find, close output window
-        JFrame f = jmri.util.JmriJFrame.getFrame("Script Output");
-        Assert.assertTrue("found output frame", f != null);
-        f.dispose();
+        JFrame f = JFrameOperator.waitJFrame("Script Output", true, true);
+        Assert.assertNotNull("found output frame", f);
+        JUnitUtil.dispose(f);
 
         // error messages are a fail
         if (jmri.util.JUnitAppender.clearBacklog(org.apache.log4j.Level.WARN) != 0) {
@@ -48,42 +54,24 @@ public class JythonWindowsTest extends TestCase {
         }
     }
 
+    @Test
     public void testInput() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         new InputWindowAction().actionPerformed(null);
-        JFrame f = jmri.util.JmriJFrame.getFrame("Script Entry");
-        Assert.assertTrue("found input frame", f != null);
-        f.dispose();
+        JFrame f = JFrameOperator.findJFrame("Script Entry", true, true);
+        Assert.assertNotNull("found input frame", f);
+        JUnitUtil.dispose(f);
     }
 
-    // from here down is testing infrastructure
-    public JythonWindowsTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", JythonWindowsTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JythonWindowsTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-
-        super.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+    @Before
+    public void setUp() throws Exception {
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
-    protected void tearDown() throws Exception {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
     }
 }

@@ -10,13 +10,16 @@
       <enumChoice choice="Non Directional, normal NMRA mapping" value="0">
         <choice>Non Directional, normal NMRA mapping</choice>
         <choice xml:lang="it">Luci non direzionali, Standard NMRA</choice>
+        <choice xml:lang="cs">Ne směrové, normální přiřazení NMRA</choice>
       </enumChoice>
       <enumChoice choice="FO9 on in reverse" value="1">
         <choice>FO9 directional</choice>
         <choice xml:lang="it">Luci direzionali FO9</choice>
+        <choice xml:lang="cs">Směrový funkční výstup 9</choice>
       </enumChoice>
     </enumVal>
     <label>FO9 directional setting</label>
     <label xml:lang="it">Luci direzionali FO9</label>
+    <label xml:lang="cs">Směrové nastavení funkčního výstupu 9</label>
   </variable>
 </variables>

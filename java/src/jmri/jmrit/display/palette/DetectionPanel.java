@@ -25,11 +25,11 @@ import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.picker.PickPanel;
 
 /**
- * Panel for Occupancy and Error detection,
+ * Panel for Occupancy and Error detection.
  */
 public class DetectionPanel extends JPanel {
 
-    private JTextField _occDetectorName = new JTextField();   // can be either a Sensor or OBlock name
+    private JTextField _occDetectorName = new JTextField(); // can be either a Sensor or OBlock name
     private JFrame _pickFrame;
     private JButton _openPicklistButton;
     private JPanel _trainIdPanel;
@@ -41,16 +41,19 @@ public class DetectionPanel extends JPanel {
     private JPanel _checkBoxPanel;
 
     /**
+     * Add _blockPathPanel to this ItemPanel.
      */
     public DetectionPanel(ItemPanel parent) {
         super();
         _parent = parent;
         _occDetectorName.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 checkDetection();
             }
         });
         _occDetectorName.addFocusListener(new FocusAdapter() {
+            @Override
             public void focusLost(FocusEvent e) {
                 checkDetection();
             }
@@ -61,6 +64,7 @@ public class DetectionPanel extends JPanel {
         panel.add(makeSensorPanel(_occDetectorName, "DetectionSensor", "ToolTipOccupancySensor"));
         _openPicklistButton = new JButton(Bundle.getMessage("OpenPicklist"));
         _openPicklistButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 if (_pickFrame == null) {
                     openPickList();
@@ -132,6 +136,7 @@ public class DetectionPanel extends JPanel {
 
         _pickFrame.setContentPane(content);
         _pickFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 closePickList();
             }
@@ -292,4 +297,5 @@ public class DetectionPanel extends JPanel {
         _blockPathPanel.add(_checkBoxPanel, 1);
         _blockPathPanel.setVisible(true);
     }
+
 }

@@ -1,6 +1,9 @@
 package jmri;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Manage tasks to be completed when the program shuts down normally.
@@ -47,15 +50,23 @@ public interface ShutDownManager {
      * registered are silently ignored.
      *
      * @param task the task not to execute
-     * @throws NullPointerException if the task is null
      */
-    public void deregister(@Nonnull ShutDownTask task);
+    public void deregister(@Nullable ShutDownTask task);
 
+    /**
+     * Provide access to the current registered shutdown tasks.
+     */
+    public List<ShutDownTask> tasks();
+    
     /**
      * Run the shutdown tasks, and then terminate the program with status 100 if
      * not aborted. Does not return under normal circumstances. Does return
      * false if the shutdown was aborted by the user, in which case the program
      * should continue to operate.
+     * <p>
+     * By exiting the program with status 100, the batch file (MS Windows) or
+     * shell script (Linux/Mac OS X/UNIX) can catch the exit status and restart
+     * the java program.
      * <p>
      * <b>NOTE</b> If the OS X {@literal application->quit} menu item is used,
      * this must return false to abort the shutdown.
@@ -65,15 +76,18 @@ public interface ShutDownManager {
     public boolean restart();
 
     /**
-     * Run the shutdown tasks, and then terminate the program with status 0 if
-     * not aborted. Does not return under normal circumstances. Does return
+     * First asks the shutdown tasks if shutdown is allowed. If not return false.
+     * <p>
+     * Then run the shutdown tasks, and then terminate the program with status 0
+     * if not aborted. Does not return under normal circumstances. Does return
      * false if the shutdown was aborted by the user, in which case the program
      * should continue to operate.
      * <p>
      * <b>NOTE</b> If the OS X {@literal application->quit} menu item is used,
      * this must return false to abort the shutdown.
      *
-     * @return boolean which should be false
+     * @return false if any shutdown task aborts the shutdown or if anything goes
+     * wrong.
      */
     public boolean shutdown();
 

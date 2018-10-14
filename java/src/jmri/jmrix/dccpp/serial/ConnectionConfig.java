@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.dccpp.serial;
 
 import jmri.util.SystemType;
@@ -9,8 +8,7 @@ import jmri.util.SystemType;
  * This uses the {@link DCCppAdapter} class to do the actual connection.
  *
  * @author Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- *
+  *
  * @see DCCppAdapter
  *
  * Based on jmri.jmrix.lenz.liusb.ConnectionConfig by Paul Bender
@@ -32,6 +30,7 @@ public class ConnectionConfig extends jmri.jmrix.dccpp.AbstractDCCppSerialConnec
         super();
     }
 
+    @Override
     public String name() {
         return "DCC++ Serial Port";
     }
@@ -44,6 +43,7 @@ public class ConnectionConfig extends jmri.jmrix.dccpp.AbstractDCCppSerialConnec
         return new String[]{};
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new DCCppAdapter();

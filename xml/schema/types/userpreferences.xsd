@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: connection.xsd 18038 2011-07-25 13:53:18Z kevin-dickerson $ -->
-
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -69,8 +67,62 @@
             <xs:element name="locY" type="xs:float" minOccurs="0" maxOccurs="1"/>
             <xs:element name="width" type="xs:float" minOccurs="0" maxOccurs="1"/>
             <xs:element name="height" type="xs:float" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="properties" minOccurs="0" maxOccurs="1">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="key" minOccurs="1" maxOccurs="1">
+                          <xs:complexType>                          
+                            <xs:simpleContent>
+                              <xs:extension base="xs:string">
+                                <xs:attribute name="class" type="xs:string" use="required" />
+                              </xs:extension>
+                            </xs:simpleContent>
+                          </xs:complexType>
+                        </xs:element>
+                        <xs:element name="value" minOccurs="0" maxOccurs="1">
+                          <xs:complexType>                          
+                            <xs:simpleContent>
+                              <xs:extension base="xs:string">
+                                <xs:attribute name="class" type="xs:string" use="required" />
+                              </xs:extension>
+                            </xs:simpleContent>
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
           </xs:sequence>
           <xs:attribute name="class" type="xs:string" use="required" />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="tableDetails" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="table" minOccurs="0" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="column" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="order" type="xs:int" minOccurs="0" maxOccurs="1" />
+                        <xs:element name="width" type="xs:int" minOccurs="0" maxOccurs="1" />
+                        <xs:element name="sort" type="xs:int" minOccurs="0" maxOccurs="1" />
+                        <xs:element name="hidden" type="yesNoType" minOccurs="0" maxOccurs="1" />
+                      </xs:sequence>
+                      <xs:attribute name="name" type="xs:string" use="required" />
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+                <xs:attribute name="name" type="xs:string" use="required" />
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
         </xs:complexType>
       </xs:element>
     </xs:sequence>

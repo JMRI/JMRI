@@ -13,11 +13,20 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Common implementations for the Programmer interface.
+ * <p>
+ * Contains two time-out handlers:
+ * <ul>
+ * <li> SHORT_TIMEOUT, the "short timer", is on operations other than reads
+ * <li> LONG_TIMEOUT, the "long timer", is for the "read from decoder" step, which can take a long time.
+ * </ul>
+ * The duration of these can be adjusted by changing the values of those constants in subclasses.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2012, 2013
+ * @author Bob Jacobsen Copyright (C) 2001, 2012, 2013
  */
 public abstract class AbstractProgrammer implements Programmer {
 
+    /** {@inheritDoc} */
+    @Override
     public String decodeErrorCode(int code) {
         if (code == ProgListener.OK) {
             return Bundle.getMessage("StatusOK");
@@ -76,15 +85,14 @@ public abstract class AbstractProgrammer implements Programmer {
      */
     private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
-    /**
-     * Add a PropertyChangeListener to the listener list.
-     *
-     * @param listener The PropertyChangeListener to be added
-     */
+    /** {@inheritDoc} */
+    @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
+    /** {@inheritDoc} */
+    @Override
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.removePropertyChangeListener(listener);
     }
@@ -93,30 +101,39 @@ public abstract class AbstractProgrammer implements Programmer {
         propertyChangeSupport.firePropertyChange(key, oldValue, value);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    @SuppressWarnings("deprecation") // this is a migration call, to be removed when writeCV(int, int, ProgListener) is removed
     public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
         writeCV(Integer.parseInt(CV), val, p);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    @SuppressWarnings("deprecation") // this is a migration call, to be removed when readCV(int, ProgListener) is removed
     public void readCV(String CV, ProgListener p) throws ProgrammerException {
         readCV(Integer.parseInt(CV), p);
     }
 
+    /** {@inheritDoc} */
     @Override
-    @SuppressWarnings("deprecation") // parent Programmer method deprecated, will remove at same time
+    @Deprecated // 4.1.1
     public final void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
         confirmCV(""+CV, val, p);
     }
 
-    /**
+    /** {@inheritDoc} 
      * Basic implementation. Override this to turn reading on and off globally.
      */
+    @Override
     public boolean getCanRead() {
         return true;
     }
 
-    /**
+    /** {@inheritDoc} 
      * Checks using the current default programming mode
      */
+    @Override
     public boolean getCanRead(String addr) {
         if (!getCanRead()) {
             return false; // check basic implementation first
@@ -127,6 +144,7 @@ public abstract class AbstractProgrammer implements Programmer {
     // handle mode
     private ProgrammingMode mode = null;
 
+    /** {@inheritDoc} */
     @Override
     public final void setMode(ProgrammingMode m) {
         List<ProgrammingMode> validModes = getSupportedModes();
@@ -151,7 +169,7 @@ public abstract class AbstractProgrammer implements Programmer {
 
     /**
      * Define the "best" programming mode, which provides the initial setting.
-     *
+     * <p>
      * The definition of "best" is up to the specific-system developer.
      * By default, this is the first of the available methods from getSupportedModes;
      * override this method to change that.
@@ -165,6 +183,8 @@ public abstract class AbstractProgrammer implements Programmer {
         return null;
     }
 
+    /** {@inheritDoc} */
+    @Override
     public final ProgrammingMode getMode() {
         if (mode == null) {
             mode = getBestMode();
@@ -173,26 +193,40 @@ public abstract class AbstractProgrammer implements Programmer {
     }
 
     @Override
-    abstract public @Nonnull List<ProgrammingMode> getSupportedModes();
+    abstract @Nonnull public List<ProgrammingMode> getSupportedModes();
 
-    /**
+    /** {@inheritDoc} 
      * Basic implementation. Override this to turn writing on and off globally.
      */
+    @Override
     public boolean getCanWrite() {
         return true;
     }
 
-    /**
+    /** {@inheritDoc} 
      * Checks using the current default programming mode.
      */
+    @Override
     public boolean getCanWrite(String addr) {
         return getCanWrite();
     }
+
+    /** {@inheritDoc} 
+     * By default, say that no verification is done.
+     *
+     * @param addr A CV address to check (in case this varies with CV range) or null for any
+     * @return Always WriteConfirmMode.NotVerified
+     */
+    @Nonnull
+    @Override
+    public Programmer.WriteConfirmMode getWriteConfirmMode(String addr) { return WriteConfirmMode.NotVerified; }
+    
 
     /**
      * Internal routine to start timer to protect the mode-change.
      */
     protected void startShortTimer() {
+        log.debug("startShortTimer");
         restartTimer(SHORT_TIMEOUT);
     }
 
@@ -200,6 +234,7 @@ public abstract class AbstractProgrammer implements Programmer {
      * Internal routine to restart timer with a long delay
      */
     protected void startLongTimer() {
+        log.debug("startLongTimer");
         restartTimer(LONG_TIMEOUT);
     }
 
@@ -207,6 +242,7 @@ public abstract class AbstractProgrammer implements Programmer {
      * Internal routine to stop timer, as all is well
      */
     protected synchronized void stopTimer() {
+        log.debug("stop timer");
         if (timer != null) {
             timer.stop();
         }
@@ -216,11 +252,11 @@ public abstract class AbstractProgrammer implements Programmer {
      * Internal routine to handle timer starts {@literal &} restarts
      */
     protected synchronized void restartTimer(int delay) {
-        if (log.isDebugEnabled()) {
-            log.debug("restart timer with delay " + delay);
-        }
+        log.debug("(re)start timer with delay {}", delay);
+
         if (timer == null) {
             timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     timeout();
                 }
@@ -252,6 +288,9 @@ public abstract class AbstractProgrammer implements Programmer {
                 return 7;
             case 8:
                 return 8;
+            default:
+                log.warn("Unhandled register from cv: {}", cv);
+                break;
         }
         throw new ProgrammerException();
     }
@@ -266,6 +305,6 @@ public abstract class AbstractProgrammer implements Programmer {
 
     javax.swing.Timer timer = null;
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractProgrammer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractProgrammer.class);
 
 }

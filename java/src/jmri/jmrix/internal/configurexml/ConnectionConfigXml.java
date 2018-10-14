@@ -21,6 +21,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
         adapter = new InternalAdapter();
     }

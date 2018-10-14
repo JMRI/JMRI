@@ -3,56 +3,50 @@
 
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright ($Author$) 2008 -->
-  <!--  $Id$ -->
-  <!-- UpDated  by Blorec Herv&#233;  2013-09-10-->
+<!-- UpDated  by Blorec Herv&#233;  2017-01-19-->
+<title>JMRI Hardware Support - CBUS - Naming</title>
 
-  <title>JMRI: CBUS Naming</title><!-- Style -->
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+<!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
-    <div id="mainContent">
-      <h1>JMRI: d&eacute;signation CBUS</h1>Cette page explique
-      comment JMRI utilise des noms syst&egrave;me pour
-      acc&eacute;der aux ressources jointes &agrave; CBUS.
+<div id="mainContent">
 
-      <p>Pour en savoir plus sur le support CBUS JMRI, voir la
-      <a href="index.shtml">page principale CBUS</a>.</p>
+<h1>Structure Mat&#233;riel: CBUS - D&#233;signation</h1>
+<p>
+Cette page explique comment JMRI utilise les Noms Syst&#232;mes pour acc&#233;der aux ressources li&#233;es &#224; CBUS.
 
-      <h2>Utilisation des noms JMRI</h2>JMRI fournit une interface
-      au r&eacute;seau r&eacute;el via des objets internes, tels
-      que les Aiguillages, les Capteurs, etc qui sont
-      &eacute;troitement cartographi&eacute;s correspondants
-      &agrave; des p&eacute;riph&eacute;riques physiques. Cette
-      cartographie est r&eacute;alis&eacute;e via la
-      d&eacute;signation "Noms Syst&egrave;mes", qui &agrave; la
-      fois identifie comment acc&eacute;der &agrave; un dispositif
-      particulier, et sont les cl&eacute;s de la recherche d'un
-      objet correspondant dans JMRI.
+<h2>Noms Syst&#232;mes</h2>
+<p>JMRI fournit une interface au r&#233;seau r&#233;el via des
+objets internes, tels que les Aiguillages, les Capteurs, etc qui
+sont &#233;troitement "mapp&#233;s" pour correspondres &#224; des p&#233;riph&#233;riques physiques.
+Ce "mapping" est r&#233;alis&#233;e via les "Noms Syst&#232;mes", qui &#224; la fois
+identifie comment acc&#233;der &#224; un dispositif particulier, et sont la cl&#233;
+ de la recherche d'un objet correspondant dans JMRI.</p>
 
-      <h2>&eacute;v&eacute;nements CBUS</h2><a href=
-      "http://www.merg.org.uk/">MERG</a> <a href=
-      "http://www.merg.org.uk/resources/lcb.html">CBUS</a>
-      communique par messages avec un format fixe: Un octet de
-      commande et d'information sur la longueur, suivi
-      &eacute;ventuellement par des octets de donn&eacute;es
-      suppl&eacute;mentaires. Et ceci est la forme la plus simple,
-      il est utilis&eacute; pour envoyer des
-      "&eacute;v&eacute;nements" identifiables &agrave; leur tour,
-      les &eacute;v&eacute;nements sont de deux types: "ON" et
-      "OFF". <!--#include virtual="/Footer" -->
-    </div>
-  </div>
+<h2>&#201;v&#233;nements CBUS</h2>
+Le <a href="http://www.merg.org.uk/resources/lcb.html"> CBUS</a>
+<a href="http://www.merg.org.uk/"> MERG</a>  
+communique par messages avec un format fix&#233;:
+Un octet de commande et d'information sur la longueur, suivi &#233;ventuellement
+par des octets de donn&#233;es suppl&#233;mentaires.
+Et ceci est la forme la plus simple, il est utilis&#233; pour envoyer des "&#233;v&#233;nements" identifiables.
+ &#193; leur tour, les &#233;v&#233;nements sont de deux types: "ON" et "OFF".
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Aide JMRI</h3>
+<p>Retour &#224; la page d'aide principale de <a href="index.shtml">CBUS</a>.
+    
+<!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

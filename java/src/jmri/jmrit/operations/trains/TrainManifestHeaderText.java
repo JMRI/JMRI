@@ -28,7 +28,7 @@ public class TrainManifestHeaderText {
     private static String consist = Bundle.getMessage("Consist");
     private static String kernel = Bundle.getMessage("Kernel");
     private static String owner = Bundle.getMessage("Owner");
-    private static String rwe = Bundle.getMessage("RWE");
+    private static String rwe = Bundle.getMessage("RWELabel"); // add "RWE:" in Switch List
     private static String comment = Bundle.getMessage("Comment");
     private static String drop_comment = Bundle.getMessage("SetOut_Msg");
     private static String pickup_comment = Bundle.getMessage("PickUp_Msg");
@@ -283,7 +283,7 @@ public class TrainManifestHeaderText {
             e.addContent(values = new Element(Xml.OWNER));
             values.setAttribute(Xml.TEXT, getStringHeader_Owner());
         }
-        if (!getStringHeader_RWE().equals(Bundle.getMessage("RWE"))) {
+        if (!getStringHeader_RWE().equals(Bundle.getMessage("RWELabel"))) {
             e.addContent(values = new Element(Xml.RWE));
             values.setAttribute(Xml.TEXT, getStringHeader_RWE());
         }

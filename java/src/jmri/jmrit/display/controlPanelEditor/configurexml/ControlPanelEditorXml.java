@@ -12,6 +12,7 @@ import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.controlPanelEditor.PortalIcon;
@@ -54,7 +55,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("editable", "" + (p.isEditable() ? "yes" : "no"));
         panel.setAttribute("positionable", "" + (p.allPositionable() ? "yes" : "no"));
         //panel.setAttribute("showcoordinates", ""+(p.showCoordinates()?"yes":"no"));
-        panel.setAttribute("showtooltips", "" + (p.showTooltip() ? "yes" : "no"));
+        panel.setAttribute("showtooltips", "" + (p.showToolTip() ? "yes" : "no"));
         panel.setAttribute("controlling", "" + (p.allControlling() ? "yes" : "no"));
         panel.setAttribute("hide", p.isVisible() ? "no" : "yes");
         panel.setAttribute("panelmenu", p.isPanelMenuVisible() ? "yes" : "no");
@@ -86,7 +87,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
                     if (e != null) {
                         panel.addContent(e);
                     }
-                } catch (Exception e) {
+                } catch (RuntimeException e) {
                     log.error("Error storing panel element: {}", e.getMessage(), e);
                 }
             }
@@ -138,15 +139,15 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
             name = shared.getAttribute("name").getValue();
         }
         // confirm that panel hasn't already been loaded
-        if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)) {
+        if (InstanceManager.getDefault(PanelMenu.class).isPanelNameUsed(name)) {
             log.warn("File contains a panel with the same name ({}) as an existing panel", name);
             result = false;
         }
         ControlPanelEditor panel = new ControlPanelEditor(name);
         panel.getTargetFrame().setVisible(false);   // save painting until last
-        jmri.jmrit.display.PanelMenu.instance().addEditorPanel(panel);
+        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(panel);
 
-        // Load editor option flags. This has to be done before the content 
+        // Load editor option flags. This has to be done before the content
         // items are loaded, to preserve the individual item settings
         Attribute a;
         boolean value = true;
@@ -171,7 +172,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         if ((a = shared.getAttribute("showtooltips")) != null && a.getValue().equals("no")) {
             value = false;
         }
-        panel.setAllShowTooltip(value);
+        panel.setAllShowToolTip(value);
 
         value = true;
         if ((a = shared.getAttribute("controlling")) != null && a.getValue().equals("no")) {
@@ -249,7 +250,9 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
                 if (!panel.loadOK()) {
                     result = false;
                 }
-            } catch (Exception e) {
+            } catch (ClassNotFoundException | InstantiationException 
+                    | jmri.configurexml.JmriConfigureXmlException | IllegalAccessException
+                    | RuntimeException e) {
                 log.error("Exception while loading {}: {}", item.getName(), e.getMessage(), e);
                 result = false;
             }
@@ -308,6 +311,6 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         return jmri.Manager.PANELFILES;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ControlPanelEditorXml.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ControlPanelEditorXml.class);
 
 }

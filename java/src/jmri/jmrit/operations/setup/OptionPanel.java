@@ -1,4 +1,3 @@
-// OptionFrame.java
 package jmri.jmrit.operations.setup;
 
 import java.awt.GridBagLayout;
@@ -13,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,13 +21,12 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of setup options
  *
  * @author Dan Boudreau Copyright (C) 2010, 2011, 2012, 2013, 2015
- * @version $Revision$
  */
 public class OptionPanel extends OperationsPreferencesPanel {
 
     // labels
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // radio buttons
     JRadioButton buildNormal = new JRadioButton(Bundle.getMessage("Normal"));
@@ -226,6 +225,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
 
         // check boxes
         addCheckBoxAction(routerCheckBox);
+        addCheckBoxAction(routerRestrictBox);       
         setRouterCheckBoxesEnabled();
 
         setBuildOption();
@@ -246,7 +246,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button selected");
         // can't change the build option if there are trains built
-        if (TrainManager.instance().isAnyTrainBuilt()) {
+        if (InstanceManager.getDefault(TrainManager.class).isAnyTrainBuilt()) {
             setBuildOption(); // restore the correct setting
             JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotChangeBuild"), Bundle
                     .getMessage("MustTerminateOrReset"), JOptionPane.ERROR_MESSAGE);
@@ -271,6 +271,10 @@ public class OptionPanel extends OperationsPreferencesPanel {
     protected void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == routerCheckBox) {
             setRouterCheckBoxesEnabled();
+        }
+        if (ae.getSource() == routerRestrictBox && routerRestrictBox.isSelected()) {
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("WarnExtremeTrackDest"), Bundle
+                    .getMessage("WarnExtremeTitle"), JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -329,7 +333,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         // VSD
         Setup.setVsdPhysicalLocationEnabled(enableVsdCheckBox.isSelected());
         // write the file
-        OperationsSetupXml.instance().writeOperationsFile();
+        InstanceManager.getDefault(OperationsSetupXml.class).writeOperationsFile();
     }
 
     @Override

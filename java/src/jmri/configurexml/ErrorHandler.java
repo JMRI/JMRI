@@ -14,29 +14,31 @@ public class ErrorHandler {
      * Handle an error.
      * <p>
      * Default implementation formats and puts in log.
+     *
+     * @param e the error
      */
     public void handle(ErrorMemo e) {
-        String m = e.description;
+        StringBuilder m = new StringBuilder(e.description);
         if (e.systemName != null) {
-            m += " System name \"" + e.systemName + "\"";
+            m.append(" System name \"").append(e.systemName).append("\"");
         }
         if (e.userName != null && !e.userName.equals("")) {
-            m += " User name \"" + e.userName + "\"";
+            m.append(" User name \"").append(e.userName).append("\"");
         }
         if (e.operation != null) {
-            m += " while " + e.operation;
+            m.append(" while ").append(e.operation);
         }
         if (e.adapter != null) {
-            m += " in adaptor of type " + e.adapter.getClass().getName();
+            m.append(" in adaptor of type ").append(e.adapter.getClass().getName());
         }
         if (e.exception != null) {
-            m += " Exception: " + e.exception.toString();
+            m.append(" Exception: ").append(e.exception.toString());
         }
-
+        m.append("\nSee http://jmri.org/help/en/package/jmri/configurexml/ErrorHandler.shtml for possibly more information.");
         if (e.exception != null) {
-            log.error(m, e.exception);
+            log.error(m.toString(), e.exception);
         } else {
-            log.error(m);
+            log.error(m.toString());
         }
     }
 
@@ -46,9 +48,11 @@ public class ErrorHandler {
      * Default implementation doesn't do anything here, everything already
      * logged above.
      */
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NM_CONFUSING", 
+            justification = "Seems to be a false positive due to jmri.jmris.simpleserver.parser.SimpleCharStream.Done()")
     public void done() {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ErrorHandler.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ErrorHandler.class);
 }

@@ -3,17 +3,15 @@ package jmri.jmrix.srcp.swing;
 import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import jmri.jmrix.srcp.SRCPSystemConnectionMemo;
-import jmri.jmrix.srcp.swing.srcpmon.SRCPMonAction;
 import jmri.jmrix.srcp.swing.packetgen.PacketGenAction;
+import jmri.jmrix.srcp.swing.srcpmon.SRCPMonAction;
 
 /**
- * Create a "Systems" menu containing the system-specific tools
+ * Create a "Systems" menu containing the system-specific SRCP tools.
  *
  * @author	Bob Jacobsen Copyright 2008
  */
 public class SystemMenu extends JMenu {
-
-    private SRCPSystemConnectionMemo _memo = null;
 
     public SystemMenu(String name, SRCPSystemConnectionMemo memo) {
         this(memo);
@@ -21,18 +19,18 @@ public class SystemMenu extends JMenu {
     }
 
     public SystemMenu(SRCPSystemConnectionMemo memo) {
-
         super();
-        _memo = memo;
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
+        if (memo != null) {
+            setText(memo.getUserName());
+        } else {
+            setText(Bundle.getMessage("MenuItemSRCP"));
+        }
 
-        // setText(rb.getString("MenuSystems"));
-        setText(rb.getString("MenuItemSRCP"));
-
-        add(new SRCPMonAction(rb.getString("MenuItemCommandMonitor"),_memo));
-        add(new PacketGenAction(rb.getString("MenuItemSendCommand"),_memo));
-
+        if (memo != null) {
+            add(new SRCPMonAction());
+            add(new PacketGenAction(Bundle.getMessage("MenuItemSendCommand"), memo));
+        }
     }
 
 }

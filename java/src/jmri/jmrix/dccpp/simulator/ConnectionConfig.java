@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.dccpp.simulator;
 
 /**
@@ -10,8 +9,7 @@ package jmri.jmrix.dccpp.simulator;
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Paul Bender Copyright (C) 2009
  * @author Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- *
+  *
  * @see DCCppSimulatorAdapter
  *
  * Based on jmri.jmrix.lenz.xnetsimulator.ConnectionConfig
@@ -33,20 +31,24 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         super();
     }
 
+    @Override
     public String name() {
         return "DCC++ Simulator";
     }
 
     String manufacturerName = "DCC++";
 
+    @Override
     public String getManufacturer() {
         return manufacturerName;
     }
 
+    @Override
     public void setManufacturer(String manu) {
         manufacturerName = manu;
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new DCCppSimulatorAdapter();

@@ -21,4 +21,4 @@ public abstract class SRCPPortController extends jmri.jmrix.AbstractNetworkPortC
 }
 
 
-/* @(#)SRCPPortController.java */
+

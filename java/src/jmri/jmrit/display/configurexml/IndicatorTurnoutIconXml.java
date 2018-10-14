@@ -33,6 +33,7 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
      * @param o Object to store, of type IndicatorTurnoutIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         IndicatorTurnoutIcon p = (IndicatorTurnoutIcon) o;
@@ -51,7 +52,7 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
             element.addContent(storeNamedBean("occupancyblock", b));
         }
         NamedBeanHandle<Sensor> s = p.getNamedOccSensor();
-        if (b == null && s != null) {	// only write sensor if no OBlock
+        if (b == null && s != null) { // only write sensor if no OBlock
             element.addContent(storeNamedBean("occupancysensor", s));
         }
 
@@ -111,6 +112,7 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o       Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         Editor p = (Editor) o;
@@ -183,5 +185,5 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.TURNOUTS, element);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IndicatorTurnoutIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndicatorTurnoutIconXml.class);
 }

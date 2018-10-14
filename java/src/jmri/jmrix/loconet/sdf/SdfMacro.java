@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Common base for all the SDF macros defined by Digitrax for their sound
- * definition language
+ * definition language.
  * <p>
  * Each macro has a number of descriptive forms:
  * <dl>
@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * within it.
  * <dt>name()<dd>
  * </dl>
- * <P>
+ *
  * SdfMacro and its subclasses don't do the notification needed to be Models in
  * an MVC edit paradyme. This is because there are a lot of SdfMacros in
  * realistic sound file, and the per-object overhead needed would be too large.
@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * be notified of changes in the SdfBuffer, acccessed by reference during
  * editing (to avoid another dependency), but that's a project for another day)
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public abstract class SdfMacro implements SdfConstants {
 
@@ -56,6 +56,7 @@ public abstract class SdfMacro implements SdfConstants {
      *
      * @return newline-terminated string; never null
      */
+    @Override
     abstract public String toString();
 
     /**
@@ -91,6 +92,8 @@ public abstract class SdfMacro implements SdfConstants {
 
     /**
      * Total length, including contained instructions
+     *
+     * @return length of all parts
      */
     public int totalLength() {
         int result = length();
@@ -103,16 +106,14 @@ public abstract class SdfMacro implements SdfConstants {
         }
         return result;
     }
-    /**
-     * Local method contains comment text associated with this instruction
-     */
-    String comment;
 
     /**
      * Store into a buffer.
-     * <P>
+     * <p>
      * This provides a default implementation for children, but each subclass
-     * needs to store it's own data with setAtIndexAndInc()
+     * needs to store its own data with setAtIndexAndInc().
+     *
+     * @param buffer load with all children
      */
     public void loadByteArray(SdfBuffer buffer) {
         List<SdfMacro> l = getChildren();
@@ -125,8 +126,8 @@ public abstract class SdfMacro implements SdfConstants {
     }
 
     /**
-     * Return the next instruction macro in a buffer.
-     * <P>
+     * Get the next instruction macro in a buffer.
+     * <p>
      * Note this uses the index contained in the SdfBuffer implementation, and
      * has the side-effect of bumping that forward.
      *
@@ -169,18 +170,15 @@ public abstract class SdfMacro implements SdfConstants {
         } else // generics
         if ((m = FourByteMacro.match(buff)) != null) {
             return m;
-        } else if ((m = TwoByteMacro.match(buff)) != null) {
-            return m;
+        } else  { // only case left is TwoByteMacro, which has to match
+            return TwoByteMacro.match(buff);
         }
-
-        log.warn("dropped through");
-        return null;
     }
 
     /**
      * Service method to unpack various bit-coded values for display, using a
      * mask array.
-     * <P>
+     * <p>
      * Note that multiple values can be returned, e.g. this can be used to scan
      * for individual bits set in a variable.
      *
@@ -194,23 +192,18 @@ public abstract class SdfMacro implements SdfConstants {
      *               corresponding label is returned
      * @return "+" separated list of labels, or "&lt;ERROR&gt;" if none matched
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     String decodeFlags(int input, int[] values, int[] masks, String[] labels) {
         String[] names = jmri.util.StringUtil.getNamesFromStateMasked(input, values, masks, labels);
-        if (names == null) {
-            return "<ERROR>"; // unexpected case, internal error, should also log?
-        } else if (names.length == 0) {
+        if (names.length == 0) {
             return labels[labels.length - 1];  // last name is non-of-above special case
         } else if (names.length == 1) {
             return names[0];
         }
-        String output = names[0];
+        StringBuilder output = new StringBuilder(names[0]);
         for (int i = 1; i < names.length; i++) {
-            output += "+" + names[i];
+            output.append("+").append(names[i]);
         }
-        return output;
+        return output.toString();
     }
 
     String decodeState(int input, int[] values, String[] labels) {
@@ -221,6 +214,6 @@ public abstract class SdfMacro implements SdfConstants {
         return val;
     }
 
-    private static Logger log = LoggerFactory.getLogger(SdfMacro.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SdfMacro.class);
 
 }

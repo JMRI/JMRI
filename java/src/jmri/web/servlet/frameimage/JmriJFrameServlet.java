@@ -2,6 +2,7 @@ package jmri.web.servlet.frameimage;
 
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.URL;
+import static jmri.web.servlet.ServletUtil.UTF8;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -13,6 +14,9 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -23,6 +27,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,13 +36,15 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
+import jmri.InstanceManager;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 import jmri.server.json.JSON;
+import jmri.server.json.JsonException;
 import jmri.server.json.util.JsonUtilHttpService;
 import jmri.util.JmriJFrame;
-import jmri.util.StringUtil;
 import jmri.web.server.WebServerPreferences;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,6 +67,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Modifications by Bob Jacobsen Copyright 2005, 2006, 2008
  */
+@WebServlet(name = "FrameServlet",
+        urlPatterns = {"/frame"})
+@ServiceProvider(service = HttpServlet.class)
 public class JmriJFrameServlet extends HttpServlet {
 
     void sendClick(String name, Component c, int xg, int yg, Container FrameContentPane) {  // global positions
@@ -197,8 +207,9 @@ public class JmriJFrameServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (WebServerPreferences.getDefault().isDisableFrames()) {
-            if (WebServerPreferences.getDefault().isRedirectFramesToPanels()) {
+        WebServerPreferences preferences = InstanceManager.getDefault(WebServerPreferences.class);
+        if (preferences.isDisableFrames()) {
+            if (preferences.isRedirectFramesToPanels()) {
                 if (JSON.JSON.equals(request.getParameter("format"))) {
                     response.sendRedirect("/panel?format=json");
                 } else {
@@ -211,7 +222,7 @@ public class JmriJFrameServlet extends HttpServlet {
         }
         JmriJFrame frame = null;
         String name = getFrameName(request.getRequestURI());
-        List<String> disallowedFrames = Arrays.asList(WebServerPreferences.getDefault().getDisallowedFrames());
+        List<String> disallowedFrames = Arrays.asList(preferences.getDisallowedFrames());
         if (name != null) {
             if (disallowedFrames.contains(name)) {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Frame [" + name + "] not allowed (check Preferences)");
@@ -247,12 +258,13 @@ public class JmriJFrameServlet extends HttpServlet {
     }
 
     private void doHtml(JmriJFrame frame, HttpServletRequest request, HttpServletResponse response, Map<String, String[]> parameters) throws ServletException, IOException {
+        WebServerPreferences preferences = InstanceManager.getDefault(WebServerPreferences.class);
         Date now = new Date();
         boolean click = false;
-        boolean useAjax = WebServerPreferences.getDefault().isUseAjax();
-        boolean plain = WebServerPreferences.getDefault().isSimple();
-        String clickRetryTime = Integer.toString(WebServerPreferences.getDefault().getClickDelay());
-        String noclickRetryTime = Integer.toString(WebServerPreferences.getDefault().getRefreshDelay());
+        boolean useAjax = preferences.isUseAjax();
+        boolean plain = preferences.isSimple();
+        String clickRetryTime = Integer.toString(preferences.getClickDelay());
+        String noclickRetryTime = Integer.toString(preferences.getRefreshDelay());
         boolean protect = false;
         if (parameters.containsKey("coords")) { // NOI18N
             click = true;
@@ -284,7 +296,7 @@ public class JmriJFrameServlet extends HttpServlet {
         // 6 is ajax preference
         // 7 is protect
         Object[] args = new String[]{"localhost", // NOI18N
-            StringUtil.escapeString(frame.getTitle()),
+            URLEncoder.encode(frame.getTitle(), UTF8),
             (click ? clickRetryTime : noclickRetryTime),
             noclickRetryTime,
             Boolean.toString(plain),
@@ -326,7 +338,7 @@ public class JmriJFrameServlet extends HttpServlet {
     }
 
     private void doList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<String> disallowedFrames = Arrays.asList(WebServerPreferences.getDefault().getDisallowedFrames());
+        List<String> disallowedFrames = Arrays.asList(InstanceManager.getDefault(WebServerPreferences.class).getDisallowedFrames());
         String format = request.getParameter("format"); // NOI18N
         ObjectMapper mapper = new ObjectMapper();
         Date now = new Date();
@@ -346,7 +358,7 @@ public class JmriJFrameServlet extends HttpServlet {
             ArrayNode root = mapper.createArrayNode();
             HashSet<JFrame> frames = new HashSet<>();
             JsonUtilHttpService service = new JsonUtilHttpService(new ObjectMapper());
-            JmriJFrame.getFrameList().stream().forEach((frame) -> {
+            for (JmriJFrame frame : JmriJFrame.getFrameList()) {
                 if (usePanels && frame instanceof Editor) {
                     ObjectNode node = service.getPanel(request.getLocale(), (Editor) frame, JSON.XML);
                     if (node != null) {
@@ -361,14 +373,20 @@ public class JmriJFrameServlet extends HttpServlet {
                             && !frames.contains(frame)
                             && frame.isVisible()) {
                         ObjectNode node = mapper.createObjectNode();
-                        node.put(NAME, title);
-                        node.put(URL, "/frame/" + StringUtil.escapeString(title) + ".html"); // NOI18N
-                        node.put("png", "/frame/" + StringUtil.escapeString(title) + ".png"); // NOI18N
-                        root.add(node);
-                        frames.add(frame);
+                        try {
+                            node.put(NAME, title);
+                            node.put(URL, "/frame/" + URLEncoder.encode(title, UTF8) + ".html"); // NOI18N
+                            node.put("png", "/frame/" + URLEncoder.encode(title, UTF8) + ".png"); // NOI18N
+                            root.add(node);
+                            frames.add(frame);
+                        } catch (UnsupportedEncodingException ex) {
+                            JsonException je = new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to encode panel title \"" + title + "\"");
+                            response.sendError(je.getCode(), mapper.writeValueAsString(je.getJsonMessage()));
+                            return;
+                        }
                     }
                 }
-            });
+            }
             response.getWriter().write(mapper.writeValueAsString(root));
         } else {
             response.getWriter().append(Bundle.getMessage(request.getLocale(), "FrameDocType")); // NOI18N
@@ -379,7 +397,7 @@ public class JmriJFrameServlet extends HttpServlet {
                 String title = frame.getTitle();
                 //don't add to list if blank or disallowed
                 if (!title.isEmpty() && frame.getAllowInFrameServlet() && !disallowedFrames.contains(title) && frame.isVisible()) {
-                    String link = "/frame/" + StringUtil.escapeString(title) + ".html"; // NOI18N
+                    String link = "/frame/" + URLEncoder.encode(title, UTF8) + ".html"; // NOI18N
                     //format a table row for each valid window (frame)
                     response.getWriter().append("<tr><td><a href='" + link + "'>"); // NOI18N
                     response.getWriter().append(title);
@@ -387,7 +405,7 @@ public class JmriJFrameServlet extends HttpServlet {
                     response.getWriter().append("<td><a href='");
                     response.getWriter().append(link);
                     response.getWriter().append("'><img src='"); // NOI18N
-                    response.getWriter().append("/frame/" + StringUtil.escapeString(title) + ".png"); // NOI18N
+                    response.getWriter().append("/frame/" + URLEncoder.encode(title, UTF8) + ".png"); // NOI18N
                     response.getWriter().append("'></a></td></tr>\n"); // NOI18N
                 }
             }
@@ -397,16 +415,16 @@ public class JmriJFrameServlet extends HttpServlet {
     }
 
     // Requests for frames are always /frame/<name>.html or /frame/<name>.png
-    private String getFrameName(String URI) {
+    private String getFrameName(String URI) throws UnsupportedEncodingException {
         if (!URI.contains(".")) { // NOI18N
             return null;
         } else {
             // if request contains parameters, strip those off
-            int stop = (URI.contains("?")) ? URI.indexOf("?") : URI.length(); // NOI18N
-            String name = URI.substring(URI.lastIndexOf("/"), stop); // NOI18N
+            int stop = (URI.contains("?")) ? URI.indexOf('?') : URI.length(); // NOI18N
+            String name = URI.substring(URI.lastIndexOf('/'), stop); // NOI18N
             // URI contains a leading / at this point
-            name = name.substring(1, name.lastIndexOf(".")); // NOI18N
-            name = StringUtil.unescapeString(name); //undo escaped characters
+            name = name.substring(1, name.lastIndexOf('.')); // NOI18N
+            name = URLDecoder.decode(name, UTF8); //undo escaped characters
             log.debug("Frame name is {}", name); // NOI18N
             return name;
         }
@@ -484,7 +502,7 @@ public class JmriJFrameServlet extends HttpServlet {
             sendClick(f.getTitle(), c, x, y, f);
 
             //keep looking
-        } else if (Container.class.isAssignableFrom(c.getClass())) {
+        } else if (c instanceof Container) {
             //check this component's children
             for (Component child : ((Container) c).getComponents()) {
                 clickOnEditorPane(child, x, y, f);
@@ -492,5 +510,5 @@ public class JmriJFrameServlet extends HttpServlet {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JmriJFrameServlet.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriJFrameServlet.class);
 }

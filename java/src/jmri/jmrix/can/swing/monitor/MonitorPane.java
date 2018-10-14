@@ -1,4 +1,3 @@
-// MonitorPane.java
 package jmri.jmrix.can.swing.monitor;
 
 import jmri.jmrix.can.CanListener;
@@ -12,15 +11,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame displaying (and logging) CAN frames
  *
- * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 17977 $
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListener, CanPanelInterface {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4147929733083518618L;
 
     public MonitorPane() {
         super();
@@ -28,12 +21,14 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
 
     CanSystemConnectionMemo memo;
 
+    @Override
     public void initContext(Object context) {
         if (context instanceof CanSystemConnectionMemo) {
             initComponents((CanSystemConnectionMemo) context);
         }
     }
 
+    @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         this.memo = memo;
 
@@ -45,45 +40,32 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         }
     }
 
+    @Override
     public String getTitle() {
-        return "CAN Monitor";
+        return Bundle.getMessage("CanMonitorTitle");
     }
 
+    @Override
     public void init() {
     }
 
+    @Override
     public synchronized void message(CanMessage l) {  // receive a message and log it
         if (log.isDebugEnabled()) {
             log.debug("Message: " + l.toString());
         }
-        StringBuffer buf = new StringBuffer();
-        //String formatted = "("+Integer.toHexString(l.getHeader())
-        //                    + (l.isExtended() ? " ext)" : ")");
-        buf.append("(" + Integer.toHexString(l.getHeader())
-                + (l.isExtended() ? " ext)" : ")"));
-        for (int i = 0; i < l.getNumDataElements(); i++) //formatted += " "+jmri.util.StringUtil.twoHexFromInt(l.getElement(i));
-        {
-            buf.append(" " + jmri.util.StringUtil.twoHexFromInt(l.getElement(i)));
-        }
-        nextLine("M: " + buf.toString() + "\n", l.toString());
+        logMessage("M: ",l);
     }
 
+    @Override
     public synchronized void reply(CanReply l) {  // receive a reply and log it
         if (log.isDebugEnabled()) {
             log.debug("Reply: " + l.toString());
         }
-        StringBuffer buf = new StringBuffer();
-        //String formatted = "("+Integer.toHexString(l.getHeader())
-        //                    + (l.isExtended() ? " ext)" : ")");
-        buf.append("(" + Integer.toHexString(l.getHeader())
-                + (l.isExtended() ? " ext)" : ")"));
-        for (int i = 0; i < l.getNumDataElements(); i++) //formatted += " "+jmri.util.StringUtil.twoHexFromInt(l.getElement(i));
-        {
-            buf.append(" " + jmri.util.StringUtil.twoHexFromInt(l.getElement(i)));
-        }
-        nextLine("R: " + buf.toString() + "\n", l.toString());
+        logMessage("R: ",l);
     }
 
+    @Override
     public void dispose() {
         // disconnect from the LnTrafficController
         memo.getTrafficController().removeCanListener(this);
@@ -96,19 +78,14 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -2277527920171927509L;
-
         public Default() {
-            super("CAN Monitor",
+            super(Bundle.getMessage("CanMonitorTitle"),
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     MonitorPane.class.getName(),
                     jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MonitorPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MonitorPane.class);
 
 }

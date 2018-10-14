@@ -1,43 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <enumChoice choice="Dimmable headlight" value="0">
+  <enumChoice value="0">
     <choice>Dimmable headlight</choice>
     <choice xml:lang="it">Luce di testa regolabile</choice>
+    <choice xml:lang="ca">Llum davantera regulable</choice>
   </enumChoice>
-  <enumChoice choice="Flash light (phase 1)" value="1">
+  <enumChoice value="1">
     <choice>Flash light (phase 1)</choice>
     <choice xml:lang="it">Luce a Flash (fase 1)</choice>
+    <choice xml:lang="ca">Llum amb flash (fase 1)</choice>
   </enumChoice>
-  <enumChoice choice="Flash light (phase 2)" value="2">
+  <enumChoice value="2">
     <choice>Flash light (phase 2)</choice>
     <choice xml:lang="it">Luce a Flash (fase 2)</choice>
+    <choice xml:lang="ca">Llum amb flash (fase 2)</choice>
   </enumChoice>
-  <enumChoice choice="Single strobe" value="3">
+  <enumChoice value="3">
     <choice>Single strobe</choice>
     <choice xml:lang="it">Singolo Strobe</choice>
+    <choice xml:lang="ca">Estregoscòpica simple</choice>
   </enumChoice>
-  <enumChoice choice="Firebox" value="5">
+  <enumChoice value="5">
     <choice>Firebox</choice>
     <choice xml:lang="it">Fuoco Caldaia</choice>
+    <choice xml:lang="ca">Caixa de focs</choice>
   </enumChoice>
-  <enumChoice choice="Dimmable headlight (fade in/out)" value="7">
+  <enumChoice value="7">
     <choice>Dimmable headlight (fade in/out)</choice>
     <choice xml:lang="it">Luce di testa regolabile (sfumata in/out)</choice>
+    <choice xml:lang="ca">Llum davanetra regulable (fade</choice>
   </enumChoice>
-  <enumChoice choice="Mars light" value="8">
+  <enumChoice value="8">
     <choice>Mars light</choice>
     <choice xml:lang="it">Luce Mars</choice>
   </enumChoice>
-  <enumChoice choice="Gyra light" value="9">
+  <enumChoice value="9">
     <choice>Gyra light</choice>
     <choice xml:lang="it">Gyra light rotante</choice>
+    <choice xml:lang="ca">Llum Gyra rotatoria</choice>
   </enumChoice>
-  <enumChoice choice="Ditch light (phase 1)" value="13">
+  <enumChoice value="13">
     <choice>Ditch light (phase 1)</choice>
     <choice xml:lang="it">Luce Ditch (fase 1)</choice>
+    <choice xml:lang="ca">Llum Dicht (fase 1)</choice>
   </enumChoice>
-  <enumChoice choice="Ditch light type (phase 2)" value="14">
+  <enumChoice value="14">
     <choice>Ditch light type (phase 2)</choice>
     <choice xml:lang="it">Luce Ditch (fase 2)</choice>
+    <choice xml:lang="ca">Llum Dicht (fase 2)</choice>
   </enumChoice>
 </enumVal>

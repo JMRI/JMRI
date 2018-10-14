@@ -1,4 +1,3 @@
-// ImportRollingStock.java
 package jmri.jmrit.operations.rollingstock;
 
 import java.io.BufferedReader;
@@ -19,14 +18,18 @@ import org.slf4j.LoggerFactory;
  * Provides common routes for importing cars and locomotives
  *
  * @author Dan Boudreau Copyright (C) 2013
- * @version $Revision: 24463 $
+ * 
  */
 public class ImportRollingStock extends Thread {
 
+    static final String ESC = "\""; // escape character NOI18N
+    static final String del = ","; // delimiter
     protected static final String NEW_LINE = "\n"; // NOI18N
 
     protected JLabel lineNumber = new JLabel();
     protected JLabel importLine = new JLabel();
+    
+    protected static final String LOCATION_TRACK_SEPARATOR = "-";
 
     protected jmri.util.JmriJFrame fstatus;
 
@@ -79,30 +82,38 @@ public class ImportRollingStock extends Thread {
         for (int i = 0; i < outLine.length; i++) {
             outLine[i] = "";
         }
-        if (line.contains("\"")) { // NOI18N
-            // log.debug("line number "+lineNum+" has escape char \"");
-            String[] parseLine = line.split(",");
+        if (line.contains(ESC)) { // NOI18N
+//            log.debug("escape char detected in line: {}", line);
+            String[] parseLine = line.split(del);
             int j = 0;
             for (int i = 0; i < parseLine.length; i++) {
-                if (parseLine[i].contains("\"")) { // NOI18N
-                    StringBuilder sb = new StringBuilder(parseLine[i++]);
+//                log.debug("parse {}", parseLine[i]);
+                if (parseLine[i].contains(ESC)) { // NOI18N
+                    StringBuilder sb = new StringBuilder(parseLine[i]);
                     sb.deleteCharAt(0); // delete the "
                     outLine[j] = sb.toString();
-                    while (i < parseLine.length) {
-                        if (parseLine[i].contains("\"")) { // NOI18N
+                    if (outLine[j].contains(ESC)) {
+                        sb.deleteCharAt(sb.length() - 1); // delete the 2nd "
+                        outLine[j] = sb.toString();
+//                        log.debug("generated simple string: "+outLine[j]);
+                        j++;
+                        continue;
+                    }
+                    while (i++ < parseLine.length) {
+                        if (parseLine[i].contains(ESC)) { // NOI18N
                             sb = new StringBuilder(parseLine[i]);
                             sb.deleteCharAt(sb.length() - 1); // delete the "
-                            outLine[j] = outLine[j] + "," + sb.toString();
-                            // log.debug("generated string: "+outLine[j]);
+                            outLine[j] = outLine[j] + del + sb.toString();
+//                            log.debug("generated string: "+outLine[j]);
                             j++;
                             break; // done!
                         } else {
-                            outLine[j] = outLine[j] + "," + parseLine[i++];
+                            outLine[j] = outLine[j] + del + parseLine[i];
                         }
                     }
 
                 } else {
-                    // log.debug("outLine: "+parseLine[i]);
+//                    log.debug("outLine: "+parseLine[i]);
                     outLine[j++] = parseLine[i];
                 }
                 if (j > arraySize - 1) {
@@ -110,7 +121,7 @@ public class ImportRollingStock extends Thread {
                 }
             }
         } else {
-            outLine = line.split(",");
+            outLine = line.split(del);
         }
         return outLine;
     }
@@ -141,5 +152,5 @@ public class ImportRollingStock extends Thread {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ImportRollingStock.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ImportRollingStock.class);
 }

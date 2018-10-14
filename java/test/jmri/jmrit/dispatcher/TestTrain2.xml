@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/dispatcher-traininfo.xsl" type="text/xsl"?>
+<!DOCTYPE traininfofile SYSTEM "/xml/DTD/dispatcher-traininfo.dtd">
+<traininfofile>
+  <!--Written by JMRI version 4.9.1ish+sg+20170723T1846Z+Redaf9004ff on Sun Jul 23 14:57:34 EDT 2017-->
+  <traininfo version="2" transitname="IZ42(11WEST-2122)" transitid="IZ42" trainname="CN-RDC-250" dccaddress=" " trainintransit="yes" startblockname="IB20(B-11-WEST)-1" startblockid="IB20" startblockseq="1" endblockname="IB:AUTO:0002(B-21-22)" endblockid="IB:AUTO:0002" endblockseq="10" trainfromroster="yes" trainfromtrains="no" trainfromuser="no" priority="5" resetwhendone="yes" delayedrestart="timed" delayedrestarttime="5" reverseatend="yes" delayedstart="sensor" delayedSensor="1-StartTrain1" terminatewhendone="no" departuretimehr="8" departuretimemin="0" traintype="EXPRESS_PASSENGER" autorun="yes" loadatstartup="yes" allocatealltheway="no" speedfactor="1.0" maxspeed="1.0" ramprate="RAMP_NONE" resistancewheels="yes" runinreverse="no" sounddecoder="yes" maxtrainlength="120.0" />
+</traininfofile>

@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
    SerialDriverAdapterTest.class,
-   jmri.jmrix.tmcc.serialdriver.configurexml.PackageTest.class
+   jmri.jmrix.tmcc.serialdriver.configurexml.PackageTest.class,
+   BundleTest.class
 
 })
 /**
@@ -33,6 +34,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

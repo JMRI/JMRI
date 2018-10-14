@@ -1,4 +1,3 @@
-// EditManifestHeaderTextFrame.java
 package jmri.jmrit.operations.setup;
 
 import jmri.jmrit.operations.OperationsFrame;
@@ -7,7 +6,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of manifest header text strings
  *
  * @author Dan Boudreau Copyright (C) 2014
- * @version $Revision: 21846 $
+ * 
  */
 public class EditManifestHeaderTextFrame extends OperationsFrame {
 

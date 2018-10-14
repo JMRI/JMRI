@@ -1,7 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AddEditSignallingLogic.shtml 17977 2011-07-18 17:23:46Z zoo  -->
-<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-11-->
+<!-- Updated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-11-->
 
 <html lang="fr">
 <head>
@@ -9,9 +8,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Adding/Editing SignalMast Logic</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Kevin Dickerson" name="Author">
+  <meta name="author" content="Kevin Dickerson">
   <meta name="keywords" content=
   "JMRI help SignalMast Logic Add Edit"><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -154,10 +151,7 @@
       tableaux contenant les donn&eacute;es automatiquement
       g&eacute;n&eacute;r&eacute;s seront alors re-remplis.
 
-      <p>Ceci est la page d'aide
-      help/fr/package/jmri/jmrit/signalling/AddEitSignallingLogic.shtml</p>
-
-      <p><!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

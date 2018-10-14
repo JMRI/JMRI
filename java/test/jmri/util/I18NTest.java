@@ -1,20 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.util;
 
 import java.io.IOException;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+import org.junit.*;
 
 /**
  *
  * @author rhwood
  */
-public class I18NTest extends TestCase {
+public class I18NTest {
 
+    @Test
     public void testI18N() throws IOException {
         return; // disable the test until I can figure out why its failing on Jenkins
         /*
@@ -31,9 +27,6 @@ public class I18NTest extends TestCase {
          */
     }
 
-    public static Test suite() {
-        return new TestSuite(I18NTest.class);
-    }
 
     /* Referenced in disabled test above 
      private Map<String, Integer> getUnfinishedI18NModules() throws IOException {
@@ -56,19 +49,16 @@ public class I18NTest extends TestCase {
      return result;
      }
      */
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", I18NTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
 
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
     }
 
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

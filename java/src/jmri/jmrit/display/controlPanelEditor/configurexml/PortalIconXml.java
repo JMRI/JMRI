@@ -26,6 +26,7 @@ public class PortalIconXml extends PositionableLabelXml {
      * @param o Object to store, of type PortalIcon
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
 
         PortalIcon p = (PortalIcon) o;
@@ -63,6 +64,7 @@ public class PortalIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         if (!(o instanceof ControlPanelEditor)) {
             log.error("Can't load portalIcon.  Panel editor must use ControlPanelEditor.");
@@ -127,5 +129,5 @@ public class PortalIconXml extends PositionableLabelXml {
         l.setHideArrows(value);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PortalIconXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PortalIconXml.class);
 }

@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- $Id$ -->
 <!-- Translated by Blorec Hervé le 2012-01-25-->
 
 <html lang="fr">
@@ -9,9 +8,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Configure Digitrax DS64o</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help configure loconet DS64">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -62,8 +59,8 @@
       peuvent pas &Atilde;&ordf;tre programm&Atilde;&copy; par cet
       outil. C'est possible, mais personne n'a &Atilde;&copy;crit
       le code pour le moment car les itin&Atilde;&copy;raires JMRI
-      sont plus puissant et facile &Atilde;  utiliser 
-      <!--#include virtual="/Footer" --></p>
+      sont plus puissant et facile &Atilde;  utiliser. </p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

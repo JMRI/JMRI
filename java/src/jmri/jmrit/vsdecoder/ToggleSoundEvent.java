@@ -15,8 +15,8 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
+ * @author   Mark Underwood Copyright (C) 2011
+ * 
  */
 import java.beans.PropertyChangeListener;
 import javax.swing.JComponent;
@@ -134,6 +134,6 @@ public class ToggleSoundEvent extends SoundEvent implements PropertyChangeListen
          */
     }  // end setXml()
 
-    private static final Logger log = LoggerFactory.getLogger(ToggleSoundEvent.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ToggleSoundEvent.class);
 
 }

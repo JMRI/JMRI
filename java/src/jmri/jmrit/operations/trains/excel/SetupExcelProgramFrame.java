@@ -1,4 +1,3 @@
-// SetupExcelProgramFrame.java
 package jmri.jmrit.operations.trains.excel;
 
 import java.awt.Dimension;
@@ -12,6 +11,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.setup.Control;
@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for user edit of the file name and setup of an Excel program.
  *
  * @author Dan Boudreau Copyright (C) 2013
- * @version $Revision: 22249 $
+ * 
  */
 public class SetupExcelProgramFrame extends OperationsFrame {
 
@@ -34,7 +34,7 @@ public class SetupExcelProgramFrame extends OperationsFrame {
     // major buttons
     JButton addButton = new JButton(Bundle.getMessage("Add"));
     JButton testButton = new JButton(Bundle.getMessage("Test"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // directory
     JPanel pDirectoryName = new JPanel();
@@ -83,11 +83,13 @@ public class SetupExcelProgramFrame extends OperationsFrame {
     /**
      * Opens a dialog window in either the csvManifest or csvSwitchLists
      * directory
+     * @param directoryName The string name of the directory
+     * @return The File selected.
      *
      */
     protected File selectFile(String directoryName) {
         JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("ExcelProgramFiles"), "xls", "xlsm"); // NOI18N
-        fc.setCurrentDirectory(OperationsManager.getInstance().getFile(directoryName));
+        fc.setCurrentDirectory(InstanceManager.getDefault(OperationsManager.class).getFile(directoryName));
         fc.setDialogTitle(Bundle.getMessage("FindDesiredExcelFile"));
         // when reusing the chooser, make sure new files are included
         fc.rescanCurrentDirectory();
@@ -101,5 +103,5 @@ public class SetupExcelProgramFrame extends OperationsFrame {
         return null;
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(SetupExcelProgramFrame.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(SetupExcelProgramFrame.class);
 }

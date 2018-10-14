@@ -1,4 +1,3 @@
-// pricom.pockettester.StatusAction.java
 package jmri.jmrix.pricom.pockettester;
 
 import java.awt.event.ActionEvent;
@@ -12,25 +11,18 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrix.pricom.pockettester.StatusFrame
  *
  * @author	Bob Jacobsen Copyright (C) 2002,2004, 2005
- * @version	$Revision$
- */
+  */
 public abstract class StatusAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2710088536076104047L;
 
     public StatusAction(String s) {
         super(s);
     }
 
     public StatusAction() {
-        java.util.ResourceBundle rb
-                = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
-        putValue(javax.swing.Action.NAME, rb.getString("ActionStatus"));
+        putValue(javax.swing.Action.NAME, Bundle.getMessage("ActionStatus"));
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         StatusFrame f = new StatusFrame();
         try {
@@ -44,9 +36,6 @@ public abstract class StatusAction extends AbstractAction {
 
     abstract void connect(StatusFrame l);
 
-    private final static Logger log = LoggerFactory.getLogger(StatusAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StatusAction.class);
 
 }
-
-
-/* @(#)StatusAction.java */

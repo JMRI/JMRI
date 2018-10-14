@@ -10,4 +10,3 @@ retry.
 bytes of data from each node, in other words there's only
 one input message generated.
 
-$Id$

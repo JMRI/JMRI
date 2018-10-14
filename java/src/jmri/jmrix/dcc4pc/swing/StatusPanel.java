@@ -1,4 +1,3 @@
-// StatusPanel.java
 package jmri.jmrix.dcc4pc.swing;
 
 import javax.swing.BoxLayout;
@@ -10,19 +9,16 @@ import jmri.jmrix.dcc4pc.Dcc4PcMessage;
 import jmri.jmrix.dcc4pc.Dcc4PcReply;
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
 import jmri.jmrix.dcc4pc.Dcc4PcTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Panel to show DCC4PC status
  *
- * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 17977 $
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements Dcc4PcListener, Dcc4PcPanelInterface {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1884301741261020275L;
     String appString = "Info        : ";
     String proString = "Description : ";
     String hrdString = "Serial No   : ";
@@ -36,9 +32,12 @@ public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements 
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void initComponents(Dcc4PcSystemConnectionMemo memo) {
         super.initComponents(memo);
-        //memo.getTrafficController().addEcosListener(this);
         tc = memo.getDcc4PcTrafficController();
         // Create GUI
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -49,7 +48,11 @@ public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements 
         // ask to be notified
         Dcc4PcMessage m = new jmri.jmrix.dcc4pc.Dcc4PcMessage(new byte[]{(byte) 0x00});
         nextPacket = 0x00;
-        tc.sendDcc4PcMessage(m, this);
+        if(tc!=null){
+            tc.sendDcc4PcMessage(m, this);
+        } else {
+            log.error("no Traffic Controller Found");
+        }
 
         sendButton = new JButton("Update");
         sendButton.setVisible(true);
@@ -57,13 +60,18 @@ public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements 
 
         add(sendButton);
         sendButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sendButtonActionPerformed(e);
             }
         });
     }
 
-    public void initComponents() throws Exception {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void initComponents() {
     }
 
     void reset() {
@@ -72,24 +80,23 @@ public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements 
         serialNo.setText(hrdString + "<unknown>");
     }
 
-    // to free resources when no longer used
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void dispose() {
-        tc.removeDcc4PcListener(this);
-        tc = null;
+        if(tc!=null){
+            tc.removeDcc4PcListener(this);
+            tc = null;
+        }
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-        reset();
-        Dcc4PcMessage m = new jmri.jmrix.dcc4pc.Dcc4PcMessage(new byte[]{(byte) 0x00});
-        nextPacket = 0x00;
-        tc.sendDcc4PcMessage(m, this);
-
-    }
-
-    @SuppressWarnings("unused")
-    private void checkTC() throws JmriException {
-        if (tc == null) {
-            throw new JmriException("attempt to use EcosPowerManager after dispose");
+        if(tc!=null){
+            reset();
+            Dcc4PcMessage m = new jmri.jmrix.dcc4pc.Dcc4PcMessage(new byte[]{(byte) 0x00});
+            nextPacket = 0x00;
+            tc.sendDcc4PcMessage(m, this);
         }
     }
 
@@ -101,7 +108,10 @@ public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements 
     public void notifyMessage(Dcc4PcMessage m) {
     }
 
-    // to listen for status changes from Ecos system
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void reply(Dcc4PcReply r) {
         // power message?
         switch (nextPacket) {
@@ -149,6 +159,10 @@ public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements 
 
     int nextPacket = -1;
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void message(Dcc4PcMessage m) {
         byte[] theByteArray = m.getFormattedMessage();
         if (theByteArray[0] == 0x00) {
@@ -160,14 +174,12 @@ public class StatusPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implements 
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void handleTimeout(Dcc4PcMessage m) {
     }
-
-    public void processingData() {
-        //We should be increasing our timeout
-    }
-
+    
+    private final static Logger log = LoggerFactory.getLogger(StatusPanel.class);
 }
-
-
-/* @(#)StatusPane.java */

@@ -13,13 +13,17 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="B. Milhaupt" version="1.3" lastUpdated="20180823"/>
   <version author="td@teamdigital1.com" version="1.2" lastUpdated="20150720"/>
   <!-- Version 1 initial release 7/20/15-->
+  <!-- Version 1.3 release, added "LOCONETOPSBOARD" programming token to allow LocoNet-connected boards to read CV values -->
   <decoder>
     <family name="Stationary Decoder" mfg="Team Digital" type="stationary">
       <model model="SC82" lowVersionID="1" comment="SC82 is a stationary decoder, but it can be programmed in the usual way"/>
     </family>
-    <programming direct="yes" paged="yes" register="no" ops="yes"/>
+    <programming direct="yes" paged="yes" register="no" ops="yes">
+        <mode>LOCONETOPSBOARD</mode>
+    </programming>
     <variables>
       <variable CV="1" mask="VVVVVVVV" item="Short Address" tooltip="Range 1-16000, max value of 127 when programming via DCC" default="1">
         <splitVal highCV="2" upperMask="XXVVVVVV"/>
@@ -994,7 +998,7 @@
           <enumChoice choice="yes">
           </enumChoice>
         </enumVal>
-        <label>Servo 1 Postion Indication</label>
+        <label>Servo 1 Position Indication</label>
       </variable>
       <variable item="Rev1" CV="104" mask="VXXXXXXX" default="0">
         <enumVal>
@@ -1012,7 +1016,7 @@
           <enumChoice choice="yes">
           </enumChoice>
         </enumVal>
-        <label>Servo 2 Postion Indication</label>
+        <label>Servo 2 Position Indication</label>
       </variable>
       <variable item="Rev2" CV="105" mask="VXXXXXXX" default="0">
         <enumVal>
@@ -1030,7 +1034,7 @@
           <enumChoice choice="yes">
           </enumChoice>
         </enumVal>
-        <label>Servo 3 Postion Indication</label>
+        <label>Servo 3 Position Indication</label>
       </variable>
       <variable item="Rev3" CV="106" mask="VXXXXXXX" default="0">
         <enumVal>
@@ -1048,7 +1052,7 @@
           <enumChoice choice="yes">
           </enumChoice>
         </enumVal>
-        <label>Servo 4 Postion Indication</label>
+        <label>Servo 4 Position Indication</label>
       </variable>
       <variable item="Rev4" CV="107" mask="VXXXXXXX" default="0">
         <enumVal>
@@ -1068,7 +1072,7 @@
           <enumChoice choice="yes">
           </enumChoice>
         </enumVal>
-        <label>Servo 5 Postion Indication</label>
+        <label>Servo 5 Position Indication</label>
       </variable>
       <variable item="Rev5" CV="108" mask="VXXXXXXX" default="0">
         <enumVal>
@@ -1088,7 +1092,7 @@
           <enumChoice choice="yes">
           </enumChoice>
         </enumVal>
-        <label>Servo 6 Postion Indication</label>
+        <label>Servo 6 Position Indication</label>
       </variable>
       <variable item="Rev6" CV="109" mask="VXXXXXXX" default="0">
         <enumVal>
@@ -1108,7 +1112,7 @@
           <enumChoice choice="yes">
           </enumChoice>
         </enumVal>
-        <label>Servo 7 Postion Indication</label>
+        <label>Servo 7 Position Indication</label>
       </variable>
       <variable item="Rev7" CV="110" mask="VXXXXXXX" default="0">
         <enumVal>
@@ -1128,7 +1132,7 @@
           <enumChoice choice="yes">
           </enumChoice>
         </enumVal>
-        <label>Servo 8 Postion Indication</label>
+        <label>Servo 8 Position Indication</label>
       </variable>
       <variable item="Rev8" CV="111" mask="VXXXXXXX" default="0">
         <enumVal>
@@ -2441,7 +2445,7 @@
             <text> </text>
           </label>
           <label>
-            <text>Note: In a Digirax system the bus is called LocoNet</text>
+            <text>Note: In a Digitrax system the bus is called LocoNet</text>
           </label>
           <label>
             <text> </text>
@@ -2561,7 +2565,7 @@
   <pane>
     <column>
       <label>
-        <text>---- Sets the SC82 to a paricular test state - Use to help adjust servos ----</text>
+        <text>---- Sets the SC82 to a particular test state - Use to help adjust servos ----</text>
       </label>
       <label>
         <text>            Only works in Ops mode</text>
@@ -2611,7 +2615,7 @@
           </label>
         </column>
         <column>
-          <display item="PA1" tooltip="Determines the input addess"/>
+          <display item="PA1" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="PTog P1" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
@@ -2624,13 +2628,13 @@
           </label>
         </column>
         <column>
-          <display item="PTy1" tooltip="Configures the input for specfic use"/>
+          <display item="PTy1" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="PInv P1" format="checkbox" tooltip="Inverts the normal state of Close when input goes hi"/>
         </column>
       </row>
-      <display item="PTr1" tooltip="Configures the input simulas"/>
+      <display item="PTr1" tooltip="Configures the input stimulas"/>
       <display item="Rte Num P1" tooltip="number of the route"/>
       <label>
         <text> </text>
@@ -2648,7 +2652,7 @@
           </label>
         </column>
         <column>
-          <display item="PA2" tooltip="Determines the input addess"/>
+          <display item="PA2" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="PTog P2" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
@@ -2666,13 +2670,13 @@
           </label>
         </column>
         <column>
-          <display item="PTy2" tooltip="Configures the input for specfic use"/>
+          <display item="PTy2" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="PInv P2" format="checkbox" tooltip="Inverts the normal state of Close when input goes hi"/>
         </column>
       </row>
-      <display item="PTr2" tooltip="Configures the input simulas"/>
+      <display item="PTr2" tooltip="Configures the input stimulas"/>
       <display item="Rte Num P2" tooltip="number of the route"/>
       <label>
         <text> </text>
@@ -2690,7 +2694,7 @@
           </label>
         </column>
         <column>
-          <display item="PA3" tooltip="Determines the input addess"/>
+          <display item="PA3" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="PTog P3" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
@@ -2708,13 +2712,13 @@
           </label>
         </column>
         <column>
-          <display item="PTy3" tooltip="Configures the input for specfic use"/>
+          <display item="PTy3" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="PInv P3" format="checkbox" tooltip="Inverts the normal state of Close when input goes hi"/>
         </column>
       </row>
-      <display item="PTr3" tooltip="Configures the input simulas"/>
+      <display item="PTr3" tooltip="Configures the input stimulas"/>
       <display item="Rte Num P3" tooltip="number of the route"/>
       <label>
         <text> </text>
@@ -2732,7 +2736,7 @@
           </label>
         </column>
         <column>
-          <display item="PA4" tooltip="Determines the input addess"/>
+          <display item="PA4" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="PTog P4" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
@@ -2750,13 +2754,13 @@
           </label>
         </column>
         <column>
-          <display item="PTy4" tooltip="Configures the input for specfic use"/>
+          <display item="PTy4" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="PInv P4" format="checkbox" tooltip="Inverts the normal state of Close when input goes hi"/>
         </column>
       </row>
-      <display item="PTr4" tooltip="Configures the input simulas"/>
+      <display item="PTr4" tooltip="Configures the input stimulas"/>
       <display item="Rte Num P4" tooltip="number of the route"/>
     </column>
     <column>
@@ -2776,7 +2780,7 @@
           </label>
         </column>
         <column>
-          <display item="PA5" tooltip="Determines the input addess"/>
+          <display item="PA5" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="PTog P5" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
@@ -2794,13 +2798,13 @@
           </label>
         </column>
         <column>
-          <display item="PTy5" tooltip="Configures the input for specfic use"/>
+          <display item="PTy5" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="PInv P5" format="checkbox" tooltip="Inverts the normal state of Close when input goes hi"/>
         </column>
       </row>
-      <display item="PTr5" tooltip="Configures the input simulas"/>
+      <display item="PTr5" tooltip="Configures the input stimulas"/>
       <display item="Rte Num P5" tooltip="number of the route"/>
       <label>
         <text> </text>
@@ -2818,7 +2822,7 @@
           </label>
         </column>
         <column>
-          <display item="PA6" tooltip="Determines the input addess"/>
+          <display item="PA6" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="PTog P6" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
@@ -2836,13 +2840,13 @@
           </label>
         </column>
         <column>
-          <display item="PTy6" tooltip="Configures the input for specfic use"/>
+          <display item="PTy6" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="PInv P6" format="checkbox" tooltip="Inverts the normal state of Close when input goes hi"/>
         </column>
       </row>
-      <display item="PTr6" tooltip="Configures the input simulas"/>
+      <display item="PTr6" tooltip="Configures the input stimulas"/>
       <display item="Rte Num P6" tooltip="number of the route"/>
       <label>
         <text> </text>
@@ -2860,7 +2864,7 @@
           </label>
         </column>
         <column>
-          <display item="PA7" tooltip="Determines the input addess"/>
+          <display item="PA7" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="PTog P7" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
@@ -2878,13 +2882,13 @@
           </label>
         </column>
         <column>
-          <display item="PTy7" tooltip="Configures the input for specfic use"/>
+          <display item="PTy7" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="PInv P7" format="checkbox" tooltip="Inverts the normal state of Close when input goes hi"/>
         </column>
       </row>
-      <display item="PTr7" tooltip="Configures the input simulas"/>
+      <display item="PTr7" tooltip="Configures the input stimulas"/>
       <display item="Rte Num P7" tooltip="number of the route"/>
       <label>
         <text> </text>
@@ -2902,7 +2906,7 @@
           </label>
         </column>
         <column>
-          <display item="PA8" tooltip="Determines the input addess"/>
+          <display item="PA8" tooltip="Determines the input address"/>
         </column>
         <column>
           <display item="PTog P8" format="checkbox" tooltip="Sends opposite switch state from previous send - Switch Request only"/>
@@ -2920,13 +2924,13 @@
           </label>
         </column>
         <column>
-          <display item="PTy8" tooltip="Configures the input for specfic use"/>
+          <display item="PTy8" tooltip="Configures the input for specific use"/>
         </column>
         <column>
           <display item="PInv P8" format="checkbox" tooltip="Inverts the normal state of Close when input goes hi"/>
         </column>
       </row>
-      <display item="PTr8" tooltip="Configures the input simulas"/>
+      <display item="PTr8" tooltip="Configures the input stimulas"/>
       <display item="Rte Num P8" tooltip="number of the route"/>
     </column>
     <name>Inputs 1-8</name>
@@ -2976,7 +2980,7 @@
               </label>
             </column>
             <column>
-              <display item="Rev1" format="checkbox" tooltip="Servo moves in oposite direction"/>
+              <display item="Rev1" format="checkbox" tooltip="Servo moves in opposite direction"/>
             </column>
           </row>
         </column>
@@ -2997,7 +3001,7 @@
               </label>
             </column>
             <column>
-              <display item="Rev5" format="checkbox" tooltip="Servo moves in oposite direction"/>
+              <display item="Rev5" format="checkbox" tooltip="Servo moves in opposite direction"/>
             </column>
           </row>
         </column>
@@ -3018,7 +3022,7 @@
               </label>
             </column>
             <column>
-              <display item="Rev2" format="checkbox" tooltip="Servo moves in oposite direction"/>
+              <display item="Rev2" format="checkbox" tooltip="Servo moves in opposite direction"/>
             </column>
           </row>
         </column>
@@ -3039,7 +3043,7 @@
               </label>
             </column>
             <column>
-              <display item="Rev6" format="checkbox" tooltip="Servo moves in oposite direction"/>
+              <display item="Rev6" format="checkbox" tooltip="Servo moves in opposite direction"/>
             </column>
           </row>
         </column>
@@ -3060,7 +3064,7 @@
               </label>
             </column>
             <column>
-              <display item="Rev3" format="checkbox" tooltip="Servo moves in oposite direction"/>
+              <display item="Rev3" format="checkbox" tooltip="Servo moves in opposite direction"/>
             </column>
           </row>
         </column>
@@ -3081,7 +3085,7 @@
               </label>
             </column>
             <column>
-              <display item="Rev7" format="checkbox" tooltip="Servo moves in oposite direction"/>
+              <display item="Rev7" format="checkbox" tooltip="Servo moves in opposite direction"/>
             </column>
           </row>
         </column>
@@ -3102,7 +3106,7 @@
               </label>
             </column>
             <column>
-              <display item="Rev4" format="checkbox" tooltip="Servo moves in oposite direction"/>
+              <display item="Rev4" format="checkbox" tooltip="Servo moves in opposite direction"/>
             </column>
           </row>
         </column>
@@ -3123,7 +3127,7 @@
               </label>
             </column>
             <column>
-              <display item="Rev8" format="checkbox" tooltip="Servo moves in oposite direction"/>
+              <display item="Rev8" format="checkbox" tooltip="Servo moves in opposite direction"/>
             </column>
           </row>
         </column>
@@ -3320,7 +3324,7 @@
       </row>
       <row>
         <column>
-          <display item="MType1" tooltip="A sensor type messsage will executes this route"/>
+          <display item="MType1" tooltip="A sensor type message will executes this route"/>
         </column>
       </row>
       <label>
@@ -3409,7 +3413,7 @@
       </row>
       <row>
         <column>
-          <display item="MType2" tooltip="A sensor type messsage will executes this route"/>
+          <display item="MType2" tooltip="A sensor type message will executes this route"/>
         </column>
       </row>
       <label>
@@ -3498,7 +3502,7 @@
       </row>
       <row>
         <column>
-          <display item="MType3" tooltip="A sensor type messsage will executes this route"/>
+          <display item="MType3" tooltip="A sensor type message will executes this route"/>
         </column>
       </row>
       <label>
@@ -3587,7 +3591,7 @@
       </row>
       <row>
         <column>
-          <display item="MType4" tooltip="A sensor type messsage will executes this route"/>
+          <display item="MType4" tooltip="A sensor type message will executes this route"/>
         </column>
       </row>
       <label>
@@ -3685,7 +3689,7 @@
       </row>
       <row>
         <column>
-          <display item="MType5" tooltip="A sensor type messsage will executes this route"/>
+          <display item="MType5" tooltip="A sensor type message will executes this route"/>
         </column>
       </row>
       <label>
@@ -3774,7 +3778,7 @@
       </row>
       <row>
         <column>
-          <display item="MType6" tooltip="A sensor type messsage will executes this route"/>
+          <display item="MType6" tooltip="A sensor type message will executes this route"/>
         </column>
       </row>
       <label>
@@ -3863,7 +3867,7 @@
       </row>
       <row>
         <column>
-          <display item="MType7" tooltip="A sensor type messsage will executes this route"/>
+          <display item="MType7" tooltip="A sensor type message will executes this route"/>
         </column>
       </row>
       <label>
@@ -3952,7 +3956,7 @@
       </row>
       <row>
         <column>
-          <display item="MType8" tooltip="A sensor type messsage will executes this route"/>
+          <display item="MType8" tooltip="A sensor type message will executes this route"/>
         </column>
       </row>
       <label>

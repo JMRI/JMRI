@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id$ -->
-
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -38,8 +36,9 @@
         <xs:element name="layoutblock" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="metric" type="xs:integer" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
             <xs:attribute name="systemName" type="systemNameType">
                 <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>

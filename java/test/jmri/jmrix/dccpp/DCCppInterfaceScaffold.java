@@ -11,8 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2006
  * @author	Mark Underwood Copyright (C) 2015
- * @version	$Revision$
- *
+  *
  * Use an object of this type as a DCCppTrafficController in tests
  */
 public class DCCppInterfaceScaffold extends DCCppTrafficController {
@@ -22,6 +21,7 @@ public class DCCppInterfaceScaffold extends DCCppTrafficController {
     }
 
     // override some DCCppTrafficController methods for test purposes
+    @Override
     public boolean status() {
         return true;
     }
@@ -31,6 +31,7 @@ public class DCCppInterfaceScaffold extends DCCppTrafficController {
      */
     public Vector<DCCppMessage> outbound = new Vector<DCCppMessage>();  // public OK here, so long as this is a test class
 
+    @Override
     public void sendDCCppMessage(DCCppMessage m, DCCppListener replyTo) {
         if (log.isDebugEnabled()) {
             log.debug("sendDCCppMessage [" + m + "]");
@@ -39,6 +40,7 @@ public class DCCppInterfaceScaffold extends DCCppTrafficController {
         outbound.addElement(m);
     }
 
+    @Override
     public void sendHighPriorityDCCppMessage(DCCppMessage m, DCCppListener replyTo) {
         if (log.isDebugEnabled()) {
             log.debug("sendDCCppMessage [" + m + "]");
@@ -70,21 +72,24 @@ public class DCCppInterfaceScaffold extends DCCppTrafficController {
     /**
      * Avoid error message, normal in parent
      */
+    @Override
     protected void connectionWarn() {
     }
 
     /**
      * Avoid error message, normal in parent
      */
+    @Override
     protected void portWarn(Exception e) {
     }
 
+    @Override
     public void receiveLoop() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppInterfaceScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DCCppInterfaceScaffold.class);
 
 }
 
 
-/* @(#)LocoNetInterfaceScaffold.java */
+

@@ -8,7 +8,9 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   jmri.jmrix.wangrow.serialdriver.PackageTest.class
+   jmri.jmrix.wangrow.serialdriver.PackageTest.class,
+   WangrowConnectionTypeListTest.class,
+   WangrowMenuTest.class
 })
 /**
  * Tests for the jmri.jmrix.wangrow package.
@@ -30,6 +32,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

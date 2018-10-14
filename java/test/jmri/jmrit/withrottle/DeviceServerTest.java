@@ -1,9 +1,12 @@
 package jmri.jmrit.withrottle;
 
-import org.junit.Assert;
+import jmri.InstanceManager;
+import jmri.NamedBeanHandleManager;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Test simple functioning of DeviceServer
@@ -16,7 +19,7 @@ public class DeviceServerTest extends TestCase {
         java.net.Socket s = new java.net.Socket();
         FacelessServer f = new FacelessServer(){
            @Override
-           public void createServerThread(){
+           public void listen(){
            }
         };
         DeviceServer panel = new DeviceServer(s,f);
@@ -44,12 +47,13 @@ public class DeviceServerTest extends TestCase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
+        InstanceManager.setDefault(NamedBeanHandleManager.class, new NamedBeanHandleManager());
     }
     
     @Override
     public void tearDown() throws Exception {
         super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

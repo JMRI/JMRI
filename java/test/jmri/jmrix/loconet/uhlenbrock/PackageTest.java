@@ -9,7 +9,14 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
-   jmri.jmrix.loconet.uhlenbrock.configurexml.PackageTest.class
+   jmri.jmrix.loconet.uhlenbrock.configurexml.PackageTest.class,
+   UhlenbrockAdapterTest.class,
+   UhlenbrockConnectionTypeListTest.class,
+   UhlenbrockPacketizerTest.class,
+   UhlenbrockSystemConnectionMemoTest.class,
+   UhlenbrockProgrammerManagerTest.class,
+   UhlenbrockLnThrottleManagerTest.class,
+   BundleTest.class,
 })
 /**
  * Tests for the jmri.jmrix.loconet.uhlenbrock package.
@@ -31,6 +38,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

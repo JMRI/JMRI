@@ -1,58 +1,57 @@
 package jmri.jmrix.tmcc;
 
-import jmri.implementation.AbstractTurnoutTest;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import jmri.implementation.AbstractTurnoutTestBase;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * Tests for the SerialTurnout class
  *
- * @author	Bob Jacobsen
- * @version	$Revision$
+ * @author Bob Jacobsen
  */
-public class SerialTurnoutTest extends AbstractTurnoutTest {
+public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     private SerialTrafficControlScaffold tcis = null;
+    private TmccSystemConnectionMemo memo = null;
 
+    @Before
+    @Override
     public void setUp() {
+        JUnitUtil.setUp();
         // prepare an interface
-        tcis = new SerialTrafficControlScaffold();
+        memo = new TmccSystemConnectionMemo("T", "TMCC Test");
+        tcis = new SerialTrafficControlScaffold(memo);
+        memo.setTrafficController(tcis); // important for successful getTrafficController()
 
-        t = new SerialTurnout(4);
+        t = new SerialTurnout("T", 4, memo);
     }
 
+    @Override
     public int numListeners() {
         return tcis.numListeners();
     }
 
+    @Override
     public void checkThrownMsgSent() {
-
-//                tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
-//		Assert.assertTrue("message sent", tcis.outbound.size()>0);
-//		Assert.assertEquals("content", "41 54 08", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
+//       tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
+//       Assert.assertTrue("message sent", tcis.outbound.size() > 0);
+//       Assert.assertEquals("content", "41 54 08", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // OUT (THROWN) message
     }
 
+    @Override
     public void checkClosedMsgSent() {
-//                tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
-//		Assert.assertTrue("message sent", tcis.outbound.size()>0);
-//		Assert.assertEquals("content", "41 54 00", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
+//       tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
+//       Assert.assertTrue("message sent", tcis.outbound.size() > 0);
+//       Assert.assertEquals("content", "41 54 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());  // THROUGH (CLOSED) message
     }
 
-    // from here down is testing infrastructure
-    public SerialTurnoutTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SerialTurnoutTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SerialTurnoutTest.class);
-        return suite;
+    // The minimal setup for log4J
+    @After
+    public void tearDown() {
+        t.dispose();
+        t = null;
+        JUnitUtil.tearDown();
     }
 
 }

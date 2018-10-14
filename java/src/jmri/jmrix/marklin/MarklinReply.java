@@ -1,14 +1,11 @@
-// MarklinReply.java
 package jmri.jmrix.marklin;
-
 
 /**
  * Carries the reply to an MarklinMessage.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Kevin Dickerson Copyright (C) 2007
- * @version $Revision: 20714 $
+ *
  */
 public class MarklinReply extends jmri.jmrix.AbstractMRReply {
 
@@ -30,21 +27,22 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
         //this(header);
         this();
         _nDataChars = d.length;
-        for (int i = 0; i < d.length; i++) {
-            _dataChars[i] = d[i];
-        }
+        System.arraycopy(d, 0, _dataChars, 0, d.length);
     }
 
     //Maximum size of a reply packet is 13 bytes.
+    @Override
     public int maxSize() {
         return 13;
     }
 
     // no need to do anything
+    @Override
     protected int skipPrefix(int index) {
         return index;
     }
 
+    @Override
     public int value() {
         if (isBinary()) {
             return getElement(0);
@@ -58,32 +56,36 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
         return super.getElement(n) & 0xff;
     }
 
-    //knowing where the end is we can then determine the error code
-    int endAtElement = -1;
-
     //An event message is Unsolicited
+    @Override
     public boolean isUnsolicited() {
         return !isResponse();
     }
 
-    /**
-     * Returns a hex string representation of this MarklinReply
+    /*
+     * {@inhertDoc}
      */
-    public String toHexString() {
-
-        StringBuffer buf = new StringBuffer();
-        buf.append("0x" + Integer.toHexString(_dataChars[0]));
+    @Override
+    public String toString(){
+        StringBuilder buf = new StringBuilder();
+        buf.append("0x").append(Integer.toHexString(_dataChars[0]));
         for (int i = 1; i < _nDataChars; i++) {
-            buf.append(", 0x" + Integer.toHexString(_dataChars[i]));
+            buf.append(", 0x").append(Integer.toHexString(_dataChars[i]));
         }
         return buf.toString();
     }
 
+    /*
+     * {@inhertDoc}
+     */
+    @Override
+    public String toMonitorString(){
+	    // eventually, the MarklinMon class should probably be integrated here.
+	    return jmri.jmrix.marklin.swing.monitor.MarklinMon.displayReply(this);
+    }
+
     public boolean isResponse() {
-        if ((getElement(1) & 0x01) == 0x01) {
-            return true;
-        }
-        return false;
+        return (getElement(1) & 0x01) == 0x01;
     }
 
     public int getCanDataLength() {
@@ -131,6 +133,3 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
         return arr;
     }
 }
-
-
-/* @(#)MarklinReply.java */

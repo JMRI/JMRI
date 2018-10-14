@@ -95,7 +95,7 @@ public abstract class Bean extends UnboundBean implements PropertyChangeProvider
     }
 
     /**
-     * Fire an indexed property change on the Event dispatch (Swing) thread. Use
+     * Fire a property change on the Event dispatch (Swing) thread. Use
      * {@link java.beans.PropertyChangeSupport#firePropertyChange(java.lang.String, boolean, boolean)}
      * directly to fire this notification on another thread.
      *
@@ -111,7 +111,7 @@ public abstract class Bean extends UnboundBean implements PropertyChangeProvider
     }
 
     /**
-     * Fire an indexed property change on the Event dispatch (Swing) thread. Use
+     * Fire a property change on the Event dispatch (Swing) thread. Use
      * {@link java.beans.PropertyChangeSupport#firePropertyChange(java.beans.PropertyChangeEvent)}
      * directly to fire this notification on another thread.
      *
@@ -124,7 +124,7 @@ public abstract class Bean extends UnboundBean implements PropertyChangeProvider
     }
 
     /**
-     * Fire an indexed property change on the Event dispatch (Swing) thread. Use
+     * Fire a property change on the Event dispatch (Swing) thread. Use
      * {@link java.beans.PropertyChangeSupport#firePropertyChange(java.lang.String, int, int)}
      * directly to fire this notification on another thread.
      *
@@ -140,7 +140,7 @@ public abstract class Bean extends UnboundBean implements PropertyChangeProvider
     }
 
     /**
-     * Fire an indexed property change on the Event dispatch (Swing) thread. Use
+     * Fire a property change on the Event dispatch (Swing) thread. Use
      * {@link java.beans.PropertyChangeSupport#firePropertyChange(java.lang.String, java.lang.Object, java.lang.Object)}
      * directly to fire this notification on another thread.
      *

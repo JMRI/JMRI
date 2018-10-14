@@ -1,36 +1,24 @@
 package jmri.server.json;
 
-import static jmri.server.json.JSON.CARS;
-import static jmri.server.json.JSON.CONSIST;
-import static jmri.server.json.JSON.CONSISTS;
 import static jmri.server.json.JSON.DATA;
-import static jmri.server.json.JSON.ENGINES;
+import static jmri.server.json.JSON.GET;
 import static jmri.server.json.JSON.GOODBYE;
 import static jmri.server.json.JSON.HELLO;
 import static jmri.server.json.JSON.LIST;
 import static jmri.server.json.JSON.LOCALE;
-import static jmri.server.json.JSON.LOCATIONS;
 import static jmri.server.json.JSON.METHOD;
 import static jmri.server.json.JSON.PING;
-import static jmri.server.json.JSON.PROGRAMMER;
-import static jmri.server.json.JSON.TRAIN;
-import static jmri.server.json.JSON.TRAINS;
 import static jmri.server.json.JSON.TYPE;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.ServiceLoader;
+import javax.servlet.http.HttpServletResponse;
 import jmri.JmriException;
-import jmri.jmris.json.JsonConsistServer;
-import jmri.jmris.json.JsonOperationsServer;
-import jmri.jmris.json.JsonProgrammerServer;
-import jmri.jmris.json.JsonReporterServer;
-import jmri.jmris.json.JsonUtil;
 import jmri.spi.JsonServiceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,55 +26,50 @@ import org.slf4j.LoggerFactory;
 public class JsonClientHandler {
 
     /**
-     * When used as a parameter to
-     * {@link #onMessage(java.lang.String)}, will cause a
-     * {@value jmri.server.json.JSON#HELLO} message to be sent to the client.
+     * When used as a parameter to {@link #onMessage(java.lang.String)}, will
+     * cause a {@value jmri.server.json.JSON#HELLO} message to be sent to the
+     * client.
      */
     public static final String HELLO_MSG = "{\"" + JSON.TYPE + "\":\"" + JSON.HELLO + "\"}";
-    private final JsonConsistServer consistServer;
-    private final JsonOperationsServer operationsServer;
-    private final JsonProgrammerServer programmerServer;
-    private final JsonReporterServer reporterServer;
     private final JsonConnection connection;
-    private final HashMap<String, HashSet<JsonSocketService>> services = new HashMap<>();
+    private final HashMap<String, HashSet<JsonSocketService<?>>> services = new HashMap<>();
     private static final Logger log = LoggerFactory.getLogger(JsonClientHandler.class);
 
     public JsonClientHandler(JsonConnection connection) {
         this.connection = connection;
-        this.consistServer = new JsonConsistServer(this.connection);
-        this.operationsServer = new JsonOperationsServer(this.connection);
-        this.programmerServer = new JsonProgrammerServer(this.connection);
-        this.reporterServer = new JsonReporterServer(this.connection);
-        for (JsonServiceFactory factory : ServiceLoader.load(JsonServiceFactory.class)) {
+        ServiceLoader.load(JsonServiceFactory.class).forEach((factory) -> {
+            JsonSocketService<?> service = factory.getSocketService(connection);
             for (String type : factory.getTypes()) {
-                JsonSocketService service = factory.getSocketService(connection);
-                if (service != null) {
-                    HashSet<JsonSocketService> set = this.services.get(type);
-                    if (set == null) {
-                        this.services.put(type, new HashSet<>());
-                        set = this.services.get(type);
-                    }
-                    set.add(service);
+                HashSet<JsonSocketService<?>> set = this.services.get(type);
+                if (set == null) {
+                    this.services.put(type, new HashSet<>());
+                    set = this.services.get(type);
                 }
+                set.add(service);
             }
-        }
+            for (String type : factory.getReceivedTypes()) {
+                HashSet<JsonSocketService<?>> set = this.services.get(type);
+                if (set == null) {
+                    this.services.put(type, new HashSet<>());
+                    set = this.services.get(type);
+                }
+                set.add(service);
+            }
+        });
     }
 
-    public void dispose() {
-        this.consistServer.dispose();
-        this.operationsServer.dispose();
-        this.programmerServer.dispose();
-        this.reporterServer.dispose();
+    public void onClose() {
         services.values().stream().forEach((set) -> {
             set.stream().forEach((service) -> {
                 service.onClose();
             });
         });
+        services.clear();
     }
 
     /**
      * Process a JSON string and handle appropriately.
-     *
+     * <p>
      * Currently JSON strings in four different forms are handled by this
      * method:<ul> <li>list requests in the form:
      * <code>{"type":"list","list":"trains"}</code> or
@@ -114,7 +97,11 @@ public class JsonClientHandler {
      * @throws java.io.IOException if communications with the client is broken
      */
     public void onMessage(String string) throws IOException {
-        log.debug("Received from client: {}", string);
+        if (string.equals("{\"type\":\"ping\"}")) { //turn down the noise a bit
+            log.trace("Received from client: '{}'", string);            
+        } else {
+            log.debug("Received from client: '{}'", string);
+        }
         try {
             this.onMessage(this.connection.getObjectMapper().readTree(string));
         } catch (JsonProcessingException pe) {
@@ -125,7 +112,7 @@ public class JsonClientHandler {
 
     /**
      * Process a JSON node and handle appropriately.
-     *
+     * <p>
      * See {@link #onMessage(java.lang.String)} for expected JSON objects.
      *
      * @param root the JSON node.
@@ -134,81 +121,63 @@ public class JsonClientHandler {
      */
     public void onMessage(JsonNode root) throws IOException {
         try {
+            String method = root.path(METHOD).asText(GET);
             String type = root.path(TYPE).asText();
-            if (root.path(TYPE).isMissingNode() && root.path(LIST).isValueNode()) {
-                type = LIST;
-            }
             JsonNode data = root.path(DATA);
-            if (data.path(METHOD).isMissingNode() && root.path(METHOD).isValueNode()) {
-                ((ObjectNode) data).put(METHOD, root.path(METHOD).asText());
+            if ((root.path(TYPE).isMissingNode() || type.equals(LIST))
+                    && root.path(LIST).isValueNode()) {
+                type = root.path(LIST).asText();
+                method = LIST;
             }
-            log.debug("Processing {} with {}", type, data);
-            if ((type.equals(HELLO) || type.equals(PING) || type.equals(GOODBYE))
-                    && data.isMissingNode()) {
-                // these messages are not required to have a data payload,
-                // so create one if the message did not contain one to avoid
-                // special casing later
-                data = this.connection.getObjectMapper().createObjectNode();
-            }
-            if (type.equals(LIST)) {
-                JsonNode reply;
-                String list = root.path(LIST).asText();
-                switch (list) {
-                    case CARS:
-                        reply = JsonUtil.getCars(this.connection.getLocale());
-                        break;
-                    case CONSISTS:
-                        reply = JsonUtil.getConsists(this.connection.getLocale());
-                        break;
-                    case ENGINES:
-                        reply = JsonUtil.getEngines(this.connection.getLocale());
-                        break;
-                    case LOCATIONS:
-                        reply = JsonUtil.getLocations(this.connection.getLocale());
-                        break;
-                    case TRAINS:
-                        reply = JsonUtil.getTrains(this.connection.getLocale());
-                        break;
-                    default:
-                        if (this.services.get(list) != null) {
-                            for (JsonSocketService service : this.services.get(list)) {
-                                service.onList(list, data, this.connection.getLocale());
-                            }
-                            return;
-                        } else {
-                            log.warn("Requested list type '{}' unknown.", list);
-                            this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", list));
-                            return;
-                        }
+            if (data.isMissingNode()) {
+                if ((type.equals(HELLO) || type.equals(PING) || type.equals(GOODBYE))
+                        || (method.equals(LIST) || method.equals(GET))) {
+                    // these messages are not required to have a data payload,
+                    // so create one if the message did not contain one to avoid
+                    // special casing later
+                    data = this.connection.getObjectMapper().createObjectNode();
+                } else {
+                    this.sendErrorMessage(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"));
+                    return;
                 }
-                this.connection.sendMessage(this.connection.getObjectMapper().writeValueAsString(reply));
+            }
+            if (root.path(METHOD).isMissingNode()) { // method not explicitly set
+                if (data.path(METHOD).isValueNode()) {
+                    // at one point, we used method within data, so check there also
+                    // if method was not specified, set it to "post"
+                    method = data.path(METHOD).asText(JSON.POST);
+                }
+            }
+            if (type.equals(PING)) { //turn down the noise a bit
+                log.trace("Processing '{}' with '{}'", type, data);
+            } else {
+                log.debug("Processing '{}' with '{}'", type, data);                
+            }
+            if (method.equals(LIST)) {
+                if (this.services.get(type) != null) {
+                    for (JsonSocketService<?> service : this.services.get(type)) {
+                        service.onList(type, data, this.connection.getLocale());
+                    }
+                    return;
+                } else {
+                    log.warn("Requested list type '{}' unknown.", type);
+                    this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type));
+                    return;
+                }
             } else if (!data.isMissingNode()) {
-                switch (type) {
-                    case CONSIST:
-                        this.consistServer.parseRequest(this.connection.getLocale(), data);
-                        break;
-                    case PROGRAMMER:
-                        this.programmerServer.parseRequest(this.connection.getLocale(), data);
-                        break;
-                    case TRAIN:
-                        this.operationsServer.parseTrainRequest(this.connection.getLocale(), data);
-                        break;
-                    case HELLO:
-                    case LOCALE:
-                        if (!data.path(LOCALE).isMissingNode()) {
-                            this.connection.setLocale(Locale.forLanguageTag(data.path(LOCALE).asText()));
-                        }
-                    //$FALL-THROUGH$ to default action
-                    default:
-                        if (this.services.get(type) != null) {
-                            for (JsonSocketService service : this.services.get(type)) {
-                                service.onMessage(type, data, this.connection.getLocale());
-                            }
-                        } else {
-                            log.warn("Requested type '{}' unknown.", type);
-                            this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type));
-                        }
-                        break;
+                if (type.equals(HELLO) || type.equals(LOCALE) && !data.path(LOCALE).isMissingNode()) {
+                    String locale = data.path(LOCALE).asText();
+                    if (!locale.isEmpty()) {
+                        this.connection.setLocale(Locale.forLanguageTag(locale));
+                    }
+                }
+                if (this.services.get(type) != null) {
+                    for (JsonSocketService<?> service : this.services.get(type)) {
+                        service.onMessage(type, data, method, this.connection.getLocale());
+                    }
+                } else {
+                    log.warn("Requested type '{}' unknown.", type);
+                    this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type));
                 }
             } else {
                 this.sendErrorMessage(400, Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"));
@@ -224,19 +193,6 @@ public class JsonClientHandler {
         }
     }
 
-    /**
-     *
-     * @param heartbeat seconds until heartbeat must be received before breaking
-     *                  connection to client; currently ignored
-     * @throws IOException if communications broken with client
-     * @deprecated since 4.5.2; use {@link #onMessage(java.lang.String)} with
-     * the parameter {@link #HELLO_MSG} instead
-     */
-    @Deprecated
-    public void sendHello(int heartbeat) throws IOException {
-        this.onMessage(HELLO_MSG);
-    }
-
     private void sendErrorMessage(int code, String message) throws IOException {
         JsonException ex = new JsonException(code, message);
         this.sendErrorMessage(ex);
@@ -244,5 +200,9 @@ public class JsonClientHandler {
 
     private void sendErrorMessage(JsonException ex) throws IOException {
         this.connection.sendMessage(ex.getJsonMessage());
+    }
+
+    protected HashMap<String, HashSet<JsonSocketService<?>>> getServices() {
+        return new HashMap<>(this.services);
     }
 }

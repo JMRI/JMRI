@@ -1,4 +1,3 @@
-// YardmasterByTrackAction.java
 package jmri.jmrit.operations.locations;
 
 import java.awt.Frame;
@@ -9,7 +8,7 @@ import javax.swing.AbstractAction;
  * Swing action open the yardmaster by track frame.
  *
  * @author Daniel Boudreau Copyright (C) 2015
- * @version $Revision: 28746 $
+ * 
  */
 public class YardmasterByTrackAction extends AbstractAction {
 
@@ -42,8 +41,8 @@ public class YardmasterByTrackAction extends AbstractAction {
             f = new YardmasterByTrackFrame(_location);
         }
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 }
 
-/* @(#)YardmasterByTrackAction.java */
+

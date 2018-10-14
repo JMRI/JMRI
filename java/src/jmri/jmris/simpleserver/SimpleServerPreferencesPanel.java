@@ -1,6 +1,3 @@
-/**
- * @author Randall Wood Copyright (C) 2012
- */
 package jmri.jmris.simpleserver;
 
 import javax.swing.Box;
@@ -15,10 +12,14 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
+import org.openide.util.lookup.ServiceProvider;
 
+/**
+ * @author Randall Wood Copyright (C) 2012
+ */
+@ServiceProvider(service = PreferencesPanel.class)
 public class SimpleServerPreferencesPanel extends JPanel implements PreferencesPanel {
 
-    private static final long serialVersionUID = 03_16_2015L;
     private JSpinner port;
     private SimpleServerPreferences preferences;
     private JFrame parentFrame = null;
@@ -165,8 +166,9 @@ public class SimpleServerPreferencesPanel extends JPanel implements PreferencesP
      *
      * @return true if the preferences are valid, false otherwise
      */
+    @Override
     public boolean isPreferencesValid() {
-        return false;
+        return true;
     }
 
 }

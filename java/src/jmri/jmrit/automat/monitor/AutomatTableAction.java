@@ -6,7 +6,7 @@ import javax.swing.AbstractAction;
 /**
  * Swing action to create and register a AutomatTable GUI
  *
- * @author	Bob Jacobsen Copyright (C) 2004, 2008
+ * @author Bob Jacobsen Copyright (C) 2004, 2008
  */
 public class AutomatTableAction extends AbstractAction {
 
@@ -24,6 +24,7 @@ public class AutomatTableAction extends AbstractAction {
 
     AutomatTableFrame f;
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create the frame
         f = new AutomatTableFrame(new AutomatTableDataModel());

@@ -23,7 +23,7 @@ public abstract class ConstrainedBean extends Bean implements VetoableChangeProv
             super.setProperty(key, value);
         } catch (PropertyVetoException ex) {
             // use the logger for the implementing class instead of a logger for ConstrainedBean
-            LoggerFactory.getLogger(this.getClass().getName()).warn("Property {} change vetoed.", key, ex);
+            LoggerFactory.getLogger(this.getClass()).warn("Property {} change vetoed.", key, ex);
             // fire a property change that does not have the new value to indicate
             // to any other listeners that the property was "reset" back to its
             // orginal value as a result of the veto
@@ -38,7 +38,7 @@ public abstract class ConstrainedBean extends Bean implements VetoableChangeProv
             super.setIndexedProperty(key, index, value);
         } catch (PropertyVetoException ex) {
             // use the logger for the implementing class instead of a logger for ConstrainedBean
-            LoggerFactory.getLogger(this.getClass().getName()).warn("Property {} change vetoed.", key, ex);
+            LoggerFactory.getLogger(this.getClass()).warn("Property {} change vetoed.", key, ex);
             // fire a property change that does not have the new value to indicate
             // to any other listeners that the property was "reset" back to its
             // orginal value as a result of the veto

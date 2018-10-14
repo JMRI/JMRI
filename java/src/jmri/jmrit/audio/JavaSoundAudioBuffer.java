@@ -396,13 +396,13 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
     }
 
     @Override
-    protected void cleanUp() {
+    protected void cleanup() {
         if (log.isDebugEnabled()) {
             log.debug("Cleanup JavaSoundAudioBuffer (" + this.getSystemName() + ")");
         }
         this.dispose();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(JavaSoundAudioBuffer.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JavaSoundAudioBuffer.class);
 
 }

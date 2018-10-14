@@ -2,12 +2,12 @@ package jmri.jmrix.sprog.console;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
- * Swing action to create and register a SprogConsoleFrame object
+ * Swing action to create and register a SprogConsoleFrame object.
  *
  * @author	Andrew Crosland Copyright (C) 2008
  */
@@ -15,11 +15,12 @@ public class SprogConsoleAction extends AbstractAction {
 
     private SprogSystemConnectionMemo _memo;
 
-    public SprogConsoleAction(String s,SprogSystemConnectionMemo memo) {
+    public SprogConsoleAction(String s, SprogSystemConnectionMemo memo) {
         super(s);
         _memo = memo;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         SprogConsoleFrame f = new SprogConsoleFrame(_memo);
         try {
@@ -29,8 +30,7 @@ public class SprogConsoleAction extends AbstractAction {
         }
         f.setVisible(true);
     }
-    private final static Logger log = LoggerFactory.getLogger(SprogConsoleAction.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(SprogConsoleAction.class);
+
 }
-
-
-/* @(#)SprogConsoleAction.java */

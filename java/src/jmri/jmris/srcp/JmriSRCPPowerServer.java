@@ -1,4 +1,3 @@
-//JmriSRCPPowerServer.java
 package jmri.jmris.srcp;
 
 import java.io.DataOutputStream;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * SRCP interface between the JMRI power manager and a network connection
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision$
  */
 public class JmriSRCPPowerServer extends AbstractPowerServer {
 
@@ -27,6 +25,7 @@ public class JmriSRCPPowerServer extends AbstractPowerServer {
     /*
      * Protocol Specific Abstract Functions
      */
+    @Override
     public void sendStatus(int Status) throws IOException {
         if (Status == PowerManager.ON) {
             TimeStampedOutput.writeTimestamp(output, "100 INFO 0 POWER ON\n\r");
@@ -38,10 +37,12 @@ public class JmriSRCPPowerServer extends AbstractPowerServer {
         }
     }
 
+    @Override
     public void sendErrorStatus() throws IOException {
         TimeStampedOutput.writeTimestamp(output, "499 ERROR unspecified error\n\r");
     }
 
+    @Override
     public void parseStatus(String statusString) throws jmri.JmriException {
         if (statusString.contains("ON")) {
             if (log.isDebugEnabled()) {
@@ -71,6 +72,6 @@ public class JmriSRCPPowerServer extends AbstractPowerServer {
         } catch (IOException ie2) {
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(JmriSRCPPowerServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriSRCPPowerServer.class);
 
 }

@@ -48,9 +48,13 @@
                                             <xs:complexType>
                                                 <xs:sequence>
                                                     <xs:element name="key" type="xs:string" minOccurs="1" maxOccurs="1" />
-                                                    <xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="1">
-                                                        <xs:complexType>
-                                                            <xs:attribute name="class" type="xs:string" use="required" />
+                                                    <xs:element name="value" minOccurs="0" maxOccurs="1">
+                                                        <xs:complexType>                          
+                                                            <xs:simpleContent>
+                                                                <xs:extension base="xs:string">
+                                                                    <xs:attribute name="class" type="xs:string" use="required" />
+                                                                </xs:extension>
+                                                            </xs:simpleContent>
                                                         </xs:complexType>
                                                     </xs:element>
                                                 </xs:sequence>

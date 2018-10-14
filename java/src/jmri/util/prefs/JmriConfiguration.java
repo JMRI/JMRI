@@ -25,7 +25,7 @@ import org.xml.sax.SAXException;
  */
 abstract class JmriConfiguration implements AuxiliaryConfiguration {
 
-    private final Logger log = LoggerFactory.getLogger(JmriConfiguration.class);
+    private final static Logger log = LoggerFactory.getLogger(JmriConfiguration.class);
 
     JmriConfiguration() {
     }

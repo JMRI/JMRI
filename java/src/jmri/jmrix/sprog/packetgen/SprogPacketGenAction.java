@@ -2,16 +2,15 @@ package jmri.jmrix.sprog.packetgen;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 /**
  * Swing action to create and register a SprogPacketGenFrame object
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
- */
+  */
 public class SprogPacketGenAction extends AbstractAction {
 
     private SprogSystemConnectionMemo _memo;
@@ -21,6 +20,7 @@ public class SprogPacketGenAction extends AbstractAction {
         _memo = memo;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         SprogPacketGenFrame f = new SprogPacketGenFrame(_memo);
         try {
@@ -30,8 +30,8 @@ public class SprogPacketGenAction extends AbstractAction {
         }
         f.setVisible(true);
     }
-    private final static Logger log = LoggerFactory.getLogger(SprogPacketGenAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SprogPacketGenAction.class);
 }
 
 
-/* @(#)SprogPacketGenAction.java */
+

@@ -205,10 +205,10 @@
       programme</p>
 
       <p><a href=
-      "../../../../../jython/JmriDemo.py">JmriDemo.py</a></p>
+            "../../../../../jython/PanelPro.py">PanelPro.py</a></p>
 
-      <p>Code Python pour lancer une application JmriDemo,
-      compl&egrave;te avec barre de menu</p>
+      <p>Code Python pour lancer une application PanelPro,
+          compl&egrave;te avec barre de menu</p>
 
       <p><a href=
       "../../../../../jython/ListenerExample.py">ListenerExample.py</a></p>
@@ -296,13 +296,7 @@
       invoquer un dialogue.</p>
 
       <p><a href=
-      "../../../../../jython/PacketPro.py">PacketPro.py</a></p>
-
-      <p>d&eacute;marrer l'application PacketPro Java, y compris le
-      menu principal.</p>
-
-      <p><a href=
-      "../../../../../jython/ParallelPortTest.py">ParallelPortTest.py</a></p>
+            "../../../../../jython/ParallelPortTest.py">ParallelPortTest.py</a></p>
 
       <p>Connect JMRI turnouts to parallel port logic Maps internal
       turnouts to specific values to be send to the parallel port.

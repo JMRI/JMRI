@@ -33,6 +33,18 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>8</revnumber>
+      <date>2016-12-22</date>
+      <authorinitials>JCA</authorinitials>
+      <revremark>Catalan translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>7</revnumber>
+      <date>2016-10-22</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>6</revnumber>
       <date>2014-05-18</date>
       <authorinitials>Ba</authorinitials>
@@ -51,6 +63,7 @@
 	<label>Speed Table</label>
 	<label xml:lang="it">Tabella velocità</label>
 	<label xml:lang="de">Geschwindikeitskennlinie</label>
+    <label xml:lang="cs">Rychlostní tabulka</label>
+    <label xml:lang="ca">Taula de Velocitats</label>
   </variable>
-  
 </variables>

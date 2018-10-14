@@ -1,38 +1,37 @@
 package jmri.jmrit.dispatcher;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        DispatcherTrainInfoTest.class,
+        DispatcherTrainInfoFileTest.class,
+        BundleTest.class,
+        DispatcherFrameTest.class,
+        DispatcherActionTest.class,
+        OptionsFileTest.class,
+        TrainInfoFileTest.class,
+        TrainInfoTest.class,
+        ActivateTrainFrameTest.class,
+        AutoTrainsFrameTest.class,
+        AutoAllocateTest.class,
+        AutoTurnoutsTest.class,
+        OptionsMenuTest.class,
+        ActiveTrainTest.class,
+        AllocatedSectionTest.class,
+        AllocationRequestTest.class,
+        AllocationPlanTest.class,
+        AutoActiveTrainTest.class,
+        AutoTrainActionTest.class,
+})
 
 /**
  * Tests for the jmrit.dispatcher package
  *
  * @author	Dave Duchamp
  */
-public class PackageTest extends TestCase {
-
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrit.dispatcher.PackageTest"); // no tests in class itself
-        suite.addTest(jmri.jmrit.dispatcher.DispatcherTrainInfoTest.suite());
-        suite.addTest(jmri.jmrit.dispatcher.DispatcherTrainInfoFileTest.suite());
-        suite.addTest(BundleTest.suite());
-        // GUI tests start here
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(jmri.jmrit.dispatcher.DispatcherFrameTest.suite());
-        }
-        return suite;
-    }
-
+public class PackageTest {
 }

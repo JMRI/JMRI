@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Lights</name>
+  <name xml:lang="de">Licht</name>
   <column>
     <label>
       <text>&lt;html&gt;
@@ -14,15 +15,25 @@
         &lt;strong&gt;To hide empty tabs, uncheck Preferences -> Roster -> Programmer -> Show empty tabs.&lt;/strong&gt;
       &lt;/html&gt;</text>
       <text xml:lang="de">&lt;html&gt;
-        &lt;strong&gt;Diese Reiter ist leer weil Lichter auf dem folgenden Reiter konfiguriert werden:&lt;/strong&gt;
+        &lt;strong&gt;Diese Reiter ist leer weil Lichter auf den folgenden Reitern konfiguriert werden:&lt;/strong&gt;
         &lt;ul&gt;
         &lt;li&gt;Funktionszuordnung (weise Funktionsknöpfe, Richtung u. Geschwindigkeitsstufen an Ausgänge zu)&lt;/li&gt;
-        &lt;li&gt;Function Outputs = Funktionsausgänge (wähle Lichttyp, Helligkeit usw.)&lt;/li&gt;
-        &lt;li&gt;Function Settings = Funktionseinstellungen (Blinkfrequenz u. Bahnübergangswartezeit)&lt;/li&gt;
+        &lt;li&gt;Funktionsausgänge (wähle Lichttyp, Helligkeit usw.)&lt;/li&gt;
+        &lt;li&gt;Funktionseinstellungen (Blinkfrequenz u. Bahnübergangswartezeit)&lt;/li&gt;
         &lt;/ul&gt;
         &lt;br&gt;
-        &lt;strong&gt;Um leere Reiter zu verbirgen, deselektiere Voreinstellungen -> Lokpark -> Programmierer -> Zeige leere Reiter.&lt;/strong&gt;
+        &lt;strong&gt;Um leere Reiter zu verbergen, deselektiere Voreinstellungen -> Lokpark -> Programmierer -> Zeige leere Reiter.&lt;/strong&gt;
         &lt;/html&gt;</text>
+        <text xml:lang="ca">&lt;html&gt;
+        &lt;strong&gt;Aquesta pestanya és buida perquè els llums es configuren a la següent pestanya:&lt;/strong&gt;
+        &lt;ul&gt;
+          &lt;li&gt;Mapejat de funcions (Mapa de funcions, sentit o moviment a les sortides)&lt;/li&gt;
+          &lt;li&gt;Funcions de sortida (especifica el tipus de llum, brillantor, etc.)&lt;/li&gt;
+          &lt;li&gt;Configuració de sortida (freqüència d'intermitència i grau de creuament)&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;br&gt;
+        &lt;strong&gt;Per amagar aquesta pestanya, desghabilita Preferències -> Flota -> Programador -> Mostra pestanyes buides.&lt;/strong&gt;
+      &lt;/html&gt;</text>
     </label>
   </column>
 </pane>

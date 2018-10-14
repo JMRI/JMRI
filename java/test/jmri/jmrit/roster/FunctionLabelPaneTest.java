@@ -1,17 +1,19 @@
 package jmri.jmrit.roster;
 
+import java.awt.GraphicsEnvironment;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmrit.roster.FunctionLabelPane class.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
  */
-public class FunctionLabelPaneTest extends TestCase {
+public class FunctionLabelPaneTest {
 
     // statics for test objects
     org.jdom2.Element eOld = null;
@@ -19,9 +21,57 @@ public class FunctionLabelPaneTest extends TestCase {
     RosterEntry rOld = null;
     RosterEntry rNew = null;
 
+    @Test
+    public void testShow() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        FunctionLabelPane p = new FunctionLabelPane(rOld);
+
+        jmri.util.JmriJFrame j = new jmri.util.JmriJFrame("FunctionLabelPaneTest");
+        j.add(p);
+        j.pack();
+        j.setVisible(true);
+
+        // Now close
+        JUnitUtil.dispose(j);
+
+    }
+
+    @Test
+    public void testGuiChanged1() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        FunctionLabelPane p = new FunctionLabelPane(rOld);
+
+        // copy to a new entry
+        // check for unchanged
+        Assert.assertTrue("initially unchanged", !p.guiChanged(rOld));
+
+        // change the entry and check
+        rOld.setFunctionLabel(14, "changed value");
+        Assert.assertTrue("detects change", p.guiChanged(rOld));
+
+    }
+
+    @Test
+    public void testGuiChanged2() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        FunctionLabelPane p = new FunctionLabelPane(rOld);
+
+        // copy to a new entry
+        // check for unchanged
+        Assert.assertTrue("initially unchanged", !p.guiChanged(rOld));
+
+        // change the roster road name entry and check
+        rOld.setFunctionLockable(14, false);
+        Assert.assertTrue("detects change", p.guiChanged(rOld));
+
+    }
+
+    @Before
     public void setUp() {
         // log4J
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
+        jmri.util.JUnitUtil.resetProfileManager();
 
         // create Element
         eOld = new org.jdom2.Element("locomotive")
@@ -37,6 +87,7 @@ public class FunctionLabelPaneTest extends TestCase {
                 ); // end create element
 
         rOld = new RosterEntry(eOld) {
+            @Override
             protected void warnShortLong(String s) {
             }
         };
@@ -59,69 +110,14 @@ public class FunctionLabelPaneTest extends TestCase {
                 ); // end create element
 
         rNew = new RosterEntry(eNew) {
+            @Override
             protected void warnShortLong(String s) {
             }
         };
     }
 
-    public void testShow() {
-        FunctionLabelPane p = new FunctionLabelPane(rOld);
-
-        jmri.util.JmriJFrame j = new jmri.util.JmriJFrame("FunctionLabelPaneTest");
-        j.add(p);
-        j.pack();
-        j.setVisible(true);
-
-        // Now close
-        j.dispose();
-
-    }
-
-    public void testGuiChanged1() {
-        FunctionLabelPane p = new FunctionLabelPane(rOld);
-
-        // copy to a new entry
-        // check for unchanged
-        Assert.assertTrue("initially unchanged", !p.guiChanged(rOld));
-
-        // change the entry and check
-        rOld.setFunctionLabel(14, "changed value");
-        Assert.assertTrue("detects change", p.guiChanged(rOld));
-
-    }
-
-    public void testGuiChanged2() {
-        FunctionLabelPane p = new FunctionLabelPane(rOld);
-
-        // copy to a new entry
-        // check for unchanged
-        Assert.assertTrue("initially unchanged", !p.guiChanged(rOld));
-
-        // change the roster road name entry and check
-        rOld.setFunctionLockable(14, false);
-        Assert.assertTrue("detects change", p.guiChanged(rOld));
-
-    }
-
-    // from here down is testing infrastructure
-    public FunctionLabelPaneTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {FunctionLabelPaneTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(FunctionLabelPaneTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 }

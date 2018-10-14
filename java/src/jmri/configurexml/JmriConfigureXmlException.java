@@ -4,7 +4,7 @@ package jmri.configurexml;
  * Base for JMRI-specific ConfigureXml exceptions. No functionality, just used
  * to confirm type-safety.
  *
- * @author	Bob Jacobsen Copyright (C) 2009, 2010
+ * @author Bob Jacobsen Copyright (C) 2009, 2010
  */
 public class JmriConfigureXmlException extends jmri.JmriException {
 

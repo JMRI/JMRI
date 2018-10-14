@@ -6,9 +6,9 @@ import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 
 /**
- * Create a new DecoderPro start window
+ * Create a new DecoderPro start window.
  *
- * @author	Bob Jacobsen (C) 2014
+ * @author Bob Jacobsen (C) 2014
  */
 public class DecoderProAction extends JmriAbstractAction {
 
@@ -40,6 +40,7 @@ public class DecoderProAction extends JmriAbstractAction {
      *
      * @param e The event causing the action.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (frame == null) {
             frame = new apps.AppsLaunchFrame(new DecoderProPane(), "DecoderPro");
@@ -48,6 +49,7 @@ public class DecoderProAction extends JmriAbstractAction {
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

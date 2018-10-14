@@ -1,16 +1,15 @@
 package jmri.jmrix.loconet.sdf;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.jmrix.loconet.sdf.Play class.
  *
  * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision$
- */
+  */
 public class PlayTest extends TestCase {
 
     public void testCtor() {

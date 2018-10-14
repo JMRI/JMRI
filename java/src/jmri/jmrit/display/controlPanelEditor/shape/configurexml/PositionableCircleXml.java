@@ -7,7 +7,7 @@ import org.jdom2.Element;
 /**
  * Handle configuration for display.PositionableShape objects
  *
- * @author Pete Cressman Copyright: Copyright (c) 2012
+ * @author Pete Cressman Copyright (c) 2012
  */
 public class PositionableCircleXml extends PositionableShapeXml {
 
@@ -20,6 +20,7 @@ public class PositionableCircleXml extends PositionableShapeXml {
      * @param o Object to store, of type PositionableShape
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         PositionableCircle p = (PositionableCircle) o;
 
@@ -30,7 +31,7 @@ public class PositionableCircleXml extends PositionableShapeXml {
         storeCommonAttributes(p, element);
 
         Element elem = new Element("size");
-        elem.setAttribute("radius", "" + p.getRadius());
+        elem.setAttribute("radius", "" + p.getWidth());     // actually diameter
         element.addContent(elem);
 
         element.setAttribute("class", "jmri.jmrit.display.controlPanelEditor.shape.configurexml.PositionableCircleXml");
@@ -43,13 +44,14 @@ public class PositionableCircleXml extends PositionableShapeXml {
      * @param element Top level Element to unpack.
      * @param o       Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         Editor ed = (Editor) o;
         PositionableCircle ps = new PositionableCircle(ed);
 
         Element elem = element.getChild("size");
-        ps.setRadius(getInt(elem, "radius"));
+        ps.setWidth(getInt(elem, "radius"));    // actually diameter - too late to change name
 
         // get object class and determine editor being used
         Editor editor = (Editor) o;

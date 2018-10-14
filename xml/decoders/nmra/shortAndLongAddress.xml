@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id$ -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year>
@@ -26,6 +15,12 @@
     </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>8</revnumber>
+      <date>2016-10-23</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
     <revision>
       <revnumber>7</revnumber>
       <date>2013-07-25</date>
@@ -47,20 +42,28 @@
   </revhistory>
   <variable CV="1" comment="Short address" item="Short Address" default="03">
     <shortAddressVal/>
+    <label>Primary Address</label>
     <label xml:lang="it">Indirizzo Primario</label>
+    <label xml:lang="cs">Základní adresa</label>
     <label xml:lang="fr">Adresse décodeur</label>
     <label xml:lang="de">Basisadresse</label>
+    <label xml:lang="nl">Primair adres</label>
+	<label xml:lang="da">Primær Adresse</label>
     <comment xml:lang="it">Indirizzo Corto</comment>
     <comment xml:lang="fr">Adresse courte</comment>
     <comment xml:lang="de">Kurze Adresse</comment>
-    <label>Primary Address</label>
+    <comment xml:lang="nl">Kort adres</comment>
+    <comment xml:lang="cs">Krátká adresa</comment>
   </variable>
   <variable CV="17" item="Long Address">
     <longAddressVal/>
+    <label>Extended Address</label>
     <label xml:lang="it">Indirizzo Esteso</label>
     <label xml:lang="fr">Adresse longue</label>
     <label xml:lang="de">Erweiterte Adresse</label>
-    <label>Extended Address</label>
+    <label xml:lang="nl">Lang adres</label>
+    <label xml:lang="cs">Rozšířená adresa</label>
+	<label xml:lang="da">Udvidet Adresse</label>
   </variable>
   <variable item="Address Format" CV="29" mask="XXVXXXXX">
     <enumVal>
@@ -68,16 +71,25 @@
         <choice xml:lang="it">Ind.Corto (1 byte)</choice>
         <choice xml:lang="fr">Adresse courte (1 octet)</choice>
         <choice xml:lang="de">Basisadresse (1 byte)</choice>
+        <choice xml:lang="cs">Základní adresa (1 byte)</choice>
+        <choice xml:lang="nl">Basisadres (1 byte)</choice>
+		<choice xml:lang="da">Kort (1 byte) adresse</choice>
       </enumChoice>
       <enumChoice choice="Long (two byte) address">
         <choice xml:lang="it">Ind.Esteso (2 byte)</choice>
         <choice xml:lang="fr">Adresse étendue (2 octets)</choice>
         <choice xml:lang="de">Erweiterte Adresse (2 byte)</choice>
+        <choice xml:lang="cs">Rozšířená adresa (2 byte)</choice>
+        <choice xml:lang="nl">Lang adres (2 byte)</choice>
+		<choice xml:lang="da">Lang (2 byte) adresse</choice>
       </enumChoice>
     </enumVal>
+    <label>Address Format</label>
     <label xml:lang="it">Formato Indirizzo</label>
     <label xml:lang="fr">Format d'Adresse</label>
     <label xml:lang="de">Adresse Format</label>
-    <label>Address Format</label>
+    <label xml:lang="nl">Adresformaat</label>
+    <label xml:lang="cs">Typ adresy</label>
+	<label xml:lang="da">Adresse Format</label>
   </variable>
 </variables>

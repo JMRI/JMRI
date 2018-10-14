@@ -1,12 +1,12 @@
-// SdfConstants.java
 package jmri.jmrix.loconet.sdf;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  *
- * @author	Bob Jacobsen Copyright (C) 2007, 2010
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2007, 2010
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_OOI_PKGPROTECT") // Don't worry about malicious code changing constants
+@SuppressFBWarnings(value = "MS_OOI_PKGPROTECT") // Don't worry about malicious code changing constants
 public interface SdfConstants {
 
     /* **********************
@@ -16,13 +16,13 @@ public interface SdfConstants {
     final static int TRUE = 1;
     final static int FALSE = 0;
     final static int[] trueFalseCodes = new int[]{TRUE, FALSE};
-    final static String[] trueFalseNames = new String[]{"TRUE", "FALSE"};
+    final static String[] trueFalseNames = new String[]{"TRUE", "FALSE"}; // NOI18N
 
 // TRIGGER values
 // sound TRIGGER PREMPT control bits
-// SPECIAL trigs:	POL,0,0,0-0,s,s,s 	0-7 are special trigs
-// FN trigger format:	POL,0,0,B-B,b,b,b   	BB 1 of 3 bytes 01,10,11 (24 fns), bbb is bit adr#
-    final static int NORMAL = 0;	  // (complete .WAV frag/preempt higher/trigger true)
+// SPECIAL trigs: POL,0,0,0-0,s,s,s  0-7 are special trigs
+// FN trigger format: POL,0,0,B-B,b,b,b    BB 1 of 3 bytes 01,10,11 (24 fns), bbb is bit adr#
+    final static int NORMAL = 0;   // (complete .WAV frag/preempt higher/trigger true)
 
     final static int ZAP = 0x01; // value for ZAP on PREMPT
     final static int RUN_WHILE_TRIG = 0x02; // mask/binary values
@@ -38,7 +38,7 @@ public interface SdfConstants {
 
     final static int[] premptCodes = new int[]{ZAP, RUN_WHILE_TRIG, NO_PREEMPT_TRIG, NOT_TRIG}; // NORMAL matches all (is zero), so left off
     final static int[] premptMasks = premptCodes;             // just check 1 bits
-    final static String[] premptNames = new String[]{"ZAP", "RUN_WHILE_TRIG", "NO_PREEMPT_TRIG", "NOT_TRIG", "NORMAL"};
+    final static String[] premptNames = new String[]{"ZAP", "RUN_WHILE_TRIG", "NO_PREEMPT_TRIG", "NOT_TRIG", "NORMAL"}; // NOI18N
 
 //----------
 // TRIGGER initiate CODES 
@@ -172,7 +172,7 @@ public interface SdfConstants {
     final static int T_SPD_DEC_SP2 = TSPD + 14;
     final static int T_SPD_DIR_CHNG = TSPD + 15;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY")  // known to be mutable, OK by convention
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY")  // known to be mutable, OK by convention
     final static int[] triggerCodes = new int[]{
         TRIG_NEVER, TRIG_MODE_CHNG, TRIG_MATH, TRIG_DISTANCE,
         TRIG_SPD_INC, TRIG_SPD_DEC, TRIG_CAM, TRIG_NOT_TRIG,
@@ -199,59 +199,59 @@ public interface SdfConstants {
     };
 
     final static String[] triggerNames = new String[]{
-        "TRIG_NEVER", "TRIG_MODE_CHNG", "TRIG_MATH", "TRIG_DISTANCE",
-        "TRIG_SPD_INC", "TRIG_SPD_DEC", "TRIG_CAM", "TRIG_NOT_TRIG",
-        "TRIG_SF0", "TRIG_SF1", "TRIG_SF2", "TRIG_SF3", "TRIG_SF4",
-        "TRIG_SF5", "TRIG_SF6", "TRIG_SF7", "TRIG_SF8",
-        "TRIG_SF9", "TRIG_SF10", "TRIG_SF11", "TRIG_SF12",
-        "TRIG_SF13", "TRIG_SF14", "TRIG_SF15", "TRIG_SF16",
-        "TRIG_SF17", "TRIG_SF18", "TRIG_SF19", "TRIG_SF20",
-        "TRIG_DIRNOW_CHNG", "TRIG_MOVING", "TRIG_SND_ACTV11",
-        "TRIG_SF21", "TRIG_SF22", "TRIG_SF23", "TRIG_SF24",
-        "TRIG_SF25", "TRIG_SF26", "TRIG_SF27", "TRIG_SF28",
-        "TRIG_BSC0", "TRIG_BSC1", "TRIG_BSC2", "TRIG_BSC3",
-        "TRIG_BSC4", "TRIG_BSC5", "TRIG_BSC6", "TRIG_BSC7",
-        "TRIG_IN_0", "TRIG_IN_1", "TRIG_IN_2", "TRIG_IN_3",
-        "TRIG_IN_4", "TRIG_IN_5", "TRIG_IN_6", "TRIG_IN_7",
-        "TRIG_NOTCH_CHNG", "TRIG_TIME_16PPS", "TRIG_FACTORY_CVRESET", "TRIG_OPSPROGWR_CV",
-        "TRIG_SCAT0", "TRIG_SCAT1", "TRIG_SCAT2", "TRIG_SCAT3",
-        "TRIG_SCAT4", "TRIG_SCAT5", "TRIG_SCAT6", "TRIG_SCAT7",
-        "T_SPD_MUTE", "T_SPD_TURNON", "T_SPD_IDLE", "T_SPD_ACCEL1",
-        "T_SPD_ACC_CHNG", "T_SPD_ACCEL2", "T_SPD_IDLEXIT", "T_SPD_RUN",
-        "T_SPD_DECEL1", "T_SPD_DEC_CHNG", "T_SPD_DECEL2",
-        "T_SPD_DEC_IDLE", "T_SPD_TURNOFF",
-        "T_SPD_DEC_SP1", "T_SPD_DEC_SP2", "T_SPD_DIR_CHNG"
+        "TRIG_NEVER", "TRIG_MODE_CHNG", "TRIG_MATH", "TRIG_DISTANCE", // NOI18N
+        "TRIG_SPD_INC", "TRIG_SPD_DEC", "TRIG_CAM", "TRIG_NOT_TRIG", // NOI18N
+        "TRIG_SF0", "TRIG_SF1", "TRIG_SF2", "TRIG_SF3", "TRIG_SF4", // NOI18N
+        "TRIG_SF5", "TRIG_SF6", "TRIG_SF7", "TRIG_SF8", // NOI18N
+        "TRIG_SF9", "TRIG_SF10", "TRIG_SF11", "TRIG_SF12", // NOI18N
+        "TRIG_SF13", "TRIG_SF14", "TRIG_SF15", "TRIG_SF16", // NOI18N
+        "TRIG_SF17", "TRIG_SF18", "TRIG_SF19", "TRIG_SF20", // NOI18N
+        "TRIG_DIRNOW_CHNG", "TRIG_MOVING", "TRIG_SND_ACTV11", // NOI18N
+        "TRIG_SF21", "TRIG_SF22", "TRIG_SF23", "TRIG_SF24", // NOI18N
+        "TRIG_SF25", "TRIG_SF26", "TRIG_SF27", "TRIG_SF28", // NOI18N
+        "TRIG_BSC0", "TRIG_BSC1", "TRIG_BSC2", "TRIG_BSC3", // NOI18N
+        "TRIG_BSC4", "TRIG_BSC5", "TRIG_BSC6", "TRIG_BSC7", // NOI18N
+        "TRIG_IN_0", "TRIG_IN_1", "TRIG_IN_2", "TRIG_IN_3", // NOI18N
+        "TRIG_IN_4", "TRIG_IN_5", "TRIG_IN_6", "TRIG_IN_7", // NOI18N
+        "TRIG_NOTCH_CHNG", "TRIG_TIME_16PPS", "TRIG_FACTORY_CVRESET", "TRIG_OPSPROGWR_CV", // NOI18N
+        "TRIG_SCAT0", "TRIG_SCAT1", "TRIG_SCAT2", "TRIG_SCAT3", // NOI18N
+        "TRIG_SCAT4", "TRIG_SCAT5", "TRIG_SCAT6", "TRIG_SCAT7", // NOI18N
+        "T_SPD_MUTE", "T_SPD_TURNON", "T_SPD_IDLE", "T_SPD_ACCEL1", // NOI18N
+        "T_SPD_ACC_CHNG", "T_SPD_ACCEL2", "T_SPD_IDLEXIT", "T_SPD_RUN", // NOI18N
+        "T_SPD_DECEL1", "T_SPD_DEC_CHNG", "T_SPD_DECEL2", // NOI18N
+        "T_SPD_DEC_IDLE", "T_SPD_TURNOFF", // NOI18N
+        "T_SPD_DEC_SP1", "T_SPD_DEC_SP2", "T_SPD_DIR_CHNG" // NOI18N
 
     };
 
     /**
      * Human-readable form of trigger constants for use in SdfEditor
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY")  // known to be mutable, OK by convention
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY")  // known to be mutable, OK by convention
     final static String[] editorTriggerNames = new String[]{
-        "TRIG_NEVER", "TRIG_MODE_CHNG", "TRIG_MATH", "TRIG_DISTANCE",
-        "TRIG_SPD_INC", "TRIG_SPD_DEC", "TRIG_CAM", "TRIG_NOT_TRIG",
-        "Function 0 On", "Function 1 On", "Function 2 On", "Function 3 On",
-        "Function 4 On", "Function 5 On", "Function 6 On", "Function 7 On",
-        "Function 8 On", "Function 9 On", "Function 10 On", "Function 11 On",
-        "Function 12 On", "Function 13 On", "Function 14 On", "Function 15 On",
-        "Function 16 On", "Function 17 On", "Function 18 On", "Function 19 On",
-        "Function 20 On",
-        "TRIG_DIRNOW_CHNG", "TRIG_MOVING", "TRIG_SND_ACTV11",
-        "Function 21 On", "Function 22 On", "Function 23 On", "Function 24 On",
-        "Function 25 On", "Function 26 On", "Function 27 On", "Function 28 On",
-        "TRIG_BSC0", "TRIG_BSC1", "TRIG_BSC2", "TRIG_BSC3",
-        "TRIG_BSC4", "TRIG_BSC5", "TRIG_BSC6", "TRIG_BSC7",
-        "TRIG_IN_0", "TRIG_IN_1", "TRIG_IN_2", "TRIG_IN_3",
-        "TRIG_IN_4", "TRIG_IN_5", "TRIG_IN_6", "TRIG_IN_7",
-        "TRIG_NOTCH_CHNG", "TRIG_TIME_16PPS", "TRIG_FACTORY_CVRESET", "TRIG_OPSPROGWR_CV",
-        "TRIG_SCAT0", "TRIG_SCAT1", "TRIG_SCAT2", "TRIG_SCAT3",
-        "TRIG_SCAT4", "TRIG_SCAT5", "TRIG_SCAT6", "TRIG_SCAT7",
-        "T_SPD_MUTE", "T_SPD_TURNON", "T_SPD_IDLE", "T_SPD_ACCEL1",
-        "T_SPD_ACC_CHNG", "T_SPD_ACCEL2", "T_SPD_IDLEXIT", "T_SPD_RUN",
-        "T_SPD_DECEL1", "T_SPD_DEC_CHNG", "T_SPD_DECEL2",
-        "T_SPD_DEC_IDLE", "T_SPD_TURNOFF",
-        "T_SPD_DEC_SP1", "T_SPD_DEC_SP2", "T_SPD_DIR_CHNG"
+        "TRIG_NEVER", "TRIG_MODE_CHNG", "TRIG_MATH", "TRIG_DISTANCE", // NOI18N
+        "TRIG_SPD_INC", "TRIG_SPD_DEC", "TRIG_CAM", "TRIG_NOT_TRIG", // NOI18N
+        "Function 0 On", "Function 1 On", "Function 2 On", "Function 3 On", // NOI18N
+        "Function 4 On", "Function 5 On", "Function 6 On", "Function 7 On", // NOI18N
+        "Function 8 On", "Function 9 On", "Function 10 On", "Function 11 On", // NOI18N
+        "Function 12 On", "Function 13 On", "Function 14 On", "Function 15 On", // NOI18N
+        "Function 16 On", "Function 17 On", "Function 18 On", "Function 19 On", // NOI18N
+        "Function 20 On", // NOI18N
+        "TRIG_DIRNOW_CHNG", "TRIG_MOVING", "TRIG_SND_ACTV11", // NOI18N
+        "Function 21 On", "Function 22 On", "Function 23 On", "Function 24 On", // NOI18N
+        "Function 25 On", "Function 26 On", "Function 27 On", "Function 28 On", // NOI18N
+        "TRIG_BSC0", "TRIG_BSC1", "TRIG_BSC2", "TRIG_BSC3", // NOI18N
+        "TRIG_BSC4", "TRIG_BSC5", "TRIG_BSC6", "TRIG_BSC7", // NOI18N
+        "TRIG_IN_0", "TRIG_IN_1", "TRIG_IN_2", "TRIG_IN_3", // NOI18N
+        "TRIG_IN_4", "TRIG_IN_5", "TRIG_IN_6", "TRIG_IN_7", // NOI18N
+        "TRIG_NOTCH_CHNG", "TRIG_TIME_16PPS", "TRIG_FACTORY_CVRESET", "TRIG_OPSPROGWR_CV", // NOI18N
+        "TRIG_SCAT0", "TRIG_SCAT1", "TRIG_SCAT2", "TRIG_SCAT3", // NOI18N
+        "TRIG_SCAT4", "TRIG_SCAT5", "TRIG_SCAT6", "TRIG_SCAT7", // NOI18N
+        "T_SPD_MUTE", "T_SPD_TURNON", "T_SPD_IDLE", "T_SPD_ACCEL1", // NOI18N
+        "T_SPD_ACC_CHNG", "T_SPD_ACCEL2", "T_SPD_IDLEXIT", "T_SPD_RUN", // NOI18N
+        "T_SPD_DECEL1", "T_SPD_DEC_CHNG", "T_SPD_DECEL2", // NOI18N
+        "T_SPD_DEC_IDLE", "T_SPD_TURNOFF", // NOI18N
+        "T_SPD_DEC_SP1", "T_SPD_DEC_SP2", "T_SPD_DIR_CHNG" // NOI18N
 
     };
 
@@ -267,7 +267,7 @@ public interface SdfConstants {
     final static int[] wavebrkMasks = wavebrkCodes;
 
     final static String[] wavebrkNames = new String[]{
-        "loop_GLOBAL", "loop_INVERT", "loop_STD"
+        "loop_GLOBAL", "loop_INVERT", "loop_STD" // NOI18N
     };
 
     final static int loop_GLOBAL_BIT = 4; // bit # assert to loop and UP 1 level...
@@ -325,17 +325,17 @@ public interface SdfConstants {
     };
     final static int[] loopMasks = loopCodes;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_MUTABLE_ARRAY")  // known to be mutable, OK by convention
+    @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY")  // known to be mutable, OK by convention
     final static String[] loopNames = new String[]{
-        "loop_till_cam", "loop_till_init_TRIG",
-        "loop_till_DIRNOW_CHNG", "loop_till_MOVING", "loop_till_SND_ACTV11",
-        "loop_till_F0",
-        "loop_till_F1",
-        "loop_till_F2", "loop_till_F3", "loop_till_F4", "loop_till_F5",
-        "loop_till_F6", "loop_till_F7", "loop_till_F8", "loop_till_F9",
-        "loop_till_F10", "loop_till_F11", "loop_till_F12",
-        "loop_till_SCAT4", "loop_till_SCAT5", "loop_till_SCAT6", "loop_till_SCAT7",
-        "no_loop"
+        "loop_till_cam", "loop_till_init_TRIG", // NOI18N
+        "loop_till_DIRNOW_CHNG", "loop_till_MOVING", "loop_till_SND_ACTV11", // NOI18N
+        "loop_till_F0", // NOI18N
+        "loop_till_F1", // NOI18N
+        "loop_till_F2", "loop_till_F3", "loop_till_F4", "loop_till_F5", // NOI18N
+        "loop_till_F6", "loop_till_F7", "loop_till_F8", "loop_till_F9", // NOI18N
+        "loop_till_F10", "loop_till_F11", "loop_till_F12", // NOI18N
+        "loop_till_SCAT4", "loop_till_SCAT5", "loop_till_SCAT6", "loop_till_SCAT7", // NOI18N
+        "no_loop" // NOI18N
     };
 
 //----------------
@@ -355,7 +355,7 @@ public interface SdfConstants {
     final static int[] trigLogicMasks = loopCodes;
 
     final static String[] trigLogicNames = new String[]{
-        "TRIG_TRUE", "TRIG_FALSE"
+        "TRIG_TRUE", "TRIG_FALSE" // NOI18N
     };
 
     final static int SK_SENS_BIT = 0;
@@ -363,7 +363,7 @@ public interface SdfConstants {
 
 //=====================================================================
 // load MODIFY COMMAND arg/VALUES- allows USER maximal configurability/customization in SDF files
-// 4byte CMD 	1110-mmmm, ARG1,ARG2,ARG3
+// 4byte CMD  1110-mmmm, ARG1,ARG2,ARG3
 //---------------------
 // modifier control REG command types
 // mmmm target embedded in LOAD MODIFY CMD to direct what following 3 ARG bytes will be loaded TO
@@ -383,8 +383,8 @@ public interface SdfConstants {
         MTYPE_SCATTER, MTYPE_SNDCV, MTYPE_WORK_IMMED, MTYPE_WORK_INDIRECT
     };
     final static String[] modControlNames = new String[]{
-        "MTYPE_TIME", "MTYPE_GAIN", "MTYPE_PITCH", "MTYPE_BLEND",
-        "MTYPE_SCATTER", "MTYPE_SNDCV", "MTYPE_WORK_IMMED", "MTYPE_WORK_INDIRECT"
+        "MTYPE_TIME", "MTYPE_GAIN", "MTYPE_PITCH", "MTYPE_BLEND", // NOI18N
+        "MTYPE_SCATTER", "MTYPE_SNDCV", "MTYPE_WORK_IMMED", "MTYPE_WORK_INDIRECT" // NOI18N
     };
 
 // ---------------
@@ -394,8 +394,8 @@ public interface SdfConstants {
     final static int FMATH_OR = 0x40; // use to SET  bit(S), MATH FLAG SET shows whole WORK is 1's
     final static int FMATH_XOR = 0x60; // use to flip bit(s), MATH FLAG SET if all flipped bits are now 0 
 
-//;FMATH_ADD	EQU	0x80	;add signed value  (commented out in original Digitrax file)
-    final static int FMATH_INTEGRATE = 0xA0; // add signed value to WORK,MATH_FLAG SET if over/underflo,or clamp LIMIT 		
+//;FMATH_ADD EQU 0x80 ;add signed value  (commented out in original Digitrax file)
+    final static int FMATH_INTEGRATE = 0xA0; // add signed value to WORK,MATH_FLAG SET if over/underflo,or clamp LIMIT   
     final static int FMATH_TEST_ZERO = 0xC0; // see if WORK under MASK is ZERO, if ZERO set MATH bit
 
 // -----1111----------------
@@ -407,14 +407,14 @@ public interface SdfConstants {
         FMATH_LODE, FMATH_AND, FMATH_OR, FMATH_XOR, FMATH_INTEGRATE, FMATH_TEST_ZERO, GCMD_MASK
     };
     static final String[] arg1ModNames = new String[]{
-        "FMATH_LODE", "FMATH_AND", "FMATH_OR", "FMATH_XOR", "FMATH_INTEGRATE", "FMATH_TEST_ZERO", "GCMD_MASK"
+        "FMATH_LODE", "FMATH_AND", "FMATH_OR", "FMATH_XOR", "FMATH_INTEGRATE", "FMATH_TEST_ZERO", "GCMD_MASK" // NOI18N
     };
 
 // 32 analog ARGS 3/21
 // TYPE 8 GAIN
     final static int IMMED_GAIN_MODIFY = 0x80; // set new GAIN to [CV# 6 bit offset in ARG1] *CV58 , CV120 base
     final static int ANALOG_GAIN_MODIFY = 0xA0; // modify INIT GAIN by analog chnl in 5 ls bits
-    // AUX1=		AUX2=dither coding
+    // AUX1=  AUX2=dither coding
 
     final static int FCMD_NONE = 0x00; // NO PITCH MODIFY task RUN
     final static int FCMD_MASK = 0xE0; // 3 ms bits 1st CMD decode
@@ -422,7 +422,7 @@ public interface SdfConstants {
 // type 8 PITCH
     final static int CV_PITCH_MODIFY = 0x80; // set new PITCH to [CV# 6 bit offset in ARG1] , CV120 base
     final static int ANALOG_PITCH_MODIFY = 0xA0; // modify INIT PITCH by analog chnl in 5 ls bits
-    // AUX1=		AUX2=dither coding
+    // AUX1=  AUX2=dither coding
 
 //==================
 // 32 predefined user visible WORK/STATE regs, use these defined values
@@ -473,13 +473,13 @@ public interface SdfConstants {
     };
 
     final static String[] workRegNames = new String[]{
-        "WORK_SPEED", "WORK_NOTCH", "WORK_SERVO", "WORK_MVOLTS",
-        "WORK_USER_LINES", "WORK_TIMEBASE", "WORK_STATUS_BITS",
-        "WORK_GLBL_GAIN", "WORK_GAIN_TRIM", "WORK_PITCH_TRIM", "WORK_SPEED_DELTA",
-        "WORK_SCATTER4", "WORK_SCATTER5", "WORK_SCATTER6", "WORK_SCATTER7",
-        "WORK_ACHNL_7F", "WORK_ACHNL_7E", "WORK_SKAT_FAST", "WORK_SKAT_SLOW",
-        "WORK_DISTANCE", "WORK_PEAK_SPD", "WORK_USER_0", "WORK_USER_1",
-        "WORK_USER_2", "WORK_USER_3", "WORK_USER_4", "WORK_USER_5"
+        "WORK_SPEED", "WORK_NOTCH", "WORK_SERVO", "WORK_MVOLTS", // NOI18N
+        "WORK_USER_LINES", "WORK_TIMEBASE", "WORK_STATUS_BITS", // NOI18N
+        "WORK_GLBL_GAIN", "WORK_GAIN_TRIM", "WORK_PITCH_TRIM", "WORK_SPEED_DELTA", // NOI18N
+        "WORK_SCATTER4", "WORK_SCATTER5", "WORK_SCATTER6", "WORK_SCATTER7", // NOI18N
+        "WORK_ACHNL_7F", "WORK_ACHNL_7E", "WORK_SKAT_FAST", "WORK_SKAT_SLOW", // NOI18N
+        "WORK_DISTANCE", "WORK_PEAK_SPD", "WORK_USER_0", "WORK_USER_1", // NOI18N
+        "WORK_USER_2", "WORK_USER_3", "WORK_USER_4", "WORK_USER_5" // NOI18N
     };
 
 // ---------------------
@@ -506,7 +506,7 @@ public interface SdfConstants {
         WKSB_ANALOG_MASK, WKSB_DIRNOW_MASK, WKSB_RUN_MASK, WKSB_ACEL_MASK, WKSB_SPDDELTA_MASK, WKSB_MATH_MASK
     };
     final static String[] workStatusBitNames = new String[]{
-        "WKSB_ANALOG_MASK", "WKSB_DIRNOW_MASK", "WKSB_RUN_MASK", "WKSB_ACEL_MASK", "WKSB_SPDDELTA_MASK", "WKSB_MATH_MASK"
+        "WKSB_ANALOG_MASK", "WKSB_DIRNOW_MASK", "WKSB_RUN_MASK", "WKSB_ACEL_MASK", "WKSB_SPDDELTA_MASK", "WKSB_MATH_MASK" // NOI18N
     };
 
 //========================
@@ -526,7 +526,7 @@ public interface SdfConstants {
     final static int[] scatCommandCodes = new int[]{
         SCAT_CMD_PERIOD, SCAT_CMD_PERIOD_REV, SCAT_CMD_SAWTOOTH, SCAT_CMD_SAWTOOTH_REV};
     final static String[] scatCommandNames = new String[]{
-        "SCAT_CMD_PERIOD", "SCAT_CMD_PERIOD_REV", "SCAT_CMD_SAWTOOTH", "SCAT_CMD_SAWTOOTH_REV"};
+        "SCAT_CMD_PERIOD", "SCAT_CMD_PERIOD_REV", "SCAT_CMD_SAWTOOTH", "SCAT_CMD_SAWTOOTH_REV"}; // NOI18N
 
     final static int SCAT_PERIOD_POLARITY_BIT = 3; // 1= reverse WORK influence
     final static int SKATTER_INCREMENT = 8; // phase INCREMENT
@@ -543,7 +543,7 @@ public interface SdfConstants {
     final static int[] scatChannelCodes = new int[]{
         SCAT_CHNL0, SCAT_CHNL1, SCAT_CHNL2, SCAT_CHNL3, SCAT_CHNL4, SCAT_CHNL5, SCAT_CHNL6, SCAT_CHNL7};
     final static String[] scatChannelNames = new String[]{
-        "SCAT_CHNL0", "SCAT_CHNL1", "SCAT_CHNL2", "SCAT_CHNL3", "SCAT_CHNL4", "SCAT_CHNL5", "SCAT_CHNL6", "SCAT_CHNL7"};
+        "SCAT_CHNL0", "SCAT_CHNL1", "SCAT_CHNL2", "SCAT_CHNL3", "SCAT_CHNL4", "SCAT_CHNL5", "SCAT_CHNL6", "SCAT_CHNL7"}; // NOI18N
 
     final static int SINTEN_IMMED = 0xE0; // use WORK# as immediate data
     final static int SINTEN_HIGH = 0xC0;
@@ -555,7 +555,7 @@ public interface SdfConstants {
     final static int[] sintenCodes = new int[]{
         SINTEN_IMMED, SINTEN_HIGH, SINTEN_MID, SINTEN_LOW, SINTEN_MIN, SINTEN_OFF};
     final static String[] sintenNames = new String[]{
-        "SINTEN_IMMED", "SINTEN_HIGH", "SINTEN_MID", "SINTEN_LOW", "SINTEN_MIN", "SINTEN_OFF"};
+        "SINTEN_IMMED", "SINTEN_HIGH", "SINTEN_MID", "SINTEN_LOW", "SINTEN_MIN", "SINTEN_OFF"}; // NOI18N
 
 // ======================
     final static int DEFAULT_GLBL_GAIN = 0xC0;
@@ -572,7 +572,7 @@ public interface SdfConstants {
 
 // ----3333--------------
 // 3RD modify ARG
-//;MPUSH		EQU	0x80		;this bit forces LEVEL OVERIDE
+//;MPUSH  EQU 0x80  ;this bit forces LEVEL OVERIDE
     final static int DITHER = 0x80; // value to change to DITHER mode
     final static int SUMG = 0x40;
 
@@ -581,7 +581,7 @@ public interface SdfConstants {
     final static int MID_DITH = 0x40;
     final static int MAX_DITH = 0x60;
 
-// ;MPUSH_BIT	EQU	7  (commendted out in the original Digitrax file)
+// ;MPUSH_BIT EQU 7  (commendted out in the original Digitrax file)
     final static int DITHER_BIT = 7;
     final static int SUM_BIT = 6; // 1=add ARG1/2 variation,0=multiply
     final static int MG1_BIT = 5; // these code meaning of LO nibble
@@ -607,9 +607,9 @@ public interface SdfConstants {
         0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F, 0x0F
     };
     final static String[] arg3ModNames = new String[]{
-        "DITHER",
-        "LOW_DITH", "MID_DITH", "MAX_DITH",
-        "SCALE_F", "SCALE_C", "SCALE_8", "SCALE_6", "SCALE_5", "SCALE_4", "SCALE_2"
+        "DITHER", // NOI18N
+        "LOW_DITH", "MID_DITH", "MAX_DITH", // NOI18N
+        "SCALE_F", "SCALE_C", "SCALE_8", "SCALE_6", "SCALE_5", "SCALE_4", "SCALE_2" // NOI18N
     };
 
 // DITHER ????
@@ -627,13 +627,13 @@ public interface SdfConstants {
         DITHERG_DIESEL, DITHERG_WHISTLE, DITHERG_NONE
     };
     final static String[] ditherGNames = new String[]{
-        "DITHERG_DIESEL", "DITHERG_WHISTLE", "DITHERG_NONE"
+        "DITHERG_DIESEL", "DITHERG_WHISTLE", "DITHERG_NONE" // NOI18N
     };
     final static int[] ditherPCodes = new int[]{
         DITHERP_DIESEL, DITHERP_WHISTLE, DITHERP_NONE
     };
     final static String[] ditherPNames = new String[]{
-        "DITHERP_DIESEL", "DITHERP_WHISTLE", "DITHERP_NONE"
+        "DITHERP_DIESEL", "DITHERP_WHISTLE", "DITHERP_NONE" // NOI18N
     };
 
 // BLEND logic commnds
@@ -664,9 +664,9 @@ public interface SdfConstants {
         BLEND_FASEMASK, BLEND_FASEMASK
     };
     final static String[] blendArg1Names = new String[]{
-        "BLEND_CURRENT_CHNL", "BLEND_ALL",
-        "BLEND_GAIN0", "BLEND_GAIN1",
-        "BLEND_FASE0", "BLEND_FASE1"
+        "BLEND_CURRENT_CHNL", "BLEND_ALL", // NOI18N
+        "BLEND_GAIN0", "BLEND_GAIN1", // NOI18N
+        "BLEND_FASE0", "BLEND_FASE1" // NOI18N
     };
 
     final static int BLENDG_DSL_ACCEL0 = 0x04; // GAIN rate for loaded DIESEL
@@ -681,11 +681,11 @@ public interface SdfConstants {
     final static int[] blendArg2Codes = new int[]{
         BLENDG_DSL_ACCEL0, BLENDG_DSL_ACCEL1, BLENDG_DSL_ACCEL1};
     final static String[] blendArg2Names = new String[]{
-        "BLENDG_DSL_ACCEL0", "BLENDG_DSL_ACCEL1", "BLENDG_DSL_ACCEL1"};
+        "BLENDG_DSL_ACCEL0", "BLENDG_DSL_ACCEL1", "BLENDG_DSL_ACCEL1"}; // NOI18N
     final static int[] blendArg3Codes = new int[]{
         BLENDF_DSL_ACCEL0, BLENDF_DSL_ACCEL1, BLENDF_DSL_ACCEL1};
     final static String[] blendArg3Names = new String[]{
-        "BLENDF_DSL_ACCEL0", "BLENDF_DSL_ACCEL1", "BLENDF_DSL_ACCEL1"};
+        "BLENDF_DSL_ACCEL0", "BLENDF_DSL_ACCEL1", "BLENDF_DSL_ACCEL1"}; // NOI18N
 
 // COMPARE CMD control bits
     final static int TARGET_DATA = 0x00; // second COMPARE ARG is WORK reg or SCV
@@ -719,9 +719,9 @@ public interface SdfConstants {
         SCV_137, SCV_138, SCV_DISTANCE_RATE, SCV_FREEFORM
     };
     static final String[] fixedCVNames = new String[]{
-        "SNDCV_CONFIGA", "SNDCV_CONFIGB", "SCV_DCONFIG", "SCV_NOTCH",
-        "SNDCV_STEAM", "SCV_STGEAR", "SCV_MUTE_VOL", "SCV_MAIN_PITCH",
-        "SCV_137", "SCV_138", "SCV_DISTANCE_RATE", "SCV_FREEFORM"
+        "SNDCV_CONFIGA", "SNDCV_CONFIGB", "SCV_DCONFIG", "SCV_NOTCH", // NOI18N
+        "SNDCV_STEAM", "SCV_STGEAR", "SCV_MUTE_VOL", "SCV_MAIN_PITCH", // NOI18N
+        "SCV_137", "SCV_138", "SCV_DISTANCE_RATE", "SCV_FREEFORM" // NOI18N
     };
 
 // CV133, SNDCV_STEAM /DRIVER size bit7=1 means EXTERNAL INPUT_0 generates a special CAM code as well
@@ -730,10 +730,10 @@ public interface SdfConstants {
 // =======end of FIXED DATA assignments==============
 // =================
 // USER choices
-// SCAT_AIRCOMP_RATE	EQU	25		;AIR compressor about 2 mins, above 128 is SNDCV foR RATE ARG
-// SCAT_DRIER_RATE		EQU	10		;about 10 secs for DRIER
-// SCAT_WATERPUMP_RATE	EQU	100
-// SCAT_COAL_RATE		EQU	120
+// SCAT_AIRCOMP_RATE EQU 25  ;AIR compressor about 2 mins, above 128 is SNDCV foR RATE ARG
+// SCAT_DRIER_RATE  EQU 10  ;about 10 secs for DRIER
+// SCAT_WATERPUMP_RATE EQU 100
+// SCAT_COAL_RATE  EQU 120
 // specific DFLT values to scale MAX ranges
     final static int MAXG_WHISTLE = 0x6A;
     final static int MAXP_WHISTLE = 0x07;
@@ -747,14 +747,14 @@ public interface SdfConstants {
         MAXP_WHISTLE, MAXP_DIESEL, MAXP_STEAM
     };
     final static String[] maxPNames = new String[]{
-        "MAXP_WHISTLE", "MAXP_DIESEL", "MAXP_STEAM"
+        "MAXP_WHISTLE", "MAXP_DIESEL", "MAXP_STEAM" // NOI18N
     };
 
     final static int[] maxGCodes = new int[]{
         MAXG_WHISTLE, MAXG_DIESEL, MAXG_STEAM
     };
     final static String[] maxGNames = new String[]{
-        "MAXG_WHISTLE", "MAXG_DIESEL", "MAXG_STEAM"
+        "MAXG_WHISTLE", "MAXG_DIESEL", "MAXG_STEAM" // NOI18N
     };
 
 }

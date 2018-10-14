@@ -16,7 +16,6 @@ import javax.swing.SortOrder;
 import javax.swing.table.TableRowSorter;
 import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
 import jmri.swing.RowSorterUtil;
-import jmri.util.SystemNameComparator;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  * @author Matthew Harris copyright (c) 2009
  */
 public class AudioTablePanel extends JPanel {
@@ -66,7 +65,8 @@ public class AudioTablePanel extends JPanel {
         super();
         listenerDataModel = listenerModel;
         TableRowSorter<AudioTableDataModel> sorter = new TableRowSorter<>(listenerDataModel);
-        sorter.setComparator(AudioTableDataModel.SYSNAMECOL, new SystemNameComparator());
+
+        // use NamedBean's built-in Comparator interface for sorting the system name column
         RowSorterUtil.setSortOrder(sorter, AudioTableDataModel.SYSNAMECOL, SortOrder.ASCENDING);
         listenerDataTable = listenerDataModel.makeJTable(listenerDataModel.getMasterClassName(), listenerDataModel, sorter);
         listenerDataScroll = new JScrollPane(listenerDataTable);
@@ -75,7 +75,6 @@ public class AudioTablePanel extends JPanel {
 
         bufferDataModel = bufferModel;
         sorter = new TableRowSorter<>(bufferDataModel);
-        sorter.setComparator(AudioTableDataModel.SYSNAMECOL, new SystemNameComparator());
         RowSorterUtil.setSortOrder(sorter, AudioTableDataModel.SYSNAMECOL, SortOrder.ASCENDING);
         bufferDataTable = bufferDataModel.makeJTable(bufferDataModel.getMasterClassName(), bufferDataModel, sorter);
         bufferDataScroll = new JScrollPane(bufferDataTable);
@@ -84,7 +83,6 @@ public class AudioTablePanel extends JPanel {
 
         sourceDataModel = sourceModel;
         sorter = new TableRowSorter<>(sourceDataModel);
-        sorter.setComparator(AudioTableDataModel.SYSNAMECOL, new SystemNameComparator());
         RowSorterUtil.setSortOrder(sorter, AudioTableDataModel.SYSNAMECOL, SortOrder.ASCENDING);
         sourceDataTable = sourceDataModel.makeJTable(sourceDataModel.getMasterClassName(), sourceDataModel, sorter);
         sourceDataScroll = new JScrollPane(sourceDataTable);
@@ -114,7 +112,7 @@ public class AudioTablePanel extends JPanel {
         add(audioTabs, BorderLayout.CENTER);
 
         bottomBox = Box.createHorizontalBox();
-        bottomBox.add(Box.createHorizontalGlue());	// stays at end of box
+        bottomBox.add(Box.createHorizontalGlue()); // stays at end of box
         bottomBoxIndex = 0;
 
         add(bottomBox, BorderLayout.SOUTH);
@@ -199,6 +197,6 @@ public class AudioTablePanel extends JPanel {
         sourceDataScroll = null;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AudioTablePanel.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AudioTablePanel.class);
 
 }

@@ -2,17 +2,14 @@ package apps.configurexml;
 
 import apps.PerformFileModel;
 import apps.StartupActionsManager;
-import java.io.File;
-import jmri.ConfigureManager;
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.util.FileUtil;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handle XML persistance of PerformFileModel objects
+ * Handle XML persistence of PerformFileModel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Ken Cameron Copyright: 2014(c)
@@ -29,6 +26,7 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
      * @param o Object to store, of type PerformActonModel
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element e = new Element("perform");
         PerformFileModel g = (PerformFileModel) o;
@@ -52,21 +50,9 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws JmriException {
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         String fileName = FileUtil.getAbsoluteFilename(shared.getAttribute("name").getValue());
-        log.info("Load file " + fileName);
-
-        // load the file
-        File file = new File(fileName);
-        ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
-        if (cm != null) {
-            result = cm.load(file);
-        } else {
-            result = false;
-        }
-
-        // leave an updated object around
         PerformFileModel m = new PerformFileModel();
         m.setFileName(fileName);
         InstanceManager.getDefault(StartupActionsManager.class).addAction(m);
@@ -79,10 +65,11 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
      * @param element Top level Element to unpack.
      * @param o       ignored
      */
+    @Override
     public void load(Element element, Object o) {
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(PerformFileModelXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PerformFileModelXml.class);
 
 }

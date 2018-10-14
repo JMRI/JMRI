@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
 <!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -13,30 +13,45 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <copyright xmlns="http://docbook.org/ns/docbook">
-    <year>2010</year>
-    <holder>JMRI</holder>
-  </copyright>
-  <authorgroup xmlns="http://docbook.org/ns/docbook">
-    <author>
-      <personname>
-        <firstname>Bob</firstname>
-        <surname>Jacobsen</surname>
-      </personname>
-    </author>
-  </authorgroup>
-  <revhistory xmlns="http://docbook.org/ns/docbook">
-    <revision>
-      <revnumber>1</revnumber>
-      <date>2014-08-19</date>
-      <authorinitials>EF</authorinitials>
-      <revremark>New for Advanced ACK</revremark>
-    </revision>
-  </revhistory>
-  <variable CV="29" mask="XXXXVXXX" item="Advanced Ack">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Advanced Decoder Acknowledgement</label>
-        <label xml:lang="fr">Advanced Decoder Acknowledgement(fr)</label>
-        <label xml:lang="it">Riconoscimento Decoder Avanzato</label>
-      </variable>
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2010</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+		<personname>
+				<firstname>Bob</firstname>
+				<surname>Jacobsen</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>3</revnumber>
+			<date>2018-02-14</date>
+			<authorinitials>WK</authorinitials>
+			<revremark>Added German and Dutch translation</revremark>
+		</revision>
+		<revision>
+			<revnumber>2</revnumber>
+			<date>2016-10-23</date>
+			<authorinitials>PS</authorinitials>
+			<revremark>Czech translation</revremark>
+		</revision>
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2014-08-19</date>
+			<authorinitials>EF</authorinitials>
+			<revremark>New for Advanced ACK</revremark>
+		</revision>
+	</revhistory>
+	<variable CV="29" mask="XXXXVXXX" item="Advanced Ack">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+		<label>Advanced Decoder Acknowledgement</label>
+		<label xml:lang="it">Riconoscimento Decoder Avanzato</label>
+		<label xml:lang="fr">Advanced Decoder Acknowledgement(fr)</label>
+		<label xml:lang="de">Erweiterte Decoder-Bestätigung</label>
+		<label xml:lang="cs">Pokročilé potvrzování dekodérem</label>
+		<label xml:lang="nl">Geavanceerde decoder bevestiging</label>
+	</variable>
 </variables>

@@ -1,46 +1,41 @@
 package jmri.jmrix.loconet.sdfeditor;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrix.loconet.sdf.SdfBuffer;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.loconet.sdfeditor.EditorPane class.
  *
  * @author	Bob Jacobsen Copyright 2007
  */
-public class EditorPaneTest extends TestCase {
+public class EditorPaneTest {
 
+    @Test
     public void testShowPane() throws java.io.IOException {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SdfBuffer buff = new SdfBuffer("java/test/jmri/jmrix/loconet/sdf/test2.sdf");
-        new EditorFrame(buff).setVisible(true);
-    }
-
-    // from here down is testing infrastructure
-    public EditorPaneTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {EditorPaneTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(EditorPaneTest.class);
-        return suite;
+        Assert.assertNotNull(buff);
+        EditorFrame f = new EditorFrame(buff);
+        f.setVisible(true);
+        f.dispose();
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
     }
 
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

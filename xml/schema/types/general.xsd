@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- Test schema for JMRI I/O support. Not for use before JMRI 2.9.1        -->
-
-<!-- $Id$ -->
+<!-- Schema for JMRI I/O support. Not for use before JMRI 2.9.1             -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -52,7 +50,7 @@
                     <xs:complexType>
                       <xs:simpleContent>
                         <xs:extension base="xs:string">
-                          <xs:attribute name="class" type="classType" use="required" />
+                          <xs:attribute name="class" type="classType" use="optional" />
                         </xs:extension>
                       </xs:simpleContent>
                     </xs:complexType>
@@ -104,7 +102,10 @@
         </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:token">
-      <xs:minLength value="2"/>
+        <!-- "[A-Z]([0-9]*)[A-Z].*" is more correct, but fails lots of short signal head names -->
+        <!-- type letter pattern can also be constrained: ABCHLMOPRSTX but also Y? -->
+        <!-- the following is "at least two characters" -->
+             <xs:pattern value="..*"/>
     </xs:restriction>
   </xs:simpleType>
   
@@ -171,46 +172,61 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:simpleType name="screenColorType">
-    <xs:annotation>
-        <xs:documentation>
-          Provide possible colors for screen use, not for signals.
-          See jmri.jmrit.display.layoutEditor.LayoutBlock.colorText
-          (until refactored?).
-          Code indicates leading capital letters, but files are 
-          available with all-lower case.
-        </xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:token">
-      <xs:enumeration value="Black"/>
-      <xs:enumeration value="DarkGray"/>
-      <xs:enumeration value="Gray"/>
-      <xs:enumeration value="LightGray"/>
-      <xs:enumeration value="White"/>
-      <xs:enumeration value="Red"/>
-      <xs:enumeration value="Pink"/>
-      <xs:enumeration value="Orange"/>
-      <xs:enumeration value="Yellow"/>
-      <xs:enumeration value="Green"/>
-      <xs:enumeration value="Blue"/>
-      <xs:enumeration value="Magenta"/>
-      <xs:enumeration value="Cyan"/>
-      <xs:enumeration value="black"/>
-      <xs:enumeration value="darkgray"/>
-      <xs:enumeration value="darkGray"/>
-      <xs:enumeration value="gray"/>
-      <xs:enumeration value="lightgray"/>
-      <xs:enumeration value="lightGray"/>
-      <xs:enumeration value="white"/>
-      <xs:enumeration value="red"/>
-      <xs:enumeration value="pink"/>
-      <xs:enumeration value="orange"/>
-      <xs:enumeration value="yellow"/>
-      <xs:enumeration value="green"/>
-      <xs:enumeration value="blue"/>
-      <xs:enumeration value="magenta"/>
-      <xs:enumeration value="cyan"/>
-    </xs:restriction>
+  <xs:simpleType name="screenColorType"> 
+    <xs:union>
+       <xs:simpleType>
+          <xs:annotation>
+             <xs:documentation>
+                 Allow hex strings for screen colors starting with version 4.9.6
+             </xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:string">
+             <xs:pattern value="#[0-9A-Fa-f]{6}"/>
+          </xs:restriction>
+       </xs:simpleType>
+       <xs:simpleType>
+          <xs:annotation>
+             <xs:documentation>
+                Provide possible colors for screen use, not for signals.
+                Lower case values historically were encoded in 
+                jmri.util.ColorUtil, but are now encoded in 
+                jmri.NamedBeanBundle.properties.  Some code in jmri.jmrit
+                has used upper case first letters, so those are included
+                just in case the values appear in files.
+             </xs:documentation>
+          </xs:annotation>
+          <xs:restriction base="xs:token">
+             <xs:enumeration value="Black"/>
+             <xs:enumeration value="DarkGray"/>
+             <xs:enumeration value="Gray"/>
+             <xs:enumeration value="LightGray"/>
+             <xs:enumeration value="White"/>
+             <xs:enumeration value="Red"/>
+             <xs:enumeration value="Pink"/>
+             <xs:enumeration value="Orange"/>
+             <xs:enumeration value="Yellow"/>
+             <xs:enumeration value="Green"/>
+             <xs:enumeration value="Blue"/>
+             <xs:enumeration value="Magenta"/>
+             <xs:enumeration value="Cyan"/>
+             <xs:enumeration value="black"/>
+             <xs:enumeration value="darkgray"/>
+             <xs:enumeration value="darkGray"/>
+             <xs:enumeration value="gray"/>
+             <xs:enumeration value="lightgray"/>
+             <xs:enumeration value="lightGray"/>
+             <xs:enumeration value="white"/>
+             <xs:enumeration value="red"/>
+             <xs:enumeration value="pink"/>
+             <xs:enumeration value="orange"/>
+             <xs:enumeration value="yellow"/>
+             <xs:enumeration value="green"/>
+             <xs:enumeration value="blue"/>
+             <xs:enumeration value="magenta"/>
+             <xs:enumeration value="cyan"/>
+          </xs:restriction>
+       </xs:simpleType>
+    </xs:union>
   </xs:simpleType>
 
   <xs:simpleType name="classType">
@@ -239,12 +255,14 @@
     <xs:annotation>
         <xs:documentation>
           Only valid URLs for resource access. 
-          Checks for a valid prefix, then a pathname of a-z, A-Z, 0-9 and / - _ or .
+          Checks for a valid prefix, then a pathname without an invalid filename character.
           A: through Z: accepted for Windows.
+          Any HTTP(S) URL should be accepted.
         </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:normalizedString">
-      <xs:pattern value="(program:|preference:|settings:|home:|profile:|resource:|file:|http:|[a-zA-Z]:)[a-z A-Z0-9/\-_\.]*"/>
+        <!-- accepts, but should not, the greater than and less than characters in file names -->
+      <xs:pattern value="((resource:|program:|preference:|settings:|home:|profile:|file:|scripts:|[a-zA-Z]:|/)(/|\\|[^\\/?*:;{}]+)+|https?://.+/?.*)"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -350,5 +368,18 @@
     <xs:restriction base="xs:string" />
   </xs:simpleType>
   
+  <xs:simpleType name="familyModelNameType">
+    <xs:annotation>
+        <xs:documentation>
+          Exclude vertical bar "|",
+            used as a separator in replacementFamily and replacementModel
+            suggestion lists.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:normalizedString">
+      <xs:pattern value="[^|]*"/>
+    </xs:restriction>
+  </xs:simpleType>
+
   
 </xs:schema>

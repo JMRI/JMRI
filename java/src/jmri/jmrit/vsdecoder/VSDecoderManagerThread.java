@@ -1,6 +1,6 @@
 package jmri.jmrit.vsdecoder;
 
-/*
+/**
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -15,12 +15,11 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
+ * @author Mark Underwood Copyright (C) 2011
  */
 class VSDecoderManagerThread extends Thread {
 
-    private static VSDecoderManagerThread instance = null;
+    private volatile static VSDecoderManagerThread instance = null;
     private static VSDecoderManager manager = null;
     boolean is_running;
 
@@ -31,22 +30,21 @@ class VSDecoderManagerThread extends Thread {
 
     public static VSDecoderManagerThread instance(Boolean create) {
         manager = new VSDecoderManager();
-
-        return (instance());
+        return instance();
     }
 
     public static VSDecoderManagerThread instance() {
         if (instance == null) {
             VSDecoderManagerThread temp = new VSDecoderManagerThread();
+            temp.setName("VSDecoderManagerThread");
             temp.start();
             instance = temp; // don't allow escape of VSDecoderManagerThread object until running
-
         }
-        return (instance);
+        return instance;
     }
 
     public static VSDecoderManager manager() {
-        return (VSDecoderManagerThread.manager);
+        return VSDecoderManagerThread.manager;
     }
 
     @Override

@@ -1,4 +1,3 @@
-// BuildReportOptionAction.java
 package jmri.jmrit.operations.setup;
 
 import java.awt.Frame;
@@ -10,7 +9,6 @@ import javax.swing.AbstractAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 public class BuildReportOptionAction extends AbstractAction {
 
@@ -32,10 +30,10 @@ public class BuildReportOptionAction extends AbstractAction {
             f.initComponents();
         }
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(BuildReportOptionAction.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(BuildReportOptionAction.class);
 }
 
-/* @(#)BuildReportOptionAction.java */
+

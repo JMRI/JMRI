@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
+<!-- version 1.1 - Ronald Kuhn - add german translation -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Alt Function Map</name>
+  <name xml:lang="it">Mappa Funzioni Speciali</name>
+  <name xml:lang="cs">Alternativní přiřazení funkcí</name>
+  <name xml:lang="de">Alt. Funktionszuordnung</name>
   <column>
     <display item="FO3 + FO4 directional setting"/>
     <label>
@@ -17,6 +22,8 @@
     <label>
       <text>           Description                                      Output wire or operation</text>
       <text xml:lang="it">           Descrizione                                      Filo Uscita o operazione</text>
+      <text xml:lang="cs">           Popis                                            Výstupní vodič nebo operace</text>
+      <text xml:lang="de"> Beschreibung         Ausgangsanschluß oder Betrieb</text>
     </label>
     <label>
       <text> </text>
@@ -24,71 +31,103 @@
     <row>
       <column>
         <label>
-          <text>                                               1</text>
+          <text>                               1</text>
         </label>
         <label>
-          <text>                                           Front  </text>
-          <text xml:lang="it">                                          Frontale </text>
+          <text>                             Front  </text>
+          <text xml:lang="it">                             Frontale </text>
+          <text xml:lang="cs">                             Přední  </text>
+          <text xml:lang="de">                             Lvor </text>
         </label>
         <label>
-          <text>                                           Light  </text>
-          <text xml:lang="it">                                           Luci   </text>
+          <text>                             Light  </text>
+          <text xml:lang="it">                             Luci   </text>
+          <text xml:lang="cs">                             Světlo  </text>
+          <text xml:lang="de"> </text>
         </label>
         <display item="FL(f) controls output 1" format="checkbox" label="Forward Headlight F0(f)">
           <label>Forward Headlight F0(f)</label>
           <label xml:lang="it">Luci frontali  F0(avanti)</label>
+          <label xml:lang="cs">Přední světla F0 vpřed</label>
+          <label xml:lang="de">  F0 (vorn)         </label>
         </display>
         <display item="FL(r) controls output 1" format="checkbox" label="Reverse Headlight F0(r)">
           <label>Reverse Headlight F0(r)</label>
           <label xml:lang="it">Luci Posteriori  F0(retro)</label>
+          <label xml:lang="cs">Zadní světla F0 vzad</label>
+          <label xml:lang="de">F0 (hinten)         </label>
         </display>
         <display item="F1 controls output 1" format="checkbox" label="Function 1         ">
           <label>Function 1         </label>
           <label xml:lang="it">Funzione 1         </label>
+          <label xml:lang="cs">Funkce 1           </label>
+          <label xml:lang="de">Funktion 1         </label>
         </display>
         <display item="F2 controls output 1" format="checkbox" label="Function 2         ">
           <label>Function 2         </label>
           <label xml:lang="it">Funzione 2         </label>
+          <label xml:lang="cs">Funkce 2           </label>
+          <label xml:lang="de">Funktion 2         </label>
         </display>
         <display item="AltF3 controls output 1" format="checkbox" label="Function 3         ">
           <label>Function 3         </label>
           <label xml:lang="it">Funzione 3         </label>
+          <label xml:lang="cs">Funkce 3           </label>
+          <label xml:lang="de">Funktion 3         </label>
         </display>
         <display item="AltF4 controls output 1" format="checkbox" label="Function 4         ">
           <label>Function 4         </label>
           <label xml:lang="it">Funzione 4         </label>
+          <label xml:lang="cs">Funkce 4           </label>
+          <label xml:lang="de">Funktion 4         </label>
         </display>
         <display item="AltF5 controls output 1" format="checkbox" label="Function 5         ">
           <label>Function 5         </label>
           <label xml:lang="it">Funzione 5         </label>
+          <label xml:lang="cs">Funkce 5           </label>
+          <label xml:lang="de">Funktion 5         </label>
         </display>
         <display item="AltF6 controls output 1" format="checkbox" label="Function 6         ">
           <label>Function 6         </label>
           <label xml:lang="it">Funzione 6         </label>
+          <label xml:lang="cs">Funkce 6           </label>
+          <label xml:lang="de">Funktion 6         </label>
         </display>
         <display item="AltF7 controls output 1" format="checkbox" label="Function 7         ">
           <label>Function 7         </label>
           <label xml:lang="it">Funzione 7         </label>
+          <label xml:lang="cs">Funkce 7           </label>
+          <label xml:lang="de">Funktion 7         </label>
         </display>
         <display item="AltF8 controls output 1" format="checkbox" label="Function 8         ">
           <label>Function 8         </label>
           <label xml:lang="it">Funzione 8         </label>
+          <label xml:lang="cs">Funkce 8           </label>
+          <label xml:lang="de">Funktion 8         </label>
         </display>
         <display item="AltF9 controls output 1" format="checkbox" label="Function 9         ">
           <label>Function 9         </label>
           <label xml:lang="it">Funzione 9         </label>
+          <label xml:lang="cs">Funkce 9           </label>
+          <label xml:lang="de">Funktion 9         </label>
         </display>
         <display item="AltF10 controls output 1" format="checkbox" label="Function 10         ">
           <label>Function 10         </label>
           <label xml:lang="it">Funzione 10        </label>
+          <label xml:lang="cs">Funkce 10          </label>
+          <label xml:lang="de">Funktion 10         </label>
         </display>
         <display item="AltF11 controls output 1" format="checkbox" label="Function 11         ">
           <label>Function 11         </label>
           <label xml:lang="it">Funzione 11        </label>
+          <label xml:lang="cs">Funkce 11          </label>
+          <label xml:lang="de">Funktion 11         </label>
         </display>
         <display item="AltF12 controls output 1" format="checkbox" label="Function 12         ">
           <label>Function 12         </label>
           <label xml:lang="it">Funzione 12        </label>
+          <label xml:lang="cs">Funkce 12          </label>
+          <label xml:lang="de">Funktion 12         </label>
         </display>
       </column>
       <column>
@@ -98,10 +137,14 @@
         <label>
           <text> Rear </text>
           <text xml:lang="it"> Retro </text>
+          <text xml:lang="cs"> Zadní </text>
+          <text xml:lang="de"> Lrück </text>
         </label>
         <label>
           <text> Light </text>
           <text xml:lang="it"> Luci </text>
+          <text xml:lang="cs"> Světlo </text>
+          <text xml:lang="de">      </text>
         </label>
         <display item="FL(f) controls output 2" format="checkbox" label="">
           <label/>
@@ -152,6 +195,7 @@
         </label>
         <label>
           <text>  FO 1 </text>
+          <text xml:lang="de">  FA1 </text>
         </label>
         <label>
           <text> </text>
@@ -205,6 +249,7 @@
         </label>
         <label>
           <text> FO 2 </text>
+          <text xml:lang="de">  FA2 </text>
         </label>
         <label>
           <text> </text>
@@ -254,6 +299,4 @@
       </column>
     </row>
   </column>
-  <name>Alt Function Map</name>
-  <name xml:lang="it">Mappa Funzioni Speciali</name>
 </pane>

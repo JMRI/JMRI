@@ -14,20 +14,19 @@ package jmri.jmris.srcp.parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/* 
+/*
  * This file defines a JavaTree/JavaCC parser implementation for
  * the SRCP protocol.
- * 
+ *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision$
  */
 
 // This is generated code.  DO NOT ATTEMPT TO FIX ANY FINDBUGS WARNINGS
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"NM_METHOD_NAMING_CONVENTION","RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE"})
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"NM_METHOD_NAMING_CONVENTION","NM_CONFUSING","RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE"})
 
 public class SRCPParser {
-  
-   static Logger log = LoggerFactory.getLogger(SRCPParser.class.getName());
+
+   private final static Logger log = LoggerFactory.getLogger(SRCPParser.class);
 
   }
 
@@ -74,7 +73,7 @@ TOKEN :
 | < JMRISENSOR: ["a"-"z","A"-"Z"] "S" (["0"-"9"])+ >
 | < JMRILIGHT: ["a"-"z","A"-"Z"] "L" (["0"-"9"])+ >
 | < ONOFF: (<ON>|<OFF>) >
-| < #ON: <O><N>> 
+| < #ON: <O><N>>
 | < #OFF: <O>(<F>){2} >
 | < PROTOCOL: (<A>|<F>|<L>|<P>|<S>|<N>|<M>|<Z>) >
 | < DRIVEMODE: ("="|"0"|"1"|"2") >
@@ -108,10 +107,10 @@ TOKEN :
 
 //programming modes
 | <CVBIT: <C><V><B><I><T>>
-| <CV: <C><V>> 
-| <REG: <R><E><G>> 
+| <CV: <C><V>>
+| <REG: <R><E><G>>
 
-// commands 
+// commands
 | < GET: <G><E><T> >
 | < SET: <S><E><T> >
 | < CHECK: <C><H><E><C><K> >
@@ -147,14 +146,13 @@ TOKEN :
 | <#X:["x","X"]>
 | <#Y:["y","Y"]>
 | <#Z:["z","Z"]>
-| <BADTOKEN:~[" "]>
 }
 
 // Lexical specifications begin here
 
 SimpleNode handshakecommand():{}
 {
-  // This is a simple list of the possible commands.  
+  // This is a simple list of the possible commands.
   // They are broken down further below.
   ( LOOKAHEAD(2) go() | handshake_set() ) <EOL>
   {
@@ -165,10 +163,10 @@ SimpleNode handshakecommand():{}
 
 SimpleNode command():{}
 {
-  // This is a simple list of the possible commands.  
+  // This is a simple list of the possible commands.
   // They are broken down further below.
   ( LOOKAHEAD(4) get() | set() | check() | wait_cmd() | init() |
-                 term() | reset() | verify() )  <EOL> 
+                 term() | reset() | verify() )  <EOL>
   {
     log.debug("Command Production");
     return jjtThis;
@@ -270,7 +268,7 @@ SimpleNode port():{SimpleNode s;}
 
 SimpleNode devicegroup():{Token t;}
 {
-  ( t=<FB> | t=<GA> | t=<GL> | t=<SM> | t=<TIME> | t=<SESSION> |t=<SERVER> | 
+  ( t=<FB> | t=<GA> | t=<GL> | t=<SM> | t=<TIME> | t=<SESSION> |t=<SERVER> |
     t=<LOCK> | t=<DESCRIPTION> | t=<POWER> )
   {
     log.debug("DeviceGroup Production");
@@ -282,7 +280,7 @@ SimpleNode devicegroup():{Token t;}
 
 SimpleNode go():{}
 {
-  <GO> 
+  <GO>
   {
      log.debug("GO Production");
      return jjtThis;
@@ -291,16 +289,16 @@ SimpleNode go():{}
 
 SimpleNode get():{}
 {
-  <GET> bus() ( fb() address() | 
-                ga() address() port() | 
-                gl() address() | 
-                sm() address() progmode() cvno() | 
-                time() | 
-                power() | 
-                server() | 
-                session() address() | 
-                lock() | 
-                description() ) 
+  <GET> bus() ( fb() address() |
+                ga() address() port() |
+                gl() address() |
+                sm() address() progmode() cvno() (value())* |
+                time() |
+                power() |
+                server() |
+                session() address() |
+                lock() |
+                description() )
 
   {
      log.debug("GET Production");
@@ -310,8 +308,8 @@ SimpleNode get():{}
 
 SimpleNode handshake_set():{}
 {
-	<SET> ( protocollitteral() serviceversion() | 
-	        connectionlitteral() <SRCP> connectionmode() ) 
+	<SET> ( protocollitteral() serviceversion() |
+	        connectionlitteral() <SRCP> connectionmode() )
   {
     log.debug("Handshake Mode SET Production");
     return jjtThis;
@@ -320,7 +318,7 @@ SimpleNode handshake_set():{}
 
 SimpleNode protocollitteral():{}
 {
-   <PROTOCOLLITTERAL> 
+   <PROTOCOLLITTERAL>
    {
        log.debug("Protocol Litteral production");
        return jjtThis;
@@ -329,7 +327,7 @@ SimpleNode protocollitteral():{}
 
 SimpleNode connectionlitteral():{}
 {
-   <CONNECTIONMODELITTERAL> 
+   <CONNECTIONMODELITTERAL>
    {
        log.debug("Connection Litteral production");
        return jjtThis;
@@ -337,12 +335,12 @@ SimpleNode connectionlitteral():{}
 }
 SimpleNode set():{}
 {
-  <SET> ( bus() ( gl() address() drivemode() address() address() (functionmode())* | 
-                sm() address() progmode() cvno() value() | 
-                ga() address() port() zeroone() (delay()|timeout()) | 
-                fb() address() zeroone()| 
-                time() address() address() address() address() | 
-                power() onoff() | 
+  <SET> ( bus() ( gl() address() drivemode() address() address() (functionmode())* |
+                sm() address() progmode() cvno() (value())+ |
+                ga() address() port() zeroone() (delay()|timeout()) |
+                fb() address() zeroone()|
+                time() address() address() address() address() |
+                power() onoff() |
                 lock() ) )
   {
     log.debug("SET Production");
@@ -352,13 +350,13 @@ SimpleNode set():{}
 
 SimpleNode term():{}
 {
-  <TERM> bus()  ( fb() | 
-                  gl() address() | 
-                  sm() | 
-                  power() | 
-                  server() | 
-                  lock() | 
-                  time() | 
+  <TERM> bus()  ( fb() |
+                  gl() address() |
+                  sm() |
+                  power() |
+                  server() |
+                  lock() |
+                  time() |
                   session() [ address() ] )
   {return jjtThis;}
 }
@@ -368,15 +366,15 @@ SimpleNode check():{}
 {
   // the protocol documentation indicates check and set
   // are the same, so there could be some refactoring here.
-  <CHECK> ( ( bus() ( gl() | 
-                sm() | 
-                ga() address() port() zeroone() (delay()|timeout()) | 
-                fb() address() zeroone()| 
-                time() | 
-                power() onoff() | 
+  <CHECK> ( ( bus() ( gl() |
+                sm() |
+                ga() address() port() zeroone() (delay()|timeout()) |
+                fb() address() zeroone()|
+                time() |
+                power() onoff() |
                 lock() ) ) |
-	<PROTOCOLLITTERAL> serviceversion() | 
-	<CONNECTIONMODELITTERAL> connectionmode() ) 
+	<PROTOCOLLITTERAL> serviceversion() |
+	<CONNECTIONMODELITTERAL> connectionmode() )
   {
     log.debug("Check Production");
     return jjtThis;
@@ -396,11 +394,11 @@ SimpleNode wait_cmd():{}
 
 SimpleNode init():{}
 {
-  <INIT> bus() ( fb() | 
-                 ga() address() protocol() | 
-                 gl() address() protocol() | 
-                 sm() <NMRA> | 
-                 time() nonzeroaddress() nonzeroaddress() | 
+  <INIT> bus() ( fb() |
+                 ga() address() protocol() |
+                 gl() address() protocol() |
+                 sm() <NMRA> |
+                 time() nonzeroaddress() nonzeroaddress() |
                  power() )
   {
      log.debug("INIT Production");
@@ -410,7 +408,7 @@ SimpleNode init():{}
 
 SimpleNode reset():{}
 {
-  <RESET> bus() server() 
+  <RESET> bus() server()
   {
      log.debug("RESET Production");
      return jjtThis;
@@ -437,7 +435,7 @@ SimpleNode gl():{Token t;}
 
 SimpleNode sm():{Token t;}
 {
-  t=<SM> 
+  t=<SM>
   {
      jjtThis.jjtSetValue(t.image);
      return jjtThis;
@@ -447,7 +445,7 @@ SimpleNode sm():{Token t;}
 SimpleNode ga():{Token t;}
 {
   t=<GA>
-  { 
+  {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
   }
@@ -456,7 +454,7 @@ SimpleNode ga():{Token t;}
 SimpleNode fb():{Token t;}
 {
   t=<FB>
-  { 
+  {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
   }
@@ -464,7 +462,7 @@ SimpleNode fb():{Token t;}
 
 SimpleNode time():{Token t;}
 {
-  t=<TIME> 
+  t=<TIME>
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
@@ -473,7 +471,7 @@ SimpleNode time():{Token t;}
 
 SimpleNode power():{Token t;}
 {
-  t=<POWER> 
+  t=<POWER>
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
@@ -482,7 +480,7 @@ SimpleNode power():{Token t;}
 
 SimpleNode server():{Token t;}
 {
-  t=<SERVER> 
+  t=<SERVER>
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
@@ -491,7 +489,7 @@ SimpleNode server():{Token t;}
 
 SimpleNode session():{Token t;}
 {
-  t=<SESSION> 
+  t=<SESSION>
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
@@ -500,7 +498,7 @@ SimpleNode session():{Token t;}
 
 SimpleNode lock():{Token t;}
 {
-  ( t=<LOCK> devicegroup() address() [address()] ) 
+  ( t=<LOCK> devicegroup() address() [address()] )
   {
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
@@ -514,12 +512,6 @@ SimpleNode description():{Token t; SimpleNode s; SimpleNode r;}
     jjtThis.jjtSetValue(t.image);
     return jjtThis;
   }
-}
-
-SimpleNode comment():{}
-{
-  //<COMMENT>
-  {return jjtThis;}
 }
 
 SimpleNode onoff():{Token t;}
@@ -594,7 +586,7 @@ SimpleNode reg():{}
 }
 
 SimpleNode protocol():{Token t;}
-{ 
+{
   t=<PROTOCOL> (address())*
   {
     log.debug("Protocol Production "+ t.image);
@@ -605,7 +597,7 @@ SimpleNode protocol():{Token t;}
 }
 
 SimpleNode drivemode():{Token t;}
-{  
+{
    ( t=<DRIVEMODE> | t=<ZEROADDR> | t=<NONZEROADDR> )
    {
     log.debug("Drivemode Production "+ t.image);
@@ -615,7 +607,7 @@ SimpleNode drivemode():{Token t;}
 }
 
 SimpleNode functionmode():{Token t;}
-{  
+{
    ( t=<FUNCTIONMODE> | t=<ZEROADDR> | t=<NONZEROADDR> | t=<DRIVEMODE> )
    {
     log.debug("Functionmode Production "+ t.image);

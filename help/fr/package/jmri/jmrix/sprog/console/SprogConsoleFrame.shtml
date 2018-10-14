@@ -6,7 +6,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright 2008 -->
-  <!-- $Id$ -->
   <!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14-->
 
   <title>JMRI: SPROG Console</title><!-- Style -->
@@ -29,9 +28,7 @@
       fournit une mani&egrave;re de voir et de contr&ocirc;ler les
       op&eacute;rations Sprog depuis un seul endroit.
 
-      <p>C"est la page d'aide
-      package/jmri/jmrix/sprog/console/SprogConsoleFrame. 
-      <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

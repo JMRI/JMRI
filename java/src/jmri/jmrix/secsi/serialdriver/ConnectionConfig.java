@@ -1,16 +1,15 @@
-// ConnectionConfig.java
 package jmri.jmrix.secsi.serialdriver;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import jmri.jmrix.secsi.nodeconfig.NodeConfigAction;
+import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 
 /**
- * Definition of objects to handle configuring a SECSI layout connection
+ * Definition of objects to handle configuring a SECSI layout connection.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007
- * @version	$Revision$
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -23,35 +22,37 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no prexisting adapter.
      */
     public ConnectionConfig() {
         super();
     }
 
+    JButton b = new JButton(Bundle.getMessage("ConfigNodesTitle"));
+
+    @Override
     public void loadDetails(JPanel details) {
+        setInstance();
+
         // have to embed the usual one in a new JPanel
-
-        JPanel p = new JPanel();
-        super.loadDetails(p);
-
-        details.setLayout(new BoxLayout(details, BoxLayout.Y_AXIS));
-        details.add(p);
-
+        b.addActionListener(new NodeConfigAction((SecsiSystemConnectionMemo)adapter.getSystemConnectionMemo()));
         // add another button
-        JButton b = new JButton("Configure nodes");
-
-        details.add(b);
-
-        b.addActionListener(new NodeConfigAction());
-
+        if (!additionalItems.contains(b)) {
+            additionalItems.add(b);
+        }
+        super.loadDetails(details);
     }
 
+    @Override
     public String name() {
-        return "SECSI Layout Bus";
+        return Bundle.getMessage("SecsiBusConnection");
     }
 
+    @Override
     protected void setInstance() {
-        adapter = SerialDriverAdapter.instance();
+        if (adapter == null ) {
+           adapter = new SerialDriverAdapter();
+        }
     }
+
 }

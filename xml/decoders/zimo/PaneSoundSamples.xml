@@ -14,12 +14,14 @@
                     </label>
                     <label>
                         <text>Function Key Samples</text>
+                        <text xml:lang="cs">Funkční klávesy vzorky</text>
                     </label>
                     <label>
                         <text> </text>
                     </label>
                     <label>
                         <text>             Loop  Short                          Loop  Short</text>
+                        <text xml:lang="cs">             Smyčka  Krátká                       Smyčka  Krátká</text>
                     </label>
                 </column>
             </row>
@@ -533,6 +535,7 @@
         <column>
             <label>
                 <text>Automatic Sound Samples </text>
+                <text xml:lang="cs">Automatický zvuk vzorky</text>
             </label>
             <label>
                 <text> </text>
@@ -595,6 +598,7 @@
             <label>
                 <text>Switch triggered sounds </text>
                 <text xml:lang="it">Livello Suoni regolato da Ingresso</text>
+                <text xml:lang="cs">Spínač spouští zvuk</text>
             </label>
             <label>
                 <text> </text>
@@ -614,12 +618,14 @@
             <label>
                 <text>Randomly generated sound Samples</text>
                 <text xml:lang="it">Suoni Casuali</text>
+                <text xml:lang="cs">Náhodně generované zvuky vzorky</text>
             </label>
             <label>
                 <text> </text>
             </label>
             <label>
                 <text>                   Drive   Stand</text>
+                <text xml:lang="cs">                       Jízda   Stání</text>
             </label>
             <row>
                 <display item="Z1 Sound Sample"/>
@@ -736,4 +742,5 @@
         </column>
     </row>
     <name xml:lang="it">Livelli Suono</name>
+    <name xml:lang="cs">Zvukové vzorky</name>
 </pane>

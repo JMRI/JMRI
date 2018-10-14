@@ -1,4 +1,3 @@
-// LnSensorAddress.java
 package jmri.jmrix.loconet;
 
 import org.slf4j.Logger;
@@ -6,29 +5,27 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Utilities for handling LocoNet sensor addresses.
- * <P>
+ * <p>
  * There are three addressing spaces for LocoNet sensors:
- * <UL>
- * <LI>The space used for DS54 inputs, where the least-significant-bit in the
- * address refers to the "Aux" and "Switch" inputs. These are represented by
- * system names of the form LSnnnA and LSnnnS respectively. nnn is then the
- * turnout number of the DS54 channel.
- * <LI>The space used for BDL16 inputs, where the card and section numbers are
- * part of the address. These are represented by names of the form LScccA1
- * through LScccA4, LScccB1 through LScccB4, and on through LScccD4. ccc is the
- * BDL16 card number.
- * <LI>A straight-forward numeric space, represented by LSmmm. Note that this is
- * a 1-4096 scheme, not a 0-4095.
- * </UL>
- * <P>
+ * <ul>
+ *   <li>The space used for DS54 inputs, where the least-significant-bit in the
+ *   address refers to the "Aux" and "Switch" inputs. These are represented by
+ *   system names of the form LSnnnA and LSnnnS respectively. nnn is then the
+ *   turnout number of the DS54 channel.
+ *   <li>The space used for BDL16 inputs, where the card and section numbers are
+ *   part of the address. These are represented by names of the form LScccA1
+ *   through LScccA4, LScccB1 through LScccB4, and on through LScccD4. ccc is the
+ *   BDL16 card number.
+ *   <li>A straight-forward numeric space, represented by LSmmm. Note that this is
+ *   a 1-4096 scheme, not a 0-4095.
+ * </ul>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <P>
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision$
+ *
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public class LnSensorAddress {
 
@@ -40,7 +37,7 @@ public class LnSensorAddress {
     boolean _valid;
 
     public LnSensorAddress(int sw1, int sw2, String prefix) {
-        _as = sw2 & 0x20;		// should be a LocoNet constant?
+        _as = sw2 & 0x20;  // should be a LocoNet constant?
         _high = sw2 & 0x0F;
         _low = sw1 & 0x7F;
         _valid = true;
@@ -86,6 +83,9 @@ public class LnSensorAddress {
                             break;
                         case 'D':
                             d = 3;
+                            break;
+                        default:
+                            log.warn("Unhandled addr code: {}", c);
                             break;
                     }
                     int n = Integer.parseInt(s.substring(prefix.length() + 1, s.length() - 2)) * 16 + d * 4
@@ -165,6 +165,7 @@ public class LnSensorAddress {
         return _valid;
     }
 
+    @Override
     public String toString() {
         return getNumericAddress() + ":"
                 + getDS54Address() + ":"
@@ -240,9 +241,6 @@ public class LnSensorAddress {
         return prefix + "S" + (asInt() / 16) + letter + digit;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnSensorAddress.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnSensorAddress.class);
 
 }
-
-
-/* @(#)LnSensorAddress.java */

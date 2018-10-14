@@ -1,8 +1,11 @@
 package jmri.jmrix.tams;
 
 import jmri.Turnout;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,80 +14,58 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen  Copyright 2013, 2016
  */
-public class TamsTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+public class TamsTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
     private TamsInterfaceScaffold nis = null;
     private TamsSystemConnectionMemo tm = null;
-    
-    @Override
-    protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
-        super.tearDown();
+
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
     @Override
-    public void setUp() throws Exception {
-        super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         // prepare an interface, register
         nis = new TamsInterfaceScaffold();
-        tm = new TamsSystemConnectionMemo(nis){
-            {
-                userNames.clear();
-                sysPrefixes.clear();
-            }
-        };
+        tm = new TamsSystemConnectionMemo(nis);
         // create and register the manager object
         l = new TamsTurnoutManager(tm);
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
+    @Override
     public String getSystemName(int n) {
-        return "TMT" + n;
+        return "TT" + n;
     }
 
+    @Test
     public void testAsAbstractFactory() {
         // ask for a Turnout, and check type
-        Turnout o = l.newTurnout("TMT21", "my name");
+        Turnout o = l.newTurnout("TT21", "my name");
 
         if (log.isDebugEnabled()) {
             log.debug("received turnout value " + o);
         }
-        assertTrue(null != (TamsTurnout) o);
+        Assert.assertTrue(null != (TamsTurnout) o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + l.getBySystemName("TMT21"));
+            log.debug("by system name: " + l.getBySystemName("TT21"));
         }
         if (log.isDebugEnabled()) {
             log.debug("by user name:   " + l.getByUserName("my name"));
         }
 
-        assertTrue(null != l.getBySystemName("TMT21"));
-        assertTrue(null != l.getByUserName("my name"));
+        Assert.assertTrue(null != l.getBySystemName("TT21"));
+        Assert.assertTrue(null != l.getByUserName("my name"));
 
     }
 
-    // from here down is testing infrastructure
-    public TamsTurnoutManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {TamsTurnoutManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite(TamsTurnoutManagerTest.class);
-        return suite;
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(TamsTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TamsTurnoutManagerTest.class);
 
 }

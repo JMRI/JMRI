@@ -17,10 +17,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * This class attempts to retrieve the screen insets for all operating systems.
- *
+ * <p>
  * The standard insets command fails on Linux - this class attempts to rectify
  * that.
- *
+ * <p>
  * <a href="http://forums.sun.com/thread.jspa?threadID=5169228&start=29">
  * Borrows heavily from the Linsets class created by: A. Tres Finocchiaro
  * </a>
@@ -48,6 +48,8 @@ public class JmriInsets {
 
     /**
      * Creates a new instance of JmriInsets
+     *
+     * @return the new instance
      */
     public static Insets getInsets() {
 
@@ -147,24 +149,23 @@ public class JmriInsets {
         int s = 0;
         int e = 0;
         int w = 0;
-        for (int i = 0; i < gnomeRoot.listFiles().length; i++) {
-            File f = gnomeRoot.listFiles()[i];
-            String folder = f.getName();
-            if (f.isDirectory() && folder.contains(GNOME_PANEL)) {
-                int val = getGnomeXML(new File(GNOME_ROOT + "/" + folder + "/" + GNOME_CONFIG));
-                if (val == -1) {//Skip
-                } else if (folder.startsWith("top" + GNOME_PANEL)) //NOI18N
-                {
-                    n = Math.max(val, n);
-                } else if (folder.startsWith("bottom" + GNOME_PANEL)) //NOI18N
-                {
-                    s = Math.max(val, s);
-                } else if (folder.startsWith("right" + GNOME_PANEL)) //NOI18N
-                {
-                    e = Math.max(val, e);
-                } else if (folder.startsWith("left" + GNOME_PANEL)) //NOI18N
-                {
-                    w = Math.max(val, w);
+        File[] files = gnomeRoot.listFiles();
+        if (files != null) {
+            for (File f : files) {
+                String folder = f.getName();
+                if (f.isDirectory() && folder.contains(GNOME_PANEL)) {
+                    int val = getGnomeXML(new File(GNOME_ROOT + "/" + folder + "/" + GNOME_CONFIG));
+                    if (val == -1) {
+                        // Skip
+                    } else if (folder.startsWith("top" + GNOME_PANEL)) { //NOI18N
+                        n = Math.max(val, n);
+                    } else if (folder.startsWith("bottom" + GNOME_PANEL)) { //NOI18N
+                        s = Math.max(val, s);
+                    } else if (folder.startsWith("right" + GNOME_PANEL)) { //NOI18N
+                        e = Math.max(val, e);
+                    } else if (folder.startsWith("left" + GNOME_PANEL)) { //NOI18N
+                        w = Math.max(val, w);
+                    }
                 }
             }
         }
@@ -201,13 +202,12 @@ public class JmriInsets {
      * Write log entry for any OS that we don't yet now how to handle.
      */
     private static Insets getDefaultInsets() {
-        if (!OS_NAME.toLowerCase().startsWith("windows") && //NOI18N
-                !OS_NAME.toLowerCase().startsWith("mac")) //NOI18N
-        // MS Windows & Mac OS will always end-up here, so no need to log.
-        {
+        if (!OS_NAME.toLowerCase().startsWith("windows") // NOI18N
+                && !OS_NAME.toLowerCase().startsWith("mac")) { // NOI18N
+            // MS Windows & Mac OS will always end-up here, so no need to log.
             return getDefaultInsets(false);
-        } else // any other OS ends up here
-        {
+        } else {
+            // any other OS ends up here
             return getDefaultInsets(true);
         }
     }
@@ -218,8 +218,8 @@ public class JmriInsets {
         }
         try {
             GraphicsDevice gs[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices();
-            for (int i = 0; i < gs.length; i++) {
-                GraphicsConfiguration gc[] = gs[i].getConfigurations();
+            for (GraphicsDevice g : gs) {
+                GraphicsConfiguration[] gc = g.getConfigurations();
                 for (GraphicsConfiguration element : gc) {
                     return (Toolkit.getDefaultToolkit().getScreenInsets(element));
                 }
@@ -233,24 +233,23 @@ public class JmriInsets {
     /*
      * Some additional routines required for specific window managers
      */
-    /*
+ /*
      * Parse XML files for some sizes in Gnome
      */
     private static int getGnomeXML(File xmlFile) {
         try {
             boolean found = false;
-            FileReader reader = new FileReader(xmlFile);
-            BufferedReader buffer = new BufferedReader(reader);
-            String temp = buffer.readLine();
-            while (temp != null) {
-                if (temp.contains("<entry name=\"size\"")) { //NOI18N
-                    found = true;
-                    break;
-                }
+            String temp;
+            try (FileReader reader = new FileReader(xmlFile); BufferedReader buffer = new BufferedReader(reader)) {
                 temp = buffer.readLine();
+                while (temp != null) {
+                    if (temp.contains("<entry name=\"size\"")) { //NOI18N
+                        found = true;
+                        break;
+                    }
+                    temp = buffer.readLine();
+                }
             }
-            buffer.close();
-            reader.close();
             if (temp == null) {
                 return -1;
             }
@@ -259,7 +258,7 @@ public class JmriInsets {
                 return Integer.parseInt(temp.substring(0, temp.indexOf('"')));
             }
         } catch (IOException e) {
-            log.error("Error parsing Gnome XML: " + e.getMessage());
+            log.error("Error parsing Gnome XML: {}", e.getMessage());
         }
         return -1;
     }
@@ -316,10 +315,10 @@ public class JmriInsets {
                 return Integer.parseInt(value);
             }
         } catch (IOException e) {
-            log.error("Error parsing KDI_CONFIG: " + e.getMessage());
+            log.error("Error parsing KDI_CONFIG: {}", e.getMessage());
         }
         return -1;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JmriInsets.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JmriInsets.class);
 }

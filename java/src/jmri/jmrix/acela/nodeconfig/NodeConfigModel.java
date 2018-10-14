@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.jmrix.acela.nodeconfig;
 
 import javax.swing.table.AbstractTableModel;
@@ -12,13 +8,10 @@ import javax.swing.table.AbstractTableModel;
  */
 public abstract class NodeConfigModel extends AbstractTableModel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8887616188889211179L;
     protected int numrows = 16;          // Trying to make a property here
-    protected boolean editmode = true;  // Trying to make a property here
+    protected boolean editmode = true;   // Trying to make a property here
 
+    @Override
     public int getRowCount() {
         return numrows;
     }

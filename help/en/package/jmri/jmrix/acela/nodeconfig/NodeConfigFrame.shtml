@@ -4,7 +4,7 @@
  <title>
       JMRI: Configure Acela Nodes
  </title>
-    <meta content="Bob Jacobsen" name="Author">
+    <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI help configure grapevine node">
 
 <!-- Style -->
@@ -28,9 +28,10 @@ This is the help/jmri/jmrix/acela/nodeconfig/NodeConfigFrame help page
 Thank you for reading this, hopefully the few minutes you spend reading this will save you hours down the road.
 <p>
 If you have not already, please be sure to read more about JMRI <a href="../../../../../html/hardware/acela/index.shtml">Acela</a> hardware support and the <a href="../../../../../html/hardware/acela/Names.shtml">CTI Acela System Names</a>.</p>
-<H2>Configuration Files
-</H2>
-Just to perfectly clear, DecoderPro and PanelPro are different skins or user interfaces to the same JMRI program.
+
+<h2>Configuration Files
+</h2>
+Just to be perfectly clear, DecoderPro and PanelPro are different skins or user interfaces to the same JMRI program.
 <p>
 You can do anything from any of these three programs, the user interface has just been tailored in an attempt to make it easier for you to do what you want to do:
 <ul>
@@ -44,8 +45,8 @@ The advantage is that you can set up each skin to have a unique configuration.
 <p>
 The disadvantage is that you may need to set up your configuration more than once (or copy and paste from one configuration to the next) if you want to use a different skin with at least some of the same configuration.
 
-<H2>Back up your Configuration Files 
-</H2>
+<h2>Back up your Configuration Files
+</h2>
 That all said, each skin has only one configuration file (i.e. for DecoderPro it is DecoderProConfig2.xml).
 <p>
 So, if you make a change and SAVE your configuration file (by pressing the SAVE button on the Preferences window) you will write a new configuration file and the old one will be lost forever.
@@ -54,8 +55,8 @@ This is all fine and dandy until you realize that you were not connected to your
 <p>
 So, again, make backup copies of your configuration files (i.e. DecoderProConfig2.xml, PanelProConfig2.xml) often and store them in a safe place. 
 
-<H2>Connecting to Your CTI Acela System
-</H2>
+<h2>Connecting to Your CTI Acela System
+</h2>
 It is highly recommended that you let the JMRI software discover your CTI Acela network for you.
 <p>
 To that end, the Add and Delete buttons have been disabled for the time being.
@@ -68,13 +69,14 @@ It is recommended that you configure your CTI Acela network in three steps: Esta
 </h3>
 With the CTI Acela system powered on and connected to your computer, start JMRI  (DecoderPro or PanelPro).
 <p>
-From the main menu select <Edit> and then select <Preferences>.  
+From the main menu select <b>Edit</b> and then select <b>Preferences</b> -&gt; Connections tab.
 <p>
-In the preferences page select Acela as either the Main connection or as one of the auxiliary connections.  Usually, Acela will be one of your auxiliary connections since it cannot actually run the trains.  For the rest of this documentation it will be assumed that you selected CTI Acela as an Auxiliary Connection.
+On the Connections tab select CTI Electronics as the System Manufacturer and Acela as the System Connection.
+Usually, Acela will be one of your auxiliary connections since it cannot actually run the trains.
 <p>
-You then need to select the correct serial port.  Make sure that you get this right.  If this is an auxiliary connection, the serial port is probably something like Com4 or Com5 (and probably not Com3).
+You then need to select the correct serial port.  Make sure that you get this right.  The serial port is probably something like Com4 or Com5 (and probably not Com3).
 <p>
-Press the <Save> button.  The JMRI program will end.  
+Press the [Save] button.  The JMRI program will end.
 <p>
 If you look at your configuration file (i.e. DecoderProConfig2.xml or PanelProConfig2.xml depending upon which program you ran) you should see a connection entry with the specified serial port.
 It will look something like (note the second "connection port" line):
@@ -279,11 +281,13 @@ It will look something like (note the lines after the second "connection port" l
 <p>
   &lt;/connection&gt;
 <p>
-  &lt;!--Written by JMRI version 2.2 on Mon Jul 28 20:58:27 EDT 2008 $Id$--&gt;
+  &lt;!--Written by JMRI version 2.2 on Mon Jul 28 20:58:27 EDT 2008 --&gt;
 <p>
 &lt;/layout-config>
-<p>
-You can always get back to this state by erasing your configuration file and repeating these two steps.
+
+<p>You can always get back to this state by erasing your
+configuration file and repeating these two steps.</p>
+
 <h3>Customize your configuration
 </h3>
 Restart JMRI  (DecoderPro or PanelPro).
@@ -295,8 +299,8 @@ Again select the "Configure Nodes" button and go to the Acela Configure Nodes pa
 The first section which is entitled "The Nodes in the Network" should display the network the same as it did in the previous step.
 <p>
 You can now customize your configuration.
-<H2>Customize your configuration
-</H2>
+<h2>Customize your configuration
+</h2>
 There are four types of CTI Acela nodes:
 <ul>
 <li>the Acela node itself (nothing to configure)
@@ -316,6 +320,7 @@ There are four types of CTI Acela nodes:
 <li>initial state (Active or off)
 </ul>
 </ul>
+
 <h3>Configuring Sensors
 </h3>
 A sensor circuit is usually used in one of four ways:
@@ -399,7 +404,7 @@ Remember to save your new configuration by using the Save button in the Preferen
 	</ul>
 </ul>
 
-<p>Remember to save your new configuration by using the Save button in the Preferences window.  Also remember to save a copy of your configuration file (i.e. DecoderProConfig2.xml or PanelProConfig2.xml) in a safe place.
+    <p>Remember to save your new configuration by using the Save button in the Preferences window.  Also remember to save a copy of your configuration file (i.e. DecoderProConfig2.xml or PanelProConfig2.xml) in a safe place.</p>
 
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->

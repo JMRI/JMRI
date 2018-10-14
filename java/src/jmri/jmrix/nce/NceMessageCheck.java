@@ -1,4 +1,3 @@
-// NceMessageCheck.java
 package jmri.jmrix.nce;
 
 import jmri.JmriException;
@@ -11,8 +10,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author Dan Boudreau Copyright (C) 2010
  * @author ken cameron Copyright (C) 2013
- * @version	$Revision$
- *
+  *
  */
 public class NceMessageCheck {
 
@@ -20,57 +18,57 @@ public class NceMessageCheck {
         if (m != null) {
             switch (m.getOpCode()) {
                 /* NCE USB can now address the full range of accessory addresses dboudreau 1/18/2012
-                 case NceBinaryCommand.ACC_CMD: checkACC_CMD(memo, m);
+                 case NceMessage.ACC_CMD: checkACC_CMD(memo, m);
                  break;*/
-                case NceBinaryCommand.READ1_CMD:
+                case NceMessage.READ1_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.READ16_CMD:
+                case NceMessage.READ16_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.WRITEn_CMD:
+                case NceMessage.WRITE_N_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.WRITE1_CMD:
+                case NceMessage.WRITE1_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.WRITE2_CMD:
+                case NceMessage.WRITE2_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.WRITE4_CMD:
+                case NceMessage.WRITE4_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.WRITE8_CMD:
+                case NceMessage.WRITE8_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.STOP_CLOCK_CMD:
+                case NceMessage.STOP_CLOCK_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.START_CLOCK_CMD:
+                case NceMessage.START_CLOCK_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.SET_CLOCK_CMD:
+                case NceMessage.SET_CLOCK_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.CLOCK_1224_CMD:
+                case NceMessage.CLOCK_1224_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.CLOCK_RATIO_CMD:
+                case NceMessage.CLOCK_RATIO_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.OPS_PROG_LOCO_CMD:
+                case NceMessage.OPS_PROG_LOCO_CMD:
                     checkOPS_PROG_CMD(memo, m);
                     break;
-                case NceBinaryCommand.OPS_PROG_ACCY_CMD:
+                case NceMessage.OPS_PROG_ACCY_CMD:
                     checkOPS_PROG_CMD(memo, m);
                     break;
-                case NceBinaryCommand.USB_MEM_POINTER_CMD:
+                case NceMessage.USB_MEM_POINTER_CMD:
                     checkUsbMem_CMD(memo, m);
                     break;
-                case NceBinaryCommand.USB_MEM_READ_CMD:
+                case NceMessage.USB_MEM_READ_CMD:
                     checkUsbMem_CMD(memo, m);
                     break;
-                case NceBinaryCommand.USB_MEM_WRITE_CMD:
+                case NceMessage.USB_MEM_WRITE_CMD:
                     checkUsbMem_CMD(memo, m);
                     break;
                 default:
@@ -82,8 +80,8 @@ public class NceMessageCheck {
     /* NCE USB no longer has an accessory address restriction dboudreau 1/18/2012
      private static void checkACC_CMD(NceSystemConnectionMemo memo, NceMessage m) throws JmriException{
      // USB connected to PowerCab or SB3 can only access addresses up to 250
-     int number = m.getElement(1);			// high byte address
-     number = number*256 + m.getElement(2);	// low byte address
+     int number = m.getElement(1);   // high byte address
+     number = number*256 + m.getElement(2); // low byte address
      if (number > 250 && 
      (memo.getNceUSB() == NceTrafficController.USB_SYSTEM_POWERCAB 
      || (memo.getNceUSB() == NceTrafficController.USB_SYSTEM_SB3))){
@@ -123,7 +121,7 @@ public class NceMessageCheck {
         throw new JmriException(txt);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceMessageCheck.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NceMessageCheck.class);
 }
 
-/* @(#)NceMessageCheck.java */
+

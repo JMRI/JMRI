@@ -1,22 +1,14 @@
 package apps.startup.configurexml;
 
-import apps.Apps;
 import apps.StartupActionsManager;
-import apps.gui3.Apps3;
 import apps.startup.ScriptButtonModel;
 import apps.startup.StartupModel;
-import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import javax.script.ScriptException;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JButton;
+import java.util.Locale;
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.configurexml.AbstractXmlAdapter;
-import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
+import jmri.util.prefs.InitializationException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +35,7 @@ public class ScriptButtonModelXml extends AbstractXmlAdapter {
      * @param o Object to store, of type PerformActonModel
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element element = new Element("perform"); // NOI18N
         element.setAttribute("name", ((StartupModel) o).getName()); // NOI18N
@@ -68,7 +61,7 @@ public class ScriptButtonModelXml extends AbstractXmlAdapter {
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws JmriException {
+    public boolean load(Element shared, Element perNode) {
         // Should the script engines be pre-loaded here?
         boolean result = false;
         ScriptButtonModel model = new ScriptButtonModel();
@@ -81,16 +74,13 @@ public class ScriptButtonModelXml extends AbstractXmlAdapter {
                     model.setScript(FileUtil.getFile(script));
                     result = true;
                 } catch (FileNotFoundException ex) {
+                    model.addException(new InitializationException(
+                            Bundle.getMessage(Locale.ENGLISH, "ScriptButtonModel.ScriptNotFound", script),
+                            Bundle.getMessage("ScriptButtonModel.ScriptNotFound", script),
+                            ex));
                     log.error("Unable to create button for script {}", script);
                 }
             }
-        }
-        if (Apps.buttonSpace() != null) {
-            JButton b = new JButton(new ScriptButtonAction(model));
-            Apps.buttonSpace().add(b);
-        } else if (Apps3.buttonSpace() != null) {
-            JButton b = new JButton(new ScriptButtonAction(model));
-            Apps3.buttonSpace().add(b);
         }
 
         // store the model
@@ -104,26 +94,8 @@ public class ScriptButtonModelXml extends AbstractXmlAdapter {
      * @param element Top level Element to unpack.
      * @param o       ignored
      */
+    @Override
     public void load(Element element, Object o) {
         log.error("Unexpected call of load(Element, Object)");
-    }
-
-    private static class ScriptButtonAction extends AbstractAction {
-        
-        ScriptButtonModel model;
-
-        public ScriptButtonAction(ScriptButtonModel model) {
-            this.model = model;
-            this.putValue(Action.NAME, model.getName());
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-                JmriScriptEngineManager.getDefault().eval(model.getScript());
-            } catch (ScriptException | IOException ex) {
-                log.error("Unable to run script {}.", model.getScript(), ex);
-            }
-        }
     }
 }

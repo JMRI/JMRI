@@ -24,6 +24,7 @@ public class ThrottlesPreferences {
     private boolean _hideUndefinedFunButton = false;
     private boolean _ignoreThrottlePosition = true;
     private boolean _saveThrottleOnLayoutSave = true;
+    private boolean _isSilentSteal = false;
     protected boolean dirty = false;
 
     private Dimension _winDim = new Dimension(800, 600);
@@ -70,7 +71,7 @@ public class ThrottlesPreferences {
             setUsingFunctionIcon(a.getValue().compareTo("true") == 0);
         }
         if (((a = e.getAttribute("windowDimensionWidth")) != null) && ((b = e.getAttribute("windowDimensionHeight")) != null)) {
-            setWindowDimension(new Dimension(Integer.valueOf(a.getValue()), Integer.valueOf(b.getValue())));
+            setWindowDimension(new Dimension(Integer.parseInt(a.getValue()), Integer.parseInt(b.getValue())));
         }
         if ((a = e.getAttribute("isSavingThrottleOnLayoutSave")) != null) {
             setSaveThrottleOnLayoutSave(a.getValue().compareTo("true") == 0);
@@ -89,6 +90,9 @@ public class ThrottlesPreferences {
         }
         if ((a = e.getAttribute("isIgnoringThrottlePosition")) != null) {
             setIgnoreThrottlePosition(a.getValue().compareTo("true") == 0);
+        }
+        if ((a = e.getAttribute("isSilentSteal")) != null) {
+            setSilentSteal(a.getValue().compareTo("true") == 0);
         }
         this.dirty = false;
     }
@@ -121,6 +125,7 @@ public class ThrottlesPreferences {
         e.setAttribute("isAutoLoading", "" + isAutoLoading());
         e.setAttribute("isHidingUndefinedFunctionButtons", "" + isHidingUndefinedFuncButt());
         e.setAttribute("isIgnoringThrottlePosition", "" + isIgnoringThrottlePosition());
+        e.setAttribute("isSilentSteal", "" + isSilentSteal());
         return e;
     }
 
@@ -136,6 +141,7 @@ public class ThrottlesPreferences {
         setAutoLoad(tp.isAutoLoading());
         setHideUndefinedFuncButt(tp.isHidingUndefinedFuncButt());
         setIgnoreThrottlePosition(tp.isIgnoringThrottlePosition());
+        setSilentSteal(tp.isSilentSteal());
 
         if (listeners != null) {
             for (int i = 0; i < listeners.size(); i++) {
@@ -156,7 +162,8 @@ public class ThrottlesPreferences {
                 || isUsingRosterImage() != tp.isUsingRosterImage()
                 || isEnablingRosterSearch() != tp.isEnablingRosterSearch()
                 || isAutoLoading() != tp.isAutoLoading()
-                || isHidingUndefinedFuncButt() != tp.isHidingUndefinedFuncButt());
+                || isHidingUndefinedFuncButt() != tp.isHidingUndefinedFuncButt())
+                || isSilentSteal() != tp.isSilentSteal();
     }
 
     public void save() {
@@ -186,17 +193,17 @@ public class ThrottlesPreferences {
 
         try {
             Element root = new Element("throttles-preferences");
-            Document doc = XmlFile.newDocument(root, XmlFile.dtdLocation + "throttles-preferences.dtd");
+            Document doc = XmlFile.newDocument(root, XmlFile.getDefaultDtdLocation() + "throttles-preferences.dtd");
             // add XSLT processing instruction
             // <?xml-stylesheet type="text/xsl" href="XSLT/throttle.xsl"?>
-/*TODO    		java.util.Map<String,String> m = new java.util.HashMap<String,String>();
+/*TODO      java.util.Map<String,String> m = new java.util.HashMap<String,String>();
              m.put("type", "text/xsl");
              m.put("href", jmri.jmrit.XmlFile.xsltLocation+"throttles-preferences.xsl");
              ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
              doc.addContent(0,p);*/
             root.setContent(store());
             xf.writeXML(file, doc);
-        } catch (Exception ex) {
+        } catch (java.io.IOException ex) {
             log.warn("Exception in storing throttles preferences xml: " + ex);
         }
         this.dirty = false;
@@ -301,6 +308,16 @@ public class ThrottlesPreferences {
         return _saveThrottleOnLayoutSave;
     }
 
+    public boolean isSilentSteal() {
+        return _isSilentSteal;
+    }
+    
+    
+    public void setSilentSteal(boolean b) {
+        _isSilentSteal = b;
+        this.dirty = true;
+    }
+    
     /**
      * Add an AddressListener. AddressListeners are notified when the user
      * selects a new address and when a Throttle is acquired for that address
@@ -328,5 +345,5 @@ public class ThrottlesPreferences {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ThrottlesPreferences.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ThrottlesPreferences.class);
 }

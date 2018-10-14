@@ -1,4 +1,3 @@
-// PreferencesFrame.java
 package jmri.jmrix.ecos.swing.preferences;
 
 import javax.swing.BoxLayout;
@@ -8,15 +7,9 @@ import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 /**
  * Frame for ECoS preferences
  *
- * @author	Kevin Dickerson Copyright (C) 2009
- * @version $Revision$
+ * @author Kevin Dickerson Copyright (C) 2009
  */
 public class PreferencesFrame extends jmri.util.JmriJFrame {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8594656805050589881L;
 
     public PreferencesFrame() {
         super();
@@ -25,12 +18,12 @@ public class PreferencesFrame extends jmri.util.JmriJFrame {
     JButton sendButton;
     PreferencesPane preferencesPane;
 
-    public void initComponents(EcosSystemConnectionMemo adaptermemo) throws Exception {
+    public void initComponents(EcosSystemConnectionMemo adaptermemo) {
         // the following code sets the frame's initial state
 
         preferencesPane = new PreferencesPane(adaptermemo.getPreferenceManager());
 
-        setTitle("ECoS User Preferences");
+        setTitle(Bundle.getMessage("MenuItemECoSPrefs"));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         getContentPane().add(preferencesPane);

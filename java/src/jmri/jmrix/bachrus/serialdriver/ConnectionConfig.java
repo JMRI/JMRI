@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.bachrus.serialdriver;
 
 import jmri.util.SystemType;
@@ -9,25 +8,28 @@ import jmri.util.SystemType;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Andrew Crosland Copyright (C) 2010
- * @version	$Revision$
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process; Swing init is
-     * deferred.
+     * Create a connection configuration with a preexisting adapter. This is
+     * used principally when loading a configuration that defines this
+     * connection.
+     *
+     * @param p the adapter to create a connection configuration for
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Create a connection configuration without a preexisting adapter.
      */
     public ConnectionConfig() {
         super();
     }
 
+    @Override
     public String name() {
         return "Speedo";
     }
@@ -40,6 +42,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return new String[]{};
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new SerialDriverAdapter();

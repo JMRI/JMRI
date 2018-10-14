@@ -14,7 +14,6 @@ import jmri.jmrix.lenz.li101.LI101Adapter;
  * attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractXNetSerialConnectionConfigXml {
 

@@ -10,7 +10,7 @@ import jmri.util.JmriJFrame;
  * This Action runs creates an InputWindow for sending input to the global
  * jython interpreter
  *
- * @author	Bob Jacobsen Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2004
  */
 public class InputWindowAction extends AbstractAction {
 

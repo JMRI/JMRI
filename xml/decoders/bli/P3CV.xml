@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <variable item="Function 1 option 2" CV="159" mask="XXXXVXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		<label>L4/L5 Power Up State</label>
+  </variable>
+  <variable item="Function 1 option 3" CV="159" mask="XXVXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-LowHigh.xml"/>
+		<label>L4 Logic</label>
+  </variable>
+  <variable item="Function 2 option 2" CV="159" mask="XVXXXXXX" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-LowHigh.xml"/>
+		<label>L5 Logic</label>
+  </variable>
   <variable CV="176" default="114" item="Fatal OverCurrent Config" readOnly="yes" tooltip="This value determines the internal references, multiplies and comparator selection. DO NOT CHANGE.">
 	<decVal/>
   </variable>
@@ -8,19 +20,20 @@
 	<decVal/>
   </variable>
   <variable CV="212" default="1" item="Sound Group 1 Option 1">
-	<decVal max="29"/>
-	<label>Rolling Thunder Channel</label>
+    <decVal max="29"/>
+    <label>Rolling Thunder Channel</label>
+    <tooltip>Value of 0 disables transmitter</tooltip>
   </variable>
   <variable CV="213" default="1" mask="VXXXXXXX" item="Sound Group 1 Option 2">
-	<enumVal>
-	  <enumChoice>
-		<choice>868mhz</choice>
-	  </enumChoice>
-	  <enumChoice>
-		<choice>915mhz</choice>
-	  </enumChoice>
-	</enumVal>
-	<label>Rolling Thunder Frequency</label>
+    <enumVal>
+      <enumChoice>
+        <choice>868mhz</choice>
+      </enumChoice>
+      <enumChoice>
+        <choice>915mhz</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Rolling Thunder Frequency</label>
   </variable>
   <variable CV="213" default="0" mask="XVVVXXXX" item="Sound Group 1 Option 3">
 	<enumVal>
@@ -72,39 +85,47 @@
 	<label>Bell Select</label>
   </variable>
   <variable CV="224" default="0" item="Sound Group 2 Option 1">
-	<enumVal>
-	  <enumChoice>
-		<choice>Default</choice>
-	  </enumChoice>
-	  <enumChoice>
-		<choice>Horn3</choice>
-	  </enumChoice>
-	  <enumChoice>
-		<choice>Horn4</choice>
-	  </enumChoice>
-	  <enumChoice>
-		<choice>Complete Horn</choice>
-	  </enumChoice>
-	</enumVal>
-	<label>Horn Select</label>
+    <enumVal>
+      <enumChoice>
+      <choice>Default</choice>
+      </enumChoice>
+      <enumChoice>
+      <choice>Horn3</choice>
+      </enumChoice>
+      <enumChoice>
+      <choice>Horn4</choice>
+      </enumChoice>
+      <enumChoice>
+      <choice>Complete Horn</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Horn Select</label>
   </variable>
-  <variable item="Function 1 options" CV="225" mask="XXXXXVXX" default="0">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-	<label>L4 Light</label>
+  <variable item="Function 1 options" CV="225" mask="XXXXXVXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>L4 Light</label>
   </variable>
-  <variable item="Function 1 option 1" CV="225" mask="XXVXXXXX" default="0">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-	<label>L4 follows front/rear on/off</label>
+  <variable item="Function 2 options" CV="225" mask="XXXXVXXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>L5 Light</label>
   </variable>
-  <variable item="Function 1 option 2" CV="225" mask="XVXXXXXX" default="0">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-	<label>L5 follows front/rear on/off</label>
+  <variable item="Function 1 option 1" CV="225" mask="XXVXXXXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>L4 follows front/rear on/off</label>
+  </variable>
+  <variable item="Function 2 option 1" CV="225" mask="XVXXXXXX" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>L5 follows front/rear on/off</label>
   </variable>
   <variable item="Consist L4 Light" CV="229" mask="XXXXVXXX" default="1" tooltip="DCC and DC)">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-	<label>Consist L4 Light</label>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Consist L4 Light</label>
   </variable>
   <variable item="Track Sounds Maximum Speed Step" CV="242" default="15">
-	<decVal/>
+    <decVal/>
+  </variable>
+  <variable item="Broadcast Stop Packet Count" CV="244" default="0" mask="XXXXXVVV">
+    <decVal/>
+    <label>Broadcast Stop Packet Count</label>
   </variable>
 </variables>

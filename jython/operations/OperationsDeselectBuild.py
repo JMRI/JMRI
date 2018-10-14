@@ -3,16 +3,13 @@
 #
 # Author: Daniel Boudreau, copyright 2011
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 
 import jmri
 
 class terminateCheckBoxTrain(jmri.jmrit.automat.AbstractAutomaton) :      
   def init(self):
     # get the train manager
-    self.tm = jmri.jmrit.operations.trains.TrainManager.instance()
+    self.tm = jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
     return
 
   def handle(self):

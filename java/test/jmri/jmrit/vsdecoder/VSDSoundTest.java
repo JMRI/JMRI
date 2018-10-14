@@ -1,10 +1,12 @@
 package jmri.jmrit.vsdecoder;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.jdom2.Element;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
 
 /**
  * Tests for the VSDSound class
@@ -19,13 +21,13 @@ public class VSDSoundTest extends TestCase {
 
     // Note: VSDSound is abstract.  Using SoundBite as test vehicle.
     public void testCreateSimple() {
-        VSDSound uut = new SoundBite("unitUnderTest");
+        VSDSound uut = new SoundBite("unitUnderTest"); // BOUND_MODE
         Assert.assertEquals("sound name", "unitUnderTest", uut.getName());
         Assert.assertFalse("is playing", uut.isPlaying());
     }
 
-    public void TestSetGet() {
-        VSDSound uut = new SoundBite("unitUnderTest");
+    public void testSetGet() {
+        VSDSound uut = new SoundBite("unitUnderTest"); // BOUND_MODE
         uut.setName("new name");
         Assert.assertEquals("set name", "new name", uut.getName());
     }
@@ -38,7 +40,7 @@ public class VSDSoundTest extends TestCase {
     }
 
     public void testSetXML() {
-        VSDSound uut = new SoundBite("unitUnderTest");
+        VSDSound uut = new SoundBite("unitUnderTest"); // BOUND_MODE
         Element e = buildTestXML();
         uut.setXml(e);
         // VSDSound.setXml() does nothing.
@@ -62,4 +64,18 @@ public class VSDSoundTest extends TestCase {
         return suite;
     }
 
+    @Before
+    @Override
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+
+    }
+
+    @After
+    @Override
+    public void tearDown() {
+        jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
+        jmri.util.JUnitUtil.tearDown();
+
+    }
 }

@@ -14,9 +14,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Rfid implementation of a ReporterManager.
- * <P>
- * System names are "FRpppp", where ppp is a representation of the RFID reader.
- * <P>
+ * <p>
+ * System names are "FnRpppp", where Fn is the connection prefix, ppp is a representation of the RFID reader.
+ *
  * @author Bob Jacobsen Copyright (C) 2008
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
@@ -80,6 +80,6 @@ public class ConcentratorReporterManager extends RfidReporterManager {
         report.notify(idTag);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ConcentratorReporterManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ConcentratorReporterManager.class);
 
 }

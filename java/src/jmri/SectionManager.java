@@ -1,5 +1,6 @@
 package jmri;
 
+import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +8,10 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 
 /**
  * Basic Implementation of a SectionManager.
@@ -33,31 +38,37 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2008
  */
-public class SectionManager extends AbstractManager
-        implements java.beans.PropertyChangeListener {
+public class SectionManager extends AbstractManager<Section> implements PropertyChangeListener, InstanceManagerAutoDefault {
 
     public SectionManager() {
         super();
-        InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
-        InstanceManager.getDefault(jmri.BlockManager.class).addVetoableChangeListener(this);
+        InstanceManager.getDefault(SensorManager.class).addVetoableChangeListener(this);
+        InstanceManager.getDefault(BlockManager.class).addVetoableChangeListener(this);
     }
 
+    @Override
     public int getXMLOrder() {
         return Manager.SECTIONS;
     }
 
+    @Override
     public String getSystemPrefix() {
         return "I";
     }
 
+    @Override
     public char typeLetter() {
         return 'Y';
     }
 
     /**
-     * Method to create a new Section if the Section does not exist Returns null
-     * if a Section with the same systemName or userName already exists, or if
-     * there is trouble creating a new Section.
+     * Method to create a new Section if the Section does not exist.
+     *
+     * @param systemName the desired system name
+     * @param userName   the desired user name
+     * @return a new Section or null if a Section with the same systemName or
+     *         userName already exists, or if there is trouble creating a new
+     *         Section.
      */
     public Section createNewSection(String systemName, String userName) {
         // check system name
@@ -89,8 +100,8 @@ public class SectionManager extends AbstractManager
         y = new Section(sName, userName);
         // save in the maps
         register(y);
-        /*The following keeps trace of the last created auto system name.  
-         currently we do not reuse numbers, although there is nothing to stop the 
+        /*The following keeps trace of the last created auto system name.
+         currently we do not reuse numbers, although there is nothing to stop the
          user from manually recreating them*/
         if (systemName.startsWith("IY:AUTO:")) {
             try {
@@ -118,18 +129,23 @@ public class SectionManager extends AbstractManager
     int lastAutoSectionRef = 0;
 
     /**
-     * Remove an existing Section
+     * Remove an existing Section.
+     *
+     * @param y the section to remove
      */
     public void deleteSection(Section y) {
-        // delete the Section				
+        // delete the Section
         deregister(y);
         y.dispose();
     }
 
     /**
-     * Method to get an existing Section. First looks up assuming that name is a
-     * User Name. If this fails looks up assuming that name is a System Name. If
-     * both fail, returns null.
+     * Get an existing Section. First looks up assuming that name is a User
+     * Name. If this fails looks up assuming that name is a System Name.
+     *
+     * @param name the name to find; user names are searched for a match first,
+     *             followed by system names
+     * @return the found section of null if no matching section found
      */
     public Section getSection(String name) {
         Section y = getByUserName(name);
@@ -141,15 +157,34 @@ public class SectionManager extends AbstractManager
 
     public Section getBySystemName(String name) {
         String key = name.toUpperCase();
-        return (Section) _tsys.get(key);
+        return _tsys.get(key);
     }
 
     public Section getByUserName(String key) {
-        return (Section) _tuser.get(key);
+        return _tuser.get(key);
     }
 
     /**
-     * Validates all Sections
+     * {@inheritDoc}
+     * 
+     * Forces upper case and trims leading and trailing whitespace.
+     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
+     */
+    @CheckReturnValue
+    @Override
+    public @Nonnull
+    String normalizeSystemName(@Nonnull String inputName) {
+        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
+        return inputName.toUpperCase().trim();
+    }
+
+    /**
+     * Validates all Sections.
+     *
+     * @param frame   ignored
+     * @param lePanel the panel containing sections to validate
+     * @return number or validation errors; -2 is returned if there are no
+     *         sections
      */
     public int validateAllSections(jmri.util.JmriJFrame frame, LayoutEditor lePanel) {
         List<String> list = getSystemNameList();
@@ -171,10 +206,11 @@ public class SectionManager extends AbstractManager
     }
 
     /**
-     * Checks direction sensors in SSL for signals. Returns '0' for no errors
-     * Returns n, where n is a positive number for number of errors or warnings
-     * Returns -1 if there is no LayoutEditor panel Returns -2 if there are no
-     * Sections defined
+     * Checks direction sensors in SSL for signals.
+     *
+     * @param lePanel the panel containing direction sensors
+     * @return the number or errors; 0 if no errors; -1 if the panel is null; -2
+     *         if there are no sections
      */
     public int setupDirectionSensors(LayoutEditor lePanel) {
         if (lePanel == null) {
@@ -196,10 +232,11 @@ public class SectionManager extends AbstractManager
     }
 
     /**
-     * Removes direction sensors from SSL for all signals. Returns '0' for no
-     * errors Returns n, where n is a positive number for number of errors or
-     * warnings Returns -1 if there is no LayoutEditor panel Returns -2 if there
-     * are no Sections defined
+     * Removes direction sensors from SSL for all signals.
+     *
+     * @param lePanel the panel containing direction sensors
+     * @return the number or errors; 0 if no errors; -1 if the panel is null; -2
+     *         if there are no sections
      */
     public int removeDirectionSensorsFromSSL(LayoutEditor lePanel) {
         if (lePanel == null) {
@@ -211,7 +248,7 @@ public class SectionManager extends AbstractManager
             return -2;
         }
         int numErrors = 0;
-        ArrayList<String> sensorList = new ArrayList<String>();
+        ArrayList<String> sensorList = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             Section s = getBySystemName(list.get(i));
             String name = s.getReverseBlockingSensorName();
@@ -254,18 +291,10 @@ public class SectionManager extends AbstractManager
         }
     }
 
-    static SectionManager _instance = null;
-
-    static public SectionManager instance() {
-        if (_instance == null) {
-            _instance = new SectionManager();
-        }
-        return (_instance);
-    }
-
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameSection");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SectionManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SectionManager.class);
 }

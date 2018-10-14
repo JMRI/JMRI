@@ -28,10 +28,10 @@
             <eventid/>
             <eventid/>
         </group>
-        <bit>
+        <int size="1">
             <name>Sample bit variable</name>
             <description>Doesn't do anything</description>
-        </bit>
+        </int>
         <int size="2">
             <name>Sample integer variable</name>
             <description>Doesn't do anything</description>

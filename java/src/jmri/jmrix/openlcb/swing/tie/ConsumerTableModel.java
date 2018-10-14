@@ -1,4 +1,3 @@
-// ConsumerTableModel.java
 package jmri.jmrix.openlcb.swing.tie;
 
 import java.awt.Font;
@@ -12,16 +11,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Table Model for access to producer info
  *
- * @author	Bob Jacobsen 2008
- * @version	$Revision$
- * @since 2.3.7
+ * @author Bob Jacobsen 2008
+  * @since 2.3.7
  */
 public class ConsumerTableModel extends AbstractTableModel {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5173698837318536847L;
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
 
@@ -30,30 +23,37 @@ public class ConsumerTableModel extends AbstractTableModel {
     public static final int NUMBER_COLUMN = 2;
     String[] columnName = new String[]{"User Name", "Node", "Event"};
 
+    @Override
     public String getColumnName(int c) {
         return columnName[c];
     }
 
+    @Override
     public Class<?> getColumnClass(int c) {
         return String.class;
     }
 
+    @Override
     public boolean isCellEditable(int r, int c) {
         return false;
     }
 
+    @Override
     public int getColumnCount() {
         return columnName.length;
     }
 
+    @Override
     public int getRowCount() {
         return dummy.length;
     }
 
+    @Override
     public Object getValueAt(int r, int c) {
         return dummy[r][c];  // for testing
     }
 
+    @Override
     public void setValueAt(Object type, int r, int c) {
         // nothing is stored here
     }
@@ -74,6 +74,8 @@ public class ConsumerTableModel extends AbstractTableModel {
      * lines between each column. Data is word wrapped within a column. Can only
      * handle 4 columns of data as strings. Adapted from routines in
      * BeanTableDataModel.java by Bob Jacobsen and Dennis Miller
+     * @param w hard copy writer connection
+     * @param colWidth array of column widths
      */
     public void printTable(HardcopyWriter w, int colWidth[]) {
         // determine the column sizes - proportionately sized, with space between for lines
@@ -202,8 +204,8 @@ public class ConsumerTableModel extends AbstractTableModel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConsumerTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConsumerTableModel.class);
 
 }
 
-/* @(#)ProducerTableModel.java */
+

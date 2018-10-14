@@ -1,10 +1,15 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import com.digi.xbee.api.RemoteXBeeDevice;
+import com.digi.xbee.api.models.XBee16BitAddress;
+import com.digi.xbee.api.models.XBee64BitAddress;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * <P>
@@ -14,64 +19,74 @@ import org.junit.Test;
  */
 public class XBeeIOStreamTest {
 
-   private XBeeInterfaceScaffold tc = null; // set in setUp.
-   private XBeeNode node = null; // set in setUp.
+   private static XBeeInterfaceScaffold tc = null; // set in setUp.
+   private static XBeeNode node = null; // set in setUp.
+   private XBeeIOStream a = null; // set in initTest 
 
    @Test
    public void ConstructorTest(){
-       XBeeIOStream a = new XBeeIOStream(node,tc);
        Assert.assertNotNull(a);
    }
 
    @Test
    public void checkInputStream(){
-       XBeeIOStream a = new XBeeIOStream(node,tc);
        Assert.assertNotNull(a.getInputStream());
    }
 
    @Test
    public void checkOutputStream(){
-       XBeeIOStream a = new XBeeIOStream(node,tc);
-       Assert.assertNotNull(a.getInputStream());
+       Assert.assertNotNull(a.getOutputStream());
    }
 
    @Test
    public void checkStatus(){
-       XBeeIOStream a = new XBeeIOStream(node,tc);
        Assert.assertTrue(a.status());
    }
 
    @Test
    public void checkPortName(){
-       XBeeIOStream a = new XBeeIOStream(node,tc);
        Assert.assertEquals("NONE",a.getCurrentPortName());
    }
 
    @Test
    public void checkDisabled(){
-       XBeeIOStream a = new XBeeIOStream(node,tc);
        Assert.assertFalse(a.getDisabled());
    }
 
-    // The minimal setup for log4J
+   @Test
+   @Ignore("data send occurs, but tearDown closes the pipes to quickly")
+   public void checkSend() throws java.io.IOException {
+       a.configure(); // start the send and receive threads.
+       a.getOutputStream().writeChars("Hello World");
+       jmri.util.JUnitUtil.waitFor(()->{ return tc.dataSent; });
+   }
+
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         tc = new XBeeInterfaceScaffold();
+        tc.setAdapterMemo(new XBeeConnectionMemo());
         byte pan[] = {(byte) 0x00, (byte) 0x42};
-        byte uad[] = {(byte) 0x6D, (byte) 0x97};
+        byte uad[] = {(byte) 0x00, (byte) 0x02};
         byte gad[] = {(byte) 0x00, (byte) 0x13, (byte) 0xA2, (byte) 0x00, (byte) 0x40, (byte) 0xA0, (byte) 0x4D, (byte) 0x2D};
         node = new XBeeNode(pan,uad,gad);
-        tc.setAdapterMemo(new XBeeConnectionMemo());
-        Assume.assumeNotNull(tc,node);
+        RemoteXBeeDevice rd = new RemoteXBeeDevice(tc.getXBee(),
+             new XBee64BitAddress("0013A20040A04D2D"),
+             new XBee16BitAddress("0002"),
+             "Node 1");
+        node.setXBee(rd);
+        tc.registerNode(node);
+        a = new XBeeIOStream(node,tc);
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        a.dispose();
+        a=null;
+        tc.terminate();
         tc = null;
         node = null;
+        jmri.util.JUnitUtil.tearDown();
     }
-
 
 }

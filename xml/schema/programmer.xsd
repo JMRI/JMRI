@@ -3,8 +3,6 @@
 
 <!-- Schema for JMRI programmer definitions       -->
 
-<!-- $Id$ -->
-
 <!-- This schema is part of JMRI. Copyright 2009, 2010.                     -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -28,7 +26,8 @@
     <!-- need attribute restrictions -->
     <!-- need attribute defaults -->
     
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+<xs:schema xmlns:xi="http://www.w3.org/2001/XInclude"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
            xmlns:docbook="http://docbook.org/ns/docbook"
            xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
@@ -41,6 +40,8 @@
     <xs:include schemaLocation="http://jmri.org/xml/schema/types/general.xsd"/>
     <xs:include schemaLocation="http://jmri.org/xml/schema/types/panetype.xsd"/>
     <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/docbook.xsd'/>
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/03/xml.xsd" />
+    <xs:import namespace="http://www.w3.org/2001/XInclude" schemaLocation="http://www.w3.org/2001/XInclude.xsd"/>
 
 <xs:annotation>
     <xs:documentation>
@@ -59,9 +60,10 @@
   </xs:complexType>
 
   <xs:complexType name="ProgrammerType">
-    <xs:sequence>
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
 
       <xs:element name="pane" type="PaneType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
 
     </xs:sequence>
     <xs:attribute name="decoderFilePanes"  type="yesNoType" default="yes"/>

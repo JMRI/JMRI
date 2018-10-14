@@ -5,31 +5,28 @@ import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.Vector;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Description:	JUnit tests for the SerialTrafficController class
+ * JUnit tests for the SerialTrafficController class
  *
  * @author	Bob Jacobsen Copyright 2006
  */
-public class SerialTrafficControllerTest extends TestCase {
+public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTrafficControllerTest {
 
-    public void testCreate() {
-        SerialTrafficController m = new SerialTrafficController();
-        Assert.assertNotNull("exists", m);
-    }
-
+    @Test
     public void testSerialNodeEnumeration() {
-        SerialTrafficController c = new SerialTrafficController();
-        SerialNode b = new SerialNode(1, 0);
-        SerialNode f = new SerialNode(3, 0);
-        SerialNode d = new SerialNode(2, 0);
-        SerialNode e = new SerialNode(6, 0);
+        SerialTrafficController c = (SerialTrafficController)tc;
+        SerialNode b = new SerialNode(1, 0,c);
+        SerialNode f = new SerialNode(3, 0,c);
+        SerialNode d = new SerialNode(2, 0,c);
+        SerialNode e = new SerialNode(6, 0,c);
         Assert.assertEquals("1st Node", b, c.getNode(0));
         Assert.assertEquals("2nd Node", f, c.getNode(1));
         Assert.assertEquals("3rd Node", d, c.getNode(2));
@@ -72,34 +69,36 @@ public class SerialTrafficControllerTest extends TestCase {
 
         public SerialListenerScaffold() {
             rcvdReply = null;
-            rcvdMsg = null;
         }
 
+        @Override
         public void message(SerialMessage m) {
-            rcvdMsg = m;
         }
 
+        @Override
         public void reply(SerialReply r) {
             rcvdReply = r;
         }
     }
-    SerialReply rcvdReply;
-    SerialMessage rcvdMsg;
-
+    private SerialReply rcvdReply;
     // internal class to simulate a PortController
     class SerialPortControllerScaffold extends SerialPortController {
 
+        @Override
         public Vector<String> getPortNames() {
             return null;
         }
 
+        @Override
         public String openPort(String portName, String appName) {
             return null;
         }
 
+        @Override
         public void configure() {
         }
 
+        @Override
         public String[] validBaudRates() {
             return null;
         }
@@ -116,16 +115,19 @@ public class SerialTrafficControllerTest extends TestCase {
         }
 
         // returns the InputStream from the port
+        @Override
         public DataInputStream getInputStream() {
             return istream;
         }
 
         // returns the outputStream to the port
+        @Override
         public DataOutputStream getOutputStream() {
             return ostream;
         }
 
         // check that this object is ready to operate
+        @Override
         public boolean status() {
             return true;
         }
@@ -136,32 +138,20 @@ public class SerialTrafficControllerTest extends TestCase {
     static DataOutputStream tistream; // tests write to this
     static DataInputStream istream;  // so the traffic controller can read from this
 
-    // from here down is testing infrastructure
-    public SerialTrafficControllerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SerialTrafficControllerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SerialTrafficControllerTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
+    @Override
+    @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+        tc = new SerialTrafficController();
     }
 
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @Override
+    @After
+    public void tearDown() {
+        rcvdReply = null;
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTrafficControllerTest.class);
 
 }

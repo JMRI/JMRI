@@ -164,10 +164,14 @@
         <decVal/>
         <label>KlSlow</label>
       </variable>
-	  <variable CV="200" default="0" item="Sound Setting 40">
-		<decVal max="255"/>
-		<label>DCC Throttle Magnitude Increase</label>
-	  </variable>
+      <variable item="Global lighting option 2" CV="159" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>L1/Headlight Power Up State</label>
+      </variable>
+      <variable CV="200" default="0" item="Sound Setting 40">
+        <decVal max="255"/>
+        <label>DCC Throttle Magnitude Increase</label>
+      </variable>
       <variable item="Aux Select for DCMaster" CV="222" default="0">
         <enumVal>
           <enumChoice value="0">
@@ -285,6 +289,10 @@
       <variable item="Smoke Unit Idle Heater Power" CV="237" default="50">
         <decVal max="110"/>
         <label>Smoke Unit Idle Heater Power</label>
+      </variable>
+      <variable item="Broadcast Stop Packet Count" CV="244" default="0">
+        <decVal/>
+        <label>Broadcast Stop Packet Count</label>
       </variable>
     </variables>
     <resets>

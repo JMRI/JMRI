@@ -10,12 +10,12 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An icon to display a status of a light.
- * <P>
+ * <p>
  * A click on the icon will command a state change. Specifically, it will set
  * the state to the opposite (THROWN vs CLOSED) of the current state.
- * <P>
- * The default icons are for a left-handed turnout, facing point for east-bound
- * traffic.
+ * <p>
+ * The default icons show a crossed lamp symbol.
+ * @see Editor#addLightEditor()
  *
  * @author Bob Jacobsen Copyright (c) 2002
  */
@@ -23,8 +23,8 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
 
     public LightIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
-        super(new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
-                "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif"), editor);
+        super(new NamedIcon("resources/icons/smallschematics/lights/cross-on.png",
+                "resources/icons/smallschematics/lights/cross-off.png"), editor);
         _control = true;
         displayState(lightState());
         setPopupUtility(null);
@@ -79,13 +79,13 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
     }
 
     // display icons
-    String offLName = "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif";
+    String offLName = "resources/icons/smallschematics/lights/cross-on.png";
     NamedIcon off = new NamedIcon(offLName, offLName);
-    String onLName = "resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif";
+    String onLName = "resources/icons/smallschematics/lights/cross-off.png";
     NamedIcon on = new NamedIcon(onLName, onLName);
-    String inconsistentLName = "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif";
+    String inconsistentLName = "resources/icons/smallschematics/lights/cross-inconsistent.png";
     NamedIcon inconsistent = new NamedIcon(inconsistentLName, inconsistentLName);
-    String unknownLName = "resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif";
+    String unknownLName = "resources/icons/smallschematics/lights/cross-unknown.png";
     NamedIcon unknown = new NamedIcon(unknownLName, unknownLName);
 
     public NamedIcon getOffIcon() {
@@ -124,6 +124,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         displayState(lightState());
     }
 
+    @Override
     public int maxHeight() {
         return Math.max(
                 Math.max((off != null) ? off.getIconHeight() : 0,
@@ -132,6 +133,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         );
     }
 
+    @Override
     public int maxWidth() {
         return Math.max(
                 Math.max((off != null) ? off.getIconWidth() : 0,
@@ -156,6 +158,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
     }
 
     // update icon as state of light changes
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("property change: " + getNameString() + " " + e.getPropertyName() + " is now "
@@ -163,11 +166,12 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         }
 
         if (e.getPropertyName().equals("KnownState")) {
-            int now = ((Integer) e.getNewValue()).intValue();
+            int now = ((Integer) e.getNewValue());
             displayState(now);
         }
     }
 
+    @Override
     public String getNameString() {
         String name;
         if (light == null) {
@@ -180,9 +184,10 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         return name;
     }
 
-    /**
-     * ****** popup AbstractAction.actionPerformed method overrides ********
-     */
+    //
+    // ****** popup AbstractAction.actionPerformed method overrides ********
+    //
+    @Override
     protected void rotateOrthogonal() {
         off.setRotation(on.getRotation() + 1, this);
         on.setRotation(off.getRotation() + 1, this);
@@ -193,6 +198,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         repaint();
     }
 
+    @Override
     public void setScale(double s) {
         off.scale(s, this);
         on.scale(s, this);
@@ -201,6 +207,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         displayState(lightState());
     }
 
+    @Override
     public void rotate(int deg) {
         off.rotate(deg, this);
         on.rotate(deg, this);
@@ -209,27 +216,26 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         displayState(lightState());
     }
 
+    @Override
     protected void edit() {
         makeIconEditorFrame(this, "Light", true, null);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.lightPickModelInstance());
-        _iconEditor.setIcon(3, "LightStateOff", off);
-        _iconEditor.setIcon(2, "LightStateOn", on);
+        _iconEditor.setIcon(3, "StateOff", off);
+        _iconEditor.setIcon(2, "StateOn", on);
         _iconEditor.setIcon(0, "BeanStateInconsistent", inconsistent);
         _iconEditor.setIcon(1, "BeanStateUnknown", unknown);
         _iconEditor.makeIconPanel(false);
 
-        ActionListener addIconAction = new ActionListener() {
-            public void actionPerformed(ActionEvent a) {
-                updateLight();
-            }
+        ActionListener addIconAction = (ActionEvent a) -> {
+            updateLight();
         };
         _iconEditor.complete(addIconAction, true, true, true);
         _iconEditor.setSelection(light);
     }
 
     void updateLight() {
-        setOffIcon(_iconEditor.getIcon("LightStateOff"));
-        setOnIcon(_iconEditor.getIcon("LightStateOn"));
+        setOffIcon(_iconEditor.getIcon("StateOff"));
+        setOnIcon(_iconEditor.getIcon("StateOn"));
         setUnknownIcon(_iconEditor.getIcon("BeanStateUnknown"));
         setInconsistentIcon(_iconEditor.getIcon("BeanStateInconsistent"));
         setLight((Light) _iconEditor.getTableSelection());
@@ -239,14 +245,16 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         invalidate();
     }
 
-    /**
-     * *********** end popup action methods ***************
-     */
+    //
+    // *********** end popup action methods ***************
+    //
     /**
      * Drive the current state of the display from the state of the light.
+     *
+     * @param state the new state
      */
     void displayState(int state) {
-        log.debug(getNameString() + " displayState " + state);
+        log.debug("{} displayState {}", getNameString(), state);
         updateSize();
         switch (state) {
             case Light.OFF:
@@ -274,15 +282,14 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
                 }
                 break;
         }
-
-        return;
     }
 
     /**
-     * Change the light when the icon is clicked
+     * Change the light when the icon is clicked.
      *
+     * @param e the mouse click
      */
-    // Was mouseClicked, changed to mouseRelease to workaround touch screen driver limitation
+    @Override
     public void doMouseClicked(java.awt.event.MouseEvent e) {
         if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {
             return;
@@ -304,6 +311,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         }
     }
 
+    @Override
     public void dispose() {
         if (light != null) {
             light.removePropertyChangeListener(this);
@@ -318,5 +326,5 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LightIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LightIcon.class);
 }

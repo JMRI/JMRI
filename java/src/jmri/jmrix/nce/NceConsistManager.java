@@ -1,16 +1,14 @@
 /**
- * NceConsistManager.java
- *
- * Description: Consist Manager for use with the NceConsist class for the
- * consists it builds
+ * Consist Manager for use with the NceConsist class for the
+ * consists it builds.
  *
  * @author Paul Bender Copyright (C) 2011
  * @author Daniel Boudreau Copyright (C) 2012
- * @version $Revision: 17977 $
  */
 package jmri.jmrix.nce;
 
 import jmri.Consist;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.implementation.AbstractConsistManager;
 import jmri.jmrix.ConnectionStatus;
@@ -27,7 +25,8 @@ public class NceConsistManager extends AbstractConsistManager {
         memo = m;
     }
 
-    /* request an update from the layout, loading
+    /**
+     * Request an update from the layout, loading
      * Consists from the command station.
      */
     @Override
@@ -60,25 +59,28 @@ public class NceConsistManager extends AbstractConsistManager {
      * Add a new NceConsist with the given address to consistTable/consistList
      */
     @Override
-    public Consist addConsist(DccLocoAddress locoAddress) {
+    public Consist addConsist(LocoAddress locoAddress) {
+        if (! (locoAddress instanceof DccLocoAddress)) {
+            throw new IllegalArgumentException("locoAddress is not a DccLocoAddress object");
+        }
         if (consistTable.containsKey(locoAddress)) // no duplicates allowed.
         {
             return consistTable.get(locoAddress);
         }
         log.debug("Add consist, address " + locoAddress);
-        NceConsist consist = new NceConsist(locoAddress, memo);
+        NceConsist consist = new NceConsist((DccLocoAddress) locoAddress, memo);
         consistTable.put(locoAddress, consist);
         return consist;
     }
 
     private void addConsist(NceConsist consist) {
         log.debug("Add consist " + consist.getConsistAddress());
-        //delConsist(consist.getConsistAddress());	// remove consist if one exists
+        //delConsist(consist.getConsistAddress()); // remove consist if one exists
         consistTable.put(consist.getConsistAddress(), consist);
     }
 
     @Override
-    public Consist getConsist(DccLocoAddress locoAddress) {
+    public Consist getConsist(LocoAddress locoAddress) {
         log.debug("Requesting NCE consist " + locoAddress);
         NceConsist consist = (NceConsist) super.getConsist(locoAddress);
         // Checking the CS memory each time a consist is requested creates lots of NCE messages!
@@ -88,7 +90,7 @@ public class NceConsistManager extends AbstractConsistManager {
 
     // remove the old Consist
     @Override
-    public void delConsist(DccLocoAddress locoAddress) {
+    public void delConsist(LocoAddress locoAddress) {
         NceConsist consist = (NceConsist) getConsist(locoAddress);
         // kill this consist
         consist.dispose();
@@ -123,7 +125,7 @@ public class NceConsistManager extends AbstractConsistManager {
                 while (!ConnectionStatus.instance().getConnectionState(memo.getNceTrafficController().getPortName()).equals(ConnectionStatus.CONNECTION_UP)) {
                     log.debug("Waiting for NCE connected");
                     try {
-                        wait(2000);	// wait 2 seconds and try again
+                        wait(2000); // wait 2 seconds and try again
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt(); // retain if needed later
                     }
@@ -139,7 +141,7 @@ public class NceConsistManager extends AbstractConsistManager {
                     synchronized (this) {
                         try {
                             //log.debug("Waiting for consist "+_consistNum+" to be valid");
-                            wait(100);	// wait 100 milliseconds and check again
+                            wait(100); // wait 100 milliseconds and check again
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
                         }
@@ -154,5 +156,7 @@ public class NceConsistManager extends AbstractConsistManager {
             notifyConsistListChanged();
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(NceConsistManager.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(NceConsistManager.class);
+
 }

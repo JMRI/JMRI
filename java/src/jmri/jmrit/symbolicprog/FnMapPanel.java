@@ -91,8 +91,8 @@ import org.slf4j.LoggerFactory;
  * </dd>
  * </dl>
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Dave Heap Copyright (C) 2016
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Dave Heap Copyright (C) 2016
  */
 public class FnMapPanel extends JPanel {
 
@@ -319,7 +319,7 @@ public class FnMapPanel extends JPanel {
         Attribute a = model.getAttribute("numOuts");
         try {
             if (a != null) {
-                numOut = Integer.valueOf(a.getValue()).intValue();
+                numOut = Integer.parseInt(a.getValue());
             }
         } catch (Exception e) {
             log.error("error handling decoder's numOuts value");
@@ -327,7 +327,7 @@ public class FnMapPanel extends JPanel {
         a = model.getAttribute("numFns");
         try {
             if (a != null) {
-                numFn = Integer.valueOf(a.getValue()).intValue();
+                numFn = Integer.parseInt(a.getValue());
             }
         } catch (Exception e) {
             log.error("error handling decoder's numFns value");
@@ -345,7 +345,7 @@ public class FnMapPanel extends JPanel {
             String name = e.getAttribute("name").getValue();
             // if this a number, or a character name?
             try {
-                int outputNum = Integer.valueOf(name).intValue();
+                int outputNum = Integer.parseInt(name);
                 // yes, since it was converted.  All we do with
                 // these are store the label index (if it exists)
                 String at = LocaleSelector.getAttribute(e, "label");
@@ -394,5 +394,5 @@ public class FnMapPanel extends JPanel {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(FnMapPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FnMapPanel.class);
 }

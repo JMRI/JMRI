@@ -29,7 +29,7 @@ import jmri.jmrit.catalog.CatalogTreeNode;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * </P>
  *
- * @author	Pete Cressman Copyright (C) 2009
+ * @author Pete Cressman Copyright (C) 2009
  *
  */
 public interface CatalogTree extends NamedBean, TreeModel {
@@ -65,5 +65,6 @@ public interface CatalogTree extends NamedBean, TreeModel {
      * Get the root element of the tree as a jmri.CatalogTreeNode object.
      * (Instead of Object, as parent swing.TreeModel provides)
      */
+    @Override
     public CatalogTreeNode getRoot();
 }

@@ -1,10 +1,10 @@
-// PrintTrainsAction.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2009, 2014
- * @version $Revision$
  */
 public class PrintTrainsAction extends PrintTrainAction {
 
@@ -31,23 +30,27 @@ public class PrintTrainsAction extends PrintTrainAction {
     static final String TAB = "\t"; // NOI18N
     static final char FORM_FEED = '\f'; // NOI18N
 
-    TrainManager trainManager = TrainManager.instance();
+    TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
     TrainsTableFrame trainsTableFrame;
 
     public static final int MAX_NAME_LENGTH = Control.max_len_string_train_name - 10;
 
-    public PrintTrainsAction(String actionName, Frame mframe, boolean preview, TrainsTableFrame frame) {
-        super(actionName, mframe, preview);
+    public PrintTrainsAction(String actionName, boolean preview, TrainsTableFrame frame) {
+        super(actionName, preview);
         trainsTableFrame = frame;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        printTrains();
+    }
+    
+    public void printTrains() {
 
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleTrainsTable"), Control.reportFontSize, .5, .5, .5, .5, isPreview);
+            writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleTrainsTable"), Control.reportFontSize, .5, .5, .5, .5, isPreview);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;
@@ -88,23 +91,18 @@ public class PrintTrainsAction extends PrintTrainAction {
             String s = Bundle.getMessage("Name") + TAB + TAB + Bundle.getMessage("Description") + TAB
                     + Bundle.getMessage("Route") + TAB + TAB + Bundle.getMessage("Departs") + TAB + TAB
                     + Bundle.getMessage("Time") + "  " + Bundle.getMessage("Terminates") + TAB + NEW_LINE;
-            writer.write(s, 0, s.length());
+            writer.write(s);
             for (Train train : trains) {
                 if (train.isBuildEnabled() || trainsTableFrame.showAllBox.isSelected()) {
-                    String name = train.getName();
-                    name = truncate(name);
-                    String desc = train.getDescription();
-                    desc = truncate(desc);
-                    String route = train.getTrainRouteName();
-                    route = truncate(route);
-                    String departs = train.getTrainDepartsName();
-                    departs = truncate(departs);
-                    String terminates = train.getTrainTerminatesName();
-                    terminates = truncate(terminates);
-
+                    String name = truncate(train.getName());
+                    String desc = truncate(train.getDescription());
+                    String route = truncate(train.getTrainRouteName());
+                    String departs = truncate(train.getTrainDepartsName());        
+                    String terminates = truncate(train.getTrainTerminatesName());
+                    
                     s = name + " " + desc + " " + route + " " + departs + " " + train.getDepartureTime() + " "
                             + terminates + NEW_LINE;
-                    writer.write(s, 0, s.length());
+                    writer.write(s);
                 }
             }
 
@@ -126,5 +124,5 @@ public class PrintTrainsAction extends PrintTrainAction {
         return buf.toString();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintTrainsAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PrintTrainsAction.class);
 }

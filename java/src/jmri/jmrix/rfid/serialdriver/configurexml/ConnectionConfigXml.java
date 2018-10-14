@@ -44,5 +44,5 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         this.register(new ConnectionConfig(adapter));
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class);
 }

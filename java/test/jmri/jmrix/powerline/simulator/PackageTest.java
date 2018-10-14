@@ -9,7 +9,17 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
-   jmri.jmrix.powerline.simulator.configurexml.PackageTest.class
+   jmri.jmrix.powerline.simulator.configurexml.PackageTest.class,
+   SimulatorAdapterTest.class,
+   SpecificInsteonLightTest.class,
+   SpecificX10LightTest.class,
+   SpecificLightManagerTest.class,
+   SpecificSensorManagerTest.class,
+   SpecificMessageTest.class,
+   SpecificReplyTest.class,
+   SpecificSystemConnectionMemoTest.class,
+   SpecificTrafficControllerTest.class,
+   ConstantsTest.class
 })
 /**
  * Tests for the jmri.jmrix.powerline.cp290 package.
@@ -31,6 +41,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

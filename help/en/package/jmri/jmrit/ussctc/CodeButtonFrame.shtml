@@ -7,9 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Code Button Help</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help OS Indicator">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -47,7 +45,8 @@
       </dl>
 
       <p>This is the help/jmri/jmrit/ussctc/CodeButtonFrame help
-      page <!--#include virtual="/Footer" --></p>
+      page</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

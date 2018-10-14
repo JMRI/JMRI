@@ -1,0 +1,1678 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2018 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- Function Map pane for Märklin mLD/3 and mSD/3 decoders                 -->
+<!-- 					Alain Le Marchand (2018-03-31)																-->
+
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Function Map</name>
+  <name xml:lang="ca">Mapejat de funcions</name>
+  <name xml:lang="cs">Přiřazení funkcí</name>
+  <name xml:lang="da">Funktions Indstillinger</name>
+  <name xml:lang="de">Funktionszuordnung</name>
+  <name xml:lang="fr">Carte des Fonctions</name>
+  <name xml:lang="it">Mappa Funzioni</name>
+  <name xml:lang="nl">Functietoewijzing</name>
+  <column>
+		<row>
+    <column>
+			<label>
+				<text>&lt;html&gt;&lt;i&gt;Important:&lt;/i&gt;&lt;br&gt;
+              Read the full pane &lt;i&gt;before AND after&lt;/i&gt; &lt;br&gt;
+              using this pane.&lt;br&gt;
+              There will not be automatic refresh &lt;br&gt;
+              after you have written a new value.&lt;/html&gt;</text>
+				<text xml:lang="de">&lt;html&gt;&lt;i&gt;Wichtig:&lt;/i&gt;&lt;br&gt;
+              Lesen Sie die vollständige Seite &lt;i&gt;vor UND nachdem&lt;/i&gt; &lt;br&gt;
+              Sie diese Seite verwendet haben.&lt;br&gt;
+              Es wird keine automatische Aktualisierung geben,&lt;br&gt;
+              nachdem Sie einen neuen Wert geschrieben haben.&lt;/html&gt;</text>
+				<text xml:lang="fr">&lt;html&gt;&lt;i&gt;Important:&lt;/i&gt;&lt;br&gt;
+              Lisez l'onglet entier &lt;i&gt;avant ET après&lt;/i&gt; &lt;br&gt;
+              avoir utilisé cet onglet.&lt;br&gt;
+              Il n'y aura pas d'actualisation automatique,&lt;br&gt;
+              après l'écriture de nouvelles valeurs.&lt;/html&gt;</text>
+			</label>
+			<label><text>  </text></label>
+			<display item="Read First Line"/>
+    </column>
+		<label><text>     </text></label>
+		<separator/>
+		<label><text>     </text></label>
+		<column>
+			<label>
+				<text>&lt;html&gt;&lt;i&gt;Note: Please read the manual before using this pane.&lt;/i&gt;&lt;/html&gt;</text>
+				<text xml:lang="de">&lt;html&gt;&lt;i&gt;Hinweis: Bitte lesen Sie das Handbuch vor der Verwendung diese Seite.&lt;/i&gt;&lt;/html&gt;</text>
+				<text xml:lang="fr">&lt;html&gt;&lt;i&gt;Conseil: Merci de lire le manuel avant d'utiliser cet onglet.&lt;/i&gt;&lt;/html&gt;</text>
+			</label>
+			<label><text>  </text></label>
+			<label>
+				<text>&lt;html&gt;The function mapping is very far-reaching and complex.&lt;br&gt;
+                Each individual mapping is made via three settings. It specifies:&lt;br&gt;
+               - How is the function triggered.&lt;br&gt;
+               - Possible conditions applying to this function.&lt;br&gt;
+               - Which function is triggered.&lt;br&gt;
+               This information, once set, is stored together in a "line".&lt;br&gt;
+               A total of 80 lines (0-79) can be stored.
+        &lt;/html&gt;</text>
+				<text xml:lang="de">&lt;html&gt;Das Funktonsmapping ist sehr weitreichend und komplex.&lt;br&gt;
+              Jedes einzelne Mapping wird über drei Einstellungen vorgenommen. Dabei wird festgelegt:&lt;br&gt;
+              - Wie wird die Funktion ausgelöst&lt;br&gt;
+              - mögliche Bedingungen gelten für diese Funktion&lt;br&gt;
+              - Welche Funktion wird ausgelöst&lt;br&gt;
+              Diese Informationen werden, nachdem sie eingestellt wurden, gemeinsam in einer "Zeile" gespeichert.&lt;br&gt;
+              Insgesammt können 80 Zeilen (0–79) gespeichert werden.
+        &lt;/html&gt;</text>
+        <text xml:lang="fr">&lt;html&gt;Le mappage des fonctions est d’une grande portée et complexe.&lt;br&gt;
+              Chaque mappage se fait individuellement via trois paramètres.&lt;br&gt;
+              Ils déterminent:&lt;br&gt;
+              - comment est déclenchée la fonction &lt;br&gt;
+              - les conditions applicables à cette fonction &lt;br&gt;
+              - quelle fonction est déclenchée&lt;br&gt;
+              Après avoir été saisies, ces informations sont enregistrées ensemble dans une «ligne».&lt;br&gt;
+              Au total 80 lignes (0-79) peuvent être stockées.
+        &lt;/html&gt;</text>
+			</label>
+			<label><text> </text></label>
+		</column>
+		</row>
+		<separator/>
+		<row>
+		<grid ipadx="2" ipady="5" weightx="1">
+			<griditem gridx="0" gridy="0" anchor="LINE_START">
+				<column>
+					<label>
+						<text>      Line</text>
+						<text xml:lang="de">            Zeile</text>
+						<text xml:lang="fr">        Ligne</text>
+					</label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+        <row>
+        	<label>
+						<text>Write </text>
+						<text xml:lang="de">Schreiben </text>
+						<text xml:lang="fr">Ecrire </text>
+					</label>
+					<display item="Write Line" label=""/>
+        </row>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+        <column>
+        	<label><text>               </text></label>
+          <separator/>
+        	<label><text>               </text></label>
+        </column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>0     </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>1     </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>2     </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>3     </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>4     </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>5     </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>6     </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>7     </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>8     </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>9     </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>10    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>11    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>12    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>13    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>14    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>15    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>16    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>17    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>18    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>19    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>20    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>21    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>22    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>23    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>24    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>25    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>26    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>27    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>28    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>29    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>30    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>31    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>32    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>33    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>34    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>35    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>36    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>37    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>38    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>39    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>40    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>41    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>42    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>43    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>44    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>45    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>46    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>47    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>48    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>49    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>50    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>51    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>52    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>53    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>54    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>55    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>56    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>57    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>58    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>59    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>60    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>61    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>62    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>63    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>64    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>65    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>66    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>67    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>68    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>69    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>70    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>71    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>72    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>73    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>74    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>75    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>76    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>77    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>78    </text></label>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="LINE_END">
+        	<label><text>79    </text></label>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label>
+            <text>Trigger</text>
+            <text xml:lang="de">Auslöser</text>
+            <text xml:lang="fr">Déclencheur</text>
+					</label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+        <column>
+        	<label><text>               </text></label>
+          <separator/>
+        	<label><text>               </text></label>
+        </column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 0" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 1" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 2" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 3" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 4" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 5" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 6" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 7" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 8" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 9" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 10" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 11" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 12" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 13" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 14" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 15" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 16" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 17" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 18" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 19" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 20" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 21" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 22" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 23" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 24" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 25" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 26" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 27" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 28" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 29" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 30" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 31" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 32" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 33" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 34" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 35" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 36" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 37" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 38" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 39" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 40" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 41" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 42" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 43" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 44" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 45" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 46" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 47" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 48" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 49" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 50" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 51" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 52" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 53" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 54" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 55" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 56" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 57" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 58" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 59" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 60" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 61" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 62" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 63" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 64" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 65" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 66" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 67" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 68" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 69" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 70" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 71" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 72" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 73" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 74" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 75" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 76" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 77" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 78" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger 79" label=""/>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label>
+            <text>Condition</text>
+            <text xml:lang="de">Bedingung</text>
+            <text xml:lang="fr">Condition</text>
+					</label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+        <column>
+        	<label><text>               </text></label>
+          <separator/>
+        	<label><text>               </text></label>
+        </column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 0" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 1" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 2" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 3" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 4" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 5" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 6" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 7" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 8" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 9" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 10" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 11" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 12" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 13" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 14" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 15" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 16" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 17" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 18" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 19" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 20" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 21" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 22" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 23" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 24" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 25" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 26" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 27" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 28" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 29" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 30" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 31" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 32" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 33" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 34" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 35" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 36" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 37" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 38" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 39" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 40" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 41" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 42" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 43" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 44" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 45" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 46" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 47" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 48" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 49" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 50" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 51" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 52" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 53" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 54" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 55" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 56" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 57" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 58" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 59" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 60" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 61" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 62" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 63" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 64" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 65" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 66" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 67" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 68" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 69" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 70" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 71" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 72" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 73" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 74" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 75" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 76" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 77" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 78" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Condition 79" label=""/>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label>
+            <text>Direction</text>
+            <text xml:lang="de">Richtung</text>
+            <text xml:lang="fr">Direction</text>
+					</label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+        <column>
+        	<label><text>               </text></label>
+          <separator/>
+        	<label><text>               </text></label>
+        </column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 0" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 1" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 2" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 3" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 4" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 5" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 6" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 7" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 8" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 9" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 10" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 11" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 12" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 13" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 14" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 15" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 16" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 17" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 18" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 19" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 20" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 21" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 22" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 23" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 24" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 25" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 26" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 27" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 28" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 29" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 30" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 31" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 32" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 33" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 34" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 35" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 36" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 37" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 38" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 39" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 40" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 41" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 42" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 43" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 44" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 45" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 46" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 47" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 48" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 49" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 50" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 51" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 52" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 53" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 54" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 55" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 56" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 57" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 58" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 59" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 60" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 61" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 62" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 63" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 64" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 65" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 66" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 67" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 68" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 69" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 70" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 71" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 72" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 73" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 74" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 75" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 76" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 77" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 78" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Direction 79" label=""/>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label>
+            <text>Movement</text>
+            <text xml:lang="de">Bewegung</text>
+            <text xml:lang="fr">Mouvement</text>
+					</label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+        <column>
+        	<label><text>               </text></label>
+          <separator/>
+        	<label><text>               </text></label>
+        </column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 0" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 1" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 2" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 3" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 4" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 5" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 6" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 7" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 8" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 9" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 10" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 11" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 12" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 13" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 14" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 15" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 16" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 17" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 18" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 19" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 20" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 21" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 22" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 23" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 24" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 25" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 26" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 27" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 28" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 29" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 30" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 31" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 32" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 33" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 34" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 35" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 36" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 37" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 38" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 39" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 40" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 41" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 42" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 43" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 44" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 45" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 46" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 47" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 48" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 49" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 50" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 51" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 52" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 53" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 54" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 55" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 56" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 57" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 58" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 59" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 60" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 61" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 62" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 63" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 64" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 65" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 66" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 67" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 68" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 69" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 70" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 71" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 72" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 73" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 74" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 75" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 76" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 77" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 78" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Trigger Movement 79" label=""/>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="NEXT" gridy="0" anchor="PAGE_START">
+				<column>
+					<label>
+            <text>Function</text>
+            <text xml:lang="de">Funktion</text>
+            <text xml:lang="fr">Fonction</text>
+					</label>
+					<label><text>    </text></label>
+				</column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+        <column>
+        	<label><text>               </text></label>
+          <separator/>
+        	<label><text>               </text></label>
+        </column>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 0" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 1" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 2" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 3" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 4" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 5" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 6" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 7" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 8" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 9" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 10" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 11" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 12" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 13" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 14" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 15" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 16" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 17" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 18" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 19" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 20" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 21" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 22" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 23" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 24" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 25" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 26" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 27" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 28" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 29" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 30" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 31" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 32" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 33" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 34" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 35" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 36" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 37" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 38" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 39" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 40" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 41" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 42" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 43" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 44" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 45" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 46" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 47" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 48" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 49" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 50" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 51" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 52" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 53" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 54" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 55" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 56" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 57" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 58" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 59" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 60" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 61" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 62" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 63" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 64" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 65" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 66" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 67" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 68" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 69" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 70" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 71" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 72" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 73" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 74" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 75" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 76" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 77" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 78" label=""/>
+			</griditem>
+			<griditem gridx="CURRENT" gridy="NEXT" anchor="CENTER">
+					<display item="Function Mapping 79" label=""/>
+			</griditem>
+		</grid>
+		</row>
+  </column>
+</pane>

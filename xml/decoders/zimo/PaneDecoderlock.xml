@@ -11,4 +11,5 @@
   </column>
   <name>Decoder Lock</name>
   <name xml:lang="it">Blocco decoder</name>
+  <name xml:lang="cs">Zámek dekodéru</name>
 </pane>

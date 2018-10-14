@@ -1,4 +1,3 @@
-//ChangeTracksTypeAction.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Dimension;
@@ -25,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * types are Spurs, Yards, Interchanges and Staging.
  *
  * @author Daniel Boudreau Copyright (C) 2011
- * @version $Revision: 18559 $
+ * 
  */
 class ChangeTracksFrame extends OperationsFrame {
 
@@ -36,7 +35,7 @@ class ChangeTracksFrame extends OperationsFrame {
     JRadioButton stagingRadioButton = new JRadioButton(Bundle.getMessage("Staging"));
 
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     private LocationEditFrame _lef;
     private Location _location;
@@ -121,5 +120,5 @@ class ChangeTracksFrame extends OperationsFrame {
         dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ChangeTracksFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ChangeTracksFrame.class);
 }

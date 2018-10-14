@@ -12,8 +12,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
    SprogCSSerialDriverAdapterTest.class,
    ConnectionConfigTest.class,
-   jmri.jmrix.sprog.sprogCS.configurexml.PackageTest.class
-
+   jmri.jmrix.sprog.sprogCS.configurexml.PackageTest.class,
+   BundleTest.class
 })
 public class PackageTest {
 }

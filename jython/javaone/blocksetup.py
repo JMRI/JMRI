@@ -2,9 +2,6 @@
 #
 # Author: Bob Jacobsen, copyright 2006
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 
 # create the blocks themselves
 IB150 = jmri.Block("IB150")

@@ -5,13 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * XNetInterfaceScaffold.java
- *
- * Description:	Test scaffold implementation of XNetInterface
+ * Test scaffold implementation of XNetInterface
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2006
- * @version	$Revision$
- *
+  *
  * Use an object of this type as a XNetTrafficController in tests
  */
 public class XNetInterfaceScaffold extends XNetTrafficController {
@@ -21,15 +18,17 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
     }
 
     // override some XNetTrafficController methods for test purposes
+    @Override
     public boolean status() {
         return true;
     }
 
     /**
-     * record XNet messages sent, provide access for making sure they are OK
+     * Record XNet messages sent, provide access for making sure they are OK.
      */
     public Vector<XNetMessage> outbound = new Vector<XNetMessage>();  // public OK here, so long as this is a test class
 
+    @Override
     public void sendXNetMessage(XNetMessage m, XNetListener replyTo) {
         if (log.isDebugEnabled()) {
             log.debug("sendXNetMessage [" + m + "]");
@@ -38,6 +37,7 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
         outbound.addElement(m);
     }
 
+    @Override
     public void sendHighPriorityXNetMessage(XNetMessage m, XNetListener replyTo) {
         if (log.isDebugEnabled()) {
             log.debug("sendXNetMessage [" + m + "]");
@@ -47,8 +47,9 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
     }
 
     // test control member functions
+
     /**
-     * forward a message to the listeners, e.g. test receipt
+     * Forward a message to the listeners, e.g. test receipt.
      */
     public void sendTestMessage(XNetReply m) {
         // forward a test message to XNetListeners
@@ -60,30 +61,44 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
     }
 
     /*
-     * Check number of listeners, used for testing dispose()
+     * Check number of listeners, used for testing dispose().
      */
     public int numListeners() {
         return cmdListeners.size();
     }
 
     /**
-     * Avoid error message, normal in parent
+     * Avoid error message, normal in parent.
      */
+    @Override
     protected void connectionWarn() {
     }
 
     /**
-     * Avoid error message, normal in parent
+     * Avoid error message, normal in parent.
      */
+    @Override
     protected void portWarn(Exception e) {
     }
 
+    @Override
     public void receiveLoop() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetInterfaceScaffold.class.getName());
+
+
+    /**
+     * This is normal, don't log at ERROR level
+     */
+    @Override 
+    protected void reportReceiveLoopException(Exception e) {
+        log.debug("run: Exception: {} in {} (considered normal in testing)", e.toString(), this.getClass().toString(), e);
+        jmri.jmrix.ConnectionStatus.instance().setConnectionState(controller.getUserName(), controller.getCurrentPortName(), jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
+        if (controller instanceof jmri.jmrix.AbstractNetworkPortController) {
+            portWarnTCP(e);
+        }
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(XNetInterfaceScaffold.class);
 
 }
-
-
-/* @(#)LocoNetInterfaceScaffold.java */

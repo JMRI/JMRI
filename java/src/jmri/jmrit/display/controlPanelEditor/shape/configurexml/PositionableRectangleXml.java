@@ -7,7 +7,7 @@ import org.jdom2.Element;
 /**
  * Handle configuration for display.PositionableShape objects
  *
- * @author Pete Cressman Copyright: Copyright (c) 2012
+ * @author Pete Cressman Copyright (c) 2012
  */
 public class PositionableRectangleXml extends PositionableShapeXml {
 
@@ -20,6 +20,7 @@ public class PositionableRectangleXml extends PositionableShapeXml {
      * @param o Object to store, of type PositionableShape
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         PositionableRectangle p = (PositionableRectangle) o;
 
@@ -44,6 +45,7 @@ public class PositionableRectangleXml extends PositionableShapeXml {
      * @param element Top level Element to unpack.
      * @param o       Editor as an Object
      */
+    @Override
     public void load(Element element, Object o) {
         // create the objects
         Editor ed = (Editor) o;

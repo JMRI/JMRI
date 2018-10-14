@@ -50,6 +50,8 @@
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
+  <filehistory>
+  </filehistory>
   <!--Written by JMRI version 20140805-1643-jake on Tue Aug 05 12:46:47 EDT 2014 $Id: XmlFile.java 26366 2014-06-20 03:34:25Z ken_c $-->
 </layout-config>
 

@@ -3,27 +3,19 @@ package apps.gui3.dp3;
 import java.io.File;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
+import jmri.InstanceManager;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The JMRI application for developing the DecoderPro 3 GUI
- * <BR>
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * </P><P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * </P>
+ * The JMRI application for developing the DecoderPro 3 GUI.
+ * <p>
+ * Inserts DP3 interface elements stored in xml/config/parts/jmri/
+ * that are also used in the web server interface.
  *
- * @author	Bob Jacobsen Copyright 2003, 2004, 2007, 2009, 2010
+ * @author Bob Jacobsen Copyright 2003, 2004, 2007, 2009, 2010
  */
 public class DecoderPro3 extends apps.gui3.Apps3 {
 
@@ -89,18 +81,13 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
      */
     @Override
     protected void displayMainFrame(java.awt.Dimension d) {
-        jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        if (!p.isWindowPositionSaved(mainFrame.getWindowFrameRef())) {
+        jmri.UserPreferencesManager p = InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        if (!p.hasProperties(mainFrame.getWindowFrameRef())) {
             mainFrame.setSize(new java.awt.Dimension(1024, 600));
             mainFrame.setPreferredSize(new java.awt.Dimension(1024, 600));
         }
 
         mainFrame.setVisible(true);
-    }
-
-    @Override
-    protected ResourceBundle getActionModelResourceBundle() {
-        return ResourceBundle.getBundle("apps.gui3.dp3.DecoderPro3ActionListBundle");
     }
 
     // Main entry point
@@ -112,7 +99,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
 
     static public void preInit(String[] args) {
         apps.gui3.Apps3.preInit(applicationName);
-        setConfigFilename("DecoderProConfig3.xml", args);
+        apps.gui3.Apps3.setConfigFilename("DecoderProConfig3.xml", args);
     }
 
     /**
@@ -135,7 +122,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
             @Override
             public void run() {
                 try {
-                    DecoderIndexFile.instance();
+                    InstanceManager.getDefault(DecoderIndexFile.class);
                 } catch (Exception ex) {
                     log.error("Error in trying to initialize decoder index file " + ex.toString());
                 }
@@ -145,5 +132,5 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
         thr.start();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DecoderPro3.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DecoderPro3.class);
 }

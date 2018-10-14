@@ -4,9 +4,6 @@
 # Author: Daniel Boudreau, copyright 2015
 # Part of the JMRI distribution
 #
-# The next line is maintained by CVS, please don't change it
-# $Revision$
-#
 # To use this script you must provide the type names for containers and trailers, and the type names for the flatcars to use. 
 # You must also enter the train name that will service them. The train doesn't have to service the flatcars, this script will
 # do the flatcar assignments based on the container or trailer destinations. Run this script after the train is built.
@@ -62,7 +59,7 @@ class AssignTrailersToCars(jmri.jmrit.automat.AbstractAutomaton):
 
     # first some checking
     # determine if trailer, container, and flatcar names exist
-    carTypes = jmri.jmrit.operations.rollingstock.cars.CarTypes.instance()
+    carTypes = jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarTypes)
     for unitArray in self.units:
         unitName = unitArray[0]
         if (carTypes.containsName(unitName) == False):
@@ -79,7 +76,7 @@ class AssignTrailersToCars(jmri.jmrit.automat.AbstractAutomaton):
             print number, "(" + unitName + ") can be carried by flatcar (" + flatcarName + ") load name (" + flatcarLoadName + ")"
             
     # get the train manager
-    trainManager = jmri.jmrit.operations.trains.TrainManager.instance()   
+    trainManager = jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
     # determine if train exists and is built
     train = trainManager.getTrainByName(self.trainName)
     if train == None:
@@ -90,7 +87,7 @@ class AssignTrailersToCars(jmri.jmrit.automat.AbstractAutomaton):
         return False
     
     # get the car manager
-    carManager = jmri.jmrit.operations.rollingstock.cars.CarManager.instance()
+    carManager = jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarManager)
           
     # get a list of cars from the manager
     carList = carManager.getByTrainDestinationList(train)

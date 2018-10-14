@@ -1,16 +1,16 @@
 package jmri.util;
 
-import static jmri.util.FileUtil.FILE;
 import static jmri.util.FileUtil.HOME;
 import static jmri.util.FileUtil.PREFERENCES;
 import static jmri.util.FileUtil.PROFILE;
 import static jmri.util.FileUtil.PROGRAM;
-import static jmri.util.FileUtil.RESOURCE;
 import static jmri.util.FileUtil.SCRIPTS;
 import static jmri.util.FileUtil.SEPARATOR;
 import static jmri.util.FileUtil.SETTINGS;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import com.sun.jna.platform.win32.KnownFolders;
+import com.sun.jna.platform.win32.Shell32Util;
+import com.sun.jna.platform.win32.ShlObj;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -33,10 +33,18 @@ import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.security.CodeSource;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 import java.util.jar.JarFile;
 import java.util.regex.Matcher;
+import java.util.stream.Collectors;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import jmri.Version;
 import jmri.beans.Bean;
+import jmri.util.FileUtil.Location;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,11 +60,11 @@ import org.slf4j.LoggerFactory;
 public class FileUtilSupport extends Bean {
 
     /* User's home directory */
-    private static final String homePath = System.getProperty("user.home") + File.separator; // NOI18N
-    /*
-     * Settable directories
-     */
- /* JMRI program path, defaults to directory JMRI is executed from */
+    private static final String HOME_PATH = System.getProperty("user.home") + File.separator; // NOI18N
+    //
+    // Settable directories
+    //
+    /* JMRI program path, defaults to directory JMRI is executed from */
     private String programPath = null;
     /* path to jmri.jar */
     private String jarPath = null;
@@ -66,6 +74,7 @@ public class FileUtilSupport extends Bean {
     private String userFilesPath = null;
     /* path to the current profile */
     private String profilePath = null;
+
     // initialize logging
     private static final Logger log = LoggerFactory.getLogger(FileUtilSupport.class);
     // default instance
@@ -83,7 +92,9 @@ public class FileUtilSupport extends Bean {
      * @see #getURI(java.lang.String)
      * @see #getURL(java.lang.String)
      */
-    public File getFile(String path) throws FileNotFoundException {
+    @Nonnull
+    @CheckReturnValue
+    public File getFile(@Nonnull String path) throws FileNotFoundException {
         try {
             return new File(this.pathFromPortablePath(path));
         } catch (NullPointerException ex) {
@@ -102,7 +113,9 @@ public class FileUtilSupport extends Bean {
      * @see #getFile(java.lang.String)
      * @see #getURL(java.lang.String)
      */
-    public URI getURI(String path) throws FileNotFoundException {
+    @Nonnull
+    @CheckReturnValue
+    public URI getURI(@Nonnull String path) throws FileNotFoundException {
         return this.getFile(path).toURI();
     }
 
@@ -117,7 +130,9 @@ public class FileUtilSupport extends Bean {
      * @see #getFile(java.lang.String)
      * @see #getURI(java.lang.String)
      */
-    public URL getURL(String path) throws FileNotFoundException {
+    @Nonnull
+    @CheckReturnValue
+    public URL getURL(@Nonnull String path) throws FileNotFoundException {
         try {
             return this.getURI(path).toURL();
         } catch (MalformedURLException ex) {
@@ -133,16 +148,137 @@ public class FileUtilSupport extends Bean {
      * @param uri The URI to convert.
      * @return URL or null if any errors exist.
      */
-    public URL getURL(URI uri) {
+    @CheckForNull
+    @CheckReturnValue
+    public URL getURL(@Nonnull URI uri) {
         try {
             return uri.toURL();
         } catch (MalformedURLException | IllegalArgumentException ex) {
-            log.warn("Unable to get URL from {}", uri.toString());
+            log.warn("Unable to get URL from {}", uri);
             return null;
         } catch (NullPointerException ex) {
             log.warn("Unable to get URL from null object.", ex);
             return null;
         }
+    }
+
+    /**
+     * Find all files matching the given name under the given root directory
+     * within both the user and installed file locations.
+     *
+     * @param name the name of the file to find
+     * @param root the relative path to a directory in either or both of the
+     *             user or installed file locations; use a single period
+     *             character to refer to the root of the user or installed file
+     *             locations
+     * @return a set of found files or an empty set if no matching files were
+     *         found
+     * @throws IllegalArgumentException if the name is not a relative path, is
+     *                                  empty, or contains path separators; or
+     *                                  if the root is not a relative path, is
+     *                                  empty, or contains a parent directory
+     *                                  (..)
+     * @throws NullPointerException     if any parameter is null
+     */
+    @Nonnull
+    @CheckReturnValue
+    public Set<File> findFiles(@Nonnull String name, @Nonnull String root) throws IllegalArgumentException {
+        return this.findFiles(name, root, Location.ALL);
+    }
+
+    /**
+     * Find all files matching the given name under the given root directory
+     * within the specified location.
+     *
+     * @param name     the name of the file to find
+     * @param root     the relative path to a directory in either or both of the
+     *                 user or installed file locations; use a single period
+     *                 character to refer to the root of the location
+     * @param location the location to search within
+     * @return a set of found files or an empty set if no matching files were
+     *         found
+     * @throws IllegalArgumentException if the name is not a relative path, is
+     *                                  empty, or contains path separators; if
+     *                                  the root is not a relative path, is
+     *                                  empty, or contains a parent directory
+     *                                  (..); or if the location is
+     *                                  {@link Location#NONE}
+     * @throws NullPointerException     if any parameter is null
+     */
+    @Nonnull
+    @CheckReturnValue
+    public Set<File> findFiles(@Nonnull String name, @Nonnull String root, @Nonnull Location location) {
+        Objects.requireNonNull(name, "name must be nonnull");
+        Objects.requireNonNull(root, "root must be nonnull");
+        Objects.requireNonNull(location, "location must be nonnull");
+        if (location == Location.NONE) {
+            throw new IllegalArgumentException("location must not be NONE");
+        }
+        if (root.isEmpty() || root.contains("..") || root.startsWith("/")) {
+            throw new IllegalArgumentException("root is invalid");
+        }
+        if (name.isEmpty() || name.contains(File.pathSeparator) || name.contains("/")) {
+            throw new IllegalArgumentException("name is invalid");
+        }
+        Set<File> files = new HashSet<>();
+        if (location == Location.INSTALLED || location == Location.ALL) {
+            files.addAll(this.findFiles(name, new File(this.findURI(PROGRAM + root, Location.NONE))));
+        }
+        if (location == Location.USER || location == Location.ALL) {
+            try {
+                files.addAll(this.findFiles(name, new File(this.findURI(PREFERENCES + root, Location.NONE))));
+            } catch (NullPointerException ex) {
+                // expected if path PREFERENCES + root does not exist
+                log.trace("{} does not exist in {}", root, PREFERENCES);
+            }
+            try {
+                files.addAll(this.findFiles(name, new File(this.findURI(PROFILE + root, Location.NONE))));
+            } catch (NullPointerException ex) {
+                // expected if path PROFILE + root does not exist
+                log.trace("{} does not exist in {}", root, PROFILE);
+            }
+            try {
+                files.addAll(this.findFiles(name, new File(this.findURI(SETTINGS + root, Location.NONE))));
+            } catch (NullPointerException ex) {
+                // expected if path SETTINGS + root does not exist
+                log.trace("{} does not exist in {}", root, SETTINGS);
+            }
+        }
+        return files;
+    }
+
+    private Set<File> findFiles(String name, File root) {
+        Set<File> files = new HashSet<>();
+        if (root.isDirectory()) {
+            try {
+                Files.walkFileTree(root.toPath(), new SimpleFileVisitor<Path>() {
+                    @Override
+                    public FileVisitResult preVisitDirectory(final Path dir,
+                            final BasicFileAttributes attrs) throws IOException {
+
+                        Path fn = dir.getFileName();
+                        if (fn != null && name.equals(fn.toString())) {
+                            files.add(dir.toFile().getCanonicalFile());
+                        }
+                        return FileVisitResult.CONTINUE;
+                    }
+
+                    @Override
+                    public FileVisitResult visitFile(final Path file,
+                            final BasicFileAttributes attrs) throws IOException {
+                        // TODO: accept glob patterns
+                        Path fn = file.getFileName();
+                        if (fn != null && name.equals(fn.toString())) {
+                            files.add(file.toFile().getCanonicalFile());
+                        }
+                        return FileVisitResult.CONTINUE;
+                    }
+                });
+            } catch (IOException ex) {
+                log.warn("Exception while finding file {} in {}", name, root, ex);
+            }
+        }
+        return files;
     }
 
     /**
@@ -174,11 +310,13 @@ public class FileUtilSupport extends Bean {
      * @param pName The name string, possibly starting with file:, home:,
      *              profile:, program:, preference:, scripts:, settings, or
      *              resource:
-     * @return Absolute file name to use, or null. This will include
+     * @return Absolute file name to use. This will include
      *         system-specific file separators.
      * @since 2.7.2
      */
-    public String getExternalFilename(String pName) {
+    @Nonnull
+    @CheckReturnValue
+    public String getExternalFilename(@Nonnull String pName) {
         String filename = this.pathFromPortablePath(pName);
         return (filename != null) ? filename : pName.replace(SEPARATOR, File.separatorChar);
     }
@@ -189,13 +327,15 @@ public class FileUtilSupport extends Bean {
      * @param path the portable filename
      * @return An absolute filename
      */
-    public String getAbsoluteFilename(String path) {
+    @Nonnull
+    @CheckReturnValue
+    public String getAbsoluteFilename(@Nonnull String path) {
         return this.pathFromPortablePath(path);
     }
 
     /**
      * Convert a File object's path to our preferred storage form.
-     *
+     * <p>
      * This is the inverse of {@link #getFile(String pName)}. Deprecated forms
      * are not created.
      *
@@ -204,16 +344,18 @@ public class FileUtilSupport extends Bean {
      *         portable, not system-specific, file separators.
      * @since 2.7.2
      */
-    public String getPortableFilename(File file) {
+    @Nonnull
+    @CheckReturnValue
+    public String getPortableFilename(@Nonnull File file) {
         return this.getPortableFilename(file, false, false);
     }
 
     /**
      * Convert a File object's path to our preferred storage form.
-     *
+     * <p>
      * This is the inverse of {@link #getFile(String pName)}. Deprecated forms
      * are not created.
-     *
+     * <p>
      * This method supports a specific use case concerning profiles and other
      * portable paths that are stored within the User files directory, which
      * will cause the {@link jmri.profile.ProfileManager} to write an incorrect
@@ -232,7 +374,9 @@ public class FileUtilSupport extends Bean {
      * @return Storage format representation
      * @since 3.5.5
      */
-    public String getPortableFilename(File file, boolean ignoreUserFilesPath, boolean ignoreProfilePath) {
+    @Nonnull
+    @CheckReturnValue
+    public String getPortableFilename(@Nonnull File file, boolean ignoreUserFilesPath, boolean ignoreProfilePath) {
         // compare full path name to see if same as preferences
         String filename = file.getAbsolutePath();
 
@@ -241,6 +385,10 @@ public class FileUtilSupport extends Bean {
             filename = filename + File.separator;
         }
 
+        if (filename == null ) {
+            throw new IllegalArgumentException("File \""+file+"\" has a null absolute path which is not allowed");
+        }
+        
         // compare full path name to see if same as preferences
         if (!ignoreUserFilesPath) {
             if (filename.startsWith(getUserFilesPath())) {
@@ -292,7 +440,7 @@ public class FileUtilSupport extends Bean {
 
     /**
      * Convert a filename string to our preferred storage form.
-     *
+     * <p>
      * This is the inverse of {@link #getExternalFilename(String pName)}.
      * Deprecated forms are not created.
      *
@@ -300,16 +448,18 @@ public class FileUtilSupport extends Bean {
      * @return Filename for storage in a portable manner
      * @since 2.7.2
      */
-    public String getPortableFilename(String filename) {
+    @Nonnull
+    @CheckReturnValue
+    public String getPortableFilename(@Nonnull String filename) {
         return this.getPortableFilename(filename, false, false);
     }
 
     /**
      * Convert a filename string to our preferred storage form.
-     *
+     * <p>
      * This is the inverse of {@link #getExternalFilename(String pName)}.
      * Deprecated forms are not created.
-     *
+     * <p>
      * This method supports a specific use case concerning profiles and other
      * portable paths that are stored within the User files directory, which
      * will cause the {@link jmri.profile.ProfileManager} to write an incorrect
@@ -328,7 +478,9 @@ public class FileUtilSupport extends Bean {
      * @return Storage format representation
      * @since 3.5.5
      */
-    public String getPortableFilename(String filename, boolean ignoreUserFilesPath, boolean ignoreProfilePath) {
+    @Nonnull
+    @CheckReturnValue
+    public String getPortableFilename(@Nonnull String filename, boolean ignoreUserFilesPath, boolean ignoreProfilePath) {
         if (this.isPortableFilename(filename)) {
             // if this already contains prefix, run through conversion to normalize
             return getPortableFilename(getExternalFilename(filename), ignoreUserFilesPath, ignoreProfilePath);
@@ -340,23 +492,20 @@ public class FileUtilSupport extends Bean {
 
     /**
      * Test if the given filename is a portable filename.
-     *
+     * <p>
      * Note that this method may return a false positive if the filename is a
      * file: URL.
      *
      * @param filename the name to test
      * @return true if filename is portable
      */
-    @SuppressWarnings("deprecation")
-    public boolean isPortableFilename(String filename) {
+    public boolean isPortableFilename(@Nonnull String filename) {
         return (filename.startsWith(PROGRAM)
                 || filename.startsWith(HOME)
                 || filename.startsWith(PREFERENCES)
                 || filename.startsWith(SCRIPTS)
                 || filename.startsWith(PROFILE)
-                || filename.startsWith(SETTINGS)
-                || filename.startsWith(FILE)
-                || filename.startsWith(RESOURCE));
+                || filename.startsWith(SETTINGS));
     }
 
     /**
@@ -364,19 +513,25 @@ public class FileUtilSupport extends Bean {
      *
      * @return User's home directory as a String
      */
+    @Nonnull
+    @CheckReturnValue
     public String getHomePath() {
-        return homePath;
+        return HOME_PATH;
     }
 
     /**
      * Get the user's files directory. If not set by the user, this is the same
-     * as the profile path.
+     * as the profile path. Note that if the profile path has been set to null,
+     * that returns the preferences directory, see {@link #getProfilePath()}.
      *
      * @see #getProfilePath()
-     * @return User's files directory as a String
+     * @return User's files directory as a String - never null
      */
+    @Nonnull
+    @CheckReturnValue
     public String getUserFilesPath() {
-        return (this.userFilesPath != null) ? this.userFilesPath : this.getProfilePath();
+        if (userFilesPath != null) return userFilesPath;
+        return getProfilePath();
     }
 
     /**
@@ -386,24 +541,26 @@ public class FileUtilSupport extends Bean {
      * @param path The path to the user's files directory using system-specific
      *             separators
      */
-    public void setUserFilesPath(String path) {
+    public void setUserFilesPath(@Nonnull String path) {
         String old = this.userFilesPath;
-        if (path != null && !path.endsWith(File.separator)) {
+        if (!path.endsWith(File.separator)) {
             path = path + File.separator;
         }
         this.userFilesPath = path;
-        if ((old != null && !old.equals(path)) || (path != null && !path.equals(old))) {
+        if ((old != null && !old.equals(path)) || (!path.equals(old))) {
             this.firePropertyChange(FileUtil.PREFERENCES, old, path);
         }
     }
 
     /**
-     * Get the profile directory. If not set, this is the same as the
+     * Get the profile directory. If not set, provide the
      * preferences path.
      *
      * @see #getPreferencesPath()
      * @return Profile directory as a String using system-specific separators
      */
+    @Nonnull
+    @CheckReturnValue
     public String getProfilePath() {
         return (this.profilePath != null) ? this.profilePath : this.getPreferencesPath();
     }
@@ -413,9 +570,10 @@ public class FileUtilSupport extends Bean {
      *
      * @see #getProfilePath()
      * @param path The path to the profile directory using system-specific
-     *             separators.
+     *             separators. If null, this will cause  {@link #getProfilePath()} to 
+     *             provide the preferences directory via {@link #getPreferencesPath()}.
      */
-    public void setProfilePath(String path) {
+    public void setProfilePath(@CheckForNull String path) {
         String old = this.profilePath;
         if (path != null && !path.endsWith(File.separator)) {
             path = path + File.separator;
@@ -440,6 +598,8 @@ public class FileUtilSupport extends Bean {
      * @return Path to the preferences directory using system-specific
      *         separators.
      */
+    @Nonnull
+    @CheckReturnValue
     public String getPreferencesPath() {
         // return jmri.prefsdir property if present
         String jmriPrefsDir = System.getProperty("jmri.prefsdir", ""); // NOI18N
@@ -479,26 +639,91 @@ public class FileUtilSupport extends Bean {
     }
 
     /**
-     * Get the JMRI program directory.
+     * Get the JMRI cache location, ensuring its existence.
+     * <p>
+     * This is <strong>not</strong> part of the {@link jmri.util.FileUtil} API
+     * since it should generally be accessed using
+     * {@link jmri.profile.ProfileUtils#getCacheDirectory(jmri.profile.Profile, java.lang.Class)}.
+     * <p>
+     * Uses the following locations (where [version] is from
+     * {@link jmri.Version#getCanonicalVersion()}):
+     * <dl>
+     * <dt>System Property (if set)</dt><dd>value of
+     * <em>jmri_default_cachedir</em></dd>
+     * <dt>macOS</dt><dd>~/Library/Caches/JMRI/[version]</dd>
+     * <dt>Windows</dt><dd>%Local AppData%/JMRI/[version]</dd>
+     * <dt>UNIX/Linux/POSIX</dt><dd>${XDG_CACHE_HOME}/JMRI/[version] or
+     * $HOME/.cache/JMRI/[version]</dd>
+     * <dt>Fallback</dt><dd>JMRI portable path
+     * <em>setting:cache/[version]</em></dd>
+     * </dl>
+     *
+     * @return the cache directory for this version of JMRI
+     */
+    @Nonnull
+    public File getCacheDirectory() {
+        File cache;
+        String property = System.getProperty("jmri_default_cachedir");
+        if (property != null) {
+            cache = new File(property);
+        } else {
+            switch (SystemType.getType()) {
+                case SystemType.MACOSX:
+                    cache = new File(new File(this.getHomePath(), "Library/Caches/JMRI"), Version.getCanonicalVersion());
+                    break;
+                case SystemType.LINUX:
+                case SystemType.UNIX:
+                    property = System.getenv("XDG_CACHE_HOME");
+                    if (property != null) {
+                        cache = new File(new File(property, "JMRI"), Version.getCanonicalVersion());
+                    } else {
+                        cache = new File(new File(this.getHomePath(), ".cache/JMRI"), Version.getCanonicalVersion());
+                    }
+                    break;
+                case SystemType.WINDOWS:
+                    try {
+                        cache = new File(new File(Shell32Util.getKnownFolderPath(KnownFolders.FOLDERID_LocalAppData), "JMRI/cache"), Version.getCanonicalVersion());
+                    } catch (UnsatisfiedLinkError er) {
+                        // Needed only on Windows XP
+                        cache = new File(new File(Shell32Util.getFolderPath(ShlObj.CSIDL_LOCAL_APPDATA), "JMRI/cache"), Version.getCanonicalVersion());
+                    }
+                    break;
+                default:
+                    // fallback
+                    cache = new File(new File(this.getPreferencesPath(), "cache"), Version.getCanonicalVersion());
+                    break;
+            }
+        }
+        this.createDirectory(cache);
+        return cache;
+    }
+
+    /**
+     * Get the JMRI program directory. If the program directory has not been
+     * previously sets, first sets the program directory to the value specified
+     * in the Java System property <code>jmri.path.program</code>, or
+     * <code>.</code> if that property is not set.
      *
      * @return JMRI program directory as a String.
      */
+    @Nonnull
+    @CheckReturnValue
     public String getProgramPath() {
         if (programPath == null) {
-            this.setProgramPath("."); // NOI18N
+            this.setProgramPath(System.getProperty("jmri.path.program", ".")); // NOI18N
         }
         return programPath;
     }
 
     /**
      * Set the JMRI program directory.
-     *
-     * Convenience method that calls
-     * {@link FileUtil#setProgramPath(java.io.File)} with the passed in path.
+     * <p>
+     * Convenience method that calls {@link #setProgramPath(java.io.File)} with
+     * the passed in path.
      *
      * @param path the path to the JMRI installation
      */
-    public void setProgramPath(String path) {
+    public void setProgramPath(@Nonnull String path) {
         this.setProgramPath(new File(path));
     }
 
@@ -512,7 +737,7 @@ public class FileUtilSupport extends Bean {
      *
      * @param path the path to the JMRI installation
      */
-    public void setProgramPath(File path) {
+    public void setProgramPath(@Nonnull File path) {
         String old = this.programPath;
         try {
             this.programPath = (path).getCanonicalPath() + File.separator;
@@ -530,6 +755,8 @@ public class FileUtilSupport extends Bean {
      *
      * @return path to [user's file]/resources/ using system-specific separators
      */
+    @Nonnull
+    @CheckReturnValue
     public String getUserResourcePath() {
         return this.getUserFilesPath() + "resources" + File.separator; // NOI18N
     }
@@ -547,10 +774,13 @@ public class FileUtilSupport extends Bean {
     }
 
     /**
-     * Get the path to the scripts directory.
+     * Get the path to the scripts directory. If not set previously with
+     * {@link #setScriptsPath}, this is the "jython" subdirectory in the program directory.
      *
      * @return the scriptsPath using system-specific separators
      */
+    @Nonnull
+    @CheckReturnValue
     public String getScriptsPath() {
         if (scriptsPath != null) {
             return scriptsPath;
@@ -565,11 +795,11 @@ public class FileUtilSupport extends Bean {
     }
 
     /**
-     * Set the path to python scripts.
+     * Set the path to python scripts. 
      *
-     * @param path the scriptsPath to set
+     * @param path the scriptsPath to set. Null resets to the default, defined in {@link #getScriptsPath()}
      */
-    public void setScriptsPath(String path) {
+    public void setScriptsPath(@CheckForNull String path) {
         String old = this.scriptsPath;
         if (path != null && !path.endsWith(File.separator)) {
             path = path + File.separator;
@@ -582,13 +812,14 @@ public class FileUtilSupport extends Bean {
 
     /**
      * Get the URL of a portable filename if it can be located using
-     * {@link #findURL(java.lang.String)}
+     * {@link #findURI(java.lang.String)}
      *
      * @param path the path to find
      * @return URL of portable or absolute path
      */
-    @SuppressWarnings("deprecation")
-    public URI findExternalFilename(String path) {
+    @Nonnull
+    @CheckReturnValue
+    public URI findExternalFilename(@Nonnull String path) {
         log.debug("Finding external path {}", path);
         if (this.isPortableFilename(path)) {
             int index = path.indexOf(":") + 1;
@@ -597,10 +828,8 @@ public class FileUtilSupport extends Bean {
             log.debug("Finding {} and {}", location, path);
             switch (location) {
                 case FileUtil.PROGRAM:
-                case FileUtil.RESOURCE:
                     return this.findURI(path, FileUtil.Location.INSTALLED);
                 case FileUtil.PREFERENCES:
-                case FileUtil.FILE:
                     return this.findURI(path, FileUtil.Location.USER);
                 case FileUtil.PROFILE:
                 case FileUtil.SETTINGS:
@@ -611,7 +840,7 @@ public class FileUtilSupport extends Bean {
                     break;
             }
         }
-        return this.findURI(path, FileUtil.Location.ALL);
+        return this.findURI(path, Location.ALL);
     }
 
     /**
@@ -630,7 +859,7 @@ public class FileUtilSupport extends Bean {
      * @see #findURL(java.lang.String, jmri.util.FileUtil.Location,
      * java.lang.String...)
      */
-    public InputStream findInputStream(String path) {
+    public InputStream findInputStream(@Nonnull String path) {
         return this.findInputStream(path, new String[]{});
     }
 
@@ -647,8 +876,8 @@ public class FileUtilSupport extends Bean {
      * @see #findInputStream(java.lang.String, jmri.util.FileUtil.Location,
      * java.lang.String...)
      */
-    public InputStream findInputStream(String path, @Nonnull String... searchPaths) {
-        return this.findInputStream(path, FileUtil.Location.ALL, searchPaths);
+    public InputStream findInputStream(@Nonnull String path, @Nonnull String... searchPaths) {
+        return this.findInputStream(path, Location.ALL, searchPaths);
     }
 
     /**
@@ -663,7 +892,7 @@ public class FileUtilSupport extends Bean {
      * @see #findInputStream(java.lang.String, jmri.util.FileUtil.Location,
      * java.lang.String...)
      */
-    public InputStream findInputStream(String path, FileUtil.Location locations) {
+    public InputStream findInputStream(@Nonnull String path, @Nonnull Location locations) {
         return this.findInputStream(path, locations, new String[]{});
     }
 
@@ -679,7 +908,7 @@ public class FileUtilSupport extends Bean {
      * @see #findInputStream(java.lang.String)
      * @see #findInputStream(java.lang.String, java.lang.String...)
      */
-    public InputStream findInputStream(String path, FileUtil.Location locations, @Nonnull String... searchPaths) {
+    public InputStream findInputStream(@Nonnull String path, @Nonnull Location locations, @Nonnull String... searchPaths) {
         URL file = this.findURL(path, locations, searchPaths);
         if (file != null) {
             try {
@@ -704,7 +933,7 @@ public class FileUtilSupport extends Bean {
      * @see #findURI(java.lang.String, jmri.util.FileUtil.Location,
      * java.lang.String...)
      */
-    public URI findURI(String path) {
+    public URI findURI(@Nonnull String path) {
         return this.findURI(path, new String[]{});
     }
 
@@ -713,7 +942,7 @@ public class FileUtilSupport extends Bean {
      * {@link java.net.URI} for that file. Search order is defined by
      * {@link #findURI(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...)}.
      * No limits are placed on search locations.
-     *
+     * <p>
      * Note that if the file for path is not found in one of the searchPaths,
      * all standard locations are also be searched through to find the file. If
      * you need to limit the locations where the file can be found use
@@ -727,8 +956,8 @@ public class FileUtilSupport extends Bean {
      * @see #findURI(java.lang.String, jmri.util.FileUtil.Location,
      * java.lang.String...)
      */
-    public URI findURI(String path, @Nonnull String... searchPaths) {
-        return this.findURI(path, FileUtil.Location.ALL, searchPaths);
+    public URI findURI(@Nonnull String path, @Nonnull String... searchPaths) {
+        return this.findURI(path, Location.ALL, searchPaths);
     }
 
     /**
@@ -744,7 +973,7 @@ public class FileUtilSupport extends Bean {
      * @see #findURI(java.lang.String, jmri.util.FileUtil.Location,
      * java.lang.String...)
      */
-    public URI findURI(String path, FileUtil.Location locations) {
+    public URI findURI(@Nonnull String path, @Nonnull Location locations) {
         return this.findURI(path, locations, new String[]{});
     }
 
@@ -753,25 +982,33 @@ public class FileUtilSupport extends Bean {
      * {@link java.net.URI} for that file.
      * <p>
      * Search order is:
-     * <ol><li>For any provided searchPaths, iterate over the searchPaths by
+     * <ol>
+     * <li>For any provided searchPaths, iterate over the searchPaths by
      * prepending each searchPath to the path and following the following search
-     * order:
-     * <ol><li>As a {@link java.io.File} in the user preferences directory</li>
+     * order:<ol>
+     * <li>As a {@link java.io.File} in the user preferences directory</li>
      * <li>As a File in the current working directory (usually, but not always
-     * the JMRI distribution directory)</li> <li>As a File in the JMRI
-     * distribution directory</li> <li>As a resource in jmri.jar</li></ol></li>
+     * the JMRI distribution directory)</li>
+     * <li>As a File in the JMRI distribution directory</li>
+     * <li>As a resource in jmri.jar</li>
+     * </ol></li>
      * <li>If the file or resource has not been found in the searchPaths, search
-     * in the four locations listed without prepending any path</li></ol>
+     * in the four locations listed without prepending any path</li>
+     * <li>As a File with an absolute path</li>
+     * </ol>
      * <p>
      * The <code>locations</code> parameter limits the above logic by limiting
      * the location searched.
-     * <ol><li>{@link FileUtil.Location#ALL} will not place any limits on the
-     * search</li><li>{@link FileUtil.Location#NONE} effectively requires that
-     * <code>path</code> be a portable
-     * pathname</li><li>{@link FileUtil.Location#INSTALLED} limits the search to
-     * the {@link FileUtil#PROGRAM} directory and JARs in the class
-     * path</li><li>{@link FileUtil.Location#USER} limits the search to the
-     * {@link FileUtil#PROFILE} directory</li></ol>
+     * <ol>
+     * <li>{@link Location#ALL} will not place any limits on the search</li>
+     * <li>{@link Location#NONE} effectively requires that <code>path</code> be
+     * a portable pathname</li>
+     * <li>{@link Location#INSTALLED} limits the search to the
+     * {@link FileUtil#PROGRAM} directory and JARs in the class path</li>
+     * <li>{@link Location#USER} limits the search to the
+     * {@link FileUtil#PREFERENCES}, {@link FileUtil#PROFILE}, and
+     * {@link FileUtil#SETTINGS} directories (in that order)</li>
+     * </ol>
      *
      * @param path        The relative path of the file or resource
      * @param locations   The types of locations to limit the search to
@@ -781,7 +1018,7 @@ public class FileUtilSupport extends Bean {
      * @see #findURI(java.lang.String, jmri.util.FileUtil.Location)
      * @see #findURI(java.lang.String, java.lang.String...)
      */
-    public URI findURI(String path, FileUtil.Location locations, @Nonnull String... searchPaths) {
+    public URI findURI(@Nonnull String path, @Nonnull Location locations, @Nonnull String... searchPaths) {
         if (log.isDebugEnabled()) { // avoid the Arrays.toString call unless debugging
             log.debug("Attempting to find {} in {}", path, Arrays.toString(searchPaths));
         }
@@ -800,14 +1037,24 @@ public class FileUtilSupport extends Bean {
             }
         }
         File file;
-        if (locations == FileUtil.Location.ALL || locations == FileUtil.Location.USER) {
+        if (locations == Location.ALL || locations == Location.USER) {
             // attempt to return path from preferences directory
-            file = new File(this.getUserFilesPath() + path);
+            file = new File(this.getUserFilesPath(), path);
+            if (file.exists()) {
+                return file.toURI();
+            }
+            // attempt to return path from profile directory
+            file = new File(this.getProfilePath(), path);
+            if (file.exists()) {
+                return file.toURI();
+            }
+            // attempt to return path from preferences directory
+            file = new File(this.getPreferencesPath(), path);
             if (file.exists()) {
                 return file.toURI();
             }
         }
-        if (locations == FileUtil.Location.ALL || locations == FileUtil.Location.INSTALLED) {
+        if (locations == Location.ALL || locations == Location.INSTALLED) {
             // attempt to return path from current working directory
             file = new File(path);
             if (file.exists()) {
@@ -819,7 +1066,7 @@ public class FileUtilSupport extends Bean {
                 return file.toURI();
             }
         }
-        if (locations == FileUtil.Location.ALL || locations == FileUtil.Location.INSTALLED) {
+        if (locations == Location.ALL || locations == Location.INSTALLED) {
             // return path if in jmri.jar or null
             // The ClassLoader needs paths to use /
             path = path.replace(File.separatorChar, '/');
@@ -834,7 +1081,14 @@ public class FileUtilSupport extends Bean {
                 resource = (url != null) ? url.toURI() : null;
             } catch (URISyntaxException ex) {
                 log.warn("Unable to get URI for {}", path, ex);
-                return null;
+            }
+        }
+        // if a resource has not been found and path is absolute and exists
+        // return it
+        if (resource == null) {
+            file = new File(path);
+            if (file.isAbsolute() && file.exists()) {
+                return file.toURI();
             }
         }
         return resource;
@@ -853,7 +1107,7 @@ public class FileUtilSupport extends Bean {
      * @see #findURL(java.lang.String, jmri.util.FileUtil.Location,
      * java.lang.String...)
      */
-    public URL findURL(String path) {
+    public URL findURL(@Nonnull String path) {
         return this.findURL(path, new String[]{});
     }
 
@@ -871,8 +1125,8 @@ public class FileUtilSupport extends Bean {
      * @see #findURL(java.lang.String, jmri.util.FileUtil.Location,
      * java.lang.String...)
      */
-    public URL findURL(String path, @Nonnull String... searchPaths) {
-        return this.findURL(path, FileUtil.Location.ALL, searchPaths);
+    public URL findURL(@Nonnull String path, @Nonnull String... searchPaths) {
+        return this.findURL(path, Location.ALL, searchPaths);
     }
 
     /**
@@ -888,7 +1142,7 @@ public class FileUtilSupport extends Bean {
      * @see #findURL(java.lang.String, jmri.util.FileUtil.Location,
      * java.lang.String...)
      */
-    public URL findURL(String path, FileUtil.Location locations) {
+    public URL findURL(@Nonnull String path, Location locations) {
         return this.findURL(path, locations, new String[]{});
     }
 
@@ -909,12 +1163,12 @@ public class FileUtilSupport extends Bean {
      * <p>
      * The <code>locations</code> parameter limits the above logic by limiting
      * the location searched.
-     * <ol><li>{@link FileUtil.Location#ALL} will not place any limits on the
-     * search</li><li>{@link FileUtil.Location#NONE} effectively requires that
+     * <ol><li>{@link Location#ALL} will not place any limits on the
+     * search</li><li>{@link Location#NONE} effectively requires that
      * <code>path</code> be a portable
-     * pathname</li><li>{@link FileUtil.Location#INSTALLED} limits the search to
-     * the {@link FileUtil#PROGRAM} directory and JARs in the class
-     * path</li><li>{@link FileUtil.Location#USER} limits the search to the
+     * pathname</li><li>{@link Location#INSTALLED} limits the search to the
+     * {@link FileUtil#PROGRAM} directory and JARs in the class
+     * path</li><li>{@link Location#USER} limits the search to the
      * {@link FileUtil#PROFILE} directory</li></ol>
      *
      * @param path        The relative path of the file or resource
@@ -925,7 +1179,7 @@ public class FileUtilSupport extends Bean {
      * @see #findURL(java.lang.String, jmri.util.FileUtil.Location)
      * @see #findURL(java.lang.String, java.lang.String...)
      */
-    public URL findURL(String path, FileUtil.Location locations, @Nonnull String... searchPaths) {
+    public URL findURL(@Nonnull String path, @Nonnull Location locations, @Nonnull String... searchPaths) {
         URI file = this.findURI(path, locations, searchPaths);
         if (file != null) {
             try {
@@ -944,7 +1198,7 @@ public class FileUtilSupport extends Bean {
      * @return a URI or null if the conversion would have caused a
      *         {@link java.net.URISyntaxException}
      */
-    public URI urlToURI(URL url) {
+    public URI urlToURI(@Nonnull URL url) {
         try {
             return url.toURI();
         } catch (URISyntaxException ex) {
@@ -964,7 +1218,7 @@ public class FileUtilSupport extends Bean {
      * @return a URL or null if the conversion would have caused a
      *         MalformedURLException
      */
-    public URL fileToURL(File file) {
+    public URL fileToURL(@Nonnull File file) {
         try {
             return file.toURI().toURL();
         } catch (MalformedURLException ex) {
@@ -976,28 +1230,39 @@ public class FileUtilSupport extends Bean {
     /**
      * Get the JMRI distribution jar file.
      *
-     * @return a {@link java.util.jar.JarFile} pointing to jmri.jar or null
+     * @return the JAR file containing the JMRI library or null if not running
+     *         from a JAR file
      */
     public JarFile getJmriJarFile() {
         if (jarPath == null) {
             CodeSource sc = FileUtilSupport.class.getProtectionDomain().getCodeSource();
             if (sc != null) {
                 jarPath = sc.getLocation().toString();
-                // 9 = length of jar:file:
-                jarPath = jarPath.substring(9, jarPath.lastIndexOf("!"));
+                if (jarPath.startsWith("jar:file:")) {
+                    // 9 = length of jar:file:
+                    jarPath = jarPath.substring(9, jarPath.lastIndexOf("!"));
+                } else {
+                    log.info("Running from classes not in jar file.");
+                    jarPath = ""; // set to empty String to bypass search
+                    return null;
+                }
                 log.debug("jmri.jar path is {}", jarPath);
             }
             if (jarPath == null) {
                 log.error("Unable to locate jmri.jar");
+                jarPath = ""; // set to empty String to bypass search
                 return null;
             }
         }
-        try {
-            return new JarFile(jarPath);
-        } catch (IOException ex) {
-            log.error("Unable to open jmri.jar", ex);
-            return null;
+        if (!jarPath.isEmpty()) {
+            try {
+                return new JarFile(jarPath);
+            } catch (IOException ex) {
+                log.error("Unable to open jmri.jar", ex);
+                return null;
+            }
         }
+        return null;
     }
 
     /**
@@ -1007,30 +1272,23 @@ public class FileUtilSupport extends Bean {
      * @return The contents of the file.
      * @throws java.io.IOException if the file cannot be read
      */
-    public String readFile(File file) throws IOException {
+    public String readFile(@Nonnull File file) throws IOException {
         return this.readURL(this.fileToURL(file));
     }
 
     /**
-     * Read a text URL into a String. Would be significantly simpler with Java
-     * 7. File is assumed to be encoded using UTF-8
+     * Read a text URL into a String.
      *
      * @param url The text URL.
      * @return The contents of the file.
      * @throws java.io.IOException if the URL cannot be read
      */
-    public String readURL(URL url) throws IOException {
+    public String readURL(@Nonnull URL url) throws IOException {
         try {
-            StringBuilder builder;
             try (InputStreamReader in = new InputStreamReader(url.openStream(), StandardCharsets.UTF_8);
                     BufferedReader reader = new BufferedReader(in)) {
-                builder = new StringBuilder();
-                String aux;
-                while ((aux = reader.readLine()) != null) {
-                    builder.append(aux);
-                }
+                return reader.lines().collect(Collectors.joining("\n")); // NOI18N
             }
-            return builder.toString();
         } catch (NullPointerException ex) {
             return null;
         }
@@ -1042,7 +1300,8 @@ public class FileUtilSupport extends Bean {
      * @param name The filename to be sanitized.
      * @return The sanitized filename.
      */
-    public String sanitizeFilename(String name) {
+    @Nonnull
+    public String sanitizeFilename(@Nonnull String name) {
         name = name.trim().replaceAll(" ", "_").replaceAll("[.]+", ".");
         StringBuilder filename = new StringBuilder();
         for (char c : name.toCharArray()) {
@@ -1059,7 +1318,7 @@ public class FileUtilSupport extends Bean {
      *
      * @param path directory to create
      */
-    public void createDirectory(String path) {
+    public void createDirectory(@Nonnull String path) {
         this.createDirectory(new File(path));
     }
 
@@ -1069,9 +1328,9 @@ public class FileUtilSupport extends Bean {
      *
      * @param dir directory to create
      */
-    public void createDirectory(File dir) {
+    public void createDirectory(@Nonnull File dir) {
         if (!dir.exists()) {
-            log.info("Creating directory: {}", dir);
+            log.debug("Creating directory: {}", dir);
             if (!dir.mkdirs()) {
                 log.error("Failed to create directory: {}", dir);
             }
@@ -1086,12 +1345,13 @@ public class FileUtilSupport extends Bean {
      * @param path path to delete
      * @return true if path was deleted, false otherwise
      */
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
-            justification = "listFiles() is documented to return null only if isDirectory() is false")
-    public boolean delete(File path) {
+    public boolean delete(@Nonnull File path) {
         if (path.isDirectory()) {
-            for (File file : path.listFiles()) {
-                this.delete(file);
+            File[] files = path.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    this.delete(file);
+                }
             }
         }
         return path.delete();
@@ -1106,7 +1366,7 @@ public class FileUtilSupport extends Bean {
      * @param dest   must be the file or directory, not the containing directory
      * @throws java.io.IOException if file cannot be copied
      */
-    public void copy(File source, File dest) throws IOException {
+    public void copy(@Nonnull File source, @Nonnull File dest) throws IOException {
         if (!source.exists()) {
             log.error("Attempting to copy non-existant file: {}", source);
             return;
@@ -1155,7 +1415,7 @@ public class FileUtilSupport extends Bean {
      * @param text Text to append
      * @throws java.io.IOException if file cannot be written to
      */
-    public void appendTextToFile(File file, String text) throws IOException {
+    public void appendTextToFile(@Nonnull File file, @Nonnull String text) throws IOException {
         try (PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file, true), StandardCharsets.UTF_8))) {
             pw.println(text);
         }
@@ -1170,7 +1430,7 @@ public class FileUtilSupport extends Bean {
      * @param file the file to backup
      * @throws java.io.IOException if a backup cannot be created
      */
-    public void backup(File file) throws IOException {
+    public void backup(@Nonnull File file) throws IOException {
         this.rotate(file, 4, "bak");
     }
 
@@ -1186,7 +1446,7 @@ public class FileUtilSupport extends Bean {
      * @throws IllegalArgumentException if max is less than one
      * @see #backup(java.io.File)
      */
-    public void rotate(@Nonnull File file, int max, String extension) throws IOException {
+    public void rotate(@Nonnull File file, int max, @CheckForNull String extension) throws IOException {
         if (max < 1) {
             throw new IllegalArgumentException();
         }
@@ -1211,6 +1471,16 @@ public class FileUtilSupport extends Bean {
         this.copy(file, new File(dir, name + "." + i + extension));
     }
 
+    /**
+     * Get the default instance of a FileUtilSupport object.
+     * <p>
+     * Unlike most implementations of getDefault(), this does not return an
+     * object held by {@link jmri.InstanceManager} due to the need for this
+     * default instance to be available prior to the creation of an
+     * InstanceManager.
+     *
+     * @return the default FileUtilSupport instance, creating it if necessary
+     */
     public static FileUtilSupport getDefault() {
         if (FileUtilSupport.defaultInstance == null) {
             FileUtilSupport.defaultInstance = new FileUtilSupport();
@@ -1250,7 +1520,6 @@ public class FileUtilSupport extends Bean {
      * @return Canonical path to use, or null if one cannot be found.
      * @since 2.7.2
      */
-    @SuppressWarnings("deprecation")
     private String pathFromPortablePath(@Nonnull String path) {
         if (path.startsWith(PROGRAM)) {
             if (new File(path.substring(PROGRAM.length())).isAbsolute()) {
@@ -1287,18 +1556,6 @@ public class FileUtilSupport extends Bean {
                 path = path.substring(HOME.length());
             } else {
                 path = path.replaceFirst(HOME, Matcher.quoteReplacement(this.getHomePath()));
-            }
-        } else if (path.startsWith(RESOURCE)) {
-            if (new File(path.substring(RESOURCE.length())).isAbsolute()) {
-                path = path.substring(RESOURCE.length());
-            } else {
-                path = path.replaceFirst(RESOURCE, Matcher.quoteReplacement(this.getProgramPath()));
-            }
-        } else if (path.startsWith(FILE)) {
-            if (new File(path.substring(FILE.length())).isAbsolute()) {
-                path = path.substring(FILE.length());
-            } else {
-                path = path.replaceFirst(FILE, Matcher.quoteReplacement(this.getUserFilesPath() + "resources" + File.separator));
             }
         } else if (!new File(path).isAbsolute()) {
             return null;

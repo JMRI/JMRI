@@ -1,4 +1,3 @@
-// LoadDemoAction.java
 package jmri.jmrit.operations.setup;
 
 import apps.Apps;
@@ -6,10 +5,11 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
-import jmri.jmrit.operations.ExceptionContext;
-import jmri.jmrit.operations.ExceptionDisplayFrame;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.util.swing.ExceptionContext;
+import jmri.util.swing.ExceptionDisplayFrame;
 
 /**
  * Swing action to load the operation demo files.
@@ -17,11 +17,10 @@ import jmri.jmrit.operations.OperationsXml;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
  * @author Gregory Madsen Copyright(C) 2012
- * @version $Revision$
  */
 public class LoadDemoAction extends AbstractAction {
 
-//    private final static Logger log = LoggerFactory.getLogger(LoadDemoAction.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(LoadDemoAction.class);
 
     public LoadDemoAction(String s) {
         super(s);
@@ -53,7 +52,7 @@ public class LoadDemoAction extends AbstractAction {
             // now deregister shut down task
             // If Trains window was opened, then task is active
             // otherwise it is normal to not have the task running
-            OperationsManager.getInstance().setShutDownTask(null);
+            InstanceManager.getDefault(OperationsManager.class).setShutDownTask(null);
 
             JOptionPane.showMessageDialog(null, Bundle.getMessage("YouMustRestartAfterLoadDemo"),
                     Bundle.getMessage("LoadDemoSuccessful"), JOptionPane.INFORMATION_MESSAGE);
@@ -63,9 +62,9 @@ public class LoadDemoAction extends AbstractAction {
         } catch (IOException ex) {
             ExceptionContext context = new ExceptionContext(ex, Bundle.getMessage("LoadingDemoFiles"),
                     Bundle.getMessage("LoadingDemoMakeSure"));
-            new ExceptionDisplayFrame(context);
+            new ExceptionDisplayFrame(context, null).setVisible(true);
         }
     }
 }
 
-/* @(#)LoadDemoAction.java */
+

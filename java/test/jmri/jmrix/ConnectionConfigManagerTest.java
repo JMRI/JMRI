@@ -1,6 +1,5 @@
 package jmri.jmrix;
 
-import apps.tests.Log4JFixture;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,8 +21,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for ConnectionConfigManager.
@@ -40,7 +37,7 @@ public class ConnectionConfigManagerTest {
     public final static String TYPE_B = "TypeB";
     public final static String TYPE_C = "TypeC";
     public final static String TYPE_D = "TypeD";
-    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigManagerTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(ConnectionConfigManagerTest.class);
 
     @BeforeClass
     public static void setUpClass() throws Exception {
@@ -52,15 +49,17 @@ public class ConnectionConfigManagerTest {
 
     @Before
     public void setUp() throws Exception {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         this.workspace = Files.createTempDirectory(this.getClass().getSimpleName());
         JUnitUtil.resetInstanceManager();
     }
 
     @After
     public void tearDown() throws Exception {
-        Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetFileUtilSupport();
         FileUtil.delete(this.workspace.toFile());
     }
 

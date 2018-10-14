@@ -4,6 +4,7 @@ import jmri.implementation.AbstractLight;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.TrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,6 +97,8 @@ public class CbusLight extends AbstractLight
 
     @Override
     public void reply(CanReply f) {
+        // convert response events to normal
+        f = CbusMessage.opcRangeToStl(f);
         if (addrOn.match(f)) {
             setState(ON);
         } else if (addrOff.match(f)) {
@@ -103,5 +106,5 @@ public class CbusLight extends AbstractLight
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(CbusLight.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(CbusLight.class);
 }

@@ -1,4 +1,3 @@
-// CanFrame.java
 package jmri.jmrix.can;
 
 /**
@@ -14,9 +13,8 @@ package jmri.jmrix.can;
  * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2009, 2010
- * @version $Revision$
  */
-@net.jcip.annotations.Immutable
+@javax.annotation.concurrent.Immutable
 public interface CanFrame {
 
     public int getHeader();
@@ -30,5 +28,3 @@ public interface CanFrame {
     public int getElement(int n);
 
 }
-
-/* @(#)CanFrame.java */

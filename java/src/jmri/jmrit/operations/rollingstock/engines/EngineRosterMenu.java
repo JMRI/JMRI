@@ -1,9 +1,13 @@
-// EngineRosterMenu.java
 package jmri.jmrit.operations.rollingstock.engines;
 
-import java.awt.Frame;
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
+import jmri.jmrit.operations.rollingstock.engines.tools.DeleteEngineRosterAction;
+import jmri.jmrit.operations.rollingstock.engines.tools.ExportEngineRosterAction;
+import jmri.jmrit.operations.rollingstock.engines.tools.ImportEngineAction;
+import jmri.jmrit.operations.rollingstock.engines.tools.ImportRosterEngineAction;
+import jmri.jmrit.operations.rollingstock.engines.tools.PrintEngineRosterAction;
+import jmri.jmrit.operations.rollingstock.engines.tools.ResetEngineMovesAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +18,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2007, 2012
- * @version $Revision$
  *
  */
 public class EngineRosterMenu extends JMenu {
@@ -67,13 +70,11 @@ public class EngineRosterMenu extends JMenu {
                 Bundle.getMessage("MenuItemResetMoves"), pWho);
         resetMovesAction.setEnabled(false);
 
-        // Need a frame here, but are not passed one
-        Frame newFrame = new Frame();
         AbstractAction printAction = new PrintEngineRosterAction(Bundle.getMessage("MenuItemPrint"),
-                newFrame, false, pWho);
+                 false, pWho);
         printAction.setEnabled(false);
         AbstractAction previewAction = new PrintEngineRosterAction(
-                Bundle.getMessage("MenuItemPreview"), newFrame, true, pWho);
+                Bundle.getMessage("MenuItemPreview"), true, pWho);
         printAction.setEnabled(false);
         add(importRosterAction);
         add(importAction);

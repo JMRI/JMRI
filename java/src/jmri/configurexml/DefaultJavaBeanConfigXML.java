@@ -23,14 +23,19 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws Exception {
+    public boolean load(Element shared, Element perNode) {
         return true;
     }
 
-    public void load(Element e, Object o) throws Exception {
+    @Override
+    public void load(Element e, Object o) {
     }
 
-    Object unpack(Element e) throws Exception {
+    Object unpack(Element e) 
+            throws ClassNotFoundException,  NoSuchMethodException, InstantiationException,
+                    java.beans.IntrospectionException, IllegalAccessException,
+                    java.lang.reflect.InvocationTargetException
+            {
         String classname = e.getAttributeValue("beanClass");
 
         Class<?> cl = Class.forName(classname);
@@ -75,6 +80,7 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
         return o;
     }
 
+    @Override
     public Element store(Object o) {
         Element e = new Element("javabean");
         e.setAttribute("class", this.getClass().getName());
@@ -109,13 +115,13 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
                 p.addContent(v);
                 e.addContent(p);
             }
-         } catch (java.beans.IntrospectionException ex) {
-             log.error("Partial store due to IntrospectionException: " + ex);
-         } catch (java.lang.reflect.InvocationTargetException ex) {
-             log.error("Partial store due to InvocationTargetException: " + ex);
-         } catch (IllegalAccessException ex) {
-             log.error("Partial store due to IllegalAccessException: " + ex);
-         }
+        } catch (java.beans.IntrospectionException ex) {
+            log.error("Partial store due to IntrospectionException: " + ex);
+        } catch (java.lang.reflect.InvocationTargetException ex) {
+            log.error("Partial store due to InvocationTargetException: " + ex);
+        } catch (IllegalAccessException ex) {
+            log.error("Partial store due to IllegalAccessException: " + ex);
+        }
 
         return e;
     }
@@ -125,6 +131,7 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
      *
      * @param elem The existing Element
      * @param name name of desired Attribute
+     * @return the attribute string or null if name is not an attribute of elem
      */
     String getAttributeString(Element elem, String name) {
         Attribute a = elem.getAttribute(name);
@@ -141,6 +148,7 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
      * @param elem The existing Element
      * @param name Name of desired Attribute
      * @param def  Default value for attribute
+     * @return value of name or def if name is not an attribute of elem
      */
     boolean getAttributeBool(Element elem, String name, boolean def) {
         String v = getAttributeString(elem, name);
@@ -153,5 +161,5 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultJavaBeanConfigXML.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultJavaBeanConfigXML.class);
 }

@@ -5,7 +5,7 @@ import javax.swing.JRadioButton;
 
 /* Represents a JComboBox as a JPanel containing just the "off" button
  *
- * @author			Bob Jacobsen   Copyright (C) 2001, 2002
+ * @author   Bob Jacobsen   Copyright (C) 2001, 2002
  */
 public class ComboOffRadioButton extends ComboRadioButtons {
 
@@ -13,13 +13,10 @@ public class ComboOffRadioButton extends ComboRadioButtons {
         super(box, var);
     }
 
-    ComboOffRadioButton(JComboBox<String> box, IndexedEnumVariableValue var) {
-        super(box, var);
-    }
-
     /**
      * Make only the "on" button visible
      */
+    @Override
     void addToPanel(JRadioButton b, int i) {
         if (i == 0) {
             add(b);

@@ -1,36 +1,92 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
     <head>
-        <!--
-        
-          $Id$
-        
-          Made with permission from the Sun version at
-          http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
-        
-          Copyright 2003
-        
-        -->
+        <!-- Edited: Egbert Broerse 2018 -->
     </head>
     <body bgcolor="white">
 
         This package handles communications for the ProTrak Grapevine hardware.
-        <P>
+        <p>
             Note that the zero Grapevine address is used for error
             messages, and does not correspond to a node.  The nodes
             have addresses 1 through 127. These are mapped to e.g. GT1 through GT126001
             for their first outputs.
+        <p>
+            Use the Grapevine Simulator connection type to pretend all nodes are present.
+            Simulator was introduced in JMRI 4.11.4.
+
+        <h2>Grapevine Binary Message Format Summary</h2>
+        <h3>Signal (Head)s (Banks 1-3)</h3>
+
+        <pre>
+        b2 (element 1): id + state      b4 (element 3): bank + parity
+        bit/id (1 - F = 15 poss.)       bank 1 			    0001 ....
+                         .000 1...      bank 2 			    0010 ....
+                         .001 0...      bank 3 			    0011 ....
+                         .001 1...
+                         etc up to      parity 			    .... xxxx
+                         .111 1...
+
+        Signal State (7 appearances)
+        Green 		    .... .000
+        (more colors)
+        Red 			    .... .110
+        </pre>
+
+        <h3>Sensors (bank 4 and 5)</h3>
+        <pre>
+        b2 (element 1) : id + state      b4 (element 3): bank + parity
+        bit/id (01 - 3F = 63 poss.)      bank 4 (new serial)	0100 ....
+        .000 001.                        bank 5 			    0101 ....
+        .000 010.
+        .000 011.                        parity 			    .... xxxx
+        .000 100.
+        -
+        .111 111.
+
+        Sensor State:
+        (4) Active 	    .... ...0
+        (4) Inactive 	.... ...1
+        (5) Bit States	.... 1010 (set of 4 Active/Inactive bits for Parallel Sensors on Bank 5)
+
+        Sensor Type:
+        Parallel 		.00. ....
+        Parr. 2nd		.10. ....
+        Old Serial		..1. ....
+        (5) Nibble High	...1 ....
+        (5) Nibble Low	...0 ....
+
+        Special codes:
+
+        b2                               b4
+        Init1 0x71		0111 0001        Renumber node 0x60	0110 ....
+        Init2 0x73		0111 0011
+        </pre>
+
+        <h3>Examples:</h3>
+        <pre>
+        Set Node 3 Signal 2 to Red: 	0x03 0x8C 0x03 0x10 + parity
+        Bit 2: 1001 0110 = 0x..		Bit 4: bank 1 = 0x10
+
+        Set Node 1 Sensor 2 to Active: 	0x01 0x8C 0x01 0x40 + parity
+        Bit 2: 1000 0100 = 0x8C		Bit 4: bank 4 = 0x40
+        </pre>
+
+        <h2>Tools</h2>
+        <ul>
+            <li>Node Table: checks for existing nodes by requesting software version
+            <li>Node Table Tool to change a node address
+            <li>Error handling/reporting - captures address 0 messages
+        </ul>
 
         <h2>TODO</h2>
         <ul>
             <li>SerialLight needs to be updated to work; see SerialTurnout for communications
-            <li>Add a tool to check for existing nodes by requesting software version
-            <li>Add a tool to change a node address?
             <li>Automatically create a SerialNode if a message from an unknown address arrives?
             <li>Update the node type based on info received in response to software version message
             <li>Error handling/reporting - start by capturing address 0 messages
-            <li>setOutputBit() should be removed (in SerialLight, among other places)
         </ul>
+
         <h2>Related Documentation</h2>
 
         Other sources of documentation
@@ -43,6 +99,7 @@
         <!-- @since 1.7.3 -->
 
         @since 2.1.1
+        @see SerialMessage#staticFormat(int, int, int, int)
 
     </body>
 </html>

@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.automation.actions;
 
 import javax.swing.JComboBox;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.automation.Automation;
 import jmri.jmrit.operations.automation.AutomationManager;
 
@@ -38,7 +39,7 @@ public class RunAutomationAction extends Action {
     @Override
     public JComboBox<Automation> getComboBox() {
         if (getAutomationItem() != null) {
-            JComboBox<Automation> cb = AutomationManager.instance().getComboBox();
+            JComboBox<Automation> cb = InstanceManager.getDefault(AutomationManager.class).getComboBox();
             cb.setSelectedItem(getAutomationItem().getAutomationToRun());
             return cb;
         }

@@ -1,36 +1,52 @@
-// LnTrafficRouter.java
 package jmri.jmrix.loconet;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Implements a LocoNetInterface by doing a scatter-gather to another, simpler
  * implementation.
- * <P>
+ * <p>
  * This is intended for remote operation, where only one copy of each message
- * should go to/from another node. By putting a LnTrafficRouter implementation
+ * should go to/from another node. By putting an LnTrafficRouter implementation
  * at the remote node, all of the routing of messages to multiple consumers can
  * be done without traffic over the connection.
  *
- * @author	Bob Jacobsen Copyright (C) 2002
- * @version $Revision$
- *
+ * @author Bob Jacobsen Copyright (C) 2002
  */
 public class LnTrafficRouter extends LnTrafficController implements LocoNetListener {
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "Only used during system initialization")
+    /**
+     * Create a default LnTrafficRouter instance without a SystemConnectionMemo.
+     * Not compatible with multi connections.
+     *
+     * @deprecated since 4.11.6, use LnTrafficRouter(LocoNetSystemConnectionMemo) instead
+     */
+    @Deprecated
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "Only used during system initialization") // NOI18N
     public LnTrafficRouter() {
-        // set the instance to point here
-        self = this;
     }
 
-    // The methods to implement the LocoNetInterface for clients.
+    /**
+     * Create a default instance connected to a given SystemConnectionMemo.
+     *
+     * @since 4.11.6
+     * @param m the connected LocoNetSystemConnectionMemo
+     */
+    public LnTrafficRouter(LocoNetSystemConnectionMemo m) {
+        // set the memo to point here
+        memo = m;
+        m.setLnTrafficController(this);
+    }
+
+    // Methods to implement the LocoNetInterface for clients.
     // These use the parent implementations of listeners, addLocoNetListener,
     // removeLocoNetListener, notify
     boolean connected = false;
 
+    @Override
     public boolean status() {
         return connected;
     }
@@ -40,6 +56,7 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
      *
      * @param m Message to send; will be updated with CRC
      */
+    @Override
     public void sendLocoNetMessage(LocoNetMessage m) {
         // update statistics
         transmittedMsgCount++;
@@ -52,6 +69,7 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
      * Receive a LocoNet message from upstream and forward it to all the local
      * clients.
      */
+    @Override
     public void message(LocoNetMessage m) {
         notify(m);
     }
@@ -92,12 +110,11 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
      *
      * @return true if busy, false if nothing waiting to send
      */
+    @Override
     public boolean isXmtBusy() {
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnTrafficRouter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnTrafficRouter.class);
+
 }
-
-
-/* @(#)LnTrafficRouter.java */

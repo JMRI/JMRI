@@ -1,8 +1,6 @@
-// TurnoutSignalMast.java
 package jmri.implementation;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
@@ -15,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * A Signalmast that is built up using turnouts to control a specific
  * appearance. System name specifies the creation information:
  * <pre>
- * IF$tsm:basic:one-searchlight:(IT1)(IT2)
+ * IF$tsm:basic:one-searchlight(IT1)(IT2)
  * </pre> The name is a colon-separated series of terms:
  * <ul>
  * <li>IF$tsm - defines signal masts of this type
@@ -24,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * <li>(IT1)(IT2) - colon-separated list of names for Turnouts
  * </ul>
  *
- * @author	Bob Jacobsen Copyright (C) 2009, 2014
+ * @author Bob Jacobsen Copyright (C) 2009, 2014
  */
 public class TurnoutSignalMast extends AbstractSignalMast {
 
@@ -52,6 +50,8 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         String mast = parts[2];
 
         mast = mast.substring(0, mast.indexOf("("));
+        setMastType(mast);
+
         String tmp = parts[2].substring(parts[2].indexOf("($") + 2, parts[2].indexOf(")"));
         try {
             int autoNumber = Integer.parseInt(tmp);
@@ -80,14 +80,16 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         if (getLit()) { //If the signalmast is lit, then send the commands to change the aspect.
             if (resetPreviousStates) {
                 //Clear all the current states, this will result in the signalmast going blank for a very short time.
-                for (String appearances : turnouts.keySet()) {
+                for (Map.Entry<String, TurnoutAspect> entry : turnouts.entrySet()) {
+                    String appearances = entry.getKey();
+                    TurnoutAspect aspt = entry.getValue();
                     if (!isAspectDisabled(appearances)) {
                         int setState = Turnout.CLOSED;
-                        if (turnouts.get(appearances).getTurnoutState() == Turnout.CLOSED) {
+                        if (aspt.getTurnoutState() == Turnout.CLOSED) {
                             setState = Turnout.THROWN;
                         }
-                        if (turnouts.get(appearances).getTurnout().getKnownState() != setState) {
-                            turnouts.get(appearances).getTurnout().setCommandedState(setState);
+                        if (aspt.getTurnout().getKnownState() != setState) {
+                            aspt.getTurnout().setCommandedState(setState);
                         }
                     }
                 }
@@ -149,13 +151,13 @@ public class TurnoutSignalMast extends AbstractSignalMast {
                 }
                 // set all Heads to state
             } else {
-                for (String appearances : turnouts.keySet()) {
+                for (TurnoutAspect aspect : turnouts.values()) {
                     int setState = Turnout.CLOSED;
-                    if (turnouts.get(appearances).getTurnoutState() == Turnout.CLOSED) {
+                    if (aspect.getTurnoutState() == Turnout.CLOSED) {
                         setState = Turnout.THROWN;
                     }
-                    if (turnouts.get(appearances).getTurnout().getKnownState() != setState) {
-                        turnouts.get(appearances).getTurnout().setCommandedState(setState);
+                    if (aspect.getTurnout().getKnownState() != setState) {
+                        aspect.getTurnout().setCommandedState(setState);
                     }
                 }
             }
@@ -187,13 +189,15 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         turnouts.put(appearance, new TurnoutAspect(turn, state));
     }
 
-    HashMap<String, TurnoutAspect> turnouts = new HashMap<String, TurnoutAspect>();
+    HashMap<String, TurnoutAspect> turnouts = new HashMap<>();
 
     boolean resetPreviousStates = false;
 
     /**
      * If the signal mast driver requires the previous state to be cleared down
      * before the next state is set.
+     *
+     * @param boo true if prior states should be cleared; false otherwise
      */
     public void resetPreviousStates(boolean boo) {
         resetPreviousStates = boo;
@@ -203,16 +207,20 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         return resetPreviousStates;
     }
 
-    static class TurnoutAspect implements java.io.Serializable {
+    static class TurnoutAspect {
 
         NamedBeanHandle<Turnout> namedTurnout;
         int state;
 
         TurnoutAspect(String turnoutName, int turnoutState) {
             if (turnoutName != null && !turnoutName.equals("")) {
-                Turnout turn = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
-                namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turn);
                 state = turnoutState;
+                Turnout turn = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
+                if (turn == null) {  
+                    log.error("TurnoutAspect couldn't locate turnout {}", turnoutName);
+                    return;
+                }
+                namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turn);
             }
         }
 
@@ -257,6 +265,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
 
     static int lastRef = 0;
 
+    @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { //IN18N
             if (evt.getOldValue() instanceof Turnout) {
@@ -265,14 +274,13 @@ public class TurnoutSignalMast extends AbstractSignalMast {
                     throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalMastVeto", getDisplayName()), e); //IN18N
                 }
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { //IN18N
-            //Do nothing at this stage
         }
     }
 
+    @Override
     public void dispose() {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutSignalMast.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TurnoutSignalMast.class);
 }

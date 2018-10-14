@@ -18,6 +18,7 @@ public class NoArchiveFileFilter extends jmri.util.FileChooserFilter {
         super(description);
     }
 
+    @Override
     public boolean accept(java.io.File f) {
         if (f.getName().endsWith(".zip")) {
             return false;

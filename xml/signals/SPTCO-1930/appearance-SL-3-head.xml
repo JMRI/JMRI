@@ -174,14 +174,17 @@
     <aspectMapping>
       <advancedAspect>Branch Clear</advancedAspect>
       <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Branch Approach</advancedAspect>
       <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Branch Diverging</advancedAspect>
       <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
     </aspectMapping>
   </aspectMappings>
 </appearancetable>  

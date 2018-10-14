@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014, 2016 All rights reserved -->
+<!-- $Id$	-->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2016</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Dave</firstname>
+                <surname>Heap</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2016-12-28</date>
+            <authorinitials>DGH</authorinitials>
+            <revremark>Initial creation</revremark>
+        </revision>
+    </revhistory>
+    <enumChoice choice="On period 65 msec" value="32"/>
+    <enumChoice choice="On period 130 msec" value="33"/>
+    <enumChoice choice="On period 195 msec" value="34"/>
+    <enumChoice choice="On period 260 msec" value="35"/>
+    <enumChoice choice="On period 325 msec" value="36"/>
+    <enumChoice choice="On period 390 msec" value="37"/>
+    <enumChoice choice="On period 455 msec" value="38"/>
+    <enumChoice choice="On period 520 msec" value="39"/>
+    <enumChoice choice="On period 585 msec" value="40"/>
+    <enumChoice choice="On period 650 msec" value="41"/>
+    <enumChoice choice="On period 715 msec" value="42"/>
+    <enumChoice choice="On period 780 msec" value="43"/>
+    <enumChoice choice="On period 845 msec" value="44"/>
+    <enumChoice choice="On period 910 msec" value="45"/>
+    <enumChoice choice="On period 975 msec" value="46"/>
+    <enumChoice choice="On period 1040 msec" value="47"/>
+    <enumChoice choice="On period 1105 msec" value="48"/>
+    <enumChoice choice="On period 1170 msec" value="49"/>
+    <enumChoice choice="On period 1235 msec" value="50"/>
+    <enumChoice choice="On period 1300 msec" value="51"/>
+    <enumChoice choice="On period 1365 msec" value="52"/>
+    <enumChoice choice="On period 1430 msec" value="53"/>
+    <enumChoice choice="On period 1495 msec" value="54"/>
+    <enumChoice choice="On period 1560 msec" value="55"/>
+    <enumChoice choice="On period 1625 msec" value="56"/>
+    <enumChoice choice="On period 1690 msec" value="57"/>
+    <enumChoice choice="On period 1755 msec" value="58"/>
+    <enumChoice choice="On period 1820 msec" value="59"/>
+    <enumChoice choice="On period 1885 msec" value="60"/>
+    <enumChoice choice="On period 1950 msec" value="61"/>
+    <enumChoice choice="On period 2015 msec" value="62"/>
+    <enumChoice choice="On period 2080 msec" value="63"/>
+</enumVal>

@@ -1,4 +1,3 @@
-// YardTableModel.java
 package jmri.jmrit.operations.locations;
 
 import java.beans.PropertyChangeEvent;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of yards used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class YardTableModel extends TrackTableModel {
 
@@ -29,6 +27,9 @@ public class YardTableModel extends TrackTableModel {
         switch (col) {
             case NAME_COLUMN:
                 return Bundle.getMessage("YardName");
+            default:
+                // fall out
+                break;
         }
         return super.getColumnName(col);
     }
@@ -53,7 +54,7 @@ public class YardTableModel extends TrackTableModel {
 
     // this table listens for changes to a location and it's yards
     @Override
-    public synchronized void propertyChange(PropertyChangeEvent e) {
+    public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
@@ -61,7 +62,7 @@ public class YardTableModel extends TrackTableModel {
         super.propertyChange(e);
         if (e.getSource().getClass().equals(Track.class)) {
             Track track = ((Track) e.getSource());
-            if (track.getTrackType().equals(Track.YARD)) {
+            if (track.isYard()) {
                 int row = tracksList.indexOf(track);
                 if (Control.SHOW_PROPERTY) {
                     log.debug("Update yard table row: {} track: ({})", row, track.getName());
@@ -73,5 +74,5 @@ public class YardTableModel extends TrackTableModel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(YardTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(YardTableModel.class);
 }

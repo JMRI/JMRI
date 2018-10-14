@@ -1,0 +1,41 @@
+#msgList {
+	height: 8em;  
+	overflow-y: scroll;
+	overflow-x: hidden;
+	border: solid 1px lightgrey;
+}
+
+#dropzone {
+	max-width: 20em;
+    text-align: center;
+/*    font-weight: bold;  */
+    margin-top:0.25em;
+    margin-bottom: 0.25em;
+    font-size: auto;
+}
+#dropzone.in {
+/*
+	width: 600px;
+    height: 200px;
+    line-height: 200px;
+*/    
+    font-size: larger;
+    font-weight: bold;
+}
+#dropzone.hover {
+    background: lightGreen;
+}
+#dropzone.fade {
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    opacity: 1;
+}
+
+#progress .bar {
+	height: 18px;
+	background: lightGreen;
+	width: 0%; /* starting value, will inc in js */
+} 

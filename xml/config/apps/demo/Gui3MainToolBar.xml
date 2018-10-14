@@ -9,20 +9,23 @@
   <name>JMRI GUI3 Demo</name>
 
   <node><name>New PP Window</name>
+        <name xml:lang="cs">Nové okno PanelPro</name>
     <adapter>apps.gui3.paned.PanelProAction</adapter>
   </node>
   <node><icon>resources/icons/throttles/PowerRed24.png</icon>
     <adapter>jmri.jmrit.powerpanel.PowerPanelAction</adapter>
   </node>
   <node><name>Preferences</name>
+        <name xml:lang="cs">Přednastavení</name>
     <panel>apps.gui3.TabbedPreferences</panel>
   </node>
   <node><name>License</name>
+        <name xml:lang="cs">Licence</name>
     <adapter>apps.LicenseAction</adapter>
   </node>
   <node><name>New Loco</name>
+        <name xml:lang="cs">Nová lokomotiva</name>
     <panel>jmri.jmrit.symbolicprog.LocoSelTreePane</panel>
   </node>
 
 </nodes>
-  

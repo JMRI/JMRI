@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -10,7 +9,7 @@
   <title>JMRI: Configure Grapevine Nodes</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI help configure grapevine node"><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -28,12 +27,14 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Configure Grapevine Nodes</h1>This is the
-      help/jmri/jmrix/grapevine/nodeconfig/NodeConfigFrame help
-      page
+      <h1>Configure Grapevine Nodes</h1>
 
+      <img src="../images/GrapevineNodeConfigToolPane.png" width=
+      "653" height="312" align="right"
+      alt="Grapevine Node Configuration Tool Interface">
       <p>Grapevine nodes need to be configured before input
-      works.</p>
+      works. Select the "Configure Node" tool either from the JMRI
+      Preference Connection pane or the Grapevinemenu.</p>
 
       <p>The node software comes in three separate varieties:</p>
 
@@ -52,9 +53,14 @@
         <dd>Although JMRI has code to support these, it has not
         been extensively tested. If you encounter problems, please
         let us now so we improve the support for these cards.</dd>
-      </dl>Although right now there are no additional properties,
+      </dl>
+      <p>Although currently there are no additional properties,
       we expect to eventually add more information here as we learn
-      about the capabilities of Grapevine nodes. 
+      about the capabilities of Grapevine nodes.</p>
+
+      <p>Back to the <a href="../../../../../html/hardware/grapevine/index.shtml">Grapevine Hardware Help</a>
+      page.</p>
+
       <!--#include virtual="/Footer" -->
     </div>
   </div>

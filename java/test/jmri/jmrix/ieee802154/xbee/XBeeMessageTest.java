@@ -1,9 +1,10 @@
 package jmri.jmrix.ieee802154.xbee;
 
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * XBeeMessageTest.java
@@ -12,37 +13,26 @@ import junit.framework.TestSuite;
  *
  * @author	Paul Bender
  */
-public class XBeeMessageTest extends TestCase {
+public class XBeeMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
+    @Override
+    @Test
     public void testCtor() {
-        XBeeMessage m = new XBeeMessage(3);
         Assert.assertEquals("length", 3, m.getNumDataElements());
     }
 
-    // from here down is testing infrastructure
-    public XBeeMessageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XBeeMessageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XBeeMessageTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        m = new XBeeMessage(3);
     }
 
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+	m = null;
+        JUnitUtil.tearDown();
     }
 
 }

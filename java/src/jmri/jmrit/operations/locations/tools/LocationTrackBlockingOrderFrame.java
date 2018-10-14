@@ -1,4 +1,3 @@
-// LocationTrackBlockingOrderFrame.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Dimension;
@@ -11,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of location
  *
  * @author Dan Boudreau Copyright (C) 2015
- * @version $Revision: 29365 $
+ * 
  */
 public class LocationTrackBlockingOrderFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -33,14 +33,14 @@ public class LocationTrackBlockingOrderFrame extends OperationsFrame implements 
     JTable trackTable = new JTable(trackModel);
     JScrollPane trackPane = new JScrollPane(trackTable);
 
-    LocationManager locationManager = LocationManager.instance();
+    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     Location _location = null;
     
     JLabel locationName = new JLabel();
 
     // major buttons
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     JButton resetButton = new JButton(Bundle.getMessage("Reset"));
     JButton reorderButton = new JButton(Bundle.getMessage("Reorder"));
 
@@ -123,7 +123,7 @@ public class LocationTrackBlockingOrderFrame extends OperationsFrame implements 
                 trackTable.getCellEditor().stopCellEditing();
             }
             // recreate all train manifests
-            TrainManager.instance().setTrainsModified();
+            InstanceManager.getDefault(TrainManager.class).setTrainsModified();
             // save location file
             OperationsXml.save();
             if (Setup.isCloseWindowOnSaveEnabled()) {
@@ -155,5 +155,5 @@ public class LocationTrackBlockingOrderFrame extends OperationsFrame implements 
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocationTrackBlockingOrderFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LocationTrackBlockingOrderFrame.class);
 }

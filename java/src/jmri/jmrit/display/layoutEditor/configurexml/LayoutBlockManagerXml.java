@@ -9,6 +9,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.ColorUtil;
 import org.jdom2.Attribute;
+import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * Provides the functionality for configuring a LayoutBlockManager
  *
  * @author Dave Duchamp Copyright (c) 2007
+ * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -29,6 +31,7 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
      * @param o Object to store, of type LayoutBlockManager
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element layoutblocks = new Element("layoutblocks");
         setStoreElementClass(layoutblocks);
@@ -54,26 +57,25 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
             } else {
                 log.debug("layoutblock system name is " + sname);
                 LayoutBlock b = tm.getBySystemName(sname);
+                // save only those LayoutBlocks that are in use--skip abandoned ones
                 if (b.getUseCount() > 0) {
-                    // save only those LayoutBlocks that are in use--skip abandoned ones
-                    Element elem = new Element("layoutblock")
-                            .setAttribute("systemName", sname);
+                    Element elem = new Element("layoutblock").setAttribute("systemName", sname);
                     elem.addContent(new Element("systemName").addContent(sname));
                     storeCommon(b, elem);
-                    if (!b.getOccupancySensorName().equals("")) {
+                    if (!b.getOccupancySensorName().isEmpty()) {
                         elem.setAttribute("occupancysensor", b.getOccupancySensorName());
                     }
                     elem.setAttribute("occupiedsense", "" + b.getOccupiedSense());
-                    elem.setAttribute("trackcolor", ColorUtil.colorToString(b.getBlockTrackColor()));
-                    elem.setAttribute("occupiedcolor", ColorUtil.colorToString(b.getBlockOccupiedColor()));
-                    elem.setAttribute("extracolor", ColorUtil.colorToString(b.getBlockExtraColor()));
-                    layoutblocks.addContent(elem);
-                    if (!b.getMemoryName().equals("")) {
+                    elem.setAttribute("trackcolor", ColorUtil.colorToColorName(b.getBlockTrackColor()));
+                    elem.setAttribute("occupiedcolor", ColorUtil.colorToColorName(b.getBlockOccupiedColor()));
+                    elem.setAttribute("extracolor", ColorUtil.colorToColorName(b.getBlockExtraColor()));
+                    if (!b.getMemoryName().isEmpty()) {
                         elem.setAttribute("memory", b.getMemoryName());
                     }
                     if (!b.useDefaultMetric()) {
                         elem.addContent(new Element("metric").addContent("" + b.getBlockMetric()));
                     }
+                    layoutblocks.addContent(elem);
                 }
             }
         }
@@ -91,6 +93,7 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
         layoutblocks.setAttribute("class", getClass().getName());
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -113,16 +116,16 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
      */
     public void loadLayoutBlocks(Element layoutblocks) {
         LayoutBlockManager tm = InstanceManager.getDefault(LayoutBlockManager.class);
-        if (layoutblocks.getAttribute("blockrouting") != null) {
-            if (layoutblocks.getAttribute("blockrouting").getValue().equals("yes")) {
-                tm.enableAdvancedRouting(true);
-            }
+        try {
+            tm.enableAdvancedRouting(layoutblocks.getAttribute("blockrouting").getBooleanValue());
+        } catch (DataConversionException e1) {
+            log.warn("unable to convert layout block manager blockrouting attribute");
+        } catch (NullPointerException e) {  // considered normal if the attribute is not present
         }
         if (layoutblocks.getAttribute("routingStablisedSensor") != null) {
             try {
                 tm.setStabilisedSensor(layoutblocks.getAttribute("routingStablisedSensor").getValue());
             } catch (jmri.JmriException e) {
-
             }
         }
 
@@ -182,7 +185,7 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
                 if (((layoutblockList.get(i))).getChild("metric") != null) {
                     String stMetric = ((layoutblockList.get(i))).getChild("metric").getText();
                     try {
-                        b.setBlockMetric(Integer.valueOf(stMetric));
+                        b.setBlockMetric(Integer.parseInt(stMetric));
                     } catch (java.lang.NumberFormatException e) {
                         log.error("failed to convert metric attribute for block " + b.getDisplayName());
                     }
@@ -208,8 +211,7 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
         }
 
         // register new one with InstanceManager
-        LayoutBlockManager pManager = LayoutBlockManager.instance();
-        InstanceManager.store(pManager, jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
+        LayoutBlockManager pManager = InstanceManager.getDefault(LayoutBlockManager.class);
         // register new one for configuration
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
@@ -217,5 +219,5 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutBlockManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LayoutBlockManagerXml.class);
 }

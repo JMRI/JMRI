@@ -25,6 +25,7 @@ public class FirstTimeStartUpWizardAction extends jmri.util.swing.JmriAbstractAc
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

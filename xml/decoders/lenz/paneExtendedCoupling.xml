@@ -35,6 +35,18 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>8</revnumber>
+      <date>2016-12-22</date>
+      <authorinitials>JCA</authorinitials>
+      <revremark>Catalan translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>7</revnumber>
+      <date>2016-10-22</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>6</revnumber>
       <date>2014-05-20</date>
       <authorinitials>Ba</authorinitials>
@@ -52,6 +64,8 @@
       <label>
         <text>F1 Forward/backward mapping.               </text>
         <text xml:lang="de">F1 Vorwärts/Rückwärts Zuordnung.               </text>
+        <text xml:lang="cs">F1 přiřazení vpřed/vzad.                       </text>
+		<text xml:lang="ca">Mapejat de F1 Davant/Darrere.               </text>
       </label>
       <label>
         <text> </text>
@@ -62,18 +76,24 @@
             <label>
               <text>Output</text>
               <text xml:lang="de">Ausgang</text>
+              <text xml:lang="cs">Výstup</text>
+              <text xml:lang="ca">Sortida</text>
             </label>
           </row>
           <row>
             <label>
               <text>Function 1 forward</text>
               <text xml:lang="de">Funktion 1 vorwärts</text>
+              <text xml:lang="cs">Funkce 1 vpřed</text>
+              <text xml:lang="ca">Funció 1 endavant</text>
             </label>
           </row>
           <row>
             <label>
               <text>Function 1 backward</text>
               <text xml:lang="de">Funktion 1 rückwärts</text>
+              <text xml:lang="cs">Funkce 1 vzad</text>
+              <text xml:lang="ca">Funció 1 enrere</text>
             </label>
           </row>
         </column>
@@ -82,6 +102,8 @@
             <label>
               <text>A</text>
               <text xml:lang="de">A</text>
+              <text xml:lang="cs">A</text>
+              <text xml:lang="ca">A</text>
             </label>
           </row>
           <row>
@@ -96,6 +118,8 @@
             <label>
               <text>B</text>
               <text xml:lang="de">B</text>
+              <text xml:lang="cs">B</text>
+              <text xml:lang="ca">B</text>
             </label>
           </row>
           <row>
@@ -110,6 +134,8 @@
             <label>
               <text>C</text>
               <text xml:lang="de">C</text>
+              <text xml:lang="cs">C</text>
+              <text xml:lang="ca">C</text>
             </label>
           </row>
           <row>
@@ -124,6 +150,8 @@
             <label>
               <text>D</text>
               <text xml:lang="de">D</text>
+              <text xml:lang="cs">D</text>
+              <text xml:lang="ca">D</text>
             </label>
           </row>
           <row>
@@ -138,6 +166,8 @@
             <label>
               <text>E</text>
               <text xml:lang="de">E</text>
+              <text xml:lang="cs">E</text>
+              <text xml:lang="ca">E</text>
             </label>
           </row>
           <row>
@@ -152,6 +182,8 @@
             <label>
               <text>F</text>
               <text xml:lang="de">F</text>
+              <text xml:lang="cs">F</text>
+              <text xml:lang="ca">F</text>
             </label>
           </row>
           <row>
@@ -166,6 +198,8 @@
             <label>
               <text>G</text>
               <text xml:lang="de">G</text>
+              <text xml:lang="cs">G</text>
+              <text xml:lang="ca">G</text>
             </label>
           </row>
           <row>
@@ -180,6 +214,8 @@
             <label>
               <text>H</text>
               <text xml:lang="de">H</text>
+			  <text xml:lang="cs">H</text>
+			  <text xml:lang="ca">H</text>
             </label>
           </row>
           <row>
@@ -195,10 +231,14 @@
       <label>
         <text>Select which function</text>
         <text xml:lang="de">Auswahl der Funktionstaste</text>
+        <text xml:lang="cs">Vyberte která funkce</text>
+        <text xml:lang="ca">Selecciona quina funció</text>
       </label>
       <label>
         <text>which enables coupling control forward:</text>
         <text xml:lang="de">für das Entkuppeln vorwärts:</text>
+        <text xml:lang="cs">zpřístupní ovládání spřáhla vpředu:</text>
+        <text xml:lang="ca">activa desenganxador davanter</text>
       </label>
       <label>
         <text> </text>
@@ -220,10 +260,14 @@
       <label>
         <text>Select which function</text>
         <text xml:lang="de">Auswahl der Funktionstaste</text>
+        <text xml:lang="cs">Vyberte která funkce</text>
+        <text xml:lang="ca">Selecciona quina funció</text>
       </label>
       <label>
         <text>which enables coupling control backward:</text>
         <text xml:lang="de">für das Entkuppeln rückwärts:</text>
+        <text xml:lang="cs">zpřístupní ovládání spřáhla vzadu:</text>
+        <text xml:lang="ca">activa desenganxador posterior</text>
       </label>
       <label>
         <text> </text>

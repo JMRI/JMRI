@@ -1,21 +1,14 @@
-// JMRIClientMenu.java
 package jmri.jmrix.jmriclient.swing;
 
 import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**
- * Create a "JMRIClient" menu containing the system-specific tools
+ * Create a "JMRIClient" menu containing the system-specific tools.
  *
- * @author	Bob Jacobsen Copyright 2008
- * @version $Revision$
+ * @author Bob Jacobsen Copyright 2008
  */
 public class JMRIClientMenu extends JMenu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5861232083288110754L;
 
     public JMRIClientMenu(String name, jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo memo) {
         this(memo);
@@ -23,18 +16,18 @@ public class JMRIClientMenu extends JMenu {
     }
 
     public JMRIClientMenu(jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo memo) {
-
         super();
-        _memo = memo;
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
+        if (memo != null) {
+            setText(memo.getUserName());
+        } else {
+            setText(Bundle.getMessage("MenuItemJMRIClient"));
+        }
 
-        setText(rb.getString("MenuItemJMRIClient"));
-
-        add(new jmri.jmrix.jmriclient.swing.mon.JMRIClientMonAction(rb.getString("MenuItemCommandMonitor"), _memo));
-        add(new jmri.jmrix.jmriclient.swing.packetgen.PacketGenAction(rb.getString("MenuItemSendCommand"), _memo));
+        if (memo != null) {
+            add(new jmri.jmrix.jmriclient.swing.mon.JMRIClientMonAction());
+            add(new jmri.jmrix.jmriclient.swing.packetgen.PacketGenAction(Bundle.getMessage("MenuItemSendCommand"), memo));
+        }
     }
-
-    jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo _memo = null;
 
 }

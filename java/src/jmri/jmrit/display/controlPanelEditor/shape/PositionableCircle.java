@@ -9,24 +9,17 @@ import jmri.jmrit.display.Positionable;
 
 /**
  * PositionableCircle PositionableShapes.
- * <P>
+ *
  * @author Pete Cressman Copyright (c) 2012
  */
 public class PositionableCircle extends PositionableShape {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1016948514119727789L;
-
     public PositionableCircle(Editor editor) {
         super(editor);
-        _height = _width = 100;
     }
 
     public PositionableCircle(Editor editor, Shape shape) {
         super(editor, shape);
-        _height = _width = 100;
     }
 
     @Override
@@ -35,20 +28,9 @@ public class PositionableCircle extends PositionableShape {
         _width = _height;
     }
 
-    public void setRadius(int r) {
-        setWidth(r);
-    }
-
-    public int getRadius() {
-        return _width;
-    }
-
-    /**
-     * this class must be overridden by its subclasses and executed only after
-     * its parameters have been set
-     */
-    public void makeShape() {
-        setShape(new Ellipse2D.Double(0, 0, _width, _width));
+    @Override
+    protected Shape makeShape() {
+        return new Ellipse2D.Double(0, 0, _width, _width);
     }
 
     @Override
@@ -57,26 +39,30 @@ public class PositionableCircle extends PositionableShape {
         return finishClone(pos);
     }
 
-    protected Positionable finishClone(PositionableCircle pos) {
+    @Override
+    protected Positionable finishClone(PositionableShape pos) {
         pos._width = _width;
+        pos._height = _height;
         return super.finishClone(pos);
     }
 
+    @Override
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = Bundle.getMessage("editShape", Bundle.getMessage("Circle"));
         popup.add(new javax.swing.AbstractAction(txt) {
-            /**
-             *
-             */
-            private static final long serialVersionUID = 4014472244175717813L;
-
+            @Override
             public void actionPerformed(ActionEvent e) {
-                if (_editFrame == null) {
-                    _editFrame = new DrawCircle("editShape", "Circle", null);
-                    setEditParams();
-                }
+                makeEditFrame(false);
             }
         });
         return true;
     }
+    
+    @Override
+    protected DrawFrame makeEditFrame(boolean create) {
+        _editFrame = new DrawCircle("editShape", "Circle", this, getEditor(), create);
+        _editFrame.setDisplayParams(this);
+        return _editFrame;
+    }
+        
 }

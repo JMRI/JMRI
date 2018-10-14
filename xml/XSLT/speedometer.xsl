@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id$ -->
-
+<?xml version="1.0" encoding="iso-8859-1"?>
 <!-- Stylesheet to convert a JMRI Speedometer XML file into displayable     -->
 <!-- HTML                                                                   -->
 
@@ -10,7 +8,7 @@
 <!-- This is just a basic implementation for debugging purposes, without    -->
 <!-- any real attempt at formatting                                         -->
 
-<!-- This file is part of JMRI.  Copyright 2011.                            -->
+<!-- This file is part of JMRI.  Copyright 2011, 2018.                            -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -49,11 +47,12 @@
 <xsl:apply-templates/>
 <hr/>
 This page was produced by <a href="http://jmri.org">JMRI</a>.
-<P/>Copyright &#169; <xsl:value-of select="$JmriCopyrightYear" /> JMRI Community. 
+<p/>Copyright &#169; <xsl:value-of select="$JmriCopyrightYear" /> JMRI Community.
 <p/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
 <p/><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
 <p/>Site hosted by: <br/>
-<a href="http://sourceforge.net"><img src="http://sourceforge.net/sflogo.php?group_id=26788&amp;type=1" width="88" height="31" border="0" alt="SourceForge Logo"/> </a>
+    <a href="http://www.tagadab.com/">
+    <img src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab logo"/></a>
 </body>
 </html>
 </xsl:template>

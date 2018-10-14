@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: Suzie _Tall $) 2013 -->
-<!-- $Id: index.shtml 18924 2011-10-20 16:51:30Z ken_c $ -->
 <title>JMRI: LMS Mirfield speed signals</title>
 
 <!-- Style -->
@@ -14,9 +13,9 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -30,9 +29,14 @@ This signal system contains signalling definitions for the LMS speed signalling 
 The 1937 change involved extinguishing the lower red 'marker' lamp when the signal was not showing stop implementing 1933 ministry of transport recommendations to standardise signalling and the 1959 change removed the yellow over green advance caution aspect changing it to an additional yellow over yellow bringing the aspects in to line with the rest of BR.
 <p>
 Some extra aspect definitions have been provided for the signals that were not provided on the prototype but might have been needed had the Mirfield system been extended or more widely adopted. 
-<p>
-References can be seen at <a href="http://www.signalbox.org/signals/lmsspeed.htm">LMS Mirfield Speed Signalling</a> and 
+<p> 
+References can be seen at <a href="https://www.signalbox.org/signals/lmsspeed.htm">LMS Mirfield Speed Signalling</a> and 
 <a href="http://www.davros.org/rail/signalling/lmsr/newlines.html">LMS New Lines Signalling</a>
+</p>
+
+
+<h3>Aspect Files in XML Format</h3>
+
 <p>
 See the 
 <a href="aspects.xml">aspect page</a>.

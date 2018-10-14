@@ -1,10 +1,9 @@
 package jmri.implementation;
 
 import jmri.*;
-
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Test the DefaultLogixTest implementation class
@@ -16,6 +15,7 @@ public class DefaultLogixTest extends NamedBeanTest {
     /**
      * Operate parent NamedBeanTest tests.
      */
+    @Override
     protected NamedBean createInstance() {
         return new DefaultLogix("IX 0");
     }
@@ -48,7 +48,7 @@ public class DefaultLogixTest extends NamedBeanTest {
     // The minimal setup for log4J
     @Override
     protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         super.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
@@ -57,9 +57,7 @@ public class DefaultLogixTest extends NamedBeanTest {
 
     @Override
     protected void tearDown() throws Exception {
-        jmri.util.JUnitUtil.resetInstanceManager();
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
 
     // Main entry point

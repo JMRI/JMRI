@@ -2,7 +2,6 @@ package jmri.jmrit;
 
 import jmri.Programmer;
 import jmri.ProgrammingMode;
-import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * function) to simplify use of {@link jmri.Programmer} callbacks.
  * <p>
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2015
+ * @author Bob Jacobsen Copyright (C) 2001, 2015
  * @see jmri.jmrit.symbolicprog.CombinedLocoSelPane
  * @see jmri.jmrit.symbolicprog.NewLocoSelPane
  */
@@ -50,6 +49,8 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
     /**
      * Update the status field (if any). Invoked with "Done" when the results
      * are in.
+     *
+     * @param status the new status
      */
     abstract protected void statusUpdate(String status);
 
@@ -93,46 +94,47 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
      * request terminates. Each will reduce (if possible) the list of consistent
      * decoders, and starts the next step.
      */
+    @Override
     public void programmingOpReply(int value, int status) {
         // we abort if there's no programmer
         //  (doing this now to simplify later)
-        if (programmer == null ) {
+        if (programmer == null) {
             log.warn("No programmer connected");
             statusUpdate("No programmer connected");
-            
+
             state = 0;
             retry = 0;
             error();
             return;
         }
-        
+
         // we abort if the status isn't normal
         if (status != jmri.ProgListener.OK) {
-            if ( retry < RETRY_COUNT) {
+            if (retry < RETRY_COUNT) {
                 statusUpdate("Programmer error: "
-                    + programmer.decodeErrorCode(status));
+                        + programmer.decodeErrorCode(status));
                 state--;
                 retry++;
-            } else if (programmer.getMode() != DefaultProgrammerManager.PAGEMODE &&
-                        programmer.getSupportedModes().contains(DefaultProgrammerManager.PAGEMODE)) {
-                programmer.setMode(DefaultProgrammerManager.PAGEMODE);
+            } else if (programmer.getMode() != ProgrammingMode.PAGEMODE
+                    && programmer.getSupportedModes().contains(ProgrammingMode.PAGEMODE)) {
+                programmer.setMode(ProgrammingMode.PAGEMODE);
                 retry = 0;
                 state--;
-                log.warn(programmer.decodeErrorCode(status) +
-                        ", trying " + programmer.getMode().toString() + " mode");
+                log.warn(programmer.decodeErrorCode(status)
+                        + ", trying " + programmer.getMode().toString() + " mode");
             } else {
                 log.warn("Stopping due to error: "
-                    + programmer.decodeErrorCode(status));
+                        + programmer.decodeErrorCode(status));
                 statusUpdate("Stopping due to error: "
-                    + programmer.decodeErrorCode(status));
+                        + programmer.decodeErrorCode(status));
                 if (programmer.getMode() != savedMode) {  // restore original mode
                     log.warn("Restoring " + savedMode.toString() + " mode");
                     programmer.setMode(savedMode);
                 }
-            state = 0;
-            retry = 0;
-            error();
-            return;
+                state = 0;
+                retry = 0;
+                error();
+                return;
             }
         } else {
             retry = 0;
@@ -201,7 +203,6 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
                 // this is an error
                 log.error("unexpected state in normal operation: " + state + " value: " + value + ", ending identification");
                 identifyDone();
-                return;
         }
     }
 
@@ -211,7 +212,9 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
     abstract protected void error();
 
     /**
-     * To check if running now
+     * To check if running now.
+     *
+     * @return true if running; false otherwise
      */
     public boolean isRunning() {
         return state != 0;
@@ -224,9 +227,11 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
     int retry = 0;
 
     /**
-     * Access a single CV for the next step
+     * Access a single CV for the next step.
+     *
+     * @param cv the CV to read
      */
-    protected void readCV(int cv) {
+    protected void readCV(String cv) {
         if (programmer == null) {
             statusUpdate("No programmer connected");
         } else {
@@ -238,7 +243,7 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
         }
     }
 
-    protected void writeCV(int cv, int value) {
+    protected void writeCV(String cv, int value) {
         if (programmer == null) {
             statusUpdate("No programmer connected");
         } else {
@@ -251,6 +256,6 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(AbstractIdentify.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractIdentify.class);
 
 }

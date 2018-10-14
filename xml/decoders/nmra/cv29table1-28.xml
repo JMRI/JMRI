@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved    -->
 <!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -13,50 +13,68 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <copyright xmlns="http://docbook.org/ns/docbook">
-    <year>2010</year>
-    <holder>JMRI</holder>
-  </copyright>
-  <authorgroup xmlns="http://docbook.org/ns/docbook">
-    <author>
-      <personname>
-        <firstname>Michael</firstname>
-        <surname>Mosher</surname>
-      </personname>
-    </author>
-  </authorgroup>
-  <revhistory xmlns="http://docbook.org/ns/docbook">
-    <revision>
-      <revnumber>2</revnumber>
-      <date>2013-07-29</date>
-      <authorinitials>PB</authorinitials>
-      <revremark>Added German, French</revremark>
-    </revision>
-    <revision>
-      <revnumber>1</revnumber>
-      <date>2013-01-22</date>
-      <authorinitials>MM</authorinitials>
-      <revremark>Initial release</revremark>
-    </revision>
-  </revhistory>
-  <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" default="0">
-    <enumVal>
-      <enumChoice choice="Don't use Speed Table, use Start Voltage (Vstart)">
-        <choice>Don't use Speed Table, use Start Voltage (Vstart and Vmax)</choice>
-        <choice xml:lang="it">Non usare Tabella, usa Tensione Iniziale (Vstart e Vmax)</choice>
-        <choice xml:lang="fr">Utiliser V démarrage (Vstart-Vmax)</choice>
-        <choice xml:lang="de">Anfahrspannung (Vstart-Vmax) nutzen</choice>
-      </enumChoice>
-      <enumChoice choice="Use Speed Table">
-        <choice>Use Speed Table</choice>
-        <choice xml:lang="it">Usa Tabella Velocità</choice>
-        <choice xml:lang="fr">Utiliser tableau de vitesse</choice>
-        <choice xml:lang="de">Geschw.-kennlinie nutzen</choice>
-      </enumChoice>
-    </enumVal>
-    <label>Use Speed Table</label>
-    <label xml:lang="fr">Tableau de vitesse</label>
-    <label xml:lang="de">Geschwindigkeitskennlinie nutzen</label>
-    <label xml:lang="it">Uso Tabella Velocità</label>
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2010</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Michael</firstname>
+				<surname>Mosher</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>4</revnumber>
+			<date>2018-03-01</date>
+			<authorinitials>WK</authorinitials>
+			<revremark>Added Dutch translation</revremark>
+		</revision>
+		<revision>
+			<revnumber>3</revnumber>
+			<date>2016-10-23</date>
+			<authorinitials>PS</authorinitials>
+			<revremark>Czech translation</revremark>
+		</revision>
+		<revision>
+			<revnumber>2</revnumber>
+			<date>2013-07-29</date>
+			<authorinitials>PB</authorinitials>
+			<revremark>Added German, French</revremark>
+		</revision>
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2013-01-22</date>
+			<authorinitials>MM</authorinitials>
+			<revremark>Initial release</revremark>
+		</revision>
+	</revhistory>
+	<variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" default="0">
+		<enumVal>
+			<enumChoice choice="Don't use Speed Table, use Start Voltage (Vstart)">
+				<choice>Don't use Speed Table, use Start Voltage (Vstart and Vmax)</choice>
+				<choice xml:lang="it">Non usare Tabella, usa Tensione Iniziale (Vstart e Vmax)</choice>
+				<choice xml:lang="fr">Utiliser V démarrage (Vstart-Vmax)</choice>
+				<choice xml:lang="de">Anfahrspannung (Vstart-Vmax) nutzen</choice>
+				<choice xml:lang="cs">Nepoužít rychlostní tabulku, použít rozjezdové napětí (Vstart a Vmax)</choice>
+				<choice xml:lang="nl">Gebruik geen snelheidsgrafiek, gebruik start voltage (Vstart en Vmax)</choice>
+			</enumChoice>
+			<enumChoice choice="Use Speed Table">
+				<choice>Use Speed Table</choice>
+				<choice xml:lang="it">Usa Tabella Velocità</choice>
+				<choice xml:lang="fr">Utiliser tableau de vitesse</choice>
+				<choice xml:lang="de">Geschw.-kennlinie nutzen</choice>
+				<choice xml:lang="cs">Použít rychlostní tabulku</choice>
+				<choice xml:lang="nl">Gebruik de snelheidsgrafiek</choice>
+			</enumChoice>
+		</enumVal>
+		<label>Use Speed Table</label>
+		<label xml:lang="fr">Tableau de vitesse</label>
+		<label xml:lang="de">Geschwindigkeitskennlinie nutzen</label>
+		<label xml:lang="it">Uso Tabella Velocità</label>
+		<label xml:lang="cs">Použití rychlostní tabulky</label>
+		<label xml:lang="nl">Gebruik de snelheidsgrafiek</label>
   </variable>
 </variables>

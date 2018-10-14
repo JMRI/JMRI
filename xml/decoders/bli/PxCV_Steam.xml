@@ -165,10 +165,6 @@
 	<decVal max="15"/>
 	<label>Recorder Repeats</label>
   </variable>
-  <variable item="Broadcast Stop Packet Count" CV="244" default="0">
-	<decVal/>
-	<label>Broadcast Stop Packet Count</label>
-  </variable>
   <variable item="GSC2 bit 6" CV="246" mask="XVXXXXXX" default="0">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
 	<label>Chuff Sensor</label>

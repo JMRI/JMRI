@@ -5,9 +5,11 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JComboBox;
+import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
+import jmri.InstanceManagerAutoInitialize;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -19,31 +21,25 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
  */
-public class RouteManager {
+public class RouteManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize {
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "routesListLengthChanged"; // NOI18N
 
     public RouteManager() {
     }
 
-    /**
-     * record the single instance *
-     */
-    private static RouteManager _instance = null;
     private int _id = 0;
 
+    /**
+     * Get the default instance of this class.
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.2; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     public static synchronized RouteManager instance() {
-        if (_instance == null) {
-            log.debug("RouteManager creating instance");
-            // create and load
-            _instance = new RouteManager();
-            OperationsSetupXml.instance(); // load setup
-            RouteManagerXml.instance(); // load routes
-        }
-        if (Control.SHOW_INSTANCE) {
-            log.debug("RouteManager returns instance {}", _instance);
-        }
-        return _instance;
+        return InstanceManager.getDefault(RouteManager.class);
     }
 
     public void dispose() {
@@ -52,9 +48,10 @@ public class RouteManager {
     }
 
     // stores known Route instances by id
-    protected Hashtable<String, Route> _routeHashTable = new Hashtable<String, Route>();
+    protected Hashtable<String, Route> _routeHashTable = new Hashtable<>();
 
     /**
+     * @param name The string name of the Route.
      * @return requested Route object or null if none exists
      */
     public Route getRouteByName(String name) {
@@ -77,6 +74,8 @@ public class RouteManager {
      * Finds an existing route or creates a new route if needed requires route's
      * name creates a unique id for this route
      *
+     * @param name The string name of the new Route.
+     *
      *
      * @return new route or existing route
      */
@@ -95,6 +94,8 @@ public class RouteManager {
 
     /**
      * Remember a NamedBean Object created outside the manager.
+     *
+     * @param route The Route to add.
      */
     public void register(Route route) {
         Integer oldSize = Integer.valueOf(_routeHashTable.size());
@@ -110,6 +111,8 @@ public class RouteManager {
 
     /**
      * Forget a NamedBean Object created outside the manager.
+     *
+     * @param route The Route to delete.
      */
     public void deregister(Route route) {
         if (route == null) {
@@ -129,7 +132,7 @@ public class RouteManager {
     public List<Route> getRoutesByNameList() {
         List<Route> sortList = getList();
         // now re-sort
-        List<Route> out = new ArrayList<Route>();
+        List<Route> out = new ArrayList<>();
         for (Route route : sortList) {
             for (int j = 0; j < out.size(); j++) {
                 if (route.getName().compareToIgnoreCase(out.get(j).getName()) < 0) {
@@ -153,7 +156,7 @@ public class RouteManager {
     public List<Route> getRoutesByIdList() {
         List<Route> sortList = getList();
         // now re-sort
-        List<Route> out = new ArrayList<Route>();
+        List<Route> out = new ArrayList<>();
         for (Route route : sortList) {
             for (int j = 0; j < out.size(); j++) {
                 try {
@@ -173,7 +176,7 @@ public class RouteManager {
     }
 
     private List<Route> getList() {
-        List<Route> out = new ArrayList<Route>();
+        List<Route> out = new ArrayList<>();
         Enumeration<Route> en = _routeHashTable.elements();
         while (en.hasMoreElements()) {
             out.add(en.nextElement());
@@ -204,9 +207,9 @@ public class RouteManager {
      * Copy route, returns a new route named routeName. If invert is true the
      * reverse of the route is returned.
      *
-     * @param route The route to be copied
+     * @param route     The route to be copied
      * @param routeName The name of the new route
-     * @param invert If true, return the inversion of route
+     * @param invert    If true, return the inversion of route
      * @return A copy of the route
      */
     public Route copyRoute(Route route, String routeName, boolean invert) {
@@ -231,13 +234,14 @@ public class RouteManager {
     }
 
     private void copyRouteLocation(Route newRoute, RouteLocation rl, RouteLocation rlNext, boolean invert) {
-        Location loc = LocationManager.instance().getLocationByName(rl.getName());
+        Location loc = InstanceManager.getDefault(LocationManager.class).getLocationByName(rl.getName());
         RouteLocation rlNew = newRoute.addLocation(loc);
         // now copy the route location objects we want
         rlNew.setMaxCarMoves(rl.getMaxCarMoves());
+        rlNew.setRandomControl(rl.getRandomControl());
         rlNew.setWait(rl.getWait());
         rlNew.setDepartureTime(rl.getDepartureTime());
-        rlNew.setComment(rl.getComment());
+        rlNew.setComment(rl.getComment());     
         if (!invert) {
             rlNew.setDropAllowed(rl.isDropAllowed());
             rlNew.setPickUpAllowed(rl.isPickUpAllowed());
@@ -261,7 +265,7 @@ public class RouteManager {
             }
             // get the max length between location
             if (rlNext == null) {
-                log.error("Can not copy route, oldNextRl is null!");
+                log.error("Can not copy route, rlNext is null!");
                 return;
             }
             rlNew.setMaxTrainLength(rlNext.getMaxTrainLength());
@@ -280,7 +284,6 @@ public class RouteManager {
     public void load(Element root) {
         // decode type, invoke proper processing routine if a decoder file
         if (root.getChild(Xml.ROUTES) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> eRoutes = root.getChild(Xml.ROUTES).getChildren(Xml.ROUTE);
             log.debug("readFile sees {} routes", eRoutes.size());
             for (Element eRoute : eRoutes) {
@@ -308,12 +311,16 @@ public class RouteManager {
     }
 
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
-        RouteManagerXml.instance().setDirty(true);
+        InstanceManager.getDefault(RouteManagerXml.class).setDirty(true);
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RouteManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RouteManager.class);
+
+    @Override
+    public void initialize() {
+        InstanceManager.getDefault(OperationsSetupXml.class); // load setup
+        InstanceManager.getDefault(RouteManagerXml.class); // load routes
+    }
 
 }
-
-/* @(#)RouteManager.java */

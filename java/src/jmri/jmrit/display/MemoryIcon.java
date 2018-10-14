@@ -17,6 +17,7 @@ import jmri.Memory;
 import jmri.NamedBeanHandle;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.util.datatransfer.RosterEntrySelection;
@@ -37,6 +38,9 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     java.util.HashMap<String, NamedIcon> map = null;
     private NamedBeanHandle<Memory> namedMemory;
 
+    /**
+     * {@inheritDoc}
+     */
     public MemoryIcon(String s, Editor editor) {
         super(s, editor);
         resetDefaultIcon();
@@ -141,6 +145,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         return namedMemory.getBean();
     }
 
+    @Override
     public jmri.NamedBean getNamedBean() {
         return getMemory();
     }
@@ -162,6 +167,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     }
 
     // update icon as state of Memory changes
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
             log.debug("property change: "
@@ -183,6 +189,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         }
     }
 
+    @Override
     public String getNameString() {
         String name;
         if (namedMemory == null) {
@@ -204,6 +211,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     }
     boolean selectable = false;
 
+    @Override
     public boolean showPopUp(JPopupMenu popup) {
         if (isEditable() && selectable) {
             popup.add(new JSeparator());
@@ -214,6 +222,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                 //String value = ((NamedIcon)map.get(key)).getName();
                 popup.add(new AbstractAction(key) {
 
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         String key = e.getActionCommand();
                         setValue(key);
@@ -225,8 +234,9 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         if (re != null) {
             popup.add(new AbstractAction(Bundle.getMessage("OpenThrottle")) {
 
+                @Override
                 public void actionPerformed(ActionEvent e) {
-                    ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
+                    ThrottleFrame tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
                     tf.toFront();
                     tf.getAddressPanel().setRosterEntry(re);
                 }
@@ -239,14 +249,16 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     if (at != null) {
                         popup.add(new AbstractAction(Bundle.getMessage("MenuTerminateTrain")) {
 
+                            @Override
                             public void actionPerformed(ActionEvent e) {
                                 df.terminateActiveTrain(at);
                             }
                         });
                         popup.add(new AbstractAction(Bundle.getMessage("MenuAllocateExtra")) {
 
+                            @Override
                             public void actionPerformed(ActionEvent e) {
-                                //Just brings up the standard allocate extra frame, this could be expanded in the future 
+                                //Just brings up the standard allocate extra frame, this could be expanded in the future
                                 //As a point and click operation.
                                 df.allocateExtraSection(e, at);
                             }
@@ -254,6 +266,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                         if (at.getStatus() == jmri.jmrit.dispatcher.ActiveTrain.DONE) {
                             popup.add(new AbstractAction(Bundle.getMessage("MenuRestartTrain")) {
 
+                                @Override
                                 public void actionPerformed(ActionEvent e) {
                                     at.allocateAFresh();
                                 }
@@ -262,6 +275,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     } else {
                         popup.add(new AbstractAction(Bundle.getMessage("MenuNewTrain")) {
 
+                            @Override
                             public void actionPerformed(ActionEvent e) {
                                 if (!df.getNewTrainActive()) {
                                     df.getActiveTrainFrame().initiateTrain(e, re, jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getBlockWithMemoryAssigned(getMemory()).getBlock());
@@ -283,9 +297,11 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     /**
      * Text edits cannot be done to Memory text - override
      */
+    @Override
     public boolean setTextEditMenu(JPopupMenu popup) {
         popup.add(new AbstractAction(Bundle.getMessage("EditMemoryValue")) {
 
+            @Override
             public void actionPerformed(ActionEvent e) {
                 editMemoryValue();
             }
@@ -317,6 +333,17 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         }
         Object key = getMemory().getValue();
         displayState(key);
+    }
+
+    /**
+     * Special method to transfer a setAttributes call from the LE version of
+     * MemoryIcon.  This eliminates the need to change references to public.
+     * @since 4.11.6
+     * @param util The LE popup util object.
+     * @param that The current positional object (this).
+     */
+    public void setAttributes(PositionablePopupUtil util, Positionable that) {
+        _editor.setAttributes(util, that);
     }
 
     protected void displayState(Object key) {
@@ -393,7 +420,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
     protected Object updateIconFromRosterVal(RosterEntry roster) {
         re = roster;
-        javax.swing.ImageIcon icon = jmri.InstanceManager.rosterIconFactoryInstance().getIcon(roster);
+        javax.swing.ImageIcon icon = jmri.InstanceManager.getDefault(RosterIconFactory.class).getIcon(roster);
         if (icon == null || icon.getIconWidth() == -1 || icon.getIconHeight() == -1) {
             //the IconPath is still at default so no icon set
             return roster.titleString();
@@ -425,6 +452,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     static final int RIGHT = 0x02;
     static final int CENTRE = 0x04;
 
+    @Override
     public void updateSize() {
         if (_popupUtil.getFixedWidth() == 0) {
             //setSize(maxWidth(), maxHeight());
@@ -437,6 +465,9 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     break;
                 case CENTRE:
                     super.setLocation(getOriginalX() - (maxWidth() / 2), getOriginalY());
+                    break;
+                default:
+                    log.warn("Unhandled justification code: {}", _popupUtil.getJustification());
                     break;
             }
             setSize(maxWidth(), maxHeight());
@@ -467,6 +498,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         return originalY;
     }
 
+    @Override
     public void setLocation(int x, int y) {
         if (_popupUtil.getFixedWidth() == 0) {
             setOriginalLocation(x, y);
@@ -475,9 +507,11 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         }
     }
 
+    @Override
     public boolean setEditIconMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameMemory"));
         popup.add(new AbstractAction(txt) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 edit();
             }
@@ -485,13 +519,12 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         return true;
     }
 
+    @Override
     protected void edit() {
         makeIconEditorFrame(this, "Memory", true, null);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.memoryPickModelInstance());
-        ActionListener addIconAction = new ActionListener() {
-            public void actionPerformed(ActionEvent a) {
-                editMemory();
-            }
+        ActionListener addIconAction = (ActionEvent a) -> {
+            editMemory();
         };
         _iconEditor.complete(addIconAction, false, true, true);
         _iconEditor.setSelection(getMemory());
@@ -506,6 +539,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         invalidate();
     }
 
+    @Override
     public void dispose() {
         if (getMemory() != null) {
             getMemory().removePropertyChangeListener(this);
@@ -518,6 +552,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         super.dispose();
     }
 
+    @Override
     public void doMouseClicked(java.awt.event.MouseEvent e) {
         if (e.getClickCount() == 2) { // double click?
             editMemoryValue();
@@ -576,7 +611,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
             flipRosterIcon = true;
         }
         if (getValue() == roster) {
-            //No change in the loco but a change in direction facing might have occured
+            //No change in the loco but a change in direction facing might have occurred
             updateIconFromRosterVal(roster);
         } else {
             setValue(roster);
@@ -622,5 +657,5 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MemoryIcon.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MemoryIcon.class);
 }

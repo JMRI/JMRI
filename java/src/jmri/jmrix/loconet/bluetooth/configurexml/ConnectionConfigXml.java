@@ -9,7 +9,7 @@ import jmri.jmrix.loconet.bluetooth.LocoNetBluetoothAdapter;
  * LocoNetBluetoothAdapter (and connections). Note this is named as the XML version of
  * a ConnectionConfig object, but it's actually persisting the
  * LocoNetBluetoothAdapter.
- * <P>
+ * <p>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
  * is the one actually registered. Reads are brought here directly via the class
  * attribute in the XML.
@@ -20,10 +20,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
         adapter = new LocoNetBluetoothAdapter();
     }
 
+    @Override
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig) object).getAdapter();
     }

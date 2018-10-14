@@ -31,7 +31,7 @@ public class BuildTrainAction extends Action {
 
     @Override
     public void cancelAction() {
-        // no cancel for this action     
+        // no cancel for this action
     }
 
 }

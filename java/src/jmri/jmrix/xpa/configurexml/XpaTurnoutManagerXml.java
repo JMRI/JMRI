@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Paul Bender Copyright (c) 2004
- * @version $Revision$
  */
 public class XpaTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -20,10 +19,12 @@ public class XpaTurnoutManagerXml extends jmri.managers.configurexml.AbstractTur
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element turnouts) {
         turnouts.setAttribute("class", "jmri.jmrix.xpa.configurexml.XpaTurnoutManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -37,5 +38,5 @@ public class XpaTurnoutManagerXml extends jmri.managers.configurexml.AbstractTur
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(XpaTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XpaTurnoutManagerXml.class);
 }

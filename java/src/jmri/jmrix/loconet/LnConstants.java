@@ -13,83 +13,82 @@ package jmri.jmrix.loconet;
  *  <li>RE - Re-engineered, not from the LocoNet documentations
  *  <li>STAT1 - bits in status byte 1
  *  <li>STAT2 - bits in status byte 2
- *  <li>
  *  </ul>
  *<p>
  * Slot Status byte definitions and macros
- * <UL>
- * <li>D7-SL_SPURGE : 1=SLOT purge en,  ALSO adrSEL (INTERNAL use only) (not seen on NET!) 
- * 
+ * <ul>
+ * <li>D7-SL_SPURGE : 1=SLOT purge en, ALSO adrSEL (INTERNAL use only) (not seen on NET!)
+ *
  * <li>D6-SL_CONUP : CONDN/CONUP: bit encoding-Control double
- * linked Consist List 
+ * linked Consist List
  *    <ul>
  *    <li> 11=LOGICAL MID CONSIST , Linked up AND down
- *    <li> 10=LOGICAL CONSIST TOP, Only linked downwards 
- *    <li> 01=LOGICAL CONSIST SUB-MEMBER, Only linked upwards 
- *    <li> 00=FREE locomotive, no CONSIST indirection/linking 
+ *    <li> 10=LOGICAL CONSIST TOP, Only linked downwards
+ *    <li> 01=LOGICAL CONSIST SUB-MEMBER, Only linked upwards
+ *    <li> 00=FREE locomotive, no CONSIST indirection/linking
  *    </ul>
- * ALLOWS "CONSISTS of CONSISTS". Uplinked means that Slot SPD number is 
- * now SLOT adr of SPD/DIR and STATUS of 
- * consist. i.e. is an Indirect pointer. This Slot 
- * has same BUSY/ACTIVE bits as TOP of Consist. TOP is 
- * loco with SPD/DIR for whole consist. (top of list). 
- * 
- * <li> D5-SL_BUSY: BUSY/ACTIVE: bit encoding for SLOT activity 
+ * ALLOWS "CONSISTS of CONSISTS". Uplinked means that Slot SPD number is
+ * now SLOT adr of SPD/DIR and STATUS of
+ * consist. i.e. is an Indirect pointer. This Slot
+ * has same BUSY/ACTIVE bits as TOP of Consist. TOP is
+ * loco with SPD/DIR for whole consist. (top of list).
+ *
+ * <li> D5-SL_BUSY: BUSY/ACTIVE: bit encoding for SLOT activity
  *      <ul>
- *      <li> 11=IN_USE loco adr in SLOT -REFRESHED 
+ *      <li> 11=IN_USE loco adr in SLOT -REFRESHED
  *      </ul>
  *
  * <li> D4-SL_ACTIVE ;
  *      <ul>
- *      <li>10=IDLE loco adr in SLOT -NOT refreshed 
- *      <li>01=COMMON loco adr IN SLOT-refreshed 
- *      <li>00=FREE SLOT, no valid DATA -not refreshed 
+ *      <li>10=IDLE loco adr in SLOT -NOT refreshed
+ *      <li>01=COMMON loco adr IN SLOT-refreshed
+ *      <li>00=FREE SLOT, no valid DATA -not refreshed
  *      </ul>
  *
- * <li>D3-SL_CONDN : shows other SLOT Consist linked INTO this slot, see SL_CONUP 
- * 
- * <li>D2-SL_SPDEX ; 3 BITS for Decoder TYPE encoding for this SLOT 
- * 
+ * <li>D3-SL_CONDN : shows other SLOT Consist linked INTO this slot, see SL_CONUP
+ *
+ * <li>D2-SL_SPDEX ; 3 BITS for Decoder TYPE encoding for this SLOT
+ *
  * <li>D1-SL_SPD14
  *      <ul>
- *      <li>011=send 128 speed mode packets 
- *      </ul> 
- * 
+ *      <li>011=send 128 speed mode packets
+ *      </ul>
+ *
  * <li>D0-SL_SPD28
  *      <ul>
- *      <li>010=14 step MODE 
- *      <li>001=28 step. Generate Trinary packets for this Mobile ADR 
- *      <li>000=28 step. 3 BYTE PKT regular mode 
- *      <li>111=128 Step decoder, Allow Advanced DCC consisting 
- *      <li>100=28 Step decoder ,Allow Advanced DCC consisting 
+ *      <li>010=14 step MODE
+ *      <li>001=28 step. Generate Trinary packets for this Mobile ADR
+ *      <li>000=28 step. 3 BYTE PKT regular mode
+ *      <li>111=128 Step decoder, Allow Advanced DCC consisting
+ *      <li>100=28 Step decoder ,Allow Advanced DCC consisting
  *      </ul>
- * </ul><p>
+ * </ul>
  * Note that the values in this class have been taken from the llnmom C program
  * of Ron W. Auld, which included some work of John Kabat. The symbol names are
  * copied from the loconet.h file, CVS revision 1.1.1.1, program release 0.3.0
  * Those parts are (C) Copyright 2001 Ron W. Auld, and are used with direct
  * permission of the copyright holder.
- * <P>
+ * <p>
  * Most major comment blocks here are quotes from the Digitrax Loconet(r) OPCODE
  * SUMMARY found in the Loconet(r) Personal Edition 1.
- * <P>
+ * <p>
  * Al Silverstein provided the reverse-engineering effort for the
  * OPC_MULTI_SENSE message.
- * <P>
+ * <p>
  * Alain Le Marchand completed the list of constants for Uhlenbrock Intellibox-I
  * and -II, from observations of Intellibox traffic.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2015
- * @author  Ron W. Auld
- * @author  John Kabat
- * @author  Alain Le Marchand
- *
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2015
+ * @author Ron W. Auld
+ * @author John Kabat
+ * @author Alain Le Marchand
+ * @author B. Milhaupt Copyright (C) 2018
  */
 public final class LnConstants {
 
@@ -148,29 +147,29 @@ public final class LnConstants {
     public final static int STAT1_SL_SPURGE = 0x80;  /* internal use only, not seen on net */
 
     /** consist status                     */
-    public final static int STAT1_SL_CONUP = 0x40; 
+    public final static int STAT1_SL_CONUP = 0x40;
 
     /** Used with STAT1_SL_ACTIVE         */
     public final static int STAT1_SL_BUSY = 0x20;
 
-    public final static int STAT1_SL_ACTIVE = 0x10; 
+    public final static int STAT1_SL_ACTIVE = 0x10;
 
-    public final static int STAT1_SL_CONDN = 0x08; 
+    public final static int STAT1_SL_CONDN = 0x08;
 
-    public final static int STAT1_SL_SPDEX = 0x04; 
+    public final static int STAT1_SL_SPDEX = 0x04;
 
-    public final static int STAT1_SL_SPD14 = 0x02; 
+    public final static int STAT1_SL_SPD14 = 0x02;
 
     public final static int STAT1_SL_SPD28 = 0x01;
 
     /** 1 = Adv. Consisting supressed      */
-    public final static int STAT2_SL_SUPPRESS = 0x01;  
+    public final static int STAT2_SL_SUPPRESS = 0x01;
 
     /** 1 = ID1/ID2 is not ID usage        */
-    public final static int STAT2_SL_NOT_ID = 0x04;  
+    public final static int STAT2_SL_NOT_ID = 0x04;
 
     /** 1 = ID1/ID2 is not encoded alias   */
-    public final static int STAT2_SL_NOTENCOD = 0x08;  
+    public final static int STAT2_SL_NOTENCOD = 0x08;
 
     public final static int STAT2_ALIAS_MASK = STAT2_SL_NOTENCOD | STAT2_SL_NOT_ID;
     public final static int STAT2_ID_IS_ALIAS = STAT2_SL_NOT_ID;
@@ -182,17 +181,22 @@ public final class LnConstants {
     public final static int CONSIST_SUB = STAT1_SL_CONUP;
     public final static int CONSIST_NO = 0;
 
-    /** Encode consisting status as a string */
+    /**
+     * Encode consisting status as a string
+     * <p>
+     * @param s - consist status bits
+     * @return string contaning a description of the consisting state
+     */
     public final static String CONSIST_STAT(int s) {
-        return ((s & CONSIST_MASK) == CONSIST_MID) ? "Mid Consist"
-                : (((s & CONSIST_MASK) == CONSIST_TOP) ? "Consist TOP"
-                        : (((s & CONSIST_MASK) == CONSIST_SUB) ? "Sub Consist"
-                                : "Not Consisted"));
+        return ((s & CONSIST_MASK) == CONSIST_MID) ? "Mid Consist" // NOI18N
+                : (((s & CONSIST_MASK) == CONSIST_TOP) ? "Consist TOP" // NOI18N
+                        : (((s & CONSIST_MASK) == CONSIST_SUB) ? "Sub Consist" // NOI18N
+                                : "Not Consisted")); // NOI18N
     }
 
-    /** Mask for locomotive use determination. 
-    * Compare value to {@link #LOCO_IN_USE},  {@link #LOCO_IDLE},  
-    * {@link #LOCO_COMMON},  {@link #LOCO_FREE} 
+   /** Mask for locomotive use determination.
+    * Compare value to {@link #LOCO_IN_USE},  {@link #LOCO_IDLE},
+    * {@link #LOCO_COMMON},  {@link #LOCO_FREE}
     */
     public final static int LOCOSTAT_MASK = STAT1_SL_BUSY | STAT1_SL_ACTIVE;
     /** Value for locomotive use determination */
@@ -204,17 +208,22 @@ public final class LnConstants {
     /** Value for locomotive use determination */
     public final static int LOCO_FREE = 0;
 
-    /**Encode loco status as a string */
-    public final static String LOCO_STAT(int s) { 
-        return ((s & LOCOSTAT_MASK) == LOCO_IN_USE) ? "In-Use"
-                : (((s & LOCOSTAT_MASK) == LOCO_IDLE) ? "Idle"
-                        : (((s & LOCOSTAT_MASK) == LOCO_COMMON) ? "Common"
-                                : "Free"));
+    /**
+     * Encode loco status as a string
+     * <p>
+     * @param s - integer containing loco "status"
+     * @return string containing a description of the loco "status"
+     */
+    public final static String LOCO_STAT(int s) {
+        return ((s & LOCOSTAT_MASK) == LOCO_IN_USE) ? "In-Use" // NOI18N
+                : (((s & LOCOSTAT_MASK) == LOCO_IDLE) ? "Idle" // NOI18N
+                        : (((s & LOCOSTAT_MASK) == LOCO_COMMON) ? "Common" // NOI18N
+                                : "Free")); // NOI18N
     }
 
-    /** Mask for decoder type encoding for this slot.
-    * Compare value to 
-    * {@link #DEC_MODE_128A}, {@link #DEC_MODE_28A}, {@link #DEC_MODE_128}, 
+   /** Mask for decoder type encoding for this slot.
+    * Compare value to
+    * {@link #DEC_MODE_128A}, {@link #DEC_MODE_28A}, {@link #DEC_MODE_128},
     * {@link #DEC_MODE_14}, {@link #DEC_MODE_28TRI}, {@link #DEC_MODE_28}
     */
     public final static int DEC_MODE_MASK = STAT1_SL_SPDEX | STAT1_SL_SPD14 | STAT1_SL_SPD28;
@@ -232,46 +241,49 @@ public final class LnConstants {
     public final static int DEC_MODE_28 = 0;
 
     public final static String DEC_MODE(int s) { // encode decoder type as a string
-        return ((s & DEC_MODE_MASK) == DEC_MODE_128A) ? "128 (Allow Adv. consisting)"
-                : (((s & DEC_MODE_MASK) == DEC_MODE_28A) ? "28 (Allow Adv. consisting)"
-                        : (((s & DEC_MODE_MASK) == DEC_MODE_128) ? "128"
-                                : (((s & DEC_MODE_MASK) == DEC_MODE_14) ? "14"
-                                        : (((s & DEC_MODE_MASK) == DEC_MODE_28TRI) ? "28 (Motorola)"
-                                                : "28"))));
+        return ((s & DEC_MODE_MASK) == DEC_MODE_128A) ? "128 (Allow Adv. consisting)" // NOI18N
+                : (((s & DEC_MODE_MASK) == DEC_MODE_28A) ? "28 (Allow Adv. consisting)" // NOI18N
+                        : (((s & DEC_MODE_MASK) == DEC_MODE_128) ? "128" // NOI18N
+                                : (((s & DEC_MODE_MASK) == DEC_MODE_14) ? "14" // NOI18N
+                                        : (((s & DEC_MODE_MASK) == DEC_MODE_28TRI) ? "28 (Motorola)" // NOI18N
+                                                : "28")))); // NOI18N
     }
 
     /* values for track status encoding for this slot */
-    public final static int GTRK_PROG_BUSY = 0x08;      /* 1 = programming track in this master is Busy         */
+    public final static int GTRK_PROG_BUSY = 0x08; /* 1 = programming track in this master is Busy         */
 
-    public final static int GTRK_MLOK1 = 0x04;      /* 0 = Master is DT200, 1=Master implements LocoNet 1.1 */
+    public final static int GTRK_MLOK1 = 0x04;     /* 0 = Master is DT200, 1=Master implements LocoNet 1.1 */
 
     public final static int GTRK_IDLE = 0x02;      /* 0=TRACK is PAUSED, B'cast EMERG STOP.                */
 
-    public final static int GTRK_POWER = 0x01;      /* 1=DCC packets are ON in MASTER, Global POWER up      */
+    public final static int GTRK_POWER = 0x01;     /* 1=DCC packets are ON in MASTER, Global POWER up      */
 
     /** Fast clock is in this slot                           */
-    public final static int FC_SLOT = 0x7b;      
+    public final static int FC_SLOT = 0x7b;
 
-     /** This slot communicates with the programming track    */
-    public final static int PRG_SLOT = 0x7c;     
+     /** This slot communicates with the programming track   */
+    public final static int PRG_SLOT = 0x7c;
+
+    /** This slot holds extended configuration bits for some command stations */
+    public final static int CFG_EXT_SLOT = 0x7e;
 
     /** This slot holds configuration bits                   */
-    public final static int CFG_SLOT = 0x7f;      
+    public final static int CFG_SLOT = 0x7f;
 
     /** Values and macros to decode programming messages */
-    public final static int PCMD_RW = 0x40;      /* 1 = write, 0 = read                                  */
+    public final static int PCMD_RW = 0x40;        /* 1 = write, 0 = read                                  */
 
-    public final static int PCMD_BYTE_MODE = 0x20;      /* 1 = byte operation, 0 = bit operation (if possible)  */
+    public final static int PCMD_BYTE_MODE = 0x20; /* 1 = byte operation, 0 = bit operation (if possible)  */
 
-    public final static int PCMD_TY1 = 0x10;      /* TY1 Programming type select bit                      */
+    public final static int PCMD_TY1 = 0x10;       /* TY1 Programming type select bit                      */
 
-    public final static int PCMD_TY0 = 0x08;      /* TY0 Programming type select bit                      */
+    public final static int PCMD_TY0 = 0x08;       /* TY0 Programming type select bit                      */
 
-    public final static int PCMD_OPS_MODE = 0x04;      /* 1 = Ops mode, 0 = Service Mode                       */
+    public final static int PCMD_OPS_MODE = 0x04;  /* 1 = Ops Mode, 0 = Service Mode                       */
 
-    public final static int PCMD_RSVRD1 = 0x02;      /* reserved                                             */
+    public final static int PCMD_RSVRD1 = 0x02;    /* reserved                                             */
 
-    public final static int PCMD_RSVRD0 = 0x01;      /* reserved                                             */
+    public final static int PCMD_RSVRD0 = 0x01;    /* reserved                                             */
 
     /** Programming mode mask */
     public final static int PCMD_MODE_MASK = PCMD_BYTE_MODE | PCMD_OPS_MODE | PCMD_TY1 | PCMD_TY0;
@@ -316,11 +328,11 @@ public final class LnConstants {
     public final static int PSTAT_NO_DECODER = 0x01;
 
     /* bit masks for CVH */
-    public final static int CVH_CV8_CV9 = 0x30;    /* mask for CV# bits 8 and 9    */
+    public final static int CVH_CV8_CV9 = 0x30; /* mask for CV# bits 8 and 9 */
 
-    public final static int CVH_CV7 = 0x01;    /* mask for CV# bit 7           */
+    public final static int CVH_CV7 = 0x01;     /* mask for CV# bit 7        */
 
-    public final static int CVH_D7 = 0x02;    /* MSbit for data value         */
+    public final static int CVH_D7 = 0x02;      /* MSbit for data value      */
 
 // The following two are commented out pending some decisions as to (a) whether
 // they belong here or in the parser and (b) understanding what they say about
@@ -333,7 +345,7 @@ public final class LnConstants {
 //public final static int PROG_CV_NUM(ptr)    (((((ptr->cvh & CVH_CV8_CV9) >> 3) | (ptr->cvh & CVH_CV7)) * 128)   \
 //                            + (ptr->cvl & 0x7f))
 
-    /* loconet opcodes */
+    /* LocoNet opcodes */
     public final static int OPC_GPBUSY = 0x81;
     public final static int OPC_GPOFF = 0x82;
     public final static int OPC_GPON = 0x83;
@@ -370,46 +382,51 @@ public final class LnConstants {
     public final static int OPC_MASK = 0x7f;  /* mask for acknowledge opcodes */
 
 
-    /** Encode LocoNet Opcode as a string */
+    /**
+     * Encode LocoNet Opcode as a string
+     * <p>
+     * @param opcode - a LocoNet opcode value
+     * @return string containing the opcode "name"
+     */
     public final static String OPC_NAME(int opcode) {
         switch (opcode) {
-            case OPC_GPBUSY     : return "OPC_GPBUSY";
-            case OPC_GPOFF      : return "OPC_GPOFF";
-            case OPC_GPON       : return "OPC_GPON";
-            case OPC_IDLE       : return "OPC_IDLE";
-            case OPC_LOCO_SPD   : return "OPC_LOCO_SPD";
-            case OPC_LOCO_DIRF  : return "OPC_LOCO_DIRF";
-            case OPC_LOCO_SND   : return "OPC_LOCO_SND";
-            case OPC_SW_REQ     : return "OPC_SW_REQ";
-            case OPC_SW_REP     : return "OPC_SW_REP";
-            case OPC_INPUT_REP  : return "OPC_INPUT_REP";
-            case OPC_UNKNOWN    : return "OPC_UNKNOWN";
-            case OPC_LONG_ACK   : return "OPC_LONG_ACK";
-            case OPC_SLOT_STAT1 : return "OPC_SLOT_STAT1";
-            case OPC_CONSIST_FUNC: return "OPC_CONSIST_FUNC";
-            case OPC_UNLINK_SLOTS: return "OPC_UNLINK_SLOTS";
-            case OPC_LINK_SLOTS : return "OPC_LINK_SLOTS";
-            case OPC_MOVE_SLOTS : return "OPC_MOVE_SLOTS";
-            case OPC_RQ_SL_DATA : return "OPC_RQ_SL_DATA";
-            case OPC_SW_STATE   : return "OPC_SW_STATE";
-            case OPC_SW_ACK     : return "OPC_SW_ACK";
-            case OPC_LOCO_ADR   : return "OPC_LOCO_ADR";
-            case OPC_MULTI_SENSE: return "OPC_MULTI_SENSE";
-            case OPC_PANEL_QUERY: return "OPC_PANEL_QUERY";
-            case OPC_PANEL_RESPONSE: return "OPC_PANEL_RESPONSE";
-            case OPC_LISSY_UPDATE: return "OPC_LISSY_UPDATE";
-            case OPC_PEER_XFER  : return "OPC_PEER_XFER";
-            case OPC_ALM_READ   : return "OPC_ALM_READ";
-            case OPC_SL_RD_DATA : return "OPC_SL_RD_DATA";
-            case OPC_IMM_PACKET : return "OPC_IMM_PACKET";
-            case OPC_IMM_PACKET_2: return "OPC_IMM_PACKET_2";
-            case OPC_WR_SL_DATA : return "OPC_WR_SL_DATA";
+            case OPC_GPBUSY     : return "OPC_GPBUSY"; // NOI18N
+            case OPC_GPOFF      : return "OPC_GPOFF"; // NOI18N
+            case OPC_GPON       : return "OPC_GPON"; // NOI18N
+            case OPC_IDLE       : return "OPC_IDLE"; // NOI18N
+            case OPC_LOCO_SPD   : return "OPC_LOCO_SPD"; // NOI18N
+            case OPC_LOCO_DIRF  : return "OPC_LOCO_DIRF"; // NOI18N
+            case OPC_LOCO_SND   : return "OPC_LOCO_SND"; // NOI18N
+            case OPC_SW_REQ     : return "OPC_SW_REQ"; // NOI18N
+            case OPC_SW_REP     : return "OPC_SW_REP"; // NOI18N
+            case OPC_INPUT_REP  : return "OPC_INPUT_REP"; // NOI18N
+            case OPC_UNKNOWN    : return "OPC_UNKNOWN"; // NOI18N
+            case OPC_LONG_ACK   : return "OPC_LONG_ACK"; // NOI18N
+            case OPC_SLOT_STAT1 : return "OPC_SLOT_STAT1"; // NOI18N
+            case OPC_CONSIST_FUNC: return "OPC_CONSIST_FUNC"; // NOI18N
+            case OPC_UNLINK_SLOTS: return "OPC_UNLINK_SLOTS"; // NOI18N
+            case OPC_LINK_SLOTS : return "OPC_LINK_SLOTS"; // NOI18N
+            case OPC_MOVE_SLOTS : return "OPC_MOVE_SLOTS"; // NOI18N
+            case OPC_RQ_SL_DATA : return "OPC_RQ_SL_DATA"; // NOI18N
+            case OPC_SW_STATE   : return "OPC_SW_STATE"; // NOI18N
+            case OPC_SW_ACK     : return "OPC_SW_ACK"; // NOI18N
+            case OPC_LOCO_ADR   : return "OPC_LOCO_ADR"; // NOI18N
+            case OPC_MULTI_SENSE: return "OPC_MULTI_SENSE"; // NOI18N
+            case OPC_PANEL_QUERY: return "OPC_PANEL_QUERY"; // NOI18N
+            case OPC_PANEL_RESPONSE: return "OPC_PANEL_RESPONSE"; // NOI18N
+            case OPC_LISSY_UPDATE: return "OPC_LISSY_UPDATE"; // NOI18N
+            case OPC_PEER_XFER  : return "OPC_PEER_XFER"; // NOI18N
+            case OPC_ALM_READ   : return "OPC_ALM_READ"; // NOI18N
+            case OPC_SL_RD_DATA : return "OPC_SL_RD_DATA"; // NOI18N
+            case OPC_IMM_PACKET : return "OPC_IMM_PACKET"; // NOI18N
+            case OPC_IMM_PACKET_2: return "OPC_IMM_PACKET_2"; // NOI18N
+            case OPC_WR_SL_DATA : return "OPC_WR_SL_DATA"; // NOI18N
             // case OPC_WR_SL_DATA_EXP: return "OPC_WR_SL_DATA_EXP"; // duplicates 0xEE
             // case OPC_ALM_WRITE: return "OPC_ALM_WRITE"; // duplicates 0xEE
-            default: return "<unknown>";
+            default: return "<unknown>"; // NOI18N
         }
     }
-    
+
 // start of values not from llnmon.c
 
 // Expanded slot index values
@@ -429,7 +446,7 @@ public final class LnConstants {
     public final static int EXPD_F27_F21 = 9;
 
 //  opcode keys used to express interest in various messages
-//            note these are _not_ the loconet opcode values!
+//            note these are _not_ the LocoNet opcode values!
     public final static int KEY_GPBUSY = 1 << 0;
     public final static int KEY_GPOFF = 1 << 1;
     public final static int KEY_GPON = 1 << 2;
@@ -462,11 +479,23 @@ public final class LnConstants {
 // reverse-engineered constants
     public final static int RE_IPL_MFR_DIGITRAX = 0x00;
     public final static int RE_IPL_MFR_ALL = 0x00;
+    public final static int RE_IPL_DIGITRAX_HOST_LNRP = 0x01;
     public final static int RE_IPL_DIGITRAX_HOST_UT4 = 0x04;
-    public final static int RE_IPL_DIGITRAX_HOST_UR92 = 0x5C;
-    public final static int RE_IPL_DIGITRAX_HOST_DCS51 = 0x33;
-    public final static int RE_IPL_DIGITRAX_HOST_DT402 = 0x2A;
+    public final static int RE_IPL_DIGITRAX_HOST_WTL12 = 0x0c;
+    public final static int RE_IPL_DIGITRAX_HOST_DB210OPTO = 0x14;
+    public final static int RE_IPL_DIGITRAX_HOST_DB210 = 0x15;
+    public final static int RE_IPL_DIGITRAX_HOST_DB220 = 0x16;
+    public final static int RE_IPL_DIGITRAX_HOST_DCS210 = 0x1b;
+    public final static int RE_IPL_DIGITRAX_HOST_DCS240 = 0x1c;
     public final static int RE_IPL_DIGITRAX_HOST_PR3 = 0x23;
+    public final static int RE_IPL_DIGITRAX_HOST_PR4 = 0x24;
+    public final static int RE_IPL_DIGITRAX_HOST_DT402 = 0x2A;
+    public final static int RE_IPL_DIGITRAX_HOST_DT500 = 0x32;
+    public final static int RE_IPL_DIGITRAX_HOST_DCS51 = 0x33;
+    public final static int RE_IPL_DIGITRAX_HOST_BXPA1 = 0x51;
+    public final static int RE_IPL_DIGITRAX_HOST_UR92 = 0x5C;
+    public final static int RE_IPL_DIGITRAX_HOST_BXP88 = 0x58;
+    public final static int RE_IPL_DIGITRAX_HOST_LNWI = 0x63;
     public final static int RE_IPL_DIGITRAX_HOST_ALL = 0x00;
     public final static int RE_IPL_DIGITRAX_SLAVE_RF24 = 0x18;
     public final static int RE_IPL_DIGITRAX_SLAVE_ALL = 0x00;
@@ -483,6 +512,13 @@ public final class LnConstants {
 // Below data is assumed, based on firmware files available from RR-Cirkits web site
     public final static int RE_IPL_MFR_RR_CIRKITS = 87;
     public final static int RE_IPL_RRCIRKITS_HOST_TC64 = 11;
+    public final static int RE_IPL_RRCIRKITS_HOST_LNCP = 12;
+    public final static int RE_IPL_RRCIRKITS_HOST_SIGNALMAN = 21;
+    public final static int RE_IPL_RRCIRKITS_HOST_TOWERMAN = 22;
+    public final static int RE_IPL_RRCIRKITS_HOST_WATCHMAN = 23;
+    public final static int RE_IPL_RRCIRKITS_HOST_TC64_MKII = 24;
+    public final static int RE_IPL_RRCIRKITS_HOST_MOTORMAN = 25;
+    public final static int RE_IPL_RRCIRKITS_HOST_MOTORMAN_II = 28;
     public final static int RE_IPL_RRCIRKITS_SLAVE_ALL = 00;
 
 // Constants associated with OPC_PEER_XFR for Duplex operations

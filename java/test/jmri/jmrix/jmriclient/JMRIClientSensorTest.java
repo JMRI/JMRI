@@ -1,9 +1,10 @@
 package jmri.jmrix.jmriclient;
 
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * JMRIClientSensorTest.java
@@ -11,45 +12,41 @@ import junit.framework.TestSuite;
  * Description:	tests for the jmri.jmrix.jmriclient.JMRIClientSensor class
  *
  * @author	Bob Jacobsen
- * @version $Revision: 17977 $
+ * @author      Paul Bender Copyright (C) 2018
  */
-public class JMRIClientSensorTest extends TestCase {
+public class JMRIClientSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
-    public void testCtor() {
-        JMRIClientTrafficController tc = new JMRIClientTrafficController() {
-            public void sendJMRIClientMessage(JMRIClientMessage m, JMRIClientListener reply) {
-                // do nothing to avoid null pointer when sending to non-existant
-                // connection durring test.
-            }
-        };
-        JMRIClientSensor m = new JMRIClientSensor(3, new JMRIClientSystemConnectionMemo(tc));
-        Assert.assertNotNull(m);
-    }
+    @Override
+    public int numListeners() {return 0;}
 
-    // from here down is testing infrastructure
-    public JMRIClientSensorTest(String s) {
-        super(s);
-    }
+    @Override
+    public void checkOnMsgSent() {}
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", JMRIClientSensorTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
+    @Override
+    public void checkOffMsgSent() {}
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JMRIClientSensorTest.class);
-        return suite;
-    }
+    @Override
+    public void checkStatusRequestMsgSent() {}
 
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        JMRIClientTrafficController tc = new JMRIClientTrafficController() {
+            @Override
+            public void sendJMRIClientMessage(JMRIClientMessage m, JMRIClientListener reply) {
+                // do nothing to avoid null pointer when sending to non-existant
+                // connection during test.
+            }
+        };
+        t = new JMRIClientSensor(3, new JMRIClientSystemConnectionMemo(tc));
     }
 
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+	t.dispose();
+        JUnitUtil.tearDown();
     }
 
 }

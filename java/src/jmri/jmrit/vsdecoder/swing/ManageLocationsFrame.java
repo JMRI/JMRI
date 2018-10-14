@@ -1,5 +1,6 @@
 package jmri.jmrit.vsdecoder.swing;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -32,18 +33,14 @@ import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.vsdecoder.LoadVSDFileAction;
-import jmri.jmrit.vsdecoder.LoadXmlVSDecoderAction;
-import jmri.jmrit.vsdecoder.StoreXmlVSDecoderAction;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.util.JmriJFrame;
 import jmri.util.PhysicalLocation;
-import jmri.util.WindowMenu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/*
+/**
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -58,28 +55,12 @@ import org.slf4j.LoggerFactory;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
+ * @author Mark Underwood Copyright (C) 2011
  */
 public class ManageLocationsFrame extends JmriJFrame {
 
-    public static enum PropertyChangeID {
-
-        MUTE, VOLUME_CHANGE, ADD_DECODER, REMOVE_DECODER
-    }
-
-    public static final Map<PropertyChangeID, String> PCIDMap;
-
-    static {
-        Map<PropertyChangeID, String> aMap = new HashMap<PropertyChangeID, String>();
-        aMap.put(PropertyChangeID.MUTE, "VSDMF:Mute"); // NOI18N
-        aMap.put(PropertyChangeID.VOLUME_CHANGE, "VSDMF:VolumeChange"); // NOI18N
-        aMap.put(PropertyChangeID.ADD_DECODER, "VSDMF:AddDecoder"); // NOI18N
-        aMap.put(PropertyChangeID.REMOVE_DECODER, "VSDMF:RemoveDecoder"); // NOI18N
-        PCIDMap = Collections.unmodifiableMap(aMap);
-    }
-
     // Map of Mnemonic KeyEvent values to GUI Components
-    private static final Map<String, Integer> Mnemonics = new HashMap<String, Integer>();
+    private static final Map<String, Integer> Mnemonics = new HashMap<>();
 
     static {
         Mnemonics.put("RoomMode", KeyEvent.VK_R); // NOI18N
@@ -112,7 +93,7 @@ public class ManageLocationsFrame extends JmriJFrame {
 
     private List<JMenu> menuList;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2",
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2",
             justification = "2D array of different types passed as complex parameter. "
             + "Better to switch to passing use-specific objects rather than "
             + "papering this over with a deep copy of the arguments. "
@@ -142,6 +123,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         b1.setToolTipText(Bundle.getMessage("ToolTipButtonAudioModeRoom"));
         b1.setMnemonic(Mnemonics.get("RoomMode")); // NOI18N
         b1.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 modeRadioButtonPressed(e);
             }
@@ -150,6 +132,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         b2.setMnemonic(Mnemonics.get("HeadphoneMode")); // NOI18N
         b2.setToolTipText(Bundle.getMessage("ToolTipButtonAudioModeHeadphone"));
         b2.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 modeRadioButtonPressed(e);
             }
@@ -175,10 +158,10 @@ public class ManageLocationsFrame extends JmriJFrame {
         locData[0][5] = listenerLoc.getBearing();
         locData[0][6] = listenerLoc.getAzimuth();
 
-        log.debug("Listener:" + listenerLoc.toString());
+        log.debug("Listener: {}", listenerLoc.toString());
         log.debug("locData:");
         for (int i = 0; i < 7; i++) {
-            log.debug("" + locData[0][i]);
+            log.debug("{}", locData[0][i]);
         }
 
         JPanel locPanel = new JPanel();
@@ -224,10 +207,10 @@ public class ManageLocationsFrame extends JmriJFrame {
         opsScrollPanel.getViewport().add(opsTable);
 
         tabbedPane = new JTabbedPane();
-        tabbedPane.addTab(Bundle.getMessage("FieldReportersTabTitle"), reporterScrollPanel);
+        tabbedPane.addTab(Bundle.getMessage("Reporters"), reporterScrollPanel); // Reporters Tab Title
         tabbedPane.setToolTipTextAt(0, Bundle.getMessage("ToolTipReporterTab"));
         tabbedPane.setMnemonicAt(0, Mnemonics.get("ReporterTab")); // NOI18N
-        tabbedPane.addTab(Bundle.getMessage("FieldBlockTabTitle"), blockScrollPanel);
+        tabbedPane.addTab(Bundle.getMessage("Blocks"), blockScrollPanel);
         tabbedPane.setToolTipTextAt(0, Bundle.getMessage("ToolTipBlockTab"));
         tabbedPane.setMnemonicAt(0, Mnemonics.get("BlockTab")); // NOI18N
         tabbedPane.addTab(Bundle.getMessage("FieldOpsTabTitle"), opsScrollPanel);
@@ -239,10 +222,11 @@ public class ManageLocationsFrame extends JmriJFrame {
 
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
-        JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
+        JButton closeButton = new JButton(Bundle.getMessage("ButtonCancel"));
         closeButton.setToolTipText(Bundle.getMessage("ToolTipButtonMLFClose"));
         closeButton.setMnemonic(Mnemonics.get("CloseButton")); // NOI18N
         closeButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 closeButtonPressed(e);
             }
@@ -251,6 +235,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         saveButton.setToolTipText(Bundle.getMessage("ToolTipButtonMLFSave"));
         saveButton.setMnemonic(Mnemonics.get("SaveButton")); // NOI18N
         saveButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 saveButtonPressed(e);
             }
@@ -266,50 +251,16 @@ public class ManageLocationsFrame extends JmriJFrame {
     }
 
     private void buildMenu() {
-        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
-
-        fileMenu.add(new LoadVSDFileAction(Bundle.getMessage("MenuItemLoadVSDFile")));
-        fileMenu.add(new StoreXmlVSDecoderAction(Bundle.getMessage("MenuItemSaveProfile")));
-        fileMenu.add(new LoadXmlVSDecoderAction(Bundle.getMessage("MenuItemLoadProfile")));
-
         JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
-        editMenu.add(new VSDPreferencesAction(Bundle.getMessage("MenuItemEditPreferences")));
+        editMenu.add(new VSDPreferencesAction(Bundle.getMessage("VSDecoderFileMenuPreferences")));
 
-        fileMenu.getItem(1).setEnabled(false); // disable XML store
-        fileMenu.getItem(2).setEnabled(false); // disable XML load
+        menuList = new ArrayList<>(1);
 
-        menuList = new ArrayList<JMenu>(3);
-
-        menuList.add(fileMenu);
         menuList.add(editMenu);
 
         this.setJMenuBar(new JMenuBar());
-        this.getJMenuBar().add(fileMenu);
         this.getJMenuBar().add(editMenu);
         this.addHelpMenu("package.jmri.jmrit.vsdecoder.swing.ManageLocationsFrame", true); // NOI18N
-
-    }
-
-    /**
-     * Add a standard help menu, including window specific help item.
-     *
-     * @param ref    JHelp reference for the desired window-specific help page
-     * @param direct true if the help menu goes directly to the help system,
-     *               e.g. there are no items in the help menu
-     *
-     * WARNING: BORROWED FROM JmriJFrame.
-     */
-    public void addHelpMenu(String ref, boolean direct) {
-        // only works if no menu present?
-        JMenuBar bar = getJMenuBar();
-        if (bar == null) {
-            bar = new JMenuBar();
-        }
-        // add Window menu
-        bar.add(new WindowMenu(this)); // * GT 28-AUG-2008 Added window menu
-        // add Help menu
-        jmri.util.HelpUtil.helpMenu(bar, ref, direct);
-        setJMenuBar(bar);
     }
 
     private void saveButtonPressed(ActionEvent e) {
@@ -325,37 +276,48 @@ public class ManageLocationsFrame extends JmriJFrame {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "only in slow debug")
+    @SuppressFBWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "only in slow debug")
     private void saveTableValues() {
         if ((Boolean) locModel.getValueAt(0, 1)) {
-            listenerLoc.setLocation((Double) locModel.getValueAt(0, 2),
-                    (Double) locModel.getValueAt(0, 3),
-                    (Double) locModel.getValueAt(0, 4));
-            listenerLoc.setOrientation((Double) locModel.getValueAt(0, 5),
-                    (Double) locModel.getValueAt(0, 6));
-            VSDecoderManager.instance().getVSDecoderPreferences().setListenerPosition(listenerLoc);
+            // Don't accept Azimuth value 90 or -90 (they are not in the domain of definition)
+            if ((Double) locModel.getValueAt(0, 6) != null 
+                    && ((Double) locModel.getValueAt(0, 6) == 90.0d || (Double) locModel.getValueAt(0, 6) == -90.0d)) {
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("FieldTableAzimuthInvalidValue"));
+            } else {
+                listenerLoc.setLocation((Double) locModel.getValueAt(0, 2),
+                        (Double) locModel.getValueAt(0, 3),
+                        (Double) locModel.getValueAt(0, 4));
+                listenerLoc.setOrientation((Double) locModel.getValueAt(0, 5),
+                        (Double) locModel.getValueAt(0, 6));
+                VSDecoderManager.instance().getVSDecoderPreferences().save();
+                VSDecoderManager.instance().getVSDecoderPreferences().setListenerPosition(listenerLoc);
+            }
         }
 
         HashMap<String, PhysicalLocation> data = reporterModel.getDataMap();
         ReporterManager mgr = jmri.InstanceManager.getDefault(jmri.ReporterManager.class);
         for (String s : data.keySet()) {
-            log.debug("Reporter: " + s + " Location: " + data.get(s));
+            log.debug("Reporter: {}, Location: {}", s, data.get(s));
             Reporter r = mgr.getByDisplayName(s);
-            PhysicalLocation.setBeanPhysicalLocation(data.get(s), r);
+            if (r != null) {
+                PhysicalLocation.setBeanPhysicalLocation(data.get(s), r);
+            }
         }
 
         data = blockModel.getDataMap();
         BlockManager bmgr = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
         for (String s : data.keySet()) {
-            log.debug("Block: " + s + " Location: " + data.get(s));
+            log.debug("Block: {}, Location: {}", s, data.get(s));
             Block b = bmgr.getByDisplayName(s);
-            PhysicalLocation.setBeanPhysicalLocation(data.get(s), b);
+            if (b != null) {
+                PhysicalLocation.setBeanPhysicalLocation(data.get(s), b);
+            }
         }
 
         data = opsModel.getDataMap();
-        LocationManager lmgr = LocationManager.instance();
+        LocationManager lmgr = jmri.InstanceManager.getDefault(LocationManager.class);
         for (String s : data.keySet()) {
-            log.debug("OpsLocation: " + s + " Location: " + data.get(s));
+            log.debug("OpsLocation: {}, Location: {}", s, data.get(s));
             Location l = lmgr.getLocationByName(s);
             l.setPhysicalLocation(data.get(s));
         }
@@ -368,7 +330,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         dispose();
     }
 
-    static private Logger log = LoggerFactory.getLogger(ManageLocationsFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ManageLocationsFrame.class);
 
     /**
      * Private class to serve as TableModel for Reporters and Ops Locations
@@ -382,7 +344,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         public LocationTableModel(Object[][] dataMap) {
             super();
             // Use i18n-ized column titles.
-            columnNames[0] = Bundle.getMessage("FieldTableNameColumn");
+            columnNames[0] = Bundle.getMessage("Name");
             columnNames[1] = Bundle.getMessage("FieldTableUseColumn");
             columnNames[2] = Bundle.getMessage("FieldTableXColumn");
             columnNames[3] = Bundle.getMessage("FieldTableYColumn");
@@ -393,41 +355,57 @@ public class ManageLocationsFrame extends JmriJFrame {
 
         public HashMap<String, PhysicalLocation> getDataMap() {
             // Includes only the ones with the checkbox made
-            HashMap<String, PhysicalLocation> retv = new HashMap<String, PhysicalLocation>();
+            HashMap<String, PhysicalLocation> retv = new HashMap<>();
             for (Object[] row : rowData) {
                 if ((Boolean) row[1]) {
+                    if (row[2] == null) { 
+                        row[2] = 0.0f;
+                    }
+                    if (row[3] == null) { 
+                        row[3] = 0.0f;
+                    }
+                    if (row[4] == null) { 
+                        row[4] = 0.0f;
+                    }
                     retv.put((String) row[0],
                             new PhysicalLocation((Float) row[2], (Float) row[3], (Float) row[4], (Boolean) row[5]));
                 }
             }
-            return (retv);
+            return retv;
         }
 
+        @Override
         public String getColumnName(int col) {
             return columnNames[col];
         }
 
+        @Override
         public int getRowCount() {
             return rowData.length;
         }
 
+        @Override
         public int getColumnCount() {
             return columnNames.length;
         }
 
+        @Override
         public Object getValueAt(int row, int col) {
             return rowData[row][col];
         }
 
+        @Override
         public boolean isCellEditable(int row, int col) {
             return true;
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             rowData[row][col] = value;
             fireTableCellUpdated(row, col);
         }
 
+        @Override
         public Class<?> getColumnClass(int columnIndex) {
             switch (columnIndex) {
                 case 1:
@@ -456,7 +434,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         public ListenerTableModel(Object[][] dataMap) {
             super();
             // Use i18n-ized column titles.
-            columnNames[0] = Bundle.getMessage("FieldTableNameColumn");
+            columnNames[0] = Bundle.getMessage("Name");
             columnNames[1] = Bundle.getMessage("FieldTableUseColumn");
             columnNames[2] = Bundle.getMessage("FieldTableXColumn");
             columnNames[3] = Bundle.getMessage("FieldTableYColumn");
@@ -469,7 +447,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         @SuppressWarnings("unused")
         public HashMap<String, ListeningSpot> getDataMap() {
             // Includes only the ones with the checkbox made
-            HashMap<String, ListeningSpot> retv = new HashMap<String, ListeningSpot>();
+            HashMap<String, ListeningSpot> retv = new HashMap<>();
             ListeningSpot spot = null;
             for (Object[] row : rowData) {
                 if ((Boolean) row[1]) {
@@ -480,34 +458,41 @@ public class ManageLocationsFrame extends JmriJFrame {
                     retv.put((String) row[0], spot);
                 }
             }
-            return (retv);
+            return retv;
         }
 
+        @Override
         public String getColumnName(int col) {
             return columnNames[col];
         }
 
+        @Override
         public int getRowCount() {
             return rowData.length;
         }
 
+        @Override
         public int getColumnCount() {
             return columnNames.length;
         }
 
+        @Override
         public Object getValueAt(int row, int col) {
             return rowData[row][col];
         }
 
+        @Override
         public boolean isCellEditable(int row, int col) {
             return true;
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             rowData[row][col] = value;
             fireTableCellUpdated(row, col);
         }
 
+        @Override
         public Class<?> getColumnClass(int columnIndex) {
             switch (columnIndex) {
                 case 1:
@@ -523,6 +508,5 @@ public class ManageLocationsFrame extends JmriJFrame {
                     return super.getColumnClass(columnIndex);
             }
         }
-
     }
 }

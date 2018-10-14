@@ -1,39 +1,27 @@
 package jmri.jmrix.ieee802154;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        IEEE802154MessageTest.class,
+        IEEE802154ReplyTest.class,
+        IEEE802154SystemConnectionMemoTest.class,
+        IEEE802154TrafficControllerTest.class,
+        jmri.jmrix.ieee802154.xbee.PackageTest.class,
+        jmri.jmrix.ieee802154.serialdriver.PackageTest.class,
+        IEEE802154NodeTest.class,
+        BundleTest.class,
+        jmri.jmrix.ieee802154.swing.PackageTest.class,
+        IEEE802154PortControllerTest.class,
+        SerialConnectionTypeListTest.class,
+})
 
 /**
  * Tests for the jmri.jmrix.ieee802154 package
  *
  * @author	Paul Bender
- * @version	$Revision$
- */
-public class PackageTest extends TestCase {
-
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.ieee802154.IEEE802154Test");  // no tests in this class itself
-        suite.addTest(new TestSuite(IEEE802154MessageTest.class));
-        suite.addTest(new TestSuite(IEEE802154ReplyTest.class));
-        suite.addTest(new TestSuite(IEEE802154SystemConnectionMemoTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(IEEE802154TrafficControllerTest.class));
-        suite.addTest(jmri.jmrix.ieee802154.xbee.PackageTest.suite());
-        suite.addTest(jmri.jmrix.ieee802154.serialdriver.PackageTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(IEEE802154NodeTest.class));
-        return suite;
-    }
-
+  */
+public class PackageTest  {
 }

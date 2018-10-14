@@ -16,7 +16,7 @@ import jmri.Programmer;
  * Note that you should call the dispose() method when you're really done, so
  * that a ProgModeSelector object can disconnect its listeners.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public abstract class ProgModeSelector extends javax.swing.JPanel {
 
@@ -40,6 +40,7 @@ public abstract class ProgModeSelector extends javax.swing.JPanel {
      *
      * @param enabled false disables GUI user changes
      */
+    @Override
     public void setEnabled(boolean enabled) {
     }
 

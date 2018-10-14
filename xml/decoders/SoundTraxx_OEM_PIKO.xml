@@ -13,24 +13,22 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Marc Fournier" version="2" lastUpdated="20161218"/>
   <version author="Jeff Schmaltz 493rdafa@gmail.com" version="1" lastUpdated="20131011"/>
-  <!-- This file was based on the "retail version" Tsunami definitions for ALL steam
+  <!-- Version 2 - Added missing lowVerssion 84 -->
+  <!-- Version 1 - This file was based on the "retail version" Tsunami definitions for ALL steam
        locomotives, SoundTraxx_Tsu_Steam.xml, version 8, plus looking at the other
        Tsunami steam definition files
 
        So the real credit for this goes to the authors of those files, Jack Shall, Michael
        Mosher, Bob Jacobsen, and others.
 
-       Any and all feedback on this file would be appreciated.
-
-      Version History:
-
-        1.0 - Initial release 11 Oct 2013
--->
+       Any and all feedback on this file would be appreciated. -->
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="OEM PIKO" mfg="SoundTraxx (Throttle-Up)" comment="These are the PIKO OEM G scale steam decoders">
       <model model="Mogul" numOuts="2" numFns="14" connector="other" productID="Mogul">
+	  <versionCV lowVersionID="84"/>
         <output name="Whistle"/>
         <output name="Bell"/>
         <output name="(Not used)"/>

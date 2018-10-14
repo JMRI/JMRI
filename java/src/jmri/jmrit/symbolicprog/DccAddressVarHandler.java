@@ -18,7 +18,7 @@ package jmri.jmrit.symbolicprog;
  * </ul>
  * At least one of Short Address and Long Address must be present!
  *
- * @author	Bob Jacobsen Copyright (C) 2013
+ * @author Bob Jacobsen Copyright (C) 2013
  */
 public class DccAddressVarHandler {
 

@@ -1,9 +1,9 @@
 package jmri.jmrix.rps.csvinput;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the jmri.jmrix.rps.csvinput package.
@@ -50,7 +50,6 @@ public class CsvTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite(CsvTest.class);
         return suite;
     }

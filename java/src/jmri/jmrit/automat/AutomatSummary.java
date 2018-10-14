@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * This can be invoked from various threads, so switches to the Swing thread to
  * notify it's own listeners.
  *
- * @author	Bob Jacobsen Copyright (C) 2004, 2007
+ * @author Bob Jacobsen Copyright (C) 2004, 2007
  */
 public class AutomatSummary {
 
@@ -27,7 +27,7 @@ public class AutomatSummary {
         return self;
     }
 
-    private ArrayList<AbstractAutomaton> automats = new ArrayList<AbstractAutomaton>();
+    private final ArrayList<AbstractAutomaton> automats = new ArrayList<>();
 
     java.beans.PropertyChangeSupport prop = new java.beans.PropertyChangeSupport(this);
 
@@ -41,7 +41,9 @@ public class AutomatSummary {
 
     /**
      * A newly-created AbstractAutomaton instance uses this method to notify
-     * interested parties of it's existance.
+     * interested parties of it's existence.
+     *
+     * @param a the automaton to register
      */
     public void register(AbstractAutomaton a) {
         synchronized (automats) {
@@ -49,13 +51,15 @@ public class AutomatSummary {
         }
 
         //notify length changed
-        notify("Insert", null, Integer.valueOf(indexOf(a)));
+        notify("Insert", null, indexOf(a));
 
     }
 
     /**
      * Just before exiting, an AbstractAutomaton instance uses this method to
      * notify interested parties of it's departure.
+     *
+     * @param a the automaton to remove
      */
     public void remove(AbstractAutomaton a) {
         int index = indexOf(a);
@@ -65,7 +69,7 @@ public class AutomatSummary {
         }
 
         //notify length changed
-        notify("Remove", null, Integer.valueOf(index));
+        notify("Remove", null, index);
     }
 
     public int length() {
@@ -117,13 +121,15 @@ public class AutomatSummary {
     /**
      * An AbstractAutomaton instance uses this method to notify interested
      * parties that it's gone around it's handle loop again.
+     *
+     * @param a the looping automaton
      */
     public void loop(AbstractAutomaton a) {
         int i;
         synchronized (automats) {
             i = automats.indexOf(a);
         }
-        notify("Count", null, Integer.valueOf(i));
+        notify("Count", null, i);
     }
 
     void notify(String property, Object arg1, Object arg2) {
@@ -142,6 +148,7 @@ public class AutomatSummary {
         Object arg2;
         String property;
 
+        @Override
         public void run() {
             prop.firePropertyChange(property, arg1, arg2);
         }

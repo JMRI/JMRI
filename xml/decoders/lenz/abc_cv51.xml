@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>7</revnumber>
+      <date>2016-10-09</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>6</revnumber>
       <date>2012-12-27</date>
       <authorinitials>BJ</authorinitials>
@@ -44,24 +50,32 @@
     <label>Automatic Braking Control</label>
     <label xml:lang="it">Controllo Automatico frenata</label>
     <label xml:lang="de">ABC aktiviert</label>
+    <label xml:lang="cs">ABC automatické řízení brždění</label>
+    <label xml:lang="ca">Control Autmàtic de Frenada [ABC]</label>
   </variable>
   <variable CV="51" mask="XXXXXVXX" item="ABC Direction" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
     <label>ABC direction dependancy</label>
     <label xml:lang="it">Dipendenza Controlla Frenata da direzione</label>
     <label xml:lang="de">Richtungsabhängigkeit von ABC ist ausgeschaltet</label>
+    <label xml:lang="cs">ABC automatické řízení brždění závislé na směru</label>
+    <label xml:lang="ca">Dependència del Control de Freanada segons el sentit</label>
   </variable>
   <variable CV="51" mask="XXXXVXXX" item="Push-Pull w/o Stop" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Push-Pull without Stop</label>
     <label xml:lang="it">Push-Pull senza Stop</label>
     <label xml:lang="de">Pendelbetrieb ohne Zwischenhalt</label>
+    <label xml:lang="cs">Kyvadlový provoz bez mezizastávky</label>
+    <label xml:lang="ca">Push-Pull Sense Parada</label>
   </variable>
   <variable CV="51" mask="XXXVXXXX" item="Push-Pull w Stop" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Push-Pull with Stop</label>
     <label xml:lang="it">Push-Pull con Stop</label>
     <label xml:lang="de">Pendelbetrieb mit Zwischenhalt</label>
+    <label xml:lang="cs">Kyvadlový provoz s mezizastávkou</label>
+    <label xml:lang="ca">Push-Pull amb parada</label>
   </variable>
   <variable CV="53" item="ABC Approach Speed" default="48" comment="Range 0-255">
     <decVal min="0" max="255"/>
@@ -70,14 +84,22 @@
     <comment>Range 0-255</comment>
     <label xml:lang="de">Langsamfahrgeschwindigkeit bei ABC (0-255)</label>
     <comment xml:lang="de">Wertebereich 0-255</comment>
+    <label xml:lang="cs">Pomalá rychlost s ABC (0-255)</label>
+    <comment xml:lang="cs">Meze 0-255</comment>
+    <label xml:lang="ca">Apropament Lent de Velocitat amb ABC (0-255)</label>
+    <comment xml:lang="ca">Rang de 0-255</comment>
   </variable>
   <variable CV="54" item="Push-Pull Stop Time" default="4" comment="Range 0-255">
     <decVal min="0" max="255"/>
     <label>Push-Pull stop time (0-255 seconds) </label>
-    <label xml:lang="it">Tempo di Stop Push-Pull (0-225 sec)</label>
     <comment>Range 0-255</comment>
+    <label xml:lang="it">Tempo di Stop Push-Pull (0-225 sec)</label>
     <comment xml:lang="it">Valori da 0 a 255</comment>
     <label xml:lang="de">Aufenthaltsdauer bei Pendelbetrieb in Sekunden</label>
     <comment xml:lang="de">Wertebereich 0-255</comment>
+    <label xml:lang="cs">Kyvadlový provoz doba pobytu na zastávce ve vteřinách</label>
+    <comment xml:lang="cs">Meze 0-255</comment>
+    <label xml:lang="ca">Temps de parada del Push-Pull (0-255 segons)</label>
+    <comment xml:lang="ca">Rang de 0-255</comment>
   </variable>
 </variables>

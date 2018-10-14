@@ -1,9 +1,8 @@
-// LocoNetSystemConnectionMemo.java
 package jmri.jmrix.nce;
 
 import java.util.ResourceBundle;
+import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
-import jmri.ProgrammerManager;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -12,9 +11,8 @@ import jmri.ProgrammerManager;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  * @author ken cameron Copyright (C) 2013
- * @version $Revision$
  */
 public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -54,6 +52,8 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     /**
      * Provides access to the TrafficController for this particular connection.
+     *
+     * @return tc for this connection
      */
     public NceTrafficController getNceTrafficController() {
         return nceTrafficController;
@@ -67,11 +67,9 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
     }
 
-    @SuppressWarnings("deprecation")
-    private ProgrammerManager programmerManager;
+    private NceProgrammerManager programmerManager;
 
-    @SuppressWarnings("deprecation")
-    public ProgrammerManager getProgrammerManager() {
+    public NceProgrammerManager getProgrammerManager() {
         //Do not want to return a programmer if the system is disabled
         if (getDisabled()) {
             return null;
@@ -82,29 +80,28 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return programmerManager;
     }
 
-    @SuppressWarnings("deprecation")
-    public void setProgrammerManager(ProgrammerManager p) {
+    public void setProgrammerManager(NceProgrammerManager p) {
         programmerManager = p;
     }
 
     /**
      * Sets the NCE message option.
+     *
+     * @param val command option value
      */
     public void configureCommandStation(int val) {
         getNceTrafficController().setCommandOptions(val);
-        jmri.InstanceManager.setCommandStation(nceTrafficController);
+        jmri.InstanceManager.store(nceTrafficController, jmri.CommandStation.class);
     }
 
     /**
-     * Tells which managers this provides by class
+     * Tells which managers this class provides.
      */
     @SuppressWarnings("deprecation")
+    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
-        }
-        if (type.equals(jmri.ProgrammerManager.class)) {
-            return true;
         }
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
             return true;
@@ -137,19 +134,17 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (type.equals(jmri.ConsistManager.class)) {
             return true;
         }
-        return false; // nothing, by default
+        return super.provides(type); // nothing, by default
     }
 
     /**
      * Provide manager by class
      */
     @SuppressWarnings({"unchecked", "deprecation"})
+    @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
-        }
-        if (T.equals(jmri.ProgrammerManager.class)) {
-            return (T) getProgrammerManager();
         }
         if (T.equals(jmri.GlobalProgrammerManager.class)) {
             return (T) getProgrammerManager();
@@ -182,7 +177,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (T.equals(jmri.ConsistManager.class)) {
             return (T) getConsistManager();
         }
-        return null; // nothing, by default
+        return super.get(T);
     }
 
     private NcePowerManager powerManager;
@@ -191,7 +186,6 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private NceSensorManager sensorManager;
     private NceThrottleManager throttleManager;
     private NceClockControl clockManager;
-    private NceConsistManager consistManager;
 
     /**
      * Configure the common managers for NCE connections. This puts the common
@@ -219,15 +213,20 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                 // don't set a service mode programmer
             }
         } else {
-            InstanceManager.setProgrammerManager(
-                    getProgrammerManager());
+            if (getProgrammerManager().isAddressedModePossible()) {
+                InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
+            }
+            if (getProgrammerManager().isGlobalProgrammerAvailable()) {
+                InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
+            }
         }
 
         clockManager = new jmri.jmrix.nce.NceClockControl(getNceTrafficController(), getSystemPrefix());
-        InstanceManager.addClockControl(clockManager);
+        // make sure InstanceManager knows about that
+        InstanceManager.store(clockManager, jmri.ClockControl.class);
+        InstanceManager.setDefault(jmri.ClockControl.class, clockManager);
 
-        consistManager = new jmri.jmrix.nce.NceConsistManager(this);
-        InstanceManager.setConsistManager(consistManager);
+        setConsistManager(new jmri.jmrix.nce.NceConsistManager(this));
 
     }
 
@@ -255,14 +254,12 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return clockManager;
     }
 
-    public NceConsistManager getConsistManager() {
-        return consistManager;
-    }
-
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.nce.NceActionListBundle");
     }
 
+    @Override
     public void dispose() {
         nceTrafficController = null;
         InstanceManager.deregister(this, NceSystemConnectionMemo.class);
@@ -287,14 +284,8 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (clockManager != null) {
             InstanceManager.deregister(clockManager, jmri.jmrix.nce.NceClockControl.class);
         }
-        if (consistManager != null) {
-            InstanceManager.deregister(consistManager, jmri.jmrix.nce.NceConsistManager.class);
-        }
 
         super.dispose();
     }
 
 }
-
-
-/* @(#)NceSystemConnectionMemo.java */

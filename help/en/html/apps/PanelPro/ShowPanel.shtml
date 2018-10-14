@@ -7,7 +7,8 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: Displaying JMRI Panel Files</title><!-- Style -->
+  <title>JMRI: Displaying JMRI Panel Files</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -15,7 +16,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -37,6 +39,9 @@
       You open your panel file with a web browser, and can then
       read it, print it, copy and paste into a file of another
       form, etc.</p>
+      <img src="images/PanelFileView.png"
+           alt="screen shot of xml preview" align="right" width="462"
+           height="164" hspace="0" vspace="0">
 
       <p>A large example of this is available as a <a href=
       "http://jmri.org/community/examples/SPShastaConfigFile.pdf">PDF
@@ -90,8 +95,8 @@
       <p>Don't change the first line!</p>
 
       <p>For technical information on this, see the <a href=
-      "../../doc/Technical/XmlUsage.shtml">JMRI XML page</a>. 
-      <!--#include virtual="/Footer" --></p>
+      "../../doc/Technical/XmlUsage.shtml">JMRI XML page</a>.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

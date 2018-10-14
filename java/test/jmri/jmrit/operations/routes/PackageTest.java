@@ -1,39 +1,37 @@
 package jmri.jmrit.operations.routes;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        OperationsRoutesTest.class,
+        BundleTest.class,
+        OperationsRoutesGuiTest.class,
+        RouteCopyFrameTest.class,
+        RouteEditFrameTest.class,
+        RouteEditTableModelTest.class,
+        RouteManagerTest.class,
+        RouteManagerXmlTest.class,
+        RoutesTableActionTest.class,
+        RoutesTableFrameTest.class,
+        RoutesTableModelTest.class,
+        SetTrainIconPositionFrameTest.class,
+        XmlTest.class,
+        RouteCopyActionTest.class,
+        SetTrainIconPositionActionTest.class,
+        RouteLocationTest.class,
+        RouteTest.class,
+        SetTrainIconRouteActionTest.class,
+        SetTrainIconRouteFrameTest.class,
+        PrintRoutesActionTest.class,
+        PrintRouteActionTest.class,
+})
 
 /**
  * Tests for the jmrit.operations.routes package
  *
  * @author	Bob Coleman
  */
-public class PackageTest extends TestCase {
-
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrit.operations.routes.PackageTest"); // no tests in class itself
-        suite.addTest(OperationsRoutesTest.suite());
-        suite.addTest(BundleTest.suite());
-
-        // GUI tests start here
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(OperationsRoutesGuiTest.suite());
-        }
-
-        return suite;
-    }
-
+public class PackageTest  {
 }

@@ -1,28 +1,26 @@
-// SerialMessage.java
 package jmri.jmrix.oaktree;
 
 /**
  * Contains the data payload of a serial packet.
- * <P>
+ * <p>
  * Note that <i>only</i> the payload, not the header or trailer, nor the padding
  * DLE characters are included. These are added during transmission.
  *
  * @author Bob Jacobsen Copyright (C) 2001,2003, 2006
- * @version $Revision$
  */
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     // is this logically an abstract class?
 
     /**
      * Suppress the default ctor, as the response length must always be
-     * specified
+     * specified.
      */
     @SuppressWarnings("unused")
     private SerialMessage() {
     }
 
     public SerialMessage(int l) {
-        super(5);  // all messages are five bytes
+        super(5);  // all OakTree messages are five bytes
         setResponseLength(l);
         setBinary(true);
     }
@@ -35,9 +33,8 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * This ctor interprets the String as the exact sequence to send,
+     * Interpret the String as the exact sequence to send,
      * byte-for-byte.
-     *
      */
     public SerialMessage(String m, int l) {
         super(m);
@@ -46,7 +43,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * This ctor interprets the byte array as a sequence of characters to send.
+     * Interpret the byte array as a sequence of characters to send.
      *
      * @param a Array of bytes to send
      */
@@ -68,8 +65,9 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
     /**
      * Override parent method to ensure that message always has valid error
-     * check byte
+     * check byte.
      */
+    @Override
     public void setElement(int element, int value) {
         super.setElement(element, value);
         int ecb = getElement(0) ^ getElement(1) ^ getElement(2) ^ getElement(3);
@@ -104,5 +102,3 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
 }
-
-/* @(#)SerialMessage.java */

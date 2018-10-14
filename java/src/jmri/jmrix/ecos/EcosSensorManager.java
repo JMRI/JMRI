@@ -6,13 +6,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement sensor manager for Ecos systems. The Manager handles all the state
+ * Implement sensor manager for ECoS systems. The Manager handles all the state
  * changes.
- * <P>
- * System names are "USnnn:yy", where nnn is the Ecos Object Number for a given
+ * <p>
+ * System names are "USnnn:yy", where nnn is the ECoS Object Number for a given
  * s88 Bus Module and yy is the port on that module.
  *
- * @author	Kevin Dickerson Copyright (C) 2009
+ * @author Kevin Dickerson Copyright (C) 2009
  */
 public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         implements EcosListener {
@@ -38,12 +38,14 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
     private Hashtable<Integer, EcosSensor> _tecos = new Hashtable<Integer, EcosSensor>();   // stores known Ecos Object ids to DCC
     private Hashtable<Integer, Integer> _sport = new Hashtable<Integer, Integer>();   // stores known Ecos Object ids to DCC
 
+    @Override
     public String getSystemPrefix() {
         return memo.getSystemPrefix();
     }
 
+    @Override
     public Sensor createNewSensor(String systemName, String userName) {
-        //int ports = Integer.valueOf(systemName.substring(2)).intValue();
+        //int ports = Integer.parseInt(systemName.substring(2));
         Sensor s = new EcosSensor(systemName, userName);
         //s.setUserName(userName);
 
@@ -51,6 +53,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     // to listen for status changes from Ecos system
+    @Override
     public void reply(EcosReply m) {
         // is this a list of sensors?
         EcosSensor es;
@@ -69,7 +72,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                         start = start + 2;
                         if (start > 0 && end > 0) {
                             String val = lines[i].substring(start, end);
-                            int intState = Integer.valueOf(val, 16).intValue();
+                            int intState = Integer.parseInt(val, 16);
                             decodeSensorState(ecosObjectId, intState);
                         }
                     }
@@ -77,7 +80,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                         //int newstate = UNKNOWN;
                         if (start > 0 && end > 0) {
                             String val = lines[i].substring(start, lines[i].indexOf(",")).trim();
-                            int j = Integer.valueOf(val).intValue();
+                            int j = Integer.parseInt(val);
                             j++;
                             StringBuilder sb = new StringBuilder();
                             sb.append(getSystemPrefix());
@@ -172,6 +175,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
 
+    @Override
     public void message(EcosMessage m) {
         // messages are ignored
     }
@@ -209,7 +213,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         tc.sendEcosMessage(m, this);
 
     }
-    private final static Logger log = LoggerFactory.getLogger(EcosSensorManager.class.getName());
-}
 
-/* @(#)EcosSensorManager.java */
+    private final static Logger log = LoggerFactory.getLogger(EcosSensorManager.class);
+
+}

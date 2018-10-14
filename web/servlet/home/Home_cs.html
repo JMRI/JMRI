@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!-- %3$s is the railroad name -->
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" data-railroad="%3$s"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" data-railroad="%3$s"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" data-railroad="%3$s"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" data-railroad="%3$s"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>%1$s</title><!-- %1$s is title from Servlet -->
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/panel.css">
+        <link rel="stylesheet" href="/css/user.css">
+
+        <script src="/js/jquery-1.11.2.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="/js/json2.js"></script>
+        <script src="/js/jquery.websocket.js"></script>
+        <script src="/js/jquery.jmri.js"></script>
+        <script src="/js/main.js"></script>
+        <script src="/js/user.js"></script>
+        <script src="/js/home.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+        <div id="wrap">
+            <!-- Navigation Bar %2$s -->
+
+            <div class="jumbotron">
+                <div class="container">
+                    <h1>%3$s</h1>
+                    <p>Vítejte na <em>%3$s</em>, poháněno <a href="http://jmri.org">JMRI</a>.</p>
+                </div>
+            </div>
+
+            <div class="container">
+
+                <div class="row">
+                    <!-- throttles -->
+                    <div class="col-md-4">
+                        <h2>Ovladače</h2>
+                        <h4><a href="/web/webThrottle.html">webThrottle</a></h4>
+                        <p><em>webThrottle</em> je webový ovladač který poskytuje integrovanou podporu pro řízení vlaků, prvky kolejiště a panely z webového prohlížeče.</p>
+                        <p>
+                            <a class="btn btn-default" href="/web/webThrottle.html" target="webThrottle" role="button">Otevřít nyní »</a>
+                            <a class="btn btn-default" href="/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml" role="button">Zjistit více »</a>
+                        </p>
+                        <div class="visible-jmri_withrottle">
+                            <h4><a href="http://enginedriver.rrclubs.org">Engine Driver</a></h4>
+                            <p><em>Engine Driver</em> je původní ovladač pro telefony a tablety se systémem Android.</p>
+                            <p>
+                                <!-- should have open/download button as appropriate -->
+                                <a class="btn btn-default" href="http://enginedriver.rrclubs.org" role="button">Zjistit více »</a>
+                            </p>
+                            <h4><a href="http://www.withrottle.com">WiThrottle</a></h4>
+                            <p><em>WiThrottle</em> je původní ovladač pro iPhone, iPad a iPod.</p>
+                            <p>
+                                <!-- should have open/download button as appropriate -->
+                                <a class="btn btn-default" href="http://www.withrottle.com" role="button">Zjistit více »</a>
+                            </p>
+                        </div>
+                        <div class="hidden-jmri_withrottle alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Původní ovladače aplikací jsou přístupné pokud je povolena služba WiThrottle.</div>
+                    </div>
+                    <div class="col-md-4">
+                        <h2>Otevřít okno</h2>
+                        <div id="no-open-frames" class="alert alert-info alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Není otevřené žádné okno, které by bylo možno sdílet.</div>
+                        <ul id="frame-list" class="list-group"></ul>
+                    </div>
+                    <!-- contributed / frames / file access -->
+                    <div class="col-md-4">
+                        <h2>Nástroje</h2>
+                        <h4 class="hidden-jmri_jmri-json">JSON konsole</h4>
+                        <h4 class="visible-jmri_jmri-json"><a href="/json">JSON konsole</a></h4>
+                        <p class="hidden-jmri_jmri-json alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>JSON konsole je nepřístupná.</p>
+                        <p>Konsole pro přímé vydávání příkazů JSON do JMRI.</p>
+                        <h4 class="hidden-jmri_jmri-simple">Simple konsole</h4>
+                        <h4 class="visible-jmri_jmri-simple"><a href="/simple">Simple konsole</a></h4>
+                        <p class="hidden-jmri_jmri-simple alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>Simple konsole je nepřístupná.</p>
+                        <p>Konsole pro vydávání příkazů v prostém textu do JMRI.</p>
+                        <h2>Přístup k souborům</h2>
+                        <p>Přímý přístup k určitým souborům a adresářům:</p>
+                        <dl>
+                            <dt><a href="/prefs">/prefs</a></dt>
+                            <dd>Adresář předvoleb pro aktuální JMRI profil.</dd>
+                            <dt><a href="/dist">/dist</a><dt>
+                            <dd>Instalační adresář aplikace JMRI.</dd>
+                            <dt><a href="/web">/web</a></dt>
+                            <dd>Některé aplikace a soubory požadované web serverem.</dd>
+                            <dt><a href="/images">/images</a></dt>
+                            <dd>Obrázky obsažené v JMRI.</dd>
+                            <dt><a href="/xml/signals">/xml/signals</a></dt>
+                            <dd>Místní definice návěstí v čitelném tvaru.</dd>
+                        </dl>
+                        <p><small>Pokud adresář obsahuje soubor index.html, potom bude vrácen soubor index.html namísto obsahu adresáře.</small></p>
+                        <p><small>Pokud adresář existuje současně v uživatelských předvolbách a instalačním adresáři JMRI, tak adesář v uživatelských předvolbách je vrácen bez URL cesty začínající na <code/>/dist</code> nebo <code>/xml</code>.</small></p>
+                    </div>
+                </div>
+
+            </div> <!-- /container -->
+        </div> <!-- /wrap -->
+        <!-- Footer %4$s -->
+    </body>
+</html>

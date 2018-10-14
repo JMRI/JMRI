@@ -13,15 +13,19 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="B. Milhaupt" version="1.2" lastUpdated="20180823"/>
   <version author="td@teamdigital1.com" version="1.0" lastUpdated="20130520"/>
   <!-- Version 1 initial release 10/27/13-->
   <!-- Version 1.1 added delay for inputs 9-16 release 10/27/13-->  
+  <!-- Version 1.2 release, added "LOCONETOPSBOARD" programming token to allow LocoNet-connected boards to read CV values -->
   <decoder>
     <family name="CSC Family" mfg="Team Digital" type="stationary" comment="The CSC can be programmed in the usual way">
       <model model="CSC" lowVersionID="10" comment="Original HW"/>
       <model model="CSCe" lowVersionID="10" comment="Later HW"/>
     </family>
-    <programming direct="no" paged="yes" register="no" ops="yes"/>
+    <programming direct="no" paged="yes" register="no" ops="yes">
+        <mode>LOCONETOPSBOARD</mode>
+    </programming>
     <variables>
       <variable CV="1" mask="VVVVVVVV" item="Short Address" tooltip="Range 1-16000, max value of 127 when programming via DCC" default="10010">
         <splitVal highCV="2" upperMask="XXVVVVVV"/>
@@ -304,7 +308,7 @@
       <variable item="Test State" CV="7" mask="XXXVVVVV" default="0">
         <enumVal>
           <enumChoice choice="None" value="0"/>
-          <enumChoice choice="Initailize logic cells - useful after changing Logic cell CVs" value="6"/>
+          <enumChoice choice="Initialize logic cells - useful after changing Logic cell CVs" value="6"/>
         </enumVal>
         <label>Test State</label>
       </variable>
@@ -314,7 +318,7 @@
           <enumChoice choice="Move servos back and forth" value="3"/>
           <enumChoice choice="Move servos to one end" value="4"/>
           <enumChoice choice="Move servos to the other end" value="5"/>
-          <enumChoice choice="Initailize logic cells - useful after changing Logic cell CVs" value="6"/>
+          <enumChoice choice="Initialize logic cells - useful after changing Logic cell CVs" value="6"/>
         </enumVal>
         <label>Servo Test</label>
       </variable>
@@ -11543,10 +11547,10 @@
     <name>Mfg</name>
     <column>
       <label>
-        <text>Initailize logic cells writes to the Vsersion ID but does not change it </text>
+        <text>Initialize logic cells writes to the Vsersion ID but does not change it </text>
       </label>
       <label>
-        <text>To initiate, make a change by selecting None then select Initailize logic cells</text>
+        <text>To initiate, make a change by selecting None then select Initialize logic cells</text>
       </label>
       <label>
         <text>now click 'Write changes on sheet'</text>

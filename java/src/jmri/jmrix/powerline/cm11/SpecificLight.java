@@ -1,4 +1,3 @@
-// SpecificLight.java
 package jmri.jmrix.powerline.cm11;
 
 import jmri.jmrix.powerline.SerialTrafficController;
@@ -16,44 +15,37 @@ import jmri.jmrix.powerline.SerialTrafficController;
  * <p>
  * Keeps track of the controller's "dim count", and if not certain forces it to
  * zero to be sure.
- * <p>
- *
- *
  *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009, 2010
  * @author Ken Cameron Copyright (C) 2009 Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version $Revision$
  */
 public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -5302813776530897464L;
 
     /**
      * Create a Light object, with only system name.
      * <P>
      * 'systemName' was previously validated in SerialLightManager
+     *
+     * @param systemName systemName for light
+     * @param tc         tc for connection
      */
     public SpecificLight(String systemName, SerialTrafficController tc) {
         super(systemName, tc);
-        this.tc = tc;
     }
 
     /**
      * Create a Light object, with both system and user names.
      * <P>
      * 'systemName' was previously validated in SerialLightManager
+     *
+     * @param systemName systemName for light
+     * @param tc         tc for connection
+     * @param userName   userName for light
      */
     public SpecificLight(String systemName, SerialTrafficController tc, String userName) {
         super(systemName, tc, userName);
-        this.tc = tc;
     }
 
-    SerialTrafficController tc = null;
 }
-
-/* @(#)SerialLight.java */

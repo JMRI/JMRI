@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
-   jmri.jmrix.marklin.networkdriver.configurexml.PackageTest.class
+   jmri.jmrix.marklin.networkdriver.configurexml.PackageTest.class,
+   NetworkDriverAdapterTest.class
 
 })
 /**
@@ -32,6 +33,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

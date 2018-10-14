@@ -4,34 +4,34 @@ import java.util.ResourceBundle;
 import javax.swing.JMenu;
 
 /**
- * Create a "Systems" menu containing the Jmri SECSI-specific tools
+ * Create a "Systems" menu containing the JMRI SECSI-specific tools.
  *
- * @author	Bob Jacobsen Copyright 2003, 2006, 2007
- * @version $Revision$
+ * @author Bob Jacobsen Copyright 2003, 2006, 2007
  */
 public class SecsiMenu extends JMenu {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8675063885996858394L;
-
-    public SecsiMenu(String name) {
-        this();
+    public SecsiMenu(String name, SecsiSystemConnectionMemo memo) {
+        this(memo);
         setText(name);
     }
 
-    public SecsiMenu() {
+    public SecsiMenu(SecsiSystemConnectionMemo memo) {
 
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.secsi.SecsiBundle");
+        if (memo != null) {
+            setText(memo.getUserName());
+        } else {
+            setText(Bundle.getMessage("MenuSystem"));
+        }
 
-        setText(rb.getString("MenuSystem"));
-
-        add(new jmri.jmrix.secsi.serialmon.SerialMonAction(rb.getString("MenuItemCommandMonitor")));
-        add(new jmri.jmrix.secsi.packetgen.SerialPacketGenAction(rb.getString("MenuItemSendCommand")));
-
+        if (memo != null) {
+            // do we have a SerialTrafficController?
+            setEnabled(memo.getTrafficController() != null); // disable menu, no connection, no tools!
+            add(new jmri.jmrix.secsi.serialmon.SerialMonAction(Bundle.getMessage("MenuItemCommandMonitor"), memo));
+            add(new jmri.jmrix.secsi.packetgen.SerialPacketGenAction(Bundle.getMessage("MenuItemSendCommand"), memo));
+            add(new jmri.jmrix.secsi.nodeconfig.NodeConfigAction(Bundle.getMessage("ConfigNodesTitle"), memo));
+        }
     }
 
 }

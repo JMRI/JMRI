@@ -1,4 +1,3 @@
-// EasyDccTurnout.java
 package jmri.jmrix.easydcc;
 
 import jmri.NmraPacket;
@@ -8,32 +7,33 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * EasyDcc implementation of the Turnout interface.
- * <P>
+ * EasyDCC implementation of the Turnout interface.
+ * <p>
  * This object doesn't listen to the EasyDcc communications. This is because it
  * should be the only object that is sending messages for this turnout; more
  * than one Turnout object pointing to a single device is not allowed.
  *
- * Description:	extend jmri.AbstractTurnout for EasyDcc layouts
- *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class EasyDccTurnout extends AbstractTurnout {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2850269669837354617L;
+    // data members
+    int _number; // turnout number
+    private EasyDccTrafficController tc = null;
+    protected String _prefix = "E"; // default to "E"
 
     /**
-     * EasyDcc turnouts use the NMRA number (0-511) as their numerical
-     * identification.
+     * Create a turnout. EasyDCC turnouts use the NMRA number (0-511) as their
+     * numerical identification.
+     *
+     * @param number the NMRA turnout number from 0 to 511
      */
-    public EasyDccTurnout(int number) {
-        super("ET" + number);
+    public EasyDccTurnout(String prefix, int number, EasyDccSystemConnectionMemo memo) {
+        super(prefix + "T" + number);
+        tc = memo.getTrafficController();
         _number = number;
-        // At construction, register for messages
+        _prefix = prefix;
+        // At construction, don't register for messages (see package doc)
     }
 
     public int getNumber() {
@@ -47,6 +47,7 @@ public class EasyDccTurnout extends AbstractTurnout {
     }
 
     // Handle a request to change state by sending a formatted DCC packet
+    @Override
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states
         if ((s & Turnout.CLOSED) != 0) {
@@ -54,7 +55,6 @@ public class EasyDccTurnout extends AbstractTurnout {
             if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
                 log.error("Cannot command both CLOSED and THROWN " + s);
-                return;
             } else {
                 // send a CLOSED command
                 sendMessage(true ^ getInverted());
@@ -65,14 +65,13 @@ public class EasyDccTurnout extends AbstractTurnout {
         }
     }
 
+    @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
-            log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton ET" + _number);
+            log.debug("Send command to {}",
+                    (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton " + _prefix + "T" +  _number);
         }
     }
-
-    // data members
-    int _number;   // turnout number
 
     protected void sendMessage(boolean closed) {
         // get the packet
@@ -118,13 +117,10 @@ public class EasyDccTurnout extends AbstractTurnout {
             m.setElement(i++, s.charAt(1));
         }
 
-        EasyDccTrafficController.instance().sendEasyDccMessage(m, null);
-
+        log.debug("send easydcc message for turnout {}T{}", _prefix, _number);
+        tc.sendEasyDccMessage(m, null);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EasyDccTurnout.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccTurnout.class);
 
 }
-
-
-/* @(#)EasyDccTurnout.java */

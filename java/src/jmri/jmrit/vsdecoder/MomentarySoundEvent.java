@@ -15,8 +15,8 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision$
+ * @author   Mark Underwood Copyright (C) 2011
+ * 
  */
 import java.beans.PropertyChangeListener;
 import javax.swing.JButton;
@@ -136,6 +136,6 @@ public class MomentarySoundEvent extends SoundEvent implements PropertyChangeLis
          */
     }  // end setXml()
 
-    private static final Logger log = LoggerFactory.getLogger(MomentarySoundEvent.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(MomentarySoundEvent.class);
 
 }

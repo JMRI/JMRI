@@ -1,34 +1,40 @@
 package jmri.jmrix.maple;
 
-import jmri.implementation.AbstractTurnoutTest;
+import jmri.implementation.AbstractTurnoutTestBase;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
- * Tests for the jmri.jmrix.maple.SerialTurnout class
+ * JUnit tests for the jmri.jmrix.maple.SerialTurnout class
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
-public class SerialTurnoutTest extends AbstractTurnoutTest {
+  */
+public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     private SerialTrafficControlScaffold tcis = null;
-    private SerialNode n = new SerialNode();
+    private MapleSystemConnectionMemo _memo = null;
+    private SerialNode n = null; 
 
-    public void setUp() {
-        // prepare an interface
-        tcis = new SerialTrafficControlScaffold();
-        n = new SerialNode(1, 0);
-        t = new SerialTurnout("KT4", "t4");
+    @Test
+    public void testNode() {
         Assert.assertNotNull("exists", n);
         Assert.assertNotNull("turnout exists", t);
     }
 
+    @Test
+    public void testCTor() {
+        SerialTurnout t = new SerialTurnout("KT1", _memo);
+        Assert.assertNotNull("exists", t);
+    }
+
+    @Override
     public int numListeners() {
         return tcis.numListeners();
     }
 
+    @Override
     public void checkThrownMsgSent() {
 
 //                tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
@@ -36,27 +42,34 @@ public class SerialTurnoutTest extends AbstractTurnoutTest {
 //		Assert.assertEquals("content", "41 54 08", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // THROWN message
     }
 
+    @Override
     public void checkClosedMsgSent() {
 //                tcis.sendSerialMessage(tcis.nextWrite(), null); // force outbound message; normally done by poll loop
 //		Assert.assertTrue("message sent", tcis.outbound.size()>0);
 //		Assert.assertEquals("content", "41 54 00", tcis.outbound.elementAt(tcis.outbound.size()-1).toString());  // CLOSED message
     }
 
-    // from here down is testing infrastructure
-    public SerialTurnoutTest(String s) {
-        super(s);
+    @Override
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+        // prepare an interface
+        tcis = new SerialTrafficControlScaffold();
+        _memo = new MapleSystemConnectionMemo("K", "Maple");
+        _memo.setTrafficController(tcis);
+        n = new SerialNode(1, 0,tcis);
+        t = new SerialTurnout("KT4", "t4", _memo);
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SerialTurnoutTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SerialTurnoutTest.class);
-        return suite;
+    // OK to used this for class clean up?
+    @After
+    public void tearDown() {
+        tcis = null;
+        _memo.dispose();
+        n = null;
+        t = null;
+        // Some clean up is done through the AbstractTurnoutTestBase
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

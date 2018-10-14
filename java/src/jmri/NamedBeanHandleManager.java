@@ -2,24 +2,25 @@ package jmri;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Objects;
 import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-
+import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Instance for controlling the issuing of NamedBeanHandles.
  * <hr>
- * The NamedBeanHandleManager, deals with controlling and updating NamedBeans
+ * The NamedBeanHandleManager, deals with controlling and updating {@link NamedBean} objects
  * across JMRI. When a piece of code requires persistent access to a bean, it
- * should use a NamedBeanHandle, the NamedBeanHandle stores not only the bean
+ * should use a {@link NamedBeanHandle}. The {@link NamedBeanHandle} stores not only the bean
  * that has been requested but also the named that was used to request it
  * (either User or System Name).
  * <p>
- * This Manager will only issue out one NamedBeanHandle per Bean/Name request.
- * The Manager also deals with updates and changes to the names of Beans, along
+ * This Manager will only issue out one {@link NamedBeanHandle} per Bean/Name request.
+ * The Manager also deals with updates and changes to the names of {@link NamedBean} objects, along
  * with moving usernames between different beans.
  * <p>
  * If a beans username is changed by the user, then the name will be updated in
@@ -39,22 +40,27 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @see jmri.NamedBean
+ * @see jmri.NamedBeanHandle
+ *
+ * @author Kevin Dickerson Copyright (C) 2011
  */
-public class NamedBeanHandleManager extends jmri.managers.AbstractManager implements java.io.Serializable {
+public class NamedBeanHandleManager extends AbstractManager implements InstanceManagerAutoDefault {
 
     public NamedBeanHandleManager() {
         super();
     }
 
     @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
-    @CheckForNull
-    public <T> NamedBeanHandle<T> getNamedBeanHandle(@Nonnull String name, @Nonnull T bean) {
-        if (bean == null || name == null || name.equals("")) {
-            return null;
+    @Nonnull
+    @CheckReturnValue
+    public <T extends NamedBean> NamedBeanHandle<T> getNamedBeanHandle(@Nonnull String name, @Nonnull T bean) {
+        Objects.requireNonNull(bean, "bean must be nonnull");
+        Objects.requireNonNull(name, "name must be nonnull");
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException("name cannot be empty in getNamedBeanHandle");
         }
         NamedBeanHandle<T> temp = new NamedBeanHandle<>(name, bean);
-
         for (NamedBeanHandle<T> h : namedBeanHandles) {
             if (temp.equals(h)) {
                 return h;
@@ -65,16 +71,22 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
     }
 
     /**
-     * A Method to update the name on a bean. Note this does not change the name
-     * on the bean, it only changes the references
+     * Update the name of a bean in its references.
+     * <p>
+     * <strong>Note</strong> this does not change the name on the bean, it only
+     * changes the references.
      *
+     * @param <T>     the type of the bean
+     * @param oldName the name changing from
+     * @param newName the name changing to
+     * @param bean    the bean being renamed
      */
     @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
-    public <T> void renameBean(@Nonnull String oldName, @Nonnull String newName, @Nonnull T bean) {
+    public <T extends NamedBean> void renameBean(@Nonnull String oldName, @Nonnull String newName, @Nonnull T bean) {
 
         /*Gather a list of the beans in the system with the oldName ref.
          Although when we get a new bean we always return the first one that exists
-         when a rename is performed it doesn't delete the bean with the old name 
+         when a rename is performed it doesn't delete the bean with the old name
          it simply updates the name to the new one. So hence you can end up with
          multiple named bean entries for one name.
          */
@@ -84,17 +96,23 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
                 h.setName(newName);
             }
         }
-        updateListenerRef(oldName, newName, ((NamedBean) bean));
+        updateListenerRef(oldName, newName, bean);
     }
 
     /**
-     * A method to effectivily move a name from one bean to another. This method
-     * only updates the references to point to the new bean It does not move the
-     * name provided from one bean to another.
+     * Effectively move a name from one bean to another.
+     * <p>
+     * <strong>Note</strong> only updates the references to point to the new
+     * bean; does not move the name provided from one bean to another.
+     *
+     * @param <T>     the bean type
+     * @param oldBean bean loosing the name
+     * @param name    name being moved
+     * @param newBean bean gaining the name
      */
     //Checks are performed to make sure that the beans are the same type before being moved
     @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
-    public <T> void moveBean(@Nonnull T oldBean, @Nonnull T newBean, @Nonnull String name) {
+    public <T extends NamedBean> void moveBean(@Nonnull T oldBean, @Nonnull T newBean, @Nonnull String name) {
         /*Gather a list of the beans in the system with the oldBean ref.
          Although when a new bean is requested, we always return the first one that exists
          when a move is performed it doesn't delete the namedbeanhandle with the oldBean
@@ -108,7 +126,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
                 h.setBean(newBean);
             }
         }
-        moveListener((NamedBean) oldBean, (NamedBean) newBean, name);
+        moveListener(oldBean, newBean, name);
     }
 
     public void updateBeanFromUserToSystem(@Nonnull NamedBean bean) {
@@ -132,19 +150,15 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
         renameBean(systemName, userName, bean);
     }
 
-    @SuppressWarnings("unchecked") // namedBeanHandles contains multiple types of NameBeanHandles<T>
-    public <T> boolean inUse(@Nonnull String name, @Nonnull T bean) {
+    @CheckReturnValue
+    public <T extends NamedBean> boolean inUse(@Nonnull String name, @Nonnull T bean) {
         NamedBeanHandle<T> temp = new NamedBeanHandle<>(name, bean);
-        for (NamedBeanHandle<T> h : namedBeanHandles) {
-            if (temp.equals(h)) {
-                return true;
-            }
-        }
-        return false;
+        return namedBeanHandles.stream().anyMatch((h) -> (temp.equals(h)));
     }
 
     @CheckForNull
-    public <T> NamedBeanHandle<T> newNamedBeanHandle(@Nonnull String name, @Nonnull T bean, @Nonnull Class<T> type) {
+    @CheckReturnValue
+    public <T extends NamedBean> NamedBeanHandle<T> newNamedBeanHandle(@Nonnull String name, @Nonnull T bean, @Nonnull Class<T> type) {
         return getNamedBeanHandle(name, bean);
     }
 
@@ -160,7 +174,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
 
     /**
      * Moves a propertyChangeListener from one bean to another, where the
-     * listerner reference matches the currentName.
+     * listener reference matches the currentName.
      */
     private void moveListener(@Nonnull NamedBean oldBean, @Nonnull NamedBean newBean, @Nonnull String currentName) {
         java.beans.PropertyChangeListener[] listeners = oldBean.getPropertyChangeListenersByReference(currentName);
@@ -171,8 +185,6 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
         }
     }
 
-    // abstract methods to be extended by subclasses
-    // to free resources when no longer used
     @Override
     public void dispose() {
         super.dispose();
@@ -188,25 +200,33 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
     protected void registerSelf() {
     }
 
+    @Override
+    @CheckReturnValue
     public String getSystemPrefix() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    @CheckReturnValue
     public char typeLetter() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
+    @CheckReturnValue
     public String makeSystemName(String s) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
+    @Deprecated  // will be removed when Manager method is removed due to @Override
     public String[] getSystemNameArray() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
+    @CheckReturnValue
+    @Deprecated  // will be removed when Manager method is removed due to @Override
     public List<String> getSystemNameList() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -238,13 +258,17 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    @CheckReturnValue
     public int getXMLOrder() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    @CheckReturnValue
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanName");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NamedBeanHandleManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NamedBeanHandleManager.class);
 }

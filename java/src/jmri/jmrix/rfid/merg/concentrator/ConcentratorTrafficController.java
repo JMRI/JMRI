@@ -12,11 +12,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Converts Stream-based I/O to/from messages. The "SerialInterface" side
  * sends/receives message objects.
- * <P>
+ * <p>
  * The connection to a SerialPortController is via a pair of *Streams, which
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
- * <P>
+ * <p>
  * This maintains a list of nodes, but doesn't currently do anything with it.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2005, 2006, 2008
@@ -26,11 +26,10 @@ import org.slf4j.LoggerFactory;
 public class ConcentratorTrafficController extends RfidTrafficController {
 
     private final String range;
-    private final RfidSystemConnectionMemo memo;
 
     public ConcentratorTrafficController(RfidSystemConnectionMemo memo, String range) {
         super();
-        this.memo = memo;
+        adapterMemo = memo;
         this.range = range;
         logDebug = log.isDebugEnabled();
 
@@ -43,7 +42,7 @@ public class ConcentratorTrafficController extends RfidTrafficController {
 
     @Override
     public void sendInitString() {
-        String init = memo.getProtocol().initString();
+        String init = adapterMemo.getProtocol().initString();
         if (init.length() > 0) {
             sendRfidMessage(new ConcentratorMessage(init, 0), null);
         }
@@ -65,7 +64,7 @@ public class ConcentratorTrafficController extends RfidTrafficController {
 
     @Override
     protected AbstractMRReply newReply() {
-        ConcentratorReply reply = new ConcentratorReply(memo.getTrafficController());
+        ConcentratorReply reply = new ConcentratorReply(adapterMemo.getTrafficController());
         return reply;
     }
 
@@ -76,10 +75,11 @@ public class ConcentratorTrafficController extends RfidTrafficController {
 
     @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
-        return memo.getProtocol().endOfMessage(msg);
+        return adapterMemo.getProtocol().endOfMessage(msg);
     }
 
     boolean sendInterlock = false; // send the 00 interlock when CRC received
 
-    private static final Logger log = LoggerFactory.getLogger(ConcentratorTrafficController.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ConcentratorTrafficController.class);
+
 }

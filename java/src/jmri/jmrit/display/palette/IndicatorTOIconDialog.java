@@ -1,4 +1,3 @@
-// IndicatorTOIconDialog.java
 package jmri.jmrit.display.palette;
 
 import java.awt.FlowLayout;
@@ -20,36 +19,26 @@ import org.slf4j.LoggerFactory;
  */
 public class IndicatorTOIconDialog extends IconDialog {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 6760221740048137437L;
     String _key;
 
-    /**
-     * Constructor for existing family to change icons, add/delete icons, or to
-     * delete the family
-     */
     public IndicatorTOIconDialog(String type, String family, IndicatorTOItemPanel parent, String key,
             HashMap<String, NamedIcon> iconMap) {
-        super(type, key, parent, iconMap);	// temporarily use key for family to set JL
+        super(type, key, parent, iconMap); // temporarily use key for family to set JL
         _family = family;
         _key = key;
-        sizeLocate();
-        if (log.isDebugEnabled()) {
-            log.debug("IndicatorTOIconDialog ctor done. type= \""
-                    + type + "\", family= \"" + family + "\", key= \"" + key + "\"");
-        }
+        log.debug("IndicatorTOIconDialog ctor done. type= \"{}\" family =\"{}\", key= \"{}\"", type, family, key);
     }
 
     /**
-     * Add/Delete icon family for types that may have more than 1 family
+     * Add/Delete icon family for types that may have more than 1 family.
      */
+    @Override
     protected void makeAddIconButtonPanel(JPanel buttonPanel, String addTip, String deleteTip) {
         JPanel panel1 = new JPanel();
         panel1.setLayout(new FlowLayout());
         JButton addFamilyButton = new JButton(Bundle.getMessage("addMissingStatus"));
         addFamilyButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 addFamilySet();
                 dispose();
@@ -60,6 +49,7 @@ public class IndicatorTOIconDialog extends IconDialog {
 
         JButton deleteButton = new JButton(Bundle.getMessage("deleteStatus"));
         deleteButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 deleteFamilySet();
                 dispose();
@@ -71,18 +61,16 @@ public class IndicatorTOIconDialog extends IconDialog {
     }
 
     /**
-     * Action item for add new status set in makeAddIconButtonPanel
+     * Action item for add new status set in makeAddIconButtonPanel.
      */
     private void addFamilySet() {
-        if (log.isDebugEnabled()) {
-            log.debug("addFamilySet: type= \""
-                    + _type + "\", family= \"" + _family + "\" key= " + _key);
-        }
+        log.debug("addFamilySet: type= \"{}\", family= \"{}\" key= {}",
+                _type, _family, _key);
         setVisible(false);
         IndicatorTOItemPanel parent = (IndicatorTOItemPanel) _parent;
         if (parent._iconGroupsMap.size() < IndicatorTOItemPanel.STATUS_KEYS.length) {
             Set<String> keys = ItemPalette.getLevel4Family(_type, _family).keySet();
-            ArrayList<String> options = new ArrayList<String>();
+            ArrayList<String> options = new ArrayList<>();
             for (int i = 0; i < IndicatorTOItemPanel.STATUS_KEYS.length; i++) {
                 if (!keys.contains(IndicatorTOItemPanel.STATUS_KEYS[i])) {
                     options.add(IndicatorTOItemPanel.STATUS_KEYS[i]);
@@ -90,30 +78,30 @@ public class IndicatorTOIconDialog extends IconDialog {
             }
             Object[] selections = options.toArray();
             String key = (String) JOptionPane.showInputDialog(_parent._paletteFrame,
-                    Bundle.getMessage("PickStatus"), Bundle.getMessage("questionTitle"), JOptionPane.QUESTION_MESSAGE, null,
+                    Bundle.getMessage("PickStatus"), Bundle.getMessage("QuestionTitle"), JOptionPane.QUESTION_MESSAGE, null,
                     selections, selections[0]);
             if (key != null) {
                 _key = key;
                 createNewStatusSet();
-//                new IndicatorTOIconDialog(_type, null, parent, _key, _iconMap);        		
+//                new IndicatorTOIconDialog(_type, null, parent, _key, _iconMap);
             }
         } else {
             JOptionPane.showMessageDialog(_parent._paletteFrame,
                     Bundle.getMessage("AllStatus"),
-                    Bundle.getMessage("infoTitle"), JOptionPane.INFORMATION_MESSAGE);
+                    Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
     /**
      * NOT add a new family. Create a status family when previous status was
-     * deleted
+     * deleted.
      */
     private void createNewStatusSet() {
         if (log.isDebugEnabled()) {
-            log.debug("createNewFamily: type= \""
-                    + _type + "\", family= \"" + _family + "\" key= " + _key);
+            log.debug("createNewFamily: type= \"{}\", family \"{}\" key = \"{}\"",
+                    _type, _family, _key);
         }
-        //check text        
+        //check text
         HashMap<String, NamedIcon> iconMap = ItemPanel.makeNewIconMap("Turnout");
         ItemPalette.addLevel4FamilyMap(_type, _parent._family, _key, iconMap);
         addFamilySet(_parent._family, iconMap, _key);
@@ -121,7 +109,7 @@ public class IndicatorTOIconDialog extends IconDialog {
     }
 
     /**
-     * Action item for add delete status set in makeAddIconButtonPanel
+     * Action item for add delete status set in makeAddIconButtonPanel.
      */
     private void deleteFamilySet() {
         ItemPalette.removeLevel4IconMap(_type, _parent._family, _key);
@@ -130,7 +118,7 @@ public class IndicatorTOIconDialog extends IconDialog {
     }
 
     /**
-     * Action item for makeDoneButtonPanel
+     * Action item for makeDoneButtonPanel.
      */
     @Override
     protected boolean doDoneAction() {
@@ -139,21 +127,21 @@ public class IndicatorTOIconDialog extends IconDialog {
         if (_family != null && _family.equals(subFamily)) {
             ItemPalette.removeLevel4IconMap(_type, _parent._family, subFamily);
         }
-        jmri.jmrit.catalog.ImageIndexEditor.indexChanged(true);
         return addFamilySet(_parent._family, _iconMap, subFamily);
     }
 
     private boolean addFamilySet(String family, HashMap<String, NamedIcon> iconMap, String subFamily) {
         if (log.isDebugEnabled()) {
-            log.debug("addFamily _type= \"" + _type + "\", family= \"" + family + "\""
-                    + ", key= \"" + _key + "\", _iconMap.size= " + iconMap.size());
+            log.debug("addFamilySet _type= \"{}\", family= \"{}\", key=\"{}\", _iconMap.size= {}",
+                    _type, family, _key, iconMap.size());
         }
         IndicatorTOItemPanel parent = (IndicatorTOItemPanel) _parent;
         parent.updateIconGroupsMap(subFamily, iconMap);
-        _parent.updateFamiliesPanel();
-        _parent._family = family;
+        parent.updateFamiliesPanel();
+        parent._family = family;
         return true;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IndicatorTOIconDialog.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndicatorTOIconDialog.class);
+
 }

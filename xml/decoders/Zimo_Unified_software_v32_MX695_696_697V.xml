@@ -16,6 +16,7 @@
   <version author="Mark Waters mark16jmri@mybtinternet.com" version="1" lastUpdated="20150103"/>
   <version author="Mark Waters mark16jmri@mybtinternet.com" version="1.1" lastUpdated="20150103"/>
   <version author="Mark Waters mark16jmri@mybtinternet.com" version="1.2" lastUpdated="20160311"/>
+  <version author="Nigel Cliffe" version="1.3" lastUpdated="20161228" />
   <!-- This decoder configuration file is based on the Zimo_MX640_v9.xml                     -->
   <!-- V 1 file, dated 20090222. With the Sound tabs from Jeff Schmaltz' MX69/MX690 file.    -->
   <!--                                                                                       -->
@@ -30,6 +31,7 @@
   <!-- V 1 new file -->
   <!-- V 1.1 added MX697 and additional productID 227 -->
   <!-- v1.2,  Added Sound Samples Pane.   Mark Waters, 11 Mar 2016 -->
+  <!-- V1.3 added CV's 153-157 after user reported they were absent. Nigel Cliffe 28 Dec 2016 -->
   <decoder>
     <family name="Zimo Unified software (version 32+)" mfg="Zimo">
       <model model="MX695KV version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30 V" maxMotorCurrent="6 A (peak 10 A)" maxTotalCurrent="6 A (peak 10 A)" numOuts="14" numFns="14" formFactor="G" connector="other" productID="224,227">
@@ -154,6 +156,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV1-CV99.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV152version30.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV152bit7version27.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV153-CV157version28.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV159-CV160.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
@@ -161,21 +164,25 @@
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 1:</label>
       </variable>
       <variable item="Decoder ID 2" CV="251" readOnly="yes">
         <decVal/>
         <label>Decoder ID 2</label>
         <label xml:lang="it">ID 2 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 2:</label>
       </variable>
       <variable item="Decoder ID 3" CV="252" readOnly="yes">
         <decVal/>
         <label>Decoder ID 3</label>
         <label xml:lang="it">ID 3 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 3:</label>
       </variable>
       <variable item="Decoder ID 4" CV="253" readOnly="yes">
         <decVal/>
         <label>Decoder ID 4</label>
         <label xml:lang="it">ID 4 Decoder: </label>
+        <label xml:lang="cs">Dekodér ID 4:</label>
       </variable>
       <!-- Begin sound-only variables -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV260-CV355sound_version30.xml"/>

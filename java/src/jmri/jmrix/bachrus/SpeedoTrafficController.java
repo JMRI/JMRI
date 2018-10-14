@@ -1,41 +1,47 @@
 package jmri.jmrix.bachrus;
 
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.SerialPortEvent;
+import purejavacomm.SerialPortEventListener;
 
 /**
- * Converts Stream-based I/O to/from speedo messages. The "SpeedoInterface" side
+ * Converts Stream-based I/O to/from Speedo messages. The "SpeedoInterface" side
  * sends/receives message objects. The connection to a SpeedoPortController is
  * via a pair of *Streams, which then carry sequences of characters for
  * transmission. Note that this processing is handled in an independent thread.
+ * <p>
+ * Removed Runnable implementation and methods for it.
  *
- * Updated January 2010 for gnu io (RXTX) - Andrew Berridge. Comments tagged
- * with "AJB" indicate changes or observations by me
- *
- * Removed Runnable implementation and methods for it
- *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Andrew Crosland Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Andrew Crosland Copyright (C) 2010
+ * @author Andrew Berridge Copyright (C) 2010 for gnu io (RXTX)
  */
 public class SpeedoTrafficController implements SpeedoInterface, SerialPortEventListener {
 
     private SpeedoReply reply = new SpeedoReply();
 
-    public SpeedoTrafficController() {
+    /**
+     * Create a new SpeedoTrafficController instance.
+     *
+     * @param adaptermemo the associated SystemConnectionMemo
+     */
+    public SpeedoTrafficController(SpeedoSystemConnectionMemo adaptermemo) {
     }
 
     // The methods to implement the SpeedoInterface
+
     protected Vector<SpeedoListener> cmdListeners = new Vector<SpeedoListener>();
 
+    @Override
     public boolean status() {
         return (ostream != null && istream != null);
     }
 
+    @Override
     public synchronized void addSpeedoListener(SpeedoListener l) {
         // add only if not already registered
         if (l == null) {
@@ -46,6 +52,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
         }
     }
 
+    @Override
     public synchronized void removeSpeedoListener(SpeedoListener l) {
         if (cmdListeners.contains(l)) {
             cmdListeners.removeElement(l);
@@ -75,15 +82,16 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
             }
         }
 
-        // forward to the last listener who send a message
-        // this is done _second_ so monitoring can have already stored the reply
-        // before a response is sent
+        // Forward to the last listener who send a message.
+        // This is done _second_ so monitoring can have already stored the reply
+        // before a response is sent.
         if (lastSender != null) {
             lastSender.reply(r);
         }
     }
 
     // methods to connect/disconnect to a source of data in a LnPortController
+
     private SpeedoPortController controller = null;
 
     /**
@@ -112,7 +120,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
     }
 
     /**
-     * static function returning the SpeedoTrafficController instance to use.
+     * Get the SpeedoTrafficController instance to use.
      *
      * @return The registered SpeedoTrafficController instance for general use,
      *         if need be creating one.
@@ -126,7 +134,6 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
     // data members to hold the streams
     DataInputStream istream = null;
     OutputStream ostream = null;
-
 
     /*
      * Speedo replies end with ";"
@@ -144,13 +151,15 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
     }
 
     private boolean unsolicited;
-    private final static Logger log = LoggerFactory.getLogger(SpeedoTrafficController.class.getName());
 
     /**
-     * serialEvent - respond to an event triggered by RXTX. In this case we are
+     * Respond to an event triggered by RXTX. In this case we are
      * only dealing with DATA_AVAILABLE but the other events are left here for
-     * reference. AJB Jan 2010
+     * reference.
+     *
+     * @author Andrew Berridge Jan 2010
      */
+    @Override
     public void serialEvent(SerialPortEvent event) {
         switch (event.getEventType()) {
             case SerialPortEvent.BI:
@@ -177,6 +186,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
                         this.reply.setElement(i, char1);
 
                     } catch (Exception e) {
+                        log.debug("{} Exception handling reply cause {}",e,e.getCause());
                     }
                     if (endReply(this.reply)) {
                         sendreply();
@@ -185,11 +195,14 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
                 }
 
                 break;
+            default:
+                log.warn("Unhandled event type: {}", event.getEventType());
+                break;
         }
     }
 
     /**
-     * Send the current reply - built using data from seriaEvent
+     * Send the current reply - built using data from serialEvent.
      */
     private void sendreply() {
         //send the reply
@@ -198,15 +211,16 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
             if (unsolicited) {
                 thisReply.setUnsolicited();
             }
-            final SpeedoTrafficController thisTC = this;
+            final SpeedoTrafficController thisTc = this;
             // return a notification via the queue to ensure end
             Runnable r = new Runnable() {
 
                 SpeedoReply msgForLater = thisReply;
-                SpeedoTrafficController myTC = thisTC;
+                SpeedoTrafficController myTc = thisTc;
 
+                @Override
                 public void run() {
-                    myTC.notifyReply(msgForLater);
+                    myTc.notifyReply(msgForLater);
                 }
             };
             javax.swing.SwingUtilities.invokeLater(r);
@@ -214,4 +228,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
         //Create a new reply, ready to be filled
         this.reply = new SpeedoReply();
     }
+
+    private final static Logger log = LoggerFactory.getLogger(SpeedoTrafficController.class);
+
 }

@@ -5,7 +5,7 @@ package jmri;
  * <p>
  * No ACK is not a failure if the implementation does not expect to see one.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
  */
 public class ProgWriteException extends ProgrammerException {
 

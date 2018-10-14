@@ -37,10 +37,10 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  * @author Matthew Harris copyright (c) 2009
  */
-public class AudioTableAction extends AbstractTableAction {
+public class AudioTableAction extends AbstractTableAction<Audio> {
 
     AudioTableDataModel listeners;
     AudioTableDataModel buffers;
@@ -102,7 +102,7 @@ public class AudioTableAction extends AbstractTableAction {
              */
             @Override
             void extras() {
-                addToFrame(null);
+                addToFrame(this);
             }
         };
         setTitle();
@@ -255,12 +255,12 @@ public class AudioTableAction extends AbstractTableAction {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AudioTableAction.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AudioTableAction.class);
 
     /**
      * Define abstract AudioTableDataModel
      */
-    abstract public class AudioTableDataModel extends BeanTableDataModel implements PropertyChangeListener {
+    abstract public class AudioTableDataModel extends BeanTableDataModel<Audio> implements PropertyChangeListener {
 
         char subType;
 
@@ -420,7 +420,7 @@ public class AudioTableAction extends AbstractTableAction {
         }
 
         @Override
-        protected void clickOn(NamedBean t) {
+        protected void clickOn(Audio t) {
             // Do nothing
         }
 
@@ -493,7 +493,7 @@ public class AudioTableAction extends AbstractTableAction {
 
     @Override
     public void setMessagePreferencesDetails(){
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "nullAudio", Bundle.getMessage("HideNullAudioWarningMessage"));
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceItemDetails(getClassName(), "nullAudio", Bundle.getMessage("HideNullAudioWarningMessage"));
         super.setMessagePreferencesDetails();
     }
 

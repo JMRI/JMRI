@@ -7,7 +7,7 @@ package jmri.jmrit.symbolicprog;
  * default Programmer file. This has been moved to the {@link ProgDefault} class
  * in revision 1.3 (JMRI 1.5.3) and later.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public class LocoSelPane extends jmri.util.swing.JmriPanel {
 

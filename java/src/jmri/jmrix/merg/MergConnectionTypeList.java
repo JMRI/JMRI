@@ -1,21 +1,14 @@
 package jmri.jmrix.merg;
 
+import jmri.jmrix.ConnectionTypeList;
+import org.openide.util.lookup.ServiceProvider;
+
 /**
- * Returns a list of valid connection types for MERG
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * Return a list of valid connection types for MERG.
  *
  * @author Matthew Harris Copyright (c) 2011
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class MergConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String MERG = "MERG";
@@ -40,4 +33,5 @@ public class MergConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
     public String[] getManufacturers() {
         return new String[]{MERG};
     }
+
 }

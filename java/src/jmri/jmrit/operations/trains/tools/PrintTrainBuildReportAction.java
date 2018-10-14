@@ -1,4 +1,3 @@
-// PrintTrainBuildReportAction.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.event.ActionEvent;
@@ -12,7 +11,6 @@ import jmri.jmrit.operations.trains.TrainEditFrame;
  * Action to print a train's build report
  *
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision$
  */
 public class PrintTrainBuildReportAction extends AbstractAction {
 
@@ -57,5 +55,5 @@ public class PrintTrainBuildReportAction extends AbstractAction {
         }
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(PrintTrainBuildReportAction.class.getName());
+//    private final static Logger log = LoggerFactory.getLogger(PrintTrainBuildReportAction.class);
 }

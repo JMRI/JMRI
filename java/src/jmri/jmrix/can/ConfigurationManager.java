@@ -1,6 +1,6 @@
-// ConfigurationManager.java
 package jmri.jmrix.can;
 
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,14 +11,13 @@ import org.slf4j.LoggerFactory;
  * It would be good to replace this with properties-based method for redirecting
  * to classes in particular subpackages.
  *
- * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 abstract public class ConfigurationManager {
 
     final public static String MERGCBUS = "MERG CBUS";
     final public static String OPENLCB = "OpenLCB";
-    final public static String RAWCAN = "Raw CAN";
+    final public static String RAWCAN = "Raw CAN"; // TODO I18N
     final public static String TEST = "Test - do not use";
 
     private static String[] options = new String[]{MERGCBUS, OPENLCB, RAWCAN, TEST};
@@ -26,9 +25,8 @@ abstract public class ConfigurationManager {
     /**
      * Provide the current set of "Option1" values
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"EI_EXPOSE_REP", "MS_EXPOSE_REP"}) // OK until Java 1.6 allows return of cheap array copy
     static public String[] getSystemOptions() {
-        return options;
+        return Arrays.copyOf(options, options.length);
     }
 
     /**
@@ -56,18 +54,16 @@ abstract public class ConfigurationManager {
     abstract public void configureManagers();
 
     /**
-     * Tells which managers this provides by class
+     * Tells which managers this class provides.
      */
     abstract public boolean provides(Class<?> type);
 
-    @SuppressWarnings("unchecked")
     abstract public <T> T get(Class<?> T);
 
     abstract public void dispose();
 
     abstract protected ResourceBundle getActionModelResourceBundle();
 
-    private final static Logger log = LoggerFactory.getLogger(ConfigurationManager.class.getName());
-}
+    private final static Logger log = LoggerFactory.getLogger(ConfigurationManager.class);
 
-/* @(#)ConfigurationManager.java */
+}

@@ -1,111 +1,153 @@
 package jmri;
 
-import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.Nonnull;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
 /**
  *
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
- *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
-public interface SignalMastLogicManager extends Manager {
+public interface SignalMastLogicManager extends Manager<SignalMastLogic> {
 
     /*public void addDestinationMastToLogic(SignalMastLogic src, SignalMast destination);*/
     /**
-     * This will replace all instances of an old SignalMast (either source or
-     * destination) with the new signal mast instance. This is for use with such
-     * tools as the layout editor where a signalmast can at a certain location
-     * can be replaced with another, while the remainder of the configuration
-     * stays the same.
+     * Replace all instances of an old SignalMast (either source or destination)
+     * with the new signal mast instance. This is for use with such tools as the
+     * Layout Editor where a signal mast at a certain location can be replaced
+     * with another, while the remainder of the configuration stays the same.
+     *
+     * @param oldMast Current Signal Mast
+     * @param newMast Replacement (new) Signal Mast
      */
     public void replaceSignalMast(SignalMast oldMast, SignalMast newMast);
 
     /**
-     * Discover all possible valid source and destination signalmasts past pairs
-     * on all layout editor panels.
+     * Discover all possible valid source + destination signal mast pairs on all
+     * Layout Editor Panels and create the corresponding SMLs.
+     *
+     * @throws jmri.JmriException if there is an error discovering signaling
+     *                            pairs
      */
     public void automaticallyDiscoverSignallingPairs() throws JmriException;
 
     /**
-     * This uses the layout editor to check if the destination signalmast is
-     * reachable from the source signalmast
+     * Discover valid destination signal masts for a given source Signal Mast on
+     * a given Layout Editor Panel.
      *
-     * @param sourceMast Source SignalMast
-     * @param destMast   Destination SignalMast
-     * @return true if valid, false if not valid.
+     * @param source Source Signal Mast
+     * @param layout Layout Editor panel to check
+     * @throws jmri.JmriException if there is an error discovering signaling
+     *                            destinations
      */
-    // public boolean checkValidDest(SignalMast sourceMast, SignalMast destMast) throws JmriException;
-    /**
-     * Discover valid destination signalmasts for a given source signal on a
-     * given layout editor panel.
-     *
-     * @param source Source SignalMast
-     * @param layout Layout Editor panel to check.
-     */
-    public void discoverSignallingDest(SignalMast source, LayoutEditor layout) throws JmriException;
+    public void discoverSignallingDest(@Nonnull SignalMast source, @Nonnull LayoutEditor layout) throws JmriException;
 
+    /**
+     * Remove references to and from this object, so that it can eventually be
+     * garbage-collected.
+     */
+    @Override
     public void dispose();
 
     /**
-     * Gather a list of all the signal mast logics, by destination signal mast
-     */
-    public ArrayList<SignalMastLogic> getLogicsByDestination(SignalMast destination);
-
-    public long getSignalLogicDelay();
-
-    public SignalMastLogic getSignalMastLogic(SignalMast source);
-
-    /**
-     * Returns an arraylist of signalmastlogic
+     * Gather a list of all the Signal Mast Logics, by destination Signal Mast.
      *
-     * @return An ArrayList of SignalMast logics
+     * @param destination The destination Signal Mast
+     * @return a list of logics for destination or an empty list if none
      */
-    public ArrayList<SignalMastLogic> getSignalMastLogicList();
+    @Nonnull
+    public List<SignalMastLogic> getLogicsByDestination(@Nonnull SignalMast destination);
 
     /**
-     * Used to initialise all the signalmast logics. primarily used after
-     * loading.
+     * Return the Signal Mast Logic for a specific Source Signal Mast.
+     *
+     * @param source The Source Signal Mast
+     * @return The Signal Mast Logic for that mast
+     */
+    public SignalMastLogic getSignalMastLogic(@Nonnull SignalMast source);
+
+    /**
+     * Return a list of all existing Signal Mast Logics
+     *
+     * @return An List of all Signal Mast Logics
+     */
+    @Nonnull
+    public List<SignalMastLogic> getSignalMastLogicList();
+
+    /**
+     * Initialise all the Signal Mast Logics. Primarily used after loading a
+     * configuration.
      */
     public void initialise();
 
+    /**
+     * Create a new Signal Mast Logic for a source Signal Mast.
+     *
+     * @param source The source Signal Mast
+     * @return source The new SML instance
+     */
+    @Nonnull
     public SignalMastLogic newSignalMastLogic(SignalMast source);
 
-    //public void removeDestinationMastToLogic(SignalMastLogic src, SignalMast destination);
     /**
-     * Remove a destination mast from the signalmast logic
+     * Remove a destination Signal Mast and its settings from a Signal Mast
+     * Logic.
      *
-     * @param sml  The signalmast logic of the source signal
+     * @param sml  The Signal Mast Logic
      * @param dest The destination mast
      */
-    public void removeSignalMastLogic(SignalMastLogic sml, SignalMast dest);
+    public void removeSignalMastLogic(@Nonnull SignalMastLogic sml, @Nonnull SignalMast dest);
 
     /**
-     * Completely remove the signalmast logic.
+     * Completely remove a specific Signal Mast Logic by name.
+     *
+     * @param sml The Signal Mast Logic to be removed
      */
-    public void removeSignalMastLogic(SignalMastLogic sml);
+    public void removeSignalMastLogic(@Nonnull SignalMastLogic sml);
 
     /**
-     * Completely remove the signalmast logic, for a specific signal mast
+     * Completely remove a Signal Mast from all the SMLs that use it.
+     *
+     * @param mast The Signal Mast to be removed
      */
-    public void removeSignalMast(SignalMast mast);
+    public void removeSignalMast(@Nonnull SignalMast mast);
 
-    public void disableLayoutEditorUse(SignalMast mast);
+    /**
+     * Disable the use of info from the Layout Editor Panels to configure a
+     * Signal Mast Logic for a specific Signal Mast.
+     *
+     * @param mast The Signal Mast for which LE info is to be disabled
+     */
+    public void disableLayoutEditorUse(@Nonnull SignalMast mast);
 
-    public void swapSignalMasts(SignalMast mastA, SignalMast mastB);
+    /**
+     * Replace the complete Signal Mast Logic configurations between two Source
+     * Signal Masts.
+     *
+     * @param mastA Signal Mast A
+     * @param mastB Signal Mast B
+     */
+    public void swapSignalMasts(@Nonnull SignalMast mastA, @Nonnull SignalMast mastB);
 
-    public boolean isSignalMastUsed(SignalMast mast);
+    /**
+     * Check if a Signal Mast is in use as either a Source or Destination mast
+     * in any Signal Mast Logic
+     *
+     * @param mast the signal mast to check
+     * @return true if mast is used by at least one Signal Mast Logic
+     */
+    public boolean isSignalMastUsed(@Nonnull SignalMast mast);
 
-    public void setSignalLogicDelay(long l);
+    /**
+     * @return characteristic delay time in msec, used to control roughly
+     *          when signal system computations are done. (Some are half this, some twice)
+     */
+    public int getSignalLogicDelay();
+
+    /**
+     * @param l characteristic delay time in msec, used to control roughly
+     *          when signal system computations are done. (Some are half this, some twice)
+     */
+    public void setSignalLogicDelay(int l);
 
 }

@@ -1,15 +1,18 @@
 package jmri.jmrix.openlcb.swing.send;
 
+import jmri.jmrix.can.CanSystemConnectionMemo;
+
 /**
  * Create and register a tool to send OpenLCB CAN frames.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2010
  */
-public class OpenLcbCanSendAction extends OpenLcbCanSendPane.Default {
+public class OpenLcbCanSendAction extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2653850619154579104L;
+    public OpenLcbCanSendAction() {
+        super("Send CAN Frames and OpenLCB Messages",
+                new jmri.util.swing.sdi.JmriJFrameInterface(),
+                OpenLcbCanSendPane.class.getName(),
+                jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
+    }
 }

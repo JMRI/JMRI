@@ -1,4 +1,3 @@
-//ChangeTracksTypeAction.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.event.ActionEvent;
@@ -10,7 +9,7 @@ import jmri.jmrit.operations.locations.LocationEditFrame;
  * types are Spurs, Yards, Interchanges and Staging.
  *
  * @author Daniel Boudreau Copyright (C) 2011
- * @version $Revision: 18559 $
+ * 
  */
 public class ChangeTracksTypeAction extends AbstractAction {
 

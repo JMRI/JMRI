@@ -1,5 +1,4 @@
 <!-- Defines XML documenting the list of available decoder definitions -->
-<!-- $Revision$ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
 <!--                                                                        -->
@@ -14,7 +13,8 @@
 <!-- for more details.                                                      -->
 
 <!ELEMENT decoderIndex-config (decoderIndex)>
-<!ATTLIST decoderIndex-config>
+<!ATTLIST decoderIndex-config xmlns:xsi	CDATA #IMPLIED> <!-- to allow XML Schema reference to be DTD valid -->
+<!ATTLIST decoderIndex-config xsi:noNamespaceSchemaLocation	CDATA #IMPLIED> <!-- to allow XML Schema reference to be DTD valid -->
 
 <!ELEMENT decoderIndex (mfgList, familyList)>
 <!ATTLIST decoderIndex version	CDATA #IMPLIED>   <!-- version of the index, controls update -->

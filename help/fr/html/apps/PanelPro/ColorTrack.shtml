@@ -208,7 +208,8 @@ l'"Avant", et cacher des choses avec des valeurs "inf&eacute;rieur
           fonctionnent ind&eacute;pendamment et montrer &agrave; la
           fois les position (en suivant les ligne) et les
           occupation (gr&acirc;ce &agrave; la couleur) de cet
-          aiguillage. <!--#include virtual="/Footer" --></p>
+          aiguillage.</p>
+        <!--#include virtual="/Footer" -->
         </li>
       </ol>
     </div>

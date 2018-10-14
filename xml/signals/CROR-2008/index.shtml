@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: Tall $) 2013 -->
-<!-- $Id: index.shtml,v 1.0 2013/06/21 12:00 Tall Exp $ -->
 <title>JMRI: CROR 2008 Signaling Definition</title>
 
 <!-- Style -->
@@ -14,9 +13,9 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -65,15 +64,15 @@ Signal Mast definitions:
 </ul>
 <p>
 <ul>
-<li><a href="appearance-CROR-2-lo.xml">Double head searchlight dwarf signal</a>
-<li><a href="appearance-CROR-2L-lo.xml">Double head searchlight dwarf signal with a yellow triangular 'L' plate</a>
-<li><a href="appearance-CROR-2D-lo.xml">Double head searchlight dwarf signal with a yellow rectangular 'DV' plate</a>
+<li><a href="appearance-CROR-2-Lo.xml">Double head searchlight dwarf signal</a>
+<li><a href="appearance-CROR-2L-Lo.xml">Double head searchlight dwarf signal with a yellow triangular 'L' plate</a>
+<li><a href="appearance-CROR-2D-Lo.xml">Double head searchlight dwarf signal with a yellow rectangular 'DV' plate</a>
 </ul>
 <p>
 <ul>
-<li><a href="appearance-CROR-1-lo.xml">Single head searchlight dwarf signal</a>
-<li><a href="appearance-CROR-1A-lo.xml">Single head searchlight dwarf signal with a circular 'A' plate</a>
-<li><a href="appearance-CROR-1D-lo.xml">Single head searchlight dwarf signal with a rectangular 'DV' plate</a>
+<li><a href="appearance-CROR-1-Lo.xml">Single head searchlight dwarf signal</a>
+<li><a href="appearance-CROR-1A-Lo.xml">Single head searchlight dwarf signal with a circular 'A' plate</a>
+<li><a href="appearance-CROR-1D-Lo.xml">Single head searchlight dwarf signal with a rectangular 'DV' plate</a>
 </ul>
 <p>
 <ul>

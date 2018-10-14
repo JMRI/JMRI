@@ -7,8 +7,6 @@ import java.util.List;
  * <P>
  * This doesn't have a "new" method, since Logixs are separately implemented,
  * instead of being system-specific.
- *
- *
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -19,26 +17,26 @@ import java.util.List;
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author Dave Duchamp Copyright (C) 2007
  */
-public interface LogixManager extends Manager {
-
-    // to free resources when no longer used
-    public void dispose();
+public interface LogixManager extends Manager<Logix> {
 
     /**
-     * Method to create a new Logix if the Logix does not exist Returns null if
-     * a Logix with the same systemName or userName already exists, or if there
-     * is trouble creating a new Logix.
+     * Create a new Logix if the Logix does not exist.
+     *
+     * @param systemName the system name
+     * @param userName   the user name
+     * @return a new Logix or null if unable to create: An error, or the Logix already exists
      */
     public Logix createNewLogix(String systemName, String userName);
 
     /**
      * For use with User GUI, to allow the auto generation of systemNames, where
-     * the user can optionally supply a username. Returns null if a Logix with
-     * the same userName already exists, or if there is trouble creating a new
-     * Logix.
+     * the user can optionally supply a username.
+     *
+     * @param userName the user name
+     * @return a new Logix or null if unable to create
      */
     public Logix createNewLogix(String userName);
 
@@ -62,18 +60,17 @@ public interface LogixManager extends Manager {
     public void activateAllLogixs();
 
     /**
-     * Get a list of all Logix system names.
-     */
-    public List<String> getSystemNameList();
-
-    /**
      * Delete Logix by removing it from the manager. The Logix must first be
      * deactivated so it stops processing.
+     *
+     * @param x the Logix to delete
      */
     void deleteLogix(Logix x);
 
     /**
      * Support for loading Logixs in a disabled state to debug loops
+     * 
+     * @param s true if Logix should be loadable while disabled
      */
     public void setLoadDisabled(boolean s);
 

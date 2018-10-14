@@ -1,34 +1,35 @@
 package apps;
 
-/** 
- * Check how the Checker Framework and annotations interact.  
+/**
+ * Check how the Checker Framework and annotations interact.
  * <p>
- * Note: This deliberately causes FindBugs warnings!  Do not remove or annotate them!
- *       Instead, when past its useful point, just comment out the body of the
- *       class so as to leave the code examples present.
+ * Note: This deliberately causes SpotBugs (formally FindBugs) warnings! Do not
+ * remove or annotate them! Instead, when past its useful point, just comment
+ * out the body of the class so as to leave the code examples present.
  * <p>
  * Tests Nonnull, Nullable and CheckForNull from the javax.annotation package.
  * <p>
- * Comments indicate observed (and unobserved) warnings from the Checker Framework nullness processor
+ * Comments indicate observed (and unobserved) warnings from the Checker
+ * Framework nullness processor
  * <p>
- * This has no main() because it's not expected to run:  It will certainly
- * throw a NullPointerException right away.  The idea is for the CheckerFramework to 
+ * This has no main() because it's not expected to run: It will certainly throw
+ * a NullPointerException right away. The idea is for the CheckerFramework to
  * find those in static analysis
  * <p>
- * Types are explicitly qualified (instead of using 'import') to make it 
- * completely clear which is being used at each point.  That makes this the
- * code less readable, so it's not recommended for general use.
+ * Types are explicitly qualified (instead of using 'import') to make it
+ * completely clear which is being used at each point. That makes this the code
+ * less readable, so it's not recommended for general use.
  * <p>
  * @see apps.FindBugsCheck
  * @author Bob Jacobsen 2016
  */
 public class CheckerFrameworkCheck {
-    
+
     void test() { // something that has to be executed on an object
-        System.out.println("test "+this.getClass());
+        System.out.println("test " + this.getClass());
     }
 
-/*  commenting out the rest of the file to avoid FindBugs counting the deliberate warnings
+    /*  commenting out the rest of the file to avoid SpotBugs counting the deliberate warnings
 
 
     public CheckerFrameworkCheck noAnnotationReturn() {
@@ -42,7 +43,7 @@ public class CheckerFrameworkCheck {
 
         noAnnotationParm(this);
         noAnnotationParm(null);                     // error: [argument.type.incompatible] incompatible types in argument. required: @Initialized @NonNull CheckerFrameworkCheck
-        
+
         noAnnotationParm(noAnnotationReturn());
         noAnnotationParm(jaNonnullReturn());
         noAnnotationParm(jaNullableReturn());       // error: [argument.type.incompatible] incompatible types in argument. required: @Initialized @NonNull CheckerFrameworkCheck
@@ -50,11 +51,11 @@ public class CheckerFrameworkCheck {
     }
 
     // Test Nonnull
-    
-    @javax.annotation.Nonnull public CheckerFrameworkCheck jaNonnullReturn() {
+
+    Nonnull public CheckerFrameworkCheck jaNonnullReturn() {
         return null;                                // error: [return.type.incompatible] incompatible types in return. required: @Initialized @NonNull CheckerFrameworkCheck
     }
-    public void jaNonNullParm(@javax.annotation.Nonnull CheckerFrameworkCheck p) {
+    public void jaNonNullParm(Nonnull CheckerFrameworkCheck p) {
         p.test();
     }
     public void jaTestNonnull() {
@@ -62,7 +63,7 @@ public class CheckerFrameworkCheck {
 
         jaNonNullParm(this);
         jaNonNullParm(null);                        // error: [argument.type.incompatible] incompatible types in argument. required: @Initialized @NonNull CheckerFrameworkCheck
-        
+
         jaNonNullParm(noAnnotationReturn());
         jaNonNullParm(jaNonnullReturn());
         jaNonNullParm(jaNullableReturn());          // error: [argument.type.incompatible] incompatible types in argument. required: @Initialized @NonNull CheckerFrameworkCheck
@@ -70,11 +71,11 @@ public class CheckerFrameworkCheck {
     }
 
     // Test Nullable
-    
-    @javax.annotation.Nullable public CheckerFrameworkCheck jaNullableReturn() {
+
+    Nullable public CheckerFrameworkCheck jaNullableReturn() {
         return null;
     }
-    public void jaNullableParm(@javax.annotation.Nullable CheckerFrameworkCheck p) {
+    public void jaNullableParm(Nullable CheckerFrameworkCheck p) {
         p.test();                                   // error: [dereference.of.nullable] dereference of possibly-null reference p
     }
     public void jaTestNullable() {
@@ -82,7 +83,7 @@ public class CheckerFrameworkCheck {
 
         jaNullableParm(this);
         jaNullableParm(null);
-        
+
         jaNullableParm(noAnnotationReturn());
         jaNullableParm(jaNonnullReturn());
         jaNullableParm(jaNullableReturn());
@@ -91,18 +92,18 @@ public class CheckerFrameworkCheck {
 
     // Test CheckForNull
 
-    @javax.annotation.CheckForNull public CheckerFrameworkCheck jaCheckForNullReturn() {
+    CheckForNull public CheckerFrameworkCheck jaCheckForNullReturn() {
         return null;
     }
-    public void jaCheckForNullParm(@javax.annotation.CheckForNull CheckerFrameworkCheck p) {
+    public void jaCheckForNullParm(CheckForNull CheckerFrameworkCheck p) {
         p.test();                                   // error: [dereference.of.nullable] dereference of possibly-null reference p
     }
     public void jaTestCheckForNull() {
         jaCheckForNullReturn().test();              // error: [dereference.of.nullable] dereference of possibly-null reference jaNullableReturn()
-        
+
         jaCheckForNullParm(this);
         jaCheckForNullParm(null);
-        
+
         jaCheckForNullParm(noAnnotationReturn());
         jaCheckForNullParm(jaNonnullReturn());
         jaCheckForNullParm(jaNullableReturn());
@@ -110,5 +111,4 @@ public class CheckerFrameworkCheck {
     }
 
     end of commenting out file */
-
 }

@@ -1,10 +1,10 @@
 package jmri.util;
 
 import java.util.Calendar;
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,6 +45,7 @@ public class WaitHandlerTest extends TestCase {
         startTime = -1;
 
         Thread t = new Thread() {
+            @Override
             public void run() {
                 startTime = Calendar.getInstance().getTimeInMillis();
                 flag1 = true;
@@ -53,25 +54,14 @@ public class WaitHandlerTest extends TestCase {
                 flag2 = true;
             }
         };
+        t.setName("Seperate Thread Waiting Test Thread");
         t.start();
 
-        for (int i = 1; i < TEST_DELAY; i++) {
-            // wait on flag 1 for start
-            if (flag1) {
-                break;
-            }
-            JUnitUtil.releaseThread(this, 1);
-        }
+        JUnitUtil.waitFor(()->{return flag1;},"flag1 not set");
 
         Assert.assertTrue("started", flag1);
 
-        for (int i = 1; i < TEST_DELAY; i++) {
-            // wait on flag 2 for end
-            if (flag2) {
-                break;
-            }
-            JUnitUtil.releaseThread(this, 1);
-        }
+        JUnitUtil.waitFor(()->{return flag2;},"flag2 not set");
 
         Assert.assertTrue("ended", flag2);
         Assert.assertTrue("run time long enough", THREAD_DELAY <= endTime - startTime);
@@ -81,6 +71,7 @@ public class WaitHandlerTest extends TestCase {
         flag1 = false;
         flag2 = false;
         Thread t = new Thread() {
+            @Override
             public void run() {
                 startTime = Calendar.getInstance().getTimeInMillis();
                 flag1 = true;
@@ -89,15 +80,10 @@ public class WaitHandlerTest extends TestCase {
                 flag2 = true;
             }
         };
+        t.setName("Interupt Test Thread");
         t.start();
 
-        for (int i = 1; i < TEST_DELAY; i++) {
-            // wait on flag 1 for start
-            if (flag1) {
-                break;
-            }
-            JUnitUtil.releaseThread(this, 1);
-        }
+        JUnitUtil.waitFor(()->{return flag1;},"flag1 not set");
 
         Assert.assertTrue("started", flag1);
 
@@ -106,13 +92,7 @@ public class WaitHandlerTest extends TestCase {
         t.interrupt();
         Assert.assertTrue("notify early enough", THREAD_DELAY > Calendar.getInstance().getTimeInMillis() - startTime);
 
-        for (int i = 1; i < TEST_DELAY; i++) {
-            // wait on flag 2 for end
-            if (flag2) {
-                break;
-            }
-            JUnitUtil.releaseThread(this, 1);
-        }
+        JUnitUtil.waitFor(()->{return flag2;},"flag2 not set");
 
         Assert.assertTrue("ended", flag2);
         Assert.assertTrue("ended early", THREAD_DELAY >= endTime - startTime);
@@ -122,6 +102,7 @@ public class WaitHandlerTest extends TestCase {
         flag1 = false;
         flag2 = false;
         Thread t = new Thread() {
+            @Override
             public void run() {
                 startTime = Calendar.getInstance().getTimeInMillis();
                 flag1 = true;
@@ -135,15 +116,10 @@ public class WaitHandlerTest extends TestCase {
                 flag2 = true;
             }
         };
+        t.setName("Spurious Wake Test Thread");
         t.start();
 
-        for (int i = 1; i < TEST_DELAY; i++) {
-            // wait on flag 1 for start
-            if (flag1) {
-                break;
-            }
-            JUnitUtil.releaseThread(this, 1);
-        }
+        JUnitUtil.waitFor(()->{return flag1;},"flag1 not set");
 
         Assert.assertTrue("started", flag1);
 
@@ -155,13 +131,7 @@ public class WaitHandlerTest extends TestCase {
             t.notify();
         }
 
-        for (int i = 1; i < TEST_DELAY; i++) {
-            // wait on flag 2 for end
-            if (flag2) {
-                break;
-            }
-            JUnitUtil.releaseThread(this, 1);
-        }
+        JUnitUtil.waitFor(()->{return flag2;},"flag2 not set");
 
         Assert.assertTrue("ended", flag2);
 
@@ -172,10 +142,12 @@ public class WaitHandlerTest extends TestCase {
         flag1 = false;
         flag2 = false;
         Thread t = new Thread() {
+            @Override
             public void run() {
                 startTime = Calendar.getInstance().getTimeInMillis();
                 flag1 = true;
                 new WaitHandler(this, THREAD_DELAY) {
+                    @Override
                     public boolean wasSpurious() {
                         return false;
                     }
@@ -184,15 +156,10 @@ public class WaitHandlerTest extends TestCase {
                 flag2 = true;
             }
         };
+        t.setName("Crosscheck Test Method Test Thread");
         t.start();
 
-        for (int i = 1; i < TEST_DELAY; i++) {
-            // wait on flag 1 for start
-            if (flag1) {
-                break;
-            }
-            JUnitUtil.releaseThread(this, 1);
-        }
+        JUnitUtil.waitFor(()->{return flag1;},"flag1 not set");
         Assert.assertTrue("started", flag1);
         Assert.assertTrue("still running", !flag2);
 
@@ -202,14 +169,7 @@ public class WaitHandlerTest extends TestCase {
             Assert.assertTrue("notify early enough", THREAD_DELAY >= Calendar.getInstance().getTimeInMillis() - startTime);
         }
 
-        for (int i = 1; i < TEST_DELAY; i++) {
-            // wait on flag 2 for end
-            if (flag2) {
-                break;
-            }
-            JUnitUtil.releaseThread(this, 1);
-        }
-
+        JUnitUtil.waitFor(()->{return flag2;},"flag2 not set");
         Assert.assertTrue("ended", flag2);
 
         if (THREAD_DELAY <= endTime - startTime) {
@@ -236,16 +196,18 @@ public class WaitHandlerTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
     }
 
+    @Override
     protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
         super.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WaitHandlerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WaitHandlerTest.class);
 
 }

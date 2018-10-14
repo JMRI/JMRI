@@ -9,7 +9,15 @@ junit-results.xml
 junit*.properties
 findbugs.xml
 findbugs.html
+spotbugs.xml
+spotbugs-check.xml
+spotbugs.html
+spotbugs-check.html
 jacoco.exec
+jmri-fb.html
+coveragereport
+tests.log
+cucumber-results.xml
 
 # runtime artifacts
 messages.log*
@@ -32,9 +40,12 @@ session.log
 /xml/XSLT/xml
 /xml/XSLT/pages
 .run.sh
+hs_err_pid*.log
 
 # private / per-user configuration files
 /nbproject/private
+/web/app/nbproject/private
+/scripts/config-portable/nbproject/private
 /.idea/workspace.xml
 local.properties
 /test
@@ -43,10 +54,12 @@ local.properties
 .metadata
 RemoteSystemsTempFiles
 
+# user-installed components
+/web/TrainCrew
+
 # CATS source, sometimes present for test
 /java/src/cats
 
 # OS junk files
 [Tt]humbs.db
 *.DS_Store
-/jmri-fb.html

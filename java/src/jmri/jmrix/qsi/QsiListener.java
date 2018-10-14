@@ -1,4 +1,3 @@
-// QsiListener.java
 package jmri.jmrix.qsi;
 
 /**
@@ -6,8 +5,7 @@ package jmri.jmrix.qsi;
  * link.
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version	$Revision$
- */
+  */
 public interface QsiListener extends java.util.EventListener {
 
     public void message(QsiMessage m);
@@ -15,4 +13,4 @@ public interface QsiListener extends java.util.EventListener {
     public void reply(QsiReply m);
 }
 
-/* @(#)QsiListener.java */
+

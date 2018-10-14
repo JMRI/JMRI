@@ -1,4 +1,3 @@
-// TrainSwitchLists.java
 package jmri.jmrit.operations.trains;
 
 import java.io.BufferedWriter;
@@ -10,9 +9,9 @@ import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarColors;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
@@ -33,12 +32,12 @@ import org.slf4j.LoggerFactory;
  * Builds a switch list for a location on the railroad
  *
  * @author Daniel Boudreau (C) Copyright 2008, 2011, 2012, 2013, 2015
- * @version $Revision: 21846 $
+ *
  *
  */
 public class TrainSwitchLists extends TrainCommon {
 
-    TrainManager trainManager = TrainManager.instance();
+    TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
     private static final char FORM_FEED = '\f';
     private static final boolean IS_PRINT_HEADER = true;
 
@@ -51,15 +50,13 @@ public class TrainSwitchLists extends TrainCommon {
      * which can cause an IllegalArgumentException. Some messages have more
      * arguments than the default message allowing the user to customize the
      * message to their liking.
-     * 
+     *
      * There also an option to list all of the car work by track name. This option
      * is only available in real time and is shown after the switch list by
      * train.
      *
      * @param location The Location needing a switch list
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
-            justification = "CarManager only provides Car Objects") // NOI18N
     public void buildSwitchList(Location location) {
         // Append switch list data if not operating in real time
         boolean newTrainsOnly = !Setup.isSwitchListRealTime();
@@ -79,7 +76,7 @@ public class TrainSwitchLists extends TrainCommon {
         log.debug("Append: {} for location ({})", append, location.getName());
 
         // create switch list file
-        File file = TrainManagerXml.instance().createSwitchListFile(location.getName());
+        File file = InstanceManager.getDefault(TrainManagerXml.class).createSwitchListFile(location.getName());
 
         PrintWriter fileOut = null;
         try {
@@ -104,23 +101,20 @@ public class TrainSwitchLists extends TrainCommon {
             String valid = MessageFormat.format(messageFormatText = TrainManifestText.getStringValid(),
                     new Object[]{getDate(true)});
             if (Setup.isPrintTimetableNameEnabled()) {
-                TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(
-                        trainManager.getTrainScheduleActiveId());
+                TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getActiveSchedule();
                 if (sch != null) {
                     valid = valid + " (" + sch.getName() + ")";
                 }
             }
 
-            // get a list of trains sorted by arrival time
+            // get a list of built trains sorted by arrival time
             List<Train> trains = trainManager.getTrainsArrivingThisLocationList(location);
             for (Train train : trains) {
-                if (!train.isBuilt()) {
-                    continue; // train wasn't built so skip
-                }
                 if (newTrainsOnly && train.getSwitchListStatus().equals(Train.PRINTED)) {
                     continue; // already printed this train
                 }
                 Route route = train.getRoute();
+                // TODO throw exception? only built trains should be in the list, so no route is an error
                 if (route == null) {
                     continue; // no route for this train
                 } // determine if train works this location
@@ -338,19 +332,19 @@ public class TrainSwitchLists extends TrainCommon {
                 }
                 newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
                         .getStringSwitchListByTrack(), new Object[]{splitString(location.getName())}));
-                
+
                 // we only need the cars delivered to or at this location
-                List<RollingStock> rsList = carManager.getByTrainList();
-                List<Car> carList = new ArrayList<Car>();
-                for (RollingStock rs : rsList) {
+                List<Car> rsList = carManager.getByTrainList();
+                List<Car> carList = new ArrayList<>();
+                for (Car rs : rsList) {
                     if ((rs.getLocation() != null &&
                             splitString(rs.getLocation().getName()).equals(splitString(location.getName()))) ||
                             (rs.getDestination() != null &&
                                     splitString(rs.getDestination().getName()).equals(splitString(location.getName()))))
-                        carList.add((Car) rs);
+                        carList.add(rs);
                 }
-                
-                List<String> trackNames = new ArrayList<String>(); // locations and tracks can have "similar" names, only list track names once
+
+                List<String> trackNames = new ArrayList<>(); // locations and tracks can have "similar" names, only list track names once
                 for (Location loc : locationManager.getLocationsByNameList()) {
                     if (!splitString(loc.getName()).equals(splitString(location.getName())))
                         continue;
@@ -359,8 +353,8 @@ public class TrainSwitchLists extends TrainCommon {
                         if (trackNames.contains(trackName))
                             continue;
                         trackNames.add(trackName);
-                        
-                        String trainName = ""; // for printing train message once                     
+
+                        String trainName = ""; // for printing train message once
                         newLine(fileOut);
                         newLine(fileOut, trackName); // print out just the track name
                         // now show the cars pickup and holds for this track
@@ -399,19 +393,19 @@ public class TrainSwitchLists extends TrainCommon {
                                 newLine(fileOut, MessageFormat.format(
                                         messageFormatText = TrainSwitchListText.getStringHoldCar(),
                                         new Object[]{padAndTruncateString(car.getRoadName(),
-                                                CarRoads.instance().getMaxNameLength()),
+                                                InstanceManager.getDefault(CarRoads.class).getMaxNameLength()),
                                                 padAndTruncateString(TrainCommon.splitString(car.getNumber()),
                                                         Control.max_len_string_print_road_number),
                                                 padAndTruncateString(car.getTypeName().split("-")[0],
-                                                        CarTypes.instance().getMaxNameLength()),
+                                                        InstanceManager.getDefault(CarTypes.class).getMaxNameLength()),
                                                 padAndTruncateString(car.getLength() + LENGTHABV,
                                                         Control.max_len_string_length_name),
                                                 padAndTruncateString(car.getLoadName(),
-                                                        CarLoads.instance().getMaxNameLength()),
+                                                        InstanceManager.getDefault(CarLoads.class).getMaxNameLength()),
                                                 padAndTruncateString(trackName,
                                                         locationManager.getMaxTrackNameLength()),
                                                 padAndTruncateString(car.getColor(),
-                                                        CarColors.instance().getMaxNameLength())}));
+                                                        InstanceManager.getDefault(CarColors.class).getMaxNameLength())}));
                             }
                         }
                         // now do set outs at this location
@@ -445,7 +439,7 @@ public class TrainSwitchLists extends TrainCommon {
             newLine(fileOut, MessageFormat.format(Bundle.getMessage("ErrorIllegalArgument"), new Object[]{
                     Bundle.getMessage("TitleSwitchListText"), e.getLocalizedMessage()}));
             newLine(fileOut, messageFormatText);
-            e.printStackTrace();
+            log.error("Illegal argument", e);
         }
 
         // Are there any cars that need to be found?
@@ -455,15 +449,15 @@ public class TrainSwitchLists extends TrainCommon {
     }
 
     public void printSwitchList(Location location, boolean isPreview) {
-        File buildFile = TrainManagerXml.instance().getSwitchListFile(location.getName());
-        if (!buildFile.exists()) {
+        File switchListFile = InstanceManager.getDefault(TrainManagerXml.class).getSwitchListFile(location.getName());
+        if (!switchListFile.exists()) {
             log.warn("Switch list file missing for location ({})", location.getName());
             return;
         }
         if (isPreview && Setup.isManifestEditorEnabled()) {
-            TrainPrintUtilities.openDesktopEditor(buildFile);
+            TrainUtilities.openDesktop(switchListFile);
         } else {
-            TrainPrintUtilities.printReport(buildFile, location.getName(), isPreview, Setup.getFontName(), false,
+            TrainPrintUtilities.printReport(switchListFile, location.getName(), isPreview, Setup.getFontName(), false,
                     FileUtil.getExternalFilename(Setup.getManifestLogoURL()), location.getDefaultPrinterName(), Setup
                             .getSwitchListOrientation(),
                     Setup.getManifestFontSize());
@@ -475,8 +469,10 @@ public class TrainSwitchLists extends TrainCommon {
     }
 
     protected void newLine(PrintWriter file, String string) {
-        newLine(file, string, !IS_MANIFEST);
+        if (!string.isEmpty()) {
+            newLine(file, string, !IS_MANIFEST);
+        }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainSwitchLists.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainSwitchLists.class);
 }

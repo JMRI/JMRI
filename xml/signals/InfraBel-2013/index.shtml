@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: Suzie _Tall $) 2013 -->
-<!-- $Id: index.shtml 18924 2011-10-20 16:51:30Z ken_c $ -->
 <title>JMRI: InfraBel Wikipedia signals for Belgium</title>
 
 <!-- Style -->
@@ -14,15 +13,15 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
 <h1> 
-JMRI: Belgium InfraBel signal definition from Wikipedia
+JMRI: Belgium InfraBel signal definition
 </h1>
 
 This signalling system contains signaling definitions worked out following five minures of study of the Belgian signals page on Wikipedia.

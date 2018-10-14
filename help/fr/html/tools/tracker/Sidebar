@@ -1,5 +1,5 @@
 <!-- Sidebar -->
-<!-- French Translation Updated by Blorec Herv&#233; le 2013-10-05; Egbert Broerse pour HTML; le 2015-10-18 -->
+<!-- French Translation Updated by Blorec Herv&#233; le 2017-01-10 -->
       <hr class="hide">
 	  <div id="side"> <!-- Block of text on left side of page -->
 	    <div style="text-align: center">JMRI est...</div>
@@ -7,34 +7,37 @@
 
 		<dt><h3><a href="../index.html">Outils G&#233;n&#233;raux</a></h3></dt>
 		<dd>JMRI fournit des outils puissants pour travailler avec votre r&#233;seau.
-		    <ul>
-		    <li><dfn><a href="../throttle/ThrottleMain.shtml">R&#233;gulateurs</a></dfn>
-		    <li><dfn><a href="../consisttool/ConsistTool.shtml">Couplage</a></dfn>
-		    <li><dfn><a href="../../../tools/Routes.shtml">Itin&#233;raires</a></dfn>
-		    <li><dfn><a href="../../../tools/fastclock/index.shtml">Horloges Rapides</a></dfn>
-		    <li><dfn><a href="../../apps/Speedometer/index.shtml">Tachym&#232;tre</a></dfn>
-		    <li><dfn><a href="../../doc/scripts/index.shtml">Script</a></dfn>
-		    </ul>
-		</dd>
+		  <ul>
+		   	<li><dfn><a href="../Turnouts.shtml">Aiguillages</a></dfn>
+			<li><dfn><a href="../Lights.shtml">Lumi&#232;res</a></dfn>
+			<li><dfn><a href="../Sensors.shtml">Capteurs</a></dfn>
+			<li><dfn><a href="../throttle/ThrottleMain.shtml">R&#233;gulateurs</a></dfn>
+			<li><dfn><a href="../consisttool/ConsistTool.shtml">Couplage</a></dfn>
+			<li><dfn><a href="../signaling/index.shtml">Signaliation</a></dfn>
+			<li><dfn><a href="../Blocks.shtml">Cantons</a></dfn>
+			<li><dfn><a href="../Reporters.shtml">Rapports</a></dfn>
+			<li><dfn><a href="../Memories.shtml">Variables M&#233;moires</a></dfn>
+			<li><dfn><a href="../Routes.shtml">Itin&#233;raires</a></dfn>
+			<li><dfn><a href="../LRoutes.shtml">LItin&#233;raires</a></dfn>
+	   	 	<li><dfn><a href="../Sections.shtml">Sections</a></dfn>
+			<li><dfn><a href="../Logix.shtml">Logix</a></dfn>
+			<li><dfn><a href="../fastclock/index.shtml">Horlorges Acc&#233;l&#233;r&#233;es</a></dfn>
+			<li><dfn><a href="../speedometer/index.shtml">Compteur de Vitesse</a></dfn>
+			<li><dfn><a href="../Audio.shtml">Audio</a></dfn>
+			<li><dfn><a href="../IdTags.shtml">&#201;tiquettes ID</a></dfn>
+   			
+			<li><dfn><a href="../index.shtml#systemSpecificTools">System-specific...</a></dfn>
+	    	</ul>
+			</dd>
 
-		<dt><h3><a href="../../apps/LocoTools/index.shtml">LocoNet Tools</a></h3></dt>
-		<dd> Un jeu d'outils sp&#233;cifiques pour LocoNet Digitrax
-		    <ul>
-		    <li><dfn>LocoNet moniteur</dfn>
-		    <li><dfn>Slot moniteur</dfn>
-		    <li><dfn>Source paquet</dfn>
-		    <li><dfn>Programmateur PM4</dfn>
-		    <li><dfn>Programmateur BDL16 </dfn>
-		    </ul>
-		</dd>
-
-		<dt><h3><a href="../tools/automation">Automatisation du r&#233;seau</a></h3></dt>
+		<dt><h3><a href="../tools/automation">Automatisation du R&#233;seau</a></h3></dt>
 		<dd>JMRI peut &#234;tre utilis&#233; pour automatiser des portions de votre r&#233;seau, depuis le simple contr&#244;le d'un croisement &#224; la conduite d'un train en toile de fond.
 		    <ul>
-		    <li><dfn><a href="../tools/Signalling">Signalisation</a></dfn>
-		    <li><dfn><a href="../Routes.shtml">Itin&#233;raires</a></dfn>
-		    <li><dfn><a href="../../tools/fastclock">Horloges Rapides</a></dfn>
-		    <li><dfn><a href="../doc/scripts/index.html">Script</a></dfn>
+		    	<li><dfn><a href="../tools/Signalling">Signalisation</a></dfn>
+			<li><dfn><a href="../signaling/EntryExit.shtml">Entr&#233;e Sortie (NX)</a></dfn>
+		    	<li><dfn><a href="../Routes.shtml">Itin&#233;raires</a></dfn>
+		    	<li><dfn><a href="../../tools/fastclock">Horloges Acc&#233;l&#233;r&#233;es</a></dfn>
+		   	 <li><dfn><a href="../doc/scripts/index.html">Script</a></dfn>
 		    </ul>
 		</dd>
 

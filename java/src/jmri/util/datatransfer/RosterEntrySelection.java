@@ -33,15 +33,15 @@ import jmri.jmrit.roster.RosterEntry;
  */
 public class RosterEntrySelection implements Transferable, ClipboardOwner {
 
-    private ArrayList<String> Ids;
+    private final ArrayList<String> Ids;
 
     public static final DataFlavor rosterEntryFlavor = new DataFlavor(ArrayList.class, "RosterEntryIDs");
 
-    static final DataFlavor[] flavors = {
+    private static final DataFlavor[] FLAVORS = {
         RosterEntrySelection.rosterEntryFlavor
     };
 
-    private static final List<DataFlavor> flavorList = Arrays.asList(flavors);
+    private static final List<DataFlavor> FLAVOR_LIST = Arrays.asList(FLAVORS);
 
     /**
      * Create the transferable.
@@ -58,24 +58,28 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
     /**
      * Create a transferable with a list of RosterEntries.
      *
-     * @param rosterEntries - an ArrayList of RosterEntries
+     * @param rosterEntries entries to include in the selection
+     * @return a new selection with the given entries
      */
     public static RosterEntrySelection createRosterEntrySelection(ArrayList<RosterEntry> rosterEntries) {
-        ArrayList<String> Ids = new ArrayList<String>(rosterEntries.size());
-        for (RosterEntry re : rosterEntries) {
+        ArrayList<String> Ids = new ArrayList<>(rosterEntries.size());
+        rosterEntries.stream().forEach((re) -> {
             Ids.add(re.getId());
-        }
+        });
         return new RosterEntrySelection(Ids);
     }
 
+    @Override
     public synchronized DataFlavor[] getTransferDataFlavors() {
-        return java.util.Arrays.copyOf(flavors, flavors.length);
+        return java.util.Arrays.copyOf(FLAVORS, FLAVORS.length);
     }
 
+    @Override
     public boolean isDataFlavorSupported(DataFlavor df) {
-        return (flavorList.contains(df));
+        return (FLAVOR_LIST.contains(df));
     }
 
+    @Override
     public Object getTransferData(DataFlavor df) throws UnsupportedFlavorException, IOException {
         if (df.equals(rosterEntryFlavor)) {
             return Ids;
@@ -83,6 +87,7 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
         throw new UnsupportedFlavorException(df);
     }
 
+    @Override
     public void lostOwnership(Clipboard clpbrd, Transferable t) {
         // if we need to take an action when something else if posted on the
         // clipboard, we would do so now.
@@ -91,14 +96,21 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
     /**
      * Get an ArrayList of RosterEntries from a RosterEntrySelection.
      *
-     * @param t - a Transferable object. This should be a RosterEntrySelection,
+     * @param t a Transferable object. This should be a RosterEntrySelection,
      *          but for simplicity, will accept any Transferable object.
+     * @return the transfered roster entries
+     * @throws java.awt.datatransfer.UnsupportedFlavorException if the
+     *                                                          transferable is
+     *                                                          incorrect
+     * @throws java.io.IOException                              if unable to
+     *                                                          transfer the
+     *                                                          entries
      */
     public static ArrayList<RosterEntry> getRosterEntries(Transferable t) throws UnsupportedFlavorException, IOException {
         if (t.isDataFlavorSupported(rosterEntryFlavor)) {
             @SuppressWarnings("unchecked")
             ArrayList<String> Ids = (ArrayList<String>) t.getTransferData(rosterEntryFlavor);
-            ArrayList<RosterEntry> REs = new ArrayList<RosterEntry>(Ids.size());
+            ArrayList<RosterEntry> REs = new ArrayList<>(Ids.size());
             for (String Id : Ids) {
                 RosterEntry re = Roster.getDefault().entryFromTitle(Id);
                 if (re != null) {

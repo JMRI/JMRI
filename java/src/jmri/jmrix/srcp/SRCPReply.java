@@ -67,6 +67,7 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
         return part[1];
     }
 
+    @Override
     protected int skipPrefix(int index) {
         // start at index, passing any whitespace & control characters at the start of the buffer
         while (index < getNumDataElements() - 1
@@ -81,13 +82,14 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
      * can't be parsed. Expects a message of the form 1264343601.156 100 INFO 1
      * SM -1 CV 8 99
      */
+    @Override
     public int value() {
         String s = toString();
         String[] part = s.split("\\s", 10);
         int val = -1;
 
         try {
-            int tmp = Integer.valueOf(part[8], 10).intValue();
+            int tmp = Integer.valueOf(part[7], 10).intValue();
             val = tmp;  // don't do this assign until now in case the conversion throws
         } catch (Exception e) {
             log.error("Unable to get number from reply: \"" + s + "\"");
@@ -95,6 +97,7 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
         return val;
     }
 
+    @Override
     public boolean isUnsolicited() {
         String s = toString();
         try {
@@ -113,9 +116,9 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SRCPReply.class);
 
 }
 
 
-/* @(#)SRCPReply.java */
+

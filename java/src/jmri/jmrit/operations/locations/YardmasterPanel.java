@@ -1,4 +1,3 @@
-// YardmasterFrame.java
 package jmri.jmrit.operations.locations;
 
 import java.awt.Dimension;
@@ -11,6 +10,7 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.CommonConductorYardmasterPanel;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * Yardmaster Frame. Shows work at one location.
  *
  * @author Dan Boudreau Copyright (C) 2013
- * @version $Revision: 18630 $
+ * 
  */
 public class YardmasterPanel extends CommonConductorYardmasterPanel {
 
@@ -288,21 +288,21 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
 
     private void addTrainListeners() {
         log.debug("Adding train listerners");
-        List<Train> trains = TrainManager.instance().getTrainsByIdList();
+        List<Train> trains = InstanceManager.getDefault(TrainManager.class).getTrainsByIdList();
         trains.stream().forEach((train) -> {
             train.addPropertyChangeListener(this);
         });
         // listen for new trains being added
-        TrainManager.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(TrainManager.class).addPropertyChangeListener(this);
     }
 
     private void removeTrainListeners() {
         log.debug("Removing train listerners");
-        List<Train> trains = TrainManager.instance().getTrainsByIdList();
+        List<Train> trains = InstanceManager.getDefault(TrainManager.class).getTrainsByIdList();
         trains.stream().forEach((train) -> {
             train.removePropertyChangeListener(this);
         });
-        TrainManager.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(TrainManager.class).removePropertyChangeListener(this);
     }
 
     @Override
@@ -328,6 +328,9 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
                 checkBoxes.remove("s" + car.getId());
                 checkBoxes.remove("m" + car.getId());
                 log.debug("Car ({}) removed from list", car.toString());
+                if (car.isUtility()) {
+                    clearAndUpdate(); // need to recalculate number of utility cars
+                }
             }
             update();
         }
@@ -336,5 +339,5 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(YardmasterPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(YardmasterPanel.class);
 }

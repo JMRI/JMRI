@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.tams.serialdriver;
 
 /**
@@ -6,31 +5,35 @@ package jmri.jmrix.tams.serialdriver;
  * SerialDriverAdapter object.
  *
  * @author Kevin Dickerson Copyright (C) 2012
- * @version	$Revision: 17977 $
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     public final static String NAME = "MasterControl";
 
     /**
-     * Ctor for an object being created during load process; Swing init is
-     * deferred.
+     * Create a connection configuration with a preexisting adapter. This is
+     * used principally when loading a configuration that defines this
+     * connection.
+     *
+     * @param p the adapter to create a connection configuration for
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
     }
 
     /**
-     * Ctor for a functional Swing object with no existing adapter
+     * Create a connection configuration without a preexisting adapter.
      */
     public ConnectionConfig() {
         super();
     }
 
+    @Override
     public String name() {
         return NAME;
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new SerialDriverAdapter();

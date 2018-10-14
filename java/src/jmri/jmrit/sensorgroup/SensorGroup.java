@@ -1,4 +1,3 @@
-// SensorGroup.java
 package jmri.jmrit.sensorgroup;
 
 import java.util.ArrayList;
@@ -15,10 +14,11 @@ import org.slf4j.LoggerFactory;
  * Object for representing, creating and editing sensor groups.
  * <P>
  * Sensor groups are implemented by (groups) of Routes, not by any other object.
+ * <p>
+ * They are not (currently) NamedBean objects.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
- * @version	$Revision$
- */
+ * @author Bob Jacobsen Copyright (C) 2007
+  */
 public class SensorGroup {
 
     /**
@@ -95,6 +95,6 @@ public class SensorGroup {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SensorGroup.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorGroup.class);
 
 }

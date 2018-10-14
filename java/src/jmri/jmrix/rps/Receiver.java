@@ -1,4 +1,3 @@
-// Receiver.java
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
@@ -7,8 +6,7 @@ import javax.vecmath.Point3d;
  * Holds all the state information for a single receiver.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
- */
+  */
 public class Receiver {
 
     public Receiver(Point3d position) {
@@ -64,4 +62,4 @@ public class Receiver {
     }
 }
 
-/* @(#)Receiver.java */
+

@@ -52,6 +52,7 @@
 
 import jmri
 import java
+import java.beans
 
 # Define the listener class to play a sound when a  throttle function changes
 class ThrottleListener(java.beans.PropertyChangeListener):
@@ -59,7 +60,7 @@ class ThrottleListener(java.beans.PropertyChangeListener):
     def propertyChange(self, event):
       if ((event.propertyName == "F3") and (event.newValue == True) and (event.oldValue == False)) :
          self.snd.play()
-	 print "F3"
+     print "F3"
 
 # create a specific listener object, with a specific sound
 Script111 = ThrottleListener()

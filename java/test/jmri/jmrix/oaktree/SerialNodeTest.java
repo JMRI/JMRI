@@ -2,10 +2,11 @@ package jmri.jmrix.oaktree;
 
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRMessage;
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * JUnit tests for the SerialNode class
@@ -15,8 +16,8 @@ import junit.framework.TestSuite;
  */
 public class SerialNodeTest extends TestCase {
 
-    //private SerialNode a = new SerialNode(1,SerialNode.IO48);
-    SerialNode b = new SerialNode();
+    private OakTreeSystemConnectionMemo memo = null;
+    private SerialNode b = null;
 
     public void testConstructor1() {
         Assert.assertEquals("check default ctor type", SerialNode.IO24, b.getNodeType());
@@ -24,13 +25,13 @@ public class SerialNodeTest extends TestCase {
     }
 
     public void testConstructor2() {
-        SerialNode c = new SerialNode(3, SerialNode.IO24);
+        SerialNode c = new SerialNode(3, SerialNode.IO24,memo);
         Assert.assertEquals("check ctor type", SerialNode.IO24, c.getNodeType());
         Assert.assertEquals("check ctor address", 3, c.getNodeAddress());
     }
 
     public void testAccessors() {
-        SerialNode n = new SerialNode(2, SerialNode.IO24);
+        SerialNode n = new SerialNode(2, SerialNode.IO24,memo);
         n.setNodeAddress(7);
         Assert.assertEquals("check ctor type", SerialNode.IO24, n.getNodeType());
         Assert.assertEquals("check address", 7, n.getNodeAddress());
@@ -44,7 +45,7 @@ public class SerialNodeTest extends TestCase {
 
     public void testOutputBits1() {
         // IO48 with several output bits set
-        SerialNode g = new SerialNode(5, SerialNode.IO48);
+        SerialNode g = new SerialNode(5, SerialNode.IO48,memo);
         Assert.assertTrue("must Send", g.mustSend());
         g.resetMustSend();
         Assert.assertTrue("must Send off", !(g.mustSend()));
@@ -67,7 +68,7 @@ public class SerialNodeTest extends TestCase {
 
     public void testMarkChanges() {
         SerialSensor s1 = new SerialSensor("OS1", "a");
-        Assert.assertEquals("check bit number", 1, SerialAddress.getBitFromSystemName("OS1"));
+        Assert.assertEquals("check bit number", 1, SerialAddress.getBitFromSystemName("OS1", memo.getSystemPrefix()));
         SerialSensor s2 = new SerialSensor("OS2", "ab");
         SerialSensor s3 = new SerialSensor("OS3", "abc");
         b.registerSensor(s1, 0);
@@ -100,12 +101,17 @@ public class SerialNodeTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
+        memo = new OakTreeSystemConnectionMemo();
+        memo.setTrafficController(new SerialTrafficControlScaffold(memo));
+        b = new SerialNode(memo);
     }
 
+    @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

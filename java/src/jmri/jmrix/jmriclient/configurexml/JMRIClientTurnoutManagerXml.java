@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision$
  */
 public class JMRIClientTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -20,10 +19,12 @@ public class JMRIClientTurnoutManagerXml extends jmri.managers.configurexml.Abst
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element turnouts) {
         turnouts.setAttribute("class", "jmri.jmrix.jmriclient.configurexml.JMRIClientTurnoutManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -35,5 +36,5 @@ public class JMRIClientTurnoutManagerXml extends jmri.managers.configurexml.Abst
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(JMRIClientTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(JMRIClientTurnoutManagerXml.class);
 }

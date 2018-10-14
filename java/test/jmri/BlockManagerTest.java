@@ -1,9 +1,10 @@
 package jmri;
 
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the BlockManager class
@@ -45,17 +46,17 @@ public class BlockManagerTest extends TestCase {
 
     public void testNameIncrement() {
         // original create with no systemname and an empty username
-        Block b1 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("");
+        Block b1 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(null);
         Assert.assertEquals("system name 1", "IB:AUTO:0001", b1.getSystemName());
-        Assert.assertEquals("user name 1", "", b1.getUserName());
+        Assert.assertEquals("user name 1", null, b1.getUserName());
 
-        Block b2 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("");
+        Block b2 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock(null);
         Assert.assertEquals("system name 2", "IB:AUTO:0002", b2.getSystemName());
-        Assert.assertEquals("user name 2", "", b2.getUserName());
+        Assert.assertEquals("user name 2", null, b2.getUserName());
 
         // and b1 still OK
         Assert.assertEquals("system name 1", "IB:AUTO:0001", b1.getSystemName());
-        Assert.assertEquals("user name 1", "", b1.getUserName());
+        Assert.assertEquals("user name 1", null, b1.getUserName());
     }
 
     public void testProvideWorksTwice() {
@@ -64,7 +65,7 @@ public class BlockManagerTest extends TestCase {
         b1 = InstanceManager.getDefault(jmri.BlockManager.class).provideBlock("!!");
         Assert.assertNotNull(b1);
     }
-    
+
     public void testGet1() {
         // original create with no systemname and a username
         Block b1 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("UserName4");
@@ -169,13 +170,12 @@ public class BlockManagerTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         super.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 }

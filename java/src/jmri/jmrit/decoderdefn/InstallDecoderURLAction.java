@@ -1,5 +1,6 @@
 package jmri.jmrit.decoderdefn;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
-import java.util.ResourceBundle;
 import javax.swing.Icon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Install decoder definition from URL
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  * @see jmri.jmrit.XmlFile
  */
 public class InstallDecoderURLAction extends JmriAbstractAction {
@@ -44,27 +44,23 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
         super(s);
     }
 
-    static ResourceBundle rb = null;
-
     JPanel _who;
 
     URL pickURL(JPanel who) {
         // show input dialog
-        String urlname = JOptionPane.showInputDialog(who, rb.getString("InputURL"));
+        String urlname = JOptionPane.showInputDialog(who, Bundle.getMessage("InputURL"));
         try {
             URL url = new URL(urlname);
             return url;
         } catch (java.net.MalformedURLException e) {
-            JOptionPane.showMessageDialog(who, rb.getString("MalformedURL"));
+            JOptionPane.showMessageDialog(who, Bundle.getMessage("MalformedURL"));
         }
 
         return null;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
-        if (rb == null) {
-            rb = ResourceBundle.getBundle("jmri.jmrit.decoderdefn.DecoderFile");
-        }
 
         // get the input URL
         URL url = pickURL(_who);
@@ -76,7 +72,6 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
             // OK, do the actual copy
             copyAndInstall(url, _who);
         }
-        rb = null;
     }
 
     void copyAndInstall(URL from, JPanel who) {
@@ -110,10 +105,10 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
         DecoderIndexFile.forceCreationOfNewIndex();
 
         // Done OK
-        JOptionPane.showMessageDialog(who, rb.getString("CompleteOK"));
+        JOptionPane.showMessageDialog(who, Bundle.getMessage("CompleteOK"));
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "OBL_UNSATISFIED_OBLIGATION", justification = "Looks like false positive")
+    @SuppressFBWarnings(value = "OBL_UNSATISFIED_OBLIGATION", justification = "Looks like false positive")
     boolean copyfile(URL from, File toFile, JPanel who) {
         InputStream in = null;
         OutputStream out = null;
@@ -131,11 +126,11 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
             // done - finally cleans up
         } catch (FileNotFoundException ex) {
             log.debug("" + ex);
-            JOptionPane.showMessageDialog(who, rb.getString("CopyError1"));
+            JOptionPane.showMessageDialog(who, Bundle.getMessage("CopyError1"));
             return false;
         } catch (IOException e) {
             log.debug("" + e);
-            JOptionPane.showMessageDialog(who, rb.getString("CopyError2"));
+            JOptionPane.showMessageDialog(who, Bundle.getMessage("CopyError2"));
             return false;
         } finally {
             try {
@@ -167,20 +162,25 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
 
             // check to see if there's a decoder element
             if (root.getChild("decoder") == null) {
-                JOptionPane.showMessageDialog(who, rb.getString("WrongContent"));
+                JOptionPane.showMessageDialog(who, Bundle.getMessage("WrongContent"));
                 return false;
             }
             return true;
 
         } catch (java.io.IOException | org.jdom2.JDOMException ex) {
             log.debug("" + ex);
-            JOptionPane.showMessageDialog(who, rb.getString("ParseError"));
+            JOptionPane.showMessageDialog(who, Bundle.getMessage("ParseError"));
             return false;
         }
     }
 
     /**
-     * Ask SAX to read and verify a file
+     * Read and verify an XML file.
+     *
+     * @param url the URL of the file
+     * @return the root element in the file
+     * @throws org.jdom2.JDOMException if the file cannot be parsed
+     * @throws java.io.IOException     if the file cannot be read
      */
     Element readFile(URL url) throws org.jdom2.JDOMException, java.io.IOException {
         XmlFile xf = new XmlFile() {
@@ -191,9 +191,10 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(InstallDecoderURLAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InstallDecoderURLAction.class);
 }

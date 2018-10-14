@@ -19,7 +19,7 @@ import org.apache.log4j.spi.LoggingEvent;
 
 /**
  * Implements a log4j appender which writes to a swing JTextPane
- *
+ * <p>
  * This code was copied from
  * "jakarta-log4j-1.2.15\apache-log4j-1.2.15\contribs\SvenReimers\gui\TextPaneAppender.java"
  * (which did not work properly, not even compile) and adapted for my needs.
@@ -28,18 +28,16 @@ import org.apache.log4j.spi.LoggingEvent;
  */
 public class JTextPaneAppender extends AppenderSkeleton {
 
-    /**
-     *
-     */
     JTextPane myTextPane;
-    /**
-     *
-     */
     Hashtable<String, MutableAttributeSet> myAttributeSet;
 
     /**
      * Constructor
      *
+     * @param aLayout      the panel layout
+     * @param aName        the panel name
+     * @param aFilterArray a list of filters
+     * @param aTextPane    the text pane to display
      */
     public JTextPaneAppender(Layout aLayout, String aName, Filter[] aFilterArray, JTextPane aTextPane) {
         this();
@@ -48,14 +46,12 @@ public class JTextPaneAppender extends AppenderSkeleton {
         myTextPane = aTextPane;
 
         if (aFilterArray != null) {
-            for (int i = 0; i < aFilterArray.length; i++) {
-                if (aFilterArray[i] != null) {
-                    addFilter(aFilterArray[i]);
-                } // if aFilterArray[i] != null]
-            } // for i
-
-        } // if aFilterArray != null
-
+            for (Filter aFilterArray1 : aFilterArray) {
+                if (aFilterArray1 != null) {
+                    addFilter(aFilterArray1);
+                }
+            }
+        }
         createAttributes();
     }
 
@@ -69,12 +65,11 @@ public class JTextPaneAppender extends AppenderSkeleton {
     }
 
     /**
-     * @see org.apache.log4j.AppenderSkeleton#close()
+     * {@inheritDoc}
+     * @see org.apache.log4j.Appender#close()
      */
-    // original source had this marked as an over-ride, but it isn't
-    //@Override
+    @Override
     public void close() {
-        //
     }
 
     private void createAttributes() {
@@ -103,41 +98,45 @@ public class JTextPaneAppender extends AppenderSkeleton {
     }
 
     /**
+     * {@inheritDoc}
      * @see
      * org.apache.log4j.AppenderSkeleton#append(org.apache.log4j.spi.LoggingEvent)
      */
     @Override
-    public void append(LoggingEvent event) {
+    public void append(final LoggingEvent event) {
         if (myTextPane == null) {
             LogLog.warn("TextPane is not initialized");
             return;
         } // if myTextPane == null
 
-        String text = this.layout.format(event);
+        String temp = this.layout.format(event);
         String[] stackTrace = event.getThrowableStrRep();
         if (stackTrace != null) {
-            StringBuffer sb = new StringBuffer(text);
+            StringBuffer sb = new StringBuffer(temp);
 
             for (int i = 0; i < stackTrace.length; i++) {
                 sb.append("    ").append(stackTrace[i]).append("\n");
             } // for i
 
-            text = sb.toString();
+            temp = sb.toString();
         }
+        final String text = temp;
 
-        StyledDocument myDoc = myTextPane.getStyledDocument();
-
-        try {
-            myDoc.insertString(myDoc.getLength(), text, myAttributeSet.get(event.getLevel().toString()));
-        } catch (BadLocationException badex) {
-            System.err.println(badex);  // can't log this, as it would be recursive error
-        }
-
-        myTextPane.setCaretPosition(myDoc.getLength());
+        jmri.util.ThreadingUtil.runOnGUI( ()->{ 
+            try {
+                StyledDocument myDoc = myTextPane.getStyledDocument();
+                myDoc.insertString(myDoc.getLength(), text, myAttributeSet.get(event.getLevel().toString()));
+                myTextPane.setCaretPosition(myDoc.getLength());
+            } catch (BadLocationException badex) {
+                System.err.println(badex);  // can't log this, as it would be recursive error
+            }
+        } ); 
     }
 
     /**
-     * Get current TextPane
+     * Get current TextPane.
+     *
+     * @return the current text pane
      */
     public JTextPane getTextPane() {
         return myTextPane;
@@ -146,6 +145,7 @@ public class JTextPaneAppender extends AppenderSkeleton {
     /**
      * Set current TextPane
      *
+     * @param aTextpane the text pane to make current
      */
     public void setTextPane(JTextPane aTextpane) {
         myTextPane = aTextpane;
@@ -163,95 +163,112 @@ public class JTextPaneAppender extends AppenderSkeleton {
     // ///////////////////////////////////////////////////////////////////
     // option setters and getters
     /**
-     * setColorEmerg
+     * Set the emergency color.
      *
+     * @param color the color for {@link Level#FATAL} messages
      */
     public void setColorEmerg(Color color) {
         setColor(Level.FATAL, color);
     }
 
     /**
-     * getColorEmerg
+     * Get the emergency color.
+     *
+     * @return the color for {@link Level#FATAL} messages
      */
     public Color getColorEmerg() {
         return getColor(Level.FATAL);
     }
 
     /**
-     * setColorError
+     * Set the error color.
      *
+     * @param color the color for {@link Level#ERROR} messages
      */
     public void setColorError(Color color) {
         setColor(Level.ERROR, color);
     }
 
     /**
-     * getColorError
+     * Get the error color.
+     *
+     * @return the color for {@link Level#ERROR} messages
      */
     public Color getColorError() {
         return getColor(Level.ERROR);
     }
 
     /**
-     * setColorWarn
+     * Set the warning color.
      *
+     * @param color the color for {@link Level#WARN} messages
      */
     public void setColorWarn(Color color) {
         setColor(Level.WARN, color);
     }
 
     /**
-     * getColorWarn
+     * Get the warning color.
+     *
+     * @return the color for {@link Level#WARN} messages
      */
     public Color getColorWarn() {
         return getColor(Level.WARN);
     }
 
     /**
-     * setColorInfo
+     * Set the information color.
      *
+     * @param color the color for {@link Level#INFO} messages
      */
     public void setColorInfo(Color color) {
         setColor(Level.INFO, color);
     }
 
     /**
-     * getColorInfo
+     * Get the information color.
+     *
+     * @return the color for {@link Level#INFO} messages
      */
     public Color getColorInfo() {
         return getColor(Level.INFO);
     }
 
     /**
-     * setColorDebug
+     * Set the debugging color.
      *
+     * @param color the color for {@link Level#DEBUG} messages
      */
     public void setColorDebug(Color color) {
         setColor(Level.DEBUG, color);
     }
 
     /**
-     * getColorDebug
+     * Get the debugging color.
+     *
+     * @return the color for {@link Level#DEBUG} messages
      */
     public Color getColorDebug() {
         return getColor(Level.DEBUG);
     }
 
     /**
-     * Sets the font size of all Level's
+     * Set the font size of all levels.
      *
+     * @param aSize the font size
      */
     public void setFontSize(int aSize) {
         Enumeration<MutableAttributeSet> e = myAttributeSet.elements();
         while (e.hasMoreElements()) {
             StyleConstants.setFontSize(e.nextElement(), aSize);
         }
-        return;
     }
 
     /**
-     * Sets the font size of a particular Level
+     * Set the font size of a particular level.
      *
+     * @param aSize  the font size
+     * @param aLevel the level
      */
     public void setFontSize(int aSize, Level aLevel) {
         MutableAttributeSet set = myAttributeSet.get(aLevel.toString());
@@ -263,6 +280,8 @@ public class JTextPaneAppender extends AppenderSkeleton {
     /**
      * Get the font size for a particular logging level
      *
+     * @param aLevel the level
+     * @return the font size
      */
     public int getFontSize(Level aLevel) {
         AttributeSet attrSet = myAttributeSet.get(aLevel.toString());
@@ -274,32 +293,35 @@ public class JTextPaneAppender extends AppenderSkeleton {
     }
 
     /**
-     * Sets the font name of all known Level's
+     * Set the font name of all known levels.
      *
+     * @param aName the font name
      */
     public void setFontName(String aName) {
         Enumeration<MutableAttributeSet> e = myAttributeSet.elements();
         while (e.hasMoreElements()) {
             StyleConstants.setFontFamily(e.nextElement(), aName);
         }
-        return;
     }
 
     /**
-     * setFontName
+     * Set the font name for the given level.
      *
+     * @param aName  the font name
+     * @param aLevel the log level
      */
     public void setFontName(String aName, Level aLevel) {
         MutableAttributeSet set = myAttributeSet.get(aLevel.toString());
         if (set != null) {
             StyleConstants.setFontFamily(set, aName);
         }
-        return;
     }
 
     /**
-     * Retrieves the font name of a particular Level
+     * Get the font name of a particular Level.
      *
+     * @param aLevel the level
+     * @return the font name
      */
     public String getFontName(Level aLevel) {
         AttributeSet attrSet = myAttributeSet.get(aLevel.toString());
@@ -312,11 +334,10 @@ public class JTextPaneAppender extends AppenderSkeleton {
     }
 
     /**
-     * @see org.apache.log4j.AppenderSkeleton#requiresLayout()
+     * {@inheritDoc}
+     * @see org.apache.log4j.Appender#requiresLayout()
      */
-    // original code had this marked as an override, but it isn't,
-    // at least for Log4J 1.2.15
-    //@Override
+    @Override
     public boolean requiresLayout() {
         return true;
     }

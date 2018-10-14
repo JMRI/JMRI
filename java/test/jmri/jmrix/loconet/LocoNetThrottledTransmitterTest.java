@@ -2,40 +2,42 @@ package jmri.jmrix.loconet;
 
 import java.util.concurrent.TimeUnit;
 import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmrix.loconet.LocoNetThrottledTransmitter class.
  *
  * @author Bob Jacobsen Copyright 2001, 2002, 2009, 2015
  */
-public class LocoNetThrottledTransmitterTest extends TestCase {
+public class LocoNetThrottledTransmitterTest {
 
+    @Test
     public void testCtorAndDispose() {
-        new LocoNetThrottledTransmitter(null, false).dispose();
+        LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(null, false);
+        q.dispose();
+        JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
     }
 
+    @Test
     public void testMemoCtor() {
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(null, false);
-        q.new Memo(null, 100, TimeUnit.MILLISECONDS);
+        new LocoNetThrottledTransmitter.Memo(null, 100, TimeUnit.MILLISECONDS);
 
         q.dispose();
+        JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
     }
 
+    @Test
     public void testMemoComparable() {
-        LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(null, false) {
-            long nowMSec() {
-                return 0;
-            }
-        };
-        LocoNetThrottledTransmitter.Memo m50 = q.new Memo(null, 50, TimeUnit.MILLISECONDS);
-        LocoNetThrottledTransmitter.Memo m100a = q.new Memo(null, 100, TimeUnit.MILLISECONDS);
-        LocoNetThrottledTransmitter.Memo m100b = q.new Memo(null, 100, TimeUnit.MILLISECONDS);
-        LocoNetThrottledTransmitter.Memo m200a = q.new Memo(null, 200, TimeUnit.MILLISECONDS);
-        LocoNetThrottledTransmitter.Memo m200b = q.new Memo(null, 200, TimeUnit.MILLISECONDS);
+        LocoNetThrottledTransmitter.Memo m50   = new LocoNetThrottledTransmitter.Memo(null, 50, TimeUnit.MILLISECONDS);
+        LocoNetThrottledTransmitter.Memo m100a = new LocoNetThrottledTransmitter.Memo(null, 100, TimeUnit.MILLISECONDS);
+        LocoNetThrottledTransmitter.Memo m100b = new LocoNetThrottledTransmitter.Memo(null, 100, TimeUnit.MILLISECONDS);
+        LocoNetThrottledTransmitter.Memo m200a = new LocoNetThrottledTransmitter.Memo(null, 200, TimeUnit.MILLISECONDS);
+        LocoNetThrottledTransmitter.Memo m200b = new LocoNetThrottledTransmitter.Memo(null, 200, TimeUnit.MILLISECONDS);
 
         Assert.assertNotNull("exists", m100b);
         Assert.assertNotNull("exists", m200b);
@@ -49,26 +51,9 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
         Assert.assertEquals("greater than 1", 1, m200a.compareTo(m100a));
         Assert.assertEquals("greater than 2", 1, m100a.compareTo(m50));
         Assert.assertEquals("greater than 3", 1, m200a.compareTo(m50));
-
-        q.dispose();
     }
 
-    public void testMemoGetDelay() {
-        LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(null, false) {
-            long nowMSec() {
-                return 0;
-            }
-        };
-        LocoNetThrottledTransmitter.Memo m5000 = q.new Memo(null, 5000, TimeUnit.MILLISECONDS);
-
-        Assert.assertEquals("nanoseconds", 5000000000l, m5000.getDelay(TimeUnit.NANOSECONDS));
-        Assert.assertEquals("microseconds", 5000000l, m5000.getDelay(TimeUnit.MICROSECONDS));
-        Assert.assertEquals("milliseconds", 5000l, m5000.getDelay(TimeUnit.MILLISECONDS));
-        Assert.assertEquals("seconds", 5l, m5000.getDelay(TimeUnit.SECONDS));
-
-        q.dispose();
-    }
-
+    @Test
     public void testThreadStartStop() {
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(null, false);
         JUnitUtil.waitFor(()->{return q.running;}, "started");
@@ -79,13 +64,14 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
         JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
     }
 
+    @Test
     public void testSendOneImmediate() {
         LocoNetInterfaceScaffold s = new LocoNetInterfaceScaffold();
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(s, false);
 
         LocoNetMessage m1;
 
-        m1 = new LocoNetMessage(1);
+        m1 = new LocoNetMessage(2);
         m1.setElement(0, 0x01);  // dummy value
 
         q.minInterval = 0;
@@ -95,15 +81,19 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
 
         Assert.assertEquals("one sent", 1, s.outbound.size());
         Assert.assertEquals("right one", m1, s.outbound.elementAt(s.outbound.size() - 1));
+
+        q.dispose();
+        JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
     }
 
+    @Test
     public void testSendOneNowOneLater() {
         LocoNetInterfaceScaffold s = new LocoNetInterfaceScaffold();
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(s, false);
 
-        LocoNetMessage m1 = new LocoNetMessage(1);
+        LocoNetMessage m1 = new LocoNetMessage(2);
         m1.setElement(0, 0x01);  // dummy value
-        LocoNetMessage m2 = new LocoNetMessage(1);
+        LocoNetMessage m2 = new LocoNetMessage(2);
         m2.setElement(0, 0x02);  // dummy value
 
         q.minInterval = 1;
@@ -120,15 +110,19 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
 
         Assert.assertEquals("two sent", 2, s.outbound.size());
         Assert.assertEquals("right 2nd", m2, s.outbound.elementAt(1));
+
+        q.dispose();
+        JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
     }
 
+    @Test
     public void testAfterTimeNewMessageSentImmediately() {
         LocoNetInterfaceScaffold s = new LocoNetInterfaceScaffold();
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(s, false);
 
-        LocoNetMessage m1 = new LocoNetMessage(1);
+        LocoNetMessage m1 = new LocoNetMessage(2);
         m1.setElement(0, 0x01);  // dummy value
-        LocoNetMessage m2 = new LocoNetMessage(1);
+        LocoNetMessage m2 = new LocoNetMessage(2);
         m2.setElement(0, 0x02);  // dummy value
 
         q.minInterval = 100;
@@ -144,32 +138,20 @@ public class LocoNetThrottledTransmitterTest extends TestCase {
 
         Assert.assertEquals("two sent", 2, s.outbound.size());
         Assert.assertEquals("right 2nd", m2, s.outbound.elementAt(1));
-    }
 
-    // from here down is testing infrastructure
-    public LocoNetThrottledTransmitterTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {LocoNetThrottledTransmitterTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LocoNetThrottledTransmitterTest.class);
-        return suite;
+        q.dispose();
+        JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
     }
 
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }

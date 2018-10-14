@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.Intellibox;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.NoSuchElementException;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetMessage;
@@ -12,33 +13,31 @@ import org.slf4j.LoggerFactory;
  * side sends/receives LocoNetMessage objects. The connection to a
  * LnPortController is via a pair of *Streams, which then carry sequences of
  * characters for transmission.
- * <P>
+ * <p>
  * Messages come to this via the main GUI thread, and are forwarded back to
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <UL>
- * <LI> RcvHandler - at highest available priority
- * <LI> XmtHandler - down one, which is assumed to be above the GUI
- * <LI> (everything else)
- * </UL>
- * <P>
+ * <ul>
+ *   <li> RcvHandler - at highest available priority
+ *   <li> XmtHandler - down one, which is assumed to be above the GUI
+ *   <li> (everything else)
+ * </ul>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2010
- *
+ * @author Bob Jacobsen Copyright (C) 2001, 2010
  */
 public class IBLnPacketizer extends LnPacketizer {
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization")
     public IBLnPacketizer() {
         echo = true;
-        self = this;
+        //self = this;
     }
 
     /**
@@ -53,7 +52,7 @@ public class IBLnPacketizer extends LnPacketizer {
          */
         LnPacketizer trafficController;
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+        @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
                 justification = "single threaded during init; will eventually be replaced for multi-connection support")
         public RcvHandler(LnPacketizer lt) {
             trafficController = lt;
@@ -71,21 +70,21 @@ public class IBLnPacketizer extends LnPacketizer {
             }
         }
 
+        @Override
         public void run() {
-            boolean debug = log.isDebugEnabled();
 
             int opCode;
             while (true) {   // loop permanently, program close will exit
                 try {
                     // start by looking for command -  skip if bit not set
                     while (((opCode = (readNextByteFromUSB() & 0xFF)) & 0x80) == 0) {
-                        if (debug) {
-                            log.debug("Skipping: " + Integer.toHexString(opCode));
+                        if (log.isDebugEnabled()) { // Avoid building unneeded Strings
+                            log.debug("Skipping: {}", Integer.toHexString(opCode));
                         }
                     }
                     // here opCode is OK. Create output message
-                    if (debug) {
-                        log.debug("Start message with opcode: " + Integer.toHexString(opCode));
+                    if (log.isDebugEnabled()) { // Avoid building unneeded Strings
+                        log.debug("Start message with opcode: {}", Integer.toHexString(opCode));
                     }
                     LocoNetMessage msg = null;
                     while (msg == null) {
@@ -95,30 +94,34 @@ public class IBLnPacketizer extends LnPacketizer {
                             //log.debug("Byte2: "+Integer.toHexString(byte2));
                             if ((byte2 & 0x80) != 0) {
                                 log.warn("LocoNet message with opCode: "
-                                        +Integer.toHexString(opCode)
-                                        +" ended early. Byte2 is also an opcode: "
+                                        + Integer.toHexString(opCode)
+                                        + " ended early. Byte2 is also an opcode: "
                                         + Integer.toHexString(byte2));
                                 opCode = byte2;
                                 throw new LocoNetMessageException();
                             }
                             // Decide length
                             switch ((opCode & 0x60) >> 5) {
-                                case 0:     /* 2 byte message */
+                                case 0:
+                                    /* 2 byte message */
 
                                     msg = new LocoNetMessage(2);
                                     break;
 
-                                case 1:     /* 4 byte message */
+                                case 1:
+                                    /* 4 byte message */
 
                                     msg = new LocoNetMessage(4);
                                     break;
 
-                                case 2:     /* 6 byte message */
+                                case 2:
+                                    /* 6 byte message */
 
                                     msg = new LocoNetMessage(6);
                                     break;
 
-                                case 3:     /* N byte message */
+                                case 3:
+                                    /* N byte message */
 
                                     if (byte2 < 2) {
                                         log.error("LocoNet message length invalid: " + byte2
@@ -168,14 +171,15 @@ public class IBLnPacketizer extends LnPacketizer {
                             log.debug("queue message for notification");
                         }
                         final LocoNetMessage thisMsg = msg;
-                        final LnPacketizer thisTC = trafficController;
+                        final LnPacketizer thisTc = trafficController;
                         // return a notification via the queue to ensure end
                         Runnable r = new Runnable() {
                             LocoNetMessage msgForLater = thisMsg;
-                            LnPacketizer myTC = thisTC;
+                            LnPacketizer myTc = thisTc;
 
+                            @Override
                             public void run() {
-                                myTC.notify(msgForLater);
+                                myTc.notify(msgForLater);
                             }
                         };
                         javax.swing.SwingUtilities.invokeLater(r);
@@ -199,16 +203,14 @@ public class IBLnPacketizer extends LnPacketizer {
      */
     class XmtHandler implements Runnable {
 
+        @Override
         public void run() {
-            boolean debug = log.isDebugEnabled();
 
             while (true) {   // loop permanently
                 // any input?
                 try {
                     // get content; failure is a NoSuchElementException
-                    if (debug) {
-                        log.debug("check for input");
-                    }
+                    log.debug("check for input");
                     byte msg[] = null;
                     synchronized (this) {
                         msg = xmtList.removeFirst();
@@ -220,9 +222,7 @@ public class IBLnPacketizer extends LnPacketizer {
                             if (!controller.okToSend()) {
                                 log.debug("LocoNet port not ready to receive");
                             }
-                            if (debug) {
-                                log.debug("start write to stream");
-                            }
+                            log.debug("start write to stream");
 
                             // The Intellibox cannot handle messges over 4 bytes without
                             // stopping the sender via CTS/RTS hardware handshake
@@ -238,10 +238,8 @@ public class IBLnPacketizer extends LnPacketizer {
                                 ostream.flush();
                             }
 
-                            if (debug) {
-                                log.debug("end write to stream");
-                            }
-                            messageTransmited(msg);
+                            log.debug("end write to stream");
+                            messageTransmitted(msg);
                         } else {
                             // no stream connected
                             log.warn("sendLocoNetMessage: no connection established");
@@ -251,15 +249,11 @@ public class IBLnPacketizer extends LnPacketizer {
                     }
                 } catch (NoSuchElementException e) {
                     // message queue was empty, wait for input
-                    if (debug) {
-                        log.debug("start wait");
-                    }
+                    log.debug("start wait");
 
                     new jmri.util.WaitHandler(this);  // handle synchronization, spurious wake, interruption
 
-                    if (debug) {
-                        log.debug("end wait");
-                    }
+                    log.debug("end wait");
                 }
             }
         }
@@ -268,6 +262,7 @@ public class IBLnPacketizer extends LnPacketizer {
     /**
      * Invoked at startup to start the threads needed here.
      */
+    @Override
     public void startThreads() {
         int priority = Thread.currentThread().getPriority();
         log.debug("startThreads current priority = " + priority
@@ -298,5 +293,5 @@ public class IBLnPacketizer extends LnPacketizer {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IBLnPacketizer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IBLnPacketizer.class);
 }

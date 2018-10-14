@@ -9,7 +9,11 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
-   jmri.jmrix.loconet.Intellibox.configurexml.PackageTest.class
+   jmri.jmrix.loconet.Intellibox.configurexml.PackageTest.class,
+   IBLnPacketizerTest.class,
+   IbxConnectionTypeListTest.class,
+   IntelliboxAdapterTest.class,
+   BundleTest.class,
 })
 /**
  * Tests for the jmri.jmrix.loconet.Intellibox package.
@@ -31,6 +35,6 @@ public class PackageTest {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PackageTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(PackageTest.class);
 
 }

@@ -1,21 +1,18 @@
-// SerialLightManagerXml.java
 package jmri.jmrix.maple.configurexml;
 
-import jmri.jmrix.maple.SerialLightManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Provides load and store functionality for configuring SerialLightManagers.
- * <P>
+ * <p>
  * Uses the store method from the abstract base class, but provides a load
  * method here.
- * <P>
+ * <p>
  * Based on SerialTurnoutManagerXml.java
  *
  * @author Dave Duchamp Copyright (c) 2004
- * @version $Revision$
  */
 public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
@@ -23,21 +20,21 @@ public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLi
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element lights) {
         lights.setAttribute("class", "jmri.jmrix.maple.configurexml.SerialLightManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
 
     @Override
     public boolean load(Element shared, Element perNode) {
-        // create the master object
-        SerialLightManager.instance();
         // load individual lights
         return loadLights(shared);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialLightManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialLightManagerXml.class);
 }

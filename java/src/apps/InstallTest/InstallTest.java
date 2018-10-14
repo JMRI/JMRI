@@ -7,7 +7,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.util.JmriJFrame;
@@ -33,31 +32,36 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Ken Cameron Copyright 2008
+ * @author Ken Cameron Copyright 2008
  */
 public class InstallTest extends Apps {
 
-    InstallTest(JFrame p) {
-        super(p);
+    InstallTest() {
+        super();
     }
 
+    @Override
     protected String logo() {
         return "resources/InstallTest.gif";
     }
 
+    @Override
     protected String mainWindowHelpID() {
         return "package.apps.InstallTest.InstallTest";
     }
 
+    @Override
     protected String line1() {
         return MessageFormat.format(Bundle.getMessage("InstallTestVersionCredit"),
                 new Object[]{jmri.Version.name()});
     }
 
+    @Override
     protected String line2() {
         return "http://jmri.org/InstallTest";
     }
 
+    @Override
     protected JPanel statusPanel() {
         JPanel j = new JPanel();
         j.setLayout(new BoxLayout(j, BoxLayout.Y_AXIS));
@@ -66,6 +70,7 @@ public class InstallTest extends Apps {
         Action serviceprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getMessage("DpButtonUseProgrammingTrack"));
         Action opsprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getMessage("DpButtonProgramOnMainTrack"));
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 Apps.handleQuit();
             }
@@ -76,8 +81,8 @@ public class InstallTest extends Apps {
         b1.addActionListener(serviceprog);
         b1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(b1);
-        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) == null
-                || !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).isGlobalProgrammerAvailable()) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.GlobalProgrammerManager.class) == null
+                || !jmri.InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).isGlobalProgrammerAvailable()) {
             b1.setEnabled(false);
             b1.setToolTipText(Bundle.getMessage("MsgServiceButtonDisabled"));
         }
@@ -85,8 +90,8 @@ public class InstallTest extends Apps {
         m1.addActionListener(opsprog);
         m1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(m1);
-        if (jmri.InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) == null
-                || !jmri.InstanceManager.getDefault(jmri.ProgrammerManager.class).isAddressedModePossible()) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.AddressedProgrammerManager.class) == null
+                || !jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).isAddressedModePossible()) {
             m1.setEnabled(false);
             m1.setToolTipText(Bundle.getMessage("MsgOpsButtonDisabled"));
         }
@@ -107,12 +112,13 @@ public class InstallTest extends Apps {
         Apps.setStartupInfo("InstallTest");
 
         setConfigFilename("InstallTestConfig2.xml", args);
-        JmriJFrame f = new JmriJFrame("InstallTest");
-        createFrame(new InstallTest(f), f);
+        InstallTest it = new InstallTest();
+        JmriJFrame f = new JmriJFrame(jmri.Application.getApplicationName());
+        createFrame(it, f);
 
         log.debug("main initialization done");
         splash(false);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(InstallTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(InstallTest.class);
 }

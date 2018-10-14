@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.web.servlet.config;
 
 import java.io.IOException;
@@ -10,17 +5,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import jmri.InstanceManager;
+import jmri.web.server.WebServerPreferences;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood (C) 2016
  */
 public class ConfigServlet extends HttpServlet {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6553518147779778004L;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,7 +30,11 @@ public class ConfigServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendError(501, Bundle.getMessage("501NotImplemented")); // NOI18N
+        if (!InstanceManager.getDefault(WebServerPreferences.class).allowRemoteConfig()) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN);
+            return;
+        }
+        response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED, Bundle.getMessage("501NotImplemented")); // NOI18N
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

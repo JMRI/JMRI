@@ -1,16 +1,15 @@
 package jmri;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Test simple functioning of DccLocoAddress
  *
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version	$Revision$
- */
+  */
 public class DccLocoAddressTest extends TestCase {
 
     public void testValue1() {
@@ -160,7 +159,6 @@ public class DccLocoAddressTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite(DccLocoAddressTest.class);
         return suite;
     }

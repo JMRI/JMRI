@@ -1,4 +1,3 @@
-// Dcc4PcPanel.java
 package jmri.jmrix.dcc4pc.swing;
 
 import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
@@ -11,14 +10,9 @@ import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
  *
  * @author Bob Jacobsen Copyright 2010
  * @since 2.11.3
- * @version $Revision: 17977 $
  */
 abstract public class Dcc4PcPanel extends jmri.util.swing.JmriPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1643643748631018231L;
     /**
      * make "memo" object available as convenience
      */

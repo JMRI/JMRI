@@ -1,4 +1,3 @@
-//SimplePowerServer.java
 package jmri.jmris.simpleserver;
 
 import java.io.DataInputStream;
@@ -17,7 +16,6 @@ import jmri.jmris.simpleserver.parser.SimpleVisitor;
  * connection
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision$
  */
 public class SimplePowerServer extends AbstractPowerServer {
 

@@ -29,10 +29,15 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
-        adapter = new NetworkDriverAdapter();
+        if(adapter == null) {
+           adapter = new NetworkDriverAdapter();
+           adapter.configure(); // sets the memo and traffic controller.
+        }
     }
 
+    @Override
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig) object).getAdapter();
     }
@@ -42,9 +47,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
      *
      * @param e Element being extended
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
+    @Override
     protected void extendElement(Element e) {
         SerialTrafficController tc = ((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()).getTrafficController();
         SerialNode node = (SerialNode) tc.getNode(0);
@@ -60,16 +63,16 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             n.addContent(makeParameter("transmissiondelay", "" + node.getTransmissionDelay()));
             n.addContent(makeParameter("num2lsearchlights", "" + node.getNum2LSearchLights()));
             n.addContent(makeParameter("pulsewidth", "" + node.getPulseWidth()));
-            String value = "";
+            StringBuilder value = new StringBuilder("");
             for (int i = 0; i < node.getLocSearchLightBits().length; i++) {
-                value = value + Integer.toHexString(node.getLocSearchLightBits()[i] & 0xF);
+                value.append(Integer.toHexString(node.getLocSearchLightBits()[i] & 0xF));
             }
-            n.addContent(makeParameter("locsearchlightbits", "" + value));
-            value = "";
+            n.addContent(makeParameter("locsearchlightbits", value.toString()));
+            value = new StringBuilder("");
             for (int i = 0; i < node.getCardTypeLocation().length; i++) {
-                value = value + Integer.toHexString(node.getCardTypeLocation()[i] & 0xF);
+                value.append(Integer.toHexString(node.getCardTypeLocation()[i] & 0xF));
             }
-            n.addContent(makeParameter("cardtypelocation", "" + value));
+            n.addContent(makeParameter("cardtypelocation", value.toString()));
 
             // look for the next node
             node = (SerialNode) tc.getNode(index);

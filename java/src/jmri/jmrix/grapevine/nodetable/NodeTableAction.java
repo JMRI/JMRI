@@ -4,24 +4,29 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 
 /**
- * Swing action to create and register a NodeTableFrame object
+ * Swing action to create and register a NodeTableFrame object.
  *
- * @author	Bob Jacobsen Copyright (C) 2006, 2008
+ * @author Bob Jacobsen Copyright (C) 2006, 2008
  */
 public class NodeTableAction extends AbstractAction {
 
-    public NodeTableAction(String s) {
+    private GrapevineSystemConnectionMemo memo = null;
+
+    public NodeTableAction(String s, GrapevineSystemConnectionMemo _memo) {
         super(s);
+        memo = _memo;
     }
 
-    public NodeTableAction() {
-        this("Configure Grapevine Nodes");
+    public NodeTableAction(GrapevineSystemConnectionMemo _memo) {
+        this(Bundle.getMessage("WindowTitle"), _memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
-        NodeTableFrame f = new NodeTableFrame();
+        NodeTableFrame f = new NodeTableFrame(memo);
         try {
             f.initComponents();
         } catch (Exception ex) {
@@ -30,5 +35,7 @@ public class NodeTableAction extends AbstractAction {
         f.setLocation(100, 30);
         f.setVisible(true);
     }
-    private final static Logger log = LoggerFactory.getLogger(NodeTableAction.class.getName());
+
+    private final static Logger log = LoggerFactory.getLogger(NodeTableAction.class);
+
 }

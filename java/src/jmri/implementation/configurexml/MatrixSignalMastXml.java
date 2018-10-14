@@ -9,10 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handle XML configuration for a DefaultSignalMastManager object.
+ * Handle XML configuration for DefaultSignalMastManager objects.
  *
  * @author Bob Jacobsen Copyright: (C) 2009
- * @author Egbert Broerse Copyright: (C) 2016
+ * @author Egbert Broerse Copyright: (C) 2016, 2017
  */
 public class MatrixSignalMastXml
         extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -27,10 +27,11 @@ public class MatrixSignalMastXml
      * @param o Object to store, of type MatrixSignalMast
      * @return e Element containing the complete info
      */
+    @Override
     public Element store(Object o) { // from mast p to XML
         MatrixSignalMast p = (MatrixSignalMast) o;
 
-        Element e = new Element("signalmast");
+        Element e = new Element("matrixsignalmast");
         e.setAttribute("class", this.getClass().getName());
 
         // include content
@@ -51,10 +52,11 @@ public class MatrixSignalMastXml
         List<String> outputs = p.getOutputs();
         // convert char[] to xml-storable simple String
         // max. 5 outputs (either: turnouts (bean names) [or ToDo: DCC addresses (numbers)]
-        // spotted by FindBugs as to never be null (check on creation of MatrixMast)
+        // spotted by SpotBugs as to never be null (check on creation of MatrixMast)
         Element outps = new Element("outputs");
         int i = 1;
         for (String _output : outputs) {
+            log.debug("   handling {}", _output);
             String key = ("output" + i);
             Element outp = new Element("output");
             outp.setAttribute("matrixCol", key);
@@ -66,7 +68,7 @@ public class MatrixSignalMastXml
             e.addContent(outps);
         }
 
-        // string of max. 5 chars "00101" describing matrix row per aspect
+        // string of max. 6 chars "001010" describing matrix row per aspect
         SignalAppearanceMap appMap = p.getAppearanceMap();
         if (appMap != null) {
             Element bss = new Element("bitStrings");
@@ -103,7 +105,7 @@ public class MatrixSignalMastXml
         try {
         m = new jmri.implementation.MatrixSignalMast(sys);
         } catch (Exception e) {
-            log.error("An error occured while trying to create the signal '" + sys + "' " + e.toString());
+            log.error("An error occurred while trying to create the signal '" + sys + "' " + e.toString());
             return false;
         }
         if (getUserName(shared) != null) {
@@ -128,11 +130,7 @@ public class MatrixSignalMastXml
         Element outps = shared.getChild("outputs"); // multiple
         if (outps != null) {
             List<Element> list = outps.getChildren("output"); // singular
-            int i = 0;
-            for (Element outp : list) {
-                i++; // count outputs
-            }
-            m.setBitNum(i); // set char[] size before creating outputs
+            m.setBitNum(list.size()); // set char[] size before creating outputs
             for (Element outp : list) {
                 String outputname = outp.getAttribute("matrixCol").getValue();
                 String turnoutname = outp.getText();
@@ -144,7 +142,7 @@ public class MatrixSignalMastXml
         if (bss != null) {
             List<Element> list = bss.getChildren("bitString"); // singular
             for (Element bs : list) {
-                m.setBitstring(bs.getAttribute("aspect").getValue(), bs.getText());
+                m.setBitstring(bs.getAttribute("aspect").getValue(), bs.getText()); // OK if value is null
             }
         }
 
@@ -159,9 +157,10 @@ public class MatrixSignalMastXml
         return true;
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MatrixSignalMastXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MatrixSignalMastXml.class);
 }

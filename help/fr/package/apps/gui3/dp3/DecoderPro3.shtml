@@ -5,7 +5,7 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- UpDated by Blorec Herv&#233; le 2013-10-08-->
+  <!-- Updated by Blorec Herv&#233; le 2013-10-08-->
 
   <title>JMRI: DecoderPro 3</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -36,8 +36,8 @@
       <h1>Description de la Fen&ecirc;tre Decoder Pro 3</h1>
 
       <p>La fen&ecirc;tre d&eacute;codeur Pro 3 est divis&eacute;e
-      en cinq grandes sections de haut en bas.</p><img src=
-      "helpfile_dump1.jpg" width="526" height="266">
+      en cinq grandes sections de haut en bas.</p>
+      <img src="../../images/Dp3Roster.png" width="509" height="265">
 
       <ol>
         <li><a href="#menubar">La barre de menus</a>.</li>
@@ -294,7 +294,8 @@
         <li>--------------</li>
 
         <li>Ex&eacute;cuter Script</li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

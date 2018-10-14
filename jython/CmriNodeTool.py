@@ -1,10 +1,13 @@
 #
 # Find and enable/disable CMRI card polling, interactive
 #
+# only handles 1st CMRI connection:  get(0) should be iterated over the full list
+#
 # Author: Ken Cameron, copyright 2009
 # Part of the JMRI distribution
 
 import java
+import java.awt
 import jmri
 import javax.swing
 
@@ -17,13 +20,14 @@ class CmriNodeTool(jmri.jmrit.automat.AbstractAutomaton) :
     maxNodeAddr = 128
 
     def init(self) :
-        print "init()"
+        #print "init()"
         i = 0
         while i < self.maxNodeAddr :
             x = (i * 1000) + 1
             txt = "CT" + str(x)
             #print "looking for node " + i.toString() + " using name " + txt
-            node = jmri.jmrix.cmri.serial.SerialAddress.getNodeFromSystemName(txt)
+            memo = jmri.InstanceManager.getList(jmri.jmrix.cmri.CMRISystemConnectionMemo).get(0)
+            node = memo.getNodeFromSystemName(txt, memo.getTrafficController())
             if (node != None) :
                 print "found node for " + txt
                 self.nodeList.append(node)
@@ -80,14 +84,14 @@ class CmriNodeTool(jmri.jmrit.automat.AbstractAutomaton) :
             i = i + 1
 
         # Put contents in frame and display
-        print "setup: packing frame"
+        #print "setup: packing frame"
         self.scriptFrame.contentPane.add(pane2)
         self.scriptFrame.pack()
         self.scriptFrame.show()
         return
 
 # create one of these
-print "Creating CMRI Node Tool"
+#print "Creating CMRI Node Tool"
 a = CmriNodeTool()
 #print "Calling init() for CMRI Node Tool"
 a.init()

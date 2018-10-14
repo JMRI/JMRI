@@ -1,10 +1,11 @@
 /**
  * Concrete subclass of TurnoutOperator for a turnout that has sensor feedback.
  *
- * @author	John Harper	Copyright 2005
+ * @author John Harper Copyright 2005
  */
 package jmri.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import jmri.TurnoutOperator;
@@ -31,11 +32,13 @@ public class SensorTurnoutOperator extends TurnoutOperator {
      * - if we're no longer the current operator this throws
      * TurnoutOperatorException which just terminates the thread.
      */
+    @Override
     public void run() {
         //long startTime = System.currentTimeMillis();
         listener = new PropertyChangeListener() {
-            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY",
+            @SuppressFBWarnings(value = "NN_NAKED_NOTIFY",
                     justification = "notify not naked, outside sensor and turnout is shared state")
+            @Override
             public void propertyChange(PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("KnownState")) {
                     synchronized (this) {
@@ -75,5 +78,5 @@ public class SensorTurnoutOperator extends TurnoutOperator {
         myTurnout.removePropertyChangeListener(listener);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SensorTurnoutOperator.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorTurnoutOperator.class);
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="Low">
+    <choice>Low</choice>
+	<choice xml:lang="da">Lav</choice>
+    <choice xml:lang="fr">Bas</choice>
+    <choice xml:lang="de">Niedrig</choice>
+    <choice xml:lang="nl">Laag</choice>
+  </enumChoice>
+  <enumChoice choice="High">
+    <choice>High</choice>
+	<choice xml:lang="da">Høj</choice>
+    <choice xml:lang="fr">Haut</choice>
+    <choice xml:lang="de">Hoch</choice>
+    <choice xml:lang="nl">Hoog</choice>
+  </enumChoice>
+</enumVal>

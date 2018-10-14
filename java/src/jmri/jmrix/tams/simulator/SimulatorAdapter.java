@@ -1,4 +1,3 @@
-// SerialDriverAdapter.java
 package jmri.jmrix.tams.simulator;
 
 import java.io.DataInputStream;
@@ -15,12 +14,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * MRC simulator
+ * Tams simulator.
+ * Derived from MRC Simulator
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @author	Paul Bender, Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Paul Bender, Copyright (C) 2009
  * @author Daniel Boudreau Copyright (C) 2010
- * @version	$Revision: 24776 $
+ * 
  */
 public class SimulatorAdapter extends TamsPortController implements
         jmri.jmrix.SerialPortAdapter, Runnable {
@@ -31,7 +31,7 @@ public class SimulatorAdapter extends TamsPortController implements
 
     // streams to share with user class
     private DataOutputStream pout = null; // this is provided to classes who want to write to us
-    private DataInputStream pin = null; // this is provided to class who want data from us
+    private DataInputStream pin = null; // this is provided to classes who want data from us
 
     // internal ends of the pipes
     private DataOutputStream outpipe = null; // feed pin
@@ -41,6 +41,7 @@ public class SimulatorAdapter extends TamsPortController implements
         super(new TamsSystemConnectionMemo());
     }
 
+    @Override
     public String openPort(String portName, String appName) {
         try {
             PipedOutputStream tempPipeI = new PipedOutputStream();
@@ -57,15 +58,15 @@ public class SimulatorAdapter extends TamsPortController implements
     }
 
     /**
-     * set up all of the other objects to simulate operation with an MRC command
+     * Set up all of the other objects to simulate operation with a Tams command
      * station.
      */
+    @Override
     public void configure() {
         TamsTrafficController tc = new TamsTrafficController();
         tc.connectPort(this);
         this.getSystemConnectionMemo().setTamsTrafficController(tc);
         tc.setAdapterMemo(this.getSystemConnectionMemo());
-        //tc.connectPort(this);     
 
         this.getSystemConnectionMemo().configureManagers();
         //tc.setCabNumber(2);
@@ -79,6 +80,8 @@ public class SimulatorAdapter extends TamsPortController implements
     }
 
     // base class methods for the TamsPortController interface
+
+    @Override
     public DataInputStream getInputStream() {
         if (!opened || pin == null) {
             log.error("getInputStream called before load(), stream not available");
@@ -86,6 +89,7 @@ public class SimulatorAdapter extends TamsPortController implements
         return pin;
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened || pout == null) {
             log.error("getOutputStream called before load(), stream not available");
@@ -93,6 +97,7 @@ public class SimulatorAdapter extends TamsPortController implements
         return pout;
     }
 
+    @Override
     public boolean status() {
         return opened;
     }
@@ -100,18 +105,21 @@ public class SimulatorAdapter extends TamsPortController implements
     /**
      * Get an array of valid baud rates.
      */
+    @Override
     public String[] validBaudRates() {
         log.debug("validBaudRates should not have been invoked");
         return null;
     }
 
+    @Override
     public String getCurrentBaudRate() {
         return "";
     }
 
+    @Override
     public void run() { // start a new thread
-        // this thread has one task.  It repeatedly reads from the input pipe
-        // and writes an appropriate response to the output pipe.  This is the heart
+        // This thread has one task. It repeatedly reads from the input pipe
+        // and writes an appropriate response to the output pipe. This is the heart
         // of the TAMS command station simulation.
         // report status?
         if (log.isInfoEnabled()) {
@@ -122,8 +130,9 @@ public class SimulatorAdapter extends TamsPortController implements
                 synchronized (this) {
                     wait(50);
                 }
-            } catch (Exception e) {
-
+            } catch (InterruptedException e) {
+                log.debug("interrupted, ending");
+                return;
             }
             TamsMessage m = readMessage();
             TamsReply r;
@@ -172,7 +181,7 @@ public class SimulatorAdapter extends TamsPortController implements
     /**
      * Get characters from the input source.
      *
-     * @returns filled message
+     * @return filled message
      * @throws IOException when presented by the input source.
      */
     private TamsMessage loadChars() throws java.io.IOException {
@@ -288,6 +297,6 @@ public class SimulatorAdapter extends TamsPortController implements
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(SimulatorAdapter.class.getName());
+            .getLogger(SimulatorAdapter.class);
 
 }

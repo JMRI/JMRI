@@ -37,14 +37,13 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
      * @param o Object to store, of type MergSD2SignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         MergSD2SignalHead p = (MergSD2SignalHead) o;
 
         Element element = new Element("signalhead");
         element.setAttribute("class", this.getClass().getName());
 
-        // include contents
-        element.setAttribute("systemName", p.getSystemName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         element.setAttribute("aspects", p.getAspects() + "");
@@ -201,9 +200,10 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
         }
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MergSD2SignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(MergSD2SignalHeadXml.class);
 }

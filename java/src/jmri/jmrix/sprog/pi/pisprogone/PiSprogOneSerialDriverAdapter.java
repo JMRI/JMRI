@@ -7,20 +7,20 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the Sprog system.
- * <P>
+ * <p>
  * This connects an SPROG DCC PI-SPROG One via a serial com port.
- * <P>
+ * <p>
  * The current implementation only handles the 115,200 baud rate, and does not use
  * any other options at configuration time.
  *
- * @author	Andrew Crosland Copyright (C) 2016
+ * @author Andrew Crosland Copyright (C) 2016
  */
 public class PiSprogOneSerialDriverAdapter
         extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
 
     public PiSprogOneSerialDriverAdapter() {
         super(SprogMode.SERVICE, 115200, new SprogType(SprogType.PISPROGONE));
-        this.getSystemConnectionMemo().setUserName("Pi-SPROG One Programmer");
+        this.getSystemConnectionMemo().setUserName(Bundle.getMessage("PiSprog1ProgrammerTitle"));
     }
 
     /**
@@ -38,7 +38,6 @@ public class PiSprogOneSerialDriverAdapter
     static public PiSprogOneSerialDriverAdapter instance() {
         return null;
     }
-
-    static Logger log = LoggerFactory.getLogger(PiSprogOneSerialDriverAdapter.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(PiSprogOneSerialDriverAdapter.class);
 
 }

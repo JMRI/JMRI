@@ -13,13 +13,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implements SerialPortAdapter for the Marklin system network connection.
- * <P>
- * This connects an Marklin command station via a UDP connection. Normally
+ * Implements NetworkPortAdapter for the Marklin system network connection.
+ * <p>
+ * This connects a Marklin command station via a UDP connection. Normally
  * controlled by the NetworkDriverFrame class.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
- * @author	Kevin Dickerson Copyright (C) 2012
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class NetworkDriverAdapter extends MarklinPortController implements jmri.jmrix.NetworkPortAdapter {
 
@@ -40,7 +40,8 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
     public void setPort(String p) {
     }
 
-    public void connect() throws Exception {
+    @Override
+    public void connect() {
         opened = false;
 
         if (m_HostName == null) {
@@ -53,42 +54,43 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
             log.error("a error opening network connection: " + e);
             if (m_port != 0) {
                 ConnectionStatus.instance().setConnectionState(
-                        m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
+                        null, m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
             } else {
                 ConnectionStatus.instance().setConnectionState(
-                        m_HostName, ConnectionStatus.CONNECTION_DOWN);
+                        null, m_HostName, ConnectionStatus.CONNECTION_DOWN);
             }
             throw (e);
         }
         if (opened && m_port != 0) {
             ConnectionStatus.instance().setConnectionState(
-                    m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_UP);
+                    null, m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_UP);
         } else if (opened) {
             ConnectionStatus.instance().setConnectionState(
-                    m_HostName, ConnectionStatus.CONNECTION_UP);
+                    null, m_HostName, ConnectionStatus.CONNECTION_UP);
         }
     }
 
+    @Override
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
             if (m_port != 0) {
                 ConnectionStatus.instance().setConnectionState(
-                        m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
+                        null, m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
             } else {
                 ConnectionStatus.instance().setConnectionState(
-                        m_HostName, ConnectionStatus.CONNECTION_DOWN);
+                        null, m_HostName, ConnectionStatus.CONNECTION_DOWN);
             }
         }
         try {
             return new DataInputStream(new UDPInputStream(null, 15730));
         } catch (java.io.IOException ex1) {
-            ex1.printStackTrace();
-            log.error("an Exception getting input stream: " + ex1);
+            log.error("an Exception getting input stream", ex1);
             return null;
         }
     }
 
+    @Override
     public DataOutputStream getOutputStream() {
         if (!opened) {
             log.error("getOutputStream called before load(), stream not available");
@@ -96,23 +98,23 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
         try {
             return new DataOutputStream(new UDPOutputStream(m_HostName, 15731));
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e);
-            e.printStackTrace();
+            log.error("getOutputStream exception", e);
             if (m_port != 0) {
                 ConnectionStatus.instance().setConnectionState(
-                        m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
+                        null, m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
             } else {
                 ConnectionStatus.instance().setConnectionState(
-                        m_HostName, ConnectionStatus.CONNECTION_DOWN);
+                        null, m_HostName, ConnectionStatus.CONNECTION_DOWN);
             }
         }
         return null;
     }
 
     /**
-     * set up all of the other objects to operate with an ECOS command station
-     * connected to this port
+     * Set up all of the other objects to operate with a Marklin command station
+     * connected to this port.
      */
+    @Override
     public void configure() {
         // connect to the traffic controller
         MarklinTrafficController control = new MarklinTrafficController();
@@ -127,6 +129,6 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
         return opened;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);
 
 }

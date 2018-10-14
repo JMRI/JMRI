@@ -2,17 +2,18 @@ package jmri.jmrit.operations.rollingstock.engines;
 
 import java.io.IOException;
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.rollingstock.RollingStock;
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.jdom2.JDOMException;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations RollingStock Engine class Last manually
  * cross-checked on 20090131
- *
+ * <p>
  * Still to do: Engine: Destination Engine: Verify everything else EngineTypes:
  * get/set Names lists EngineModels: get/set Names lists EngineLengths:
  * Everything Consist: Everything Import: Everything EngineManager: Engine
@@ -23,13 +24,14 @@ import org.jdom2.JDOMException;
 public class XmlTest extends OperationsTestCase {
 
     // test Xml create support
+    @Test
     public void testXMLCreate() throws JDOMException, IOException {
 
         // confirm that file name has been modified for testing
-        Assert.assertEquals("OperationsJUnitTestEngineRoster.xml", EngineManagerXml.instance().getOperationsFileName());
+        Assert.assertEquals("OperationsJUnitTestEngineRoster.xml", InstanceManager.getDefault(EngineManagerXml.class).getOperationsFileName());
 
-        EngineManager manager = EngineManager.instance();
-        List<RollingStock> tempengineList = manager.getByIdList();
+        EngineManager manager = InstanceManager.getDefault(EngineManager.class);
+        List<Engine> tempengineList = manager.getByIdList();
 
         Assert.assertEquals("Starting Number of Engines", 0, tempengineList.size());
         Engine e1 = manager.newEngine("CP", "Test Number 1");
@@ -94,7 +96,7 @@ public class XmlTest extends OperationsTestCase {
         tempengineList = manager.getByIdList();
         Assert.assertEquals("New Number of Engines", 3, tempengineList.size());
 
-        EngineManagerXml.instance().writeOperationsFile();
+        InstanceManager.getDefault(EngineManagerXml.class).writeOperationsFile();
 
         // Add some more engines and write file again
         // so we can test the backup facility
@@ -146,37 +148,37 @@ public class XmlTest extends OperationsTestCase {
         tempengineList = manager.getByIdList();
         Assert.assertEquals("New Number of Engines", 6, tempengineList.size());
 
-        EngineManagerXml.instance().writeOperationsFile();
+        InstanceManager.getDefault(EngineManagerXml.class).writeOperationsFile();
 
         // now reset everything using dispose
         manager.dispose();
-        EngineModels.instance().dispose();
+        InstanceManager.getDefault(EngineModels.class).dispose();
 
-        manager = EngineManager.instance();
+        manager = InstanceManager.getDefault(EngineManager.class);
         tempengineList = manager.getByIdList();
         Assert.assertEquals("Starting Number of Engines", 0, tempengineList.size());
 
         // confirm that engine models has been reset by dispose
-        Assert.assertEquals("e1 model type", null, EngineModels.instance().getModelType("e1 model"));
-        Assert.assertEquals("e1 model length", null, EngineModels.instance().getModelLength("e1 model"));
-        Assert.assertEquals("e1 model Weight Tons", null, EngineModels.instance().getModelWeight("e1 model"));
-        Assert.assertEquals("e1 model hp", null, EngineModels.instance().getModelHorsepower("e1 model"));
+        Assert.assertEquals("e1 model type", null, InstanceManager.getDefault(EngineModels.class).getModelType("e1 model"));
+        Assert.assertEquals("e1 model length", null, InstanceManager.getDefault(EngineModels.class).getModelLength("e1 model"));
+        Assert.assertEquals("e1 model Weight Tons", null, InstanceManager.getDefault(EngineModels.class).getModelWeight("e1 model"));
+        Assert.assertEquals("e1 model hp", null, InstanceManager.getDefault(EngineModels.class).getModelHorsepower("e1 model"));
 
-        EngineManagerXml.instance().readFile(EngineManagerXml.instance().getDefaultOperationsFilename());
+        InstanceManager.getDefault(EngineManagerXml.class).readFile(InstanceManager.getDefault(EngineManagerXml.class).getDefaultOperationsFilename());
 
         tempengineList = manager.getByIdList();
         Assert.assertEquals("Number of Engines", 6, tempengineList.size());
 
-        // confirm that engine models was loaded	
-        Assert.assertEquals("e1 model type", "e1 type", EngineModels.instance().getModelType("e1 model"));
-        Assert.assertEquals("e1 model length", "40", EngineModels.instance().getModelLength("e1 model"));
-        Assert.assertEquals("e1 model Weight Tons", "100", EngineModels.instance().getModelWeight("e1 model"));
-        Assert.assertEquals("e1 model hp", "e1 hp", EngineModels.instance().getModelHorsepower("e1 model"));
+        // confirm that engine models was loaded
+        Assert.assertEquals("e1 model type", "e1 type", InstanceManager.getDefault(EngineModels.class).getModelType("e1 model"));
+        Assert.assertEquals("e1 model length", "40", InstanceManager.getDefault(EngineModels.class).getModelLength("e1 model"));
+        Assert.assertEquals("e1 model Weight Tons", "100", InstanceManager.getDefault(EngineModels.class).getModelWeight("e1 model"));
+        Assert.assertEquals("e1 model hp", "e1 hp", InstanceManager.getDefault(EngineModels.class).getModelHorsepower("e1 model"));
 
         e1 = manager.getByRoadAndNumber("CP", "Test Number 1"); // must find engine by original id
         e2 = manager.getByRoadAndNumber("ACL", "Test Number 2"); // must find engine by original id
         e3 = manager.getByRoadAndNumber("CP", "Test Number 3"); // must find engine by original id
-        e4 = manager.getByRoadAndNumber("PC", "Test Number 4"); // must find engine by original id 
+        e4 = manager.getByRoadAndNumber("PC", "Test Number 4"); // must find engine by original id
         e5 = manager.getByRoadAndNumber("BM", "Test Number 5"); // must find engine by original id
         e6 = manager.getByRoadAndNumber("SP", "Test Number 6"); // must find engine by original id
 
@@ -280,34 +282,34 @@ public class XmlTest extends OperationsTestCase {
 
         // now test backup file
         manager.dispose();
-        manager = EngineManager.instance();
+        manager = InstanceManager.getDefault(EngineManager.class);
         tempengineList = manager.getByIdList();
         Assert.assertEquals("Starting Number of Engines", 0, tempengineList.size());
 
-        // confirm that engine models has been reset by dispose	
-        Assert.assertEquals("e1 model type", null, EngineModels.instance().getModelType("e1 X model"));
-        Assert.assertEquals("e1 model length", null, EngineModels.instance().getModelLength("e1 X model"));
-        Assert.assertEquals("e1 model Weight Tons", null, EngineModels.instance().getModelWeight("e1 X model"));
-        Assert.assertEquals("e1 model hp", null, EngineModels.instance().getModelHorsepower("e1 X model"));
+        // confirm that engine models has been reset by dispose
+        Assert.assertEquals("e1 model type", null, InstanceManager.getDefault(EngineModels.class).getModelType("e1 X model"));
+        Assert.assertEquals("e1 model length", null, InstanceManager.getDefault(EngineModels.class).getModelLength("e1 X model"));
+        Assert.assertEquals("e1 model Weight Tons", null, InstanceManager.getDefault(EngineModels.class).getModelWeight("e1 X model"));
+        Assert.assertEquals("e1 model hp", null, InstanceManager.getDefault(EngineModels.class).getModelHorsepower("e1 X model"));
 
         // change default file name to backup
-        EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml.bak");
+        InstanceManager.getDefault(EngineManagerXml.class).setOperationsFileName("OperationsJUnitTestEngineRoster.xml.bak");
 
-        EngineManagerXml.instance().readFile(EngineManagerXml.instance().getDefaultOperationsFilename());
+        InstanceManager.getDefault(EngineManagerXml.class).readFile(InstanceManager.getDefault(EngineManagerXml.class).getDefaultOperationsFilename());
 
         tempengineList = manager.getByIdList();
         Assert.assertEquals("Number of Engines", 3, tempengineList.size());
 
-        // confirm that engine models was loaded	
-        Assert.assertEquals("e1 model type", "e1 X type", EngineModels.instance().getModelType("e1 X model"));
-        Assert.assertEquals("e1 model length", "04", EngineModels.instance().getModelLength("e1 X model"));
-        Assert.assertEquals("e1 model Weight Tons", "001", EngineModels.instance().getModelWeight("e1 X model"));
-        Assert.assertEquals("e1 model hp", "e1 hp", EngineModels.instance().getModelHorsepower("e1 X model"));
+        // confirm that engine models was loaded
+        Assert.assertEquals("e1 model type", "e1 X type", InstanceManager.getDefault(EngineModels.class).getModelType("e1 X model"));
+        Assert.assertEquals("e1 model length", "04", InstanceManager.getDefault(EngineModels.class).getModelLength("e1 X model"));
+        Assert.assertEquals("e1 model Weight Tons", "001", InstanceManager.getDefault(EngineModels.class).getModelWeight("e1 X model"));
+        Assert.assertEquals("e1 model hp", "e1 hp", InstanceManager.getDefault(EngineModels.class).getModelHorsepower("e1 X model"));
 
         e1 = manager.getByRoadAndNumber("CP", "Test Number 1"); // must find engine by original id
         e2 = manager.getByRoadAndNumber("ACL", "Test Number 2"); // must find engine by original id
         e3 = manager.getByRoadAndNumber("CP", "Test Number 3"); // must find engine by original id
-        e4 = manager.getByRoadAndNumber("PC", "Test Number 4"); // must find engine by original id 
+        e4 = manager.getByRoadAndNumber("PC", "Test Number 4"); // must find engine by original id
         e5 = manager.getByRoadAndNumber("BM", "Test Number 5"); // must find engine by original id
         e6 = manager.getByRoadAndNumber("SP", "Test Number 6"); // must find engine by original id
 
@@ -369,30 +371,15 @@ public class XmlTest extends OperationsTestCase {
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
     }
 
-    public XmlTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XmlTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XmlTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
-       super.tearDown();
+    @After
+    public void tearDown() {
+        super.tearDown();
     }
-
 
 }

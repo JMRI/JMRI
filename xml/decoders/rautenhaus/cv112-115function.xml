@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Ronald</firstname>
+        <surname>Kuhn</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2017-07-17</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>Options for F13 - F16</revremark>
+    </revision>
+  </revhistory>
+  <!-- Code bits from http://jmri.org/xml/nmra/functionmap.xml -->
+  <variable item="F13 controls output 1" CV="112" mask="XXXXXXXV" minOut="1" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F13 controls output 1</label>
+    <label xml:lang="it">Luci frontali in avanti controllo uscita 1</label>
+    <label xml:lang="de">F13 steuert Ausgang 1</label>
+  </variable>
+  <variable item="F13 controls output 2" CV="112" mask="XXXXXXVX" minOut="2">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F13 controls output 2</label>
+    <label xml:lang="it">Luci frontali in avanti controllo uscita 2</label>
+    <label xml:lang="de">F13 steuert Ausgang 2</label>
+  </variable>
+  <variable item="F13 controls output 3" CV="112" mask="XXXXXVXX" minOut="3">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F13 controls output 3</label>
+    <label xml:lang="it">Luci frontali in avanti controllo uscita 3</label>
+    <label xml:lang="de">F13 steuert Ausgang 3</label>
+  </variable>
+  <variable item="F13 controls output 4" CV="112" mask="XXXXVXXX" minOut="4">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F13 controls output 4</label>
+    <label xml:lang="it">Luci frontali in avanti controllo uscita 4</label>
+    <label xml:lang="de">F13 steuert Ausgang 4</label>
+  </variable>
+  <variable item="F13 controls output 5" CV="112" mask="XXXVXXXX" minOut="5">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F13 controls output 5</label>
+    <label xml:lang="it">Luci frontali in avanti controllo uscita 5</label>
+    <label xml:lang="de">F13 steuert Ausgang 5</label>
+  </variable>
+  <variable item="F13 controls output 6" CV="112" mask="XXVXXXXX" minOut="6">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F13 controls output 6</label>
+    <label xml:lang="it">Luci frontali in avanti controllo uscita 6</label>
+    <label xml:lang="de">F13 steuert Ausgang 6</label>
+  </variable>
+  <variable item="F14 controls output 1" CV="113" mask="XXXXXXXV" minOut="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F14 controls output 1</label>
+    <label xml:lang="it">Luci frontali in retro controllo uscita 1</label>
+    <label xml:lang="de">F14 steuert Ausgang 1</label>
+  </variable>
+  <variable item="F14 controls output 2" CV="113" mask="XXXXXXVX" minOut="2" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F14 controls output 2</label>
+    <label xml:lang="it">Luci frontali in retro controllo uscita 2</label>
+    <label xml:lang="de">F14 steuert Ausgang 2</label>
+  </variable>
+  <variable item="F14 controls output 3" CV="113" mask="XXXXXVXX" minOut="3">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F14 controls output 3</label>
+    <label xml:lang="it">Luci frontali in retro controllo uscita 3</label>
+    <label xml:lang="de">F14 steuert Ausgang 3</label>
+  </variable>
+  <variable item="F14 controls output 4" CV="113" mask="XXXXVXXX" minOut="4">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F14 controls output 4</label>
+    <label xml:lang="it">Luci frontali in retro controllo uscita 4</label>
+    <label xml:lang="de">F14 steuert Ausgang 4</label>
+  </variable>
+  <variable item="F14 controls output 5" CV="113" mask="XXXVXXXX" minOut="5">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F14 controls output 5</label>
+    <label xml:lang="it">Luci frontali in retro controllo uscita 5</label>
+    <label xml:lang="de">F14 steuert Ausgang 5</label>
+  </variable>
+  <variable item="F14 controls output 6" CV="113" mask="XXVXXXXX" minOut="6">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F14 controls output 6</label>
+    <label xml:lang="it">Luci frontali in retro controllo uscita 6</label>
+    <label xml:lang="de">F14 steuert Ausgang 6</label>
+  </variable>
+  <variable item="F15 controls output 1" CV="114" mask="XXXXXXXV" minOut="1" minFn="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F15 controls output 1</label>
+    <label xml:lang="it">F15 controllo uscita 1</label>
+    <label xml:lang="de">F15 steuert Ausgang 1</label>
+  </variable>
+  <variable item="F15 controls output 2" CV="114" mask="XXXXXXVX" minOut="2" minFn="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F15 controls output 2</label>
+    <label xml:lang="it">F15 controllo uscita 2</label>
+    <label xml:lang="de">F15 steuert Ausgang 2</label>
+  </variable>
+  <variable item="F15 controls output 3" CV="114" mask="XXXXXVXX" minOut="3" minFn="1" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F15 controls output 3</label>
+    <label xml:lang="it">F15 controllo uscita 3</label>
+    <label xml:lang="de">F15 steuert Ausgang 3</label>
+  </variable>
+  <variable item="F15 controls output 4" CV="114" mask="XXXXVXXX" minOut="4" minFn="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F15 controls output 4</label>
+    <label xml:lang="it">F15 controllo uscita 4</label>
+    <label xml:lang="de">F15 steuert Ausgang 4</label>
+  </variable>
+  <variable item="F15 controls output 5" CV="114" mask="XXXVXXXX" minOut="5" minFn="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F15 controls output 5</label>
+    <label xml:lang="it">F15 controllo uscita 5</label>
+    <label xml:lang="de">F15 steuert Ausgang 5</label>
+  </variable>
+  <variable item="F15 controls output 6" CV="114" mask="XXVXXXXX" minOut="6" minFn="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F15 controls output 6</label>
+    <label xml:lang="it">F15 controllo uscita 6</label>
+    <label xml:lang="de">F15 steuert Ausgang 6</label>
+  </variable>
+  <variable item="F16 controls output 1" CV="115" mask="XXXXXXXV" minOut="1" minFn="2">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F16 controls output 1</label>
+    <label xml:lang="it">F16 controllo uscita 1</label>
+    <label xml:lang="de">F16 steuert Ausgang 1</label>
+  </variable>
+  <variable item="F16 controls output 2" CV="115" mask="XXXXXXVX" minOut="2" minFn="2">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F16 controls output 2</label>
+    <label xml:lang="it">F16 controllo uscita 2</label>
+    <label xml:lang="de">F16 steuert Ausgang 2</label>
+  </variable>
+  <variable item="F16 controls output 3" CV="115" mask="XXXXXVXX" minOut="3" minFn="2">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F16 controls output 3</label>
+    <label xml:lang="it">F16 controllo uscita 3</label>
+    <label xml:lang="de">F16 steuert Ausgang 3</label>
+  </variable>
+  <variable item="F16 controls output 4" CV="115" mask="XXXXVXXX" minOut="4" minFn="2" default="1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F16 controls output 4</label>
+    <label xml:lang="it">F16 controllo uscita 4</label>
+    <label xml:lang="de">F16 steuert Ausgang 4</label>
+  </variable>
+  <variable item="F16 controls output 5" CV="115" mask="XXXVXXXX" minOut="5" minFn="2">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F16 controls output 5</label>
+    <label xml:lang="it">F16 controllo uscita 5</label>
+    <label xml:lang="de">F16 steuert Ausgang 5</label>
+  </variable>
+  <variable item="F16 controls output 6" CV="115" mask="XXVXXXXX" minOut="6" minFn="2">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F16 controls output 6</label>
+    <label xml:lang="it">F16 controllo uscita 6</label>
+    <label xml:lang="de">F16 steuert Ausgang 6</label>
+  </variable>
+  <!-- Function tables for outputs 7-8 (dimmed or shunting speed function)  -->
+  <variable item="F13 controls output 8" CV="112" mask="VXXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F13 controls output 8</label>
+    <label xml:lang="it">Luci frontale(avanti) controllo uscita 8</label>
+    <label xml:lang="de">F13 steuert Ausgang 8</label>
+  </variable>
+  <variable item="F14 controls output 8" CV="113" mask="VXXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F14 controls output 8</label>
+    <label xml:lang="it">Luci frontale(retro) controllo uscita 8</label>
+    <label xml:lang="de">F14 steuert Ausgang 8</label>
+  </variable>
+  <variable item="F15 controls output 8" CV="114" mask="VXXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F15 controls output 8</label>
+    <label xml:lang="it">F1controllo uscita 8</label>
+    <label xml:lang="de">F15 steuert Ausgang 8</label>
+  </variable>
+  <variable item="F16 controls output 8" CV="115" mask="VXXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>F16 controls output 8</label>
+    <label xml:lang="it">F2controllo uscita 8</label>
+    <label xml:lang="de">F16 steuert Ausgang 8</label>
+  </variable>
+</variables>

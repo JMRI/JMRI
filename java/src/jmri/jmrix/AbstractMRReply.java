@@ -5,25 +5,31 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for replies in a message/reply protocol.
- * <P>
+ * <p>
  * Handles the character manipulation.
  * <p>
  * This is a variable length reply, which can grow as needed. The length is
  * given by the largest index written so far.
  *
- * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003
  */
 abstract public class AbstractMRReply extends AbstractMessage {
     // is this logically an abstract class?
 
-    // create a new one
+    /**
+     * Create a new AbstractMRReply instance.
+     */
     public AbstractMRReply() {
         setBinary(false);
         unsolicited = false;
         _dataChars = new int[maxSize()];
     }
 
-    // copy one
+    /**
+     * Copy a Reply to a new AbstractMRReply instance.
+     *
+     * @param m the reply to copy
+     */
     public AbstractMRReply(AbstractMRReply m) {
         this();
         if (m == null) {
@@ -36,7 +42,11 @@ abstract public class AbstractMRReply extends AbstractMessage {
         }
     }
 
-    // from String
+    /**
+     * Create a new AbstractMRReply instance from a string.
+     *
+     * @param s String to use as reply content
+     */
     public AbstractMRReply(String s) {
         this();
         _nDataChars = s.length();
@@ -46,6 +56,7 @@ abstract public class AbstractMRReply extends AbstractMessage {
     }
 
     // keep track of length
+    @Override
     public void setElement(int n, int v) {
         _dataChars[n] = (char) v;
         _nDataChars = Math.max(_nDataChars, n + 1);
@@ -84,15 +95,17 @@ abstract public class AbstractMRReply extends AbstractMessage {
     }
 
     /*
-     * Return true if the message is an error and we can automatically 
-     * recover by retransmitting the message.  Override in system specific 
-     * classes if required.
+     * Override in system specific classes if required.
+     *
+     * @return 'true' if the message is an error and we can automatically
+     * recover by retransmitting the message.
      */
     public boolean isRetransmittableErrorMsg() {
         return false;
     }
 
     // display format
+    @Override
     public String toString() {
         String s = "";
         for (int i = 0; i < _nDataChars; i++) {
@@ -110,7 +123,7 @@ abstract public class AbstractMRReply extends AbstractMessage {
 
     abstract protected int skipPrefix(int index);
 
-    public int value() {  // integer value of 1st three digits
+    public int value() { // integer value of 1st three digits
         int index = 0;
         index = skipWhiteSpace(index);
         index = skipPrefix(index);
@@ -119,14 +132,13 @@ abstract public class AbstractMRReply extends AbstractMessage {
         int val = -1;
         try {
             val = Integer.parseInt(s);
-        } catch (Exception e) {
-            log.error("Unable to get number from reply: \"" + s + "\" index: " + index
-                    + " message: \"" + toString() + "\"");
+        } catch (RuntimeException e) {
+            log.error("Unable to get number from reply: \"{}\" index: {} message: \"{}\"", s, index, toString());
         }
         return val;
     }
 
-    public int pollValue() {  // integer value of HHHH
+    public int pollValue() { // integer value of HHHH
         int index = 0;
         index = skipWhiteSpace(index);
         index = skipPrefix(index);
@@ -136,9 +148,8 @@ abstract public class AbstractMRReply extends AbstractMessage {
         int val = -1;
         try {
             val = Integer.parseInt(s, 16);
-        } catch (Exception e) {
-            log.error("Unable to get number from reply: \"" + s + "\" index: " + index
-                    + " message: \"" + toString() + "\"");
+        } catch (RuntimeException e) {
+            log.error("Unable to get number from reply: \"{}\" index: {} message: \"{}\"", s, index, toString());
         }
         return val;
     }
@@ -158,10 +169,6 @@ abstract public class AbstractMRReply extends AbstractMessage {
         }
 
         return -1;
-
-        // find a specific string in the reply
-        //String rep = new String(_dataChars, 0, _nDataChars);
-        //return rep.indexOf(s);
     }
 
     public int skipWhiteSpace(int index) {
@@ -178,12 +185,9 @@ abstract public class AbstractMRReply extends AbstractMessage {
     }
     static public final int DEFAULTMAXSIZE = 120;
 
-    // contents (private)
+    // contents
     private boolean unsolicited;
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractMRReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractMRReply.class);
 
 }
-
-
-/* @(#)AbstractMRReply.java */

@@ -6,7 +6,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
   <!-- Translated  by Blorec Hervé le 2011-11-1-->
 
   <title>JMRI: Connector Pin Assignments</title><!-- Style -->
@@ -25,14 +24,12 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h2>JMRI: Affectation des broches du connecteur</h2>Cet outil
-      vous permet de v&Atilde;&copy;rifier l'affectation des
+      <h2>JMRI: Affectation des broches du connecteur</h2>
+      <p>Cet outil vous permet de v&Atilde;&copy;rifier l'affectation des
       broches pour votre n&Aring;"ud C/MRI.JMRI: Connector Pin
-      Assignments
+      Assignments.</p>
 
-      <p>Ceci est la page d'aide help/en/package/jmri/jmrix/C/MRI
-      cmri.serial.assignment.AssignmentFrame. 
-      <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

@@ -4,7 +4,7 @@ package jmri.jmrit.operations.automation;
  * A convenient place to access operations xml element and attribute names.
  *
  * @author Daniel Boudreau Copyright (C) 2016
- * @version $Revision: 22156 $
+ * 
  *
  */
 public class Xml {
@@ -32,6 +32,7 @@ public class Xml {
     static final String ROUTE_LOCATION_ID = "routeLocationId"; // NOI18N
     static final String AUTOMATION_ID = "automationId"; // NOI18N
     static final String GOTO_AUTOMATION_ID = "gotoAutomationId"; // NOI18N
+    static final String GOTO_AUTOMATION_BRANCHED = "gotoBranched"; // NOI18N
     static final String TRAIN_SCHEDULE_ID = "trainScheduleId"; // NOI18N
     
     static final String HALT_FAIL = "haltFail"; // NOI18N

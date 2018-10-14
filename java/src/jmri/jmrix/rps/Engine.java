@@ -1,11 +1,13 @@
 package jmri.jmrix.rps;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.IOException;
 import javax.vecmath.Point3d;
 import jmri.CommandStation;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +55,7 @@ public class Engine implements ReadingListener {
     public double getVSound() {
         return vsound;
     }
-    private double vsound = 0.013544;  // 0.013544 inches/usec, .000345 m/usec, 
+    private double vsound = 0.013544;  // 0.013544 inches/usec, .000345 m/usec,
     private int offset = 0;
 
     public void setOffset(int offset) {
@@ -101,7 +103,7 @@ public class Engine implements ReadingListener {
     }
 
     /**
-     * Get a particular reciever by address (starting at 1)
+     * Get a particular receiver by address (starting at 1)
      */
     public void setReceiver(int address, Receiver receiver) {
         if (receivers == null) {
@@ -140,6 +142,7 @@ public class Engine implements ReadingListener {
 
     String algorithm = "Ash 2.1";  // default value, configured separately
 
+    @Override
     public void notify(Reading r) {
         // This implementation creates a new Calculator
         // each time to ensure that the most recent
@@ -148,10 +151,10 @@ public class Engine implements ReadingListener {
         // to reduce the work done.
 
         // ok to send next poll
-        log.debug("po false " + r.getID());
+        log.debug("po false " + r.getId());
         pollOutstanding = false;
 
-        // make a list of receiver positions to provide 
+        // make a list of receiver positions to provide
         // to the new Calculator.  Missing/unconfigured receivers
         // are null.
         Point3d list[] = new Point3d[receivers.length];
@@ -164,7 +167,7 @@ public class Engine implements ReadingListener {
 
             Point3d p = getReceiverPosition(i);
             if (p != null) {
-                receivers[i].setLastTime((int) r.getValue(i));  // recievers numbered from 1
+                receivers[i].setLastTime((int) r.getValue(i));  // receivers numbered from 1
                 log.debug("    " + i + "th value min " + receivers[i].getMinTime() + " < time "
                         + r.getValue(i) + " < max "
                         + receivers[i].getMaxTime() + " at " + p);
@@ -185,16 +188,16 @@ public class Engine implements ReadingListener {
 
         Measurement m = c.convert(r, lastPoint);
 
-        saveLastMeasurement(r.getID(), m);
+        saveLastMeasurement(r.getId(), m);
 
         lastPoint = m;
         Distributor.instance().submitMeasurement(m);
     }
 
-    // Store the lastMeasurement 
+    // Store the lastMeasurement
     void saveLastMeasurement(String id, Measurement m) {
         for (int i = 0; i < getNumTransmitters(); i++) {
-            if (getTransmitter(i).getID().equals(id) && getTransmitter(i).isPolled()) {
+            if (getTransmitter(i).getId().equals(id) && getTransmitter(i).isPolled()) {
                 getTransmitter(i).setLastMeasurement(m);
                 // might be more than one, so don't end here
             }
@@ -290,9 +293,9 @@ public class Engine implements ReadingListener {
     public void setPolling(boolean polling) {
         this.polling = polling;
         if (polling) {
-            startpoll();
+            startPoll();
         } else {
-            stoppoll();
+            stopPoll();
         }
     }
 
@@ -315,7 +318,7 @@ public class Engine implements ReadingListener {
                 Transmitter t = new Transmitter(r.getId(), false, address, r.isLongAddress());
                 t.setRosterName(r.getId());
                 transmitters.add(t);
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 // just skip this entry
                 if (r != null) {
                     log.warn("Skip roster entry: " + r.getId());
@@ -328,8 +331,8 @@ public class Engine implements ReadingListener {
         // load the polling status, custom IDs, etc, from file if possible
         try {
             loadPollConfig(new File(PollingFile.defaultFilename()));
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException | JDOMException e) {
+            log.error("Unable to load {}", PollingFile.defaultFilename(), e);
         }
     }
 
@@ -349,7 +352,7 @@ public class Engine implements ReadingListener {
         if (file.exists()) {
             PollingFile pf = new PollingFile();
             pf.loadFile(file);
-            // first make sure transmitters defined      
+            // first make sure transmitters defined
             pf.getTransmitters(this);
             // and possibly start polling
             pf.getPollValues();
@@ -393,7 +396,7 @@ public class Engine implements ReadingListener {
         if (t == null) {
             return "";
         }
-        return t.getID();
+        return t.getId();
     }
 
     public int getPolledAddress() {
@@ -458,9 +461,10 @@ public class Engine implements ReadingListener {
         return !(bscPoll || throttlePoll);
     }
 
-    void startpoll() {
+    void startPoll() {
         // time to start operation
         pollThread = new Thread() {
+            @Override
             public void run() {
                 log.debug("Polling starts");
                 while (true) {
@@ -518,7 +522,7 @@ public class Engine implements ReadingListener {
         }
     }
 
-    void stoppoll() {
+    void stopPoll() {
         if (pollThread != null) {
             pollThread.interrupt();
         }
@@ -582,10 +586,10 @@ public class Engine implements ReadingListener {
     }
 
     // for now, we only allow one Engine
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "MS_PKGPROTECT") // for tests
+    @SuppressFBWarnings(value = "MS_PKGPROTECT") // for tests
     static volatile protected Engine _instance = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "LI_LAZY_INIT_UPDATE_STATIC") // see comment in method
+    @SuppressFBWarnings(value = "LI_LAZY_INIT_UPDATE_STATIC") // see comment in method
     static public Engine instance() {
         if (_instance == null) {
             // NOTE: _instance has to be initialized before loadValues()
@@ -607,5 +611,5 @@ public class Engine implements ReadingListener {
         prop.addPropertyChangeListener(p);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Engine.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Engine.class);
 }

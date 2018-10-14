@@ -1,7 +1,9 @@
 package jmri.jmrit;
 
 import apps.startup.AbstractStartupActionFactory;
+import apps.startup.StartupActionFactory;
 import java.util.Locale;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * {@link apps.startup.StartupActionFactory} implementation to allow
@@ -9,6 +11,7 @@ import java.util.Locale;
  *
  * @author Randall Wood Copyright (C) 2016
  */
+@ServiceProvider(service = StartupActionFactory.class)
 public class XmlFileValidateStartupActionFactory extends AbstractStartupActionFactory {
 
     @Override
@@ -23,5 +26,5 @@ public class XmlFileValidateStartupActionFactory extends AbstractStartupActionFa
     public Class<?>[] getActionClasses() {
         return new Class[]{XmlFileValidateAction.class};
     }
-    
+
 }

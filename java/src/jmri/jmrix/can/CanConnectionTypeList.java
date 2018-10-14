@@ -1,13 +1,11 @@
-// CanConnectionTypeList.java
 package jmri.jmrix.can;
 
 /**
- * Returns a list of valid lenz XpressNet Connection Types
- * <P>
+ * Return a list of valid lenz XpressNet Connection Types.
+ *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
- *
+  *
  */
 public class CanConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 

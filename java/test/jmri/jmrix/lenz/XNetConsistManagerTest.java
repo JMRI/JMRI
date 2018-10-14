@@ -1,51 +1,41 @@
 package jmri.jmrix.lenz;
 
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * XNetConsistManagerTest.java
  *
  * Description:	tests for the jmri.jmrix.lenz.XNetConsistManager class
  *
- * @author	Paul Bender
+ * @author	Paul Bender Copyright (C) 2012,2017
  */
-public class XNetConsistManagerTest extends TestCase {
-
-    public void testCtor() {
-        // infrastructure objects
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
-
-        XNetConsistManager c = new XNetConsistManager(new XNetSystemConnectionMemo(tc));
-        Assert.assertNotNull(c);
-    }
-
-    // from here down is testing infrastructure
-    public XNetConsistManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XNetConsistManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XNetConsistManagerTest.class);
-        return suite;
-    }
+public class XNetConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase {
 
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Before
+    @Override
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        cm = new XNetConsistManager(new XNetSystemConnectionMemo(tc));
     }
 
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    @Override
+    public void tearDown() {
+        cm = null;
+        jmri.util.JUnitUtil.tearDown();
     }
+
+    @Test
+    @Override
+    public void testIsCommandStationConsistPossible(){
+       // true for XPressNet
+       Assert.assertTrue("CS Consist Possible",cm.isCommandStationConsistPossible());
+    }
+
 
 }

@@ -43,10 +43,16 @@
   end tell
                 
 </pre>
-
+      
       <p>The sample script shows how to do this, and can easily
       form the basis for running your own OSA scripts from within
       JMRI.</p>
+
+      <p>JMRI 4.5.2 or newer can directly call AppleScript without
+      embedding it in another script by adding 
+      <a href="https://jmri.github.io/applescript">JMRI AppleScript Support</a>
+      to your JMRI installation. Note that this may not work in future
+      versions of macOS or Java.</p>
 
       <h2>AppleScript Information</h2>
 

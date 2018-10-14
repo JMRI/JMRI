@@ -5,10 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * LnLight.java
- *
  * Implementation of the Light Object for Loconet
- * <P>
+ * <p>
  * Based in part on SerialLight.java
  *
  * @author Dave Duchamp Copyright (C) 2006
@@ -17,7 +15,7 @@ public class LnLight extends AbstractLight {
 
     /**
      * Create a Light object, with only system name.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in LnLightManager
      */
     public LnLight(String systemName, LnTrafficController tc, LnLightManager mgr) {
@@ -30,7 +28,7 @@ public class LnLight extends AbstractLight {
 
     /**
      * Create a Light object, with both system and user names.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in LnLightManager
      */
     public LnLight(String systemName, String userName, LnTrafficController tc, LnLightManager mgr) {
@@ -56,6 +54,7 @@ public class LnLight extends AbstractLight {
      * Set the current state of this Light This routine requests the hardware to
      * change.
      */
+    @Override
     protected void doNewState(int oldState, int newState) {
         LocoNetMessage l = new LocoNetMessage(4);
         l.setOpCode(LnConstants.OPC_SW_REQ);
@@ -77,5 +76,6 @@ public class LnLight extends AbstractLight {
         tc.sendLocoNetMessage(l);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnLight.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnLight.class);
+
 }

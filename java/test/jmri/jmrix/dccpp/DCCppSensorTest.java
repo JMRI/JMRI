@@ -1,9 +1,11 @@
 package jmri.jmrix.dccpp;
 
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * DCCppSensorTest.java
@@ -12,23 +14,28 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen
  * @author	Mark Underwood
+ * @author      Paul Bender Copyright (C) 2018
  */
-public class DCCppSensorTest extends TestCase {
+public class DCCppSensorTest extends jmri.implementation.AbstractSensorTestBase  {
 
-    public void testDCCppSensorCreate() {
-        DCCppInterfaceScaffold xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
-        DCCppSensor t = new DCCppSensor("DCCPPS042", xnis);
+    @Override
+    public int numListeners() {return 0;}
 
-        // created in UNKNOWN state
-        Assert.assertTrue(t.getKnownState() == jmri.Sensor.UNKNOWN);
-    }
+    @Override
+    public void checkOnMsgSent() {}
+
+    @Override
+    public void checkOffMsgSent() {}
+
+    @Override
+    public void checkStatusRequestMsgSent() {}
+
+
+    private DCCppInterfaceScaffold xnis = null;
 
     // DCCppSensor test for incoming status message
+    @Test
     public void testDCCppSensorStatusMsg() {
-        DCCppInterfaceScaffold xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
-        Assert.assertNotNull("exists", xnis);
-
-        DCCppSensor t = new DCCppSensor("DCCPPS04", xnis);
         DCCppReply m;
 
         // Verify this was created in UNKNOWN state
@@ -36,78 +43,54 @@ public class DCCppSensorTest extends TestCase {
 
         // notify the Sensor that somebody else changed it...
         m = DCCppReply.parseDCCppReply("Q 4");
-        t.message(m);
+        ((DCCppSensor)t).message(m);
         Assert.assertEquals("Known state after activate ", jmri.Sensor.ACTIVE, t.getKnownState());
 
         m = DCCppReply.parseDCCppReply("q 4");
-        t.message(m);
+        ((DCCppSensor)t).message(m);
 
         Assert.assertEquals("Known state after inactivate ", jmri.Sensor.INACTIVE, t.getKnownState());
 
     }
 
-    // DCCppSensor test for setting state
-    public void testDCCppSensorSetState() throws jmri.JmriException {
-        DCCppInterfaceScaffold xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
-        DCCppSensor t = new DCCppSensor("DCCPPS043", xnis);
+    // DCCppSensor test for incoming status message
+    @Test
+    public void testDCCppSensorInvertStatusMsg() {
+        DCCppReply m;
 
-        t.setKnownState(jmri.Sensor.ACTIVE);
-        Assert.assertTrue(t.getKnownState() == jmri.Sensor.ACTIVE);
-        t.setKnownState(jmri.Sensor.INACTIVE);
-        Assert.assertTrue(t.getKnownState() == jmri.Sensor.INACTIVE);
-    }
+        // Verify this was created in UNKNOWN state
+        Assert.assertTrue(t.getKnownState() == jmri.Sensor.UNKNOWN);
+        
+        // Set the inverted flag
+        t.setInverted(true);
 
-    /* Functions not supported
+        // notify the Sensor that somebody else changed it...
+        m = DCCppReply.parseDCCppReply("Q 4");
+        ((DCCppSensor)t).message(m);
+        Assert.assertEquals("Known state after activate ", jmri.Sensor.INACTIVE, t.getKnownState());
 
-    // DCCppSensor test for outgoing status request
-    public void testDCCppSensorStatusRequest() {
-        DCCppInterfaceScaffold xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
+        m = DCCppReply.parseDCCppReply("q 4");
+        ((DCCppSensor)t).message(m);
 
-        DCCppSensor t = new DCCppSensor("XS042", xnis);
+        Assert.assertEquals("Known state after inactivate ", jmri.Sensor.ACTIVE, t.getKnownState());
 
-        t.requestUpdateFromLayout();
-        // check that the correct message was sent
-        Assert.assertEquals("Sensor Status Request Sent", "42 05 80 C7", xnis.outbound.elementAt(0).toString());
-    }
-
-    // DCCppSensor test for outgoing status request
-    public void testDCCppSensorStatusRequest2() {
-        DCCppInterfaceScaffold xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
-
-        DCCppSensor t = new DCCppSensor("XS513", xnis);
-
-        t.requestUpdateFromLayout();
-        // check that the correct message was sent
-        Assert.assertEquals("Sensor Status Request Sent", "42 40 80 82", xnis.outbound.elementAt(0).toString());
-    }
-    */
-
-    // from here down is testing infrastructure
-    public DCCppSensorTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", DCCppSensorTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DCCppSensorTest.class);
-        return suite;
     }
 
     // The minimal setup for log4J
-    protected void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
-        super.setUp();
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
+        t = new DCCppSensor("DCCPPS04", xnis);
     }
 
-    protected void tearDown() throws Exception {
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+    @Override
+    @After
+    public void tearDown() {
+	t.dispose();
+	xnis=null;
+        JUnitUtil.tearDown();
     }
 
 }

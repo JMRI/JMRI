@@ -1,4 +1,3 @@
-// IEEE802154Node.java
 package jmri.jmrix.ieee802154;
 
 import jmri.jmrix.AbstractMRListener;
@@ -22,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * All nodes in a given network must have the same PAN ID
  *
  * @author Paul Bender Copyright 2013
- * @version $Revision$
  */
 public abstract class IEEE802154Node extends AbstractNode {
 
@@ -49,6 +47,7 @@ public abstract class IEEE802154Node extends AbstractNode {
      *
      * @throws IllegalArgumentException if out of range
      */
+    @Override
     public void setNodeAddress(int address) {
         if (checkNodeAddress(address)) {
             nodeAddress = address;
@@ -64,6 +63,7 @@ public abstract class IEEE802154Node extends AbstractNode {
      *
      * @return true if valid
      */
+    @Override
     protected boolean checkNodeAddress(int address) {
         // we're not using this address directly, so ignore.
         return true;
@@ -137,17 +137,20 @@ public abstract class IEEE802154Node extends AbstractNode {
      * Create the needed Initialization packet (AbstractMRMessage) for this
      * node. Returns null if not needed.
      */
+    @Override
     abstract public AbstractMRMessage createInitPacket();
 
     /**
      * Create an Transmit packet (AbstractMRMessage) to send current state
      */
+    @Override
     abstract public AbstractMRMessage createOutPacket();
 
     /**
      * Are there sensors present, and hence this node will need to be polled?
      * Note: returns 'true' if at least one sensor is active for this node
      */
+    @Override
     abstract public boolean getSensorsActive();
 
     /**
@@ -157,16 +160,19 @@ public abstract class IEEE802154Node extends AbstractNode {
      * @param l listener that sent the message
      * @return true if initialization required
      */
+    @Override
     abstract public boolean handleTimeout(AbstractMRMessage m, AbstractMRListener l);
 
     /**
      * A reply was received, so there was not timeout, do any needed processing.
      */
+    @Override
     abstract public void resetTimeout(AbstractMRMessage m);
 
     /**
      * Return state of needSend flag.
      */
+    @Override
     public boolean mustSend() {
         return needSend;
     }
@@ -175,6 +181,7 @@ public abstract class IEEE802154Node extends AbstractNode {
      * Public to reset state of needSend flag. Subclasses may override to
      * enforce conditions.
      */
+    @Override
     public void resetMustSend() {
         needSend = false;
     }
@@ -182,11 +189,13 @@ public abstract class IEEE802154Node extends AbstractNode {
     /**
      * Public to set state of needSend flag.
      */
+    @Override
     public void setMustSend() {
         needSend = true;
     }
 
     boolean needSend = true;          // 'true' if something has changed that requires data to be sent
 
-    private static Logger log = LoggerFactory.getLogger(IEEE802154Node.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IEEE802154Node.class);
+
 }

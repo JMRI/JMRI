@@ -1,4 +1,3 @@
-// MarklinSystemConnectionMemo.java
 package jmri.jmrix.marklin;
 
 import java.util.ResourceBundle;
@@ -11,14 +10,13 @@ import jmri.InstanceManager;
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
- * @author	Kevin Dickerson Copyright (C) 2012
- * @version $Revision: 20728 $
+ * @author Bob Jacobsen Copyright (C) 2010
+ * @author Kevin Dickerson Copyright (C) 2012
  */
 public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public MarklinSystemConnectionMemo(MarklinTrafficController et) {
-        super("MC", "Marklin-CS2");
+        super("M", "Marklin-CS2");
         this.et = et;
         et.setAdapterMemo(this);
         register();
@@ -28,7 +26,7 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     }
 
     public MarklinSystemConnectionMemo() {
-        super("MC", "Marklin-CS2");
+        super("M", "Marklin-CS2");
         register(); // registers general type
         InstanceManager.store(this, MarklinSystemConnectionMemo.class); // also register as specific type
         //Needs to be implemented
@@ -73,6 +71,7 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
          jmri.InstanceManager.setReporterManager(reporterManager);*/
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.marklin.MarklinActionListBundle");
     }
@@ -105,8 +104,9 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     //public MarklinReporterManager getReporterManager() { return reporterManager; }
 
     /**
-     * Tells which managers this provides by class
+     * Tells which managers this class provides.
      */
+    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
             return false;
@@ -129,6 +129,7 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
             return null;
@@ -181,7 +182,5 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
         super.dispose();
     }
+
 }
-
-
-/* @(#)InternalSystemConnectionMemo.java */

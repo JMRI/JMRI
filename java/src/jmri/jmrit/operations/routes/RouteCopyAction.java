@@ -1,4 +1,3 @@
-// RouteCopyAction.java
 package jmri.jmrit.operations.routes;
 
 import java.awt.Frame;
@@ -10,7 +9,6 @@ import javax.swing.AbstractAction;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision$
  */
 public class RouteCopyAction extends AbstractAction {
 
@@ -37,8 +35,8 @@ public class RouteCopyAction extends AbstractAction {
             f.setRouteName(routeName);
         }
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 }
 
-/* @(#)RouteCopyAction.java */
+

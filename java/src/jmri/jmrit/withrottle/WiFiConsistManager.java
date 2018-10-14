@@ -2,30 +2,33 @@ package jmri.jmrit.withrottle;
 
 import java.util.ArrayList;
 import jmri.Consist;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
-import jmri.implementation.AbstractConsistManager;
+import jmri.implementation.NmraConsistManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author Brett Hoffman Copyright (C) 2010, 2011
- * @version $Revision: 18416 $
+ * 
  */
-public class WiFiConsistManager extends AbstractConsistManager {
+public class WiFiConsistManager extends NmraConsistManager {
 
     ArrayList<ControllerInterface> listeners = null;
     boolean isValid = false;
 
     public WiFiConsistManager() {
-        super();
+        super(jmri.InstanceManager.getDefault(jmri.CommandStation.class));
         log.debug("New WiFiConsistManager");
         isValid = true;
     }
 
+    /** 
+     * @deprecated since 4.9.6 use @link{jmri.jmrit.withrottle.ConsistController.stringToDcc()} instead.
+     */
+    @Deprecated
     public DccLocoAddress stringToDcc(String s) {
-        int num = Integer.parseInt(s.substring(1));
-        boolean isLong = (s.charAt(0) == 'L');
-        return (new DccLocoAddress(num, isLong));
+        return ConsistController.stringToDcc(s);
     }
 
     /**
@@ -44,21 +47,14 @@ public class WiFiConsistManager extends AbstractConsistManager {
     }
 
     @Override
-    public Consist addConsist(DccLocoAddress address) {
+    public Consist addConsist(LocoAddress address) {
+        if (! (address instanceof DccLocoAddress)) { 
+            throw new IllegalArgumentException("address is not a DccLocoAddress object");
+        }
         WiFiConsist consist;
-        consist = new WiFiConsist(address);
+        consist = new WiFiConsist((DccLocoAddress) address);
         consistTable.put(address, consist);
         return consist;
-    }
-
-    @Override
-    public boolean isCommandStationConsistPossible() {
-        return false;
-    }
-
-    @Override
-    public boolean csConsistNeedsSeperateAddress() {
-        return false;
     }
 
     /**
@@ -83,6 +79,6 @@ public class WiFiConsistManager extends AbstractConsistManager {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WiFiConsistManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WiFiConsistManager.class);
 
 }

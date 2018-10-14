@@ -5,9 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * EasyDcc implementation of the CommandStation interface.
+ * EasyDCC implementation of the CommandStation interface.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class EasyDccCommandStation implements CommandStation {
 
@@ -22,7 +22,8 @@ public class EasyDccCommandStation implements CommandStation {
      *                error-correction byte. Must not be null.
      * @param repeats Number of times to repeat the transmission, capped at 9
      */
-    public void sendPacket(byte[] packet, int repeats) {
+    @Override
+    public boolean sendPacket(byte[] packet, int repeats) {
 
         if (repeats > 9) {
             repeats = 9;
@@ -51,12 +52,14 @@ public class EasyDccCommandStation implements CommandStation {
             }
         }
 
-        EasyDccTrafficController.instance().sendEasyDccMessage(m, null);
+        memo.getTrafficController().sendEasyDccMessage(m, null);
 
+        return true;
     }
 
     EasyDccSystemConnectionMemo memo = null;
 
+    @Override
     public String getUserName() {
         if (memo == null) {
             return "EasyDCC";
@@ -64,6 +67,7 @@ public class EasyDccCommandStation implements CommandStation {
         return memo.getUserName();
     }
 
+    @Override
     public String getSystemPrefix() {
         if (memo == null) {
             return "E";
@@ -71,6 +75,6 @@ public class EasyDccCommandStation implements CommandStation {
         return memo.getSystemPrefix();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EasyDccCommandStation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccCommandStation.class);
 
 }

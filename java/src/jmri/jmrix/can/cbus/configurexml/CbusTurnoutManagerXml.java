@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
  * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision$
  * @since 2.3.1
  */
 public class CbusTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
@@ -20,10 +19,12 @@ public class CbusTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element turnouts) {
         turnouts.setAttribute("class", this.getClass().getName());
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -34,6 +35,6 @@ public class CbusTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
         return loadTurnouts(shared, perNode);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CbusTurnoutManagerXml.class);
 
 }

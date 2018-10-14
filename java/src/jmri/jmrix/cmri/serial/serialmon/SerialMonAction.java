@@ -2,14 +2,14 @@ package jmri.jmrix.cmri.serial.serialmon;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
 /**
  * Swing action to create and register a SerialMonFrame object
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  */
 public class SerialMonAction extends AbstractAction {
 
@@ -21,9 +21,10 @@ public class SerialMonAction extends AbstractAction {
     }
 
     public SerialMonAction(CMRISystemConnectionMemo memo) {
-        this("C/MRI monitor",memo);
+        this(Bundle.getMessage("SerialCommandMonTitle"),memo);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a SerialMonFrame
         SerialMonFrame f = new SerialMonFrame(_memo);
@@ -35,6 +36,6 @@ public class SerialMonAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialMonAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialMonAction.class);
 
 }

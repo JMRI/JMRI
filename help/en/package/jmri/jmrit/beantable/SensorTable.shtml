@@ -9,7 +9,7 @@
   <title>JMRI: Sensor Table Help</title>
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Sensor Table">
   <!--#include virtual="/Style" -->
 </head>
@@ -25,17 +25,23 @@
       for this Panel.</p>
 
       <h2>Sensor Table Columns</h2>
-
+      (You may change the order of the columns by dragging their titles,
+      and sort the rows by clicking one of the sort triangles next to a column title)
       <dl>
         <dt>User Name</dt>
 
         <dd>You can directly enter or change the "User Name" for an
-        existing Sensor.</dd>
+        existing Sensor (double click in the cell).</dd>
 
         <dt>State</dt>
 
-        <dd>Pushing the "State" command button will change the
-        state of an existing Sensor.</dd>
+        <dd>Pushing the "State" button/icon will change the
+        state of an existing Sensor.
+        <img src="images/SensorTableGraphic.png" height="187" width="307"
+        align="right" alt="Graphic Sensor state column">
+        Choose between textual and graphic display of the Sensor state
+        in the <a href="../../../apps/TabbedPreferences.shtml#Display">Display preferences</a>.
+        </dd>
 
         <dt>Delete</dt>
 
@@ -69,7 +75,7 @@
           <p><a href="#Debounce">See Sensor Debounce below</a></p>
         </dd>
 
-        <dt>Active Delay/ InActive Delay</dt>
+        <dt>Active Delay/ Inactive Delay</dt>
 
         <dd>
           Specify the amount of time in milliseconds that the
@@ -108,8 +114,8 @@
       time, after the timer has finished it will check to see if
       the Sensor is in the same state as it was before it restarted
       the process. If not, the process is re-started again until
-      the state is the same before and after the timer is run. 
-      <!--#include virtual="/Footer" --></p>
+      the state is the same before and after the timer is run.</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

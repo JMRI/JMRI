@@ -1,4 +1,3 @@
-// BeanInterface.java
 package jmri.beans;
 
 import java.util.Set;

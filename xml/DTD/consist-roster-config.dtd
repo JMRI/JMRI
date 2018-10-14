@@ -1,7 +1,7 @@
 <!-- Defines XML documenting a consist roster -->
 <!-- $Id$ -->
 
-<!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
+<!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008, 2017.                  -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -43,3 +43,4 @@
 <!ATTLIST loco dccLocoAddress	CDATA #REQUIRED >          
 <!ATTLIST loco longAddress		( yes | no ) "yes">          
 <!ATTLIST loco locoDir			( normal | reverse | unknown ) "normal" >
+<!ATTLIST loco locoRosterId		CDATA #IMPLIED >

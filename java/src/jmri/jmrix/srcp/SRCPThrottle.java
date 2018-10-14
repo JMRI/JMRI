@@ -1,5 +1,6 @@
 package jmri.jmrix.srcp;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottle;
@@ -17,17 +18,21 @@ public class SRCPThrottle extends AbstractThrottle {
 
     /**
      * Constructor.
+     *
+     * @param memo    the memo containing the connection
+     * @param address the address to use
      */
-    public SRCPThrottle(SRCPBusConnectionMemo memo, DccLocoAddress address){
+    public SRCPThrottle(SRCPBusConnectionMemo memo, DccLocoAddress address) {
         // default to 128 speed steps with 28 functions and NMRA protocl.
-        this(memo,address,"N",SpeedStepMode128,28);
+        this(memo, address, "N", SpeedStepMode128, 28);
     }
-    
+
     public SRCPThrottle(SRCPBusConnectionMemo memo, DccLocoAddress address,
-            String protocol,int mode,int functions){
+            String protocol, int mode, int functions) {
         super(memo);
-        if(!protocol.equals("N")) 
-           throw new IllegalArgumentException("Protocol " + protocol + " not supported");
+        if (!protocol.equals("N")) {
+            throw new IllegalArgumentException("Protocol " + protocol + " not supported");
+        }
         setSpeedStepMode(mode);
 
         bus = memo.getBus();
@@ -69,10 +74,10 @@ public class SRCPThrottle extends AbstractThrottle {
         // send allocation message
         String msg = "INIT " + bus + " GL "
                 + (address.getNumber())
-                + " " + protocol + " " 
-                + (address.isLongAddress()?" 2 ":" 1 ") 
-                + maxsteps + " " 
-                + functions +"\n";
+                + " " + protocol + " "
+                + (address.isLongAddress() ? " 2 " : " 1 ")
+                + maxsteps + " "
+                + functions + "\n";
         memo.getTrafficController()
                 .sendSRCPMessage(new SRCPMessage(msg), null);
     }
@@ -80,6 +85,7 @@ public class SRCPThrottle extends AbstractThrottle {
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4.
      */
+    @Override
     protected void sendFunctionGroup1() {
         sendUpdate();
     }
@@ -87,6 +93,7 @@ public class SRCPThrottle extends AbstractThrottle {
     /**
      * Send the message to set the state of functions F5, F6, F7, F8.
      */
+    @Override
     protected void sendFunctionGroup2() {
         sendUpdate();
     }
@@ -94,6 +101,7 @@ public class SRCPThrottle extends AbstractThrottle {
     /**
      * Send the message to set the state of functions F9, F10, F11, F12.
      */
+    @Override
     protected void sendFunctionGroup3() {
         sendUpdate();
     }
@@ -102,14 +110,16 @@ public class SRCPThrottle extends AbstractThrottle {
      * Send the message to set the state of functions F13, F14, F15, F16, F17,
      * F18, F19, and F20.
      */
+    @Override
     protected void sendFunctionGroup4() {
         sendUpdate();
     }
 
     /**
-     * Send the message to set the state of functions F21, F22, F23, F24,
-     * F25, F26, F27 and F28.
+     * Send the message to set the state of functions F21, F22, F23, F24, F25,
+     * F26, F27 and F28.
      */
+    @Override
     protected void sendFunctionGroup5() {
         sendUpdate();
     }
@@ -121,7 +131,8 @@ public class SRCPThrottle extends AbstractThrottle {
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
+    @Override
     public void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
@@ -131,6 +142,7 @@ public class SRCPThrottle extends AbstractThrottle {
         }
     }
 
+    @Override
     public void setIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
@@ -156,8 +168,8 @@ public class SRCPThrottle extends AbstractThrottle {
         // direction and speed
         msg += (isForward ? " 1" : " 0");
         msg += " " + ((int) (speedSetting * maxsteps));
-        msg += " "; 
-        msg +=maxsteps;
+        msg += " ";
+        msg += maxsteps;
 
         // now add the functions
         msg += f0 ? " 1" : " 0";
@@ -197,29 +209,30 @@ public class SRCPThrottle extends AbstractThrottle {
     }
 
     @Override
-    public void setSpeedStepMode(int Mode){
-       super.setSpeedStepMode(Mode);
-       switch(Mode){
-          case SpeedStepMode14:
-                 maxsteps = 14;
-                 break;
-          case SpeedStepMode27:
-                 maxsteps = 27;
-                 break;
-          case SpeedStepMode28:
-                 maxsteps = 28;
-                 break;
-          case SpeedStepMode128:
-          default:
-                 maxsteps = 126;
-       }
+    public void setSpeedStepMode(int Mode) {
+        super.setSpeedStepMode(Mode);
+        switch (Mode) {
+            case SpeedStepMode14:
+                maxsteps = 14;
+                break;
+            case SpeedStepMode27:
+                maxsteps = 27;
+                break;
+            case SpeedStepMode28:
+                maxsteps = 28;
+                break;
+            case SpeedStepMode128:
+            default:
+                maxsteps = 126;
+        }
     }
 
-
+    @Override
     public LocoAddress getLocoAddress() {
         return address;
     }
 
+    @Override
     protected void throttleDispose() {
         finishRecord();
     }

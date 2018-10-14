@@ -28,11 +28,13 @@ public class TrackPowerController extends AbstractController implements Property
         }
     }
 
+    @Override
     public boolean verifyCreation() {
         return isValid;
     }
 
-    public void handleMessage(String message) {
+    @Override
+    public void handleMessage(String message, DeviceServer deviceServer) {
         if (message.charAt(0) == 'A') {
             if (message.charAt(1) == '1') {
                 setTrackPowerOn();
@@ -89,17 +91,20 @@ public class TrackPowerController extends AbstractController implements Property
 
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent event) {
         sendCurrentState();
     }
 
+    @Override
     public void register() {
         pwrMgr.addPropertyChangeListener(this);
     }
 
+    @Override
     public void deregister() {
         pwrMgr.removePropertyChangeListener(this);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackPowerController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrackPowerController.class);
 }

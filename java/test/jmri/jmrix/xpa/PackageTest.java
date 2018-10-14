@@ -1,46 +1,29 @@
 package jmri.jmrix.xpa;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        XpaMessageTest.class,
+        XpaTrafficControllerTest.class,
+        XpaSystemConnectionMemoTest.class,
+        XpaTurnoutTest.class,
+        XpaThrottleTest.class,
+        XpaTurnoutManagerTest.class,
+        XpaPowerManagerTest.class,
+        XpaThrottleManagerTest.class,
+        jmri.jmrix.xpa.serialdriver.PackageTest.class,
+        jmri.jmrix.xpa.configurexml.PackageTest.class,
+        jmri.jmrix.xpa.swing.PackageTest.class,
+        XpaPortControllerTest.class,
+        BundleTest.class,
+})
 
 /**
  * Tests for the jmri.jmrix.xpa package
  *
- * @author	Paul Bender
- * @version	$Revision$
- */
-public class PackageTest extends TestCase {
-
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrix.xpa.XpaTest");  // no tests in this class itself
-        suite.addTest(new TestSuite(XpaMessageTest.class));
-        suite.addTest(new TestSuite(XpaTrafficControllerTest.class));
-        suite.addTest(new TestSuite(XpaSystemConnectionMemoTest.class));
-        suite.addTest(new TestSuite(XpaTurnoutTest.class));
-        suite.addTest(new TestSuite(XpaThrottleTest.class));
-        //suite.addTest(new TestSuite(XpaPacketizerTest.class));
-        //suite.addTest(new TestSuite(jmri.jmrix.xpa.packetgen.PacketGenFrameTest.class));
-        suite.addTest(new TestSuite(XpaTurnoutManagerTest.class));
-        suite.addTest(new TestSuite(XpaPowerManagerTest.class));
-        suite.addTest(new TestSuite(XpaThrottleManagerTest.class));
-        //suite.addTest(new TestSuite(XpaTrafficControllerTest.class));
-        //suite.addTest(new TestSuite(XpaTrafficRouterTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.xpa.serialdriver.PackageTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.xpa.configurexml.PackageTest.class));
-        return suite;
-    }
-
+ * @author	Paul Bender Copyright (C) 2012,2016
+  */
+public class PackageTest  {
 }

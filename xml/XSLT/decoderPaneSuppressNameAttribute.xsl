@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: decoderLabelToItem.xsl 25756 2014-05-03 21:31:17Z jacobsen $ -->
+<?xml version="1.0" encoding="iso-8859-1"?>
 
 <!-- Process a JMRI decoder file, removing the name attribute on a pane   -->
 <!-- element                                                                -->

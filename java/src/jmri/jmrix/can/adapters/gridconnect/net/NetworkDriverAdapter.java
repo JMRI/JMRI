@@ -1,4 +1,3 @@
-// NetworkDriverAdapter.java
 package jmri.jmrix.can.adapters.gridconnect.net;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -11,29 +10,29 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the OpenLCB system network connection.
- * <P>
+ * <p>
  * This connects via a telnet connection. Normally controlled by the
  * NetworkDriverFrame class.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortController {
 
     public NetworkDriverAdapter() {
         super(new CanSystemConnectionMemo());
-        option1Name = "Gateway";
-        options.put(option1Name, new Option("Gateway", new String[]{"Pass All", "Filtering"}));
-        option2Name = "Protocol";
-        options.put(option2Name, new Option("Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions(), false));
+        option1Name = "Gateway"; // NOI18N
+        options.put(option1Name, new Option(Bundle.getMessage("ConnectionGateway"), new String[]{"Pass All", "Filtering"}));
+        option2Name = "Protocol"; // NOI18N
+        options.put(option2Name, new Option(Bundle.getMessage("ConnectionProtocol"), jmri.jmrix.can.ConfigurationManager.getSystemOptions(), false));
         this.getSystemConnectionMemo().setUserName("OpenLCB");
         setManufacturer(jmri.jmrix.openlcb.OlcbConnectionTypeList.OPENLCB);
     }
 
     /**
-     * set up all of the other objects to operate with the CAN bus connected via
-     * this TCP/IP link
+     * Set up all of the other objects to operate with the CAN bus connected via
+     * this TCP/IP link.
      */
+    @Override
     public void configure() {
         TrafficController tc;
         if (getOptionState(option2Name).equals(ConfigurationManager.MERGCBUS)) {
@@ -58,7 +57,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
         // do central protocol-specific configuration    
         this.getSystemConnectionMemo().configureManagers();
         if (socketConn != null) {
-            log.info("Connection complete with " + socketConn.getInetAddress());
+            log.info("Connection complete with {}", socketConn.getInetAddress());
         }
     }
 
@@ -72,6 +71,6 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
         return (CanSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);
 
 }

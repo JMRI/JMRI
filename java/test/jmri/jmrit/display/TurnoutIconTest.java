@@ -1,160 +1,146 @@
 package jmri.jmrit.display;
 
+import java.awt.GraphicsEnvironment;
 import java.beans.PropertyChangeEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import jmri.util.JUnitUtil;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * TurnoutIconTest.java
  *
  * @author	Bob Jacobsen
  */
-public class TurnoutIconTest extends jmri.util.SwingTestCase {
+public class TurnoutIconTest extends PositionableIconTest {
 
-    TurnoutIcon to;
-    jmri.jmrit.display.panelEditor.PanelEditor panel;
-
+    @Test
     public void testEquals() {
-        JFrame jf = new JFrame();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JFrame jf = new JFrame("Turnout Icon Test");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
-        to = new TurnoutIcon(panel);
+        TurnoutIcon to = new TurnoutIcon(editor);
         jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
-        to.setTurnout(new jmri.NamedBeanHandle<jmri.Turnout>("IT1", turnout));
+        to.setTurnout(new jmri.NamedBeanHandle<>("IT1", turnout));
 
-        TurnoutIcon to2 = new TurnoutIcon(panel);
+        TurnoutIcon to2 = new TurnoutIcon(editor);
         turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
-        to2.setTurnout(new jmri.NamedBeanHandle<jmri.Turnout>("IT1", turnout));
+        to2.setTurnout(new jmri.NamedBeanHandle<>("IT1", turnout));
 
         Assert.assertTrue("identity", to.equals(to));
         Assert.assertFalse("object (not content) equality", to2.equals(to));
-        Assert.assertFalse("object (not content) equality commutes", to.equals(to2));        
+        Assert.assertFalse("object (not content) equality commutes", to.equals(to2));
+        // close the frame.
+        EditorFrameOperator jfo = new EditorFrameOperator(editor);
+        jfo.requestClose();
     }
 
+    @Override
+    @Test
     public void testClone() {
-        JFrame jf = new JFrame();
-        jf.getContentPane().setLayout(new java.awt.FlowLayout());
-
-        to = new TurnoutIcon(panel);
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Editor es = new EditorScaffold();
+        TurnoutIcon to = new TurnoutIcon(es);
         jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
-        to.setTurnout(new jmri.NamedBeanHandle<jmri.Turnout>("IT1", turnout));
+        to.setTurnout(new jmri.NamedBeanHandle<>("IT1", turnout));
 
         TurnoutIcon to2 = (TurnoutIcon) to.deepClone();
 
         Assert.assertFalse("clone object (not content) equality", to2.equals(to));
-        
+
         Assert.assertTrue("class type equality", to2.getClass().equals(to.getClass()));
-        
     }
-    
+
+    @Override
+    @Test
     public void testShow() {
-        JFrame jf = new JFrame();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JFrame jf = new JFrame("Turnout Icon Test");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
-        to = new TurnoutIcon(panel);
+        TurnoutIcon to = new TurnoutIcon(editor);
         jf.getContentPane().add(to);
 
         jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
-        to.setTurnout(new jmri.NamedBeanHandle<jmri.Turnout>("IT1", turnout));
+        to.setTurnout(new jmri.NamedBeanHandle<>("IT1", turnout));
 
         // test buttons
         JButton throwButton = new JButton("throw");
-        throwButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                throwButtonPushed();
-            }
+        throwButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            throwButtonPushed();
         });
         jf.getContentPane().add(throwButton);
         JButton closeButton = new JButton("close");
-        closeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                closeButtonPushed();
-            }
+        closeButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            closeButtonPushed();
         });
         jf.getContentPane().add(closeButton);
         JButton unknownButton = new JButton("unknown");
-        unknownButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                unknownButtonPushed();
-            }
+        unknownButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            unknownButtonPushed();
         });
         jf.getContentPane().add(unknownButton);
         JButton inconsistentButton = new JButton("inconsistent");
-        inconsistentButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                inconsistentButtonPushed();
-            }
+        inconsistentButton.addActionListener((java.awt.event.ActionEvent e) -> {
+            inconsistentButtonPushed();
         });
         jf.getContentPane().add(inconsistentButton);
 
         jf.pack();
         jf.setVisible(true);
+        // close the frame.
+        EditorFrameOperator jfo = new EditorFrameOperator(jf);
+        jfo.requestClose();
 
     }
 
     // animate the visible frame
     public void throwButtonPushed() {
+        TurnoutIcon to = new TurnoutIcon(editor);
         java.beans.PropertyChangeEvent e = new PropertyChangeEvent(this,
-                "KnownState", null, Integer.valueOf(jmri.Turnout.THROWN));
+                "KnownState", null, jmri.Turnout.THROWN);
         to.propertyChange(e);
     }
 
     public void closeButtonPushed() {
+        TurnoutIcon to = new TurnoutIcon(editor);
         java.beans.PropertyChangeEvent e = new PropertyChangeEvent(this,
-                "KnownState", null, Integer.valueOf(jmri.Turnout.CLOSED));
+                "KnownState", null, jmri.Turnout.CLOSED);
         to.propertyChange(e);
     }
 
     public void unknownButtonPushed() {
+        TurnoutIcon to = new TurnoutIcon(editor);
         java.beans.PropertyChangeEvent e = new PropertyChangeEvent(this,
-                "KnownState", null, Integer.valueOf(jmri.Turnout.UNKNOWN));
+                "KnownState", null, jmri.Turnout.UNKNOWN);
         to.propertyChange(e);
     }
 
     public void inconsistentButtonPushed() {
+        TurnoutIcon to = new TurnoutIcon(editor);
         java.beans.PropertyChangeEvent e = new PropertyChangeEvent(this,
-                "KnownState", null, Integer.valueOf(23));
+                "KnownState", null, 23);
         to.propertyChange(e);
     }
 
-    // from here down is testing infrastructure
-    public TurnoutIconTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", TurnoutIconTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(TurnoutIconTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-    
-        jmri.util.JUnitUtil.resetInstanceManager();
-        panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test TurnoutIcon Panel");
-        to = null;
-    }
-
-    protected void tearDown() {
-        // now close panel window
-        java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
-        for (int i = 0; i < listeners.length; i++) {
-            panel.getTargetFrame().removeWindowListener(listeners[i]);
+    @Before
+    @Override
+    public void setUp() {
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+        if (!GraphicsEnvironment.isHeadless()) {
+           editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test TurnoutIcon Panel");
+           Editor e = new EditorScaffold();
+           TurnoutIcon to = new TurnoutIcon(e);
+           jmri.Turnout t = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
+           to.setTurnout(new jmri.NamedBeanHandle<>("IT1", t));
+           p = to;
         }
-        junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
-        apps.tests.Log4JFixture.tearDown();
     }
 
-	// static private Logger log = LoggerFactory.getLogger(TurnoutIconTest.class.getName());
 }

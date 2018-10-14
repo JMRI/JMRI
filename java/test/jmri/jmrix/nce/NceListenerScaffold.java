@@ -4,8 +4,7 @@
  * Description:	Stands in for the NceTrafficController class
  *
  * @author	Bob Jacobsen
- * @version	$Revision$
- */
+  */
 package jmri.jmrix.nce;
 
 
@@ -16,10 +15,12 @@ class NceListenerScaffold implements jmri.jmrix.nce.NceListener {
         rcvdMsg = null;
     }
 
+    @Override
     public void message(NceMessage m) {
         rcvdMsg = m;
     }
 
+    @Override
     public void reply(NceReply r) {
         rcvdReply = r;
     }

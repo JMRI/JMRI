@@ -13,14 +13,9 @@ import jmri.util.JmriJFrame;
 /**
  * Swing action to display the file revision history
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  */
 public class FileHistoryAction extends AbstractAction {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -7063215106558684398L;
 
     public FileHistoryAction(String s) {
         super(s);
@@ -30,6 +25,7 @@ public class FileHistoryAction extends AbstractAction {
         this("File History");
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         JFrame frame = new JmriJFrame() {
         };  // JmriJFrame to ensure fits on screen

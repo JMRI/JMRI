@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
-<!-- $Id$ -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 	<enumChoice choice="Locomotive Address Only">
+		<choice xml:lang="da">Kun Lokomotiv Adresse</choice>
 		<choice xml:lang="it">Indirizzo Loco da Sola</choice>
 		<choice xml:lang="fr">Adresse locomotive seulement</choice>
 		<choice xml:lang="de">Nur Lok Adresse</choice>
+		<choice xml:lang="cs">Pouze adresa lokomotivy</choice>
+		<choice xml:lang="nl">Alleen Locomotief adres</choice>
 	</enumChoice>
 	<enumChoice choice="Respond to Consist Address">
+		<choice xml:lang="da">Kun Consist Adresse</choice>
 		<choice xml:lang="it">Risponde a Indirizzo Consist</choice>
 		<choice xml:lang="fr">Répondre à l'adresse d'UM</choice>
 		<choice xml:lang="de">Verbund-Befehle akzeptieren</choice>
+		<choice xml:lang="cs">Reagovat na adresu soupravy</choice>
+		<choice xml:lang="nl">Reageert op het gemeenschappelijke adres</choice>
 	</enumChoice>
 </enumVal>

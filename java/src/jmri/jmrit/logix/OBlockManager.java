@@ -1,10 +1,7 @@
 package jmri.jmrit.logix;
 
-import jmri.managers.AbstractManager;
-
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.CheckReturnValue;
+import jmri.managers.AbstractManager;
 
 /**
  * Basic Implementation of a OBlockManager.
@@ -31,21 +28,24 @@ import javax.annotation.CheckReturnValue;
  * @author Bob Jacobsen Copyright (C) 2006
  * @author Pete Cressman Copyright (C) 2009
  */
-public class OBlockManager extends AbstractManager
+public class OBlockManager extends AbstractManager<OBlock>
         implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
 
     public OBlockManager() {
         super();
     }
 
+    @Override
     public int getXMLOrder() {
         return jmri.Manager.OBLOCKS;
     }
 
-    public @Nonnull String getSystemPrefix() {
+    @Nonnull@Override
+ public String getSystemPrefix() {
         return "O";
     }
 
+    @Override
     public char typeLetter() {
         return 'B';
     }
@@ -66,7 +66,7 @@ public class OBlockManager extends AbstractManager
         }
         String sName = systemName.toUpperCase();
         if (!sName.startsWith("OB")) {
-            sName = "OB" + sName;
+            return null;
         }
         if (sName.length() < 3) {
             return null;
@@ -100,17 +100,17 @@ public class OBlockManager extends AbstractManager
             return null;
         }
         String key = name.toUpperCase();
-        return (OBlock) _tsys.get(key);
+        return _tsys.get(key);
     }
 
     public OBlock getByUserName(String key) {
         if (key == null || key.trim().length() == 0) {
             return null;
         }
-        return (OBlock) _tuser.get(key);
+        return  _tuser.get(key);
     }
 
-    public @Nonnull OBlock provideOBlock(String name) throws IllegalArgumentException {
+    @Nonnull public OBlock provideOBlock(String name) throws IllegalArgumentException {
         if (name == null || name.length() == 0) {
             throw new IllegalArgumentException("name \""+name+"\" invalid");
         }
@@ -126,15 +126,7 @@ public class OBlockManager extends AbstractManager
         return ob;
     }
 
-    static OBlockManager _instance = null;
-
-    static public OBlockManager instance() {
-        if (_instance == null) {
-            _instance = new OBlockManager();
-        }
-        return (_instance);
-    }
-
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameOBlock");
     }

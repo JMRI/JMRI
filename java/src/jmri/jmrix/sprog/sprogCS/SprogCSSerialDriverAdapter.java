@@ -1,15 +1,13 @@
 package jmri.jmrix.sprog.sprogCS;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * Implements SerialPortAdapter for the Sprog system.
- * <P>
+ * Implement SerialPortAdapter for the Sprog system.
+ * <p>
  * This connects an Sprog command station via a serial com port. Also used for
  * the USB SPROG, which appears to the computer as a serial port.
- * <P>
+ * <p>
  * The current implementation only handles the 9,600 baud rate, and does not use
  * any other options at configuration time.
  *
@@ -20,9 +18,11 @@ public class SprogCSSerialDriverAdapter
 
     public SprogCSSerialDriverAdapter() {
         super(SprogMode.OPS);
-        options.put("TrackPowerState", new Option("Track Power At StartUp:", new String[]{"Powered Off", "Powered On"}, true));
-        //Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
-        this.getSystemConnectionMemo().setUserName("SPROG Command Station");
+        options.put("TrackPowerState", new Option(Bundle.getMessage("OptionTrackPowerLabel"),
+                new String[]{Bundle.getMessage("PowerStateOff"), Bundle.getMessage("PowerStateOn")},
+                true)); // first element (TrackPowerState) NOI18N
+        // Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
+        this.getSystemConnectionMemo().setUserName(Bundle.getMessage("SprogCSTitle"));
     }
 
     /**
@@ -33,6 +33,6 @@ public class SprogCSSerialDriverAdapter
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogCSSerialDriverAdapter.class.getName());
+    // private final static Logger log = LoggerFactory.getLogger(SprogCSSerialDriverAdapter.class);
 
 }

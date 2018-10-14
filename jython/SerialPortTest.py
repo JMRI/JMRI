@@ -14,7 +14,7 @@
 
 import jarray
 import jmri
-import gnu.io
+import purejavacomm
 
 class SerialPortTest(jmri.jmrit.automat.AbstractAutomaton) :
     
@@ -23,13 +23,13 @@ class SerialPortTest(jmri.jmrit.automat.AbstractAutomaton) :
         
         # find the port info and open the port
         print "opening ",portname
-        self.portID = gnu.io.CommPortIdentifier.getPortIdentifier(portname)
+        self.portID = purejavacomm.CommPortIdentifier.getPortIdentifier(portname)
         self.port = self.portID.open("JMRI", 50)
         
         # set options on port
         baudrate = 9600
-        self.port.setSerialPortParams(baudrate, gnu.io.SerialPort.DATABITS_8, 
-                                    gnu.io.SerialPort.STOPBITS_1, gnu.io.SerialPort.PARITY_NONE)
+        self.port.setSerialPortParams(baudrate, purejavacomm.SerialPort.DATABITS_8, 
+                                    purejavacomm.SerialPort.STOPBITS_1, purejavacomm.SerialPort.PARITY_NONE)
         
         # get I/O connections for later
         self.inputStream = self.port.getInputStream()
@@ -48,7 +48,7 @@ class SerialPortTest(jmri.jmrit.automat.AbstractAutomaton) :
     def handle(self) : 
         
         # get next character
-        next = a.inputStream.read()
+        next = self.inputStream.read()
         
         # this sample doesn't do anything with that character except echo it
         print "rcv", next

@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU Gene ral Public License for more details.
  * <P>
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @see jmri.jmrit.roster.ImportRosterItemAction
  * @see jmri.jmrit.XmlFile
  */
@@ -84,6 +84,6 @@ public class ExportRosterItemAction extends AbstractRosterItemAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ExportRosterItemAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ExportRosterItemAction.class);
 
 }

@@ -3,171 +3,166 @@
 
 <html lang="fr">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Copyright ($Author$) 2008 -->
-  <!-- $Id$ -->
-  <!-- UpDated  by Blorec Herv&#233;  2013-09-10-->
+<!-- UpDated  by Blorec Herv&#233;  2017-01-19-->
+<title>JMRI Hardware Support - MERG CBUS</title>
 
-  <title>JMRI: CBUS Support</title><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+<!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
-    <div id="mainContent">
-      <h1>JMRI: Support CBUS</h1><em>Le support sur cette page est
-      en &eacute;volution rapide, le code r&eacute;el pourrait
-      &ecirc;tre en avance ou en retard sur la documentation un
-      jour donn&eacute;.</em>
+<div id="mainContent">
 
-      <p>JMRI fournit un soutien pour les <a href=
-      "../../../tools/Sensors.shtml">Capteurs</a>
-      g&eacute;n&eacute;raux JMRI, et les <a href=
-      "../../../tools/Turnouts.shtml">Aiguillages</a> en termes
-      d'"&eacute;v&eacute;nements" CBUS.</p>
+<h1>Structure Mat&#233;riel: CBUS MERG</h1>
 
-      <p>Voir aussi la <a href="../index.shtml">page principale
-      d'aide</a> que JMRI CAN peut soutenir,supporter, y compris
-      des liens vers divers outils g&eacute;n&eacute;raux, et les
-      page sur les <a href="Details.shtml">d&eacute;tails
-      techniques</a> de support de CBUS JMRI.</p>
+<em>Le support de MERG est en &#233;volution rapide,
+ le code r&#233;el pourrait &#234;tre en avance ou en retard sur
+ la documentation un jour donn&#233;.
+</em>
+<ul class="snav"><!-- TOC -->
+<li><a href="#connecting">Connexion</a>
+<li><a href="#tools">Outils JMRI CBUS MERG</a>
+<li><a href="#documentation">Documentation</a>
+</ul>
 
-      <h2>D&eacute;signation</h2>Le <a href=
-      "../../../doc/Technical/Names.shtml">syst&egrave;me de
-      lettre</a> pour les connexions CBUS est "M". D&eacute;tails
-      du CBUS les noms d'&eacute;v&eacute;nement et les objet sont
-      d&eacute;crits ci-dessous, avec des d&eacute;tails techniques
-      sur une <a href="Names.shtml">page s&eacute;par&eacute;e</a>.
+<h2>Connexion</h2>
+<h3>D&#233;nomination CBUS</h3>
+JMRI fournit une prise en charge pour les 
+<a href="../../../tools/Sensors.shtml"> Capteurs</a> g&#233;n&#233;raux JMRI
+ les
+<a href="../../../tools/Turnouts.shtml"> Aiguillages</a>  g&#233;n&#233;raux JMRI
+en termes d'"&#233;v&#233;nements" CBUS.
 
-      <p>Notez qu'il y a un <a href=
-      "../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">
-      Outil de Capture des &eacute;v&egrave;nement CBUS</a></p>
+Le <a  href="../../../doc/Technical/Names.shtml"> syst&#232;me de lettre</a>
+pour les connexions CBUS est "M". 
+<p>D&#233;tails  d'&#233;v&#233;nement CBUS et les noms des objet sont
+d&#233;crits ci-dessous, avec des d&#233;tails techniques sur une
+<a href="Names.shtml"> page s&#233;par&#233;e</a>.
 
-      <p>JMRI Associe les &eacute;v&eacute;nements individuels CBUS
-      et les Objets JMRI (capteurs, aiguillages, etc) via le Noms
-      syst&egrave;me JMRI. Un tel nom syst&egrave;me "
-      <code>MS+123; -345</code>" d&eacute;finit un capteur qui suit
-      les &eacute;v&eacute;nements CBUS "123 ON" et "345 OFF" pour
-      changer d'&eacute;tat. Selon les &eacute;v&eacute;nement CBUS
-      - les ID sont utilis&eacute;es. sur un circuit particulier ,
-      ces noms syst&egrave;mes peuvent &ecirc;tre tr&egrave;s long,
-      auquel cas, le "nom utilisateur" devient beaucoup plus
-      utile.</p>
+<p>
+JMRI Associe les &#233;v&#233;nements CBUS avec les
+objets individues JMRI (capteurs, aiguillages, etc) via le
+Noms Syst&#232;me JMRI. Un  Nom Syst&#232;me comme
+"<code> MS+123; -345</code>"
+d&#233;finit un capteur qui suit les &#233;v&#233;nements CBUS
+"123 ON" et "345 OFF" pour changer d'&#233;tat.
+Selon les &#233;v&#233;nement CBUS - les ID sont utilis&#233;es.
+sur un circuit particulier
+, ces noms syst&#232;mes peuvent &#234;tre tr&#232;s long, auquel
+cas, le "nom utilisateur" devient beaucoup plus utile. 
 
-      <h2>Capteurs</h2>Les messages CBUS entrant dans une
-      applications JMRI peuvent &ecirc;tre consult&eacute;s via des
-      objets capteur JMRI. Le <a href="Names.shtml">nom
-      syst&egrave;me</a> des capteurs d&eacute;termine &agrave;
-      quel(s) message(s) CBUS (s) il correspond.
+<h2>Capteurs</h2>
+<p>
+Les messages CBUS entrant dans une applications JMRI peuvent &#234;tre consult&#233;s
+via des objets capteur JMRI. Le<a href="Names.shtml"> Nom Syst&#232;me</a> des capteurs
+d&#233;termine &#224; quel(s) message(s) CBUS (s) il correspond.
 
-      <h3>D&eacute;signation</h3>Un capteur est d&eacute;fini par
-      deux &eacute;v&eacute;nements: L'un, qui est ACTIF, et celui
-      qui est INACTIF. Si ces images sont mapp&eacute;es &agrave;
-      ON et OFF avec le m&ecirc;me num&eacute;ro ID
-      d'&eacute;v&eacute;nement, respectivement, seul le nombre
-      d'ID d'&eacute;v&eacute;nement doit &ecirc;tre
-      pr&eacute;cis&eacute;:<br>
-      <code>MS18</code><br>
-      Le nombre est d&eacute;cimal.
+Le codage Un capteur est d&#233;fini par deux &#233;v&#233;nements: L'un, qui est ACTIF, et
+celui qui est INACTIF.
 
-      <p>Pour accro&icirc;tre la polyvalence, il est possible
-      d'utiliser diff&eacute;rents num&eacute;ros d'ID
-      d'&eacute;v&eacute;nement pour la transition ACTIVE (par
-      d&eacute;faut, une trame ON ) et transition INACTIVE (par
-      d&eacute;faut, une trame OFF):<br>
-      <code>MS18;21</code></p>
+Si ces images sont mapp&#233;es &#224; ON et OFF avec le m&#234;me num&#233;ro ID d'&#233;v&#233;nement, respectivement, seul
+le nombre d'ID d'&#233;v&#233;nement doit &#234;tre pr&#233;cis&#233;:
+<br><code>MS18</code><br>
+Le nombre est d&#233;cimal.
 
-      <p>ON et OFF de codage de CBUS n'est pas tout &agrave; fait
-      conforme au mod&egrave;le d'&eacute;v&eacute;nement , et il
-      peut &ecirc;tre utile de communiquer la transition ACTIF ou
-      INACTIF d'un capteur JMRI &agrave; une trame OFF ou ON CBUS
-      respectivement. Les caract&egrave;res "+" et "- " le font.
-      Par exemple,<br>
-      <code>MS-18;+21</code><br>
-      d&eacute;finit un capteur qui va ACTIF quand une trame OFF
-      avec num&eacute;ro d'identification 18 est re&ccedil;u, et va
-      INACTIF quand une trame avec le num&eacute;ro ID 21 est
-      re&ccedil;u.</p>
+<p>
+Pour accro&#238;tre la polyvalence, il est possible d'utiliser diff&#233;rents num&#233;ros d'ID d'&#233;v&#233;nement
+pour la transition ACTIVE (par d&#233;faut, une trame ON  ) et transition INACTIVE
+(par d&#233;faut, une trame OFF):
+<br><code> MS18;21</code>
+<p>
+Le codage ON et OFF de CBUS n'est pas tout &#224; fait conforme au mod&#232;le d'&#233;v&#233;nement
+, et il peut &#234;tre utile de connecter la transition ACTIF ou INACTIF
+d'un capteur JMRI  &#224; une trame OFF ou ON  CBUS respectivement.
+Les caract&#232;res "+" et "- " le font. Par exemple,
+<br><code> MS-18;+21</code><br>
+d&#233;finit un capteur qui va ACTIF quand une trame OFF avec num&#233;ro d'identification 18 est re&#231;u,
+et va INACTIF quand une trame avec le num&#233;ro ID 21 est re&#231;u.
+<p>
+Les num&#233;ros d'&#233;v&#233;nement CBUS (en g&#233;n&#233;ral) contiennent un num&#233;ro de n&#339;ud dans leur octets les plus significatifs.
+Vous pouvez sp&#233;cifier le num&#233;ro de n&#339;ud soit
+en utilisant un nombre &#224; 5 chiffres pour le num&#233;ro d'&#233;v&#233;nement lui-m&#234;me,
+pr&#233;c&#233;d&#233; par le num&#233;ro de n&#339;ud:
+<br><code> MS200018</code><br>
+soit en utilisant les lettres "N" et "E" pour pr&#233;ciser les diff&#233;rentes parties:
+<br><code>MSN2E18</code><br>
 
-      <p>Les num&eacute;ros d'&eacute;v&eacute;nement CBUS (en
-      g&eacute;n&eacute;ral) contiennent un num&eacute;ro de noeud
-      dans leur octets les plus significatifs. Vous pouvez
-      sp&eacute;cifier le num&eacute;ro de noeud soit en utilisant
-      un nombre &agrave; 5 chiffres pour le num&eacute;ro
-      d'&eacute;v&eacute;nement lui-m&ecirc;me,
-      pr&eacute;c&eacute;d&eacute; par le num&eacute;ro de
-      noeud:<br>
-      <code>MS200018</code><br>
-      soit en utilisant les lettres "N" et "E" pour pr&eacute;ciser
-      les diff&eacute;rentes parties:<br>
-      <code>MSN2E18</code><br></p>
+<p>
+Vous pouvez masquer une partie du paquet de CBUS, de sorte que les valeurs dans la partie masqu&#233;e vont toujours correspondre, en utilisant la lettre "M" de format. <br><code> MS200018M07</code><br>
 
-      <p>Vous pouvez masquer une partie du paquet de CBUS, de sorte
-      que les valeurs dans la partie masqu&eacute;e vont toujours
-      correspondre, en utilisant la lettre "M" de format.<br>
-      <code>MS200018M07</code><br>
-      "M" indique le d&eacute;but d'un masque en hexad&eacute;cimal
-      qui sera appliqu&eacute;e, o&ocirc; les bits &agrave; 1 dans
-      le masque seront bits &agrave; z&eacute;ro dans la valeur
-      r&eacute;sultante. Dans l'exemple ci-dessus, "18"
-      correspondra &agrave; "1F" . Ceci est particuli&egrave;rement
-      utile pour faire correspondre par exemple des
-      &eacute;v&egrave;nements courts CBUS, o&ocirc; les
-      pi&egrave;ces du paquet incluent le num&eacute;ro de noeud
-      qui devrait (normalement) &ecirc;tre ignor&eacute;</p>
+"M" indique le d&#233;but d'un masque en hexad&#233;cimal qui sera appliqu&#233;e, o&#249; les bits &#224; 1 dans le masque seront bits &#224; z&#233;ro dans la valeur r&#233;sultante.
+Dans l'exemple ci-dessus, "18" correspondra &#224; "1F" . Ceci est particuli&#232;rement utile pour faire correspondre par exemple des &#233;v&#232;nements courts CBUS, o&#244; les pi&#232;ces du paquet incluent le num&#233;ro de n&#339;ud qui devrait (normalement) &#234;tre ignor&#233;
 
-      <p>Enfin, il est possible de connecter arbitrairement un
-      capteur &agrave; des trames CAN en pr&eacute;cisant les
-      donn&eacute;es contenu comme une cha&icirc;ne
-      hexad&eacute;cimale:<br>
-      <code>MSX9100000000000012;X9100000000000019</code><br>
-      Ceci permet au Capteur de faire abstraction de toute
-      signification intrins&egrave;que d'&eacute;v&eacute;nements
-      &agrave; "ON" et "OFF" , et lui permet de r&eacute;pondre
-      &agrave; n'importe quel trame sur le r&eacute;seau.</p>
+<p>
+ Enfin, il est possible de connecter arbitrairement un Capteur &#224;
+des trames CAN en pr&#233;cisant les donn&#233;es contenu 
+comme une cha&#238;ne hexad&#233;cimale:<br><code>MSX9100000000000012;X9100000000000019</code><br>
 
-      <h3>Cr&eacute;ation automatique</h3>JMRI tente
-      automatiquement de cr&eacute;er des objets Capteur depuis le
-      trafic qu'il entend sur le CBUS.
+Ceci permet au Capteur de faire abstraction de toute signification intrins&#232;que d'&#233;v&#233;nements &#224; "ON" et "OFF"
+, et lui permet de r&#233;pondre &#224; n'importe quel trame sur le r&#233;seau.
 
-      <p>Lorsque JMRI entend un &eacute;v&eacute;nement ON ou OFF
-      sur le CBUS, il cr&eacute;e un capteur en utilisant l'ID
-      d'&eacute;v&eacute;nement correspondant. La valeur par
-      d&eacute;faut du capteur sera cr&eacute;&eacute;
-      automatiquement &agrave; ON dans le cas de l'activation du
-      capteur ACTIF et &agrave; OFF dans le cas de l'activation du
-      capteur INACTIF</p>
+<h4> Cr&#233;ation automatique</h4>
+<p>
+JMRI tente automatiquement de cr&#233;er des objets Capteur depuis le
+trafic qu'il entend sur le CBUS.
+<p>
+Lorsque JMRI entend un &#233;v&#233;nement ON ou OFF sur le CBUS, il cr&#233;e un Capteur
+en utilisant l'ID d'&#233;v&#233;nement correspondant.
+La valeur par d&#233;faut du Capteur sera cr&#233;&#233; automatiquement &#224; ON
+dans le cas de l'activation du capteur ACTIF
+et &#224; OFF dans le cas de l'activation du capteur INACTIF
 
-      <p>Parce que les &eacute;v&eacute;nements ne sont pas
-      intrins&egrave;quement associ&eacute;s avec des objet
-      mat&eacute;riels sp&eacute;cifiques , et parce que les gens
-      peuvent utiliser les ID d'&eacute;v&eacute;nement de bien des
-      mani&egrave;re, ceci ne pas fait ce qui est souhait&eacute;.
-      Quand il ne le fait pas, vous pouvez cr&eacute;er
-      manuellement des Capteurs appropri&eacute;s en utilisant le
-      bouton <a href=
-      "../../../../package/jmri/jmrit/beantable/SensorAddEdit.shtml">
-      Ajouter...</a> sur le <a href=
-      "../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Tableau
-      Capteur</a>.</p>
+<p>
+Parce que les &#233;v&#233;nements ne sont pas intrins&#232;quement associ&#233;s avec des objet mat&#233;riels sp&#233;cifiques
+, et parce que les gens peuvent utiliser les ID d'&#233;v&#233;nement de bien des mani&#232;re, ceci
+ne pas fait ce qui est souhait&#233;. Quand il ne le fait pas, vous pouvez 
+cr&#233;er manuellement des Capteurs appropri&#233;s en utilisant le bouton 
+<a href="../../../../package/jmri/jmrit/beantable/SensorAddEdit.shtml">Ajouter...</a>
+sur le
+<a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Tableau Capteur</a>.
 
-      <h2>Aiguillages</h2>(Pourrait &ecirc;tre &eacute;crit, mais
-      le sch&eacute;ma est similaire aux capteurs ci-dessus, sauf
-      que JMRI &eacute;met des trames CBUS au lieu de les recevoir,
-      et la lettre type est "T"au lieu de "S", par exemple,
-      <code>MT-18; +21&lt;/ code&gt;) 
-      <!--#include virtual="/Footer" --></code>
-    </div>
-  </div>
+<p>
+Notez qu'il y a un
+<a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Outil de Capture d'&#201;venements CBUS</a> qui peut vous aider &#224; cr&#233;er les noms des Aiguillages et Capteurs Sans avoir &#224; travailler directement sur les Noms Syst&#232;me.
+
+<h3>Aiguillages</h3>
+<p>(Pourrait &#234;tre &#233;crit, mais le sch&#233;ma est similaire aux capteurs ci-dessus,
+sauf que JMRI &#233;met des trames CBUS au lieu de les recevoir, et
+la lettre type est "T"au lieu de "S", par exemple, <code> MT-18; +21</code>)
+
+<h3>Lumi&#232;res</h3>
+<p>Pourrait &#234;tre &#233;crit, mais le sch&#233;ma est similaire aux Aiguillages ci-dessus,
+sauf que  la lettre type est "L"au lieu de "T", par exemple, <code>ML-18;+21</code>
+
+<a name="tools"></a><h2>Outils CBUS MERG JMRI</h2></a>
+<img src="../images/MERG_Menu.png" alt="MERG menu" align="right" height="132" width="227">
+<p>Le menu MERG contient 5 outils:
+<ul>
+  <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console</a>
+ 	<li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#cbusSend">Envoyer Trame</a></li>
+	<li><a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Outil de Capture d'&#201;v&#233;nement</a>
+	<li>Tableau &#201;v&#233;neme</li>
+	<li><a href="../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Outil de Configuration de N&#339;ud</a></li>
+	</ul>
+
+<a name="documentation"></a><h2>Documentation</h2>
+<h3>Aide JMRI</h3>
+	<ul>
+	<li>La d&#233;nomination des Entr&#233;es et des Sorties CBUS est d&#233;crites <a href="Names.shtml">ici</a>.
+	<li><a href="Details.shtml">D&#233;tails technique du support CBUS</a>
+	<li><a href="../index.shtml">Page d'AidePrincipale du support CAN</a> includant des liens pour obtenir plus d'outils.
+	</ul>
+
+<!--#include virtual="/Footer" -->
+ </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
+</html>
 </html>

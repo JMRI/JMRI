@@ -3,7 +3,6 @@ package apps.startup.configurexml;
 import apps.StartupActionsManager;
 import apps.startup.TriggerRouteModel;
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.configurexml.AbstractXmlAdapter;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -31,6 +30,7 @@ public class TriggerRouteModelXml extends AbstractXmlAdapter {
      * @param o Object to store, of type PerformActonModel
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         Element e = new Element("perform"); // NOI18N
         e.setAttribute("name", ((TriggerRouteModel) o).getName());
@@ -52,21 +52,12 @@ public class TriggerRouteModelXml extends AbstractXmlAdapter {
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) throws JmriException {
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         String userName = shared.getAttribute("name").getValue();
-        log.info("Setting route \"{}\" at startup.", userName);
 
         TriggerRouteModel m = new TriggerRouteModel();
         m.setUserName(userName);
-
-        // trigger the route
-        try {
-            m.getRoute().setRoute();
-        } catch (NullPointerException ex) {
-            log.error("Unable to set route \"{}\"; it has not been defined. Is it's panel loaded?", userName);
-            result = false;
-        }
 
         // store the model
         InstanceManager.getDefault(StartupActionsManager.class).addAction(m);
@@ -79,6 +70,7 @@ public class TriggerRouteModelXml extends AbstractXmlAdapter {
      * @param element Top level Element to unpack.
      * @param o       ignored
      */
+    @Override
     public void load(Element element, Object o) {
         log.error("Unexpected call of load(Element, Object)");
     }

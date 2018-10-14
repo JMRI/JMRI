@@ -3,34 +3,41 @@ package jmri.jmrix.tmcc.serialmon;
 import jmri.jmrix.tmcc.SerialListener;
 import jmri.jmrix.tmcc.SerialMessage;
 import jmri.jmrix.tmcc.SerialReply;
-import jmri.jmrix.tmcc.SerialTrafficController;
+import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
 
 /**
- * Frame displaying (and logging) TMCC serial command messages
+ * Frame displaying (and logging) TMCC serial command messages.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2006
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
-    public SerialMonFrame() {
+    private TmccSystemConnectionMemo _memo = null;
+
+    public SerialMonFrame(TmccSystemConnectionMemo memo) {
         super();
+        _memo = memo;
     }
 
+    @Override
     protected String title() {
-        return "TMCC Serial Command Monitor";
+        return Bundle.getMessage("MonitorXTitle", "TMCC");
     }
 
+    @Override
+    protected void init() {
+        // connect to TrafficController
+        _memo.getTrafficController().addSerialListener(this);
+    }
+
+    @Override
     public void dispose() {
-        SerialTrafficController.instance().removeSerialListener(this);
+        _memo.getTrafficController().removeSerialListener(this);
         super.dispose();
     }
 
-    protected void init() {
-        // connect to TrafficController
-        SerialTrafficController.instance().addSerialListener(this);
-    }
-
-    public synchronized void message(SerialMessage l) {  // receive a message and log it
+    @Override
+    public synchronized void message(SerialMessage l) { // receive a message and log it
         // check for valid length
         if (l.getNumDataElements() < 3) {
             nextLine("Truncated message of length " + l.getNumDataElements() + "\n",
@@ -41,7 +48,8 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         }
     }
 
-    public synchronized void reply(SerialReply l) {  // receive a reply message and log it
+    @Override
+    public synchronized void reply(SerialReply l) { // receive a reply message and log it
         // check for valid length
         if (l.getNumDataElements() < 2) {
             nextLine("Truncated reply of length " + l.getNumDataElements() + ": \"" + l.toString() + "\"\n",

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+<aspecttable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/aspecttable.xsd">
+  <name>B&amp;O-Semaphore</name>
+  <date>1969</date>
+  <reference>As described by Joseph Hoevet from 1969 rules but intended to be used in conjunction with the B&amp;0-2009 system.</reference>
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2016</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2016-11-22</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+  <aspects>
+    <aspect>
+      <name>Clear</name>
+      <rule>Rule 281</rule>
+      <indication>Proceed</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+      <dccAspect>15</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Approach Limited</name>
+      <rule>Rule 281B</rule>
+      <indication>Proceed approaching next signal at limited speed</indication>
+      <speed>Normal</speed>
+      <speed2>Limited</speed2>
+      <route>Either</route>
+      <dccAspect>14</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Limited Clear</name>
+      <rule>Rule 281C</rule>
+      <indication>Proceed; limited speed within interlocking limits</indication>
+      <speed>Limited</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+      <dccAspect>13</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Approach Medium</name>
+      <rule>Rule 282</rule>
+      <indication>Proceed approaching next signal at medium speed</indication>
+      <speed>Normal</speed>
+      <speed2>Medium</speed2>
+      <route>Either</route>
+      <dccAspect>12</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Medium Clear</name>
+      <rule>Rule 283</rule>
+      <indication>Proceed; medium speed within interlocking limits</indication>
+      <speed>Medium</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+      <dccAspect>11</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Medium Approach Medium</name>
+      <rule>Rule 283A</rule>
+      <indication>Proceed preparing to stop at second signal; medium speed within interlocking limits</indication>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Either</route>
+      <dccAspect>10</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Medium Approach Slow</name>
+      <rule>Rule 283B</rule>
+      <indication>Proceed at medium speed approaching next signal at slow speed</indication>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>9</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Approach Slow</name>
+      <rule>Rule 284</rule>
+      <indication>Proceed approaching next signal at slow speed. Train exceeding medium speed must at once reduce to that speed.</indication>
+      <speed>Normal</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>8</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Approach</name>
+      <rule>Rule 285</rule>
+      <indication>Proceed preparing to stop at next signal. Train exceeding medium speed must at once reduce to that speed.</indication>
+      <speed>Normal</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>7</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Medium Approach</name>
+      <rule>Rule 286</rule>
+      <indication>Proceed at medium speed preparing to stop at next signal</indication>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>6</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Slow Clear</name>
+      <rule>Rule 287</rule>
+      <indication>Proceed; slow speed within interlocking limits.</indication>
+      <speed>Slow</speed>
+      <speed2>Normal</speed2>
+      <route>Either</route>
+      <dccAspect>5</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Slow Approach Slow</name>
+      <rule>Rule 287A</rule>
+      <indication>Proceed preparing to pass next signal at slow speed; slow speed within interlocking limits.</indication>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>4</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Slow Approach</name>
+      <rule>Rule 288</rule>
+      <indication>Proceed preparing to stop at next signal; slow speed within interlocking limits.</indication>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Either</route>
+      <dccAspect>3</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Restricting</name>
+      <rule>Rule 290</rule>
+      <indication>Proceed at restricted speed.</indication>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+      <dccAspect>2</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Restricted Proceed</name>
+      <rule>Rule 291</rule>
+      <indication>Proceed at restricted speed.</indication>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+      <dccAspect>1</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Stop</name>
+      <rule>Rule 292</rule>
+      <indication>Stop.</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>0</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Unlit</name>
+      <rule>-</rule>
+      <indication>Stop.</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>31</dccAspect>
+    </aspect>
+  </aspects>
+  <imagetypes>
+    <imagetype type="noflash" />
+    <imagetype type="aspects" />
+  </imagetypes>
+  <appearancefiles>
+    <appearancefile href="appearance-bumper.xml" />
+    <appearancefile href="appearance-single.xml" />
+    <appearancefile href="appearance-double.xml" />
+    <appearancefile href="appearance-triple.xml" />
+    <appearancefile href="appearance-dwarf.xml" />
+  </appearancefiles>
+</aspecttable>

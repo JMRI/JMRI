@@ -9,11 +9,9 @@
 #
 # Author: Bob Jacobsen, copyright 2003, 2004
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 
 import jmri
+import java.beans
 
 # define a helper function
 def decodeJmriFilename(name) :

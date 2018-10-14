@@ -1,14 +1,14 @@
 package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.util.JmriJFrame;
 
 /**
  * Swing action to create and register a Block Routing Table.
  * <P>
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class LayoutBlockRouteTableAction extends AbstractAction {
 
@@ -17,25 +17,22 @@ public class LayoutBlockRouteTableAction extends AbstractAction {
      * <P>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
-     *
+     * <p>
+     * @param name the action title
+     * @param layoutBlock the layout block
      */
-    public LayoutBlockRouteTableAction(String s, LayoutBlock lBlock) {
-        super(s);
-        this.lBlock = lBlock;
+    public LayoutBlockRouteTableAction(String name, LayoutBlock layoutBlock) {
+        super(name);
+        this.layoutBlock = layoutBlock;
     }
 
-    //static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
+    private LayoutBlock layoutBlock = null;
 
-    LayoutBlock lBlock;
+    private LayoutBlockRouteTable lbrTable;
+    private JmriJFrame frame = null;
 
-    LayoutBlockRouteTable m;
-    //LayoutBlockNeighbourTable mn;
-    jmri.util.JmriJFrame f;
-
-    void createModel() {
-
-        m = new LayoutBlockRouteTable(false, lBlock);
-
+    private void createModel() {
+        lbrTable = new LayoutBlockRouteTable(false, layoutBlock);
     }
 
     public void actionPerformed() {
@@ -43,28 +40,23 @@ public class LayoutBlockRouteTableAction extends AbstractAction {
         createModel();
 
         // create the frame
-        f = new jmri.util.JmriJFrame() {
-
-            /**
-             *
-             */
-            private static final long serialVersionUID = -8814222912512779305L;
-        };
-        f.add(m);
+        frame = new JmriJFrame();
+        frame.add(lbrTable);
         setTitle();
-        f.pack();
-        f.setVisible(true);
+        frame.pack();
+        frame.setVisible(true);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
         actionPerformed();
     }
 
     void setTitle() {
-        if (lBlock != null) {
-            f.setTitle(Bundle.getMessage("BlockRoutingTableTitle") + " " + lBlock.getDisplayName());
+        if (layoutBlock != null) {
+            frame.setTitle(Bundle.getMessage("BlockRoutingTableTitle") + " " + layoutBlock.getDisplayName());
         } else {
-            f.setTitle(Bundle.getMessage("BlockRoutingTableTitleShort"));
+            frame.setTitle(Bundle.getMessage("BlockRoutingTableTitleShort"));
         }
     }
 

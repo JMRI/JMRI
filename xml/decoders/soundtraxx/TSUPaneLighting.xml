@@ -20,6 +20,7 @@
     <row>
       <label>
         <text>LIGHTING EFFECTS AND CONTROLS</text>
+        <text xml:lang="fr">EFFETS et COMMANDES des LUMIÈRES</text>
         <text xml:lang="it">EFFETTI LUMINOSI E CONTROLLI</text>
       </label>
     </row>
@@ -113,6 +114,28 @@
           <text>  </text>
         </label>
       </column>
+      <column>
+        <display item="FX7 Effect Selection"/>
+        <display item="FX7 Phase Selection"/>
+        <display item="FX7 Grade Crossing Logic"/>
+        <display item="FX7 Rule 17 Mode"/>
+        <display item="FX7 Light Type"/>
+        <display item="FX7 Forward Directional Control" format="checkbox"/>
+        <display item="FX7 Reverse Directional Control" format="checkbox"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="FX8 Effect Selection"/>
+        <display item="FX8 Phase Selection"/>
+        <display item="FX8 Grade Crossing Logic"/>
+        <display item="FX8 Rule 17 Mode"/>
+        <display item="FX8 Light Type"/>
+        <display item="FX8 Forward Directional Control" format="checkbox"/>
+        <display item="FX8 Reverse Directional Control" format="checkbox"/>
+        <label>
+          <text> </text>
+        </label>
+      </column>
     </row>
     <separator/>
     <row>
@@ -172,5 +195,11 @@
     </row>
   </column>
   <name>Lights</name>
+  <name xml:lang="ca">Llums</name>
+  <name xml:lang="cs">Osvětlení</name>
+  <name xml:lang="da">Lys</name>
+  <name xml:lang="de">Licht</name>
+  <name xml:lang="fr">Lumières</name>
   <name xml:lang="it">Luci</name>
+  <name xml:lang="nl">Licht</name>
 </pane>

@@ -27,6 +27,18 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>8</revnumber>
+      <date>2016-12-22</date>
+      <authorinitials>JCA</authorinitials>
+      <revremark>Catalan translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>7</revnumber>
+      <date>2016-10-22</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>6</revnumber>
       <date>2012-12-27</date>
       <authorinitials>BJ</authorinitials>
@@ -45,16 +57,22 @@
         <choice>Okay</choice>
         <choice xml:lang="it">OK</choice>
         <choice xml:lang="de">Okay</choice>
+        <choice xml:lang="cs">V pořádku</choice>
+        <choice xml:lang="ca">OK</choice>
       </enumChoice>
       <enumChoice choice="Fault">
         <choice>Fault</choice>
         <choice xml:lang="it">Guasto</choice>
         <choice xml:lang="de">Fehler</choice>
+        <choice xml:lang="cs">Závada</choice>
+        <choice xml:lang="ca">Error</choice>
       </enumChoice>
     </enumVal>
     <label>Light short-circuit</label>
     <label xml:lang="it">Luce per corto-circuito</label>
     <label xml:lang="de">Lampen Kurzschluss</label>
+    <label xml:lang="cs">Zkrat osvětlení</label>
+    <label xml:lang="ca">Curt-Circuit als Llums</label>
   </variable>
   <variable CV="30" mask="XXXXXXVX" item="Overheating" default="0">
     <enumVal>
@@ -62,16 +80,22 @@
         <choice>Okay</choice>
         <choice xml:lang="it">OK</choice>
         <choice xml:lang="de">Okay</choice>
+        <choice xml:lang="cs">V pořádku</choice>
+        <choice xml:lang="ca">OK</choice>
       </enumChoice>
       <enumChoice choice="Fault">
         <choice>Fault</choice>
         <choice xml:lang="it">Guasto</choice>
         <choice xml:lang="de">Fehler</choice>
+        <choice xml:lang="cs">Závada</choice>
+        <choice xml:lang="ca">Error</choice>
       </enumChoice>
     </enumVal>
     <label>Overheating</label>
     <label xml:lang="it">Sovratemperatura</label>
     <label xml:lang="de">Übertemperatur</label>
+    <label xml:lang="cs">Přehřátí</label>
+    <label xml:lang="ca">Sobre escalfament</label>
   </variable>
   <variable CV="30" mask="XXXXXVXX" item="Motor Short" default="0">
     <enumVal>
@@ -79,15 +103,21 @@
         <choice>Okay</choice>
         <choice xml:lang="it">OK</choice>
         <choice xml:lang="de">Okay</choice>
+        <choice xml:lang="cs">V pořádku</choice>
+        <choice xml:lang="ca">OK</choice>
       </enumChoice>
       <enumChoice choice="Fault">
         <choice>Fault</choice>
         <choice xml:lang="it">Guasto</choice>
         <choice xml:lang="de">Fehler</choice>
+        <choice xml:lang="cs">Závada</choice>
+        <choice xml:lang="ca">Error</choice>
       </enumChoice>
     </enumVal>
     <label>Motor short-circuit</label>
     <label xml:lang="it">Corto circuito Motore</label>
     <label xml:lang="de">Motor Kurzschluss</label>
+    <label xml:lang="cs">Zkrat motoru</label>
+    <label xml:lang="ca">Curt-Circuit al motor</label>
   </variable>
 </variables>

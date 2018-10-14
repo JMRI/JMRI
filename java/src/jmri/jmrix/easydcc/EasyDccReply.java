@@ -1,4 +1,3 @@
-// EasyDccReply.java
 package jmri.jmrix.easydcc;
 
 import org.slf4j.Logger;
@@ -7,8 +6,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Carries the reply to an EasyDccMessage.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2004
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2001, 2004
  */
 public class EasyDccReply extends jmri.jmrix.AbstractMRReply {
 
@@ -25,6 +23,7 @@ public class EasyDccReply extends jmri.jmrix.AbstractMRReply {
         super(l);
     }
 
+    @Override
     protected int skipPrefix(int index) {
         // start at index, passing any whitespace & control characters at the start of the buffer
         while (index < getNumDataElements() - 1
@@ -35,10 +34,13 @@ public class EasyDccReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * Extracts Read-CV returned value from a message. Returns -1 if message
-     * can't be parsed. Expects a message of the formnat "CVnnnvv" where vv is
+     * Extracts Read-CV returned value from a message.
+     * Expects a message of the format "CVnnnvv" where vv is
      * the hexadecimal value or "Vnvv" where vv is the hexadecimal value.
+     *
+     * @return -1 if message can't be parsed
      */
+    @Override
     public int value() {
         int index = 0;
         if ((char) getElement(index) == 'C') {
@@ -48,7 +50,7 @@ public class EasyDccReply extends jmri.jmrix.AbstractMRReply {
             // integer value of 3rd, 4th digits in hex
             index = 2;  // 2nd position is index 2
         } else {
-            log.warn("Did not find recognizable format: " + this.toString());
+            log.warn("Did not find recognizable format: {}", this.toString());
         }
         String s1 = "" + (char) getElement(index);
         String s2 = "" + (char) getElement(index + 1);
@@ -57,16 +59,13 @@ public class EasyDccReply extends jmri.jmrix.AbstractMRReply {
             int sum = Integer.valueOf(s2, 16).intValue();
             sum += 16 * Integer.valueOf(s1, 16).intValue();
             val = sum;  // don't do this assign until now in case the conversion throws
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             log.error("Unable to get number from reply: \"" + s1 + s2 + "\" index: " + index
                     + " message: \"" + toString() + "\"");
         }
         return val;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EasyDccReply.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EasyDccReply.class);
 
 }
-
-
-/* @(#)EasyDccReply.java */

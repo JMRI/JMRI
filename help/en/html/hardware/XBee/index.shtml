@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI Hardware Support - Digi XBee Network</title>
-  <meta content="Paul Bender" name="Author">
+  <meta name="author" content="Paul Bender">
   <meta name="keywords" content=
   "XBee Configuration Information for JMRI"><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -43,8 +43,9 @@
       XBee Modules</a> are family of wireless communication devices
       that have their own microcontroller and IO pins that make
       them useful for many distributed control networks, including
-      on model railroads.</p><a name="hardware" id="hardware"></a>
+      on model railroads.</p>
 
+      <a name="hardware" id="hardware"></a>
       <h2>Supported Hardware</h2>
 
       <h3>Command Station</h3>
@@ -78,12 +79,19 @@
       <h3>Wiring</h3>
 
       <p>JMRI can communicate with XBee Series 1 and XBee Series 2
-      modules. Underlying support for communication is provided by
-      <a href="https://code.google.com/p/xbee-api/">Andrew Rapp's
-      xbee-api library for Java</a>. This library requires that the
-      XBee module connected to the PC be configured for <a href=
-      "https://code.google.com/p/xbee-api/wiki/WhyApiMode">API
-      mode</a>.</p>
+      modules.</p>
+
+      <p>In JMRI versions Prior to 4.5.5, Underlying support for
+      communication is provided by 
+      <a href="https://github.com/andrewrapp/xbee-api">Andrew Rapp's
+      xbee-api library for Java</a>.</p>
+
+      <p>Starting with JMRI version 4.5.5, the Underlying support for
+      communication is provided by <a href="http://docs.digi.com/display/XBJLIB/XBee+Java+Library">The Digi XBee Java Library</a>.
+
+      <p>Both library requires that the
+      XBee module connected to the PC be configured for API
+      mode with escapes (mode 2).</p>
 
       <p>JMRI support for the Digi XBee Modules currently includes
       the ability to passively read digital sensor inputs, as JMRI
@@ -181,6 +189,50 @@
       ModuleAddress, the 64 bit GUID will be used for the
       ModuleAddress.</p>
 
+      <h3>Adding an item to the table</h3>
+      <p>When you add an item to one of the tables, many times you only
+        have to fill in the numbers to have JMRI construct
+        the complete system name.<br>
+        Here's a summary, split up for
+        outputs (eg. Turnouts) and inputs (eg. Sensors):</p>
+
+      <table>
+        <tbody><tr>
+          <th>In/Out</th>
+          <th>Entry</th>
+          <th>Meaning</th>
+          <th>makes System Name</th>
+          <th>Mask</th>
+          <th>Equivalent</th>
+          <th>Minimum</th>
+          <th>Maximum</th>
+        </tr>
+        <tr>
+          <td>i</td>
+          <td>4:3</td>
+          <td>ModuleAddress:Pin</td>
+          <td>ZS4:3</td>
+          <td>int : int</td>
+          <td> </td>
+          <td>pin: 0</td>
+          <td>pin: 71 (?)</td>
+        </tr>
+        <tr>
+          <td>o</td>
+          <td>4:3:4</td>
+          <td>ModuleAddress:Pin1:Pin2</td>
+          <td>ZT4:3:4</td>
+          <td>int : int : int</td>
+          <td> </td>
+          <td>pin: 0</td>
+          <td>pin: 71 (?)</td>
+        </tr>
+        </tbody>
+      </table>
+      <!-- this table is an exceprt from the table in the help/en/html/doc/Technical/Names.shtml
+      based on information from the Hardware help pages
+      by Egbert Broerse @silverailscolo July 2017 -->
+
       <h3>Software settings</h3>
 
       <ol>
@@ -265,7 +317,8 @@
       <h3>Third Party info</h3>
 
       <p><a href="http://www.digi.com/xbee">Digi Intl. XBee</a> web
-      site <!--#include virtual="/Footer" --></p>
+      site</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

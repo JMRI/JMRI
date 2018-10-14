@@ -1,6 +1,5 @@
 package jmri.jmrit.mailreport;
 
-import gnu.io.CommPortIdentifier;
 import java.awt.Dimension;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
@@ -26,6 +25,7 @@ import jmri.util.JmriInsets;
 import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
 import jmri.util.zeroconf.ZeroConfService;
+import purejavacomm.CommPortIdentifier;
 
 /**
  * Provide the JMRI context info.
@@ -49,21 +49,28 @@ public class ReportContext {
 
         addString("JMRI Version: " + jmri.Version.name() + "   ");
         addString("JMRI configuration file name: "
-                + System.getProperty("org.jmri.apps.Apps.configFilename") + "   ");
-        if (jmri.util.JmriJFrame.getFrameList().get(0) != null) {
+                + System.getProperty("org.jmri.apps.Apps.configFilename") + "   (from org.jmri.apps.Apps.configFilename system property)");
+        if (!jmri.util.JmriJFrame.getFrameList().isEmpty() && jmri.util.JmriJFrame.getFrameList().get(0) != null) {
             addString("JMRI main window name: "
                     + jmri.util.JmriJFrame.getFrameList().get(0).getTitle() + "   ");
+        } else {
+            addString("No main window present");
         }
 
         addString("JMRI Application: " + jmri.Application.getApplicationName() + "   ");
-        ConnectionConfig[] connList = InstanceManager.getDefault(ConnectionConfigManager.class).getConnections();
-        if (connList != null) {
-            for (int x = 0; x < connList.length; x++) {
-                ConnectionConfig conn = connList[x];
-                addString("Connection " + x + ": " + conn.getManufacturer() + " connected via " + conn.name() + " on " + conn.getInfo() + " Disabled " + conn.getDisabled() + "   ");
+        ConnectionConfigManager cm = InstanceManager.getNullableDefault(ConnectionConfigManager.class);
+        if (cm != null) {
+            ConnectionConfig[] connList = cm.getConnections();
+            if (connList != null) {
+                for (int x = 0; x < connList.length; x++) {
+                    ConnectionConfig conn = connList[x];
+                    addString("Connection " + x + ": " + conn.getManufacturer() + " connected via " + conn.name() + " on " + conn.getInfo() + " Disabled " + conn.getDisabled() + "   ");
+                }
             }
+        } else {
+            addString("No connections present");
         }
-
+        
         addString("Available Communication Ports:");
         addCommunicationPortInfo();
 
@@ -71,6 +78,8 @@ public class ReportContext {
         addString("Active profile: " + profile.getName() + "   ");
         addString("Profile location: " + profile.getPath().getPath() + "   ");
         addString("Profile ID: " + profile.getId() + "   ");
+        
+        addString("JMRI Node ID: "+ jmri.util.node.NodeIdentity.identity() );
 
         String prefs = FileUtil.getUserFilesPath();
         addString("Preferences directory: " + prefs + "   ");
@@ -86,7 +95,7 @@ public class ReportContext {
 
         //String operations = jmri.jmrit.operations.setup.OperationsSetupXml.getFileLocation();
         //addString("Operations files location: "+operations+"  ");
-        jmri.jmrit.audio.AudioFactory af = jmri.InstanceManager.getDefault(jmri.AudioManager.class).getActiveAudioFactory();
+        jmri.jmrit.audio.AudioFactory af = jmri.InstanceManager.getNullableDefault(jmri.AudioManager.class).getActiveAudioFactory();
         String audio = af != null ? af.toString() : "[not initialised]";
         addString("Audio factory type: " + audio + "   ");
 
@@ -128,6 +137,10 @@ public class ReportContext {
         addProperty("user.language");
         addProperty("user.timezone");
         addProperty("jmri.log.path");
+        
+        addString("FileSystemView#getDefaultDirectory(): "+javax.swing.filechooser.FileSystemView.getFileSystemView().getDefaultDirectory().getPath() );
+        addString("FileSystemView#getHomeDirectory(): "+javax.swing.filechooser.FileSystemView.getFileSystemView().getHomeDirectory().getPath() );
+        addString("Default JFileChooser(): "+(new javax.swing.JFileChooser()).getCurrentDirectory().getPath() );
 
         addScreenSize();
 
@@ -211,7 +224,7 @@ public class ReportContext {
             Insets jmriInsets = JmriInsets.getInsets();
             addString("JmriInsets t:" + jmriInsets.top + ", b:" + jmriInsets.bottom
                     + "; l:" + jmriInsets.left + ", r:" + jmriInsets.right);
-        } catch (Throwable ex) {
+        } catch (Exception ex) {
             addString("Exception getting JmriInsets" + ex.getMessage());
         }
     }
@@ -276,10 +289,9 @@ public class ReportContext {
      * Add communication port information
      */
     private void addCommunicationPortInfo() {
-        @SuppressWarnings("unchecked")
         Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
 
-        ArrayList<CommPortIdentifier> ports = new ArrayList<CommPortIdentifier>();
+        ArrayList<CommPortIdentifier> ports = new ArrayList<>();
 
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
@@ -309,4 +321,4 @@ public class ReportContext {
 
 }
 
-/* @(#)ReportContext.java */
+

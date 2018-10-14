@@ -1,6 +1,7 @@
 package jmri.managers;
 
-import jmri.NamedBean;
+import javax.annotation.Nonnull;
+
 import jmri.Reporter;
 import jmri.ReporterManager;
 
@@ -10,16 +11,18 @@ import jmri.ReporterManager;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
  */
-public class ProxyReporterManager extends AbstractProxyManager implements ReporterManager {
+public class ProxyReporterManager extends AbstractProxyManager<Reporter> implements ReporterManager {
 
     public ProxyReporterManager() {
         super();
     }
 
-    protected AbstractManager makeInternalManager() {
+    @Override
+    protected AbstractManager<Reporter> makeInternalManager() {
         return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getReporterManager();
     }
 
+    @Override
     public int getXMLOrder() {
         return jmri.Manager.REPORTERS;
     }
@@ -29,17 +32,24 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
      *
      * @return Null if nothing by that name exists
      */
+    @Override
     public Reporter getReporter(String name) {
-        return (Reporter) super.getNamedBean(name);
+        return super.getNamedBean(name);
     }
 
-    protected NamedBean makeBean(int i, String systemName, String userName) {
+    @Override
+    protected Reporter makeBean(int i, String systemName, String userName) {
         return ((ReporterManager) getMgr(i)).newReporter(systemName, userName);
     }
 
+    @Override
     public Reporter provideReporter(String sName) throws IllegalArgumentException {
-        return (Reporter) super.provideNamedBean(sName);
+        return super.provideNamedBean(sName);
     }
+
+    @Override
+    /** {@inheritDoc} */
+    public Reporter provide(@Nonnull String name) throws IllegalArgumentException { return provideReporter(name); }
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
@@ -47,8 +57,9 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
      *
      * @return requested Reporter object or null if none exists
      */
+    @Override
     public Reporter getBySystemName(String sName) {
-        return (Reporter) super.getBeanBySystemName(sName);
+        return super.getBeanBySystemName(sName);
     }
 
     /**
@@ -57,10 +68,12 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
      *
      * @return requested Reporter object or null if none exists
      */
+    @Override
     public Reporter getByUserName(String userName) {
-        return (Reporter) super.getBeanByUserName(userName);
+        return super.getBeanByUserName(userName);
     }
 
+    @Override
     public Reporter getByDisplayName(String key) {
         // First try to find it in the user list.
         // If that fails, look it up in the system list
@@ -100,10 +113,12 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
      *
      * @return requested Reporter object (never null)
      */
+    @Override
     public Reporter newReporter(String systemName, String userName) {
-        return (Reporter) newNamedBean(systemName, userName);
+        return newNamedBean(systemName, userName);
     }
 
+    @Override
     public boolean allowMultipleAdditions(String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
@@ -112,6 +127,22 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
         return ((ReporterManager) getMgr(0)).allowMultipleAdditions(systemName);
     }
 
+    /**
+     * Validate system name format. Locate a system specfic ReporterManager based on a system name.
+     *
+     * @return if a manager is found, return its determination of validity of
+     * system name format. Return INVALID if no manager exists.
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        int i = matchTentative(systemName);
+        if (i >= 0) {
+            return ((ReporterManager) getMgr(i)).validSystemNameFormat(systemName);
+        }
+        return NameValidity.INVALID;
+    }
+
+    @Override
     public String getNextValidAddress(String curAddress, String prefix) {
         for (int i = 0; i < nMgrs(); i++) {
             if (prefix.equals(
@@ -123,6 +154,16 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
         return null;
     }
 
+    /**
+     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     */
+    @Override
+    public String getEntryToolTip() {
+        String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
+        return entryToolTip;
+    }
+
+    @Override
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameReporter");
     }

@@ -1,4 +1,3 @@
-// TrainConductorFrame.java
 package jmri.jmrit.operations.trains;
 
 import java.awt.Dimension;
@@ -12,7 +11,7 @@ import jmri.jmrit.operations.trains.tools.ShowCarsInTrainAction;
  * Conductor Frame. Shows work for a train one location at a time.
  *
  * @author Dan Boudreau Copyright (C) 2011, 2013
- * @version $Revision: 18630 $
+ * 
  */
 public class TrainConductorFrame extends OperationsFrame {
 
@@ -36,10 +35,10 @@ public class TrainConductorFrame extends OperationsFrame {
             menuBar.add(toolMenu);
         }
         setJMenuBar(menuBar);
-        addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true); // NOI18N
+        addHelpMenu("package.jmri.jmrit.operations.Operations_TrainConductor", true); // NOI18N
 
         initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
     }
 
-//   private static final Logger log = LoggerFactory.getLogger(TrainConductorFrame.class.getName());
+//   private static final Logger log = LoggerFactory.getLogger(TrainConductorFrame.class);
 }

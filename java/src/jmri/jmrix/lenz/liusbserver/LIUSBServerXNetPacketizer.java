@@ -1,8 +1,6 @@
-/**
- * LIUSBXNetPacketizer.java
- */
 package jmri.jmrix.lenz.liusbserver;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.lenz.XNetPacketizer;
@@ -16,29 +14,25 @@ import org.slf4j.LoggerFactory;
  * In particular, LIUSBServerXNetPacketizer counts the number of commands
  * received.
  *
- * @author	Paul Bender, Copyright (C) 2009
- * @version $Revision$
+ * @author Paul Bender, Copyright (C) 2009
  *
  */
 public class LIUSBServerXNetPacketizer extends XNetPacketizer {
 
     public LIUSBServerXNetPacketizer(jmri.jmrix.lenz.LenzCommandStation pCommandStation) {
         super(pCommandStation);
-        if (log.isDebugEnabled()) {
-            log.debug("Loading LIUSB Server Extension to XNetPacketizer");
-        }
+        log.debug("Loading LIUSB Server Extension to XNetPacketizer");
     }
 
     /**
      * Actually transmits the next message to the port
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"UW_UNCOND_WAIT"},
+    @SuppressFBWarnings(value = {"UW_UNCOND_WAIT"},
              justification = "Wait is for external hardware, which doesn't necessarilly respond, to process the data.")
 
+    @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
-        if (log.isDebugEnabled()) {
-            log.debug("forwardToPort message: [{}]", m);
-        }
+        log.debug("forwardToPort message: [{}]", m);
         // remember who sent this
         mLastSender = reply;
 
@@ -78,14 +72,13 @@ public class LIUSBServerXNetPacketizer extends XNetPacketizer {
                 // no stream connected
                 connectionWarn();
             }
-        } catch (Exception e) {
+        } catch (java.io.IOException e) {
             // start the recovery process if an exception occurs.
             portWarn(e);
             controller.recover();
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LIUSBServerXNetPacketizer.class.getName());
-}
+    private final static Logger log = LoggerFactory.getLogger(LIUSBServerXNetPacketizer.class);
 
-/* @(#)XnTcpXNetPacketizer.java */
+}

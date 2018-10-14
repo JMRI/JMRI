@@ -1,5 +1,3 @@
-//RaspberryPiSystemConnectionMemo.java
-
 package jmri.jmrix.pi;
 
 import java.util.ResourceBundle;
@@ -18,13 +16,13 @@ import org.slf4j.LoggerFactory;
  * instance manager to activate their particular system.
  *
  * @author   Paul Bender Copyright (C) 2015
- * @version  $Revision$
+ * 
  */
 
 public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
    public RaspberryPiSystemConnectionMemo(){
-     super("PI","RaspberryPi");
+     super("P","RaspberryPi");
      register(); // registers general type
      InstanceManager.store(this,RaspberryPiSystemConnectionMemo.class); // also register as specific type
      if(log.isDebugEnabled()) log.debug("Created RaspberryPiSystemConnectionMemo");
@@ -80,6 +78,7 @@ public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnection
        setSensorManager(new RaspberryPiSensorManager(getSystemPrefix()));
     }
     
+    @Override
     public boolean provides(Class<?> type) {
         if (getDisabled())
             return false;
@@ -92,8 +91,9 @@ public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnection
         else return false; // nothing, by default
     }
 
-     @SuppressWarnings("unchecked")
-     public <T> T get(Class<?> T) {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T get(Class<?> T) {
          if (getDisabled())
              return null;
          if (T.equals(jmri.SensorManager.class))
@@ -105,17 +105,19 @@ public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnection
          return null; // nothing, by default
      }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle(){
         return ResourceBundle.getBundle("jmri.jmrix.pi.RaspberryPiActionListBundle");
     }
 
+    @Override
     public void dispose() {
         InstanceManager.deregister(this, RaspberryPiSystemConnectionMemo.class);
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RaspberryPiSystemConnectionMemo.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RaspberryPiSystemConnectionMemo.class);
 
 
 }
-/* @(#)XNetSystemConnectionMemo.java */
+

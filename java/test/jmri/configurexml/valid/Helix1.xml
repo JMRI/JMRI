@@ -1,0 +1,3612 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+
+
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+
+
+  <jmriversion>
+
+
+    <major>4</major>
+
+
+    <minor>2</minor>
+
+
+    <test>1</test>
+
+
+    <modifier>.1</modifier>
+
+
+  </jmriversion>
+
+
+  <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
+
+
+    <defaultInitialState>unknown</defaultInitialState>
+
+
+    <sensor systemName="ISCLOCKRUNNING" inverted="false">
+
+
+      <systemName>ISCLOCKRUNNING</systemName>
+
+
+    </sensor>
+
+
+  </sensors>
+
+
+  <sensors class="jmri.jmrix.loconet.configurexml.LnSensorManagerXml">
+
+
+    <sensor systemName="LS1" inverted="false" userName="Main Line Block 1">
+
+
+      <systemName>LS1</systemName>
+
+
+      <userName>Main Line Block 1</userName>
+
+
+      <comment>Block 1 Main Line</comment>
+
+
+    </sensor>
+
+
+    <sensor systemName="LS10" inverted="false">
+
+
+      <systemName>LS10</systemName>
+
+
+    </sensor>
+
+
+    <sensor systemName="LS11" inverted="false">
+
+
+      <systemName>LS11</systemName>
+
+
+    </sensor>
+
+
+    <sensor systemName="LS12" inverted="false">
+
+
+      <systemName>LS12</systemName>
+
+
+    </sensor>
+
+
+    <sensor systemName="LS13" inverted="false">
+
+
+      <systemName>LS13</systemName>
+
+
+    </sensor>
+
+
+    <sensor systemName="LS14" inverted="false">
+
+
+      <systemName>LS14</systemName>
+
+
+    </sensor>
+
+
+    <sensor systemName="LS15" inverted="false">
+
+
+      <systemName>LS15</systemName>
+
+
+    </sensor>
+
+
+    <sensor systemName="LS16" inverted="false">
+
+
+      <systemName>LS16</systemName>
+
+
+    </sensor>
+
+
+    <sensor systemName="LS2" inverted="false" userName="North Helix Level 1">
+
+
+      <systemName>LS2</systemName>
+
+
+      <userName>North Helix Level 1</userName>
+
+
+      <comment>Block 2 North Helix Level 1</comment>
+
+
+    </sensor>
+
+
+    <sensor systemName="LS3" inverted="false" userName="North Helix Level 2">
+
+
+      <systemName>LS3</systemName>
+
+
+      <userName>North Helix Level 2</userName>
+
+
+      <comment>Block 3 North Helix Level 2</comment>
+
+
+    </sensor>
+
+
+    <sensor systemName="LS4" inverted="false" userName="South Tunnel Level 3">
+
+
+      <systemName>LS4</systemName>
+
+
+      <userName>South Tunnel Level 3</userName>
+
+
+      <comment>Block 4 South Tunnel Level 3</comment>
+
+
+    </sensor>
+
+
+    <sensor systemName="LS5" inverted="false" userName="North Tunnel Level 3">
+
+
+      <systemName>LS5</systemName>
+
+
+      <userName>North Tunnel Level 3</userName>
+
+
+      <comment>Block 5 North Tunnel Level 3</comment>
+
+
+    </sensor>
+
+
+    <sensor systemName="LS6" inverted="false" userName="South Helix Level 2">
+
+
+      <systemName>LS6</systemName>
+
+
+      <userName>South Helix Level 2</userName>
+
+
+      <comment>Block 6 South Helix Level 2</comment>
+
+
+    </sensor>
+
+
+    <sensor systemName="LS7" inverted="false" userName="South Helix Level 1`">
+
+
+      <systemName>LS7</systemName>
+
+
+      <userName>South Helix Level 1`</userName>
+
+
+      <comment>Block 7 South Helix Level 1</comment>
+
+
+    </sensor>
+
+
+    <sensor systemName="LS8" inverted="false" userName="Staging Area ">
+
+
+      <systemName>LS8</systemName>
+
+
+      <userName>Staging Area </userName>
+
+
+      <comment>Block 8 Staging Area</comment>
+
+
+    </sensor>
+
+
+    <sensor systemName="LS9" inverted="false">
+
+
+      <systemName>LS9</systemName>
+
+
+    </sensor>
+
+
+  </sensors>
+
+
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+
+
+    <memory systemName="IM:AUTO:0001" userName="Staging Area">
+
+
+      <systemName>IM:AUTO:0001</systemName>
+
+
+      <userName>Staging Area</userName>
+
+
+    </memory>
+
+
+    <memory systemName="IM:AUTO:0002" userName="Main Line">
+
+
+      <systemName>IM:AUTO:0002</systemName>
+
+
+      <userName>Main Line</userName>
+
+
+    </memory>
+
+
+    <memory systemName="IM:AUTO:0003" userName="South Helix Level 1">
+
+
+      <systemName>IM:AUTO:0003</systemName>
+
+
+      <userName>South Helix Level 1</userName>
+
+
+    </memory>
+
+
+    <memory systemName="IM:AUTO:0004" userName="South Helix Level 2">
+
+
+      <systemName>IM:AUTO:0004</systemName>
+
+
+      <userName>South Helix Level 2</userName>
+
+
+    </memory>
+
+
+    <memory systemName="IM:AUTO:0005" userName="South Tunnel Level 3">
+
+
+      <systemName>IM:AUTO:0005</systemName>
+
+
+      <userName>South Tunnel Level 3</userName>
+
+
+    </memory>
+
+
+    <memory systemName="IM:AUTO:0006" userName="North Tunnel Level 3">
+
+
+      <systemName>IM:AUTO:0006</systemName>
+
+
+      <userName>North Tunnel Level 3</userName>
+
+
+    </memory>
+
+
+    <memory systemName="IM:AUTO:0007" userName="North Helix Level 2">
+
+
+      <systemName>IM:AUTO:0007</systemName>
+
+
+      <userName>North Helix Level 2</userName>
+
+
+    </memory>
+
+
+    <memory systemName="IM:AUTO:0008" userName="North Helix Level 1">
+
+
+      <systemName>IM:AUTO:0008</systemName>
+
+
+      <userName>North Helix Level 1</userName>
+
+
+    </memory>
+
+
+    <memory systemName="IMCURRENTTIME" value="3:10 PM">
+
+
+      <systemName>IMCURRENTTIME</systemName>
+
+
+    </memory>
+
+
+    <memory systemName="IMRATEFACTOR" value="1.0">
+
+
+      <systemName>IMRATEFACTOR</systemName>
+
+
+    </memory>
+
+
+  </memories>
+
+
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
+
+
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+
+
+  <blocks class="jmri.configurexml.BlockManagerXml">
+
+
+    <defaultspeed>Normal</defaultspeed>
+
+
+    <block systemName="IB1">
+
+
+      <systemName>IB1</systemName>
+
+
+      <userName>Block 1</userName>
+
+
+    </block>
+
+
+    <block systemName="IB10">
+
+
+      <systemName>IB10</systemName>
+
+
+      <userName>North Tunnel Level 3</userName>
+
+
+    </block>
+
+
+    <block systemName="IB11">
+
+
+      <systemName>IB11</systemName>
+
+
+      <userName>South Tunnel Level 3</userName>
+
+
+    </block>
+
+
+    <block systemName="IB12">
+
+
+      <systemName>IB12</systemName>
+
+
+      <userName>South Helix Level 1</userName>
+
+
+    </block>
+
+
+    <block systemName="IB2">
+
+
+      <systemName>IB2</systemName>
+
+
+      <userName>South Tunnel Level 3 (5)</userName>
+
+
+    </block>
+
+
+    <block systemName="IB3">
+
+
+      <systemName>IB3</systemName>
+
+
+      <userName>South Tunnel Level 3 (B5)</userName>
+
+
+    </block>
+
+
+    <block systemName="IB4">
+
+
+      <systemName>IB4</systemName>
+
+
+      <userName>Main Line Block 1</userName>
+
+
+    </block>
+
+
+    <block systemName="IB5">
+
+
+      <systemName>IB5</systemName>
+
+
+      <userName>North Helix Level 2</userName>
+
+
+    </block>
+
+
+    <block systemName="IB6">
+
+
+      <systemName>IB6</systemName>
+
+
+      <userName>South Helix Level 2</userName>
+
+
+    </block>
+
+
+    <block systemName="IB7">
+
+
+      <systemName>IB7</systemName>
+
+
+      <userName>Main Line</userName>
+
+
+    </block>
+
+
+    <block systemName="IB8">
+
+
+      <systemName>IB8</systemName>
+
+
+      <userName>Staging Area</userName>
+
+
+    </block>
+
+
+    <block systemName="IB9">
+
+
+      <systemName>IB9</systemName>
+
+
+      <userName>North Helix Level 1</userName>
+
+
+    </block>
+
+
+    <block systemName="IB1" length="0.0" curve="0" userName="Block 1">
+
+
+      <systemName>IB1</systemName>
+
+
+      <userName>Block 1</userName>
+
+
+      <permissive>no</permissive>
+
+
+    </block>
+
+
+    <block systemName="IB10" length="0.0" curve="0" userName="North Tunnel Level 3">
+
+
+      <systemName>IB10</systemName>
+
+
+      <userName>North Tunnel Level 3</userName>
+
+
+      <comment />
+
+
+      <permissive>no</permissive>
+
+
+      <occupancysensor>North Tunnel Level 3</occupancysensor>
+
+
+      <path todir="64" fromdir="128" block="IB5" />
+
+
+      <path todir="128" fromdir="64" block="IB5" />
+
+
+      <path todir="64" fromdir="128" block="IB5" />
+
+
+      <path todir="128" fromdir="64" block="IB5" />
+
+
+    </block>
+
+
+    <block systemName="IB11" length="0.0" curve="0" userName="South Tunnel Level 3">
+
+
+      <systemName>IB11</systemName>
+
+
+      <userName>South Tunnel Level 3</userName>
+
+
+      <comment />
+
+
+      <permissive>no</permissive>
+
+
+      <occupancysensor>South Tunnel Level 3</occupancysensor>
+
+
+      <path todir="128" fromdir="64" block="IB6" />
+
+
+      <path todir="64" fromdir="128" block="IB6" />
+
+
+      <path todir="128" fromdir="64" block="IB6" />
+
+
+      <path todir="64" fromdir="128" block="IB6" />
+
+
+    </block>
+
+
+    <block systemName="IB12" length="0.0" curve="0" userName="South Helix Level 1">
+
+
+      <systemName>IB12</systemName>
+
+
+      <userName>South Helix Level 1</userName>
+
+
+      <comment />
+
+
+      <permissive>no</permissive>
+
+
+      <occupancysensor>South Helix Level 1`</occupancysensor>
+
+
+      <path todir="128" fromdir="64" block="IB7" />
+
+
+      <path todir="64" fromdir="128" block="IB6" />
+
+
+      <path todir="128" fromdir="64" block="IB6" />
+
+
+    </block>
+
+
+    <block systemName="IB2" length="0.0" curve="0" userName="South Tunnel Level 3 (5)">
+
+
+      <systemName>IB2</systemName>
+
+
+      <userName>South Tunnel Level 3 (5)</userName>
+
+
+      <permissive>no</permissive>
+
+
+    </block>
+
+
+    <block systemName="IB3" length="0.0" curve="0" userName="South Tunnel Level 3 (B5)">
+
+
+      <systemName>IB3</systemName>
+
+
+      <userName>South Tunnel Level 3 (B5)</userName>
+
+
+      <permissive>no</permissive>
+
+
+    </block>
+
+
+    <block systemName="IB4" length="0.0" curve="0" userName="Main Line Block 1">
+
+
+      <systemName>IB4</systemName>
+
+
+      <userName>Main Line Block 1</userName>
+
+
+      <comment />
+
+
+      <permissive>no</permissive>
+
+
+      <occupancysensor>Main Line Block 1</occupancysensor>
+
+
+    </block>
+
+
+    <block systemName="IB5" length="0.0" curve="0" userName="North Helix Level 2">
+
+
+      <systemName>IB5</systemName>
+
+
+      <userName>North Helix Level 2</userName>
+
+
+      <comment />
+
+
+      <permissive>no</permissive>
+
+
+      <occupancysensor>North Helix Level 2</occupancysensor>
+
+
+      <path todir="64" fromdir="128" block="IB9" />
+
+
+      <path todir="128" fromdir="64" block="IB10" />
+
+
+      <path todir="128" fromdir="64" block="IB9" />
+
+
+      <path todir="64" fromdir="128" block="IB9" />
+
+
+      <path todir="64" fromdir="128" block="IB10" />
+
+
+      <path todir="128" fromdir="64" block="IB9" />
+
+
+      <path todir="128" fromdir="64" block="IB10" />
+
+
+      <path todir="64" fromdir="128" block="IB10" />
+
+
+    </block>
+
+
+    <block systemName="IB6" length="0.0" curve="0" userName="South Helix Level 2">
+
+
+      <systemName>IB6</systemName>
+
+
+      <userName>South Helix Level 2</userName>
+
+
+      <comment />
+
+
+      <permissive>no</permissive>
+
+
+      <occupancysensor>South Helix Level 2</occupancysensor>
+
+
+      <path todir="128" fromdir="64" block="IB12" />
+
+
+      <path todir="64" fromdir="128" block="IB11" />
+
+
+      <path todir="64" fromdir="128" block="IB12" />
+
+
+      <path todir="128" fromdir="64" block="IB12" />
+
+
+      <path todir="128" fromdir="64" block="IB11" />
+
+
+      <path todir="64" fromdir="128" block="IB12" />
+
+
+      <path todir="64" fromdir="128" block="IB11" />
+
+
+      <path todir="128" fromdir="64" block="IB11" />
+
+
+    </block>
+
+
+    <block systemName="IB7" length="0.0" curve="0" userName="Main Line">
+
+
+      <systemName>IB7</systemName>
+
+
+      <userName>Main Line</userName>
+
+
+      <comment />
+
+
+      <permissive>no</permissive>
+
+
+      <occupancysensor>Main Line Block 1</occupancysensor>
+
+
+      <path todir="64" fromdir="128" block="IB12" />
+
+
+      <path todir="128" fromdir="64" block="IB9" />
+
+
+    </block>
+
+
+    <block systemName="IB8" length="0.0" curve="0" userName="Staging Area">
+
+
+      <systemName>IB8</systemName>
+
+
+      <userName>Staging Area</userName>
+
+
+      <comment />
+
+
+      <permissive>no</permissive>
+
+
+      <occupancysensor>Staging Area </occupancysensor>
+
+
+    </block>
+
+
+    <block systemName="IB9" length="0.0" curve="0" userName="North Helix Level 1">
+
+
+      <systemName>IB9</systemName>
+
+
+      <userName>North Helix Level 1</userName>
+
+
+      <comment />
+
+
+      <permissive>no</permissive>
+
+
+      <occupancysensor>North Helix Level 1</occupancysensor>
+
+
+      <path todir="64" fromdir="128" block="IB7" />
+
+
+      <path todir="128" fromdir="64" block="IB5" />
+
+
+      <path todir="64" fromdir="128" block="IB5" />
+
+
+    </block>
+
+
+  </blocks>
+
+
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
+
+
+  <layoutblocks class="jmri.jmrit.display.configurexml.LayoutBlockManagerXml">
+
+
+    <layoutblock systemName="ILB10" userName="South Tunnel Level 3" occupancysensor="South Tunnel Level 3" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white" memory="South Tunnel Level 3">
+
+
+      <systemName>ILB10</systemName>
+
+
+      <userName>South Tunnel Level 3</userName>
+
+
+    </layoutblock>
+
+
+    <layoutblock systemName="ILB11" userName="South Helix Level 1" occupancysensor="South Helix Level 1`" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white" memory="South Helix Level 1">
+
+
+      <systemName>ILB11</systemName>
+
+
+      <userName>South Helix Level 1</userName>
+
+
+    </layoutblock>
+
+
+    <layoutblock systemName="ILB2" userName="Main Line" occupancysensor="Main Line Block 1" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white" memory="Main Line">
+
+
+      <systemName>ILB2</systemName>
+
+
+      <userName>Main Line</userName>
+
+
+    </layoutblock>
+
+
+    <layoutblock systemName="ILB5" userName="North Helix Level 2" occupancysensor="North Helix Level 2" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white" memory="North Helix Level 2">
+
+
+      <systemName>ILB5</systemName>
+
+
+      <userName>North Helix Level 2</userName>
+
+
+    </layoutblock>
+
+
+    <layoutblock systemName="ILB6" userName="South Helix Level 2" occupancysensor="South Helix Level 2" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white" memory="South Helix Level 2">
+
+
+      <systemName>ILB6</systemName>
+
+
+      <userName>South Helix Level 2</userName>
+
+
+    </layoutblock>
+
+
+    <layoutblock systemName="ILB7" userName="Staging Area" occupancysensor="Staging Area " occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white" memory="Staging Area">
+
+
+      <systemName>ILB7</systemName>
+
+
+      <userName>Staging Area</userName>
+
+
+    </layoutblock>
+
+
+    <layoutblock systemName="ILB8" userName="North Helix Level 1" occupancysensor="North Helix Level 1" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white" memory="North Helix Level 1">
+
+
+      <systemName>ILB8</systemName>
+
+
+      <userName>North Helix Level 1</userName>
+
+
+    </layoutblock>
+
+
+    <layoutblock systemName="ILB9" userName="North Tunnel Level 3" occupancysensor="North Tunnel Level 3" occupiedsense="2" trackcolor="black" occupiedcolor="red" extracolor="white" memory="North Tunnel Level 3">
+
+
+      <systemName>ILB9</systemName>
+
+
+      <userName>North Tunnel Level 3</userName>
+
+
+    </layoutblock>
+
+
+  </layoutblocks>
+
+
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+
+
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+
+
+    <logicDelay>500</logicDelay>
+
+
+  </signalmastlogics>
+
+
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Mar 04 10:24:20 EST 2016" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" />
+
+
+  <entryexitpairs class="jmri.jmrit.signalling.configurexml.EntryExitPairsXml" />
+
+
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="My Layout" x="0" y="0" height="648" width="1346" windowheight="713" windowwidth="1365" panelheight="648" panelwidth="1346" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="yes" drawgrid="no" snaponadd="no" snaponmove="no" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="8" xscale="1.0" yscale="1.0" sidetrackwidth="4" defaulttrackcolor="black" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="2" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" openDispatcher="no" useDirectTurnoutControl="no">
+
+
+    <positionablelabel x="530" y="361" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="Staging Area" size="16" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+
+
+      <tooltip>Text Label</tooltip>
+
+
+    </positionablelabel>
+
+
+    <positionablelabel x="537" y="313" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="Main Line" size="16" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+
+
+      <tooltip>Text Label</tooltip>
+
+
+    </positionablelabel>
+
+
+    <positionablelabel x="889" y="270" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="South Helix Level 1" size="16" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+
+
+      <tooltip>Text Label</tooltip>
+
+
+    </positionablelabel>
+
+
+    <positionablelabel x="888" y="204" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="South Helix Level 2" size="16" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+
+
+      <tooltip>Text Label</tooltip>
+
+
+    </positionablelabel>
+
+
+    <positionablelabel x="879" y="128" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="South Tunnel Level 3" size="16" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+
+
+      <tooltip>Text Label</tooltip>
+
+
+    </positionablelabel>
+
+
+    <positionablelabel x="159" y="132" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="North Tunnel Level 3" size="16" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+
+
+      <tooltip>Text Label</tooltip>
+
+
+    </positionablelabel>
+
+
+    <positionablelabel x="198" y="209" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="North Helix Level 2" size="16" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+
+
+      <tooltip>Text Label</tooltip>
+
+
+    </positionablelabel>
+
+
+    <positionablelabel x="193" y="268" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="North Helix Level 1" size="16" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+
+
+      <tooltip>Text Label</tooltip>
+
+
+    </positionablelabel>
+
+
+    <fastclock x="940" y="413" scale="1.0" color="Black" class="jmri.jmrit.display.configurexml.AnalogClock2DisplayXml" />
+
+
+    <sensoricon sensor="ISCLOCKRUNNING" x="984" y="594" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" text="" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+
+
+      <tooltip>ISCLOCKRUNNING</tooltip>
+
+
+      <active url="program:resources/icons/misc/Pause.gif" degrees="0" scale="1.0">
+
+
+        <rotation>0</rotation>
+
+
+      </active>
+
+
+      <inactive url="program:resources/icons/misc/Run.gif" degrees="0" scale="1.0">
+
+
+        <rotation>0</rotation>
+
+
+      </inactive>
+
+
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+
+
+        <rotation>0</rotation>
+
+
+      </unknown>
+
+
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+
+
+        <rotation>0</rotation>
+
+
+      </inconsistent>
+
+
+      <iconmaps />
+
+
+      <activeText red="255" green="0" blue="0" />
+
+
+      <inactiveText red="255" green="255" blue="0" />
+
+
+      <unknownText red="0" green="0" blue="255" />
+
+
+      <inconsistentText red="0" green="0" blue="0" />
+
+
+    </sensoricon>
+
+
+    <positionablelabel x="819" y="599" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="Run Train - Stop/Start Clock" size="12" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+
+
+      <tooltip>Text Label</tooltip>
+
+
+    </positionablelabel>
+
+
+    <memoryicon memory="North Tunnel Level 3" x="114" y="133" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" size="12" style="1" red="255" green="0" blue="0" hasBackground="yes" redBack="255" greenBack="0" blueBack="0" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+
+
+      <tooltip>North Tunnel Level 3 (IM:AUTO:0006)</tooltip>
+
+
+    </memoryicon>
+
+
+    <memoryicon memory="South Tunnel Level 3" x="1048" y="131" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" size="12" style="1" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+
+
+      <tooltip>South Tunnel Level 3 (IM:AUTO:0005)</tooltip>
+
+
+    </memoryicon>
+
+
+    <memoryicon memory="South Helix Level 2" x="1050" y="206" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" size="12" style="1" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+
+
+      <tooltip>South Helix Level 2 (IM:AUTO:0004)</tooltip>
+
+
+    </memoryicon>
+
+
+    <memoryicon memory="South Helix Level 1" x="1051" y="270" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" size="12" style="1" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+
+
+      <tooltip>South Helix Level 1 (IM:AUTO:0003)</tooltip>
+
+
+    </memoryicon>
+
+
+    <memoryicon memory="North Helix Level 1" x="105" y="265" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" size="12" style="1" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+
+
+      <tooltip>North Helix Level 1 (IM:AUTO:0008)</tooltip>
+
+
+    </memoryicon>
+
+
+    <memoryicon memory="North Helix Level 2" x="110" y="204" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" size="12" style="1" red="255" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+
+
+      <tooltip>North Helix Level 2 (IM:AUTO:0007)</tooltip>
+
+
+    </memoryicon>
+
+
+    <memoryicon memory="Main Line" x="504" y="317" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" size="12" style="1" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+
+
+      <tooltip>Main Line (IM:AUTO:0002)</tooltip>
+
+
+    </memoryicon>
+
+
+    <memoryicon memory="Staging Area" x="503" y="362" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" size="12" style="1" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+
+
+      <tooltip>Staging Area (IM:AUTO:0001)</tooltip>
+
+
+    </memoryicon>
+
+
+    <layoutturnout ident="TO1" blockname="Staging Area" type="2" connectaname="T3" connectbname="T2" connectcname="T1" continuing="2" disabled="no" disableWhenOccupied="no" xcen="1045.0" ycen="357.0" xa="1025.0" ya="357.0" xb="1065.0" yb="357.0" xc="1065.0" yc="348.0" xd="1025.0" yd="357.0" ver="1" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+
+
+    <layoutturnout ident="TO2" blockname="Main Line" type="2" connectaname="T12" connectbname="T4" connectcname="T1" continuing="2" disabled="no" disableWhenOccupied="no" xcen="1091.0" ycen="338.0" xa="1110.0" ya="338.0" xb="1072.0" yb="338.0" xc="1072.0" yc="348.0" xd="1110.0" yd="338.0" ver="1" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+
+
+    <tracksegment ident="T1" connect1name="TO1" type1="4" connect2name="TO2" type2="4" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+
+
+    <tracksegment ident="T2" blockname="Staging Area" connect1name="TO1" type1="3" connect2name="EB1" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+
+
+    <tracksegment ident="T3" blockname="Staging Area" connect1name="TO1" type1="2" connect2name="EB2" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+
+
+    <tracksegment ident="T4" blockname="Main Line" connect1name="TO2" type1="3" connect2name="EC2" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+
+
+    <tracksegment ident="T6" blockname="North Helix Level 1" connect1name="EC4" type1="1" connect2name="EC3" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+
+
+    <tracksegment ident="T7" blockname="North Helix Level 2" connect1name="EC6" type1="1" connect2name="EC5" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+
+
+    <tracksegment ident="T8" blockname="North Tunnel Level 3" connect1name="EC7" type1="1" connect2name="EC8" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+
+
+    <tracksegment ident="T9" blockname="South Helix Level 1" connect1name="EC9" type1="1" connect2name="EC12" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+
+
+    <tracksegment ident="T10" blockname="South Helix Level 2" connect1name="EC10" type1="1" connect2name="EC13" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+
+
+    <tracksegment ident="T11" blockname="South Tunnel Level 3" connect1name="EC11" type1="1" connect2name="EC14" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+
+
+    <tracksegment ident="T12" blockname="Main Line" connect1name="TO2" type1="2" connect2name="EC1" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+
+
+    <positionablepoint ident="EB1" type="2" x="1242.0" y="357.0" connect1name="T2" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC1" type="3" x="1132.0" y="338.0" connect1name="T12" linkedpanel="" linkpointid="" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC2" type="3" x="184.0" y="338.0" connect1name="T4" linkedpanel="" linkpointid="" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC3" type="3" x="14.0" y="295.0" connect1name="T6" linkedpanel="" linkpointid="" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC4" type="3" x="498.0" y="295.0" connect1name="T6" connect2name="T4" linkedpanel="My Layout" linkpointid="EC2" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC5" type="3" x="14.0" y="232.0" connect1name="T7" connect2name="T6" linkedpanel="My Layout" linkpointid="EC4" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC6" type="3" x="498.0" y="232.0" connect1name="T7" connect2name="T6" linkedpanel="My Layout" linkpointid="EC3" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC7" type="3" x="11.0" y="177.0" connect1name="T8" connect2name="T7" linkedpanel="My Layout" linkpointid="EC6" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC8" type="3" x="518.0" y="138.0" connect1name="T8" connect2name="T7" linkedpanel="My Layout" linkpointid="EC5" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC9" type="3" x="1314.0" y="296.0" connect1name="T9" linkedpanel="" linkpointid="" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC10" type="3" x="1314.0" y="233.0" connect1name="T10" connect2name="T9" linkedpanel="My Layout" linkpointid="EC12" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC11" type="3" x="1307.0" y="176.0" connect1name="T11" connect2name="T10" linkedpanel="My Layout" linkpointid="EC13" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC12" type="3" x="584.0" y="296.0" connect1name="T9" connect2name="T12" linkedpanel="My Layout" linkpointid="EC1" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC13" type="3" x="583.0" y="233.0" connect1name="T10" connect2name="T9" linkedpanel="My Layout" linkpointid="EC9" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EB2" type="2" x="19.0" y="357.0" connect1name="T3" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC14" type="3" x="551.0" y="140.0" connect1name="T11" connect2name="T10" linkedpanel="My Layout" linkpointid="EC10" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+  </LayoutEditor>
+
+
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="My Layout" x="0" y="0" height="648" width="1346" windowheight="713" windowwidth="1365" panelheight="648" panelwidth="1346" sliders="no" scrollable="none" editable="yes" positionable="yes" controlling="yes" animating="yes" showhelpbar="yes" drawgrid="no" snaponadd="no" snaponmove="no" antialiasing="yes" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="8" xscale="1.0" yscale="1.0" sidetrackwidth="4" defaulttrackcolor="black" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="2" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="255" greenBackground="200" blueBackground="0" openDispatcher="no" useDirectTurnoutControl="no">
+
+
+    <positionablelabel x="530" y="361" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Staging Area" size="16" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+
+
+      <tooltip>Text Label</tooltip>
+
+
+    </positionablelabel>
+
+
+    <positionablelabel x="537" y="313" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Main Line" size="16" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+
+
+      <tooltip>Text Label</tooltip>
+
+
+    </positionablelabel>
+
+
+    <positionablelabel x="889" y="270" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="South Helix Level 1" size="16" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+
+
+      <tooltip>Text Label</tooltip>
+
+
+    </positionablelabel>
+
+
+    <positionablelabel x="888" y="204" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="South Helix Level 2" size="16" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+
+
+      <tooltip>Text Label</tooltip>
+
+
+    </positionablelabel>
+
+
+    <positionablelabel x="879" y="128" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="South Tunnel Level 3" size="16" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+
+
+      <tooltip>Text Label</tooltip>
+
+
+    </positionablelabel>
+
+
+    <positionablelabel x="159" y="132" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="North Tunnel Level 3" size="16" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+
+
+      <tooltip>Text Label</tooltip>
+
+
+    </positionablelabel>
+
+
+    <positionablelabel x="198" y="209" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="North Helix Level 2" size="16" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+
+
+      <tooltip>Text Label</tooltip>
+
+
+    </positionablelabel>
+
+
+    <positionablelabel x="193" y="268" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="North Helix Level 1" size="16" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+
+
+      <tooltip>Text Label</tooltip>
+
+
+    </positionablelabel>
+
+
+    <fastclock x="940" y="413" scale="1.0" color="Black" class="jmri.jmrit.display.configurexml.AnalogClock2DisplayXml" />
+
+
+    <sensoricon sensor="ISCLOCKRUNNING" x="984" y="594" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" text="" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+
+
+      <tooltip>ISCLOCKRUNNING</tooltip>
+
+
+      <active url="program:resources/icons/misc/Pause.gif" degrees="0" scale="1.0">
+
+
+        <rotation>0</rotation>
+
+
+      </active>
+
+
+      <inactive url="program:resources/icons/misc/Run.gif" degrees="0" scale="1.0">
+
+
+        <rotation>0</rotation>
+
+
+      </inactive>
+
+
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+
+
+        <rotation>0</rotation>
+
+
+      </unknown>
+
+
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+
+
+        <rotation>0</rotation>
+
+
+      </inconsistent>
+
+
+      <iconmaps />
+
+
+      <activeText red="255" green="0" blue="0" />
+
+
+      <inactiveText red="255" green="255" blue="0" />
+
+
+      <unknownText red="0" green="0" blue="255" />
+
+
+      <inconsistentText red="0" green="0" blue="0" />
+
+
+    </sensoricon>
+
+
+    <positionablelabel x="819" y="599" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Run Train - Stop/Start Clock" size="12" style="1" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+
+
+      <tooltip>Text Label</tooltip>
+
+
+    </positionablelabel>
+
+
+    <memoryicon memory="North Tunnel Level 3" x="114" y="133" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="255" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+
+
+      <tooltip>North Tunnel Level 3 (IM:AUTO:0006)</tooltip>
+
+
+    </memoryicon>
+
+
+    <memoryicon memory="South Tunnel Level 3" x="1048" y="131" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+
+
+      <tooltip>South Tunnel Level 3 (IM:AUTO:0005)</tooltip>
+
+
+    </memoryicon>
+
+
+    <memoryicon memory="South Helix Level 2" x="1050" y="206" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+
+
+      <tooltip>South Helix Level 2 (IM:AUTO:0004)</tooltip>
+
+
+    </memoryicon>
+
+
+    <memoryicon memory="South Helix Level 1" x="1051" y="270" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+
+
+      <tooltip>South Helix Level 1 (IM:AUTO:0003)</tooltip>
+
+
+    </memoryicon>
+
+
+    <memoryicon memory="North Helix Level 1" x="105" y="265" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+
+
+      <tooltip>North Helix Level 1 (IM:AUTO:0008)</tooltip>
+
+
+    </memoryicon>
+
+
+    <memoryicon memory="North Helix Level 2" x="110" y="204" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="255" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+
+
+      <tooltip>North Helix Level 2 (IM:AUTO:0007)</tooltip>
+
+
+    </memoryicon>
+
+
+    <memoryicon memory="Main Line" x="504" y="317" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+
+
+      <tooltip>Main Line (IM:AUTO:0002)</tooltip>
+
+
+    </memoryicon>
+
+
+    <memoryicon memory="Staging Area" x="503" y="362" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="0" green="0" blue="0" hasBackground="no" justification="left" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+
+
+      <tooltip>Staging Area (IM:AUTO:0001)</tooltip>
+
+
+    </memoryicon>
+
+
+    <layoutturnout ident="TO1" blockname="Staging Area" type="2" connectaname="T3" connectbname="T2" connectcname="T1" continuing="2" disabled="no" disableWhenOccupied="no" xcen="1045.0" ycen="357.0" xa="1025.0" ya="357.0" xb="1065.0" yb="357.0" xc="1065.0" yc="348.0" xd="1025.0" yd="357.0" ver="1" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+
+
+    <layoutturnout ident="TO2" blockname="Main Line" type="2" connectaname="T12" connectbname="T4" connectcname="T1" continuing="2" disabled="no" disableWhenOccupied="no" xcen="1091.0" ycen="338.0" xa="1111.0" ya="338.0" xb="1071.0" yb="338.0" xc="1072.0" yc="348.0" xd="1111.0" yd="338.0" ver="1" class="jmri.jmrit.display.configurexml.LayoutTurnoutXml" />
+
+
+    <tracksegment ident="T1" connect1name="TO1" type1="4" connect2name="TO2" type2="4" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+
+
+    <tracksegment ident="T2" blockname="Staging Area" connect1name="TO1" type1="3" connect2name="EB1" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+
+
+    <tracksegment ident="T3" blockname="Staging Area" connect1name="TO1" type1="2" connect2name="EB2" type2="1" dashed="no" mainline="no" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+
+
+    <tracksegment ident="T4" blockname="Main Line" connect1name="TO2" type1="3" connect2name="EC2" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+
+
+    <tracksegment ident="T6" blockname="North Helix Level 1" connect1name="EC4" type1="1" connect2name="EC3" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+
+
+    <tracksegment ident="T7" blockname="North Helix Level 2" connect1name="EC6" type1="1" connect2name="EC5" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+
+
+    <tracksegment ident="T8" blockname="North Tunnel Level 3" connect1name="EC7" type1="1" connect2name="EC8" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+
+
+    <tracksegment ident="T9" blockname="South Helix Level 1" connect1name="EC9" type1="1" connect2name="EC12" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+
+
+    <tracksegment ident="T10" blockname="South Helix Level 2" connect1name="EC10" type1="1" connect2name="EC13" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+
+
+    <tracksegment ident="T11" blockname="South Tunnel Level 3" connect1name="EC11" type1="1" connect2name="EC14" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+
+
+    <tracksegment ident="T12" blockname="Main Line" connect1name="TO2" type1="2" connect2name="EC1" type2="1" dashed="no" mainline="yes" hidden="no" arc="no" class="jmri.jmrit.display.configurexml.TrackSegmentXml" />
+
+
+    <positionablepoint ident="EB1" type="2" x="1242.0" y="357.0" connect1name="T2" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC1" type="3" x="1132.0" y="338.0" connect1name="T12" connect2name="T9" linkedpanel="My Layout" linkpointid="EC12" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC2" type="3" x="184.0" y="338.0" connect1name="T4" connect2name="T6" linkedpanel="My Layout" linkpointid="EC4" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC3" type="3" x="14.0" y="295.0" connect1name="T6" connect2name="T7" linkedpanel="My Layout" linkpointid="EC6" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC4" type="3" x="498.0" y="295.0" connect1name="T6" connect2name="T7" linkedpanel="My Layout" linkpointid="EC5" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC5" type="3" x="14.0" y="232.0" connect1name="T7" connect2name="T8" linkedpanel="My Layout" linkpointid="EC8" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC6" type="3" x="500.0" y="231.0" connect1name="T7" connect2name="T8" linkedpanel="My Layout" linkpointid="EC7" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC7" type="3" x="11.0" y="177.0" connect1name="T8" linkedpanel="" linkpointid="" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC8" type="3" x="496.0" y="178.0" connect1name="T8" linkedpanel="" linkpointid="" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC9" type="3" x="1314.0" y="296.0" connect1name="T9" connect2name="T10" linkedpanel="My Layout" linkpointid="EC13" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC10" type="3" x="1306.0" y="233.0" connect1name="T10" connect2name="T11" linkedpanel="My Layout" linkpointid="EC14" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC11" type="3" x="1304.0" y="176.0" connect1name="T11" linkedpanel="" linkpointid="" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC12" type="3" x="584.0" y="296.0" connect1name="T9" connect2name="T10" linkedpanel="My Layout" linkpointid="EC10" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC13" type="3" x="583.0" y="233.0" connect1name="T10" connect2name="T11" linkedpanel="My Layout" linkpointid="EC11" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EB2" type="2" x="19.0" y="357.0" connect1name="T3" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+    <positionablepoint ident="EC14" type="3" x="582.0" y="178.0" connect1name="T11" linkedpanel="" linkpointid="" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
+
+
+  </LayoutEditor>
+
+
+  <filehistory>
+
+
+    <operation>
+
+
+      <type>app</type>
+
+
+      <date>Sun Mar 06 14:38:02 EST 2016</date>
+
+
+      <filename>DecoderPro</filename>
+
+
+    </operation>
+
+
+    <operation>
+
+
+      <type>Load OK</type>
+
+
+      <date>Sun Mar 06 14:38:02 EST 2016</date>
+
+
+      <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+    </operation>
+
+
+    <operation>
+
+
+      <type>Load OK</type>
+
+
+      <date>Sun Mar 06 14:38:03 EST 2016</date>
+
+
+      <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Blocks.xml</filename>
+
+
+      <filehistory>
+
+
+        <operation>
+
+
+          <type>app</type>
+
+
+          <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+          <filename>DecoderPro</filename>
+
+
+        </operation>
+
+
+        <operation>
+
+
+          <type>Load OK</type>
+
+
+          <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+          <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+        </operation>
+
+
+        <operation>
+
+
+          <type>Store</type>
+
+
+          <date>Fri Mar 04 11:03:03 EST 2016</date>
+
+
+          <filename />
+
+
+        </operation>
+
+
+      </filehistory>
+
+
+    </operation>
+
+
+    <operation>
+
+
+      <type>Load OK</type>
+
+
+      <date>Sun Mar 06 14:38:03 EST 2016</date>
+
+
+      <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Sensors.xml</filename>
+
+
+      <filehistory>
+
+
+        <operation>
+
+
+          <type>app</type>
+
+
+          <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+          <filename>DecoderPro</filename>
+
+
+        </operation>
+
+
+        <operation>
+
+
+          <type>Load OK</type>
+
+
+          <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+          <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+        </operation>
+
+
+        <operation>
+
+
+          <type>Store</type>
+
+
+          <date>Fri Mar 04 11:04:06 EST 2016</date>
+
+
+          <filename />
+
+
+        </operation>
+
+
+      </filehistory>
+
+
+    </operation>
+
+
+    <operation>
+
+
+      <type>Load OK</type>
+
+
+      <date>Sun Mar 06 14:38:52 EST 2016</date>
+
+
+      <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/My%20Layout/Helix.xml</filename>
+
+
+      <filehistory>
+
+
+        <operation>
+
+
+          <type>app</type>
+
+
+          <date>Sun Mar 06 14:12:06 EST 2016</date>
+
+
+          <filename>DecoderPro</filename>
+
+
+        </operation>
+
+
+        <operation>
+
+
+          <type>Load OK</type>
+
+
+          <date>Sun Mar 06 14:12:06 EST 2016</date>
+
+
+          <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+        </operation>
+
+
+        <operation>
+
+
+          <type>Load OK</type>
+
+
+          <date>Sun Mar 06 14:12:07 EST 2016</date>
+
+
+          <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Blocks.xml</filename>
+
+
+          <filehistory>
+
+
+            <operation>
+
+
+              <type>app</type>
+
+
+              <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+              <filename>DecoderPro</filename>
+
+
+            </operation>
+
+
+            <operation>
+
+
+              <type>Load OK</type>
+
+
+              <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+              <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+            </operation>
+
+
+            <operation>
+
+
+              <type>Store</type>
+
+
+              <date>Fri Mar 04 11:03:03 EST 2016</date>
+
+
+              <filename />
+
+
+            </operation>
+
+
+          </filehistory>
+
+
+        </operation>
+
+
+        <operation>
+
+
+          <type>Load OK</type>
+
+
+          <date>Sun Mar 06 14:12:08 EST 2016</date>
+
+
+          <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Sensors.xml</filename>
+
+
+          <filehistory>
+
+
+            <operation>
+
+
+              <type>app</type>
+
+
+              <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+              <filename>DecoderPro</filename>
+
+
+            </operation>
+
+
+            <operation>
+
+
+              <type>Load OK</type>
+
+
+              <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+              <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+            </operation>
+
+
+            <operation>
+
+
+              <type>Store</type>
+
+
+              <date>Fri Mar 04 11:04:06 EST 2016</date>
+
+
+              <filename />
+
+
+            </operation>
+
+
+          </filehistory>
+
+
+        </operation>
+
+
+        <operation>
+
+
+          <type>Load OK</type>
+
+
+          <date>Sun Mar 06 14:12:25 EST 2016</date>
+
+
+          <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/My%20Layout/Helix.xml</filename>
+
+
+          <filehistory>
+
+
+            <operation>
+
+
+              <type>app</type>
+
+
+              <date>Sun Mar 06 10:49:40 EST 2016</date>
+
+
+              <filename>DecoderPro</filename>
+
+
+            </operation>
+
+
+            <operation>
+
+
+              <type>Load OK</type>
+
+
+              <date>Sun Mar 06 10:49:40 EST 2016</date>
+
+
+              <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+            </operation>
+
+
+            <operation>
+
+
+              <type>Load OK</type>
+
+
+              <date>Sun Mar 06 10:49:41 EST 2016</date>
+
+
+              <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Blocks.xml</filename>
+
+
+              <filehistory>
+
+
+                <operation>
+
+
+                  <type>app</type>
+
+
+                  <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+                  <filename>DecoderPro</filename>
+
+
+                </operation>
+
+
+                <operation>
+
+
+                  <type>Load OK</type>
+
+
+                  <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+                  <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+                </operation>
+
+
+                <operation>
+
+
+                  <type>Store</type>
+
+
+                  <date>Fri Mar 04 11:03:03 EST 2016</date>
+
+
+                  <filename />
+
+
+                </operation>
+
+
+              </filehistory>
+
+
+            </operation>
+
+
+            <operation>
+
+
+              <type>Load OK</type>
+
+
+              <date>Sun Mar 06 10:49:43 EST 2016</date>
+
+
+              <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Sensors.xml</filename>
+
+
+              <filehistory>
+
+
+                <operation>
+
+
+                  <type>app</type>
+
+
+                  <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+                  <filename>DecoderPro</filename>
+
+
+                </operation>
+
+
+                <operation>
+
+
+                  <type>Load OK</type>
+
+
+                  <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+                  <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+                </operation>
+
+
+                <operation>
+
+
+                  <type>Store</type>
+
+
+                  <date>Fri Mar 04 11:04:06 EST 2016</date>
+
+
+                  <filename />
+
+
+                </operation>
+
+
+              </filehistory>
+
+
+            </operation>
+
+
+            <operation>
+
+
+              <type>Load OK</type>
+
+
+              <date>Sun Mar 06 10:51:16 EST 2016</date>
+
+
+              <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/My%20Layout/Helix.xml</filename>
+
+
+              <filehistory>
+
+
+                <operation>
+
+
+                  <type>app</type>
+
+
+                  <date>Sat Mar 05 12:06:22 EST 2016</date>
+
+
+                  <filename>DecoderPro</filename>
+
+
+                </operation>
+
+
+                <operation>
+
+
+                  <type>Load OK</type>
+
+
+                  <date>Sat Mar 05 12:06:22 EST 2016</date>
+
+
+                  <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+                </operation>
+
+
+                <operation>
+
+
+                  <type>Load OK</type>
+
+
+                  <date>Sat Mar 05 12:06:22 EST 2016</date>
+
+
+                  <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Blocks.xml</filename>
+
+
+                  <filehistory>
+
+
+                    <operation>
+
+
+                      <type>app</type>
+
+
+                      <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+                      <filename>DecoderPro</filename>
+
+
+                    </operation>
+
+
+                    <operation>
+
+
+                      <type>Load OK</type>
+
+
+                      <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+                      <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+                    </operation>
+
+
+                    <operation>
+
+
+                      <type>Store</type>
+
+
+                      <date>Fri Mar 04 11:03:03 EST 2016</date>
+
+
+                      <filename />
+
+
+                    </operation>
+
+
+                  </filehistory>
+
+
+                </operation>
+
+
+                <operation>
+
+
+                  <type>Load OK</type>
+
+
+                  <date>Sat Mar 05 12:06:23 EST 2016</date>
+
+
+                  <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Sensors.xml</filename>
+
+
+                  <filehistory>
+
+
+                    <operation>
+
+
+                      <type>app</type>
+
+
+                      <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+                      <filename>DecoderPro</filename>
+
+
+                    </operation>
+
+
+                    <operation>
+
+
+                      <type>Load OK</type>
+
+
+                      <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+                      <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+                    </operation>
+
+
+                    <operation>
+
+
+                      <type>Store</type>
+
+
+                      <date>Fri Mar 04 11:04:06 EST 2016</date>
+
+
+                      <filename />
+
+
+                    </operation>
+
+
+                  </filehistory>
+
+
+                </operation>
+
+
+                <operation>
+
+
+                  <type>Load with errors</type>
+
+
+                  <date>Sat Mar 05 12:50:47 EST 2016</date>
+
+
+                  <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Helix%20Level%202.xml</filename>
+
+
+                  <filehistory>
+
+
+                    <operation>
+
+
+                      <type>app</type>
+
+
+                      <date>Fri Mar 04 20:52:16 EST 2016</date>
+
+
+                      <filename>DecoderPro</filename>
+
+
+                    </operation>
+
+
+                    <operation>
+
+
+                      <type>Load OK</type>
+
+
+                      <date>Fri Mar 04 20:52:16 EST 2016</date>
+
+
+                      <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+                    </operation>
+
+
+                    <operation>
+
+
+                      <type>Load OK</type>
+
+
+                      <date>Fri Mar 04 20:52:17 EST 2016</date>
+
+
+                      <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Sensors.xml</filename>
+
+
+                      <filehistory>
+
+
+                        <operation>
+
+
+                          <type>app</type>
+
+
+                          <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+                          <filename>DecoderPro</filename>
+
+
+                        </operation>
+
+
+                        <operation>
+
+
+                          <type>Load OK</type>
+
+
+                          <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+                          <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+                        </operation>
+
+
+                        <operation>
+
+
+                          <type>Store</type>
+
+
+                          <date>Fri Mar 04 11:04:06 EST 2016</date>
+
+
+                          <filename />
+
+
+                        </operation>
+
+
+                      </filehistory>
+
+
+                    </operation>
+
+
+                    <operation>
+
+
+                      <type>Load OK</type>
+
+
+                      <date>Fri Mar 04 20:52:18 EST 2016</date>
+
+
+                      <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Blocks.xml</filename>
+
+
+                      <filehistory>
+
+
+                        <operation>
+
+
+                          <type>app</type>
+
+
+                          <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+                          <filename>DecoderPro</filename>
+
+
+                        </operation>
+
+
+                        <operation>
+
+
+                          <type>Load OK</type>
+
+
+                          <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+                          <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+                        </operation>
+
+
+                        <operation>
+
+
+                          <type>Store</type>
+
+
+                          <date>Fri Mar 04 11:03:03 EST 2016</date>
+
+
+                          <filename />
+
+
+                        </operation>
+
+
+                      </filehistory>
+
+
+                    </operation>
+
+
+                    <operation>
+
+
+                      <type>Load with errors</type>
+
+
+                      <date>Fri Mar 04 23:56:01 EST 2016</date>
+
+
+                      <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Helix%20Level%201.xml</filename>
+
+
+                      <filehistory>
+
+
+                        <operation>
+
+
+                          <type>app</type>
+
+
+                          <date>Fri Mar 04 20:52:16 EST 2016</date>
+
+
+                          <filename>DecoderPro</filename>
+
+
+                        </operation>
+
+
+                        <operation>
+
+
+                          <type>Load OK</type>
+
+
+                          <date>Fri Mar 04 20:52:16 EST 2016</date>
+
+
+                          <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+                        </operation>
+
+
+                        <operation>
+
+
+                          <type>Load OK</type>
+
+
+                          <date>Fri Mar 04 20:52:17 EST 2016</date>
+
+
+                          <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Sensors.xml</filename>
+
+
+                        </operation>
+
+
+                        <operation>
+
+
+                          <type>Load OK</type>
+
+
+                          <date>Fri Mar 04 20:52:18 EST 2016</date>
+
+
+                          <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Blocks.xml</filename>
+
+
+                        </operation>
+
+
+                        <operation>
+
+
+                          <type>Store</type>
+
+
+                          <date>Fri Mar 04 23:52:45 EST 2016</date>
+
+
+                          <filename />
+
+
+                        </operation>
+
+
+                      </filehistory>
+
+
+                    </operation>
+
+
+                    <operation>
+
+
+                      <type>Load OK</type>
+
+
+                      <date>Fri Mar 04 23:58:24 EST 2016</date>
+
+
+                      <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Main%20Line%20&amp;%20Staging.xml</filename>
+
+
+                      <filehistory>
+
+
+                        <operation>
+
+
+                          <type>app</type>
+
+
+                          <date>Fri Mar 04 20:52:16 EST 2016</date>
+
+
+                          <filename>DecoderPro</filename>
+
+
+                        </operation>
+
+
+                        <operation>
+
+
+                          <type>Load OK</type>
+
+
+                          <date>Fri Mar 04 20:52:16 EST 2016</date>
+
+
+                          <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+                        </operation>
+
+
+                        <operation>
+
+
+                          <type>Load OK</type>
+
+
+                          <date>Fri Mar 04 20:52:17 EST 2016</date>
+
+
+                          <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Sensors.xml</filename>
+
+
+                        </operation>
+
+
+                        <operation>
+
+
+                          <type>Load OK</type>
+
+
+                          <date>Fri Mar 04 20:52:18 EST 2016</date>
+
+
+                          <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Blocks.xml</filename>
+
+
+                        </operation>
+
+
+                        <operation>
+
+
+                          <type>Store</type>
+
+
+                          <date>Fri Mar 04 23:41:26 EST 2016</date>
+
+
+                          <filename />
+
+
+                        </operation>
+
+
+                      </filehistory>
+
+
+                    </operation>
+
+
+                    <operation>
+
+
+                      <type>Store</type>
+
+
+                      <date>Sat Mar 05 00:11:05 EST 2016</date>
+
+
+                      <filename />
+
+
+                    </operation>
+
+
+                  </filehistory>
+
+
+                </operation>
+
+
+                <operation>
+
+
+                  <type>Load with errors</type>
+
+
+                  <date>Sat Mar 05 12:51:30 EST 2016</date>
+
+
+                  <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/My%20Layout/Helix%20Level%202.xml</filename>
+
+
+                </operation>
+
+
+                <operation>
+
+
+                  <type>Load with errors</type>
+
+
+                  <date>Sat Mar 05 12:51:51 EST 2016</date>
+
+
+                  <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/My%20Layout/Helix%20Level%202.xml</filename>
+
+
+                </operation>
+
+
+                <operation>
+
+
+                  <type>Store</type>
+
+
+                  <date>Sat Mar 05 13:13:57 EST 2016</date>
+
+
+                  <filename />
+
+
+                </operation>
+
+
+              </filehistory>
+
+
+            </operation>
+
+
+            <operation>
+
+
+              <type>Store</type>
+
+
+              <date>Sun Mar 06 12:15:19 EST 2016</date>
+
+
+              <filename />
+
+
+            </operation>
+
+
+          </filehistory>
+
+
+        </operation>
+
+
+        <operation>
+
+
+          <type>Load OK</type>
+
+
+          <date>Sun Mar 06 14:13:22 EST 2016</date>
+
+
+          <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/My%20Layout/Helix.xml</filename>
+
+
+          <filehistory>
+
+
+            <operation>
+
+
+              <type>app</type>
+
+
+              <date>Sun Mar 06 10:49:40 EST 2016</date>
+
+
+              <filename>DecoderPro</filename>
+
+
+            </operation>
+
+
+            <operation>
+
+
+              <type>Load OK</type>
+
+
+              <date>Sun Mar 06 10:49:40 EST 2016</date>
+
+
+              <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+            </operation>
+
+
+            <operation>
+
+
+              <type>Load OK</type>
+
+
+              <date>Sun Mar 06 10:49:41 EST 2016</date>
+
+
+              <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Blocks.xml</filename>
+
+
+              <filehistory>
+
+
+                <operation>
+
+
+                  <type>app</type>
+
+
+                  <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+                  <filename>DecoderPro</filename>
+
+
+                </operation>
+
+
+                <operation>
+
+
+                  <type>Load OK</type>
+
+
+                  <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+                  <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+                </operation>
+
+
+                <operation>
+
+
+                  <type>Store</type>
+
+
+                  <date>Fri Mar 04 11:03:03 EST 2016</date>
+
+
+                  <filename />
+
+
+                </operation>
+
+
+              </filehistory>
+
+
+            </operation>
+
+
+            <operation>
+
+
+              <type>Load OK</type>
+
+
+              <date>Sun Mar 06 10:49:43 EST 2016</date>
+
+
+              <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Sensors.xml</filename>
+
+
+              <filehistory>
+
+
+                <operation>
+
+
+                  <type>app</type>
+
+
+                  <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+                  <filename>DecoderPro</filename>
+
+
+                </operation>
+
+
+                <operation>
+
+
+                  <type>Load OK</type>
+
+
+                  <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+                  <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+                </operation>
+
+
+                <operation>
+
+
+                  <type>Store</type>
+
+
+                  <date>Fri Mar 04 11:04:06 EST 2016</date>
+
+
+                  <filename />
+
+
+                </operation>
+
+
+              </filehistory>
+
+
+            </operation>
+
+
+            <operation>
+
+
+              <type>Load OK</type>
+
+
+              <date>Sun Mar 06 10:51:16 EST 2016</date>
+
+
+              <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/My%20Layout/Helix.xml</filename>
+
+
+              <filehistory>
+
+
+                <operation>
+
+
+                  <type>app</type>
+
+
+                  <date>Sat Mar 05 12:06:22 EST 2016</date>
+
+
+                  <filename>DecoderPro</filename>
+
+
+                </operation>
+
+
+                <operation>
+
+
+                  <type>Load OK</type>
+
+
+                  <date>Sat Mar 05 12:06:22 EST 2016</date>
+
+
+                  <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+                </operation>
+
+
+                <operation>
+
+
+                  <type>Load OK</type>
+
+
+                  <date>Sat Mar 05 12:06:22 EST 2016</date>
+
+
+                  <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Blocks.xml</filename>
+
+
+                  <filehistory>
+
+
+                    <operation>
+
+
+                      <type>app</type>
+
+
+                      <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+                      <filename>DecoderPro</filename>
+
+
+                    </operation>
+
+
+                    <operation>
+
+
+                      <type>Load OK</type>
+
+
+                      <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+                      <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+                    </operation>
+
+
+                    <operation>
+
+
+                      <type>Store</type>
+
+
+                      <date>Fri Mar 04 11:03:03 EST 2016</date>
+
+
+                      <filename />
+
+
+                    </operation>
+
+
+                  </filehistory>
+
+
+                </operation>
+
+
+                <operation>
+
+
+                  <type>Load OK</type>
+
+
+                  <date>Sat Mar 05 12:06:23 EST 2016</date>
+
+
+                  <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Sensors.xml</filename>
+
+
+                  <filehistory>
+
+
+                    <operation>
+
+
+                      <type>app</type>
+
+
+                      <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+                      <filename>DecoderPro</filename>
+
+
+                    </operation>
+
+
+                    <operation>
+
+
+                      <type>Load OK</type>
+
+
+                      <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+                      <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+                    </operation>
+
+
+                    <operation>
+
+
+                      <type>Store</type>
+
+
+                      <date>Fri Mar 04 11:04:06 EST 2016</date>
+
+
+                      <filename />
+
+
+                    </operation>
+
+
+                  </filehistory>
+
+
+                </operation>
+
+
+                <operation>
+
+
+                  <type>Load with errors</type>
+
+
+                  <date>Sat Mar 05 12:50:47 EST 2016</date>
+
+
+                  <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Helix%20Level%202.xml</filename>
+
+
+                  <filehistory>
+
+
+                    <operation>
+
+
+                      <type>app</type>
+
+
+                      <date>Fri Mar 04 20:52:16 EST 2016</date>
+
+
+                      <filename>DecoderPro</filename>
+
+
+                    </operation>
+
+
+                    <operation>
+
+
+                      <type>Load OK</type>
+
+
+                      <date>Fri Mar 04 20:52:16 EST 2016</date>
+
+
+                      <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+                    </operation>
+
+
+                    <operation>
+
+
+                      <type>Load OK</type>
+
+
+                      <date>Fri Mar 04 20:52:17 EST 2016</date>
+
+
+                      <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Sensors.xml</filename>
+
+
+                      <filehistory>
+
+
+                        <operation>
+
+
+                          <type>app</type>
+
+
+                          <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+                          <filename>DecoderPro</filename>
+
+
+                        </operation>
+
+
+                        <operation>
+
+
+                          <type>Load OK</type>
+
+
+                          <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+                          <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+                        </operation>
+
+
+                        <operation>
+
+
+                          <type>Store</type>
+
+
+                          <date>Fri Mar 04 11:04:06 EST 2016</date>
+
+
+                          <filename />
+
+
+                        </operation>
+
+
+                      </filehistory>
+
+
+                    </operation>
+
+
+                    <operation>
+
+
+                      <type>Load OK</type>
+
+
+                      <date>Fri Mar 04 20:52:18 EST 2016</date>
+
+
+                      <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Blocks.xml</filename>
+
+
+                      <filehistory>
+
+
+                        <operation>
+
+
+                          <type>app</type>
+
+
+                          <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+                          <filename>DecoderPro</filename>
+
+
+                        </operation>
+
+
+                        <operation>
+
+
+                          <type>Load OK</type>
+
+
+                          <date>Fri Mar 04 10:24:20 EST 2016</date>
+
+
+                          <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+                        </operation>
+
+
+                        <operation>
+
+
+                          <type>Store</type>
+
+
+                          <date>Fri Mar 04 11:03:03 EST 2016</date>
+
+
+                          <filename />
+
+
+                        </operation>
+
+
+                      </filehistory>
+
+
+                    </operation>
+
+
+                    <operation>
+
+
+                      <type>Load with errors</type>
+
+
+                      <date>Fri Mar 04 23:56:01 EST 2016</date>
+
+
+                      <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Helix%20Level%201.xml</filename>
+
+
+                      <filehistory>
+
+
+                        <operation>
+
+
+                          <type>app</type>
+
+
+                          <date>Fri Mar 04 20:52:16 EST 2016</date>
+
+
+                          <filename>DecoderPro</filename>
+
+
+                        </operation>
+
+
+                        <operation>
+
+
+                          <type>Load OK</type>
+
+
+                          <date>Fri Mar 04 20:52:16 EST 2016</date>
+
+
+                          <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+                        </operation>
+
+
+                        <operation>
+
+
+                          <type>Load OK</type>
+
+
+                          <date>Fri Mar 04 20:52:17 EST 2016</date>
+
+
+                          <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Sensors.xml</filename>
+
+
+                        </operation>
+
+
+                        <operation>
+
+
+                          <type>Load OK</type>
+
+
+                          <date>Fri Mar 04 20:52:18 EST 2016</date>
+
+
+                          <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Blocks.xml</filename>
+
+
+                        </operation>
+
+
+                        <operation>
+
+
+                          <type>Store</type>
+
+
+                          <date>Fri Mar 04 23:52:45 EST 2016</date>
+
+
+                          <filename />
+
+
+                        </operation>
+
+
+                      </filehistory>
+
+
+                    </operation>
+
+
+                    <operation>
+
+
+                      <type>Load OK</type>
+
+
+                      <date>Fri Mar 04 23:58:24 EST 2016</date>
+
+
+                      <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Main%20Line%20&amp;%20Staging.xml</filename>
+
+
+                      <filehistory>
+
+
+                        <operation>
+
+
+                          <type>app</type>
+
+
+                          <date>Fri Mar 04 20:52:16 EST 2016</date>
+
+
+                          <filename>DecoderPro</filename>
+
+
+                        </operation>
+
+
+                        <operation>
+
+
+                          <type>Load OK</type>
+
+
+                          <date>Fri Mar 04 20:52:16 EST 2016</date>
+
+
+                          <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/UserPrefsProfileConfig.xml</filename>
+
+
+                        </operation>
+
+
+                        <operation>
+
+
+                          <type>Load OK</type>
+
+
+                          <date>Fri Mar 04 20:52:17 EST 2016</date>
+
+
+                          <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Sensors.xml</filename>
+
+
+                        </operation>
+
+
+                        <operation>
+
+
+                          <type>Load OK</type>
+
+
+                          <date>Fri Mar 04 20:52:18 EST 2016</date>
+
+
+                          <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/Blocks.xml</filename>
+
+
+                        </operation>
+
+
+                        <operation>
+
+
+                          <type>Store</type>
+
+
+                          <date>Fri Mar 04 23:41:26 EST 2016</date>
+
+
+                          <filename />
+
+
+                        </operation>
+
+
+                      </filehistory>
+
+
+                    </operation>
+
+
+                    <operation>
+
+
+                      <type>Store</type>
+
+
+                      <date>Sat Mar 05 00:11:05 EST 2016</date>
+
+
+                      <filename />
+
+
+                    </operation>
+
+
+                  </filehistory>
+
+
+                </operation>
+
+
+                <operation>
+
+
+                  <type>Load with errors</type>
+
+
+                  <date>Sat Mar 05 12:51:30 EST 2016</date>
+
+
+                  <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/My%20Layout/Helix%20Level%202.xml</filename>
+
+
+                </operation>
+
+
+                <operation>
+
+
+                  <type>Load with errors</type>
+
+
+                  <date>Sat Mar 05 12:51:51 EST 2016</date>
+
+
+                  <filename>/C:/Users/Doug/JMRI/My_JMRI_Railroad/My%20Layout/Helix%20Level%202.xml</filename>
+
+
+                </operation>
+
+
+                <operation>
+
+
+                  <type>Store</type>
+
+
+                  <date>Sat Mar 05 13:13:57 EST 2016</date>
+
+
+                  <filename />
+
+
+                </operation>
+
+
+              </filehistory>
+
+
+            </operation>
+
+
+            <operation>
+
+
+              <type>Store</type>
+
+
+              <date>Sun Mar 06 12:15:19 EST 2016</date>
+
+
+              <filename />
+
+
+            </operation>
+
+
+          </filehistory>
+
+
+        </operation>
+
+
+        <operation>
+
+
+          <type>Store</type>
+
+
+          <date>Sun Mar 06 14:18:53 EST 2016</date>
+
+
+          <filename />
+
+
+        </operation>
+
+
+      </filehistory>
+
+
+    </operation>
+
+
+    <operation>
+
+
+      <type>Store</type>
+
+
+      <date>Sun Mar 06 15:10:42 EST 2016</date>
+
+
+      <filename />
+
+
+    </operation>
+
+
+  </filehistory>
+
+
+  <!--Written by JMRI version 4.2.1-R6b484b4 on Sun Mar 06 15:10:42 EST 2016 $Id$-->
+
+
+</layout-config>
+
+

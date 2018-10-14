@@ -23,7 +23,8 @@ public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
      * Usual configurexml method, this one doesn't do anything because the
      * content is explicitly loaded from the file
      */
-    public boolean load(Element shared, Element perNode) throws Exception {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         return true;
     }
 
@@ -69,29 +70,17 @@ public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
     }
 
     /**
-     * Create a set of configured objects from their XML description, using an
-     * auxiliary object.
-     * <P>
-     * For example, the auxilary object o might be a manager or GUI of some type
-     * that needs to be informed as each object is created.
-     *
-     * @param e Top-level XML element containing the description
-     * @param o Implementation-specific Object needed for the conversion
-     * @throws Exception when a error prevents creating the objects as as
-     *                   required by the input XML.
+     * This method is not implemented: See class comment above for more discussion.
      */
-    public void load(Element e, Object o) throws Exception {
-        throw new Exception("Method not coded");
+    @Override
+    public void load(Element e, Object o) {
+        throw new UnsupportedOperationException("Method not coded");
     }
 
     /**
-     * Store the
-     *
-     * @param o The object to be recorded. Specific XmlAdapter implementations
-     *          will require this to be of a specific type; that binding is done
-     *          in ConfigXmlManager.
-     * @return The XML representation Element
+     * {@inheritDoc}
      */
+    @Override
     public Element store(Object o) {
         return storeDirectly(o);
     }

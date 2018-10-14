@@ -1,62 +1,52 @@
 package jmri.jmrit.display.layoutEditor;
 
-import junit.framework.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
 /**
  * Tests for the jmrit.display.layoutEditor package
  *
  * @author	Bob Jacobsen Copyright 2008, 2009, 2010
  */
-public class PackageTest extends TestCase {
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        LayoutEditorConnectivityTest.class,
+        BlockContentsIconTest.class,
+        BlockValueFileTest.class, 
+        BundleTest.class,
+        ConnectivityUtilTest.class,
+        jmri.jmrit.display.layoutEditor.blockRoutingTable.PackageTest.class,
+        jmri.jmrit.display.layoutEditor.configurexml.PackageTest.class,
+        LayoutBlockConnectivityToolsTest.class, 
+        LayoutBlockManagerTest.class, 
+        LayoutBlockTest.class, 
+        LayoutConnectivityTest.class, 
+        LayoutEditorActionTest.class, 
+        LayoutEditorAuxToolsTest.class,
+        LayoutEditorFindItemsTest.class,
+        LayoutEditorLoadAndStoreTest.class,
+        LayoutEditorTest.class,
+        LayoutEditorWindowTest.class,
+        LayoutSlipTest.class,
+        LayoutTurnoutTest.class,
+        LayoutTurntableTest.class,
+        LevelXingTest.class,
+        MemoryIconTest.class,
+        MultiIconEditorTest.class,
+        MultiSensorIconFrameTest.class,
+        PositionablePointTest.class,
+        SchemaTest.class,
+        TrackNodeTest.class,
+        TrackSegmentTest.class,
+        TransitCreationToolTest.class,
+        LayoutTrackEditorsTest.class,
+        LayoutEditorComponentTest.class,
+        LayoutEditorToolsTest.class,
+        LayoutEditorChecksTest.class,
+        LayoutTrackDrawingOptionsDialogTest.class,
+	LayoutTrackDrawingOptionsTest.class,
+	LayoutTrackExpectedStateTest.class,
 
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        apps.tests.Log4JFixture.initLogging();
-        
-        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(PackageTest.class.getName());
-
-        suite.addTest(SchemaTest.suite());
-        suite.addTest(LayoutBlockTest.suite());
-        suite.addTest(LayoutBlockManagerTest.suite());
-        suite.addTest(BlockValueFileTest.suite());
-        suite.addTest(LayoutBlockConnectivityToolsTest.suite());
-        suite.addTest(LayoutTurnoutTest.suite());
-        suite.addTest(LayoutConnectivityTest.suite());
-
-        suite.addTest(BundleTest.suite());
-        suite.addTest(jmri.jmrit.display.layoutEditor.blockRoutingTable.BundleTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.display.layoutEditor.configurexml.PackageTest.class));
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(LayoutEditorActionTest.suite());
-            suite.addTest(LayoutEditorTest.suite());
-            suite.addTest(LayoutEditorToolsTest.suite());
-            suite.addTest(LayoutEditorAuxToolsTest.suite());
-            suite.addTest(ConnectivityUtilTest.suite());
-            suite.addTest(BlockContentsIconTest.suite());
-            suite.addTest(MultiIconEditorTest.suite());
-            suite.addTest(MultiSensorIconFrameTest.suite());
-            suite.addTest(LayoutTurntableTest.suite());
-            suite.addTest(LevelXingTest.suite());
-            suite.addTest(LayoutSlipTest.suite());
-            suite.addTest(MemoryIconTest.suite());
-            suite.addTest(PositionablePointTest.suite());
-            suite.addTest(TrackNodeTest.suite());
-            suite.addTest(TrackSegmentTest.suite());
-            suite.addTest(LayoutEditorWindowTest.suite());
-            suite.addTest(LEConnectivityTest.suite());
-        }
-
-        return suite;
-    }
+})
+public class PackageTest {
 }

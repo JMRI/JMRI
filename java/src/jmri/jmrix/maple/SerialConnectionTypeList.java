@@ -1,14 +1,15 @@
-// SerialConnectionTypeList.java
 package jmri.jmrix.maple;
+
+import jmri.jmrix.ConnectionTypeList;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Returns a list of valid Maple Connection Types
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
- * @version	$Revision$
- *
  */
+@ServiceProvider(service = ConnectionTypeList.class)
 public class SerialConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 
     public static final String MAPLE = "Maple Systems";
@@ -16,7 +17,8 @@ public class SerialConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
     @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
-            "jmri.jmrix.maple.serialdriver.ConnectionConfig"
+            "jmri.jmrix.maple.serialdriver.ConnectionConfig",
+            "jmri.jmrix.maple.simulator.ConnectionConfig"
         };
     }
 

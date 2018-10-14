@@ -1,40 +1,45 @@
 package jmri.jmrix.grapevine.nodetable;
 
 import java.awt.Container;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
-import jmri.jmrix.grapevine.SerialTrafficController;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
+import jmri.util.JmriJFrame;
 
 /**
- * Frame for user configuration of serial nodes
+ * Frame for user configuration of serial nodes.
  *
- * @author	Bob Jacobsen Copyright (C) 2004, 2007
- * @author	Dave Duchamp Copyright (C) 2004, 2006
+ * @author Bob Jacobsen Copyright (C) 2004, 2007
+ * @author Dave Duchamp Copyright (C) 2004, 2006
  */
-public class NodeTableFrame extends jmri.util.JmriJFrame {
+public class NodeTableFrame extends JmriJFrame {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.grapevine.nodetable.NodeTableBundle");
+    private GrapevineSystemConnectionMemo memo = null;
 
     /**
-     * Constructor method
+     * Create a new NodeTableFrame.
+     *
+     * @param _memo the {@link jmri.jmrix.grapevine.GrapevineSystemConnectionMemo} for this table
      */
-    public NodeTableFrame() {
+    public NodeTableFrame(GrapevineSystemConnectionMemo _memo) {
         super();
+        memo = _memo;
     }
 
     NodeTablePane p;
 
     /**
-     * Initialize the window
+     * {@inheritDoc}
+     * Initialize the NodeTableFrame window.
      */
+    @Override
     public void initComponents() {
-        setTitle(rb.getString("WindowTitle"));
+        setTitle(Bundle.getMessage("WindowTitle"));
 
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
         // add table
-        p = new NodeTablePane();
+        p = new NodeTablePane(memo);
         p.initComponents();
         contentPane.add(p);
 
@@ -42,13 +47,18 @@ public class NodeTableFrame extends jmri.util.JmriJFrame {
         addHelpMenu("package.jmri.jmrix.grapevine.nodetable.NodeTableFrame", true);
 
         // register
-        SerialTrafficController.instance().addSerialListener(p);
+        memo.getTrafficController().addSerialListener(p);
         // pack for display
         pack();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void dispose() {
-        SerialTrafficController.instance().removeSerialListener(p);
+        memo.getTrafficController().removeSerialListener(p);
         super.dispose();
     }
+
 }

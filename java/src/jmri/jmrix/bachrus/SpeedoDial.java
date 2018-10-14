@@ -1,4 +1,3 @@
-// SpeedoDial.java
 package jmri.jmrix.bachrus;
 
 import java.awt.Color;
@@ -20,16 +19,11 @@ import jmri.jmrit.catalog.NamedIcon;
  * Based on analogue clock frame by Dennis Miller
  *
  * @author Andrew Crosland Copyright (C) 2010
- * @author	Dennis Miller Copyright (C) 2015
+ * @author Dennis Miller Copyright (C) 2015
  *
- * @version $Revision$
  */
 public class SpeedoDial extends JPanel {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8451435603320207793L;
     // GUI member declarations
     float speedAngle = 0.0F;
     int speedDigits = 0;
@@ -91,14 +85,20 @@ public class SpeedoDial extends JPanel {
 
         // Add component listener to handle frame resizing event
         this.addComponentListener(new ComponentAdapter() {
+            @Override
             public void componentResized(ComponentEvent e) {
                 scaleFace();
             }
         });
     }
 
+    @Override
     public void paint(Graphics g) {
         super.paint(g);
+        if (!(g instanceof Graphics2D) ) {
+              throw new IllegalArgumentException("Graphics object passed is not the correct type");
+        }
+
         Graphics2D g2 = (Graphics2D) g;
 
         // overridden Paint method to draw the speedo dial
@@ -186,11 +186,12 @@ public class SpeedoDial extends JPanel {
         // Draw pointer rotated to appropriate angle
         // Calculation mimics the AffineTransform class calculations in Graphics2D
         // Graphics2D and AffineTransform not used to maintain compatabilty with Java 1.1.8
+        double speedAngleRadians = Math.toRadians(speedAngle);
         for (int i = 0; i < scaledMinuteX.length; i++) {
-            rotatedMinuteX[i] = (int) (scaledMinuteX[i] * Math.cos(toRadians(speedAngle))
-                    - scaledMinuteY[i] * Math.sin(toRadians(speedAngle)));
-            rotatedMinuteY[i] = (int) (scaledMinuteX[i] * Math.sin(toRadians(speedAngle))
-                    + scaledMinuteY[i] * Math.cos(toRadians(speedAngle)));
+            rotatedMinuteX[i] = (int) (scaledMinuteX[i] * Math.cos(speedAngleRadians)
+                    - scaledMinuteY[i] * Math.sin(speedAngleRadians));
+            rotatedMinuteY[i] = (int) (scaledMinuteX[i] * Math.sin(speedAngleRadians)
+                    + scaledMinuteY[i] * Math.cos(speedAngleRadians));
         }
         scaledMinuteHand = new Polygon(rotatedMinuteX, rotatedMinuteY, rotatedMinuteX.length);
         g2.fillPolygon(scaledMinuteHand);
@@ -230,23 +231,17 @@ public class SpeedoDial extends JPanel {
         g2.drawString(speedString, -digitsFontM.stringWidth(speedString) / 2, 2 * faceSize / 5);
     }
 
-    // Method to convert degrees to radians
-    // Math.toRadians was not available until Java 1.2
-    float toRadians(float degrees) {
-        return degrees / 180.0F * (float) Math.PI;
-    }
-
     // Method to provide the cartesian x coordinate given a radius and angle (in degrees)
     int dotX(float radius, float angle) {
         int xDist;
-        xDist = (int) Math.round(radius * Math.cos(toRadians(angle)));
+        xDist = (int) Math.round(radius * Math.cos(Math.toRadians(angle)));
         return xDist;
     }
 
     // Method to provide the cartesian y coordinate given a radius and angle (in degrees)
     int dotY(float radius, float angle) {
         int yDist;
-        yDist = (int) Math.round(radius * Math.sin(toRadians(angle)));
+        yDist = (int) Math.round(radius * Math.sin(Math.toRadians(angle)));
         return yDist;
     }
 

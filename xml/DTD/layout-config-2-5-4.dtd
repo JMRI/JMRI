@@ -25,6 +25,8 @@
 			signalheads | conditionals | logixs | application | signalelements | reporters |
 			memories | memorys | timebase |
 			layoutblocks )*>
+  <!ATTLIST layout-config xmlns:xsi	CDATA #IMPLIED> <!-- to allow XML Schema reference to be DTD valid -->
+  <!ATTLIST layout-config xsi:noNamespaceSchemaLocation	CDATA #IMPLIED> <!-- to allow XML Schema reference to be DTD valid -->
 
 <!-- Overall application configuration -->
 <!ELEMENT application (connection*, gui*, programmer, roster?, perform*)>

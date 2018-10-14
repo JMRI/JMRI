@@ -1,6 +1,6 @@
-// ShowTrainsServingLocationFram.java
 package jmri.jmrit.operations.locations.tools;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
@@ -28,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * Frame to show which trains can service this location
  *
  * @author Dan Boudreau Copyright (C) 2014
- * @version $Revision: 24984 $
+ * 
  */
 public class ShowTrainsServingLocationFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -124,7 +125,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
     private void updateTrainPane() {
         pTrains.removeAll();
         int y = 0;
-        for (Train train : TrainManager.instance().getTrainsByNameList()) {
+        for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByNameList()) {
             Route route = train.getRoute();
             if (route == null) {
                 continue;
@@ -154,21 +155,24 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
                             .acceptsTypeName((String) typeComboBox.getSelectedItem()))
                             && (train.isLocalSwitcher() || (rl.getTrainDirection() & _location.getTrainDirections()) != 0)
                             && (train.isLocalSwitcher() || _track == null || ((rl.getTrainDirection() & _track
-                            .getTrainDirections()) != 0)) && (_track == null || _track.acceptsDropTrain(train))) {
+                            .getTrainDirections()) != 0)) 
+                            && (_track == null || _track.acceptsDropTrain(train))) {
                         setout = true;
                     }
                     // now display results
                     if (showAllTrainsCheckBox.isSelected() || pickup || setout) {
                         addItemLeft(pTrains, new JLabel(train.getName()), 0, y);
+                        // train direction when servicing this location
+                        addItem(pTrains, new JLabel(rl.getTrainDirectionString()), 1, y);
                         if (pickup) {
-                            addItem(pTrains, new JLabel(Bundle.getMessage("OkayPickUp")), 1, y);
+                            addItem(pTrains, new JLabel(Bundle.getMessage("OkayPickUp")), 2, y);
                         } else {
-                            addItem(pTrains, new JLabel(Bundle.getMessage("NoPickUp")), 1, y);
+                            addItem(pTrains, new JLabel(Bundle.getMessage("NoPickUp")), 2, y);
                         }
                         if (setout) {
-                            addItem(pTrains, new JLabel(Bundle.getMessage("OkaySetOut")), 2, y);
+                            addItem(pTrains, new JLabel(Bundle.getMessage("OkaySetOut")), 3, y);
                         } else {
-                            addItem(pTrains, new JLabel(Bundle.getMessage("NoSetOut")), 2, y);
+                            addItem(pTrains, new JLabel(Bundle.getMessage("NoSetOut")), 3, y);
                         }
                     }
                     y++;
@@ -180,7 +184,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("check box action");
         isShowAllTrains = showAllTrainsCheckBox.isSelected();
@@ -203,7 +207,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
     private void updateComboBox() {
         log.debug("update combobox");
         typeComboBox.setEnabled(false);
-        CarTypes.instance().updateComboBox(typeComboBox);
+        InstanceManager.getDefault(CarTypes.class).updateComboBox(typeComboBox);
         // remove car types not serviced by this location and track
         for (int i = typeComboBox.getItemCount() - 1; i >= 0; i--) {
             String type = typeComboBox.getItemAt(i);
@@ -234,21 +238,21 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
         if (_track != null) {
             _track.removePropertyChangeListener(this);
         }
-        CarTypes.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
         removePropertyChangeAllTrains();
         super.dispose();
     }
 
     public void addPropertyChangeAllTrains() {
-        TrainManager.instance().addPropertyChangeListener(this);
-        for (Train train : TrainManager.instance().getTrainsByNameList()) {
+        InstanceManager.getDefault(TrainManager.class).addPropertyChangeListener(this);
+        for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByNameList()) {
             train.addPropertyChangeListener(this);
         }
     }
 
     public void removePropertyChangeAllTrains() {
-        TrainManager.instance().removePropertyChangeListener(this);
-        for (Train train : TrainManager.instance().getTrainsByNameList()) {
+        InstanceManager.getDefault(TrainManager.class).removePropertyChangeListener(this);
+        for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByNameList()) {
             train.removePropertyChangeListener(this);
             if (train.getRoute() != null) {
                 train.getRoute().removePropertyChangeListener(this);
@@ -282,5 +286,5 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ShowTrainsServingLocationFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ShowTrainsServingLocationFrame.class);
 }

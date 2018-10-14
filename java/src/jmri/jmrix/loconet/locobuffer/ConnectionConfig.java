@@ -1,4 +1,3 @@
-// ConnectionConfig.java
 package jmri.jmrix.loconet.locobuffer;
 
 /**
@@ -6,8 +5,7 @@ package jmri.jmrix.loconet.locobuffer;
  * via a LocoBufferAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2010
- * @version	$Revision$
- */
+  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
@@ -19,7 +17,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no preexisting adapter
      */
     public ConnectionConfig() {
         super();
@@ -29,10 +27,12 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return false;
     }
 
+    @Override
     public String name() {
-        return "LocoNet LocoBuffer";
+        return "LocoNet LocoBuffer"; // NOI18N
     }
 
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new LocoBufferAdapter();

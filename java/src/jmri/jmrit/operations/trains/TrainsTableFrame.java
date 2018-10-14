@@ -1,8 +1,6 @@
-// TrainsTableFrame.java
 package jmri.jmrit.operations.trains;
 
 import java.awt.Color;
-import java.awt.Frame;
 import java.io.File;
 import java.text.MessageFormat;
 import java.util.List;
@@ -60,7 +58,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
  * 2014
- * @version $Revision$
  */
 public class TrainsTableFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -69,11 +66,11 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     public static final String RESET = Bundle.getMessage("Reset");
     public static final String CONDUCTOR = Bundle.getMessage("Conductor");
 
-    CarManagerXml carManagerXml = CarManagerXml.instance(); // load cars
-    EngineManagerXml engineManagerXml = EngineManagerXml.instance(); // load engines
-    TrainManager trainManager = TrainManager.instance();
-    TrainManagerXml trainManagerXml = TrainManagerXml.instance();
-    LocationManager locationManager = LocationManager.instance();
+    CarManagerXml carManagerXml = InstanceManager.getDefault(CarManagerXml.class); // load cars
+    EngineManagerXml engineManagerXml = InstanceManager.getDefault(EngineManagerXml.class); // load engines
+    TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
+    TrainManagerXml trainManagerXml = InstanceManager.getDefault(TrainManagerXml.class);
+    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     TrainsTableModel trainsModel;
     JTable trainsTable;
@@ -81,7 +78,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 
     // labels
     JLabel numTrains = new JLabel();
-    JLabel textTrains = new JLabel(Bundle.getMessage("Trains").toLowerCase());
+    JLabel textTrains = new JLabel(Bundle.getMessage("trains"));
     JLabel textSep1 = new JLabel("      ");
 
     // radio buttons
@@ -94,7 +91,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     JRadioButton conductorRB = new JRadioButton(CONDUCTOR);
 
     // major buttons
-    JButton addButton = new JButton(Bundle.getMessage("Add"));
+    JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
     JButton buildButton = new JButton(Bundle.getMessage("Build"));
     JButton printButton = new JButton(Bundle.getMessage("Print"));
     JButton openFileButton = new JButton(Bundle.getMessage("OpenFile"));
@@ -288,8 +285,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         toolMenu.add(new PrintSavedTrainManifestAction(Bundle.getMessage("MenuItemPreviewSavedManifest"), true, null));
         toolMenu.add(new SetupExcelProgramFrameAction(Bundle.getMessage("MenuItemSetupExcelProgram")));
         toolMenu.add(new ExportTrainRosterAction());
-        toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPrint"), new Frame(), false, this));
-        toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPreview"), new Frame(), true, this));
+        toolMenu.addSeparator();
+        toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPrint"), false, this));
+        toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPreview"), true, this));
 
         menuBar.add(toolMenu);
         menuBar.add(new jmri.jmrit.operations.OperationsMenu());
@@ -309,7 +307,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         addPropertyChangeLocations();
 
         // auto save
-        new AutoSave();
+        new AutoSave().start();
     }
 
     @Override
@@ -362,7 +360,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
                         JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                 .getMessage("NeedToBuildBeforeOpenFile"), new Object[]{
                             train.getName()}),
-                                Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);
+                                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                     } else if (train.isBuilt()) {
                         train.openFile();
                     }
@@ -371,34 +369,42 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         }
         if (ae.getSource() == runFileButton) {
             // Processes the CSV Manifest files using an external custom program.
-            if (!TrainCustomManifest.instance().excelFileExists()) {
-                log.warn("Manifest creator file not found!, directory name: " + TrainCustomManifest.instance().getDirectoryName()
-                        + ", file name: " + TrainCustomManifest.instance().getFileName()); // NOI18N
-                JOptionPane.showMessageDialog(this, MessageFormat.format(
-                        Bundle.getMessage("LoadDirectoryNameFileName"), new Object[]{
-                    TrainCustomManifest.instance().getDirectoryName(), TrainCustomManifest.instance().getFileName()}), Bundle
-                        .getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
+            TrainCustomManifest tcm = InstanceManager.getDefault(TrainCustomManifest.class);
+            if (!tcm.excelFileExists()) {
+                log.warn("Manifest creator file not found!, directory name: {}, file name: {}",
+                        tcm.getDirectoryName(), tcm.getFileName());
+                JOptionPane.showMessageDialog(this,
+                        MessageFormat.format(Bundle.getMessage("LoadDirectoryNameFileName"),
+                                new Object[]{
+                                    tcm.getDirectoryName(),
+                                    tcm.getFileName()
+                                }),
+                        Bundle.getMessage("ManifestCreatorNotFound"),
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
             List<Train> trains = getSortByList();
             for (Train train : trains) {
                 if (train.isBuildEnabled()) {
                     if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
-                        JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
-                                .getMessage("NeedToBuildBeforeRunFile"), new Object[]{
-                            train.getName()}),
-                                Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(this,
+                                MessageFormat.format(Bundle.getMessage("NeedToBuildBeforeRunFile"),
+                                        new Object[]{
+                                            train.getName()
+                                        }),
+                                Bundle.getMessage("ErrorTitle"),
+                                JOptionPane.ERROR_MESSAGE);
                     } else if (train.isBuilt()) {
                         // Make sure our csv manifest file exists for this Train.
                         File csvFile = train.createCSVManifestFile();
                         // Add it to our collection to be processed.
-                        TrainCustomManifest.instance().addCVSFile(csvFile);
+                        tcm.addCVSFile(csvFile);
                     }
                 }
             }
 
             // Now run the user specified custom Manifest processor program
-            TrainCustomManifest.instance().process();
+            tcm.process();
         }
         if (ae.getSource() == switchListsButton) {
             if (tslef != null) {
@@ -507,7 +513,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 
     private void updateTitle() {
         String title = Bundle.getMessage("TitleTrainsTable");
-        TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(trainManager.getTrainScheduleActiveId());
+        TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getActiveSchedule();
         if (sch != null) {
             title = title + " (" + sch.getName() + ")";
         }
@@ -612,5 +618,5 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainsTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainsTableFrame.class);
 }

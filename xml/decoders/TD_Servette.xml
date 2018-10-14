@@ -56,13 +56,13 @@
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable item="Servo 1 Center Posiion" CV="10" mask="XVVVVVVV" default="62">
+      <variable item="Servo 1 Center Position" CV="10" mask="XVVVVVVV" default="62">
         <decVal min="1" max="127"/>
-        <label>Servo 1 Center Posiion</label>
+        <label>Servo 1 Center Position</label>
       </variable>
-      <variable item="Servo 2 Center Posiion" CV="11" mask="XVVVVVVV" default="62">
+      <variable item="Servo 2 Center Position" CV="11" mask="XVVVVVVV" default="62">
         <decVal min="1" max="127"/>
-        <label>Servo 2 Center Posiion</label>
+        <label>Servo 2 Center Position</label>
       </variable>
       <!-- Begin route variable definition -->
       <variable item="Route 1 Address" CV="12" mask="VVVVVVVV" default="0" tooltip="Range 1-2040">
@@ -297,7 +297,7 @@
     <name>Mfg</name>
     <column>
       <label>
-        <text>---- Sets the Servette to a paricular test state - Use to help adjust servos ----</text>
+        <text>---- Sets the Servette to a particular test state - Use to help adjust servos ----</text>
       </label>
       <label>
         <text>            Only works in Ops mode</text>
@@ -383,14 +383,14 @@
       <row>
         <column>
           <display item="Servo Move Range" tooltip="Range 1-127"/>
-          <display item="Servo Center Posiion" tooltip="Range 1-127"/>
+          <display item="Servo Center Position" tooltip="Range 1-127"/>
           <display item="Servo Move Speed" tooltip="Range 1-127"/>
           <row>
             <column>
               <display item="Servo Behavior"/>
             </column>
             <column>
-              <display item="Rev1" format="checkbox" tooltip="Servo moves in oposite direction"/>
+              <display item="Rev1" format="checkbox" tooltip="Servo moves in opposite direction"/>
             </column>
           </row>
         </column>

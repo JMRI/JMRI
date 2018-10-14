@@ -7,10 +7,10 @@
 #
 # Author: Bob Jacobsen, copyright 2008
 # JMRI
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
-    
+import jmri
+import jmri.jmrix
+import jmri.jmrix.grapevine
+
 # Define Listener to make a note if an answer is received
 class NodeListener(jmri.jmrix.grapevine.SerialListener):
   def message(self, m):
@@ -20,7 +20,7 @@ class NodeListener(jmri.jmrix.grapevine.SerialListener):
     result = False
     return
  
-jmri.jmrix.grapevine.SerialTrafficController.instance().addSerialListener(NodeListener())
+jmri.InstanceManager.getDefault(jmri.jmrix.grapevine.GrapevineSystemConnectionMemo).getTrafficController().addSerialListener(NodeListener())
 
 # now an Automat to loop over all possible nodes and report those that
 # don't reply after a short wait
@@ -37,7 +37,7 @@ class TestLooper(jmri.jmrit.automat.AbstractAutomaton) :
             result = True
             self.message.setElement(0,i+128)
             self.message.setElement(2,i+128)
-            jmri.jmrix.grapevine.SerialTrafficController.instance().sendSerialMessage(self.message, None)
+            jmri.InstanceManager.getDefault(jmri.jmrix.grapevine.GrapevineSystemConnectionMemo).getTrafficController().sendSerialMessage(self.message, None)
             self.waitMsec(200)
             if (result) :
                 print "node",i,"may be present"

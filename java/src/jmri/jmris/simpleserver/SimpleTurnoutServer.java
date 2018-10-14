@@ -1,4 +1,3 @@
-//SimpleTurnoutServer.java
 package jmri.jmris.simpleserver;
 
 import java.io.DataInputStream;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
  * connection
  *
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision$
  */
 public class SimpleTurnoutServer extends AbstractTurnoutServer {
 
@@ -92,5 +90,5 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SimpleTurnoutServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SimpleTurnoutServer.class);
 }

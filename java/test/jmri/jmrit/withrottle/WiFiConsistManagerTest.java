@@ -1,48 +1,35 @@
 package jmri.jmrit.withrottle;
 
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test simple functioning of WiFiConsistManager
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class WiFiConsistManagerTest extends TestCase {
+public class WiFiConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase {
 
-    public void testCtor() {
-        WiFiConsistManager panel = new WiFiConsistManager();
-        Assert.assertNotNull("exists", panel );
+    @Test(expected=NullPointerException.class)
+    public void testCTorThrowsNPE() {
+        JUnitUtil.setUp();
+        cm = new WiFiConsistManager();
     }
 
-    // from here down is testing infrastructure
-    public WiFiConsistManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", WiFiConsistManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(WiFiConsistManagerTest.class);
-        return suite;
-    }
-
+    @Before
     @Override
-    public void setUp() throws Exception {
-        super.setUp();
-        apps.tests.Log4JFixture.setUp();
+    public void setUp() {
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initDebugCommandStation();
+        cm = new WiFiConsistManager();
     }
     
+    @After
     @Override
-    public void tearDown() throws Exception {
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
+        cm = null;
     }
 }

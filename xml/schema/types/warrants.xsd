@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id$ -->
-
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -104,6 +102,9 @@
             </xs:sequence>
             <xs:attribute name="systemName" type="systemNameType" use="required"/>
             <xs:attribute name="userName" type="userNameType" />
+            <xs:attribute name="wtype" type="xs:string"/>
+            <xs:attribute name="speedFactor" type="xs:string"/>
+            <xs:attribute name="timeToPlatform" type="xs:string"/>
           </xs:complexType>
         </xs:element>
             

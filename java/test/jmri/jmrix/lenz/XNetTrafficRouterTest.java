@@ -1,7 +1,8 @@
 package jmri.jmrix.lenz;
 
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
 import junit.framework.TestCase;
+import org.junit.Assert;
 
 /**
  * <p>
@@ -25,12 +26,15 @@ public class XNetTrafficRouterTest extends TestCase {
 
         // create object
         XNetTrafficRouter router = new XNetTrafficRouter(new LenzCommandStation()) {
+            @Override
             protected void connectionWarn() {
             }
 
+            @Override
             public void receiveLoop() {
             }
 
+            @Override
             protected void portWarn(Exception e) {
             }
         };
@@ -65,12 +69,15 @@ public class XNetTrafficRouterTest extends TestCase {
     public void testReceiveAndForward() {
         // create object
         XNetTrafficRouter router = new XNetTrafficRouter(new LenzCommandStation()) {
+            @Override
             protected void connectionWarn() {
             }
 
+            @Override
             public void receiveLoop() {
             }
 
+            @Override
             protected void portWarn(Exception e) {
             }
         };
@@ -79,13 +86,16 @@ public class XNetTrafficRouterTest extends TestCase {
         resetCount();
         // register a listener
         XNetListener l = new XNetListener() {
+            @Override
             public void message(XNetReply m) {
                 incrementCount();
             }
 
+            @Override
             public void message(XNetMessage m) {
             }
 
+            @Override
             public void notifyTimeout(XNetMessage m) {
             }
         };
@@ -104,12 +114,15 @@ public class XNetTrafficRouterTest extends TestCase {
     public void testConnectAndDisconnect() {
         // scaffold for upstream
         XNetInterfaceScaffold upstream = new XNetInterfaceScaffold(new LenzCommandStation()) {
+            @Override
             protected void connectionWarn() {
             }
 
+            @Override
             public void receiveLoop() {
             }
 
+            @Override
             protected void portWarn(Exception e) {
             }
         };
@@ -134,12 +147,14 @@ public class XNetTrafficRouterTest extends TestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
     }
 
+    @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

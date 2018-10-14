@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 4 - 2015-10-14 - PB - grids added and new SD fw functions -->
+<!-- version 3 - 2015-03-05 - PB - Spelling.  -->
+<!-- version 2 - 2014-06-03 - PB - improved XML -->
+<!-- version 1 - 2014-02-20 - PB - for common D&H software -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>F-Options</name>
+  <name xml:lang="de">F-Einstellungen</name>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <!-- BEGIN - Dimming grid -->
+        <grid gridy="NEXT" weightx="1" ipadx="10">
+          <griditem gridx="0" gridy="0" gridwidth="1">
+              <label>
+                <text>Dimming options</text>
+                <text xml:lang="fr">Options d'intensité</text>
+                <text xml:lang="de">Dimmer Optionen</text>
+                <text xml:lang="it">Opzioni Dimmer</text>
+              </label>
+             <label>
+               <text> </text>
+             </label>
+          </griditem>
+          <griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
+			<row>
+              <display item="Lights dimming (normal)"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Lights dimming (normal)" label="" format="hslider"/>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
+			<row>
+              <display item="Lights dimming (alternative)"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Lights dimming (alternative)" label="" format="hslider"/>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
+			<row>
+              <display item="AUX 1 dimming"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="AUX 1 dimming" label="" format="hslider"/>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
+			<row>
+              <display item="AUX 2 dimming"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="AUX 2 dimming" label="" format="hslider"/>
+            </row>
+          </griditem>
+        </grid>
+        <!-- END - Dimming grid -->
+      </column>
+      <column>
+        <label>
+          <text>   </text>
+        </label>
+      </column>
+      <separator/>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+        <!-- BEGIN - Timers grid -->
+        <grid gridy="NEXT" weightx="1" ipadx="10">
+          <griditem gridx="0" gridy="0" gridwidth="1">
+              <label>
+                <text>Auto-off Timer options</text>
+                <text xml:lang="fr">Options de temporisation (Auto-off)</text>
+                <text xml:lang="de">Zeit für Kupplungsfunktion (Auto-off)</text>
+                <text xml:lang="it">Opzioni Temporizzazioni (Auto-off)</text>
+              </label>
+          </griditem>
+          <griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
+			<row>
+              <display item="AUX 1 Auto-off timer" label="AUX 1"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="AUX 1 Auto-off timer" label="" format="hslider"/>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
+			<row>
+              <display item="AUX 2 Auto-off timer" label="AUX 2"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="AUX 2 Auto-off timer" label="" format="hslider"/>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
+			<row>
+              <display item="AUX 3 Auto-off timer" label="AUX 3"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="AUX 3 Auto-off timer" label="" format="hslider"/>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
+			<row>
+              <display item="AUX 4 Auto-off timer" label="AUX 4"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="AUX 4 Auto-off timer" label="" format="hslider"/>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
+			<row>
+              <display item="AUX 5 Auto-off timer" label="AUX 5"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="AUX 5 Auto-off timer" label="" format="hslider"/>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="6" gridwidth="1" anchor="LINE_END">
+			<row>
+              <display item="AUX 6 Auto-off timer" label="AUX 6"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="AUX 6 Auto-off timer" label="" format="hslider"/>
+            </row>
+          </griditem>
+        </grid>
+        <!-- END - Timers grid -->
+      </column>
+      <column>
+        <label>
+          <text> </text>
+        </label>
+      </column>
+    </row>
+  </column>
+</pane>

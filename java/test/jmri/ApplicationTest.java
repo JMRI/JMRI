@@ -1,9 +1,9 @@
 package jmri;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,14 +58,16 @@ public class ApplicationTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetApplication();
     }
 
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.resetApplication();
+        jmri.util.JUnitUtil.tearDown();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ApplicationTest.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ApplicationTest.class);
 
 }

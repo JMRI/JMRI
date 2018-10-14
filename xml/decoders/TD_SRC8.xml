@@ -13,13 +13,18 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="B. Milhaupt" version="1.1" lastUpdated="20180823"/>
   <version author="td@teamdigital1.com" version="1" lastUpdated="20051215"/>
   <!-- Version 1 initial release -->
+  <!-- Version 1.1 release, added "LOCONETOPSBOARD" programming token to allow LocoNet-connected boards to read CV values -->
   <decoder>
     <family name="SRC8" mfg="Team Digital" type="stationary" comment="SRC8 is not stationary decoder, but it can be programmed in the usual way">
       <model model="SRC8" lowVersionID="12"/>
     </family>
-    <programming direct="no" paged="yes" register="no" ops="yes"/>
+    <programming direct="no" paged="yes" register="no" ops="yes">
+        <mode>LOCONETOPSBOARD</mode>
+    </programming>
+
     <variables>
       <variable item="Base Address CV1" CV="1" mask="XVVVVVVV" default="1" tooltip="Range 1-127">
         <decVal/>
@@ -1544,7 +1549,7 @@
         <text> </text>
       </label>
       <display item="Sw rep1" tooltip="Enable feedback"/>
-      <display item="Alt Group Address 1" tooltip="Determines the input addess"/>
+      <display item="Alt Group Address 1" tooltip="Determines the input address"/>
       <label>
         <text> </text>
       </label>
@@ -1555,7 +1560,7 @@
         <text> </text>
       </label>
       <display item="Sw rep2" tooltip="Enable feedback"/>
-      <display item="Alt Group Address 2" tooltip="Determines the input addess"/>
+      <display item="Alt Group Address 2" tooltip="Determines the input address"/>
       <label>
         <text> </text>
       </label>
@@ -1566,7 +1571,7 @@
         <text> </text>
       </label>
       <display item="Sw rep3" tooltip="Enable feedback"/>
-      <display item="Alt Group Address 3" tooltip="Determines the input addess"/>
+      <display item="Alt Group Address 3" tooltip="Determines the input address"/>
       <label>
         <text> </text>
       </label>
@@ -1577,7 +1582,7 @@
         <text> </text>
       </label>
       <display item="Sw rep4" tooltip="Enable feedback"/>
-      <display item="Alt Group Address 4" tooltip="Determines the input addess"/>
+      <display item="Alt Group Address 4" tooltip="Determines the input address"/>
       <label>
         <text> </text>
       </label>
@@ -1588,7 +1593,7 @@
         <text> </text>
       </label>
       <display item="Sw rep5" tooltip="Enable feedback"/>
-      <display item="Alt Group Address 5" tooltip="Determines the input addess"/>
+      <display item="Alt Group Address 5" tooltip="Determines the input address"/>
       <label>
         <text> </text>
       </label>
@@ -1599,7 +1604,7 @@
         <text> </text>
       </label>
       <display item="Sw rep6" tooltip="Enable feedback"/>
-      <display item="Alt Group Address 6" tooltip="Determines the input addess"/>
+      <display item="Alt Group Address 6" tooltip="Determines the input address"/>
       <label>
         <text> </text>
       </label>
@@ -1610,7 +1615,7 @@
         <text> </text>
       </label>
       <display item="Sw rep7" tooltip="Enable feedback"/>
-      <display item="Alt Group Address 7" tooltip="Determines the input addess"/>
+      <display item="Alt Group Address 7" tooltip="Determines the input address"/>
       <label>
         <text> </text>
       </label>
@@ -1621,7 +1626,7 @@
         <text> </text>
       </label>
       <display item="Sw rep8" tooltip="Enable feedback"/>
-      <display item="Alt Group Address 8" tooltip="Determines the input addess"/>
+      <display item="Alt Group Address 8" tooltip="Determines the input address"/>
       <label>
         <text> </text>
       </label>
@@ -1633,7 +1638,7 @@
       <label>
         <text> </text>
       </label>
-      <display item="Send Address Delay" tooltip="Time between senting addresses in a route"/>
+      <display item="Send Address Delay" tooltip="Time between sending addresses in a route"/>
       <label>
         <text> </text>
       </label>

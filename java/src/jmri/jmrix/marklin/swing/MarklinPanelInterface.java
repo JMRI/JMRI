@@ -1,4 +1,3 @@
-// MarklinPanelInterface.java
 package jmri.jmrix.marklin.swing;
 
 import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
@@ -9,7 +8,6 @@ import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
  *
  * @author Kevin Dickerson Copyright 2010
  * @since 2.11.3
- * @version $Revision: 17977 $
  */
 public interface MarklinPanelInterface {
 
@@ -19,6 +17,6 @@ public interface MarklinPanelInterface {
      * This needs to be connected to the initContext() method in implementing
      * classes.
      */
-    public void initComponents(MarklinSystemConnectionMemo memo) throws Exception;
+    public void initComponents(MarklinSystemConnectionMemo memo);
 
 }

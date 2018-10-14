@@ -1,14 +1,11 @@
-// SerialReply.java
 package jmri.jmrix.maple;
-
 
 /**
  * Contains the data payload of a serial reply packet. Note that _only_ the
  * payload, not the header or trailer, nor the padding DLE characters are
  * included. But it does include addressing characters, etc.
  *
- * @author	Bob Jacobsen Copyright (C) 2002, 2008
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2002, 2008
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
@@ -25,21 +22,19 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         super(l);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
+    @Override
     public String toString() {
-        String s = "";
+        StringBuilder s = new StringBuilder("");
         for (int i = 0; i < getNumDataElements(); i++) {
             if (i != 0) {
-                s += " ";
+                s.append(" ");
             }
             if (getElement(i) < 16) {
-                s += "0";
+                s.append("0");
             }
-            s += Integer.toHexString(getElement(i) & 0xFF);
+            s.append(Integer.toHexString(getElement(i) & 0xFF));
         }
-        return s;
+        return s.toString();
     }
 
     // recognize format
@@ -52,11 +47,10 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         return addr;
     }
 
+    @Override
     protected int skipPrefix(int index) {
         // doesn't have to do anything
         return index;
     }
 
 }
-
-/* @(#)SerialReply.java */

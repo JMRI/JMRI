@@ -1,17 +1,6 @@
-// LsDecSignalHead.java
-// This file is part of JMRI.
-//
-// JMRI is free software; you can redistribute it and/or modify it under 
-// the terms of version 2 of the GNU General Public License as published 
-// by the Free Software Foundation. See the "COPYING" file for a copy
-// of this license.
-// 
-// JMRI is distributed in the hope that it will be useful, but WITHOUT 
-// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
-// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
-// for more details.
 package jmri.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import org.slf4j.Logger;
@@ -27,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * For more info on the signals, see
  * <A HREF="http://www.ldt-infocenter.com">http://www.ldt-infocenter.com</a>.
  *
- * @author	Petr Koud'a Copyright (C) 2007
+ * @author Petr Koud'a Copyright (C) 2007
  */
 public class LsDecSignalHead extends DefaultSignalHead {
 
@@ -71,6 +60,7 @@ public class LsDecSignalHead extends DefaultSignalHead {
      * Modified from DefaultSignalHead
      * removed software flashing!!!
      */
+    @Override
     public void setAppearance(int newAppearance) {
         int oldAppearance = mAppearance;
         mAppearance = newAppearance;
@@ -83,6 +73,7 @@ public class LsDecSignalHead extends DefaultSignalHead {
         }
     }
 
+    @Override
     public void setLit(boolean newLit) {
         boolean oldLit = mLit;
         mLit = newLit;
@@ -94,7 +85,8 @@ public class LsDecSignalHead extends DefaultSignalHead {
     }
 
     @SuppressWarnings("fallthrough")
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
+    @Override
     protected void updateOutput() {
         // assumes that writing a turnout to an existing state is cheap!
         if (mLit == false) {
@@ -134,6 +126,7 @@ public class LsDecSignalHead extends DefaultSignalHead {
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
      */
+    @Override
     public void dispose() {
         mRed = null;
         mYellow = null;
@@ -273,6 +266,7 @@ public class LsDecSignalHead extends DefaultSignalHead {
         mDarkState = i;
     }
 
+    @Override
     boolean isTurnoutUsed(Turnout t) {
         if (getRed() != null && t.equals(getRed().getBean())) {
             return true;
@@ -298,6 +292,6 @@ public class LsDecSignalHead extends DefaultSignalHead {
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LsDecSignalHead.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LsDecSignalHead.class);
 
 }

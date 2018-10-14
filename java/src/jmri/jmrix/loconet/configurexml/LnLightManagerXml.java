@@ -1,4 +1,3 @@
-// LnLightManagerXml.java
 package jmri.jmrix.loconet.configurexml;
 
 import org.jdom2.Element;
@@ -7,12 +6,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides load and store functionality for configuring LnLightManagers.
- * <P>
+ * <p>
  * Uses the store method from the abstract base class, but provides a load
  * method here.
- * <P>
+ *
  * @author Dave Duchamp Copyright (c) 2006
- * @version $Revision$
  */
 public class LnLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
@@ -20,10 +18,12 @@ public class LnLightManagerXml extends jmri.managers.configurexml.AbstractLightM
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element lights) {
-        lights.setAttribute("class", "jmri.jmrix.loconet.configurexml.LnLightManagerXml");
+        lights.setAttribute("class", "jmri.jmrix.loconet.configurexml.LnLightManagerXml"); // NOI18N
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -34,5 +34,5 @@ public class LnLightManagerXml extends jmri.managers.configurexml.AbstractLightM
         return loadLights(shared);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnLightManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LnLightManagerXml.class);
 }

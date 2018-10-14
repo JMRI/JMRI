@@ -1,10 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author: ken_c $) 2009 -->
-<!-- $Id: index.shtml 18924 2011-10-20 16:51:30Z ken_c $ -->
-<title>JMRI: NYC-1956 Signaling Definition</title>
 
+<title>JMRI: NYC-1956 Signaling Definition</title>
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
@@ -13,45 +11,13 @@
 	MEDIA="print">
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
-<!-- /Style -->
-</HEAD>
+	<!-- /Style -->
+</head>
 
-<BODY>
-<!-- Header -->
-  <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
-
-  <div id="header">
-	<!-- Logo -->
-	<a href="/" title="Return to home page" accesskey="1">
-	    <img src="/images/logo-jmri.gif" width="160" height="135" alt="JMRI Logo"> </a>
-	<!-- /Logo -->
-
-	<ul id="mainNav"> <!-- Top tool bar -->
-	   <li><a href="/download/"  title="Get the latest software">Download</a></li>
-	   <li><a href="/help/en/html/apps/index.shtml"      title="Learn about JMRI applications">Applications</a></li>
-	   <li><a href="/help/en/html/hardware/index.shtml"  title="What hardware does JMRI support">Hardware</a></li>
-	   <li><a href="/help/en/webtoc.shtml"   title="JMRI Help Screens">Help</a></li>
-	   <li><a href="/help/en/manual/index.shtml"   title="DecoderPro Manual">Manual</a></li>
-	   <li><a href="/help/en/html/doc/Technical/index.shtml" title="Developing and extending JMRI">Developers</a></li>
-	   <li><A href="/help/en/Acknowledgements.shtml" title="Who is JMRI">Acknowledgements</a></li>
-	</ul>
-
-	<div id="searchform"> <!--  Search Form -->
-	  <form id="search" method="get" action="http://www.google.com/custom">
-	    <label for="q" title="Search JMRI.org">search JMRI: </label>
-	    <input type="hidden" name="cof" value="LW:200;LH:95;L:http://JMRI.org/images/logo.gif;GIMP:#cc0000;T:black;ALC:#0000ff;GFNT:grey;LC:#990000;BGC:white;AH:center;VLC:purple;GL:0;GALT:#666633;AWFID:9262c37cefe23a86;">
-	    <input type="hidden" name="domains" value="jmri.org">
-	    <input type="hidden" name="sitesearch" value="jmri.org">
-	    <input type="text" id="q" name="q" accesskey="s" size="30">
-	    <input type="submit" id="submit" value="go">
-	  </form>
-    </div> <!--  End #searchform -->
-  </div> <!-- closes #header-->
-
-<!-- /Header -->
-
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<body>
+<!--#include virtual="/Header" -->
+<div class="nomenu" id="mBody">
+	<div id="mainContent">
 
 <h1> 
 JMRI: NYC-1956 Signaling Definition
@@ -77,41 +43,9 @@ Signal Mast definitions:
 <li><a href="appearance-SL-1-low.xml">Single searchlight dwarf signal</a>
 </ul>
 
-    </div>
+	</div>
 </div>
-<!-- Footer -->
-    <hr class="hide">
-    <div id="footer">
-	<ul id="bn">
-	<li>Contact us via the <a href="http://groups.yahoo.com/group/jmriusers">JMRI users</a> mailing list</li>
-	</ul>
-
-	<p>Thanks and congratulations to
-	   <A href="/help/en/Acknowledgements.shtml" title="Who is JMRI">
-	   	all who contributed</A>! </p>
-
-	<p>Copyright &copy; 1997 - 2010 JMRI Community. 
-	<P>JMRI&reg;, DecoderPro&reg;, PanelPro&trade;, DispatcherPro&trade; and associated logos are our trademarks.
-	<P><A href="/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a></p>
-    
-       <BR/>Site hosted by: <BR/>
-<a href="http://sourceforge.net/projects/jmri"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=26788&type=12" width="120" height="30" border="0" alt="Get JMRI Model Railroad Interface at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a>
-    </div>
-
-<!-- Piwik -->
-<script type="text/javascript">
-var pkBaseURL = (("https:" == document.location.protocol) ? "https://apps.sourceforge.net/piwik/jmri/" : "http://apps.sourceforge.net/piwik/jmri/");
-document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-</script><script type="text/javascript">
-piwik_action_name = '';
-piwik_idsite = 1;
-piwik_url = pkBaseURL + "piwik.php";
-piwik_log(piwik_action_name, piwik_idsite, piwik_url);
-</script>
-<object><noscript><p><img src="http://apps.sourceforge.net/piwik/jmri/piwik.php?idsite=1" alt="piwik"/></p></noscript></object>
-<!-- End Piwik Tag -->
-
-<!-- /Footer -->
+<!--#include virtual="/Footer" -->
 
 </body>
 </html>

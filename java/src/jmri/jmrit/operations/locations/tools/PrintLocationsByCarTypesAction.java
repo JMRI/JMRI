@@ -1,4 +1,3 @@
-// PrintLocationsByCarTypesAction.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Component;
@@ -7,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.List;
 import javax.swing.AbstractAction;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -26,14 +26,13 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision$
  */
 public class PrintLocationsByCarTypesAction extends AbstractAction {
 
     static final String NEW_LINE = "\n"; // NOI18N
     static final String TAB = "\t"; // NOI18N
 
-    LocationManager locManager = LocationManager.instance();
+    LocationManager locManager = InstanceManager.getDefault(LocationManager.class);
 
     public PrintLocationsByCarTypesAction(String actionName, Frame frame, boolean preview,
             Component pWho) {
@@ -65,7 +64,7 @@ public class PrintLocationsByCarTypesAction extends AbstractAction {
 
         // Loop through the car types showing which locations and tracks will
         // service that car type
-        String carTypes[] = CarTypes.instance().getNames();
+        String carTypes[] = InstanceManager.getDefault(CarTypes.class).getNames();
 
         List<Location> locations = locManager.getLocationsByNameList();
 
@@ -102,5 +101,5 @@ public class PrintLocationsByCarTypesAction extends AbstractAction {
     }
 
     private final static Logger log = LoggerFactory
-            .getLogger(PrintLocationsByCarTypesAction.class.getName());
+            .getLogger(PrintLocationsByCarTypesAction.class);
 }

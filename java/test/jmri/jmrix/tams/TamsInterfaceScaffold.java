@@ -9,12 +9,13 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen
  */
-class TamsInterfaceScaffold extends TamsTrafficController {
+public class TamsInterfaceScaffold extends TamsTrafficController {
 
     public TamsInterfaceScaffold() {
     }
 
     // override some TamsInterfaceController methods for test purposes
+    @Override
     public boolean status() {
         return true;
     }
@@ -24,6 +25,7 @@ class TamsInterfaceScaffold extends TamsTrafficController {
      */
     public Vector<TamsMessage> outbound = new Vector<TamsMessage>();  // public OK here, so long as this is a test class
 
+    @Override
     public void sendTamsMessage(TamsMessage m, TamsListener l) {
         if (log.isDebugEnabled()) {
             log.debug("sendTamsMessage [" + m + "]");
@@ -62,6 +64,6 @@ class TamsInterfaceScaffold extends TamsTrafficController {
         return cmdListeners.size();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TamsInterfaceScaffold.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TamsInterfaceScaffold.class);
 
 }

@@ -1,101 +1,75 @@
 package jmri.jmrit;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        jmri.jmrit.AbstractIdentifyTest.class,
+        BundleTest.class,
+        DccLocoAddressSelectorTest.class,
+        MemoryContentsTest.class,
+        SoundTest.class,
+        XmlFileTest.class,
+        jmri.jmrit.automat.PackageTest.class,
+        jmri.jmrit.beantable.PackageTest.class,
+        jmri.jmrit.blockboss.PackageTest.class,
+        jmri.jmrit.catalog.PackageTest.class,
+        jmri.jmrit.conditional.PackageTest.class,
+        jmri.jmrit.decoderdefn.PackageTest.class,
+        jmri.jmrit.dispatcher.PackageTest.class,
+        jmri.jmrit.display.PackageTest.class,
+        jmri.jmrit.entryexit.PackageTest.class,
+        jmri.jmrit.jython.PackageTest.class,
+        jmri.jmrit.log.PackageTest.class,
+        jmri.jmrit.logix.PackageTest.class,
+        jmri.jmrit.operations.PackageTest.class,
+        jmri.jmrit.progsupport.PackageTest.class,
+        jmri.jmrit.mastbuilder.PackageTest.class,
+        jmri.jmrit.mailreport.PackageTest.class,
+        jmri.jmrit.powerpanel.PackageTest.class,
+        jmri.jmrit.roster.PackageTest.class,
+        jmri.jmrit.sendpacket.PackageTest.class,
+        jmri.jmrit.sensorgroup.PackageTest.class,
+        jmri.jmrit.simpleclock.PackageTest.class,
+        jmri.jmrit.symbolicprog.PackageTest.class,
+        jmri.jmrit.tracker.PackageTest.class,
+        jmri.jmrit.ussctc.PackageTest.class,
+        jmri.jmrit.consisttool.PackageTest.class,
+        jmri.jmrit.withrottle.PackageTest.class,
+        jmri.jmrit.ampmeter.PackageTest.class,
+        jmri.jmrit.lcdclock.PackageTest.class,
+        jmri.jmrit.throttle.PackageTest.class,
+        jmri.jmrit.audio.PackageTest.class,
+        jmri.jmrit.turnoutoperations.PackageTest.class,
+        jmri.jmrit.dualdecoder.PackageTest.class,
+        jmri.jmrit.nixieclock.PackageTest.class,
+        jmri.jmrit.simpleprog.PackageTest.class,
+        jmri.jmrit.signalling.PackageTest.class,
+        jmri.jmrit.picker.PackageTest.class,
+        jmri.jmrit.speedometer.PackageTest.class,
+        jmri.jmrit.analogclock.PackageTest.class,
+        jmri.jmrit.revhistory.PackageTest.class,
+        jmri.jmrit.sample.PackageTest.class,
+        jmri.jmrit.sound.PackageTest.class,
+        jmri.jmrit.vsdecoder.PackageTest.class,
+        jmri.jmrit.simplelightctrl.PackageTest.class,
+        jmri.jmrit.simpleturnoutctrl.PackageTest.class,
+        MemoryFrameActionTest.class,
+        ToolsMenuTest.class,
+        XmlFileLocationActionTest.class,
+        XmlFileValidateActionTest.class,
+        XmlFileValidateStartupActionFactoryTest.class,
+        DebugMenuTest.class,
+        LogixLoadActionTest.class,
+        XmlFileCheckActionTest.class,
+})
 
 /**
  * Invokes complete set of tests in the jmri.jmrit tree
  *
  * @author	Bob Jacobsen Copyright 2001, 2003, 2012
  */
-public class PackageTest extends TestCase {
-
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrit.PackageTest");   // no tests in this class itself
-
-        // this next line causes obscure AWT errors when here,
-        // and errors in other places when later, e.g. in
-        // jmri.jmrit.beantable.MemoryTableAction$1.getValue(MemoryTableAction.java:56)
-        // suite.addTest(jmri.jmrit.MemoryContentsTest.suite());
-        if (!Boolean.getBoolean("jmri.headlesstest")) {
-            suite.addTest(jmri.jmrit.AbstractIdentifyTest.suite());
-        }
-        suite.addTest(BundleTest.suite());
-        suite.addTest(DccLocoAddressSelectorTest.suite());
-        suite.addTest(MemoryContentsTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(SoundTest.class));
-        suite.addTest(XmlFileTest.suite());
-
-        suite.addTest(jmri.jmrit.automat.AutomatTest.suite());
-        if (!Boolean.getBoolean("jmri.headlesstest")) {
-            suite.addTest(jmri.jmrit.beantable.PackageTest.suite());
-        }
-        suite.addTest(jmri.jmrit.blockboss.PackageTest.suite());
-        if (!Boolean.getBoolean("jmri.headlesstest")) {
-            suite.addTest(jmri.jmrit.catalog.PackageTest.suite());
-        }
-        suite.addTest(jmri.jmrit.decoderdefn.PackageTest.suite());
-        suite.addTest(jmri.jmrit.dispatcher.PackageTest.suite());
-        suite.addTest(jmri.jmrit.display.PackageTest.suite());
-        suite.addTest(jmri.jmrit.jython.PackageTest.suite());
-        suite.addTest(jmri.jmrit.log.PackageTest.suite());
-        suite.addTest(jmri.jmrit.logix.PackageTest.suite());
-        suite.addTest(jmri.jmrit.operations.PackageTest.suite());
-        suite.addTest(jmri.jmrit.progsupport.PackageTest.suite());
-        if (!Boolean.getBoolean("jmri.headlesstest")) {
-            suite.addTest(jmri.jmrit.mastbuilder.MastBuilderTest.suite());
-            suite.addTest(jmri.jmrit.powerpanel.PackageTest.suite());
-        }
-        suite.addTest(jmri.jmrit.roster.PackageTest.suite());
-        if (!Boolean.getBoolean("jmri.headlesstest")) {
-            suite.addTest(jmri.jmrit.sendpacket.SendPacketTest.suite());
-            suite.addTest(jmri.jmrit.sensorgroup.SensorGroupTest.suite());
-        }
-        suite.addTest(jmri.jmrit.simpleclock.PackageTest.suite());
-        suite.addTest(jmri.jmrit.symbolicprog.PackageTest.suite());
-        suite.addTest(jmri.jmrit.tracker.PackageTest.suite());
-        if (!Boolean.getBoolean("jmri.headlesstest")) {
-            suite.addTest(jmri.jmrit.ussctc.PackageTest.suite());
-        }
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.consisttool.PackageTest.class));
-        suite.addTest(jmri.jmrit.withrottle.PackageTest.suite());
-        suite.addTest(jmri.jmrit.ampmeter.PackageTest.suite());
-        suite.addTest(jmri.jmrit.lcdclock.PackageTest.suite());
-        suite.addTest(jmri.jmrit.throttle.PackageTest.suite());
-        suite.addTest(jmri.jmrit.audio.PackageTest.suite());
-        suite.addTest(jmri.jmrit.turnoutoperations.PackageTest.suite());
-        suite.addTest(jmri.jmrit.dualdecoder.PackageTest.suite());
-        suite.addTest(jmri.jmrit.nixieclock.PackageTest.suite());
-        suite.addTest(jmri.jmrit.simpleprog.PackageTest.suite());
-        suite.addTest(jmri.jmrit.signalling.PackageTest.suite());
-        suite.addTest(jmri.jmrit.picker.PackageTest.suite());
-        suite.addTest(jmri.jmrit.speedometer.PackageTest.suite());
-        suite.addTest(jmri.jmrit.analogclock.PackageTest.suite());
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrit.revhistory.PackageTest.class));
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-    }
-
-    @Override
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
-    }
+public class PackageTest {
 }
+

@@ -1,4 +1,3 @@
-// WebServerAction.java
 package jmri.web.server;
 
 import java.awt.event.ActionEvent;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
  */
 public class WebServerAction extends JmriAbstractAction {
 
-    private static final long serialVersionUID = 6023025995086573898L;
     private static ServerThread serverThread = null;
     private final static Logger log = LoggerFactory.getLogger(WebServerAction.class);
 
@@ -36,6 +34,7 @@ public class WebServerAction extends JmriAbstractAction {
         synchronized (this) {
             if (serverThread == null) {
                 serverThread = new ServerThread();
+                serverThread.setName("WebServerAction action");
                 serverThread.start();
             } else {
                 log.info("Web Server already running");
@@ -50,7 +49,11 @@ public class WebServerAction extends JmriAbstractAction {
 
         @Override
         public void run() {
-            WebServer.getDefault().start();
+            try {
+                WebServer.getDefault().start();
+            } catch (Exception ex) {
+                log.error("Unable to start web server.", ex);
+            }
         }
     }
 }

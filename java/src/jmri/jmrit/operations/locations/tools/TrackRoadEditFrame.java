@@ -1,4 +1,3 @@
-// TrackRoadEditFrame.java
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.Dimension;
@@ -15,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of track roads
  *
  * @author Dan Boudreau Copyright (C) 2013, 2014
- * @version $Revision: 22371 $
+ * 
  */
 public class TrackRoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -53,7 +53,7 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
     JRadioButton roadNameExclude = new JRadioButton(Bundle.getMessage("Exclude"));
 
     // combo box
-    JComboBox<String> comboBoxRoads = CarRoads.instance().getComboBox();
+    JComboBox<String> comboBoxRoads = InstanceManager.getDefault(CarRoads.class).getComboBox();
 
     // labels
     JLabel trackName = new JLabel();
@@ -71,7 +71,7 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 
         // property changes
         // listen for car road name changes
-        CarRoads.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarRoads.class).addPropertyChangeListener(this);
 
         // the following code sets the frame's initial state
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -225,7 +225,7 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
     }
 
     private void updateRoadComboBox() {
-        CarRoads.instance().updateComboBox(comboBoxRoads);
+        InstanceManager.getDefault(CarRoads.class).updateComboBox(comboBoxRoads);
     }
 
     private void updateRoadNames() {
@@ -297,7 +297,7 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
         if (_track != null) {
             _track.removePropertyChangeListener(this);
         }
-        CarRoads.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarRoads.class).removePropertyChangeListener(this);
         super.dispose();
     }
 
@@ -316,5 +316,5 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackRoadEditFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrackRoadEditFrame.class);
 }

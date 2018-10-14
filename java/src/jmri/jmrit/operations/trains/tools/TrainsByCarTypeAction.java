@@ -1,4 +1,3 @@
-// TrainsByCarTypeAction.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Frame;
@@ -9,7 +8,6 @@ import javax.swing.AbstractAction;
  * Swing action to create and register a TrainsByCarTypeFrame object.
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version $Revision$
  */
 public class TrainsByCarTypeAction extends AbstractAction {
 
@@ -31,8 +29,8 @@ public class TrainsByCarTypeAction extends AbstractAction {
             f.initComponents("");
         }
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 }
 
-/* @(#)TrainsByCarTypeAction.java */
+

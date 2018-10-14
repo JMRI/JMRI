@@ -1,6 +1,8 @@
 # basic setup for JavaOne demo
 
 import java
+import java.beans
+import java.io
 
 # define constants
 
@@ -23,7 +25,7 @@ initSensorB = "LS159"
 # initBlockA, initBlockB are defined below
 
 # Load the layout configuration
-jmri.InstanceManager.configureManagerInstance().load(java.io.File(fileprefix+"Configuration.xml"))
+jmri.InstanceManager.getDefault(jmri.ConfigureManager).load(java.io.File(fileprefix+"Configuration.xml"))
 
 # define the utility for doing warnings
 execfile(fileprefix+"warn.py")
@@ -70,8 +72,8 @@ execfile(fileprefix+"speedo.py")
 jmri.jmrit.throttle.LoadXmlThrottleAction().loadThrottles(java.io.File(fileprefix+"Throttles.xml"))
 
 # show the panels
-jmri.InstanceManager.configureManagerInstance().load(java.io.File(fileprefix+"MainPanel.xml"))
-jmri.InstanceManager.configureManagerInstance().load(java.io.File(fileprefix+"MonitorPanel.xml"))
+jmri.InstanceManager.getDefault(jmri.ConfigureManager).load(java.io.File(fileprefix+"MainPanel.xml"))
+jmri.InstanceManager.getDefault(jmri.ConfigureManager).load(java.io.File(fileprefix+"MonitorPanel.xml"))
 
 # now enough configured to be able to force stop of layout
 skipSetup = False

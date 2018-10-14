@@ -1,4 +1,3 @@
-// AcelaLight.java
 package jmri.jmrix.acela;
 
 import jmri.implementation.AbstractLight;
@@ -7,15 +6,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * AcelaLight.java
- *
+ * <p>
  * Implementation of the Light Object for Acela
- * <P>
+ * <p>
  * Based in part on SerialTurnout.java
  *
  * @author Dave Duchamp Copyright (C) 2004
- * @version $Revision$
  *
- * @author	Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
+ * @author Bob Coleman Copyright (C) 2007, 2008 Based on CMRI serial example,
  * modified to establish Acela support.
  */
 public class AcelaLight extends AbstractLight {
@@ -24,10 +22,13 @@ public class AcelaLight extends AbstractLight {
 
     /**
      * Create a Light object, with only system name.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in AcelaLightManager
+     *
+     * @param systemName the system name for this Light
+     * @param memo       the memo for the system connection
      */
-    public AcelaLight(String systemName,AcelaSystemConnectionMemo memo) {
+    public AcelaLight(String systemName, AcelaSystemConnectionMemo memo) {
         super(systemName);
         _memo = memo;
         initializeLight(systemName);
@@ -35,10 +36,14 @@ public class AcelaLight extends AbstractLight {
 
     /**
      * Create a Light object, with both system and user names.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in AcelaLightManager
+     *
+     * @param systemName the system name for this Light
+     * @param userName   the user name for this Light
+     * @param memo       the memo for the system connection
      */
-    public AcelaLight(String systemName, String userName,AcelaSystemConnectionMemo memo) {
+    public AcelaLight(String systemName, String userName, AcelaSystemConnectionMemo memo) {
         super(systemName, userName);
         _memo = memo;
         initializeLight(systemName);
@@ -46,16 +51,15 @@ public class AcelaLight extends AbstractLight {
 
     /**
      * Sets up system dependent instance variables and sets system independent
-     * instance variables to default values Note: most instance variables are in
-     * AbstractLight.java
+     * instance variables to default values.
+     * <p>
+     * Note: most instance variables are in AbstractLight.java
      */
     private void initializeLight(String systemName) {
-        // Save system name
-        mSystemName = systemName;
         // Extract the Bit from the name
-        mBit = AcelaAddress.getBitFromSystemName(systemName);
+        mBit = AcelaAddress.getBitFromSystemName(systemName, _memo.getSystemPrefix());
         // Set initial state
-        AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName,_memo);
+        AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName, _memo);
 
         if (mNode != null) {
             int initstate;
@@ -73,15 +77,7 @@ public class AcelaLight extends AbstractLight {
     /**
      * System dependent instance variables
      */
-    String mSystemName = "";     // system name 
     int mBit = -1;                // global address from 0
-
-    /**
-     * Return the current state of this Light
-     */
-    public int getState() {
-        return mState;
-    }
 
     /**
      * Set the current state of this Light This routine requests the hardware to
@@ -89,16 +85,21 @@ public class AcelaLight extends AbstractLight {
      * AcelaNode), a Transmit packet will be sent before this Node is next
      * polled.
      */
+    @Override
     public void setState(int newState) {
-        AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName,_memo);
+        AcelaNode mNode = AcelaAddress.getNodeFromSystemName(mSystemName, _memo);
 
         if (mNode != null) {
-            if (newState == ON) {
-                mNode.setOutputBit(mBit, true);
-            } else if (newState == OFF) {
-                mNode.setOutputBit(mBit, false);
-            } else {
-                log.warn("illegal state requested for Light: " + getSystemName());
+            switch (newState) {
+                case ON:
+                    mNode.setOutputBit(mBit, true);
+                    break;
+                case OFF:
+                    mNode.setOutputBit(mBit, false);
+                    break;
+                default:
+                    log.warn("illegal state requested for Light: {}", getSystemName());
+                    break;
             }
         }
 
@@ -107,11 +108,10 @@ public class AcelaLight extends AbstractLight {
             mState = newState;
 
             // notify listeners, if any
-            firePropertyChange("KnownState", Integer.valueOf(oldState), Integer.valueOf(newState));
+            firePropertyChange("KnownState", oldState, newState);
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AcelaLight.class.getName());
-}
+    private final static Logger log = LoggerFactory.getLogger(AcelaLight.class);
 
-/* @(#)AcelaLight.java */
+}

@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
  * provides a load method here.
  *
  * @author  Paul Bender Copyright (c) 2003
- * @version $Revision$
  */
 public class RaspberryPiSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
@@ -21,10 +20,12 @@ public class RaspberryPiSensorManagerXml extends jmri.managers.configurexml.Abst
         super();
     }
 
+    @Override
     public void setStoreElementClass(Element sensors) {
         sensors.setAttribute("class","jmri.jmrix.pi.configurexml.RaspberryPiSensorManagerXml");
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -35,6 +36,6 @@ public class RaspberryPiSensorManagerXml extends jmri.managers.configurexml.Abst
         return loadSensors(shared);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RaspberryPiTurnoutManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RaspberryPiTurnoutManagerXml.class);
 
 }

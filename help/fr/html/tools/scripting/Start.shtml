@@ -6,7 +6,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
   <!-- UpDated  by Blorec Herv&#233; 2013-09-27-->
 
   <title>JMRI: Getting Started with Scripting</title><!-- Style -->
@@ -266,8 +265,8 @@ retourne &agrave; la ligne de commande.
       moyen d'avoir une ex&eacute;cution de code
       ind&eacute;pendante &agrave; l'int&eacute;rieur du programme.
       Mais ne vous souciez pas de cela jusqu'&agrave; ce que vous
-      ayez eu plus d'exp&eacute;rience avec les scripts. 
-      <!--#include virtual="/Footer" --></p>
+      ayez eu plus d'exp&eacute;rience avec les scripts.</p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

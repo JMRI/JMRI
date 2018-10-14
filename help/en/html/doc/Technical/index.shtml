@@ -9,17 +9,17 @@
   <title>JMRI: Technical Info</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>JMRI: Technical Info</h1>
+      <h1>JMRI: Technical Information</h1>
 
       <p>You don't need to work with your own copy of the JMRI
       source code, compilers, etc if you just want to run the
@@ -28,9 +28,10 @@
       play with the code, or get a copy of the program that
       contains updates since the last downloadable version was
       published, this section of the web site will help you get
-      started. <a id="moreinfo" name="moreinfo"></a></p>
+      started.</p>
 
-      <h2>Technical background info on the JMRI project</h2>
+      <a id="moreinfo" name="moreinfo"></a>
+      <h2>Technical background on the JMRI project</h2>
 
       <p>JMRI is intended as a jumping-off point for hobbyists who
       want to control their layouts from a computer without having
@@ -129,15 +130,7 @@
         <li><a href="http://sourceforge.net/projects/jmri/">JMRI
         project page</a> and <a href=
         "http://sourceforge.net/export/projhtml.php?group_id=26788">
-        project statistics</a>.</li>
-
-        <li>Trackers for <a href=
-        'http://sourceforge.net/tracker/?group_id=26788&amp;atid=388313'>
-        Bugs</a>, <a href=
-        'http://sourceforge.net/tracker/?group_id=26788&amp;atid=388316'>
-        Feature Requests</a>, and <a href=
-        'http://sourceforge.net/tracker/?group_id=26788&amp;atid=388315'>
-        Patches</a>.</li>
+        project statistics (for that information tracked by SourceForge)</a>.</li>
       </ul>
 
       <h2>Code</h2>All of the JMRI code is available from GitHub.
@@ -185,11 +178,9 @@
       we can distribute them to the rest of the community.</p>
 
       <p>For initial and/or small contributions, e.g. a new decoder
-      file or small bug fix, you can fill out a new "Patches" entry
-      on SourceForge using <a href=
-      "http://sourceforge.net/tracker/?group_id=26788&amp;atid=388315">
-      our patches page</a> (click new on the middle-left, then fill
-      out the resulting form). You can attach the entire file
+      file or small bug fix, you can fill out a new "issue" on
+      <a href="https://github.com/JMRI/JMRI/issues/new">GitHub</a>.
+      You can attach the entire file
       there. If it's more than one files, and you're using an IDE
       like <a href="NetBeans.shtml">NetBeans</a>, it's very easy to
       create a "diff patch file" to carry your changes, and that
@@ -274,19 +265,27 @@
         This includes decoder definition files: You are welcome to
         use them, including reformatting their content to another
         form, but you must give JMRI credit for their content.</li>
-      </ul>If you have any questions about this, please <a href=
-      "mailto:jmri@pacbell.net">contact us</a> directly.
+      </ul>
+      <p>If you have any questions about this, please <a href=
+      "mailto:jmri@pacbell.net">contact us</a> directly.</p>
 
-      <h2>Developer Code Swarm</h2>
-
-      <p>We have created a <a href=
+      <h2>JMRI Code Visualization</h2>
+      <p>To show how much work goes into making JMRI run and
+      provide help to users, the 
+      <a href="/community/codeflower.shtml">JMRI CodeFlower</a>
+      provides a dynamic view of the whole GitHub repository.
+      It shows the relative size of the code in each file and the
+      structure in which the files are stored.
+      </p>
+      <p>In 2009, Dennis Miller created a <a href=
       "/community/codeswarm.shtml">Code Swarm of JMRI
-      development</a> from its inception to January 2009. A Code
+      development</a> from its inception up to January 2009. A Code
       Swarm is a fascinating and dynamic visual representation of
       change as developers come and go and make changes to the
-      files that make up a project. More information is available
-      on the <a href="/community/codeswarm.shtml">Code Swarm</a>
-      page.</p><!--#include virtual="/Footer" -->
+      files that make up a project. Take a look at the
+      <a href="/community/codeswarm.shtml">JMRI Code Swarm</a>.
+      </p>
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

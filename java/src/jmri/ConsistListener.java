@@ -19,7 +19,7 @@ import java.util.EventListener;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Paul Bender Copyright (C) 2004
+ * @author Paul Bender Copyright (C) 2004
  */
 public interface ConsistListener extends EventListener {
 
@@ -32,7 +32,7 @@ public interface ConsistListener extends EventListener {
      *                    bitwise combination of the various status coded
      *                    defined in this interface.
      */
-    public void consistReply(DccLocoAddress locoaddress, int status);
+    public void consistReply(LocoAddress locoaddress, int status);
     /**
      * Constant denoting that the request completed correctly. Note this is a
      * specific value; all others are bitwise combinations

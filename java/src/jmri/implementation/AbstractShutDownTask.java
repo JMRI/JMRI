@@ -20,6 +20,22 @@ public abstract class AbstractShutDownTask implements ShutDownTask {
         this.mName = name;
     }
 
+    /**
+     * Ask if shut down is allowed.
+     * <p>
+     * The shut down manager must call this method first on all the tasks
+     * before starting to execute the method execute() on the tasks.
+     * <p>
+     * If this method returns false on any task, the shut down process must
+     * be aborted.
+     *
+     * @return true if it is OK to shut down, false to abort shut down.
+     */
+    @Override
+    public boolean isShutdownAllowed() {
+        return true;
+    }
+
     @Override
     public String getName() {
         return mName;

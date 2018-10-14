@@ -1,107 +1,79 @@
 package jmri.jmrit.display;
 
+import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import jmri.InstanceManager;
+import jmri.ReporterManager;
+import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.panelEditor.PanelEditor;
+import jmri.util.JUnitUtil;
+import org.junit.*;
 
 /**
  * Test the ReporterIcon.
- * <P>
- * There is no default (or internal) implementation, so test via the specific
- * LocoNet implementation
- *
+ * <p>
  * Description:
  *
- * @author	Bob Jacobsen Copyright 2007
- * @version	$Revision$
+ * @author Bob Jacobsen Copyright 2007
  */
-public class ReporterIconTest extends jmri.util.SwingTestCase {
+public class ReporterIconTest extends PositionableTestBase {
 
-    ReporterIcon to = null;
-    jmri.jmrit.display.panelEditor.PanelEditor panel;
+    private ReporterIcon to = null;
 
+    @Test
     public void testShowSysName() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame jf = new JFrame();
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
-        to = new ReporterIcon(panel);
         jf.getContentPane().add(to);
-
-        // reset instance manager
-        jmri.util.JUnitUtil.resetInstanceManager();
-
-        // reset the LocoNet instances, so this behaves independent of 
-        // any layout connection
-        jmri.jmrix.loconet.LocoNetInterfaceScaffold tc = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
-
-        // create objects to test
-        jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager(tc, "L"));
-        jmri.InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter("LR1");
-        to.setReporter("LR1");
-        jmri.InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter("LR1").setReport("data");
 
         jf.pack();
         jf.setVisible(true);
-
+        JUnitUtil.dispose(jf);
     }
 
+    @Test
     public void testShowNumericAddress() {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
         JFrame jf = new JFrame();
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
-        to = new ReporterIcon(panel);
         jf.getContentPane().add(to);
 
-        jmri.util.JUnitUtil.resetInstanceManager();
-
-        // reset the LocoNet instances, so this behaves independent of 
-        // any layout connection
-        jmri.jmrix.loconet.LocoNetInterfaceScaffold tc = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
-
-        // create objects to test
-        jmri.InstanceManager.setReporterManager(new jmri.jmrix.loconet.LnReporterManager(tc, "L"));
-        jmri.InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter("1");
-        to.setReporter("1");
-        jmri.InstanceManager.getDefault(jmri.ReporterManager.class).provideReporter("1").setReport("data");
 
         jf.pack();
         jf.setVisible(true);
-
-    }
-
-    // from here down is testing infrastructure
-    public ReporterIconTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", ReporterIconTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(ReporterIconTest.class);
-        return suite;
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.initReporterManager();
+        if (!GraphicsEnvironment.isHeadless()) {
+            editor = new PanelEditor("Test ReporterIcon Panel");
+            p = to = new ReporterIcon(editor);
 
-        panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test ReporterIcon Panel");
-    }
-
-    protected void tearDown() {
-        // now close panel window
-        java.awt.event.WindowListener[] listeners = panel.getTargetFrame().getWindowListeners();
-        for (int i = 0; i < listeners.length; i++) {
-            panel.getTargetFrame().removeWindowListener(listeners[i]);
+            // create objects to test
+            InstanceManager.getDefault(ReporterManager.class).provideReporter("IR1");
+            to.setReporter("IR1");
+            InstanceManager.getDefault(ReporterManager.class).provideReporter("IR1").setReport("data");
+            NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
+            to.setIcon(icon);
         }
-        junit.extensions.jfcunit.TestHelper.disposeWindow(panel.getTargetFrame(), this);
-        apps.tests.Log4JFixture.tearDown();
     }
 
-	// static private Logger log = LoggerFactory.getLogger(TurnoutIconTest.class.getName());
+    @Override
+    @After
+    public void tearDown() {
+        super.tearDown();
+        to = null;
+        JUnitUtil.tearDown();
+    }
+
+    // private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);
 }

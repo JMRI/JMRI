@@ -3,10 +3,13 @@ package jmri.jmris.json;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.beans.Bean;
+import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrit.XmlFile;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
@@ -15,6 +18,7 @@ import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,26 +28,29 @@ public class JsonServerPreferences extends Bean {
     static final String XML_PREFS_ELEMENT = "JSONServerPreferences"; // NOI18N
     static final String HEARTBEAT_INTERVAL = "heartbeatInterval"; // NOI18N
     static final String PORT = "port"; // NOI18N
+    static final String VALIDATE_CLIENT = "validateClientMessages"; // NOI18N
+    static final String VALIDATE_SERVER = "validateServerMessages"; // NOI18N
     // initial defaults if prefs not found
     private int heartbeatInterval = 15000;
     private int port = DEFAULT_PORT;
+    private boolean validateClientMessages = false;
+    private boolean validateServerMessages = false;
     // as loaded prefences
     private int asLoadedHeartbeatInterval = 15000;
     private int asLoadedPort = DEFAULT_PORT;
     private final static Logger log = LoggerFactory.getLogger(JsonServerPreferences.class);
 
+    /**
+     *
+     * @return the default instance of this class
+     * @deprecated since 4.9.4; use
+     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     public static JsonServerPreferences getDefault() {
-        if (InstanceManager.getNullableDefault(JsonServerPreferences.class) == null) {
-            String fileName = FileUtil.getUserFilesPath() + "networkServices" + File.separator + "JsonServerPreferences.xml"; // NOI18N
-            if ((new File(fileName)).exists()) {
-                InstanceManager.store(new JsonServerPreferences(fileName), JsonServerPreferences.class);
-            } else {
-                InstanceManager.store(new JsonServerPreferences(), JsonServerPreferences.class);
-            }
-        }
         return InstanceManager.getDefault(JsonServerPreferences.class);
     }
-    
+
     public JsonServerPreferences(String fileName) {
         boolean migrate = false;
         Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
@@ -86,6 +93,8 @@ public class JsonServerPreferences extends Bean {
     private void readPreferences(Preferences sharedPreferences) {
         this.setHeartbeatInterval(sharedPreferences.getInt(HEARTBEAT_INTERVAL, this.getHeartbeatInterval()));
         this.setPort(sharedPreferences.getInt(PORT, this.getPort()));
+        this.setValidateClientMessages(sharedPreferences.getBoolean(VALIDATE_CLIENT, this.getValidateClientMessages()));
+        this.setValidateServerMessages(sharedPreferences.getBoolean(VALIDATE_SERVER, this.getValidateServerMessages()));
         this.asLoadedHeartbeatInterval = this.getHeartbeatInterval();
         this.asLoadedPort = this.getPort();
     }
@@ -148,6 +157,8 @@ public class JsonServerPreferences extends Bean {
         Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
         sharedPreferences.putInt(HEARTBEAT_INTERVAL, this.heartbeatInterval);
         sharedPreferences.putInt(PORT, this.port);
+        sharedPreferences.putBoolean(VALIDATE_CLIENT, this.validateClientMessages);
+        sharedPreferences.putBoolean(VALIDATE_SERVER, this.validateServerMessages);
     }
 
     public boolean isDirty() {
@@ -178,6 +189,56 @@ public class JsonServerPreferences extends Bean {
         this.port = value;
     }
 
+    /**
+     * Validate that messages from clients are schema valid.
+     *
+     * @return true if client messages should be validated; false otherwise
+     */
+    public boolean getValidateClientMessages() {
+        return this.validateClientMessages;
+    }
+
+    public void setValidateClientMessages(boolean validate) {
+        this.validateClientMessages = validate;
+    }
+
+    /**
+     * Validate that messages from the server are schema valid.
+     *
+     * @return true if server messages should be validated; false otherwise
+     */
+    public boolean getValidateServerMessages() {
+        return this.validateServerMessages;
+    }
+
+    public void setValidateServerMessages(boolean validate) {
+        this.validateServerMessages = validate;
+    }
+
     private static class JsonServerPreferencesXml extends XmlFile {
+    }
+
+    @ServiceProvider(service = InstanceInitializer.class)
+    public static class Initializer extends AbstractInstanceInitializer {
+
+        @Override
+        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+            if (type.equals(JsonServerPreferences.class)) {
+                String fileName = FileUtil.getUserFilesPath() + "networkServices" + File.separator + "JsonServerPreferences.xml"; // NOI18N
+                if ((new File(fileName)).exists()) {
+                    return new JsonServerPreferences(fileName);
+                } else {
+                    return new JsonServerPreferences();
+                }
+            }
+            return super.getDefault(type);
+        }
+
+        @Override
+        public Set<Class<?>> getInitalizes() {
+            Set<Class<?>> set = super.getInitalizes();
+            set.add(JsonServerPreferences.class);
+            return set;
+        }
     }
 }

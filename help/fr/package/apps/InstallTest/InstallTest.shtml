@@ -1,7 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- UpDated  by Blorec Herv&#233; 2013-10-09-->
+<!-- Updated  by Blorec Herv&#233; 2013-10-09-->
 
 <html lang="fr">
 <head>
@@ -9,9 +8,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: InstallTest Main Window</title>
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Bob Jacobsen" name="Author">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help preferences">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -29,8 +26,8 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: Fen&ecirc;tre Principale InstallTest</h1>La
-      fen&ecirc;tre principale InstallTest est destin&eacute;e
+      <h1>JMRI: Fen&ecirc;tre Principale InstallTest</h1>
+      La fen&ecirc;tre principale InstallTest est destin&eacute;e
       &agrave; montrer si vous avez Java et JMRI correctement
       install&eacute;. Vous ne devriez pas l'utiliser pour une
       activit&eacute; normale.
@@ -41,8 +38,7 @@
       configuration et l'&eacute;xecution de DecoderPro, PanelPro,
       etc</p>
 
-      <p>Ceci est la page d'aide apps.InstallTest.InstallTest.shtml
-      <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

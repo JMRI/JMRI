@@ -1,20 +1,14 @@
-// XBeeMenu.java
 package jmri.jmrix.ieee802154.xbee.swing;
 
 import java.util.ResourceBundle;
+import javax.swing.JMenu;
 
 /**
  * Create a menu containing the XBee specific tools
  *
- * @author	Paul Bender Copyright 2013
- * @version $Revision$
+ * @author Paul Bender Copyright 2013
  */
-public class XBeeMenu extends jmri.jmrix.ieee802154.swing.IEEE802154Menu {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = -1839316572099070745L;
+public class XBeeMenu extends JMenu {
 
     public XBeeMenu(String name, jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo memo) {
         this(memo);
@@ -23,7 +17,7 @@ public class XBeeMenu extends jmri.jmrix.ieee802154.swing.IEEE802154Menu {
 
     public XBeeMenu(jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo memo) {
 
-        super(memo);
+        //super(memo);
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ieee802154.IEEE802154ActionListBundle");
 
@@ -33,7 +27,8 @@ public class XBeeMenu extends jmri.jmrix.ieee802154.swing.IEEE802154Menu {
             setText(rb.getString("MenuXBee"));
         }
 
-        add(new jmri.jmrix.ieee802154.xbee.swing.nodeconfig.NodeConfigAction(rb.getString("jmri.jmrix.ieee802154.xbee.swing.nodeconfig.NodeConfigAction"), memo));
+        add(new jmri.jmrix.ieee802154.xbee.swing.packetgen.PacketGenAction(rb.getString("jmri.jmrix.ieee802154.xbee.swing.packetgen.PacketGenAction"), memo));
+        add(new jmri.jmrix.ieee802154.xbee.swing.nodeconfig.XBeeNodeConfigAction(rb.getString("jmri.jmrix.ieee802154.xbee.swing.nodeconfig.XBeeNodeConfigAction"), memo));
 
     }
 

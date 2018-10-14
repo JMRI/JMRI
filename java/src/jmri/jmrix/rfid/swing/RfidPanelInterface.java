@@ -19,6 +19,6 @@ public interface RfidPanelInterface {
      * classes.
      * @param memo SystemConnectionMemo for configured RFID system
      */
-    public void initComponents(RfidSystemConnectionMemo memo) throws Exception;
+    public void initComponents(RfidSystemConnectionMemo memo);
 
 }

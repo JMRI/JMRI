@@ -27,6 +27,7 @@ public class JmriJInternalFrameInterface implements jmri.util.swing.WindowInterf
     JDesktopPane desktop;
     JmriJFrame mainFrame;
 
+    @Override
     public void show(final jmri.util.swing.JmriPanel child,
             jmri.util.swing.JmriAbstractAction act,
             Hint hint) {
@@ -79,18 +80,21 @@ public class JmriJInternalFrameInterface implements jmri.util.swing.WindowInterf
         frame.moveToFront();
     }
 
+    @Override
     public void show(final jmri.util.swing.JmriPanel child,
             jmri.util.swing.JmriAbstractAction act) {
 
         show(child, act, Hint.DEFAULT);
     }
 
+    @Override
     public void dispose() {
     }
 
     /**
      * Create new windows on each request
      */
+    @Override
     public boolean multipleInstances() {
         return true;
     }

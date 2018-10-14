@@ -1,8 +1,6 @@
 package jmri;
 
 import java.util.List;
-
-import javax.annotation.CheckReturnValue;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
@@ -26,9 +24,10 @@ import javax.annotation.Nonnull;
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
-public interface SignalMastManager extends Manager {
+public interface SignalMastManager extends Manager<SignalMast> {
 
     // to free resources when no longer used
+    @Override
     public void dispose();
 
     /**
@@ -38,7 +37,7 @@ public interface SignalMastManager extends Manager {
      * @param name User name or system name to match
      * @return null if no match found
      */
-    public @CheckForNull SignalMast getSignalMast(@Nonnull String name);
+    @CheckForNull public SignalMast getSignalMast(@Nonnull String name);
 
     /**
      * Locate via user name, then system name if needed. Create new one from
@@ -49,23 +48,18 @@ public interface SignalMastManager extends Manager {
      * @return Never null
      * @throws IllegalArgumentException if SignalMast doesn't already exist and
      *                                  the manager cannot create the SignalMast
-     *                                  due to e.g. an illegal name or name that
+     *                                  due to an illegal name or name that
      *                                  can't be parsed.
      */
-    public @Nonnull SignalMast provideSignalMast(@Nonnull String name);
+    @Nonnull public SignalMast provideSignalMast(@Nonnull String name);
 
-    public @Nonnull SignalMast provideSignalMast(@Nonnull String prefix, // nominally IF$shsm
+    @Nonnull public SignalMast provideSignalMast(@Nonnull String prefix, // nominally IF$shsm
             @Nonnull String signalSystem,
             @Nonnull String mastName,
             @Nonnull String[] heads);
 
-    public @CheckForNull SignalMast getByUserName(@Nonnull String s);
+    @CheckForNull public SignalMast getByUserName(@Nonnull String s);
 
-    public @CheckForNull SignalMast getBySystemName(@Nonnull String s);
-
-    /**
-     * Get a list of all SignalMast system names.
-     */
-    public @Nonnull List<String> getSystemNameList();
+    @CheckForNull public SignalMast getBySystemName(@Nonnull String s);
 
 }

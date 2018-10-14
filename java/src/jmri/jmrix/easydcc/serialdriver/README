@@ -1,12 +1,6 @@
 This is the README file for the jmrix.easydcc.serialdriver package.
 
-The jmrix Java package defines implementations for the JMRI interfaces. 
+The jmrix Java package defines implementations for the JMRI interfaces.
+
 jmrix.easydcc.serialdriver defines classes for interfacing to an EasyDcc
 command station via a RS232 serial line. 
-
-
-
-
-
-	
-	

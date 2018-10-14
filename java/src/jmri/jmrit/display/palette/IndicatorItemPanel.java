@@ -14,29 +14,30 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.IndicatorTrackIcon;
-import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ItemPanel for for Indicating track blocks
+ * ItemPanel for for Indicating track blocks.
  */
 public class IndicatorItemPanel extends FamilyItemPanel {
 
     private DetectionPanel _detectPanel;
 
     /**
-     * Constructor for plain icons and backgrounds
+     * Constructor for plain icons and backgrounds.
      */
-    public IndicatorItemPanel(JmriJFrame parentFrame, String type, String family, Editor editor) {
+    public IndicatorItemPanel(DisplayFrame parentFrame, String type, String family, Editor editor) {
         super(parentFrame, type, family, editor);
     }
 
     /**
-     * Init for creation insert panels for detection and train id
+     * Init for creation of insert panels for detection and train id.
      */
+    @Override
     public void init() {
         if (!_initialized) {
             super.init();
@@ -46,13 +47,15 @@ public class IndicatorItemPanel extends FamilyItemPanel {
             panel.add(Box.createVerticalGlue());
             panel.add(_detectPanel);
             add(panel, 0);
+            hideIcons();
         }
     }
 
     /**
-     * Init for update of existing track block _bottom3Panel has "Update Panel"
-     * button put into _bottom1Panel
+     * Init for update of existing track block.
+     * _bottom3Panel has "Update Panel" button put onto _bottom1Panel.
      */
+    @Override
     public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
         super.init(doneAction, iconMap);
         _detectPanel = new DetectionPanel(this);
@@ -60,18 +63,21 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     }
 
     /**
-     * Init for conversion of plain track to indicator track
+     * Init for conversion of plain track to indicator track by CircuitBuilder.
      */
+    @Override
     public void init(ActionListener doneAction) {
         super.init(doneAction);
     }
 
+    @Override
     public void dispose() {
         if (_detectPanel != null) {
             _detectPanel.dispose();
         }
     }
 
+    @Override
     protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
         super.makeDndIconPanel(iconMap, "ClearTrack");
     }
@@ -119,28 +125,26 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     /**
      * ****************************************************
      */
-    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map) {
-        return new IndicatorDragJLabel(flavor, map);
+    @Override
+    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
+        return new IndicatorDragJLabel(flavor, map, icon);
     }
 
     protected class IndicatorDragJLabel extends DragJLabel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -4091016874029191930L;
         HashMap<String, NamedIcon> iconMap;
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EI_EXPOSE_REP2") // icon map is within package 
-        public IndicatorDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map) {
-            super(flavor);
-            iconMap = map;
+        public IndicatorDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map, NamedIcon icon) {
+            super(flavor, icon);
+            iconMap = new HashMap<>(map);
         }
 
+        @Override
         public boolean isDataFlavorSupported(DataFlavor flavor) {
             return super.isDataFlavorSupported(flavor);
         }
 
+        @Override
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {
                 return null;
@@ -152,22 +156,30 @@ public class IndicatorItemPanel extends FamilyItemPanel {
             if (log.isDebugEnabled()) {
                 log.debug("IndicatorDragJLabel.getTransferData");
             }
-            IndicatorTrackIcon t = new IndicatorTrackIcon(_editor);
+            if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
+                IndicatorTrackIcon t = new IndicatorTrackIcon(_editor);
 
-            t.setOccBlock(_detectPanel.getOccBlock());
-            t.setOccSensor(_detectPanel.getOccSensor());
-            t.setShowTrain(_detectPanel.getShowTrainName());
-            t.setFamily(_family);
+                t.setOccBlock(_detectPanel.getOccBlock());
+                t.setOccSensor(_detectPanel.getOccSensor());
+                t.setShowTrain(_detectPanel.getShowTrainName());
+                t.setFamily(_family);
 
-            Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
-            while (it.hasNext()) {
-                Entry<String, NamedIcon> entry = it.next();
-                t.setIcon(entry.getKey(), new NamedIcon(entry.getValue()));
+                Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
+                while (it.hasNext()) {
+                    Entry<String, NamedIcon> entry = it.next();
+                    t.setIcon(entry.getKey(), new NamedIcon(entry.getValue()));
+                }
+                t.setLevel(Editor.TURNOUTS);
+                return t;                
+            } else if (DataFlavor.stringFlavor.equals(flavor)) {
+                StringBuilder sb = new StringBuilder(_itemType);
+                sb.append(" icons");
+                return  sb.toString();
             }
-            t.setLevel(Editor.TURNOUTS);
-            return t;
+            return null;
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IndicatorItemPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(IndicatorItemPanel.class);
+
 }

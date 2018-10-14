@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -7,7 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
-import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -21,11 +22,10 @@ import org.slf4j.LoggerFactory;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2016
- * @version $Revision$
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
-    CarManager manager = CarManager.instance(); // There is only one manager
+    CarManager carManager = InstanceManager.getDefault(CarManager.class); // There is only one manager
 
     // Defines the columns
     private static final int SELECT_COLUMN = 0;
@@ -79,10 +79,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
     private int _sort = SORTBY_NUMBER;
 
-    List<RollingStock> sysList = null; // list of cars
+    List<Car> carList = null; // list of cars
     boolean showAllCars = true; // when true show all cars
     String locationName = null; // only show cars with this location
-    String trackName = null; // only show cars with this track
+    public String trackName = null; // only show cars with this track
     JTable _table;
     CarsTableFrame _frame;
 
@@ -91,7 +91,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         this.showAllCars = showAllCars;
         this.locationName = locationName;
         this.trackName = trackName;
-        manager.addPropertyChangeListener(this);
+        carManager.addPropertyChangeListener(this);
         updateList();
     }
 
@@ -106,6 +106,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
      * <p>
      * Moves, Built, Owner, Value, RFID, Wait, Pickup, and Last are grouped
      * together.
+     * 
+     * @param sort The integer sort to use.
      *
      */
     public void setSort(int sort) {
@@ -143,9 +145,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             tcm.setColumnVisible(tcm.getColumnByModelIndex(WAIT_COLUMN), sort == SORTBY_WAIT);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(PICKUP_COLUMN), sort == SORTBY_PICKUP);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), sort == SORTBY_LAST);
-        } else {
-            fireTableDataChanged();
         }
+        fireTableDataChanged();
     }
 
     public String getSortByName() {
@@ -197,19 +198,13 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         }
     }
 
-    // keep show checkboxes consistent during a session
-    private static boolean isSelectVisible = false;
-
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "GUI ease of use") // NOI18N
     public void toggleSelectVisible() {
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
-        isSelectVisible = !tcm.isColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN));
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN), isSelectVisible);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN), !tcm.isColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN)));
     }
 
     public void resetCheckboxes() {
-        for (RollingStock car : sysList) {
+        for (Car car : carList) {
             car.setSelected(false);
         }
     }
@@ -219,11 +214,12 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
     /**
      * Search for car by road number
+     * @param roadNumber The string road number to search for.
      *
      * @return -1 if not found, table row number if found
      */
     public int findCarByRoadNumber(String roadNumber) {
-        if (sysList != null) {
+        if (carList != null) {
             if (!roadNumber.equals(_roadNumber)) {
                 return getIndex(0, roadNumber);
             }
@@ -237,8 +233,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     private int getIndex(int start, String roadNumber) {
-        for (int index = start; index < sysList.size(); index++) {
-            Car c = (Car) sysList.get(index);
+        for (int index = start; index < carList.size(); index++) {
+            Car c = carList.get(index);
             if (c != null) {
                 String[] number = c.getNumber().split("-");
                 // check for wild card '*'
@@ -268,96 +264,96 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     public Car getCarAtIndex(int index) {
-        return (Car) sysList.get(index);
+        return carList.get(index);
     }
 
-    synchronized void updateList() {
+    private void updateList() {
         // first, remove listeners from the individual objects
         removePropertyChangeCars();
-        sysList = getSelectedCarList();
+        carList = getSelectedCarList();
         // and add listeners back in
         addPropertyChangeCars();
     }
 
-    public List<RollingStock> getSelectedCarList() {
+    public List<Car> getSelectedCarList() {
         return getCarList(_sort);
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
+    @SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
             justification = "default case is sort by number") // NOI18N
-    public List<RollingStock> getCarList(int sort) {
-        List<RollingStock> list;
+    public List<Car> getCarList(int sort) {
+        List<Car> list;
         switch (sort) {
             case SORTBY_NUMBER:
-                list = manager.getByNumberList();
+                list = carManager.getByNumberList();
                 break;
             case SORTBY_ROAD:
-                list = manager.getByRoadNameList();
+                list = carManager.getByRoadNameList();
                 break;
             case SORTBY_TYPE:
-                list = manager.getByTypeList();
+                list = carManager.getByTypeList();
                 break;
             case SORTBY_COLOR:
-                list = manager.getByColorList();
+                list = carManager.getByColorList();
                 break;
             case SORTBY_LOAD:
-                list = manager.getByLoadList();
+                list = carManager.getByLoadList();
                 break;
             case SORTBY_KERNEL:
-                list = manager.getByKernelList();
+                list = carManager.getByKernelList();
                 break;
             case SORTBY_LOCATION:
-                list = manager.getByLocationList();
+                list = carManager.getByLocationList();
                 break;
             case SORTBY_DESTINATION:
-                list = manager.getByDestinationList();
+                list = carManager.getByDestinationList();
                 break;
             case SORTBY_TRAIN:
-                list = manager.getByTrainList();
+                list = carManager.getByTrainList();
                 break;
             case SORTBY_FINALDESTINATION:
-                list = manager.getByFinalDestinationList();
+                list = carManager.getByFinalDestinationList();
                 break;
             case SORTBY_RWE:
-                list = manager.getByRweList();
+                list = carManager.getByRweList();
                 break;
             case SORTBY_MOVES:
-                list = manager.getByMovesList();
+                list = carManager.getByMovesList();
                 break;
             case SORTBY_BUILT:
-                list = manager.getByBuiltList();
+                list = carManager.getByBuiltList();
                 break;
             case SORTBY_OWNER:
-                list = manager.getByOwnerList();
+                list = carManager.getByOwnerList();
                 break;
             case SORTBY_VALUE:
-                list = manager.getByValueList();
+                list = carManager.getByValueList();
                 break;
             case SORTBY_RFID:
-                list = manager.getByRfidList();
+                list = carManager.getByRfidList();
                 break;
             case SORTBY_WAIT:
-                list = manager.getByWaitList();
+                list = carManager.getByWaitList();
                 break;
             case SORTBY_PICKUP:
-                list = manager.getByPickupList();
+                list = carManager.getByPickupList();
                 break;
             case SORTBY_LAST:
-                list = manager.getByLastDateList();
+                list = carManager.getByLastDateList();
                 break;
             default:
-                list = manager.getByNumberList();
+                list = carManager.getByNumberList();
         }
         filterList(list);
         return list;
     }
 
-    private void filterList(List<RollingStock> list) {
+    private void filterList(List<Car> list) {
         if (showAllCars) {
             return;
         }
         for (int i = 0; i < list.size(); i++) {
-            Car car = (Car) list.get(i);
+            Car car = list.get(i);
             if (car.getLocation() == null) {
                 list.remove(i--);
                 continue;
@@ -384,7 +380,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     // Cars frame table column widths, starts with Select column and ends with Edit
-    private int[] tableColumnWidths =
+    private final int[] tableColumnWidths =
             {60, 60, 60, 65, 35, 75, 75, 75, 65, 190, 190, 140, 190, 190, 190, 65, 50, 50, 50, 50, 100,
                     50, 100, 100, 65, 70};
 
@@ -409,7 +405,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         _frame.loadTableDetails(_table);
 
         // turn off columns
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN), isSelectVisible);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(COLOR_COLUMN), false);
 
         tcm.setColumnVisible(tcm.getColumnByModelIndex(FINAL_DESTINATION_COLUMN), false);
@@ -425,11 +420,16 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         tcm.setColumnVisible(tcm.getColumnByModelIndex(WAIT_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(PICKUP_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), false);
+        
+        // turn on defaults
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), true);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), true);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(MOVES_COLUMN), true);
     }
 
     @Override
     public int getRowCount() {
-        return sysList.size();
+        return carList.size();
     }
 
     @Override
@@ -441,7 +441,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     public String getColumnName(int col) {
         switch (col) {
             case SELECT_COLUMN:
-                return Bundle.getMessage("Select");
+                return Bundle.getMessage("ButtonSelect");
             case NUMBER_COLUMN:
                 return Bundle.getMessage("Number");
             case ROAD_COLUMN:
@@ -467,7 +467,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case FINAL_DESTINATION_COLUMN:
                 return Bundle.getMessage("FinalDestination");
             case RWE_COLUMN:
-                return Bundle.getMessage("ReturnWhenEmpty");
+                return Bundle.getMessage("RWELocation");
             case RWE_LOAD_COLUMN:
                 return Bundle.getMessage("RWELoad");
             case TRAIN_COLUMN:
@@ -491,7 +491,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case SET_COLUMN:
                 return Bundle.getMessage("Set");
             case EDIT_COLUMN:
-                return Bundle.getMessage("Edit");
+                return Bundle.getMessage("ButtonEdit"); // titles above all columns
             default:
                 return "unknown"; // NOI18N
         }
@@ -531,11 +531,11 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     @Override
-    public synchronized Object getValueAt(int row, int col) {
+    public Object getValueAt(int row, int col) {
         if (row >= getRowCount()) {
             return "ERROR row " + row; // NOI18N
         }
-        Car car = (Car) sysList.get(row);
+        Car car = carList.get(row);
         if (car == null) {
             return "ERROR car unknown " + row; // NOI18N
         }
@@ -590,6 +590,11 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 if (car.getFinalDestinationTrack() != null) {
                     s = s + " (" + car.getFinalDestinationTrackName() + ")";
                 }
+                if (log.isDebugEnabled() &&
+                        car.getFinalDestinationTrack() != null &&
+                        car.getFinalDestinationTrack().getSchedule() != null) {
+                    s = s + " " + car.getScheduleItemId();
+                }
                 return s;
             }
             case RWE_COLUMN:
@@ -622,7 +627,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case SET_COLUMN:
                 return Bundle.getMessage("Set");
             case EDIT_COLUMN:
-                return Bundle.getMessage("Edit");
+                return Bundle.getMessage("ButtonEdit");
             default:
                 return "unknown " + col; // NOI18N
         }
@@ -632,8 +637,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     CarSetFrame csf = null;
 
     @Override
-    public synchronized void setValueAt(Object value, int row, int col) {
-        Car car = (Car) sysList.get(row);
+    public void setValueAt(Object value, int row, int col) {
+        Car car = carList.get(row);
         switch (col) {
             case SELECT_COLUMN:
                 car.setSelected(((Boolean) value).booleanValue());
@@ -703,7 +708,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     public void dispose() {
-        manager.removePropertyChangeListener(this);
+        carManager.removePropertyChangeListener(this);
         removePropertyChangeCars();
         if (csf != null) {
             csf.dispose();
@@ -714,13 +719,13 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     private void addPropertyChangeCars() {
-        for (RollingStock car : manager.getList()) {
+        for (Car car : carManager.getList()) {
             car.addPropertyChangeListener(this);
         }
     }
 
     private void removePropertyChangeCars() {
-        for (RollingStock car : manager.getList()) {
+        for (Car car : carManager.getList()) {
             car.removePropertyChangeListener(this);
         }
     }
@@ -737,7 +742,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         } // must be a car change
         else if (e.getSource().getClass().equals(Car.class)) {
             Car car = (Car) e.getSource();
-            int row = sysList.indexOf(car);
+            int row = carList.indexOf(car);
             if (Control.SHOW_PROPERTY) {
                 log.debug("Update car table row: {}", row);
             }
@@ -751,5 +756,5 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarsTableModel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CarsTableModel.class);
 }

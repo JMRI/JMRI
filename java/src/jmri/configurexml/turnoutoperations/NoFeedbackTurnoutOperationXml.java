@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * Concrete subclass to save/restore NoFeedbackTurnoutOperation object to/from
  * XML. Most of the work is done by CommonTurnoutOperationXml
  *
- * @author John Harper	Copyright 2005
+ * @author John Harper Copyright 2005
  *
  */
 public class NoFeedbackTurnoutOperationXml extends CommonTurnoutOperationXml {
@@ -23,6 +23,7 @@ public class NoFeedbackTurnoutOperationXml extends CommonTurnoutOperationXml {
      *
      * @param e the XML element of type "turnoutOperation"
      */
+    @Override
     public TurnoutOperation loadOne(Element e) {
         try {
             Class<?> myOpClass = Class.forName("jmri.NoFeedbackTurnoutOperation");
@@ -38,5 +39,5 @@ public class NoFeedbackTurnoutOperationXml extends CommonTurnoutOperationXml {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NoFeedbackTurnoutOperation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(NoFeedbackTurnoutOperation.class);
 }

@@ -7,6 +7,10 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI Hardware Support - RFID Readers</title><!-- Style -->
+  
+      <meta name="keywords" content=
+  "JMRI hardware rfid readers">
+  
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -39,7 +43,9 @@
       <ul>
         <li>CORE-ID / ID-Innovations - since version 2.11.4</li>
 
-        <li>Olimex - since v 3.9.2</li>
+        <li>Olimex MOD-RFID125 - since v 3.9.2</li>
+
+        <li>Olimex MOD-RFID1356MIFARE - since v 4.7.5</li>
 
         <li>Parallax - since v 3.9.2</li>
       </ul>
@@ -49,13 +55,15 @@
 
       <p>JMRI also supports up to 8 individual readers connected
       via a Concentrator. Right now, the only supported
-      Concentrator is that from MERG, and then only for readers
+      Concentrator is that from <a href="../can/cbus/Details.shtml#c7">MERG</a>, and then only for readers
       using the CORE-ID protocol.<br>
+      
       Select "MERG Concentrator" for the "Adapter" on the
-      Connections tab in the JMRI Preferences. <a name="connecting"
-      id="connecting"></a></p>
+      Connections tab in the JMRI Preferences. </p>
 
-      <h2>Connecting</h2>
+      <h2><a name="connecting"
+      id="connecting">Connecting</a></h2>
+      
 
       <h3>Wiring</h3>
 
@@ -63,19 +71,27 @@
         <li>Direct serial connections have been supported since
         JMRI 2.11.4</li>
 
-        <li>Network connections are targeted for the JMRI 4.1
+        <li>Network connections are targeted for the JMRI 4.1.2
         release series.</li>
       </ul>
 
       <h3>Settings</h3><a href="RFID_Preferences.png"><img src=
       "RFID_Preferences.png" align="right" height="220" width=
-      "430"></a>
+      "430" alt="JMRI RFID Preferences"></a>
 
       <p>You configure JMRI's connection to your RFID hardware in
       JMRI's Preferences.<br>
       It appears as "RFID" in the System Manufacturer drop-down
       list.</p>
+      <p>The "Baud rate" advanced connection setting is typically not critical 
+      for USB-connected RFID connections so it may be "greyed out" to indicate 
+      that it is not selectable.</p>
 
+      <h3>Reader Configuration</h3>
+      <h4>Olimex readers</h4>
+      <p>Olimex MOD-RFID125 and MOD-RFID1356MIFARE readers must be operating in "CDC" 
+          mode.  This mode is typically configured using a pushbutton on the reader.</p>
+      
       <h3>Naming</h3>
 
       <p>The <a href="../../doc/Technical/Names.shtml">system
@@ -159,7 +175,10 @@
 
         <li>The pop-up menu on the icon will let you change the
         formatting.</li>
-      </ul><!--#include virtual="/Footer" -->
+        
+      </ul>
+      
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

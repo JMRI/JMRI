@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import jmri.InstanceManager;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.operations.OperationsFrame;
@@ -33,7 +34,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyChangeListener {
 
-    RouteManager routeManager = RouteManager.instance();
+    RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
 
     // labels
     JLabel textX = new JLabel("   X  ");
@@ -47,8 +48,8 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
     JButton previousButton = new JButton(Bundle.getMessage("Previous"));
     JButton nextButton = new JButton(Bundle.getMessage("Next"));
     JButton placeButton = new JButton(Bundle.getMessage("PlaceTestIcon"));
-    JButton applyButton = new JButton(Bundle.getMessage("Apply"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton applyButton = new JButton(Bundle.getMessage("ButtonApply"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     // combo boxes
     // Spinners
@@ -70,7 +71,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
         if (routeName == null) {
             return;
         }
-        _route = RouteManager.instance().getRouteByName(routeName);
+        _route = InstanceManager.getDefault(RouteManager.class).getRouteByName(routeName);
         _route.addPropertyChangeListener(this);
 
         // general GUI config
@@ -147,7 +148,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
         }
         if (ae.getSource() == applyButton) {
             if (value != JOptionPane.YES_OPTION) {
-                value = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
+                value = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
                         .getMessage("UpdateTrainIconRoute"), new Object[]{_route.getName()}), Bundle
                                 .getMessage("DoYouWantThisRoute"),
                         JOptionPane.YES_NO_OPTION);
@@ -158,7 +159,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
             updateTrainIconCoordinates();
         }
         if (ae.getSource() == saveButton) {
-            RouteManagerXml.instance().writeOperationsFile();
+            InstanceManager.getDefault(RouteManagerXml.class).writeOperationsFile();
             if (Setup.isCloseWindowOnSaveEnabled()) {
                 dispose();
             }
@@ -183,7 +184,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
 
     // place test markers on panel
     private void placeTestIcons() {
-        Editor editor = PanelMenu.instance().getEditorByName(Setup.getPanelName());
+        Editor editor = InstanceManager.getDefault(PanelMenu.class).getEditorByName(Setup.getPanelName());
         if (editor == null) {
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LoadPanel"),
                     new Object[]{Setup.getPanelName()}), Bundle.getMessage("PanelNotFound"),
@@ -194,8 +195,8 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
             }
             // icon
             _tIon = editor.addTrainIcon(_rl.getName());
-            _tIon.getTooltip().setText(_route.getName());
-            _tIon.getTooltip().setBackgroundColor(Color.white);
+            _tIon.getToolTip().setText(_route.getName());
+            _tIon.getToolTip().setBackgroundColor(Color.white);
             _tIon.setLocation(_rl.getTrainIconX(), _rl.getTrainIconY());
             setTrainIconNameAndColor();
             addIconListener(_tIon);
@@ -228,9 +229,9 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
         updateRouteLocation(NONE);
     }
 
-    private int FORWARD = 1;
-    private int BACK = -1;
-    private int NONE = 0;
+    private final int FORWARD = 1;
+    private final int BACK = -1;
+    private final int NONE = 0;
 
     private void updateRouteLocation(int direction) {
         if (direction == FORWARD) {
@@ -258,6 +259,10 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
             loadSpinners(_rl);
             routeLocationName.setText(_rl.getName());
         }
+        // disable or enable previous and next buttons
+        previousButton.setEnabled(_routeIndex != 0);
+        nextButton.setEnabled(_routeIndex != _routeList.size() - 1);
+        
         setTrainIconNameAndColor();
     }
 
@@ -329,5 +334,5 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SetTrainIconRouteFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SetTrainIconRouteFrame.class);
 }

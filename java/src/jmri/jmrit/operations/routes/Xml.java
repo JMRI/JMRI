@@ -4,7 +4,7 @@ package jmri.jmrit.operations.routes;
  * A convenient place to access operations xml element and attribute names.
  *
  * @author Daniel Boudreau Copyright (C) 2013
- * @version $Revision: 22156 $
+ * 
  *
  */
 public class Xml {
@@ -36,6 +36,8 @@ public class Xml {
     static final String DEPART_TIME = "departTime"; // NOI18N
     static final String TRAIN_ICON_X = "trainIconX"; // NOI18N
     static final String TRAIN_ICON_Y = "trainIconY"; // NOI18N
+    static final String TRAIN_ICON_RANGE_X = "trainIconRangeX"; // NOI18N
+    static final String TRAIN_ICON_RANGE_Y = "trainIconRangeY"; // NOI18N
     static final String SEQUENCE_ID = "sequenceId"; // NOI18N
 
     // RouteManagerXml.java

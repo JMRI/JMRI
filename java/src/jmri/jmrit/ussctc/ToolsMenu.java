@@ -5,7 +5,7 @@ import javax.swing.JMenu;
 /**
  * Create a "Tools" menu containing the USS CTC tools
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class ToolsMenu extends JMenu {
 
@@ -18,14 +18,9 @@ public class ToolsMenu extends JMenu {
 
         super();
 
-        if (rb == null) {
-            rb = java.util.ResourceBundle.getBundle("jmri.jmrit.ussctc.UssCtcBundle");
-        }
-        setText(rb.getString("MenuCtcTools"));
+        setText(Bundle.getMessage("MenuCtcTools"));   // NOI18N
 
-        add(new OsIndicatorAction(rb.getString("MenuItemOsIndicator")));
-        add(new FollowerAction(rb.getString("MenuItemFollower")));
+        add(new OsIndicatorAction(Bundle.getMessage("MenuItemOsIndicator")));   // NOI18N
+        add(new FollowerAction(Bundle.getMessage("MenuItemFollower")));    // NOI18N
     }
-
-    static java.util.ResourceBundle rb = null;
 }

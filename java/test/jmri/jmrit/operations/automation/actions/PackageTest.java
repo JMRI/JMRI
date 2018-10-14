@@ -1,45 +1,48 @@
 package jmri.jmrit.operations.automation.actions;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        BundleTest.class,
+        ActionCodesTest.class,
+        ActivateTimetableActionTest.class,
+        ApplyTimetableActionTest.class,
+        BuildTrainActionTest.class,
+        BuildTrainIfSelectedActionTest.class,
+        DeselectTrainActionTest.class,
+        GotoActionTest.class,
+        GotoFailureActionTest.class,
+        GotoSuccessActionTest.class,
+        HaltActionTest.class,
+        IsTrainEnRouteActionTest.class,
+        MessageYesNoActionTest.class,
+        MoveTrainActionTest.class,
+        NoActionTest.class,
+        PrintSwitchListActionTest.class,
+        PrintSwitchListChangesActionTest.class,
+        PrintTrainManifestActionTest.class,
+        PrintTrainManifestIfSelectedActionTest.class,
+        ResetTrainActionTest.class,
+        ResumeAutomationActionTest.class,
+        RunAutomationActionTest.class,
+        RunSwitchListActionTest.class,
+        RunSwitchListChangesActionTest.class,
+        RunTrainActionTest.class,
+        SelectTrainActionTest.class,
+        StopAutomationActionTest.class,
+        TerminateTrainActionTest.class,
+        UpdateSwitchListActionTest.class,
+        WaitSwitchListActionTest.class,
+        WaitTrainActionTest.class,
+        WaitTrainTerminatedActionTest.class,
+})
 
 /**
  * Invokes complete set of tests in the jmri.jmrit.operations.automations.actions tree
  *
  * @author	Bob Jacobsen Copyright 2001, 2003, 2012
  */
-public class PackageTest extends TestCase {
-
-    // from here down is testing infrastructure
-    public PackageTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", PackageTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrit.operations.automations.actions.PackageTest");   // no tests in this class itself
-
-        suite.addTest(BundleTest.suite());
-
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-        }
-
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-    }
-
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
-    }
+public class PackageTest  {
 }

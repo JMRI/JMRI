@@ -7,6 +7,7 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import jmri.InstanceManager;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.RosterIconFactory;
 
 /**
  * Render RosterEntry objects or Strings as cells in a JComboBox.
@@ -21,13 +22,14 @@ public class RosterEntryListCellRenderer extends JLabel implements ListCellRende
     }
 
     // FIXME: JList needs typed
+    @Override
     public Component getListCellRendererComponent(@SuppressWarnings("rawtypes") JList list, Object value,
             int index, boolean isSelected, boolean cellHasFocus) {
         if (value != null) {
             if (value instanceof RosterEntry) {
                 String rosterEntryTitle = ((RosterEntry) value).titleString();
 
-                ImageIcon icon = InstanceManager.rosterIconFactoryInstance().getIcon(rosterEntryTitle);
+                ImageIcon icon = InstanceManager.getDefault(RosterIconFactory.class).getIcon(rosterEntryTitle);
                 if (icon != null) {
                     icon.setImageObserver(list);
                 }

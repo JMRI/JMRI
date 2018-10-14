@@ -1,4 +1,3 @@
-// EndSound.java
 package jmri.jmrix.loconet.sdf;
 
 /**
@@ -6,20 +5,23 @@ package jmri.jmrix.loconet.sdf;
  *
  * This carries no additional information.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
- * @version $Revision$
+ * @author Bob Jacobsen Copyright (C) 2007
  */
 public class EndSound extends SdfMacro {
 
     public EndSound(int byte1, int byte2) {
+        this.byte1 = byte1;
+        this.byte2 = byte2;
     }
 
     int byte1, byte2;
 
+    @Override
     public String name() {
-        return "END_SOUND";
+        return "END_SOUND"; // NOI18N
     }
 
+    @Override
     public int length() {
         return 2;
     }
@@ -36,6 +38,7 @@ public class EndSound extends SdfMacro {
     /**
      * Store into a buffer.
      */
+    @Override
     public void loadByteArray(SdfBuffer buffer) {
         // data
         buffer.setAtIndexAndInc(byte1);
@@ -45,17 +48,18 @@ public class EndSound extends SdfMacro {
         super.loadByteArray(buffer);
     }
 
+    @Override
     public String toString() {
-        return "End Sequence\n";
+        return "End Sequence\n"; // NOI18N
     }
 
+    @Override
     public String oneInstructionString() {
         return name() + '\n';
     }
 
+    @Override
     public String allInstructionString(String indent) {
         return indent + oneInstructionString();
     }
 }
-
-/* @(#)EndSound.java */

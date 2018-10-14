@@ -7,7 +7,7 @@ import org.jdom2.Element;
  * Loads and stores the switch list text strings.
  *
  * @author Daniel Boudreau Copyright (C) 2013
- * @version $Revision: 21846 $
+ * 
  *
  */
 public class TrainSwitchListText {
@@ -20,7 +20,7 @@ public class TrainSwitchListText {
     private static String departedExpected = Bundle.getMessage("DepartedExpected");
 
     private static String visitNumber = Bundle.getMessage("VisitNumber");
-    private static String visitNumberDeparted = Bundle.getMessage("VisitNumberDeparted");	// this get's appended to "no scheduled work at"
+    private static String visitNumberDeparted = Bundle.getMessage("VisitNumberDeparted"); // this get's appended to "no scheduled work at"
     private static String visitNumberTerminates = Bundle.getMessage("VisitNumberTerminates");
     private static String visitNumberTerminatesDeparted = Bundle.getMessage("VisitNumberTerminatesDeparted");
     private static String visitNumberDone = Bundle.getMessage("VisitNumberDone");

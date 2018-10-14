@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author Brett Hoffman Copyright (C) 2011
- * @version $Revision: $
+ * 
  */
 public class WiFiConsistFile extends ConsistFile {
 
@@ -44,6 +44,6 @@ public class WiFiConsistFile extends ConsistFile {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WiFiConsistFile.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(WiFiConsistFile.class);
 
 }

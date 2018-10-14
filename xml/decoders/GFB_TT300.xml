@@ -601,7 +601,7 @@
         <text>Routes are turnout addresses which take values from 1 to 127.  Optionally, the Route address can cause the </text>
       </label>
       <label>
-        <text>decoder to act in the Alternate Sense to the instruction given (ie, will move the turnout the oposite way). </text>
+        <text>decoder to act in the Alternate Sense to the instruction given (ie, will move the turnout the opposite way). </text>
       </label>
       <label>
         <text>If any Route Address is set to Zero, then all other after that Route Address are ignored.   </text>

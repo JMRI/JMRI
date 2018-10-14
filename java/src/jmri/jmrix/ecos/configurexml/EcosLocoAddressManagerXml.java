@@ -1,4 +1,3 @@
-// EcosLocoAddressManagerXml.java
 package jmri.jmrix.ecos.configurexml;
 
 import org.jdom2.Element;
@@ -12,13 +11,13 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2009
- * @version $Revision$
  */
 public class EcosLocoAddressManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
     public EcosLocoAddressManagerXml() {
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
@@ -28,8 +27,9 @@ public class EcosLocoAddressManagerXml extends jmri.managers.configurexml.Abstra
         return true;
     }
 
+    @Override
     public Element store(Object o) {
         return null;
     }
-    private final static Logger log = LoggerFactory.getLogger(EcosLocoAddressManagerXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EcosLocoAddressManagerXml.class);
 }

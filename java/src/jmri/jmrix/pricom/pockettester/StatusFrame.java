@@ -1,4 +1,3 @@
-// pricom.pockettester.StatusFrame.java
 package jmri.jmrix.pricom.pockettester;
 
 import java.util.Hashtable;
@@ -14,19 +13,11 @@ import org.slf4j.LoggerFactory;
  * For more info on the product, see http://www.pricom.com
  *
  * @author	Bob Jacobsen Copyright (C) 2005
- * @version	$Revision$
- */
+  */
 public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 8215226616579760539L;
-
-    static java.util.ResourceBundle rb
-            = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
-
     javax.swing.Timer timer = new javax.swing.Timer(500, new java.awt.event.ActionListener() {
+        @Override
         public void actionPerformed(java.awt.event.ActionEvent e) {
             sendRequest();
         }
@@ -38,39 +29,41 @@ public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
     DataSource source = null;
 
     public StatusFrame() {
-        super(rb.getString("TitleStatus"));
+        super(Bundle.getMessage("TitleStatus"));
     }
 
     /**
      * Add GUI elements
      */
+    @Override
     public void initComponents() {
         getContentPane().add(tabPane);
 
         // loop over the auto definitions from the properties file, adding panes
         // get pane count
-        int numAutoPane = Integer.parseInt(rb.getString("CSNumAutoPanes"));
+        int numAutoPane = Integer.parseInt(Bundle.getMessage("CSNumAutoPanes"));
 
         for (int i = 0; i < numAutoPane; i++) {
             // create and install tabbed pane
             JPanel p = new JPanel();
             p.setLayout(new java.awt.GridLayout(0, 2));  // 0 rows is a dummy value
-            tabPane.addTab(rb.getString("CS" + i + "Title"), p);
+            tabPane.addTab(Bundle.getMessage("CS" + i + "Title"), p);
 
             // install variables
-            int numVars = Integer.parseInt(rb.getString("CS" + i + "NumVars"));
+            int numVars = Integer.parseInt(Bundle.getMessage("CS" + i + "NumVars"));
             for (int j = 0; j < numVars; j++) {
-                p.add(new JLabel(rb.getString("CS" + i + "Var" + j + "Name")));
+                p.add(new JLabel(Bundle.getMessage("CS" + i + "Var" + j + "Name")));
                 JLabel val = new JLabel("-----");
                 // record the label and format for later
-                displayHash.put(rb.getString("CS" + i + "Var" + j + "ID"), val);
-                formatHash.put(rb.getString("CS" + i + "Var" + j + "ID"), rb.getString("CS" + i + "Var" + j + "Format"));
+                displayHash.put(Bundle.getMessage("CS" + i + "Var" + j + "ID"), val);
+                formatHash.put(Bundle.getMessage("CS" + i + "Var" + j + "ID"), Bundle.getMessage("CS" + i + "Var" + j + "Format"));
                 p.add(val);
             }
         }
 
         // add a listener to hear about selections
         tabPane.addChangeListener(new javax.swing.event.ChangeListener() {
+            @Override
             public void stateChanged(javax.swing.event.ChangeEvent e) {
                 sendRequest();  // to get a fast update
             }
@@ -83,12 +76,13 @@ public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
     }
 
     protected String title() {
-        return rb.getString("TitleStatus");
+        return Bundle.getMessage("TitleStatus");
     }
 
     // note that the message coming from the unit has
     // an invisible null character after the "=" in version 1.5.1
     // but not in later versions
+    @Override
     public void asciiFormattedMessage(String input) {
         String m = input + " ";  // extra space to make stripping easier
         // check if interesting
@@ -121,7 +115,7 @@ public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
     protected String convertValue(String val, String format) {
         if (format.equals("address")) {
             // long or short address format
-            int address = Integer.valueOf(val).intValue();
+            int address = Integer.parseInt(val);
             if (address >= 0x8000) {
                 return "" + (address - 0x8000) + " (long)";
             } else {
@@ -147,10 +141,8 @@ public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
      */
     private void sendRequest() {
         int i = tabPane.getSelectedIndex();
-        String prompt = rb.getString("CS" + i + "PromptChar");
-        if (log.isDebugEnabled()) {
-            log.debug("send " + prompt + " for pane " + i);
-        }
+        String prompt = Bundle.getMessage("CS" + i + "PromptChar");
+        log.debug("send {} for pane {}", prompt, i);
 
         if (source == null) {
             log.error("DataSource should not be null in sendRequest");
@@ -169,6 +161,7 @@ public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
         timer.start();
     }
 
+    @Override
     public void dispose() {
         // stop timer
         timer.stop();
@@ -176,6 +169,6 @@ public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(StatusFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(StatusFrame.class);
 
 }

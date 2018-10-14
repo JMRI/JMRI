@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
 <!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -27,6 +27,24 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>4</revnumber>
+      <date>2018-03-11</date>
+      <authorinitials>WK</authorinitials>
+      <revremark>German and Dutch translating inserted</revremark>
+    </revision>
+    <revision>
+      <revnumber>3</revnumber>
+      <date>2018-01-02</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>French translation</revremark>
+    </revision>
+    <revision>
+      <revnumber>2</revnumber>
+      <date>2016-10-23</date>
+      <authorinitials>PS</authorinitials>
+      <revremark>Czech translation</revremark>
+    </revision>
+    <revision>
       <revnumber>1</revnumber>
       <date>2014-08-19</date>
       <authorinitials>EF</authorinitials>
@@ -36,8 +54,16 @@
   <variable item="Consist Function" CV="21" mask="XXXXXXXV" tooltip="Selects the address accessory functions will respond .Least bit default=0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Functions Respond to Address</label>
+        <label xml:lang="cs">Funkce reaguje na adrese</label>
+        <label xml:lang="fr">Fonctions répondront à l'adresse</label>
         <label xml:lang="it">Indirizzo valido per le Funzioni</label>
+        <label xml:lang="de">Funktionen reagieren auf Adresse</label>
+        <label xml:lang="nl">Functies reageren op adres</label>
         <tooltip>Selects the address accessory functions will respond to</tooltip>
+        <tooltip xml:lang="cs">Vyberte adresu na které bude reagovat funkce</tooltip>
+        <tooltip xml:lang="fr">Sélectionne l'adresse à laquelle les fonctions répondront</tooltip>
         <tooltip xml:lang="it">Seleziona l'indirizzo a cui rispondono le Funzioni</tooltip>
+        <tooltip xml:lang="de">Wählt die Adresse, wo auf die Funktionen reagieren.</tooltip>
+        <tooltip xml:lang="nl">Hiermee selecteert u het accessoire adres waar de functies op reageren zal</tooltip>
       </variable>
 </variables>

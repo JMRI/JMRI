@@ -11,11 +11,9 @@ import org.slf4j.LoggerFactory;
  * Controls the actual LocoNet transfers to download sounds into a Digitrax SFX
  * decoder.
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class LoaderEngine {
-
-    static java.util.ResourceBundle res = java.util.ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Loader");
 
     static final int CMD_START = 0x04;
     static final int CMD_ADD = 0x08;
@@ -46,14 +44,14 @@ public class LoaderEngine {
         // use a try-catch to handle aborts from below
         try {
             // erase flash
-            notify(res.getString("EngineEraseFlash"));
+            notify(Bundle.getMessage("EngineEraseFlash"));
             controller.sendLocoNetMessage(getEraseMessage());
             protectedWait(1000);
-            notify(res.getString("EngineEraseWait"));
+            notify(Bundle.getMessage("EngineEraseWait"));
             protectedWait(20000);
 
             // start
-            notify(res.getString("EngineSendInit"));
+            notify(Bundle.getMessage("EngineSendInit"));
             controller.sendLocoNetMessage(getInitMessage());
             protectedWait(250);
 
@@ -65,15 +63,15 @@ public class LoaderEngine {
 
             // end
             controller.sendLocoNetMessage(getExitMessage());
-            notify(res.getString("EngineDone"));
+            notify(Bundle.getMessage("EngineDone"));
         } catch (DelayException e) {
-            notify(res.getString("EngineAbortDelay"));
+            notify(Bundle.getMessage("EngineAbortDelay"));
         }
 
     }
 
     void sendSDF() throws DelayException {
-        notify(res.getString("EngineSendSdf"));
+        notify(Bundle.getMessage("EngineSendSdf"));
 
         // get control info, data
         SpjFile.Header header = spjFile.findSdfHeader();
@@ -95,7 +93,7 @@ public class LoaderEngine {
     }
 
     void sendAllWAV() throws DelayException {
-        notify(res.getString("EngineSendWav"));
+        notify(Bundle.getMessage("EngineSendWav"));
         for (int i = 1; i < spjFile.numHeaders(); i++) {
             // see if WAV
             if (spjFile.getHeader(i).isWAV()) {
@@ -105,8 +103,7 @@ public class LoaderEngine {
     }
 
     public void sendOneWav(int index) throws DelayException {
-        notify(java.text.MessageFormat.format(
-                res.getString("EngineSendWavBlock"), new Object[]{"" + index}));
+        notify(Bundle.getMessage("EngineSendWavBlock", index));
         // get control info, data
         SpjFile.Header header = spjFile.getHeader(index);
         int handle = header.getHandle();
@@ -160,16 +157,10 @@ public class LoaderEngine {
             }            // wait a while, and then try again
             protectedWait(10);
         }
-        throw new DelayException("Ran out of time after sending " + m.toString());
+        throw new DelayException("Ran out of time after sending " + m.toString()); // NOI18N
     }
 
     static class DelayException extends Exception {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 5382070125978390478L;
-
         DelayException(String s) {
             super(s);
         }
@@ -241,7 +232,7 @@ public class LoaderEngine {
                 header[i] = 0;
             }
             if (transferName.length() > 32) {
-                log.error("name " + transferName + " is too long, truncated");
+                log.error("name {} is too long, truncated", transferName);
             }
             for (int i = 0; i < Math.min(32, transferName.length()); i++) {
                 header[i + 8] = (byte) transferName.charAt(i);
@@ -254,7 +245,7 @@ public class LoaderEngine {
             // calculate remaining bytes
             int remaining = transferContents.length - transferIndex;
             if (remaining < 0) {
-                log.error("Did not expect to find length " + transferContents.length + " and index " + transferIndex);
+                log.error("Did not expect to find length {} and index {}", transferContents.length, transferIndex);
             }
             if (remaining <= 0) {
                 return null; // transfer complete
@@ -274,7 +265,6 @@ public class LoaderEngine {
 
             // and return the message
             return getSendDataMessage(transferType, transferHandle, buffer);
-
         }
     }
 
@@ -292,8 +282,7 @@ public class LoaderEngine {
         }
 
         if (log.isDebugEnabled()) {
-            log.debug("getStartDataMessage: " + type + "," + handle + "," + length + ";"
-                    + pagecount + "," + remainder);
+            log.debug("getStartDataMessage: {},{},{};{},{}", type, handle, length, pagecount, remainder);
         }
 
         LocoNetMessage m = new LocoNetMessage(new int[]{0xD3, (type | CMD_START), handle, pagecount & 0x7F,
@@ -368,6 +357,6 @@ public class LoaderEngine {
     public void dispose() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LoaderEngine.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LoaderEngine.class);
 
 }

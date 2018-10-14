@@ -1,56 +1,43 @@
 package jmri.jmrit.display.palette;
 
-import java.beans.PropertyChangeEvent;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import java.awt.GraphicsEnvironment;
+import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
  * @author	Bob Jacobsen
  */
-public class ItemPaletteTest extends jmri.util.SwingTestCase {
+public class ItemPaletteTest {
 
-    ItemPalette ip;
-    
+    // allows creation in lamba expressions
+    private ItemPalette ip = null;
+
+    @Test
     public void testShow() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.util.ThreadingUtil.runOnGUI(() -> {
-            ip = new ItemPalette("Test ItemPalette", null);
+            ip = ItemPalette.getDefault("Test ItemPalette",  new ControlPanelEditor("EdItemPalette"));
             ip.pack();
+            ip.setVisible(true);
         });
-        ip.setVisible(true);
+        JUnitUtil.dispose(ip);
     }
 
-
-    // from here down is testing infrastructure
-    public ItemPaletteTest(String s) {
-        super(s);
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", ItemPaletteTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @After
+    public void tearDown() {
+        ip = null;
+        JUnitUtil.tearDown();
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(ItemPaletteTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-    
-        jmri.util.JUnitUtil.resetInstanceManager();
-    }
-
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
-    }
-
-	// static private Logger log = LoggerFactory.getLogger(ItemPaletteTest.class.getName());
 }

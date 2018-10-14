@@ -15,6 +15,7 @@ import javax.swing.JSeparator;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.text.DefaultEditorKit;
+import jmri.InstanceManager;
 import jmri.jmrit.DebugMenu;
 import jmri.jmrit.ToolsMenu;
 import jmri.jmrit.decoderdefn.PrintDecoderListAction;
@@ -43,7 +44,7 @@ import org.slf4j.LoggerFactory;
  * This is for launching after the system is initialized, so it does none of
  * that.
  *
- * @author	Bob Jacobsen Copyright 2003, 2007, 2008, 2010, 2014
+ * @author Bob Jacobsen Copyright 2003, 2007, 2008, 2010, 2014
  * @author Dennis Miller Copyright 2005
  * @author Giorgio Terdina Copyright 2008
  * @author Matthew Harris Copyright (C) 2011
@@ -70,11 +71,16 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
         // handle window close
         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 
-        // pack and center this frame
+        // pack
         pack();
+        
+        // center as default
         Dimension screen = getToolkit().getScreenSize();
         Dimension size = getSize();
         setLocation((screen.width - size.width) / 2, (screen.height - size.height) / 2);
+        
+        // then try to load location and size from preferences
+        setFrameLocation();
     }
 
     /**
@@ -180,14 +186,11 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
     }
 
     protected void panelMenu(JMenuBar menuBar, WindowInterface wi) {
-        menuBar.add(PanelMenu.instance());
+        menuBar.add(InstanceManager.getDefault(PanelMenu.class));
     }
 
     /**
      * Show only active systems in the menu bar.
-     * <p>
-     * Alternately, you might want to use
-     * <code>menuBar.add(new jmri.jmrix.SystemsMenu());</code>
      *
      * @param menuBar the menu to attach systems menus to
      * @param wi      ignored, but available for overriding methods to use if
@@ -224,6 +227,11 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
 
         d.add(new JSeparator());
         d.add(new WiThrottleCreationAction());
+        
+        d.add(new JSeparator());
+        d.add(new apps.TrainCrew.InstallFromURL());
+        
+        // add final to menu bar
         menuBar.add(d);
 
     }
@@ -250,21 +258,14 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
     }
 
     protected void helpMenu(JMenuBar menuBar, WindowInterface wi, AppsLaunchPane containedPane) {
-        try {
+        // create menu and standard items
+        JMenu helpMenu = HelpUtil.makeHelpMenu(containedPane.windowHelpID(), true);
 
-            // create menu and standard items
-            JMenu helpMenu = HelpUtil.makeHelpMenu(containedPane.windowHelpID(), true);
+        // tell help to use default browser for external types
+        SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
 
-            // tell help to use default browser for external types
-            SwingHelpUtilities.setContentViewerUI("jmri.util.ExternalLinkContentViewerUI");
-
-            // use as main help menu 
-            menuBar.add(helpMenu);
-
-        } catch (Throwable e3) {
-            log.error("Unexpected error creating help.", e3);
-        }
-
+        // use as main help menu
+        menuBar.add(helpMenu);
     }
 
     /**
@@ -282,5 +283,5 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
     // GUI members
     private JMenuBar menuBar;
 
-    private final static Logger log = LoggerFactory.getLogger(AppsLaunchFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AppsLaunchFrame.class);
 }

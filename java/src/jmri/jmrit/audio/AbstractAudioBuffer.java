@@ -306,5 +306,5 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
         // Move along... nothing to see here...
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AbstractAudioBuffer.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AbstractAudioBuffer.class);
 }

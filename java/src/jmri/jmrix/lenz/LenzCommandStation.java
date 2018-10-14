@@ -5,42 +5,39 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Defines the standard/common routines used in multiple classes related to the
- * a Lenz Command Station, on an XPressNet network.
+ * a Lenz Command Station, on an XpressNet network.
  *
- * @author	Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
  */
 public class LenzCommandStation implements jmri.CommandStation {
 
     /* The First group of routines is for obtaining the Software and
      hardware version of the Command station */
+
     /**
      * We need to add a few data members for saving the version information we
      * get from the layout.
-     *
      */
     private int cmdStationType = -1;
     private float cmdStationSoftwareVersion = -1;
     private int cmdStationSoftwareVersionBCD = -1;
 
     /**
-     * return the CS Type
-     *
+     * Return the CS Type.
      */
     public int getCommandStationType() {
         return cmdStationType;
     }
 
     /**
-     * set the CS Type
-     *
+     * Set the CS Type.
      */
     public void setCommandStationType(int t) {
         cmdStationType = t;
     }
 
     /**
-     * Set the CS type based on an XPressNet Message
-     *
+     * Set the CS Type based on an XpressNet Message.
      */
     public void setCommandStationType(XNetReply l) {
         if (l.getElement(0) == XNetConstants.CS_SERVICE_MODE_RESPONSE) {
@@ -52,32 +49,28 @@ public class LenzCommandStation implements jmri.CommandStation {
     }
 
     /**
-     * return the CS Software Version
-     *
+     * Get the CS Software Version.
      */
     public float getCommandStationSoftwareVersion() {
         return cmdStationSoftwareVersion;
     }
 
     /**
-     * return the CS Software Version in BCD (for use in comparisons)
-     *
+     * Get the CS Software Version in BCD (for use in comparisons).
      */
     public float getCommandStationSoftwareVersionBCD() {
         return cmdStationSoftwareVersionBCD;
     }
 
     /**
-     * set the CS Software Version
-     *
+     * Set the CS Software Version.
      */
     public void setCommandStationSoftwareVersion(float v) {
         cmdStationSoftwareVersion = v;
     }
 
     /**
-     * Set the CS Software Version based on an XPressNet Message
-     *
+     * Set the CS Software Version based on an XpressNet Message.
      */
     public void setCommandStationSoftwareVersion(XNetReply l) {
         if (l.getElement(0) == XNetConstants.CS_SERVICE_MODE_RESPONSE) {
@@ -97,16 +90,16 @@ public class LenzCommandStation implements jmri.CommandStation {
     }
 
     /**
-     * Provides the version string returned during the initial check.
+     * Provide the version string returned during the initial check.
      */
     public String getVersionString() {
         return Bundle.getMessage("CSVersionString", getCommandStationType(),getCommandStationSoftwareVersionBCD());
     }
 
     /**
-     * XPressNet command station does provide Ops Mode We should make this
+     * XpressNet command station does provide Ops Mode. We should make this
      * return false based on what command station we're using but for now, we'll
-     * return true
+     * return true.
      */
     public boolean isOpsModePossible() {
         if (cmdStationType == 0x01 || cmdStationType == 0x02) {
@@ -117,9 +110,10 @@ public class LenzCommandStation implements jmri.CommandStation {
     }
 
     // A few utility functions
+
     /**
      * Get the Lower byte of a locomotive address from the decimal locomotive
-     * address
+     * address.
      */
     public static int getDCCAddressLow(int address) {
         /* For addresses below 100, we just return the address, otherwise,
@@ -136,7 +130,7 @@ public class LenzCommandStation implements jmri.CommandStation {
 
     /**
      * Get the Upper byte of a locomotive address from the decimal locomotive
-     * address
+     * address.
      */
     public static int getDCCAddressHigh(int address) {
         /* this isn't actually the high byte, For addresses below 100, we
@@ -151,30 +145,55 @@ public class LenzCommandStation implements jmri.CommandStation {
             temp = temp / 256;
             return temp;
         }
+    }
 
+    /**
+     * We need to calculate the locomotive address when doing the translations
+     * back to text. XpressNet Messages will have these as two elements, which
+     * need to get translated back into a single address by reversing the
+     * formulas used to calculate them in the first place.
+     *
+     * @param AH the high order byte of the address
+     * @param AL the low order byte of the address
+     * @return the address as an integer.
+     */
+    static public int calcLocoAddress(int AH, int AL) {
+        if (AH == 0x00) {
+            /* if AH is 0, this is a short address */
+            return (AL);
+        } else {
+            /* This must be a long address */
+            int address = 0;
+            address = ((AH * 256) & 0xFF00);
+            address += (AL & 0xFF);
+            address -= 0xC000;
+            return (address);
+        }
     }
 
     /* To Implement the CommandStation Interface, we have to define the 
      sendPacket function */
+
     /**
      * Send a specific packet to the rails.
-     * <p>
+     *
      * @param packet  Byte array representing the packet, including the
      *                error-correction byte. Must not be null.
      * @param repeats Number of times to repeat the transmission.
      */
     @Override
-    public void sendPacket(byte[] packet, int repeats) {
+    public boolean sendPacket(byte[] packet, int repeats) {
 
         if (_tc == null) {
             log.error("Send Packet Called without setting traffic controller");
-            return;
+            return false;
         }
 
         XNetMessage msg = XNetMessage.getNMRAXNetMsg(packet);
         for (int i = 0; i < repeats; i++) {
             _tc.sendXNetMessage(msg, null);
         }
+        return true;
     }
 
     /*
@@ -196,7 +215,7 @@ public class LenzCommandStation implements jmri.CommandStation {
     @Override
     public String getUserName() {
         if (adaptermemo == null) {
-            return "XPressnet";
+            return Bundle.getMessage("MenuXpressNet");
         }
         return adaptermemo.getUserName();
     }
@@ -210,8 +229,8 @@ public class LenzCommandStation implements jmri.CommandStation {
     }
 
     /*
-     * We need to register for logging
+     * Register for logging.
      */
-    private final static Logger log = LoggerFactory.getLogger(LenzCommandStation.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LenzCommandStation.class);
 
 }

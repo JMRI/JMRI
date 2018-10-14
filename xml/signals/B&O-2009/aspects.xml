@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
 <aspecttable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/aspecttable.xsd">
   <name>B&amp;O-2009 (CSX)</name>
@@ -23,6 +23,12 @@
       <date>2014-09-21</date>
       <authorinitials>ST</authorinitials>
       <revremark>Initial version</revremark>
+    </revision>
+    <revision>
+      <revnumber>1.1</revnumber>
+      <date>2016-11-24</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Added additional masts</revremark>
     </revision>
   </revhistory>
   <aspects>
@@ -186,7 +192,10 @@
   </imagetypes>
   <appearancefiles>
     <appearancefile href="appearance-full.xml" />
+    <appearancefile href="appearance-bothm.xml" />
+    <appearancefile href="appearance-boths.xml" />
     <appearancefile href="appearance-fast.xml" />
+    <appearancefile href="appearance-junm.xml" />
     <appearancefile href="appearance-fast1.xml" />
     <appearancefile href="appearance-fastm.xml" />
     <appearancefile href="appearance-fasts.xml" />

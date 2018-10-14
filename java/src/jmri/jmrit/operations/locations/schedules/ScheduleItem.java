@@ -1,9 +1,12 @@
 package jmri.jmrit.operations.locations.schedules;
 
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.trains.timetable.TrainSchedule;
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,6 +48,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 
     /**
      *
+     * @param id ScheduleItem string id
      * @param type car type for schedule
      */
     public ScheduleItem(String id, String type) {
@@ -85,6 +89,16 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
     public String getSetoutTrainScheduleId() {
         return _setoutTrainScheduleId;
     }
+    
+    public String getSetoutTrainScheduleName() {
+        String name = "";
+        TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class)
+                .getScheduleById(getSetoutTrainScheduleId());
+        if (sch != null) {
+            name = sch.getName();
+        }
+        return name;
+    }
 
     public void setSetoutTrainScheduleId(String id) {
         String old = _setoutTrainScheduleId;
@@ -94,6 +108,16 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 
     public String getPickupTrainScheduleId() {
         return _pickupTrainScheduleId;
+    }
+    
+    public String getPickupTrainScheduleName() {
+        String name = "";
+        TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class)
+                .getScheduleById(getPickupTrainScheduleId());
+        if (sch != null) {
+            name = sch.getName();
+        }
+        return name;
     }
 
     public void setPickupTrainScheduleId(String id) {
@@ -320,7 +344,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
             _ship = a.getValue();
         }
         if ((a = e.getAttribute(Xml.DESTINATION_ID)) != null) {
-            _destination = LocationManager.instance().getLocationById(a.getValue());
+            _destination = InstanceManager.getDefault(LocationManager.class).getLocationById(a.getValue());
         }
         if ((a = e.getAttribute(Xml.DEST_TRACK_ID)) != null && _destination != null) {
             _trackDestination = _destination.getTrackById(a.getValue());
@@ -385,6 +409,6 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ScheduleItem.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ScheduleItem.class);
 
 }

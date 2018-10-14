@@ -1,13 +1,12 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
-<html> <head>
-<title><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
-    <TITLE>
+    <title>
  	JMRI: Subversion FAQ
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    </title>
+    <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code SVN Subversion FAQ">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -18,7 +17,7 @@
     <!-- or change them to reflect your alternative logo -->
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -26,63 +25,51 @@
 <!-- /Style -->
 </head>
 
-<!--#include virtual="/Header" -->
+<body>
+<!--#include virtual="/Header.shtml" -->
     <div id="mBody">
-<!--#include virtual="Sidebar" -->
+<!--#include virtual="Sidebar.shtml" -->
 
 <div id="mainContent">
 
-<h1>JMRI: Subversion FAQ</h1>
+<h1>JMRI Code: Subversion FAQ</h1>
+
+    <p class="important">JMRI has migrated from Subversion (SVN)
+    to Git in September 2015. For our current Version Control FAQ,
+    please see the <a href="GitFAQ.shtml">Git FAQ</a>.</p>
 
   <p>This is a list of Frequently Asked Questions for Subversion,
-particularly regarding how we use it with JMRI.</p>
+particularly regarding how we used it with JMRI up until 2015.</p>
 
   <p>See also the <a href="index.shtml">Technical index</a>
 for more information on maintaining JMRI code.</p>
-
 
 <h3>SVN Properties</h3>
 
 In general, we keep everything in SVN revision control, so there's no
 need for the various properties lines we used to need in CVS.  These
 looked like 
-<code>
 <pre>
 # The next line is maintained by CVS, please don't change it
 # $Revision$
 </pre>
-</code>
 
-<p.
+<p>
 But there are certain files, like decoder XML, properties files, etc,
 that users are likely to edit and submit back for inclusion.  It is
 very helpful if we can identify the specific content that they started with.
 <p>
 Therefore, for html, XML, python and properties files, we do:
 
-<code>
 <pre>
 svn propset svn:keywords "Date Revision Version Id Author" {}
 </pre>
-</code>
 
 That way SVN will fill in those tags if/when they're present and the file is changed.
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 
 </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>
 </html>
-
-</title>
-</head>
-
-<body>
-<h1></h1>
-
-
-
-<hr>
-<address></address>
-</body> </html>

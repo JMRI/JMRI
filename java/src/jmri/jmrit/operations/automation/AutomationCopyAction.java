@@ -1,4 +1,3 @@
-// CopyAutomationAction.java
 package jmri.jmrit.operations.automation;
 
 import java.awt.Frame;
@@ -9,7 +8,6 @@ import javax.swing.AbstractAction;
  * Action to reset an automation
  *
  * @author Daniel Boudreau Copyright (C) 2016
- * @version $Revision$
  */
 public class AutomationCopyAction extends AbstractAction {
 

@@ -3,6 +3,7 @@ package jmri.jmrix.grapevine.configurexml;
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.jmrix.grapevine.SerialSignalHead;
+import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
@@ -16,7 +17,10 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
+    private GrapevineSystemConnectionMemo memo = null;
+
     public SerialSignalHeadXml() {
+       memo = InstanceManager.getDefault(GrapevineSystemConnectionMemo.class);
     }
 
     /**
@@ -26,6 +30,7 @@ public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
      * @param o Object to store, of type SerialSignalHead
      * @return Element containing the complete info
      */
+    @Override
     public Element store(Object o) {
         SerialSignalHead p = (SerialSignalHead) o;
 
@@ -46,9 +51,9 @@ public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         Attribute a = shared.getAttribute("userName");
         SignalHead h;
         if (a == null) {
-            h = new SerialSignalHead(sys);
+            h = new SerialSignalHead(sys, memo);
         } else {
-            h = new SerialSignalHead(sys, a.getValue());
+            h = new SerialSignalHead(sys, a.getValue(), memo);
         }
 
         loadCommon(h, shared);
@@ -57,9 +62,10 @@ public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         return true;
     }
 
+    @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialSignalHeadXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialSignalHeadXml.class);
 }

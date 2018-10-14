@@ -3,6 +3,7 @@ package jmri.jmrix.loconet.cmdstnconfig;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -22,51 +23,32 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * User interface for Command Station Option Programming
- * <P>
+ * User interface for Command Station Option Programming.
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  *
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- *
- * @author	Alex Shepherd Copyright (C) 2004
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Alex Shepherd Copyright (C) 2004
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4164148406541743498L;
     int CONFIG_SLOT = 127;
     int MIN_OPTION = 1;
     int MAX_OPTION = 72;
-    String LabelT = "T";
-    String LabelC = "C";
-    String LabelTop = "Configure Command Station";
 
-    String read = "Read";
-    String write = "Write";
+    String labelT;
+    String labelC;
+    String labelTop;
+    String read;
+    String write;
 
     int[] oldcontent = new int[10];
 
     JCheckBox optionBox;
-
-    public CmdStnConfigPane() {
-        super();
-    }
 
     ResourceBundle rb;
     // internal members to hold widgets
@@ -78,16 +60,25 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
     JLabel[] labels = new JLabel[MAX_OPTION];
     boolean[] isReserved = new boolean[MAX_OPTION];
 
-    public String getHelpTarget() {
-        return "package.jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigFrame";
+    /**
+     * Create a new instance of a Command Station Configuration Pane
+     */
+    public CmdStnConfigPane() {
+        super();
     }
 
+    @Override
+    public String getHelpTarget() {
+        return "package.jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigFrame"; // NOI18N
+    }
+
+    @Override
     public String getTitle() {
         String uName = "";
         if (memo != null) {
             uName = memo.getUserName();
-            if (!"LocoNet".equals(uName)) {
-                uName = uName + ": ";
+            if (!"LocoNet".equals(uName)) { // NOI18N
+                uName = uName + ": "; // NOI18N
             } else {
                 uName = "";
             }
@@ -95,43 +86,49 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
         return uName + Bundle.getMessage("MenuItemCmdStnConfig");
     }
 
+    @Override
     public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
 
         // set up constants from properties file, if possible
-        String name = "<unchanged>";
+        String name = "<unchanged>"; // NOI18N
         try {
             name = memo.getSlotManager().getCommandStationType().getName();
             // get first token
             if (name.indexOf(' ') != -1) {
                 name = name.substring(0, name.indexOf(' '));
             }
-            log.debug("match /" + name + "/");
-            rb = ResourceBundle.getBundle("jmri.jmrix.loconet.cmdstnconfig." + name + "options");
-        } catch (Exception e) {
-            log.warn("Failed to find properties for /" + name + "/ command station type", e);
-            rb = ResourceBundle.getBundle("jmri.jmrix.loconet.cmdstnconfig.Defaultoptions");
+            log.debug("match /{}/", name); // NOI18N
+            rb = ResourceBundle.getBundle("jmri.jmrix.loconet.cmdstnconfig." + name + "options"); // NOI18N
+        } catch (Exception e) { // use standard option set
+            log.warn("Failed to find properties for /{}/ command station type", name, e); // NOI18N
+            rb = ResourceBundle.getBundle("jmri.jmrix.loconet.cmdstnconfig.Defaultoptions"); // NOI18N
+            // Localized strings common to all LocoNet command station models are fetched using Bundle.getMessage()
         }
 
         try {
             CONFIG_SLOT = Integer.parseInt(rb.getString("CONFIG_SLOT"));
             MIN_OPTION = Integer.parseInt(rb.getString("MIN_OPTION"));
             MAX_OPTION = Integer.parseInt(rb.getString("MAX_OPTION"));
-            LabelT = rb.getString("LabelT");
-            LabelC = rb.getString("LabelC");
-            LabelTop = rb.getString("LabelTop");
-            read = rb.getString("ButtonRead");
-            write = rb.getString("ButtonWrite");
-        } catch (Exception e) {
-            log.error("Failed to load values from /" + name + "/ properties");
+        } catch (NumberFormatException e) {
+            log.error("Failed to load values from /{}/ properties", name); // NOI18N
         }
+        log.debug("Constants: {} {} {}", CONFIG_SLOT, MIN_OPTION, MAX_OPTION); // NOI18N
 
-        log.debug("Constants: " + CONFIG_SLOT + " " + MIN_OPTION + " " + MAX_OPTION);
+        labelT = Bundle.getMessage("StateThrownShort");
+        labelC = Bundle.getMessage("StateClosedShort");
+        labelTop = rb.getString("LabelTop");
+        read = Bundle.getMessage("ButtonRead");
+        write = Bundle.getMessage("ButtonWrite");
+        String tooltip = Bundle.getMessage("CmdStnConfigFxToolTip");
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         {
-            // section holding buttons buttons
+            // start with the CS title
+            add(new JLabel(labelTop));
+
+            // section holding buttons
             readButton = new JButton(read);
             writeButton = new JButton(write);
 
@@ -139,13 +136,17 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
             pane.setLayout(new FlowLayout());
             pane.add(readButton);
             pane.add(writeButton);
+            if (CONFIG_SLOT == -1) { // disable reading/writing for non-configurable CS types, ie. Intellibox-I/-II
+                readButton.setEnabled(false);
+                writeButton.setEnabled(false);
+            }
             add(pane);
 
-            optionBox = new JCheckBox(rb.getString("CheckBoxReserved"));
+            optionBox = new JCheckBox(Bundle.getMessage("CheckBoxReserved"));
             add(optionBox);
 
             // heading
-            add(new JLabel(rb.getString("HeadingText")));
+            add(new JLabel(Bundle.getMessage("HeadingText")));
 
             // section holding options
             JPanel options = new JPanel();
@@ -159,8 +160,8 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
                 JPanel p2 = new JPanel();
                 p2.setLayout(new FlowLayout());
                 ButtonGroup g = new ButtonGroup();
-                JRadioButton c = new JRadioButton(LabelC);
-                JRadioButton t = new JRadioButton(LabelT);
+                JRadioButton c = new JRadioButton(labelC);
+                JRadioButton t = new JRadioButton(labelT);
                 g.add(c);
                 g.add(t);
 
@@ -179,13 +180,23 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
                 gc.anchor = GridBagConstraints.WEST;
                 String label;
                 try {
-                    label = rb.getString("Option" + i);
+                    label = rb.getString("Option" + i); // model specific Option descriptions NOI18N
                     isReserved[i - MIN_OPTION] = false;
                 } catch (java.util.MissingResourceException e) {
-                    label = "" + i + ": " + rb.getString("Reserved");
+                    label = "" + i + ": " + Bundle.getMessage("Reserved");
                     isReserved[i - MIN_OPTION] = true;
                 }
                 JLabel l = new JLabel(label);
+                if (i > 20 && i < 24) {
+                    log.debug("CS name: {}", name);
+                    if (name.startsWith("DB150")) {
+                        // DB150 is the only model using different OpSw 21-23 combos than the common tooltip, which is stored in LocoNetBundle
+                        tooltip = rb.getString("DB150ConfigFxToolTip");
+                    }
+                    t.setToolTipText(tooltip);
+                    c.setToolTipText(tooltip);
+                    l.setToolTipText(tooltip);
+                }
                 labels[i - MIN_OPTION] = l;
                 gl.setConstraints(l, gc);
                 options.add(l);
@@ -198,20 +209,14 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
 
         }
 
-        optionBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                updateVisibility(optionBox.isSelected());
-            }
+        optionBox.addActionListener((ActionEvent e) -> {
+            updateVisibility(optionBox.isSelected());
         });
-        readButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                readButtonActionPerformed(e);
-            }
+        readButton.addActionListener((ActionEvent e) -> {
+            readButtonActionPerformed(e);
         });
-        writeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                writeButtonActionPerformed(e);
-            }
+        writeButton.addActionListener((ActionEvent e) -> {
+            writeButtonActionPerformed(e);
         });
 
         updateVisibility(optionBox.isSelected());
@@ -271,12 +276,10 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
 
         // send message
         memo.getLnTrafficController().sendLocoNetMessage(msg);
-        return;
     }
 
     /**
-     *
-     * Start the Frame operating by asking for a read
+     * Start the Frame operating by asking for a read.
      */
     public void start() {
         // format and send request for slot contents
@@ -289,8 +292,9 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
     }
 
     /**
-     * Process the incoming message to look for Slot 127 Read
+     * Process the incoming message to look for Slot 127 Read.
      */
+    @Override
     public void message(LocoNetMessage msg) {
         if (msg.getOpCode() != LnConstants.OPC_SL_RD_DATA) {
             return;
@@ -325,9 +329,10 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
             }
         }
 
-        log.debug("Config Slot Data: " + msg.toString());
+        log.debug("Config Slot Data: {}", msg);
     }
 
+    @Override
     public void dispose() {
         // disconnect from LnTrafficController
         memo.getLnTrafficController().removeLocoNetListener(~0, this);
@@ -335,5 +340,6 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(CmdStnConfigPane.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(CmdStnConfigPane.class);
+
 }

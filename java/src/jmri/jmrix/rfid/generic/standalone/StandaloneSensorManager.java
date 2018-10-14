@@ -78,6 +78,6 @@ public class StandaloneSensorManager extends RfidSensorManager {
         super.dispose();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(StandaloneSensorManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(StandaloneSensorManager.class);
 
 }

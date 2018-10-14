@@ -1700,7 +1700,7 @@ var throttleShow = function(e, locoId) {
 	if (!isLeftButton(e)) return;
 	e.preventDefault();
 	e.stopImmediatePropagation();
-	var url = document.URL.split('?')[0] + '?loconame=' + encodeURI(locoId);
+	var url = document.URL.split('?')[0] + '?loconame=' + encodeURIComponent(locoId);
 	if ($toFrame) {
 		if (addToFrameList(url + '&inframe')) window.open(document.URL.split('?')[0], $pageInFrame ? '_top' : '_self');
 	} else window.open(url, url);

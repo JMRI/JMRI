@@ -1,6 +1,8 @@
 package jmri.jmrit.operations.automation.actions;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
@@ -39,8 +41,11 @@ public class RunSwitchListChangesAction extends Action {
      * there's new work for that location.
      * <p>
      * common code see RunSwitchListAction.java
+     *
+     * @param isChanged if set true only locations with changes will get a
+     *                  custom switch list.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
+    @SuppressFBWarnings(
             value = {"UC_USELESS_CONDITION", "RpC_REPEATED_CONDITIONAL_TEST"},
             justification = "isChanged = false when called from RunSwitchListAction")
     protected void doAction(boolean isChanged) {
@@ -51,30 +56,35 @@ public class RunSwitchListChangesAction extends Action {
                 return;
             }
             // we do need one of these!
-            if (!TrainCustomSwitchList.instance().excelFileExists()) {
-                log.warn("Manifest creator file not found!, directory name: {}, file name: {}", TrainCustomSwitchList.instance()
-                        .getDirectoryName(), TrainCustomSwitchList.instance().getFileName());
+            if (!InstanceManager.getDefault(TrainCustomSwitchList.class).excelFileExists()) {
+                log.warn("Manifest creator file not found!, directory name: {}, file name: {}", InstanceManager.getDefault(TrainCustomSwitchList.class)
+                        .getDirectoryName(), InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName());
                 finishAction(false);
                 return;
             }
             setRunning(true);
             TrainSwitchLists trainSwitchLists = new TrainSwitchLists();
             TrainCsvSwitchLists trainCsvSwitchLists = new TrainCsvSwitchLists();
+            // check that both the Excel custom manifest and custom switch lists aren't busy with other work
+            // We've found that on some OS only one copy of Excel can be running at a time
             // this can wait thread
-            if (!new TrainCustomManifest().checkProcessReady()) {
+            if (!InstanceManager.getDefault(TrainCustomManifest.class).checkProcessReady()) {
                 log.warn(
-                        "Timeout waiting for excel manifest program to complete previous opeation, timeout value: {} seconds",
+                        "Timeout waiting for excel manifest program to complete previous operation, timeout value: {} seconds",
                         Control.excelWaitTime);
             }
             // this can wait thread
-            if (!new TrainCustomSwitchList().checkProcessReady()) {
+            if (!InstanceManager.getDefault(TrainCustomSwitchList.class).checkProcessReady()) {
                 log.warn(
-                        "Timeout waiting for excel switch list program to complete previous opeation, timeout value: {} seconds",
-                        Control.excelWaitTime);                
+                        "Timeout waiting for excel switch list program to complete previous operation, timeout value: {} seconds",
+                        Control.excelWaitTime);
             }
-            for (Location location : LocationManager.instance().getLocationsByNameList()) {
-                if (location.isSwitchListEnabled() &&
-                        (!isChanged || (isChanged && location.getStatus().equals(Location.MODIFIED)))) {
+            if (InstanceManager.getDefault(TrainCustomSwitchList.class).doesCommonFileExist()) {
+                log.warn("Switch List CSV common file exists!");
+            }
+            for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
+                if (location.isSwitchListEnabled()
+                        && (!isChanged || (isChanged && location.getStatus().equals(Location.MODIFIED)))) {
                     // also build the regular switch lists so they can be used
                     if (!Setup.isSwitchListRealTime()) {
                         trainSwitchLists.buildSwitchList(location);
@@ -85,32 +95,32 @@ public class RunSwitchListChangesAction extends Action {
                         finishAction(false);
                         return;
                     }
-                    TrainCustomSwitchList.instance().addCVSFile(csvFile);
+                    InstanceManager.getDefault(TrainCustomSwitchList.class).addCVSFile(csvFile);
                 }
             }
             // Processes the CSV Manifest files using an external custom program.
-            boolean status = TrainCustomSwitchList.instance().process();
+            boolean status = InstanceManager.getDefault(TrainCustomSwitchList.class).process();
             if (status) {
                 try {
-                    status = TrainCustomSwitchList.instance().waitForProcessToComplete(); // wait up to 60 seconds per file
+                    status = InstanceManager.getDefault(TrainCustomSwitchList.class).waitForProcessToComplete(); // wait up to 60 seconds per file
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    log.error("Thread interrupeted while waiting", e);
                 }
             } else {
                 log.info("No switch list changes found");
             }
             // set trains switch lists printed
-            TrainManager.instance().setTrainsSwitchListStatus(Train.PRINTED);
+            InstanceManager.getDefault(TrainManager.class).setTrainsSwitchListStatus(Train.PRINTED);
             finishAction(status);
         }
     }
 
     @Override
     public void cancelAction() {
-        // no cancel for this action     
+        // no cancel for this action
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RunSwitchListChangesAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(RunSwitchListChangesAction.class);
 
 }

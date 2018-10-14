@@ -10,10 +10,11 @@ import jmri.jmrix.powerline.SerialPortController;
 import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.SerialTrafficController;
+import jmri.util.JUnitUtil;
+import org.junit.After;
 import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,16 +25,10 @@ import org.slf4j.LoggerFactory;
  * connection
  * @author kcameron Copyright (C) 2011
  */
-public class SpecificTrafficControllerTest extends TestCase {
+public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTrafficControllerTest {
 
     SerialTrafficController t = null;
     SerialSystemConnectionMemo m = null;
-
-    public void testCreate() {
-        this.m = new SpecificSystemConnectionMemo();
-        this.t = new SpecificTrafficController(m);
-        Assert.assertNotNull("exists", m);
-    }
 
     // inner class to give access to protected endOfMessage method
     class TestSerialTC extends SpecificTrafficController {
@@ -46,10 +41,12 @@ public class SpecificTrafficControllerTest extends TestCase {
             return endOfMessage(r);
         }
 
+        @Override
         protected void forwardToPort(jmri.jmrix.AbstractMRMessage m, jmri.jmrix.AbstractMRListener reply) {
         }
     }
 
+    @Test
     public void testReceiveStates1() {
         TestSerialTC c = new TestSerialTC(m);
         SerialReply r = new SpecificReply(t);
@@ -61,6 +58,7 @@ public class SpecificTrafficControllerTest extends TestCase {
         Assert.assertTrue("Reset", c.testEndOfMessage(r));
     }
 
+    @Test
     public void testReceiveStatesRead() {
         // build a dim for address 11.22.33 to 50%
         TestSerialTC c = new TestSerialTC(m);
@@ -104,6 +102,7 @@ public class SpecificTrafficControllerTest extends TestCase {
         //Assert.assertTrue("single byte reply", c.testEndOfMessage(r));
     }
 
+      
 //    public void testSerialNodeEnumeration() {
 //        SpecificTrafficController c = new SpecificTrafficController();
 //        SerialNode b = new SerialNode(1,SerialNode.DAUGHTER);
@@ -138,17 +137,7 @@ public class SpecificTrafficControllerTest extends TestCase {
     /*         Assert.assertTrue("must Send", g.mustSend() ); */
     /*         g.resetMustSend(); */
     /*         Assert.assertTrue("must Send off", !(g.mustSend()) ); */
-    /*         c.setSerialOutput("PL5B2",false); */
-    /*         c.setSerialOutput("PL5B1",false); */
-    /*         c.setSerialOutput("PL5B23",false); */
-    /*         c.setSerialOutput("PPL5B22",false); */
-    /*         c.setSerialOutput("PL5B21",false); */
-    /*         c.setSerialOutput("PL5B2",true); */
-    /*         c.setSerialOutput("PL5B19",false); */
-    /*         c.setSerialOutput("PL5B5",false); */
-    /*         c.setSerialOutput("PL5B20",false); */
-    /*         c.setSerialOutput("PL5B17",true); */
-    /*         Assert.assertTrue("must Send on", g.mustSend() ); */
+    /*         //c.setSerialOutput("PL5B2",false); // test and 12 year old method removed, called nowhere as of 4.9.4 */
     /*         SerialMessage m = g.createOutPacket(); */
     /*         Assert.assertEquals("packet size", 9, m.getNumDataElements() ); */
     /*         Assert.assertEquals("node address", 5, m.getElement(0) ); */
@@ -189,10 +178,12 @@ public class SpecificTrafficControllerTest extends TestCase {
             rcvdMsg = null;
         }
 
+        @Override
         public void message(SerialMessage m) {
             rcvdMsg = m;
         }
 
+        @Override
         public void reply(SerialReply r) {
             rcvdReply = r;
         }
@@ -203,17 +194,21 @@ public class SpecificTrafficControllerTest extends TestCase {
     // internal class to simulate a PortController
     class SerialPortControllerScaffold extends SerialPortController {
 
+        @Override
         public java.util.Vector<String> getPortNames() {
             return null;
         }
 
+        @Override
         public String openPort(String portName, String appName) {
             return null;
         }
 
+        @Override
         public void configure() {
         }
 
+        @Override
         public String[] validBaudRates() {
             return null;
         }
@@ -230,16 +225,19 @@ public class SpecificTrafficControllerTest extends TestCase {
         }
 
         // returns the InputStream from the port
+        @Override
         public DataInputStream getInputStream() {
             return istream;
         }
 
         // returns the outputStream to the port
+        @Override
         public DataOutputStream getOutputStream() {
             return ostream;
         }
 
         // check that this object is ready to operate
+        @Override
         public boolean status() {
             return true;
         }
@@ -250,32 +248,21 @@ public class SpecificTrafficControllerTest extends TestCase {
     static DataOutputStream tistream; // tests write to this
     static DataInputStream istream;  // so the traffic controller can read from this
 
-    // from here down is testing infrastructure
-    public SpecificTrafficControllerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SpecificTrafficControllerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SpecificTrafficControllerTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        m = new SpecificSystemConnectionMemo();
+        tc = t = new SpecificTrafficController(m);
     }
 
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @Override
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpecificTrafficControllerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SpecificTrafficControllerTest.class);
 
 }

@@ -10,20 +10,25 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ServiceLoader;
 import java.util.Set;
+import jmri.JmriException;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
 import jmri.implementation.FileLocationsPreferences;
+import jmri.jmrit.logix.WarrantPreferences;
 import jmri.jmrit.roster.RosterConfigManager;
 import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 import jmri.managers.ManagerDefaultSelector;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
+import jmri.server.web.app.WebAppManager;
 import jmri.spi.PreferencesManager;
+import jmri.swing.JmriJTablePersistenceManager;
 import jmri.util.jdom.JDOMUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +38,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood (C) 2015, 2016
  */
+@ServiceProvider(service = PreferencesManager.class)
 public class StartupActionsManager extends AbstractPreferencesManager {
 
     private final List<StartupModel> actions = new ArrayList<>();
@@ -52,10 +58,24 @@ public class StartupActionsManager extends AbstractPreferencesManager {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Loads the startup action preferences and, if all required managers have
+     * initialized without exceptions, performs those actions. Startup actions
+     * are only performed if {@link apps.startup.StartupModel#isValid()} is true
+     * for the action. It is assumed that the action has retained an Exception
+     * that can be used to explain why isValid() is false.
+     */
     @Override
     public void initialize(Profile profile) throws InitializationException {
         if (!this.isInitialized(profile)) {
-            InitializationException exception = null;
+            boolean perform = true;
+            try {
+                this.requiresNoInitializedWithExceptions(profile, Bundle.getMessage("StartupActionsManager.RefusalToInitialize"));
+            } catch (InitializationException ex) {
+                perform = false;
+            }
             try {
                 Element startup;
                 try {
@@ -64,50 +84,54 @@ public class StartupActionsManager extends AbstractPreferencesManager {
                     log.debug("Reading element from version 2.9.6 namespace...");
                     startup = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(STARTUP, NAMESPACE_OLD, true));
                 }
-                for (Element perform : startup.getChildren()) {
-                    String adapter = perform.getAttributeValue("class"); // NOI18N
-                    String name = perform.getAttributeValue("name"); // NOI18N
+                for (Element action : startup.getChildren()) {
+                    String adapter = action.getAttributeValue("class"); // NOI18N
+                    String name = action.getAttributeValue("name"); // NOI18N
                     String override = StartupActionModelUtil.getDefault().getOverride(name);
                     if (override != null) {
-                        perform.setAttribute("name", override);
+                        action.setAttribute("name", override);
                         log.info("Overridding statup action class {} with {}", name, override);
-                        exception = new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsOverriddenClasses", name, override),
-                                Bundle.getMessage(Locale.ENGLISH, "StartupActionsOverriddenClasses", name, override));
+                        this.addInitializationException(profile, new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsOverriddenClasses", name, override),
+                                Bundle.getMessage(Locale.ENGLISH, "StartupActionsOverriddenClasses", name, override)));
                         name = override; // after logging difference and creating error message
                     }
-                    String type = perform.getAttributeValue("type"); // NOI18N
+                    String type = action.getAttributeValue("type"); // NOI18N
                     log.debug("Read {} {} adapter {}", type, name, adapter);
                     try {
                         log.debug("Creating {} {} adapter {}...", type, name, adapter);
-                        ((XmlAdapter) Class.forName(adapter).newInstance()).load(perform, null); // no perNode preferences
+                        ((XmlAdapter) Class.forName(adapter).newInstance()).load(action, null); // no perNode preferences
                     } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-                        log.error("Unable to create {} for {}", adapter, perform, ex);
-                        if (exception != null) {
-                            exception = new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsMultipleErrors"),
-                                    Bundle.getMessage("StartupActionsMultipleErrors")); // NOI18N
-                        } else {
-                            exception = new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsCreationError", adapter, name),
-                                    Bundle.getMessage("StartupActionsCreationError", adapter, name)); // NOI18N
-                        }
+                        log.error("Unable to create {} for {}", adapter, action, ex);
+                        this.addInitializationException(profile, new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsCreationError", adapter, name),
+                                Bundle.getMessage("StartupActionsCreationError", adapter, name))); // NOI18N
                     } catch (Exception ex) {
-                        log.error("Unable to load {} into {}", perform, adapter, ex);
-                        if (exception != null) {
-                            exception = new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsMultipleErrors"),
-                                    Bundle.getMessage("StartupActionsMultipleErrors")); // NOI18N
-                        } else {
-                            exception = new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsLoadError", adapter, name),
-                                    Bundle.getMessage("StartupActionsLoadError", adapter, name)); // NOI18N
-                        }
+                        log.error("Unable to load {} into {}", action, adapter, ex);
+                        this.addInitializationException(profile, new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsLoadError", adapter, name),
+                                Bundle.getMessage("StartupActionsLoadError", adapter, name))); // NOI18N
                     }
                 }
             } catch (NullPointerException ex) {
-                // ignore - this indicates migration has not occured
+                // ignore - this indicates migration has not occurred
                 log.debug("No element to read");
             }
+            if (perform) {
+                this.actions.stream().filter((action) -> (action.isValid())).forEachOrdered((action) -> {
+                    try {
+                        action.performAction();
+                    } catch (JmriException ex) {
+                        this.addInitializationException(profile, ex);
+                    }
+                });
+            }
             this.isDirty = false;
+            this.restartRequired = false;
             this.setInitialized(profile, true);
-            if (exception != null) {
-                throw exception;
+            List<Exception> exceptions = this.getInitializationExceptions(profile);
+            if (exceptions.size() == 1) {
+                throw new InitializationException(exceptions.get(0));
+            } else if (exceptions.size() > 1) {
+                throw new InitializationException(Bundle.getMessage(Locale.ENGLISH, "StartupActionsMultipleErrors"),
+                        Bundle.getMessage("StartupActionsMultipleErrors")); // NOI18N
             }
         }
     }
@@ -120,6 +144,9 @@ public class StartupActionsManager extends AbstractPreferencesManager {
         requires.add(RosterConfigManager.class);
         requires.add(ProgrammerConfigManager.class);
         requires.add(GuiLafPreferencesManager.class);
+        requires.add(WarrantPreferences.class);
+        requires.add(WebAppManager.class);
+        requires.add(JmriJTablePersistenceManager.class);
         return requires;
     }
 
@@ -164,9 +191,9 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     }
 
     /**
-     * Insert a {@link apps.StartupModel} at the given position. Triggers an
-     * {@link java.beans.IndexedPropertyChangeEvent} where the old value is null
-     * and the new value is the inserted model.
+     * Insert a {@link apps.startup.StartupModel} at the given position.
+     * Triggers an {@link java.beans.IndexedPropertyChangeEvent} where the old
+     * value is null and the new value is the inserted model.
      *
      * @param index The position where the model will be inserted
      * @param model The model to be inserted
@@ -186,9 +213,10 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     }
 
     /**
-     * Move a {@link apps.StartupModel} from position start to position end.
-     * Triggers an {@link java.beans.IndexedPropertyChangeEvent} where the index
-     * is end, the old value is start and the new value is the moved model.
+     * Move a {@link apps.startup.StartupModel} from position start to position
+     * end. Triggers an {@link java.beans.IndexedPropertyChangeEvent} where the
+     * index is end, the old value is start and the new value is the moved
+     * model.
      *
      * @param start the original position
      * @param end   the new position
@@ -205,7 +233,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     }
 
     /**
-     * Remove a {@link apps.StartupModel}. Triggers an
+     * Remove a {@link apps.startup.StartupModel}. Triggers an
      * {@link java.beans.IndexedPropertyChangeEvent} where the index is the
      * position of the removed model, the old value is the model, and the new
      * value is null.

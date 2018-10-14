@@ -59,6 +59,7 @@ public class BusyGlassPane extends JComponent {
             this.contentPane = contentPane;
         }
 
+        @Override
         public void mouseMoved(MouseEvent e) {
             redispatchMouseEvent(e);
         }
@@ -71,26 +72,32 @@ public class BusyGlassPane extends JComponent {
          * gray background or whatever its L&F uses to indicate
          * that the button is currently being pressed.
          */
+        @Override
         public void mouseDragged(MouseEvent e) {
             redispatchMouseEvent(e);
         }
 
+        @Override
         public void mouseClicked(MouseEvent e) {
             redispatchMouseEvent(e);
         }
 
+        @Override
         public void mouseEntered(MouseEvent e) {
             redispatchMouseEvent(e);
         }
 
+        @Override
         public void mouseExited(MouseEvent e) {
             redispatchMouseEvent(e);
         }
 
+        @Override
         public void mousePressed(MouseEvent e) {
             redispatchMouseEvent(e);
         }
 
+        @Override
         public void mouseReleased(MouseEvent e) {
             redispatchMouseEvent(e);
             inDrag = false;
@@ -126,7 +133,8 @@ public class BusyGlassPane extends JComponent {
             }
 
             for (int i = 0; i < liveRectangles.size(); i++) {
-                if (liveRectangles.get(i).contains(containerPoint)) {
+                Rectangle rectangle = this.liveRectangles.get(i);
+                if (rectangle != null && rectangle.contains(containerPoint)) {
                     inButton = true;
                     testForDrag(eventID);
                 }

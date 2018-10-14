@@ -3,6 +3,7 @@ package apps;
 import javax.swing.JComponent;
 import jmri.swing.PreferencesPanel;
 import jmri.swing.PreferencesSubPanel;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Provide PreferencesPanel information for the JPanel provided by
@@ -10,6 +11,7 @@ import jmri.swing.PreferencesSubPanel;
  *
  * @author Randall Wood randall.h.wood@alexandriasoftware.com
  */
+@ServiceProvider(service = PreferencesPanel.class)
 public class GuiLocalePreferencesPanel implements PreferencesSubPanel {
 
     GuiLafConfigPane parent = null;

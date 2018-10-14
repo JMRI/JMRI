@@ -1,15 +1,14 @@
 package jmri.jmrit.vsdecoder;
 
-import org.junit.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.junit.Assert;
 
 /**
  * Tests for the Trigger class
  *
  * @author Mark Underwood Copyright (C) 2011
- * @version $Revision: 17977 $
  */
 public class TriggerTest extends TestCase {
 
@@ -48,12 +47,15 @@ public class TriggerTest extends TestCase {
         Assert.assertEquals("set trigger type", Trigger.TriggerType.BOOLEAN,
                 uut.getTriggerType());
         TriggerListener tl = new TriggerListener() {
+            @Override
             public void takeAction() {
             }
 
+            @Override
             public void takeAction(int i) {
             }
 
+            @Override
             public void takeAction(float f) {
             }
         };

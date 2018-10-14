@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id$ -->
-
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -34,7 +32,7 @@
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence>
-        
+
         <xs:element name="route" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:complexContent>
@@ -48,26 +46,26 @@
                       Only present for backward compatibility
                     </xs:documentation>
                   </xs:annotation>
-                  <xs:attribute name="systemName" type="systemNameType" use="required"/>
+                  <xs:attribute name="systemName" type="beanNameType" use="required"/>
                   <xs:attribute name="state" type="xs:string" use="required"/> <!-- THROWN/CLOSE/TOGGLE -->
                 </xs:complexType>
               </xs:element>
               <xs:element name="routeOutputTurnout" minOccurs="0" maxOccurs="unbounded" >
                 <xs:complexType>
-                  <xs:attribute name="systemName" type="systemNameType" use="required"/>
+                  <xs:attribute name="systemName" type="beanNameType" use="required"/>
                   <xs:attribute name="state" type="xs:string" use="required"/> <!-- THROWN/CLOSE/TOGGLE -->
                 </xs:complexType>
               </xs:element>
               <xs:element name="routeOutputSensor" minOccurs="0" maxOccurs="unbounded" >
                 <xs:complexType>
-                  <xs:attribute name="systemName" type="systemNameType" use="required" />
+                  <xs:attribute name="systemName" type="beanNameType" use="required" />
                   <xs:attribute name="state" type="xs:string" use="required" /> <!-- ACTIVE/INACTIVE/? -->
                 </xs:complexType>
               </xs:element>
               <xs:element name="routeSensor" minOccurs="0" maxOccurs="unbounded" >
                 <xs:complexType>
-                  <xs:attribute name="systemName" type="systemNameType" use="required"/>
-                  <xs:attribute name="mode" default="onActive" > 
+                  <xs:attribute name="systemName" type="beanNameType" use="required"/>
+                  <xs:attribute name="mode" default="onActive" >
                     <xs:simpleType>
                       <xs:restriction base="xs:token">
                         <xs:enumeration value="onActive"/>
@@ -100,6 +98,7 @@
             <xs:attribute name="controlTurnoutState" type="xs:string" /> <!-- CLOSED/THROWN/? -->
             <xs:attribute name="controlLockTurnout" type="xs:string" />
             <xs:attribute name="controlLockTurnoutState" type="xs:string" /> <!-- CLOSED/THROWN/? -->
+            <xs:attribute name="routeLocked" type="xs:string" /> <!-- Locked -->
             <xs:attribute name="addedDelay" type="xs:int" />
 
       </xs:extension>
@@ -108,7 +107,7 @@
 
           </xs:complexType>
         </xs:element>
-            
+
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required"/>
     </xs:complexType>

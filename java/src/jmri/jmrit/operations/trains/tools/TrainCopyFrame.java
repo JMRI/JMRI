@@ -1,4 +1,3 @@
-// TrainCopyFrame.java
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.Dimension;
@@ -9,6 +8,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
@@ -22,21 +22,20 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2011, 2013
- * @version $Revision: 17977 $
  */
 public class TrainCopyFrame extends OperationsFrame {
 
-    TrainManager trainManager = TrainManager.instance();
+    TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
 
     // labels
     // text field
     javax.swing.JTextField trainNameTextField = new javax.swing.JTextField(Control.max_len_string_train_name);
 
     // major buttons
-    javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getMessage("Copy"));
+    javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getMessage("ButtonCopy"));
 
     // combo boxes
-    JComboBox<Train> trainBox = TrainManager.instance().getTrainComboBox();
+    JComboBox<Train> trainBox = InstanceManager.getDefault(TrainManager.class).getTrainComboBox();
 
     public TrainCopyFrame(Train train) {
         // general GUI config
@@ -142,5 +141,5 @@ public class TrainCopyFrame extends OperationsFrame {
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainCopyFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrainCopyFrame.class);
 }

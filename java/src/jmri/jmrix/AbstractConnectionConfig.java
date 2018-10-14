@@ -3,18 +3,18 @@ package jmri.jmrix;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
-import jmri.UserPreferencesManager;
 
 /**
- * Abstract base class for common implementation of the ConnectionConfig
+ * Abstract base class for common implementation of the ConnectionConfig.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
@@ -25,9 +25,59 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
      * subclass setInstance() will fill the adapter member.
      */
     public AbstractConnectionConfig() {
+        try {
+            // The next commented-out line replacing the following when Issue #4670 is resolved; see Manager
+            // systemPrefixField = new JFormattedTextField(new jmri.util.swing.RegexFormatter("[A-Za-z]\\d*"));
+            systemPrefixField = new JFormattedTextField(new SystemPrefixFormatter()) {
+                @Override
+                public void setValue(Object value) {
+                    log.debug("setValue {} {}", value, getBackground());
+                    if (getBackground().equals(java.awt.Color.RED)) { // only if might have set before, leaving default otherwise
+                        setBackground(java.awt.Color.WHITE); 
+                        setToolTipText(null);
+                    }
+                    super.setValue(value);
+                    // check for legacy, and if so paint red (will have not gotten here if not valid)
+                    if (jmri.Manager.isLegacySystemPrefix(value.toString())) {
+                        setBackground(java.awt.Color.RED);
+                        setToolTipText("This is a legacy prefix that should be migrated, ask on JMRIusers");
+                    }                    
+                }
+                public void setText(String value) {
+                    log.debug("setText {} {}", value, getBackground());
+                    if (getBackground().equals(java.awt.Color.RED)) { // only if might have set before, leaving default otherwise
+                        setBackground(java.awt.Color.WHITE); 
+                        setToolTipText(null);
+                    }
+                    super.setText(value);
+                    // check for legacy, and if so paint red (will have not gotten here if not valid)
+                    if (jmri.Manager.isLegacySystemPrefix(value)) {
+                        setBackground(java.awt.Color.RED);
+                        setToolTipText("This is a legacy prefix that should be migrated, ask on JMRIusers");
+                    }                    
+                }
+            };
+            
+            systemPrefixField.setPreferredSize(new JTextField("P123").getPreferredSize());
+            systemPrefixField.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
+        } catch (java.util.regex.PatternSyntaxException e) {
+            log.error("unexpected parse exception during setup", e);
+        }
     }
 
-    protected final UserPreferencesManager pref = InstanceManager.getNullableDefault(UserPreferencesManager.class);
+    static public class SystemPrefixFormatter extends javax.swing.text.DefaultFormatter {
+        @Override
+        public Object stringToValue(String text) throws java.text.ParseException {
+            try {
+                if (jmri.Manager.getSystemPrefixLength(text)!= text.length()) {
+                    throw new java.text.ParseException("Pattern did not match", 0);
+                }
+            } catch (jmri.NamedBean.BadSystemNameException e) {
+                throw new java.text.ParseException("Pattern did not match", 0);
+            }
+            return text;
+        }
+    }
 
     abstract protected void checkInitDone();
 
@@ -39,18 +89,16 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     protected JCheckBox showAdvanced = new JCheckBox(Bundle.getMessage("AdditionalConnectionSettings"));
     protected JLabel systemPrefixLabel = new JLabel(Bundle.getMessage("ConnectionPrefix"));
     protected JLabel connectionNameLabel = new JLabel(Bundle.getMessage("ConnectionName"));
-    protected JTextField systemPrefixField = new JTextField(10);
+    protected JFormattedTextField systemPrefixField;
     protected JTextField connectionNameField = new JTextField(15);
-    protected String systemPrefix;
-    protected String connectionName;
 
-    protected JPanel _details;
+    protected JPanel _details = null;
 
-    protected Hashtable<String, Option> options = new Hashtable<>();
+    protected final HashMap<String, Option> options = new HashMap<>();
 
     /**
      * Determine if configuration needs to be written to disk.
-     *
+     * <p>
      * This default implementation always returns true to maintain the existing
      * behavior.
      *
@@ -64,7 +112,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     /**
      * Determine if application needs to be restarted for configuration changes
      * to be applied.
-     *
+     * <p>
      * The default implementation always returns true to maintain the existing
      * behavior.
      *
@@ -133,9 +181,15 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
 
     protected ArrayList<JComponent> additionalItems = new ArrayList<>(0);
 
-    static java.util.ResourceBundle rb
-            = java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
-
+    /**
+     * Load the Swing widgets needed to configure this connection into a
+     * specified JPanel. Used during the configuration process to fill out the
+     * preferences window with content specific to this Connection type. The
+     * JPanel contents need to handle their own gets/sets to the underlying
+     * Connection content.
+     *
+     * @param details The specific Swing object to be configured and filled.
+     */
     @Override
     abstract public void loadDetails(final JPanel details);
 
@@ -202,10 +256,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     abstract public void setDisabled(boolean disable);
 
     /**
-     * Register the ConnectionConfig with the running JMRI process. It is
-     * strongly recommended that overriding implementations call
-     * super.register() since this implementation performs all required
-     * registration tasks.
+     * {@inheritDoc}
      */
     @Override
     public void register() {
@@ -224,5 +275,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
             ccm.remove(this);
         }
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractThrottle.class);
 
 }

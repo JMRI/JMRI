@@ -96,6 +96,6 @@ public class TimeoutRfidSensor extends RfidSensor {
 
     }
 
-    private static final Logger log = LoggerFactory.getLogger(TimeoutRfidSensor.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(TimeoutRfidSensor.class);
 
 }

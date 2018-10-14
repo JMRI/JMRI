@@ -1,49 +1,36 @@
 package jmri.jmrix.maple;
 
 import jmri.Turnout;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * SerialTurnoutManagerTest.java
- *
- * Description:	tests for the jmri.jmrix.maple.SerialTurnoutManager class
+ * JUnit tests for the jmri.jmrix.maple.SerialTurnoutManager class
  *
  * @author	Bob Jacobsen
  */
-public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
+public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
 
-    protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
-        super.tearDown();
-    }
+    private MapleSystemConnectionMemo memo = null;
 
     @Override
-    public void setUp() throws Exception {
-        super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        // replace the SerialTrafficController
-        SerialTrafficController t = new SerialTrafficController() {
-            SerialTrafficController test() {
-                setInstance();
-                return this;
-            }
-        }.test();
-        t.registerNode(new SerialNode());
-        // create and register the turnout manager object
-        l = new SerialTurnoutManager() {
-            public void notifyTurnoutCreationError(String conflict, int bitNum) {
-            }
-        };
-        jmri.InstanceManager.setTurnoutManager(l);
-    }
-
     public String getSystemName(int n) {
         return "KT" + n;
     }
 
+    @Test
+    public void testConstructor() {
+        // create and register the manager object
+        SerialTurnoutManager atm = new SerialTurnoutManager(new MapleSystemConnectionMemo());
+        Assert.assertNotNull("Maple Turnout Manager creation with memo", atm);
+    }
+
+    @Test
     public void testAsAbstractFactory() {
         // ask for a Turnout, and check type
         Turnout o = l.newTurnout("KT21", "my name");
@@ -51,7 +38,7 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         if (log.isDebugEnabled()) {
             log.debug("received turnout value " + o);
         }
-        assertTrue(null != (SerialTurnout) o);
+        Assert.assertTrue(null != (SerialTurnout) o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
@@ -61,29 +48,38 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
             log.debug("by user name:   " + l.getByUserName("my name"));
         }
 
-        assertTrue(null != l.getBySystemName("KT21"));
-        assertTrue(null != l.getByUserName("my name"));
+        Assert.assertTrue(null != l.getBySystemName("KT21"));
+        Assert.assertTrue(null != l.getByUserName("my name"));
 
     }
 
-    // from here down is testing infrastructure
-    public SerialTurnoutManagerTest(String s) {
-        super(s);
+    @Override
+    @Before
+    public void setUp(){
+        jmri.util.JUnitUtil.setUp();
+        // replace the SerialTrafficController
+        SerialTrafficController t = new SerialTrafficController() {
+            SerialTrafficController test() {
+                return this;
+            }
+        }.test();
+        t.registerNode(new SerialNode(t));
+        memo = new MapleSystemConnectionMemo("K", "Maple");
+        // create and register the turnout manager object
+        l = new SerialTurnoutManager(memo) {
+            @Override
+            public void notifyTurnoutCreationError(String conflict, int bitNum) {
+            }
+        };
+        jmri.InstanceManager.setTurnoutManager(l);
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SerialTurnoutManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @After
+    public void tearDown() {
+        memo.dispose();
+        JUnitUtil.tearDown();
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite(SerialTurnoutManagerTest.class);
-        return suite;
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerTest.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerTest.class);
 
 }

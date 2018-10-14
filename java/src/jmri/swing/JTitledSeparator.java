@@ -1,9 +1,3 @@
-/* JTitledSeparator based on
- * https://github.com/rhwood/DJ-Swing-Suite/blob/master/DJSwingSuite/src/chrriis/dj/swingsuite/JTitledSeparator.java
- * by
- * Christopher Deckers (chrriis@nextencia.net)
- * http://www.nextencia.net
- */
 package jmri.swing;
 
 import java.awt.BorderLayout;
@@ -23,16 +17,17 @@ import javax.swing.border.TitledBorder;
 /**
  * A separator with a title.
  *
+ * JTitledSeparator based on
+ * https://github.com/rhwood/DJ-Swing-Suite/blob/master/DJSwingSuite/src/chrriis/dj/swingsuite/JTitledSeparator.java
+ * by
+ * Christopher Deckers (chrriis@nextencia.net)
+ * http://www.nextencia.net
+ *
  * @author Randall Wood
  */
 public class JTitledSeparator extends JPanel {
 
     private final static class SeparatorPane extends JPanel {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 17667095414633319L;
 
         private SeparatorPane() {
             super(new GridBagLayout());
@@ -57,11 +52,6 @@ public class JTitledSeparator extends JPanel {
     public JTitledSeparator(String title) {
         super(new BorderLayout());
         JPanel westPanel = new JPanel(new BorderLayout()) {
-
-            /**
-             *
-             */
-            private static final long serialVersionUID = 2501748738360927763L;
 
             @Override
             public void setBounds(int x, int y, int w, int h) {

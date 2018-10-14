@@ -26,17 +26,13 @@ import jmri.util.JmriJFrame;
  */
 public class MultiSensorIconFrame extends JmriJFrame {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -6940028615554911494L;
-    JPanel content = new JPanel();
-    JmriJFrame defaultsFrame;
-    MultiIconEditor defaultIcons;
-    LayoutEditor layoutEditor = null;
-    JRadioButton updown = new JRadioButton(Bundle.getMessage("UpDown"));
-    JRadioButton rightleft = new JRadioButton(Bundle.getMessage("RightLeft"));
-    ButtonGroup group = new ButtonGroup();
+    private JPanel content = new JPanel();
+    private JmriJFrame defaultsFrame;
+    private MultiIconEditor defaultIcons;
+    private LayoutEditor layoutEditor = null;
+    private JRadioButton updown = new JRadioButton(Bundle.getMessage("UpDown"));
+    private JRadioButton rightleft = new JRadioButton(Bundle.getMessage("RightLeft"));
+    private ButtonGroup group = new ButtonGroup();
 
     MultiSensorIconFrame(LayoutEditor p) {
         super("Enter MultiSensor");
@@ -48,6 +44,7 @@ public class MultiSensorIconFrame extends JmriJFrame {
     int isEmpty = 0; // check for empty Fields in panel
     int _numberOfPositions = 3; // add an index to Sensor label
 
+    @Override
     public void initComponents() {
         this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 
@@ -71,6 +68,7 @@ public class MultiSensorIconFrame extends JmriJFrame {
         this.getContentPane().add(new JSeparator());
         JButton b = new JButton(Bundle.getMessage("ButtonAddAdditionalSensor"));
         ActionListener a = new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 // add another entry
                 _numberOfPositions++;
@@ -105,6 +103,7 @@ public class MultiSensorIconFrame extends JmriJFrame {
         defaultsFrame.pack();
         defaultsFrame.addHelpMenu("package.jmri.jmrit.display.MultiSensorIconDefaultsFrame", true);
         b.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 defaultsFrame.setVisible(true);
             }
@@ -114,6 +113,7 @@ public class MultiSensorIconFrame extends JmriJFrame {
         this.getContentPane().add(new JSeparator());
         b = new JButton(Bundle.getMessage("ButtonCreateIcon"));
         b.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent a) {
                 make();
                 if (isEmpty != 1){
@@ -124,7 +124,7 @@ public class MultiSensorIconFrame extends JmriJFrame {
         this.getContentPane().add(b);
     }
 
-    // Remove an Entry from the panel, 
+    // Remove an Entry from the panel,
     // and therefore from the eventual sensor
     void remove(Entry e) {
         content.remove(e);
@@ -139,7 +139,7 @@ public class MultiSensorIconFrame extends JmriJFrame {
 
         for (int i = 0; i < content.getComponentCount(); i++) {
             Entry e = (Entry) content.getComponent(i);
-            if (e.sensor.getText().trim().equals("")) {
+            if (e.sensor.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this,
                         Bundle.getMessage("Error19", i+1),
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
@@ -165,15 +165,12 @@ public class MultiSensorIconFrame extends JmriJFrame {
 
     class Entry extends JPanel {
 
-        /**
-         *
-         */
-        private static final long serialVersionUID = -8918960162933617297L;
         JTextField sensor = new JTextField(5);
         JPanel self;
         MultiIconEditor ed = new MultiIconEditor(1);
         JmriJFrame edf = new JmriJFrame("", false, true);
 
+        @Override
         public String toString() {
             return ed.getIcon(0).toString();
         }
@@ -192,16 +189,15 @@ public class MultiSensorIconFrame extends JmriJFrame {
             edf.pack();
 
             JButton b = new JButton(Bundle.getMessage("SetIconButton"));
-            b.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    edf.setVisible(true);
-                }
+            b.addActionListener((ActionEvent a) -> {
+                edf.setVisible(true);
             });
             this.add(b);
 
-            // button to remove this entry from it's parent 
+            // button to remove this entry from it's parent
             b = new JButton(Bundle.getMessage("ButtonDelete"));
             ActionListener a = new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent a) {
                     // remove this entry
                     self.remove(entry);

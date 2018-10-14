@@ -1,9 +1,8 @@
 package jmri.jmrit.beantable;
 
-import jmri.InstanceManager;
-import jmri.Manager;
+import jmri.*;
 
-public class TurnoutTableTabAction extends AbstractTableTabAction {
+public class TurnoutTableTabAction extends AbstractTableTabAction<Turnout> {
 
     public TurnoutTableTabAction(String s) {
         super(s);
@@ -13,15 +12,18 @@ public class TurnoutTableTabAction extends AbstractTableTabAction {
         this("Multiple Tabbed");
     }
 
-    protected Manager getManager() {
+    @Override
+    protected Manager<Turnout> getManager() {
         return InstanceManager.turnoutManagerInstance();
     }
 
+    @Override
     protected String getClassName() {
         return TurnoutTableAction.class.getName();
     }
 
-    protected AbstractTableAction getNewTableAction(String choice) {
+    @Override
+    protected TurnoutTableAction getNewTableAction(String choice) {
         return new TurnoutTableAction(choice);
     }
 

@@ -57,13 +57,13 @@ public class NullAudioListener extends AbstractAudioListener {
     }
 
     @Override
-    protected void cleanUp() {
+    protected void cleanup() {
         if (log.isDebugEnabled()) {
             log.debug("Cleanup NullAudioBuffer (" + this.getSystemName() + ")");
         }
         this.dispose();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(NullAudioListener.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(NullAudioListener.class);
 
 }

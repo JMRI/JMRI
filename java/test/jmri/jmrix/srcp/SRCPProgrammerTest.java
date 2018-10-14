@@ -1,9 +1,8 @@
 package jmri.jmrix.srcp;
 
-import org.junit.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
+import jmri.ProgrammingMode;
+import org.junit.*;
 
 /**
  * SRCPProgrammerTest.java
@@ -12,43 +11,39 @@ import junit.framework.TestSuite;
  *
  * @author	Bob Jacobsen
  */
-public class SRCPProgrammerTest extends TestCase {
+public class SRCPProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
-    public void testCtor() {
+    @Test
+    @Override
+    public void testDefault() {
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBYTEMODE,
+                programmer.getMode());        
+    }
+
+    @Override
+    @Test
+    public void testDefaultViaBestMode() {
+        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBYTEMODE,
+                ((SRCPProgrammer)programmer).getBestMode());        
+    }
+
+    // The minimal setup for log4J
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
         SRCPBusConnectionMemo sm = new SRCPBusConnectionMemo(new SRCPTrafficController() {
             @Override
             public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
             }
         }, "A", 1);
-        SRCPProgrammer s = new SRCPProgrammer(sm);
-        Assert.assertNotNull(s);
-    }
-
-    // from here down is testing infrastructure
-    public SRCPProgrammerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SRCPProgrammerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SRCPProgrammerTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        programmer = new SRCPProgrammer(sm);
     }
 
     @Override
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    @After
+    public void tearDown() {
+        programmer = null;
+        JUnitUtil.tearDown();
     }
 }

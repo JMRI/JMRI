@@ -24,11 +24,12 @@ import javax.swing.JRadioButton;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import jmri.jmrit.operations.ExceptionContext;
-import jmri.jmrit.operations.ExceptionDisplayFrame;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.UnexpectedExceptionContext;
+import jmri.util.swing.ExceptionContext;
+import jmri.util.swing.ExceptionDisplayFrame;
+import jmri.util.swing.UnexpectedExceptionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -140,7 +141,7 @@ public class RestoreDialog extends JDialog {
                 buttonPane.add(restoreButton);
             }
             {
-                JButton cancelButton = new JButton(Bundle.getMessage("BackupDialog.cancelButton.text"));
+                JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
                 cancelButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent arg0) {
@@ -221,7 +222,7 @@ public class RestoreDialog extends JDialog {
             // now deregister shut down task
             // If Trains window was opened, then task is active
             // otherwise it is normal to not have the task running
-            OperationsManager.getInstance().setShutDownTask(null);
+            InstanceManager.getDefault(OperationsManager.class).setShutDownTask(null);
 
             JOptionPane.showMessageDialog(this, Bundle.getMessage("YouMustRestartAfterRestore"),
                     Bundle.getMessage("RestoreSuccessful"), JOptionPane.INFORMATION_MESSAGE);
@@ -233,7 +234,7 @@ public class RestoreDialog extends JDialog {
         catch (IOException ex) {
             ExceptionContext context = new ExceptionContext(ex, Bundle.getMessage("RestoreDialog.restoring")
                     + " " + setName, "Hint about checking valid names, etc."); // NOI18N
-            new ExceptionDisplayFrame(context);
+            new ExceptionDisplayFrame(context, this).setVisible(true);
 
         } catch (Exception ex) {
             log.error("Doing restore from " + setName, ex);
@@ -241,7 +242,7 @@ public class RestoreDialog extends JDialog {
             UnexpectedExceptionContext context = new UnexpectedExceptionContext(ex,
                     Bundle.getMessage("RestoreDialog.restoring") + " " + setName);
 
-            new ExceptionDisplayFrame(context);
+            new ExceptionDisplayFrame(context, this).setVisible(true);
         }
     }
 
@@ -259,7 +260,7 @@ public class RestoreDialog extends JDialog {
         comboBox.removeAllItems();
 
         BackupSet[] sets = backup.getBackupSets();
-        ComboBoxModel<BackupSet> model = new DefaultComboBoxModel<BackupSet>(sets);
+        ComboBoxModel<BackupSet> model = new DefaultComboBoxModel<>(sets);
 
         // Clear any current selection so that the state change will fire when
         // we set a selection.

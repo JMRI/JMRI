@@ -1,4 +1,3 @@
-// RpsReporterManager.java
 package jmri.jmrix.rps;
 
 import jmri.Reporter;
@@ -8,15 +7,16 @@ import jmri.managers.AbstractReporterManager;
  * RPS implementation of a ReporterManager.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision$
- * @since 2.3.1
+  * @since 2.3.1
  */
 public class RpsReporterManager extends AbstractReporterManager {
 
+    @Override
     public String getSystemPrefix() {
         return "R";
     }
 
+    @Override
     protected Reporter createNewReporter(String systemName, String userName) {
         RpsReporter r = new RpsReporter(systemName, userName);
         Distributor.instance().addMeasurementListener(r);
@@ -42,4 +42,4 @@ public class RpsReporterManager extends AbstractReporterManager {
     }
 }
 
-/* @(#)Rps ReporterManager.java */
+

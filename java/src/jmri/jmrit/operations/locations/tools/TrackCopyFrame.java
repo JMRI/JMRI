@@ -1,6 +1,6 @@
-// TrackCopyFrame.java
 package jmri.jmrit.operations.locations.tools;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -33,7 +34,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2013
- * @version $Revision: 17977 $
  */
 public class TrackCopyFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -41,19 +41,21 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
     JTextField trackNameTextField = new javax.swing.JTextField(Control.max_len_string_track_name);
 
     // major buttons
-    JButton copyButton = new javax.swing.JButton(Bundle.getMessage("Copy"));
-    JButton saveButton = new javax.swing.JButton(Bundle.getMessage("Save"));
+    JButton copyButton = new javax.swing.JButton(Bundle.getMessage("ButtonCopy"));
+    JButton saveButton = new javax.swing.JButton(Bundle.getMessage("ButtonSave"));
 
     // combo boxes
-    JComboBox<Location> locationBox = LocationManager.instance().getComboBox();
+    JComboBox<Location> locationBox = InstanceManager.getDefault(LocationManager.class).getComboBox();
     JComboBox<Track> trackBox = new JComboBox<>();
+    JComboBox<Location> destinationBox = InstanceManager.getDefault(LocationManager.class).getComboBox();
 
     // checkboxes
     JCheckBox sameNameCheckBox = new JCheckBox(Bundle.getMessage("SameName"));
     JCheckBox moveRollingStockCheckBox = new JCheckBox(Bundle.getMessage("MoveRollingStock"));
     JCheckBox deleteTrackCheckBox = new JCheckBox(Bundle.getMessage("DeleteCopiedTrack"));
 
-    Location _location;	// Copy the track to this location
+    Location _location;     // copy from this location
+    Location _destination;  // copy the track to this location
 
     // remember state of checkboxes during a session
     static boolean sameName = false;
@@ -61,7 +63,9 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
     static boolean deleteTrack = false;
 
     public TrackCopyFrame(LocationEditFrame lef) {
-        _location = lef._location;
+        if (lef != null) {
+            _destination = lef._location;
+        }
 
         // general GUI config
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -80,8 +84,14 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
         pCopy.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SelectTrackToCopy")));
         addItem(pCopy, locationBox, 0, 0);
         addItem(pCopy, trackBox, 1, 0);
-
+        
         // row 3
+        JPanel pCopyTo = new JPanel();
+        pCopyTo.setLayout(new GridBagLayout());
+        pCopyTo.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SelectCopyToLocation")));
+        addItem(pCopyTo, destinationBox, 0, 0);
+
+        // row 4
         JPanel pOptions = new JPanel();
         pOptions.setLayout(new GridBagLayout());
         pOptions.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
@@ -89,7 +99,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
         addItemLeft(pOptions, moveRollingStockCheckBox, 0, 1);
         addItemLeft(pOptions, deleteTrackCheckBox, 0, 2);
 
-        // row 4
+        // row 5
         JPanel pButton = new JPanel();
         pButton.setLayout(new GridBagLayout());
         addItem(pButton, copyButton, 0, 0);
@@ -97,11 +107,14 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 
         getContentPane().add(pName);
         getContentPane().add(pCopy);
+        getContentPane().add(pCopyTo);
         getContentPane().add(pOptions);
         getContentPane().add(pButton);
 
         addComboBoxAction(locationBox);
         addComboBoxAction(trackBox);
+        
+        addComboBoxAction(destinationBox);
 
         // set the checkbox states
         sameNameCheckBox.setSelected(sameName);
@@ -110,7 +123,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
         deleteTrackCheckBox.setEnabled(moveRollingStockCheckBox.isSelected());
 
         // get notified if combo box gets modified
-        LocationManager.instance().addPropertyChangeListener(this);
+        InstanceManager.getDefault(LocationManager.class).addPropertyChangeListener(this);
 
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_CopyTrack", true); // NOI18N
@@ -118,10 +131,12 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
         pack();
         setMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight400));
 
-        if (_location != null) {
-            setTitle(MessageFormat.format(Bundle.getMessage("TitleCopyTrack"), new Object[]{_location.getName()}));
-            _location.addPropertyChangeListener(this);
+        if (_destination != null) {
+            setTitle(MessageFormat.format(Bundle.getMessage("TitleCopyTrack"), new Object[]{_destination.getName()}));
+            pCopyTo.setVisible(false);
+            _destination.addPropertyChangeListener(this);
         } else {
+            setTitle(Bundle.getMessage("MenuItemCopyTrack"));
             copyButton.setEnabled(false);
         }
 
@@ -142,16 +157,26 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
         if (ae.getSource() == trackBox) {
             updateTrackName();
         }
+        if (ae.getSource() == destinationBox) {
+            _destination = (Location) destinationBox.getSelectedItem();
+            copyButton.setEnabled(_destination != null);
+        }
     }
 
     protected void updateTrackComboBox() {
         log.debug("update track combobox");
+        if (_location != null) {
+            _location.removePropertyChangeListener(this);
+        }
         if (locationBox.getSelectedItem() == null) {
             trackBox.removeAllItems();
         } else {
-            log.debug("Copy Track Frame sees location: {}", locationBox.getSelectedItem());
-            Location l = (Location) locationBox.getSelectedItem();
-            l.updateComboBox(trackBox);
+            log.debug("copy from location: {}", locationBox.getSelectedItem());
+            _location = (Location) locationBox.getSelectedItem();
+            Track track = (Track)trackBox.getSelectedItem();
+            _location.updateComboBox(trackBox);
+            trackBox.setSelectedItem(track);
+            _location.addPropertyChangeListener(this);
         }
     }
 
@@ -162,14 +187,14 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     protected void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == copyButton) {
             log.debug("copy track button activated");
             if (!checkName()) {
                 return;
             }
-            if (trackBox.getSelectedItem() == null || trackBox.getSelectedItem().equals(Location.NONE) || _location == null) {
+            if (trackBox.getSelectedItem() == null || trackBox.getSelectedItem().equals(Location.NONE) || _destination == null) {
                 // tell user that they need to select a track to copy
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationAndTrack"), Bundle
                         .getMessage("SelectTrackToCopy"), JOptionPane.INFORMATION_MESSAGE);
@@ -191,18 +216,18 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
                 return; // failed
             }
             // only copy tracks that are okay with the location
-            if (fromTrack.getTrackType().equals(Track.STAGING) ^ _location.isStaging()) {
+            if (fromTrack.isStaging() ^ _destination.isStaging()) {
                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackTypeWrong"),
-                        new Object[]{fromTrack.getTrackType(), _location.getName()}), MessageFormat.format(Bundle
+                        new Object[]{fromTrack.getTrackType(), _destination.getName()}), MessageFormat.format(Bundle
                                 .getMessage("CanNotCopy"), new Object[]{fromTrack.getName()}), JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            Track toTrack = fromTrack.copyTrack(trackNameTextField.getText(), _location);
+            Track toTrack = fromTrack.copyTrack(trackNameTextField.getText(), _destination);
             if (moveRollingStockCheckBox.isSelected()) {
                 // move rolling stock
                 moveRollingStock(fromTrack, toTrack);
                 if (deleteTrackCheckBox.isSelected()) {
-                    ScheduleManager.instance().replaceTrack(fromTrack, toTrack);
+                    InstanceManager.getDefault(ScheduleManager.class).replaceTrack(fromTrack, toTrack);
                     fromTrack.getLocation().deleteTrack(fromTrack);
                 }
             }
@@ -231,7 +256,8 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 
     protected void updateComboBoxes() {
         log.debug("update location combobox");
-        LocationManager.instance().updateComboBox(locationBox);
+        InstanceManager.getDefault(LocationManager.class).updateComboBox(locationBox);
+        InstanceManager.getDefault(LocationManager.class).updateComboBox(destinationBox);
     }
 
     /**
@@ -241,34 +267,34 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
     protected boolean checkName() {
         if (trackNameTextField.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
-                    .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("Copy")}), JOptionPane.ERROR_MESSAGE);
+                    .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (TrainCommon.splitString(trackNameTextField.getText()).length() > Control.max_len_string_track_name) {
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackNameLengthMax"),
                     new Object[]{Integer.toString(Control.max_len_string_track_name + 1)}), MessageFormat.format(Bundle
-                            .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("Copy")}), JOptionPane.ERROR_MESSAGE);
+                            .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         // check to see if track already exists
-        if (_location == null) {
+        if (_destination == null) {
             return false;
         }
-        Track check = _location.getTrackByName(trackNameTextField.getText(), null);
+        Track check = _destination.getTrackByName(trackNameTextField.getText(), null);
         if (check != null) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("TrackAlreadyExists"), MessageFormat.format(Bundle
-                    .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("Copy")}), JOptionPane.ERROR_MESSAGE);
+                    .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
     }
 
     protected void moveRollingStock(Track fromTrack, Track toTrack) {
-        moveRollingStock(fromTrack, toTrack, CarManager.instance());
-        moveRollingStock(fromTrack, toTrack, EngineManager.instance());
+        moveRollingStock(fromTrack, toTrack, InstanceManager.getDefault(CarManager.class));
+        moveRollingStock(fromTrack, toTrack, InstanceManager.getDefault(EngineManager.class));
     }
 
-    private void moveRollingStock(Track fromTrack, Track toTrack, RollingStockManager manager) {
+    private void moveRollingStock(Track fromTrack, Track toTrack, RollingStockManager<? extends RollingStock> manager) {
         for (RollingStock rs : manager.getByIdList()) {
             if (rs.getTrack() == fromTrack) {
                 rs.setLocation(toTrack.getLocation(), toTrack, RollingStock.FORCE);
@@ -278,7 +304,10 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 
     @Override
     public void dispose() {
-        LocationManager.instance().removePropertyChangeListener(this);
+        InstanceManager.getDefault(LocationManager.class).removePropertyChangeListener(this);
+        if (_destination != null) {
+            _destination.removePropertyChangeListener(this);
+        }
         if (_location != null) {
             _location.removePropertyChangeListener(this);
         }
@@ -287,14 +316,17 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        log.debug("PropertyChange ({}) new ({})", e.getPropertyName(), e.getNewValue());
+        log.debug("PropertyChange ({}) old ({}) new ({})", e.getPropertyName(), e.getOldValue(), e.getNewValue());
         if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)) {
             updateComboBoxes();
         }
-        if (e.getPropertyName().equals(Location.DISPOSE_CHANGED_PROPERTY)) {
+        if (e.getSource() == _location) {
+            updateTrackComboBox();
+        }
+        if (e.getSource() == _destination && e.getPropertyName().equals(Location.DISPOSE_CHANGED_PROPERTY)) {
             dispose();
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrackCopyFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TrackCopyFrame.class);
 }

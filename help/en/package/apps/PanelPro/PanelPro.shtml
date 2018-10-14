@@ -25,8 +25,9 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: PanelPro Main Window</h1>The PanelPro main window
-      gives you access to all the capabilities of JMRI.
+      <h1>JMRI: PanelPro Main Window</h1>
+      <p>The PanelPro main window
+      gives you access to all the capabilities of JMRI.</p>
 
       <p>Help on specific menus:</p>
 
@@ -81,8 +82,8 @@
         </li>
       </ul>
 
-      <p>This is the apps.PanelPro.PanelPro.shtml help page 
-      <!--#include virtual="/Footer" --></p>
+      <p>This is the apps.PanelPro.PanelPro.shtml help page</p>
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

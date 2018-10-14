@@ -18,33 +18,41 @@
   <enumChoice choice="Acceleration on/off">
     <choice>Acceleration on/off</choice>
     <choice xml:lang="it">Accellerazione on/off</choice>
+    <choice xml:lang="ca">Acceleració on/off</choice>
   </enumChoice>
   <enumChoice choice="Shunting Mode on/off">
     <choice>Shunting Mode on/off</choice>
     <choice xml:lang="it">Modalità Manovra on/off</choice>
+    <choice xml:lang="ca">Mode de maniobres on/off</choice>
   </enumChoice>
   <enumChoice choice="Sound on/off">
     <choice>Sound on/off</choice>
     <choice xml:lang="it">Suono on/off</choice>
+    <choice xml:lang="ca">So on/off</choice>
   </enumChoice>
   <enumChoice choice="Shift Mode">
     <choice>Shift Mode</choice>
     <choice xml:lang="it">Modo Ritardato</choice>
+    <choice xml:lang="ca">AMode amb retard</choice>
   </enumChoice>
   <enumChoice choice="Blower Sound">
     <choice>Blower Sound</choice>
     <choice xml:lang="it">Suono Turbina</choice>
+    <choice xml:lang="ca">So de turbina</choice>
   </enumChoice>
   <enumChoice choice="Doppler on Slot 1">
     <choice>Doppler on Slot 1</choice>
     <choice xml:lang="it">Doppler in Slot 1</choice>
+    <choice xml:lang="ca">Doppler a l'slot 1</choice>
   </enumChoice>
   <enumChoice choice="Mute/Volume Control">
     <choice>Mute/Volume Control</choice>
     <choice xml:lang="it">Controllo Muto/Volume</choice>
+    <choice xml:lang="ca">Control volum on/off</choice>
   </enumChoice>
   <enumChoice choice="Dynamic Brake">
     <choice>Dynamic Brake</choice>
     <choice xml:lang="it">Frenata Dinamica</choice>
+    <choice xml:lang="ca">Fre dinàmic</choice>
   </enumChoice>
 </enumVal>

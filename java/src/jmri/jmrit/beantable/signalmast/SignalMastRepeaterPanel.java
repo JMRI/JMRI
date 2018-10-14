@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for Signal Mast Add / Edit Panel
  *
- * @author	Kevin Dickerson Copyright (C) 2011
+ * @author Kevin Dickerson Copyright (C) 2011
  */
 public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implements PropertyChangeListener {
 
@@ -65,8 +65,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
         _RepeaterModel = new SignalMastRepeaterModel();
         JTable _RepeaterTable = new JTable(_RepeaterModel);
 
-        TableRowSorter<SignalMastRepeaterModel> sorter = new TableRowSorter<>(_RepeaterModel);
-        sorter.setComparator(SignalMastRepeaterModel.DIR_COLUMN, new jmri.util.SystemNameComparator());
+        TableRowSorter<SignalMastRepeaterModel> sorter = new TableRowSorter<>(_RepeaterModel); // leave default sorting
         RowSorterUtil.setSortOrder(sorter, SignalMastRepeaterModel.DIR_COLUMN, SortOrder.ASCENDING);
         _RepeaterTable.setRowSorter(sorter);
 
@@ -82,6 +81,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
 
         _MasterBox = new JmriBeanComboBox(dsmm);
         _MasterBox.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setSlaveBoxLists();
             }
@@ -93,9 +93,10 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
         footer.add(_MasterBox);
         footer.add(new JLabel(Bundle.getMessage("Slave") + " : "));
         footer.add(_SlaveBox);
-        _addRepeater = new JButton(Bundle.getMessage("ButtonAdd"));
+        _addRepeater = new JButton(Bundle.getMessage("AddButtonText"));
         _addRepeater.setEnabled(false);
         _addRepeater.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 SignalMastRepeater rp = new SignalMastRepeater((SignalMast) _MasterBox.getSelectedBean(), (SignalMast) _SlaveBox.getSelectedBean());
                 try {
@@ -132,7 +133,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
         if (!iter.hasNext()) {
             return;
         }
-        ArrayList<NamedBean> excludeList = new ArrayList<NamedBean>();
+        ArrayList<NamedBean> excludeList = new ArrayList<>();
         while (iter.hasNext()) {
             String mname = iter.next();
             if (mname != null) {
@@ -157,6 +158,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
     JmriJFrame signalMastLogicFrame = null;
     JLabel sourceLabel = new JLabel();
 
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
 
     }
@@ -207,6 +209,8 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
 
         }
 
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
+                                justification="better to keep cases in column order rather than to combine")
         public int getPreferredWidth(int col) {
             switch (col) {
                 case ENABLE_COLUMN:
@@ -248,6 +252,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
 
         }
 
+        @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             if (e.getPropertyName().equals("repeaterlength")) {
                 updateDetails();
@@ -281,6 +286,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
                     .setPreferredWidth((sample.getPreferredSize().width) + 4);
         }
 
+        @Override
         public int getColumnCount() {
             return 5;
         }
@@ -312,6 +318,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
         public void setSetToState(String x) {
         }
 
+        @Override
         public int getRowCount() {
             if (_signalMastRepeaterList == null) {
                 return 0;
@@ -319,6 +326,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
             return _signalMastRepeaterList.size();
         }
 
+        @Override
         public Object getValueAt(int r, int c) {
             if (r >= _signalMastRepeaterList.size()) {
                 log.debug("row is greater than turnout list size");
@@ -349,6 +357,8 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
             }
         }
 
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
+                                justification="better to keep cases in column order rather than to combine")
         @Override
         public void setValueAt(Object type, int r, int c) {
             if (c == DIR_COLUMN) {
@@ -376,6 +386,6 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalMastRepeaterPanel.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SignalMastRepeaterPanel.class);
 
 }

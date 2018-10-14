@@ -22,7 +22,7 @@ package jmri;
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
-public interface SignalSystemManager extends Manager {
+public interface SignalSystemManager extends Manager<SignalSystem> {
 
     public SignalSystem getSystem(String name);
 

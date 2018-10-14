@@ -1,11 +1,10 @@
-// MarklinSensor.java
 package jmri.jmrix.marklin;
 
 import jmri.implementation.AbstractSensor;
 
 /**
  * Implement a Sensor via Marklin communications.
- * <P>
+ * <p>
  * This object doesn't listen to the Marklin communications. This is because the
  * sensor manager will handle all the messages as some sensor updates will come
  * bundled together in one message. It also saves having multiple sensor beans
@@ -13,14 +12,8 @@ import jmri.implementation.AbstractSensor;
  * in one location.
  *
  * @author Kevin Dickerson (C) 2009
- * @version	$Revision: 20842 $
  */
 public class MarklinSensor extends AbstractSensor {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7029240754803015932L;
 
     public MarklinSensor(String systemName, String userName) {
         super(systemName, userName);
@@ -35,11 +28,8 @@ public class MarklinSensor extends AbstractSensor {
     private void init(String id) {
     }
 
+    @Override
     public void requestUpdateFromLayout() {
     }
 
-    static String[] modeNames = null;
-    static int[] modeValues = null;
 }
-
-/* @(#)MarklinSensor.java */

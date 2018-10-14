@@ -1,0 +1,45 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-memory-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"memory\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "System name of the memory"
+        },
+        "userName": {
+            "type": ["string", "null"],
+            "description": "User name of the memory"
+        },
+        "comment": {
+            "type": ["string", "null"],
+            "description": "Comment for the memory"
+        },
+        "properties": {
+            "type": "array",
+            "description": "NamedBean properties of the memory",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "description": "Key by which property is accessed"
+                    },
+                    "value": {
+                        "type": ["string", "null"],
+                        "description": "String value of property or null"
+                    }
+                },
+                "additionalProperties": false,
+                "required": ["name", "value"]
+            }
+        },
+        "value": {
+            "type": ["string", "null"],
+            "description": "The value of the memory"
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name", "userName", "comment", "value"]
+}

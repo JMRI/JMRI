@@ -1,4 +1,3 @@
-// FactoryResetAction.java
 package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionEvent;
@@ -26,6 +25,7 @@ public class FactoryResetAction extends AbstractAction {
         mParent = pParent;
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         log.debug("start to display Factory Reset");
@@ -54,5 +54,5 @@ public class FactoryResetAction extends AbstractAction {
         }
 
     }
-    private final static Logger log = LoggerFactory.getLogger(FactoryResetAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(FactoryResetAction.class);
 }

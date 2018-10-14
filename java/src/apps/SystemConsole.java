@@ -1,5 +1,6 @@
 package apps;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -116,13 +117,13 @@ public final class SystemConsole extends JTextArea {
         if (instance == null) {
             try {
                 instance = new SystemConsole();
-            } catch (Exception ex) {
+            } catch (RuntimeException ex) {
                 log.error("failed to complete Console redirection", ex);
             }
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
+    @SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
             justification = "Can only be called from the same instance so default encoding OK")
     private SystemConsole() {
         // Record current System.out and System.err
@@ -202,6 +203,9 @@ public final class SystemConsole extends JTextArea {
 
         pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
 
+        // Add Help menu (Windows menu automaitically added)
+        frame.addHelpMenu("package.apps.SystemConsole", true); // NOI18N
+
         // Grab a reference to the system clipboard
         final Clipboard clipboard = frame.getToolkit().getSystemClipboard();
 
@@ -209,8 +213,18 @@ public final class SystemConsole extends JTextArea {
         JScrollPane scroll = new JScrollPane(console);
         frame.add(scroll, BorderLayout.CENTER);
 
-        // Add button to allow copy to clipboard
+
         JPanel p = new JPanel();
+        
+        // Add button to clear display
+        JButton clear = new JButton(Bundle.getMessage("ButtonClear"));
+        clear.addActionListener((ActionEvent event) -> {
+            console.setText("");
+        });
+        clear.setToolTipText(Bundle.getMessage("ButtonClearTip"));
+        p.add(clear);        
+        
+        // Add button to allow copy to clipboard        
         JButton copy = new JButton(Bundle.getMessage("ButtonCopyClip"));
         copy.addActionListener((ActionEvent event) -> {
             StringSelection text = new StringSelection(console.getText());
@@ -403,7 +417,7 @@ public final class SystemConsole extends JTextArea {
             }
 
             @Override
-            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
+            @SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
                     justification = "Can only be called from the same instance so default encoding OK")
             public void write(byte[] b, int off, int len) throws IOException {
                 updateTextArea(new String(b, off, len), which);
@@ -419,14 +433,14 @@ public final class SystemConsole extends JTextArea {
     /**
      * Method to redirect the system streams to the console
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
+    @SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
             justification = "Can only be called from the same instance so default encoding OK")
     private void redirectSystemStreams() {
         System.setOut(this.getOutputStream());
         System.setErr(this.getErrorStream());
     }
 
-    final public int MAX_CONSOLE_LINES = 5000;  // public, not static so can be modified via e.g. a script
+    final public int MAX_CONSOLE_LINES = 5000;  // public, not static so can be modified via a script
     public void truncateTextArea() {
         int numLinesToRemove = console.getLineCount() -1 - MAX_CONSOLE_LINES; // There's a blank at the end
         if(numLinesToRemove > 0) {
@@ -661,6 +675,6 @@ public final class SystemConsole extends JTextArea {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(SystemConsole.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(SystemConsole.class);
 
 }

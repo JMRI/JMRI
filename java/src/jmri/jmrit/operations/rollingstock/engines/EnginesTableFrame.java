@@ -1,4 +1,3 @@
-// EnginesTableFrame.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.beans.PropertyChangeEvent;
@@ -23,7 +22,7 @@ import javax.swing.table.TableColumnModel;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.rollingstock.engines.tools.NceConsistEngineAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.swing.JTablePersistenceManager;
@@ -35,14 +34,13 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2013
- * @version $Revision$
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener {
 
     EnginesTableModel enginesModel;
     javax.swing.JTable enginesTable;
     JScrollPane enginesPane;
-    EngineManager engineManager = EngineManager.instance();
+    EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
 
     // labels
     JLabel numEngines = new JLabel();
@@ -53,22 +51,22 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     JRadioButton sortByNumber = new JRadioButton(Bundle.getMessage("Number"));
     JRadioButton sortByRoad = new JRadioButton(Bundle.getMessage("Road"));
     JRadioButton sortByModel = new JRadioButton(Bundle.getMessage("Model"));
-    JRadioButton sortByConsist = new JRadioButton(Bundle.getMessage("Consist"));
+    public JRadioButton sortByConsist = new JRadioButton(Bundle.getMessage("Consist"));
     JRadioButton sortByLocation = new JRadioButton(Bundle.getMessage("Location"));
     JRadioButton sortByDestination = new JRadioButton(Bundle.getMessage("Destination"));
     JRadioButton sortByTrain = new JRadioButton(Bundle.getMessage("Train"));
     JRadioButton sortByMoves = new JRadioButton(Bundle.getMessage("Moves"));
     JRadioButton sortByBuilt = new JRadioButton(Bundle.getMessage("Built"));
     JRadioButton sortByOwner = new JRadioButton(Bundle.getMessage("Owner"));
-    JRadioButton sortByValue = new JRadioButton(Setup.getValueLabel());
-    JRadioButton sortByRfid = new JRadioButton(Setup.getRfidLabel());
+    public JRadioButton sortByValue = new JRadioButton(Setup.getValueLabel());
+    public JRadioButton sortByRfid = new JRadioButton(Setup.getRfidLabel());
     JRadioButton sortByLast = new JRadioButton(Bundle.getMessage("Last"));
     ButtonGroup group = new ButtonGroup();
 
     // major buttons
-    JButton addButton = new JButton(Bundle.getMessage("Add"));
+    JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
     JButton findButton = new JButton(Bundle.getMessage("Find"));
-    JButton saveButton = new JButton(Bundle.getMessage("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     JTextField findEngineTextBox = new JTextField(6);
 
@@ -253,7 +251,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         }
     }
 
-    public List<RollingStock> getSortByList() {
+    public List<Engine> getSortByList() {
         return enginesModel.getSelectedEngineList();
     }
 
@@ -329,5 +327,5 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EnginesTableFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(EnginesTableFrame.class);
 }

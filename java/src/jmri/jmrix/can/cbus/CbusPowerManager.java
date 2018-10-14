@@ -11,8 +11,8 @@ import jmri.jmrix.can.TrafficController;
 /**
  * PowerManager implementation for controlling CBUS layout power.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Andrew CRosland Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Andrew CRosland Copyright (C) 2009
  */
 public class CbusPowerManager implements PowerManager, CanListener {
 
@@ -25,6 +25,7 @@ public class CbusPowerManager implements PowerManager, CanListener {
 
     CanSystemConnectionMemo memo;
 
+    @Override
     public String getUserName() {
         if (memo != null) {
             return memo.getUserName();
@@ -34,6 +35,7 @@ public class CbusPowerManager implements PowerManager, CanListener {
 
     int power = ON;
 
+    @Override
     public void setPower(int v) throws JmriException {
         power = UNKNOWN; // while waiting for reply
         checkTC();
@@ -55,11 +57,13 @@ public class CbusPowerManager implements PowerManager, CanListener {
         firePropertyChange("Power", null, null);
     }
 
+    @Override
     public int getPower() {
         return power;
     }
 
     // to free resources when no longer used
+    @Override
     public void dispose() throws JmriException {
         tc.removeCanListener(this);
         tc = null;
@@ -74,6 +78,7 @@ public class CbusPowerManager implements PowerManager, CanListener {
     // to hear of changes
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
+    @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
@@ -82,6 +87,7 @@ public class CbusPowerManager implements PowerManager, CanListener {
         pcs.firePropertyChange(p, old, n);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
@@ -89,6 +95,7 @@ public class CbusPowerManager implements PowerManager, CanListener {
     TrafficController tc = null;
 
     // to listen for status changes from Cbus system
+    @Override
     public void reply(CanReply m) {
         if (CbusMessage.isTrackOff(m)) {
             power = OFF;
@@ -102,6 +109,7 @@ public class CbusPowerManager implements PowerManager, CanListener {
         }
     }
 
+    @Override
     public void message(CanMessage m) {
         // do nothing
     }

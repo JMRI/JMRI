@@ -1,0 +1,57 @@
+<ol class="breadcrumb">
+  <li><a ng-href="#!/">{{railroad}}</a></li>
+  <li>Roster</li>
+</ol>
+<div ng-controller="RosterCtrl" class="ng-scope row row-cards-pf list-view-container">
+
+  <div class="col-md-12">
+    <pf-toolbar id="rosterToolbar" config="toolbarConfig"></pf-toolbar>
+  </div>
+  <div ng-hide="loading">
+    <div class="col-md-12" ng-if="viewType == 'listView'">
+      <pf-list-view config="listConfig" items="items" empty-state-config="emptyStateConfig">
+        <div class="list-view-pf-description">
+          <div class="list-group-item-heading">
+            {{item.name}}
+          </div>
+          <div class="list-group-item-heading">
+            <span translate="ROSTER.FIELD.address"></span>: {{item.address}}
+          </div>
+          <div class="list-group-item-text">
+            {{item.road}} {{item.number}}
+          </div>
+        </div>
+        <div class="list-view-pf-additional-info">
+          <div class="list-view-pf-additional-info-item">
+            {{item.owner}}
+          </div>
+        </div>
+      </pf-list-view>
+    </div>
+    <div class="col-md-12" ng-if="viewType == 'cardView'">
+      <pf-card-view config="listConfig" items="items" empty-state-config="emptyStateConfig">
+        <div class="col-md-12">
+          <span>{{item.name}}</span>
+        </div>
+        <div class="col-md-12">
+          <span>{{item.road}} {{item.number}}</span>
+        </div>
+        <div class="col-md-12">
+          <span><span translate="ROSTER.FIELD.address"></span> <strong>{{item.address}}</strong></span>
+        </div>
+        <div class="col-md-12">
+          <span>{{item.owner}}</span>
+        </div>
+        <div class="col-md-12" ng-show="item.icon || item.image" style="">
+          <span><a target="_blank" ng-href="{{item.icon}}" ng-show="item.icon && !item.image"><img src="{{item.icon}}" class="img-responsive" style="max-height: 50%"></a>
+          <a target="_blank" ng-href="{{item.image}}" ng-show="item.image"><img src="{{item.image}}" class="img-responsive"></a></span>
+        </div>
+      </pf-card-view>
+    </div>
+    <div class="col-md-12" ng-show="viewType == 'tableView'">
+      <pf-table-view config="tableConfig" columns="columns" items="items" empty-state-config="emptyStateConfig">
+      </pf-table-view>
+    </div>
+  </div>
+  <div ng-show="loading" class="col-mid-12 spinner spinner-lg"></div>
+</div>

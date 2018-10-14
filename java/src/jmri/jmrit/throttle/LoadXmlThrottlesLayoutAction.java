@@ -6,6 +6,8 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -43,6 +45,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
      *
      * @param e The event causing the action.
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         if (fileChooser == null) {
             fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
@@ -56,10 +59,10 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
         }
 
         // if exising frames are open ask to destroy those or merge.
-        if (ThrottleFrameManager.instance().getThrottleWindows().hasNext()) {
+        if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottleWindows().hasNext()) {
             Object[] possibleValues = {Bundle.getMessage("LabelMerge"),
                 Bundle.getMessage("LabelReplace"),
-                Bundle.getMessage("LabelCancel")};
+                Bundle.getMessage("ButtonCancel")};
             int selectedValue = JOptionPane.showOptionDialog(null,
                     Bundle.getMessage("DialogMergeOrReplace"),
                     Bundle.getMessage("OptionLoadingThrottles"),
@@ -68,7 +71,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
                     possibleValues[0]);
             if (selectedValue == JOptionPane.NO_OPTION) {
                 // replace chosen - close all then load
-                ThrottleFrameManager.instance().requestAllThrottleWindowsDestroyed();
+                InstanceManager.getDefault(ThrottleFrameManager.class).requestAllThrottleWindowsDestroyed();
             }
         }
         try {
@@ -84,28 +87,32 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
      *
      * @param f The XML file containing throttles.
      */
-    @SuppressWarnings("unchecked")
     public boolean loadThrottlesLayout(java.io.File f) throws java.io.IOException {
         try {
             ThrottlePrefs prefs = new ThrottlePrefs();
             Element root = prefs.rootFromFile(f);
             List<Element> throttles = root.getChildren("ThrottleFrame");
-            if ((throttles != null) && (throttles.size() > 0)) { // OLD FORMAT				
-                for (java.util.Iterator<Element> i = throttles.iterator(); i.hasNext();) {
-                    ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
-                    tf.setXml(i.next());
-                    tf.toFront();
+            ThrottleFrameManager tfManager = InstanceManager.getDefault(ThrottleFrameManager.class);
+            if ((throttles != null) && (throttles.size() > 0)) { // OLD FORMAT
+                for (Element e : throttles) {
+                    SwingUtilities.invokeLater(() -> {
+                        ThrottleFrame tf = tfManager.createThrottleFrame();
+                        tf.setXml(e);
+                        tf.toFront();
+                    });
                 }
             } else {
                 throttles = root.getChildren("ThrottleWindow");
-                for (java.util.Iterator<Element> i = throttles.iterator(); i.hasNext();) {
-                    ThrottleWindow tw = ThrottleFrameManager.instance().createThrottleWindow();
-                    tw.setXml(i.next());
-                    tw.setVisible(true);
+                for (Element e : throttles) {
+                    SwingUtilities.invokeLater(() -> {
+                        ThrottleWindow tw = tfManager.createThrottleWindow();
+                        tw.setXml(e);
+                        tw.setVisible(true);
+                    });
                 }
                 Element tlp = root.getChild("ThrottlesListPanel");
                 if (tlp != null) {
-                    ThrottleFrameManager.instance().getThrottlesListPanel().setXml(tlp);
+                    InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().setXml(tlp);
                 }
             }
         } catch (org.jdom2.JDOMException ex) {
@@ -124,6 +131,6 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LoadXmlThrottlesLayoutAction.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(LoadXmlThrottlesLayoutAction.class);
 
 }

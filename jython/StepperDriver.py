@@ -4,18 +4,15 @@
 # Author: Ken Cameron, copyright 2011
 # Part of the JMRI distribution
 #
-# The next line is maintained by CVS, please don't change it
-# $Revision$
-#
 # This class lets you create a light that is driven by a 4 pole
-#	stepper motor connected to a normal lamp dimmer. A novel solution
-#	to having your layout lighting tied to your fast clock.
-#	But if you have to drive stepper motors (slowly) this works.
-#	Yes there is an issue about the true order of the bits getting
-#	to the motor but it seems for a CMRI setup, this hasn't been
-#	an issue. The layout really using this is Jim Heidt's O&N
-#	in Central New York.
-##
+#   stepper motor connected to a normal lamp dimmer. A novel solution
+#   to having your layout lighting tied to your fast clock.
+#   But if you have to drive stepper motors (slowly) this works.
+#   Yes there is an issue about the true order of the bits getting
+#   to the motor but it seems for a CMRI setup, this hasn't been
+#   an issue. The layout really using this is Jim Heidt's O&N
+#   in Central New York.
+#
 
 import jmri
 

@@ -68,6 +68,12 @@
 # JAVA imports
 
 import java
+import java.awt
+import java.awt.event
+import java.beans
+import java.io
+import java.util
+
 import jmri
 
 from java.beans import PropertyChangeListener
@@ -160,7 +166,7 @@ class FastListener(java.beans.PropertyChangeListener):
   fastTime = 0
 
   def propertyChange(self, event):
-    time = InstanceManager.timebaseInstance().getTime()
+    time = InstanceManager.getDefault(jmri.Timebase).getTime()
     FastListener.fastTime = time.getHours() * 60 + time.getMinutes()
     return
 
@@ -211,7 +217,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
     powerMonitor = None
     
     # Fast Clock
-    fastBase = InstanceManager.timebaseInstance()
+    fastBase = InstanceManager.getDefault(jmri.Timebase)
     fastListener = FastListener()
 
     # Status variables
@@ -788,7 +794,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
 
         # Get consists from JMRI
         # Any consist must be defined before starting AutoDispatcher
-        consistMan = InstanceManager.consistManagerInstance()
+        consistMan = InstanceManager.getDefault(jmri.ConsistManager)
         consists = consistMan.getConsistList()
         # Any consist?
         if len(consists) == 0 :

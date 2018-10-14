@@ -3,6 +3,7 @@ package jmri.jmrix.jinput;
 import java.util.HashMap;
 import javax.swing.tree.DefaultMutableTreeNode;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.Sensor;
 import net.java.games.input.Component;
 import net.java.games.input.Controller;
@@ -16,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Can be connected to a JMRI Sensor or Memory.
  *
- * @author	Bob Jacobsen Copyright 2008
+ * @author Bob Jacobsen Copyright 2008
  */
 public class UsbNode extends DefaultMutableTreeNode {
 
@@ -33,9 +34,6 @@ public class UsbNode extends DefaultMutableTreeNode {
 
     @Override
     public int hashCode() {
-        if (component != null) {
-            return component.hashCode();
-        }
         if (controller == null) {
             return super.hashCode();
         } else {
@@ -53,14 +51,14 @@ public class UsbNode extends DefaultMutableTreeNode {
 
     @Override
     public boolean equals(Object a) {
-        if (a == null) {
-            return false;
+        boolean result = false;
+        if ((a != null) && (a instanceof UsbNode)) {
+            UsbNode usbNode = (UsbNode) a;
+            result = (name.equals(usbNode.name)
+                    && (controller == usbNode.controller)
+                    && (component == usbNode.component));
         }
-        if (!(a instanceof UsbNode)) {
-            return false;
-        }
-        UsbNode opp = (UsbNode) a;
-        return (name.equals(opp.name)) && (controller == opp.controller) && (component == opp.component);
+        return result;
     }
 
     public void setValue(float val) {
@@ -70,9 +68,9 @@ public class UsbNode extends DefaultMutableTreeNode {
             if ((attachedSensor != null) && (!attachedSensor.equals(""))) {
                 InstanceManager.sensorManagerInstance()
                         .provideSensor(attachedSensor).setKnownState(
-                                val > 0.0 ? Sensor.ACTIVE : Sensor.INACTIVE);
+                        val > 0.0 ? Sensor.ACTIVE : Sensor.INACTIVE);
             }
-        } catch (Exception e1) {
+        } catch (IllegalArgumentException | JmriException e1) {
             log.error("Can't set sensor: " + e1);
         }
         try {
@@ -80,7 +78,7 @@ public class UsbNode extends DefaultMutableTreeNode {
                 InstanceManager.memoryManagerInstance()
                         .provideMemory(attachedMemory).setValue("" + val);
             }
-        } catch (Exception e2) {
+        } catch (IllegalArgumentException e2) {
             log.error("Can't set memory: " + e2);
         }
     }
@@ -115,25 +113,26 @@ public class UsbNode extends DefaultMutableTreeNode {
     }
 
     /**
-     * Get a specific node. This is used instead of a ctor to ensure that node
-     * objects for a given USB object are unique.
+     * Get a specific node. This is used instead of a constructor to ensure that
+     * node objects for a given USB object are unique.
+     *
+     * @param name       the node name
+     * @param controller the input controller
+     * @param component  the input component
+     * @return the node, either an existing node with the same controller or
+     *         component, or newly created
      */
     static public UsbNode getNode(String name, Controller controller, Component component) {
-        Object key = controller;
-        if (component != null) {
-            key = component;
+        Object key = (component != null) ? component : controller;
+        UsbNode result = NODES.get(key);
+        if (result == null) {
+            result = new UsbNode(name, controller, component);
+            NODES.put(key, result);
         }
-
-        UsbNode temp = map.get(key);
-        if (temp != null) {
-            return temp;
-        }
-        UsbNode node = new UsbNode(name, controller, component);
-        map.put(key, node);
-        return node;
+        return result;
     }
 
-    static private HashMap<Object, UsbNode> map = new HashMap<Object, UsbNode>();
+    private static final HashMap<Object, UsbNode> NODES = new HashMap<>();
 
-    private final static Logger log = LoggerFactory.getLogger(UsbNode.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(UsbNode.class);
 }

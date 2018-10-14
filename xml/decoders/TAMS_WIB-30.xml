@@ -454,51 +454,51 @@
         <label xml:lang="fr">Simulation néon</label>
         <label xml:lang="de">Leuchtstoffröhrensimulation</label>
       </variable>
-      <variable item="LED 1 nr of inital blinks" CV="126" mask="XXXXVVVV" default="3" tooltip="CV126 Bits 0-3">
+      <variable item="LED 1 nr of initial blinks" CV="126" mask="XXXXVVVV" default="3" tooltip="CV126 Bits 0-3">
         <decVal min="1" max="15"/>
-        <label>LED 1 nr of inital blinks</label>
+        <label>LED 1 nr of initial blinks</label>
         <label xml:lang="fr">Clignotements avt allumage LED 1</label>
         <label xml:lang="de">Anzahl Flackerlichter LED 1</label>
       </variable>
-      <variable item="LED 2 nr of inital blinks" CV="126" mask="VVVVXXXX" default="3" tooltip="CV126 Bits 4-7">
+      <variable item="LED 2 nr of initial blinks" CV="126" mask="VVVVXXXX" default="3" tooltip="CV126 Bits 4-7">
         <decVal min="1" max="15"/>
-        <label>LED 2 nr of inital blinks</label>
+        <label>LED 2 nr of initial blinks</label>
         <label xml:lang="fr">Clignotements avt allumage LED 2</label>
         <label xml:lang="de">Anzahl Flackerlichter LED 2</label>
       </variable>
-      <variable item="LED 3 nr of inital blinks" CV="127" mask="XXXXVVVV" default="3" tooltip="CV127 Bits 0-3">
+      <variable item="LED 3 nr of initial blinks" CV="127" mask="XXXXVVVV" default="3" tooltip="CV127 Bits 0-3">
         <decVal min="1" max="15"/>
-        <label>LED 3 nr of inital blinks</label>
+        <label>LED 3 nr of initial blinks</label>
         <label xml:lang="fr">Clignotements avt allumage LED 3</label>
         <label xml:lang="de">Anzahl Flackerlichter LED 3</label>
       </variable>
-      <variable item="LED 4 nr of inital blinks" CV="127" mask="VVVVXXXX" default="3" tooltip="CV127 Bits 4-7">
+      <variable item="LED 4 nr of initial blinks" CV="127" mask="VVVVXXXX" default="3" tooltip="CV127 Bits 4-7">
         <decVal min="1" max="15"/>
-        <label>LED 4 nr of inital blinks</label>
+        <label>LED 4 nr of initial blinks</label>
         <label xml:lang="fr">Clignotements avt allumage LED 4</label>
         <label xml:lang="de">Anzahl Flackerlichter LED 4</label>
       </variable>
-      <variable item="LED 5 nr of inital blinks" CV="128" mask="XXXXVVVV" default="3" tooltip="CV128 Bits 0-3">
+      <variable item="LED 5 nr of initial blinks" CV="128" mask="XXXXVVVV" default="3" tooltip="CV128 Bits 0-3">
         <decVal min="1" max="15"/>
-        <label>LED 5 nr of inital blinks</label>
+        <label>LED 5 nr of initial blinks</label>
         <label xml:lang="fr">Clignotements avt allumage LED 5</label>
         <label xml:lang="de">Anzahl Flackerlichter LED 5</label>
       </variable>
-      <variable item="LED 6 nr of inital blinks" CV="128" mask="VVVVXXXX" default="3" tooltip="CV128 Bits 4-7">
+      <variable item="LED 6 nr of initial blinks" CV="128" mask="VVVVXXXX" default="3" tooltip="CV128 Bits 4-7">
         <decVal min="1" max="15"/>
-        <label>LED 6 nr of inital blinks</label>
+        <label>LED 6 nr of initial blinks</label>
         <label xml:lang="fr">Clignotements avt allumage LED 6</label>
         <label xml:lang="de">Anzahl Flackerlichter LED 6</label>
       </variable>
-      <variable item="LED 7 nr of inital blinks" CV="129" mask="XXXXVVVV" default="3" tooltip="CV129 Bits 0-3">
+      <variable item="LED 7 nr of initial blinks" CV="129" mask="XXXXVVVV" default="3" tooltip="CV129 Bits 0-3">
         <decVal min="1" max="15"/>
-        <label>LED 7 nr of inital blinks</label>
+        <label>LED 7 nr of initial blinks</label>
         <label xml:lang="fr">Clignotements avt allumage LED 7</label>
         <label xml:lang="de">Anzahl Flackerlichter LED 7</label>
       </variable>
-      <variable item="LED 8 nr of inital blinks" CV="129" mask="VVVVXXXX" default="3" tooltip="CV129 Bits 4-7">
+      <variable item="LED 8 nr of initial blinks" CV="129" mask="VVVVXXXX" default="3" tooltip="CV129 Bits 4-7">
         <decVal min="1" max="15"/>
-        <label>LED 8 nr of inital blinks</label>
+        <label>LED 8 nr of initial blinks</label>
         <label xml:lang="fr">Clignotements avt allumage LED 8</label>
         <label xml:lang="de">Anzahl Flackerlichter LED 8</label>
       </variable>
@@ -1989,60 +1989,60 @@
             <text> </text>
           </label>
           <row>
-            <display item="LED 1 nr of inital blinks"/>
+            <display item="LED 1 nr of initial blinks"/>
             <label>
               <text> </text>
             </label>
-            <display item="LED 1 nr of inital blinks" label="" format="hslider"/>
+            <display item="LED 1 nr of initial blinks" label="" format="hslider"/>
           </row>
           <row>
-            <display item="LED 2 nr of inital blinks"/>
+            <display item="LED 2 nr of initial blinks"/>
             <label>
               <text> </text>
             </label>
-            <display item="LED 2 nr of inital blinks" label="" format="hslider"/>
+            <display item="LED 2 nr of initial blinks" label="" format="hslider"/>
           </row>
           <row>
-            <display item="LED 3 nr of inital blinks"/>
+            <display item="LED 3 nr of initial blinks"/>
             <label>
               <text> </text>
             </label>
-            <display item="LED 3 nr of inital blinks" label="" format="hslider"/>
+            <display item="LED 3 nr of initial blinks" label="" format="hslider"/>
           </row>
           <row>
-            <display item="LED 4 nr of inital blinks"/>
+            <display item="LED 4 nr of initial blinks"/>
             <label>
               <text> </text>
             </label>
-            <display item="LED 4 nr of inital blinks" label="" format="hslider"/>
+            <display item="LED 4 nr of initial blinks" label="" format="hslider"/>
           </row>
           <row>
-            <display item="LED 5 nr of inital blinks"/>
+            <display item="LED 5 nr of initial blinks"/>
             <label>
               <text> </text>
             </label>
-            <display item="LED 5 nr of inital blinks" label="" format="hslider"/>
+            <display item="LED 5 nr of initial blinks" label="" format="hslider"/>
           </row>
           <row>
-            <display item="LED 6 nr of inital blinks"/>
+            <display item="LED 6 nr of initial blinks"/>
             <label>
               <text> </text>
             </label>
-            <display item="LED 6 nr of inital blinks" label="" format="hslider"/>
+            <display item="LED 6 nr of initial blinks" label="" format="hslider"/>
           </row>
           <row>
-            <display item="LED 7 nr of inital blinks"/>
+            <display item="LED 7 nr of initial blinks"/>
             <label>
               <text> </text>
             </label>
-            <display item="LED 7 nr of inital blinks" label="" format="hslider"/>
+            <display item="LED 7 nr of initial blinks" label="" format="hslider"/>
           </row>
           <row>
-            <display item="LED 8 nr of inital blinks"/>
+            <display item="LED 8 nr of initial blinks"/>
             <label>
               <text> </text>
             </label>
-            <display item="LED 8 nr of inital blinks" label="" format="hslider"/>
+            <display item="LED 8 nr of initial blinks" label="" format="hslider"/>
           </row>
         </column>
       </row>

@@ -24,8 +24,8 @@ abstract public class AbstractProgrammerServer implements jmri.ProgListener {
     protected int lastCV = -1;
 
     public AbstractProgrammerServer() {
-        if (InstanceManager.getNullableDefault(jmri.ProgrammerManager.class) != null) {
-            p = InstanceManager.getDefault(jmri.ProgrammerManager.class).getGlobalProgrammer();
+        if (InstanceManager.getNullableDefault(jmri.GlobalProgrammerManager.class) != null) {
+            p = InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).getGlobalProgrammer();
         } else {
             log.warn("no Service Mode ProgrammerManager configured, network programming disabled");
         }
@@ -55,7 +55,7 @@ abstract public class AbstractProgrammerServer implements jmri.ProgListener {
         lastCV = CV;
         try {
             p.setMode(mode); // need to check if mode is available
-            p.writeCV(CV, value, this);
+            p.writeCV(String.valueOf(CV), value, this);
         } catch (jmri.ProgrammerException ex) {
             //Send failure Status.
             try {
@@ -78,7 +78,7 @@ abstract public class AbstractProgrammerServer implements jmri.ProgListener {
         lastCV = CV;
         try {
             p.setMode(mode); // need to check if mode is available
-            p.readCV(CV, this);
+            p.readCV(String.valueOf(CV), this);
         } catch (jmri.ProgrammerException ex) {
             //Send failure Status.
             try {
@@ -97,6 +97,7 @@ abstract public class AbstractProgrammerServer implements jmri.ProgListener {
      *               combination of the various status coded defined in this
      *               interface.
      */
+    @Override
     public void programmingOpReply(int value, int status) {
         if (log.isDebugEnabled()) {
             log.debug("programmingOpReply called with value " + value + " and status " + status);
@@ -114,6 +115,6 @@ abstract public class AbstractProgrammerServer implements jmri.ProgListener {
     public void dispose() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractProgrammerServer.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractProgrammerServer.class);
 
 }

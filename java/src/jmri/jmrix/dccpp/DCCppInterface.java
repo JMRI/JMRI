@@ -1,4 +1,3 @@
-// DCCppInterface
 package jmri.jmrix.dccpp;
 
 /**
@@ -22,8 +21,8 @@ package jmri.jmrix.dccpp;
  * that messages will be returned in any particular thread. See the DCCppListener
  * doc for more background.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
- * @author	Mark Underwood Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Mark Underwood Copyright (C) 2015
  * @see jmri.jmrix.dccpp.DCCppListener
  * @see jmri.jmrix.dccpp.DCCppTrafficController
  *
@@ -125,4 +124,4 @@ public interface DCCppInterface {
 }
 
 
-/* @(#)DCCppInterface.java */
+

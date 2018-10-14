@@ -36,8 +36,8 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Sensor groups are implemented by (groups) of Routes, not by any other object.
  *
- * @author	Bob Jacobsen Copyright (C) 2007
- * @author	Pete Cressman Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2007
+ * @author Pete Cressman Copyright (C) 2009
  */
 public class SensorGroupFrame extends jmri.util.JmriJFrame {
 
@@ -58,6 +58,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
     JTextField _nameField;
     JList<String> _sensorGroupList;
 
+    @Override
     public void initComponents() {
         addHelpMenu("package.jmri.jmrit.sensorgroup.SensorGroupFrame", true);
 
@@ -76,14 +77,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         p2xs.add(p21s);
         _sensorModel = new SensorTableModel();
         JTable sensorTable = new JTable(_sensorModel);
-        /*
-         JTable sensorTable = jmri.util.JTableUtil.sortableDataModel(sensorModel);
-         try {
-         jmri.util.com.sun.TableSorter tmodel = ((jmri.util.com.sun.TableSorter)sensorTable.getModel());
-         tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-         tmodel.setSortingStatus(SensorTableModel.SNAME_COLUMN, jmri.util.com.sun.TableSorter.ASCENDING);
-         } catch (ClassCastException e3) {}  // if not a sortable table model
-         */
+
         sensorTable.setRowSelectionAllowed(false);
         sensorTable.setPreferredScrollableViewportSize(new java.awt.Dimension(450, 200));
         TableColumnModel sensorColumnModel = sensorTable.getColumnModel();
@@ -120,6 +114,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         JPanel p4 = new JPanel();
         JButton viewButton = new JButton(" View ");
         viewButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 viewPressed();
             }
@@ -127,6 +122,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         p4.add(viewButton);
         JButton addButton = new JButton("Make Group");
         addButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 addPressed();
             }
@@ -134,6 +130,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         p4.add(addButton);
         JButton undoButton = new JButton("Undo Group");
         undoButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 undoGroupPressed();
             }
@@ -184,6 +181,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         p5.add(Box.createHorizontalStrut(10));
         JButton doneButton = new JButton(" Done ");
         doneButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 donePressed(e);
             }
@@ -209,13 +207,16 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         String cSystemName = ConditionalSystemPrefix + group.toUpperCase();
         String cUserName = ConditionalUserPrefix + group;
         // add new Conditional
-        ArrayList<ConditionalVariable> variableList = new ArrayList<ConditionalVariable>();
-        ArrayList<ConditionalAction> actionList = new ArrayList<ConditionalAction>();
+        ArrayList<ConditionalVariable> variableList = new ArrayList<>();
+        ArrayList<ConditionalAction> actionList = new ArrayList<>();
         int count = 0;
         for (int i = 0; i < _sensorModel.getRowCount(); i++) {
             if ((Boolean) _sensorModel.getValueAt(i, BeanTableModel.INCLUDE_COLUMN)) {
-                String sensor = (String) _sensorModel.getValueAt(i, BeanTableModel.SNAME_COLUMN);
-                variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_OR,
+                String sensor = (String) _sensorModel.getValueAt(i, BeanTableModel.UNAME_COLUMN);
+                if (sensor == null || sensor.length() == 0) {
+                    sensor = (String) _sensorModel.getValueAt(i, BeanTableModel.SNAME_COLUMN);
+                }
+                variableList.add(new ConditionalVariable(false, Conditional.Operator.OR,
                         Conditional.TYPE_SENSOR_ACTIVE, sensor, true));
                 actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
                         Conditional.ACTION_SET_SENSOR, sensor,
@@ -229,11 +230,11 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                     "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
         Conditional c = new SensorGroupConditional(cSystemName, cUserName);
-        InstanceManager.getDefault(jmri.ConditionalManager.class).register(c);
         c.setStateVariables(variableList);
         c.setLogicType(Conditional.ALL_OR, "");
         c.setAction(actionList);
-        logix.addConditional(cSystemName, 0);
+        logix.addConditional(cSystemName, 0);       // Update the Logix Conditional names list
+        logix.addConditional(cSystemName, c);       // Update the Logix Conditional hash map
         logix.setEnabled(true);
         logix.activateLogix();
         ((DefaultListModel<String>) _sensorGroupList.getModel()).addElement(
@@ -271,6 +272,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                 }
             }
         }
+
         // look for  Sensor group in SYSTEM Logix
         if (!isRoute) {
             Logix logix = getSystemLogix();
@@ -283,13 +285,16 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                     if (c == null) {
                         log.error("Conditional \"" + name + "\" expected but NOT found in Logix " + logix.getSystemName());
                     } else {
-                        ArrayList<ConditionalVariable> variableList = c.getCopyOfStateVariables();
+                        List<ConditionalVariable> variableList = c.getCopyOfStateVariables();
                         for (int k = 0; k < variableList.size(); k++) {
                             String sensor = variableList.get(k).getName();
-                            for (int j = _sensorModel.getRowCount() - 1; j >= 0; j--) {
-                                if (_sensorModel.getValueAt(j, BeanTableModel.SNAME_COLUMN).equals(sensor)) {
-                                    _sensorModel.setValueAt(Boolean.TRUE, j, BeanTableModel.INCLUDE_COLUMN);
-                                    setRow = j;
+                            if (sensor != null) {
+                                for (int j = _sensorModel.getRowCount() - 1; j >= 0; j--) {
+                                    if (sensor.equals(_sensorModel.getValueAt(j, BeanTableModel.UNAME_COLUMN))
+                                            || sensor.equals(_sensorModel.getValueAt(j, BeanTableModel.SNAME_COLUMN))) {
+                                        _sensorModel.setValueAt(Boolean.TRUE, j, BeanTableModel.INCLUDE_COLUMN);
+                                        setRow = j;
+                                    }
                                 }
                             }
                         }
@@ -329,6 +334,15 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
 
     void deleteGroup(boolean showMsg) {
         String group = _nameField.getText();
+
+        if (group == null || group.equals("")) {
+            if (showMsg) {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "'View' the group or enter the group name in the 'Group Name' field before selecting 'Undo Group'",
+                        "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+            return;
+        }
         String prefix = (namePrefix + group + nameDivider).toUpperCase();
 
         // remove the old routes
@@ -388,5 +402,5 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         clear();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SensorGroupFrame.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(SensorGroupFrame.class);
 }

@@ -40,35 +40,53 @@
       <authorinitials>EF</authorinitials>
       <revremark>Italian translation 2014</revremark>
     </revision>
+    <revision>
+      <revnumber>3</revnumber>
+      <date>2017-08-16</date>
+      <authorinitials>RK</authorinitials>
+      <revremark>German translation</revremark>
+    </revision>
   </revhistory>
   <variable item="Analog Mode Function Status - FL(f)" CV="14" mask="XXXXXXXV" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Analog Mode Function Status - FL(f)</label>
     <label xml:lang="it">Stato Funzioni in analogico - Luci in avanti</label>
+    <label xml:lang="de">Funktionsstatus im Analogbetrieb - FL(f)</label>
+    <label xml:lang="ca">Estat de les funcions en analògic - FL(f)</label>
   </variable>
   <variable item="Analog Mode Function Status - FL(r)" CV="14" mask="XXXXXXVX" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Analog Mode Function Status - FL(r)</label>
     <label xml:lang="it">Stato Funzioni in analogico - Luci in retro</label>
+    <label xml:lang="de">Funktionsstatus im Analogbetrieb - FL(r)</label>
+    <label xml:lang="ca">Estat de les funcions en analògic - FL(r)</label>
   </variable>
   <variable item="Analog Mode Function Status - F9" CV="14" mask="XXXXXVXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Analog Mode Function Status - F9</label>
     <label xml:lang="it">Stato Funzioni in analogico - F9</label>
+    <label xml:lang="de">Funktionsstatus im Analogbetrieb - F9</label>
+    <label xml:lang="ca">Estat de les funcions en analògic - F9</label>
   </variable>
   <variable item="Analog Mode Function Status - F10" CV="14" mask="XXXXVXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Analog Mode Function Status - F10</label>
     <label xml:lang="it">Stato Funzioni in analogico - F10</label>
+    <label xml:lang="de">Funktionsstatus im Analogbetrieb - F10</label>
+    <label xml:lang="ca">Estat de les funcions en analògic - F10</label>
   </variable>
   <variable item="Analog Mode Function Status - F11" CV="14" mask="XXXVXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Analog Mode Function Status - F11</label>
     <label xml:lang="it">Stato Funzioni in analogico - F11</label>
+    <label xml:lang="de">Funktionsstatus im Analogbetrieb - F11</label>
+    <label xml:lang="ca">Estat de les funcions en analògic - F11</label>
   </variable>
   <variable item="Analog Mode Function Status - F12" CV="14" mask="XXVXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Analog Mode Function Status - F12</label>
     <label xml:lang="it">Stato Funzioni in analogico - F12</label>
+    <label xml:lang="de">Funktionsstatus im Analogbetrieb - F12</label>
+    <label xml:lang="ca">Estat de les funcions en analògic - f12</label>
   </variable>
 </variables>
