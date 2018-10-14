@@ -102,22 +102,7 @@
       <!-- Include function mapping -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/functionmap7outputs.xml"/>
       <!-- End function mapping -->
-      <variable item="Forward Trim" CV="47" default="32">
-        <decVal max="63"/>
-        <label>Speed Correction Forward</label>
-        <label xml:lang="de">Geschw.-korrektur vorwärts</label>
-        <label xml:lang="nl">Snelheidscorr. vooruit</label>
-        <tooltip>Factor = Value/128</tooltip>
-      </variable>
-      <variable item="Reverse Trim" CV="48" default="32">
-        <decVal max="63"/>
-        <label>Speed Correction Reverse</label>
-        <label xml:lang="de">Geschw.-korrektur rückwärts</label>
-        <label xml:lang="nl">Snelheidscorr. achteruit</label>
-        <tooltip>Factor = Value/128</tooltip>
-        <tooltip xml:lang="de">Factor = Wert/128</tooltip>
-        <tooltip xml:lang="nl">Factor = Waarde/128</tooltip>
-      </variable>	  
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv47.48trim.xml"/>
       <!-- CV49 Uhlenbrock decoder configuration - common bits -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv49common.xml"/>
       <!-- CV49 bits 3-4 moved to CV12 in this decoder 			-->
@@ -326,80 +311,8 @@
         <label xml:lang="de">Dimmung - A7</label>
         <tooltip>min=0 (off), max=32 (100%)</tooltip>
       </variable>
-      <variable item="Coupling option 1" CV="124" default="0">
-        <decVal/>
-        <label>Coupling repeats A1/A2</label>
-        <label xml:lang="de">Kupplungswiederholungen A1/A2</label>
-        <tooltip>for electric couplings (0=no coupling)</tooltip>
-        <tooltip xml:lang="de">für elektrische Kupplungen (0=keine Kupplung)</tooltip>
-      </variable>
-      <variable item="Coupling option 2" CV="125" default="255">
-        <decVal/>
-        <label>On PWM A1/A2</label>
-        <label xml:lang="de">Einschalt-PWM A1/A2</label>
-        <tooltip>for electric couplings</tooltip>
-        <tooltip xml:lang="de">für elektrische Kupplungen</tooltip>
-      </variable>
-      <variable item="Coupling option 3" CV="126" default="64">
-        <decVal/>
-        <label>Hold PWM A1/A2</label>
-        <label xml:lang="de">Halte-PWM A1/A2</label>
-        <tooltip>for electric couplings</tooltip>
-        <tooltip xml:lang="de">für elektrische Kupplungen</tooltip>
-      </variable>
-      <variable item="Coupling option 4" CV="127" default="5">
-        <decVal/>
-        <label>On time - coupling</label>
-        <label xml:lang="de">Einschaltzeit - Kupplung</label>
-        <tooltip>value * 50ms</tooltip>
-        <tooltip xml:lang="de">Wert * 50ms</tooltip>
-      </variable>
-      <variable item="Coupling option 5" CV="128" default="20">
-        <decVal/>
-        <label>Hold time - coupling</label>
-        <label xml:lang="de">Haltezeit - Kupplung</label>
-        <tooltip>value * 100ms</tooltip>
-        <tooltip xml:lang="de">Wert * 100ms</tooltip>
-      </variable>
-      <variable item="Coupling option 6" CV="129" default="20">
-        <decVal/>
-        <label>Pause time - coupling</label>
-        <label xml:lang="de">Pausenzeit - Kupplung</label>
-        <tooltip>value * 100ms</tooltip>
-        <tooltip xml:lang="de">Wert * 100ms</tooltip>
-      </variable>
-      <variable item="Smoke generator option 1" CV="130" mask="VXXXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>	  
-        <label>Smoke generator operation - A1</label>
-        <label xml:lang="de">Rauchgeneratorbetrieb - A1</label>
-      </variable>
-      <variable item="Smoke generator option 2" CV="130" mask="XVXXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>	  
-        <label>Smoke generator operation - A2</label>
-        <label xml:lang="de">Rauchgeneratorbetrieb - A2</label>
-      </variable>
-      <variable item="Smoke generator option 3" CV="130" mask="XXVVVVVV" default="0">
-        <decVal max="63"/>
-        <label>Smoke gen. accel. time</label>
-        <label xml:lang="de">Rauchgen. Anfahrzeit</label>
-        <tooltip>value * 0.2s</tooltip>
-        <tooltip xml:lang="de">Wert * 0.2s</tooltip>
-      </variable>
-      <variable item="Smoke generator option 4" CV="131" default="31">
-        <decVal max="32"/>
-        <label>Smoke gen. control PWM - Start</label>
-        <label xml:lang="de">Rauchgen. PWM-Anfahren</label>
-      </variable>
-      <variable item="Smoke generator option 5" CV="132" default="16">
-        <decVal max="32"/>
-        <label>Smoke gen. control PWM - Normal</label>
-        <label xml:lang="de">Rauchgen. PWM-Normalbetrieb</label>
-      </variable>
-      <variable item="Smoke generator option 6" CV="133" default="8">
-        <decVal max="32"/>
-        <label>Smoke gen. control PWM - Idle</label>
-        <label xml:lang="de">Rauchgen. PWM-Leerlauf</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv124.129coupling.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv130.134smoke.xml"/>
     </variables>
     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset.xml"/>
   </decoder>

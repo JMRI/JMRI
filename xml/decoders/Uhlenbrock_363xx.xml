@@ -160,25 +160,7 @@
       <!-- Include function mapping -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/functionmap7outputs.xml"/>
       <!-- End function mapping -->
-
-      <variable item="Forward Trim" CV="47" default="32">
-        <decVal max="63"/>
-        <label>Speed Correction Forward</label>
-        <label xml:lang="de">Geschw.-korrektur vorwärts</label>
-        <label xml:lang="nl">Snelheidscorr. vooruit</label>
-        <tooltip>Factor = Value/128</tooltip>
-        <tooltip xml:lang="de">Faktor = Wert/128</tooltip>
-        <tooltip xml:lang="nl">Factor = Waarde/128</tooltip>
-      </variable>
-      <variable item="Reverse Trim" CV="48" default="32">
-        <decVal max="63"/>
-        <label>Speed Correction Reverse</label>
-        <label xml:lang="de">Geschw.-korrektur rückwärts</label>
-        <label xml:lang="nl">Snelheidscorr. achteruit</label>
-        <tooltip>Factor = Value/128</tooltip>
-        <tooltip xml:lang="de">Faktor = Wert/128</tooltip>
-        <tooltip xml:lang="nl">Factor = Waarde/128</tooltip>
-      </variable>	  
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv47.48trim.xml"/>
       <!-- CV49 Uhlenbrock decoder configuration - common bits -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv49common.xml"/>
       <!-- CV49 bits 3-4 moved to CV12 in this decoder 			-->
@@ -430,139 +412,8 @@
         <label xml:lang="nl">Dimmen - A7</label>
         <tooltip>min=0 (off), max=32 (100%)</tooltip>
       </variable>
-      <variable item="Coupling option 1" CV="124" default="0">
-        <decVal/>
-        <label>Coupling repeats A1/A2</label>
-        <label xml:lang="de">Kupplungswiederholungen A1/A2</label>
-        <label xml:lang="nl">Koppelingsherhaling A1/A2</label>
-        <tooltip>for electric couplings (0=no coupling)</tooltip>
-        <tooltip xml:lang="de">für elektrische Kupplungen (0=keine Kupplung)</tooltip>
-        <tooltip xml:lang="nl">voor electrische koppelingen (0=geen koppeling)</tooltip>
-      </variable>
-      <variable item="Coupling option 2" CV="125" default="255">
-        <decVal/>
-        <label>On PWM A1/A2</label>
-        <label xml:lang="de">Einschalt-PWM A1/A2</label>
-        <label xml:lang="nl">Inschakel-PWM A1/A2</label>
-        <tooltip>for electric couplings</tooltip>
-        <tooltip xml:lang="de">für elektrische Kupplungen</tooltip>
-        <tooltip xml:lang="nl">voor electrische koppelingen</tooltip>
-      </variable>
-      <variable item="Coupling option 3" CV="126" default="64">
-        <decVal/>
-        <label>Hold PWM A1/A2</label>
-        <label xml:lang="de">Halte-PWM A1/A2</label>
-        <label xml:lang="nl">Vasthoud-PWM A1/A2</label>
-        <tooltip>for electric couplings</tooltip>
-        <tooltip xml:lang="de">für elektrische Kupplungen</tooltip>
-        <tooltip xml:lang="nl">voor electrische koppelingen</tooltip>
-      </variable>
-      <variable item="Coupling option 4" CV="127" default="5">
-        <decVal/>
-        <label>On time - coupling</label>
-        <label xml:lang="de">Einschaltzeit - Kupplung</label>
-        <label xml:lang="nl">Koppeling - Inschakeltijd</label>
-        <tooltip>value * 50ms</tooltip>
-        <tooltip xml:lang="de">Wert * 50ms</tooltip>
-        <tooltip xml:lang="nl">Waarde * 50ms</tooltip>
-      </variable>
-      <variable item="Coupling option 5" CV="128" default="20">
-        <decVal/>
-        <label>Hold time - coupling</label>
-        <label xml:lang="de">Haltezeit - Kupplung</label>
-        <label xml:lang="nl">Koppeling - Vasthoudtijd</label>
-        <tooltip>value * 100ms</tooltip>
-        <tooltip xml:lang="de">Wert * 100ms</tooltip>
-        <tooltip xml:lang="nl">Waarde * 100ms</tooltip>
-      </variable>
-      <variable item="Coupling option 6" CV="129" default="20">
-        <decVal/>
-        <label>Pause time - coupling</label>
-        <label xml:lang="de">Pausenzeit - Kupplung</label>
-        <label xml:lang="nl">Koppeling - Pauzeduur</label>
-        <tooltip>value * 100ms</tooltip>
-        <tooltip xml:lang="de">Wert * 100ms</tooltip>
-        <tooltip xml:lang="nl">Waarde * 100ms</tooltip>
-      </variable>
-      <variable item="Smoke generator option 1" CV="130" mask="VXXXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>	  
-        <label>Smoke generator operation - A1</label>
-        <label xml:lang="de">Rauchgeneratorbetrieb - A1</label>
-        <label xml:lang="nl">Rookgenerator - A1</label>
-      </variable>
-      <variable item="Smoke generator option 2" CV="130" mask="XVXXXXXX" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>	  
-        <label>Smoke generator operation - A2</label>
-        <label xml:lang="de">Rauchgeneratorbetrieb - A2</label>
-        <label xml:lang="nl">Rookgenerator - A2</label>
-      </variable>
-      <variable item="Smoke generator option 3" CV="130" mask="XXVVVVVV" default="0">
-        <decVal max="63"/>
-        <label>Smoke gen. duration</label>
-        <label xml:lang="de">Rauchzeit (T2)</label>
-        <label xml:lang="nl">Rookduur (T2)</label>
-        <tooltip>Value * 0.2s + Start delay (T1)</tooltip>
-        <tooltip xml:lang="de">Wert * 0.2s + Anfahrwartezeit (T1)</tooltip>
-        <tooltip xml:lang="nl">Waarde * 0.2s + Wegrijvertraging (T1)</tooltip>
-      </variable>
-      <!-- specific 363x values for CV 131 PWM-Anfahren -->
-      <variable item="Smoke generator option 4" CV="131" mask="XXXVVVVV" default="31">
-        <decVal max="31"/>
-        <label>Smoke gen. control PWM - Start</label>
-        <label xml:lang="de">Rauchgen. PWM - Anfahren</label>
-        <label xml:lang="nl">Rookgen. PWM - Wegrijden</label>
-      </variable>
-      <variable item="Smoke generator option 7" CV="131" mask="VVVXXXXX" default="4">
-        <enumVal>
-          <enumChoice choice="0s">
-            <choice>0 sec.</choice>
-            <choice xml:lang="de">0 Sek.</choice>
-          </enumChoice>
-          <enumChoice choice="1s">
-            <choice>1 sec.</choice>
-            <choice xml:lang="de">1 Sek.</choice>
-          </enumChoice>
-          <enumChoice choice="2s">
-            <choice>2 sec.</choice>
-            <choice xml:lang="de">2 Sek.</choice>
-          </enumChoice>
-          <enumChoice choice="3s" value="3">
-            <choice>3 sec.</choice>
-            <choice xml:lang="de">3 Sek.</choice>
-          </enumChoice>
-          <enumChoice choice="4s">
-            <choice>4 sec.</choice>
-            <choice xml:lang="de">4 Sek.</choice>
-          </enumChoice>
-          <enumChoice choice="5s">
-            <choice>5 sec.</choice>
-            <choice xml:lang="de">5 Sek.</choice>
-          </enumChoice>
-          <enumChoice choice="6s">
-            <choice>6 sec.</choice>
-            <choice xml:lang="de">6 Sek.</choice>
-          </enumChoice>
-          <enumChoice choice="7s">
-            <choice>7 sec.</choice>
-            <choice xml:lang="de">7 Sek.</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Smoke generator - Start delay (T1)</label>
-        <label xml:lang="de">Rauchgen. - Anfahrwartezeit (T1)</label>
-        <label xml:lang="nl">Rookgen. - Startvertraging (T1)</label>
-      </variable>
-      <variable item="Smoke generator option 5" CV="132" default="16">
-        <decVal max="32"/>
-        <label>Smoke gen. control PWM - Normal</label>
-        <label xml:lang="de">Rauchgen. PWM - Normalbetrieb</label>
-        <label xml:lang="nl">Rookgen. PWM - Normaalbedrijf</label>
-      </variable>
-      <variable item="Smoke generator option 6" CV="133" default="8">
-        <decVal max="32"/>
-        <label>Smoke gen. control PWM - Idle</label>
-        <label xml:lang="de">Rauchgen. PWM - Leerlauf</label>
-        <label xml:lang="nl">Rookgen. PWM - Vrijloop</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv124.129coupling.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv130.134smoke.xml"/>
       <!-- integrate IntelliSound3 variables in decoder -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/soundVars7outputs.xml"/>
     </variables>
