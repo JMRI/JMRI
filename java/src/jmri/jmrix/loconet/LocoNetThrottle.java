@@ -364,7 +364,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         }
 
         // reset timeout
-        if (mRefreshTimer != null) { // got NullPointerException sometimes
+        if (mRefreshTimer != null) {
             mRefreshTimer.stop();
             mRefreshTimer.setRepeats(true);     // refresh until stopped by dispose
             mRefreshTimer.start();
