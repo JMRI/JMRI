@@ -63,8 +63,7 @@ public class TrainManifest extends TrainCommon {
                     new Object[]{getDate(true)});
 
             if (Setup.isPrintTimetableNameEnabled()) {
-                TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(
-                        InstanceManager.getDefault(TrainManager.class).getTrainScheduleActiveId());
+                TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getActiveSchedule();
                 if (sch != null) {
                     valid = valid + " (" + sch.getName() + ")";
                 }

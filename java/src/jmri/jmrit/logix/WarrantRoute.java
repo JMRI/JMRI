@@ -145,13 +145,12 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         _calculateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                clearTempWarrant();
                 calculate();
             }
         });
         JPanel p = new JPanel();
-//        p.add(Box.createHorizontalGlue());
         p.add(makeTextBoxPanel(vertical, _calculateButton, "CalculateRoute", null));
-//        p.add(Box.createHorizontalGlue());
         return p;
     }
     public JPanel makePickListPanel() {
@@ -850,14 +849,15 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     protected void clearTempWarrant() {
         if (_tempWarrant != null) {
             _tempWarrant.deAllocate();
-            _tempWarrant = null;
         }
     }
 
     private void showTempWarrant(ArrayList<BlockOrder> orders) {
         String s = ("" + Math.random()).substring(4);
-        _tempWarrant = new Warrant("IW" + s + "TEMP", null);
-        _tempWarrant.setBlockOrders(orders);
+        if (_tempWarrant == null) {
+            _tempWarrant = new Warrant("IW" + s + "TEMP", null);
+            _tempWarrant.setBlockOrders(orders);
+        }
         String msg = _tempWarrant.setRoute(0, orders);
         if (msg != null) {
             JOptionPane.showMessageDialog(null, msg,
@@ -873,11 +873,12 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
      * @param routeTree the routes
      */
     protected void pickRoute(List<DefaultMutableTreeNode> destNodes, DefaultTreeModel routeTree) {
-/*        if (destNodes.size() == 1) {      // for Leo
+        if (destNodes.size() == 1) {
             showRoute(destNodes.get(0), routeTree);
             selectedRoute(_orders);
+            showTempWarrant(_orders);
             return;
-        }*/
+        }
         _pickRouteDialog = new JDialog(this, Bundle.getMessage("DialogTitle"), false);
         _pickRouteDialog.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -927,6 +928,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                     int i = Integer.parseInt(buttons.getSelection().getActionCommand());
                     showRoute(dNodes.get(i), tree);
                     selectedRoute(_orders);
+                    showTempWarrant(_orders);
                     dialog.dispose();
                 } else {
                     showWarning(Bundle.getMessage("SelectRoute"));

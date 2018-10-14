@@ -61,7 +61,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     JRadioButton sortByColor = new JRadioButton(Bundle.getMessage("Color"));
     JRadioButton sortByLoad = new JRadioButton(Bundle.getMessage("Load"));
     JRadioButton sortByKernel = new JRadioButton(Bundle.getMessage("Kernel"));
-    public JRadioButton sortByLocation = new JRadioButton(Bundle.getMessage("Location"));
+    JRadioButton sortByLocation = new JRadioButton(Bundle.getMessage("Location"));
     JRadioButton sortByDestination = new JRadioButton(Bundle.getMessage("Destination"));
     JRadioButton sortByFinalDestination = new JRadioButton(Bundle.getMessage("FD"));
     JRadioButton sortByRwe = new JRadioButton(Bundle.getMessage("RWE"));

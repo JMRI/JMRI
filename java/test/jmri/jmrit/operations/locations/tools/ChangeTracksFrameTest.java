@@ -1,8 +1,14 @@
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationEditFrame;
+import jmri.jmrit.operations.locations.LocationManager;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -13,28 +19,61 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class ChangeTracksFrameTest {
+public class ChangeTracksFrameTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LocationEditFrame f = new LocationEditFrame(null);
+        
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+        Location loc = lmanager.getLocationByName("North Industries");
+        Assert.assertNotNull("exists", loc);
+        
+        LocationEditFrame f = new LocationEditFrame(loc);
         ChangeTracksFrame t = new ChangeTracksFrame(f);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
         JUnitUtil.dispose(f);
     }
+    
+    @Test
+    public void testFrameButtons() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+        Location loc = lmanager.getLocationByName("North Industries");
+        Assert.assertNotNull("exists", loc);
+
+        LocationEditFrame lef = new LocationEditFrame(loc);
+        ChangeTracksFrame ctf = new ChangeTracksFrame(lef);
+        Assert.assertNotNull("exists", ctf);
+               
+        // confirm default
+        Assert.assertTrue(loc.hasYards());
+        
+        JemmyUtil.enterClickAndLeave(ctf.spurRadioButton);
+        JemmyUtil.enterClickAndLeave(ctf.saveButton);
+        
+        // confirm change
+        Assert.assertFalse(loc.hasYards());
+        
+        JUnitUtil.dispose(ctf);
+        JUnitUtil.dispose(lef);
     }
 
+    // The minimal setup for log4J
+    @Override
+    @Before
+    public void setUp() {
+        super.setUp();
+
+        JUnitOperationsUtil.initOperationsData();
+    }
+
+    @Override
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ChangeTracksFrameTest.class);

@@ -19,11 +19,20 @@ import org.junit.Test;
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
-public class ConnectionConfigXmlTest {
+public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
 
-    @Test
-    public void testCtor(){
-      Assert.assertNotNull("ConnectionConfigXml constructor",new ConnectionConfigXml());
+    // The minimal setup for log4J
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        xmlAdapter = new ConnectionConfigXml();
+    }
+
+    @After
+    public void tearDown() {
+        JUnitUtil.tearDown();
+        xmlAdapter = null;
     }
 
     @Test
@@ -49,19 +58,5 @@ public class ConnectionConfigXmlTest {
       c.getInstance(cc);
       Assert.assertNotNull("ConnectionConfigXml store()",c.store(cc));
     }
-
-
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
-    }
-
 }
 

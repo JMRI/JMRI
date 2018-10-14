@@ -23,7 +23,7 @@ public class ApplyTimetableAction extends Action {
     @Override
     public void doAction() {
         if (getAutomationItem() != null) {
-            TrainSchedule ts = InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(InstanceManager.getDefault(TrainManager.class).getTrainScheduleActiveId());
+            TrainSchedule ts = InstanceManager.getDefault(TrainScheduleManager.class).getActiveSchedule();
             if (ts != null) {
                 for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
                     train.setBuildEnabled(ts.containsTrainId(train.getId()));
