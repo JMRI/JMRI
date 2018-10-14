@@ -276,13 +276,8 @@
         <label xml:lang="de">Blinkgenerator Einschaltzeit</label>
         <tooltip>in 100 ms steps</tooltip>
         <tooltip xml:lang="de">in 100ms Schritten</tooltip>		
-      </variable>	
-      <variable item="LISSY Train Category" CV="115" default="1">
-        <decVal max="4"/>
-        <label>LISSY Train Category</label>
-        <label xml:lang="de">LISSY Zugkategorie</label>
-        <tooltip>Value 1 - 4</tooltip>        
       </variable>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv57lissy.xml"/>
       <variable item="Function F0F option 1" CV="116" default="32">
         <decVal min="0" max="32"/>
         <label>Dimming - Lights</label>
