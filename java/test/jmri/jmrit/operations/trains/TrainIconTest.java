@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -25,6 +26,7 @@ public class TrainIconTest {
 
     // test TrainIcon attributes
     @Test
+    @Ignore("Initializing PanelEditor takes many seconds, test coverage not worth the wait")
     public void testTrainIconAttributes() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Train train1 = new Train("TESTTRAINID", "TESTNAME");
@@ -35,9 +37,10 @@ public class TrainIconTest {
         trainicon1.setTrain(train1);
         Assert.assertEquals("TrainIcon set train", "TESTNAME", trainicon1.getTrain().getName());
         editor.getTargetFrame().dispose();
-    }
+    } 
 
     @Test
+    @Ignore("Initializing PanelEditor takes many seconds, test coverage not worth the wait")
     public void testTrainIconColorChangeAttributes() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Train train1 = new Train("TESTTRAINID", "TESTNAME");
