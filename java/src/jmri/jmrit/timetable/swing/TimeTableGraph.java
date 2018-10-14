@@ -245,7 +245,6 @@ public class TimeTableGraph extends JPanel {
             _trainLine = new Path2D.Double();
 
             boolean activeSeg = false;
-            boolean prevSeg = false;
 
             _stops = _dataMgr.getStops(train.getTrainId(), 0, true);
             _stopCnt = _stops.size();
@@ -302,7 +301,6 @@ public class TimeTableGraph extends JPanel {
             x = x - textRect.getWidth();
         }
 
-        int vOffset = 0;
         if (invert) {
             y = y + ((_direction.equals("down") || throttle) ? 13 : -7);
         } else {
@@ -493,7 +491,6 @@ public class TimeTableGraph extends JPanel {
         // Handle segment change...
         // Get the name of the previous station
         String prevName = prevStation.getStationName();
-        double segmentDistance = 0;
 
         // Find the corresponding station in the current Segment
         for (Station segStation : _stations) {

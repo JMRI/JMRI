@@ -1,5 +1,6 @@
 package jmri.jmrit.timetable.swing;
 
+import java.awt.GraphicsEnvironment;
 import org.junit.*;
 
 /**
@@ -10,6 +11,7 @@ public class TimeTableGraphTest {
 
     @Test
     public void testCreate() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         new TimeTableGraph();
     }
 
