@@ -32,7 +32,7 @@ public class Schedule {
         return _scheduleId;
     }
 
-    public int getLayoutId() {;
+    public int getLayoutId() {
         return _layoutId;
     }
 
