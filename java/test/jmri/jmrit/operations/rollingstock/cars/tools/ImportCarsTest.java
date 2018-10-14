@@ -74,6 +74,10 @@ public class ImportCarsTest extends OperationsTestCase {
         mb.setName("Test Import Cars"); // NOI18N
         mb.start();
         
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return mb.getState().equals(Thread.State.WAITING);
+        }, "wait for file chooser");
+        
         // opens file chooser path "operations" "JUnitTest"
         JFileChooserOperator fco = new JFileChooserOperator();
         String[] path = OperationsXml.getOperationsDirectoryName().split(Pattern.quote(File.separator));  
@@ -84,8 +88,12 @@ public class ImportCarsTest extends OperationsTestCase {
         // import complete 
         JemmyUtil.pressDialogButton(Bundle.getMessage("SuccessfulImport"), "OK");
         
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return mb.getState().equals(Thread.State.TERMINATED);
+        }, "wait for import complete");
+        
         // confirm import successful
-        Assert.assertEquals("cars", 9, emanager.getNumEntries());    
+        Assert.assertEquals("cars", 9, emanager.getNumEntries());
     }
 
 
