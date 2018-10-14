@@ -61,21 +61,7 @@
         <label xml:lang="fr">ID constructeur: </label>
         <label xml:lang="de">Hersteller ID: </label>
       </variable>
-      <variable item="Analog Mode Function Status - FL" CV="13" default="1" mask="XXXXXXXV">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Function in Analog - Lights</label>
-        <label xml:lang="de">Funktion im Analogbetrieb - Licht</label>
-      </variable>
-      <variable item="Analog Mode Function Status - F1" CV="13" default="0" mask="XXXXXXVX" minOut="3">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Function in Analog - A1</label>
-        <label xml:lang="de">Funktion im Analogbetrieb - A1</label>
-      </variable>
-      <variable item="Analog Mode Function Status - F2" CV="13" default="0" mask="XXXXXVXX" minOut="4">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Function in Analog - A2</label>
-        <label xml:lang="de">Funktion im Analogbetrieb - A2</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv13analogfunction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
