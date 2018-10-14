@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.trains.tools;
 
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -9,6 +10,7 @@ import jmri.util.JUnitOperationsUtil;
 import jmri.util.JmriJFrame;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,6 +29,8 @@ public class ShowCarsInTrainActionTest extends OperationsTestCase {
 
     @Test
     public void performAction() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
         JUnitOperationsUtil.initOperationsData();
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         Train train1 = tmanager.getTrainById("1");
