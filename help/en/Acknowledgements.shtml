@@ -679,6 +679,11 @@
         <li>Peter MacKenzie, who added definitions for the Hattons
         MD4 and Gaugemaster Opti DCC25 decoders.</li>
 
+        <li>Konrad Malkowski, <!-- DrCodeWizzard -->
+        who created and contributed the 
+        <a href="http://jmri.org/resources/icons/functionicons">function label icon sets</a>.
+        </li>
+
         <li>Peter Mansvelder, who contributed Fleischmann decoder
         definitions</li>
 
