@@ -2255,7 +2255,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         c7.setPickupScheduleId(schedules.get(1).getId());
         c8.setPickupScheduleId(schedules.get(1).getId());
 
-        Assert.assertEquals("Active schedule", "", tmanager.getTrainScheduleActiveId());
+        Assert.assertEquals("Active schedule", "", trainScheduleManager.getTrainScheduleActiveId());
 
         // define the train
         Train train1 = tmanager.newTrain("TestCarScheduledPickup1");
@@ -2281,8 +2281,8 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // now set the day to Monday
         Assert.assertEquals("Train schedule day", "Monday", schedules.get(1).getName());
-        tmanager.setTrainSecheduleActiveId(schedules.get(1).getId());
-        Assert.assertEquals("Active schedule", "2", tmanager.getTrainScheduleActiveId());
+        trainScheduleManager.setTrainScheduleActiveId(schedules.get(1).getId());
+        Assert.assertEquals("Active schedule", "2", trainScheduleManager.getTrainScheduleActiveId());
 
         train1.reset();
         new TrainBuilder().build(train1);
@@ -2305,7 +2305,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         c8.setPickupScheduleId(schedules.get(1).getId());
 
         // change pick up day to any day of the week
-        tmanager.setTrainSecheduleActiveId(TrainSchedule.ANY);
+        trainScheduleManager.setTrainScheduleActiveId(TrainSchedule.ANY);
 
         train1.reset();
         new TrainBuilder().build(train1);
@@ -13553,7 +13553,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         sch1Item3.setSetoutTrainScheduleId(schedules.get(5).getId());
         sch1Item3.setPickupTrainScheduleId(schedules.get(6).getId());
 
-        Assert.assertEquals("Active schedule", "", tmanager.getTrainScheduleActiveId());
+        Assert.assertEquals("Active schedule", "", trainScheduleManager.getTrainScheduleActiveId());
 
         // no deliveries allowed
         new TrainBuilder().build(train);
@@ -13568,7 +13568,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // now set the day to Sunday
         Assert.assertEquals("Train schedule day", "Sunday", schedules.get(3).getName());
-        tmanager.setTrainSecheduleActiveId(schedules.get(3).getId());
+        trainScheduleManager.setTrainScheduleActiveId(schedules.get(3).getId());
 
         train.reset();
         new TrainBuilder().build(train);

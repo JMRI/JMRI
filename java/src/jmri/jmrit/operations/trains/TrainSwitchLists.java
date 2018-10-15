@@ -101,8 +101,7 @@ public class TrainSwitchLists extends TrainCommon {
             String valid = MessageFormat.format(messageFormatText = TrainManifestText.getStringValid(),
                     new Object[]{getDate(true)});
             if (Setup.isPrintTimetableNameEnabled()) {
-                TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(
-                        trainManager.getTrainScheduleActiveId());
+                TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getActiveSchedule();
                 if (sch != null) {
                     valid = valid + " (" + sch.getName() + ")";
                 }

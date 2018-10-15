@@ -38,7 +38,6 @@ public class PrintOptionPanelTest {
         Assert.assertFalse(p.departureTimeCheckBox.isSelected());
         Assert.assertTrue(p.trackSummaryCheckBox.isSelected());
         Assert.assertTrue(p.routeLocationCheckBox.isSelected());
-
     }
 
 
