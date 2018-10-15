@@ -70,6 +70,10 @@ public class ImportEnginesTest extends OperationsTestCase {
         mb.setName("Test Import Engines"); // NOI18N
         mb.start();
         
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return mb.getState().equals(Thread.State.WAITING);
+        }, "wait for file chooser");
+        
         // opens file chooser path "operations" "JUnitTest"
         JFileChooserOperator fco = new JFileChooserOperator();
         String[] path = OperationsXml.getOperationsDirectoryName().split(Pattern.quote(File.separator));  
@@ -84,8 +88,12 @@ public class ImportEnginesTest extends OperationsTestCase {
         // import complete 
         JemmyUtil.pressDialogButton(Bundle.getMessage("SuccessfulImport"), "OK");
         
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return mb.getState().equals(Thread.State.TERMINATED);
+        }, "wait for import complete");
+        
         // confirm import successful
-        Assert.assertEquals("engines", 4, emanager.getNumEntries());    
+        Assert.assertEquals("engines", 4, emanager.getNumEntries()); 
     }
 
     // The minimal setup for log4J
