@@ -262,11 +262,6 @@ public class Path {
      */
     public void setLength(float l) {
         _length = l;
-        if (_block != null) {
-            if (l > _block.getLengthMm()) {
-                _length = _block.getLengthMm();
-            }
-        }
     }
 
     /**

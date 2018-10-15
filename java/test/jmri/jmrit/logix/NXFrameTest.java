@@ -13,7 +13,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -126,7 +125,6 @@ public class NXFrameTest {
     }
 
     @Test
-    @Ignore("Causes timeouts due to changes in the scripts - not a threading problem. New script needed")
     public void testNXWarrant() throws Exception {
         // The first part of this test duplicates testNXWarrantSetup().  It
         // then goes on to test a Warrant through the WarrantTableFrame.
@@ -172,13 +170,11 @@ public class NXFrameTest {
         JemmyUtil.pressButton(jdo, Bundle.getMessage("ButtonSelect"));
 
         nxFrame.setThrottleIncrement(0.05f);     
-        nxFrame.setMaxSpeed(2);
-        JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
-        JemmyUtil.confirmJOptionPane(nfo, Bundle.getMessage("WarningTitle"), Bundle.getMessage("badSpeed", "2"), "OK");
-        
         nxFrame.setMaxSpeed(0.6f);
+        nxFrame.setTrainInfo("666");
+        nxFrame.setTrainName("Nick");
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
-        JemmyUtil.confirmJOptionPane(nfo, Bundle.getMessage("WarningTitle"), Bundle.getMessage("BadDccAddress", ""), "OK");
+
 
         // from this point to the end of the test, there are no more references
         // to nxFrame.  Do we need to split this into multiple tests?  
@@ -239,11 +235,11 @@ public class NXFrameTest {
         }, "Start Block Active");
 
         JUnitUtil.waitFor(() -> {
-            return Bundle.getMessage("Halted", name, "0").equals(warrant.getRunningMessage());
+            return Bundle.getMessage("Halted", name, "1").equals(warrant.getRunningMessage());
         }, "Warrant processed sensor change");
 
         Assert.assertEquals("Halted/Resume message", warrant.getRunningMessage(),
-                Bundle.getMessage("Halted", block.getDisplayName(), "0"));
+                Bundle.getMessage("Halted", block.getDisplayName(), "1"));
 
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             warrant.controlRunTrain(Warrant.RESUME);
