@@ -7,7 +7,7 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  * {@link apps.startup.StartupActionFactory} for the
- * {@link jmri.jmrit.timetable.TimeTableAction}.
+ * {@link jmri.jmrit.timetable.swing.TimeTableAction}.
  *
  * @author Dave Sand Copyright (C) 2018
  */

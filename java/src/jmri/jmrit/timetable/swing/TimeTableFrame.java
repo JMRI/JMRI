@@ -51,14 +51,14 @@ import jmri.jmrit.timetable.configurexml.*;
  * <p>
  * A timetable describes the layout and trains along with the times that each train should be at specified locations.
  *
- * ** Logical Schema **
+ *   Logical Schema
  * Layout
- *   |==> Train Types
- *   |==> Segments
- *          |==> Stations
- *   |==> Schedules
- *          |==> Trains
- *                 |==> Stops
+ *    Train Types
+ *    Segments
+ *        Stations
+ *    Schedules
+ *        Trains
+ *           Stops
  *
  * @author Dave Sand Copyright (c) 2018
  */
