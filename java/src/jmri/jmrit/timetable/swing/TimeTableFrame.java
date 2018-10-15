@@ -53,12 +53,12 @@ import jmri.jmrit.timetable.configurexml.*;
  *
  * ** Logical Schema **
  * Layout
- *   |--> Train Types
- *   |--> Segments
- *          |--> Stations
- *   |--> Schedules
- *          |--> Trains
- *                 |--> Stops
+ *   |==> Train Types
+ *   |==> Segments
+ *          |==> Stations
+ *   |==> Schedules
+ *          |==> Trains
+ *                 |==> Stops
  *
  * @author Dave Sand Copyright (c) 2018
  */
