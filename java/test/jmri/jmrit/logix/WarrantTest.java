@@ -98,10 +98,9 @@ public class WarrantTest {
         south.addPath(path);
         Assert.assertEquals("Path Block", path, south.getPathByName("SouthToWest"));
         Assert.assertEquals("Path Block", "SouthToEast", south.getPathByName("SouthToEast").getName());
-        
+
         bSouth.setLength(100);
-        
-        
+
         settings = new ArrayList<>();
         OBlock block =  _OBlockMgr.getOBlock("West");
         path = new OPath("SouthToNorth", block, _portalMgr.getPortal("NorthWest"), _portalMgr.getPortal("SouthWest"), settings);

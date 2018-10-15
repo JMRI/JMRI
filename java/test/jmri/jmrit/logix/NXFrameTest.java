@@ -175,16 +175,6 @@ public class NXFrameTest {
         nxFrame.setTrainName("Nick");
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
 
-
-        // from this point to the end of the test, there are no more references
-        // to nxFrame.  Do we need to split this into multiple tests?  
-        // The next part deals with a WarrantTableFrame, should it still be
-        // in this test file?
-
-        // Wouldn't help.  Most of the above would have to be repeated.
-        // Problem with this test appears to be the method call by "ButtonRunNX" (NXFrame.makeAndRunWarrant)
-        // is not completed.  i.e tableFrame.getModel().addNXWarrant(warrant) is not called in time.
-
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         Assert.assertNotNull("tableFrame", tableFrame);
 
@@ -200,17 +190,6 @@ public class NXFrameTest {
         Assert.assertNotNull("warrant", warrant);
         Assert.assertNotNull("warrant.getBlockOrders(", warrant.getBlockOrders());
         warrant.getBlockOrders();
-/*        if (orders.size()!=7) {
-            System.out.println();
-            System.out.println(warrant.getSystemName()+" " +warrant.getUserName());
-            for (BlockOrder bo : orders) {
-                System.out.println(bo.toString());
-            }
-            List<ThrottleSetting> commands = warrant.getThrottleCommands();
-            for (ThrottleSetting ts : commands) {
-                System.out.println(ts.toString());
-            }
-        }*/
         Assert.assertEquals("Num Blocks in Route", 7, warrant.getBlockOrders().size());
         Assert.assertTrue("Num Comands", warrant.getThrottleCommands().size()>5);
 

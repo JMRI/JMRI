@@ -257,7 +257,7 @@ public class Path {
 
     /**
      * Set path length.
-     *
+     * Length may override the block length default
      * @param l length in millimeters
      */
     public void setLength(float l) {
