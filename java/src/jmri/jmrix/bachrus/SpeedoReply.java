@@ -65,12 +65,12 @@ public class SpeedoReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
-    // display format
+    // display format and speedo use character messages not integer messages
     @Override
     public String toString() {
         StringBuffer buf = new StringBuffer();
         for (int i = 0; i < _nDataChars; i++) {
-            buf.append(_dataChars[i]);
+            buf.append( (char) _dataChars[i]);
         }
         return buf.toString();
     }
