@@ -5,10 +5,12 @@ import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainIcon;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -20,6 +22,7 @@ public class OperationsTrainsGuiTest extends OperationsTestCase {
 
     // test TrainIcon attributes
     @Test
+    @Ignore("Initializing PanelEditor takes many seconds, test coverage not worth the wait")
     public void testTrainIconAttributes() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Train train1 = new Train("TESTTRAINID", "TESTNAME");
@@ -31,10 +34,11 @@ public class OperationsTrainsGuiTest extends OperationsTestCase {
         jmri.jmrit.display.panelEditor.PanelEditor editor = new jmri.jmrit.display.panelEditor.PanelEditor(
                 "Test Panel Train Icon");
         Assert.assertNotNull("New editor", editor);
+
         TrainIcon trainicon1 = editor.addTrainIcon("TestName");
         trainicon1.setTrain(train1);
         Assert.assertEquals("TrainIcon set train", "TESTNAME", trainicon1.getTrain().getName());
-        
+
         // confirm that there are 6 icon colors
         Assert.assertEquals("Six colors", 6, TrainIcon.getLocoColors().length);
 
@@ -60,7 +64,7 @@ public class OperationsTrainsGuiTest extends OperationsTestCase {
                 Assert.assertEquals("Blue train icon", TrainIcon.COLOR_BLUE, trainicon1.getLocoColor());
             }
         }
-        editor.getTargetFrame().dispose();
+        JUnitUtil.dispose(editor);
     }
 
     // Ensure minimal setup for log4J

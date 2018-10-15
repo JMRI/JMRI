@@ -2,9 +2,7 @@ package jmri.jmrix.dcc4pc.serialdriver.configurexml;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * ConnectionConfigXmlTest.java
@@ -13,22 +11,19 @@ import org.junit.Test;
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
-public class ConnectionConfigXmlTest {
-
-    @Test
-    public void testCtor(){
-      Assert.assertNotNull("ConnectionConfigXml constructor",new ConnectionConfigXml());
-    }
+public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        xmlAdapter = new ConnectionConfigXml();
     }
 
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
+        xmlAdapter = null;
     }
 
 }

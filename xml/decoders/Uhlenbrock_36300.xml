@@ -12,11 +12,12 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-    <version author="Egbert Broerse" version="1" lastUpdated="20180929"/>
-    <!-- Version 1 - Created from Uhlenbrock_76560.xml v1 (Alain Le Marchand), added Uhlenbrock 363x decoder models, Dutch translation -->
+    <version author="Egbert Broerse" version="1" lastUpdated="20181012"/>
+    <!-- Version 1 - Created from Uhlenbrock_76560.xml v1 (Alain Le Marchand), added Uhlenbrock 363x and 365x decoder models, Dutch translation -->
     <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
 <decoder>
     <family name="Multi-Protocol IntelliSound3 Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="9">
+      <!-- TODO rename famiy to include 4 + noshow migration -->
       <model model="36320" numOuts="9" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="NMRAmedium" productID="36320" comment="IntelliSound 3 with PluX22 plug and RailCom(R)">
         <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
         <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
@@ -44,6 +45,34 @@
         <output name="Shunting" label="mode"/>
         <output name="Start/brake" label="inertia"/>
         <size length="30" width="15" height="4.8" units="mm"/>
+      </model>
+      <model model="36520" numOuts="9" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="NMRAmedium" productID="36520" comment="IntelliSound 4 with PluX22 plug and RailCom(R)">
+        <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+        <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+        <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+        <output name="4" label=". A2 ." connection="solder" maxcurrent="400 mA"/>
+        <output name="5" label=". A3 ." connection="solder" maxcurrent="400 mA"/>
+        <output name="6" label=". A4 ." connection="solder" maxcurrent="400 mA"/>
+        <output name="7" label=". A5 ." connection="solder" maxcurrent="400 mA"/>
+        <output name="8" label=". A6 ." connection="solder" maxcurrent="400 mA"/>
+        <output name="9" label=". A7 ." connection="solder" maxcurrent="400 mA"/>
+        <output name="Shunting" label="mode"/>
+        <output name="Start/brake" label="inertia"/>
+        <size length="30" width="16" height="4.6" units="mm"/>
+      </model>
+      <model model="36560" numOuts="9" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="PluX22" productID="36560" comment="IntelliSound 4 with PluX22 plug and RailCom(R)">
+        <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+        <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+        <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+        <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+        <output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA"/>
+        <output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
+        <output name="7" label=". A5 ." connection="plug" maxcurrent="400 mA"/>
+        <output name="8" label=". A6 ." connection="plug" maxcurrent="400 mA"/>
+        <output name="9" label=". A7 ." connection="plug" maxcurrent="400 mA"/>
+        <output name="Shunting" label="mode"/>
+        <output name="Start/brake" label="inertia"/>
+        <size length="30" width="16" height="4.6" units="mm"/>
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes">
@@ -158,17 +187,17 @@
         <enumVal>
           <enumChoice choice="to standstill">
             <choice>to standstill</choice>
-            <choice xml:lang="de">auf 0 im Bremsabschnitt</choice>
-            <choice xml:lang="nl">naar 0 in Remsectie</choice>
+            <choice xml:lang="de">bis auf 0 im Bremsabschnitt</choice>
+            <choice xml:lang="nl">tot 0 in Remsectie</choice>
           </enumChoice>
           <enumChoice choice="as def. in braking speed">
             <choice>as def. in braking speed</choice>
-            <choice xml:lang="de">auf gemäß Geschw. Brems</choice>
-            <choice xml:lang="nl">alsingest. remsnelheid</choice>
+            <choice xml:lang="de">bis auf gemäß Geschw. Brems</choice>
+            <choice xml:lang="nl">tot ingest. remsnelheid</choice>
           </enumChoice>
         </enumVal>
         <label>Braking End</label>
-        <label xml:lang="de">bremst bis</label>
+        <label xml:lang="de">Bremst bis</label>
         <label xml:lang="nl">Remt tot</label>
       </variable>
       <variable item="Motor Option 1" CV="49" mask="XXXVXXXX">
@@ -197,9 +226,11 @@
         <label xml:lang="nl">Motorola Loc-adres 2</label>
         <tooltip>for F5 to F8 (Value 1-255)</tooltip>
         <tooltip xml:lang="de">für F5 bis F8 (Wert 1-255)</tooltip>
-        <tooltip xml:lang="nl">voor F5 t/m F8 (Waarde 1-255)</tooltip>
+        <tooltip xml:lang="nl">voor F5 t/m F8 (waarde 1-255)</tooltip>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv51analog.xml"/>
+      <!-- CV 51 voor 365x -->
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv51bits2367.xml"/>
       <variable item="EMF Option 1" CV="53" default="35">
         <decVal max="63"/>
         <label>Repetition rate</label>

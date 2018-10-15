@@ -19,6 +19,7 @@ public class CbusOpCodes {
     /**
      * Return a string representation of a decoded CBUS Message
      *
+     * Used in CBUS Console Log
      * @param msg CbusMessage to be decoded Return String decoded message
      * @return decoded CBUS message
      */
@@ -26,13 +27,14 @@ public class CbusOpCodes {
         StringBuilder buf = new StringBuilder();
         int bytes;
         int value;
+        int opc=msg.getElement(0);
 
         // look for the opcode
-        String format = opcodeMap.get(msg.getElement(0));
+        String format = opcodeMap.get(opc);
         if (format == null) {
             return Bundle.getMessage("OPC_RESERVED");
         }
-
+        
         // split the format string at each comma
         String[] fields = format.split(",");
 
@@ -50,6 +52,60 @@ public class CbusOpCodes {
             // concatenat to the result
             buf.append(fields[i]);
         }
+        
+        // extra info for ERR opc
+        if (opc==CbusConstants.CBUS_ERR) {
+            // log.warn(" full err message for err no. {}",msg.getElement(3));
+            // elements 1 & 2 depend on element 3
+            switch (msg.getElement(3)) {
+                case 1:
+                    buf.append(Bundle.getMessage("ERR_LOCO_STACK_FULL"));
+                    buf.append(msg.getElement(1));
+                    buf.append(" ");
+                    buf.append(msg.getElement(2));
+                    break;
+                case 2:
+                    buf.append(Bundle.getMessage("ERR_LOCO_ADDRESS_TAKEN"));
+                    buf.append(msg.getElement(1));
+                    buf.append(" ");
+                    buf.append(msg.getElement(2));
+                    break;
+                case 3:
+                    buf.append(Bundle.getMessage("ERR_SESSION_NOT_PRESENT"));
+                    buf.append(msg.getElement(1));
+                    break;
+                case 4:
+                    buf.append(Bundle.getMessage("ERR_CONSIST_EMPTY"));
+                    buf.append(msg.getElement(1));
+                    break;
+                case 5:
+                    buf.append(Bundle.getMessage("ERR_LOCO_NOT_FOUND"));
+                    buf.append(msg.getElement(1));
+                    break;
+                case 6:
+                    buf.append(Bundle.getMessage("ERR_CAN_BUS_ERROR"));
+                    break;
+                case 7:
+                    buf.append(Bundle.getMessage("ERR_INVALID_REQUEST"));
+                    buf.append(msg.getElement(1));
+                    buf.append(" ");
+                    buf.append(msg.getElement(2));
+                    break;
+                case 8:
+                    buf.append(Bundle.getMessage("ERR_SESSION_CANCELLED"));
+                    buf.append(msg.getElement(1));
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        // extra info for CMDERR opc
+        if (opc==CbusConstants.CBUS_CMDERR) {
+            if ((msg.getElement(3) > 0 ) && (msg.getElement(3) < 13 )) {
+                buf.append(Bundle.getMessage("CMDERR"+msg.getElement(3)));
+            }
+        }
         return buf.toString();
     }
 
@@ -64,7 +120,6 @@ public class CbusOpCodes {
         if (ext == false) {
             return decode(msg);
         }
-
         return Bundle.getMessage("OPC_BOOT_TYP") + header;
     }
 
@@ -176,11 +231,10 @@ public class CbusOpCodes {
         result.put(CbusConstants.CBUS_GLOC, Bundle.getMessage("CBUS_GLOC") + " " + 
         Bundle.getMessage("OPC_AD") + ":,%2, " + Bundle.getMessage("OPC_FL") + ":,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_ERR, Bundle.getMessage("CBUS_ERR") + " " + 
-        Bundle.getMessage("OPC_DA") + ":,%1, ,%1, ,%1"); // NOI18N
+        result.put(CbusConstants.CBUS_ERR, Bundle.getMessage("CBUS_ERR") + " "); // NOI18N
         
         result.put(CbusConstants.CBUS_CMDERR, Bundle.getMessage("CBUS_CMDERR") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_ER") + ":,%1"); // NOI18N
+        Bundle.getMessage("OPC_NN") + ":,%2, "); // NOI18N
         
         result.put(CbusConstants.CBUS_EVNLF, Bundle.getMessage("CBUS_EVNLF") + " " + 
         Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_SP") + ":,%1"); // NOI18N

@@ -18,8 +18,8 @@ import jmri.jmrit.operations.locations.tools.LocationsByCarTypeFrame;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarColors;
-import jmri.jmrit.operations.rollingstock.cars.CarEditFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarLengths;
+import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
@@ -57,7 +57,14 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 
     // text box
     JTextField addTextBox = new JTextField(Control.max_len_string_attibute);
-    
+
+    public static final String ROAD = Bundle.getMessage("Road");
+    public static final String TYPE = Bundle.getMessage("Type");
+    public static final String COLOR = Bundle.getMessage("Color");
+    public static final String LENGTH = Bundle.getMessage("Length");
+    public static final String OWNER = Bundle.getMessage("Owner");
+    public static final String KERNEL = Bundle.getMessage("Kernel");
+
     boolean showQuanity = false;
 
     // property change
@@ -146,7 +153,8 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
             }
             String oldItem = (String) comboBox.getSelectedItem();
             if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("replaceMsg"), new Object[]{
-                    oldItem, newItem}), Bundle.getMessage("replaceAll"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+                    oldItem, newItem}), Bundle.getMessage("replaceAll"),
+                    JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
                 return;
             }
             if (newItem.equals(oldItem)) {
@@ -169,24 +177,32 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
         if (itemName.equals(NONE)) {
             return false;
         }
-        if (_comboboxName.equals(CarEditFrame.ROAD)) {
+        if (_comboboxName.equals(ROAD)) {
             if (!OperationsXml.checkFileName(itemName)) { // NOI18N
-                log.error("Road name must not contain reserved characters");
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("NameResChar") + NEW_LINE
-                        + Bundle.getMessage("ReservedChar"),
+                JOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("NameResChar") + NEW_LINE + Bundle.getMessage("ReservedChar"),
                         MessageFormat.format(errorMessage, new Object[]{_comboboxName}),
                         JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }
         String[] item = {itemName};
-        if (_comboboxName.equals(CarEditFrame.TYPE)) {
+        if (_comboboxName.equals(TYPE)) {
             item = itemName.split("-");
+            // can't have the " & " as part of the type name
+            if (itemName.contains(CarLoad.SPLIT_CHAR)) {
+                JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carNameNoAndChar"),
+                        new Object[]{CarLoad.SPLIT_CHAR}), MessageFormat.format(errorMessage, new Object[]{_comboboxName}),
+                        JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
         }
         if (item[0].length() > Control.max_len_string_attibute) {
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carAttribute"),
-                    new Object[]{Control.max_len_string_attibute}), MessageFormat.format(errorMessage,
-                    new Object[]{_comboboxName}), JOptionPane.ERROR_MESSAGE);
+                    new Object[]{Control.max_len_string_attibute}),
+                    MessageFormat.format(errorMessage,
+                            new Object[]{_comboboxName}),
+                    JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -200,23 +216,23 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 
     private void deleteItemFromCombobox(String deleteItem) {
         log.debug("delete attribute {}", deleteItem);
-        if (_comboboxName.equals(CarEditFrame.ROAD)) {
+        if (_comboboxName.equals(ROAD)) {
             // purge train and locations by using replace
             InstanceManager.getDefault(CarRoads.class).replaceName(deleteItem, null);
         }
-        if (_comboboxName.equals(CarEditFrame.TYPE)) {
+        if (_comboboxName.equals(TYPE)) {
             InstanceManager.getDefault(CarTypes.class).deleteName(deleteItem);
         }
-        if (_comboboxName.equals(CarEditFrame.COLOR)) {
+        if (_comboboxName.equals(COLOR)) {
             InstanceManager.getDefault(CarColors.class).deleteName(deleteItem);
         }
-        if (_comboboxName.equals(CarEditFrame.LENGTH)) {
+        if (_comboboxName.equals(LENGTH)) {
             InstanceManager.getDefault(CarLengths.class).deleteName(deleteItem);
         }
-        if (_comboboxName.equals(CarEditFrame.OWNER)) {
+        if (_comboboxName.equals(OWNER)) {
             InstanceManager.getDefault(CarOwners.class).deleteName(deleteItem);
         }
-        if (_comboboxName.equals(CarEditFrame.KERNEL)) {
+        if (_comboboxName.equals(KERNEL)) {
             carManager.deleteKernel(deleteItem);
         }
     }
@@ -225,16 +241,17 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     private void addItemToCombobox(String addItem) {
-        if (_comboboxName.equals(CarEditFrame.ROAD)) {
+        if (_comboboxName.equals(ROAD)) {
             InstanceManager.getDefault(CarRoads.class).addName(addItem);
         }
-        if (_comboboxName.equals(CarEditFrame.TYPE)) {
+        if (_comboboxName.equals(TYPE)) {
             InstanceManager.getDefault(CarTypes.class).addName(addItem);
             if (showDialogBox) {
                 int results = JOptionPane.showOptionDialog(this, Bundle.getMessage("AddNewCarType"), Bundle
                         .getMessage("ModifyLocations"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
                         null, new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
-                                Bundle.getMessage("ButtonDontShow")}, Bundle.getMessage("ButtonNo"));
+                                Bundle.getMessage("ButtonDontShow")},
+                        Bundle.getMessage("ButtonNo"));
                 if (results == JOptionPane.YES_OPTION) {
                     LocationsByCarTypeFrame lf = new LocationsByCarTypeFrame();
                     lf.initComponents(addItem);
@@ -245,7 +262,8 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
                 results = JOptionPane.showOptionDialog(this, Bundle.getMessage("AddNewCarType"), Bundle
                         .getMessage("ModifyTrains"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
                         null, new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
-                                Bundle.getMessage("ButtonDontShow")}, Bundle.getMessage("ButtonNo"));
+                                Bundle.getMessage("ButtonDontShow")},
+                        Bundle.getMessage("ButtonNo"));
                 if (results == JOptionPane.YES_OPTION) {
                     TrainsByCarTypeFrame lf = new TrainsByCarTypeFrame();
                     lf.initComponents(addItem);
@@ -255,10 +273,10 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
                 }
             }
         }
-        if (_comboboxName.equals(CarEditFrame.COLOR)) {
+        if (_comboboxName.equals(COLOR)) {
             InstanceManager.getDefault(CarColors.class).addName(addItem);
         }
-        if (_comboboxName.equals(CarEditFrame.LENGTH)) {
+        if (_comboboxName.equals(LENGTH)) {
             // convert from inches to feet if needed
             if (addItem.endsWith("\"")) { // NOI18N
                 addItem = addItem.substring(0, addItem.length() - 1);
@@ -295,8 +313,10 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
                 }
                 if (addItem.length() > Control.max_len_string_length_name) {
                     JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carAttribute"),
-                            new Object[]{Control.max_len_string_length_name}), MessageFormat.format(Bundle
-                            .getMessage("canNotAdd"), new Object[]{_comboboxName}), JOptionPane.ERROR_MESSAGE);
+                            new Object[]{Control.max_len_string_length_name}),
+                            MessageFormat.format(Bundle
+                                    .getMessage("canNotAdd"), new Object[]{_comboboxName}),
+                            JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             } catch (NumberFormatException e) {
@@ -306,60 +326,60 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
             InstanceManager.getDefault(CarLengths.class).addName(addItem);
             comboBox.setSelectedItem(addItem);
         }
-        if (_comboboxName.equals(CarEditFrame.KERNEL)) {
+        if (_comboboxName.equals(KERNEL)) {
             carManager.newKernel(addItem);
         }
-        if (_comboboxName.equals(CarEditFrame.OWNER)) {
+        if (_comboboxName.equals(OWNER)) {
             InstanceManager.getDefault(CarOwners.class).addName(addItem);
         }
     }
 
     private void replaceItem(String oldItem, String newItem) {
         // replace kernel
-        if (_comboboxName.equals(CarEditFrame.KERNEL)) {
+        if (_comboboxName.equals(KERNEL)) {
             carManager.replaceKernelName(oldItem, newItem);
         }
         // now adjust cars, locations and trains
-        if (_comboboxName.equals(CarEditFrame.TYPE)) {
+        if (_comboboxName.equals(TYPE)) {
             InstanceManager.getDefault(CarTypes.class).replaceName(oldItem, newItem);
             InstanceManager.getDefault(CarLoads.class).replaceType(oldItem, newItem);
         }
-        if (_comboboxName.equals(CarEditFrame.ROAD)) {
+        if (_comboboxName.equals(ROAD)) {
             InstanceManager.getDefault(CarRoads.class).replaceName(oldItem, newItem);
         }
-        if (_comboboxName.equals(CarEditFrame.OWNER)) {
+        if (_comboboxName.equals(OWNER)) {
             InstanceManager.getDefault(CarOwners.class).replaceName(oldItem, newItem);
         }
-        if (_comboboxName.equals(CarEditFrame.LENGTH)) {
+        if (_comboboxName.equals(LENGTH)) {
             InstanceManager.getDefault(CarLengths.class).replaceName(oldItem, newItem);
         }
-        if (_comboboxName.equals(CarEditFrame.COLOR)) {
+        if (_comboboxName.equals(COLOR)) {
             InstanceManager.getDefault(CarColors.class).replaceName(oldItem, newItem);
         }
     }
 
     private void loadCombobox() {
-        if (_comboboxName.equals(CarEditFrame.ROAD)) {
+        if (_comboboxName.equals(ROAD)) {
             comboBox = InstanceManager.getDefault(CarRoads.class).getComboBox();
             InstanceManager.getDefault(CarRoads.class).addPropertyChangeListener(this);
         }
-        if (_comboboxName.equals(CarEditFrame.TYPE)) {
+        if (_comboboxName.equals(TYPE)) {
             comboBox = InstanceManager.getDefault(CarTypes.class).getComboBox();
             InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
         }
-        if (_comboboxName.equals(CarEditFrame.COLOR)) {
+        if (_comboboxName.equals(COLOR)) {
             comboBox = InstanceManager.getDefault(CarColors.class).getComboBox();
             InstanceManager.getDefault(CarColors.class).addPropertyChangeListener(this);
         }
-        if (_comboboxName.equals(CarEditFrame.LENGTH)) {
+        if (_comboboxName.equals(LENGTH)) {
             comboBox = InstanceManager.getDefault(CarLengths.class).getComboBox();
             InstanceManager.getDefault(CarLengths.class).addPropertyChangeListener(this);
         }
-        if (_comboboxName.equals(CarEditFrame.OWNER)) {
+        if (_comboboxName.equals(OWNER)) {
             comboBox = InstanceManager.getDefault(CarOwners.class).getComboBox();
             InstanceManager.getDefault(CarOwners.class).addPropertyChangeListener(this);
         }
-        if (_comboboxName.equals(CarEditFrame.KERNEL)) {
+        if (_comboboxName.equals(KERNEL)) {
             comboBox = carManager.getKernelComboBox();
         }
     }
@@ -382,33 +402,32 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
         String item = (String) comboBox.getSelectedItem();
         log.debug("Selected item {}", item);
         for (Car car : carManager.getList()) {
-
-            if (_comboboxName.equals(CarEditFrame.ROAD)) {
+            if (_comboboxName.equals(ROAD)) {
                 if (car.getRoadName().equals(item)) {
                     number++;
                 }
             }
-            if (_comboboxName.equals(CarEditFrame.TYPE)) {
+            if (_comboboxName.equals(TYPE)) {
                 if (car.getTypeName().equals(item)) {
                     number++;
                 }
             }
-            if (_comboboxName.equals(CarEditFrame.COLOR)) {
+            if (_comboboxName.equals(COLOR)) {
                 if (car.getColor().equals(item)) {
                     number++;
                 }
             }
-            if (_comboboxName.equals(CarEditFrame.LENGTH)) {
+            if (_comboboxName.equals(LENGTH)) {
                 if (car.getLength().equals(item)) {
                     number++;
                 }
             }
-            if (_comboboxName.equals(CarEditFrame.OWNER)) {
+            if (_comboboxName.equals(OWNER)) {
                 if (car.getOwner().equals(item)) {
                     number++;
                 }
             }
-            if (_comboboxName.equals(CarEditFrame.KERNEL)) {
+            if (_comboboxName.equals(KERNEL)) {
                 if (car.getKernelName().equals(item)) {
                     number++;
                 }
@@ -418,11 +437,16 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
         // Tool to delete all attributes that haven't been assigned to a car
         if (number == 0 && deleteUnused) {
             // need to check if an engine is using the road name
-            if (_comboboxName.equals(CarEditFrame.ROAD)) {
+            if (_comboboxName.equals(ROAD)) {
                 for (RollingStock rs : InstanceManager.getDefault(EngineManager.class).getList()) {
                     if (rs.getRoadName().equals(item)) {
-                        log.info("Engine (" + rs.getRoadName() + " " + rs.getNumber()
-                                + ") has assigned road name (" + item + ")"); // NOI18N
+                        log.info("Engine (" +
+                                rs.getRoadName() +
+                                " " +
+                                rs.getNumber() +
+                                ") has assigned road name (" +
+                                item +
+                                ")"); // NOI18N
                         return;
                     }
                 }
@@ -431,9 +455,11 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
             if (!cancel) {
                 int results = JOptionPane.showOptionDialog(null, MessageFormat.format(Bundle
                         .getMessage("ConfirmDeleteAttribute"), new Object[]{_comboboxName, item}), Bundle
-                        .getMessage("DeleteAttribute?"), JOptionPane.YES_NO_CANCEL_OPTION,
+                                .getMessage("DeleteAttribute?"),
+                        JOptionPane.YES_NO_CANCEL_OPTION,
                         JOptionPane.QUESTION_MESSAGE, null, new Object[]{Bundle.getMessage("ButtonYes"),
-                                Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonCancel")}, Bundle
+                                Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonCancel")},
+                        Bundle
                                 .getMessage("ButtonYes"));
                 if (results == JOptionPane.YES_OPTION) {
                     deleteItemFromCombobox((String) comboBox.getSelectedItem());

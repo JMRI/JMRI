@@ -513,7 +513,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 
     private void updateTitle() {
         String title = Bundle.getMessage("TitleTrainsTable");
-        TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(trainManager.getTrainScheduleActiveId());
+        TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getActiveSchedule();
         if (sch != null) {
             title = title + " (" + sch.getName() + ")";
         }
