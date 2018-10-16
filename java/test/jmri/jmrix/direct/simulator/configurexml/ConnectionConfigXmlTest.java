@@ -1,10 +1,9 @@
 package jmri.jmrix.direct.simulator.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import jmri.jmrix.direct.simulator.ConnectionConfig;
+import javax.swing.JPanel;
 
 /**
  * Tests for the ConnectionConfigXml class
@@ -18,11 +17,14 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new ConnectionConfigXml();
+        cc = new ConnectionConfig();
+        cc.loadDetails(new JPanel());
     }
 
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
         xmlAdapter = null;
+        cc = null;
     }
 }

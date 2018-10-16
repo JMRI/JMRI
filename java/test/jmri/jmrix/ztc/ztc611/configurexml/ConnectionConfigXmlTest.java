@@ -1,10 +1,9 @@
 package jmri.jmrix.ztc.ztc611.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import jmri.jmrix.ztc.ztc611.ConnectionConfig;
+import javax.swing.JPanel;
 
 /**
  * ConnectionConfigXmlTest.java
@@ -13,18 +12,21 @@ import org.junit.Test;
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
-public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
+public class ConnectionConfigXmlTest extends jmri.jmrix.lenz.configurexml.AbstractXNetSerialConnectionConfigXmlTest {
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new ConnectionConfigXml();
+        cc = new ConnectionConfig();
+        cc.loadDetails(new JPanel());
     }
 
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
         xmlAdapter = null;
+        cc = null;
     }
 }

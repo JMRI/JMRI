@@ -6,11 +6,8 @@ import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.serialdriver.ConnectionConfig;
 import jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
+import javax.swing.JPanel;
 
 /**
  * ConnectionConfigXmlTest.java
@@ -27,12 +24,15 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         xmlAdapter = new ConnectionConfigXml();
+        cc = new ConnectionConfig();
+        cc.loadDetails(new JPanel());
     }
 
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
         xmlAdapter = null;
+        cc = null;
     }
 
     @Test

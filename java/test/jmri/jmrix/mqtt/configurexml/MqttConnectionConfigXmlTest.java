@@ -1,10 +1,10 @@
 package jmri.jmrix.mqtt.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import jmri.jmrix.mqtt.MqttConnectionConfig;
+import javax.swing.JPanel;
+
 
 /**
  * Tests for MqttConnectionConfigXml class.
@@ -20,11 +20,14 @@ public class MqttConnectionConfigXmlTest extends jmri.jmrix.configurexml.Abstrac
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         xmlAdapter = new MqttConnectionConfigXml();
+        cc = new MqttConnectionConfig();
+        cc.loadDetails(new JPanel());
     }
 
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
         xmlAdapter = null;
+        cc = null;
     }
 }

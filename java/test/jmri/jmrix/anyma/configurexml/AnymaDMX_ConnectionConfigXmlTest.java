@@ -1,10 +1,9 @@
 package jmri.jmrix.anyma.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import jmri.jmrix.anyma.AnymaDMX_ConnectionConfig;
+import javax.swing.JPanel;
 
 /**
  * AnymaDMX_ConnectionConfigXmlTest.java
@@ -21,11 +20,14 @@ public class AnymaDMX_ConnectionConfigXmlTest extends jmri.jmrix.configurexml.Ab
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new AnymaDMX_ConnectionConfigXml();
+        cc = new AnymaDMX_ConnectionConfig();
+        cc.loadDetails(new JPanel());
     }
 
     @After
     public void tearDown() {
         xmlAdapter = null;
+        cc = null;
         JUnitUtil.tearDown();
     }
 }
