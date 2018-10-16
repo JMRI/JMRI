@@ -10,7 +10,19 @@ public class TrainTypeTest {
 
     @Test
     public void testCreate() {
-        new TrainType(1, 1, "", "#000000");
+        new TrainType(1, 1, "", "#000000");  // NOI18N
+    }
+
+    @Test
+    public void testSettersAndGetters() {
+        TrainType t = new TrainType(1, 1, "", "#000000");  // NOI18N
+        Assert.assertEquals(1, t.getTypeId());  // NOI18N
+        Assert.assertEquals(1, t.getLayoutId());
+        t.setTypeName("New Type");  // NOI18N
+        Assert.assertEquals("New Type", t.getTypeName());  // NOI18N
+        t.setTypeColor("#ffffff");  // NOI18N
+        Assert.assertEquals("#ffffff", t.getTypeColor());  // NOI18N
+        Assert.assertEquals("New Type", t.toString());  // NOI18N
     }
 
     @Before

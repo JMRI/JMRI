@@ -9,8 +9,34 @@ import org.junit.*;
 public class BundleTest {
 
     @Test
-    public void testCreate() {
-        new Bundle();
+    public void testGoodKeyMessage() {
+        Assert.assertEquals("Open Timetable", Bundle.getMessage("TimeTableAction"));  // NOI18N
+    }
+
+    @Test
+    public void testBadKeyMessage() {
+        try {
+            Bundle.getMessage("FFFFFTTTTTTT");  // NOI18N
+        } catch (java.util.MissingResourceException e) {
+            return;
+        } // OK
+        Assert.fail("No exception thrown");
+    }
+
+    @Test
+    public void testGoodKeyMessageArg() {
+        Assert.assertEquals("Open Timetable", Bundle.getMessage("TimeTableAction", new Object[]{}));  // NOI18N
+        Assert.assertEquals("One -- Two", Bundle.getMessage("LabelTrain", "One", "Two"));  // NOI18N
+    }
+
+    @Test
+    public void testBadKeyMessageArg() {
+        try {
+            Bundle.getMessage("FFFFFTTTTTTT", new Object[]{});  // NOI18N
+        } catch (java.util.MissingResourceException e) {
+            return;
+        } // OK
+        Assert.fail("No exception thrown");  // NOI18N
     }
 
     @Before

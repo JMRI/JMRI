@@ -148,25 +148,25 @@ public class TimeTableDataManager {
         int nextId = 0;
         switch (type) {
             case "Layout":    // NOI18N
-                nextId = _layoutMap.lastKey() + 1;
+                nextId = (_layoutMap.isEmpty()) ? 1 : _layoutMap.lastKey() + 1;
                 break;
             case "TrainType": // NOI18N
-                nextId = _trainTypeMap.lastKey() + 1;
+                nextId = (_trainTypeMap.isEmpty()) ? 1 : _trainTypeMap.lastKey() + 1;
                 break;
             case "Segment":   // NOI18N
-                nextId = _segmentMap.lastKey() + 1;
+                nextId = (_segmentMap.isEmpty()) ? 1 : _segmentMap.lastKey() + 1;
                 break;
             case "Station":   // NOI18N
-                nextId = _stationMap.lastKey() + 1;
+                nextId = (_stationMap.isEmpty()) ? 1 : _stationMap.lastKey() + 1;
                 break;
             case "Schedule":  // NOI18N
-                nextId = _scheduleMap.lastKey() + 1;
+                nextId = (_scheduleMap.isEmpty()) ? 1 : _scheduleMap.lastKey() + 1;
                 break;
             case "Train":     // NOI18N
-                nextId = _trainMap.lastKey() + 1;
+                nextId = (_trainMap.isEmpty()) ? 1 : _trainMap.lastKey() + 1;
                 break;
             case "Stop":      // NOI18N
-                nextId = _stopMap.lastKey() + 1;
+                nextId = (_stopMap.isEmpty()) ? 1 : _stopMap.lastKey() + 1;
                 break;
             default:
                 log.error("getNextId: Invalid record type: {}", type);  // NOI18N
@@ -310,7 +310,7 @@ public class TimeTableDataManager {
         return list;
     }
 
-    // ------------ Map access methods: get parent entry ------------ //
+    // ------------ Special Map access methods ------------ //
 
     public Layout getLayoutForStop(int stopId) {
         return getLayout(getSchedule(getTrain(getStop(stopId).getTrainId()).getScheduleId()).getLayoutId());

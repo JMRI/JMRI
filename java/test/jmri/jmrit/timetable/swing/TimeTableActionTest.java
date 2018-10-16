@@ -15,6 +15,12 @@ public class TimeTableActionTest {
         new TimeTableAction();
     }
 
+    @Test
+    public void testAction() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        new TimeTableAction().actionPerformed(null);
+    }
+
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
