@@ -10,7 +10,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -22,7 +21,6 @@ public class OperationsTrainsGuiTest extends OperationsTestCase {
 
     // test TrainIcon attributes
     @Test
-    @Ignore("Initializing PanelEditor takes many seconds, test coverage not worth the wait")
     public void testTrainIconAttributes() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Train train1 = new Train("TESTTRAINID", "TESTNAME");
