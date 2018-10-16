@@ -724,8 +724,7 @@ public class LayoutSlipTest {
     }
 
     @Before
-    public void setUp() throws Exception {
-        JUnitUtil.setUp();
+    public void setUp() {
         jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             lts = new LayoutSlip("single", new Point2D.Double(50.0, 100.0), +45.0, layoutEditor, LayoutTurnout.SINGLE_SLIP);
@@ -734,12 +733,17 @@ public class LayoutSlipTest {
     }
 
     @After
-    public void tearDown() throws Exception {
-        lts = null;
-        ltd = null;
-
-        // reset the instance manager.
-        JUnitUtil.tearDown();
+    public void tearDown() {
+        if(lts!=null) {
+           lts.remove();
+           lts.dispose();
+           lts = null;
+        }
+        if(ltd!=null) {
+           ltd.remove();
+           ltd.dispose();
+           ltd = null;
+        }
     }
     //private final static Logger log = LoggerFactory.getLogger(LayoutSlipTest.class);
 }
