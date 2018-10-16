@@ -3,7 +3,6 @@ package jmri.jmrix.secsi.simulator.configurexml;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import jmri.jmrix.secsi.simulator.ConnectionConfig;
-import javax.swing.JPanel;
 
 /**
  * Tests for the ConnectionConfigXml class
@@ -18,7 +17,6 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
         JUnitUtil.setUp();
         xmlAdapter = new ConnectionConfigXml();
         cc = new ConnectionConfig();
-        cc.loadDetails(new JPanel());
     }
 
     @After

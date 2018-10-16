@@ -3,7 +3,6 @@ package jmri.jmrix.anyma.configurexml;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import jmri.jmrix.anyma.AnymaDMX_ConnectionConfig;
-import javax.swing.JPanel;
 
 /**
  * AnymaDMX_ConnectionConfigXmlTest.java
@@ -25,7 +24,6 @@ public class AnymaDMX_ConnectionConfigXmlTest extends jmri.jmrix.configurexml.Ab
            commenting out the creation of cc causes the tests that use it to not
            run in the parent class. */
         //cc = new AnymaDMX_ConnectionConfig();
-        //cc.loadDetails(new JPanel());
     }
 
     @After

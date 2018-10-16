@@ -3,7 +3,6 @@ package jmri.jmrix.internal.configurexml;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import jmri.jmrix.internal.ConnectionConfig;
-import javax.swing.JPanel;
 
 /**
  * ConnectionConfigXmlTest.java
@@ -20,7 +19,6 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractCon
         JUnitUtil.setUp();
         xmlAdapter = new ConnectionConfigXml();
         cc = new ConnectionConfig();
-        cc.loadDetails(new JPanel());
     }
 
     @After

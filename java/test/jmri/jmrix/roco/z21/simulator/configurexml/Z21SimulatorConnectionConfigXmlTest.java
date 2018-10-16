@@ -3,7 +3,6 @@ package jmri.jmrix.roco.z21.simulator.configurexml;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import jmri.jmrix.roco.z21.simulator.Z21SimulatorConnectionConfig;
-import javax.swing.JPanel;
 
 /**
  * Z21SimulatorConnectionConfigXmlTest.java
@@ -24,7 +23,6 @@ public class Z21SimulatorConnectionConfigXmlTest extends jmri.jmrix.configurexml
         JUnitUtil.setUp();
         xmlAdapter = new Z21SimulatorConnectionConfigXml();
         cc = new Z21SimulatorConnectionConfig();
-        cc.loadDetails(new JPanel());
     }
 
     @After

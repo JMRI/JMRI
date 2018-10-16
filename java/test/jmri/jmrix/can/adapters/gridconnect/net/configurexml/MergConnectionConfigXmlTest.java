@@ -3,7 +3,6 @@ package jmri.jmrix.can.adapters.gridconnect.net.configurexml;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import jmri.jmrix.can.adapters.gridconnect.net.ConnectionConfig;
-import javax.swing.JPanel;
 
 /**
  *

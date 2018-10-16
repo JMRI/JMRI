@@ -3,7 +3,6 @@ package jmri.jmrix.loconet.bluetooth.configurexml;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import jmri.jmrix.loconet.bluetooth.ConnectionConfig;
-import javax.swing.JPanel;
 
 /**
  * ConnectionConfigXmlTest.java
@@ -23,7 +22,6 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
            of cc causes tests in the abstract class to be skipped  with
            an Assume */
         //cc = new ConnectionConfig();
-        //cc.loadDetails(new JPanel());
     }
 
     @After

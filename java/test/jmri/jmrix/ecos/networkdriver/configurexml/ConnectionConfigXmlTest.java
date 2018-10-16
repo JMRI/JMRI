@@ -3,7 +3,6 @@ package jmri.jmrix.ecos.networkdriver.configurexml;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import jmri.jmrix.easydcc.serialdriver.ConnectionConfig;
-import javax.swing.JPanel;
 
 /**
  * ConnectionConfigXmlTest.java
@@ -24,7 +23,6 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
            not creating cc causes the tests that use it in the abstract class
            to be skipped with an Assume */
         //cc = new ConnectionConfig();
-        //cc.loadDetails(new JPanel());
     }
 
     @After

@@ -3,6 +3,7 @@ package jmri.jmrix.configurexml;
 import org.junit.*;
 import org.jdom2.Element;
 import jmri.jmrix.ConnectionConfig;
+import javax.swing.JPanel;
 
 /**
  * Base tests for ConnectionConfigXml objects.
@@ -21,6 +22,7 @@ abstract public class AbstractConnectionConfigXmlTestBase extends jmri.configure
     @Test
     public void storeTest(){
         Assume.assumeNotNull(cc);
+        cc.loadDetails(new JPanel());
         Element e = xmlAdapter.store(cc);
         Assert.assertNotNull("XML Element Produced",e); 
     }

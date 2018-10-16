@@ -3,7 +3,6 @@ package jmri.jmrix.loconet.locobufferusb.configurexml;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import jmri.jmrix.loconet.locobufferusb.ConnectionConfig;
-import javax.swing.JPanel;
 
 /**
  * ConnectionConfigXmlTest.java
@@ -20,7 +19,6 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
         JUnitUtil.setUp();
         xmlAdapter = new ConnectionConfigXml();
         cc = new ConnectionConfig();
-        cc.loadDetails(new JPanel());
     }
 
     @After

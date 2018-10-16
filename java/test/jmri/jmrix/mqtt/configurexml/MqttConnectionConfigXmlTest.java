@@ -3,7 +3,6 @@ package jmri.jmrix.mqtt.configurexml;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import jmri.jmrix.mqtt.MqttConnectionConfig;
-import javax.swing.JPanel;
 
 
 /**
@@ -21,7 +20,6 @@ public class MqttConnectionConfigXmlTest extends jmri.jmrix.configurexml.Abstrac
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         xmlAdapter = new MqttConnectionConfigXml();
         cc = new MqttConnectionConfig();
-        cc.loadDetails(new JPanel());
     }
 
     @After

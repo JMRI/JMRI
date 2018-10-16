@@ -4,7 +4,6 @@ import jmri.jmrix.cmri.serial.sim.ConnectionConfig;
 import jmri.jmrix.cmri.serial.sim.SimDriverAdapter;
 import jmri.util.JUnitUtil;
 import org.junit.*;
-import javax.swing.JPanel;
 
 /**
  * ConnectionConfigXmlTest.java
@@ -22,7 +21,6 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         xmlAdapter = new ConnectionConfigXml();
         cc = new ConnectionConfig();
-        cc.loadDetails(new JPanel());
     }
 
     @After

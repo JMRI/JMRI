@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import jmri.jmrix.lenz.li100f.ConnectionConfig;
-import javax.swing.JPanel;
 
 /**
  * Tests for the ConnectionConfigXml class
@@ -22,6 +21,5 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.lenz.configurexml.Abstra
         JUnitUtil.setUp();
         xmlAdapter = new ConnectionConfigXml();
         cc = new ConnectionConfig();
-        cc.loadDetails(new JPanel());
     }
 }
