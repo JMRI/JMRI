@@ -20,8 +20,12 @@ public class AnymaDMX_ConnectionConfigXmlTest extends jmri.jmrix.configurexml.Ab
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new AnymaDMX_ConnectionConfigXml();
-        cc = new AnymaDMX_ConnectionConfig();
-        cc.loadDetails(new JPanel());
+        /* setting up the adapter through getInstance() makes calls to libusb
+           which doesn't work right on CI servers.
+           commenting out the creation of cc causes the tests that use it to not
+           run in the parent class. */
+        //cc = new AnymaDMX_ConnectionConfig();
+        //cc.loadDetails(new JPanel());
     }
 
     @After
