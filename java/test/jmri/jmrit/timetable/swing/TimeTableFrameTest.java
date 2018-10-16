@@ -157,6 +157,7 @@ public class TimeTableFrameTest {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ttf = new TimeTableFrame("");
         ttf.setVisible(true);
     }
@@ -166,5 +167,4 @@ public class TimeTableFrameTest {
         ttf = null;
         jmri.util.JUnitUtil.tearDown();
     }
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableFrameTest.class);
 }

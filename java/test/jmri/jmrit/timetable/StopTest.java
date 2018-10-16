@@ -1,5 +1,6 @@
 package jmri.jmrit.timetable;
 
+import java.awt.GraphicsEnvironment;
 import jmri.jmrit.timetable.swing.*;
 import jmri.util.JUnitUtil;
 import org.junit.*;
@@ -41,6 +42,7 @@ public class StopTest {
 
     @Test
     public void testToString() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TimeTableFrame f = new TimeTableFrame("");
         TimeTableDataManager dm = f.getDataManager();
         Station station = new Station(1, 1);

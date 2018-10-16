@@ -1,5 +1,6 @@
 package jmri.jmrit.timetable.configurexml;
 
+import java.awt.GraphicsEnvironment;
 import org.junit.*;
 import jmri.jmrit.timetable.*;
 import jmri.jmrit.timetable.swing.*;
@@ -18,7 +19,9 @@ public class TimeTableXmlTest {
 
     @Test
     public void testLoadAndStore() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TimeTableFrame f = new TimeTableFrame("");
+        Assert.assertNotNull(f);
         boolean loadResult = TimeTableXml.doLoad();
         Assert.assertTrue("Load Failed", loadResult);  // NOI18N
         boolean storeResult = TimeTableXml.doStore();
