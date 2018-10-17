@@ -123,6 +123,13 @@ public class LocoNetSlot {
      }
 
     /**
+     *
+     * @return the protocol level support by the slot.
+     */
+    public int getProtocol() {
+        return loconetProtocol;
+    }
+    /**
      * Get decoder mode.
      *
      * The decoder (operating) mode is taken from those bits in the slot's STAT
