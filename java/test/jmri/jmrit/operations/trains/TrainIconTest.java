@@ -35,7 +35,7 @@ public class TrainIconTest {
         trainicon1.setTrain(train1);
         Assert.assertEquals("TrainIcon set train", "TESTNAME", trainicon1.getTrain().getName());
         editor.getTargetFrame().dispose();
-    }
+    } 
 
     @Test
     public void testTrainIconColorChangeAttributes() {
