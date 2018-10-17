@@ -211,8 +211,20 @@
                     <label><text> </text></label>
                     <display item="Bank C Range I Diesel notch after idle"/>
                     <label><text> </text></label>
+                    <!-- Bank C Range I Speed step next gear 1 - 13 -->
                     <display item="Bank C Range I Speed step next gear 1"/>
-                    <!-- TODO add Bank C Range I Speed step next gear 2 - 12 here -->
+                    <display item="Bank C Range I Speed step next gear 2"/>
+                    <display item="Bank C Range I Speed step next gear 3"/>
+                    <display item="Bank C Range I Speed step next gear 4"/>
+                    <display item="Bank C Range I Speed step next gear 5"/>
+                    <display item="Bank C Range I Speed step next gear 6"/>
+                    <display item="Bank C Range I Speed step next gear 7"/>
+                    <display item="Bank C Range I Speed step next gear 8"/>
+                    <display item="Bank C Range I Speed step next gear 9"/>
+                    <display item="Bank C Range I Speed step next gear 10"/>
+                    <display item="Bank C Range I Speed step next gear 11"/>
+                    <display item="Bank C Range I Speed step next gear 12"/>
+                    <display item="Bank C Range I Speed step next gear 13"/>
                 </column>
             </group>
             <group>
@@ -283,8 +295,20 @@
                     <label><text> </text></label>
                     <display item="Bank C Range II Diesel notch after idle"/>
                     <label><text> </text></label>
+                    <!-- Bank C Range II Speed step next gear 1 - 13 -->
                     <display item="Bank C Range II Speed step next gear 1"/>
-                    <!-- TODO add Bank C Range II Speed step next gear 2 - 12 here -->
+                    <display item="Bank C Range II Speed step next gear 2"/>
+                    <display item="Bank C Range II Speed step next gear 3"/>
+                    <display item="Bank C Range II Speed step next gear 4"/>
+                    <display item="Bank C Range II Speed step next gear 5"/>
+                    <display item="Bank C Range II Speed step next gear 6"/>
+                    <display item="Bank C Range II Speed step next gear 7"/>
+                    <display item="Bank C Range II Speed step next gear 8"/>
+                    <display item="Bank C Range II Speed step next gear 9"/>
+                    <display item="Bank C Range II Speed step next gear 10"/>
+                    <display item="Bank C Range II Speed step next gear 11"/>
+                    <display item="Bank C Range II Speed step next gear 12"/>
+                    <display item="Bank C Range II Speed step next gear 13"/>
                 </column>
             </group>
             <group>
@@ -355,8 +379,20 @@
                     <label><text> </text></label>
                     <display item="Bank C Range III Diesel notch after idle"/>
                     <label><text> </text></label>
+                    <!-- Bank C Range III Speed step next gear 1 - 13 -->
                     <display item="Bank C Range III Speed step next gear 1"/>
-                    <!-- TODO add Bank C Range III Speed step next gear 2 - 12 here -->
+                    <display item="Bank C Range III Speed step next gear 2"/>
+                    <display item="Bank C Range III Speed step next gear 3"/>
+                    <display item="Bank C Range III Speed step next gear 4"/>
+                    <display item="Bank C Range III Speed step next gear 5"/>
+                    <display item="Bank C Range III Speed step next gear 6"/>
+                    <display item="Bank C Range III Speed step next gear 7"/>
+                    <display item="Bank C Range III Speed step next gear 8"/>
+                    <display item="Bank C Range III Speed step next gear 9"/>
+                    <display item="Bank C Range III Speed step next gear 10"/>
+                    <display item="Bank C Range III Speed step next gear 11"/>
+                    <display item="Bank C Range III Speed step next gear 12"/>
+                    <display item="Bank C Range III Speed step next gear 13"/>
                 </column>
             </group>
         </row>
