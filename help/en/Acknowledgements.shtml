@@ -87,11 +87,12 @@
         <li>Rick Beaber contributed definitions for MRC
         decoders</li>
 
-        <li>Robin Becker, who has had a major role in the
+        <li>Robin Becker, <!-- n3ix -->
+        who has had a major role in the
         Soundtraxx decoder definitions, created our Windows icons,
         has debugged several difficult problems, created several
         Tam Valley decoder definitions, and is a primary author of
-        EngineDriver.</li><!-- n3ix on GitHub -->
+        EngineDriver.</li>
 
         <li>John Bell, who improved the NCE instructions</li>
 
@@ -195,7 +196,7 @@
         <a href="http://jmri.org/k/UDRP/index.shtml">despicable
         behavior</a>, and wrote a scripting example page</li>
 
-        <li><a href="https://github.com/JMRI/JMRI/pulls?utf8=✓&q=author%3Asilverailscolo+">Egbert Broerse</a>, 
+        <li><a href="https://github.com/JMRI/JMRI/pulls?utf8=✓&q=author%3Asilverailscolo+">Egbert Broerse</a>, <!-- silverailscolo -->
         who worked on translations, added
         Switchboards, graphic state display in the tables,
         the Output Matrix signal mast and the Rio Grande 1965
@@ -425,8 +426,9 @@
 
         <li>William C Gage provided an MRC decoder definition</li>
 
-        <li>Steve Gigiel, who fixed the XML definition of the block contents icon,
-        and helped fix the Transit implementation of comments.</li><!-- Pugwash1 -->
+        <li>Steve Gigiel, <!-- Pugwash1 -->
+        who fixed the XML definition of the block contents icon,
+        and helped fix the Transit implementation of comments.</li>
 
         <li>Brian Gilhuly, who helped debug a programmer problem in
         JMRI 3.11.1</li>
@@ -568,13 +570,16 @@
         several Quantum decoders</li>
 
         <li>The Jython project, who provided a very powerful
-        scripting engine for us <a name="K" id="K"></a></li>
+        scripting engine for us 
+        
+        <a name="K" id="K"></a></li>
 
         <li>Georg Kautzsch, who provided a decoder definition for
         the Uhlenbrock 67800 servo decoder.</li>
 
         <li>
-        Klaus Killinger, who improved the sound support <!-- klk32003 -->
+        Klaus Killinger, <!-- klk32003 -->
+            who improved the sound support
             and has provided multiple sound projects</li>
 
         <li>Scott Kitts, who helped debug the new communications
@@ -612,7 +617,9 @@
         <li>Tighe Kuykendall improved documentation.</li>
 
         <li>Bjorn Kvisli, who provided Doehler &amp; Haass decoder
-        definitions. <a name="L" id="L"></a></li>
+        definitions. 
+        
+        <a name="L" id="L"></a></li>
 
         <li>John Lang, who provided several signal definitions</li>
 
@@ -628,8 +635,9 @@
         He's also put a lot of work into test and development
         of the C/MRI support.</li>
 
-        <li>Alain Le Marchand, who provided a number of decoder
-        definitions and updates</li><!-- GitHub: AlanUS -->
+        <li>Alain Le Marchand, <!-- GitHub: AlanUS -->
+        who provided a number of decoder
+        definitions and updates</li>
 
         <li>Karl Johan Lisby, <!-- kjlisby  -->
         who made large improvements to the
@@ -671,6 +679,11 @@
         <li>Peter MacKenzie, who added definitions for the Hattons
         MD4 and Gaugemaster Opti DCC25 decoders.</li>
 
+        <li>Konrad Malkowski, <!-- DrCodeWizzard -->
+        who created and contributed the 
+        <a href="http://jmri.org/resources/icons/functionicons">function label icon sets</a>.
+        </li>
+
         <li>Peter Mansvelder, who contributed Fleischmann decoder
         definitions</li>
 
@@ -683,9 +696,9 @@
         <li>John McAleely, who contributed Hornby and Bachmann
         decoder definitions</li>
 
-        <li>Greg McCartney, who provided a <a href=
-        "http://jmri.org/xml/signals/NW-1981/index.shtml">Norfolk
-        and Western signal definition</a>, the <a href=
+        <li>Greg McCartney, who provided a 
+        <a href="http://jmri.org/xml/signals/NW-1981/index.shtml">Norfolk and Western signal definition</a>, 
+        the <a href=
         "http://jmri.org/xml/signals/B&amp;O-1980/index.shtml">B&amp;O
         1980 signal definition</a>, and the
         <a href="http://jmri.org/xml/signals/SOU-1981/index.shtml">Southern 1981 system</a>.
@@ -872,9 +885,9 @@
         <li>Joe Salemi, who contributed the Atlas 345 decoder
         definition and updated the TCS Tx definition.</li>
 
-        <li><a href="https://github.com/JMRI/JMRI/pulls?utf8=✓&q=author%3Adsand47+">Dave Sand</a>, 
+        <li><a href="https://github.com/JMRI/JMRI/pulls?utf8=✓&q=author%3Adsand47+">Dave Sand</a>, <!-- dsand47 -->
         who's worked on Layout Editor, Logix, 
-        Entry/Exit signaling and other things.</li><!-- dsand47 -->
+        Entry/Exit signaling and other things.</li>
         
         <li>Richard Sauerbrun provided a definition for the
         DN163K4B decoder.</li>
@@ -1103,7 +1116,8 @@
         <li>Mike Yawn, who provided the instructions for building
         under Eclipse <a name="Z" id="Z"></a></li>
 
-        <li>Steve Young, who helped with CBUS documentation and the Groups.io migration</li><!-- icklesteve -->
+        <li>Steve Young, <!-- icklesteve -->
+            who helped with CBUS documentation and the Groups.io migration</li>
 
         <li>Luis Zamora, who done a lot of work on the 
         Catalan translation</li><!-- eldelinux --> 

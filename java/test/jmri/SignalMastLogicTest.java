@@ -83,7 +83,6 @@ public class SignalMastLogicTest {
      * Check that you can rename the SignalMast user names
      */
     @Test
-    @Ignore("This test fails frequently on appveyor. Possible threading issue")
     public void testRename() {
         // provide 2 virtual signal masts:
         SignalMast sm1 = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0001)");
@@ -100,23 +99,20 @@ public class SignalMastLogicTest {
         Assert.assertNotNull("SignalMastLogic is null!", sml);
 
         sml.initialise();
-        new EventTool().waitNoEvent(10);
-        Assert.assertEquals("sm1 aspect (1)", "Medium Approach", sm1.getAspect());
-        Assert.assertEquals("sm2 aspect (1)", "Stop", sm2.getAspect());
-
+        JUnitUtil.waitFor( ()->{ return sm1.getAspect().equals("Medium Approach"); }, "sm1 aspect (1)" );
+        JUnitUtil.waitFor( ()->{ return sm2.getAspect().equals("Stop"); }, "sm2 aspect (1)" );
+        
         sm2.setAspect("Clear");
-        new EventTool().waitNoEvent(10);
-        Assert.assertEquals("sm1 aspect (2)", "Clear", sm1.getAspect());
-        Assert.assertEquals("sm2 aspect (2)", "Clear", sm2.getAspect());
+        JUnitUtil.waitFor( ()->{ return sm1.getAspect().equals("Clear"); }, "sm1 aspect (2)" );
+        JUnitUtil.waitFor( ()->{ return sm2.getAspect().equals("Clear"); }, "sm2 aspect (2)" );
 
         // rename the masts
         sm1.setUserName("new name 1");
         sm2.setUserName("new name 2");
 
         sm2.setAspect("Stop");
-        new EventTool().waitNoEvent(10);
-        Assert.assertEquals("sm1 aspect (3)", "Medium Approach", sm1.getAspect());
-        Assert.assertEquals("sm2 aspect (3)", "Stop", sm2.getAspect());
+        JUnitUtil.waitFor( ()->{ return sm1.getAspect().equals("Medium Approach"); }, "sm1 aspect (3)" );
+        JUnitUtil.waitFor( ()->{ return sm2.getAspect().equals("Stop"); }, "sm2 aspect (3)" );
 
         // clean up
         sml.dispose();

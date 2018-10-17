@@ -584,7 +584,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Setup.setSwitchListRouteLocationCommentEnabled(true);
 
         TrainScheduleManager tsmanager = InstanceManager.getDefault(TrainScheduleManager.class);
-        tmanager.setTrainSecheduleActiveId(tsmanager.getSchedulesByIdList().get(0).getId());
+        tsmanager.setTrainScheduleActiveId(tsmanager.getSchedulesByIdList().get(0).getId());
 
     }
 

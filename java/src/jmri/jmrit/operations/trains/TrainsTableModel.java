@@ -16,7 +16,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import jmri.InstanceManager;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
-import jmri.jmrit.operations.routes.RouteEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.swing.XTableColumnModel;
@@ -252,7 +251,6 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         switch (col) {
             case BUILD_COLUMN:
             case BUILDBOX_COLUMN:
-            case ROUTE_COLUMN:
             case ACTION_COLUMN:
             case EDIT_COLUMN:
                 return true;
@@ -359,9 +357,6 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             case BUILD_COLUMN:
                 buildTrain(row);
                 break;
-            case ROUTE_COLUMN:
-                editRoute(row);
-                break;
             case ACTION_COLUMN:
                 actionTrain(row);
                 break;
@@ -394,24 +389,6 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 Train train = sysList.get(row);
                 log.debug("Edit train ({})", train.getName());
                 tef = new TrainEditFrame(train);
-            }
-        });
-    }
-
-    RouteEditFrame ref = null;
-
-    private void editRoute(int row) {
-        if (ref != null) {
-            ref.dispose();
-        }
-        // use invokeLater so new window appears on top
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                ref = new RouteEditFrame();
-                Train train = sysList.get(row);
-                log.debug("Edit route for train (" + train.getName() + ")");
-                ref.initComponents(train.getRoute(), train);
             }
         });
     }

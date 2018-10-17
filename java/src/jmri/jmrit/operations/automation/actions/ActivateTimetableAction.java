@@ -2,7 +2,6 @@ package jmri.jmrit.operations.automation.actions;
 
 import javax.swing.JComboBox;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.timetable.TrainSchedule;
 import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 
@@ -23,7 +22,8 @@ public class ActivateTimetableAction extends Action {
     @Override
     public void doAction() {
         if (getAutomationItem() != null) {
-            InstanceManager.getDefault(TrainManager.class).setTrainSecheduleActiveId(getAutomationItem().getTrainScheduleId());
+            InstanceManager.getDefault(TrainScheduleManager.class)
+                    .setTrainScheduleActiveId(getAutomationItem().getTrainScheduleId());
             finishAction(true);
         }
     }
@@ -36,7 +36,9 @@ public class ActivateTimetableAction extends Action {
     @Override
     public JComboBox<TrainSchedule> getComboBox() {
         JComboBox<TrainSchedule> cb = InstanceManager.getDefault(TrainScheduleManager.class).getSelectComboBox();
-        cb.setSelectedItem(getAutomationItem().getTrainSchedule());
+        if (getAutomationItem() != null) {
+            cb.setSelectedItem(getAutomationItem().getTrainSchedule());
+        }
         return cb;
     }
 }

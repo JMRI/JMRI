@@ -31,16 +31,11 @@ public class PrintTrainsByCarTypesAction extends AbstractAction {
     static final String TAB = "\t"; // NOI18N
     TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
 
-    public PrintTrainsByCarTypesAction(String actionName, Frame frame, boolean preview, Component pWho) {
+    public PrintTrainsByCarTypesAction(String actionName, boolean preview, Component pWho) {
         super(actionName);
-        mFrame = frame;
         isPreview = preview;
     }
 
-    /**
-     * Frame hosting the printing
-     */
-    Frame mFrame;
     /**
      * Variable to set whether this is to be printed or previewed
      */
@@ -52,7 +47,7 @@ public class PrintTrainsByCarTypesAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         // obtain a HardcopyWriter
         try {
-            writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleTrainsByType"), Control.reportFontSize, .5, .5, .5, .5,
+            writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleTrainsByType"), Control.reportFontSize, .5, .5, .5, .5,
                     isPreview);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");

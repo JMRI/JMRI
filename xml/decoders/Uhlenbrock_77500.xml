@@ -412,7 +412,7 @@
             <choice>reverse</choice>
           </enumChoice>
         </enumVal>
-        <label>Lightplugs</label>
+        <label>Light plugs</label>
       </variable>
       <variable item="Braking with" CV="49" mask="VXXXXXXX">
         <enumVal>

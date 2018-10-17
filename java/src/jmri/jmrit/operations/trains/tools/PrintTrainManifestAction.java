@@ -5,7 +5,6 @@ import java.text.MessageFormat;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainEditFrame;
 
 /**
  * Action to print a train's manifest
@@ -14,31 +13,31 @@ import jmri.jmrit.operations.trains.TrainEditFrame;
  */
 public class PrintTrainManifestAction extends AbstractAction {
 
-    public PrintTrainManifestAction(String actionName, boolean preview, TrainEditFrame frame) {
+    public PrintTrainManifestAction(String actionName, boolean preview, Train train) {
         super(actionName);
         isPreview = preview;
-        trainEditFrame = frame;
+        _train = train;
+        setEnabled(train != null);
     }
 
     /**
      * Variable to set whether this is to be printed or previewed
      */
     boolean isPreview;
-    TrainEditFrame trainEditFrame;
+    Train _train;
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Train train = trainEditFrame._train;
-        if (train == null) {
+        if (_train == null) {
             return;
         }
-        if (!train.isBuilt()) {
+        if (!_train.isBuilt()) {
             String printOrPreview = Bundle.getMessage("print");
             if (isPreview) {
                 printOrPreview = Bundle.getMessage("preview");
             }
             String string = MessageFormat.format(Bundle.getMessage("DoYouWantToPrintPreviousManifest"),
-                    new Object[]{printOrPreview, train.getName()});
+                    new Object[]{printOrPreview, _train.getName()});
             int results = JOptionPane.showConfirmDialog(null, string, MessageFormat.format(
                     Bundle.getMessage("PrintPreviousManifest"), new Object[]{printOrPreview}),
                     JOptionPane.YES_NO_OPTION);
@@ -46,9 +45,9 @@ public class PrintTrainManifestAction extends AbstractAction {
                 return;
             }
         }
-        if (!train.printManifest(isPreview)) {
+        if (!_train.printManifest(isPreview)) {
             String string = MessageFormat.format(Bundle.getMessage("NeedToBuildTrainBeforePrinting"),
-                    new Object[]{train.getName()});
+                    new Object[]{_train.getName()});
             JOptionPane.showMessageDialog(null, string, MessageFormat.format(
                     Bundle.getMessage("CanNotPrintManifest"), new Object[]{Bundle.getMessage("print")}),
                     JOptionPane.ERROR_MESSAGE);

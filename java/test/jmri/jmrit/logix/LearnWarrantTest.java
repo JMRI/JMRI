@@ -70,9 +70,9 @@ public class LearnWarrantTest {
         JFrameOperator jfo = new JFrameOperator(frame);
         pressButton(jfo, Bundle.getMessage("Calculate"));
         
-        JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("DialogTitle"));
+/*        JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("DialogTitle"));
         pressButton(jdo, Bundle.getMessage("ButtonSelect"));
-
+*/
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         JUnitUtil.waitFor(() -> {
             return (frame.getOrders() != null);

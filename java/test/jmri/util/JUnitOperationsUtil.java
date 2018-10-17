@@ -482,8 +482,7 @@ public class JUnitOperationsUtil {
 
     public static Car createAndPlaceCar(String road, String number, String type, String length, Track track,
             int moves) {
-        return createAndPlaceCar(road, number, type, length, "",
-                "", track, moves);
+        return createAndPlaceCar(road, number, type, length, "", "", track, moves);
     }
 
     public static Car createAndPlaceCar(String road, String number, String type, String length, String owner,

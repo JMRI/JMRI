@@ -57,7 +57,7 @@ public class TrackRoadEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(tlef.saveTrackButton);
 
         // error dialog window show appear
-        JemmyUtil.pressDialogButton(tlef, Bundle.getMessage("ErrorNoRoads"), "OK");
+        JemmyUtil.pressDialogButton(tlef, Bundle.getMessage("ErrorNoRoads"), Bundle.getMessage("ButtonOK"));
 
         // only road "AA" is to be accepted
         JemmyUtil.enterClickAndLeave(tlef.addRoadButton);

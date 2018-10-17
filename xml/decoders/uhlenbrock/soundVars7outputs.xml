@@ -27,12 +27,12 @@
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
       <revnumber>1</revnumber>
-      <date>2018-09-30</date>
+      <date>2018-10-11</date>
       <authorinitials>EB</authorinitials>
       <revremark>Initial version as separate file, taken from Uhlenbrock_32300.xml</revremark>
     </revision>
-      <!-- Valid only for certain Uhlenbrock decoders with IntelliSound3 Module,
-           such as 32300, 36320, 36360 (non exhaustive list) -->
+      <!-- Valid only for certain Uhlenbrock decoders with IntelliSound3/4 Module,
+           such as 32300, 36320, 36360 (IS3), 32500, 32504, 36520, 36560 (IS4) (non exhaustive list) -->
   </revhistory>
     <variable item="SUSI-range" CV="897.0" default="1" tooltip="Will not read/write properly if multiple SUSI modules attached">
         <!-- Note: this is a normal CV, with no need to specify the index. However, setting the index allows resetting it to zero -->
@@ -217,6 +217,14 @@
         <label xml:lang="de">F28 aktiviert Sound</label>
     </variable>
     <!-- End Function Mapping -->
+    <variable item="Range I Sound switch off time" CV="933.0" default="0" include="32500,32504,36520,36560">
+        <decVal/>
+        <label>Sound switch off time</label>
+        <label xml:lang="de">Sound Ausschaltzeit</label>
+        <label xml:lang="nl">Uitschakeltijd Geluid</label>
+        <tooltip>0=Off 1-255 sec.</tooltip>
+        <tooltip xml:lang="de">0=Aus 1-255 Sek.</tooltip>
+    </variable>
     <variable item="Range I Threshold for cooling fan in E-lok" CV="934.0" default="200">
         <decVal/>
         <label>Threshold for cooling fan (E-loco)</label>
@@ -247,6 +255,11 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Chuffs halved</label>
         <label xml:lang="de">Auspuffschläge halbieren</label>
+    </variable>
+    <variable item="Range I Chuffs halved" CV="935.0" mask="XXXXVXXX" default="1" include="32500,32504,36520,36560">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Break squeel by speed step 0</label>
+        <label xml:lang="de">Bremsenquiet. bei Fahrstufe 0</label>
     </variable>
     <variable item="Range I Firebox" CV="935.0" mask="XXXVXXXX" default="0">
         <enumVal>
@@ -304,14 +317,23 @@
         <tooltip>0-100, Time between two chuffs at max speed</tooltip>
         <tooltip xml:lang="de">0-100, Zeit zwischen zwei Auspuffschlägen bei maximaler Lokgeschwindigkeit ohne Kontakt</tooltip>
     </variable>
-    <variable item="Range I Time between two chuffs at min speed" CV="939.0" default="230">
-        <decVal min="50"/>
+    <variable item="Range I Time between two chuffs at min speed" CV="939.0" default="230" exclude="32500,32504,36520,36560">
+        <decVal min="50" max="255"/>
+        <label>Time between chuffs at min speed</label>
+        <label xml:lang="de">Zeit zwischen Auspuffschlägen bei min. Geschw.</label>
+        <tooltip>50-255, Time between two chuffs at min speed</tooltip>
+        <tooltip xml:lang="de">50-255, Zeit zwischen zwei Auspuffschlägen bei minimaler Lokgeschwindigkeit ohne Kontakt</tooltip>
+    </variable>
+    <!-- copied from previous variable, for IntelliSound4, only difference: default value 245 instead of 230 -->
+    <variable item="Range I Time between two chuffs at min speed" CV="939.0" default="245" include="32500,32504,36520,36560">
+        <decVal min="50" max="255"/>
         <label>Time between chuffs at min speed</label>
         <label xml:lang="de">Zeit zwischen Auspuffschlägen bei min. Geschw.</label>
         <tooltip>50-255, Time between two chuffs at min speed</tooltip>
         <tooltip xml:lang="de">50-255, Zeit zwischen zwei Auspuffschlägen bei minimaler Lokgeschwindigkeit ohne Kontakt</tooltip>
     </variable>
     <!-- Bank A CVs (Index CV 1021 = 1) -->
+    <!-- TODO group hide/show with CV 1021 choice = 1 -->
     <variable item="Range I Hardware Version" CV="900.1" readOnly="yes" default="0">
         <decVal/>
         <label>Hardware Version</label>
@@ -354,26 +376,72 @@
         <tooltip xml:lang="de">25-255, relative Lautstärke für eigenen Sound 4</tooltip>
     </variable>
     <!-- Special functions assignment -->
+    <!-- IntelliSound4 914A, 919A - 923A-->
+    <variable item="Range I Alternative Volume" CV="914.1" default="21" include="32500,32504,36520,36560">
+        <decVal min="0" max="28"/>
+        <label>Special function Alt. Volume</label>
+        <label xml:lang="de">Sonderfunktion Alternativlautstärke</label>
+        <tooltip>Special function switches alternative volume from CV 908B</tooltip>
+        <tooltip xml:lang="de">Sonderfunktion schaltet Alternativlautstärke aus CV 908B</tooltip>
+    </variable>
+    <variable item="Range I Idle 0" CV="919.1" mask="XXXXXXXV" default="0" include="32500,32504,36520,36560">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Force Diesel loco into idle</label>
+        <label xml:lang="de">Zwinge Diesellok in Leerlauf</label>
+        <tooltip>A diesel loco is forced into idle when the speed step in the center = 0</tooltip>
+        <tooltip xml:lang="de">Bei Diesellok zwingend in Leerlauf wenn Fahrstufe an der Zentrale = 0</tooltip>
+    </variable>
+    <variable item="Range I Idle 1" CV="919.1" mask="XXXXXXVX" default="0" include="32500,32504,36520,36560">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Brake squeal Auto Off</label>
+        <label xml:lang="de">Bremsenquietschen autom. Aus</label>
+        <tooltip>Switch off brake squeal as soon as the speed step &lt;&gt; 0</tooltip>
+        <tooltip xml:lang="de">Abschalten Bremsenquietschen sobald Fahrstufe &lt;&gt; 0</tooltip>
+    </variable>
+    <variable item="Range I Idle 2" CV="919.1" mask="XXXXXVXX" default="0" include="32500,32504,36520,36560">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Channel 1 No Idle</label>
+        <label xml:lang="de">Kanal 1 Ohne Standgeräusch</label>
+        <tooltip>Channel 1 also without idle noises (if necessary, not when running)</tooltip>
+        <tooltip xml:lang="de">Kanal 1 auch ohne Standgeräusch (ggf. aber nicht in Fahrt)</tooltip>
+    </variable>
+    <variable item="Range I Idle 5" CV="919.1" mask="XXVXXXXX" default="0" include="32500,32504,36520,36560">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Channel 4 No Idle</label>
+        <label xml:lang="de">Kanal 4 Ohne Standgeräusch</label>
+        <tooltip>Channel 4 also without idle noises (if necessary, not when running)</tooltip>
+        <tooltip xml:lang="de">Kanal 4 auch ohne Standgeräusch (ggf. aber nicht in Fahrt)</tooltip>
+    </variable>
+    <variable item="Range I Squeal Start Function" CV="922.1" default="16" include="32500,32504,36520,36560">
+        <decVal min="0" max="127"/>
+        <label>Speed step at which curve squealing starts</label>
+        <label xml:lang="de">Fahrstufe ab der Kurvenquietschen einsetzt</label>
+    </variable>
+    <variable item="Range I Squeal Stop Function" CV="923.1" default="48" include="32500,32504,36520,36560">
+        <decVal min="0" max="127"/>
+        <label>Speed step at which curve squealing stops</label>
+        <label xml:lang="de">Fahrstufe ab der Kurvenquietschen aufhört</label>
+    </variable>
     <variable item="Range I Screeching off Function" CV="924.1" default="31">
         <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoice.xml"/>
         <label>Screeching off Function</label>
         <label xml:lang="de">Kurvenquietschen aus Funktion</label>
-        <tooltip>&lt;html&gt;Special function with which the external input on E-locos and Diesel locos&lt;br&gt; for the Curve screeching, can be switched off&lt;/html&gt;</tooltip>
-        <tooltip xml:lang="de">&lt;html&gt;Sonderfunktion mit der der externe Eingang bei E-Loks und Dieselloks&lt;br&gt; für das Kurvenquietschen abgeschaltet werden kann&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Special function with which the external input on E-locos and Diesel locos&lt;br&gt;for the Curve screeching, can be switched off&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Sonderfunktion mit der der externe Eingang bei E-Loks und Dieselloks&lt;br&gt;für das Kurvenquietschen abgeschaltet werden kann&lt;/html&gt;</tooltip>
     </variable>
     <variable item="Range I Start-up delay off Function" CV="925.1" default="31">
         <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoice.xml"/>
         <label>Start-up delay off Func.</label>
         <label xml:lang="de">Wartezeit Anfahr. aus Funkt.</label>
-        <tooltip>&lt;html&gt;Special function with which the start-up delay (CV 926 A)&lt;br&gt; can be switched off&lt;/html&gt;</tooltip>
-        <tooltip xml:lang="de">&lt;html&gt;Sonderfunktion mit der die Wartezeit aus (CV 926 A)&lt;br&gt; abgeschaltet werden kann&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Special function with which the start-up delay (CV 926 A)&lt;br&gt;can be switched off&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Sonderfunktion mit der die Wartezeit aus (CV 926 A)&lt;br&gt;abgeschaltet werden kann&lt;/html&gt;</tooltip>
     </variable>
     <variable item="Range I Start-up delay" CV="926.1" default="255">
         <decVal/>
         <label>Start-up delay</label>
         <label xml:lang="de">Wartezeit beim Anfahren</label>
-        <tooltip>&lt;html&gt;in 32ms steps (30 = 1 second, 254 = 8.13 seconds)&lt;br&gt; 0 = none, 255 = off (Delay then Sound controlled)&lt;/html&gt;</tooltip>
-        <tooltip xml:lang="de">&lt;html&gt;in 32ms Schritten (30 = 1 Sekunden, 254 = 8.13 Sekunden)&lt;br&gt; 0 = keine, 255 = aus (Wartezeit dann Sound gesteuert)&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;in 32ms steps (30 = 1 second, 254 = 8.13 seconds)&lt;br&gt;0 = none, 255 = off (Delay then Sound controlled)&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;in 32ms Schritten (30 = 1 Sekunden, 254 = 8.13 Sekunden)&lt;br&gt;0 = keine, 255 = aus (Wartezeit dann Sound gesteuert)&lt;/html&gt;</tooltip>
     </variable>
     <variable item="Range I Steam load time acceleration" CV="927.1" default="5">
         <decVal min="5" max="20"/>
@@ -414,8 +482,8 @@
         <decVal max="100"/>
         <label>Steam output at start-up</label>
         <label xml:lang="de">Dampfausg. beim Anfahren</label>
-        <tooltip>&lt;html&gt;0-100 %, Steam out. (SA1) at start-up with Sound on&lt;br&gt; During the delay (CV 926 A) a connect smoke generator is preheated to this value&lt;/html&gt;</tooltip>
-        <tooltip xml:lang="de">&lt;html&gt;0-100 %, Dampfausg. (SA1) beim Anfahren wenn Sound an&lt;br&gt; Während der Wartezeit (CV 926 A) wird ein angeschlossener Dampfgenerator mit diesem Wert vorgeheizt&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;0-100 %, Steam out. (SA1) at start-up with Sound on&lt;br&gt;During the delay (CV 926 A) a connect smoke generator is preheated to this value&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0-100 %, Dampfausg. (SA1) beim Anfahren wenn Sound an&lt;br&gt;Während der Wartezeit (CV 926 A) wird ein angeschlossener Dampfgenerator mit diesem Wert vorgeheizt&lt;/html&gt;</tooltip>
     </variable>
     <!-- automatically triggered Sounds when driving off -->
     <variable item="Range I Timeout Short whistle" CV="933.1" default="255">
@@ -631,6 +699,14 @@
         <label xml:lang="de">F28 aktiviert Sound</label>
     </variable>
     <!-- End Function Mapping -->
+    <variable item="Range II Sound switch off time" CV="973.0" default="0" include="32500,32504,36520,36560">
+        <decVal/>
+        <label>Sound switch off time</label>
+        <label xml:lang="de">Sound Ausschaltzeit</label>
+        <label xml:lang="nl">Uitschakeltijd Geluid</label>
+        <tooltip>0=Off 1-255 sec.</tooltip>
+        <tooltip xml:lang="de">0=Aus 1-255 Sek.</tooltip>
+    </variable>
     <variable item="Range II Threshold for cooling fan in E-lok" CV="974.0" default="200">
         <decVal/>
         <label>Threshold for cooling fan (E-loco)</label>
@@ -718,8 +794,16 @@
         <tooltip>0-100, Time between two chuffs at max speed</tooltip>
         <tooltip xml:lang="de">0-100, Zeit zwischen zwei Auspuffschlägen bei maximaler Lokgeschwindigkeit ohne Kontakt</tooltip>
     </variable>
-    <variable item="Range II Time between two chuffs at min speed" CV="979.0" default="230">
-        <decVal min="50"/>
+    <variable item="Range II Time between two chuffs at min speed" CV="979.0" default="230" exclude="32500,32504,36520,36560">
+        <decVal min="50" max="255"/>
+        <label>Time between chuffs at min speed</label>
+        <label xml:lang="de">Zeit zwischen Auspuffschlägen bei min. Geschw.</label>
+        <tooltip>50-255, Time between two chuffs at min speed</tooltip>
+        <tooltip xml:lang="de">50-255, Zeit zwischen zwei Auspuffschlägen bei minimaler Lokgeschwindigkeit ohne Kontakt</tooltip>
+    </variable>
+    <!-- copied from previous variable, for IntelliSound4, only difference: default value 245 instead of 230 -->
+    <variable item="Range II Time between two chuffs at min speed" CV="979.0" default="245" include="32500,32504,36520,36560">
+        <decVal min="50" max="255"/>
         <label>Time between chuffs at min speed</label>
         <label xml:lang="de">Zeit zwischen Auspuffschlägen bei min. Geschw.</label>
         <tooltip>50-255, Time between two chuffs at min speed</tooltip>
@@ -768,26 +852,72 @@
         <tooltip xml:lang="de">25-255, relative Lautstärke für eigenen Sound 4</tooltip>
     </variable>
     <!-- Special functions assignment -->
+    <!-- IntelliSound4 954A, 959A - 963A-->
+    <variable item="Range II Alternative Volume" CV="954.1" default="21" include="32500,32504,36520,36560">
+        <decVal min="0" max="28"/>
+        <label>Special function Alt. Volume</label>
+        <label xml:lang="de">Sonderfunktion Alternativlautstärke</label>
+        <tooltip>Special function switches alternative volume from CV 948B</tooltip>
+        <tooltip xml:lang="de">Sonderfunktion schaltet Alternativlautstärke aus CV 948B</tooltip>
+    </variable>
+    <variable item="Range II Idle 0" CV="959.1" mask="XXXXXXXV" default="0" include="32500,32504,36520,36560">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Force Diesel loco into idle</label>
+        <label xml:lang="de">Zwinge Diesellok in Leerlauf</label>
+        <tooltip>A diesel loco is forced into idle when the speed step in the center = 0</tooltip>
+        <tooltip xml:lang="de">Bei Diesellok zwingend in Leerlauf wenn Fahrstufe an der Zentrale = 0</tooltip>
+    </variable>
+    <variable item="Range II Idle 1" CV="959.1" mask="XXXXXXVX" default="0" include="32500,32504,36520,36560">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Brake squeal Auto Off</label>
+        <label xml:lang="de">Bremsenquietschen autom. Aus</label>
+        <tooltip>Switch off brake squeal as soon as the speed step &lt;&gt; 0</tooltip>
+        <tooltip xml:lang="de">Abschalten Bremsenquietschen sobald Fahrstufe &lt;&gt; 0</tooltip>
+    </variable>
+    <variable item="Range II Idle 2" CV="959.1" mask="XXXXXVXX" default="0" include="32500,32504,36520,36560">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Channel 1 No Idle</label>
+        <label xml:lang="de">Kanal 1 Ohne Standgeräusch</label>
+        <tooltip>Channel 1 also without idle noises (if necessary, not when running)</tooltip>
+        <tooltip xml:lang="de">Kanal 1 auch ohne Standgeräusch (ggf. aber nicht in Fahrt)</tooltip>
+    </variable>
+    <variable item="Range II Idle 5" CV="959.1" mask="XXVXXXXX" default="0" include="32500,32504,36520,36560">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Channel 4 No Idle</label>
+        <label xml:lang="de">Kanal 4 Ohne Standgeräusch</label>
+        <tooltip>Channel 4 also without idle noises (if necessary, not when running)</tooltip>
+        <tooltip xml:lang="de">Kanal 4 auch ohne Standgeräusch (ggf. aber nicht in Fahrt)</tooltip>
+    </variable>
+    <variable item="Range II Squeal Start Function" CV="962.1" default="16" include="32500,32504,36520,36560">
+        <decVal min="0" max="127"/>
+        <label>Speed step at which curve squealing starts</label>
+        <label xml:lang="de">Fahrstufe ab der Kurvenquietschen einsetzt</label>
+    </variable>
+    <variable item="Range II Squeal Stop Function" CV="963.1" default="48" include="32500,32504,36520,36560">
+        <decVal min="0" max="127"/>
+        <label>Speed step at which curve squealing stops</label>
+        <label xml:lang="de">Fahrstufe ab der Kurvenquietschen aufhört</label>
+    </variable>
     <variable item="Range II Screeching off Function" CV="964.1" default="31">
         <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoice.xml"/>
         <label>Screeching off Function</label>
         <label xml:lang="de">Kurvenquietschen aus Funktion</label>
-        <tooltip>&lt;html&gt;Special function with which the external input on E-locos and Diesel locos&lt;br&gt; for the Curve screeching, can be switched off&lt;/html&gt;</tooltip>
-        <tooltip xml:lang="de">&lt;html&gt;Sonderfunktion mit der der externe Eingang bei E-Loks und Dieselloks&lt;br&gt; für das Kurvenquietschen abgeschaltet werden kann&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Special function with which the external input on E-locos and Diesel locos&lt;br&gt;for the Curve screeching, can be switched off&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Sonderfunktion mit der der externe Eingang bei E-Loks und Dieselloks&lt;br&gt;für das Kurvenquietschen abgeschaltet werden kann&lt;/html&gt;</tooltip>
     </variable>
     <variable item="Range II Start-up delay off Function" CV="965.1" default="31">
         <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoice.xml"/>
         <label>Start-up delay off Func.</label>
         <label xml:lang="de">Wartezeit Anfahr. aus Funkt.</label>
-        <tooltip>&lt;html&gt;Special function with which the start-up delay (CV 966 A)&lt;br&gt; can be switched off&lt;/html&gt;</tooltip>
-        <tooltip xml:lang="de">&lt;html&gt;Sonderfunktion mit der die Wartezeit aus (CV 966 A)&lt;br&gt; abgeschaltet werden kann&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Special function with which the start-up delay (CV 966 A)&lt;br&gt;can be switched off&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Sonderfunktion mit der die Wartezeit aus (CV 966 A)&lt;br&gt;abgeschaltet werden kann&lt;/html&gt;</tooltip>
     </variable>
     <variable item="Range II Start-up delay" CV="966.1" default="255">
         <decVal/>
         <label>Start-up delay</label>
         <label xml:lang="de">Wartezeit beim Anfahren</label>
-        <tooltip>&lt;html&gt;in 32ms steps (30 = 1 second, 254 = 8.13 seconds)&lt;br&gt; 0 = none, 255 = off (Delay then Sound controlled)&lt;/html&gt;</tooltip>
-        <tooltip xml:lang="de">&lt;html&gt;in 32ms Schritten (30 = 1 Sekunden, 254 = 8.13 Sekunden)&lt;br&gt; 0 = keine, 255 = aus (Wartezeit dann Sound gesteuert)&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;in 32ms steps (30 = 1 second, 254 = 8.13 seconds)&lt;br&gt;0 = none, 255 = off (Delay then Sound controlled)&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;in 32ms Schritten (30 = 1 Sekunden, 254 = 8.13 Sekunden)&lt;br&gt;0 = keine, 255 = aus (Wartezeit dann Sound gesteuert)&lt;/html&gt;</tooltip>
     </variable>
     <variable item="Range II Steam load time acceleration" CV="967.1" default="5">
         <decVal min="5" max="20"/>
@@ -828,8 +958,8 @@
         <decVal max="100"/>
         <label>Steam output at start-up</label>
         <label xml:lang="de">Dampfausg. beim Anfahren</label>
-        <tooltip>&lt;html&gt;0-100 %, Steam out. (SA1) at start-up with Sound on&lt;br&gt; During the delay (CV 966 A) a connect smoke generator is preheated to this value&lt;/html&gt;</tooltip>
-        <tooltip xml:lang="de">&lt;html&gt;0-100 %, Dampfausg. (SA1) beim Anfahren wenn Sound an&lt;br&gt; Während der Wartezeit (CV 966 A) wird ein angeschlossener Dampfgenerator mit diesem Wert vorgeheizt&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;0-100 %, Steam out. (SA1) at start-up with Sound on&lt;br&gt;During the delay (CV 966 A) a connect smoke generator is preheated to this value&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0-100 %, Dampfausg. (SA1) beim Anfahren wenn Sound an&lt;br&gt;Während der Wartezeit (CV 966 A) wird ein angeschlossener Dampfgenerator mit diesem Wert vorgeheizt&lt;/html&gt;</tooltip>
     </variable>
     <!-- automatically triggered Sounds when driving off -->
     <variable item="Range II Timeout Short whistle" CV="973.1" default="255">
@@ -1045,6 +1175,14 @@
         <label xml:lang="de">F28 aktiviert Sound</label>
     </variable>
     <!-- End Function Mapping -->
+    <variable item="Range III Sound switch off time" CV="933.0" default="0" include="32500,32504,36520,36560">
+        <decVal/>
+        <label>Sound switch off time</label>
+        <label xml:lang="de">Sound Ausschaltzeit</label>
+        <label xml:lang="nl">Uitschakeltijd Geluid</label>
+        <tooltip>0=Off 1-255 sec.</tooltip>
+        <tooltip xml:lang="de">0=Aus 1-255 Sek.</tooltip>
+    </variable>
     <variable item="Range III Threshold for cooling fan in E-lok" CV="1014.0" default="200">
         <decVal/>
         <label>Threshold for cooling fan (E-loco)</label>
@@ -1132,8 +1270,16 @@
         <tooltip>0-100, Time between two chuffs at max speed</tooltip>
         <tooltip xml:lang="de">0-100, Zeit zwischen zwei Auspuffschlägen bei maximaler Lokgeschwindigkeit ohne Kontakt</tooltip>
     </variable>
-    <variable item="Range III Time between two chuffs at min speed" CV="1019.0" default="230">
-        <decVal min="50"/>
+    <variable item="Range III Time between two chuffs at min speed" CV="1019.0" default="230" exclude="32500,32504,36520,36560">
+        <decVal min="50" max="255"/>
+        <label>Time between chuffs at min speed</label>
+        <label xml:lang="de">Zeit zwischen Auspuffschlägen bei min. Geschw.</label>
+        <tooltip>50-255, Time between two chuffs at min speed</tooltip>
+        <tooltip xml:lang="de">50-255, Zeit zwischen zwei Auspuffschlägen bei minimaler Lokgeschwindigkeit ohne Kontakt</tooltip>
+    </variable>
+    <!-- copied from previous variable, for IntelliSound4, only difference: default value 245 instead of 230 -->
+    <variable item="Range III Time between two chuffs at min speed" CV="1019.0" default="245" include="32500,32504,36520,36560">
+        <decVal min="50" max="255"/>
         <label>Time between chuffs at min speed</label>
         <label xml:lang="de">Zeit zwischen Auspuffschlägen bei min. Geschw.</label>
         <tooltip>50-255, Time between two chuffs at min speed</tooltip>
@@ -1182,26 +1328,72 @@
         <tooltip xml:lang="de">25-255, relative Lautstärke für eigenen Sound 4</tooltip>
     </variable>
     <!-- Special functions assignment -->
+    <!-- IntelliSound4 994A, 999A - 1003A-->
+    <variable item="Range III Alternative Volume" CV="994.1" default="21" include="32500,32504,36520,36560">
+        <decVal min="0" max="28"/>
+        <label>Special function Alt. Volume</label>
+        <label xml:lang="de">Sonderfunktion Alternativlautstärke</label>
+        <tooltip>Special function switches alternative volume from CV 908B</tooltip>
+        <tooltip xml:lang="de">Sonderfunktion schaltet Alternativlautstärke aus CV 908B</tooltip>
+    </variable>
+    <variable item="Range III Idle 0" CV="999.1" mask="XXXXXXXV" default="0" include="32500,32504,36520,36560">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Force Diesel loco into idle</label>
+        <label xml:lang="de">Zwinge Diesellok in Leerlauf</label>
+        <tooltip>A diesel loco is forced into idle when the speed step in the center = 0</tooltip>
+        <tooltip xml:lang="de">Bei Diesellok zwingend in Leerlauf wenn Fahrstufe an der Zentrale = 0</tooltip>
+    </variable>
+    <variable item="Range III Idle 1" CV="999.1" mask="XXXXXXVX" default="0" include="32500,32504,36520,36560">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Brake squeal Auto Off</label>
+        <label xml:lang="de">Bremsenquietschen autom. Aus</label>
+        <tooltip>Switch off brake squeal as soon as the speed step &lt;&gt; 0</tooltip>
+        <tooltip xml:lang="de">Abschalten Bremsenquietschen sobald Fahrstufe &lt;&gt; 0</tooltip>
+    </variable>
+    <variable item="Range III Idle 2" CV="999.1" mask="XXXXXVXX" default="0" include="32500,32504,36520,36560">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Channel 1 No Idle</label>
+        <label xml:lang="de">Kanal 1 Ohne Standgeräusch</label>
+        <tooltip>Channel 1 also without idle noises (if necessary, not when running)</tooltip>
+        <tooltip xml:lang="de">Kanal 1 auch ohne Standgeräusch (ggf. aber nicht in Fahrt)</tooltip>
+    </variable>
+    <variable item="Range III Idle 5" CV="999.1" mask="XXVXXXXX" default="0" include="32500,32504,36520,36560">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Channel 4 No Idle</label>
+        <label xml:lang="de">Kanal 4 Ohne Standgeräusch</label>
+        <tooltip>Channel 4 also without idle noises (if necessary, not when running)</tooltip>
+        <tooltip xml:lang="de">Kanal 4 auch ohne Standgeräusch (ggf. aber nicht in Fahrt)</tooltip>
+    </variable>
+    <variable item="Range III Squeal Start Function" CV="1002.1" default="16" include="32500,32504,36520,36560">
+        <decVal min="0" max="127"/>
+        <label>Speed step at which curve squealing starts</label>
+        <label xml:lang="de">Fahrstufe ab der Kurvenquietschen einsetzt</label>
+    </variable>
+    <variable item="Range III Squeal Stop Function" CV="1003.1" default="48" include="32500,32504,36520,36560">
+        <decVal min="0" max="127"/>
+        <label>Speed step at which curve squealing stops</label>
+        <label xml:lang="de">Fahrstufe ab der Kurvenquietschen aufhört</label>
+    </variable>
     <variable item="Range III Screeching off Function" CV="1004.1" default="31">
         <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoice.xml"/>
         <label>Screeching off Function</label>
         <label xml:lang="de">Kurvenquietschen aus Funktion</label>
-        <tooltip>&lt;html&gt;Special function with which the external input on E-locos and Diesel locos&lt;br&gt; for the Curve screeching, can be switched off&lt;/html&gt;</tooltip>
-        <tooltip xml:lang="de">&lt;html&gt;Sonderfunktion mit der der externe Eingang bei E-Loks und Dieselloks&lt;br&gt; für das Kurvenquietschen abgeschaltet werden kann&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Special function with which the external input on E-locos and Diesel locos&lt;br&gt;for the Curve screeching, can be switched off&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Sonderfunktion mit der der externe Eingang bei E-Loks und Dieselloks&lt;br&gt;für das Kurvenquietschen abgeschaltet werden kann&lt;/html&gt;</tooltip>
     </variable>
     <variable item="Range III Start-up delay off Function" CV="1005.1" default="31">
         <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoice.xml"/>
         <label>Start-up delay off Func.</label>
         <label xml:lang="de">Wartezeit Anfahr. aus Funkt.</label>
-        <tooltip>&lt;html&gt;Special function with which the start-up delay (CV 1006 A)&lt;br&gt; can be switched off&lt;/html&gt;</tooltip>
-        <tooltip xml:lang="de">&lt;html&gt;Sonderfunktion mit der die Wartezeit aus (CV 1006 A)&lt;br&gt; abgeschaltet werden kann&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;Special function with which the start-up delay (CV 1006 A)&lt;br&gt;can be switched off&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;Sonderfunktion mit der die Wartezeit aus (CV 1006 A)&lt;br&gt;abgeschaltet werden kann&lt;/html&gt;</tooltip>
     </variable>
     <variable item="Range III Start-up delay" CV="1006.1" default="255">
         <decVal/>
         <label>Start-up delay</label>
         <label xml:lang="de">Wartezeit beim Anfahren</label>
-        <tooltip>&lt;html&gt;in 32ms steps (30 = 1 second, 254 = 8.13 seconds)&lt;br&gt; 0 = none, 255 = off (Delay then Sound controlled)&lt;/html&gt;</tooltip>
-        <tooltip xml:lang="de">&lt;html&gt;in 32ms Schritten (30 = 1 Sekunden, 254 = 8.13 Sekunden)&lt;br&gt; 0 = keine, 255 = aus (Wartezeit dann Sound gesteuert)&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;in 32ms steps (30 = 1 second, 254 = 8.13 seconds)&lt;br&gt;0 = none, 255 = off (Delay then Sound controlled)&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;in 32ms Schritten (30 = 1 Sekunden, 254 = 8.13 Sekunden)&lt;br&gt;0 = keine, 255 = aus (Wartezeit dann Sound gesteuert)&lt;/html&gt;</tooltip>
     </variable>
     <variable item="Range III Steam load time acceleration" CV="1007.1" default="5">
         <decVal min="5" max="20"/>
@@ -1242,8 +1434,8 @@
         <decVal max="100"/>
         <label>Steam output at start-up</label>
         <label xml:lang="de">Dampfausg. beim Anfahren</label>
-        <tooltip>&lt;html&gt;0-100 %, Steam out. (SA1) at start-up with Sound on&lt;br&gt; During the delay (CV 1006 A) a connect smoke generator is preheated to this value&lt;/html&gt;</tooltip>
-        <tooltip xml:lang="de">&lt;html&gt;0-100 %, Dampfausg. (SA1) beim Anfahren wenn Sound an&lt;br&gt; Während der Wartezeit (CV 1006 A) wird ein angeschlossener Dampfgenerator mit diesem Wert vorgeheizt&lt;/html&gt;</tooltip>
+        <tooltip>&lt;html&gt;0-100 %, Steam out. (SA1) at start-up with Sound on&lt;br&gt;During the delay (CV 1006 A) a connect smoke generator is preheated to this value&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="de">&lt;html&gt;0-100 %, Dampfausg. (SA1) beim Anfahren wenn Sound an&lt;br&gt;Während der Wartezeit (CV 1006 A) wird ein angeschlossener Dampfgenerator mit diesem Wert vorgeheizt&lt;/html&gt;</tooltip>
     </variable>
     <!-- automatically triggered Sounds when driving off -->
     <variable item="Range III Timeout Short whistle" CV="1013.1" default="255">
@@ -1294,19 +1486,200 @@
         <tooltip>0-128, 128=tone change is off</tooltip>
         <tooltip xml:lang="de">0-128, 128 = Tonänderung bei Lastabnahme ausgeschaltet</tooltip>
     </variable>
+    <!-- IntelliSound4 Bank B Range I CV 900B - 938B, hides/shows with CV 1021 choice = 2 -->
+    <variable item="Bank B Range I Volume for chuffs" CV="900.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for chuffs</label>
+        <label xml:lang="de">Lautstärke für Auspuffschläge</label>
+        <tooltip>only steam locos</tooltip>
+        <tooltip xml:lang="de">nur Dampflok</tooltip>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 1" CV="901.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #1</label>
+        <label xml:lang="de">Lautstärke für Sound 1</label>
+    </variable>
+    <!-- TODO add Bank B Range I sounds 2 - 7 -->
+    <variable item="Bank B Range I Alternative Volume" CV="908.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Alternative Volume</label>
+        <label xml:lang="de">Alternative Lautstärke</label>
+        <tooltip>Switchable by function in CV 914A</tooltip>
+        <tooltip xml:lang="de">Schaltbar per Funktion aus CV 914A</tooltip>
+    </variable>
+    <!-- TODO add Bank B Range I sounds 9 - 25 -->
+    <!-- IntelliSound4 Bank B Range II CV 900B - 938B, hides/shows with CV 1061 choice = 2 -->
+    <variable item="Bank B Range II Volume for chuffs" CV="940.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for chuffs</label>
+        <label xml:lang="de">Lautstärke für Auspuffschläge</label>
+        <tooltip>only steam locos</tooltip>
+        <tooltip xml:lang="de">nur Dampflok</tooltip>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 1" CV="941.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #1</label>
+        <label xml:lang="de">Lautstärke für Sound 1</label>
+    </variable>
+    <!-- TODO add Bank B Range II sounds 2 - 7 -->
+    <variable item="Bank B Range II Alternative Volume" CV="948.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Alternative Volume</label>
+        <label xml:lang="de">Alternative Lautstärke</label>
+        <tooltip>Switchable by function in CV 954A</tooltip>
+        <tooltip xml:lang="de">Schaltbar per Funktion aus CV 954A</tooltip>
+    </variable>
+    <!-- TODO add Bank B Range II sounds 9 - 25 -->
+    <!-- IntelliSound4 Bank B Range III CV 900B - 938B, hides/shows with CV 1101 choice = 2 -->
+    <variable item="Bank B Range III Volume for chuffs" CV="980.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for chuffs</label>
+        <label xml:lang="de">Lautstärke für Auspuffschläge</label>
+        <tooltip>only steam locos</tooltip>
+        <tooltip xml:lang="de">nur Dampflok</tooltip>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 1" CV="981.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #1</label>
+        <label xml:lang="de">Lautstärke für Sound 1</label>
+    </variable>
+    <!-- TODO add Bank B Range III sounds 2 - 7 -->
+    <variable item="Bank B Range III Alternative Volume" CV="988.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Alternative Volume</label>
+        <label xml:lang="de">Alternative Lautstärke</label>
+        <tooltip>Switchable by function in CV 994A</tooltip>
+        <tooltip xml:lang="de">Schaltbar per Funktion aus CV 994A</tooltip>
+    </variable>
+    <!-- TODO add Bank B Range III sounds 9 - 25 -->
+    <!-- IntelliSound4 Range I Bank C CV 900C - 913C, hides/shows with CV 1021 choice = 3 -->
+    <variable item="Bank C Range I Diesel notch after idle" CV="900.3" default="40" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Diesel notch after idle</label>
+        <label xml:lang="de">Dieselrampe nach Leerlauf</label>
+    </variable>
+    <variable item="Bank C Range I Speed step next gear 1" CV="901.3" default="30" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+    </variable>
+    <!-- TODO add Range 1 Bank C next gear 2 - 12 -->
+    <variable item="Bank C Range I Speed step next gear 13" CV="913.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+    </variable>
+    <!-- IntelliSound4 Range II Bank C CV 900C - 913C, hides/shows with CV 1061 choice = 3 -->
+    <variable item="Bank C Range II Diesel notch after idle" CV="940.3" default="40" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Diesel notch after idle</label>
+        <label xml:lang="de">Dieselrampe nach Leerlauf</label>
+    </variable>
+    <variable item="Bank C Range II Speed step next gear 1" CV="941.3" default="30" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+    </variable>
+    <!-- TODO add next gear 2 - 12 -->
+    <variable item="Bank C Range II Speed step next gear 13" CV="953.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+    </variable>
+    <!-- IntelliSound4 Range III Bank C CV 900C - 913C, hides/shows with CV 1101 choice = 3 -->
+    <variable item="Bank C Range III Diesel notch after idle" CV="980.3" default="40" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Diesel notch after idle</label>
+        <label xml:lang="de">Dieselrampe nach Leerlauf</label>
+    </variable>
+    <variable item="Bank C Range III Speed step next gear 1" CV="981.3" default="30" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+    </variable>
+    <!-- TODO add next gear 2 - 12 -->
+    <variable item="Bank C Range III Speed step next gear 13" CV="993.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+    </variable>
     <!-- Declaration of the "switch" CV, not for direct use but for checking value -->
-    <variable item="Bank A switch" CV="1021" default="0">
+    <variable item="Range I Bank switch" CV="1021" default="0">
         <enumVal>
             <enumChoice choice="Normal CVs">
                 <choice>Normal CVs</choice>
-                <choice xml:lang="de">Normal CVs</choice>
+                <choice xml:lang="de">Normale CVs</choice>
+                <choice xml:lang="nl">Normale CVs</choice>
             </enumChoice>
             <enumChoice choice="Bank A">
                 <choice>Bank A</choice>
                 <choice xml:lang="de">Bank A</choice>
             </enumChoice>
+            <enumChoice choice="Bank B" include="32500,32504,36520,36560">
+                <choice>Bank B</choice>
+                <choice xml:lang="de">Bank B</choice>
+            </enumChoice>
+            <enumChoice choice="Bank C" include="32500,32504,36520,36560">
+                <choice>Bank C</choice>
+                <choice xml:lang="de">Bank C</choice>
+            </enumChoice>
         </enumVal>
-        <label>Chuff Control</label>
-        <label xml:lang="de">Auspuffschlag Dampflok</label>
+        <label>Program</label>
+        <label xml:lang="de">Programmieren</label>
+        <label xml:lang="nl">Programmeer</label>
+        <tooltip>Setting that determines which bank A-C is programmed. Reset to Normal CVs when done!</tooltip>
+        <tooltip xml:lang="de">Einstellung der zu programmierenden Bank A - C. Zurückstellen nach Normale CVs wenn fertig!</tooltip>
+    </variable>
+    <variable item="Range II Bank switch" CV="1061" default="0">
+        <enumVal>
+            <enumChoice choice="Normal CVs">
+                <choice>Normal CVs</choice>
+                <choice xml:lang="de">Normale CVs</choice>
+                <choice xml:lang="nl">Normale CVs</choice>
+            </enumChoice>
+            <enumChoice choice="Bank A">
+                <choice>Bank A</choice>
+                <choice xml:lang="de">Bank A</choice>
+            </enumChoice>
+            <enumChoice choice="Bank B" include="32500,32504,36520,36560">
+                <choice>Bank B</choice>
+                <choice xml:lang="de">Bank B</choice>
+            </enumChoice>
+            <enumChoice choice="Bank C" include="32500,32504,36520,36560">
+                <choice>Bank C</choice>
+                <choice xml:lang="de">Bank C</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Program</label>
+        <label xml:lang="de">Programmieren</label>
+        <label xml:lang="nl">Programmeer</label>
+        <tooltip>Setting that determines which bank A-C is programmed. Reset to Normal CVs when done!</tooltip>
+        <tooltip xml:lang="de">Einstellung der zu programmierenden Bank A - C. Zurückstellen nach Normale CVs wenn fertig!</tooltip>
+    </variable>
+    <variable item="Range III Bank switch" CV="1101" default="0">
+        <enumVal>
+            <enumChoice choice="Normal CVs">
+                <choice>Normal CVs</choice>
+                <choice xml:lang="de">Normale CVs</choice>
+                <choice xml:lang="nl">Normale CVs</choice>
+            </enumChoice>
+            <enumChoice choice="Bank A">
+                <choice>Bank A</choice>
+                <choice xml:lang="de">Bank A</choice>
+            </enumChoice>
+            <enumChoice choice="Bank B" include="32500,32504,36520,36560">
+                <choice>Bank B</choice>
+                <choice xml:lang="de">Bank B</choice>
+            </enumChoice>
+            <enumChoice choice="Bank C" include="32500,32504,36520,36560">
+                <choice>Bank C</choice>
+                <choice xml:lang="de">Bank C</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Program</label>
+        <label xml:lang="de">Programmieren</label>
+        <label xml:lang="nl">Programmeer</label>
+        <tooltip>Setting that determines which bank A-C is programmed. Reset to Normal CVs when done!</tooltip>
+        <tooltip xml:lang="de">Einstellung der zu programmierenden Bank A - C. Zurückstellen nach Normale CVs wenn fertig!</tooltip>
     </variable>
 </variables>
