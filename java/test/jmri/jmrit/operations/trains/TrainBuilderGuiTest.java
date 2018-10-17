@@ -68,7 +68,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
             return build.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
-        JemmyUtil.pressDialogButton(Bundle.getMessage("SelectDepartureTrack"), "OK");
+        JemmyUtil.pressDialogButton(Bundle.getMessage("SelectDepartureTrack"), Bundle.getMessage("ButtonOK"));
 
         jmri.util.JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
@@ -128,7 +128,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
             return build.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
-        JemmyUtil.pressDialogButton(Bundle.getMessage("SelectArrivalTrack"), "OK");
+        JemmyUtil.pressDialogButton(Bundle.getMessage("SelectArrivalTrack"), Bundle.getMessage("ButtonOK"));
 
         jmri.util.JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
@@ -188,7 +188,7 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
         }, "wait for prompt");
 
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
-                new Object[]{train2.getName(), train2.getDescription()}), "OK");
+                new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonOK"));
         
         jmri.util.JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
