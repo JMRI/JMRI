@@ -331,11 +331,7 @@
         <label xml:lang="de">Geschw.-korrektur vorwärts</label>
         <tooltip>Factor = Value/128</tooltip>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-        <label xml:lang="de">Geschwindigkeitskennlinie</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable item="Reverse Trim" CV="95" default="1" include="76400">
         <decVal/>
         <label>Speed Correction Reverse</label>

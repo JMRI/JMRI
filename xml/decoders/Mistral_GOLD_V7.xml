@@ -688,10 +688,7 @@
         <decVal max="255"/>
         <label>Forward Trim</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable item="CV67(Range 0 - 255)" CV="67" default="9">
         <decVal max="255"/>
         <label>CV67(Range 0 - 255)</label>

@@ -509,10 +509,7 @@
         <decVal/>
         <label>Page Register</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable item="Special function 1 switched off when traveling forwards" CV="96" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Special function 1 switched off when traveling forwards</label>
