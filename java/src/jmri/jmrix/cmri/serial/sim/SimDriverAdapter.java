@@ -97,6 +97,11 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     protected void setSerialPort() throws UnsupportedCommOperationException {
     }
 
+    @Override
+    public String getCurrentPortName(){
+       return "";
+    }
+
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
