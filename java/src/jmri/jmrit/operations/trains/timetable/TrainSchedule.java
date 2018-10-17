@@ -26,7 +26,7 @@ public class TrainSchedule {
     protected String _id = NONE;
     protected String _name = NONE;
     protected String _comment = NONE;
-    protected List<String> _trainIds = new ArrayList<String>();
+    protected List<String> _trainIds = new ArrayList<>();
 
     public TrainSchedule(String id, String name) {
         log.debug("New train schedule ({}) id: {}", name, id);
@@ -68,6 +68,10 @@ public class TrainSchedule {
         return _comment;
     }
 
+    /**
+     * Adds the train id for a train that needs to be built
+     * @param id The train id
+     */
     public void addTrainId(String id) {
         if (!_trainIds.contains(id)) {
             _trainIds.add(id);
@@ -75,11 +79,20 @@ public class TrainSchedule {
         }
     }
 
+    /**
+     * Removes the train id for a train that needs to be built
+     * @param id The train id
+     */
     public void removeTrainId(String id) {
         _trainIds.remove(id);
         setDirtyAndFirePropertyChange(SCHEDULE_CHANGED_PROPERTY, id, null);
     }
 
+    /**
+     * Used to determine if train is to be built using this schedule
+     * @param id the id of the train to be tested
+     * @return true if this train's build enable should be set
+     */
     public boolean containsTrainId(String id) {
         return _trainIds.contains(id);
     }

@@ -132,14 +132,6 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         }
         return ActionCodes.NO_ACTION;
     }
-    
-    public Action getActionByCode(int code) {
-        for (Action action : getActionList()) {
-            if (action.getCode() == code)
-                return action;
-        }
-        return new NoAction(); // default if code not found
-    }
 
     public void doAction() {
         if (getAction() != null) {
@@ -377,7 +369,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
      * @param item The item to copy.
      */
     public void copyItem(AutomationItem item) {
-        setAction(item.getActionByCode(item.getActionCode())); // must create a new action for each item
+        setAction(getActionByCode(item.getActionCode())); // must create a new action for each item
         setAutomationToRun(item.getAutomationToRun());
         setGotoAutomationItem(item.getGotoAutomationItem()); //needs an adjustment to work properly
         setTrain(item.getTrain()); // must set train before route location
@@ -388,13 +380,21 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         setMessageFail(item.getMessageFail());
         setHaltFailureEnabled(item.isHaltFailureEnabled());
     }
+    
+    public static Action getActionByCode(int code) {
+        for (Action action : getActionList()) {
+            if (action.getCode() == code)
+                return action;
+        }
+        return new NoAction(); // default if code not found
+    }
 
     /**
      * Gets a list of all known automation actions
      * 
      * @return list of automation actions
      */
-    public List<Action> getActionList() {
+    public static List<Action> getActionList() {
         List<Action> list = new ArrayList<>();
         list.add(new NoAction());
         list.add(new BuildTrainAction());
@@ -429,7 +429,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         return list;
     }
 
-    public JComboBox<Action> getActionComboBox() {
+    public static JComboBox<Action> getActionComboBox() {
         JComboBox<Action> box = new JComboBox<>();
         for (Action action : getActionList())
             box.addItem(action);

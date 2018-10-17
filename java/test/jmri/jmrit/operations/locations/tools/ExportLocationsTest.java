@@ -44,7 +44,7 @@ public class ExportLocationsTest extends OperationsTestCase {
             return export.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
         
-        JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), "OK");
+        JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
         
         java.io.File file = new java.io.File(ExportLocations.defaultOperationsFilename());   
         Assert.assertTrue("Confirm file creation", file.exists());        

@@ -46,7 +46,7 @@ public class SetTrainIconRouteFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(t.placeButton);
 
         // error dialog should appear
-        JemmyUtil.pressDialogButton(t, Bundle.getMessage("PanelNotFound"), "OK");
+        JemmyUtil.pressDialogButton(t, Bundle.getMessage("PanelNotFound"), Bundle.getMessage("ButtonOK"));
 
         // confirm default
         RouteLocation rl = route.getDepartsRouteLocation();
@@ -58,7 +58,7 @@ public class SetTrainIconRouteFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(t.applyButton);
         
         // confirmation dialog should appear      
-        JemmyUtil.pressDialogButton(t, Bundle.getMessage("DoYouWantThisRoute"), "Yes");
+        JemmyUtil.pressDialogButton(t, Bundle.getMessage("DoYouWantThisRoute"), Bundle.getMessage("ButtonYes"));
 
         Assert.assertEquals("icon position", 345, rl.getTrainIconX());
         

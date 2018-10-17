@@ -27,21 +27,24 @@ public class AutomationItemTest extends OperationsTestCase {
         Assert.assertEquals("test id", "TestId", automationItem.getId());
         Assert.assertEquals("test id", "TestId", automationItem.toString());
         Assert.assertEquals(ActionCodes.NO_ACTION, automationItem.getActionCode());
-        Assert.assertEquals("Do Nothing", automationItem.getAction().getName());
-        Assert.assertEquals("Do Nothing", automationItem.getActionByCode(0x0000).getName()); // there isn't a code 0x0000 action
+        Assert.assertEquals("Do Nothing", automationItem.getAction().getName());      
         Assert.assertEquals("Do Nothing", automationItem.getActionName());
         Assert.assertEquals("", automationItem.getMessage());
         Assert.assertEquals("", automationItem.getMessageFail());
         Assert.assertEquals(0, automationItem.getSequenceId());
         Assert.assertEquals("", automationItem.getStatus());
         Assert.assertEquals("", automationItem.getTrainScheduleId());
-        Assert.assertEquals("Number of actions", 29, automationItem.getActionComboBox().getItemCount());
-        Assert.assertEquals("Number of actions", 29, automationItem.getActionList().size());
+        
         Assert.assertEquals(null, automationItem.getAutomationToRun());
         Assert.assertEquals(null, automationItem.getGotoAutomationItem());
         Assert.assertEquals(null, automationItem.getRouteLocation());
         Assert.assertEquals(null, automationItem.getTrain());
         Assert.assertEquals(null, automationItem.getTrainSchedule());
+        
+        // static tests
+        Assert.assertEquals("Do Nothing", AutomationItem.getActionByCode(0x0000).getName()); // there isn't a code 0x0000 action
+        Assert.assertEquals("Number of actions", 29, AutomationItem.getActionComboBox().getItemCount());
+        Assert.assertEquals("Number of actions", 29, AutomationItem.getActionList().size());
     }
 
     @Test

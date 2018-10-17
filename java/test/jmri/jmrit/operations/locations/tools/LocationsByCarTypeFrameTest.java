@@ -96,7 +96,7 @@ public class LocationsByCarTypeFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(lctf.saveButton); 
         
         // the save should have opened a dialog window
-        JemmyUtil.pressDialogButton(lctf, Bundle.getMessage("CopyCarTypeTitle"), "Yes");
+        JemmyUtil.pressDialogButton(lctf, Bundle.getMessage("CopyCarTypeTitle"), Bundle.getMessage("ButtonYes"));
         
         Assert.assertFalse("accepts", loc.acceptsTypeName("Boxcar"));
         Assert.assertFalse("accepts", loc.acceptsTypeName("Flat"));
