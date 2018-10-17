@@ -1562,12 +1562,79 @@
         <decVal min="20" max="127"/>
         <label>Speed step for next highest gear</label>
         <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[1]</tooltip>
     </variable>
-    <!-- TODO add Range 1 Bank C next gear 2 - 12 -->
+    <variable item="Bank C Range I Speed step next gear 2" CV="902.3" default="60" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[2]</tooltip>
+    </variable>
+    <variable item="Bank C Range I Speed step next gear 3" CV="903.3" default="90" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[3]</tooltip>
+    </variable>
+    <variable item="Bank C Range I Speed step next gear 4" CV="904.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[4]</tooltip>
+    </variable>
+    <variable item="Bank C Range I Speed step next gear 5" CV="905.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[5]</tooltip>
+    </variable>
+    <variable item="Bank C Range I Speed step next gear 6" CV="906.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[6]</tooltip>
+    </variable>
+    <variable item="Bank C Range I Speed step next gear 7" CV="907.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[7]</tooltip>
+    </variable>
+    <variable item="Bank C Range I Speed step next gear 8" CV="908.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[8]</tooltip>
+    </variable>
+    <variable item="Bank C Range I Speed step next gear 9" CV="909.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[9]</tooltip>
+    </variable>
+    <variable item="Bank C Range I Speed step next gear 10" CV="910.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[10]</tooltip>
+    </variable>
+    <variable item="Bank C Range I Speed step next gear 11" CV="911.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[11]</tooltip>
+    </variable>
+    <variable item="Bank C Range I Speed step next gear 12" CV="912.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[12]</tooltip>
+    </variable>
     <variable item="Bank C Range I Speed step next gear 13" CV="913.3" default="127" include="32500,32504,36520,36560">
         <decVal min="20" max="127"/>
         <label>Speed step for next highest gear</label>
         <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[13]</tooltip>
     </variable>
     <!-- IntelliSound4 Range II Bank C CV 900C - 913C, hides/shows with CV 1061 choice = 3 -->
     <variable item="Bank C Range II Diesel notch after idle" CV="940.3" default="40" include="32500,32504,36520,36560">
@@ -1579,12 +1646,79 @@
         <decVal min="20" max="127"/>
         <label>Speed step for next highest gear</label>
         <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[1]</tooltip>
     </variable>
-    <!-- TODO add next gear 2 - 12 -->
+    <variable item="Bank C Range II Speed step next gear 2" CV="942.3" default="60" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[2]</tooltip>
+    </variable>
+    <variable item="Bank C Range II Speed step next gear 3" CV="943.3" default="90" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[3]</tooltip>
+    </variable>
+    <variable item="Bank C Range II Speed step next gear 4" CV="944.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[4]</tooltip>
+    </variable>
+    <variable item="Bank C Range II Speed step next gear 5" CV="945.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[5]</tooltip>
+    </variable>
+    <variable item="Bank C Range II Speed step next gear 6" CV="946.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[6]</tooltip>
+    </variable>
+    <variable item="Bank C Range II Speed step next gear 7" CV="947.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[7]</tooltip>
+    </variable>
+    <variable item="Bank C Range II Speed step next gear 8" CV="948.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[8]</tooltip>
+    </variable>
+    <variable item="Bank C Range II Speed step next gear 9" CV="949.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[9]</tooltip>
+    </variable>
+    <variable item="Bank C Range II Speed step next gear 10" CV="950.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[10]</tooltip>
+    </variable>
+    <variable item="Bank C Range II Speed step next gear 11" CV="951.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[11]</tooltip>
+    </variable>
+    <variable item="Bank C Range II Speed step next gear 12" CV="952.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[12]</tooltip>
+    </variable>
     <variable item="Bank C Range II Speed step next gear 13" CV="953.3" default="127" include="32500,32504,36520,36560">
         <decVal min="20" max="127"/>
         <label>Speed step for next highest gear</label>
         <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[13]</tooltip>
     </variable>
     <!-- IntelliSound4 Range III Bank C CV 900C - 913C, hides/shows with CV 1101 choice = 3 -->
     <variable item="Bank C Range III Diesel notch after idle" CV="980.3" default="40" include="32500,32504,36520,36560">
@@ -1596,12 +1730,79 @@
         <decVal min="20" max="127"/>
         <label>Speed step for next highest gear</label>
         <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[1]</tooltip>
     </variable>
-    <!-- TODO add next gear 2 - 12 -->
+    <variable item="Bank C Range III Speed step next gear 2" CV="982.3" default="60" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[2]</tooltip>
+    </variable>
+    <variable item="Bank C Range III Speed step next gear 3" CV="983.3" default="90" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[3]</tooltip>
+    </variable>
+    <variable item="Bank C Range III Speed step next gear 4" CV="984.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[4]</tooltip>
+    </variable>
+    <variable item="Bank C Range III Speed step next gear 5" CV="985.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[5]</tooltip>
+    </variable>
+    <variable item="Bank C Range III Speed step next gear 6" CV="986.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[6]</tooltip>
+    </variable>
+    <variable item="Bank C Range III Speed step next gear 7" CV="987.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[7]</tooltip>
+    </variable>
+    <variable item="Bank C Range III Speed step next gear 8" CV="988.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[8]</tooltip>
+    </variable>
+    <variable item="Bank C Range III Speed step next gear 9" CV="989.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[9]</tooltip>
+    </variable>
+    <variable item="Bank C Range III Speed step next gear 10" CV="990.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[10]</tooltip>
+    </variable>
+    <variable item="Bank C Range III Speed step next gear 11" CV="991.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[11]</tooltip>
+    </variable>
+    <variable item="Bank C Range III Speed step next gear 12" CV="992.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[12]</tooltip>
+    </variable>
     <variable item="Bank C Range III Speed step next gear 13" CV="993.3" default="127" include="32500,32504,36520,36560">
         <decVal min="20" max="127"/>
         <label>Speed step for next highest gear</label>
         <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[13]</tooltip>
     </variable>
     <!-- Declaration of the "switch" CV, not for direct use but for checking value -->
     <variable item="Range I Bank switch" CV="1021" default="0">
