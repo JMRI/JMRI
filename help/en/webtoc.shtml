@@ -1234,22 +1234,9 @@
   
 <li>
 <a href="html/tools/TimeTable.shtml">Timetable </a>
-<ul>
-   
-<li>
-<a href="package/jmri/jmrit/timetable/TimeTableFrame.shtml">Manage Timetable Data </a>
 <ul></ul>
 </li>
 
-   
-<li>
-<a href="package/jmri/jmrit/timetable/TimeTableGraph.shtml">Display Timetable Graph </a>
-<ul></ul>
-</li>
-
-  
-</ul>
-</li>
   
 <li>
 <a href="html/tools/tracker/index.shtml">Tracker (Blocks) </a>

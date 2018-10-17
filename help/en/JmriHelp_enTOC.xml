@@ -399,12 +399,8 @@
    <tocitem text="inControl - Web Throttles and Panels (older version) " target="package.jmri.jmrit.inControl.inControl"/>
 
   </tocitem>
-  <tocitem text="Timetable " target="html.tools.TimeTable">
-   <tocitem text="Manage Timetable Data " target="package.jmri.jmrit.timetable.TimeTableFrame"/>
+  <tocitem text="Timetable " target="html.tools.TimeTable"/>
 
-   <tocitem text="Display Timetable Graph " target="package.jmri.jmrit.timetable.TimeTableGraph"/>
-
-  </tocitem>
   <tocitem text="Tracker (Blocks) " target="html.tools.tracker.index"/>
 
   <tocitem text="Transits ">

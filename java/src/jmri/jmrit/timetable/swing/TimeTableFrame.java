@@ -412,8 +412,8 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         setJMenuBar(menuBar);
 
         //setup Help menu
-        addHelpMenu("package.jmri.jmrit.timetable.TimeTableFrame", true);  // NOI18N
-    }  // TODO Timetable Help document
+        addHelpMenu("html.tools.TimeTable", true);  // NOI18N
+    }
 
     /**
      * Initialize components.
@@ -2070,9 +2070,9 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         f.setMinimumSize(new Dimension(600, 300));
         f.getContentPane().add(graph);
         f.pack();
-        f.addHelpMenu("package.jmri.jmrit.timetable.TimeTableGraph", true);  // NOI18N
+        f.addHelpMenu("html.tools.TimeTable", true);  // NOI18N
         f.setVisible(true);
-    }  // TODO schedule dialog and help file
+    }  // TODO schedule dialog
 
     JFileChooser fileChooser;
     void importPressed() {
