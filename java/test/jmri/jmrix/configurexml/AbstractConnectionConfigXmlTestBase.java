@@ -23,11 +23,6 @@ abstract public class AbstractConnectionConfigXmlTestBase extends jmri.configure
     public void storeTest(){
         Assume.assumeNotNull(cc);
         cc.loadDetails(new JPanel());
-        // load details MAY produce an error message if no ports are found.
-        // this is technically only required for serial ConnectionConfig objects
-        // but until we track down the non-serial ones generating the message
-        // we will suppress it here.
-        jmri.util.JUnitAppender.suppressErrorMessage("No usable ports returned");
         Element e = xmlAdapter.store(cc);
         Assert.assertNotNull("XML Element Produced",e); 
     }
