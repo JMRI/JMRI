@@ -74,7 +74,6 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
         } catch (Exception e) {
             return null;
         }
-        //return new DataInputStream(serialStream);
     }
 
     @Override
@@ -96,21 +95,6 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
      */
     @Override
     protected void setSerialPort() throws UnsupportedCommOperationException {
-    }
-
-    @Override
-    public String[] validBaudRates() {
-        return Arrays.copyOf(validSpeeds, validSpeeds.length);
-    }
-
-    /**
-     * Set the baud rate.
-     */
-    @Override
-    public void configureBaudRate(String rate) {
-        log.debug("configureBaudRate: " + rate);
-        selectedSpeed = rate;
-        super.configureBaudRate(rate);
     }
 
     // private control members
