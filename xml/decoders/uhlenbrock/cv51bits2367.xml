@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" include="36520,36560">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2018</year>
     <holder>JMRI</holder>
@@ -27,13 +27,13 @@
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
       <revnumber>1</revnumber>
-      <date>2018-10-10</date>
+      <date>2018-10-17</date>
       <authorinitials>EBR</authorinitials>
-      <revremark>Initial version used in Uhlenbrock_36300.xml (decoder 365x)</revremark>
+      <revremark>Initial version used in Uhlenbrock_36500.xml (decoder 365x)</revremark>
     </revision>
   <!-- Uhlenbrock Decoder Configuration CV 51 - advanced config -->
   </revhistory>
-  <!-- CV51 was expanded with bits 2, 3, 6, 7 in 2016 IntelliSound4 decoders eg. 365x -->
+  <!-- CV51 was expanded with bits 2, 3, 6, 7 in 2016 IntelliSound4 decoders eg. 365xx/325xx -->
   <variable item="Cv51 bit2" CV="51" default="0" mask="XXXXXVXX">
     <enumVal>
       <enumChoice choice="Digital operation only">
