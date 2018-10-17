@@ -16,6 +16,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
@@ -24,21 +25,11 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
         xmlAdapter = null;
         cc = null;
-    }
-
-    @Test
-    @Ignore("hangs")
-    public void testStore(){
-      // tests that store produces an XML element from a new ConnectionConfig object.
-      SimDriverAdapter p = new SimDriverAdapter();
-      p.configure();
-      ConnectionConfigXml x = new ConnectionConfigXml();
-      x.getInstance();
-      Assert.assertNotNull("ConnectionConfigXml store()",new ConnectionConfigXml().store(new ConnectionConfig(p)));
     }
 }
 

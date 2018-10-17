@@ -32,29 +32,5 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
         xmlAdapter = null;
         cc = null;
     }
-
-    @Test
-    @Ignore("causes errors")
-    public void testStore(){
-      // tests that store produces an XML element from a new ConnectionConfig object.
-      ConnectionConfigXml c = new ConnectionConfigXml();
-      SerialDriverAdapter p = new SerialDriverAdapter(){
-              /**
-               * set up all of the other objects to operate connected to this port
-               */
-              @Override
-              public void configure() {
-                // connect to the traffic controller
-                SerialTrafficController tc = new SerialTrafficControlScaffold();
-                tc.connectPort(this);
-                ((CMRISystemConnectionMemo)getSystemConnectionMemo()).setTrafficController(tc);
-                ((CMRISystemConnectionMemo)getSystemConnectionMemo()).configureManagers();
-              }
-      };
-      ConnectionConfig cc = new ConnectionConfig(p);
-      p.configure();
-      c.getInstance(cc);
-      Assert.assertNotNull("ConnectionConfigXml store()",c.store(cc));
-    }
 }
 
