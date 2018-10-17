@@ -9,7 +9,7 @@ import jmri.jmrix.secsi.simulator.ConnectionConfig;
  *
  * @author Paul Bender  Copyright (C) 2016
  */
-public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
+public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSimulatorConnectionConfigXmlTestBase {
 
     // The minimal setup for log4J
     @Before
