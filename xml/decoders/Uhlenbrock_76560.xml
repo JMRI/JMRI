@@ -133,12 +133,7 @@
         <tooltip>Valid when CV49 Bit 2=1 (Braking end) and Bit 7=1 (Braking analog)</tooltip>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv65.66registers.xml"/>	  	  
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-        <label xml:lang="de">Geschwindigkeitskennlinie</label>
-        <label xml:lang="nl">Snelheidsgrafiek</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv107.108indepOutputs.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv57lissy.xml"/>
       <!-- CVs 109 - 111, 116 - 123 -->
