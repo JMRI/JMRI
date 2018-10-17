@@ -193,7 +193,13 @@
                     <display item="Bank B Range I Alternative Volume"/>
                     <label><text> </text></label>
                     <display item="Bank B Range I Volume sound number 1"/>
-                    <!-- TODO add Bank B Range I sounds 2 - 7 and 9 - 25 here -->
+                    <display item="Bank B Range I Volume sound number 2"/>
+                    <display item="Bank B Range I Volume sound number 3"/>
+                    <display item="Bank B Range I Volume sound number 4"/>
+                    <display item="Bank B Range I Volume sound number 5"/>
+                    <display item="Bank B Range I Volume sound number 6"/>
+                    <display item="Bank B Range I Volume sound number 7"/>
+                    <!-- TODO add Bank B Range I sounds 9 - 25 here -->
                 </column>
             </group>
             <group>
@@ -277,7 +283,13 @@
                     <display item="Bank B Range II Alternative Volume"/>
                     <label><text> </text></label>
                     <display item="Bank B Range II Volume sound number 1"/>
-                    <!-- TODO add Bank B Range II sounds 2 - 7 and 9 - 25 here -->
+                    <display item="Bank B Range II Volume sound number 2"/>
+                    <display item="Bank B Range II Volume sound number 3"/>
+                    <display item="Bank B Range II Volume sound number 4"/>
+                    <display item="Bank B Range II Volume sound number 5"/>
+                    <display item="Bank B Range II Volume sound number 6"/>
+                    <display item="Bank B Range II Volume sound number 7"/>
+                    <!-- TODO add Bank B Range II sounds 9 - 25 here -->
                 </column>
             </group>
             <group>
@@ -361,7 +373,13 @@
                     <display item="Bank B Range III Alternative Volume"/>
                     <label><text> </text></label>
                     <display item="Bank B Range III Volume sound number 1"/>
-                    <!-- TODO add Bank B Range III sounds 2 - 7 and 9 - 25 here -->
+                    <display item="Bank B Range III Volume sound number 2"/>
+                    <display item="Bank B Range III Volume sound number 3"/>
+                    <display item="Bank B Range III Volume sound number 4"/>
+                    <display item="Bank B Range III Volume sound number 5"/>
+                    <display item="Bank B Range III Volume sound number 6"/>
+                    <display item="Bank B Range III Volume sound number 7"/>
+                    <!-- TODO add Bank B Range III sounds 9 - 25 here -->
                 </column>
             </group>
             <group>

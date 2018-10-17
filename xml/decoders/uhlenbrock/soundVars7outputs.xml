@@ -332,8 +332,8 @@
         <tooltip>50-255, Time between two chuffs at min speed</tooltip>
         <tooltip xml:lang="de">50-255, Zeit zwischen zwei Auspuffschlägen bei minimaler Lokgeschwindigkeit ohne Kontakt</tooltip>
     </variable>
-    <!-- Bank A CVs (Index CV 1021 = 1) -->
-    <!-- TODO group hide/show with CV 1021 choice = 1 -->
+    <!-- Bank A CVs (Index CV 1021 = 1)            -->
+    <!-- group hides/shows with CV 1021 choice = 1 -->
     <variable item="Range I Hardware Version" CV="900.1" readOnly="yes" default="0">
         <decVal/>
         <label>Hardware Version</label>
@@ -1494,12 +1494,43 @@
         <tooltip>only steam locos</tooltip>
         <tooltip xml:lang="de">nur Dampflok</tooltip>
     </variable>
+    <!-- Bank B Range I sounds 1 - 7 -->
     <variable item="Bank B Range I Volume sound number 1" CV="901.2" default="255" include="32500,32504,36520,36560">
         <decVal min="0" max="255"/>
         <label>Volume for sound #1</label>
         <label xml:lang="de">Lautstärke für Sound 1</label>
     </variable>
-    <!-- TODO add Bank B Range I sounds 2 - 7 -->
+    <variable item="Bank B Range I Volume sound number 2" CV="902.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #2</label>
+        <label xml:lang="de">Lautstärke für Sound 2</label>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 3" CV="903.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #3</label>
+        <label xml:lang="de">Lautstärke für Sound 3</label>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 4" CV="904.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #4</label>
+        <label xml:lang="de">Lautstärke für Sound 4</label>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 5" CV="905.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #5</label>
+        <label xml:lang="de">Lautstärke für Sound 5</label>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 6" CV="906.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #6</label>
+        <label xml:lang="de">Lautstärke für Sound 6</label>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 7" CV="907.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #7</label>
+        <label xml:lang="de">Lautstärke für Sound 7</label>
+    </variable>
+    <!-- Alternative Volume -->
     <variable item="Bank B Range I Alternative Volume" CV="908.2" default="255" include="32500,32504,36520,36560">
         <decVal min="0" max="255"/>
         <label>Alternative Volume</label>
@@ -1516,12 +1547,43 @@
         <tooltip>only steam locos</tooltip>
         <tooltip xml:lang="de">nur Dampflok</tooltip>
     </variable>
+    <!-- Bank B Range II sounds 1 - 7 -->
     <variable item="Bank B Range II Volume sound number 1" CV="941.2" default="255" include="32500,32504,36520,36560">
         <decVal min="0" max="255"/>
         <label>Volume for sound #1</label>
         <label xml:lang="de">Lautstärke für Sound 1</label>
     </variable>
-    <!-- TODO add Bank B Range II sounds 2 - 7 -->
+    <variable item="Bank B Range II Volume sound number 2" CV="942.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #2</label>
+        <label xml:lang="de">Lautstärke für Sound 2</label>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 3" CV="943.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #3</label>
+        <label xml:lang="de">Lautstärke für Sound 3</label>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 4" CV="944.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #4</label>
+        <label xml:lang="de">Lautstärke für Sound 4</label>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 5" CV="945.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #5</label>
+        <label xml:lang="de">Lautstärke für Sound 5</label>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 6" CV="946.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #6</label>
+        <label xml:lang="de">Lautstärke für Sound 6</label>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 7" CV="947.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #7</label>
+        <label xml:lang="de">Lautstärke für Sound 7</label>
+    </variable>
+    <!-- Alternative Volume -->
     <variable item="Bank B Range II Alternative Volume" CV="948.2" default="255" include="32500,32504,36520,36560">
         <decVal min="0" max="255"/>
         <label>Alternative Volume</label>
@@ -1538,12 +1600,43 @@
         <tooltip>only steam locos</tooltip>
         <tooltip xml:lang="de">nur Dampflok</tooltip>
     </variable>
+    <!-- Bank B Range III sounds 1 - 7 -->
     <variable item="Bank B Range III Volume sound number 1" CV="981.2" default="255" include="32500,32504,36520,36560">
         <decVal min="0" max="255"/>
         <label>Volume for sound #1</label>
         <label xml:lang="de">Lautstärke für Sound 1</label>
     </variable>
-    <!-- TODO add Bank B Range III sounds 2 - 7 -->
+    <variable item="Bank B Range III Volume sound number 2" CV="982.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #2</label>
+        <label xml:lang="de">Lautstärke für Sound 2</label>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 3" CV="983.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #3</label>
+        <label xml:lang="de">Lautstärke für Sound 3</label>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 4" CV="984.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #4</label>
+        <label xml:lang="de">Lautstärke für Sound 4</label>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 5" CV="985.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #5</label>
+        <label xml:lang="de">Lautstärke für Sound 5</label>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 6" CV="986.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #6</label>
+        <label xml:lang="de">Lautstärke für Sound 6</label>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 7" CV="987.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #7</label>
+        <label xml:lang="de">Lautstärke für Sound 7</label>
+    </variable>
+    <!-- Alternative Volume -->
     <variable item="Bank B Range III Alternative Volume" CV="988.2" default="255" include="32500,32504,36520,36560">
         <decVal min="0" max="255"/>
         <label>Alternative Volume</label>
