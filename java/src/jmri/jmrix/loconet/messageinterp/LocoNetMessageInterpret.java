@@ -1967,6 +1967,81 @@ public class LocoNetMessageInterpret {
                     sect1Mode, sect1State, sect2Mode, sect2State,
                     sect3Mode, sect3State, sect4Mode, sect4State);
         }
+        if ((pCMD == 0x20) ) { //BXP88 
+            int cm1 = l.getElement(3);
+            int cm2 = l.getElement(4);
+            StringBuilder sectsShorted = new StringBuilder();
+            StringBuilder sectsUnshorted = new StringBuilder();
+            if ((cm2 & 0x01) != 0) {
+                sectsShorted.append(1);
+            } else {
+                sectsUnshorted.append(1);
+            }
+            if ((cm2 & 0x02) != 0) {
+                sectsShorted.append(2);
+            } else {
+                sectsUnshorted.append(2);
+            }
+            if ((cm2 & 0x04) != 0) {
+                sectsShorted.append(3);
+            } else {
+                sectsUnshorted.append(3);
+            }
+            if ((cm2 & 0x08) != 0) {
+                sectsShorted.append(4);
+            } else {
+                sectsUnshorted.append(4);
+            }
+            if ((cm1 & 0x01) != 0) {
+                sectsShorted.append(5);
+            } else {
+                sectsUnshorted.append(5);
+            }
+            if ((cm1 & 0x02) != 0) {
+                sectsShorted.append(6);
+            } else {
+                sectsUnshorted.append(6);
+            }
+            if ((cm1 & 0x04) != 0) {
+                sectsShorted.append(7);
+            } else {
+                sectsUnshorted.append(7);
+            }
+            if ((cm1 & 0x08) != 0) {
+                sectsShorted.append(8);
+            } else {
+                sectsUnshorted.append(8);
+            }
+            return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_BXP88",
+                    (l.getElement(2) + 1) + ((l.getElement(1) & 0x1) << 7),
+                    sectsShorted, sectsUnshorted);
+        }
+        if ( (pCMD == 0x50) || (pCMD == 0x40)) { //BXPA1 - 
+            // autoreverse
+            int cm1 = l.getElement(3);
+            int cm2 = l.getElement(4);
+            String RevState = "";
+            String BreakState = "";
+            if ((cm1 & 0x10) != 0) { // reversing state
+                if ((cm1 & 0x08) != 0) {
+                    RevState = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_BXPA1_HELPER_MODE_REV");
+                } else {
+                    RevState = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_BXPA1_HELPER_MODE_NORM");
+                }
+            } else {
+                // breaker state
+                if ((cm1 & 0x08) != 0) {
+                    BreakState = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_BXPA1_HELPER_MODE_SHORT");
+                } else {
+                    BreakState = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_BXPA1_HELPER_MODE_NONSHORT");
+                }
+            }
+            int bxpa1_Id = ((l.getElement(2) << 3 ) + (l.getElement(3) & 0x07 ) + 1);
+            // Due to a problem with the firmware messages from x and x+4 are identical
+            return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_BXPA1",
+                    bxpa1_Id, bxpa1_Id +4,
+                    RevState, BreakState);
+        }
         return "";
     }
 

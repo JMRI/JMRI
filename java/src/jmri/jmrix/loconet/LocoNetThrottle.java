@@ -203,7 +203,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF0(boolean f0) {
         boolean old = this.f0;
         this.f0 = f0;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup1();
         } else {
             sendExpFunctionGroup1();
@@ -217,7 +217,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF1(boolean f1) {
         boolean old = this.f1;
         this.f1 = f1;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup1();
         } else {
             sendExpFunctionGroup1();
@@ -231,7 +231,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF2(boolean f2) {
         boolean old = this.f2;
         this.f2 = f2;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup1();
         } else {
             sendExpFunctionGroup1();
@@ -245,7 +245,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF3(boolean f3) {
         boolean old = this.f3;
         this.f3 = f3;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup1();
         } else {
             sendExpFunctionGroup1();
@@ -259,7 +259,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF4(boolean f4) {
         boolean old = this.f4;
         this.f4 = f4;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup1();
         } else {
             sendExpFunctionGroup1();
@@ -273,7 +273,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF5(boolean f5) {
         boolean old = this.f5;
         this.f5 = f5;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup2();
         } else {
             sendExpFunctionGroup1();
@@ -287,7 +287,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF6(boolean f6) {
         boolean old = this.f6;
         this.f6 = f6;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup2();
         } else {
             sendExpFunctionGroup1();
@@ -301,7 +301,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF7(boolean f7) {
         boolean old = this.f7;
         this.f7 = f7;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup2();
         } else {
             sendExpFunctionGroup2();
@@ -315,7 +315,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF8(boolean f8) {
         boolean old = this.f8;
         this.f8 = f8;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup2();
         } else {
             sendExpFunctionGroup2();
@@ -329,7 +329,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF9(boolean f9) {
         boolean old = this.f9;
         this.f9 = f9;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup3();
         } else {
             sendExpFunctionGroup2();
@@ -343,7 +343,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF10(boolean f10) {
         boolean old = this.f10;
         this.f10 = f10;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup3();
         } else {
             sendExpFunctionGroup2();
@@ -357,7 +357,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF11(boolean f11) {
         boolean old = this.f11;
         this.f11 = f11;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup3();
         } else {
             sendExpFunctionGroup2();
@@ -371,7 +371,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF12(boolean f12) {
         boolean old = this.f12;
         this.f12 = f12;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup3();
         } else {
             sendExpFunctionGroup2();
@@ -385,7 +385,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF13(boolean f13) {
         boolean old = this.f13;
         this.f13 = f13;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup4();
         } else {
             sendExpFunctionGroup2();
@@ -399,7 +399,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF14(boolean f14) {
         boolean old = this.f14;
         this.f14 = f14;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup4();
         } else {
             sendExpFunctionGroup3();
@@ -413,7 +413,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF15(boolean f15) {
         boolean old = this.f15;
         this.f15 = f15;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup4();
         } else {
             sendExpFunctionGroup3();
@@ -427,7 +427,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF16(boolean f16) {
         boolean old = this.f16;
         this.f16 = f16;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup4();
         } else {
             sendExpFunctionGroup3();
@@ -441,7 +441,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF17(boolean f17) {
         boolean old = this.f17;
         this.f17 = f17;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup4();
         } else {
             sendExpFunctionGroup3();
@@ -455,7 +455,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF18(boolean f18) {
         boolean old = this.f18;
         this.f18 = f18;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup4();
         } else {
             sendExpFunctionGroup3();
@@ -469,7 +469,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF19(boolean f19) {
         boolean old = this.f19;
         this.f19 = f19;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup4();
         } else {
             sendExpFunctionGroup3();
@@ -483,7 +483,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF20(boolean f20) {
         boolean old = this.f20;
         this.f20 = f20;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup4();
         } else {
             sendExpFunctionGroup3();
@@ -497,7 +497,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF21(boolean f21) {
         boolean old = this.f21;
         this.f21 = f21;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup5();
         } else {
             sendExpFunctionGroup4();
@@ -511,7 +511,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF22(boolean f22) {
         boolean old = this.f22;
         this.f22 = f22;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup5();
         } else {
             sendExpFunctionGroup4();
@@ -525,7 +525,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF23(boolean f23) {
         boolean old = this.f23;
         this.f23 = f23;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup5();
         } else {
             sendExpFunctionGroup4();
@@ -539,7 +539,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF24(boolean f24) {
         boolean old = this.f24;
         this.f24 = f24;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup5();
         } else {
             sendExpFunctionGroup4();
@@ -553,7 +553,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF25(boolean f25) {
         boolean old = this.f25;
         this.f25 = f25;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup5();
         } else {
             sendExpFunctionGroup4();
@@ -567,7 +567,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF26(boolean f26) {
         boolean old = this.f26;
         this.f26 = f26;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup5();
         } else {
             sendExpFunctionGroup4();
@@ -581,7 +581,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF27(boolean f27) {
         boolean old = this.f27;
         this.f27 = f27;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup5();
         } else {
             sendExpFunctionGroup4();
@@ -595,7 +595,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     public void setF28(boolean f28) {
         boolean old = this.f28;
         this.f28 = f28;
-        if (slot.getSlot() < 128 ) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO ) {
             sendFunctionGroup5();
         } else {
             sendExpFunctionGroup4();
@@ -860,7 +860,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
         if (sendLoconetMessage) {
             log.debug("setSpeedSetting: sending speed {} to LocoNet slot {}", speed, slot.getSlot());
-            if (slot.getSlot() < 128) {
+            if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
                 LocoNetMessage msg = new LocoNetMessage(4);
                 msg.setOpCode(LnConstants.OPC_LOCO_SPD);
                 msg.setElement(1, slot.getSlot());
@@ -906,7 +906,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         boolean old = isForward;
         isForward = forward;
         log.debug("setIsForward to {}, old value {}", isForward, old);
-        if (slot.getSlot() < 128) {
+        if (slot.getProtocol() != LnConstants.LOCONETPROTOCOL_TWO) {
             sendFunctionGroup1();
         } else {
             sendExpSpeedAndDirection();

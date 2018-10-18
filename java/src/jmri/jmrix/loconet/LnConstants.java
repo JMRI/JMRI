@@ -383,8 +383,12 @@ public final class LnConstants {
     public final static int OPC_MASK = 0x7f;  /* mask for acknowledge opcodes */
 
     /* protocol level */
+
+    /** The protocol has not been established */
     public final static int LOCONETPROTOCOL_UNKNOWN = 0;
+    /** Supports loconet 1.1 */
     public final static int LOCONETPROTOCOL_ONE = 1;
+    /** Supports the protocol introduced to DCS240, DCS210 */
     public final static int LOCONETPROTOCOL_TWO = 2;
 
     /* Expanded slot codes */
