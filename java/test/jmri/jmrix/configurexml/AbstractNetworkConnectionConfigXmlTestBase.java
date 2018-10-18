@@ -29,7 +29,7 @@ abstract public class AbstractNetworkConnectionConfigXmlTestBase extends Abstrac
              Assert.assertEquals("address",npc.getHostName(), e.getAttribute("address").getValue());
           }
        } else {
-          if(e.getAttribute("mdnsConfigure").getValue()!= null) {
+          if(e.getAttribute("mdnsConfigure")!= null) {
              Assert.assertEquals("mdnsConfigure","false", e.getAttribute("mdnsConfigure").getValue());
           }
           if(npc.getHostName()!=null ) {
