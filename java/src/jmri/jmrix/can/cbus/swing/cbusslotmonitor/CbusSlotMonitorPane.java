@@ -223,12 +223,11 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel implement
     
     @Override
     public void dispose() {
-        // send messages to null signal data on any cabs
-        slotModel = null;
+        // todo - send messages to null signal data on any cabs
+
         slotTable = null;
         slotModel.dispose();
-        
-        // disconnect from the CBUS
+        // disconnect from CBUS
         tc.removeCanListener(this);
         super.dispose();
     }
