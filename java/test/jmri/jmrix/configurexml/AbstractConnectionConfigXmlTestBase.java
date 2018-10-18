@@ -33,7 +33,7 @@ abstract public class AbstractConnectionConfigXmlTestBase extends jmri.configure
     }
 
     @Test
-    public void loadTest(){
+    public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
         Assume.assumeNotNull(cc);
         cc.loadDetails(new JPanel());
         Element e = xmlAdapter.store(cc);
