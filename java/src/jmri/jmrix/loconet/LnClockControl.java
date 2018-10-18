@@ -139,7 +139,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
             curRate = (int) newRate;        // clock running case
             savedRate = curRate;
         }
-        requestSetClock();
+        setClock();
     }
 
     @Override
@@ -158,7 +158,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         curDays = now.getDate();
         curHours = now.getHours();
         curMinutes = now.getMinutes();
-        requestSetClock();
+        setClock();
     }
 
     @SuppressWarnings("deprecation")
@@ -185,7 +185,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
     public void stopHardwareClock() {
         savedRate = curRate;
         curRate = 0;
-        requestSetClock();
+        setClock();
     }
 
     @SuppressWarnings("deprecation")
@@ -257,7 +257,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
                 long elapsedMS = millis % MSECPERMINUTE;
                 double frac_min = elapsedMS / (double) MSECPERMINUTE;
                 curFractionalMinutes = (int) CORRECTION - (int) (CORRECTION * frac_min);
-                requestSetClock();
+                setClock();
             }
         } else if (setInternal && !correctFastClock && !synchronizeWithInternalClock) {
             inSyncWithInternalFastClock = false;
@@ -265,7 +265,6 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         }
     }
 
-    boolean nextRequestIsUpdate = false;
     /**
      * Handle changed slot contents, due to clock changes. Can get here three
      * ways: 1) clock slot as a result of action by a throttle and 2) clock slot
@@ -278,11 +277,6 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
     public void notifyChangedSlot(LocoNetSlot s) {
         // only watch the clock slot
         if (s.getSlot() != LnConstants.FC_SLOT) {
-            return;
-        }
-        if (nextRequestIsUpdate) {
-            setClock();
-            nextRequestIsUpdate= false;
             return;
         }
         // if don't need to know, simply return
@@ -333,16 +327,8 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         inSyncWithInternalFastClock = true;
     }
 
-    private void requestSetClock() {
-        if (setInternal || synchronizeWithInternalClock || correctFastClock) {
-            // read slot.
-            nextRequestIsUpdate = true;
-            sm.sendReadSlot(LnConstants.FC_SLOT);
-        }
-    }
-     /**
+    /**
      * Push current Clock Control parameters out to LocoNet slot.
-     * This is called indirectly after a slot read has been recieved.
      */
     private void setClock() {
         if (setInternal || synchronizeWithInternalClock || correctFastClock) {
