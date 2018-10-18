@@ -34,4 +34,13 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
     @Ignore("generates error message when run")
     public void getInstanceTest() {
     }
+
+    /**
+     * { @inheritdoc }
+     */
+    @Override
+    protected void validateConnectionDetails(ConnectionConfig cc,Element e){
+        // LIUSBServer only stores standard connection details.
+    }
+
 }
