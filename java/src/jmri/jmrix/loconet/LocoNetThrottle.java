@@ -613,9 +613,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      */
     @Override
     protected void sendFunctionGroup1() {
-        // this is actually quite silly as anyone calling setFn or Setdir has already sent the message in
-        // those routines so this results in 2 sends
-        if (slot.getSlot() > 127) {
+        if (slot.getProtocol() == LnConstants.LOCONETPROTOCOL_TWO) {
             sendExpSpeedAndDirection();
             sendExpFunctionGroup1();
             return;

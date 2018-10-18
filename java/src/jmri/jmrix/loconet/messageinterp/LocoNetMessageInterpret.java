@@ -8,7 +8,6 @@ package jmri.jmrix.loconet.messageinterp;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.List;
 import jmri.InstanceManager;
 import jmri.NmraPacket;
 import jmri.Reporter;
@@ -1973,8 +1972,8 @@ public class LocoNetMessageInterpret {
         if ((pCMD == 0x20) ) { //BXP88
             int cm1 = l.getElement(3);
             int cm2 = l.getElement(4);
-            List<Integer> sectsShorted = new ArrayList();
-            List<Integer> sectsUnshorted = new ArrayList();
+            ArrayList<Integer> sectsShorted = new ArrayList<>();
+            ArrayList<Integer> sectsUnshorted = new ArrayList<>();
             if ((cm2 & 0x01) != 0) {
                 sectsShorted.add(1);
             } else {
@@ -2021,7 +2020,6 @@ public class LocoNetMessageInterpret {
         }
         if ( (pCMD == 0x50) || (pCMD == 0x40)) { //BXPA1
             int cm1 = l.getElement(3);
-            int cm2 = l.getElement(4);
             String RevState = "";
             String BreakState = "";
             if ((cm1 & 0x10) != 0) { // reversing state
