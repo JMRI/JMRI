@@ -32,6 +32,15 @@ abstract public class AbstractConnectionConfigXmlTestBase extends jmri.configure
         validateConnectionDetails(cc,e);
     }
 
+    @Test
+    public void loadTest(){
+        Assume.assumeNotNull(cc);
+        cc.loadDetails(new JPanel());
+        Element e = xmlAdapter.store(cc);
+        //load what we just produced.
+        xmlAdapter.load(e);
+    }
+
     /**
      * Validate the common details for ConnectionConfig match the values in 
      * the xml element.
