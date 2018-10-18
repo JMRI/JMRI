@@ -2,6 +2,7 @@ package jmri.jmrix.loconet.locormi.configurexml;
 
 import jmri.util.JUnitUtil;
 import org.junit.*;
+import jmri.jmrix.loconet.locormi.ConnectionConfig;
 
 /**
  * ConnectionConfigXmlTest.java
@@ -17,12 +18,14 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new ConnectionConfigXml();
+        cc = new ConnectionConfig();
     }
 
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
         xmlAdapter = null;
+        cc = null;
     }
 
     @Test
