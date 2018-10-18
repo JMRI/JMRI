@@ -263,7 +263,6 @@ public class TimeTableImport {
 // ST D NX  A   D  T  N
 //         _trainId = trainId;
 //         _stationId = stationId;
-//         _prevStopId = prevStopId;
 //         _seq = seq;
 //         _duration = duration;
 //         _nextSpeed = nextSpeed;
@@ -277,7 +276,6 @@ public class TimeTableImport {
         Stop stop = new Stop(_stopId,
                 _trainId,
                 _stationIds.get(Integer.parseInt(lineStrings[0]) - 1),
-                0,
                 seq,
                 Integer.parseInt(lineStrings[1]),
                 Integer.parseInt(lineStrings[2]),

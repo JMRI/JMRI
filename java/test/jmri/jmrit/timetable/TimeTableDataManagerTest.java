@@ -76,6 +76,8 @@ public class TimeTableDataManagerTest {
         // Test special cases
         Assert.assertNotNull(dm.getLayoutForStop(stopId));
         Assert.assertEquals(2, dm.getSegmentStations(layoutId).size());
+        int nextId = dm.getNextId("ErrorMsg");
+        jmri.util.JUnitAppender.assertErrorMessage("getNextId: Invalid record type: ErrorMsg");
     }
 
     @Before

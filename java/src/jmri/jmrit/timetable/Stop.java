@@ -15,12 +15,11 @@ public class Stop {
         _seq = seq;
     }
 
-    public Stop(int stopId, int trainId, int stationId, int prevStopId, int seq, int duration,
+    public Stop(int stopId, int trainId, int stationId, int seq, int duration,
             int nextSpeed, int arriveTime, int departTime, int stagingTrack, String stopNotes) {
         _stopId = stopId;
         _trainId = trainId;
         _stationId = stationId;
-        _prevStopId = prevStopId;
         _seq = seq;
         _duration = duration;
         _nextSpeed = nextSpeed;
@@ -33,7 +32,6 @@ public class Stop {
     private int _stopId = 0;
     private int _trainId = 0;
     private int _stationId = 0;
-    private int _prevStopId = 0;
     private int _seq = 0;
     private int _duration = 0;
     private int _nextSpeed = 0;
@@ -56,14 +54,6 @@ public class Stop {
 
     public void setStationId(int newStationId) {
         _stationId = newStationId;
-    }
-
-    public int getPrevStopId() {
-        return _prevStopId;
-    }
-
-    public void setPrevStopId(int newPrevId) {
-        _prevStopId = newPrevId;
     }
 
     public int getSeq() {

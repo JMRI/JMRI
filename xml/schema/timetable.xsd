@@ -123,7 +123,6 @@
       <xs:element type="xs:integer" name="stop_id"/>
       <xs:element type="xs:integer" name="train_id"/>
       <xs:element type="xs:integer" name="station_id"/>
-      <xs:element type="xs:integer" name="prev_stop_id"/>
       <xs:element type="xs:integer" name="seq"/>
       <xs:element type="xs:integer" name="duration"/>
       <xs:element type="xs:integer" name="next_speed"/>

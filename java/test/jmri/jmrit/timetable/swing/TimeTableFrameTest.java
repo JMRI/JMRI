@@ -21,6 +21,11 @@ public class TimeTableFrameTest {
     }
 
     @Test
+    public void testCreatEmtpy() {
+        TimeTableFrame f = new TimeTableFrame();
+    }
+
+    @Test
     public void testTree()  throws InterruptedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrameOperator editFrame = new JFrameOperator(Bundle.getMessage("TitleTimeTable"));  // NOI18N
@@ -41,6 +46,14 @@ public class TimeTableFrameTest {
         jto.selectRow(14);
         new JButtonOperator(editFrame, Bundle.getMessage("ButtonDown")).push();  // NOI18N
 
+        // Test edit dialog and cancel button
+        jto.expandRow(0);
+        jto.selectRow(0);
+        textField = new JTextFieldOperator(editFrame, 0);
+        textField.clickMouse();
+        textField.setText("XYZ");
+        new JButtonOperator(editFrame, Bundle.getMessage("ButtonCancel")).push();  // NOI18N
+
         jto.collapseRow(0);
         jto.selectRow(0);
 
@@ -48,7 +61,14 @@ public class TimeTableFrameTest {
         new JButtonOperator(editFrame, Bundle.getMessage("AddLayoutButtonText")).push();  // NOI18N
         textField = new JTextFieldOperator(editFrame, 0);
         textField.clickMouse();
-        textField.setText("New Layout");
+        textField.setText("Test Layout");
+        textField = new JTextFieldOperator(editFrame, 1);
+        textField.clickMouse();
+        textField.setText("6");
+        textField = new JTextFieldOperator(editFrame, 2);
+        textField.clickMouse();
+        textField.setText("5");
+        new JCheckBoxOperator(editFrame, 0).doClick();
         new JButtonOperator(editFrame, Bundle.getMessage("ButtonUpdate")).push();  // NOI18N
 
         jto.expandRow(1);
@@ -83,6 +103,9 @@ public class TimeTableFrameTest {
         textField = new JTextFieldOperator(editFrame, 1);
         textField.clickMouse();
         textField.setText("50");
+        new JCheckBoxOperator(editFrame, 0).doClick();
+        new JSpinnerOperator(editFrame, 0).setValue(1);
+        new JSpinnerOperator(editFrame, 1).setValue(3);
         new JButtonOperator(editFrame, Bundle.getMessage("ButtonUpdate")).push();  // NOI18N
 
         jto.selectRow(8);
@@ -91,15 +114,28 @@ public class TimeTableFrameTest {
         textField = new JTextFieldOperator(editFrame, 0);
         textField.clickMouse();
         textField.setText("Test Schedule");
+        textField = new JTextFieldOperator(editFrame, 1);
+        textField.clickMouse();
+        textField.setText("Today");
+        new JSpinnerOperator(editFrame, 0).setValue(1);
+        new JSpinnerOperator(editFrame, 1).setValue(23);
         new JButtonOperator(editFrame, Bundle.getMessage("ButtonUpdate")).push();  // NOI18N
 
         new JButtonOperator(editFrame, Bundle.getMessage("AddTrainButtonText")).push();  // NOI18N
         textField = new JTextFieldOperator(editFrame, 0);
         textField.clickMouse();
         textField.setText("TRN");
+        textField = new JTextFieldOperator(editFrame, 1);
+        textField.clickMouse();
+        textField.setText("Test Train");
         textField = new JTextFieldOperator(editFrame, 2);
         textField.clickMouse();
         textField.setText("10");
+        textField = new JTextFieldOperator(editFrame, 3);
+        textField.clickMouse();
+        textField.setText("12:00");
+        new JComboBoxOperator(editFrame, 0).selectItem("New Train Type");  // NOI18N
+        new JSpinnerOperator(editFrame, 0).setValue(1);
         new JButtonOperator(editFrame, Bundle.getMessage("ButtonUpdate")).push();  // NOI18N
 
         new JButtonOperator(editFrame, Bundle.getMessage("AddStopButtonText")).push();  // NOI18N
@@ -111,6 +147,10 @@ public class TimeTableFrameTest {
 
         new JButtonOperator(editFrame, Bundle.getMessage("AddStopButtonText")).push();  // NOI18N
         new JComboBoxOperator(editFrame, 0).selectItem("Station 2");  // NOI18N
+        textField = new JTextFieldOperator(editFrame, 1);
+        textField.clickMouse();
+        textField.setText("20");
+        new JSpinnerOperator(editFrame, 0).setValue(1);
         new JButtonOperator(editFrame, Bundle.getMessage("ButtonUpdate")).push();  // NOI18N
 
         // Delete the layout in reverse order
@@ -136,6 +176,18 @@ public class TimeTableFrameTest {
         Thread t1 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"));  // NOI18N
         new JButtonOperator(editFrame, Bundle.getMessage("DeleteLayoutButtonText")).push();  // NOI18N
         t1.join();
+
+        // Misc tests
+        ttf.makeDetailGrid("XYZ");
+        jmri.util.JUnitAppender.assertWarnMessage("Invalid grid type: 'XYZ'");
+
+        // Other buttons
+        jto.expandRow(0);
+        jto.expandRow(2);
+        jto.selectRow(3);
+        new JButtonOperator(editFrame, Bundle.getMessage("ButtonGraph")).push();  // NOI18N
+        new JButtonOperator(editFrame, Bundle.getMessage("ButtonSave")).push();  // NOI18N
+        new JButtonOperator(editFrame, Bundle.getMessage("ButtonDone")).push();  // NOI18N
     }
 
     Thread createModalDialogOperatorThread(String dialogTitle, String buttonText) {

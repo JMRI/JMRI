@@ -12,14 +12,6 @@ import jmri.util.swing.WindowInterface;
  */
 public class TimeTableAction extends JmriAbstractAction {
 
-    public TimeTableAction(String s, WindowInterface wi) {
-        super(s, wi);
-    }
-
-    public TimeTableAction(String s, Icon i, WindowInterface wi) {
-        super(s, i, wi);
-    }
-
     public TimeTableAction(String s) {
         super(s);
     }
@@ -43,6 +35,4 @@ public class TimeTableAction extends JmriAbstractAction {
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
-
-//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableAction.class);
 }

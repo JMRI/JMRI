@@ -130,7 +130,6 @@ public class TimeTableXml {
             e.addContent(new Element("stop_id").addContent("" + stop.getStopId()));
             e.addContent(new Element("train_id").addContent("" + stop.getTrainId()));
             e.addContent(new Element("station_id").addContent("" + stop.getStationId()));
-            e.addContent(new Element("prev_stop_id").addContent("" + stop.getPrevStopId()));
             e.addContent(new Element("seq").addContent("" + stop.getSeq()));
             e.addContent(new Element("duration").addContent("" + stop.getDuration()));
             e.addContent(new Element("next_speed").addContent("" + stop.getNextSpeed()));
@@ -392,8 +391,6 @@ public class TimeTableXml {
                 int trainId = (train_id == null) ? 0 : Integer.parseInt(train_id.getValue());
                 Element station_id = stop.getChild("station_id");
                 int stationId = (station_id == null) ? 0 : Integer.parseInt(station_id.getValue());
-                Element prev_stop_id = stop.getChild("prev_stop_id");
-                int prevStopId= (prev_stop_id == null) ? 0 : Integer.parseInt(prev_stop_id.getValue());
                 Element seqE = stop.getChild("seq");
                 int seq = (seqE == null) ? 0 : Integer.parseInt(seqE.getValue());
                 Element durationE = stop.getChild("duration");
@@ -409,8 +406,8 @@ public class TimeTableXml {
                 Element stop_notes = stop.getChild("stop_notes");
                 String stopNotes = (stop_notes == null) ? "" : stop_notes.getValue();
 
-                log.debug("        Stop: {} - {} - {} - {} - {} - {} - {} - {} - {} - {} - {}",
-                        stopId, trainId, stationId, prevStopId, seq, duration, nextSpeed, arriveTime, departTime, stagingTrack, stopNotes);
+                log.debug("        Stop: {} - {} - {} - {} - {} - {} - {} - {} - {} - {}",
+                        stopId, trainId, stationId, seq, duration, nextSpeed, arriveTime, departTime, stagingTrack, stopNotes);
 
                 // Validate trainId
                 if (!checkTrainIds.contains(trainId)) {
@@ -424,7 +421,7 @@ public class TimeTableXml {
                 }
 
                 // Create a stop
-                Stop newStop = new Stop(stopId, trainId, stationId, prevStopId, seq, duration,
+                Stop newStop = new Stop(stopId, trainId, stationId, seq, duration,
                         nextSpeed, arriveTime, departTime, stagingTrack, stopNotes);
                 dataMgr.addStop(stopId, newStop);
             }

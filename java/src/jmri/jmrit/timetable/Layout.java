@@ -32,7 +32,6 @@ public class Layout {
     private float _scale = 87.1f;
     private float _scaleMK;          // Scale mile (real feet) or km (real meter)
 
-//     private WarrantPreferences _wp = jmri.jmrit.logix.WarrantPreferences.getDefault();
     private WarrantPreferences _wp = null;
 
     /**
@@ -41,7 +40,6 @@ public class Layout {
      * The resulting value is the real feet or meters.
      */
     public void setScaleMK() {
-//         double oldScaleMK = _scaleMK;
         float distance = (_metric) ? 1000 : 5280;
         if (_wp == null) {
             try {
@@ -53,7 +51,6 @@ public class Layout {
         }
         _scaleMK = distance / _scale / _fastClock;
         log.debug("scaleMK = {}, scale = {}", _scaleMK, _scale);
-//         this.firePropertyChange("scaleMK", oldScaleMK, _scaleMK);
     }
 
     public float getScaleMK() {

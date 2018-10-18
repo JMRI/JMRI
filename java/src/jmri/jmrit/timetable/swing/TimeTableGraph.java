@@ -265,7 +265,7 @@ public class TimeTableGraph extends JPanel {
                     }
                     activeSeg = true;
                     setBegin();
-                    if (_stops.size() == 1) {
+                    if (_stops.size() == 1 || _stopIdx == _stops.size() - 1) {
                         setEnd(stop, false);
                         break;
                     }
@@ -412,6 +412,7 @@ public class TimeTableGraph extends JPanel {
 
         if (_stopIdx > 0) {
             // Enter after segment change
+//             log.info("segment change for train {}", _trainName);
             segmentChange = true;
             Stop prevStop = _stops.get(_stopIdx - 1);
             Station prevStation = _dataMgr.getStation(prevStop.getStationId());
@@ -427,6 +428,10 @@ public class TimeTableGraph extends JPanel {
                     setDirection();
                     drawTrainName(x, y, "Center", false, false);
                     drawTrainTime(stop.getDepartTime(), "begin", x, y);
+//                     log.info("found transition station: name = {}, x = {}, y = {}, time = {}", prevName, x, y, stop.getDepartTime());
+//                     if (_stopIdx == _stops.size() - 1) {
+//                         log.info("this is the last stop");
+//                     }
                     break;
                 }
             }
