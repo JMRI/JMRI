@@ -7,8 +7,6 @@ import java.io.InputStream;
 import java.util.Arrays;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
@@ -117,7 +115,5 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
         return mInstance;
     }
     static SimDriverAdapter mInstance;
-
-    private final static Logger log = LoggerFactory.getLogger(SimDriverAdapter.class);
 
 }
