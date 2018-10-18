@@ -23,9 +23,6 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     public String openPort(String portName, String appName) {
             // don't even try to get port
 
-        // get and save stream
-        serialStream = null;
-
         opened = true;
 
         return null; // normal operation
