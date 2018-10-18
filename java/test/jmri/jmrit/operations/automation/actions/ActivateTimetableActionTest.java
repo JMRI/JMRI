@@ -48,12 +48,12 @@ public class ActivateTimetableActionTest extends OperationsTestCase {
         ActivateTimetableAction action = new ActivateTimetableAction();
         Assert.assertNotNull("exists",action);
         AutomationItem automationItem = new AutomationItem("TestId");
-        automationItem.setAction(action);
-        action.setAutomationItem(automationItem);
+        automationItem.setAction(action);       
+        Assert.assertEquals("confirm registered", automationItem, action.getAutomationItem());
         
         // set "Monday" as the active 
         automationItem.setTrainSchedule(tsm.getScheduleByName("Monday"));
-        action.doAction();
+        automationItem.doAction();
         // confirm change
         Assert.assertEquals("active schedule", tsm.getScheduleByName("Monday").getId(), tsm.getTrainScheduleActiveId());
         

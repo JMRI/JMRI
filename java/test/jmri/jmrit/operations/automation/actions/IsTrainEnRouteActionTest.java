@@ -49,7 +49,7 @@ public class IsTrainEnRouteActionTest extends OperationsTestCase{
         Assert.assertNotNull("exists",action);
         AutomationItem automationItem = new AutomationItem("TestId");
         automationItem.setAction(action);
-        action.setAutomationItem(automationItem);
+        Assert.assertEquals("confirm registered", automationItem, action.getAutomationItem());
         
         // does nothing, no train assignment
         action.doAction();       
@@ -88,7 +88,7 @@ public class IsTrainEnRouteActionTest extends OperationsTestCase{
         Assert.assertNotNull("exists",action);
         AutomationItem automationItem = new AutomationItem("TestId");
         automationItem.setAction(action);
-        action.setAutomationItem(automationItem);
+        Assert.assertEquals("confirm registered", automationItem, action.getAutomationItem());
         
         Assert.assertTrue(train1.build());
         
