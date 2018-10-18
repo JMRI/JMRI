@@ -7,6 +7,8 @@ package jmri.jmrix.loconet.messageinterp;
 
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import jmri.InstanceManager;
 import jmri.NmraPacket;
 import jmri.Reporter;
@@ -19,6 +21,7 @@ import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
 import jmri.util.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1966,6 +1969,80 @@ public class LocoNetMessageInterpret {
                     (l.getElement(2) + 1) + ((l.getElement(1) & 0x1) << 7),
                     sect1Mode, sect1State, sect2Mode, sect2State,
                     sect3Mode, sect3State, sect4Mode, sect4State);
+        }
+        if ((pCMD == 0x20) ) { //BXP88
+            int cm1 = l.getElement(3);
+            int cm2 = l.getElement(4);
+            List<Integer> sectsShorted = new ArrayList();
+            List<Integer> sectsUnshorted = new ArrayList();
+            if ((cm2 & 0x01) != 0) {
+                sectsShorted.add(1);
+            } else {
+                sectsUnshorted.add(1);
+            }
+            if ((cm2 & 0x02) != 0) {
+                sectsShorted.add(2);
+            } else {
+                sectsUnshorted.add(2);
+            }
+            if ((cm2 & 0x04) != 0) {
+                sectsShorted.add(3);
+            } else {
+                sectsUnshorted.add(3);
+            }
+            if ((cm2 & 0x08) != 0) {
+                sectsShorted.add(4);
+            } else {
+                sectsUnshorted.add(4);
+            }
+            if ((cm1 & 0x01) != 0) {
+                sectsShorted.add(5);
+            } else {
+                sectsUnshorted.add(5);
+            }
+            if ((cm1 & 0x02) != 0) {
+                sectsShorted.add(6);
+            } else {
+                sectsUnshorted.add(6);
+            }
+            if ((cm1 & 0x04) != 0) {
+                sectsShorted.add(7);
+            } else {
+                sectsUnshorted.add(7);
+            }
+            if ((cm1 & 0x08) != 0) {
+                sectsShorted.add(8);
+            } else {
+                sectsUnshorted.add(8);
+            }
+            return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_BXP88",
+                    (l.getElement(2) + 1) + ((l.getElement(1) & 0x1) << 7),
+                    StringUtils.join(sectsShorted, ','), StringUtils.join(sectsUnshorted, ','));
+        }
+        if ( (pCMD == 0x50) || (pCMD == 0x40)) { //BXPA1
+            int cm1 = l.getElement(3);
+            int cm2 = l.getElement(4);
+            String RevState = "";
+            String BreakState = "";
+            if ((cm1 & 0x10) != 0) { // reversing state
+                if ((cm1 & 0x08) != 0) {
+                    RevState = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_BXPA1_HELPER_MODE_REV");
+                } else {
+                    RevState = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_BXPA1_HELPER_MODE_NORM");
+                }
+            } else {
+                // breaker state
+                if ((cm1 & 0x08) != 0) {
+                    BreakState = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_BXPA1_HELPER_MODE_SHORT");
+                } else {
+                    BreakState = Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_BXPA1_HELPER_MODE_NONSHORT");
+                }
+            }
+            int bxpa1_Id = ((l.getElement(2) << 3 ) + (l.getElement(3) & 0x07 ) + 1);
+            // Due to a problem with the firmware messages from x and x+4 are identical
+            return Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_POWER_BXPA1",
+                    bxpa1_Id, bxpa1_Id +4,
+                    RevState, BreakState);
         }
         return "";
     }
