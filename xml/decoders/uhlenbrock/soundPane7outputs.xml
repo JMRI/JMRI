@@ -15,9 +15,9 @@
     <revhistory xmlns="http://docbook.org/ns/docbook">
         <revision>
             <revnumber>1</revnumber>
-            <date>2018-10-12</date>
+            <date>2018-10-18</date>
             <authorinitials>EB</authorinitials>
-            <revremark>Initial version as separate file, taken from Uhlenbrock_32300.xml</revremark>
+            <revremark>Initial version as separate file, taken from Uhlenbrock_32300.xml by ALM</revremark>
         </revision>
         <!-- Valid only for certain Uhlenbrock decoders with IntelliSound3/4 Module,
              such as 32300, 36320, 36360 (IS3), 32500, 32504, 36520, 36560 (IS4) (non exhaustive list) -->

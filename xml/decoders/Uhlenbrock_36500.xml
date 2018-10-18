@@ -12,11 +12,11 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-    <version author="Egbert Broerse" version="1" lastUpdated="20181017"/>
+    <version author="Egbert Broerse" version="1" lastUpdated="20181018"/>
     <!-- Version 1 - Copied and adapted from Uhlenbrock_36500.xml + Dutch translation -->
     <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
 <decoder>
-    <family name="Multi-Protocol IntelliSound4 Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="9">
+    <family name="Multi-Protocol IntelliSound4 Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="9"><!-- to be checked by hardware owner -->
       <model model="36520" numOuts="9" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="NMRAmedium" productID="36520" comment="IntelliSound 4 with PluX22 plug and RailCom(R)">
         <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
         <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>

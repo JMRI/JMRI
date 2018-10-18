@@ -16,7 +16,7 @@
     <!-- Version 1 - Created from Uhlenbrock_76560.xml v1 (Alain Le Marchand), added Uhlenbrock 363x decoder models, Dutch translation -->
     <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
 <decoder>
-    <family name="Multi-Protocol IntelliSound3 Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="9">
+    <family name="Multi-Protocol IntelliSound3 Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="9"><!-- to be checked by hardware owner -->
       <model model="36320" numOuts="9" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="NMRAmedium" productID="36320" comment="IntelliSound 3 with PluX22 plug and RailCom(R)">
         <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
         <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
