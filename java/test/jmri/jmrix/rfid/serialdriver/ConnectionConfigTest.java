@@ -14,10 +14,6 @@ import org.junit.Test;
 
 public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase  {
 
-   @Test
-   public void ConstructorTest(){
-      Assert.assertNotNull("ConnectionConfig constructor",new ConnectionConfig());
-   }
 
    @Before
    public void setUp() {
@@ -29,6 +25,7 @@ public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionCon
 
    @After
    public void tearDown(){
+        cc=null;
         JUnitUtil.tearDown();
    }
 

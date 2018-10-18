@@ -24,6 +24,7 @@ public class Z21SimulatorConnectionConfigTest extends jmri.jmrix.AbstractSimulat
 
    @After
    public void tearDown(){
+        cc=null;
         JUnitUtil.tearDown();
    }
 
