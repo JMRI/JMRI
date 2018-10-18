@@ -68,7 +68,7 @@
         <adapter>jmri.jmrit.roster.ImportRosterItemAction</adapter>
     </node>
     <node>separator</node><!-- separator -->
-    <node name="Export Roster...">
+    <node name="Export Complete Roster...">
         <name xml:lang="fr">Exporter l'Inventaire complet...</name>
         <name xml:lang="it">Esporta Roster Completo...</name>
         <name xml:lang="de">Exportiere gesamten Lokpark...</name>
@@ -77,7 +77,7 @@
         <name xml:lang="nl">Exporteer hele Loclijst...</name>
         <adapter>jmri.jmrit.roster.FullBackupExportAction</adapter>
     </node>
-    <node name="Import Roster...">
+    <node name="Import Complete Roster...">
         <name xml:lang="fr">Importer l'Inventaire...</name>
         <name xml:lang="it">Importa Roster...</name>
         <name xml:lang="de">Importiere gesamten Lokpark...</name>

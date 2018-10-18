@@ -311,7 +311,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
             trainManager.terminateSelectedTrains(getSortByList());
         }
         if (ae.getSource() == activateButton) {
-            trainManager.setTrainSecheduleActiveId(getSelectedScheduleId());
+            trainScheduleManager.setTrainScheduleActiveId(getSelectedScheduleId());
             activateButton.setEnabled(false);
         }
         if (ae.getSource() == saveButton) {
@@ -344,7 +344,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
                 schedule.add(b);
                 schGroup.add(b);
                 addRadioButtonAction(b);
-                if (b.getName().equals(trainManager.getTrainScheduleActiveId())) {
+                if (b.getName().equals(trainScheduleManager.getTrainScheduleActiveId())) {
                     b.setSelected(true);
                     enableButtons(true);
                     // update comment field
@@ -355,7 +355,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         anyButton.setName(TrainSchedule.ANY); // Name holds schedule id for the selected radio button
         schedule.add(anyButton);
         schGroup.add(anyButton);
-        anyButton.setSelected(trainManager.getTrainScheduleActiveId().equals(TrainSchedule.ANY));
+        anyButton.setSelected(trainScheduleManager.getTrainScheduleActiveId().equals(TrainSchedule.ANY));
         schedule.revalidate();
     }
 
@@ -404,10 +404,10 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         switchListsButton.setEnabled(enable);
         terminateButton.setEnabled(enable);
 
-        log.debug("Selected id: {}, Active id: {}", getSelectedScheduleId(), trainManager.getTrainScheduleActiveId());
+        log.debug("Selected id: {}, Active id: {}", getSelectedScheduleId(), trainScheduleManager.getTrainScheduleActiveId());
 
         activateButton.setEnabled(getSelectedScheduleId() != null
-                && !getSelectedScheduleId().equals(trainManager.getTrainScheduleActiveId()));
+                && !getSelectedScheduleId().equals(trainScheduleManager.getTrainScheduleActiveId()));
         
         commentTextArea.setEnabled(enable);
     }

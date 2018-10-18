@@ -115,9 +115,9 @@ public class NamedIconTest {
         // Be wary of numerical instability in these tests. e.g. because of rounding in NamedIcon, sometimes
         // cos(30) is not exactly 0.5 and the ceil operation gives different answers!
         double sqrt3 = Math.sqrt(3);
-        int expectedHeight = (int) (Math.ceil(h * sqrt3 * scale / 2.0) + Math.ceil(w * scale / 2.0));
+        int expectedHeight = (int) (Math.ceil(h * sqrt3 * scale / 2.0 + w * scale / 2.0));
         Assert.assertEquals(expectedHeight, ni.getIconHeight());
-        int expectedWidth = (int) (Math.ceil(h * scale / 2.0) + Math.ceil(w * sqrt3 * scale / 2.0));
+        int expectedWidth = (int) (Math.ceil(h * scale / 2.0 + w * sqrt3 * scale / 2.0));
         Assert.assertEquals(expectedWidth, ni.getIconWidth());
     }
     
