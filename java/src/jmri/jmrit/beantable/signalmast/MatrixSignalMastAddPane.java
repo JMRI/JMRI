@@ -654,16 +654,9 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
 
     JComboBox<String> copyFromMastSelection() {
         JComboBox<String> mastSelect = new JComboBox<>();
-        List<String> names = InstanceManager.getDefault(jmri.SignalMastManager.class).getSystemNameList();
-        for (String name : names) {
-            // only accept MatrixSignalMast masts
-            if (InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(name) instanceof MatrixSignalMast) {
-                SignalMast m = InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(name);
-                if (m!=null) {
-                    mastSelect.addItem(m.getDisplayName());
-                } else {
-                    log.error("Can't copy from mast {} as it doesn't exist", name);
-                }
+        for (SignalMast mast : InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBeanSet()) {
+            if (mast instanceof DccSignalMast){
+                mastSelect.addItem(mast.getDisplayName());
             }
         }
         if (mastSelect.getItemCount() == 0) {

@@ -63,7 +63,7 @@ public class PrintTrainBuildReportActionTest {
         }, "wait for dialog to appear");
 
         JemmyUtil.pressDialogButton(MessageFormat.format(
-                Bundle.getMessage("PrintPreviousBuildReport"), new Object[]{"preview"}), "Yes");
+                Bundle.getMessage("PrintPreviousBuildReport"), new Object[]{"preview"}), Bundle.getMessage("ButtonYes"));
 
         jmri.util.JUnitUtil.waitFor(() -> {
             return printAction.getState().equals(Thread.State.TERMINATED);

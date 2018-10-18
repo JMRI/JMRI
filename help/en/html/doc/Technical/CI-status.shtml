@@ -80,6 +80,8 @@
         </a>
         </td><td align="center">
             <b><a href="jacoco_sort_report.php">JaCoCo Sortable Coverage Report</a></b>
+            <br>
+            <b><a href="jacoco_difference.php ">Compare Two JaCoCo Runs</a></b>
         </td></tr>
 
         <tr><td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/">Builds</a> - Unit Test Results<br>

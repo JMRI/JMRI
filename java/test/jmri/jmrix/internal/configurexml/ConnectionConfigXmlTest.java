@@ -1,10 +1,8 @@
 package jmri.jmrix.internal.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import jmri.jmrix.internal.ConnectionConfig;
 
 /**
  * ConnectionConfigXmlTest.java
@@ -13,19 +11,21 @@ import org.junit.Test;
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
-public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractConnectionConfigXmlTestBase {
+public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSimulatorConnectionConfigXmlTestBase {
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new ConnectionConfigXml();
+        cc = new ConnectionConfig();
     }
 
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
         xmlAdapter = null;
+        cc = null;
     }
 }
 

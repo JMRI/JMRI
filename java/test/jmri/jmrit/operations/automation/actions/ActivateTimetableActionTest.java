@@ -11,7 +11,8 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
+ * @author Dan Boudreau Copyright (C) 2018	
  */
 public class ActivateTimetableActionTest extends OperationsTestCase {
 
@@ -23,10 +24,16 @@ public class ActivateTimetableActionTest extends OperationsTestCase {
     
     @Test
     public void testActionNoAutomationItem() {
-        ActivateTimetableAction t = new ActivateTimetableAction();
-        Assert.assertNotNull("exists",t);
+        ActivateTimetableAction action = new ActivateTimetableAction();
+        Assert.assertNotNull("exists",action);
         // does nothing, no automationItem
-        t.doAction();
+        action.doAction();
+    }
+    
+    @Test
+    public void testGetActionName() {
+        ActivateTimetableAction action = new ActivateTimetableAction();
+        Assert.assertEquals("name", Bundle.getMessage("ActivateTimetable"), action.getName());
     }
     
     @Test
@@ -38,24 +45,28 @@ public class ActivateTimetableActionTest extends OperationsTestCase {
         Assert.assertEquals("default number of schedules", 7, tsm.getSchedulesByNameList().size());
         Assert.assertNotNull("Monday exists", tsm.getScheduleByName("Monday"));
         
-        ActivateTimetableAction t = new ActivateTimetableAction();
-        Assert.assertNotNull("exists",t);
+        ActivateTimetableAction action = new ActivateTimetableAction();
+        Assert.assertNotNull("exists",action);
         AutomationItem automationItem = new AutomationItem("TestId");
-        t.setAutomationItem(automationItem);
+        automationItem.setAction(action);       
+        Assert.assertEquals("confirm registered", automationItem, action.getAutomationItem());
         
         // set "Monday" as the active 
         automationItem.setTrainSchedule(tsm.getScheduleByName("Monday"));
-        t.doAction();
+        automationItem.doAction();
         // confirm change
         Assert.assertEquals("active schedule", tsm.getScheduleByName("Monday").getId(), tsm.getTrainScheduleActiveId());
+        
+        // confirm combobox is correctly selected
+        Assert.assertEquals("selection", tsm.getScheduleByName("Monday"), action.getComboBox().getSelectedItem());
     }
     
     @Test
     public void testGetCombobox() {
-        ActivateTimetableAction t = new ActivateTimetableAction();
-        Assert.assertNotNull("exists",t);
+        ActivateTimetableAction action = new ActivateTimetableAction();
+        Assert.assertNotNull("exists",action);
         // 7 days of the week, plus null at start
-        Assert.assertEquals("default schedules", 8, t.getComboBox().getItemCount());
+        Assert.assertEquals("default schedules", 8, action.getComboBox().getItemCount());
     }
 
     // The minimal setup for log4J
