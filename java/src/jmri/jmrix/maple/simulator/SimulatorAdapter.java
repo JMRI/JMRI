@@ -180,6 +180,11 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     }
 
     @Override
+    public String getCurrentPortName(){
+        return "";
+    }
+
+    @Override
     public void run() { // start a new thread
         // This thread has one task. It repeatedly reads from the input pipe
         // and writes an appropriate response to the output pipe. This is the heart

@@ -6,11 +6,14 @@ import jmri.jmrix.ConnectionConfig;
 import javax.swing.JPanel;
 
 /**
- * Base tests for SerialConnectionConfigXml objects.
+ * Base tests for Simulator ConnectionConfigXml objects.
+ * The AbstractSimulatorConnectionConfig is currently based on serial objects. 
+ * most of the simulators save objects using classes derived directly from 
+ * AbstractConnectionConfigXml.  This eventually needs to change.
  *
  * @author Paul Bender Copyright (C) 2018	
  */
-abstract public class AbstractSerialConnectionConfigXmlTestBase extends AbstractConnectionConfigXmlTestBase {
+abstract public class AbstractSimulatorConnectionConfigXmlTestBase extends AbstractConnectionConfigXmlTestBase {
 
     @Test
     @Override
