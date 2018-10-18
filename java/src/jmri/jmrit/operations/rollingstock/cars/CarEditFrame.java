@@ -67,7 +67,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
     JButton addButton = new JButton(Bundle.getMessage("TitleCarAdd")); // have button state item to add
 
     // check boxes
-    JCheckBox autoCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
+    JCheckBox autoWeightCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
     JCheckBox autoTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
     JCheckBox passengerCheckBox = new JCheckBox(Bundle.getMessage("Passenger"));
     JCheckBox cabooseCheckBox = new JCheckBox(Bundle.getMessage("Caboose"));
@@ -113,7 +113,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         // load tool tips
         weightTextField.setToolTipText(Bundle.getMessage("TipCarWeightOz"));
         weightTonsTextField.setToolTipText(Bundle.getMessage("TipCarWeightTons"));
-        autoCheckBox.setToolTipText(Bundle.getMessage("TipCarAutoCalculate"));
+        autoWeightCheckBox.setToolTipText(Bundle.getMessage("TipCarAutoCalculate"));
         autoTrackCheckBox.setToolTipText(Bundle.getMessage("rsTipAutoTrack"));
         passengerCheckBox.setToolTipText(Bundle.getMessage("TipCarPassenger"));
         cabooseCheckBox.setToolTipText(Bundle.getMessage("TipCarCaboose"));
@@ -149,7 +149,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
                 new Object[]{Bundle.getMessage("Kernel").toLowerCase()}));
 
         // default check box selections
-        autoCheckBox.setSelected(true);
+        autoWeightCheckBox.setSelected(true);
         passengerCheckBox.setSelected(false);
         cabooseCheckBox.setSelected(false);
         fredCheckBox.setSelected(false);
@@ -216,7 +216,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         addItem(pWeight, textWeightOz, 0, 0);
         addItem(pWeight, weightTextField, 1, 0);
         addItem(pWeight, fillWeightButton, 2, 0);
-        addItem(pWeight, autoCheckBox, 3, 0);
+        addItem(pWeight, autoWeightCheckBox, 3, 0);
         addItem(pWeight, textWeightTons, 0, 1);
         addItem(pWeight, weightTonsTextField, 1, 1);
         pPanel.add(pWeight);
@@ -470,7 +470,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         if (ae.getSource() == locationBox) {
             updateTrackLocationBox();
         }
-        if (ae.getSource() == lengthComboBox && autoCheckBox.isSelected()) {
+        if (ae.getSource() == lengthComboBox && autoWeightCheckBox.isSelected()) {
             calculateWeight();
         }
     }
