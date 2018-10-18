@@ -21,5 +21,7 @@ abstract public class AbstractSerialConnectionConfigXmlTestBase extends Abstract
         jmri.util.JUnitAppender.suppressErrorMessage("No usable ports returned");
         Element e = xmlAdapter.store(cc);
         Assert.assertNotNull("XML Element Produced",e); 
+        validateCommonDetails(cc,e);
+        validateConnectionDetails(cc,e);
     }
 }
