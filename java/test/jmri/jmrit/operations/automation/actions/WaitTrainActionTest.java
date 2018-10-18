@@ -107,7 +107,7 @@ public class WaitTrainActionTest extends OperationsTestCase {
         Assert.assertFalse(automationItem.isActionSuccessful());
 
         train1.setBuildEnabled(false);
-        ;
+        
         Assert.assertFalse(automationItem.isActionRunning());
         Assert.assertTrue(automationItem.isActionSuccessful());
     }
