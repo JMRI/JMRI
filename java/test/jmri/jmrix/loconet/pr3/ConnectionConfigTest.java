@@ -12,7 +12,7 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2016
  **/
 
-public class ConnectionConfigTest {
+public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase  {
 
    @Test
    public void ConstructorTest(){
@@ -23,7 +23,8 @@ public class ConnectionConfigTest {
    public void setUp() {
         JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        cc = new ConnectionConfig();
    }
 
    @After
