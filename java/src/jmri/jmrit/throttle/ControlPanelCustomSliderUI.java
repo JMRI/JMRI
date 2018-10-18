@@ -17,6 +17,7 @@ import javax.swing.plaf.basic.BasicSliderUI;
 
 public class ControlPanelCustomSliderUI extends BasicSliderUI {
     
+    // Color are coming from the Tango themes color palette (as well as icons on the Throttle window, for look consistency)
     private final static Color SLIDER_COLOR_BACK = new Color(0x88, 0x8a, 0x85, 0x88);
     private final static Color SLIDER_COLOR_FRONT = new Color(0xf57900);
     private final static Color THUMB_INNER_COLOR_STOP = new Color(0xcc0000);
@@ -56,8 +57,8 @@ public class ControlPanelCustomSliderUI extends BasicSliderUI {
         if (slider.getOrientation() == SwingConstants.HORIZONTAL) {
             if (slider.getMinimum()<0 && slider.getMaximum()>0) {
                 double doublerel0Pos = Math.abs((double)slider.getMinimum()) / ((double)slider.getMaximum() - (double)slider.getMinimum());
-                double x0 = (double)trackRect.x + (double)trackRect.width * doublerel0Pos;
-                double widthRect = (double)thumbRect.x + (double)thumbRect.width/2 - x0;
+                double x0 = trackRect.x + trackRect.width * doublerel0Pos;
+                double widthRect = thumbRect.x + (double)thumbRect.width/2 - x0;
                 if (widthRect>0) {
                     g2d.fillRect( (int)Math.round(x0), trackRect.y, (int)Math.round(widthRect), trackRect.height);
                 } else {
@@ -70,8 +71,8 @@ public class ControlPanelCustomSliderUI extends BasicSliderUI {
         } else {
             if (slider.getMinimum()<0 && slider.getMaximum()>0) {
                 double doublerel0Pos = Math.abs((double)slider.getMaximum()) / ((double)slider.getMaximum() - (double)slider.getMinimum());
-                double y0 = (double)trackRect.y + (double)trackRect.height * doublerel0Pos ;
-                double heightRect = (double)thumbRect.y + (double)thumbRect.height/2 - y0;
+                double y0 = trackRect.y + trackRect.height * doublerel0Pos ;
+                double heightRect = thumbRect.y + (double)thumbRect.height/2 - y0;
                 if (heightRect>0) {
                     g2d.fillRect( trackRect.x, (int)Math.round(y0), trackRect.width, (int)Math.round(heightRect));
                 } else {
