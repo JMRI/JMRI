@@ -348,7 +348,7 @@ public class TimeTableDataManager {
         }
 
         public String toString() {
-            return String.format("%s : %s", getSegment(_segmentId).getSegmentName(), getStation(_stationId).getStationName());
+            return String.format("%s : %s", getSegment(_segmentId).getSegmentName(), getStation(_stationId).getStationName());  // NOI18N
         }
     }
 

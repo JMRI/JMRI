@@ -22,10 +22,10 @@ public class TimeTableImportTest {
         TimeTableDataManager dm = new TimeTableDataManager();
         TimeTableImport imp = new TimeTableImport();
         try {
-            File file = FileUtil.getFile("program:xml/demoTimetable/TestSample.sgn");
+            File file = FileUtil.getFile("program:xml/demoTimetable/TestSample.sgn");  // NOI18N
             imp.importSgn(dm, file);
         } catch (IOException ex) {
-            log.error("Unable to test the import process");
+            log.error("Unable to test the import process");  // NOI18N
             return;
         }
 

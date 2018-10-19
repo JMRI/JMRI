@@ -180,10 +180,10 @@ public class TimeTableImport {
 //         _segmentId = segmentId;
 //         _layoutId = layoutId;
 //         _segmentName = segmentName;
-        _segmentId = _dm.getNextId("Segment");
+        _segmentId = _dm.getNextId("Segment");  // NOI18N
         Segment segment = new Segment(_segmentId,
                 _layoutId,
-                "Mainline");
+                "Mainline");  // NOI18N
         _dm.addSegment(_segmentId, segment);
     }
 
@@ -197,7 +197,7 @@ public class TimeTableImport {
 //         _doubleTrack = doubleTrack;
 //         _sidings = sidings;
 //         _staging = staging;
-        int stationId = _dm.getNextId("Station");
+        int stationId = _dm.getNextId("Station");  // NOI18N
         Station station = new Station(stationId,
                 _segmentId,
                 lineStrings[0],

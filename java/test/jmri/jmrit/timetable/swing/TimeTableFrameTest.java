@@ -23,6 +23,7 @@ public class TimeTableFrameTest {
     @Test
     public void testCreatEmtpy() {
         TimeTableFrame f = new TimeTableFrame();
+        Assert.assertNotNull(f);
     }
 
     @Test
@@ -61,7 +62,7 @@ public class TimeTableFrameTest {
         new JButtonOperator(editFrame, Bundle.getMessage("AddLayoutButtonText")).push();  // NOI18N
         textField = new JTextFieldOperator(editFrame, 0);
         textField.clickMouse();
-        textField.setText("Test Layout");
+        textField.setText("Test Layout");  // NOI18N
         textField = new JTextFieldOperator(editFrame, 1);
         textField.clickMouse();
         textField.setText("6");
@@ -77,7 +78,7 @@ public class TimeTableFrameTest {
         new JButtonOperator(editFrame, Bundle.getMessage("AddTrainTypeButtonText")).push();  // NOI18N
         textField = new JTextFieldOperator(editFrame, 0);
         textField.clickMouse();
-        textField.setText("New Train Type");
+        textField.setText("New Train Type");  // NOI18N
         new JButtonOperator(editFrame, Bundle.getMessage("ButtonUpdate")).push();  // NOI18N
 
         jto.selectRow(4);
@@ -85,13 +86,13 @@ public class TimeTableFrameTest {
         new JButtonOperator(editFrame, Bundle.getMessage("AddSegmentButtonText")).push();  // NOI18N
         textField = new JTextFieldOperator(editFrame, 0);
         textField.clickMouse();
-        textField.setText("Mainline");
+        textField.setText("Mainline");  // NOI18N
         new JButtonOperator(editFrame, Bundle.getMessage("ButtonUpdate")).push();  // NOI18N
 
         new JButtonOperator(editFrame, Bundle.getMessage("AddStationButtonText")).push();  // NOI18N
         textField = new JTextFieldOperator(editFrame, 0);
         textField.clickMouse();
-        textField.setText("Station 1");
+        textField.setText("Station 1");  // NOI18N
         new JButtonOperator(editFrame, Bundle.getMessage("ButtonUpdate")).push();  // NOI18N
 
         jto.selectRow(5);
@@ -99,7 +100,7 @@ public class TimeTableFrameTest {
         new JButtonOperator(editFrame, Bundle.getMessage("AddStationButtonText")).push();  // NOI18N
         textField = new JTextFieldOperator(editFrame, 0);
         textField.clickMouse();
-        textField.setText("Station 2");
+        textField.setText("Station 2");  // NOI18N
         textField = new JTextFieldOperator(editFrame, 1);
         textField.clickMouse();
         textField.setText("50");
@@ -113,10 +114,10 @@ public class TimeTableFrameTest {
         new JButtonOperator(editFrame, Bundle.getMessage("AddScheduleButtonText")).push();  // NOI18N
         textField = new JTextFieldOperator(editFrame, 0);
         textField.clickMouse();
-        textField.setText("Test Schedule");
+        textField.setText("Test Schedule");  // NOI18N
         textField = new JTextFieldOperator(editFrame, 1);
         textField.clickMouse();
-        textField.setText("Today");
+        textField.setText("Today");  // NOI18N
         new JSpinnerOperator(editFrame, 0).setValue(1);
         new JSpinnerOperator(editFrame, 1).setValue(23);
         new JButtonOperator(editFrame, Bundle.getMessage("ButtonUpdate")).push();  // NOI18N
@@ -124,10 +125,10 @@ public class TimeTableFrameTest {
         new JButtonOperator(editFrame, Bundle.getMessage("AddTrainButtonText")).push();  // NOI18N
         textField = new JTextFieldOperator(editFrame, 0);
         textField.clickMouse();
-        textField.setText("TRN");
+        textField.setText("TRN");  // NOI18N
         textField = new JTextFieldOperator(editFrame, 1);
         textField.clickMouse();
-        textField.setText("Test Train");
+        textField.setText("Test Train");  // NOI18N
         textField = new JTextFieldOperator(editFrame, 2);
         textField.clickMouse();
         textField.setText("10");
@@ -178,11 +179,13 @@ public class TimeTableFrameTest {
         t1.join();
 
         // Misc tests
-        ttf.makeDetailGrid("XYZ");
-        jmri.util.JUnitAppender.assertWarnMessage("Invalid grid type: 'XYZ'");
+        ttf.makeDetailGrid("XYZ");  // NOI18N
+        jmri.util.JUnitAppender.assertWarnMessage("Invalid grid type: 'XYZ'");  // NOI18N
 
         // Other buttons
+        jto.collapseRow(0);
         jto.expandRow(0);
+        jto.collapseRow(1);
         jto.expandRow(2);
         jto.selectRow(3);
         new JButtonOperator(editFrame, Bundle.getMessage("ButtonGraph")).push();  // NOI18N
@@ -197,7 +200,7 @@ public class TimeTableFrameTest {
             JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
             jbo.pushNoBlock();
         });
-        t.setName(dialogTitle + " Close Dialog Thread");
+        t.setName(dialogTitle + " Close Dialog Thread");  // NOI18N
         t.start();
         return t;
     }

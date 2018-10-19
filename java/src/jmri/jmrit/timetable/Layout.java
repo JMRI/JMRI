@@ -46,11 +46,11 @@ public class Layout {
                 _wp = jmri.jmrit.logix.WarrantPreferences.getDefault();
                 _scale = _wp.getLayoutScale();
             } catch (java.lang.NullPointerException ex) {
-                log.debug("Use HO as the default scale");
+                log.debug("Use HO as the default scale");  // NOI18N
             }
         }
         _scaleMK = distance / _scale / _fastClock;
-        log.debug("scaleMK = {}, scale = {}", _scaleMK, _scale);
+        log.debug("scaleMK = {}, scale = {}", _scaleMK, _scale);  // NOI18N
     }
 
     public float getScaleMK() {

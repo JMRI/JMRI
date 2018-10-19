@@ -17,7 +17,7 @@ public class TimeTableAction extends JmriAbstractAction {
     }
 
     public TimeTableAction() {
-        this("TimeTable");
+        this("TimeTable");  // NOI18N
     }
 
     @Override
@@ -33,6 +33,6 @@ public class TimeTableAction extends JmriAbstractAction {
     // never invoked, because we overrode actionPerformed above
     @Override
     public jmri.util.swing.JmriPanel makePanel() {
-        throw new IllegalArgumentException("Should not be invoked");
+        throw new IllegalArgumentException("Should not be invoked");  // NOI18N
     }
 }

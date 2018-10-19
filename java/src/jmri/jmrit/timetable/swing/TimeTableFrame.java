@@ -85,7 +85,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             _wp = jmri.jmrit.logix.WarrantPreferences.getDefault();
             _wp.addPropertyChangeListener("layoutScale", warrantListener);  // NOI18N
         } catch (java.lang.NullPointerException ex) {
-            log.debug("Disable scale changes");
+            log.debug("Disable scale changes");  // NOI18N
         }
 
     }  // TODO
@@ -366,7 +366,6 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
-                log.info("window close");
                 donePressed();
             }
         });
@@ -871,7 +870,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         TimeTableTreeNode layoutNode = (TimeTableTreeNode) _curNode.getParent();
         int layoutId = layoutNode.getId();
         int newId = _dataMgr.getNextId("TrainType");  // NOI18N
-        TrainType newType = new TrainType(newId, layoutId, "", "#000000");
+        TrainType newType = new TrainType(newId, layoutId, "", "#000000");  // NOI18N
         _dataMgr.addTrainType(newId, newType);
         setShowReminder(true);
 
@@ -1431,7 +1430,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             update = true;
         }
         if (update) {
-            _curNode.setText(buildNodeText("Schedule", schedule, 0));
+            _curNode.setText(buildNodeText("Schedule", schedule, 0));  // NOI18N
             _timetableModel.nodeChanged(_curNode);
         }
         if (schedule.getStartHour() != newStartHour) {
@@ -1460,7 +1459,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         String newName = _editTrainName.getText().trim();
         String newDesc = _editTrainDesc.getText().trim();
         int newType = ((TrainType) _editTrainType.getSelectedItem()).getTypeId();
-        int newSpeed = parseNumber(_editDefaultSpeed, "default train speed");
+        int newSpeed = parseNumber(_editDefaultSpeed, "default train speed");  // NOI18N
         if (newSpeed == -1) {
             newSpeed = train.getDefaultSpeed();
         }
@@ -1502,7 +1501,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             update = true;
         }
         if (update) {
-            _curNode.setText(buildNodeText("Train", train, 0));
+            _curNode.setText(buildNodeText("Train", train, 0));  // NOI18N
             _timetableModel.nodeChanged(_curNode);
         }
         if (train.getTypeId() != newType) {
@@ -1545,18 +1544,18 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         TimeTableDataManager.SegmentStation stopSegmentStation =
                 (TimeTableDataManager.SegmentStation) _editStopStation.getSelectedItem();
         int newStation = stopSegmentStation.getStationId();
-        int newDuration = parseNumber(_editStopDuration, "stop duration");
+        int newDuration = parseNumber(_editStopDuration, "stop duration");  // NOI18N
         if (newDuration == -1) {
             newDuration = stop.getDuration();
         }
-        int newSpeed = parseNumber(_editNextSpeed, "next speed");
+        int newSpeed = parseNumber(_editNextSpeed, "next speed");  // NOI18N
         if (newSpeed == -1) {
             newSpeed = stop.getNextSpeed();
         }
         int newStagingTrack = (int) _editStagingTrack.getValue();
         String newNotes = _editStopNotes.getText();
 
-        log.info("Stop station = {} ({}), dur = {}, next = {}, stg = {}, notes = {}",
+        log.info("Stop station = {} ({}), dur = {}, next = {}, stg = {}, notes = {}",  // NOI18N
                 stopSegmentStation, newStation, newDuration, newSpeed, newStagingTrack, newNotes);
 
         boolean update = false;
@@ -1564,7 +1563,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         if (stop.getStationId() != newStation) {
             stop.setStationId(newStation);
-            _curNode.setText(buildNodeText("Stop", stop, 0));
+            _curNode.setText(buildNodeText("Stop", stop, 0));  // NOI18N
             _timetableModel.nodeChanged(_curNode);
             update = true;
             recalc = true;
@@ -1621,32 +1620,32 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
      */
     void deletePressed() {
         switch (_curNodeType) {
-            case "Layout":
+            case "Layout":  // NOI18N
                 deleteLayout();
                 break;
 
-            case "TrainType":
+            case "TrainType":  // NOI18N
                 deleteTrainType();
                 break;
 
-            case "Segment":
+            case "Segment":  // NOI18N
                 deleteSegment();
                 break;
 
-            case "Station":
+            case "Station":  // NOI18N
                 deleteStation();
                 break;
 
-            case "Schedule":
+            case "Schedule":  // NOI18N
                 deleteSchedule();
                 break;
 
-            case "Train":
+            case "Train":  // NOI18N
                 deleteTrain();
                 break;
 
             case "Stop":
-                deleteStop();
+                deleteStop();  // NOI18N
                 break;
 
             default:
@@ -1939,7 +1938,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         DefaultMutableTreeNode prevNode = _curNode.getPreviousSibling();
         if (prevNode == null || !(prevNode instanceof TimeTableTreeNode)) {
-            log.warn("At first node, cannot move up");
+            log.warn("At first node, cannot move up");  // NOI18N
             return;
         }
         int prevStopId = ((TimeTableTreeNode) prevNode).getId();
@@ -1958,7 +1957,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         DefaultMutableTreeNode nextNode = _curNode.getNextSibling();
         if (nextNode == null || !(nextNode instanceof TimeTableTreeNode)) {
-            log.warn("At last node, cannot move down");
+            log.warn("At last node, cannot move down");  // NOI18N
             return;
         }
         int nextStopId = ((TimeTableTreeNode) nextNode).getId();
@@ -2058,7 +2057,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         } else {
             scheduleId = schedules.get(0).getScheduleId();
             if (schedules.size() > 1) {
-                log.info("do selection dialog");
+                log.info("do selection dialog");  // NOI18N
                 // do selection dialog
             }
         }
@@ -2076,7 +2075,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
     JFileChooser fileChooser;
     void importPressed() {
-        fileChooser = jmri.jmrit.XmlFile.userFileChooser("SchedGen File", "sgn");
+        fileChooser = jmri.jmrit.XmlFile.userFileChooser("SchedGen File", "sgn");  // NOI18N
         int retVal = fileChooser.showOpenDialog(null);
         if (retVal == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
@@ -2554,7 +2553,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         _updateAction.setEnabled(active);
         _addButton.setEnabled(!active);
         _deleteButton.setEnabled(!active);
-        if (_curNodeType != null && _curNodeType.equals("Stop")) {
+        if (_curNodeType != null && _curNodeType.equals("Stop")) {  // NOI18N
             setMoveButtons();
         }
     }

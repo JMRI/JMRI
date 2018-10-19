@@ -46,11 +46,11 @@ public class StopTest {
         TimeTableFrame f = new TimeTableFrame("");
         TimeTableDataManager dm = f.getDataManager();
         Station station = new Station(1, 1);
-        station.setStationName("test station");
+        station.setStationName("test station");  // NOI18N
         dm.addStation(1, station);
         Stop stop = new Stop(1, 1, 1);
         stop.setStationId(1);
-        Assert.assertEquals("1 :: test station", stop.toString());
+        Assert.assertEquals("1 :: test station", stop.toString());  // NOI18N
     }
 
     @Before

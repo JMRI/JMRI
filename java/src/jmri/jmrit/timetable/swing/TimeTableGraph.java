@@ -152,10 +152,10 @@ public class TimeTableGraph extends JPanel {
     void drawInfoSection(Graphics2D _g2) {
         // Info section
         _g2.setFont(_infoFont);
-        String layoutName = String.format("%s %s", Bundle.getMessage("LabelLayoutName"), _layout.getLayoutName());
-        String segmentName = String.format("%s %s", Bundle.getMessage("LabelSegmentName"), _segment.getSegmentName());
-        String scheduleName = String.format("%s %s", Bundle.getMessage("LabelScheduleName"), _schedule.getScheduleName());
-        String effDate = String.format("%s %s", Bundle.getMessage("LabelEffDate"), _schedule.getEffDate());
+        String layoutName = String.format("%s %s", Bundle.getMessage("LabelLayoutName"), _layout.getLayoutName());  // NOI18N
+        String segmentName = String.format("%s %s", Bundle.getMessage("LabelSegmentName"), _segment.getSegmentName());  // NOI18N
+        String scheduleName = String.format("%s %s", Bundle.getMessage("LabelScheduleName"), _schedule.getScheduleName());  // NOI18N
+        String effDate = String.format("%s %s", Bundle.getMessage("LabelEffDate"), _schedule.getEffDate());  // NOI18N
 
         _infoColWidth = Math.max(_infoColWidth, _g2.getFontMetrics().stringWidth(layoutName));
         _infoColWidth = Math.max(_infoColWidth, _g2.getFontMetrics().stringWidth(scheduleName));
@@ -295,16 +295,16 @@ public class TimeTableGraph extends JPanel {
         Rectangle2D textRect = _g2.getFontMetrics().getStringBounds(_trainName, _g2);
 
         // Position train name
-        if (justify.equals("Center")) {
+        if (justify.equals("Center")) {  // NOI18N
             x = x - textRect.getWidth() / 2;
-        } else if (justify.equals("Right")) {
+        } else if (justify.equals("Right")) {  // NOI18N
             x = x - textRect.getWidth();
         }
 
         if (invert) {
-            y = y + ((_direction.equals("down") || throttle) ? 13 : -7);
+            y = y + ((_direction.equals("down") || throttle) ? 13 : -7);  // NOI18N
         } else {
-            y = y + ((_direction.equals("down") || throttle) ? -7 : 13);
+            y = y + ((_direction.equals("down") || throttle) ? -7 : 13);  // NOI18N
         }
 
         textRect.setRect(
@@ -326,27 +326,27 @@ public class TimeTableGraph extends JPanel {
         if (!_showTrainTimes) {
             return;
         }
-        String minutes = String.format("%02d", time % 60);
+        String minutes = String.format("%02d", time % 60);  // NOI18N
         Rectangle2D textRect = _g2.getFontMetrics().getStringBounds(minutes, _g2);
         switch (mode) {
             case "begin":
-                x = x + ((_direction.equals("down")) ? 2 : 2);
-                y = y + ((_direction.equals("down")) ? 10 : -1);
+                x = x + ((_direction.equals("down")) ? 2 : 2);  // NOI18N
+                y = y + ((_direction.equals("down")) ? 10 : -1);  // NOI18N
                 break;
             case "arrive":
-                x = x + ((_direction.equals("down")) ? 2 : 3);
-                y = y + ((_direction.equals("down")) ? -2 : 10);
+                x = x + ((_direction.equals("down")) ? 2 : 3);  // NOI18N
+                y = y + ((_direction.equals("down")) ? -2 : 10);  // NOI18N
                 break;
             case "depart":
-                x = x + ((_direction.equals("down")) ? 2 : 1);
-                y = y + ((_direction.equals("down")) ? 10 : -2);
+                x = x + ((_direction.equals("down")) ? 2 : 1);  // NOI18N
+                y = y + ((_direction.equals("down")) ? 10 : -2);  // NOI18N
                 break;
             case "end":
-                x = x + ((_direction.equals("down")) ? 0 : 0);
-                y = y + ((_direction.equals("down")) ? 0 : 0);
+                x = x + ((_direction.equals("down")) ? 0 : 0);  // NOI18N
+                y = y + ((_direction.equals("down")) ? 0 : 0);  // NOI18N
                 break;
             default:
-                log.error("drawTrainTime mode {} is unknown");
+                log.error("drawTrainTime mode {} is unknown");  // NOI18N
                 return;
         }
 
@@ -426,8 +426,8 @@ public class TimeTableGraph extends JPanel {
                     _throttleX = x;  // save for drawing the throttle line at setEnd
 
                     setDirection();
-                    drawTrainName(x, y, "Center", false, false);
-                    drawTrainTime(stop.getDepartTime(), "begin", x, y);
+                    drawTrainName(x, y, "Center", false, false);  // NOI18N
+                    drawTrainTime(stop.getDepartTime(), "begin", x, y);  // NOI18N
 //                     log.info("found transition station: name = {}, x = {}, y = {}, time = {}", prevName, x, y, stop.getDepartTime());
 //                     if (_stopIdx == _stops.size() - 1) {
 //                         log.info("this is the last stop");
@@ -447,8 +447,8 @@ public class TimeTableGraph extends JPanel {
             _throttleX = x;  // save for drawing the throttle line at setEnd
 
             setDirection();
-            drawTrainName(x, y, "Center", false, false);
-            drawTrainTime(stop.getArriveTime(), "begin", x, y);
+            drawTrainName(x, y, "Center", false, false);  // NOI18N
+            drawTrainTime(stop.getArriveTime(), "begin", x, y);  // NOI18N
         }
 
 
@@ -463,7 +463,7 @@ public class TimeTableGraph extends JPanel {
     void setDirection() {
         if (_stops.size() == 1 || _stopIdx < 0 || _stopIdx > _stops.size() - 1) {
             // Single stop train or bad index value, default to down
-            _direction = "down";
+            _direction = "down";  // NOI18N
             return;
         }
 
@@ -475,9 +475,9 @@ public class TimeTableGraph extends JPanel {
         if (_stopIdx == 0) {
             Station nextStation = _dataMgr.getStation(_stops.get(_stopIdx + 1).getStationId());
             if (nextStation.getDistance() > currDistance) {
-                _direction = "down";
+                _direction = "down";  // NOI18N
             } else {
-                _direction = "up";
+                _direction = "up";  // NOI18N
             }
             return;
         }
@@ -486,9 +486,9 @@ public class TimeTableGraph extends JPanel {
         Station prevStation = _dataMgr.getStation(_stops.get(_stopIdx - 1).getStationId());
         if (prevStation.getSegmentId() == _segmentId) {
             if (prevStation.getDistance() < currDistance) {
-                _direction = "down";
+                _direction = "down";  // NOI18N
             } else {
-                _direction = "up";
+                _direction = "up";  // NOI18N
             }
             return;
         }
@@ -501,9 +501,9 @@ public class TimeTableGraph extends JPanel {
         for (Station segStation : _stations) {
             if (segStation.getStationName().equals(prevName)) {
                 if (segStation.getDistance() < currDistance) {
-                    _direction = "down";
+                    _direction = "down";  // NOI18N
                 } else {
-                    _direction = "up";
+                    _direction = "up";  // NOI18N
                 }
                 return;
             }
@@ -516,7 +516,7 @@ public class TimeTableGraph extends JPanel {
         double x = _graphLeft + ((arriveTime - _baseTime) * _sizeMinute) + _hourOffset;
         double y = _stationGrid.get(stop.getStationId());
         _trainLine.lineTo(x, y);
-        drawTrainTime(arriveTime, "arrive", x, y);
+        drawTrainTime(arriveTime, "arrive", x, y);  // NOI18N
 
         // Check for duration after arrive
         if (stop.getDuration() > 0) {
@@ -524,14 +524,14 @@ public class TimeTableGraph extends JPanel {
             if (x < _trainLine.getCurrentPoint().getX()) {
                 // The line wraps around to the beginning, do the line in two pieces
                 _trainLine.lineTo(_graphRight - _hourOffset, y);
-                drawTrainName(_graphRight - _hourOffset, y, "Right", false, false);
+                drawTrainName(_graphRight - _hourOffset, y, "Right", false, false);  // NOI18N
                 _trainLine.moveTo(_graphLeft + _hourOffset, y);
                 _trainLine.lineTo(x, y);
-                drawTrainName(_graphLeft + _hourOffset, y, "Left", false, false);
-                drawTrainTime(departTime, "depart", x, y);
+                drawTrainName(_graphLeft + _hourOffset, y, "Left", false, false);  // NOI18N
+                drawTrainTime(departTime, "depart", x, y);  // NOI18N
             } else {
                 _trainLine.lineTo(x, y);
-                drawTrainTime(departTime, "depart", x, y);
+                drawTrainTime(departTime, "depart", x, y);  // NOI18N
             }
         }
     }
@@ -551,7 +551,7 @@ public class TimeTableGraph extends JPanel {
             y = _stationGrid.get(stop.getStationId());
         }
 
-        drawTrainName(x, y, "Center", true, false);
+        drawTrainName(x, y, "Center", true, false);  // NOI18N
 //         if (_stops.size() > 1) {
 //             drawTrainTime(arriveTime, "end", x, y);
 //         }
@@ -569,11 +569,11 @@ public class TimeTableGraph extends JPanel {
             if (x < _throttleX) {
                  _g2.draw(new Line2D.Double(_throttleX, throttleY, _graphRight - _hourOffset, throttleY));
                  _g2.draw(new Line2D.Double(_graphLeft + _hourOffset, throttleY, x, throttleY));
-                drawTrainName(_throttleX + 10, throttleY + 5, "Left", false, true);
-                drawTrainName(_graphLeft + _hourOffset + 10, throttleY + 5, "Left", false, true);
+                drawTrainName(_throttleX + 10, throttleY + 5, "Left", false, true);  // NOI18N
+                drawTrainName(_graphLeft + _hourOffset + 10, throttleY + 5, "Left", false, true);  // NOI18N
            } else {
                 _g2.draw(new Line2D.Double(_throttleX, throttleY, x, throttleY));
-                drawTrainName(_throttleX + 10, throttleY + 5, "Left", false, true);
+                drawTrainName(_throttleX + 10, throttleY + 5, "Left", false, true);  // NOI18N
             }
         }
     }

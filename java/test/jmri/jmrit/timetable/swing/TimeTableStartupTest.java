@@ -23,14 +23,14 @@ public class TimeTableStartupTest {
     @Test
     public void testGetTitle() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("Open Timetable", new TimeTableStartup().getTitle(TimeTableAction.class, Locale.US));
+        Assert.assertEquals("Open Timetable", new TimeTableStartup().getTitle(TimeTableAction.class, Locale.US));  // NOI18N
     }
 
     @Test
     public void testGetTitleException() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         thrown.expect(IllegalArgumentException.class);
-        Assert.assertEquals("Open Timetable Exception", new TimeTableStartup().getTitle(TimeTableFrame.class, Locale.US));
+        Assert.assertEquals("Open Timetable Exception", new TimeTableStartup().getTitle(TimeTableFrame.class, Locale.US));  // NOI18N
     }
 
     @Test

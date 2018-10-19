@@ -18,34 +18,34 @@ public class TimeTableDataManagerTest {
         TimeTableDataManager dm = new TimeTableDataManager();
 
         // Test adds
-        int layoutId = dm.getNextId("Layout");
+        int layoutId = dm.getNextId("Layout");  // NOI18N
         Layout layout = new Layout(layoutId);
         dm.addLayout(layoutId, layout);
 
-        int typeId = dm.getNextId("TrainType");
-        TrainType type = new TrainType(typeId, layoutId, "Passenger", "#000000");
+        int typeId = dm.getNextId("TrainType");  // NOI18N
+        TrainType type = new TrainType(typeId, layoutId, "Passenger", "#000000");  // NOI18N
         dm.addTrainType(typeId, type);
 
-        int segmentId = dm.getNextId("Segment");
-        Segment segment = new Segment(segmentId, layoutId, "Mainline");
+        int segmentId = dm.getNextId("Segment");  // NOI18N
+        Segment segment = new Segment(segmentId, layoutId, "Mainline");  // NOI18N
         dm.addSegment(segmentId, segment);
 
-        int stationId = dm.getNextId("Station");
+        int stationId = dm.getNextId("Station");  // NOI18N
         Station station1 = new Station(stationId, segmentId);
         Station station2 = new Station(stationId + 1, segmentId);
         dm.addStation(stationId, station1);
         dm.addStation(stationId + 1, station2);
 
-        int scheduleId = dm.getNextId("Schedule");
+        int scheduleId = dm.getNextId("Schedule");  // NOI18N
         Schedule schedule = new Schedule(scheduleId, layoutId);
         dm.addSchedule(scheduleId, schedule);
 
-        int trainId = dm.getNextId("Train");
+        int trainId = dm.getNextId("Train");  // NOI18N
         Train train = new Train(trainId, scheduleId);
         train.setTypeId(typeId);
         dm.addTrain(trainId, train);
 
-        int stopId = dm.getNextId("Stop");
+        int stopId = dm.getNextId("Stop");  // NOI18N
         Stop stop1 = new Stop(stopId, trainId, 1);
         Stop stop2 = new Stop(stopId + 2, trainId, 2);
         stop1.setStationId(stationId);
@@ -76,8 +76,9 @@ public class TimeTableDataManagerTest {
         // Test special cases
         Assert.assertNotNull(dm.getLayoutForStop(stopId));
         Assert.assertEquals(2, dm.getSegmentStations(layoutId).size());
-        int nextId = dm.getNextId("ErrorMsg");
-        jmri.util.JUnitAppender.assertErrorMessage("getNextId: Invalid record type: ErrorMsg");
+        int nextId = dm.getNextId("ErrorMsg");  // NOI18N
+        jmri.util.JUnitAppender.assertErrorMessage("getNextId: Invalid record type: ErrorMsg");  // NOI18N
+        Assert.assertEquals(0, nextId);
     }
 
     @Before

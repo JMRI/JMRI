@@ -20,8 +20,8 @@ public class TrainTest {
         Assert.assertEquals(1, t.getScheduleId());
         t.setTypeId(2);
         Assert.assertEquals(2, t.getTypeId());
-        t.setTrainName("TR1");
-        Assert.assertEquals("TR1", t.getTrainName());
+        t.setTrainName("TR1");  // NOI18N
+        Assert.assertEquals("TR1", t.getTrainName());  // NOI18N
         t.setTrainDesc("New Train");  // NOI18N
         Assert.assertEquals("New Train", t.getTrainDesc());  // NOI18N
         t.setDefaultSpeed(45);

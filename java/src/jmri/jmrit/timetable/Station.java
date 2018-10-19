@@ -55,7 +55,7 @@ public class Station {
      * @return a zero padded 6 character string
      */
     public String getDistanceString() {
-        return String.format("%06d", (int) Math.round(_distance * 10));
+        return String.format("%06d", (int) Math.round(_distance * 10));  // NOI18N
     }
 
     public void setDistance(double newDistance) {
