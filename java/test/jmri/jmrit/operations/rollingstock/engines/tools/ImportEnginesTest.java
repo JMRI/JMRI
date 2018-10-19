@@ -160,6 +160,10 @@ public class ImportEnginesTest extends OperationsTestCase {
         fco.chooseFile(path[0]);
         fco.chooseFile(path[1]);
         fco.chooseFile(ExportEngines.getOperationsFileName());
+        
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return mb.getState().equals(Thread.State.WAITING);
+        }, "wait for dialog window to appear");
 
         // dialog windows should now open asking to add 2 models
         JemmyUtil.pressDialogButton(Bundle.getMessage("engineAddModel"), Bundle.getMessage("ButtonYes"));
