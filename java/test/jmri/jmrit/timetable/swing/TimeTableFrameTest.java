@@ -183,11 +183,7 @@ public class TimeTableFrameTest {
         jmri.util.JUnitAppender.assertWarnMessage("Invalid grid type: 'XYZ'");  // NOI18N
 
         // Other buttons
-        jto.collapseRow(0);
-        jto.expandRow(0);
-        jto.collapseRow(1);
-        jto.expandRow(2);
-        jto.selectRow(3);
+        jto.clickOnPath(jto.findPath(new String[]{"Sample", "Segments", "Mainline"}));
         new JButtonOperator(editFrame, Bundle.getMessage("ButtonGraph")).push();  // NOI18N
         new JButtonOperator(editFrame, Bundle.getMessage("ButtonSave")).push();  // NOI18N
         new JButtonOperator(editFrame, Bundle.getMessage("ButtonDone")).push();  // NOI18N
