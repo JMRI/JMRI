@@ -2,6 +2,7 @@ package jmri.jmrix.lenz.liusbserver.configurexml;
 
 import jmri.util.JUnitUtil;
 import org.junit.*;
+import org.jdom2.Element;
 import jmri.jmrix.lenz.liusbserver.ConnectionConfig;
 
 /**
@@ -34,4 +35,13 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
     @Ignore("generates error message when run")
     public void getInstanceTest() {
     }
+
+    /**
+     * { @inheritdoc }
+     */
+    @Override
+    protected void validateConnectionDetails(jmri.jmrix.ConnectionConfig cc,Element e){
+        // LIUSBServer only stores standard connection details.
+    }
+
 }
