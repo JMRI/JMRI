@@ -175,7 +175,7 @@
         dependencies defined for that service.
       </p>
       <p>Services are provided by creating a JAR for that service and appending
-        it to the JMRI classpath. See <a href="StartUpScripts.html">Startup Scripts</a>
+        it to the JMRI classpath. See <a href="StartUpScripts.shtml">Startup Scripts</a>
         for details on appending a JAR to the classpath and the
         <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ServiceLoader.html">Service Loader</a>
         documentation concerning what needs to be in that JAR.

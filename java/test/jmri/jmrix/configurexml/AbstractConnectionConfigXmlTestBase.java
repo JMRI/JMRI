@@ -24,7 +24,10 @@ abstract public class AbstractConnectionConfigXmlTestBase extends jmri.configure
         Assume.assumeNotNull(cc);
         cc.loadDetails(new JPanel());
         Element e = xmlAdapter.store(cc);
-        Assert.assertNotNull("XML Element Produced",e); 
+        Assert.assertNotNull("XML Element Produced",e);
+        if(e.getAttribute("class")!=null){
+           Assert.assertEquals("class",xmlAdapter.getClass().getName(), e.getAttribute("class").getValue());
+        }
         validateCommonDetails(cc,e);
         validateConnectionDetails(cc,e);
     }
@@ -38,6 +41,7 @@ abstract public class AbstractConnectionConfigXmlTestBase extends jmri.configure
     protected void validateCommonDetails(ConnectionConfig cc,Element e){
        Assume.assumeNotNull(cc.getAdapter());
        if(cc.getAdapter().getSystemConnectionMemo()!=null) {
+          Assert.assertNotNull(cc.getAdapter().getSystemConnectionMemo().getUserName());
           Assert.assertEquals("UserName",cc.getAdapter().getSystemConnectionMemo().getUserName(), e.getAttribute("userName").getValue());
           Assert.assertEquals("SystemPrefix",cc.getAdapter().getSystemConnectionMemo().getSystemPrefix(), e.getAttribute("systemPrefix").getValue());
        } 
