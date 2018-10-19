@@ -21,7 +21,7 @@ public class ControlPanelCustomSliderUI extends BasicSliderUI {
     private final static Color SLIDER_COLOR_BACK = new Color(0x88, 0x8a, 0x85, 0x88);
     private final static Color SLIDER_COLOR_FRONT = new Color(0xf57900);
     private final static Color THUMB_INNER_COLOR_STOP = new Color(0xcc0000);
-    private final static Color THUMB_INNER_COLOR_RUN = new Color(0x4e9a06);
+    private final static Color THUMB_INNER_COLOR_RUN = new Color(0x4e0206);
     private final static Color THUMB_CONTOUR_COLOR = new Color(0xd3d7cf);
     private final static Color ZERO_INNER_COLOR = new Color(0x2e3436);
     private final static Color ZERO_CONTOUR_COLOR = new Color(0x555753);    
@@ -137,8 +137,8 @@ public class ControlPanelCustomSliderUI extends BasicSliderUI {
         shape.closePath();
         if (slider.getValue()==0) {
             g2d.setPaint(THUMB_INNER_COLOR_STOP);
-        } else {
-            g2d.setPaint(THUMB_INNER_COLOR_RUN);
+        } else {             
+            g2d.setPaint(  new Color(THUMB_INNER_COLOR_RUN.getRed(),THUMB_INNER_COLOR_RUN.getGreen() + Math.abs(slider.getValue()), THUMB_INNER_COLOR_RUN.getBlue()) );
         }
         g2d.fill(shape);
         Stroke old = g2d.getStroke();
