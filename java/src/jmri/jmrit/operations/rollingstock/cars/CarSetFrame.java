@@ -161,6 +161,11 @@ public class CarSetFrame extends RollingStockSetFrame<Car> implements java.beans
         updateLoadComboBox();
         updateKernelComboBox();
     }
+    
+    @Override
+    protected ResourceBundle getRb() {
+        return rb;
+    }
 
     @Override
     protected void updateComboBoxes() {

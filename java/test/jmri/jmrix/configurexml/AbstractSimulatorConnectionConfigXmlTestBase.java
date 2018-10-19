@@ -14,17 +14,4 @@ import javax.swing.JPanel;
  * @author Paul Bender Copyright (C) 2018	
  */
 abstract public class AbstractSimulatorConnectionConfigXmlTestBase extends AbstractConnectionConfigXmlTestBase {
-
-    @Test
-    @Override
-    public void storeTest(){
-        Assume.assumeNotNull(cc);
-        cc.loadDetails(new JPanel());
-        // load details MAY produce an error message if no ports are found.
-        jmri.util.JUnitAppender.suppressErrorMessage("No usable ports returned");
-        Element e = xmlAdapter.store(cc);
-        Assert.assertNotNull("XML Element Produced",e); 
-        validateCommonDetails(cc,e);
-        validateConnectionDetails(cc,e);
-    }
 }

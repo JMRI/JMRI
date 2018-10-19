@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2014
  *
  */
-public class RollingStockAttribute {
+public abstract class RollingStockAttribute {
 
     protected static final int MIN_NAME_LENGTH = 4;
 

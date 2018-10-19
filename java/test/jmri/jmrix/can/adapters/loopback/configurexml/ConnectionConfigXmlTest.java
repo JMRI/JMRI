@@ -11,7 +11,7 @@ import jmri.jmrix.can.adapters.loopback.ConnectionConfig;
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
-public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
+public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSimulatorConnectionConfigXmlTestBase {
 
     // The minimal setup for log4J
     @Before
@@ -27,4 +27,5 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
         xmlAdapter = null;
         cc = null;
     }
+
 }
