@@ -85,6 +85,10 @@ public class ImportCarsTest extends OperationsTestCase {
         fco.chooseFile(path[1]);
         fco.chooseFile(ExportCars.getOperationsFileName());
         
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return mb.getState().equals(Thread.State.WAITING);
+        }, "wait for dialog");
+        
         // import complete 
         JemmyUtil.pressDialogButton(Bundle.getMessage("SuccessfulImport"), Bundle.getMessage("ButtonOK"));
         
