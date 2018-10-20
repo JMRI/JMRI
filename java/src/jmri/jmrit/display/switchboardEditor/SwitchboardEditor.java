@@ -24,6 +24,8 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -73,7 +75,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pete Cressman Copyright (c) 2009, 2010, 2011
  * @author Egbert Broerse Copyright (c) 2017, 2018
- *
  */
 public class SwitchboardEditor extends Editor {
 
@@ -97,6 +98,7 @@ public class SwitchboardEditor extends Editor {
     private final JSpinner minSpinner = new JSpinner(new SpinnerNumberModel(rangeMin, rangeMin, rangeMax, 1));
     private final JSpinner maxSpinner = new JSpinner(new SpinnerNumberModel(rangeMax, rangeMin, rangeMax, 1));
     private final JCheckBox hideUnconnected = new JCheckBox(Bundle.getMessage("CheckBoxHideUnconnected"));
+    private final JCheckBox autoItemRange = new JCheckBox(Bundle.getMessage("CheckBoxAutoItemRange"));
     private TargetPane switchboardLayeredPane; // JLayeredPane
     static final String TURNOUT = Bundle.getMessage("BeanNameTurnout");
     static final String SENSOR = Bundle.getMessage("BeanNameSensor");
@@ -124,7 +126,9 @@ public class SwitchboardEditor extends Editor {
     private JPanel editorContainer = null;
     private Color defaultTextColor = Color.BLACK;
     private boolean _hideUnconnected = false;
+    private boolean _autoItemRange = true;
     private final JTextArea help2 = new JTextArea(Bundle.getMessage("Help2"));
+    private final JTextArea help3 = new JTextArea(Bundle.getMessage("Help3", Bundle.getMessage("CheckBoxHideUnconnected")));
     // saved state of options when panel was loaded or created
     private transient boolean savedEditMode = true;
     private transient boolean savedControlLayout = true; // menu option to turn this off
@@ -133,6 +137,7 @@ public class SwitchboardEditor extends Editor {
 
     private final JCheckBoxMenuItem controllingBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxControlling"));
     private final JCheckBoxMenuItem hideUnconnectedBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxHideUnconnected"));
+    private final JCheckBoxMenuItem autoItemRangeBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxAutoItemRange"));
     private final JCheckBoxMenuItem showToolTipBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxShowTooltips"));
     private final JRadioButtonMenuItem scrollBoth = new JRadioButtonMenuItem(Bundle.getMessage("ScrollBoth"));
     private final JRadioButtonMenuItem scrollNone = new JRadioButtonMenuItem(Bundle.getMessage("ScrollNone"));
@@ -263,15 +268,27 @@ public class SwitchboardEditor extends Editor {
         switchShapePane.add(columns);
         add(switchShapePane);
 
-        // checkbox on panel
+        JPanel checkboxPane = new JPanel();
+        checkboxPane.setLayout(new FlowLayout(FlowLayout.TRAILING));
+        // autoItemRange checkbox on panel
+        autoItemRange.setSelected(autoItemRange());
+        log.debug("hideUnconectedBox set to {}", autoItemRange.isSelected());
+        autoItemRange.addActionListener((ActionEvent event) -> {
+            setAutoItemRange(autoItemRange.isSelected());
+            autoItemRangeBox.setSelected(autoItemRange()); // also (un)check the box on the menu
+        });
+        checkboxPane.add(autoItemRange);
+        autoItemRange.setToolTipText(Bundle.getMessage("AutoItemRangeTooltip"));
+        // hideUnconnected checkbox on panel
         hideUnconnected.setSelected(hideUnconnected());
         log.debug("hideUnconectedBox set to {}", hideUnconnected.isSelected());
         hideUnconnected.addActionListener((ActionEvent event) -> {
             setHideUnconnected(hideUnconnected.isSelected());
             hideUnconnectedBox.setSelected(hideUnconnected()); // also (un)check the box on the menu
-            help2.setVisible(!hideUnconnected()); // and show/hide instruction line
+            help2.setVisible(!hideUnconnected() && (switchlist.size() != 0)); // and show/hide instruction line unless no items on board
         });
-        add(hideUnconnected);
+        checkboxPane.add(hideUnconnected);
+        add(checkboxPane);
 
         switchboardLayeredPane.setLayout(new GridLayout(3, 8)); // initial layout params
         // TODO do some calculation from JPanel size, icon size and determine optimal cols/rows
@@ -336,10 +353,31 @@ public class SwitchboardEditor extends Editor {
         if (_hideUnconnected && !hideUnconnected.isSelected()){
             hideUnconnected.setSelected(true);
         }
+        log.debug("update _autoItemRange = {}", _autoItemRange);
+        if (_autoItemRange && !autoItemRange.isSelected()){
+            autoItemRange.setSelected(true);
+        }
         log.debug("update _editable = {}", _editable);
         setVisible(_editable); // show/hide editor
         log.debug("update _controlLayout = {}", allControlling());
 
+        // update selected address range
+        _range = (Integer) maxSpinner.getValue() - (Integer) minSpinner.getValue();
+        // check for extreme number of items
+        log.debug("address range = {}", _range);
+        if (_range > 250) {
+            // ask user if _range is indeed desired
+            int retval = JOptionPane.showOptionDialog(null,
+                    Bundle.getMessage("LargeRangeWarning", _range, Bundle.getMessage("CheckBoxHideUnconnected")),
+                    Bundle.getMessage("WarningTitle"),
+                    0, JOptionPane.INFORMATION_MESSAGE, null,
+                    new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonCancel")}, null);
+            log.debug("Retval: {}", retval);
+            if (retval != 0) {
+                return;
+            }
+        }
+        // if _range is OK, go ahead with switchboard update
         for (int i = switchlist.size() - 1; i >= 0; i--) {
             // deleting items starting from 0 will result in skipping the even numbered items
             switchboardLayeredPane.remove(i);
@@ -348,8 +386,6 @@ public class SwitchboardEditor extends Editor {
         log.debug("switchlist cleared, size is now: {}", switchlist.size());
         switchboardLayeredPane.setSize(300, 300);
 
-        // update selected address range
-        _range = (Integer) minSpinner.getValue() - (Integer) maxSpinner.getValue();
         switchboardLayeredPane.setLayout(new GridLayout(_range % ((Integer) columns.getValue()),
                 (Integer) columns.getValue())); // vertical, horizontal
         addSwitchRange((Integer) minSpinner.
@@ -357,10 +393,12 @@ public class SwitchboardEditor extends Editor {
                 beanTypeList.getSelectedIndex(),
                 beanManuPrefixes.get(beanManuNames.getSelectedIndex()),
                 switchShapeList.getSelectedIndex());
-        // update the title on the switchboard to match (no) layout control
+        // update the title at the bottom of the switchboard to match (no) layout control
         border.setTitle(beanManuNames.getSelectedItem().toString() + " "
                 + beanTypeList.getSelectedItem().toString() + " - "
                 + (allControlling() ? interact : noInteract));
+        help3.setVisible(switchlist.size() == 0); // show/hide help3 warning
+        help2.setVisible(switchlist.size() != 0); // hide help2 when help3 is shown vice versa (as no items are dimmed or not)
         pack();
         switchboardLayeredPane.repaint();
     }
@@ -442,34 +480,42 @@ public class SwitchboardEditor extends Editor {
             public void mouseClicked(MouseEvent e) {
                 int oldMin = (Integer) minSpinner.getValue();
                 int oldMax = (Integer) maxSpinner.getValue();
-                _range = oldMax - oldMin;
+                _range = Math.max(oldMax - oldMin, 0); // make sure _range > 0
                 minSpinner.setValue(Math.max(rangeMin, oldMin - _range - 1));
-                maxSpinner.setValue(Math.max(oldMax - _range - 1, Math.max(rangeMax, oldMax - _range - 1)));
+                if (_autoItemRange) {
+                    maxSpinner.setValue(Math.max(oldMax - _range - 1, Math.max(rangeMax, oldMax - _range - 1)));
+                }
                 log.debug("oldMin ={}, oldMax ={}", oldMin, oldMax);
-                //rangeMin = (Integer) minSpinner.getValue();
-                //rangeMax = (Integer) maxSpinner.getValue();
             }
         });
-        prev.setToolTipText(Bundle.getMessage("PreviousToolTip"));
+        prev.setToolTipText(Bundle.getMessage("PreviousToolTip", Bundle.getMessage("CheckBoxAutoItemRange")));
         navBarPanel.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("From"))));
+        JComponent minEditor = minSpinner.getEditor();
+        // enlarge minSpinner editor text field width
+        JFormattedTextField minTf = ((JSpinner.DefaultEditor) minEditor).getTextField();
+        minTf.setColumns(5);
         navBarPanel.add(minSpinner);
         navBarPanel.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("UpTo"))));
+        // enlarge maxSpinner editor text field width
+        JComponent maxEditor = maxSpinner.getEditor();
+        JFormattedTextField maxTf = ((JSpinner.DefaultEditor) maxEditor).getTextField();
+        maxTf.setColumns(5);
         navBarPanel.add(maxSpinner);
-        navBarPanel.add(next);
 
+        navBarPanel.add(next);
         next.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int oldMin = (Integer) minSpinner.getValue();
                 int oldMax = (Integer) maxSpinner.getValue();
-                _range = oldMax - oldMin;
-                minSpinner.setValue(oldMax + 1);
-                maxSpinner.setValue(oldMax + _range + 1);
-                //rangeMin = (Integer) minSpinner.getValue();
-                //rangeMax = (Integer) maxSpinner.getValue();
+                _range = Math.max(oldMax - oldMin, 1); // make sure _range > 0
+                if (_autoItemRange) {
+                    minSpinner.setValue(oldMax + 1);
+                }
+                maxSpinner.setValue(oldMax + _range + 1); // set new max
             }
         });
-        next.setToolTipText(Bundle.getMessage("NextToolTip"));
+        next.setToolTipText(Bundle.getMessage("NextToolTip", Bundle.getMessage("CheckBoxAutoItemRange")));
         navBarPanel.add(Box.createHorizontalGlue());
 
         // put on which Frame?
@@ -504,8 +550,12 @@ public class SwitchboardEditor extends Editor {
         // help2 explains: dimmed icons = unconnected
         innerBorderPanel.add(help2);
         if (!hideUnconnected()) {
-            help2.setVisible(false); // hide this panel when hideUnconnected() is set to false from menu or checkbox
+            help2.setVisible(false); // hide this text when hideUnconnected() is set to false from menu or checkbox
         }
+        // help3 warns: no icons to show on switchboard
+        help3.setForeground(Color.red);
+        innerBorderPanel.add(help3);
+        help3.setVisible(false); // initially hide this text
         contentPane.add(innerBorderPanel);
         //Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -554,9 +604,16 @@ public class SwitchboardEditor extends Editor {
         hideUnconnectedBox.addActionListener((ActionEvent event) -> {
             setHideUnconnected(hideUnconnectedBox.isSelected());
             hideUnconnected.setSelected(hideUnconnected()); // also (un)check the box on the editor
-            help2.setVisible(!hideUnconnected()); // and show/hide instruction line
+            help2.setVisible(!hideUnconnected() && (switchlist.size() != 0)); // and show/hide instruction line unless no items on board
         });
         hideUnconnectedBox.setSelected(hideUnconnected());
+        // autoItemRange item
+        _optionMenu.add(autoItemRangeBox);
+        autoItemRangeBox.addActionListener((ActionEvent event) -> {
+            setAutoItemRange(autoItemRangeBox.isSelected());
+            autoItemRange.setSelected(autoItemRange()); // also (un)check the box on the editor
+        });
+        autoItemRangeBox.setSelected(autoItemRange());
         // show tooltip item
         _optionMenu.add(showToolTipBox);
         showToolTipBox.addActionListener((ActionEvent e) -> {
@@ -791,6 +848,19 @@ public class SwitchboardEditor extends Editor {
 
     public boolean hideUnconnected() {
         return _hideUnconnected;
+    }
+
+    /**
+     * Control whether range of items is automatically limited.
+     *
+     * @param state true to calculate upper limit from lowest value set (default)
+     */
+    public void setAutoItemRange(boolean state) {
+        _autoItemRange = state;
+    }
+
+    public boolean autoItemRange() {
+        return _autoItemRange;
     }
 
     /**
@@ -1048,9 +1118,9 @@ public class SwitchboardEditor extends Editor {
 
     protected Manager getManager(char typeChar) {
         switch (typeChar) {
-            case 'T':
+            case 'T': // Turnout
                 return InstanceManager.turnoutManagerInstance();
-            case 'S':
+            case 'S': // Sensor
                 return InstanceManager.sensorManagerInstance();
             case 'L': // Light
                 return InstanceManager.lightManagerInstance();
