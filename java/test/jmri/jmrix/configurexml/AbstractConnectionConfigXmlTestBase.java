@@ -32,7 +32,7 @@ abstract public class AbstractConnectionConfigXmlTestBase extends jmri.configure
         validateConnectionDetails(cc,e);
     }
 
-    @Test
+    @Test(timeout=5000)
     public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
         Assume.assumeNotNull(cc);
         // This test requires a configure manager.
