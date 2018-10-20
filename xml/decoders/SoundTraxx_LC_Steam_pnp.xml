@@ -644,10 +644,7 @@
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <!-- Sound section -->
       <variable CV="112" mask="XXXXXXXV" item="Sound Option 1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>

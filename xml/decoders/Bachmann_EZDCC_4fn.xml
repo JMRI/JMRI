@@ -252,10 +252,7 @@
       </variable>
       <!-- User private ID CV's are not documented by Bachamann, but appear to work -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
