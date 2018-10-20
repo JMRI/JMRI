@@ -29,30 +29,36 @@
       <span class="since">since 4.7.3</span>
       <p>Switchboards provide a visual control grid for your JMRI layout "out of the box".<br>
       To create a new Switchboard, from the Panels menu, choose New Panel &gt; Switchboard Editor.<br>
-      A default pane with switches for Turnouts in the range 1 - 32 opens.<br>
-        If any Turnouts were defined in JMRI beforehand, those switches will immediately show their current state and let you control them.</p>
-      <a href="images/SwitchboardEditor.png"><img src="images/SwitchboardEditor.png" width="198" height="154" align="right"></a>
+      A default pane with switches for Turnouts in the range 1 - 24 opens.<br>
+      If any Turnouts were defined in JMRI beforehand, those switches will immediately show their current state and let you control them.</p>
+      <a href="images/SwitchboardEditor.png"><img src="images/SwitchboardEditor.png" width="247" height="214"
+                                                  align="right"></a>
       <p>To the left, a small Switchboard Editor pane allows you to refine what this Switchboard will control.
       Select an option for:</p>
       <ul>
         <li>Bean type - to control a range of Turnouts, Sensors or Lights</li>
         <li>Connection - select Internal or an active JMRI connection</li>
-        <li>Shape - pick a visual presentation for the switches:
+        <li>Switch shape - pick a visual presentation for the switches:
         <ul>
           <li>Button - standard Java buttons</li>
           <li>Slider - a modern interface popular in smart phones</li>
           <li>Key - the classic layout keyboard inspired by the M&auml;rklin hardware Keyboard</li>
           <li>Symbol - schematics like the traditional (Control) Panel</li>
         </ul></li>
-        <li>Set the number of switches to be displayed in each row (number of rows is calculated)</li>
+        <li>Set the number of rows of switches to be displayed (number of items per row is calculated)</li>
+        <li>Select Hide unconnected switches to only show switches for items connected to hardware</li>
+        <span class="since">since 4.13.4</span>
+        <li>Auto Address Range (selected by default) makes it easy to use the left/right arrows on the pane to
+        shift the hardware address up/down while keeping the number of items on the board the same.</li>
       </ul>
       <a href="images/Switchboard.png"><img src="images/Switchboard.png" width="276" height="221" align="right"></a>
-      <p>Optionally, select a background color for this Switchboard from the Options menu.
-      To use the new settings, click [Update Switchboard] to replace all current switches.
+      <p>Optionally, change the background color for this Switchboard via the Options menu.
+      To use the new settings, click [Update Switchboard] to replace all current items on the board.
       Note that hybrid Switchboards containing more than one bean type or connection are not saved to disk.
       You can create and save separate Switchboards for different connections, address ranges and object types like Turnouts.
       Change the name of this Switchboard by choosing Rename Switchboard... from the Edit menu while the Editor is open.</p>
-      <p>When ready, close the Editor by clicking the Close box in the title bar. Open the Editor at any time from the Edit menu.</p>
+      <p>When ready, close the Editor by clicking the Close box in its title bar or Close Editor from the File menu.
+      Open the Editor at any time from the Switchboard's Edit menu.</p>
 
       <h2>Quick Reference Guide - Using the Switchboard</h2>
       <p>Clicking on an active switch on the board will send an instruction to the layout to toggle the item (on/off, closed/thrown).
@@ -68,7 +74,7 @@
       </ul>
 
       <p>Remember to save your setup and configured items by choosing Save Panels... from the File menu.<br>
-        You can have your Switchboards open automatically upon startup by setting them as as a Startup Action under Preferences &gt; Startup.</p>
+      You can have your Switchboards open automatically upon startup by setting them as as a Startup Action under Preferences &gt; Startup.</p>
       <p>Back to the <a href="../../../../html/apps/PanelPro/PanelPro.shtml">PanelPro help page</a>.
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->

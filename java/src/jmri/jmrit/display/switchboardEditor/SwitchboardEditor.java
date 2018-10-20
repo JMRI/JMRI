@@ -104,9 +104,9 @@ public class SwitchboardEditor extends Editor {
     private final JCheckBox hideUnconnected = new JCheckBox(Bundle.getMessage("CheckBoxHideUnconnected"));
     private final JCheckBox autoItemRange = new JCheckBox(Bundle.getMessage("CheckBoxAutoItemRange"));
     private TargetPane switchboardLayeredPane; // JLayeredPane
-    static final String TURNOUT = Bundle.getMessage("BeanNameTurnout");
-    static final String SENSOR = Bundle.getMessage("BeanNameSensor");
-    static final String LIGHT = Bundle.getMessage("BeanNameLight");
+    static final String TURNOUT = Bundle.getMessage("Turnouts");
+    static final String SENSOR = Bundle.getMessage("Sensors");
+    static final String LIGHT = Bundle.getMessage("Lights");
     private final String[] beanTypeStrings = {TURNOUT, SENSOR, LIGHT};
     private JComboBox beanTypeList;
     private char beanTypeChar;
@@ -375,8 +375,9 @@ public class SwitchboardEditor extends Editor {
 
         // update selected address range
         _range = (Integer) maxSpinner.getValue() - (Integer) minSpinner.getValue();
-        if (_range > 400) {
-            maxSpinner.setValue(Math.min(_range, 400)); // fixed maximum number of items on a Switchboard to prevent memory overflow
+        if (_range > 400 && !hideUnconnected()) {
+            _range = 400;
+            maxSpinner.setValue((Integer) minSpinner.getValue() + _range); // fixed maximum number of items on a Switchboard to prevent memory overflow
         }
         // check for extreme number of items
         log.debug("address range = {}", _range);
@@ -487,7 +488,7 @@ public class SwitchboardEditor extends Editor {
     private JPanel createControlPanel() {
         JPanel controls = new JPanel();
 
-        // navigation top row and to set range
+        // navigation top row and range to set
         navBarPanel = new JPanel();
         navBarPanel.setLayout(new BoxLayout(navBarPanel, BoxLayout.X_AXIS));
 
@@ -498,11 +499,11 @@ public class SwitchboardEditor extends Editor {
                 int oldMin = (Integer) minSpinner.getValue();
                 int oldMax = (Integer) maxSpinner.getValue();
                 _range = Math.max(oldMax - oldMin, 1); // make sure _range > 0
-                minSpinner.setValue(Math.max(rangeMin, oldMin - _range - 1));
+                log.debug("range = {} oldMin ={}, oldMax ={}", _range, oldMin, oldMax);
+                minSpinner.setValue(Math.max(rangeMin, oldMin - _range));   // set new min
                 if (_autoItemRange) {
-                    maxSpinner.setValue(Math.max(oldMax - _range - 1, Math.max(rangeMax, oldMax - _range - 1)));
+                    maxSpinner.setValue(Math.max(oldMax - _range, _range)); // set new max if auto
                 }
-                log.debug("oldMin ={}, oldMax ={}", oldMin, oldMax);
             }
         });
         prev.setToolTipText(Bundle.getMessage("PreviousToolTip", Bundle.getMessage("CheckBoxAutoItemRange")));
@@ -548,20 +549,17 @@ public class SwitchboardEditor extends Editor {
                 int oldMin = (Integer) minSpinner.getValue();
                 int oldMax = (Integer) maxSpinner.getValue();
                 _range = Math.max(oldMax - oldMin, 1); // make sure _range > 0
+                log.debug("range = {} oldMin ={}, oldMax ={}", _range, oldMin, oldMax);
                 if (_autoItemRange) {
-                    minSpinner.setValue(oldMax + 1);
+                    minSpinner.setValue(Math.min(oldMin + _range, rangeMax - _range)); // set new min if auto
                 }
-                maxSpinner.setValue(oldMax + _range + 1); // set new max
-                log.debug("oldMin ={}, oldMax ={}", oldMin, oldMax);
+                maxSpinner.setValue(Math.min(oldMax + _range, rangeMax));              // set new max
             }
         });
         next.setToolTipText(Bundle.getMessage("NextToolTip", Bundle.getMessage("CheckBoxAutoItemRange")));
         navBarPanel.add(Box.createHorizontalGlue());
 
-        // put on which Frame?
-        controls.add(navBarPanel); // on 2nd Editor Panel
-        //super.getTargetFrame().add(navBarPanel); // on (top of) Switchboard Frame/Panel
-
+        controls.add(navBarPanel); // put items on 2nd Editor Panel
         controls.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SelectRangeTitle")));
         return controls;
     }
@@ -971,7 +969,7 @@ public class SwitchboardEditor extends Editor {
             case "S":
                 type = SENSOR;
                 break;
-            default: // Turnout
+            default: // Turnouts
                 type = TURNOUT;
         }
         try {
