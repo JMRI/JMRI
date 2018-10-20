@@ -106,7 +106,7 @@ public class SwitchboardEditor extends Editor {
     private final String[] beanTypeStrings = {TURNOUT, SENSOR, LIGHT};
     private JComboBox beanTypeList;
     private char beanTypeChar;
-    JSpinner columns = new JSpinner(new SpinnerNumberModel(8, 1, 16, 1));
+    JSpinner columns = new JSpinner(new SpinnerNumberModel(8, 1, 24, 1)); // actually used for the number of rows
     private final String[] switchShapeStrings = {
         Bundle.getMessage("Buttons"),
         Bundle.getMessage("Sliders"),
@@ -123,7 +123,7 @@ public class SwitchboardEditor extends Editor {
     // editor items (adapted from LayoutEditor toolbar)
     private JPanel editToolBarPanel = null;
     private JScrollPane editToolBarScroll = null;
-    private JPanel editorContainer = null;
+//    private JPanel editorContainer = null;
     private Color defaultTextColor = Color.BLACK;
     private boolean _hideUnconnected = false;
     private boolean _autoItemRange = true;
@@ -184,15 +184,12 @@ public class SwitchboardEditor extends Editor {
     @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
     @Override
     protected void init(String name) {
-        Container contentPane = getContentPane(); // Editor
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        setVisible(false); // start with Editor window hidden
-
-        // make menus
+        Container contentPane = getContentPane(); // the actual Editor window
+        setVisible(false);      // start with Editor window hidden
         setUseGlobalFlag(true); // allways true for a SwitchBoard
+        // make menus
         _menuBar = new JMenuBar();
         makeOptionMenu();
-        //makeEditMenu();
         makeFileMenu();
 
         setJMenuBar(_menuBar);
@@ -263,8 +260,8 @@ public class SwitchboardEditor extends Editor {
         switchShapeList.addActionListener(this);
         switchShapePane.add(switchShapeList);
         // add column spinner
-        JLabel columnLabel = new JLabel(Bundle.getMessage("NumberOfColumns"));
-        switchShapePane.add(columnLabel);
+        JLabel rowsLabel = new JLabel(Bundle.getMessage("NumberOfRows"));
+        switchShapePane.add(rowsLabel);
         switchShapePane.add(columns);
         add(switchShapePane);
 
@@ -377,7 +374,7 @@ public class SwitchboardEditor extends Editor {
                 return;
             }
         }
-        // if _range is OK, go ahead with switchboard update
+        // if _range is confirmed, go ahead with switchboard update
         for (int i = switchlist.size() - 1; i >= 0; i--) {
             // deleting items starting from 0 will result in skipping the even numbered items
             switchboardLayeredPane.remove(i);
@@ -386,7 +383,7 @@ public class SwitchboardEditor extends Editor {
         log.debug("switchlist cleared, size is now: {}", switchlist.size());
         switchboardLayeredPane.setSize(300, 300);
 
-        switchboardLayeredPane.setLayout(new GridLayout(_range % ((Integer) columns.getValue()),
+        switchboardLayeredPane.setLayout(new GridLayout(Math.max((Integer) columns.getValue() % _range, 1),
                 (Integer) columns.getValue())); // vertical, horizontal
         addSwitchRange((Integer) minSpinner.
                 getValue(), (Integer) maxSpinner.getValue(),
@@ -401,6 +398,7 @@ public class SwitchboardEditor extends Editor {
         help2.setVisible(switchlist.size() != 0); // hide help2 when help3 is shown vice versa (as no items are dimmed or not)
         pack();
         switchboardLayeredPane.repaint();
+        setDirty();
     }
 
     /**
@@ -480,7 +478,7 @@ public class SwitchboardEditor extends Editor {
             public void mouseClicked(MouseEvent e) {
                 int oldMin = (Integer) minSpinner.getValue();
                 int oldMax = (Integer) maxSpinner.getValue();
-                _range = Math.max(oldMax - oldMin, 0); // make sure _range > 0
+                _range = Math.max(oldMax - oldMin, 1); // make sure _range > 0
                 minSpinner.setValue(Math.max(rangeMin, oldMin - _range - 1));
                 if (_autoItemRange) {
                     maxSpinner.setValue(Math.max(oldMax - _range - 1, Math.max(rangeMax, oldMax - _range - 1)));
@@ -513,6 +511,7 @@ public class SwitchboardEditor extends Editor {
                     minSpinner.setValue(oldMax + 1);
                 }
                 maxSpinner.setValue(oldMax + _range + 1); // set new max
+                log.debug("oldMin ={}, oldMax ={}", oldMin, oldMax);
             }
         });
         next.setToolTipText(Bundle.getMessage("NextToolTip", Bundle.getMessage("CheckBoxAutoItemRange")));
@@ -530,18 +529,6 @@ public class SwitchboardEditor extends Editor {
         // Initial setup for both horizontal and vertical
         Container contentPane = getContentPane();
 
-        //remove these (if present) so we can add them back (without duplicates)
-        if (editorContainer != null) {
-            editorContainer.setVisible(false);
-            contentPane.remove(editorContainer);
-        }
-
-//        if (helpBarPanel != null) {
-//            contentPane.remove(helpBarPanel);
-//        }
-        editToolBarPanel = new JPanel();
-        editToolBarPanel.setLayout(new BoxLayout(editToolBarPanel, BoxLayout.PAGE_AXIS));
-
         JPanel innerBorderPanel = new JPanel();
         innerBorderPanel.setLayout(new BoxLayout(innerBorderPanel, BoxLayout.PAGE_AXIS));
         TitledBorder TitleBorder = BorderFactory.createTitledBorder(Bundle.getMessage("SwitchboardHelpTitle"));
@@ -557,30 +544,6 @@ public class SwitchboardEditor extends Editor {
         innerBorderPanel.add(help3);
         help3.setVisible(false); // initially hide this text
         contentPane.add(innerBorderPanel);
-        //Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
-
-        editToolBarScroll = new JScrollPane(editToolBarPanel);
-        height = 60; //editToolBarScroll.getPreferredSize().height;
-        editorContainer = new JPanel();
-        editorContainer.setLayout(new BoxLayout(editorContainer, BoxLayout.PAGE_AXIS));
-        editorContainer.add(editToolBarScroll);
-        editorContainer.setMinimumSize(new Dimension(width, height));
-        editorContainer.setPreferredSize(new Dimension(width, height));
-
-//        helpBarPanel = new JPanel();
-//        helpBarPanel.add(helpBar);
-//        for (Component c : helpBar.getComponents()) {
-//            if (c instanceof JTextArea) {
-//                JTextArea j = (JTextArea) c;
-//                //j.setSize(new Dimension(width, j.getSize().height));
-//                j.setLineWrap(true);
-//                j.setWrapStyleWord(true);
-//            }
-//        }
-//        contentPane.setLayout(new BoxLayout(contentPane, false ? BoxLayout.LINE_AXIS : BoxLayout.PAGE_AXIS));
-//        contentPane.add(editToolBarContainer);
-//        contentPane.add(helpBarPanel);
-        //helpBarPanel.setVisible(isEditable() && showHelpBar);
     }
 
     //@Override
@@ -707,11 +670,6 @@ public class SwitchboardEditor extends Editor {
         _fileMenu.add(new jmri.jmrit.display.NewPanelAction(Bundle.getMessage("MenuItemNew")));
 
         _fileMenu.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("MenuItemStore")));
-        JMenuItem storeIndexItem = new JMenuItem(Bundle.getMessage("MIStoreImageIndex"));
-        _fileMenu.add(storeIndexItem);
-        storeIndexItem.addActionListener((ActionEvent event) -> {
-            InstanceManager.getDefault(DefaultCatalogTreeManager.class).storeImageIndex();
-        });
 
         JMenuItem editItem = new JMenuItem(Bundle.getMessage("renamePanelMenu", "..."));
         PositionableJComponent z = new PositionableJComponent(this);
@@ -732,6 +690,7 @@ public class SwitchboardEditor extends Editor {
         editItem = new JMenuItem(Bundle.getMessage("CloseEditor"));
         _fileMenu.add(editItem);
         editItem.addActionListener((ActionEvent event) -> {
+            log.debug("switchboardeditor edit menu CloseEditor selected");
             setAllEditable(false);
             setVisible(false); // hide Editor pane
         });
@@ -840,10 +799,6 @@ public class SwitchboardEditor extends Editor {
      */
     public void setHideUnconnected(boolean state) {
         _hideUnconnected = state;
-        // TODO update checkbox and menu
-        //if (!state) {
-        // TODO hide Help2
-        //}
     }
 
     public boolean hideUnconnected() {
@@ -1224,6 +1179,7 @@ public class SwitchboardEditor extends Editor {
     public void windowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);
         setAllEditable(false);
+        log.debug("windowClosing");
     }
 
     /**
@@ -1240,7 +1196,7 @@ public class SwitchboardEditor extends Editor {
 
     /**
      * The target window has been requested to close. Don't delete it at this
-     * time. Deletion must be accomplished via the Delete this panel menu item.
+     * time. Deletion must be accomplished via the "Delete this Panel" menu item.
      */
     @Override
     protected void targetWindowClosingEvent(java.awt.event.WindowEvent e) {
@@ -1250,7 +1206,7 @@ public class SwitchboardEditor extends Editor {
     }
 
     /**
-     * Create sequence of panels, etc. for layout: JFrame contains its
+     * Create sequence of panels, etc. for switches: JFrame contains its
      * ContentPane which contains a JPanel with BoxLayout (p1) which contains a
      * JScollPane (js) which contains the targetPane.
      * Note this is a private menuBar, looking identical to the Editor's _menuBar
