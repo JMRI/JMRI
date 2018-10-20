@@ -139,7 +139,20 @@ public class EnginesTableFrameTest extends OperationsTestCase {
 
         // test find text field
         etf.findEngineTextBox.setText("2");
-        JemmyUtil.enterClickAndLeave(etf.findButton);
+        
+        Thread find = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                JemmyUtil.enterClickAndLeave(etf.findButton);
+            }
+        });
+        find.setName("Find Engine"); // NOI18N
+        find.start();
+        
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return find.getState().equals(Thread.State.TERMINATED);
+        }, "wait to complete");   
+        
         // table is sorted by model, Engines with number 2 are in the first and 2nd rows
         Assert.assertEquals("find Engine by number 1st", 0, etf.enginesTable.getSelectedRow());
         JemmyUtil.enterClickAndLeave(etf.findButton);
