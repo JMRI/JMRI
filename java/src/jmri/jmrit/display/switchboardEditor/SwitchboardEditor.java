@@ -37,6 +37,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -106,7 +107,7 @@ public class SwitchboardEditor extends Editor {
     private final String[] beanTypeStrings = {TURNOUT, SENSOR, LIGHT};
     private JComboBox beanTypeList;
     private char beanTypeChar;
-    JSpinner columns = new JSpinner(new SpinnerNumberModel(8, 1, 24, 1)); // actually used for the number of rows
+    JSpinner columns = new JSpinner(new SpinnerNumberModel(4, 1, 24, 1)); // columns is actually used for the number of rows
     private final String[] switchShapeStrings = {
         Bundle.getMessage("Buttons"),
         Bundle.getMessage("Sliders"),
@@ -123,7 +124,6 @@ public class SwitchboardEditor extends Editor {
     // editor items (adapted from LayoutEditor toolbar)
     private JPanel editToolBarPanel = null;
     private JScrollPane editToolBarScroll = null;
-//    private JPanel editorContainer = null;
     private Color defaultTextColor = Color.BLACK;
     private boolean _hideUnconnected = false;
     private boolean _autoItemRange = true;
@@ -177,7 +177,7 @@ public class SwitchboardEditor extends Editor {
     }
 
     /**
-     * Initialize the newly created SwitchBoard.
+     * Initialize the newly created Switchboard.
      *
      * @param name the title of the switchboard content frame
      */
@@ -186,7 +186,17 @@ public class SwitchboardEditor extends Editor {
     protected void init(String name) {
         Container contentPane = getContentPane(); // the actual Editor window
         setVisible(false);      // start with Editor window hidden
-        setUseGlobalFlag(true); // allways true for a SwitchBoard
+        setUseGlobalFlag(true); // always true for a Switchboard
+        // handle Editor close box clicked without deleting the Switchboard panel
+        super.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        super.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                log.debug("switchboardEditor close box selected");
+                setAllEditable(false);
+                setVisible(false); // hide Editor window
+            }
+        });
         // make menus
         _menuBar = new JMenuBar();
         makeOptionMenu();
@@ -762,11 +772,11 @@ public class SwitchboardEditor extends Editor {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         setAllEditable(true);
-                        log.debug("SwitchBoard Editor Open Editor menu called");
+                        log.debug("Switchboard Editor Open Editor menu called");
                     }
                 });
+                _menuBar.add(_editorMenu, 0);
             }
-            _menuBar.add(_editorMenu, 0);
             //contentPane.SetUpdateButtonEnabled(true);
         }
         super.setAllEditable(edit);
@@ -1225,7 +1235,7 @@ public class SwitchboardEditor extends Editor {
             public void actionPerformed(ActionEvent e) {
                 setVisible(true);
                 setAllEditable(true);
-                log.debug("SwitchBoard Open Editor menu called");
+                log.debug("Switchboard Open Editor menu called");
             }
         });
         targetFrame.setJMenuBar(menuBar);
