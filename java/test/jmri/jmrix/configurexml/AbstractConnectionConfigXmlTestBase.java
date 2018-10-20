@@ -38,7 +38,7 @@ abstract public class AbstractConnectionConfigXmlTestBase extends jmri.configure
         cc.loadDetails(new JPanel());
         Element e = xmlAdapter.store(cc);
         //load what we just produced.
-        xmlAdapter.load(e,null);
+        xmlAdapter.load(e,e);
     }
 
     /**
