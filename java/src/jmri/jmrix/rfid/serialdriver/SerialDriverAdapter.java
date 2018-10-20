@@ -280,6 +280,12 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         // find the baud rate value, configure comm options
         int baud = 9600;  // default, but also defaulted in the initial value of selectedSpeed
 
+        // the Parallax reader uses 2400 baud, so set that here
+        if (getOptionState(option3Name).equals("Parallax")) {
+            log.debug("Set baud rate to 2400 for Parallax reader");
+            baud = 2400;
+        }
+
         // check for specific port type
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
