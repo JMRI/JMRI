@@ -32,6 +32,18 @@ abstract public class AbstractConnectionConfigXmlTestBase extends jmri.configure
         validateConnectionDetails(cc,e);
     }
 
+    @Test(timeout=5000)
+    public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
+        Assume.assumeNotNull(cc);
+        // This test requires a configure manager.
+        jmri.util.JUnitUtil.initConfigureManager();
+        cc.loadDetails(new JPanel());
+        cc.setDisabled(true); // so we don't try to start the connection on load.
+        Element e = xmlAdapter.store(cc);
+        //load what we just produced.
+        xmlAdapter.load(e,e);
+    }
+
     /**
      * Validate the common details for ConnectionConfig match the values in 
      * the xml element.
