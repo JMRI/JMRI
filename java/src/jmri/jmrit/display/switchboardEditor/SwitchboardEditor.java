@@ -39,6 +39,8 @@ import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Manager;
@@ -94,10 +96,11 @@ public class SwitchboardEditor extends Editor {
     ImageIcon iconNext = new ImageIcon("resources/icons/misc/gui3/LafRightArrow_m.gif");
     private final JLabel next = new JLabel(iconNext);
     private int rangeMin = 1;
-    private int rangeMax = 24;
-    private int _range = rangeMax - rangeMin;
-    private final JSpinner minSpinner = new JSpinner(new SpinnerNumberModel(rangeMin, rangeMin, rangeMax, 1));
-    private final JSpinner maxSpinner = new JSpinner(new SpinnerNumberModel(rangeMax, rangeMin, rangeMax, 1));
+    private int rangeMax = 10000;
+    private static int initialMax = 24;
+    private int _range = initialMax - rangeMin;
+    private final JSpinner minSpinner = new JSpinner(new SpinnerNumberModel(rangeMin, rangeMin, rangeMax - 1, 1));
+    private final JSpinner maxSpinner = new JSpinner(new SpinnerNumberModel(initialMax, rangeMin + 1, rangeMax, 1));
     private final JCheckBox hideUnconnected = new JCheckBox(Bundle.getMessage("CheckBoxHideUnconnected"));
     private final JCheckBox autoItemRange = new JCheckBox(Bundle.getMessage("CheckBoxAutoItemRange"));
     private TargetPane switchboardLayeredPane; // JLayeredPane
@@ -107,7 +110,7 @@ public class SwitchboardEditor extends Editor {
     private final String[] beanTypeStrings = {TURNOUT, SENSOR, LIGHT};
     private JComboBox beanTypeList;
     private char beanTypeChar;
-    JSpinner columns = new JSpinner(new SpinnerNumberModel(4, 1, 24, 1)); // columns is actually used for the number of rows
+    JSpinner columns = new JSpinner(new SpinnerNumberModel(3, 1, 25, 1)); // columns is actually used for the number of rows
     private final String[] switchShapeStrings = {
         Bundle.getMessage("Buttons"),
         Bundle.getMessage("Sliders"),
@@ -283,6 +286,8 @@ public class SwitchboardEditor extends Editor {
         autoItemRange.addActionListener((ActionEvent event) -> {
             setAutoItemRange(autoItemRange.isSelected());
             autoItemRangeBox.setSelected(autoItemRange()); // also (un)check the box on the menu
+            // if set to checked, store the current range from the spinners
+            _range = (Integer) maxSpinner.getValue() - (Integer) minSpinner.getValue();
         });
         checkboxPane.add(autoItemRange);
         autoItemRange.setToolTipText(Bundle.getMessage("AutoItemRangeTooltip"));
@@ -300,7 +305,7 @@ public class SwitchboardEditor extends Editor {
         switchboardLayeredPane.setLayout(new GridLayout(3, 8)); // initial layout params
         // TODO do some calculation from JPanel size, icon size and determine optimal cols/rows
         // Add at least 1 switch to pane to create switchList:
-        addSwitchRange(1, 24,
+        addSwitchRange(1, initialMax,
                 beanTypeList.getSelectedIndex(),
                 beanManuPrefixes.get(beanManuNames.getSelectedIndex()),
                 switchShapeList.getSelectedIndex());
@@ -370,10 +375,14 @@ public class SwitchboardEditor extends Editor {
 
         // update selected address range
         _range = (Integer) maxSpinner.getValue() - (Integer) minSpinner.getValue();
+        if (_range > 400) {
+            maxSpinner.setValue(Math.min(_range, 400)); // fixed maximum number of items on a Switchboard to prevent memory overflow
+        }
         // check for extreme number of items
         log.debug("address range = {}", _range);
         if (_range > 250) {
             // ask user if _range is indeed desired
+            log.debug("Warning for big range");
             int retval = JOptionPane.showOptionDialog(null,
                     Bundle.getMessage("LargeRangeWarning", _range, Bundle.getMessage("CheckBoxHideUnconnected")),
                     Bundle.getMessage("WarningTitle"),
@@ -395,8 +404,8 @@ public class SwitchboardEditor extends Editor {
 
         switchboardLayeredPane.setLayout(new GridLayout(Math.max((Integer) columns.getValue() % _range, 1),
                 (Integer) columns.getValue())); // vertical, horizontal
-        addSwitchRange((Integer) minSpinner.
-                getValue(), (Integer) maxSpinner.getValue(),
+        addSwitchRange((Integer) minSpinner.getValue(),
+                (Integer) maxSpinner.getValue(),
                 beanTypeList.getSelectedIndex(),
                 beanManuPrefixes.get(beanManuNames.getSelectedIndex()),
                 switchShapeList.getSelectedIndex());
@@ -418,8 +427,8 @@ public class SwitchboardEditor extends Editor {
      * Items in range that can connect to existing beans in JMRI are active. The
      * others are greyed out. Option to later connect (new) beans to switches.
      *
-     * @param rangeMin    starting ordinal of Switch address range
-     * @param rangeMax    highest ordinal of Switch address range
+     * @param min    starting ordinal of Switch address range
+     * @param max    highest ordinal of Switch address range
      * @param beanType    index of selected item in Type comboBox, either T, S
      *                    or L
      * @param manuPrefix  selected item in Connection comboBox, filled from
@@ -428,7 +437,7 @@ public class SwitchboardEditor extends Editor {
      *                    selected in Type comboBox, choose either a JButton
      *                    showing the name or (to do) a graphic image
      */
-    private void addSwitchRange(int rangeMin, int rangeMax, int beanType, String manuPrefix, int switchShape) {
+    private void addSwitchRange(int min, int max, int beanType, String manuPrefix, int switchShape) {
         log.debug("_hideUnconnected = {}", hideUnconnected());
         String name;
         BeanSwitch _switch;
@@ -438,7 +447,7 @@ public class SwitchboardEditor extends Editor {
         if (_manu.startsWith("M")) {
             _insert = "+"; // for CANbus.MERG On event
         }
-        for (int i = rangeMin; i <= rangeMax; i++) {
+        for (int i = min; i <= max; i++) {
             switch (beanType) {
                 case 0:
                     name = _manu + "T" + _insert + i;
@@ -502,12 +511,34 @@ public class SwitchboardEditor extends Editor {
         // enlarge minSpinner editor text field width
         JFormattedTextField minTf = ((JSpinner.DefaultEditor) minEditor).getTextField();
         minTf.setColumns(5);
+        minSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                JSpinner spinner = (JSpinner) e.getSource();
+                int value = (int)spinner.getValue();
+                // stop if value >= maxSpinner -1 (_range <= 0)
+                if (value >= (Integer) maxSpinner.getValue() - 1) {
+                    maxSpinner.setValue(value + 1);
+                }
+            }
+        });
         navBarPanel.add(minSpinner);
         navBarPanel.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("UpTo"))));
         // enlarge maxSpinner editor text field width
         JComponent maxEditor = maxSpinner.getEditor();
         JFormattedTextField maxTf = ((JSpinner.DefaultEditor) maxEditor).getTextField();
         maxTf.setColumns(5);
+        maxSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                JSpinner spinner = (JSpinner) e.getSource();
+                int value = (int)spinner.getValue();
+                // stop if value <= minSpinner + 1 (_range <= 0)
+                if (value <= (Integer) minSpinner.getValue() + 1) {
+                    minSpinner.setValue(value - 1);
+                }
+            }
+        });
         navBarPanel.add(maxSpinner);
 
         navBarPanel.add(next);
@@ -585,6 +616,8 @@ public class SwitchboardEditor extends Editor {
         autoItemRangeBox.addActionListener((ActionEvent event) -> {
             setAutoItemRange(autoItemRangeBox.isSelected());
             autoItemRange.setSelected(autoItemRange()); // also (un)check the box on the editor
+            // if set to checked, store the current range from the spinners
+            _range = (Integer) maxSpinner.getValue() - (Integer) minSpinner.getValue();
         });
         autoItemRangeBox.setSelected(autoItemRange());
         // show tooltip item

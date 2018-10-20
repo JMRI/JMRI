@@ -177,7 +177,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         }
         panel.setHideUnconnected(value);
 
-        value = false;
+        value = true;
         if ((a = shared.getAttribute("autoitemrange")) != null && a.getValue().equals("yes")) {
             value = true;
         }
