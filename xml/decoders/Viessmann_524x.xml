@@ -628,11 +628,7 @@
 		<tooltip xml:lang="de">&lt;html&gt;Reduzierung der Spannung, die am Ausgang anliegt.&lt;br&gt; Der Wert “0” entspricht der kleinsten,&lt;br&gt; 15 der maximalen Spannung.&lt;/html&gt;</tooltip>
       </variable>
       <!-- Speed Table -->
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-        <label xml:lang="de">Geschwindigkeitskennlinie</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
 	  <!-- User variables -->
 	  <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
 	  <!-- Speed in analogue mode -->

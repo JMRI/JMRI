@@ -168,10 +168,7 @@
         <label>Rail Clack Volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable CV="105" item="User Id #1" default="0" tooltip="range 0-255, code your own ID">
         <decVal max="255"/>
         <label>User ID #1</label>

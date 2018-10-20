@@ -73,19 +73,15 @@
         <label xml:lang="it">Stato Funzione in Analogico - FL(indietro)</label>
       </variable>
       <!-- CV=29 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-        <label xml:lang="it">Tabella velocità</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable item="Directional Headlights" CV="61" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="Normal headlight operation">

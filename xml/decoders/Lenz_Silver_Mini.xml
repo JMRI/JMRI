@@ -204,11 +204,7 @@
         <label xml:lang="de">Toggle effect (outputs A/B) with F8</label>
         <tooltip xml:lang="de">Toggle Lighting Effect for outputs A and B 'off' using F8</tooltip>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-        <label xml:lang="de">Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable CV="105" item="User Id #1" default="255" comment="Range 0-255">
         <decVal min="0" max="255"/>
         <label>User Identification #1</label>
