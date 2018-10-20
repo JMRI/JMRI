@@ -35,6 +35,8 @@ abstract public class AbstractConnectionConfigXmlTestBase extends jmri.configure
     @Test
     public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
         Assume.assumeNotNull(cc);
+        // This test requires a configure manager.
+        jmri.util.JUnitUtil.initConfigureManager();
         cc.loadDetails(new JPanel());
         Element e = xmlAdapter.store(cc);
         //load what we just produced.
