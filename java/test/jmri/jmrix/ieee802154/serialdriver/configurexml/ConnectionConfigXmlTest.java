@@ -30,7 +30,14 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
 
     @Test
     @Override
-    @Ignore("requires a node to pass")
+    @Ignore("requires a traffic controller to pass")
     public void storeTest(){
     }
+
+    @Test(timeout=5000)
+    @Override
+    @Ignore("requires a traffic controller to pass")
+    public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
+    }
+
 }
