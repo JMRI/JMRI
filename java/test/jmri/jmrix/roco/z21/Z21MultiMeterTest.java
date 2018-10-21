@@ -1,14 +1,17 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.*;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
 public class Z21MultiMeterTest extends jmri.implementation.AbstractMultiMeterTestBase{
+    @Test
+    public void testMethods() {
+        Assert.assertEquals("Z21", mm.getHardwareMeterName());
+    }
 
     @Override
     @Before
