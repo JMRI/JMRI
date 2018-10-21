@@ -237,10 +237,7 @@
     </variable>
     <!-- End Lighting Configuration -->
     <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
-    <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-    </variable>
+    <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2userId.xml"/>
     <variable CV="113" item="Sound Group 3 Option 1" default="0">

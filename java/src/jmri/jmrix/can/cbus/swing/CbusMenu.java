@@ -37,7 +37,8 @@ public class CbusMenu extends JMenu {
         new Item("MenuItemSendFrame", "jmri.jmrix.can.swing.send.CanSendPane"),
         new Item("MenuItemEventCapture", "jmri.jmrix.can.cbus.swing.configtool.ConfigToolPane"),
         new Item("MenuItemEventTable", "jmri.jmrix.can.cbus.swing.eventtable.CbusEventTablePane"),
-        new Item("MenuItemNodeConfig", "jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane")
+        new Item("MenuItemNodeConfig", "jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane"),
+        new Item("MenuItemCbusSlotMonitor", "jmri.jmrix.can.cbus.swing.cbusslotmonitor.CbusSlotMonitorPane")
     };
 
     static class Item {

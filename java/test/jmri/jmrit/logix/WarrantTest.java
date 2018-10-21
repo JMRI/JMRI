@@ -73,13 +73,13 @@ public class WarrantTest {
 
         _turnoutMgr = InstanceManager.turnoutManagerInstance();
         Turnout northSwitch = _turnoutMgr.newTurnout("IT1", "NorthSwitch");
-        ArrayList<BeanSetting> settings = new ArrayList<BeanSetting>();
+        ArrayList<BeanSetting> settings = new ArrayList<>();
         settings.add(new BeanSetting(northSwitch, "NorthSwitch", Turnout.CLOSED));
         OBlock north = _OBlockMgr.getOBlock("North");
         OPath path = new OPath("NorthToWest", north, null, _portalMgr.getPortal("NorthWest"), settings);
         north.addPath(path);
         
-        settings = new ArrayList<BeanSetting>();
+        settings = new ArrayList<>();
         settings.add(new BeanSetting(northSwitch, "NorthSwitch", Turnout.THROWN));
         path = new OPath("NorthToEast", north, null, _portalMgr.getPortal("NorthEast"), settings);
         north.addPath(path);        
@@ -88,24 +88,26 @@ public class WarrantTest {
         
         Turnout southSwitch = _turnoutMgr.newTurnout("IT2", "SouthSwitch");
         OBlock south = _OBlockMgr.getOBlock("South");
-        settings = new ArrayList<BeanSetting>();
+        settings = new ArrayList<>();
         settings.add(new BeanSetting(southSwitch, "SouthSwitch", Turnout.THROWN));
         path = new OPath("SouthToEast", south, null, _portalMgr.getPortal("SouthEast"), settings);
         south.addPath(path);
-        settings = new ArrayList<BeanSetting>();
+        settings = new ArrayList<>();
         settings.add(new BeanSetting(southSwitch, "SouthSwitch", Turnout.CLOSED));
         path = new OPath("SouthToWest", south, null, south.getPortalByName("SouthWest"), settings);
         south.addPath(path);
         Assert.assertEquals("Path Block", path, south.getPathByName("SouthToWest"));
         Assert.assertEquals("Path Block", "SouthToEast", south.getPathByName("SouthToEast").getName());
-        
-        
-        settings = new ArrayList<BeanSetting>();
+
+        bSouth.setLength(100);
+
+        settings = new ArrayList<>();
         OBlock block =  _OBlockMgr.getOBlock("West");
         path = new OPath("SouthToNorth", block, _portalMgr.getPortal("NorthWest"), _portalMgr.getPortal("SouthWest"), settings);
         _OBlockMgr.getOBlock("West").addPath(path);
+        path.setLength(200);
         Assert.assertEquals("Path Block", path, block.getPathByName("SouthToNorth"));
-        settings = new ArrayList<BeanSetting>();
+        settings = new ArrayList<>();
         block =  _OBlockMgr.getOBlock("East");
         path = new OPath("NorthToSouth", block, south.getPortalByName("SouthEast"), north.getPortalByName("NorthEast"), settings);
         _OBlockMgr.getOBlock("East").addPath(path);
@@ -145,7 +147,7 @@ public class WarrantTest {
         Assert.assertEquals("Block Detection 5", OBlock.UNOCCUPIED, bWest.getState());
         Assert.assertEquals("Block Detection 6", OBlock.UNOCCUPIED, bEast.getState());
 
-        ArrayList <BlockOrder> orders = new ArrayList <BlockOrder>();
+        ArrayList <BlockOrder> orders = new ArrayList <>();
         orders.add(new BlockOrder(_OBlockMgr.getOBlock("North"), "NorthToWest", "", "NorthWest"));
         BlockOrder viaOrder = new BlockOrder(_OBlockMgr.getOBlock("West"), "SouthToNorth", "NorthWest", "SouthWest");
         orders.add(viaOrder);
@@ -156,7 +158,7 @@ public class WarrantTest {
         warrant.setBlockOrders(orders);
         Assert.assertEquals("BlockOrder", warrant.getLastOrder().toString(), lastOrder.toString());
         Assert.assertEquals("BlockOrder", warrant.getViaOrder().toString(), viaOrder.toString());
-        
+
         String msg = warrant.allocateRoute(orders);
         Assert.assertNull("allocateRoute - "+msg, msg);
         warrant.deAllocate();
