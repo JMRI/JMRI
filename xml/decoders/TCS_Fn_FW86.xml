@@ -13,6 +13,9 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Simon Ginsburg" version="1" lastUpdated="20130317"/>
+  <version author="Marc N Fournier" version="2" lastUpdated="20181018"/>
+<!-- Version 2 Correction for CV51 and CV52, bit value of 9 not used in decoders -->
+
   <decoder>
     <family name="Jan 2012" mfg="Train Control Systems" comment="TCS FW Starting Jan 2012">
       <model model="FL2" numOuts="2" numFns="14" lowVersionID="86" highVersionID="88" formFactor="HO" productID="6">

@@ -15,8 +15,8 @@
   <version author="Alain Le Marchand" version="1.0" lastUpdated="20140805"/>
   <!--   Initial Version 1.0 created from Uhlenbrock_32100.xml version 2.0 -->
   <version author="Egbert Broerse" version="2.0" lastUpdated="20180929"/>
-  <!--   Version 2.0 with include of variables and IntelliSound pane -->
-  <!-- This decoder XML is meant to be used with the "Custom", "Advanced", "Comprehensive"
+  <!--   Version 2.0 with includes of sound variables and IntelliSound pane -->
+  <!--   This decoder XML is meant to be used with the "Custom", "Advanced", "Comprehensive"
   programmer formats as no SUSI variables have standard NMRA analogues.
   Minimal JMRI version 3.8 -->
   <decoder>

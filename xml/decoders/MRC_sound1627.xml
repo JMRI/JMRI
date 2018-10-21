@@ -86,10 +86,7 @@
         <label>Chuff Rate</label>
         <comment>Range 0-31</comment>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <!-- CV 105-106 -->
 <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable item="Sound Option 1" CV="50" default="0">
