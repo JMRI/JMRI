@@ -935,13 +935,7 @@
     </variable>
     <!-- Speed Table-->
     <!-- CV#67-94    Standardwerte weichen ab -->
-    <variable item="Speed Table" CV="67">
-    <speedTableVal/>
-      <label>Speed Table</label>
-      <label xml:lang="it">Tabella velocità</label>
-      <label xml:lang="de">Geschwindigkeitstabelle</label>
-      <label xml:lang="cs">Rychlostní tabulka</label>
-    </variable>
+    <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
     <!-- End of Speed Table-->
     <!--variable CV="112" mask="XXXXXXXV" item="Advanced Group 1 Option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>

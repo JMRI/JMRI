@@ -816,10 +816,7 @@
         <label>Random-2: Sounds Cruising</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable item="High Time Sounds after Accelleration; 0.5sec" CV="96" default="8" comment="Range 0-255">
         <decVal/>
         <label>High Time Sounds after Accelleration; 0.5sec</label>

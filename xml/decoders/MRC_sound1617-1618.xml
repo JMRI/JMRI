@@ -248,10 +248,7 @@
       <!-- Kick-Start Voltage as per NMRA definition -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart_63.xml"/>
       <!-- Speed table -->
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <!-- CV=105, 106 -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable CV="112" item="Sound Setting 16" default="3">
