@@ -18,7 +18,7 @@
 		
 		<table>
 		<tr><td align="right">
-		Development:</td><td>
+		<a href="http://jmri.tagadab.com/jenkins/job/Development/">Development</a>:</td><td>
 		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/Builds/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/SpotBugs'></a>
 		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/Deprecations/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/SpotBugs'></a>
         <a href='http://jmri.tagadab.com/jenkins/job/Development/job/HTML%20Scan/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/HTML%20Scan'></a>
@@ -27,7 +27,7 @@
         <a href='http://jmri.tagadab.com/jenkins/job/Development/job/Separate_Tests/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/Separate_Tests'></a>
 		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/SpotBugs/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/SpotBugs'></a>
 		</td></tr><tr><td align="right">
-		Version Checks:</td><td>
+		<a href="http://jmri.tagadab.com/jenkins/job/Development/job/VersionChecks/">Version Checks</a>:</td><td>
 		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/VersionChecks/job/JDK%209.0.4/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/VersionChecks/JDK%209.0.4'></a>
 		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/VersionChecks/job/JDK%2010.0.1/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/VersionChecks/JDK%2010.0.1'></a>
 		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/VersionChecks/job/JDK%2011/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/VersionChecks/JDK%2011'></a>
@@ -37,7 +37,7 @@
 		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/VersionChecks/job/JRE%2010.0.1/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/VersionChecks/JRE%2010.0.1'></a>
 		<a href='http://jmri.tagadab.com/jenkins/job/Development/job/VersionChecks/job/JRE%2011/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/VersionChecks/JRE%2011'></a>
 		</td></tr><tr><td align="right">
-		Web Site:</td><td>
+		<a href="http://jmri.tagadab.com/jenkins/job/WebSite/">Web Site</a>:</td><td>
 		<a href='http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=WebSite/generate-website'></a>
 		<a href='http://jmri.tagadab.com/jenkins/job/WebSite/job/JMRI_repository/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=WebSite/JMRI_repository'></a>
 		<a href='http://jmri.tagadab.com/jenkins/job/WebSite/job/website_repository/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=WebSite/website_repository'></a>

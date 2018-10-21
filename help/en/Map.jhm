@@ -192,6 +192,8 @@
 
 <mapID target="package.jmri.jmrit.display.CoordinateEdit" url="package/jmri/jmrit/display/CoordinateEdit.shtml"/>
 
+<mapID target="html.setup.git" url="html/setup/git.shtml"/>
+
 <mapID target="html.doc.Technical.JUnit_threads" url="html/doc/Technical/JUnit.shtml#threads"/>
 
 <mapID target="html.hardware.oaktree.OakTree" url="html/hardware/oaktree/OakTree.shtml"/>
@@ -831,6 +833,8 @@
 <mapID target="manual.DecoderPro.Comp_Consist_Top" url="manual/DecoderPro/Comp_Consist.shtml#Top"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_SetCars" url="package/jmri/jmrit/operations/Operations.shtml#SetCars"/>
+
+<mapID target="package.jmri.jmrix.can.cbus.swing.cbusslotmonitor.CbusSlotMonitorPane_opc" url="package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml#opc"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_AddStaging_Top" url="manual/JMRI_OPS_UsersGuide/Ops_AddStaging.shtml#Top"/>
 
@@ -2718,6 +2722,8 @@
 
 <mapID target="html.doc.Technical.I8N" url="html/doc/Technical/I8N.shtml"/>
 
+<mapID target="package.jmri.jmrix.can.cbus.swing.cbusslotmonitor.CbusSlotMonitorPane" url="package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml"/>
+
 <mapID target="manual.DecoderPro.Main_XpressNet_LZV100" url="manual/DecoderPro/Main_XpressNet.shtml#LZV100"/>
 
 <mapID target="manual.DecoderPro.Main_Throttle_toolbar_Top" url="manual/DecoderPro/Main_Throttle_toolbar.shtml#Top"/>
@@ -2947,6 +2953,8 @@
 <mapID target="manual.DecoderPro.Main_Debug_log" url="manual/DecoderPro/Main_Debug.shtml#log"/>
 
 <mapID target="manual.DecoderPro.index_Advanced_Programmer" url="manual/DecoderPro/index.shtml#Advanced_Programmer"/>
+
+<mapID target="html.doc.Technical.Enums" url="html/doc/Technical/Enums.shtml"/>
 
 <mapID target="html.tools.automation.index" url="html/tools/automation/index.shtml"/>
 
