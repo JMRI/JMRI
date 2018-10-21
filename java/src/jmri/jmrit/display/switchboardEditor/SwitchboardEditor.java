@@ -87,7 +87,7 @@ public class SwitchboardEditor extends Editor {
     protected JMenu _fileMenu;
     protected JMenu _optionMenu;
     private ArrayList<Positionable> _secondSelectionGroup;
-    private boolean panelChanged = false;
+    private transient boolean panelChanged = false;
 
     // Switchboard items
     private JPanel navBarPanel = null;
@@ -331,6 +331,7 @@ public class SwitchboardEditor extends Editor {
         updateButton.addActionListener((ActionEvent event) -> {
             log.debug("Update clicked");
             updatePressed();
+            setDirty();
         });
         updatePanel.add(updateButton);
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS));
@@ -416,7 +417,6 @@ public class SwitchboardEditor extends Editor {
         help2.setVisible(switchlist.size() != 0); // hide help2 when help3 is shown vice versa (as no items are dimmed or not)
         pack();
         switchboardLayeredPane.repaint();
-        setDirty();
     }
 
     /**
