@@ -30,7 +30,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSim
 
     @Test(timeout=5000)
     @Override
-    @Ignore("occasionally causing ConncurrentModificationSetting while disabling connection");
+    @Ignore("occasionally causing ConncurrentModificationSetting while disabling connection")
     public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
     }
 }
