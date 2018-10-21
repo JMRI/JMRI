@@ -548,6 +548,8 @@
   <indexitem text="Wii Remote as Throttle " target="html.tools.throttle.AdvancedThrottleControl_wii"/>
 
  </indexitem>
+ <indexitem text="Timetable " target="html.tools.TimeTable"/>
+
  <indexitem text="Tracker " target="html.tools.tracker.index"/>
 
  <indexitem text="TrainCrew " target="html.apps.TrainCrew.index"/>
