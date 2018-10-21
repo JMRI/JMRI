@@ -97,7 +97,7 @@ public class SwitchboardEditor extends Editor {
     private final JLabel next = new JLabel(iconNext);
     private int rangeMin = 1;
     private int rangeMax = 10000;
-    private static int initialMax = 24;
+    private final int initialMax = 24;
     private int _range = initialMax - rangeMin;
     private final JSpinner minSpinner = new JSpinner(new SpinnerNumberModel(rangeMin, rangeMin, rangeMax - 1, 1));
     private final JSpinner maxSpinner = new JSpinner(new SpinnerNumberModel(initialMax, rangeMin + 1, rangeMax, 1));
@@ -125,8 +125,6 @@ public class SwitchboardEditor extends Editor {
     private final String noInteract = Bundle.getMessage("SwitchboardNoInteractHint");
 
     // editor items (adapted from LayoutEditor toolbar)
-    private JPanel editToolBarPanel = null;
-    private JScrollPane editToolBarScroll = null;
     private Color defaultTextColor = Color.BLACK;
     private boolean _hideUnconnected = false;
     private boolean _autoItemRange = true;
@@ -135,8 +133,8 @@ public class SwitchboardEditor extends Editor {
     // saved state of options when panel was loaded or created
     private transient boolean savedEditMode = true;
     private transient boolean savedControlLayout = true; // menu option to turn this off
-    private int height = 100;
-    private final int width = 100;
+    private final int height = 300;
+    private final int width = 300;
 
     private final JCheckBoxMenuItem controllingBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxControlling"));
     private final JCheckBoxMenuItem hideUnconnectedBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxHideUnconnected"));
@@ -209,7 +207,7 @@ public class SwitchboardEditor extends Editor {
         addHelpMenu("package.jmri.jmrit.display.SwitchboardEditor", true);
 
         switchboardLayeredPane = new TargetPane(); // extends JLayeredPane();
-        switchboardLayeredPane.setPreferredSize(new Dimension(300, 310));
+        switchboardLayeredPane.setPreferredSize(new Dimension(width, height));
         border = BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(defaultTextColor),
                 "temp",
@@ -401,7 +399,7 @@ public class SwitchboardEditor extends Editor {
         }
         switchlist.clear(); // reset list
         log.debug("switchlist cleared, size is now: {}", switchlist.size());
-        switchboardLayeredPane.setSize(300, 300);
+        switchboardLayeredPane.setSize(width, height);
 
         switchboardLayeredPane.setLayout(new GridLayout(Math.max((Integer) columns.getValue() % _range, 1),
                 (Integer) columns.getValue())); // vertical, horizontal
