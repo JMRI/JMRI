@@ -47,9 +47,8 @@
         </ul></li>
         <li>Set the number of rows of switches to be displayed (number of items per row is calculated)</li>
         <li>Select Hide unconnected switches to only show switches for items connected to hardware</li>
-        <span class="since">since 4.13.4</span>
-        <li>Auto Address Range (selected by default) makes it easy to use the left/right arrows on the pane to
-        shift the hardware address up/down while keeping the number of items on the board the same.</li>
+        <li>Auto Address Range (selected by default)<span class="since">since 4.13.4</span> makes it easy to use the left/right arrows on the pane to
+        jump to the next set of hardware addresses while keeping the number of items on the board the same.</li>
       </ul>
       <a href="images/Switchboard.png"><img src="images/Switchboard.png" width="276" height="221" align="right"></a>
       <p>Optionally, change the background color for this Switchboard via the Options menu.
@@ -67,8 +66,9 @@
       <p>Right-click a switch to open a context-menu and:</p>
       <a href="images/Keyboard.png"><img src="images/Keyboard.png" width="230" height="165" align="right"></a>
       <ul>
-        <li>set the user name of a connected item (stored in the item, not in the board)</li>
-        <li>attach a new item to an inactive switch (using the name of the switch and the object type as set in the Editor)</li>
+        <li>Set the user name of a connected item (stored in the item, not in the board)</li>
+        <li>Attach a new item to an inactive switch (using the name of the switch and the object type as set in the
+        Editor)</li>
         <li>Invert a turnout so it displays the intended state (depending on protocol support)</li>
         <li>To come: flip the switch icon to better represent the position of the connected turnout</li>
       </ul>
