@@ -35,6 +35,8 @@ abstract public class AbstractConnectionConfigXmlTestBase extends jmri.configure
     @Test(timeout=5000)
     public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
         Assume.assumeNotNull(cc);
+        // reset the profile manager for this test, so it can run independently.
+        jmri.util.JUnitUtil.resetProfileManager();
         // This test requires a configure manager.
         jmri.util.JUnitUtil.initConfigureManager();
         cc.loadDetails(new JPanel());

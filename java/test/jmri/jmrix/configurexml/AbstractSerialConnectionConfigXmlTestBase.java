@@ -33,6 +33,8 @@ abstract public class AbstractSerialConnectionConfigXmlTestBase extends Abstract
     @Override
     public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
         Assume.assumeNotNull(cc);
+        // reset the profile manager for this test, so it can run independently.
+        jmri.util.JUnitUtil.resetProfileManager();
         // This test requires a configure manager.
         jmri.util.JUnitUtil.initConfigureManager();
         cc.loadDetails(new JPanel());
