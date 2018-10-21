@@ -65,14 +65,9 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
 
         @Override
         public void run() {
-            try {
-                if (is_enabled) {
-                    log.debug("Timer Pop");
-                    requestUpdateFromLayout();
-                }
-                Thread.sleep(sleepInterval);
-            } catch (InterruptedException e) {
-                log.error("Error running timer update task! {}", e.getMessage());
+            if (is_enabled) {
+                log.debug("Timer Pop");
+                requestUpdateFromLayout();
             }
         }
     }
