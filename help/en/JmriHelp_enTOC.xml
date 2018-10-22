@@ -399,6 +399,8 @@
    <tocitem text="inControl - Web Throttles and Panels (older version) " target="package.jmri.jmrit.inControl.inControl"/>
 
   </tocitem>
+  <tocitem text="Timetable " target="html.tools.TimeTable"/>
+
   <tocitem text="Tracker (Blocks) " target="html.tools.tracker.index"/>
 
   <tocitem text="Transits ">
