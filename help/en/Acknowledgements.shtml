@@ -408,7 +408,8 @@
 
         <li>Enzo Fortuna, who created the Italian translation</li>
 
-        <li>Marc Fournier, who improved the TCS decoder definition
+        <li>Marc Fournier, <!-- Marcfour -->
+        who improved the TCS decoder definition
         and did the detail work to update the Soundtraxx
         manufacturer name.</li>
 
@@ -522,15 +523,18 @@
         ("Bonjour"-like) networking and WiFi access to throttles.
         </li>
         
-        <a name="I" id="I"></a>
-
         <li>Osvaldo Hojvat provided definitions for several
                     <a href-"http://www.ldhtrenes.com.ar">LDH</a>
                     decoders</li>
-                    
+              
+        <li>Hornby Hobbys, who provided a full set of TTS manuals 
+        plus information regarding various CVs.</li>
+        
         <li>Al Huberty, who organized our first users meeting at
         the NMRA Toronto convention</li>
         
+        <a name="I" id="I"></a>
+
         <a name="J" id="J"></a>
 
         <li>AJ Ireland of Digitrax, who loaned equipment, answered

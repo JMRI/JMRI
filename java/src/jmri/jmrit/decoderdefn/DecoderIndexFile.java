@@ -617,6 +617,9 @@ public class DecoderIndexFile extends XmlFile {
                 log.error("could not read {}: {}", fileName, exj.getMessage());
             } catch (IOException exj) {
                 log.error("other exception while dealing with {}: {}", fileName, exj.getMessage());
+            } catch (Exception exq) {
+                log.error("exception reading {}", fileName, exq);
+                throw exq;
             }
         }
 
