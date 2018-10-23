@@ -5,6 +5,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+        AssertTest.class,
         jmri.util.junit.rules.PackageTest.class
 })
 
