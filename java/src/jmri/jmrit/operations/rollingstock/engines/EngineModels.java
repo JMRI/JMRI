@@ -1,13 +1,10 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.util.Hashtable;
-import java.util.Set;
-import jmri.InstanceInitializer;
 import jmri.InstanceManager;
-import jmri.implementation.AbstractInstanceInitializer;
+import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
 import org.jdom2.Element;
-import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,10 +43,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2008
  */
-public class EngineModels extends RollingStockAttribute {
+public class EngineModels extends RollingStockAttribute implements InstanceManagerAutoDefault {
 
     private static final String MODELS = Bundle.getMessage("engineDefaultModels");
-    // Horsepower, length, and type have a one to one correspondence with the above MODELS
+    // Horsepower, length, type, and weight have a one to one correspondence with the above MODELS
     private static final String HORSEPOWER = Bundle.getMessage("engineModelHorsepowers");
     private static final String ENGINELENGTHS = Bundle.getMessage("engineModelLengths");
     private static final String ENGINETYPES = Bundle.getMessage("engineModelTypes");
@@ -94,7 +91,7 @@ public class EngineModels extends RollingStockAttribute {
         _engineWeightHashTable.clear();
         _engineBunitHashTable.clear();
         super.dispose();
-        loadDefaults();
+        loadDefaults(); // for testing
     }
 
     @Override
@@ -217,25 +214,5 @@ public class EngineModels extends RollingStockAttribute {
 
     private final static Logger log = LoggerFactory.getLogger(EngineModels.class);
 
-    @ServiceProvider(service = InstanceInitializer.class)
-    public static class Initializer extends AbstractInstanceInitializer {
 
-        @Override
-        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
-            if (type.equals(EngineModels.class)) {
-                EngineModels instance = new EngineModels();
-                instance.loadDefaults();
-                return instance;
-            }
-            return super.getDefault(type);
-        }
-
-        @Override
-        public Set<Class<?>> getInitalizes() {
-            Set<Class<?>> set = super.getInitalizes();
-            set.add(EngineModels.class);
-            return set;
-        }
-
-    }
 }

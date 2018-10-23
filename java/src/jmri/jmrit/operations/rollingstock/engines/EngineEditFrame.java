@@ -302,7 +302,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
         if (!InstanceManager.getDefault(CarRoads.class).containsName(engine.getRoadName())) {
             String msg = MessageFormat.format(Bundle.getMessage("roadNameNotExist"), new Object[]{engine
                     .getRoadName()});
-            if (JOptionPane.showConfirmDialog(this, msg, Bundle.getMessage("rsAddRoad"),
+            if (JOptionPane.showConfirmDialog(this, msg, Bundle.getMessage("addRoad"),
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 InstanceManager.getDefault(CarRoads.class).addName(engine.getRoadName());
             }
@@ -497,7 +497,6 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 
     private boolean checkRoadNumber(String roadNum) {
         if (!OperationsXml.checkFileName(roadNum)) { // NOI18N
-            log.error("Road number must not contain reserved characters");
             JOptionPane.showMessageDialog(this,
                     Bundle.getMessage("NameResChar") + NEW_LINE + Bundle.getMessage("ReservedChar"),
                     Bundle.getMessage("roadNumNG"),
@@ -505,8 +504,8 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
             return false;
         }
         if (roadNum.length() > Control.max_len_string_road_number) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("engineRoadNum"), Bundle
-                    .getMessage("engineRoadLong"), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("RoadNumMustBeLess"), Bundle
+                    .getMessage("RoadNumTooLong"), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -517,7 +516,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
             if (_engine == null ||
                     !_engine.getRoadName().equals(roadComboBox.getSelectedItem()) ||
                     !_engine.getNumber().equals(roadNumberTextField.getText())) {
-                _engine = manager.newEngine((String) roadComboBox.getSelectedItem(), roadNumberTextField.getText());
+                _engine = manager.newRS((String) roadComboBox.getSelectedItem(), roadNumberTextField.getText());
             }
             if (modelComboBox.getSelectedItem() != null) {
                 _engine.setModel((String) modelComboBox.getSelectedItem());
