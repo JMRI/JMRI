@@ -120,8 +120,8 @@
 		object. Variables within the object can then be set using statements like:</p>
 		
 		<pre>
-	a.userName = "My memory &num;1"
-	b.userName = "My Sensor &num;1 at East Yard"
+	a.userName = "My memory 1"
+	b.userName = "My Sensor 1 at East Yard"
 	a.value = "Something I want to save"
 	b.state = ACTIVE
 		</pre>
