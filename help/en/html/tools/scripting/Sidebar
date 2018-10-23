@@ -13,7 +13,7 @@
 		    <li><dfn><a href="ex_set_turnouts.shtml">Example: Setting Turnouts</a></dfn>
 		    <li><dfn><a href="Examples.shtml">Examples (Links)</a></dfn>
 		    <li><dfn><a href="HowTo.shtml">JMRI Scripting &quot;How To...&quot;</a></dfn>
-			<li><dfn><a href="JMRI_scripts_What_Where.shtml">JMRI Scripting &quot;What...Where&quot;</a></dfn>
+			<li><dfn><a href="WhatWhere.shtml">JMRI Scripting &quot;What...Where&quot;</a></dfn>
 			<li><dfn><a href="Jynstruments.shtml">Jynstruments to modify the GUI</a></dfn>
             <li><dfn><a href="AppleScript.shtml">Open Scripting (for Mac)</a></dfn>
 		    </ul>

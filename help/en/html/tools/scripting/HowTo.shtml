@@ -51,7 +51,7 @@
         the <a href="Start.shtml">introductory page</a> shows some
         of the basic commands.</p>
 	  <p>See also <a href="Python.shtml">Python/Jython Language</a> for general FAQ about the language.</p>
-	  <p>See also <a href="JMRI_scripts_What_Where.shtml">Jython Scripting "What...Where"</a> for other interesting tidbits.</p>
+	  <p>See also <a href="WhatWhere.shtml">Jython Scripting "What...Where"</a> for other interesting tidbits.</p>
 
 	  
       <h2><a id="running">How do I run a saved script?</a></h2>

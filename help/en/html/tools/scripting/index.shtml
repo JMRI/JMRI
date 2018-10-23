@@ -49,7 +49,7 @@
 		
 		<li><a href="HowTo.shtml">Lots of "How To..." for JMRI scripting</a></li>
             
-		<li><a href="JMRI_scripts_What_Where.shtml">"What...Where" interesting tidbits about creating Jython scripts for use with JMRI</a></li>
+		<li><a href="WhatWhere.shtml">"What...Where" interesting tidbits about creating Jython scripts for use with JMRI</a></li>
 		
         <li><a href="Jynstruments.shtml">Modifying the GUI with Jynstruments</a></li>
         
