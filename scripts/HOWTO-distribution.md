@@ -74,11 +74,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 
 - Update this note by executing the following line in your JMRI repository directory while you _don't_ have this file open in an editor. There are more details in the update-HOWTO.sh comments; arguments when you run it should be last release, this release you're making, the next release; you may need to update what's below:
 ```
-<<<<<<< Updated upstream
-  ./scripts/update-HOWTO.sh 4.13.4 4.13.5 4.13.5
-=======
   ./scripts/update-HOWTO.sh 4.13.4 4.13.5 4.13.6
->>>>>>> Stashed changes
 ```
 (and then manually update the end of that line above to be this version being made today, next version to be made later, one after that; i.e. when starting to do *.4, the arguments after you edit it here are *.4 *.5 *.6) 
 
