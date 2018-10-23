@@ -43,7 +43,7 @@
 	  <p>See the <a href="Examples.shtml">examples page</a> for many sample scripts. Also,
         the <a href="Start.shtml">introductory page</a> shows some
         of the basic commands.</p>
-	  <p>See also <a href="JMRI_scripts_How_To.shtml">JMRI Scripting "How To..."</a></p>
+	  <p>See also <a href="HowTo.shtml">JMRI Scripting "How To..."</a></p>
       <p>See also <a href="Python.shtml">Jython/Python Language</a> for general info about the language.</p>
 	  
 	  

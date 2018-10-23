@@ -47,7 +47,7 @@
 
 		<li><a href="Examples.shtml">Many other example scripts (Links)</a></li>
 		
-		<li><a href="JMRI_scripts_How_To.shtml">Lots of "How To..." for JMRI scripting</a></li>
+		<li><a href="HowTo.shtml">Lots of "How To..." for JMRI scripting</a></li>
             
 		<li><a href="JMRI_scripts_What_Where.shtml">"What...Where" interesting tidbits about creating Jython scripts for use with JMRI</a></li>
 		
