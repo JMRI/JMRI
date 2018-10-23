@@ -35,6 +35,7 @@ public class JemmyUtil {
         JButtonOperator jbo = new JButtonOperator(jdo, buttonName);
         // Click button
         jbo.push();
+        jdo.waitClosed();
     }
 
     static public void pressDialogButton(JmriJFrame f, String dialogTitle, String buttonName) {
