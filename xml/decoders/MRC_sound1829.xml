@@ -126,10 +126,7 @@
         <comment>Range 0-7</comment>
       </variable>
       <!-- Version 1.1 Added speed table-->
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable CV="115" item="Sound Option 4" default="1" tooltip="Auto Brake Squeal, range 0-1, 1=enable">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Auto Brake Squeal</label>

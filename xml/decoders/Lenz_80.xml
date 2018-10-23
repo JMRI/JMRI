@@ -386,12 +386,7 @@
         <label xml:lang="it">Frequenza Lampeggio Uscita C e D (0-255)</label>
         <label xml:lang="de">Output C, D Blink Rate</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-        <label xml:lang="it">Tabella velocità</label>
-        <label xml:lang="de">Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable CV="128" readOnly="yes" item="Decoder Software Version" default="01">
         <decVal/>

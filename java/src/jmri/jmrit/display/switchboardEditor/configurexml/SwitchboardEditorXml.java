@@ -57,6 +57,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("panelmenu", p.isPanelMenuVisible() ? "yes" : "no");
         panel.setAttribute("scrollable", p.getScrollable());
         panel.setAttribute("hideunconnected", "" + (p.hideUnconnected() ? "yes" : "no"));
+        panel.setAttribute("autoitemrange", "" + (p.autoItemRange() ? "yes" : "no"));
         panel.setAttribute("rangemin", "" + p.getPanelMenuRangeMin());
         panel.setAttribute("rangemax", "" + p.getPanelMenuRangeMax());
         panel.setAttribute("type", p.getSwitchType());
@@ -175,6 +176,12 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
             value = true;
         }
         panel.setHideUnconnected(value);
+
+        value = true;
+        if ((a = shared.getAttribute("autoitemrange")) != null && a.getValue().equals("yes")) {
+            value = true;
+        }
+        panel.setAutoItemRange(value);
 
         try {
             rangemin = shared.getAttribute("rangemin").getIntValue();

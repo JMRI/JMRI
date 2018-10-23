@@ -83,10 +83,23 @@ public class ImportEnginesTest extends OperationsTestCase {
         fco.chooseFile(path[0]);
         fco.chooseFile(path[1]);
         fco.chooseFile(ExportEngines.getOperationsFileName());
+        
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return mb.getState().equals(Thread.State.WAITING);
+        }, "wait for dialog");
 
         // dialog windows should now open asking to add 2 models
         JemmyUtil.pressDialogButton(Bundle.getMessage("engineAddModel"), Bundle.getMessage("ButtonYes"));
+       
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return mb.getState().equals(Thread.State.WAITING);
+        }, "wait for dialog");
+        
         JemmyUtil.pressDialogButton(Bundle.getMessage("engineAddModel"), Bundle.getMessage("ButtonYes"));
+        
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return mb.getState().equals(Thread.State.WAITING);
+        }, "wait for import to finish");
 
         // import complete 
         JemmyUtil.pressDialogButton(Bundle.getMessage("SuccessfulImport"), Bundle.getMessage("ButtonOK"));
@@ -160,20 +173,52 @@ public class ImportEnginesTest extends OperationsTestCase {
         fco.chooseFile(path[0]);
         fco.chooseFile(path[1]);
         fco.chooseFile(ExportEngines.getOperationsFileName());
+        
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return mb.getState().equals(Thread.State.WAITING);
+        }, "wait for dialog window to appear");
 
         // dialog windows should now open asking to add 2 models
         JemmyUtil.pressDialogButton(Bundle.getMessage("engineAddModel"), Bundle.getMessage("ButtonYes"));
+        
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return mb.getState().equals(Thread.State.WAITING);
+        }, "wait for dialog");
+        
         JemmyUtil.pressDialogButton(Bundle.getMessage("engineAddModel"), Bundle.getMessage("ButtonYes"));
 
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return mb.getState().equals(Thread.State.WAITING);
+        }, "wait for dialog");
+        
         // new dialog window should open stating that location doesn't exist
         JemmyUtil.pressDialogButton(Bundle.getMessage("engineLocation"), Bundle.getMessage("ButtonOK"));
+        
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return mb.getState().equals(Thread.State.WAITING);
+        }, "wait for dialog");
+        
         // create location
         JemmyUtil.pressDialogButton(Bundle.getMessage("engineLocation"), Bundle.getMessage("ButtonYes"));
+        
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return mb.getState().equals(Thread.State.WAITING);
+        }, "wait for dialog");
+        
         // new dialog window should open stating that location doesn't exist
         JemmyUtil.pressDialogButton(Bundle.getMessage("engineTrack"), Bundle.getMessage("ButtonOK"));
+        
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return mb.getState().equals(Thread.State.WAITING);
+        }, "wait for dialog");
+        
         // create track
         JemmyUtil.pressDialogButton(Bundle.getMessage("engineTrack"), Bundle.getMessage("ButtonYes"));
 
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return mb.getState().equals(Thread.State.WAITING);
+        }, "wait for dialog");
+        
         // import complete 
         JemmyUtil.pressDialogButton(Bundle.getMessage("SuccessfulImport"), Bundle.getMessage("ButtonOK"));
 

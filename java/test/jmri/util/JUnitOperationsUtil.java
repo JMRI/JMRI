@@ -9,6 +9,14 @@ import java.io.UnsupportedEncodingException;
 import java.util.ResourceBundle; // for access operations keys directly.
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.automation.Automation;
+import jmri.jmrit.operations.automation.AutomationItem;
+import jmri.jmrit.operations.automation.AutomationManager;
+import jmri.jmrit.operations.automation.actions.ActivateTimetableAction;
+import jmri.jmrit.operations.automation.actions.BuildTrainAction;
+import jmri.jmrit.operations.automation.actions.GotoAction;
+import jmri.jmrit.operations.automation.actions.MoveTrainAction;
+import jmri.jmrit.operations.automation.actions.RunAutomationAction;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
@@ -39,6 +47,8 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
+import jmri.jmrit.operations.trains.timetable.TrainSchedule;
+import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
 import org.junit.Assert;
 
 /**
@@ -88,6 +98,7 @@ public class JUnitOperationsUtil {
         // the following .dispose() calls are likely not needed
         // since new instances of these managers are recreated for each test
         InstanceManager.getDefault(TrainManager.class).dispose();
+        InstanceManager.getDefault(AutomationManager.class).dispose();
         InstanceManager.getDefault(LocationManager.class).dispose();
         InstanceManager.getDefault(RouteManager.class).dispose();
         InstanceManager.getDefault(ScheduleManager.class).dispose();
@@ -588,6 +599,47 @@ public class JUnitOperationsUtil {
         r4.setComment("Comment test route B");
         Route r5 = rManager.newRoute("Test Route A");
         r5.setComment("Comment test route A");
+    }
+    
+    public static Automation createAutomation() {
+        AutomationManager manager = InstanceManager.getDefault(AutomationManager.class);
+        Assert.assertNotNull("test creation", manager);
+        Automation automation = manager.newAutomation("TestAutomation");
+        automation.setComment("test comment for automation");
+        Assert.assertEquals(1, manager.getSize());
+
+        AutomationItem item1 = automation.addItem();
+        item1.setAction(new BuildTrainAction());
+        item1.setTrain(new Train("trainId", "trainName1"));
+        item1.setMessage("item1 OK message");
+        item1.setMessageFail("item1 fail message");
+        item1.setHaltFailureEnabled(false);
+
+        AutomationItem item2 = automation.addItem();
+        item2.setAction(new GotoAction());
+        item2.setGotoAutomationItem(item1);
+
+        AutomationItem item3 = automation.addItem();
+        item3.setAction(new MoveTrainAction());
+        item3.setTrain(new Train("trainId", "trainName2"));
+        item3.setRouteLocation(new RouteLocation("id", new Location("id", "testLocationName")));
+
+        AutomationItem item4 = automation.addItem();
+        item4.setAction(new ActivateTimetableAction());
+        TrainSchedule trainSchedule = InstanceManager.getDefault(TrainScheduleManager.class).newSchedule("train schedule name");
+        item4.setOther(trainSchedule);
+
+        AutomationItem item5 = automation.addItem();
+        item5.setAction(new RunAutomationAction());
+        
+        // 2nd automation created here
+        Automation automationToRun = manager.newAutomation("A TestAutomation2");
+        item5.setOther(automationToRun);
+        item5.setMessage("item5 OK message");
+        item5.setMessageFail("item5 fail message");
+        item5.setHaltFailureEnabled(false);
+        
+        return automation;
     }
 
     public static BufferedReader getBufferedReader(File file) {

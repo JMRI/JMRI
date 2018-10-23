@@ -117,6 +117,11 @@ public class SimulatorAdapter extends SerialPortController implements
     }
 
     @Override
+    public String getCurrentPortName(){
+        return "";
+    }
+
+    @Override
     public void run() { // start a new thread
         // Simulator thread just reports start and ends
         if (log.isInfoEnabled()) {

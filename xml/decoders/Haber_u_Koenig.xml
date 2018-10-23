@@ -220,10 +220,7 @@
         <decVal/>
         <label>Decoder Serial Number3</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
     </variables>
   </decoder>

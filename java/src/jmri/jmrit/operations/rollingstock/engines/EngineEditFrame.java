@@ -79,7 +79,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
     JComboBox<Location> locationBox = locationManager.getComboBox();
     JComboBox<Track> trackLocationBox = new JComboBox<>();
     JComboBox<String> consistComboBox = manager.getConsistComboBox();
-    JComboBox<IdTag> rfidComboBox = new JComboBox<IdTag>();
+    JComboBox<IdTag> rfidComboBox = new JComboBox<>();
 
     public static final String ROAD = Bundle.getMessage("Road");
     public static final String MODEL = Bundle.getMessage("Model");
@@ -448,6 +448,9 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
         }
         if (ae.getSource() == deleteButton) {
             log.debug("engine delete button activated");
+            // disable delete and save buttons
+            deleteButton.setEnabled(false);
+            saveButton.setEnabled(false);
             if (_engine != null &&
                     _engine.getRoadName().equals(roadComboBox.getSelectedItem()) &&
                     _engine.getNumber().equals(roadNumberTextField.getText())) {

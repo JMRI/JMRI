@@ -47,7 +47,7 @@ class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.Thr
         if (self.masterThrottle != None):
             self.masterThrottle.removePropertyChangeListener(self)
             self.masterThrottle = None
-    self.panelThrottle = None
+        self.panelThrottle = None
         self.advFunctions = None
         if (self.addressPanel != None):
             self.addressPanel.removeAddressListener(self)
