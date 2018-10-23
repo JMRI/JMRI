@@ -257,17 +257,17 @@ class BlockLister(jmri.jmrit.automat.AbstractAutomaton) :
     def displaySegmentData(self, b) :
         PanelMenu = jmri.jmrit.display.PanelMenu.instance()
         layout = PanelMenu.getLayoutEditorPanelList()
-        for s in layout[0].trackList.toArray() :
+        for s in layout[0].getTrackSegments():
             #self.msgText("Segment: " + s.getID() + " block: " + s.getBlockName() + "\n")
             if ((s.getBlockName() == b.getSystemName()) or (s.getBlockName() == b.getUserName())) :
                 if (s.getLayoutBlock() != None) :
-                    self.msgText("Segment: " + s.getID() + " LayoutBlock: " + s.getLayoutBlock().getID() + "\n")
-                if (s.getHidden()) :
-                    self.msgText("Segment: " + s.getID() + " is hidden.\n")
-                if (s.getMainline()) :
-                    self.msgText("Segment: " + s.getID() + " is Mainline.\n")
-                if (s.getDashed()) :
-                    self.msgText("Segment: " + s.getID() + " is dashed.\n")
+                    self.msgText("Segment: " + s.getId() + " LayoutBlock: " + s.getLayoutBlock().getId() + "\n")
+                if (s.isHidden()) :
+                    self.msgText("Segment: " + s.getId() + " is hidden.\n")
+                if (s.isMainline()) :
+                    self.msgText("Segment: " + s.getId() + " is Mainline.\n")
+                if (s.isDashed()) :
+                    self.msgText("Segment: " + s.getId() + " is dashed.\n")
         return
         
     # WindowListener is a interface class and therefore all of it's

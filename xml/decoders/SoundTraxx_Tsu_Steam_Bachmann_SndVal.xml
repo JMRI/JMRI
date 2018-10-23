@@ -19,6 +19,7 @@
   <version author="Alain Le Marchand" version="4" lastUpdated="20150524"/>
   <version author="Alain Le Marchand" version="5" lastUpdated="20160522"/>
   <version author="Alain Le Marchand" version="6" lastUpdated="20180103"/>
+  <version author="Marc N Fournier" version="7" lastUpdated="20181018"/>
   <!-- This file contains the definitions for the Bachmann spec'd Sound Value series of decoders	-->
   <!-- version 1	Based on the "Soundtraxx_Tsu files.                                             -->
   <!--			Includes the Alco 2-6-0                                                         -->
@@ -38,6 +39,7 @@
   <!--                  Renamed "Alco 2-6-0" in "2-6-0 Mogul - Alco [HO]"                                   -->
   <!-- version 6        Specific UserID with tooltip indicating version number,
                         from SoundTraxx Product Identification guide Rev.B                                  -->
+  <!-- version 7		Add 2-8-2 Mikado (as per single Soundtraxx doc)										--> 						
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
                 For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc.
@@ -167,6 +169,40 @@
           <functionlabel num="6" lockable="true">FX6 function</functionlabel>
         </functionlabels>
       </model>
+	  
+	  <model model="2-8-2 Mikado - [HO]" numOuts="2" numFns="14" connector="other" productID="Bald282" formFactor="HO" comment="&lt;html&gt;Baldwin Mikado 2-8-2 &lt;br&gt;Exhaust Chuff: Medium Steam&lt;br&gt;Air Compressor: Cross Compound&lt;br&gt;&lt;/html&gt;">
+        <versionCV lowVersionID="82"/>
+        <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+        </output>
+        <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+        </output>
+        <output name="5" label="Whistle| ">
+            <label xml:lang="it">Fischio| </label>
+        </output>
+        <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="8" label="Short|Whistle">
+            <label xml:lang="it">Breve|Fischio</label>
+        </output>
+        <output name="9" label="Steam|Release">
+            <label xml:lang="it">Rilascio|Vapore</label>
+        </output>
+        <output name="10" label="|"/>	<!-- Not used for for this decoder -->
+        <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+        </output>
+        <functionlabels>
+          <functionlabel num="6" lockable="true">FX6 function</functionlabel>
+        </functionlabels>
+      </model>
+	  
       <!-- keep the initial model entry for compatibility purpose as it has already been released -->
       <model show="no" model="2-8-4 Berkshire" replacementModel="2-8-4 Berkshire - Pere Marquette [HO]" replacementFamily="Tsunami Steam Bachmann Sound Value" numOuts="2" numFns="14" connector="other" productID="Lima284_PM" formFactor="HO" comment="&lt;html&gt;Lima Locomotive Works 2-8-4 (HO scale)&lt;br&gt;Exhaust Chuff: Medium Steam&lt;br&gt;Air Compressor: Cross Compound&lt;br&gt;&lt;/html&gt;">
         <versionCV lowVersionID="82"/>
@@ -1663,6 +1699,23 @@
         <label>Whistle Select</label>
         <comment>Show these whistles for the models (productID) listed in the "include" statement</comment>
       </variable>
+	  
+	  <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="Bald282" tooltip="Selects which whistle to use">
+        <enumVal>
+          <enumChoice choice="Southern 3-Chime">
+            <choice>Southern 3-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="B&amp;O 3-Chime">
+            <choice>B&amp;O 3-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Crosby 3-Chime">
+            <choice>Crosby 3-Chime</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Whistle Select</label>
+        <comment>Show these whistles for the models (productID) listed in the "include" statement</comment>
+      </variable>
+	  
       <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="Lima284_PM,Lima284_PM_N" tooltip="Selects which whistle to use">
         <enumVal>
           <enumChoice choice="D&amp;RGW K-36 No.489 3-Chime">
@@ -1734,11 +1787,11 @@
         <decVal/>
         <label>Whistle Volume</label>
       </variable>
-      <variable CV="129" mask="VVVVVVVV" item="Sound Setting 5" default="195" include="Baldwin460" tooltip="Sets the volume of the whistle">
+      <variable CV="129" mask="VVVVVVVV" item="Sound Setting 5" default="195" include="Baldwin460,Bald282" tooltip="Sets the volume of the whistle">
         <decVal/>
         <label>Whistle Volume</label>
       </variable>
-      <variable CV="129" mask="VVVVVVVV" item="Sound Setting 5" default="225" exclude="440,Baldwin460" tooltip="Sets the volume of the whistle">
+      <variable CV="129" mask="VVVVVVVV" item="Sound Setting 5" default="225" exclude="440,Baldwin460,Bald282" tooltip="Sets the volume of the whistle">
         <decVal/>
         <label>Whistle Volume</label>
       </variable>
@@ -1837,7 +1890,7 @@
         <decVal/>
         <label>Motor Kp Coefficient (0-255)</label>
       </variable>
-      <variable CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="60" include="Baldwin460,Lima284_PM,Lima284_NKP,Lima284_CO" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
+      <variable CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="60" include="Baldwin460,Lima284_PM,Lima284_NKP,Lima284_CO,Bald282" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
         <decVal/>
         <label>Motor Kp Coefficient (0-255)</label>
       </variable>
@@ -1853,7 +1906,7 @@
         <decVal/>
         <label>Motor Ki Coefficient (0-255)</label>
       </variable>
-      <variable CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="30" include="Baldwin460,Lima284_PM,Lima284_NKP,Lima284_CO" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
+      <variable CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="30" include="Baldwin460,Lima284_PM,Lima284_NKP,Lima284_CO,Bald282" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
         <decVal/>
         <label>Motor Ki Coefficient (0-255)</label>
       </variable>
@@ -1869,7 +1922,7 @@
         <decVal max="31"/>
         <label>Motor Control Sample Period (0-31)</label>
       </variable>
-      <variable CV="214" mask="VVVVVVVV" item="Advanced Group 2 Option 5" default="8" include="440,Alco260,Baldwin460,Lima284_PM,Lima284_NKP,Lima284_CO" tooltip="Specifies a gain factor for the derivative part of the PID motor control equation">
+      <variable CV="214" mask="VVVVVVVV" item="Advanced Group 2 Option 5" default="8" include="440,Alco260,Baldwin460,Lima284_PM,Lima284_NKP,Lima284_CO,Bald282" tooltip="Specifies a gain factor for the derivative part of the PID motor control equation">
         <decVal/>
         <label>Motor Control Sample Aperture Time (0-255)</label>
       </variable>
@@ -1881,7 +1934,7 @@
         <decVal max="255"/>
         <label>BEMF Reference Voltage</label>
       </variable>
-      <variable CV="216" item="EMF Option 1" default="70" include="Baldwin460,PRRK4_N,Lima284_PM,Lima284_NKP,Lima284_CO" tooltip="Specifies the reference voltage for BEMF">
+      <variable CV="216" item="EMF Option 1" default="70" include="Baldwin460,PRRK4_N,Lima284_PM,Lima284_NKP,Lima284_CO,Bald282" tooltip="Specifies the reference voltage for BEMF">
         <decVal max="255"/>
         <label>BEMF Reference Voltage</label>
       </variable>
