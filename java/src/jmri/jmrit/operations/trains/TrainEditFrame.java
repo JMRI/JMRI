@@ -566,7 +566,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
         if (!OperationsXml.checkFileName(trainName)) { // NOI18N
             log.error("Train name must not contain reserved characters");
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNameResChar") + NEW_LINE
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("NameResChar") + NEW_LINE
                     + Bundle.getMessage("ReservedChar"), MessageFormat.format(Bundle.getMessage("CanNot"),
                             new Object[]{s}), JOptionPane.ERROR_MESSAGE);
             return false;

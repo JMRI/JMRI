@@ -145,7 +145,6 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
         }
         if (_comboboxName.equals(EngineEditFrame.ROAD)) {
             if (!OperationsXml.checkFileName(itemName)) { // NOI18N
-                log.error("Road name must not contain reserved characters");
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("NameResChar") + NEW_LINE
                         + Bundle.getMessage("ReservedChar"),
                         MessageFormat.format(errorMessage, new Object[]{_comboboxName}),

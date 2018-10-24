@@ -74,7 +74,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 
 - Update this note by executing the following line in your JMRI repository directory while you _don't_ have this file open in an editor. There are more details in the update-HOWTO.sh comments; arguments when you run it should be last release, this release you're making, the next release; you may need to update what's below:
 ```
-  ./scripts/update-HOWTO.sh 4.13.4 4.13.5 4.13.5
+  ./scripts/update-HOWTO.sh 4.13.4 4.13.5 4.13.6
 ```
 (and then manually update the end of that line above to be this version being made today, next version to be made later, one after that; i.e. when starting to do *.4, the arguments after you edit it here are *.4 *.5 *.6) 
 
@@ -327,6 +327,7 @@ If somebody has merged their change into master (or it's branched from master la
 The following will take several minutes, so be patient:
 
 ```
+git checkout release-4.13.4
 ant clean compile
 cd target
 rm -f properties.4.13.4.zip
@@ -383,9 +384,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.13.4+R9e5390b.dmg](https://github.com/JMRI/JMRI/releases/download/v4.13.4/JMRI.4.13.4+R9e5390b.dmg) | 577b4df863b0b5e8f3ba6a0478b74292fec958baa71a9baa3fab8130422732c7
-[JMRI.4.13.4+R9e5390b.exe](https://github.com/JMRI/JMRI/releases/download/v4.13.4/JMRI.4.13.4+R9e5390b.exe) | eea78f773154ebd318b336bfccddbd9b3803b126621c039ba2fed002d752361b
-[JMRI.4.13.4+R9e5390b.tgz](https://github.com/JMRI/JMRI/releases/download/v4.13.4/JMRI.4.13.4+R9e5390b.tgz) | af3d2cba9938feb311dbbe69c3cf6990501360643331f66ba037df30c632cb23
+[JMRI.4.13.4+R49e7a86.dmg](https://github.com/JMRI/JMRI/releases/download/v4.13.4/JMRI.4.13.4+R49e7a86.dmg) | 1c551c99825aa45331454bde7f600a861b2cc16c5687ca576234c4eac75cac79
+[JMRI.4.13.4+R49e7a86.exe](https://github.com/JMRI/JMRI/releases/download/v4.13.4/JMRI.4.13.4+R49e7a86.exe) | c218a2f0d910a530867c079ceaf90f1534d523cd71f142b3e8174ab0f51ff0da
+[JMRI.4.13.4+R49e7a86.tgz](https://github.com/JMRI/JMRI/releases/download/v4.13.4/JMRI.4.13.4+R49e7a86.tgz) | 9d577470a8f32e7f8ee365a959f1d910dce06fb4ee9914a9a27f1b1389f87abe
 
 ```
 
