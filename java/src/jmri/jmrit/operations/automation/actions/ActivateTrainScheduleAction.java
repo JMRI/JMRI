@@ -2,12 +2,12 @@ package jmri.jmrit.operations.automation.actions;
 
 import javax.swing.JComboBox;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.schedules.TrainSchedule;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 
-public class ActivateTimetableAction extends Action {
+public class ActivateTrainScheduleAction extends Action {
 
-    private static final int _code = ActionCodes.ACTIVATE_TIMETABLE;
+    private static final int _code = ActionCodes.ACTIVATE_TRAIN_SCHEDULE;
 
     @Override
     public int getCode() {
@@ -16,7 +16,7 @@ public class ActivateTimetableAction extends Action {
 
     @Override
     public String getName() {
-        return Bundle.getMessage("ActivateTimetable");
+        return Bundle.getMessage("ActivateTrainSchedule");
     }
 
     @Override

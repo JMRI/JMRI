@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.trains.timetable;
+package jmri.jmrit.operations.trains.schedules;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -38,7 +38,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame for adding and editing train schedules (Timetable) for operations.
+ * Frame for adding and editing train schedules for operations.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010, 2012, 2016
@@ -215,9 +215,9 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         setJMenuBar(menuBar);
 
         // add help menu to window
-        addHelpMenu("package.jmri.jmrit.operations.Operations_Timetable", true); // NOI18N
+        addHelpMenu("package.jmri.jmrit.operations.Operations_TrainSchedule", true); // NOI18N
 
-        setTitle(Bundle.getMessage("TitleTimeTableTrains"));
+        setTitle(Bundle.getMessage("TitleScheduleTrains"));
 
         initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight500));
 

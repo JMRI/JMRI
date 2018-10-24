@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.trains.timetable;
+package jmri.jmrit.operations.trains.schedules;
 
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -161,7 +161,7 @@ public class TrainScheduleManager implements InstanceManagerAutoDefault, Instanc
     }
 
     /**
-     * Sort by train schedule (Timetable) name
+     * Sort by train schedule name
      *
      * @return list of train schedules ordered by name
      */
@@ -184,9 +184,9 @@ public class TrainScheduleManager implements InstanceManagerAutoDefault, Instanc
     }
 
     /**
-     * Sort by train schedule (Timetable) id numbers
+     * Sort by train schedule id numbers
      *
-     * @return list of train schedules (Timetable) ordered by id numbers
+     * @return list of train schedules ordered by id numbers
      */
     public List<TrainSchedule> getSchedulesByIdList() {
         List<TrainSchedule> sortList = getList();

@@ -5,8 +5,8 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.schedules.TrainSchedule;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.util.JUnitOperationsUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -17,17 +17,17 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class ApplyTimetableActionTest extends OperationsTestCase {
+public class ApplyTrainScheduleActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        ApplyTimetableAction t = new ApplyTimetableAction();
+        ApplyTrainScheduleAction t = new ApplyTrainScheduleAction();
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testActionNoAutomationItem() {
-        ApplyTimetableAction action = new ApplyTimetableAction();
+        ApplyTrainScheduleAction action = new ApplyTrainScheduleAction();
         Assert.assertNotNull("exists",action);
         // does nothing, no automationItem
         action.doAction();
@@ -35,8 +35,8 @@ public class ApplyTimetableActionTest extends OperationsTestCase {
     
     @Test
     public void testGetActionName() {
-        ApplyTimetableAction action = new ApplyTimetableAction();
-        Assert.assertEquals("name", Bundle.getMessage("ApplyTimetable"), action.getName());
+        ApplyTrainScheduleAction action = new ApplyTrainScheduleAction();
+        Assert.assertEquals("name", Bundle.getMessage("ApplyTrainSchedule"), action.getName());
     }
     
     /**
@@ -66,7 +66,7 @@ public class ApplyTimetableActionTest extends OperationsTestCase {
         ts.addTrainId(train2.getId());
         
         // setup action
-        ApplyTimetableAction action = new ApplyTimetableAction();
+        ApplyTrainScheduleAction action = new ApplyTrainScheduleAction();
         Assert.assertNotNull("exists",action);
         AutomationItem automationItem = new AutomationItem("TestId");
         automationItem.setAction(action);
@@ -95,6 +95,6 @@ public class ApplyTimetableActionTest extends OperationsTestCase {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ApplyTimetableActionTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(ApplyTrainScheduleActionTest.class);
 
 }

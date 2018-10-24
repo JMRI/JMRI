@@ -312,6 +312,7 @@
       <a name="graph" id="graph"></a>
       <h2>Timetable Graph</h2>
       <p>The graph provides a graphical view of the data for a Timetable segment and schedule.</p>
+      <p>Select which <a href="#segment">Segment</a> you want to graph from the Segments directory.</p>
       <div style="margin-left: 2em">
       <a href="images/TimeTableGraph.png">
       <img src="images/TimeTableGraph.png"
