@@ -3,14 +3,16 @@ package jmri.jmrix.loconet.hexfile;
 import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
-
-import jmri.*;
+import jmri.DccLocoAddress;
+import jmri.DccThrottle;
+import jmri.GlobalProgrammerManager;
+import jmri.InvokeOnGuiThread;
+import jmri.LocoAddress;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.managers.DefaultProgrammerManager;
 import jmri.util.JmriJFrame;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -173,7 +175,7 @@ public class HexFileFrame extends JmriJFrame {
 
         // do the common manager config
         port.getSystemConnectionMemo().configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, // full featured by default
-                false, false, false);
+                false, false, false, false);
         port.getSystemConnectionMemo().configureManagers();
         if (port.getSystemConnectionMemo().getSensorManager() instanceof LnSensorManager) {
             LnSensorManager LnSensorManager = (LnSensorManager) port.getSystemConnectionMemo().getSensorManager();

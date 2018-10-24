@@ -124,9 +124,11 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
      *                           between turnout operations?
      * @param mTranspondingAvailable    Is the layout configured to provide
      *                                  transopnding reports
+     * @param mLoconetProtocolAutoDetect Do we automatically detect the protocol to use or force LocoNet 1.1                                 
      */
     public void configureCommandStation(LnCommandStationType type, boolean mTurnoutNoRetry,
-                                            boolean mTurnoutExtraSpace, boolean mTranspondingAvailable) {
+                                            boolean mTurnoutExtraSpace, boolean mTranspondingAvailable,
+                                            boolean mLoconetProtocolAutoDetect) {
 
         // store arguments
         this.mTurnoutNoRetry = mTurnoutNoRetry;
@@ -143,6 +145,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             sm.setCommandStationType(type);
             sm.setSystemConnectionMemo(this);
             sm.setTranspondingAvailable(mTranspondingAvailable);
+            sm.setLoconetProtocolAutoDetect(mLoconetProtocolAutoDetect);
 
             // store as CommandStation object
             InstanceManager.store(sm, jmri.CommandStation.class);

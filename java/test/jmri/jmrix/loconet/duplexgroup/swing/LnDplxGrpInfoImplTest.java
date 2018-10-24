@@ -1,18 +1,13 @@
 package jmri.jmrix.loconet.duplexgroup.swing;
 
+import java.beans.PropertyChangeListener;
+import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.duplexgroup.DuplexGroupMessageType;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import jmri.jmrix.loconet.LocoNetMessage;
-import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.duplexgroup.DuplexGroupMessageType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.beans.PropertyChangeListener;
 
 /**
  * Test simple functioning of LnDplxGrpInfoImpl
@@ -2175,7 +2170,7 @@ public class LnDplxGrpInfoImplTest {
         memo = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo();
         memo.setLnTrafficController(lnis);
 
-        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
+        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false,false);
         // memo.configureManagers(); // Skip this step, else autonomous loconet traffic is generated!
         jmri.InstanceManager.store(memo,jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);
 

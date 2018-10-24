@@ -1,12 +1,12 @@
 package jmri.jmrix.loconet.duplexgroup.swing;
 
+import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import jmri.jmrix.loconet.LocoNetMessage;
 
 
 /**
@@ -1604,7 +1604,7 @@ public class LnIPLImplementationTest {
         memo = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo();
         memo.setLnTrafficController(lnis);
 
-        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
+        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false,false);
 
         memo.configureManagers();
         jmri.InstanceManager.store(memo,jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);
