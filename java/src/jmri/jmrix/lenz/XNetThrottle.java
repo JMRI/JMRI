@@ -414,8 +414,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             } else if (l.isRetransmittableErrorMsg()) {
                 /* this is a communications error */
                 log.trace("Communications error occurred - message received was: " + l);
-            } else if (l.getElement(0) == XNetConstants.CS_INFO
-                    && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
+            } else if (l.isUnsupportedError()) {
                 /* The Command Station does not support this command */
                 log.error("Unsupported Command Sent to command station");
                 requestState = THROTTLEIDLE;
@@ -565,8 +564,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             } else if (l.isRetransmittableErrorMsg()) {
                 /* this is a communications error */
                 log.trace("Communications error occurred - message received was: {}",l.toString());
-            } else if (l.getElement(0) == XNetConstants.CS_INFO
-                    && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
+            } else if (l.isUnsupportedError()) {
                 /* The Command Station does not support this command */
                 log.error("Unsupported Command Sent to command station");
                 if((requestState & THROTTLEMOMSTATSENT) == THROTTLEMOMSTATSENT){
