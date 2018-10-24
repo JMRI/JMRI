@@ -180,7 +180,7 @@ public class ImportEngines extends ImportRollingStock {
                             .getMessage("EngineRoadNumberTooLong"),
                             new Object[]{(engineRoad + " " + engineNumber),
                                     engineNumber}),
-                            Bundle.getMessage("engineRoadNum"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("RoadNumMustBeLess"), JOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 if (engineRoad.length() > Control.max_len_string_attibute) {
@@ -400,7 +400,7 @@ public class ImportEngines extends ImportRollingStock {
                 }
                 log.debug("Add engine ({} {}) owner ({}) built ({}) location ({}, {})", engineRoad, engineNumber,
                         engineOwner, engineBuilt, engineLocation, engineTrack);
-                Engine engine = engineManager.newEngine(engineRoad, engineNumber);
+                Engine engine = engineManager.newRS(engineRoad, engineNumber);
                 engine.setModel(engineModel);
                 engine.setLength(engineLength);
                 // does this model already have a type?

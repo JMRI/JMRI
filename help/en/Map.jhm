@@ -1222,6 +1222,8 @@
 
 <mapID target="package.jmri.jmrit.ussctc.FollowerFrame" url="package/jmri/jmrit/ussctc/FollowerFrame.shtml"/>
 
+<mapID target="html.tools.scripting.WhatWhere" url="html/tools/scripting/WhatWhere.shtml"/>
+
 <mapID target="html.doc.Technical.IntelliJ_getgit" url="html/doc/Technical/IntelliJ.shtml#getgit"/>
 
 <mapID target="html.tools.TimeTable_train" url="html/tools/TimeTable.shtml#train"/>
@@ -1585,6 +1587,8 @@
 <mapID target="package.apps.TabbedPreferences_WiThrottle" url="package/apps/TabbedPreferences.shtml#WiThrottle"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_Staging" url="package/jmri/jmrit/operations/Operations.shtml#Staging"/>
+
+<mapID target="html.tools.scripting.HowTo" url="html/tools/scripting/HowTo.shtml"/>
 
 <mapID target="html.tools.signaling.SimpleSignalExample_setup" url="html/tools/signaling/SimpleSignalExample.shtml#setup"/>
 
@@ -3036,8 +3040,6 @@
 
 <mapID target="html.tools.throttle.ThrottleChapter3_EditFrameProperties" url="html/tools/throttle/ThrottleChapter3.shtml#EditFrameProperties"/>
 
-<mapID target="html.tools.scripting.FAQ_newJython" url="html/tools/scripting/FAQ.shtml#newJython"/>
-
 <mapID target="html.hardware.nce.NCE_names" url="html/hardware/nce/NCE.shtml#names"/>
 
 <mapID target="html.hardware.ecos.index_limitations" url="html/hardware/ecos/index.shtml#limitations"/>
@@ -3365,8 +3367,6 @@
 <mapID target="manual.DecoderPro.Comp_GlobalCVs_Top" url="manual/DecoderPro/Comp_GlobalCVs.shtml#Top"/>
 
 <mapID target="html.tools.signaling.Logic_traildiv" url="html/tools/signaling/Logic.shtml#traildiv"/>
-
-<mapID target="html.tools.scripting.FAQ" url="html/tools/scripting/FAQ.shtml"/>
 
 <mapID target="html.web.index" url="html/web/index.shtml"/>
 
@@ -3753,8 +3753,6 @@
 <mapID target="package.jmri.jmrit.operations.Operations_RoadOptions" url="package/jmri/jmrit/operations/Operations.shtml#RoadOptions"/>
 
 <mapID target="package.apps.AppConfigPanel_advanced" url="package/apps/AppConfigPanel.shtml#advanced"/>
-
-<mapID target="html.tools.scripting.FAQ_windows" url="html/tools/scripting/FAQ.shtml#windows"/>
 
 <mapID target="html.doc.Technical.IntroStructure" url="html/doc/Technical/IntroStructure.shtml"/>
 

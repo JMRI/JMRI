@@ -258,7 +258,7 @@ public class TrainManagerTest extends OperationsTestCase {
 
         
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("TerminateTrain"),
-                            new Object[]{train2.getName(), train2.getDescription()}), "Yes");
+                            new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonYes"));
         
         jmri.util.JUnitUtil.waitFor(() -> {
             return terminate.getState().equals(Thread.State.TERMINATED);

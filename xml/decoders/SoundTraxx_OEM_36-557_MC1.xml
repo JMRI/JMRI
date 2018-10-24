@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!--Copyright (C) JMRI 2003, 2004, 2008 All rights reserved -->
+<!--$Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<!-- version 1	Based on the "Soundtraxx_MC by Michael Mosher 									-->
+	<version author="Brian Jackson" version="1" lastUpdated="20181020"/>
+	<!-- version 1	Based on the "Soundtraxx_MC by Michael Mosher  - created to identify Bachmann 36-557 version -->
+<decoder>
+    <family name="OEM Bachmann E-Z Command decoders" mfg="SoundTraxx (Throttle-Up)" lowVersionID="141" highVersionID="141">
+      <model model="Bachmann (soundTraxx MC1) 36-557" numOuts="4" numFns="14" connector="other" productID="MC1H10421P">
+        <versionCV highVersionID="81" lowVersionID="81"/>
+		<output name="1" label="Front light" maxcurrent="180 mA" connection="wire"/>
+        <output name="2" label="Rear light " maxcurrent="180 mA" connection="wire"/>
+        <output name="3" label="   AUX1    " maxcurrent="180 mA" connection="wire"/>
+		<output name="3" label="   AUX2    " maxcurrent="180 mA" connection="wire"/>
+	  </model>
+	</family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <!-- Configuration Variable (CV) information follows -->
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" item="Vstart" default="0" comment="A value of 255 corresponds to full voltage available" tooltip="Sets the starting voltage at throttle speed step 1">
+        <decVal/>
+        <label>Start Voltage (0-255)</label>
+        <label xml:lang="it">Volt Partenza (0-255)</label>
+        <comment>A value of 255 corresponds to full voltage available</comment>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
+      <variable CV="5" default="0" item="Vhigh" include="852002,852003,852004">
+        <decVal/>
+        <label>Vhigh</label>
+      </variable>
+      <variable CV="6" default="0" item="Vmid" include="852002,852003,852004">
+        <decVal/>
+        <label>Vmid</label>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <variable CV="10" item="EMF Feedback Cutout" default="0" tooltip="&lt;html&gt;Up to 127, this sets the speed step above which the intensity of BEMF control will be reduced&lt;br&gt;      to zero.  Values over 127 cause the BEMF to decrease as a percentage (up to 50%).&lt;/html&gt;">
+        <decVal/>
+        <label>BEMF Cutout (0-127 or 128-255)</label>
+      </variable>
+      <variable CV="11" item="Packet Time-out Value" default="0" tooltip="&lt;html&gt;Sets the time period that is allowed to elapse between receipts of a valid packet&lt;br&gt;      addressed to the decoder before a throttle shutdown occurs.  Enter zero to disable.&lt;/html&gt;">
+        <decVal/>
+        <label>Packet Time Out Value (0-255)</label>
+      </variable>
+      <variable CV="12" mask="XXXXXXXV" item="Analog Power Conversion" default="1" include="852002,852003,852004" tooltip="&lt;html&gt;Defines the type of power source the decoder should&lt;br&gt;      switch to whenever a DCC signal is not present.&lt;br&gt;      (Tip: Alternate Power Source must be enabled)&lt;/html&gt;">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPower.xml"/>
+        <label>Power Source Conversion Type</label>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction_F12.xml"/>
+      <variable CV="15" mask="XXXXXVVV" item="Advanced Group 1 Option 1" default="0" tooltip="&lt;html&gt;Enter the Lock ID Code to unlock access to the decoder CVs.&lt;br&gt;      (Tip: Establish the unlock code with CV Lock ID Code)&lt;/html&gt;">
+        <decVal/>
+        <label>CV Unlock Register (0-7)</label>
+      </variable>
+      <variable CV="16" mask="XXXXXVVV" item="Advanced Group 1 Option 2" default="0" tooltip="Sets the unlock code that must be entered into the CV Unlock Register in order to access the decoder CVs">
+        <decVal/>
+        <label>CV Lock ID Code (0-7)</label>
+      </variable>
+      <!-- Consisting Information follows -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22_F12.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAccelDecelSigned.xml"/>
+      <variable item="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumCurve.xml"/>
+        <label>Speed Table Selection</label>
+      </variable>
+      <!-- CV=29 -->
+	  <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
+      <variable CV="30" mask="XXXXXXXV" item="Advanced Group 1 Option 3" default="0" tooltip="Enable locking of CVs when decoder is used in a multi-decoder installation">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLock.xml"/>
+        <label>CV Lock Enable</label>
+      </variable>
+      <variable CV="30" mask="XXXXXXVX" item="Advanced Group 1 Option 4" default="0" tooltip="Tip: To do a one-time decoder reset, use the menu [Reset] selection">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumReset.xml"/>
+        <label>CV Clear (CVCLR)</label>
+      </variable>
+      <variable CV="30" mask="XXXXXVXX" item="Function Map Option 1" default="0" tooltip="Function Group 2 (F5-F8) assignments are swapped with Function Group 3 (F9-F12)">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumSwap.xml"/>
+        <label>Function Group 2 and 3 Exchange</label>
+      </variable>
+      <!-- Function Mapping follows -->
+      <variable CV="33" mask="XXXXXXXV" item="FL(f) controls output 1" minOut="1" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls Headlight</label>
+      </variable>
+      <variable CV="33" mask="XXXXXXVX" item="FL(f) controls output 2" minOut="2" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls Backup Light</label>
+      </variable>
+      <variable item="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output Xing Logic</label>
+      </variable>
+      <variable CV="33" mask="XXXVXXXX" item="FL(f) controls output 4" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output FX5</label>
+      </variable>
+      <variable CV="33" mask="XXVXXXXX" item="FL(f) controls output 5" minOut="2" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output FX6</label>
+      </variable>
+      <variable CV="34" mask="XXXXXXXV" item="FL(r) controls output 1" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls Headlight</label>
+      </variable>
+      <variable CV="34" mask="XXXXXXVX" item="FL(r) controls output 2" minOut="2" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls Backup Light</label>
+      </variable>
+      <variable item="FL(r) controls output 3" CV="34" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output Xing Logic</label>
+      </variable>
+      <variable CV="34" mask="XXXVXXXX" item="FL(r) controls output 4" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output FX5</label>
+      </variable>
+      <variable CV="34" mask="XXVXXXXX" item="FL(r) controls output 5" minOut="2" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output FX6</label>
+      </variable>
+      <variable CV="35" mask="XXXXXXXV" item="F1 controls output 1" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls Headlight</label>
+      </variable>
+      <variable CV="35" mask="XXXXXXVX" item="F1 controls output 2" minOut="2" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls Backup Light</label>
+      </variable>
+      <variable item="F1 controls output 3" CV="35" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output Xing Logic</label>
+      </variable>
+      <variable CV="35" mask="XXXVXXXX" item="F1 controls output 4" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output FX5</label>
+      </variable>
+      <variable CV="35" mask="XXVXXXXX" item="F1 controls output 5" minOut="2" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output FX6</label>
+      </variable>
+      <variable CV="36" mask="XXXXXXXV" item="F2 controls output 1" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls Headlight</label>
+      </variable>
+      <variable CV="36" mask="XXXXXXVX" item="F2 controls output 2" minOut="2" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls Backup Light</label>
+      </variable>
+      <variable item="F2 controls output 3" CV="36" mask="XXXXXVXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output Xing Logic</label>
+      </variable>
+      <variable CV="36" mask="XXXVXXXX" item="F2 controls output 4" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output FX5</label>
+      </variable>
+      <variable CV="36" mask="XXVXXXXX" item="F2 controls output 5" minOut="2" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output FX6</label>
+      </variable>
+      <variable CV="37" mask="XXXXXXVX" item="F3 controls output 4" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output FX5</label>
+      </variable>
+      <variable CV="37" mask="XXXXXVXX" item="F3 controls output 5" minOut="2" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output FX6</label>
+      </variable>
+      <variable item="F3 controls output 6" CV="37" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output Dimmer</label>
+      </variable>
+      <variable CV="38" mask="XXXXXXVX" item="F4 controls output 4" minOut="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output FX5</label>
+      </variable>
+      <variable CV="38" mask="XXXXXVXX" item="F4 controls output 5" minOut="2" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output FX6</label>
+      </variable>
+      <variable item="F4 controls output 6" CV="38" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4 controls output Dimmer</label>
+      </variable>
+      <!-- begin exchangeable function groups -->
+      <variables>
+        <qualifier>
+          <variableref>Function Group 2 and 3 Exchange</variableref>
+          <relation>eq</relation>
+          <value>0</value>
+        </qualifier>
+          <!-- begin normal function group 2-3 -->
+		  <variable CV="39" mask="XXXXXXVX" item="F5 controls output 4" minOut="1" default="1">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F5 controls output FX5</label>
+		  </variable>
+		  <variable CV="39" mask="XXXXXVXX" item="F5 controls output 5" minOut="2" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F5 controls output FX6</label>
+		  </variable>
+		  <variable item="F5 controls output 6" CV="39" mask="VXXXXXXX" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F5 controls output Dimmer</label>
+		  </variable>
+		  <variable CV="40" mask="XXXXXXVX" item="F6 controls output 4" minOut="1" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F6 controls output FX5</label>
+		  </variable>
+		  <variable CV="40" mask="XXXXXVXX" item="F6 controls output 5" minOut="2" default="1">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F6 controls output FX6</label>
+		  </variable>
+		  <variable item="F6 controls output 6" CV="40" mask="VXXXXXXX" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F6 controls output Dimmer</label>
+		  </variable>
+		  <variable item="F7 controls output 6" CV="41" mask="XXXVXXXX" default="1">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F7 controls output Dimmer</label>
+		  </variable>
+		  <variable item="F7 controls output 7" CV="41" mask="VXXXXXXX" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F7 controls output Brakes</label>
+		  </variable>
+		  <variable item="F8 controls output 6" CV="42" mask="XXXVXXXX" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F8 controls output Dimmer</label>
+		  </variable>
+		  <variable item="F8 controls output 7" CV="42" mask="VXXXXXXX" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F8 controls output Brakes</label>
+		  </variable>
+		  <variable item="F9 controls output 6" CV="43" mask="XXXVXXXX" default="0" minFn="9">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F9 controls output Dimmer</label>
+		  </variable>
+		  <variable item="F9 controls output 7" CV="43" mask="VXXXXXXX" default="0" minFn="9">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F9 controls output Brakes</label>
+		  </variable>
+		  <variable item="F10 controls output 6" CV="44" mask="XXXXVXXX" default="0" minFn="10">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F10 controls output Dimmer</label>
+		  </variable>
+		  <variable item="F10 controls output 7" CV="44" mask="XVXXXXXX" default="0" minFn="10">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F10 controls output Brakes</label>
+		  </variable>
+		  <variable item="F11 controls output 6" CV="45" mask="XXXXVXXX" default="0" minFn="11">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F11 controls output Dimmer</label>
+		  </variable>
+		  <variable item="F11 controls output 7" CV="45" mask="XVXXXXXX" default="1" minFn="11">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F11 controls output Brakes</label>
+		  </variable>
+		  <variable item="F12 controls output 6" CV="46" mask="XXXXVXXX" default="0" minFn="12">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F12 controls output Dimmer</label>
+		  </variable>
+		  <variable item="F12 controls output 7" CV="46" mask="XVXXXXXX" default="0" minFn="12">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F12 controls output Brakes</label>
+		  </variable>
+        <!-- end normal function group 2-3 -->
+      </variables>
+      <variables>
+        <qualifier>
+          <variableref>Function Group 2 and 3 Exchange</variableref>
+          <relation>ge</relation>
+          <value>1</value>
+        </qualifier>
+        <!-- begin exchanged function group 2-3 -->
+		  <variable CV="39" mask="XXXXXXVX" item="F9 controls output 4(alt)" minOut="1" default="1">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F9 controls output FX5</label>
+		  </variable>
+		  <variable CV="39" mask="XXXXXVXX" item="F9 controls output 5(alt)" minOut="2" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F9 controls output FX6</label>
+		  </variable>
+		  <variable item="F9 controls output 6(alt)" CV="39" mask="VXXXXXXX" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F9 controls output Dimmer</label>
+		  </variable>
+		  <variable CV="40" mask="XXXXXXVX" item="F10 controls output 4(alt)" minOut="1" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F10 controls output FX5</label>
+		  </variable>
+		  <variable CV="40" mask="XXXXXVXX" item="F10 controls output 5(alt)" minOut="2" default="1">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F10 controls output FX6</label>
+		  </variable>
+		  <variable item="F10 controls output 6(alt)" CV="40" mask="VXXXXXXX" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F10 controls output Dimmer</label>
+		  </variable>
+		  <variable item="F11 controls output 6(alt)" CV="41" mask="XXXVXXXX" default="1">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F11 controls output Dimmer</label>
+		  </variable>
+		  <variable item="F11 controls output 7(alt)" CV="41" mask="VXXXXXXX" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F11 controls output Brakes</label>
+		  </variable>
+		  <variable item="F12 controls output 6(alt)" CV="42" mask="XXXVXXXX" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F12 controls output Dimmer</label>
+		  </variable>
+		  <variable item="F12 controls output 7(alt)" CV="42" mask="VXXXXXXX" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F12 controls output Brakes</label>
+		  </variable>
+		  <variable item="F5 controls output 6(alt)" CV="43" mask="XXXVXXXX" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F5 controls output Dimmer</label>
+		  </variable>
+		  <variable item="F5 controls output 7(alt)" CV="43" mask="VXXXXXXX" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F5 controls output Brakes</label>
+		  </variable>
+		  <variable item="F6 controls output 6(alt)" CV="44" mask="XXXXVXXX" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F6 controls output Dimmer</label>
+		  </variable>
+		  <variable item="F6 controls output 7(alt)" CV="44" mask="XVXXXXXX" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F6 controls output Brakes</label>
+		  </variable>
+		  <variable item="F7 controls output 6(alt)" CV="45" mask="XXXXVXXX" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F7 controls output Dimmer</label>
+		  </variable>
+		  <variable item="F7 controls output 7(alt)" CV="45" mask="XVXXXXXX" default="1">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F7 controls output Brakes</label>
+		  </variable>
+		  <variable item="F8 controls output 6(alt)" CV="46" mask="XXXXVXXX" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F8 controls output Dimmer</label>
+		  </variable>
+		  <variable item="F8 controls output 7(alt)" CV="46" mask="XVXXXXXX" default="0">
+			<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+			<label>F8 controls output Brakes</label>
+		  </variable>
+          <!-- end exchanged function group 2-3 -->
+      </variables>
+      <!-- end exchangeable function groups -->
+      <!-- Lighting Configuration follows -->
+      <variable item="Headlight F0(f) Effect Selection" CV="49" mask="XXXXVVVV" default="15" tooltip="Determines the effect generated from the headlight">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
+        <label>Headlight F0(f) Effect Selection</label>
+      </variable>
+      <variable item="Headlight F0(f) Phase Selection" CV="49" mask="XXXVXXXX" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
+        <label>Headlight F0(f) Phase Selection</label>
+      </variable>
+      <variable item="Headlight F0(f) Grade Crossing Logic" CV="49" mask="XXVXXXXX" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Headlight F0(f) Grade Crossing Logic</label>
+      </variable>
+      <variable item="Headlight F0(f) Rule 17 Mode" CV="49" mask="XVXXXXXX" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17HL.xml"/>
+        <label>Headlight F0(f) Rule 17 Mode</label>
+      </variable>
+      <variable item="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
+        <label>Headlight F0(f) Light Type</label>
+      </variable>
+      <variable item="Backup Light F0(r) Effect Selection" CV="50" mask="XXXXVVVV" default="15" tooltip="Determines the effect generated from the backup light">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
+        <label>Backup Light F0(r) Effect Selection</label>
+      </variable>
+      <variable item="Backup Light F0(r) Phase Selection" CV="50" mask="XXXVXXXX" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
+        <label>Backup Light F0(r) Phase Selection</label>
+      </variable>
+      <variable item="Backup Light F0(r) Grade Crossing Logic" CV="50" mask="XXVXXXXX" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Backup Light F0(r) Grade Crossing Logic</label>
+      </variable>
+      <variable item="Backup Light F0(r) Rule 17 Mode" CV="50" mask="XVXXXXXX" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17RL.xml"/>
+        <label>Backup Light F0(r) Rule 17 Mode</label>
+      </variable>
+      <variable item="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
+        <label>Backup Light F0(r) Light Type</label>
+      </variable>
+      <variable item="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="15" minOut="3" tooltip="Determines the effect generated from the FX5 light output">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
+        <label>FX5 Effect Selection</label>
+      </variable>
+      <variable item="FX5 Phase Selection" CV="51" mask="XXXVXXXX" minOut="3" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
+        <label>FX5 Phase Selection</label>
+      </variable>
+      <variable item="FX5 Grade Crossing Logic" CV="51" mask="XXVXXXXX" minOut="3" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX5 Grade Crossing Logic</label>
+      </variable>
+      <variable item="FX5 Rule 17 Mode" CV="51" mask="XVXXXXXX" minOut="3" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17FX5.xml"/>
+        <label>FX5 Rule 17 Mode</label>
+      </variable>
+      <variable item="FX5 Light Type" CV="51" mask="VXXXXXXX" minOut="3" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
+        <label>FX5 Light Type</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
+      <variable item="FX6 Effect Selection" CV="52" mask="XXXXVVVV" default="15" minOut="4" tooltip="Determines the effect generated from the FX6 light output">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
+        <label>FX6 Effect Selection</label>
+      </variable>
+      <variable item="FX6 Phase Selection" CV="52" mask="XXXVXXXX" minOut="4" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
+        <label>FX6 Phase Selection</label>
+      </variable>
+      <variable item="FX6 Grade Crossing Logic" CV="52" mask="XXVXXXXX" minOut="4" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX6 Grade Crossing Logic</label>
+      </variable>
+      <variable item="FX6 Rule 17 Mode" CV="52" mask="XVXXXXXX" minOut="4" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17FX6.xml"/>
+        <label>FX6 Rule 17 Mode</label>
+      </variable>
+      <variable item="FX6 Light Type" CV="52" mask="VXXXXXXX" minOut="4" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
+        <label>FX6 Light Type</label>
+      </variable>
+      <variable item="FX5B Effect Selection" CV="53" mask="XXXXVVVV" default="15" minOut="3" include="852002,852003,852004" tooltip="Determines the second effect associated with the FX5 light output">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
+        <label>FX5B Effect Selection</label>
+      </variable>
+      <variable item="FX5B Phase Selection" CV="53" mask="XXXVXXXX" minOut="3" include="852002,852003,852004" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
+        <label>FX5B Phase Selection</label>
+      </variable>
+      <variable item="FX5B Grade Crossing Logic" CV="53" mask="XXVXXXXX" minOut="3" include="852002,852003,852004" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX5B Grade Crossing Logic</label>
+      </variable>
+      <variable item="FX5B Rule 17 Mode" CV="53" mask="XVXXXXXX" minOut="3" include="852002,852003,852004" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17FX5.xml"/>
+        <label>FX5B Rule 17 Mode</label>
+      </variable>
+      <variable item="FX5B Light Type" CV="53" mask="VXXXXXXX" minOut="3" include="852002,852003,852004" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
+        <label>FX5B Light Type</label>
+      </variable>
+      <variable item="FX6B Effect Selection" CV="54" mask="XXXXVVVV" default="15" minOut="4" include="852002,852003,852004" tooltip="Determines the second effect associated with the FX6 light output">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
+        <label>FX6B Effect Selection</label>
+      </variable>
+      <variable item="FX6B Phase Selection" CV="54" mask="XXXVXXXX" minOut="4" include="852002,852003,852004" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
+        <label>FX6B Phase Selection</label>
+      </variable>
+      <variable item="FX6B Grade Crossing Logic" CV="54" mask="XXVXXXXX" minOut="4" include="852002,852003,852004" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX6B Grade Crossing Logic</label>
+      </variable>
+      <variable item="FX6B Rule 17 Mode" CV="54" mask="XVXXXXXX" minOut="4" include="852002,852003,852004" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17FX6.xml"/>
+        <label>FX6B Rule 17 Mode</label>
+      </variable>
+      <variable item="FX6B Light Type" CV="54" mask="VXXXXXXX" minOut="4" include="852002,852003,852004" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
+        <label>FX6B Light Type</label>
+      </variable>
+      <variable item="FX5 Forward Directional Control" CV="57" mask="XXXXXXXV" default="1" minOut="4" include="852002,852003,852004" tooltip="Check to enable FX5 function output in Forward direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX5 Forward Directional Control</label>
+      </variable>
+      <variable item="FX5 Reverse Directional Control" CV="57" mask="XXXXXXVX" default="1" minOut="4" include="852002,852003,852004" tooltip="Check to enable FX5 function output in Reverse direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX5 Reverse Directional Control</label>
+      </variable>
+      <variable item="FX5B Forward Directional Control" CV="57" mask="XXXXXVXX" default="1" minOut="4" include="852002,852003,852004" tooltip="Check to enable FX5B function output in Forward direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX5B Forward Directional Control</label>
+      </variable>
+      <variable item="FX5B Reverse Directional Control" CV="57" mask="XXXXVXXX" default="1" minOut="4" include="852002,852003,852004" comment="This CV for Gas Turbine only. Don't show this for the TSU-750 models" tooltip="Check to enable FX5B function output in Reverse direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX5B Reverse Directional Control</label>
+      </variable>
+      <variable item="FX6 Forward Directional Control" CV="57" mask="XXXVXXXX" default="1" minOut="4" include="852002,852003,852004" tooltip="Check to enable FX6 function output in Forward direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX6 Forward Directional Control</label>
+      </variable>
+      <variable item="FX6 Reverse Directional Control" CV="57" mask="XXVXXXXX" default="1" minOut="4" include="852002,852003,852004" tooltip="Check to enable FX6 function output in Reverse direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX6 Reverse Directional Control</label>
+      </variable>
+      <variable item="FX6B Forward Directional Control" CV="57" mask="XVXXXXXX" default="1" minOut="4" include="852002,852003,852004" tooltip="Check to enable FX6B function output in Forward direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX6B Forward Directional Control</label>
+      </variable>
+      <variable item="FX6B Reverse Directional Control" CV="57" mask="VXXXXXXX" default="1" minOut="4" include="852002,852003,852004" tooltip="Check to enable FX6B function output in Reverse direction">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>FX6B Reverse Directional Control</label>
+      </variable>
+      <variable item="FX5 Lighting Overide" CV="58" mask="XXXXXXXV" minOut="4" default="0" include="852002,852003,852004" tooltip="When enabled, turning on FX5 will turn off all other lighting function outputs">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumOverideFX5.xml"/>
+        <label>FX5 Lighting Overide</label>
+      </variable>
+      <variable item="FX6 Lighting Overide" CV="58" mask="XXXXXXVX" minOut="4" default="0" include="852002,852003,852004" tooltip="When enabled, turning on FX6 will turn off all other lighting function outputs">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumOverideFX6.xml"/>
+        <label>FX6 Lighting Overide</label>
+      </variable>
+      <variable item="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="4" comment="0 is fast, 15 is slow, 4 is recommended for start" tooltip="Sets the overall flash rate of the Hyperlight effects">
+        <decVal max="15"/>
+        <label>Hyperlight Flash Rate (0-15)</label>
+        <comment>0 is fast, 15 is slow, 4 is recommended for start</comment>
+      </variable>
+      <variable item="Grade Crossing Hold Time (0-15)" CV="60" mask="XXXXVVVV" default="4" comment="0-15 seconds" tooltip="Sets the time (in seconds) an effect will stay on after the horn button is released">
+        <decVal max="15"/>
+        <label>Grade Crossing Hold Time (0-15)</label>
+        <comment>0-15 seconds</comment>
+      </variable>
+      <!-- End Lighting Configuration -->
+      <variable CV="61" mask="XVVVVVVV" item="Advanced Group 1 Option 6" default="0" comment="Additional braking when Fll activated (combined with CV4)" tooltip="When F11 is pressed, locos baseline braking rate is modified by this amount">
+        <decVal max="127"/>
+        <label>F11 Braking Rate (0-127)</label>
+        <comment>Additional braking when Fll activated (combined with CV4)</comment>
+      </variable>
+      <variable CV="61" mask="VXXXXXXX" item="Advanced Group 1 Option 7" default="0" tooltip="Determines whether value is added to or subtracted from loco baseline braking rate">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumBraking.xml"/>
+        <label>F11 Braking Sign</label>
+      </variable>
+      <variable CV="63" item="Radio Power Conversion" default="20" include="852002,852003,852004" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
+        <decVal/>
+        <label>Analog Mode Motor Start Voltage (0-255)</label>
+      </variable>
+      <variable CV="64" item="Zero-1 Power Conversion" default="180" include="852002,852003,852004" tooltip="Sets the maximum average voltage applied to the motor when operating in analog mode">
+        <decVal/>
+        <label>Analog Mode Max Motor Voltage (0-255)</label>
+      </variable>
+      <variable CV="66" item="Forward Trim" default="128" tooltip="&lt;html&gt;Allows the decoders overall throttle response in the forward direction to be adjusted up or down.&lt;br&gt;      Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;      Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
+        <decVal/>
+        <label>Forward Trim (0-255)</label>
+      </variable>
+      <variable item="Speed Table" CV="67">
+        <speedTableVal/>
+        <label>Speed Table</label>
+      </variable>
+      <variable CV="95" item="Reverse Trim" default="128" tooltip="&lt;html&gt;Allows the decoders overall throttle response in the reverse direction to be adjusted up or down.&lt;br&gt;      Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;      Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
+        <decVal/>
+        <label>Reverse Trim (0-255)</label>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <!-- Advanced Motor Control Features follow -->
+      <variable CV="209" mask="VVVVVVVV" item="EMF Static Config" default="25" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
+        <decVal/>
+        <label>Motor Kp Coefficient (0-255)</label>
+      </variable>
+      <variable CV="210" mask="VVVVVVVV" item="EMF Dynamic Config" default="20" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
+        <decVal/>
+        <label>Motor Ki Coefficient (0-255)</label>
+      </variable>
+      <variable CV="212" mask="VVVVVVVV" item="EMF Option 1" default="50" tooltip="The CV value is interpreted as n/32 that is fed back from the control loop">
+        <decVal/>
+        <label>Motor Control Intensity (0-255)</label>
+      </variable>
+      <variable CV="213" mask="VVVVVVVV" item="EMF Option 2" default="8" tooltip="Specifies the time period in mS (milliseconds) between measurements">
+        <decVal max="31"/>
+        <label>Motor Control Sample Period (0-31)</label>
+      </variable>
+      <variable CV="214" mask="VVVVVVVV" item="EMF Option 3" default="8" tooltip="Specifies a gain factor for the derivative part of the PID motor control equation">
+        <decVal/>
+        <label>Motor Control Sample Aperture Time (0-255)</label>
+      </variable>
+      <variable CV="216" mask="VVVVVVVV" item="EMF Option 4" default="160" tooltip="Sets the Full-Scale voltage reference for which the back EMF operates">
+        <decVal/>
+        <label>Back EMF Motor Control Reference Voltage (0-255)</label>
+      </variable>
+      <!-- highest used so far: -->
+      <!-- "Advanced Group 1 Option 8" -->
+    </variables>
+    <resets>
+      <factReset label="Reset all CVs to factory defaults" CV="8" default="8"/>
+    </resets>
+  </decoder>
+  <!-- References to external Pane format definitions below -->
+  <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneLighting.xml"/>
+</decoder-config>

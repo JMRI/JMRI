@@ -145,9 +145,9 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("New Number of Trains", 3, temptrainList.size());
 
         EngineManager eManager = InstanceManager.getDefault(EngineManager.class);
-        Engine e1 = eManager.newEngine("UP", "1");
-        Engine e2 = eManager.newEngine("UP", "2");
-        Engine e3 = eManager.newEngine("UP", "3");
+        Engine e1 = eManager.newRS("UP", "1");
+        Engine e2 = eManager.newRS("UP", "2");
+        Engine e3 = eManager.newRS("UP", "3");
 
         // save in backup file
         t3.setBuildEnabled(true);

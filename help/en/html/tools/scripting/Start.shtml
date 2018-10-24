@@ -28,7 +28,25 @@
 
       <h1>JMRI: Getting Started with Scripting</h1>
 
-      <h2>Running "Hello World"</h2>There are several ways to use
+	  <p>These sections discuss various aspects of scripting in JMRI:</p>
+	  
+      <ul>
+	  <li><a href="#helloworld">Running "Hello World"</a></li>
+      <li><a href="#debugging">Basic debugging tools in JMRI</a></li>
+      <li><a href="#layoutcommands">Sample layout commands</a></li>
+	  <li><a href="#objects">Access to JMRI Objects</a></li>
+	  <li><a href="#scripts">Script files, listeners, and classes</a></li>
+	  </ul>
+      
+	  <h4>CAUTION: Python and its Jython variant do not use braces, brackets, or parentheses to
+	  indicate program structure, but rather rely on formatting, specifically indentation.  To avoid 
+	  confusion, it is STRONGLY recommended that you DO NOT USE TABS but rather use spaces (four is typical)
+	  to show statements that part of a class or controlled structure where you might have used some bracketing.
+	  Most program editors have a setting to automatically changes tabs to a set number of spaces to make this easier.</h4>
+	  
+      <h2><a id="helloworld">Running "Hello World"</a></h2>
+      
+      There are several ways to use
       Python scripts with JMRI. The easiest is to use the built-in
       support in the standard JMRI applications: PanelPro,
       DecoderPro, etc.<br>
@@ -80,7 +98,40 @@ something like:
         </li>
       </ul>
 
-      <h2>Sample layout commands</h2>
+      
+      <h2><a id="debugging">Basic debugging tools in JMRI</a></h2>
+      <!--Section added by Jerry Grochow 2018-10-18 based on comments found in the JMRI Users online forum from 
+      Cliff in BajaSoCal and Bob Jacobson-->
+      
+      <div class="para">
+      <p>JMRI does not provide a full "development environment," but it does provide some basic information
+      that can help with debugging your scripts.</p>  
+      
+      <p>Open the System Console (an option under Help).
+      This will open the the JMRI system console window that gives you instant information pertaining to 
+      WARN and ERROR messages.</p>
+
+      <p>Investigate the information found in the  
+      <a href="http://jmri.org/help/en/html/doc/Technical/Logging.shtml" target="_blank">technical reference</a>
+      to be better able to insert more of your own DEBUG and INFO messages into the session.log file, 
+      and also the JMRI System console window.  You might also investigate the "default.lcf" file that is
+      described in that link.</p>
+      
+      <p>If the script has "print" statements, any output will appear on the JMRI system console but not in
+      the session.log file. However, "print" output on JMRI system console may be easy to overlook (there is
+      a lot of information going to the system console). Open the Script Output window (under menu item Panels)
+      to see only the results of the print statements isolated from the other noise in the system console.  Text
+      that appears can be copied to your clipboard for saving to a text editor.
+
+      <p>If you open the Script Output window and have the System Console window open, Jython should give
+      somewhat-useful error messages in many cases. Some go to one, others to the other, so you need both.
+      
+      <p> Note to Mac OS users: BBEdit and similar tools do some syntax checking. For PC users, Notepad++
+      is a good tool for getting indentation correct.</p>
+      </div>
+      
+	  
+      <h2><a id="layoutcommands">Sample layout commands</a></h2>
       <pre>
 
 &gt;&gt;&gt; lt1 = turnouts.provideTurnout("1")
@@ -124,7 +175,9 @@ directly manipulate things.
       "http://www.jython.org/">jython.org web site</a> is also very
       useful.</p>
 
-      <h3>Access to JMRI</h3>JMRI uses the factory-pattern
+	  
+      <h2><a id="objects">Access to JMRI Objects</a></h2>
+	  JMRI uses the factory-pattern
       extensively to get access to objects. In Java this results in
       verbose code like
       <pre>
@@ -205,7 +258,11 @@ You can also use the symbols "True" and "False" respectively.
 </pre>This sends that three-byte packet four times, and then
 returns to the command line.
 
-      <h3>Script files, listeners, and classes</h3>Scripting would
+
+      <h2><a id="scripts">Script files, listeners, and classes</a></h2>
+	  <div class="para">
+      
+      Scripting would
       not be very interesting if you had to type the commands each
       time. So you can put scripts in a text file and execute them
       by selecting the "Run Script..." menu item, or by using the
@@ -241,6 +298,8 @@ returns to the command line.
       you a way to have independent code to run inside the program.
       But don't worry about this until you've got some more
       experience with scripting.</p>
+      </div>
+      
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

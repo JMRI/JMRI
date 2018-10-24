@@ -501,7 +501,7 @@ public class JUnitOperationsUtil {
 
         CarManager cmanager = InstanceManager.getDefault(CarManager.class);
 
-        Car car = cmanager.newCar(road, number);
+        Car car = cmanager.newRS(road, number);
         car.setTypeName(type);
         car.setLength(length);
         car.setOwner(owner);
@@ -535,20 +535,20 @@ public class JUnitOperationsUtil {
         String roadNames[] = rb.getString("carRoadNames").split(",");
 //        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         // add caboose to the roster
-        Car c = cm.newCar(roadNames[2], "687");
+        Car c = cm.newRS(roadNames[2], "687");
         c.setCaboose(true);
-        c = cm.newCar("CP", "435");
+        c = cm.newRS("CP", "435");
         c.setCaboose(true);
 
         // load engines
         EngineManager emanager = InstanceManager.getDefault(EngineManager.class);
-        Engine e1 = emanager.newEngine("SP", "1");
+        Engine e1 = emanager.newRS("SP", "1");
         e1.setModel("GP40");
-        Engine e2 = emanager.newEngine("PU", "2");
+        Engine e2 = emanager.newRS("PU", "2");
         e2.setModel("GP40");
-        Engine e3 = emanager.newEngine("UP", "3");
+        Engine e3 = emanager.newRS("UP", "3");
         e3.setModel("GP40");
-        Engine e4 = emanager.newEngine("UP", "4");
+        Engine e4 = emanager.newRS("UP", "4");
         e4.setModel("FT");
 
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
