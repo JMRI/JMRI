@@ -74,39 +74,63 @@
         </td></tr>
  -->
 
-        <tr><td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/">JaCoCo</a><br>
-        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/">
-            <img src="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/jacoco/graph">
-        </a>
-        </td><td align="center">
-            <b><a href="jacoco_sort_report.php">JaCoCo Sortable Coverage Report</a></b>
-            <br>
-            <b><a href="jacoco_difference.php ">Compare Two JaCoCo Runs</a></b>
-        </td></tr>
+        <tr>
+            <td>
+                <a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/">JaCoCo</a><br>
+                <a href="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/">
+                    <img src="http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/jacoco/graph">
+                </a>
+            </td>
+            <td align="center">
+                <b><a href="jacoco_sort_report.php">JaCoCo Sortable Coverage Report</a></b>
+                <br>
+                <b><a href="jacoco_difference.php ">Compare Two JaCoCo Runs</a></b>
+            </td>
+        </tr>
 
-        <tr><td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/">Builds</a> - Unit Test Results<br>
-        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/lastBuild/testReport/">
-            <img src="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/test/trend">
-        </a>
-        </td>
+        <tr>
+            <td>
+                <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Separate_Tests/">Separate Tests</a> - Runtime Warnings Results<br>
+                <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Separate_Tests/lastBuild/testReport/">
+                    <img src="http://jmri.tagadab.com/jenkins/job/Development/job/Separate_Tests/warnings6/trendGraph/png?url=PRIORITY">
+                </a>
+            </td>
 
-        <td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/">Builds</a> - Regular Java warnings<br>
-        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/lastBuild/warnings10Result/NORMAL/">
-            <img src="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/warnings10/trendGraph/png?url=PRIORITY">
-        </a>
-        </td></tr>
+            <td>
+                <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/">Builds</a> - Unit Test Results<br>
+                <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/lastBuild/testReport/">
+                    <img src="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/test/trend">
+                </a>
+            </td>
+        </tr>
 
-        <tr><td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/">Builds</a> - ECJ Java warnings<br>
-        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/lastBuild/warnings25Result/NORMAL/">
-            <img src="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/warnings25/trendGraph/png?url=PRIORITY">
-        </a>
-        </td>
+        <tr>
+            <td>
+                <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/">Builds</a> - Regular Java warnings<br>
+                <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/lastBuild/warnings10Result/NORMAL/">
+                    <img src="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/warnings10/trendGraph/png?url=PRIORITY">
+                </a>
+            </td>
 
-        <td><a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/">Builds</a> - Javadoc results<br>
-        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/lastBuild/warnings42Result/NORMAL/">
-            <img src="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/warnings42/trendGraph/png?url=PRIORITY">
-        </a>
-        </td></tr>
+            <td>
+                <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/">Builds</a> - ECJ Java warnings<br>
+                <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/lastBuild/warnings25Result/NORMAL/">
+                    <img src="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/warnings25/trendGraph/png?url=PRIORITY">
+                </a>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/">Builds</a> - Javadoc results<br>
+                <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/lastBuild/warnings42Result/NORMAL/">
+                    <img src="http://jmri.tagadab.com/jenkins/job/Development/job/Builds/warnings42/trendGraph/png?url=PRIORITY">
+                </a>
+            </td>
+
+            <td>
+            </td>
+        </tr>
 
     </table>        
         
