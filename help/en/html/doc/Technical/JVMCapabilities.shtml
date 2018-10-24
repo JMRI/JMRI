@@ -50,7 +50,8 @@
       January 2019, and intends to release the next Long Term Support version 
       (notionally known as both Java 11 and Java 18.9) in September of 2018.  
       Given that some users will need to move forward for other applications
-      once Java 8 is EOL, at a minimum we'll have to have JMRI running under
+      once Java 8 is End Of Life, 
+      at a minimum we'll have to have JMRI running under
       both Java 8 and 
       Java 11/18.9 by January 2019.
       
@@ -89,7 +90,7 @@
 
           <td>9</td>
 
-          <td>?</td>
+          <td>9</td>
         </tr>
 
         <tr>
@@ -202,7 +203,7 @@
 
       <p><a href=
       "http://www.oracle.com/technetwork/java/javase/config-417990.html">
-      Oracle's page on Java 1.7 requirements</a> which says "Note:
+      Oracle's page on Java 1.7 requirements</a> says "Note:
       As of April 8, 2014 Microsoft stopped supporting Windows XP
       and therefore it is no longer a supported platform." Google
       finds numerous pages that show how to install Java 1.7 on XP
@@ -218,16 +219,8 @@
       the
       <a href="https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html">Java download archive page</a>
       for links to that.</p>
-
-      <P>Updated Feb 10, 2018: At that time, 
-      although Java 9 was available, it was 
-      <a href="http://java.com/en/download/manual.jsp">not being recommended</a> for 
-      any platform.  That situation may 
-      <a href="http://www.oracle.com/technetwork/java/eol-135779.html">become clearer</a>
-      after the next Java release(s) are shipped,
-      perhaps March or September 2018.
               
-      <p>Updated April 18, 2018:  At that time,
+      <p>As of April 18, 2018, the
       the <a href="https://java.com/en/download/release_notice.jsp">Oracle Java 8 page</a> was saying:
 <blockquote cite="https://java.com/en/download/release_notice.jsp">
       Public updates for Oracle Java SE 8 will remain available for individual, personal use through at least the end of 2020.  
@@ -241,12 +234,11 @@
         <li><a href="http://www.oracle.com/technetwork/java/javaseproducts/documentation/jdk10certconfig-4417031.html">Java 10</a></li>
       </ul>
 
-    <p>In May 2018 Oracle announced that 
-        <a href="http://openjdk.java.net/projects/jdk/11/">Java 11</a>, expected out at the end of calendar 2018,
+    <p><a href="http://openjdk.java.net/projects/jdk/11/">Oracle Java 11</a>, 
+        made available in September 2018, 
         will be a "Long Term Support" release.  Java 9 and 10 will not be.
-        
-        
-      <P>As of April 2018, Java 10 only runs on 64-bit Windows versions (no 32-bit).
+
+      <P>Java 11 only runs on 64-bit Windows versions (no 32-bit).
 
       <table border="1">
         <tr>
