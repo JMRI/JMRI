@@ -87,7 +87,8 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
      */
     public ThrottleManager getThrottleManager() {
         if (throttleManager == null) {
-           if (xt.getCommandStation().getCommandStationType() == 0x10) {
+           if (xt.getCommandStation().getCommandStationType() == 0x10 ||
+               xt.getCommandStation().getCommandStationType() == 0x04 ) {
               throttleManager = new jmri.jmrix.roco.RocoXNetThrottleManager(this);
            } else {
               throttleManager = new XNetThrottleManager(this);
