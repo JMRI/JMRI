@@ -115,11 +115,11 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
     public RollingStockEditFrame(String title) {
         super(title);
     }
-    
+
     abstract protected RollingStockAttribute getTypeManager();
 
     abstract protected RollingStockAttribute getLengthManager();
-    
+
     abstract protected void buttonEditActionPerformed(java.awt.event.ActionEvent ae);
 
     abstract protected ResourceBundle getRb();
@@ -392,7 +392,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
             }
         }
         ownerComboBox.setSelectedItem(rs.getOwner());
-        
+
         commentTextField.setText(rs.getComment());
         valueTextField.setText(rs.getValue());
         rfidComboBox.setSelectedItem(rs.getIdTag());
@@ -437,10 +437,30 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
+        // check car's weight in tons has proper format
+        try {
+            Integer.parseInt(weightTonsTextField.getText());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, getRb().getString("WeightFormatTon"),
+                    getRb().getString("WeightTonError"),
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
         return true;
     }
 
-    protected void save(RollingStockManager<?> manager, boolean isSave) {
+    @SuppressWarnings("unchecked")
+    protected <T extends RollingStock> void save(RollingStockManager<T> manager, boolean isSave) {
+        // if the rolling stock's road or number changes, it needs a new id
+        if (isSave && _rs != null &&
+                (!_rs.getRoadName().equals(roadComboBox.getSelectedItem()) ||
+                        !_rs.getNumber().equals(roadNumberTextField.getText()))) {
+            String road = (String) roadComboBox.getSelectedItem();
+            String number = roadNumberTextField.getText();
+            manager.changeId((T) _rs, road, number);
+            _rs.setRoadName(road);
+            _rs.setNumber(number);
+        }
         if (_rs == null ||
                 !_rs.getRoadName().equals(roadComboBox.getSelectedItem()) ||
                 !_rs.getNumber().equals(roadNumberTextField.getText())) {
@@ -472,14 +492,12 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         if (locationBox.getSelectedItem() != null && trackLocationBox.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(this, getRb().getString("rsFullySelect"), getRb().getString("rsCanNotLoc"),
                     JOptionPane.ERROR_MESSAGE);
-        } else {
             // update location only if it has changed
-            if (_rs.getLocation() == null ||
-                    !_rs.getLocation().equals(locationBox.getSelectedItem()) ||
-                    _rs.getTrack() == null ||
-                    !_rs.getTrack().equals(trackLocationBox.getSelectedItem())) {
-                setLocationAndTrack(_rs);
-            }
+        } else if (_rs.getLocation() == null ||
+                !_rs.getLocation().equals(locationBox.getSelectedItem()) ||
+                _rs.getTrack() == null ||
+                !_rs.getTrack().equals(trackLocationBox.getSelectedItem())) {
+            setLocationAndTrack(_rs);
         }
     }
 
@@ -526,7 +544,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         removePropertyChangeListeners();
         super.dispose();
     }
-    
+
     private void addPropertyChangeListeners() {
         InstanceManager.getDefault(CarRoads.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(CarLoads.class).addPropertyChangeListener(this);

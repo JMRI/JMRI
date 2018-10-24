@@ -332,7 +332,10 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
         if (!changeDestination(rs)) {
             return false;
         }
+        
+        updateTrainComboBox();
 
+        // check if train can service this rolling stock
         if (!ignoreTrainCheckBox.isSelected()) {
             Train train = rs.getTrain();
             if (train != null) {
@@ -483,8 +486,6 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                         } else {
                             return false;
                         }
-                    } else {
-                        updateTrainComboBox();
                     }
                 }
             }
@@ -549,8 +550,6 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                                     "rsCanNotDest"),
                             JOptionPane.ERROR_MESSAGE);
                     return false;
-                } else {
-                    updateTrainComboBox();
                 }
             }
         }
