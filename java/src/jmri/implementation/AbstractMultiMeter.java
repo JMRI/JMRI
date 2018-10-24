@@ -34,7 +34,7 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
            intervalTimer = null;
         }
         intervalTask = new UpdateTask();
-        intervalTimer = new Timer("MultiMeter Update Timer");
+        intervalTimer = new Timer("MultiMeter Update Timer", true);
         // At some point this will be dynamic intervals...
         log.debug("Starting Meter Timer");
         intervalTimer.scheduleAtFixedRate(intervalTask,
@@ -65,14 +65,9 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
 
         @Override
         public void run() {
-            try {
-                if (is_enabled) {
-                    log.debug("Timer Pop");
-                    requestUpdateFromLayout();
-                }
-                Thread.sleep(sleepInterval);
-            } catch (InterruptedException e) {
-                log.error("Error running timer update task! {}", e.getMessage());
+            if (is_enabled) {
+                log.debug("Timer Pop");
+                requestUpdateFromLayout();
             }
         }
     }

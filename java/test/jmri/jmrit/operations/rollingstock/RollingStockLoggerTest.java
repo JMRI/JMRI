@@ -31,7 +31,7 @@ public class RollingStockLoggerTest extends OperationsTestCase {
     public void testCreate() {
         // load a car
         CarManager manager = InstanceManager.getDefault(CarManager.class);
-        Car c1 = manager.newCar("CP", "1");
+        Car c1 = manager.newRS("CP", "1");
         CarTypes ct = InstanceManager.getDefault(CarTypes.class);
         ct.addName("Boxcar");
         c1.setTypeName("Boxcar");

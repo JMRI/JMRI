@@ -24,6 +24,8 @@ public abstract class RollingStockManager<T extends RollingStock> {
     protected Hashtable<String, T> _hashTable = new Hashtable<>();
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "RollingStockListLength"; // NOI18N
+    
+    abstract public RollingStock newRS(String road, String number);
 
     public RollingStockManager() {
     }
