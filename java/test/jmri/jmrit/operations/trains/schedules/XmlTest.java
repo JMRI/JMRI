@@ -1,5 +1,6 @@
-package jmri.jmrit.operations.trains.timetable;
+package jmri.jmrit.operations.trains.schedules;
 
+import jmri.jmrit.operations.trains.schedules.Xml;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -10,11 +11,11 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class TrainsScheduleEditActionTest {
+public class XmlTest {
 
     @Test
     public void testCTor() {
-        TrainsScheduleEditAction t = new TrainsScheduleEditAction();
+        Xml t = new Xml();
         Assert.assertNotNull("exists",t);
     }
 
@@ -29,6 +30,6 @@ public class TrainsScheduleEditActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainsScheduleEditActionTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(XmlTest.class);
 
 }

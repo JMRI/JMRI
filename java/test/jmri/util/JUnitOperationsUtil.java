@@ -12,7 +12,7 @@ import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.automation.Automation;
 import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.automation.AutomationManager;
-import jmri.jmrit.operations.automation.actions.ActivateTimetableAction;
+import jmri.jmrit.operations.automation.actions.ActivateTrainScheduleAction;
 import jmri.jmrit.operations.automation.actions.BuildTrainAction;
 import jmri.jmrit.operations.automation.actions.GotoAction;
 import jmri.jmrit.operations.automation.actions.MoveTrainAction;
@@ -47,8 +47,8 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.schedules.TrainSchedule;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import org.junit.Assert;
 
 /**
@@ -625,7 +625,7 @@ public class JUnitOperationsUtil {
         item3.setRouteLocation(new RouteLocation("id", new Location("id", "testLocationName")));
 
         AutomationItem item4 = automation.addItem();
-        item4.setAction(new ActivateTimetableAction());
+        item4.setAction(new ActivateTrainScheduleAction());
         TrainSchedule trainSchedule = InstanceManager.getDefault(TrainScheduleManager.class).newSchedule("train schedule name");
         item4.setOther(trainSchedule);
 

@@ -1,10 +1,10 @@
-package jmri.jmrit.operations.trains.timetable;
+package jmri.jmrit.operations.trains.schedules;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 /**
- * Action to edit timetable (Schedule)
+ * Action to edit train schedule
  *
  * @author Daniel Boudreau Copyright (C) 2010
  */

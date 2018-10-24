@@ -3,12 +3,12 @@ package jmri.jmrit.operations.automation.actions;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.schedules.TrainSchedule;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 
-public class ApplyTimetableAction extends Action {
+public class ApplyTrainScheduleAction extends Action {
 
-    private static final int _code = ActionCodes.APPLY_TIMETABLE;
+    private static final int _code = ActionCodes.APPLY_TRAIN_SCHEDULE;
 
     @Override
     public int getCode() {
@@ -17,7 +17,7 @@ public class ApplyTimetableAction extends Action {
 
     @Override
     public String getName() {
-        return Bundle.getMessage("ApplyTimetable");
+        return Bundle.getMessage("ApplyTrainSchedule");
     }
 
     @Override
