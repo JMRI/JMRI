@@ -531,7 +531,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         log.debug("stealThrottleRequest() invoked for address {}, with steal boolean = {}",address.getNumber(),steal);
         if (steal == false) {
             if (address instanceof DccLocoAddress) {
-                failedThrottleRequest((DccLocoAddress) address, "User chose not to 'steal' the throttle.");
+                failedThrottleRequest(address, "User chose not to 'steal' the throttle.");
             } else {
                 log.error("cannot cast address to DccLocoAddress.");
             }
