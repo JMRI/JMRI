@@ -1,5 +1,6 @@
-package jmri.jmrit.operations.trains.timetable;
+package jmri.jmrit.operations.trains.schedules;
 
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

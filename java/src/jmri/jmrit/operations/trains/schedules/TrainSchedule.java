@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.trains.timetable;
+package jmri.jmrit.operations.trains.schedules;
 
 import java.util.ArrayList;
 import java.util.List;

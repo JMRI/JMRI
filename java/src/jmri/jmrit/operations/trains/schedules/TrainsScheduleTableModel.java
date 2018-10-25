@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.trains.timetable;
+package jmri.jmrit.operations.trains.schedules;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Table Model for edit of train schedules (Timetable) used by operations
+ * Table Model for edit of train schedules used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2012
  */
@@ -94,7 +94,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
     }
 
     // only the first three columns of the table have defaults
-    private int[] tableScheduleColumnWidths = {50, 70, 120};
+    private final int[] tableScheduleColumnWidths = {50, 70, 120};
 
     void initTable() {
         if (_table == null) {

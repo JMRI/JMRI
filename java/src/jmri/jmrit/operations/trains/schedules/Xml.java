@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.trains.timetable;
+package jmri.jmrit.operations.trains.schedules;
 
 /**
  * A convenient place to access operations xml element and attribute names.

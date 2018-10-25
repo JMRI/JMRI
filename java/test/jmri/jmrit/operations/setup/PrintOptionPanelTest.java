@@ -30,7 +30,7 @@ public class PrintOptionPanelTest {
         Assert.assertFalse(p.printLocCommentsCheckBox.isSelected());
         Assert.assertFalse(p.printRouteCommentsCheckBox.isSelected());
         Assert.assertFalse(p.printLoadsEmptiesCheckBox.isSelected());
-        Assert.assertFalse(p.printTimetableNameCheckBox.isSelected());
+        Assert.assertFalse(p.printTrainScheduleNameCheckBox.isSelected());
         Assert.assertTrue(p.printValidCheckBox.isSelected());
         Assert.assertFalse(p.sortByTrackCheckBox.isSelected());
         Assert.assertFalse(p.printHeadersCheckBox.isSelected());
