@@ -43,8 +43,7 @@ public class StopTest {
     @Test
     public void testToString() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TimeTableFrame f = new TimeTableFrame("");
-        TimeTableDataManager dm = f.getDataManager();
+        TimeTableDataManager dm = new TimeTableDataManager(false);
         Station station = new Station(1, 1);
         station.setStationName("test station");  // NOI18N
         dm.addStation(1, station);

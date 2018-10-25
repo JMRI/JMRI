@@ -53,6 +53,18 @@
         font-size: .8rem;
     }
   </style>
+<style type="text/css">
+    span.since {
+        color: #fff;
+        float: right;
+        background: #222696;
+        background-size: 100% 100%;
+        border-radius: 4px;
+        margin: 2px 2px 2px 2px;
+        padding: .2em .3em;
+    }
+</style>
+
 </head>
 
 <body>
@@ -63,6 +75,7 @@
     <!-- Sidebar inserts div #mBody-->
 
     <div id="mainContent">
+      <span class="since">since 4.13.4</span>
       <h1>Timetable</h1>
 
       <p>A timetable describes the timing of trains running on a railroad.  This
@@ -136,7 +149,7 @@
       <h3>The Edit Process</h3>
       <p>When the Timetable tool is selected from the PanelPro Tools menu,
       the timetable data is loaded from the <strong>TimeTableData.xml</strong>
-      file.  The file is located in <strong>timetable</strong> directory in the
+      file.  The file is located in the <strong>timetable</strong> directory in the
       user files location.  If the file does not exist, a <strong>Sample</strong>
       timetable is copied from the JMRI install location.</p>
 
@@ -224,8 +237,8 @@
 
         <a name="station" id="station"></a>
         <h3>Station</h3>
-        <p>A "station" occurs any place a train can stop or an arrival/depart time
-        is desired.  The first station in a segment will have a distance of zero.
+        <p>A "station" occurs any place a train can stop or an arrival/departure
+        time is desired.  The first station in a segment will have a distance of zero.
         The remaining stations will have the cumulative distance.  The distance
         is measured in feet or meters depending on the layout metric setting.  When
         multiple segments are being used, the first station of a secondary segment
@@ -315,7 +328,7 @@
       <div style="margin-left: 2em">
       <a href="images/TimeTableGraph.png">
       <img src="images/TimeTableGraph.png"
-      alt="Timetable Editor" height="395" width="798">
+      alt="Timetable Editor" height="357" width="809">
       </a>
       </div>
 

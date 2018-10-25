@@ -10,12 +10,12 @@ public class TimeTableDataManagerTest {
 
     @Test
     public void testCreate() {
-        new TimeTableDataManager();
+        new TimeTableDataManager(false);
     }
 
     @Test
     public void testExercise() {
-        TimeTableDataManager dm = new TimeTableDataManager();
+        TimeTableDataManager dm = new TimeTableDataManager(false);
 
         // Test adds
         int layoutId = dm.getNextId("Layout");  // NOI18N

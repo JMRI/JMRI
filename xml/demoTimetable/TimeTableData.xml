@@ -297,7 +297,7 @@
       <train_desc>Morning Branch Commuter</train_desc>
       <default_speed>50</default_speed>
       <start_time>361</start_time>
-      <throttle>0</throttle>
+      <throttle>5</throttle>
       <route_duration>0</route_duration>
       <train_notes />
     </train>
@@ -309,7 +309,7 @@
       <train_desc>Afternoon Branch Commuter</train_desc>
       <default_speed>50</default_speed>
       <start_time>900</start_time>
-      <throttle>0</throttle>
+      <throttle>5</throttle>
       <route_duration>0</route_duration>
       <train_notes />
     </train>
@@ -321,7 +321,7 @@
       <train_desc>Over night peddler</train_desc>
       <default_speed>30</default_speed>
       <start_time>1380</start_time>
-      <throttle>0</throttle>
+      <throttle>2</throttle>
       <route_duration>0</route_duration>
       <train_notes />
     </train>

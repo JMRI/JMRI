@@ -117,7 +117,7 @@ public class Stop {
     }
 
     public String toString() {
-        TimeTableDataManager dataMgr = jmri.InstanceManager.getDefault(TimeTableFrame.class).getDataManager();
+        TimeTableDataManager dataMgr = TimeTableDataManager.getDataManager();
         Station station = dataMgr.getStation(_stationId);
         return _seq + " :: " + station.getStationName();
     }

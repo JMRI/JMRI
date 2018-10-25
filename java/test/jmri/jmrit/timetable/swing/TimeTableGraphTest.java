@@ -21,12 +21,9 @@ public class TimeTableGraphTest {
     @Test
     public void testGraph() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TimeTableFrame f = new TimeTableFrame("");
-        TimeTableDataManager dm = f.getDataManager();
-
 
         TimeTableGraph g = new TimeTableGraph();
-        g.init(1, 1, dm, true);
+        g.init(1, 1, true);
 
         JmriJFrame gf = new JmriJFrame(Bundle.getMessage("TitleTimeTableGraph"), true, true);  // NOI18N
         gf.setMinimumSize(new Dimension(600, 300));
@@ -36,7 +33,6 @@ public class TimeTableGraphTest {
         gf.setVisible(true);
 
         gf.dispose();
-        f.dispose();
     }
     @Before
     public void setUp() {

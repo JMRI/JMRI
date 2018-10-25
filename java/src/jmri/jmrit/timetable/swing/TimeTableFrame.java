@@ -71,16 +71,12 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         super(true, true);
         setTitle(Bundle.getMessage("TitleTimeTable"));  // NOI18N
         InstanceManager.setDefault(TimeTableFrame.class, this);
-        _dataMgr = new TimeTableDataManager();
-        if (!TimeTableXml.doLoad()) {
-            log.error("Unabled to load the time table data");  // NOI18N
-        }
+        _dataMgr = TimeTableDataManager.getDataManager();
         buildComponents();
         createFrame();
         createMenu();
         setEditMode(false);
         setShowReminder(false);
-        log.info("{} is ready", hashCode());  // NOI18N
         try {
             _wp = jmri.jmrit.logix.WarrantPreferences.getDefault();
             _wp.addPropertyChangeListener("layoutScale", warrantListener);  // NOI18N
@@ -88,15 +84,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             log.debug("Disable scale changes");  // NOI18N
         }
 
-    }  // TODO
-
-//     private WarrantPreferences _wp = jmri.jmrit.logix.WarrantPreferences.getDefault();
-    private WarrantPreferences _wp = null;
-
-    TimeTableDataManager _dataMgr;
-    public TimeTableDataManager getDataManager() {
-        return _dataMgr;
     }
+
+    private WarrantPreferences _wp = null;
+    TimeTableDataManager _dataMgr;
     boolean _isDirty = false;
     boolean _showTrainTimes = false;
 
@@ -1342,6 +1333,9 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             _timetableModel.nodeChanged(_curNode);
             update = true;
         }
+        if (newDistance < 0.0) {
+            newDistance = station.getDistance();
+        }
         if (Math.abs(station.getDistance() - newDistance) > .01 ) {
             station.setDistance(newDistance);
             update = true;
@@ -1388,22 +1382,22 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         }
 
         // Check for trains and stops outside of the time range
-        int startTime = newStartHour * 60;
-        int endTime = (newStartHour + newDuration) * 60;
+        checkStart = newStartHour;
+        checkDuration = newDuration;
         List<String> trainList = new ArrayList<>();
         for (Train train : _dataMgr.getTrains(_curNodeId, 0 , true)) {
-            if (train.getStartTime() < startTime || train.getStartTime() > endTime) {
+            if (!validateTime(train.getStartTime())) {
                 trainList.add(train.getTrainName());
-            } else {
-                for (Stop stop : _dataMgr.getStops(train.getTrainId(), 0, false)) {
-                    if (stop.getArriveTime() < startTime
-                            || stop.getArriveTime() > endTime
-                            || stop.getDepartTime() < startTime
-                            || stop.getDepartTime() > endTime) {
-                        if (!trainList.contains(train.getTrainName())) {
-                            trainList.add(train.getTrainName());
-                        }
-                    }
+                continue;
+            }
+            for (Stop stop : _dataMgr.getStops(train.getTrainId(), 0, false)) {
+                if (!validateTime(stop.getArriveTime())) {
+                    trainList.add(train.getTrainName());
+                    break;
+                }
+                if (!validateTime(stop.getDepartTime())) {
+                    trainList.add(train.getTrainName());
+                    break;
                 }
             }
         }
@@ -1418,7 +1412,6 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
-
         boolean update = false;
 
         if (!schedule.getScheduleName().equals(newName)) {
@@ -1445,7 +1438,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         if (update) {
             setShowReminder(true);
         }
-    }  // TODO -- check for midnight wrap
+    }
 
     /**
      * Update the train information.
@@ -1460,7 +1453,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         String newDesc = _editTrainDesc.getText().trim();
         int newType = ((TrainType) _editTrainType.getSelectedItem()).getTypeId();
         int newSpeed = parseNumber(_editDefaultSpeed, "default train speed");  // NOI18N
-        if (newSpeed == -1) {
+        if (newSpeed < 0) {
             newSpeed = train.getDefaultSpeed();
         }
         LocalTime newTime;
@@ -1545,11 +1538,11 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 (TimeTableDataManager.SegmentStation) _editStopStation.getSelectedItem();
         int newStation = stopSegmentStation.getStationId();
         int newDuration = parseNumber(_editStopDuration, "stop duration");  // NOI18N
-        if (newDuration == -1) {
+        if (newDuration < 0) {
             newDuration = stop.getDuration();
         }
         int newSpeed = parseNumber(_editNextSpeed, "next speed");  // NOI18N
-        if (newSpeed == -1) {
+        if (newSpeed < 0) {
             newSpeed = stop.getNextSpeed();
         }
         int newStagingTrack = (int) _editStagingTrack.getValue();
@@ -2057,13 +2050,28 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         } else {
             scheduleId = schedules.get(0).getScheduleId();
             if (schedules.size() > 1) {
-                log.info("do selection dialog");  // NOI18N
                 // do selection dialog
+                Schedule[] schedArr = new Schedule[schedules.size()];
+                schedArr = schedules.toArray(schedArr);
+                Schedule schedSelected = (Schedule) JOptionPane.showInputDialog(
+                        null,
+                        Bundle.getMessage("GraphScheduleMessage"),  // NOI18N
+                        Bundle.getMessage("QuestionTitle"),  // NOI18N
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        schedArr,
+                        schedArr[0]
+                );
+                if (schedSelected == null) {
+                    log.warn("Schedule not selected, graph request cancelled");  // NOI18N
+                    return;
+                }
+                scheduleId = schedSelected.getScheduleId();
             }
         }
 
         TimeTableGraph graph = new TimeTableGraph();
-        graph.init(_curNodeId, scheduleId, _dataMgr, _showTrainTimes);
+        graph.init(_curNodeId, scheduleId, _showTrainTimes);
 
         JmriJFrame f = new JmriJFrame(Bundle.getMessage("TitleTimeTableGraph"), true, true);  // NOI18N
         f.setMinimumSize(new Dimension(600, 300));
@@ -2071,7 +2079,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         f.pack();
         f.addHelpMenu("html.tools.TimeTable", true);  // NOI18N
         f.setVisible(true);
-    }  // TODO schedule dialog
+    }
 
     JFileChooser fileChooser;
     void importPressed() {

@@ -26,7 +26,7 @@ import jmri.jmrit.timetable.swing.*;
 public class TimeTableXml {
 
     public static boolean doStore() {
-        TimeTableDataManager dataMgr = InstanceManager.getDefault(TimeTableFrame.class).getDataManager();
+        TimeTableDataManager dataMgr = TimeTableDataManager.getDataManager();
         TimeTableXmlFile x = new TimeTableXmlFile();
         File file = x.getFile(true);
         try {
@@ -43,14 +43,6 @@ public class TimeTableXml {
                 org.jdom2.Namespace.getNamespace("xsi",
                         "http://www.w3.org/2001/XMLSchema-instance"));
         Document doc = new Document(root);
-//
-//         // add XSLT processing instruction
-//         java.util.Map<String, String> m = new java.util.HashMap<String, String>();
-//         m.put("type", "text/xsl");
-//         m.put("href", SpeedometerXml.xsltLocation + "speedometer.xsl");
-//         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
-//         doc.addContent(0, p);
-//
         Element values;
 
         root.addContent(values = new Element("layouts"));
@@ -155,7 +147,7 @@ public class TimeTableXml {
     }
 
     public static boolean doLoad() {
-        TimeTableDataManager dataMgr = InstanceManager.getDefault(TimeTableFrame.class).getDataManager();
+        TimeTableDataManager dataMgr = TimeTableDataManager.getDataManager();
         TimeTableXmlFile x = new TimeTableXmlFile();
         File file = x.getFile(false);
 

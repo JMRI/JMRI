@@ -12,6 +12,7 @@ import java.util.TreeMap;
  * <strong>tables</strong> implemented as TreeMaps and <strong>records</strong>
  * implemented as Classes.  The logical relationships are handled using foreign keys.
  *
+ * <pre>
  * Data Structure:
  *   Layout -- Global data.
  *     TrainTypes -- Assigned to trains for diagram colors.
@@ -20,10 +21,50 @@ import java.util.TreeMap;
  *     Schedules -- Basic information about a schedule.
  *       Trains -- Train characteristics.
  *         Stops -- A junction between a train and a station that contains arrival and departure times.
+ * </pre>
  * <p>
  * @author Dave Sand Copyright (C) 2018
  */
 public class TimeTableDataManager {
+
+    /**
+     * Create a TimeTableDataManager instance.
+     * @param loadData False to create an empty instance, otherwise load the data
+     */
+    public TimeTableDataManager(boolean loadData) {
+        jmri.InstanceManager.setDefault(TimeTableDataManager.class, this);
+        if (loadData) {
+            if (!jmri.jmrit.timetable.configurexml.TimeTableXml.doLoad()) {
+                log.error("Unabled to load the time table data");  // NOI18N
+            }
+        }
+    }
+
+    /**
+     * Use the InstanceManager to only allow a single data manager instance.
+     * @return the current or new data manager.
+     */
+    public static TimeTableDataManager getDataManager() {
+        TimeTableDataManager dm = jmri.InstanceManager.getNullableDefault(TimeTableDataManager.class);
+        if (dm != null) {
+            return dm;
+        }
+        return new TimeTableDataManager(true);
+    }
+
+    /**
+     * Reset all of the database tables.
+     */
+//     public void resetDataManager() {
+//         _layoutMap.clear();
+//         _trainTypeMap.clear();
+//         _segmentMap.clear();
+//         _stationMap.clear();
+//         _scheduleMap.clear();
+//         _trainMap.clear();
+//         _stopMap.clear();
+//         _segmentStations.clear();
+//     }
 
     private TreeMap<Integer, Layout> _layoutMap = new TreeMap<>();
     private TreeMap<Integer, TrainType> _trainTypeMap = new TreeMap<>();
@@ -49,6 +90,11 @@ public class TimeTableDataManager {
         _segmentMap.put(id, newSegment);
     }
 
+    /**
+     * Add a new station
+     * Create a SegmentStation instance.
+     * Add it to the SegmentStation list.
+     */
     public void addStation(int id, Station newStation) {
         _stationMap.put(id, newStation);
         SegmentStation segmentStation = new SegmentStation(newStation.getSegmentId(), id);
