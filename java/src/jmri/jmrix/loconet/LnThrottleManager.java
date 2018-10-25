@@ -423,7 +423,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      * @param reason for the failure
      */
     @Override
-    public void failedThrottleRequest(DccLocoAddress address, String reason) {
+    public void failedThrottleRequest(LocoAddress address, String reason) {
         super.failedThrottleRequest(address, reason);
         log.debug("failedThrottleRequest - address {}, reason {}", address, reason);
         //now end and remove any waiting thread

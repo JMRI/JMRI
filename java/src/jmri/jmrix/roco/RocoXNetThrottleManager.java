@@ -26,6 +26,14 @@ public class RocoXNetThrottleManager extends jmri.jmrix.lenz.XNetThrottleManager
      */
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
+        // range check for LocoMaus II
+        if (tc.getCommandStation().getCommandStationType() == 0x04 ) {
+            if(address.getNumber()>=100) {
+               String typeString = Bundle.getMessage("CSTypeLokMaus");
+               failedThrottleRequest(address,Bundle.getMessage("ThrottleErrorCSTwoDigit",typeString));
+               return;
+            }
+        }
         RocoXNetThrottle throttle;
         if (log.isDebugEnabled()) {
             log.debug("Requesting Throttle: " + address);
