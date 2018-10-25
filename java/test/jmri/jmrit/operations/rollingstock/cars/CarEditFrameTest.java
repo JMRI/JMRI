@@ -461,6 +461,9 @@ public class CarEditFrameTest extends OperationsTestCase {
  
         Assert.assertEquals("number of cars", 9, cManager.getNumEntries());
         Car c1 = cManager.getByRoadAndNumber("CP", "C10099");
+        
+        c1.setWeight("1.4");
+        c1.setWeightTons("Tons of Weight");
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
