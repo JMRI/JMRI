@@ -119,7 +119,7 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
      */
     public void setLoconetProtocolAutoDetect(String value) {
         // default (most common state) is off, so just check for Yes
-        mLoconetProtocolAutoDetect = (value.equals(Bundle.getMessage("LoconetProtocolAutoDetect")));
+        mLoconetProtocolAutoDetect = (value.equals("Yes") || value.equals(Bundle.getMessage("LoconetProtocolAutoDetect")));
         log.debug("Loconet XPSlots: {}", mLoconetProtocolAutoDetect); // NOI18N
     }
 
