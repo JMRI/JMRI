@@ -74,6 +74,12 @@ public class MultiThrottleController extends ThrottleController {
         if (eventName.matches("SpeedSteps")) {
             sendSpeedStepMode(throttle);
         }
+        if (eventName.matches("IsForward")) {
+            sendCurrentDirection(throttle);
+        }
+        if (eventName.matches("SpeedSetting")) {
+            sendCurrentSpeed(throttle);
+        }
     }
 
     /**
