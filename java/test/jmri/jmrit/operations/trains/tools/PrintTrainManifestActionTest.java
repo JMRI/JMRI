@@ -65,9 +65,15 @@ public class PrintTrainManifestActionTest {
         JemmyUtil.pressDialogButton(MessageFormat.format(
                 Bundle.getMessage("PrintPreviousManifest"), new Object[]{"preview"}), Bundle.getMessage("ButtonYes"));
                 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return printAction.getState().equals(Thread.State.TERMINATED);
-        }, "wait to complete");
+//        jmri.util.JUnitUtil.waitFor(() -> {
+//            return printAction.getState().equals(Thread.State.TERMINATED);
+//        }, "wait to complete");
+        
+        try {
+            printAction.join();
+        } catch (InterruptedException e) {
+ 
+        }
         
         // confirm print preview window is showing
         ResourceBundle rb = ResourceBundle
@@ -77,6 +83,14 @@ public class PrintTrainManifestActionTest {
         Assert.assertNotNull("exists", printPreviewFrame);
 
         JUnitUtil.dispose(printPreviewFrame);
+    }
+    
+    @Test
+    public void loopTest() {
+        int i = 1000;
+        while (i-- > 0) {
+            testPrintAction();
+        }
     }
 
     // The minimal setup for log4J
