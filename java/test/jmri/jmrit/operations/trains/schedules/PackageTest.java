@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.trains.timetable;
+package jmri.jmrit.operations.trains.schedules;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
 })
 
 /**
- * Tests for the jmrit.operations.trains.timetable package
+ * Tests for the jmrit.operations.trains.schedules package
  *
  * @author	Bob Coleman
  */

@@ -26,7 +26,7 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -269,8 +269,8 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                     op.setText(Bundle.getMessage("X(ScheduleLoad)"));
                 } else if (!checkScheduleAttribute(ROAD, carType, _car, track)) {
                     op.setText(Bundle.getMessage("X(ScheduleRoad)"));
-                } else if (!checkScheduleAttribute(TIMETABLE, carType, _car, track)) {
-                    op.setText(Bundle.getMessage("X(ScheduleTimeTable)"));
+                } else if (!checkScheduleAttribute(TRAIN_SCHEDULE, carType, _car, track)) {
+                    op.setText(Bundle.getMessage("X(ScheduleTrain)"));
                 } else if (!checkScheduleAttribute(ALL, carType, _car, track)) {
                     op.setText(Bundle.getMessage("X(Schedule)"));
                 } else if (!track.acceptsPickupTrain(_train)) {
@@ -330,7 +330,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 
     private static final String ROAD = "road"; // NOI18N
     private static final String LOAD = "load"; // NOI18N
-    private static final String TIMETABLE = "timetable"; // NOI18N
+    private static final String TRAIN_SCHEDULE = "schedule"; // NOI18N
     private static final String TYPE = "type"; // NOI18N
     private static final String ALL = "all"; // NOI18N
 
@@ -364,8 +364,8 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                             si.getRoadName().equals(car.getRoadName()))) {
                 return true;
             }
-            // check to see if schedule timetable allows delivery
-            if (attribute.equals(TIMETABLE) &&
+            // check to see if train schedule allows delivery
+            if (attribute.equals(TRAIN_SCHEDULE) &&
                     si.getTypeName().equals(carType) &&
                     (si.getSetoutTrainScheduleId().equals("") || InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId()
                             .equals(si.getSetoutTrainScheduleId()))) {

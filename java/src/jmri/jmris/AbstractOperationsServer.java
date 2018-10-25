@@ -32,7 +32,7 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
 
     @SuppressWarnings("LeakingThisInConstructor")
     public AbstractOperationsServer() {
-        tm = TrainManager.instance();
+        tm = jmri.InstanceManager.getDefault(TrainManager.class);
         tm.addPropertyChangeListener(this);
         lm = LocationManager.instance();
         lm.addPropertyChangeListener(this);
@@ -268,13 +268,13 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
     synchronized protected void addTrainToList(String trainId) {
         if (!trains.containsKey(trainId)) {
             trains.put(trainId, new TrainListener(trainId));
-            TrainManager.instance().getTrainById(trainId).addPropertyChangeListener(trains.get(trainId));
+            jmri.InstanceManager.getDefault(TrainManager.class).getTrainById(trainId).addPropertyChangeListener(trains.get(trainId));
         }
     }
 
     synchronized protected void removeTrainFromList(String trainId) {
         if (trains.containsKey(trainId)) {
-            TrainManager.instance().getTrainById(trainId).removePropertyChangeListener(trains.get(trainId));
+            jmri.InstanceManager.getDefault(TrainManager.class).getTrainById(trainId).removePropertyChangeListener(trains.get(trainId));
             trains.remove(trainId);
         }
     }
@@ -292,7 +292,7 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
             lm.removePropertyChangeListener(this);
         }
         for (Map.Entry<String, TrainListener> train : this.trains.entrySet()) {
-            TrainManager.instance().getTrainById(train.getKey()).removePropertyChangeListener(train.getValue());
+            jmri.InstanceManager.getDefault(TrainManager.class).getTrainById(train.getKey()).removePropertyChangeListener(train.getValue());
         }
         this.trains.clear();
     }
@@ -316,7 +316,7 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
         private final Train train;
 
         protected TrainListener(String trainId) {
-            this.train = TrainManager.instance().getTrainById(trainId);
+            this.train = jmri.InstanceManager.getDefault(TrainManager.class).getTrainById(trainId);
         }
 
         @Override
