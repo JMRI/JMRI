@@ -1,4 +1,4 @@
-package jmri.jmrix.roco.z21;
+package jmri.jmrix.roco;
 
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
@@ -9,24 +9,25 @@ import org.junit.Before;
 
 
 /**
- * Tests for the jmri.jmrix.lenz.z21XNetThrottleManager class
+ * Tests for the jmri.jmrix.roco.RocoXNetThrottleManager class
  *
  * @author	Paul Bender Copyright (C) 2015,2016
  */
-public class Z21XNetThrottleManagerTest extends XNetThrottleManagerTest {
+public class RocoXNetThrottleManagerTest extends XNetThrottleManagerTest {
 
     // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new RocoZ21CommandStation());
-        tm = new Z21XNetThrottleManager(new XNetSystemConnectionMemo(tc));
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new RocoCommandStation());
+        tm = new RocoXNetThrottleManager(new XNetSystemConnectionMemo(tc));
     }
 
     @After
     @Override
     public void tearDown() {
+        tm = null;
         JUnitUtil.tearDown();
     }
 

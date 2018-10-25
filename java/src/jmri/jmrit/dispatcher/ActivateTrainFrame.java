@@ -856,7 +856,7 @@ public class ActivateTrainFrame {
             trainSelectBox.addActionListener(trainSelectBoxListener);
         } else if (_TrainsFromTrains) {
             // initialize free trains from operations
-            List<Train> trains = TrainManager.instance().getTrainsByNameList();
+            List<Train> trains = jmri.InstanceManager.getDefault(TrainManager.class).getTrainsByNameList();
             if (trains.size() > 0) {
                 for (int i = 0; i < trains.size(); i++) {
                     Train t = trains.get(i);

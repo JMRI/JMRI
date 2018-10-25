@@ -1225,7 +1225,7 @@ table.sortable th {
 
           2. In JMRI OperationsPro: a table defining which trains
           will run on any given day of the week. <a href=
-          "../package/jmri/jmrit/operations/Operations.shtml#Timetable">
+          "../package/jmri/jmrit/operations/Operations.shtml#TrainSchedules">
           ...</a></td>
 
           <td class="de">Fahrplan/Kursbuch</td>

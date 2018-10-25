@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.trains.timetable;
+package jmri.jmrit.operations.trains.schedules;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Used to edit train timetable (Schedule).
+ * Used to edit train schedules.
  *
  * @author Daniel Boudreau Copyright (C)
  * 
@@ -53,7 +53,7 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
         try {
            comboBox = trainScheduleManager.getComboBox();
         } catch(IllegalArgumentException iae) {
-           comboBox = new JComboBox<TrainSchedule>();
+           comboBox = new JComboBox<>();
            trainScheduleManager.updateComboBox(comboBox);
         }
 

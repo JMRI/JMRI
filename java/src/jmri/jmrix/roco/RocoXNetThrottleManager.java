@@ -1,4 +1,4 @@
-package jmri.jmrix.roco.z21;
+package jmri.jmrix.roco;
 
 import jmri.LocoAddress;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
@@ -6,17 +6,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * z21XNet implementation of a ThrottleManager based on the
+ * Roco XNet implementation of a ThrottleManager based on the
  * AbstractThrottleManager.
  *
  * @author Paul Bender Copyright (C) 2002-2004
  */
-public class Z21XNetThrottleManager extends jmri.jmrix.roco.RocoXNetThrottleManager {
+public class RocoXNetThrottleManager extends jmri.jmrix.lenz.XNetThrottleManager {
 
     /**
      * Constructor.
      */
-    public Z21XNetThrottleManager(XNetSystemConnectionMemo memo) {
+    public RocoXNetThrottleManager(XNetSystemConnectionMemo memo) {
         super(memo);
     }
 
@@ -26,19 +26,27 @@ public class Z21XNetThrottleManager extends jmri.jmrix.roco.RocoXNetThrottleMana
      */
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
-        Z21XNetThrottle throttle;
+        // range check for LocoMaus II
+        if (tc.getCommandStation().getCommandStationType() == 0x04 ) {
+            if(address.getNumber()>=100) {
+               String typeString = Bundle.getMessage("CSTypeLokMaus");
+               failedThrottleRequest(address,Bundle.getMessage("ThrottleErrorCSTwoDigit",typeString));
+               return;
+            }
+        }
+        RocoXNetThrottle throttle;
         if (log.isDebugEnabled()) {
             log.debug("Requesting Throttle: " + address);
         }
         if (throttles.containsKey(address)) {
             notifyThrottleKnown(throttles.get(address), address);
         } else {
-            throttle = new Z21XNetThrottle((XNetSystemConnectionMemo) adapterMemo, address, tc);
+            throttle = new RocoXNetThrottle((XNetSystemConnectionMemo) adapterMemo, address, tc);
             throttles.put(address, throttle);
             notifyThrottleKnown(throttle, address);
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21XNetThrottleManager.class);
+    private final static Logger log = LoggerFactory.getLogger(RocoXNetThrottleManager.class);
 
 }
