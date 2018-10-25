@@ -87,7 +87,7 @@ public class PrintTrainManifestActionTest {
     
     @Test
     public void loopTest() {
-        int i = 1000;
+        int i = 500;
         while (i-- > 0) {
             testPrintAction();
         }
