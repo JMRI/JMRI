@@ -200,6 +200,7 @@ public class TimeTableFrameTest {
         JMenuItem importMenuItem = (JMenuItem)jpm.getComponent(2);
         Assert.assertTrue(importMenuItem.getText().equals(Bundle.getMessage("MenuImport")));  // NOI18N
         new JMenuItemOperator(importMenuItem).doClick();
+        JUnitUtil.waitFor(()->{return !(fileOpen.isAlive());}, "open dialog finished");
 
         // Test edits
         // Layout: Bad fastclock value, throttle too low.
