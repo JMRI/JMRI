@@ -10,7 +10,9 @@ public class TimeTableDataManagerTest {
 
     @Test
     public void testCreate() {
-        new TimeTableDataManager(false);
+        TimeTableDataManager dx = new TimeTableDataManager(false);
+        jmri.InstanceManager.deregister(dx, TimeTableDataManager.class);
+        dx = null;
     }
 
     @Test
@@ -79,6 +81,10 @@ public class TimeTableDataManagerTest {
         int nextId = dm.getNextId("ErrorMsg");  // NOI18N
         jmri.util.JUnitAppender.assertErrorMessage("getNextId: Invalid record type: ErrorMsg");  // NOI18N
         Assert.assertEquals(0, nextId);
+
+        // Release data manager
+        jmri.InstanceManager.deregister(dm, TimeTableDataManager.class);
+        dm = null;
     }
 
     @Before

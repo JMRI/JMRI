@@ -389,7 +389,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         JMenuItem imp = new JMenuItem(Bundle.getMessage("MenuImport"));  // NOI18N
         imp.addActionListener((ActionEvent event) -> {
-                importPressed();
+            importPressed();
         });
 
         JMenu ttMenu = new JMenu(Bundle.getMessage("MenuTimetable"));  // NOI18N
@@ -1375,15 +1375,18 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         int newStartHour = (int) _editStartHour.getValue();
         if (newStartHour < 0 || newStartHour > 23) {
             newStartHour = schedule.getStartHour();
+            log.warn("fix start hour");
         }
         int newDuration = (int) _editDuration.getValue();
         if (newDuration < 1 || newDuration > 24) {
             newDuration = schedule.getDuration();
+            log.warn("fix duration");
         }
 
         // Check for trains and stops outside of the time range
         checkStart = newStartHour;
         checkDuration = newDuration;
+        log.warn("checks: s = {}, d = {}", checkStart, checkDuration);
         List<String> trainList = new ArrayList<>();
         for (Train train : _dataMgr.getTrains(_curNodeId, 0 , true)) {
             if (!validateTime(train.getStartTime())) {
@@ -1410,6 +1413,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                     msg.toString(),
                     Bundle.getMessage("WarningTitle"),  // NOI18N
                     JOptionPane.WARNING_MESSAGE);
+            log.warn("dialog displayed");
             return;
         }
         boolean update = false;
@@ -1455,6 +1459,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         int newSpeed = parseNumber(_editDefaultSpeed, "default train speed");  // NOI18N
         if (newSpeed < 0) {
             newSpeed = train.getDefaultSpeed();
+            log.warn("bad default speed");
         }
         LocalTime newTime;
         int newStart;
@@ -1467,6 +1472,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                     Bundle.getMessage("StartTimeFormat", ex.getParsedString()),  // NOI18N
                     Bundle.getMessage("WarningTitle"),  // NOI18N
                     JOptionPane.WARNING_MESSAGE);
+            log.warn("start time format error");
             newStart = train.getStartTime();
         }
         int startHour = schedule.getStartHour();
@@ -1477,6 +1483,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                     Bundle.getMessage("StartTimeError", startHour, endHour),  // NOI18N
                     Bundle.getMessage("WarningTitle"),  // NOI18N
                     JOptionPane.WARNING_MESSAGE);
+            log.warn("start time range error");
             newStart = train.getStartTime();
         }
         int newThrottle = (int) _editThrottle.getValue();
