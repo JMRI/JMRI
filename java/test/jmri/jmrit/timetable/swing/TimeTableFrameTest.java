@@ -216,7 +216,9 @@ public class TimeTableFrameTest {
         textField.clickMouse();
         textField.setText("1");  // NOI18N
         Thread edit2 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
-        new JButtonOperator(editFrame, Bundle.getMessage("ButtonUpdate")).push();  // NOI18N
+        log.warn("find and push the update button");
+        JButtonOperator bEdit2 = new JButtonOperator(editFrame, Bundle.getMessage("ButtonUpdate"));  // NOI18N
+        bEdit2.push();
         JUnitUtil.waitFor(()->{return !(edit2.isAlive());}, "edit2 finished");
 
         // Station:  Distance and staging track.
