@@ -64,10 +64,6 @@ public class PrintTrainManifestActionTest {
         // preview previous manifest?
         JemmyUtil.pressDialogButton(MessageFormat.format(
                 Bundle.getMessage("PrintPreviousManifest"), new Object[]{"preview"}), Bundle.getMessage("ButtonYes"));
-                
-//        jmri.util.JUnitUtil.waitFor(() -> {
-//            return printAction.getState().equals(Thread.State.TERMINATED);
-//        }, "wait to complete");
         
         try {
             printAction.join();
@@ -83,14 +79,6 @@ public class PrintTrainManifestActionTest {
         Assert.assertNotNull("exists", printPreviewFrame);
 
         JUnitUtil.dispose(printPreviewFrame);
-    }
-    
-    @Test
-    public void loopTest() {
-        int i = 500;
-        while (i-- > 0) {
-            testPrintAction();
-        }
     }
 
     // The minimal setup for log4J
