@@ -51,6 +51,8 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     protected boolean mTurnoutExtraSpace = false;
 
     protected boolean mTranspondingAvailable = false;
+    
+    protected boolean mLoconetProtocolAutoDetect = true;
 
     protected LnCommandStationType[] commandStationTypes = {
         LnCommandStationType.COMMAND_STATION_DCS100,
@@ -112,6 +114,12 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
         // default (most common state) is off, so just check for Yes
         mTranspondingAvailable = (value.equals("Yes") || value.equals(Bundle.getMessage("ButtonYes")));
         log.debug("transponding available: {}", mTranspondingAvailable); // NOI18N
+    }
+    
+    public void setLoconetProtocolAutoDetect(String value) {
+        // default (most common state) is off, so just check for Yes
+        mLoconetProtocolAutoDetect = (value.equals("Yes") || value.equals(Bundle.getMessage("LoconetProtocolAutoDetect")));
+        log.debug("Loconet XPSlots: {}", mLoconetProtocolAutoDetect); // NOI18N
     }
     
     @Override

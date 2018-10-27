@@ -46,7 +46,7 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
 
     @Override
     public Vector<String> getPortNames() {
-        portNameVector = new Vector<String>();
+        portNameVector = new Vector<>();
         try {
             RemoteDevice[] devices = LocalDevice.getLocalDevice().getDiscoveryAgent().retrieveDevices(DiscoveryAgent.PREKNOWN);
             if (devices != null) {
@@ -195,7 +195,7 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
         // do the common manager config
 
         this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable);
+                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mLoconetProtocolAutoDetect);
         this.getSystemConnectionMemo().configureManagers();
 
         // start operation
