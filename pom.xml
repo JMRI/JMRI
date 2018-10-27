@@ -986,7 +986,7 @@
         <dependency>
             <groupId>org.netbeans.external</groupId>
             <artifactId>jemmy</artifactId>
-            <version>$(jemmy.version)</version>
+            <version>${jemmy.version}</version>
             <scope>test</scope>
         </dependency>
         <!--
