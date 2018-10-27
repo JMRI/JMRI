@@ -1619,6 +1619,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
      * Process the node delete request.
      */
     void deletePressed() {
+        log.warn("deletePressed: {}", _curNodeType);
         switch (_curNodeType) {
             case "Layout":  // NOI18N
                 deleteLayout();
