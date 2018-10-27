@@ -22,6 +22,7 @@ public class TimeTableFrameTest {
 
     @Test
     public void testCreatEmtpy() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TimeTableFrame f = new TimeTableFrame();
         Assert.assertNotNull(f);
     }
@@ -39,8 +40,8 @@ public class TimeTableFrameTest {
 
         menuTests();
         addTests();
-        editTests();
         deleteTests();
+        editTests();
         deleteDialogTests();
         buttonTests();
 // new EventTool().waitNoEvent(10000);
