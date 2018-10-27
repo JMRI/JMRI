@@ -44,6 +44,7 @@ class Steam1Sound extends EngineSound {
     HashMap<String, SoundBite> trigger_sounds;
 
     int top_speed;
+    int top_speed_reverse;
     private float driver_diameter_float;
     private int num_cylinders;
     private float exponent;
@@ -72,7 +73,7 @@ class Steam1Sound extends EngineSound {
     }
 
     private void startThread() {
-        _loopThread = new S1LoopThread(this, _soundName, top_speed,
+        _loopThread = new S1LoopThread(this, _soundName, top_speed, top_speed_reverse,
                 driver_diameter_float, num_cylinders, decel_trigger_rpms, true);
         log.debug("Loop Thread Started.  Sound name: {}", _soundName);
     }
@@ -92,6 +93,15 @@ class Steam1Sound extends EngineSound {
         // This is all we have to do.  The loop thread will handle everything else
         if (_loopThread != null) {
             _loopThread.setThrottle(s);
+        }
+    }
+
+    // Responds to throttle loco direction key (see EngineSound.java and EngineSoundEvent.java)
+    @Override
+    public void changeLocoDirection(int dirfn) {
+        log.debug("loco IsForward is {}", dirfn);
+        if (_loopThread != null) {
+            _loopThread.getLocoDirection(dirfn);
         }
     }
 
@@ -215,6 +225,17 @@ class Steam1Sound extends EngineSound {
         // Required values
         top_speed = Integer.parseInt(e.getChildText("top-speed"));
         log.debug("top speed forward: {} MPH", top_speed);
+
+        // Optional value
+        // Steam locos can have different top speed reverse.
+        n = e.getChildText("top-speed-reverse"); // Optional value.
+        if (n != null) {
+            top_speed_reverse = Integer.parseInt(n);
+        } else {
+            top_speed_reverse = top_speed;  // Default for top_speed_reverse!
+        }
+        log.debug("top speed reverse: {} MPH", top_speed_reverse);
+
         driver_diameter_float = Float.parseFloat(e.getChildText("driver-diameter-float"));
         log.debug("driver diameter: {} inches", driver_diameter_float);
         num_cylinders = Integer.parseInt(e.getChildText("cylinders"));
@@ -684,7 +705,9 @@ class Steam1Sound extends EngineSound {
         private boolean is_half_speed;
         private int rpm_nominal; // Nominal value
         private int rpm; // Actual value
+        private int topspeed;
         private int _top_speed;
+        private int _top_speed_reverse;
         private float _driver_diameter_float;
         private int _num_cylinders;
         private int _decel_trigger_rpms;
@@ -697,11 +720,12 @@ class Steam1Sound extends EngineSound {
         private int wait_notch;
         public static final int SLEEP_INTERVAL = 50;
 
-        public S1LoopThread(Steam1Sound d, String s, int ts, float dd, 
+        public S1LoopThread(Steam1Sound d, String s, int ts, int tsr, float dd, 
                 int nc, int dtr, boolean r) {
             super();
             _parent = d;
             _top_speed = ts;
+            _top_speed_reverse = tsr;
             _driver_diameter_float = dd;
             _num_cylinders = nc;
             _decel_trigger_rpms = dtr;
@@ -844,6 +868,17 @@ class Steam1Sound extends EngineSound {
             }
         }
 
+        private void getLocoDirection(int d) {
+            // If loco direction was changed we need to set topspeed of the loco to new value 
+            // (this is necessary, when topspeed-forward and topspeed-reverse differs)
+            if (d == 1) {  // loco is going forward
+                topspeed = _top_speed;
+            } else {
+                topspeed = _top_speed_reverse;
+            }
+            log.debug("loco direction: {}, top speed: {}", d, topspeed);
+        }
+
         private void setFunction(String event, boolean is_true, String name) {
             // This throttle function key handling differs to configurable sounds:
             // Do something following certain conditions, when a throttle function key is pressed.
@@ -930,7 +965,7 @@ class Steam1Sound extends EngineSound {
 
         private void setupAccDec() {
             // Momentum
-            int topspeed_rpm = (int) Math.round(_top_speed * 1056 / (Math.PI * _driver_diameter_float)); // Top-speed in RPM
+            int topspeed_rpm = (int) Math.round(topspeed * 1056 / (Math.PI * _driver_diameter_float)); // Top-speed in RPM
             int time_factor = 896; // NMRA value in ms
             acc_time = time_factor * _parent.accel_rate / topspeed_rpm; // NMRA CV#3
             dec_time = time_factor * _parent.decel_rate / topspeed_rpm; // NMRA CV#4
@@ -1145,7 +1180,7 @@ class Steam1Sound extends EngineSound {
         private int calcRPM(float t) {
             // speed = % of topspeed (mph)
             // RPM = speed * ((inches/mile) / (minutes/hour)) / (pi * driver_diameter_float)
-            return (int) Math.round(_parent.speedCurve(t) * _top_speed * 1056 / (Math.PI * _driver_diameter_float));
+            return (int) Math.round(_parent.speedCurve(t) * topspeed * 1056 / (Math.PI * _driver_diameter_float));
         }
 
         private int calcChuffInterval(int revpm) {

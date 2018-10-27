@@ -55,20 +55,16 @@ public class CbusOpCodes {
         
         // extra info for ERR opc
         if (opc==CbusConstants.CBUS_ERR) {
-            // log.warn(" full err message for err no. {}",msg.getElement(3));
             // elements 1 & 2 depend on element 3
+            int rcvdIntAddr = (msg.getElement(1) & 0x3f) * 256 + msg.getElement(2);
             switch (msg.getElement(3)) {
                 case 1:
                     buf.append(Bundle.getMessage("ERR_LOCO_STACK_FULL"));
-                    buf.append(msg.getElement(1));
-                    buf.append(" ");
-                    buf.append(msg.getElement(2));
+                    buf.append(rcvdIntAddr);
                     break;
                 case 2:
                     buf.append(Bundle.getMessage("ERR_LOCO_ADDRESS_TAKEN"));
-                    buf.append(msg.getElement(1));
-                    buf.append(" ");
-                    buf.append(msg.getElement(2));
+                    buf.append(rcvdIntAddr);
                     break;
                 case 3:
                     buf.append(Bundle.getMessage("ERR_SESSION_NOT_PRESENT"));
@@ -87,9 +83,7 @@ public class CbusOpCodes {
                     break;
                 case 7:
                     buf.append(Bundle.getMessage("ERR_INVALID_REQUEST"));
-                    buf.append(msg.getElement(1));
-                    buf.append(" ");
-                    buf.append(msg.getElement(2));
+                    buf.append(rcvdIntAddr);
                     break;
                 case 8:
                     buf.append(Bundle.getMessage("ERR_SESSION_CANCELLED"));

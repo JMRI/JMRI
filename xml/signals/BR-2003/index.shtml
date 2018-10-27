@@ -91,8 +91,15 @@
     <ul>
     <li><a href="appearance-feather.xml">Feather with up to 6 positions</a></li>
     </ul>
+    <p>1 North West<br>
+    2 West<br>
+    3 South West<br>
+    4 North East<br>
+    5 East<br>
+    6 South East<br>
+    </p>
     
-    <p>Position Light Signals definitions:</p>
+    <p>Position Light Signals definitions ( aka Shunt or Shunting Signals ):</p>
     <ul>
     <li><a href="appearance-plr.xml">Position Light Signal Red White Apperance</a>
     <li><a href="appearance-ply.xml">Position Light Signal Yellow White Apperance</a>
