@@ -257,9 +257,12 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
     - http://download.eclipse.org/eclipse/downloads/drops4/R-4.6-201606061100/  (via ecj-4.6.jar) June 22, 2016
 - used in ant warnings target
 
+##### jemmy-22-00c9f753cd0a.jar
+- Built from rev 22 repo after changeset 22:00c9f753cd0a; see http://hg.openjdk.java.net/code-tools/jemmy/v2/rev/00c9f753cd0a
+- See also http://hg.openjdk.java.net/code-tools/jemmy/v2/
+
 ##### junit-4.12.jar
 - version 4.12
-- Used for testing only, not at runtime
 - from http://search.maven.org/#artifactdetails%7Cjunit%7Cjunit%7C4.12%7Cjar
 
 ##### hamcrest-core-1.3.jar
