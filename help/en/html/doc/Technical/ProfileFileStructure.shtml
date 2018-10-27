@@ -28,34 +28,35 @@
     <h2>Locations and contents</h2>
         <dl>
         <dt>Settings Location (portable name = "settings:")</dt>
-        <dd>This is the only fixed location and is determined by the underlying operating system type and your logged-in-username. It's a known place the JMRI program can always look and find essential settings files that tell it where everything else is located.
-            <p>The following files/folders are always located here:
+        <dd>
+            This is the only fixed location and is determined by the underlying operating system type and your logged-in-username. It's a known place the JMRI program can always look and find essential settings files that tell it where everything else is located.
+            <p>The following files/folders are always located here:</p>
             <dl>
-            <dt>nodeIdentity.xml</dt>
-            <dd>This file contains a unique nodeIdentity string that is generated the first time JMRI uses this Settings Location, doesn't change and serves to distinguish between other possible Settings Locations (such as under another username, on a different operating system partition or another computer).</dd>
-            <dt>profiles.xml</dt>
-            <dd>This file lists the name of every Profile Folder known to this instance of JMRI and its location. It also has a list of all paths you wish to search for profiles and which path is the default for newly-created profiles. "settings:" is always searched but it doesn't have to be the default.</dd>
-            <dt>log</dt>
-            <dd>This folder contains the session.log and messages.log files, plus several previous versions of these files.
-                </dd>
-            <dt>DecoderProConfig3.properties
-            <dt>PanelProConfig2.properties
-            <dt>SoundProConfig2.properties
-                <dd>
-            These files are created the first time each of the apps are run and simply contain three pieces of information:
-                <ul>
-                <li>The name of the Profile Folder last used by this app.
-                <li>Whether you want the app to autostart with the last-used Profile Folder
-                <li>How long to display the Profile Selector box if you choose not to autostart.
-                </ul></dd>
-                <dt>Other files/folders:</dt>
-                <dd>The following may be present, but do not have to be:
-                <ul>
-                <li>Various Profile Folders you have created. From V4.13.4 on, newly-created Profile Folders will have a ".jmri" extension.
-                <li>Your User Files - panels etc.
-                <li>our "roster" folder and its (recreatable) roster.xml file.
-                </ul></dd>
-        </dd>
+                <dt>nodeIdentity.xml</dt>
+                <dd>This file contains a unique nodeIdentity string that is generated the first time JMRI uses this Settings Location, doesn't change and serves to distinguish between other possible Settings Locations (such as under another username, on a different operating system partition or another computer).</dd>
+                <dt>profiles.xml</dt>
+                <dd>This file lists the name of every Profile Folder known to this instance of JMRI and its location. It also has a list of all paths you wish to search for profiles and which path is the default for newly-created profiles. "settings:" is always searched but it doesn't have to be the default.</dd>
+                <dt>log</dt>
+                <dd>This folder contains the session.log and messages.log files, plus several previous versions of these files.
+                    </dd>
+                <dt>DecoderProConfig3.properties</dt>
+                <dt>PanelProConfig2.properties</dt>
+                <dt>SoundProConfig2.properties</dt>
+                    <dd>
+                These files are created the first time each of the apps are run and simply contain three pieces of information:
+                    <ul>
+                    <li>The name of the Profile Folder last used by this app.
+                    <li>Whether you want the app to autostart with the last-used Profile Folder
+                    <li>How long to display the Profile Selector box if you choose not to autostart.
+                    </ul></dd>
+                    <dt>Other files/folders:</dt>
+                    <dd>The following may be present, but do not have to be:
+                    <ul>
+                    <li>Various Profile Folders you have created. From V4.13.4 on, newly-created Profile Folders will have a ".jmri" extension.
+                    <li>Your User Files - panels etc.
+                    <li>our "roster" folder and its (recreatable) roster.xml file.
+                    </ul></dd>
+        </dl></dd>
     
         <dt>Profile Location (portable name = "profile:")</dt>
         <dd>This folder is the one chosen by the Profile Selector mechanism for the current JMRI session.
@@ -69,7 +70,7 @@
         The following may be present, but do not have to be:
         <ul>
         <li>Your User Files - panels etc.
-        <il>Your "roster" folder and its (recreatable) roster.xml file.
+        <li>Your "roster" folder and its (recreatable) roster.xml file.
         </ul>
         </dd>
         
@@ -83,7 +84,7 @@
         <li>Your "roster" folder and its (recreatable) roster.xml file.
         </ul>
         You are free to change the User Files Location as you like (Preferences->File Locations).
-        <dd>
+        </dd>
     
         <dt>Roster Location (portable name = "roster:")</dt>
         <dd>This location contains:
@@ -97,7 +98,7 @@
             <p>If you are creating your own scripts you may wish to change the Scripts Location (Preferences->Locations).
             </dd>
             </dl>
-        <dd>
+        </dd>
     
         <dt>Program Location (portable name = "program:")</dt>
         <dd>This location is set when JMRI is installed and can only be changed when installing the software.
