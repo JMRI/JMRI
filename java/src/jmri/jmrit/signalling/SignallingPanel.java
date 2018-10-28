@@ -106,6 +106,7 @@ public class SignallingPanel extends JmriPanel {
     /**
      * Create and fill in the JPanel to edit an existing Signal Mast Logic.
      *
+     * @see SignallingFrame
      * @param source Bean of Source Signal Mast
      * @param dest   Bean of Destination Signal Mast
      * @param frame  Name for the enclosing JFrame

@@ -23,9 +23,9 @@ public class SignallingFrame extends JmriJFrame {
     /**
      * Set the Signal Mast Logic frame's initial state.
      *
+     * @see SignallingPanel
      * @param source The Signal Mast this SML is directly linked to
      * @param dest   The Signal Mast this SML is looking at
-     * @see SignallingPanel(SignalMast, SignalMast, JmriJFrame)
      */
     public void initComponents(SignalMast source, SignalMast dest) {
         // the following code sets the frame's initial state
@@ -41,4 +41,5 @@ public class SignallingFrame extends JmriJFrame {
         // pack for display
         pack();
     }
+
 }
