@@ -212,12 +212,12 @@ public class TimeTableFrameTest {
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).push();  // NOI18N
         JUnitUtil.waitFor(()->{return !(edit3.isAlive());}, "edit3 finished");  // NOI18N
 
-        _jtxt = new JTextFieldOperator(_jfo, 0);
-        _jtxt.clickMouse();  // Activate Update button
-        new JSpinnerOperator(_jfo, 1).setValue(0);
-        Thread edit4 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
-        new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).push();  // NOI18N
-        JUnitUtil.waitFor(()->{return !(edit4.isAlive());}, "edit4 finished");  // NOI18N
+//         _jtxt = new JTextFieldOperator(_jfo, 0);
+//         _jtxt.clickMouse();  // Activate Update button
+//         new JSpinnerOperator(_jfo, 1).setValue(0);
+//         Thread edit4 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
+//         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).push();  // NOI18N
+//         JUnitUtil.waitFor(()->{return !(edit4.isAlive());}, "edit4 finished");  // NOI18N
 
         // Schedule:  Start hour and duration.
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample", "Schedule", "114"}));  // NOI18N
@@ -417,5 +417,5 @@ public class TimeTableFrameTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableFrameTest.class);
+//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableFrameTest.class);
 }
