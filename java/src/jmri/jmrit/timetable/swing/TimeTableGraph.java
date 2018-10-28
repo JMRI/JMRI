@@ -81,6 +81,7 @@ public class TimeTableGraph extends JPanel {
 
     // ------------ global variables ------------
     HashMap<Integer, Double> _stationGrid = new HashMap<>();
+    HashMap<Integer, Double> _hourMap = new HashMap<>();
     ArrayList<Double> _hourGrid = new ArrayList<>();
     int _infoColWidth = 0;
     double _hourOffset = 0;
@@ -111,7 +112,7 @@ public class TimeTableGraph extends JPanel {
     // Stop processing
     double _maxDistance;
     String _direction;
-    int _baseTime;
+//     int _baseTime;
     boolean _firstStop;
     boolean _lastStop;
 
@@ -207,9 +208,8 @@ public class TimeTableGraph extends JPanel {
             double hourX = (hourWidth * i) + _hourOffset + _graphLeft;
             int hOffset = _g2.getFontMetrics().stringWidth(hourString) / 2;
             _g2.drawString(hourString, (float) hourX - hOffset, (float) _graphBottom + 20);
-            currentHour++;
-            if (currentHour > 23) {
-                currentHour -= 24;
+            if (i < _duration) {
+                _hourMap.put(currentHour, hourX);
             }
             _hourGrid.add(hourX);
             if (i == 0) {
@@ -217,6 +217,10 @@ public class TimeTableGraph extends JPanel {
             }
             if (i == _duration) {
                 _lastX = hourX - hOffset;
+            }
+            currentHour++;
+            if (currentHour > 23) {
+                currentHour -= 24;
             }
         }
     }
@@ -252,7 +256,7 @@ public class TimeTableGraph extends JPanel {
      * in the segment, it is included.  Most trains only use a single segment.
      */
     void drawTrains() {
-        _baseTime = _startHour * 60;
+//         _baseTime = _startHour * 60;
         _sizeMinute = _graphWidth / ((_duration + 1) * 60);
         _throttleX = 0;
         for (Train train : _trains) {
@@ -531,7 +535,7 @@ public class TimeTableGraph extends JPanel {
             for (Station segStation : _stations) {
                 if (segStation.getStationName().equals(prevName)) {
                     // x is based on previous depart time, y is based on corresponding station position
-                    x = _graphLeft + ((prevStop.getDepartTime() - _baseTime) * _sizeMinute) + _hourOffset;
+                    x = calculateX(prevStop.getDepartTime());
                     y = _stationGrid.get(segStation.getStationId());
                     _trainLine.moveTo(x, y);
                     _throttleX = x;  // save for drawing the throttle line at setEnd
@@ -543,8 +547,7 @@ public class TimeTableGraph extends JPanel {
                 }
             }
         }
-
-        x = _graphLeft + ((stop.getArriveTime() - _baseTime) * _sizeMinute) + _hourOffset;
+        x = calculateX(stop.getArriveTime());
         y = _stationGrid.get(stop.getStationId());
 
         if (segmentChange) {
@@ -562,7 +565,7 @@ public class TimeTableGraph extends JPanel {
 
         // Check for stop duration before depart
         if (stop.getDuration() > 0) {
-            x = _graphLeft + ((stop.getDepartTime() - _baseTime) * _sizeMinute) + _hourOffset;
+            x = calculateX(stop.getDepartTime());
             _trainLine.lineTo(x, y);
             drawTrainTime(stop.getDepartTime(), "depart", x, y);
         }
@@ -573,7 +576,7 @@ public class TimeTableGraph extends JPanel {
      * @param stop The current stop.
      */
     void drawLine(Stop stop) {
-        double x = _graphLeft + ((_arriveTime - _baseTime) * _sizeMinute) + _hourOffset;
+        double x = calculateX(_arriveTime);
         double y = _stationGrid.get(stop.getStationId());
         _trainLine.lineTo(x, y);
         drawTrainTime(_arriveTime, "arrive", x, y);  // NOI18N
@@ -581,7 +584,7 @@ public class TimeTableGraph extends JPanel {
         setDirection();
         // Check for duration after arrive
         if (stop.getDuration() > 0) {
-            x = _graphLeft + ((_departTime - _baseTime) * _sizeMinute) + _hourOffset;
+            x = calculateX(_departTime);
             if (x < _trainLine.getCurrentPoint().getX()) {
                 // The line wraps around to the beginning, do the line in two pieces
                 _trainLine.lineTo(_graphRight - _hourOffset, y);
@@ -611,10 +614,9 @@ public class TimeTableGraph extends JPanel {
             y = _trainLine.getCurrentPoint().getY();
             skipLine = true;
         } else {
-            x = _graphLeft + ((_arriveTime - _baseTime) * _sizeMinute) + _hourOffset;
+            x = calculateX(_arriveTime);
             y = _stationGrid.get(stop.getStationId());
         }
-
 
         drawTrainName(x, y, "Center", false, false);  // NOI18N
         _g2.setColor(_trainColor);
@@ -638,6 +640,21 @@ public class TimeTableGraph extends JPanel {
                 drawTrainName(_throttleX + 10, throttleY + 5, "Left", true, true);  // NOI18N
             }
         }
+    }
+
+    /**
+     * Convert the time value, 0 - 1439 to the x graph position.
+     * @param time The time value.
+     * @return the x value.
+     */
+    double calculateX(int time) {
+        if (time < 0) time = 0;
+        if (time > 1439) time = 1439;
+
+        int hour = time / 60;
+        int min = time % 60;
+
+        return _hourMap.get(hour) + (min * _sizeMinute);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableGraph.class);

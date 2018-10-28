@@ -41,14 +41,17 @@ public class TimeTableFrameTest {
         menuTests();
         addTests();
         deleteTests();
+        addTests();
+        deleteLayout();
         editTests();
+        timeRangeTests();
         deleteDialogTests();
         buttonTests();
-// new EventTool().waitNoEvent(10000);
     }  // TODO
 
+// new EventTool().waitNoEvent(10000);
+
     void menuTests() {
-        log.warn("-- menu tests");
         JMenuBarOperator jmbo = new JMenuBarOperator(_jfo); // there's only one menubar
         JMenuOperator jmo = new JMenuOperator(jmbo, Bundle.getMessage("MenuTimetable"));  // NOI18N
         JPopupMenu jpm = jmo.getPopupMenu();
@@ -65,8 +68,6 @@ public class TimeTableFrameTest {
     }
 
     void addTests() {
-        log.warn("-- add tests");
-
         // Add a new layout
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample"}));  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("AddLayoutButtonText")).push();  // NOI18N
@@ -107,6 +108,9 @@ public class TimeTableFrameTest {
         _jtxt = new JTextFieldOperator(_jfo, 1);
         _jtxt.clickMouse();
         _jtxt.setText("0");
+        new JCheckBoxOperator(_jfo, 0).doClick();
+        new JSpinnerOperator(_jfo, 0).setValue(1);
+        new JSpinnerOperator(_jfo, 1).setValue(1);
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).push();  // NOI18N
 
         // Add a station 2
@@ -175,7 +179,6 @@ public class TimeTableFrameTest {
     }
 
     void editTests() {
-        log.warn("-- edit tests");
         // Layout: Bad fastclock value, good value to force recalc, throttle too low.
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample"}));  // NOI18N
         _jtxt = new JTextFieldOperator(_jfo, 1);
@@ -234,7 +237,6 @@ public class TimeTableFrameTest {
 
         // Train:  Speed, Start time, Notes
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample", "Schedule", "114", "AMX"}));  // NOI18N
-        log.warn("train = {}", new JTextFieldOperator(_jfo, 0).getText());
         _jtxt = new JTextFieldOperator(_jfo, 2);
         _jtxt.clickMouse();
         _jtxt.setText("-5");  // NOI18N
@@ -247,8 +249,6 @@ public class TimeTableFrameTest {
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).push();  // NOI18N
         JUnitUtil.waitFor(()->{return !(edit6.isAlive());}, "edit6 finished");
 
-// // --------------  23-20    start time range error
-
         JTextAreaOperator textArea = new JTextAreaOperator(_jfo, 0);
         textArea.clickMouse();
         textArea.setText("A train note");  // NOI18N
@@ -256,7 +256,6 @@ public class TimeTableFrameTest {
 
         // Stop:  Duration, next speed, notes
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample", "Schedule", "114", "AMX", "1"}));  // NOI18N
-        log.warn("stop = {}", new JTextFieldOperator(_jfo, 0).getText());
 
         _jtxt = new JTextFieldOperator(_jfo, 0);
         _jtxt.clickMouse();
@@ -277,8 +276,36 @@ public class TimeTableFrameTest {
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).push();  // NOI18N
     } // TODO
 
+    void timeRangeTests() {
+        // Change schedule start time
+        _jto.clickOnPath(_jto.findPath(new String[]{"Sample", "Schedule", "123"}));  // NOI18N
+        _jtxt = new JTextFieldOperator(_jfo, 0);
+        _jtxt.clickMouse();  // Activate Update button
+        new JSpinnerOperator(_jfo, 0).setValue(10);
+        Thread time1 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
+        new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).push();  // NOI18N
+        JUnitUtil.waitFor(()->{return !(time1.isAlive());}, "time1 finished");
+
+        // Change train start time
+        _jto.clickOnPath(_jto.findPath(new String[]{"Sample", "Schedule", "123", "EXP"}));  // NOI18N
+        _jtxt = new JTextFieldOperator(_jfo, 3);
+        _jtxt.clickMouse();
+        _jtxt.setText("7:00");  // NOI18N
+        Thread time2 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
+        new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).push();  // NOI18N
+        JUnitUtil.waitFor(()->{return !(time2.isAlive());}, "time2 finished");
+
+        // Change train start time to move stop times outside of schedule
+        _jto.clickOnPath(_jto.findPath(new String[]{"Sample", "Schedule", "123", "EXP"}));  // NOI18N
+        _jtxt = new JTextFieldOperator(_jfo, 3);
+        _jtxt.clickMouse();
+        _jtxt.setText("12:00");  // NOI18N
+        Thread time3 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
+        new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).push();  // NOI18N
+        JUnitUtil.waitFor(()->{return !(time3.isAlive());}, "time3 finished");
+    }
+
     void deleteTests() {
-        log.warn("-- delete tests");
         // Delete the test layout created by the add process
         _jto.clickOnPath(_jto.findPath(new String[]{"Test", "Schedules", "Test", "TRN", "2"}));  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("DeleteStopButtonText")).push();  // NOI18N
@@ -301,7 +328,6 @@ public class TimeTableFrameTest {
     }
 
     void deleteDialogTests() {
-        log.warn("-- delete tests, reply no/ok to dialog");
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample"}));  // NOI18N
         Thread delLayout = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"));  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("DeleteLayoutButtonText")).push();  // NOI18N
@@ -333,8 +359,14 @@ public class TimeTableFrameTest {
         JUnitUtil.waitFor(()->{return !(delTrain.isAlive());}, "delTrain finished");  // NOI18N
     }
 
+    void deleteLayout() {
+        _jto.clickOnPath(_jto.findPath(new String[]{"Test"}));  // NOI18N
+        Thread layoutDelete = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"));  // NOI18N
+        new JButtonOperator(_jfo, Bundle.getMessage("DeleteLayoutButtonText")).push();  // NOI18N
+        JUnitUtil.waitFor(()->{return !(layoutDelete.isAlive());}, "layoutDelete finished");
+    }
+
     void buttonTests() {
-        log.warn("-- button tests");
         // Test move buttons
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample", "Schedule", "114", "AMX", "3"}));  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUp"), 1).push();  // NOI18N
@@ -364,7 +396,6 @@ public class TimeTableFrameTest {
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(dialogTitle);
-            log.warn("jdo = {}", jdo);
             JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
             jbo.pushNoBlock();
         });
