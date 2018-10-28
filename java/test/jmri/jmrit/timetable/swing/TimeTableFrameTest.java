@@ -287,6 +287,8 @@ public class TimeTableFrameTest {
         new JSpinnerOperator(_jfo, 0).setValue(10);
         Thread time1 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
+        boolean t1 = time1.isAlive();
+        log.warn("t1 = {}", t1);
 //         JUnitUtil.waitFor(()->{return !(time1.isAlive());}, "time1 finished");
 //         try {
 //             time1.join();
@@ -444,7 +446,7 @@ public class TimeTableFrameTest {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(dialogTitle);
             JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
-            jbo.pushNoBlock();
+              jbo.pushNoBlock();
 //             jbo.doClick();
         });
         t.setName(dialogTitle + " Close Dialog Thread");  // NOI18N
