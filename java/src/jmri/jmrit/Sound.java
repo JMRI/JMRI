@@ -44,6 +44,7 @@ public class Sound {
     private boolean streamingStop = false;
     private Clip clip = null;
     private boolean autoClose = true;
+    private final Object lock = new Object();
     private final static Logger log = LoggerFactory.getLogger(Sound.class);
 
     /**
@@ -97,8 +98,10 @@ public class Sound {
             clip.addLineListener(event -> {
                 if (LineEvent.Type.STOP.equals(event.getType())) {
                     if (autoClose) {
-                        clip.close();
-                        clip = null;
+                        synchronized(lock) {
+                            clip.close();
+                            clip = null;
+                        }
                     }
                 }
             });
@@ -134,9 +137,13 @@ public class Sound {
     public void close() {
         if (streaming) {
             streamingStop = true;
-        } else if (clip != null) {
-            clip.close();
-            clip = null;
+        } else {
+            synchronized(lock) {
+                if (clip != null) {
+                    clip.close();
+                    clip = null;
+                }
+            }
         }
     }
 
@@ -149,11 +156,13 @@ public class Sound {
             Thread tStream = new Thread(streamSound);
             tStream.start();
         } else {
-            if (clip == null) {
-                openClip();
-            }
-            if (clip != null) {
-                clip.start();
+            synchronized(lock) {
+                if (clip == null) {
+                    openClip();
+                }
+                if (clip != null) {
+                    clip.start();
+                }
             }
         }
     }
@@ -176,11 +185,13 @@ public class Sound {
         if (streaming) {
             log.warn("Streaming this audio file, loop() not allowed");
         } else {
-            if (clip == null) {
-                openClip();
-            }
-            if (clip != null) {
-                clip.loop(count);
+            synchronized(lock) {
+                if (clip == null) {
+                    openClip();
+                }
+                if (clip != null) {
+                    clip.loop(count);
+                }
             }
         }
     }
