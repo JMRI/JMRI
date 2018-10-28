@@ -146,7 +146,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
                 int port = shared.getAttribute("port").getIntValue();
                 adapter.setPort(port);
             } catch (org.jdom2.DataConversionException ex) {
-                log.warn("Could not parse port attribute");
+                log.warn("Could not parse port attribute: {}", shared.getAttribute("port"));
             } catch (NullPointerException ex) {  // considered normal if the attributes are not present
             }
         }
