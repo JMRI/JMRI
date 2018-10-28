@@ -52,20 +52,17 @@ public class VSDGeoFile extends XmlFile {
     @SuppressWarnings("unchecked") // ArrayList[n] is not detected as the coded generics
     public VSDGeoFile() {
 
+        // Setup lists for Reporters and Positions
         reporterlists = new ArrayList<>();
         List<Integer>[] reporterlist = new ArrayList[VSDecoderManager.max_decoder]; // Limit number of supported VSDecoders
-        reporterlist[0] = new ArrayList<>();
-        reporterlist[1] = new ArrayList<>();
-        reporterlist[2] = new ArrayList<>();
-        reporterlist[3] = new ArrayList<>();
-
         blockPositionlists = new ArrayList<>();
         List<PhysicalLocation>[] blockPositionlist = new ArrayList[VSDecoderManager.max_decoder];
-        blockPositionlist[0] = new ArrayList<>();
-        blockPositionlist[1] = new ArrayList<>();
-        blockPositionlist[2] = new ArrayList<>();
-        blockPositionlist[3] = new ArrayList<>();
+        for (int i = 0; i < VSDecoderManager.max_decoder; i++) {
+            reporterlist[i] = new ArrayList<>();
+            blockPositionlist[i] = new ArrayList<>();
+        }
 
+        // Another list to provide a flag for circling or non-circling routes
         circlelist = new ArrayList<>();
 
         File file = new File(FileUtil.getUserFilesPath() + VSDGeoDataFileName);
@@ -310,7 +307,7 @@ public class VSDGeoFile extends XmlFile {
         return blockParameter;
     }
 
-    // Block Position lists
+    // Reporter (Block) Position lists
     public List<List<PhysicalLocation>> getBlockPosition() {
         return blockPositionlists;
     }
