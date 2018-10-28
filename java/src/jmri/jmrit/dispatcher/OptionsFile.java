@@ -202,6 +202,9 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                             dispatcher.setRosterEntryInBlock(true);
                         }
                     }
+                    if (options.getAttribute("stoppingspeedname") != null) {
+                        dispatcher.setStoppingSpeedName((options.getAttribute("stoppingspeedname")).getValue());
+                    }
                 }
             }
         } else {
@@ -251,6 +254,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
         options.setAttribute("layoutscale", Scale.getShortScaleID(dispatcher.getScale()));
         options.setAttribute("usescalemeters", "" + (dispatcher.getUseScaleMeters() ? "yes" : "no"));
         options.setAttribute("userosterentryinblock", "" + (dispatcher.getRosterEntryInBlock() ? "yes" : "no"));
+        options.setAttribute("stoppingspeedname", dispatcher.getStoppingSpeedName());
         if (dispatcher.getSignalType() == 0x00) {
             options.setAttribute("usesignaltype", "signalhead");
         } else {
