@@ -146,7 +146,21 @@ public class Sound {
             }
         }
     }
-
+    
+    @Override
+    public void finalize() throws Throwable {
+        try {
+            synchronized(lock) {
+                if (clip != null) {
+                    clip.close();
+                    clip = null;
+                }
+            }
+        } finally {
+            super.finalize();
+        }
+    }
+    
     /**
      * Play the sound once.
      */
