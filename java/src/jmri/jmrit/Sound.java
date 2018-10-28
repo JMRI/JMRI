@@ -150,10 +150,12 @@ public class Sound {
     @Override
     public void finalize() throws Throwable {
         try {
-            synchronized(lock) {
-                if (clip != null) {
-                    clip.close();
-                    clip = null;
+            if (!streaming) {
+                synchronized(lock) {
+                    if (clip != null) {
+                        clip.close();
+                        clip = null;
+                    }
                 }
             }
         } finally {
