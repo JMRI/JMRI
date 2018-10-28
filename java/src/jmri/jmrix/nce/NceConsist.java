@@ -190,6 +190,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
         }
     }
 
+    @SuppressWarnings("deprecation") // Thread.stop not likely to be removed
     private void stopReadNCEconsistThread() {
         if (mb != null) {
             try {
