@@ -13,6 +13,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -42,6 +43,7 @@ public class Sound {
     private boolean streaming = false;
     private boolean streamingStop = false;
     private Clip clip = null;
+    private boolean autoClose = true;
     private final static Logger log = LoggerFactory.getLogger(Sound.class);
 
     /**
@@ -78,19 +80,63 @@ public class Sound {
         }
         this.url = url;
         try {
-            this.clip = AudioSystem.getClip();
             streaming = this.needStreaming();
             if (!streaming) {
-                this.clip.open(AudioSystem.getAudioInputStream(this.url));
+                openClip();
             }
         } catch (URISyntaxException ex) {
             streaming = false;
+        } catch (IOException ex) {
+            log.error("Unable to open {}", url);
+        }
+    }
+    
+    private void openClip() {
+        try {
+            clip = AudioSystem.getClip();
+            clip.addLineListener(event -> {
+                if (LineEvent.Type.STOP.equals(event.getType())) {
+                    if (autoClose) {
+                        clip.close();
+                        clip = null;
+                    }
+                }
+            });
+            clip.open(AudioSystem.getAudioInputStream(url));
         } catch (IOException ex) {
             log.error("Unable to open {}", url);
         } catch (LineUnavailableException ex) {
             log.error("Unable to provide audio playback", ex);
         } catch (UnsupportedAudioFileException ex) {
             log.error("{} is not a recognised audio format", url);
+        }
+    }
+    
+    /**
+     * Set if the clip be closed automatically.
+     * @param autoClose true if closed automatically
+     */
+    public void setAutoClose(boolean autoClose) {
+        this.autoClose = autoClose;
+    }
+    
+    /**
+     * Get if the clip is closed automatically.
+     * @return true if closed automatically
+     */
+    public boolean getAutoClose() {
+        return autoClose;
+    }
+    
+    /**
+     * Closes the sound.
+     */
+    public void close() {
+        if (streaming) {
+            streamingStop = true;
+        } else if (clip != null) {
+            clip.close();
+            clip = null;
         }
     }
 
@@ -103,7 +149,12 @@ public class Sound {
             Thread tStream = new Thread(streamSound);
             tStream.start();
         } else {
-            this.clip.start();
+            if (clip == null) {
+                openClip();
+            }
+            if (clip != null) {
+                clip.start();
+            }
         }
     }
 
@@ -125,7 +176,12 @@ public class Sound {
         if (streaming) {
             log.warn("Streaming this audio file, loop() not allowed");
         } else {
-            this.clip.loop(count);
+            if (clip == null) {
+                openClip();
+            }
+            if (clip != null) {
+                clip.loop(count);
+            }
         }
     }
 
