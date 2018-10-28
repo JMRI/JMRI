@@ -249,7 +249,7 @@ public class PointDetails {
     }
 
     public void setRefObject(NamedBean refObs) {
-        List<LayoutEditor> panels = jmri.jmrit.display.PanelMenu.instance().
+        List<LayoutEditor> panels = InstanceManager.getDefault(jmri.jmrit.display.PanelMenu.class).
                 getLayoutEditorPanelList();
         for (LayoutEditor pnl : panels) {
             if (refLoc == null) {

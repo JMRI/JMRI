@@ -124,14 +124,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     static final int MID = 2;
     static final int END = 3;
     
-    static boolean _debug; {
-        if (log.isDebugEnabled()) {
-            _debug = true;
-        } else {
-            _debug = false;
-        }
-    }
-
     /**
      * Create an object with no route defined. The list of BlockOrders is the
      * route from an Origin to a Destination
@@ -146,9 +138,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         _orders = new ArrayList<>();
         _runBlind = false;
         _speedUtil = new SpeedUtil(_orders);
-        if (log.isDebugEnabled()) {
-            _debug = true;
-        }
     }
 
     @Override
@@ -940,7 +929,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     }
                     break;
                 case DEBUG:
-                    if (_debug) {
+                    if (log.isDebugEnabled()) {
                         debugInfo();
                     }
                     break;
@@ -1028,7 +1017,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     ret = true;
                     break;
                 case DEBUG:
-                    if (_debug) {
+                    if (log.isDebugEnabled()) {
                         ret = debugInfo();
                     }
                     break;
