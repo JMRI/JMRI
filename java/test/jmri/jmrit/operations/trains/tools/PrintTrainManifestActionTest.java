@@ -64,10 +64,12 @@ public class PrintTrainManifestActionTest {
         // preview previous manifest?
         JemmyUtil.pressDialogButton(MessageFormat.format(
                 Bundle.getMessage("PrintPreviousManifest"), new Object[]{"preview"}), Bundle.getMessage("ButtonYes"));
-                
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return printAction.getState().equals(Thread.State.TERMINATED);
-        }, "wait to complete");
+        
+        try {
+            printAction.join();
+        } catch (InterruptedException e) {
+ 
+        }
         
         // confirm print preview window is showing
         ResourceBundle rb = ResourceBundle
