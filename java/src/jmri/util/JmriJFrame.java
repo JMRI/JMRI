@@ -611,10 +611,8 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      * <p>
      * The returned list is a copy made at the time of the call, so it can be
      * manipulated as needed by the caller.
-     * <p>
-     * If subClass is null, returns a list of all JmriJFrames.
      *
-     * @param subClass The Class the list should be limited to.
+     * @param type The Class the list should be limited to.
      * @return An ArrayList of Frames.
      */
     @SuppressWarnings("unchecked") // cast in add() checked at run time
