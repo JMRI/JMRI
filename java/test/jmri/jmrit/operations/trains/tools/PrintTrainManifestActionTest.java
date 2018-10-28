@@ -68,7 +68,7 @@ public class PrintTrainManifestActionTest {
         try {
             printAction.join();
         } catch (InterruptedException e) {
- 
+            // do nothing
         }
         
         // confirm print preview window is showing
