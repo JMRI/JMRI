@@ -248,11 +248,11 @@
 
       <li><a href="#Kernel">Kernel (Group of Cars)</a></li>
 
-      <li><a href="#EditCarAttributes">Edit Car Attributes (Road, Type, Length, Color,
+      <li><a href="#EditCarAttributes">Edit Car Attribute Names (Road, Type, Length, Color,
         Kernel, Owner)</a>
 
        <ul>
-        <li><a href="#DeleteUnusedAttributes"> Delete Unused Attributes</a></li>
+        <li><a href="#DeleteUnusedAttributes"> Delete Unused Attribute Names</a></li>
        </ul></li>
 
       <li><a href="#EditCarLoads">Edit Car Loads</a></li>
@@ -1584,7 +1584,7 @@
 
    <h3>Message Format</h3>
    If you would like your Manifest and switch lists printed in a tabular (columns) format select the
-   "Tabular" checkbox. The program determines the maximum character length for each attribute (Road,
+   "Tabular" checkbox. The program determines the maximum character length for each of the attribute's names (Road,
    Number, Type, Length, Color, Load, etc.) when determining the width of each column. Location
    names and track names can be up to 25 characters, so you might want to consider reasonable length
    names when using the "Tabular" feature. FYI, the program reports the maximum track and location
@@ -1909,7 +1909,7 @@
    deselect all types, or "Select All" to select all types, then select or deselect the rolling
    stock you wish the location to accept. After configuring the tracks for a location, you can use
    the "Auto Select" button to have the location reflect the rolling stock serviced by the various
-   tracks. See <a href="#EditCarAttributes">Edit Car Attributes</a> to add or delete car types that
+   tracks. See <a href="#EditCarAttributes">Edit Car Attributes</a> to add or delete car type names that
    a location can service. You can also access the "Edit Car Attributes" window from the edit
    location "Tools" menu by selecting <a href="#EditCarType">Edit Car Type</a>.
 
@@ -2003,7 +2003,7 @@
    <h4>Edit Car Type</h4>
    <p>
     This tool opens the car attribute window for car types. This allows you the add, delete, or
-    replace a car type. See <a href="#EditCarAttributes">Edit Car Attributes</a> for more info.
+    replace a car type name. See <a href="#EditCarAttributes">Edit Car Attribute Names</a> for more info.
    </p>
 
    <a name="ShowCars" id="ShowCars"></a>
@@ -2051,7 +2051,7 @@
     If the rolling stock that you wish doesn't appear for a yard, confirm that the location's
     rolling stock types are properly selected. If the rolling stock type you want doesn't exist for
     a location, you will have to create the type using the <a href="#EditCarAttributes">Edit Car
-     Attributes</a> window which is also available from the edit location "Tools" menu <a
+     Attribute Names</a> window which is also available from the edit location "Tools" menu <a
      href="#EditCarType">Edit Car Type</a>.
    </p>
 
@@ -2274,7 +2274,7 @@
 
    <p>
     If you want custom <a href="#CarLoad">loads</a> for your cars, you can create them using the <a
-     href="#EditCarLoads">Edit Car Attributes</a> for car "Load". Each new load is associated with
+     href="#EditCarLoads">Edit Car Loads</a>. Each new load name is associated with
     the car type. For example you can have "Freight" for a boxcar, and "Oil" for a tankcar. The
     program will deliver cars with a custom load to a spur that has a schedule that also requests
     that particular load. However, cars with a custom load can still be placed at yards, staging,
@@ -3229,38 +3229,38 @@
     created each time the "Save" button is pressed.</p>
 
    <a name="EditCarAttributes" id="EditCarAttributes"></a>
-   <h3>Edit Car Attributes</h3>
+   <h3>Edit Car Attribute Names</h3>
    To the right of each of the car attributes (Road, Type, Length, Color, Kernel, Load, Owner) in
    the <a href="#CarsEdit">Edit Car</a> or <a href="#CarsEdit">Add Car</a> window is an "Edit"
-   button. Use this to add, delete, or replace the various attributes for a car.
+   button. Use this to add, delete, or replace the various attribute names for a car.
 
    <p>
     <img src="images/EditCarAttribute.png">
    </p>
 
    <h4>Add Button</h4>
-   To add a new car attribute, enter the desired text in the text box and press the "Add" button.
-   When you first enter a new car attribute it will show up at the start of the list. Later when
+   To add a new car attribute name, enter the desired text in the text box and press the "Add" button.
+   When you first enter a new car attribute name, it will show up at the start of the list. Later when
    your restart the program it will be sorted in the correct order.
 
    <h4>Delete Button</h4>
-   To delete a car attribute, select the attribute you want to delete in the menu box and press the
+   To delete a car attribute name, select the name you want to delete in the menu box and press the
    "Delete" button.
 
    <h4>Replace Button</h4>
-    If you need to change a specific car attribute (road, type, color, etc) in your entire car
+    If you need to change a specific car attribute name (road, type, color, etc) in your entire car
     roster, you can use the "Replace" button found at the bottom right of the edit car attribute
-    window. For example, if you wish to change the car road (reporting mark) attribute "UP" to "UPS"
+    window. For example, if you wish to change the car road (reporting mark) attribute name "UP" to "UPS"
     for all of your cars. Press the "Edit" button for any of your cars in the Cars window, and then
     press the "Edit" button across from Road in the "Car Edit" window. Enter the new road "UPS" in
-    the text box, select "UP" in the menu box, and press "Replace". All cars with "UP" as their road
-    will now have "UPS" as their road.
+    the text box, select "UP" in the menu box, and press "Replace". All cars with "UP" as their road name
+    will now have "UPS" as their road name.
 
    <a name="DeleteUnusedAttributes" id="DeleteUnusedAttributes"></a>
-   <h4>Delete Unused Attributes</h4>
-   Under "Tools" in the "Edit Attribute Window" you will find two items, "Show the number of cars with this attribute" and "Delete unused attributes".
+   <h4>Delete Unused Attribute Names</h4>
+   Under "Tools" in the "Edit Attribute Window" you will find two items, "Show the number of cars with this attribute name" and "Delete unused attribute names".
    The first will show a count in front of the menu box. The count is the number of'cars that have this particular
-   attribute. The delete option will prompt you to delete any attribute that hasn't been assigned to a car. 
+   attribute name. The delete option will prompt you to delete any attribute name that hasn't been assigned to a car. 
    
    <a name="EditCarLoads" id="EditCarLoads"></a>
    <h3>Edit Car Loads</h3>
