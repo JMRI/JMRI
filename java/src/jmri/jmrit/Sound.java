@@ -42,7 +42,7 @@ public class Sound {
     private final URL url;
     private boolean streaming = false;
     private boolean streamingStop = false;
-    private Clip clip = null;
+    private volatile Clip clip = null;
     private boolean autoClose = true;
     private final Object lock = new Object();
     private final static Logger log = LoggerFactory.getLogger(Sound.class);
