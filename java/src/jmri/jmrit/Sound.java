@@ -154,7 +154,6 @@ public class Sound {
                 synchronized(lock) {
                     if (clip != null) {
                         clip.close();
-                        clip = null;
                     }
                 }
             }
