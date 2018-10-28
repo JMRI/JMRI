@@ -163,14 +163,6 @@
       <start_hour>0</start_hour>
       <duration>24</duration>
     </schedule>
-    <schedule>
-      <schedule_id>2</schedule_id>
-      <layout_id>12</layout_id>
-      <schedule_name>123</schedule_name>
-      <eff_date>Tomorrow</eff_date>
-      <start_hour>8</start_hour>
-      <duration>8</duration>
-    </schedule>
   </schedules>
   <trains>
     <train>
@@ -329,18 +321,6 @@
       <train_desc>Over night peddler</train_desc>
       <default_speed>30</default_speed>
       <start_time>1380</start_time>
-      <throttle>2</throttle>
-      <route_duration>0</route_duration>
-      <train_notes />
-    </train>
-    <train>
-      <train_id>136</train_id>
-      <schedule_id>2</schedule_id>
-      <type_id>93</type_id>
-      <train_name>EXP</train_name>
-      <train_desc>Sunday Execursion</train_desc>
-      <default_speed>30</default_speed>
-      <start_time>540</start_time>
       <throttle>0</throttle>
       <route_duration>0</route_duration>
       <train_notes />
@@ -939,114 +919,6 @@
       <next_speed>0</next_speed>
       <arrive_time>93</arrive_time>
       <depart_time>93</depart_time>
-      <staging_track>0</staging_track>
-      <stop_notes />
-    </stop>
-    <stop>
-      <stop_id>50</stop_id>
-      <train_id>136</train_id>
-      <station_id>83</station_id>
-      <seq>1</seq>
-      <duration>0</duration>
-      <next_speed>0</next_speed>
-      <arrive_time>540</arrive_time>
-      <depart_time>540</depart_time>
-      <staging_track>0</staging_track>
-      <stop_notes />
-    </stop>
-    <stop>
-      <stop_id>51</stop_id>
-      <train_id>136</train_id>
-      <station_id>84</station_id>
-      <seq>2</seq>
-      <duration>30</duration>
-      <next_speed>0</next_speed>
-      <arrive_time>548</arrive_time>
-      <depart_time>578</depart_time>
-      <staging_track>0</staging_track>
-      <stop_notes />
-    </stop>
-    <stop>
-      <stop_id>52</stop_id>
-      <train_id>136</train_id>
-      <station_id>85</station_id>
-      <seq>3</seq>
-      <duration>30</duration>
-      <next_speed>0</next_speed>
-      <arrive_time>583</arrive_time>
-      <depart_time>613</depart_time>
-      <staging_track>0</staging_track>
-      <stop_notes />
-    </stop>
-    <stop>
-      <stop_id>53</stop_id>
-      <train_id>136</train_id>
-      <station_id>86</station_id>
-      <seq>4</seq>
-      <duration>30</duration>
-      <next_speed>0</next_speed>
-      <arrive_time>626</arrive_time>
-      <depart_time>656</depart_time>
-      <staging_track>0</staging_track>
-      <stop_notes />
-    </stop>
-    <stop>
-      <stop_id>54</stop_id>
-      <train_id>136</train_id>
-      <station_id>87</station_id>
-      <seq>5</seq>
-      <duration>60</duration>
-      <next_speed>0</next_speed>
-      <arrive_time>663</arrive_time>
-      <depart_time>723</depart_time>
-      <staging_track>0</staging_track>
-      <stop_notes />
-    </stop>
-    <stop>
-      <stop_id>55</stop_id>
-      <train_id>136</train_id>
-      <station_id>86</station_id>
-      <seq>6</seq>
-      <duration>30</duration>
-      <next_speed>0</next_speed>
-      <arrive_time>730</arrive_time>
-      <depart_time>760</depart_time>
-      <staging_track>0</staging_track>
-      <stop_notes />
-    </stop>
-    <stop>
-      <stop_id>56</stop_id>
-      <train_id>136</train_id>
-      <station_id>85</station_id>
-      <seq>7</seq>
-      <duration>30</duration>
-      <next_speed>0</next_speed>
-      <arrive_time>773</arrive_time>
-      <depart_time>803</depart_time>
-      <staging_track>0</staging_track>
-      <stop_notes />
-    </stop>
-    <stop>
-      <stop_id>57</stop_id>
-      <train_id>136</train_id>
-      <station_id>84</station_id>
-      <seq>8</seq>
-      <duration>30</duration>
-      <next_speed>0</next_speed>
-      <arrive_time>808</arrive_time>
-      <depart_time>838</depart_time>
-      <staging_track>0</staging_track>
-      <stop_notes />
-    </stop>
-    <stop>
-      <stop_id>58</stop_id>
-      <train_id>136</train_id>
-      <station_id>83</station_id>
-      <seq>9</seq>
-      <duration>0</duration>
-      <next_speed>0</next_speed>
-      <arrive_time>846</arrive_time>
-      <depart_time>846</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
