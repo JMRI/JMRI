@@ -617,17 +617,15 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      * @param subClass The Class the list should be limited to.
      * @return An ArrayList of Frames.
      */
-    // this probably should use and return a generic type
-    public static List<JmriJFrame> getFrameList(Class<?> subClass) {
-        if (subClass == null) {
-            return JmriJFrame.getFrameList();
-        }
-        List<JmriJFrame> result = new ArrayList<>();
+    @SuppressWarnings("unchecked") // cast in add() checked at run time
+    public static <T extends JmriJFrame> List<T> getFrameList(@Nonnull Class<T> type) {
+        List<T> result = new ArrayList<>();
         JmriJFrameManager m = getJmriJFrameManager();
         synchronized (m) {
-            m.stream().filter((f) -> (subClass.isInstance(f))).forEachOrdered((f) -> {
-                result.add(f);
-            });
+            m.stream().filter((f) -> (type.isInstance(f))).forEachOrdered((f) -> 
+                {
+                    result.add((T)f);
+                });
         }
         return result;
     }
