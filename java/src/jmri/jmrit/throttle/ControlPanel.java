@@ -362,7 +362,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *                      speed slider display STEPDISPLAY = use speed step
      *                      display
      */
-    @Deprecated
     public void setSpeedController(int displaySlider) {
         _displaySlider = displaySlider;
         switch (displaySlider) {
