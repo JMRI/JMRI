@@ -62,7 +62,7 @@ public class TimeTableFrameTest {
         Assert.assertTrue(timeMenuItem.getText().equals(Bundle.getMessage("MenuTrainTimes")));  // NOI18N
         new JMenuItemOperator(timeMenuItem).doClick();
 
-        Thread openDialog = createModalDialogOperatorThread("Open", Bundle.getMessage("ButtonCancel"));  // NOI18N
+        Thread openDialog = createModalDialogOperatorThread("Open", Bundle.getMessage("ButtonCancel"), "openDialog");  // NOI18N
         JMenuItem importMenuItem = (JMenuItem)jpm.getComponent(2);
         Assert.assertTrue(importMenuItem.getText().equals(Bundle.getMessage("MenuImport")));  // NOI18N
         new JMenuItemOperator(importMenuItem).doClick();
@@ -186,7 +186,7 @@ public class TimeTableFrameTest {
         _jtxt = new JTextFieldOperator(_jfo, 1);
         _jtxt.clickMouse();
         _jtxt.setText("bad fast clock");  // NOI18N
-        Thread edit1 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
+        Thread edit1 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"), "edit1");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(edit1.isAlive());}, "edit1 finished");  // NOI18N
 
@@ -197,7 +197,7 @@ public class TimeTableFrameTest {
         _jtxt = new JTextFieldOperator(_jfo, 2);
         _jtxt.clickMouse();
         _jtxt.setText("1");  // NOI18N
-        Thread edit2 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
+        Thread edit2 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"), "edit2");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(edit2.isAlive());}, "edit2 finished");  // NOI18N
 
@@ -210,14 +210,14 @@ public class TimeTableFrameTest {
 
         _jtxt.clickMouse();
         _jtxt.setText("bad distance");  // NOI18N
-        Thread edit3 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
+        Thread edit3 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"), "edit3");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(edit3.isAlive());}, "edit3 finished");  // NOI18N
 
 //         _jtxt = new JTextFieldOperator(_jfo, 0);
 //         _jtxt.clickMouse();  // Activate Update button
 //         new JSpinnerOperator(_jfo, 1).setValue(0);
-//         Thread edit4 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
+//         Thread edit4 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"), "edit4");  // NOI18N
 //         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
 //         JUnitUtil.waitFor(()->{return !(edit4.isAlive());}, "edit4 finished");  // NOI18N
 
@@ -233,7 +233,7 @@ public class TimeTableFrameTest {
         _jtxt.clickMouse();  // Activate Update button
         new JSpinnerOperator(_jfo, 0).setValue(1);
         new JSpinnerOperator(_jfo, 1).setValue(22);
-        Thread edit5 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
+        Thread edit5 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"), "edit5");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(edit5.isAlive());}, "edit5 finished");
 
@@ -247,7 +247,7 @@ public class TimeTableFrameTest {
         _jtxt = new JTextFieldOperator(_jfo, 3);
         _jtxt.clickMouse();
         _jtxt.setText("1234");  // NOI18N
-        Thread edit6 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
+        Thread edit6 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"), "edit6");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(edit6.isAlive());}, "edit6 finished");
 
@@ -280,42 +280,35 @@ public class TimeTableFrameTest {
     } // TODO
 
     void timeRangeTests() {
-        // Change schedule start time
+        // Change schedule duration
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample", "Schedule", "123"}));  // NOI18N
         _jtxt = new JTextFieldOperator(_jfo, 0);
         _jtxt.clickMouse();  // Activate Update button
-        new JSpinnerOperator(_jfo, 0).setValue(10);
-        Thread time1 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
+        new JSpinnerOperator(_jfo, 1).setValue(6);
+        log.warn("-- create time1");
+        Thread time1 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"), "@@ time1");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
-        boolean t1 = time1.isAlive();
-        log.warn("t1 = {}", t1);
-//         JUnitUtil.waitFor(()->{return !(time1.isAlive());}, "time1 finished");
-//         try {
-//             time1.join();
-//         } catch (InterruptedException ex) {
-//             // do nothing
-//         }
+        JUnitUtil.waitFor(()->{return !(time1.isAlive());}, "time1 finished");
 
         // Change train start time
-// new EventTool().waitNoEvent(5000);
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample", "Schedule", "123", "EXP"}));  // NOI18N
         _jtxt = new JTextFieldOperator(_jfo, 3);
         _jtxt.clickMouse();
-        _jtxt.setText("7:00");  // NOI18N
-//         Thread time2 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
+        _jtxt.setText("9:00");  // NOI18N
+        log.warn("-- create time2");
+        Thread time2 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"), "time2");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
-// new EventTool().waitNoEvent(5000);
-//         JUnitUtil.waitFor(()->{return !(time2.isAlive());}, "time2 finished");
+        JUnitUtil.waitFor(()->{return !(time2.isAlive());}, "time2 finished");
 
         // Change train start time to move stop times outside of schedule
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample", "Schedule", "123", "EXP"}));  // NOI18N
         _jtxt = new JTextFieldOperator(_jfo, 3);
         _jtxt.clickMouse();
-        _jtxt.setText("12:00");  // NOI18N
-//         Thread time3 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
+        _jtxt.setText("14:00");  // NOI18N
+        log.warn("-- create time3");
+        Thread time3 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"), "time3");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
-// new EventTool().waitNoEvent(5000);
-//         JUnitUtil.waitFor(()->{return !(time3.isAlive());}, "time3 finished");
+        JUnitUtil.waitFor(()->{return !(time3.isAlive());}, "time3 finished");
     }
 
     void deleteTests() {
@@ -335,46 +328,46 @@ public class TimeTableFrameTest {
         new JButtonOperator(_jfo, Bundle.getMessage("DeleteTrainTypeButtonText")).doClick();  // NOI18N
         _jto.clickOnPath(_jto.findPath(new String[]{"Test"}));  // NOI18N
 
-        Thread finalDelete = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"));  // NOI18N
+        Thread finalDelete = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"), "finalDelete");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("DeleteLayoutButtonText")).doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(finalDelete.isAlive());}, "finalDelete finished");
     }
 
     void deleteDialogTests() {
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample"}));  // NOI18N
-        Thread delLayout = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"));  // NOI18N
+        Thread delLayout = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"), "delLayout");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("DeleteLayoutButtonText")).doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(delLayout.isAlive());}, "delLayout finished");
 
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample", "Train Types", "Yard"}));  // NOI18N
-        Thread delTrainType = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
+        Thread delTrainType = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"), "delTrainType");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("DeleteTrainTypeButtonText")).doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(delTrainType.isAlive());}, "delTrainType finished");  // NOI18N
 
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample", "Segments", "Mainline"}));  // NOI18N
-        Thread delSegment = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
+        Thread delSegment = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"), "delSegment");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("DeleteSegmentButtonText")).doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(delSegment.isAlive());}, "delSegment finished");  // NOI18N
 
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample", "Segments", "Mainline", "Alpha"}));  // NOI18N
-        Thread delStation = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
+        Thread delStation = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"), "delStation");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("DeleteStationButtonText")).doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(delStation.isAlive());}, "delStation finished");  // NOI18N
 
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample", "Schedules", "114   Effective Date: 11/4/93"}));  // NOI18N
-        Thread delSchedule = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"));  // NOI18N
+        Thread delSchedule = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"), "delSchedule");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("DeleteScheduleButtonText")).doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(delSchedule.isAlive());}, "delSchedule finished");  // NOI18N
 
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample", "Schedules", "114   Effective Date: 11/4/93", "AMX -- Morning Express"}));  // NOI18N
-        Thread delTrain = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"));  // NOI18N
+        Thread delTrain = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonNo"), "delTrain");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("DeleteTrainButtonText")).doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(delTrain.isAlive());}, "delTrain finished");  // NOI18N
     }
 
     void deleteLayout() {
         _jto.clickOnPath(_jto.findPath(new String[]{"Test"}));  // NOI18N
-        Thread layoutDelete = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"));  // NOI18N
+        Thread layoutDelete = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"), "layoutDelete");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("DeleteLayoutButtonText")).doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(layoutDelete.isAlive());}, "layoutDelete finished");
     }
@@ -382,7 +375,7 @@ public class TimeTableFrameTest {
     void deleteSections() {
         // Train and stops
         _jto.clickOnPath(_jto.findPath(new String[]{"Test", "Schedules", "Test", "TRN"}));  // NOI18N
-        Thread section1 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"));  // NOI18N
+        Thread section1 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"), "section1");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("DeleteTrainButtonText")).doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(section1.isAlive());}, "section1 finished");
 
@@ -392,19 +385,19 @@ public class TimeTableFrameTest {
 
         // Delete schedule and train
         _jto.clickOnPath(_jto.findPath(new String[]{"Test", "Schedules", "Test"}));  // NOI18N
-        Thread section2= createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"));  // NOI18N
+        Thread section2= createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"), "section2");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("DeleteScheduleButtonText")).doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(section2.isAlive());}, "section2 finished");
 
         // Delete segment and stations
         _jto.clickOnPath(_jto.findPath(new String[]{"Test", "Segments", "Mainline"}));  // NOI18N
-        Thread section3 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"));  // NOI18N
+        Thread section3 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"), "section3");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("DeleteSegmentButtonText")).doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(section3.isAlive());}, "section3 finished");
 
         // Delete layout
         _jto.clickOnPath(_jto.findPath(new String[]{"Test"}));  // NOI18N
-        Thread section4 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"));  // NOI18N
+        Thread section4 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonYes"), "section4");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("DeleteLayoutButtonText")).doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(section4.isAlive());}, "section4 finished");
     }
@@ -432,7 +425,7 @@ public class TimeTableFrameTest {
         _ttf.showNodeEditMessage();  // NOI18N
 
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample", "Segments", "Mainline"}));  // NOI18N
-        Thread misc1 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonCancel"));  // NOI18N
+        Thread misc1 = createModalDialogOperatorThread(Bundle.getMessage("QuestionTitle"), Bundle.getMessage("ButtonCancel"), "misc1");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonGraph")).doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(misc1.isAlive());}, "misc1 finished");
 
@@ -441,15 +434,16 @@ public class TimeTableFrameTest {
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonDone")).doClick();  // NOI18N
     }
 
-    Thread createModalDialogOperatorThread(String dialogTitle, String buttonText) {
+    Thread createModalDialogOperatorThread(String dialogTitle, String buttonText, String threadName) {
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(dialogTitle);
             JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
-              jbo.pushNoBlock();
+            jbo.pushNoBlock();
+            log.warn("Thread done: {}", threadName);
 //             jbo.doClick();
         });
-        t.setName(dialogTitle + " Close Dialog Thread");  // NOI18N
+        t.setName(dialogTitle + " Close Dialog Thread: " + threadName);  // NOI18N
         t.start();
         return t;
     }

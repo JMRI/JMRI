@@ -1386,6 +1386,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         checkDuration = newDuration;
         List<String> trainList = new ArrayList<>();
         for (Train train : _dataMgr.getTrains(_curNodeId, 0 , true)) {
+            log.warn("$$ sched = {}, train = {}, start = {}", schedule.getScheduleName(), train.getTrainName(), train.getStartTime());
             if (!validateTime(train.getStartTime())) {
                 trainList.add(train.getTrainName());
                 continue;
@@ -1402,6 +1403,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             }
         }
         if (!trainList.isEmpty()) {
+            log.warn("++++ update schedule error");
             StringBuilder msg = new StringBuilder(Bundle.getMessage("TrainStopTime"));  // NOI18N
             for (String trainTime : trainList) {
                 msg.append("\n    " + trainTime);  // NOI18N
@@ -1413,6 +1415,9 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             return;
         }
         boolean update = false;
+        boolean recalc = false;
+        int saveStartHour = schedule.getStartHour();
+        int saveDuration = schedule.getDuration();
 
         if (!schedule.getScheduleName().equals(newName)) {
             schedule.setScheduleName(newName);
@@ -1429,14 +1434,24 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         if (schedule.getStartHour() != newStartHour) {
             schedule.setStartHour(newStartHour);
             update = true;
+            recalc = true;
         }
         if (schedule.getDuration() != newDuration) {
             schedule.setDuration(newDuration);
             update = true;
+            recalc = true;
         }
 
         if (update) {
             setShowReminder(true);
+            if (recalc) {
+                if (!calculateScheduleTrains(schedule.getScheduleId())) {
+                    // Roll back
+                    schedule.setStartHour(saveStartHour);
+                    schedule.setDuration(saveDuration);
+                    calculateScheduleTrains(schedule.getScheduleId());
+                }
+            }
         }
     }
 
@@ -1484,6 +1499,8 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         boolean update = false;
         boolean recalc = false;
+        int saveSpeed = train.getDefaultSpeed();
+        int saveStart = train.getStartTime();
 
         if (!train.getTrainName().equals(newName)) {
             train.setTrainName(newName);
@@ -1523,10 +1540,18 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         if (update) {
             setShowReminder(true);
             if (recalc) {
-                calculateTrain(train.getTrainId());
+                if (!calculateTrain(train.getTrainId())) {
+                    // Roll back train changes
+                    log.warn("The calculate failed, roll back");
+                    train.setDefaultSpeed(saveSpeed);
+                    train.setStartTime(saveStart);
+                    if (!calculateTrain(train.getTrainId())) {
+                        log.warn("Unable to fix train schedule");
+                    }
+                }
             }
         }
-    }
+    }  // TODO What about calc failure
 
     /**
      * Update the stop information.
@@ -1553,6 +1578,9 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         boolean update = false;
         boolean recalc = false;
+        int saveStation = stop.getStationId();
+        int saveDuration = stop.getDuration();
+        int saveNextSpeed = stop.getNextSpeed();
 
         if (stop.getStationId() != newStation) {
             stop.setStationId(newStation);
@@ -1583,7 +1611,17 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         if (update) {
             setShowReminder(true);
             if (recalc) {
-                calculateTrain(stop.getTrainId());
+                if (!calculateTrain(stop.getTrainId())) {
+                    // Roll back stop changes
+                    stop.setStationId(saveStation);
+                    stop.setDuration(saveDuration);
+                    stop.setNextSpeed(saveNextSpeed);
+                    _curNode.setText(buildNodeText("Stop", stop, 0));  // NOI18N
+                    _timetableModel.nodeChanged(_curNode);
+                    if (!calculateTrain(stop.getTrainId())) {
+                        log.warn("Unable to fix train schedule");
+                    }
+                }
             }
         }
     }
@@ -2149,18 +2187,24 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     /**
      * Update the train times for all of the trains that use this schedule.
      * @param scheduleId The id for the schedule that has been updated.
+     * @return false if any train has an error.
      */
-    void calculateScheduleTrains(int scheduleId) {
+    boolean calculateScheduleTrains(int scheduleId) {
+        boolean result = true;
         for (Train train : _dataMgr.getTrains(scheduleId, 0, false)) {
-            calculateTrain(train.getTrainId());
+            if (!calculateTrain(train.getTrainId())) {
+                result = false;
+            }
         }
+        return result;
     }
 
     /**
      * Calculate the arrival and departure times for all of the stops.
      * @param trainId The id of the train to be updated.
+     * @return false if any errors occur
      */
-    void calculateTrain(int trainId) {
+    boolean calculateTrain(int trainId) {
         // Get the data
         Train train = _dataMgr.getTrain(trainId);
         Schedule schedule = _dataMgr.getSchedule(train.getScheduleId());
@@ -2205,7 +2249,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                             Bundle.getMessage("TimeOutOfRange", stop.getSeq(), train.getTrainName()),  // NOI18N
                             Bundle.getMessage("WarningTitle"),  // NOI18N
                             JOptionPane.WARNING_MESSAGE);
-                    return;
+                    return false;
                 }
                 firstStop = false;
                 continue;
@@ -2230,7 +2274,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                             Bundle.getMessage("SegmentChangeError", currentStationName, segment.getSegmentName()),  // NOI18N
                             Bundle.getMessage("WarningTitle"),  // NOI18N
                             JOptionPane.WARNING_MESSAGE);
-                    return;
+                    return false;
                 }
                 wrkDistance = Math.abs(station.getDistance() - wrkStation.getDistance());
             }
@@ -2261,9 +2305,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                         Bundle.getMessage("TimeOutOfRange", stop.getSeq(), train.getTrainName()),  // NOI18N
                         Bundle.getMessage("WarningTitle"),  // NOI18N
                         JOptionPane.WARNING_MESSAGE);
-                return;
+                return false;
             }
         }
+        return true;
     }
 
     int checkStart;
