@@ -177,15 +177,17 @@ public class JUnitUtil {
             Log4JUtil.initLogging(filename);
         }
         
-        // do not set the UncaughtExceptionHandler while unit testing
-        // individual tests can explicitely set it after calling this method
-        Thread.setDefaultUncaughtExceptionHandler(null);
+        // need to do this each time
         try {
             JUnitAppender.start();
         } catch (Throwable e) {
             System.err.println("Could not start JUnitAppender, but test continues:\n" + e);
         }
 
+        // do not set the UncaughtExceptionHandler while unit testing
+        // individual tests can explicitly set it after calling this method
+        Thread.setDefaultUncaughtExceptionHandler(null);
+        
         // silence the Jemmy GUI unit testing framework
         JUnitUtil.silenceGUITestOutput();
 

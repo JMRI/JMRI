@@ -125,7 +125,7 @@ class Steam1Sound extends EngineSound {
     }
 
     // Called from thread
-    void initAccDecTimer() {
+    private void initAccDecTimer() {
         rpmTimer = newTimer(1, true, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -177,7 +177,7 @@ class Steam1Sound extends EngineSound {
         if (rpmTimer != null) {
             stopAccDecTimer();
         }
-        this.stop();
+        this.stop(); // Stop loop thread
     }
 
     @Override
@@ -794,7 +794,7 @@ class Steam1Sound extends EngineSound {
                     log.debug("decelerate from {} to {}", lastRpm, getRpmNominal());
 
                     if ((getRpmNominal() < 23) && is_auto_coasting && (count_pre_arrival > 0) && 
-                            _parent.trigger_sounds.containsKey("pre_arrival")) {
+                            _parent.trigger_sounds.containsKey("pre_arrival") && (dec_time < 250)) {
                         _parent.trigger_sounds.get("pre_arrival").fadeIn();
                         count_pre_arrival--;
                     }
@@ -806,7 +806,7 @@ class Steam1Sound extends EngineSound {
                     // Prove the trigger for decelerating actions (braking, coasting)
                     if (((lastRpm - getRpmNominal()) > _decel_trigger_rpms) && (timePassed < 500.0f)) {
                         log.debug("Time passed {}", timePassed);
-                        if (getRpmNominal() < 30) { // Braking sound only when speed is low (, but not to low)
+                        if ((getRpmNominal() < 30) && (dec_time < 250)) { // Braking sound only when speed is low (, but not to low)
                             if (_parent.trigger_sounds.containsKey("brake")) {
                                 _parent.trigger_sounds.get("brake").fadeIn();
                                 is_braking = true;
@@ -877,6 +877,9 @@ class Steam1Sound extends EngineSound {
                 topspeed = _top_speed_reverse;
             }
             log.debug("loco direction: {}, top speed: {}", d, topspeed);
+            // Re-calculate accel-time and decel-time, hence topspeed may have changed
+            acc_time = calcAccDecTime(_parent.accel_rate);
+            dec_time = calcAccDecTime(_parent.decel_rate);
         }
 
         private void setFunction(String event, boolean is_true, String name) {
@@ -911,7 +914,7 @@ class Steam1Sound extends EngineSound {
                 }
             }
 
-            // Set Accel/Decel off
+            // Set Accel/Decel off or to lower value
             if (name.equals("BRAKE_KEY")) {
                 log.debug("BRAKE_KEY pressed is {}", is_true);
                 if (_parent.engine_started) {
@@ -920,19 +923,21 @@ class Steam1Sound extends EngineSound {
                             acc_time = 0;
                             dec_time = 0;
                         } else {
-                            dec_time = _parent.brake_time;
+                            dec_time = calcAccDecTime(_parent.brake_time);
                         }
                         _parent.accdectime = dec_time;
+                        log.debug("accdectime: {}", _parent.accdectime);
                     } else {
-                        setupAccDec();
-                        _parent.accdectime = dec_time; // ist das noetig?
+                        acc_time = calcAccDecTime(_parent.accel_rate);
+                        dec_time = calcAccDecTime(_parent.decel_rate);
+                        _parent.accdectime = dec_time;
                     }
                 }
             }
             // Other throttle function keys may follow ...
         }
 
-        public void startEngine() {
+        private void startEngine() {
             _sound.unqueueBuffers();
             log.debug("thread: start engine ...");
             coast_notch  = _parent.getNotch(1); // Coast sounds are bound to notch 1
@@ -942,15 +947,16 @@ class Steam1Sound extends EngineSound {
             _sound.setReferenceDistance(_parent.engine_rd);
             setRpm(0);
             setRpmNominal(0);
-            setupAccDec(); // Setup acceleration and deceleration factors
             helper_index = -1; // Prepare helper buffer start. Index will be incremented before first use
             setWait(0);
             startBoilingSound();
             startIdling();
+            acc_time = calcAccDecTime(_parent.accel_rate); // Calculate acceleration time
+            dec_time = calcAccDecTime(_parent.decel_rate); // Calculate deceleration time
             _parent.initAccDecTimer();
         }
 
-        public void stopEngine() {
+        private void stopEngine() {
             log.debug("thread: stop engine ...");
             if (is_looping) {
                 is_looping = false; // Stop the loop player
@@ -960,17 +966,15 @@ class Steam1Sound extends EngineSound {
             stopAutoCoasting();
             stopBoilingSound();
             stopIdling();
+            _parent.stopAccDecTimer();
             _throttle = 0.0f; // Clear it, just in case the engine was stopped at speed > 0
         }
 
-        private void setupAccDec() {
-            // Momentum
-            int topspeed_rpm = (int) Math.round(topspeed * 1056 / (Math.PI * _driver_diameter_float)); // Top-speed in RPM
-            int time_factor = 896; // NMRA value in ms
-            acc_time = time_factor * _parent.accel_rate / topspeed_rpm; // NMRA CV#3
-            dec_time = time_factor * _parent.decel_rate / topspeed_rpm; // NMRA CV#4
-            _parent.accdectime = acc_time;
-            log.debug("setup acc time: {}, dec time: {}", acc_time, dec_time);
+        private int calcAccDecTime(int accdec_rate) {
+            // Handle Momentum
+            // Regard topspeed, which may be different on forward or reverse direction
+            int topspeed_rpm = (int) Math.round(topspeed * 1056 / (Math.PI * _driver_diameter_float));
+            return 896 * accdec_rate / topspeed_rpm; // NMRA value 896 in ms
         }
 
         private void startIdling() {
