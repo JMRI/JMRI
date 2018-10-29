@@ -387,8 +387,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     OutputStream ostream = null;
 
     boolean endReply(SprogReply msg) {
-        return msg.endNormalReply() || msg.endBootReply()
-                || msg.endBootloaderReply(this.getSprogState());
+        return msg.endNormalReply() || msg.endBootReply();
     }
 
     private boolean unsolicited;
