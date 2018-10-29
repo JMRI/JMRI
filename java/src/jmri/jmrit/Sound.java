@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicReference;
 import javax.annotation.Nonnull;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -42,9 +43,8 @@ public class Sound {
     private final URL url;
     private boolean streaming = false;
     private boolean streamingStop = false;
-    private volatile Clip clip = null;
+    private AtomicReference<Clip> clipRef = new AtomicReference<>();
     private boolean autoClose = true;
-    private final Object lock = new Object();
     private final static Logger log = LoggerFactory.getLogger(Sound.class);
 
     /**
@@ -83,7 +83,9 @@ public class Sound {
         try {
             streaming = this.needStreaming();
             if (!streaming) {
-                openClip();
+                clipRef.updateAndGet(clip -> {
+                    return openClip();
+                });
             }
         } catch (URISyntaxException ex) {
             streaming = false;
@@ -92,20 +94,23 @@ public class Sound {
         }
     }
     
-    private void openClip() {
+    private Clip openClip() {
+        Clip newClip = null;
         try {
-            clip = AudioSystem.getClip();
-            clip.addLineListener(event -> {
+            newClip = AudioSystem.getClip();
+            newClip.addLineListener(event -> {
                 if (LineEvent.Type.STOP.equals(event.getType())) {
                     if (autoClose) {
-                        synchronized(lock) {
-                            clip.close();
-                            clip = null;
-                        }
+                        clipRef.updateAndGet(clip -> {
+                            if (clip != null) {
+                                clip.close();
+                            }
+                            return null;
+                        });
                     }
                 }
             });
-            clip.open(AudioSystem.getAudioInputStream(url));
+            newClip.open(AudioSystem.getAudioInputStream(url));
         } catch (IOException ex) {
             log.error("Unable to open {}", url);
         } catch (LineUnavailableException ex) {
@@ -113,6 +118,8 @@ public class Sound {
         } catch (UnsupportedAudioFileException ex) {
             log.error("{} is not a recognised audio format", url);
         }
+        
+        return newClip;
     }
     
     /**
@@ -138,12 +145,12 @@ public class Sound {
         if (streaming) {
             streamingStop = true;
         } else {
-            synchronized(lock) {
+            clipRef.updateAndGet(clip -> {
                 if (clip != null) {
                     clip.close();
-                    clip = null;
                 }
-            }
+                return null;
+            });
         }
     }
     
@@ -151,11 +158,12 @@ public class Sound {
     public void finalize() throws Throwable {
         try {
             if (!streaming) {
-                synchronized(lock) {
+                clipRef.updateAndGet(clip -> {
                     if (clip != null) {
                         clip.close();
                     }
-                }
+                    return null;
+                });
             }
         } finally {
             super.finalize();
@@ -171,14 +179,15 @@ public class Sound {
             Thread tStream = new Thread(streamSound);
             tStream.start();
         } else {
-            synchronized(lock) {
+            clipRef.updateAndGet(clip -> {
                 if (clip == null) {
-                    openClip();
+                    clip = openClip();
                 }
                 if (clip != null) {
                     clip.start();
                 }
-            }
+                return clip;
+            });
         }
     }
 
@@ -200,14 +209,15 @@ public class Sound {
         if (streaming) {
             log.warn("Streaming this audio file, loop() not allowed");
         } else {
-            synchronized(lock) {
+            clipRef.updateAndGet(clip -> {
                 if (clip == null) {
-                    openClip();
+                    clip = openClip();
                 }
                 if (clip != null) {
                     clip.loop(count);
                 }
-            }
+                return clip;
+            });
         }
     }
 
@@ -218,7 +228,12 @@ public class Sound {
         if (streaming) {
             streamingStop = true;
         } else {
-            this.clip.stop();
+            clipRef.updateAndGet(clip -> {
+                if (clip != null) {
+                    clip.stop();
+                }
+                return clip;
+            });
         }
     }
 
