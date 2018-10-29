@@ -201,7 +201,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
 
     @Override
     public void dispose() {
-        pref.disallowSave();
+        pref.setSaveAllowed(false);
         for (TabbedTableItem<E> tti : tabbedTableArray) {
             tti.dispose();
         }
@@ -209,7 +209,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
             list.removeListSelectionListener(list.getListSelectionListeners()[0]);
         }
         super.dispose();
-        pref.allowSave();
+        pref.setSaveAllowed(true);
     }
 
     void buildMenus(final TabbedTableItem<E> item) {
