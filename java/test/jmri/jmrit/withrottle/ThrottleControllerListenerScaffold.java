@@ -26,7 +26,7 @@ public class ThrottleControllerListenerScaffold implements ThrottleControllerLis
     }
 
     public boolean hasAddressBeenRelease(){
-       return addressFound;
+       return addressReleased;
     }
     
     public void notifyControllerAddressDeclined(ThrottleController tc, DccLocoAddress address, String reason){
