@@ -1033,8 +1033,8 @@
       <seq>8</seq>
       <duration>30</duration>
       <next_speed>0</next_speed>
-      <arrive_time>778</arrive_time>
-      <depart_time>808</depart_time>
+      <arrive_time>958</arrive_time>
+      <depart_time>988</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -1045,8 +1045,8 @@
       <seq>9</seq>
       <duration>0</duration>
       <next_speed>0</next_speed>
-      <arrive_time>812</arrive_time>
-      <depart_time>812</depart_time>
+      <arrive_time>992</arrive_time>
+      <depart_time>992</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>

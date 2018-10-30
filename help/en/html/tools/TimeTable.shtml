@@ -102,6 +102,7 @@
         </li>
         <li><a href="#graph">Timetable Graph</a></li>
         <li><a href="#structure">Data Structure</a></li>
+        <li><a href="#technical">Technical</a></li>
       </ul>
 
 
@@ -368,6 +369,24 @@
       <p>Each record (Java class) has a primary key.  This is assigned by the
       timetable data manager.  Foreign keys create the data structure.  Data
       integrity is managed by the main maintenance class, TimeTableFrame.</p>
+
+      <a name="technical" id="technical"></a>
+      <h2>Technical</h2>
+      <p>The Timetable data is stored in a fixed xml file located at
+      <strong>preference:timetable/TimeTableData.xml</strong>.  The first time
+      the tool is used, the directory is created and a sample data file is
+      copied from <strong>program:xml/demoTimeTable/TimeTableData.xml</strong>.</p>
+
+      <p>Access to the data is handled by the TimeTableDataManager.  The
+      data manager is obtained by calling <strong>TimeTableDataManager.getDataManager()</strong>.
+      This is a static method that returns the current manager or creates a new
+      one.  If a new one is created, the data is loaded from the data file.  The
+      data manager provides data access methods for the TimeTable application
+      as well as any other JMRI components, such as Jython.</p>
+
+      <p>A sample Jython program, <strong>TimeTable.py</strong>, is included in
+      the JMRI distribution.  The program shows how to establish the data
+      manager connection and navigate the timetable data structure.</p>
 
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
