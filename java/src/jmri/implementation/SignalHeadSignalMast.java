@@ -269,8 +269,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
 
     public static List<SignalHead> getSignalHeadsUsed() {
         List<SignalHead> headsUsed = new ArrayList<SignalHead>();
-        for (String val : InstanceManager.getDefault(jmri.SignalMastManager.class).getSystemNameList()) {
-            SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(val);
+        for (SignalMast mast : InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBeanSet()) {
             if (mast instanceof jmri.implementation.SignalHeadSignalMast) {
                 java.util.List<NamedBeanHandle<SignalHead>> masthead = ((jmri.implementation.SignalHeadSignalMast) mast).getHeadsUsed();
                 for (NamedBeanHandle<SignalHead> bean : masthead) {
@@ -282,8 +281,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast implements java.bea
     }
 
     public static String isHeadUsed(SignalHead head) {
-        for (String val : InstanceManager.getDefault(jmri.SignalMastManager.class).getSystemNameList()) {
-            SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(val);
+        for (SignalMast mast : InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBeanSet()) {
             if (mast instanceof jmri.implementation.SignalHeadSignalMast) {
                 java.util.List<NamedBeanHandle<SignalHead>> masthead = ((jmri.implementation.SignalHeadSignalMast) mast).getHeadsUsed();
                 for (NamedBeanHandle<SignalHead> bean : masthead) {
