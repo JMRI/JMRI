@@ -361,6 +361,10 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
      * @return true to keep reading in run loop.
      */
     public boolean sort(String inPackage) {
+        if (inPackage.charAt(0) == 'Q') {// If device has Quit.
+            shutdownThrottle();
+            return false;
+        }
         if (isAddressSet) {
 
             try {
@@ -480,10 +484,6 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
                 default:
                     break;
             }
-        }
-        if (inPackage.charAt(0) == 'Q') {// If device has Quit.
-            shutdownThrottle();
-            return false;
         }
         return true;
 
