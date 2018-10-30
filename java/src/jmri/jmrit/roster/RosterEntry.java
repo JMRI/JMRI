@@ -1420,7 +1420,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             // _owner
             thisLine += StringUtil.padString(_owner, colWidth);
             colWidth = 10;
-            startNext += colWidth;
+
             // dateModified (type)
             if (dateModified != null) {
                 DateFormat.getDateTimeInstance().format(dateModified);
