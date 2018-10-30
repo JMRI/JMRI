@@ -299,19 +299,26 @@ public class ThrottleFrameTest {
         to.pushReleaseButton();	
     }
 
+    @Test
+    public void testSaveThrottle() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // right now, just verify no error
+        panel.saveThrottle();
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initDebugThrottleManager();
         
-	if(!GraphicsEnvironment.isHeadless()){
+	    if(!GraphicsEnvironment.isHeadless()){
            frame = new ThrottleWindow();
            panel = new ThrottleFrame(frame);
            frame.setExtendedState( frame.getExtendedState()|java.awt.Frame.MAXIMIZED_BOTH );
-	   panel.toFront();
+	       panel.toFront();
            to = new ThrottleOperator(Bundle.getMessage("ThrottleTitle"));
-	}
+	    }
     }
 
     @After
@@ -325,8 +332,8 @@ public class ThrottleFrameTest {
            JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
         }
         panel = null;
-	frame = null;
-	to = null;
-	JUnitUtil.tearDown();
+	    frame = null;
+	    to = null;
+	    JUnitUtil.tearDown();
     }
 }
