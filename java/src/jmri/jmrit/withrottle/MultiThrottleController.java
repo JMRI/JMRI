@@ -45,9 +45,7 @@ public class MultiThrottleController extends ThrottleController {
     @Override
     public void propertyChange(PropertyChangeEvent event) {
         String eventName = event.getPropertyName();
-        if (log.isDebugEnabled()) {
-            log.debug("property change: " + eventName);
-        }
+        log.debug("property change: {}",eventName);
         if (eventName.startsWith("F")) {
             if (eventName.contains("Momentary")) {
                 return;
