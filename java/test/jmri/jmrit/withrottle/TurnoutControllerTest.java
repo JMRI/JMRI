@@ -16,12 +16,12 @@ public class TurnoutControllerTest {
         Assert.assertNotNull("exists", panel );
     }
 
-    @After
+    @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
     }
     
-    @Before
+    @After
     public void tearDown() {
         JUnitUtil.tearDown();
     }
