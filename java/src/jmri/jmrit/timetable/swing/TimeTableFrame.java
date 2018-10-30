@@ -1211,6 +1211,8 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         boolean update = false;
         boolean recalc = false;
+        int saveFastClock = layout.getFastClock();
+        boolean saveMetric = layout.getMetric();
 
         if (!layout.getLayoutName().equals(newName)) {
             layout.setLayoutName(newName);
@@ -1238,7 +1240,12 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         if (update) {
             setShowReminder(true);
             if (recalc) {
-                calculateLayoutTrains(_curNodeId);
+                if (!calculateLayoutTrains(_curNodeId)) {
+                    // Roll back layout changes
+                    layout.setFastClock(saveFastClock);
+                    layout.setMetric(saveMetric);
+                    calculateLayoutTrains(_curNodeId);
+                }
             }
         }
     }
@@ -1386,7 +1393,6 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         checkDuration = newDuration;
         List<String> trainList = new ArrayList<>();
         for (Train train : _dataMgr.getTrains(_curNodeId, 0 , true)) {
-            log.warn("$$ sched = {}, train = {}, start = {}", schedule.getScheduleName(), train.getTrainName(), train.getStartTime());
             if (!validateTime(train.getStartTime())) {
                 trainList.add(train.getTrainName());
                 continue;
@@ -1403,7 +1409,6 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             }
         }
         if (!trainList.isEmpty()) {
-            log.warn("++++ update schedule error");
             StringBuilder msg = new StringBuilder(Bundle.getMessage("TrainStopTime"));  // NOI18N
             for (String trainTime : trainList) {
                 msg.append("\n    " + trainTime);  // NOI18N
@@ -1542,12 +1547,9 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             if (recalc) {
                 if (!calculateTrain(train.getTrainId())) {
                     // Roll back train changes
-                    log.warn("The calculate failed, roll back");
                     train.setDefaultSpeed(saveSpeed);
                     train.setStartTime(saveStart);
-                    if (!calculateTrain(train.getTrainId())) {
-                        log.warn("Unable to fix train schedule");
-                    }
+                    calculateTrain(train.getTrainId());
                 }
             }
         }
@@ -1618,9 +1620,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                     stop.setNextSpeed(saveNextSpeed);
                     _curNode.setText(buildNodeText("Stop", stop, 0));  // NOI18N
                     _timetableModel.nodeChanged(_curNode);
-                    if (!calculateTrain(stop.getTrainId())) {
-                        log.warn("Unable to fix train schedule");
-                    }
+                    calculateTrain(stop.getTrainId());
                 }
             }
         }
@@ -2177,11 +2177,16 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
      * Update the trains for all of the trains for this layout.
      * Invoked by updates to fast clock speed, metric, scale and station distances.
      * @param layoutId The id for the layout that has been updated.
+     * @return false if any train in any schedule has an error.
      */
-    void calculateLayoutTrains(int layoutId) {
+    boolean calculateLayoutTrains(int layoutId) {
+        boolean result = true;
         for (Schedule schedule : _dataMgr.getSchedules(layoutId, false)) {
-            calculateScheduleTrains(schedule.getScheduleId());
+            if (!calculateScheduleTrains(schedule.getScheduleId())) {
+                result = false;
+            }
         }
+        return result;
     }
 
     /**
