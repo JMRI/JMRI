@@ -8,11 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.management.Attribute;
+
 import jmri.JmriException;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +36,7 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
     public AbstractOperationsServer() {
         tm = jmri.InstanceManager.getDefault(TrainManager.class);
         tm.addPropertyChangeListener(this);
-        lm = LocationManager.instance();
+        lm = jmri.InstanceManager.getDefault(LocationManager.class);
         lm.addPropertyChangeListener(this);
         addPropertyChangeListeners();
         trains = new HashMap<>();
