@@ -22,7 +22,6 @@
            <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
            <Bug pattern="UW_UNCOND_WAIT" />
            <Bug pattern="VO_VOLATILE_INCREMENT" />
-           <Bug pattern="WA_NOT_IN_LOOP" />
            <Bug pattern="WMI_WRONG_MAP_ITERATOR" />
         </Or>
      </Match>
