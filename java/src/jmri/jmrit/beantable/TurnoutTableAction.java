@@ -62,6 +62,8 @@ import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.swing.XTableColumnModel;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1708,7 +1710,10 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         // Add some entry pattern checking, before assembling sName and handing it to the turnoutManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameTurnout"));
         String errorMessage = null;
+        
+        @SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE", justification="false positive")
         String lastSuccessfulAddress = Bundle.getMessage("NONE");
+        
         int iType = 0;
         int iNum = 1;
         boolean useLastBit = false;

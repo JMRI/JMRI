@@ -1750,7 +1750,6 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             }
         }
         ///////////////// Make Lock Conditional //////////////////////////
-        numConds = 1;
         if (_lock) {
             ArrayList<ConditionalAction> aList = new ArrayList<>();
             for (int k = 0; k < _includedOutputList.size(); k++) {
@@ -1772,7 +1771,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                         Conditional.ACTION_LOCK_TURNOUT,
                         eltName, Turnout.UNLOCKED, ""));
             }
-            numConds = makeRouteConditional(numConds, /*false,*/ aList, oneTriggerList,
+            makeRouteConditional(numConds, /*false,*/ aList, oneTriggerList,
                     vetoList, logix, sName, uName, "L");
         }
         log.debug("Conditionals added= " + logix.getNumConditionals());

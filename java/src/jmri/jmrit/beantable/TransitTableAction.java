@@ -1439,7 +1439,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     private boolean forwardConnected(Section s1, Section s2, int restrictedDirection) {
         if ((s1 != null) && (s2 != null)) {
             List<EntryPoint> s1ForwardEntries = s1.getForwardEntryPointList();
-            List<EntryPoint> s2Entries = new ArrayList<>();
+            List<EntryPoint> s2Entries;
             if (restrictedDirection == Section.FORWARD) {
                 s2Entries = s2.getReverseEntryPointList();
             } else if (restrictedDirection == Section.REVERSE) {
@@ -1464,7 +1464,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     private boolean reverseConnected(Section s1, Section s2, int restrictedDirection) {
         if ((s1 != null) && (s2 != null)) {
             List<EntryPoint> s1ReverseEntries = s1.getReverseEntryPointList();
-            List<EntryPoint> s2Entries = new ArrayList<>();
+            List<EntryPoint> s2Entries;
             if (restrictedDirection == Section.FORWARD) {
                 s2Entries = s2.getReverseEntryPointList();
             } else if (restrictedDirection == Section.REVERSE) {
