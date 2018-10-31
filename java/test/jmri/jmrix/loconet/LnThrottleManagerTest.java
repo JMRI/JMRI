@@ -1,15 +1,15 @@
 package jmri.jmrix.loconet;
 
+import jmri.DccLocoAddress;
+import jmri.DccThrottle;
+import jmri.InstanceManager;
+import jmri.ThrottleListener;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import jmri.ThrottleListener;
-import jmri.DccLocoAddress;
-import jmri.DccThrottle;
-import jmri.InstanceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1037,13 +1037,14 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
     LocoNetSystemConnectionMemo memo;
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         lnis = new LocoNetInterfaceScaffold();
         memo = new LocoNetSystemConnectionMemo();
         memo.setLnTrafficController(lnis);
-        memo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, false, false, false);
+        memo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, false, false, false, false);
         memo.configureManagers();
         tm = new LnThrottleManager(memo);
         log.debug("new throttle manager is {}", tm.toString());
