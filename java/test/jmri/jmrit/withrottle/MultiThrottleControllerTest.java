@@ -211,16 +211,20 @@ public class MultiThrottleControllerTest {
        Assert.assertTrue("Continue after velicity",controller.sort("V7"));
        Assert.assertTrue("Continue after velicity",controller.sort("V15"));
        Assert.assertTrue("Continue after velicity",controller.sort("V25"));
-       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",0.0,7.0/126.0));
+       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",0.0f,7.0f/126.0f));
        Assert.assertNull("outgoing message after property change", cis.getLastPacket() );
        Assert.assertTrue("Continue after velicity",controller.sort("V32"));
        Assert.assertTrue("Continue after velicity",controller.sort("V45"));
        Assert.assertTrue("Continue after velicity",controller.sort("V63"));
-       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",7.0/126.0,15.0/126.0));
+       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",7.0f/126.0f,15.0f/126.0f));
        Assert.assertNull("outgoing message after property change", cis.getLastPacket() );
-       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",15.0/126.0,25.0/126.0));
+       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",15.0f/126.0f,25.0f/126.0f));
        Assert.assertNull("outgoing message after property change", cis.getLastPacket() );
-       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",0.0,63.0/126.0));
+       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",25.0f/126.0f,32.0f/126.0f));
+       Assert.assertNull("outgoing message after property change", cis.getLastPacket() );
+       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",32.0f/126.0f,45.0f/126.0f));
+       Assert.assertNull("outgoing message after property change", cis.getLastPacket() );
+       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",0.0f,63.0f/126.0f));
        Assert.assertEquals("outgoing message after property change", "MAAtest<;>V63",cis.getLastPacket() );
     }
 
