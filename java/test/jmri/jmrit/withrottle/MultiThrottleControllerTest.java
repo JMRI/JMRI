@@ -196,6 +196,34 @@ public class MultiThrottleControllerTest {
        Assert.assertEquals("Velocity set",0.0f,t.getSpeedSetting(),0.0005f);
     }
 
+    @Test
+    public void testVelocityChangeSequence() {
+       jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1,false),null){
+           @Override
+	   public void setSpeedSetting(float s){
+              // override so we can send property changes in sequence.
+	   }
+       };
+       controller.notifyThrottleFound(t);
+       cis.reset();
+       // withrottle may actually sends more than one speed change when 
+       // moving the slider.
+       Assert.assertTrue("Continue after velicity",controller.sort("V7"));
+       Assert.assertTrue("Continue after velicity",controller.sort("V15"));
+       Assert.assertTrue("Continue after velicity",controller.sort("V25"));
+       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",0.0,7.0/126.0));
+       Assert.assertNull("outgoing message after property change", cis.getLastPacket() );
+       Assert.assertTrue("Continue after velicity",controller.sort("V32"));
+       Assert.assertTrue("Continue after velicity",controller.sort("V45"));
+       Assert.assertTrue("Continue after velicity",controller.sort("V63"));
+       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",7.0/126.0,15.0/126.0));
+       Assert.assertNull("outgoing message after property change", cis.getLastPacket() );
+       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",15.0/126.0,25.0/126.0));
+       Assert.assertNull("outgoing message after property change", cis.getLastPacket() );
+       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",0.0,63.0/126.0));
+       Assert.assertEquals("outgoing message after property change", "MAAtest<;>V63",cis.getLastPacket() );
+    }
+
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
