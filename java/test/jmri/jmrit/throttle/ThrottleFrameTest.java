@@ -1,18 +1,14 @@
 package jmri.jmrit.throttle;
 
 import java.awt.GraphicsEnvironment;
+import java.io.File;
 import jmri.InstanceManager;
 import jmri.DccLocoAddress;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
+import org.junit.rules.TemporaryFolder;
 
 /**
  * Test simple functioning of ThrottleFrame
@@ -23,6 +19,9 @@ public class ThrottleFrameTest {
 
     @Rule
     public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
+
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
         
     private ThrottleWindow frame = null;
     private ThrottleFrame panel = null;
@@ -300,8 +299,18 @@ public class ThrottleFrameTest {
     }
 
     @Test
-    public void testSaveThrottle() {
+    public void testSetAndGetFileName() throws java.io.IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        String fileName = folder.newFolder().getPath() + File.separator + "testThrotttle.xml";
+        panel.setLastUsedSaveFile(fileName);
+        Assert.assertEquals("filename after set",fileName,panel.getLastUsedSaveFile());
+    }
+
+    @Test
+    public void testSaveThrottle() throws java.io.IOException {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        String fileName = folder.newFolder().getPath() + File.separator + "testThrotttle.xml";
+        panel.setLastUsedSaveFile(fileName);
         // right now, just verify no error
         panel.saveThrottle();
     }
