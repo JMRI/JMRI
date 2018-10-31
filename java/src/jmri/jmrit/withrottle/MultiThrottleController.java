@@ -70,13 +70,34 @@ public class MultiThrottleController extends ThrottleController {
             }
         }
         if (eventName.matches("SpeedSteps")) {
-            sendSpeedStepMode(throttle);
+            StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
+            message.append("s");
+            message.append(event.getNewValue().toString());
+            for (ControllerInterface listener : controllerListeners) {
+                listener.sendPacketToDevice(message.toString());
+            }
         }
         if (eventName.matches("IsForward")) {
-            sendCurrentDirection(throttle);
+            StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
+            message.append("R");
+            message.append((Boolean) event.getNewValue() ? "1" : "0");
+            for (ControllerInterface listener : controllerListeners) {
+               listener.sendPacketToDevice(message.toString());
+            }
         }
         if (eventName.matches("SpeedSetting")) {
-            sendCurrentSpeed(throttle);
+            float currentSpeed = ((Float) event.getNewValue()).floatValue();
+            if(internalAdjust && Math.abs(lastSentSpeed-currentSpeed)>0.0005 ) {
+               return;
+            }
+            StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
+            message.append("V");
+            message.append(Math.round(currentSpeed / speedMultiplier));
+            for (ControllerInterface listener : controllerListeners) {
+                listener.sendPacketToDevice(message.toString());
+            }
+            lastSentSpeed=currentSpeed;
+            internalAdjust = false;
         }
     }
 
@@ -138,9 +159,6 @@ public class MultiThrottleController extends ThrottleController {
     @Override
     synchronized protected void sendCurrentSpeed(DccThrottle t) {
         float currentSpeed = t.getSpeedSetting();
-        if(internalAdjust && Math.abs(lastSentSpeed-currentSpeed)>0.0005 ) {
-           return;
-        }
         StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
         message.append("V");
         message.append(Math.round(currentSpeed / speedMultiplier));
