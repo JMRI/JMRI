@@ -53,12 +53,14 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     DccLocoAddress leadAddress;
     char whichThrottle;
     float speedMultiplier;
+    protected float lastSentSpeed;
     boolean isAddressSet;
     protected ArrayList<ThrottleControllerListener> listeners;
     protected ArrayList<ControllerInterface> controllerListeners;
     boolean useLeadLocoF;
     ConsistFunctionController leadLocoF = null;
     String locoKey = "";
+    protected boolean internalAdjust = false;
 
     final boolean isMomF2 = InstanceManager.getDefault(WiThrottlePreferences.class).isUseMomF2();
 
@@ -341,7 +343,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
         return ("RPF}|{" + whichThrottle);
     }
 
-    protected void sendCurrentSpeed(DccThrottle t) {
+    synchronized protected void sendCurrentSpeed(DccThrottle t) {
     }
 
     protected void sendCurrentDirection(DccThrottle t) {
@@ -565,11 +567,13 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
      *
      * @param rawSpeed Value sent from mobile device, range 0 - 126
      */
-    protected void setSpeed(int rawSpeed) {
+    synchronized protected void setSpeed(int rawSpeed) {
 
+        internalAdjust = true;
         float newSpeed = (rawSpeed * speedMultiplier);
 
         log.debug("raw: {}, NewSpd: {}", rawSpeed, newSpeed);
+        lastSentSpeed = newSpeed;
         throttle.setSpeedSetting(newSpeed);
     }
 

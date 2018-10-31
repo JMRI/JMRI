@@ -136,13 +136,19 @@ public class MultiThrottleController extends ThrottleController {
      * {@inheritDoc}
      */
     @Override
-    protected void sendCurrentSpeed(DccThrottle t) {
+    synchronized protected void sendCurrentSpeed(DccThrottle t) {
+        float currentSpeed = t.getSpeedSetting();
+        if(internalAdjust && Math.abs(lastSentSpeed-currentSpeed)>0.0005 ) {
+           return;
+        }
         StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
         message.append("V");
-        message.append(Math.round(t.getSpeedSetting() / speedMultiplier));
+        message.append(Math.round(currentSpeed / speedMultiplier));
         for (ControllerInterface listener : controllerListeners) {
             listener.sendPacketToDevice(message.toString());
         }
+        lastSentSpeed=currentSpeed;
+        internalAdjust = false;
     }
 
     /**
