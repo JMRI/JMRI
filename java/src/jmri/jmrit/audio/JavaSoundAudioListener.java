@@ -74,8 +74,7 @@ public class JavaSoundAudioListener extends AbstractAudioListener {
     private void recalculateSources() {
         // Loop through each AudioSource and recalculate their gain & pan
         AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
-        for (String sysName : am.getSystemNameList()) {
-            Audio audio = am.getBySystemName(sysName);
+        for (Audio audio : am.getNamedBeanSet()) {
             if (audio.getSubType() == Audio.SOURCE
                     && audio instanceof JavaSoundAudioSource) {
                 ((JavaSoundAudioSource) audio).calculateGain();
