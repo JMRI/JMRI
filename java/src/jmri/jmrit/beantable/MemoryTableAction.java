@@ -225,7 +225,7 @@ public class MemoryTableAction extends AbstractTableAction<Memory> {
         }
 
         String uName = NamedBean.normalizeUserName(userNameField.getText());
-        if (uName.isEmpty()) {
+        if (uName == null || uName.isEmpty()) {
             uName = null;
         }
         String sName = jmri.InstanceManager.memoryManagerInstance().normalizeSystemName(sysNameField.getText());

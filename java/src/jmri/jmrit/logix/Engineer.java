@@ -948,6 +948,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="Notify passing event, not state")
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (log.isDebugEnabled()) 
             log.debug("propertyChange {} new value= {}", evt.getPropertyName(), evt.getNewValue());
