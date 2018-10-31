@@ -39,6 +39,26 @@ public class MultiThrottleControllerTest {
     }
 
     @Test
+    public void testSetAndReleaseLongAddress(){
+       // set the address
+       Assert.assertTrue("Continue after address",controller.sort("L1234"));
+       Assert.assertTrue("Address Found",tcls.hasAddressBeenFound());
+       // then release it.
+       Assert.assertTrue("Continue after release",controller.sort("r"));
+       Assert.assertTrue("Address Released",tcls.hasAddressBeenReleased());
+    }
+
+    @Test
+    public void testSetAndDispatchLongAddress(){
+       // set the address
+       Assert.assertTrue("Continue after address",controller.sort("L1234"));
+       Assert.assertTrue("Address Found",tcls.hasAddressBeenFound());
+       // then dispatch it.
+       Assert.assertTrue("Continue after release",controller.sort("d"));
+       Assert.assertTrue("Address Released",tcls.hasAddressBeenReleased());
+    }
+
+    @Test
     public void testSetVelocityChange() {
        jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1,false),null);
        controller.notifyThrottleFound(t);
@@ -57,6 +77,10 @@ public class MultiThrottleControllerTest {
     @Test
     public void testSetFunction() {
        jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1,false),null);
+       // before notifying the throttle is found, set a function on
+       // which runs a couple of additional lines of code in 
+       // sendAllFunctionStates.
+       t.setF6(true);
        controller.notifyThrottleFound(t);
        // function "on" from withrottle represents a button click event.
        Assert.assertTrue("Continue after set F1 on",controller.sort("F11"));
@@ -154,6 +178,22 @@ public class MultiThrottleControllerTest {
        Assert.assertEquals("outgoing message after property change", "MAAtest<;>R0",cis.getLastPacket() );
        t.setIsForward(true);
        Assert.assertEquals("outgoing message after property change", "MAAtest<;>R1",cis.getLastPacket() );
+    }
+
+    @Test
+    public void testQuitNoAddress(){
+       Assert.assertFalse("Stop after quit",controller.sort("Q"));
+    }
+
+    @Test
+    public void testQuitWithAddress(){
+       jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1,false),null);
+       controller.notifyThrottleFound(t);
+       Assert.assertTrue("Continue after velicity",controller.sort("V63"));
+       Assert.assertEquals("Velocity set",0.5f,t.getSpeedSetting(),0.0005f);
+       Assert.assertFalse("Stop after quit",controller.sort("Q"));
+       // current behavior is to set the speed to 0 after quit.
+       Assert.assertEquals("Velocity set",0.0f,t.getSpeedSetting(),0.0005f);
     }
 
     @Before

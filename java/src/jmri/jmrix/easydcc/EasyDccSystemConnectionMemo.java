@@ -2,9 +2,12 @@ package jmri.jmrix.easydcc;
 
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
+
+import jmri.ConsistManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.ThrottleManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -94,7 +97,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
         InstanceManager.setThrottleManager(getThrottleManager());
 
-        InstanceManager.setConsistManager(getConsistManager());
+        InstanceManager.store(getConsistManager(), ConsistManager.class);
 
         commandStation = new jmri.jmrix.easydcc.EasyDccCommandStation(this);
 

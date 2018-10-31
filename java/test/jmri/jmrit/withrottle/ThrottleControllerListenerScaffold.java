@@ -25,7 +25,7 @@ public class ThrottleControllerListenerScaffold implements ThrottleControllerLis
         addressReleased = true;
     }
 
-    public boolean hasAddressBeenRelease(){
+    public boolean hasAddressBeenReleased(){
        return addressReleased;
     }
     
