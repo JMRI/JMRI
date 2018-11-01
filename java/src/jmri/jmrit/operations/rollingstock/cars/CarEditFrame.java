@@ -1,13 +1,18 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
@@ -31,11 +36,25 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
     CarManager carManager = InstanceManager.getDefault(CarManager.class);
     CarManagerXml managerXml = InstanceManager.getDefault(CarManagerXml.class);
 
+    // labels
+    JLabel textWeightOz = new JLabel(Bundle.getMessage("WeightOz"));
+
+    JButton editColorButton = new JButton(Bundle.getMessage("ButtonEdit"));
+    JButton editLoadButton = new JButton(Bundle.getMessage("ButtonEdit"));
+    JButton fillWeightButton = new JButton(Bundle.getMessage("Calculate"));
+
     JCheckBox passengerCheckBox = new JCheckBox(Bundle.getMessage("Passenger"));
     JCheckBox cabooseCheckBox = new JCheckBox(Bundle.getMessage("Caboose"));
     JCheckBox fredCheckBox = new JCheckBox(Bundle.getMessage("Fred"));
     JCheckBox utilityCheckBox = new JCheckBox(Bundle.getMessage("Utility"));
     JCheckBox hazardousCheckBox = new JCheckBox(Bundle.getMessage("Hazardous"));
+
+    public JComboBox<String> colorComboBox = InstanceManager.getDefault(CarColors.class).getComboBox();
+    public JComboBox<String> loadComboBox = InstanceManager.getDefault(CarLoads.class).getComboBox(null);
+
+    JTextField blockingTextField = new JTextField(4);
+
+    public JCheckBox autoWeightCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
 
     CarLoadEditFrame carLoadEditFrame = null;
 
@@ -86,7 +105,46 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
         addButton.setToolTipText(Bundle.getMessage("TipAddButton"));
         saveButton.setToolTipText(Bundle.getMessage("TipSaveButton"));
 
+        editColorButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
+                new Object[]{Bundle.getMessage("Color").toLowerCase()}));
+        editLoadButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
+                new Object[]{Bundle.getMessage("load")})); // initial caps for some languages i.e. German
+        editOwnerButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
+                new Object[]{Bundle.getMessage("Owner").toLowerCase()}));
+        editGroupButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
+                new Object[]{Bundle.getMessage("Kernel").toLowerCase()}));
+
+        // row 4
+        pBlocking.setLayout(new GridBagLayout());
+        pBlocking.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutPassengerBlocking")));
+        addItem(pBlocking, blockingTextField, 0, 0);
+        blockingTextField.setText("0");
+
+        // row 7
+        pWeightOz.setLayout(new GridBagLayout());
+        addItem(pWeightOz, textWeightOz, 0, 0);
+        addItem(pWeightOz, weightTextField, 1, 0);
+        addItem(pWeightOz, fillWeightButton, 2, 0);
+        addItem(pWeightOz, autoWeightCheckBox, 3, 0);
+
+        // row 8
+        pColor.setLayout(new GridBagLayout());
+        pColor.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Color")));
+        addItem(pColor, colorComboBox, 1, 0);
+        addItem(pColor, editColorButton, 2, 0);
+
+        // row 9
+        pLoad.setLayout(new GridBagLayout());
+        pLoad.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Load")));
+        addItem(pLoad, loadComboBox, 1, 0);
+        addItem(pLoad, editLoadButton, 2, 0);
+
+        // row 10
         pGroup.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Kernel")));
+
+        addEditButtonAction(editColorButton);
+        addButtonAction(fillWeightButton);
+        addButtonAction(editLoadButton);
 
         // setup check boxes
         addCheckBoxAction(cabooseCheckBox);
@@ -96,7 +154,6 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
         autoTrackCheckBox.setEnabled(false);
         //
         addHelpMenu("package.jmri.jmrit.operations.Operations_CarsEdit", true); // NOI18N
-        carManager.addPropertyChangeListener(this);
     }
 
     @Override
@@ -124,6 +181,7 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
         hazardousCheckBox.setSelected(car.isHazardous());
 
         pBlocking.setVisible(car.isPassenger() || car.getKernel() != null);
+        blockingTextField.setText(Integer.toString(car.getBlocking()));
 
         if (!InstanceManager.getDefault(CarLoads.class).containsName(car.getTypeName(), car.getLoadName())) {
             if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("loadNameNotExist"),
@@ -132,10 +190,11 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
                 InstanceManager.getDefault(CarLoads.class).addName(car.getTypeName(), car.getLoadName());
             }
         }
-        // listen for changes in car load
-        car.addPropertyChangeListener(this);
         InstanceManager.getDefault(CarLoads.class).updateComboBox(car.getTypeName(), loadComboBox);
         loadComboBox.setSelectedItem(car.getLoadName());
+        
+        // listen for changes in car load
+        car.addPropertyChangeListener(this);
 
         // only cars have color attribute
         if (!InstanceManager.getDefault(CarColors.class).containsName(car.getColor())) {
@@ -148,11 +207,9 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
         colorComboBox.setSelectedItem(car.getColor());
 
         groupComboBox.setSelectedItem(car.getKernelName());
-
         setTitle(Bundle.getMessage("TitleCarEdit"));
     }
 
-    // combo boxes
     @Override
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == typeComboBox && typeComboBox.getSelectedItem() != null) {
@@ -279,7 +336,7 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
                     .getMessage("carActualWeight"), JOptionPane.ERROR_MESSAGE);
             return false;
         }
- 
+
         return super.check(car);
     }
 
@@ -457,7 +514,7 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
         pBlocking.setVisible(passengerCheckBox.isSelected() || car.getKernel() != null);
         blockingTextField.setText(Integer.toString(car.getBlocking()));
 
-        // is this car part of a kernel?
+        // is this car part of a kernel? Ask if all cars should have the same location and track
         if (car.getKernel() != null) {
             List<Car> cars = car.getKernel().getCars();
             if (cars.size() > 1) {
@@ -523,13 +580,22 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
     }
 
     @Override
-    public void dispose() {
-        removePropertyChangeListeners();
-        super.dispose();
+    protected void addPropertyChangeListeners() {
+        InstanceManager.getDefault(CarLoads.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarColors.class).addPropertyChangeListener(this);
+        carManager.addPropertyChangeListener(this);
+        super.addPropertyChangeListeners();
     }
 
-    private void removePropertyChangeListeners() {
+    @Override
+    protected void removePropertyChangeListeners() {
+        InstanceManager.getDefault(CarLoads.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarColors.class).removePropertyChangeListener(this);
         carManager.removePropertyChangeListener(this);
+        if (_rs != null) {
+            _rs.removePropertyChangeListener(this);
+        }
+        super.removePropertyChangeListeners();
     }
 
     @Override
@@ -544,6 +610,12 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
             InstanceManager.getDefault(CarLengths.class).updateComboBox(lengthComboBox);
             if (_rs != null) {
                 lengthComboBox.setSelectedItem(_rs.getLength());
+            }
+        }
+        if (e.getPropertyName().equals(CarColors.CARCOLORS_CHANGED_PROPERTY)) {
+            InstanceManager.getDefault(CarColors.class).updateComboBox(colorComboBox);
+            if (_rs != null) {
+                colorComboBox.setSelectedItem(_rs.getColor());
             }
         }
         if (e.getPropertyName().equals(CarManager.KERNEL_LISTLENGTH_CHANGED_PROPERTY) ||
