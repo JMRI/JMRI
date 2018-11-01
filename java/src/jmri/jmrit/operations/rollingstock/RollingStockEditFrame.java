@@ -24,10 +24,8 @@ import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.cars.CarColors;
 import jmri.jmrit.operations.rollingstock.cars.CarEditFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarLengths;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -57,18 +55,13 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
     protected LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
-    // labels
-    JLabel textWeightOz = new JLabel(Bundle.getMessage("WeightOz"));
     JLabel textWeightTons = new JLabel(Bundle.getMessage("WeightTons"));
 
     // major buttons
     public JButton editRoadButton = new JButton(Bundle.getMessage("ButtonEdit"));
     public JButton clearRoadNumberButton = new JButton(Bundle.getMessage("ButtonClear"));
-    public JButton editTypeButton = new JButton(Bundle.getMessage("ButtonEdit"));
-    public JButton editColorButton = new JButton(Bundle.getMessage("ButtonEdit"));
-    public JButton editLengthButton = new JButton(Bundle.getMessage("ButtonEdit"));
-    public JButton fillWeightButton = new JButton(Bundle.getMessage("Calculate"));
-    public JButton editLoadButton = new JButton(Bundle.getMessage("ButtonEdit"));
+    public JButton editTypeButton = new JButton(Bundle.getMessage("ButtonEdit"));    
+    public JButton editLengthButton = new JButton(Bundle.getMessage("ButtonEdit"));   
     public JButton editGroupButton = new JButton(Bundle.getMessage("ButtonEdit"));
     public JButton editOwnerButton = new JButton(Bundle.getMessage("ButtonEdit"));
 
@@ -77,12 +70,11 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
     public JButton addButton = new JButton(Bundle.getMessage("ButtonAdd")); // have button state item to add
 
     // check boxes
-    public JCheckBox autoWeightCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
     public JCheckBox autoTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
 
     // text field
     public JTextField roadNumberTextField = new JTextField(Control.max_len_string_road_number);
-    public JTextField blockingTextField = new JTextField(4);
+    
     public JTextField builtTextField = new JTextField(Control.max_len_string_built_name + 3);
     public JTextField weightTextField = new JTextField(Control.max_len_string_weight_name);
     public JTextField weightTonsTextField = new JTextField(Control.max_len_string_weight_name);
@@ -91,14 +83,12 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
     // combo boxes
     public JComboBox<String> roadComboBox = InstanceManager.getDefault(CarRoads.class).getComboBox();
-    public JComboBox<String> typeComboBox = getTypeManager().getComboBox();
-    public JComboBox<String> colorComboBox = InstanceManager.getDefault(CarColors.class).getComboBox();
+    public JComboBox<String> typeComboBox = getTypeManager().getComboBox(); 
     public JComboBox<String> lengthComboBox = getLengthManager().getComboBox();
     public JComboBox<String> ownerComboBox = InstanceManager.getDefault(CarOwners.class).getComboBox();
     public JComboBox<String> groupComboBox;
     public JComboBox<Location> locationBox = locationManager.getComboBox();
     public JComboBox<Track> trackLocationBox = new JComboBox<>();
-    public JComboBox<String> loadComboBox = InstanceManager.getDefault(CarLoads.class).getComboBox(null);
 
     public JComboBox<IdTag> rfidComboBox = new JComboBox<>();
 
@@ -136,16 +126,9 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
                 new Object[]{Bundle.getMessage("road")})); // in OpsCarsBundle: initial caps for some languages i.e. German
         editTypeButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
                 new Object[]{Bundle.getMessage("type")})); // initial caps for some languages i.e. German
-        editColorButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
-                new Object[]{Bundle.getMessage("Color").toLowerCase()}));
         editLengthButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
                 new Object[]{Bundle.getMessage("length")})); // initial caps for some languages i.e. German
-        editLoadButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
-                new Object[]{Bundle.getMessage("load")})); // initial caps for some languages i.e. German
-        editOwnerButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
-                new Object[]{Bundle.getMessage("Owner").toLowerCase()}));
-        editGroupButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
-                new Object[]{Bundle.getMessage("Kernel").toLowerCase()}));
+
 
         // create panel
         JPanel pPanel = new JPanel();
@@ -180,10 +163,6 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         pPanel.add(pType);
 
         // row 4
-        pBlocking.setLayout(new GridBagLayout());
-        pBlocking.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutPassengerBlocking")));
-        addItem(pBlocking, blockingTextField, 0, 0);
-        blockingTextField.setText("0");
         // only cars use the blocking option
         pPanel.add(pBlocking);
         pBlocking.setVisible(false);
@@ -217,11 +196,6 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         pWeight.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Weight")));
 
         // weight in oz only shown for cars
-        pWeightOz.setLayout(new GridBagLayout());
-        addItem(pWeightOz, textWeightOz, 0, 0);
-        addItem(pWeightOz, weightTextField, 1, 0);
-        addItem(pWeightOz, fillWeightButton, 2, 0);
-        addItem(pWeightOz, autoWeightCheckBox, 3, 0);
         pWeight.add(pWeightOz);
 
         JPanel pWeightTons = new JPanel();
@@ -234,19 +208,10 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         pWeight.add(pWeightTons);
         pOptional.add(pWeight);
 
-        // row 8
-        pColor.setLayout(new GridBagLayout());
-        pColor.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Color")));
-        addItem(pColor, colorComboBox, 1, 0);
-        addItem(pColor, editColorButton, 2, 0);
+        // row 8 for cars
         pOptional.add(pColor);
 
-        // row 9
-        JPanel pLoad = new JPanel();
-        pLoad.setLayout(new GridBagLayout());
-        pLoad.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Load")));
-        addItem(pLoad, loadComboBox, 1, 0);
-        addItem(pLoad, editLoadButton, 2, 0);
+        // row 9 for cars
         pOptional.add(pLoad);
 
         // row 10 
@@ -313,19 +278,16 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         getContentPane().add(pButtons);
 
         // setup buttons
-        addEditButtonAction(editRoadButton);
-        addButtonAction(clearRoadNumberButton);
+        addEditButtonAction(editRoadButton);       
         addEditButtonAction(editTypeButton);
         addEditButtonAction(editLengthButton);
-        addEditButtonAction(editColorButton);
         addEditButtonAction(editGroupButton);
         addEditButtonAction(editOwnerButton);
 
+        addButtonAction(clearRoadNumberButton);
         addButtonAction(deleteButton);
         addButtonAction(addButton);
         addButtonAction(saveButton);
-        addButtonAction(fillWeightButton);
-        addButtonAction(editLoadButton);
 
         // setup combobox
         addComboBoxAction(typeComboBox);
@@ -397,11 +359,8 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         valueTextField.setText(rs.getValue());
         rfidComboBox.setSelectedItem(rs.getIdTag());
         autoTrackCheckBox.setEnabled(true);
-        blockingTextField.setText(Integer.toString(rs.getBlocking()));
     }
 
-    // combo boxes
-    //    @Override
     @Override
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == locationBox) {
@@ -530,7 +489,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
     }
 
     // for the AttributeEditFrame edit buttons
-    private void addEditButtonAction(JButton b) {
+    protected void addEditButtonAction(JButton b) {
         b.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -545,27 +504,20 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         super.dispose();
     }
 
-    private void addPropertyChangeListeners() {
+    protected void addPropertyChangeListeners() {
         InstanceManager.getDefault(CarRoads.class).addPropertyChangeListener(this);
-        InstanceManager.getDefault(CarLoads.class).addPropertyChangeListener(this);
         getTypeManager().addPropertyChangeListener(this);
         getLengthManager().addPropertyChangeListener(this);
-        InstanceManager.getDefault(CarColors.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(CarOwners.class).addPropertyChangeListener(this);
         locationManager.addPropertyChangeListener(this);
     }
 
-    private void removePropertyChangeListeners() {
-        InstanceManager.getDefault(CarRoads.class).removePropertyChangeListener(this);
-        InstanceManager.getDefault(CarLoads.class).removePropertyChangeListener(this);
+    protected void removePropertyChangeListeners() {
+        InstanceManager.getDefault(CarRoads.class).removePropertyChangeListener(this);     
         getTypeManager().removePropertyChangeListener(this);
         getLengthManager().removePropertyChangeListener(this);
-        InstanceManager.getDefault(CarColors.class).removePropertyChangeListener(this);
         InstanceManager.getDefault(CarOwners.class).removePropertyChangeListener(this);
         locationManager.removePropertyChangeListener(this);
-        if (_rs != null) {
-            _rs.removePropertyChangeListener(this);
-        }
     }
 
     @Override
@@ -581,12 +533,6 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
             getTypeManager().updateComboBox(typeComboBox);
             if (_rs != null) {
                 typeComboBox.setSelectedItem(_rs.getTypeName());
-            }
-        }
-        if (e.getPropertyName().equals(CarColors.CARCOLORS_CHANGED_PROPERTY)) {
-            InstanceManager.getDefault(CarColors.class).updateComboBox(colorComboBox);
-            if (_rs != null) {
-                colorComboBox.setSelectedItem(_rs.getColor());
             }
         }
         if (e.getPropertyName().equals(CarLengths.CARLENGTHS_CHANGED_PROPERTY) ||
