@@ -291,6 +291,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         labelTable.put(Integer.valueOf(maxSpeed), new JLabel("100%"));
         labelTable.put(Integer.valueOf(0), new JLabel(Bundle.getMessage("ButtonStop")));
         speedSlider.setLabelTable(labelTable);
+        
         if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()
                 && InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingFunctionIcon()) {
             speedSlider.setPaintTicks(false);
