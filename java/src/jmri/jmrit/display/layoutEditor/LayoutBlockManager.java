@@ -1939,8 +1939,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             @Nullable NamedBean bean,
             @Nullable LayoutEditor panel) {
         if (panel == null) {
-            List<LayoutEditor> panels = jmri.jmrit.display.PanelMenu.instance().
-                    getLayoutEditorPanelList();
+            List<LayoutEditor> panels = InstanceManager.getDefault(jmri.jmrit.display.PanelMenu.class)
+                    .getLayoutEditorPanelList();
             List<LayoutBlock> protectingBlocks = new ArrayList<>();
             for (LayoutEditor p : panels) {
                 protectingBlocks = getProtectingBlocksByBeanByPanel(bean, p);
@@ -2208,7 +2208,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             @Nonnull NamedBean bean,
             LayoutEditor panel) {
         if (panel == null) {
-            List<LayoutEditor> panels = jmri.jmrit.display.PanelMenu.instance().
+            List<LayoutEditor> panels = InstanceManager.getDefault(jmri.jmrit.display.PanelMenu.class).
                     getLayoutEditorPanelList();
             LayoutBlock returnBlock = null;
             for (LayoutEditor p : panels) {

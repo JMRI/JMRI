@@ -20,7 +20,6 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import jmri.InstanceManager;
 import jmri.Manager;
-import jmri.NamedBean;
 import jmri.Reporter;
 import jmri.ReporterManager;
 import jmri.util.ConnectionNameFromSystemName;
@@ -54,7 +53,9 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
 
     protected ReporterManager reportManager = InstanceManager.getDefault(jmri.ReporterManager.class);
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setManager(@Nonnull Manager<Reporter> man) {
         reportManager = (ReporterManager) man;
@@ -73,7 +74,9 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         m = new BeanTableDataModel<Reporter>() {
             public static final int LASTREPORTCOL = NUMCOLUMN;
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public String getValue(String name) {
                 Object value;
@@ -84,38 +87,50 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 return (value = r.getCurrentReport()) == null ? "" : value.toString();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public ReporterManager getManager() {
                 return reportManager;
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public Reporter getBySystemName(String name) {
                 return reportManager.getBySystemName(name);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public Reporter getByUserName(String name) {
                 return reportManager.getByUserName(name);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             protected String getMasterClassName() {
                 return getClassName();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public void clickOn(Reporter t) {
                 // don't do anything on click; not used in this class, because
                 // we override setValueAt
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public void setValueAt(Object value, int row, int col) {
                 if (col == VALUECOL) {
@@ -130,13 +145,17 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 }
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public int getColumnCount() {
                 return LASTREPORTCOL + 1;
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public String getColumnName(int col) {
                 if (col == VALUECOL) {
@@ -148,7 +167,9 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 return super.getColumnName(col);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public Class<?> getColumnClass(int col) {
                 if (col == VALUECOL) {
@@ -160,7 +181,9 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 return super.getColumnClass(col);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public boolean isCellEditable(int row, int col) {
                 if (col == LASTREPORTCOL) {
@@ -169,7 +192,9 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 return super.isCellEditable(row, col);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public Object getValueAt(int row, int col) {
                 if (col == LASTREPORTCOL) {
@@ -179,8 +204,10 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 return super.getValueAt(row, col);
             }
 
-             /** {@inheritDoc} */
-           @Override
+            /**
+             * {@inheritDoc}
+             */
+            @Override
             public int getPreferredWidth(int col) {
                 if (col == LASTREPORTCOL) {
                     return super.getPreferredWidth(VALUECOL);
@@ -188,27 +215,35 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 return super.getPreferredWidth(col);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public void configValueColumn(JTable table) {
                 // value column isn't button, so config is null
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 return true;
                 // return (e.getPropertyName().indexOf("Report")>=0);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public JButton configureButton() {
                 log.error("configureButton should not have been called");
                 return null;
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             protected String getBeanType() {
                 return Bundle.getMessage("BeanNameReporter");
@@ -216,13 +251,17 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         };
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleReporterTable"));
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.ReporterTable";
@@ -233,17 +272,19 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
     JTextField userNameTextField = new JTextField(20);
     JComboBox<String> prefixBox = new JComboBox<String>();
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
-    JSpinner numberToAdd = new JSpinner(rangeSpinner);
-    JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
+    JSpinner numberToAddSpinner = new JSpinner(rangeSpinner);
+    JCheckBox rangeCheckBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     JButton addButton;
     PropertyChangeListener colorChangeListener;
-    JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
+    JLabel statusBarLabel = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     String userNameError = this.getClass().getName() + ".DuplicateUserName"; // only used in this package
     String connectionChoice = "";
     jmri.UserPreferencesManager pref;
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void addPressed(ActionEvent e) {
         pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
@@ -311,7 +352,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             hardwareAddressTextField.addPropertyChangeListener(colorChangeListener);
             // create panel
             addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameTextField, prefixBox,
-                    numberToAdd, range, addButton, cancelListener, rangeListener, statusBar));
+                    numberToAddSpinner, rangeCheckBox, addButton, cancelListener, rangeListener, statusBarLabel));
             // tooltip for hardwareAddressTextField will be assigned next by canAddRange()
             canAddRange(null);
         }
@@ -320,9 +361,9 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         hardwareAddressTextField.setBackground(Color.yellow);
         addButton.setEnabled(false); // start as disabled (false) until a valid entry is typed in
         addButton.setName("createButton"); // for GUI test NOI18N
-        // reset statusBar text
-        statusBar.setText(Bundle.getMessage("HardwareAddStatusEnter"));
-        statusBar.setForeground(Color.gray);
+        // reset statusBarLabel text
+        statusBarLabel.setText(Bundle.getMessage("HardwareAddStatusEnter"));
+        statusBarLabel.setForeground(Color.gray);
 
         addFrame.pack();
         addFrame.setVisible(true);
@@ -339,8 +380,8 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
 
         int numberOfReporters = 1;
 
-        if (range.isSelected()) {
-            numberOfReporters = (Integer) numberToAdd.getValue();
+        if (rangeCheckBox.isSelected()) {
+            numberOfReporters = (Integer) numberToAddSpinner.getValue();
         }
         if (numberOfReporters >= 65) { // limited by JSpinnerModel to 100
             if (JOptionPane.showConfirmDialog(addFrame,
@@ -354,9 +395,9 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         String reporterPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()); // Add "R" later
         String curAddress = hardwareAddressTextField.getText().trim();
         // initial check for empty entry
-        if (curAddress.length() < 1) {
-            statusBar.setText(Bundle.getMessage("WarningEmptyHardwareAddress"));
-            statusBar.setForeground(Color.red);
+        if (curAddress.isEmpty()) {
+            statusBarLabel.setText(Bundle.getMessage("WarningEmptyHardwareAddress"));
+            statusBarLabel.setForeground(Color.red);
             hardwareAddressTextField.setBackground(Color.red);
             return;
         } else {
@@ -366,12 +407,13 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         // Add some entry pattern checking, before assembling sName and handing it to the ReporterManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameReporter"));
         String errorMessage = null;
+        String uName = userNameTextField.getText().trim();
         for (int x = 0; x < numberOfReporters; x++) {
             curAddress = reportManager.getNextValidAddress(curAddress, reporterPrefix);
             if (curAddress == null) {
                 log.debug("Error converting HW or getNextValidAddress");
                 errorMessage = (Bundle.getMessage("WarningInvalidEntry"));
-                statusBar.setForeground(Color.red);
+                statusBarLabel.setForeground(Color.red);
                 // The next address returned an error, therefore we stop this attempt and go to the next address.
                 break;
             }
@@ -385,42 +427,45 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             } catch (IllegalArgumentException ex) {
                 // user input no good
                 handleCreateException(rName); // displays message dialog to the user
-                // add to statusBar as well
+                // add to statusBarLabel as well
                 errorMessage = Bundle.getMessage("WarningInvalidEntry");
-                statusBar.setText(errorMessage);
-                statusBar.setForeground(Color.red);
+                statusBarLabel.setText(errorMessage);
+                statusBarLabel.setForeground(Color.red);
                 return; // without creating
             }
 
-            String user = userNameTextField.getText().trim();
-            if ((x != 0) && user != null && !user.equals("")) {
-                user = user + ":" + x; // add :x to user name starting with 2nd item
-            }
-            if (user != null && !user.equals("") && (reportManager.getByUserName(user) == null)) {
-                r.setUserName(user);
-            } else if (user != null && !user.equals("") && reportManager.getByUserName(user) != null && !pref.getPreferenceState(getClassName(), userNameError)) {
-                pref.showErrorMessage(Bundle.getMessage("ErrorTitle"),
-                        Bundle.getMessage("ErrorDuplicateUserName", user), userNameError, "", false, true);
+            if (!uName.isEmpty()) {
+                if ((reportManager.getByUserName(uName) == null)) {
+                    r.setUserName(uName);
+                } else {
+                    pref.showErrorMessage(Bundle.getMessage("ErrorTitle"),
+                            Bundle.getMessage("ErrorDuplicateUserName", uName), userNameError, "", false, true);
+                }
             }
 
             // add first and last names to statusMessage user feedback string
+            // only mention first and last of rangeCheckBox added
             if (x == 0 || x == numberOfReporters - 1) {
-                statusMessage = statusMessage + " " + rName + " (" + user + ")";
+                statusMessage = statusMessage + " " + rName + " (" + uName + ")";
             }
             if (x == numberOfReporters - 2) {
                 statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
             }
-            // only mention first and last of range added
 
-            // end of for loop creating range of Reporters
+            // bump user name
+            if (!uName.isEmpty()) {
+                uName = nextName(uName);
+            }
+
+            // end of for loop creating rangeCheckBox of Reporters
         }
-        // provide feedback to user
+        // provide feedback to uName
         if (errorMessage == null) {
-            statusBar.setText(statusMessage);
-            statusBar.setForeground(Color.gray);
+            statusBarLabel.setText(statusMessage);
+            statusBarLabel.setForeground(Color.gray);
         } else {
-            statusBar.setText(errorMessage);
-            // statusBar.setForeground(Color.red); // handled when errorMassage is set to differentiate urgency
+            statusBarLabel.setText(errorMessage);
+            // statusBarLabel.setForeground(Color.red); // handled when errorMassage is set to differentiate urgency
         }
 
         pref.setComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem());
@@ -433,12 +478,13 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
     private String addEntryToolTip;
 
     /**
-     * Activate Add a range option if manager accepts adding more than 1 Reporter
-     * and set a manager specific tooltip on the AddNewHardwareDevice pane.
+     * Activate Add a rangeCheckBox option if manager accepts adding more than 1
+ Reporter and set a manager specific tooltip on the AddNewHardwareDevice
+ pane.
      */
     private void canAddRange(ActionEvent e) {
-        range.setEnabled(false);
-        range.setSelected(false);
+        rangeCheckBox.setEnabled(false);
+        rangeCheckBox.setSelected(false);
         connectionChoice = (String) prefixBox.getSelectedItem(); // store in Field for CheckedTextField
         if (connectionChoice == null) {
             // Tab All or first time opening, default tooltip
@@ -449,8 +495,8 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             List<Manager<Reporter>> managerList = proxy.getDisplayOrderManagerList();
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (Manager<Reporter> mgr : managerList) {
-                if (mgr.getSystemPrefix().equals(systemPrefix) && ((ReporterManager)mgr).allowMultipleAdditions(systemPrefix)) {
-                    range.setEnabled(true);
+                if (mgr.getSystemPrefix().equals(systemPrefix) && ((ReporterManager) mgr).allowMultipleAdditions(systemPrefix)) {
+                    rangeCheckBox.setEnabled(true);
                     // get tooltip from ProxyReporterManager
                     addEntryToolTip = mgr.getEntryToolTip();
                     log.debug("R add box set");
@@ -458,7 +504,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 }
             }
         } else if (reportManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()))) {
-            range.setEnabled(true);
+            rangeCheckBox.setEnabled(true);
             log.debug("R add box enabled2");
             // get tooltip from sensor manager
             addEntryToolTip = reportManager.getEntryToolTip();
@@ -521,8 +567,9 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         /**
          * Validate the field information. Does not make any GUI changes.
          * <p>
-         * During validation, logging is capped at the Error level to keep the Console clean from repeated validation.
-         * This is reset to default level afterwards.
+         * During validation, logging is capped at the Error level to keep the
+         * Console clean from repeated validation. This is reset to default
+         * level afterwards.
          *
          * @return 'true' if current field entry is valid according to the
          *         system manager; otherwise 'false'
@@ -536,17 +583,15 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 return false;
             }
             value = getText().trim();
-            if ((value.length() < 1) && (allow0Length == false)) {
-                return false;
-            } else if ((allow0Length == true) && (value.length() == 0)) {
-                return true;
+            if (value.isEmpty()) {
+                return allow0Length;
             } else {
                 boolean validFormat = false;
-                    // try {
-                    validFormat = (InstanceManager.getDefault(ReporterManager.class).validSystemNameFormat(prefix + "R" + value) == Manager.NameValidity.VALID);
-                    // } catch (jmri.JmriException e) {
-                    // use it for the status bar?
-                    // }
+                // try {
+                validFormat = (InstanceManager.getDefault(ReporterManager.class).validSystemNameFormat(prefix + "R" + value) == Manager.NameValidity.VALID);
+                // } catch (jmri.JmriException e) {
+                // use it for the status bar?
+                // }
                 if (validFormat) {
                     addButton.setEnabled(true); // directly update Create button
                     return true;
@@ -567,7 +612,9 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             // set default background color for invalid field data
             Color mark = Color.orange;
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public boolean shouldYieldFocus(javax.swing.JComponent input) {
                 if (input.getClass() == CheckedTextField.class) {
@@ -586,7 +633,9 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 }
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public boolean verify(javax.swing.JComponent input) {
                 if (input.getClass() == CheckedTextField.class) {
@@ -596,7 +645,9 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 }
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 JTextField source = (JTextField) e.getSource();
@@ -606,13 +657,17 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String getClassName() {
         return ReporterTableAction.class.getName();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleReporterTable");

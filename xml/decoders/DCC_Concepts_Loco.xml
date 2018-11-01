@@ -14,19 +14,25 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Nigel Cliffe, ncliffe@btinternet.com" version="1" lastUpdated="20110511"/>
   <version author="John Stather, steam.bloke@tesco.net" version="2" lastUpdated="20120125"/>
+ <version author="Brian Jackson, brian-jackson1@blueyonder.co.uk" version="3" lastUpdated="20181021"/>
   <!-- Version 1.0 - based on correspondance with Richard Johnson of DCC Concepts -->
   <!-- Version 2.0 - Correction of compound accel/decel CVs, add CV3/4 to Momentum page and add dither amplitude and frequency CV56/57 -->
+  <!-- Version 3.0 - Error message Found mfg 36 (DCCconcepts) version 18; no such decoder defined
+					correction of mfg label - replaced DCC Concepts with DCCconcepts
+					changed mfg value to 36 and add CV7 values of 18 to blue sleeve decoder
+-->  
   <decoder>
-    <family name="DCC Concepts Loco Decoders" mfg="DCC Concepts">
-      <model model="Red Sleeve 2 Function" numOuts="2" numFns="14" lowVersionID="18" highVersionID="18" maxMotorCurrent="1.3A (peak=2A)">
-        <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
+    <family name="DCC Concepts Loco Decoders" mfg="DCCconcepts" highVersionID="36" lowVersionID="36">
+      <model model="Red Sleeve 2 Function" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)">
+	    <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
         <output name="Dim"/>
         <output name="Ditch"/>
         <output name="Motor"/>
         <output name="BEMF"/>
       </model>
-      <model model="Blue Sleeve 4 Function" numOuts="4" numFns="14" lowVersionID="18" highVersionID="18" maxMotorCurrent="1.3A (peak=2A)">
+      <model model="Blue Sleeve 4 Function" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)">
+	  <versionCV highVersionID="18" lowVersionID="18"/>
         <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
@@ -186,7 +192,7 @@
       </variable>
       <variable item="F2 controls output 2" CV="34" mask="XXXXVXXX" minOut="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>F2 controls output 2</label>
+	        <label>F2 controls output 2</label>
       </variable>
       <variable item="F3 controls output 2" CV="34" mask="XXXVXXXX" minOut="2">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -498,10 +504,7 @@
         <decVal/>
         <label>Dimming Brightness</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <!-- CV 105-106 -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable CV="112" default="1" item="Function F0F effect generated">
@@ -1147,4 +1150,4 @@
       </label>
     </column>
   </pane>
-</decoder-config>
+</decoder-config>	

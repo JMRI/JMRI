@@ -567,7 +567,7 @@ public class LayoutEditorFindItems {
         if ((name != null) && !name.isEmpty()) {
             if (name.startsWith("TO")) {
                 result = findLayoutTurnoutByName(name);
-            } else if (name.startsWith("A") || name.startsWith("EB") || name.startsWith("EC")) {
+            } else if (name.startsWith("A") || name.startsWith("EB") || name.startsWith("EC") || name.matches("F\\d+-A-\\d+")) {
                 result = findPositionablePointByName(name);
             } else if (name.startsWith("X")) {
                 result = findLevelXingByName(name);
@@ -575,7 +575,7 @@ public class LayoutEditorFindItems {
                 result = findLayoutSlipByName(name);
             } else if (name.startsWith("TUR")) {
                 result = findLayoutTurntableByName(name);
-            } else if (name.startsWith("T")) {  // (this prefix has to go after "TO" & "TUR" prefixes above)
+            } else if (name.startsWith("T") || name.matches("F\\d+-S-\\d+")) {  // (this prefix has to go after "TO" & "TUR" prefixes above)
                 result = findTrackSegmentByName(name);
             } else if (name.endsWith("-EB")) {  //BUGFIX: a 3rd party JMRI exporter gets this one wrong.
                 result = findPositionablePointByName(name);

@@ -162,8 +162,7 @@ public abstract class TrainCustomCommon {
         if (alive) {
             log.debug("Wait time: {} seconds process ready", waitTimeSeconds);
             long loopCount = waitTimeSeconds; // number of seconds to wait
-            while (loopCount > 0 && alive) {
-                loopCount--;
+            while (loopCount-- > 0 && alive) {
                 synchronized (this) {
                     try {
                         wait(1000); // 1 sec
@@ -204,8 +203,7 @@ public abstract class TrainCustomCommon {
             // printing can take a long time, wait to complete
             if (status && file.exists()) {
                 long loopCount = waitTimeSeconds; // number of seconds to wait
-                while (loopCount > 0) {
-                    loopCount--;
+                while (loopCount-- > 0 && file.exists()) {
                     synchronized (this) {
                         try {
                             wait(1000); // 1 sec
@@ -213,9 +211,6 @@ public abstract class TrainCustomCommon {
                             // TODO Auto-generated catch block
                             log.error("Thread unexpectedly interrupted", e);
                         }
-                    }
-                    if (!file.exists()) {
-                        break; // done printing
                     }
                 }
             }

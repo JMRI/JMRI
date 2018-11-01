@@ -250,6 +250,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="Notify passing reply event, not state")
     public void reply(jmri.jmrix.srcp.parser.SimpleNode n) {
         log.debug("SimpleNode Reply called with " + n.toString());
         reply(new SRCPReply(n));
@@ -292,7 +293,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
                 }
                 configured = true;
                 synchronized(this) {
-                   this.notifyAll(); // wake up any thread that called configureManagers().
+                    this.notifyAll(); // wake up any thread that called configureManagers().
                 }
             }
         }

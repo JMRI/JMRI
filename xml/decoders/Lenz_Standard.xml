@@ -644,12 +644,7 @@
         <label xml:lang="cs">F8 vypínání efektů na výstupech C a D</label>
         <tooltip xml:lang="cs">F8 vypíná světelné efekty na výstupech C a D</tooltip>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-        <label xml:lang="de">Speed Table</label>
-        <label xml:lang="cs">Rychlostní tabulka</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable CV="113" item="Minimum PWM Value" default="40" comment="Range 0-255">
         <decVal min="0" max="255"/>
         <label>Minimum PWM (Types 4, 5 only)</label>

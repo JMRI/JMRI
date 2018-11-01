@@ -539,6 +539,16 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * In the interest of code reuse, the following function checks to see
+     * if an XpressNet Message is the not supported Error
+     * message (61 82 e3).
+     */
+    public boolean isUnsupportedError() {
+        return (this.getElement(0) == XNetConstants.CS_INFO
+                && this.getElement(1) == XNetConstants.CS_NOT_SUPPORTED);
+    }
+
+    /**
+     * In the interest of code reuse, the following function checks to see
      * if an XpressNet Message is a communications error message.
      * The errors handled are:
      *  01 01 00  -- Error between interface and the PC
