@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public interface SensorManager extends ProvidingManager<Sensor> {
@@ -26,8 +26,8 @@ public interface SensorManager extends ProvidingManager<Sensor> {
     /**
      * Get the Sensor with the user name, then system name if needed; if that fails, create a
      * new Sensor. 
-     * If the name is a valid system name, it will be used for the
-     * new Sensor. Otherwise, the makeSystemName method will attempt to turn it
+     * If the name is a valid system name, it will be used for the new Sensor.
+     * Otherwise, the {@link Manager#makeSystemName} method will attempt to turn it
      * into a valid system name.
      *
      * @param name User name, system name, or address which can be promoted to
