@@ -229,7 +229,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         f.weightTonsTextField.setText("Bogus Weight");
         // new dialog warning engine weight
         JemmyUtil.enterClickAndLeave(f.addButton);
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("engineCanNotWeight"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("WeightTonError"), Bundle.getMessage("ButtonOK"));
 
         f.weightTonsTextField.setText("100");
         JemmyUtil.enterClickAndLeave(f.addButton);
@@ -237,6 +237,22 @@ public class EngineEditFrameTest extends OperationsTestCase {
         // confirm that delete and save buttons are enabled
         Assert.assertTrue(f.saveButton.isEnabled());
         Assert.assertTrue(f.deleteButton.isEnabled());
+
+        JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testHpErrorConditions() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        EngineEditFrame f = new EngineEditFrame();
+        f.initComponents();
+        Assert.assertTrue(f.isShowing());
+  
+        f.hpTextField.setText("Bogus HP");
+        // new dialog warning engine HP
+        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("engineCanNotHp"), Bundle.getMessage("ButtonOK"));
 
         JUnitUtil.dispose(f);
     }
@@ -450,18 +466,26 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         EngineManager cManager = InstanceManager.getDefault(EngineManager.class);
         Assert.assertEquals("number of Engines", 5, cManager.getNumEntries());
-        Engine c6 = cManager.getByRoadAndNumber("SP", "6");
+        Engine e6 = cManager.getByRoadAndNumber("SP", "6");
 
-        Assert.assertNotNull("Engine did not create", c6);
-        Assert.assertEquals("Engine type", "SW8", c6.getModel());
-        Assert.assertEquals("Engine type", "Diesel", c6.getTypeName());
-        Assert.assertEquals("Engine length", "44", c6.getLength()); //default for SW8 is 44
-        Assert.assertEquals("Engine built", "1999", c6.getBuilt());
-        Assert.assertEquals("Engine owner", "AT", c6.getOwner());
-        Assert.assertEquals("Engine comment", "test Engine comment field", c6.getComment());
+        Assert.assertNotNull("Engine exists", e6);
+        Assert.assertEquals("Engine type", "SW8", e6.getModel());
+        Assert.assertEquals("Engine type", "Diesel", e6.getTypeName());
+        Assert.assertEquals("Engine length", "44", e6.getLength()); //default for SW8 is 44
+        Assert.assertEquals("Engine built", "1999", e6.getBuilt());
+        Assert.assertEquals("Engine owner", "AT", e6.getOwner());
+        Assert.assertEquals("Engine comment", "test Engine comment field", e6.getComment());
+        Assert.assertFalse(e6.isBunit());
+        Assert.assertEquals("Blocking order", Engine.DEFAULT_BLOCKING_ORDER, e6.getBlocking());
+        
+        // make B unit
+        JemmyUtil.enterClickAndLeave(f.bUnitCheckBox);
 
         JemmyUtil.enterClickAndLeave(f.saveButton);
         Assert.assertEquals("number of Engines", 5, cManager.getNumEntries());
+        
+        Assert.assertTrue(e6.isBunit());
+        Assert.assertEquals("Blocking order", Engine.B_UNIT_BLOCKING, e6.getBlocking());
 
         JUnitUtil.dispose(f);
     }
@@ -663,7 +687,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
             return load.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
-        JemmyUtil.pressDialogButton(Bundle.getMessage("engineAddType"), Bundle.getMessage("ButtonNo"));
+        JemmyUtil.pressDialogButton(Bundle.getMessage("addType"), Bundle.getMessage("ButtonNo"));
 
         try {
             load.join();
@@ -687,7 +711,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
             return load2.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
-        JemmyUtil.pressDialogButton(Bundle.getMessage("engineAddType"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.pressDialogButton(Bundle.getMessage("addType"), Bundle.getMessage("ButtonYes"));
 
         try {
             load2.join();
@@ -726,7 +750,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
             return load.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
-        JemmyUtil.pressDialogButton(Bundle.getMessage("engineAddLength"), Bundle.getMessage("ButtonNo"));
+        JemmyUtil.pressDialogButton(Bundle.getMessage("addLength"), Bundle.getMessage("ButtonNo"));
 
         try {
             load.join();
@@ -750,7 +774,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
             return load2.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
-        JemmyUtil.pressDialogButton(Bundle.getMessage("engineAddLength"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.pressDialogButton(Bundle.getMessage("addLength"), Bundle.getMessage("ButtonYes"));
 
         try {
             load2.join();
@@ -825,6 +849,28 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(f);
     }
+    
+    @Test
+    public void testSaveConsist() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JUnitOperationsUtil.initOperationsData(); // load engines
+        EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
+
+        Engine e1 = engineManager.getByRoadAndNumber("PC", "5524");
+        Assert.assertEquals("consist name", "C14", e1.getConsistName());
+
+        EngineEditFrame f = new EngineEditFrame();
+        f.initComponents();
+        f.load(e1);
+
+        Consist c = engineManager.newConsist("TEST_CONSIST");
+        f.groupComboBox.setSelectedItem(c.getName());
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+        Assert.assertEquals("consist name", "TEST_CONSIST", e1.getConsistName());
+
+        JUnitUtil.dispose(f);
+    }
+
 
     @Override
     @Before
