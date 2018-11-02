@@ -55,8 +55,9 @@ public interface AudioManager extends Manager<Audio> {
     public static final int MAX_BUFFERS = 255;
 
     /**
-     * Locate via user name, then system name if needed. If that fails, create a
-     * new Audio. If the name is a valid system name, it will be used for the
+     * Get the Audio with the user name, then system name if needed; if that fails, create a
+     * new Audio. 
+     * If the name is a valid system name, it will be used for the
      * new Audio. Otherwise, the makeSystemName method will attempt to turn it
      * into a valid system name.
      *
@@ -69,8 +70,9 @@ public interface AudioManager extends Manager<Audio> {
     public Audio provideAudio(@Nonnull String name) throws AudioException;
 
     /**
-     * Locate via user name, then system name if needed. If that fails, return
-     * null
+     * Get an existing Audio or return null if it doesn't exists. 
+     * 
+     * Locates via user name, then system name if needed.
      *
      * @param name User name or system name to match
      * @return null if no match found
@@ -79,7 +81,7 @@ public interface AudioManager extends Manager<Audio> {
     public Audio getAudio(@Nonnull String name);
 
     /**
-     * Locate an instance based on a system name. Returns null if no instance
+     * Get the Audio with the given system name or return null if no instance
      * already exists.
      *
      * @param systemName Audio object system name (such as IAS1 or IAB4)
@@ -89,7 +91,7 @@ public interface AudioManager extends Manager<Audio> {
     public Audio getBySystemName(@Nonnull String systemName);
 
     /**
-     * Locate an instance based on a user name. Returns null if no instance
+     * Get the Audio with the given user name or return null if no instance
      * already exists.
      *
      * @param userName Audio object user name
@@ -99,7 +101,8 @@ public interface AudioManager extends Manager<Audio> {
     public Audio getByUserName(@Nonnull String userName);
 
     /**
-     * Return an instance with the specified system and user names. Note that
+     * Return an Audio with the specified system and user names. 
+     * Note that
      * two calls with the same arguments will get the same instance; there is
      * only one Audio object representing a given physical Audio and therefore
      * only one with a specific system or user name.

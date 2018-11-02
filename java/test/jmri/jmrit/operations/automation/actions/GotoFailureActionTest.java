@@ -13,16 +13,16 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class GotoFailureActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
         GotoFailureAction t = new GotoFailureAction();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
-    
+
     @Test
     public void testActionNoAutomationItem() {
         GotoFailureAction action = new GotoFailureAction();
@@ -62,7 +62,7 @@ public class GotoFailureActionTest extends OperationsTestCase {
 
         AutomationItem automationItem3 = automation.addItem();
         automationItem3.setAction(new HaltAction());
-        
+
         AutomationItem automationItem4 = automation.addItem();
         automationItem4.setAction(new HaltAction());
 
@@ -74,9 +74,11 @@ public class GotoFailureActionTest extends OperationsTestCase {
         Thread run = JUnitUtil.getThreadByName("Run action item: " + automationItem1.getId());
 
         if (run != null) {
-            jmri.util.JUnitUtil.waitFor(() -> {
-                return run.getState().equals(Thread.State.TERMINATED);
-            }, "wait for terminated");
+            try {
+                run.join();
+            } catch (InterruptedException e) {
+                // do nothing
+            }
         }
 
         Assert.assertTrue(automationItem1.isActionSuccessful());
@@ -84,18 +86,20 @@ public class GotoFailureActionTest extends OperationsTestCase {
         Assert.assertFalse(automationItem1.isActionRunning());
 
         Thread run2 = JUnitUtil.getThreadByName("Run action item: " + automationItem3.getId());
-
-        if (run2 != null) {
-            jmri.util.JUnitUtil.waitFor(() -> {
-                return run2.getState().equals(Thread.State.TERMINATED);
-            }, "wait for terminated");
-        }
         
+        if (run2 != null) {
+            try {
+                run2.join();
+            } catch (InterruptedException e) {
+                // do nothing
+            }
+        }
+
         // the first halt is jumped over
         Assert.assertFalse(automationItem2.isActionSuccessful());
         Assert.assertFalse(automationItem2.isActionRan());
         Assert.assertFalse(automationItem2.isActionRunning());
-        
+
         // the 2nd halt is goto address
         Assert.assertTrue(automationItem3.isActionSuccessful());
         Assert.assertTrue(automationItem3.isActionRan());
@@ -112,7 +116,8 @@ public class GotoFailureActionTest extends OperationsTestCase {
     @Override
     @Before
     public void setUp() {
-        super.setUp();    }
+        super.setUp();
+    }
 
     @Override
     @After

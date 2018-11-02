@@ -47,7 +47,7 @@ public class PrintTrainManifestActionTest {
         PrintTrainManifestAction pa = new PrintTrainManifestAction("Test Action", true, train1);
         Assert.assertNotNull("exists", pa);
 
-        // should cause file chooser to appear
+        // should cause dialog window to appear
         Thread printAction = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -61,12 +61,15 @@ public class PrintTrainManifestActionTest {
             return printAction.getState().equals(Thread.State.WAITING);
         }, "wait for dialog to appear");
 
+        // preview previous manifest?
         JemmyUtil.pressDialogButton(MessageFormat.format(
                 Bundle.getMessage("PrintPreviousManifest"), new Object[]{"preview"}), Bundle.getMessage("ButtonYes"));
-                
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return printAction.getState().equals(Thread.State.TERMINATED);
-        }, "wait to complete");
+        
+        try {
+            printAction.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
         
         // confirm print preview window is showing
         ResourceBundle rb = ResourceBundle

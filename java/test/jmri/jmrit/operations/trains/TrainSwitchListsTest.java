@@ -16,7 +16,7 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.util.JUnitOperationsUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -580,7 +580,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
 
         // improve test coverage
         Setup.setSwitchListAllTrainsEnabled(false);
-        Setup.setPrintTimetableNameEnabled(true);
+        Setup.setPrintTrainScheduleNameEnabled(true);
         Setup.setSwitchListRouteLocationCommentEnabled(true);
 
         TrainScheduleManager tsmanager = InstanceManager.getDefault(TrainScheduleManager.class);

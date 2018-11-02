@@ -7,6 +7,7 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.cars.tools.CarAttributeEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
@@ -26,12 +27,30 @@ import org.junit.Test;
 public class CarEditFrameTest extends OperationsTestCase {
 
     @Test
-    public void testCarEditFrameErrorConditions() {
+    public void testClearRoadNumber() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
         Assert.assertTrue(f.isShowing());
+
+        f.roadNumberTextField.setText("123");
+        JemmyUtil.enterClickAndLeave(f.clearRoadNumberButton);
+        Assert.assertEquals("road number", "", f.roadNumberTextField.getText());
+
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testRoadNumberErrorConditions() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        CarEditFrame f = new CarEditFrame();
+        f.initComponents();
+        Assert.assertTrue(f.isShowing());
+
+        // this will load the weight fields
+        f.lengthComboBox.setSelectedIndex(4);
 
         // "*" is not a legal character for road number
         f.roadNumberTextField.setText("6*6");
@@ -50,8 +69,31 @@ public class CarEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.addButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("RoadNumTooLong"), Bundle.getMessage("ButtonOK"));
 
-        // clear road number
-        JemmyUtil.enterClickAndLeave(f.clearRoadNumberButton);
+        // confirm that delete and save buttons are disabled
+        Assert.assertFalse(f.saveButton.isEnabled());
+        Assert.assertFalse(f.deleteButton.isEnabled());
+
+        // enter a good road number
+        f.roadNumberTextField.setText("123");
+
+        JemmyUtil.enterClickAndLeave(f.addButton);
+        // confirm that delete and save buttons are enabled
+        Assert.assertTrue(f.saveButton.isEnabled());
+        Assert.assertTrue(f.deleteButton.isEnabled());
+
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testWeightErrorConditions() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        CarEditFrame f = new CarEditFrame();
+        f.initComponents();
+        Assert.assertTrue(f.isShowing());
+
+        // enter a good road number
+        f.roadNumberTextField.setText("123456");
 
         // new dialog warning car weight
         JemmyUtil.enterClickAndLeave(f.addButton);
@@ -61,7 +103,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         f.weightTonsTextField.setText("Bogus Weight");
         // new dialog warning car weight
         JemmyUtil.enterClickAndLeave(f.addButton);
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("carWeightTon"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("WeightTonError"), Bundle.getMessage("ButtonOK"));
 
         // this will load the weight fields
         f.lengthComboBox.setSelectedIndex(4);
@@ -80,11 +122,120 @@ public class CarEditFrameTest extends OperationsTestCase {
     }
 
     @Test
-    public void testCarEditFrameLocationComboBox() {
+    public void testEditRoadButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        CarEditFrame f = new CarEditFrame();
+        f.initComponents();
+
+        JemmyUtil.enterClickAndLeave(f.editRoadButton);
+        Assert.assertTrue(f.carAttributeEditFrame.isShowing());
+        Assert.assertEquals("Check attribute", CarAttributeEditFrame.ROAD, f.carAttributeEditFrame._comboboxName);
+
+        // now change to car type
+        JemmyUtil.enterClickAndLeave(f.editTypeButton);
+        Assert.assertTrue(f.carAttributeEditFrame.isShowing());
+        Assert.assertEquals("Check attribute", CarAttributeEditFrame.TYPE, f.carAttributeEditFrame._comboboxName);
+
+        JUnitUtil.dispose(f.carAttributeEditFrame);
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testEditTypeButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        CarEditFrame f = new CarEditFrame();
+        f.initComponents();
+
+        JemmyUtil.enterClickAndLeave(f.editTypeButton);
+        Assert.assertTrue(f.carAttributeEditFrame.isShowing());
+        Assert.assertEquals("Check attribute", CarAttributeEditFrame.TYPE, f.carAttributeEditFrame._comboboxName);
+
+        JUnitUtil.dispose(f.carAttributeEditFrame);
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testEditColorButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        CarEditFrame f = new CarEditFrame();
+        f.initComponents();
+
+        JemmyUtil.enterClickAndLeave(f.editColorButton);
+        Assert.assertTrue(f.carAttributeEditFrame.isShowing());
+        Assert.assertEquals("Check attribute", CarAttributeEditFrame.COLOR, f.carAttributeEditFrame._comboboxName);
+
+        JUnitUtil.dispose(f.carAttributeEditFrame);
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testEditLengthButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        CarEditFrame f = new CarEditFrame();
+        f.initComponents();
+
+        JemmyUtil.enterClickAndLeave(f.editLengthButton);
+        Assert.assertTrue(f.carAttributeEditFrame.isShowing());
+        Assert.assertEquals("Check attribute", CarAttributeEditFrame.LENGTH, f.carAttributeEditFrame._comboboxName);
+
+        JUnitUtil.dispose(f.carAttributeEditFrame);
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testEditOwnerButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        CarEditFrame f = new CarEditFrame();
+        f.initComponents();
+
+        JemmyUtil.enterClickAndLeave(f.editOwnerButton);
+        Assert.assertTrue(f.carAttributeEditFrame.isShowing());
+        Assert.assertEquals("Check attribute", CarAttributeEditFrame.OWNER, f.carAttributeEditFrame._comboboxName);
+
+        JUnitUtil.dispose(f.carAttributeEditFrame);
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testEditGroupButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        CarEditFrame f = new CarEditFrame();
+        f.initComponents();
+
+        JemmyUtil.enterClickAndLeave(f.editGroupButton);
+        Assert.assertTrue(f.carAttributeEditFrame.isShowing());
+        Assert.assertEquals("Check attribute", CarAttributeEditFrame.KERNEL, f.carAttributeEditFrame._comboboxName);
+
+        JUnitUtil.dispose(f.carAttributeEditFrame);
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testEditLoadButton() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        CarEditFrame f = new CarEditFrame();
+        f.initComponents();
+
+        JemmyUtil.enterClickAndLeave(f.editLoadButton);
+        Assert.assertTrue(f.carLoadEditFrame.isShowing());
+
+        JUnitUtil.dispose(f.carLoadEditFrame);
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testLocationComboBox() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JUnitOperationsUtil.initOperationsData();
-        
+
         LocationManager lm = InstanceManager.getDefault(LocationManager.class);
         Location loc1 = lm.getLocationByName("North End Staging");
         Location loc2 = lm.getLocationByName("North Industries");
@@ -95,7 +246,7 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         f.roadNumberTextField.setText("10345");
         f.roadComboBox.setSelectedItem("SP");
-        
+
         CarManager cm = InstanceManager.getDefault(CarManager.class);
         Car car = cm.getByRoadAndNumber("SP", "10345");
         Assert.assertNull("car exists", car);
@@ -107,62 +258,62 @@ public class CarEditFrameTest extends OperationsTestCase {
         f.locationBox.setSelectedIndex(1);
         JemmyUtil.enterClickAndLeave(f.addButton);
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"));
-        
+
         car = cm.getByRoadAndNumber("SP", "10345");
         Assert.assertNotNull("car exists", car);
-        
+
         Assert.assertEquals("car location", null, car.getLocation());
 
         f.trackLocationBox.setSelectedIndex(1);
         JemmyUtil.enterClickAndLeave(f.addButton);
-        
+
         // car already exists
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("carCanNotAdd"), Bundle.getMessage("ButtonOK"));
         Assert.assertEquals("car location", null, car.getLocation());
-        
-        JemmyUtil.enterClickAndLeave(f.saveButton);        
+
+        JemmyUtil.enterClickAndLeave(f.saveButton);
         // car location should have been updated
         Assert.assertEquals("car location", loc1, car.getLocation());
-        
+
         // now change location
         f.locationBox.setSelectedIndex(2);
         f.trackLocationBox.setSelectedIndex(1);
 
         JemmyUtil.enterClickAndLeave(f.saveButton);
         Assert.assertEquals("car location", loc2, car.getLocation());
-             
+
         // add a track
         Assert.assertEquals("Number of locations", 4, f.locationBox.getItemCount());
         Assert.assertEquals("Number of tracks", 2, f.trackLocationBox.getItemCount());
         Track testSpur = loc2.addTrack("Test_Spur", Track.SPUR);
-        
+
         // add a location to cause update to both location and track comboboxes
         lm.newLocation("Test_Location");
         Assert.assertEquals("Number of locations", 5, f.locationBox.getItemCount());
         Assert.assertEquals("Number of tracks", 3, f.trackLocationBox.getItemCount());
-        
+
         // try to set car to test spur, with a length of 0
         f.trackLocationBox.setSelectedIndex(2);
         JemmyUtil.enterClickAndLeave(f.saveButton);
-        
+
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"));
-        
+
         // get response message
         String status = car.setLocation(loc2, testSpur);
         Assert.assertFalse(status.equals(Track.OKAY));
         JemmyUtil.pressDialogButton(f, MessageFormat
                 .format(Bundle.getMessage("rsOverride"), new Object[]{status}), Bundle.getMessage("ButtonNo"));
-   
+
         // confirm car location and track didn't change
         Assert.assertNotEquals("track", testSpur, car.getTrack());
-        
+
         // do it again, but say yes
-       JemmyUtil.enterClickAndLeave(f.saveButton);
-        
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("rsCanNotLoc"), Bundle.getMessage("ButtonOK"));
         JemmyUtil.pressDialogButton(f, MessageFormat
                 .format(Bundle.getMessage("rsOverride"), new Object[]{status}), Bundle.getMessage("ButtonYes"));
-   
+
         // confirm car location and track changed
         Assert.assertEquals("track", testSpur, car.getTrack());
 
@@ -170,20 +321,23 @@ public class CarEditFrameTest extends OperationsTestCase {
     }
 
     @Test
-    public void testCarEditFrame() {
+    public void testAddCar() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        loadCars(); // load cars
 
         // increase test coverage
-        Setup.setValueEnabled(false);
-        Setup.setRfidEnabled(false);
-
-        CarManager cManager = InstanceManager.getDefault(CarManager.class);
-        Assert.assertEquals("number of cars", 5, cManager.getNumEntries());
+        Setup.setValueEnabled(true);
+        Setup.setRfidEnabled(true);
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
         f.setTitle("Test Add Car Frame");
+
+        // this will also create property changes
+        JUnitOperationsUtil.initOperationsData(); // load cars
+
+        // confirm load
+        CarManager cManager = InstanceManager.getDefault(CarManager.class);
+        Assert.assertEquals("number of cars", 9, cManager.getNumEntries());
 
         // add a new car
         f.roadNumberTextField.setText("6");
@@ -193,7 +347,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         f.colorComboBox.setSelectedItem("Black");
         f.loadComboBox.setSelectedItem("L");
         f.builtTextField.setText("1999");
-        f.ownerComboBox.setSelectedItem("Owner1");
+        f.ownerComboBox.setSelectedItem("DAB");
         f.commentTextField.setText("test car comment field");
 
         // Save button should be disabled
@@ -206,13 +360,13 @@ public class CarEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.addButton);
 
         c6 = cManager.getByRoadAndNumber("SP", "6");
-        Assert.assertNotNull("Car did not create", c6);
+        Assert.assertNotNull("Car create", c6);
         Assert.assertEquals("car type", Bundle.getMessage("Caboose"), c6.getTypeName());
         Assert.assertEquals("car length", "38", c6.getLength());
         Assert.assertEquals("car color", "Black", c6.getColor());
         Assert.assertEquals("car load", "L", c6.getLoadName());
         Assert.assertEquals("car built", "1999", c6.getBuilt());
-        Assert.assertEquals("car owner", "Owner1", c6.getOwner());
+        Assert.assertEquals("car owner", "DAB", c6.getOwner());
         Assert.assertEquals("car comment", "test car comment field", c6.getComment());
 
         // test type default check boxes
@@ -267,8 +421,401 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertTrue("still has a fred", c6.hasFred());
         Assert.assertTrue("still hazardous", c6.isHazardous());
 
-        // should have 6 cars now
-        Assert.assertEquals("number of cars", 6, cManager.getNumEntries());
+        // should have one more car
+        Assert.assertEquals("number of cars", 10, cManager.getNumEntries());
+
+        // add another car
+        f.roadNumberTextField.setText("7");
+        JemmyUtil.enterClickAndLeave(f.addButton);
+        Assert.assertEquals("number of cars", 11, cManager.getNumEntries());
+
+        Car c7 = cManager.getByRoadAndNumber("SP", "6");
+        Assert.assertNotNull("Car create", c7);
+
+        // confirm that c6 still exist
+        c6 = cManager.getByRoadAndNumber("SP", "6");
+        Assert.assertNotNull("Car create", c6);
+
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testSaveCar() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        JUnitOperationsUtil.initOperationsData();
+
+        // confirm load
+        CarManager cManager = InstanceManager.getDefault(CarManager.class);
+        Assert.assertEquals("number of cars", 9, cManager.getNumEntries());
+
+        Car car = cManager.getByRoadAndNumber("CP", "888");
+        // confirm car id
+        Assert.assertEquals("car id", "CP888", car.getId());
+
+        CarEditFrame f = new CarEditFrame();
+        f.initComponents();
+        f.load(car);
+
+        Assert.assertEquals("car road", "CP", f.roadComboBox.getSelectedItem());
+        Assert.assertEquals("car number", "888", f.roadNumberTextField.getText());
+
+        // change road number for this car
+        f.roadNumberTextField.setText("54321");
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+        car = cManager.getByRoadAndNumber("CP", "54321");
+        Assert.assertNotNull("car exists", car);
+        // confirm car id was modified
+        Assert.assertEquals("car id", "CP54321", car.getId());
+
+        // close on save
+        Setup.setCloseWindowOnSaveEnabled(true);
+
+        // change road name
+        f.roadComboBox.setSelectedItem("SP");
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+        car = cManager.getByRoadAndNumber("SP", "54321");
+        Assert.assertNotNull("car exists", car);
+        // confirm car id was modified
+        Assert.assertEquals("car id", "SP54321", car.getId());
+
+        Assert.assertFalse("window closed", f.isVisible());
+    }
+    
+    @Test
+    public void testSaveExistingCar() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        JUnitOperationsUtil.initOperationsData();
+
+        CarManager cManager = InstanceManager.getDefault(CarManager.class);
+
+        Car car = cManager.getByRoadAndNumber("CP", "888");
+
+        CarEditFrame f = new CarEditFrame();
+        f.initComponents();
+        f.load(car);
+
+        // change road number for this car to an existing car
+        f.roadNumberTextField.setText("X20002");
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+        
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("carCanNotUpdate"),
+                new Object[]{car.getTypeName()}), Bundle.getMessage("ButtonOK"));
+ 
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testSaveCarPassenger() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        JUnitOperationsUtil.initOperationsData();
+
+        // confirm load
+        CarManager cManager = InstanceManager.getDefault(CarManager.class);
+        Assert.assertEquals("number of cars", 9, cManager.getNumEntries());
+
+        Car car = cManager.getByRoadAndNumber("CP", "888");
+        Car car2 = cManager.getByRoadAndNumber("CP", "X20002");
+        Assert.assertFalse(car.isPassenger());
+        Assert.assertFalse(car2.isPassenger());
+        Assert.assertEquals("blocking order", 0, car.getBlocking());
+        Assert.assertEquals("blocking order", 0, car2.getBlocking());
+
+        CarEditFrame f = new CarEditFrame();
+        f.initComponents();
+        f.load(car);
+
+        JemmyUtil.enterClickAndLeave(f.passengerCheckBox);
+        f.blockingTextField.setText("23"); // random number for blocking order
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+
+        // 1st dialog, make all Boxcar passenger?
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("carModifyAllType"),
+                new Object[]{car.getTypeName()}), Bundle.getMessage("ButtonNo"));
+        //2nd dialog, make all Boxcar blocking order 23 
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("carModifyAllType"),
+                new Object[]{car.getTypeName()}), Bundle.getMessage("ButtonNo"));
+
+        Assert.assertTrue(car.isPassenger());
+        Assert.assertFalse(car2.isPassenger());
+        Assert.assertEquals("blocking order", 23, car.getBlocking());
+        Assert.assertEquals("blocking order", 0, car2.getBlocking());
+
+        JemmyUtil.enterClickAndLeave(f.passengerCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("carModifyAllType"),
+                new Object[]{car.getTypeName()}), Bundle.getMessage("ButtonNo"));
+
+        Assert.assertFalse(car.isPassenger());
+        Assert.assertFalse(car2.isPassenger());
+        Assert.assertEquals("blocking order", 23, car.getBlocking());
+        Assert.assertEquals("blocking order", 0, car2.getBlocking());
+
+        JemmyUtil.enterClickAndLeave(f.passengerCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("carModifyAllType"),
+                new Object[]{car.getTypeName()}), Bundle.getMessage("ButtonYes"));
+
+        Assert.assertTrue(car.isPassenger());
+        Assert.assertTrue(car2.isPassenger());
+        Assert.assertEquals("blocking order", 23, car.getBlocking());
+        Assert.assertEquals("blocking order", 0, car2.getBlocking());
+
+        f.blockingTextField.setText("99"); // random number for blocking order
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("carModifyAllType"),
+                new Object[]{car.getTypeName()}), Bundle.getMessage("ButtonYes"));
+
+        Assert.assertTrue(car.isPassenger());
+        Assert.assertTrue(car2.isPassenger());
+        Assert.assertEquals("blocking order", 99, car.getBlocking());
+        Assert.assertEquals("blocking order", 99, car2.getBlocking());
+
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testSaveCarCaboose() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        JUnitOperationsUtil.initOperationsData();
+
+        CarManager cManager = InstanceManager.getDefault(CarManager.class);
+
+        Car car = cManager.getByRoadAndNumber("CP", "888");
+        Car car2 = cManager.getByRoadAndNumber("CP", "X20002");
+        Assert.assertFalse(car.isCaboose());
+        Assert.assertFalse(car2.isCaboose());
+
+        CarEditFrame f = new CarEditFrame();
+        f.initComponents();
+        f.load(car);
+
+        JemmyUtil.enterClickAndLeave(f.cabooseCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+
+        // dialog, make all Boxcar Caboose?
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("carModifyAllType"),
+                new Object[]{car.getTypeName()}), Bundle.getMessage("ButtonNo"));
+
+        Assert.assertTrue(car.isCaboose());
+        Assert.assertFalse(car2.isCaboose());
+
+        JemmyUtil.enterClickAndLeave(f.cabooseCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("carModifyAllType"),
+                new Object[]{car.getTypeName()}), Bundle.getMessage("ButtonNo"));
+
+        Assert.assertFalse(car.isCaboose());
+        Assert.assertFalse(car2.isCaboose());
+
+        JemmyUtil.enterClickAndLeave(f.cabooseCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("carModifyAllType"),
+                new Object[]{car.getTypeName()}), Bundle.getMessage("ButtonYes"));
+
+        Assert.assertTrue(car.isCaboose());
+        Assert.assertTrue(car2.isCaboose());
+
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testSaveCarFred() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        JUnitOperationsUtil.initOperationsData();
+
+        CarManager cManager = InstanceManager.getDefault(CarManager.class);
+
+        Car car = cManager.getByRoadAndNumber("CP", "888");
+        Assert.assertFalse(car.hasFred());
+
+        CarEditFrame f = new CarEditFrame();
+        f.initComponents();
+        f.load(car);
+
+        JemmyUtil.enterClickAndLeave(f.fredCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+        Assert.assertTrue(car.hasFred());
+
+        JemmyUtil.enterClickAndLeave(f.fredCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+        Assert.assertFalse(car.hasFred());
+
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testSaveCarUtility() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        JUnitOperationsUtil.initOperationsData();
+
+        CarManager cManager = InstanceManager.getDefault(CarManager.class);
+
+        Car car = cManager.getByRoadAndNumber("CP", "888");
+        Car car2 = cManager.getByRoadAndNumber("CP", "X20002");
+        Assert.assertFalse(car.isUtility());
+        Assert.assertFalse(car2.isUtility());
+
+        CarEditFrame f = new CarEditFrame();
+        f.initComponents();
+        f.load(car);
+
+        JemmyUtil.enterClickAndLeave(f.utilityCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+
+        // dialog, make all Boxcar utility?
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("carModifyAllType"),
+                new Object[]{car.getTypeName()}), Bundle.getMessage("ButtonNo"));
+
+        Assert.assertTrue(car.isUtility());
+        Assert.assertFalse(car2.isUtility());
+
+        JemmyUtil.enterClickAndLeave(f.utilityCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("carModifyAllType"),
+                new Object[]{car.getTypeName()}), Bundle.getMessage("ButtonNo"));
+
+        Assert.assertFalse(car.isUtility());
+        Assert.assertFalse(car2.isUtility());
+
+        JemmyUtil.enterClickAndLeave(f.utilityCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("carModifyAllType"),
+                new Object[]{car.getTypeName()}), Bundle.getMessage("ButtonYes"));
+
+        Assert.assertTrue(car.isUtility());
+        Assert.assertTrue(car2.isUtility());
+
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testSaveCarHazardous() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        JUnitOperationsUtil.initOperationsData();
+
+        CarManager cManager = InstanceManager.getDefault(CarManager.class);
+
+        Car car = cManager.getByRoadAndNumber("CP", "888");
+        Car car2 = cManager.getByRoadAndNumber("CP", "X20002");
+        Assert.assertFalse(car.isHazardous());
+        Assert.assertFalse(car2.isHazardous());
+
+        CarEditFrame f = new CarEditFrame();
+        f.initComponents();
+        f.load(car);
+
+        JemmyUtil.enterClickAndLeave(f.hazardousCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+
+        // dialog, make all Boxcar Caboose?
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("carModifyAllType"),
+                new Object[]{car.getTypeName()}), Bundle.getMessage("ButtonNo"));
+
+        Assert.assertTrue(car.isHazardous());
+        Assert.assertFalse(car2.isHazardous());
+
+        JemmyUtil.enterClickAndLeave(f.hazardousCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("carModifyAllType"),
+                new Object[]{car.getTypeName()}), Bundle.getMessage("ButtonNo"));
+
+        Assert.assertFalse(car.isHazardous());
+        Assert.assertFalse(car2.isHazardous());
+
+        JemmyUtil.enterClickAndLeave(f.hazardousCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("carModifyAllType"),
+                new Object[]{car.getTypeName()}), Bundle.getMessage("ButtonYes"));
+
+        Assert.assertTrue(car.isHazardous());
+        Assert.assertTrue(car2.isHazardous());
+
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testSaveKernel() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        JUnitOperationsUtil.initOperationsData();
+
+        CarManager cManager = InstanceManager.getDefault(CarManager.class);
+
+        Car car = cManager.getByRoadAndNumber("CP", "888");
+        Car car2 = cManager.getByRoadAndNumber("CP", "X20002");
+        Assert.assertNull(car.getKernel());
+        Assert.assertNull(car2.getKernel());
+        Assert.assertEquals("Track", "NI Yard", car.getTrackName());
+        Assert.assertEquals("Track", "North End 2", car2.getTrackName());
+        Assert.assertEquals("Load", "E", car.getLoadName());
+        Assert.assertEquals("Load", "E", car2.getLoadName());
+
+        CarEditFrame f = new CarEditFrame();
+        f.initComponents();
+        f.load(car);
+
+        // create a kernel
+        Kernel k = cManager.newKernel("Test_Kernel");
+        car2.setKernel(k);
+
+        f.groupComboBox.setSelectedItem("Test_Kernel");
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+
+        // dialog requesting to make all cars in kernel to have the same location and track
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("carPartKernel"),
+                        new Object[]{car.getKernelName()}), Bundle.getMessage("ButtonNo"));
+
+        Assert.assertEquals("kernel", k, car.getKernel());
+        Assert.assertEquals("order", 2, car.getBlocking());
+        Assert.assertFalse(car.getKernel().isLead(car));
+        Assert.assertEquals("Track", "North End 2", car2.getTrackName());
+
+        // now remove the kernel
+        f.groupComboBox.setSelectedIndex(0);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+        Assert.assertNull(car.getKernel());
+
+        // If car has FRED it becomes the lead
+        f.groupComboBox.setSelectedItem("Test_Kernel");
+        JemmyUtil.enterClickAndLeave(f.fredCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+        
+        // dialog requesting to make all cars in kernel to have the same location and track
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("carPartKernel"),
+                        new Object[]{car.getKernelName()}), Bundle.getMessage("ButtonYes"));
+
+
+        Assert.assertEquals("kernel", k, car.getKernel());
+        Assert.assertEquals("order", 2, car.getBlocking());
+        Assert.assertTrue(car.getKernel().isLead(car));
+        Assert.assertEquals("Track", "NI Yard", car2.getTrackName());
+        
+        // change the car's load
+        f.loadComboBox.setSelectedItem("L");
+        JemmyUtil.enterClickAndLeave(f.saveButton);
+        
+        // dialog requesting to make all cars in kernel have the same load
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("carPartKernel"),
+                        new Object[]{car.getKernelName()}), Bundle.getMessage("ButtonYes"));
+        
+        Assert.assertEquals("Load", "L", car.getLoadName());
+        Assert.assertEquals("Load", "L", car2.getLoadName());
 
         JUnitUtil.dispose(f);
     }
@@ -276,28 +823,31 @@ public class CarEditFrameTest extends OperationsTestCase {
     @Test
     public void testCarEditFrameRead() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        loadCars(); // load cars
+        JUnitOperationsUtil.initOperationsData(); // load cars
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
-        // should have 5 cars now
-        Assert.assertEquals("number of cars", 5, cManager.getNumEntries());
-        Car c1 = cManager.getByRoadAndNumber("NH", "1");
+
+        Assert.assertEquals("number of cars", 9, cManager.getNumEntries());
+        Car c1 = cManager.getByRoadAndNumber("CP", "C10099");
+
+        c1.setWeight("1.4");
+        c1.setWeightTons("Tons of Weight");
 
         CarEditFrame f = new CarEditFrame();
         f.initComponents();
         f.load(c1);
         f.setTitle("Test Edit Car Frame");
 
-        Assert.assertEquals("car road", "NH", f.roadComboBox.getSelectedItem());
-        Assert.assertEquals("car number", "1", f.roadNumberTextField.getText());
+        Assert.assertEquals("car road", "CP", f.roadComboBox.getSelectedItem());
+        Assert.assertEquals("car number", "C10099", f.roadNumberTextField.getText());
         Assert.assertEquals("car type", Bundle.getMessage("Caboose"), f.typeComboBox.getSelectedItem());
-        Assert.assertEquals("car length", "40", f.lengthComboBox.getSelectedItem());
+        Assert.assertEquals("car length", "32", f.lengthComboBox.getSelectedItem());
         Assert.assertEquals("car weight", "1.4", f.weightTextField.getText());
         Assert.assertEquals("car weight tons", "Tons of Weight", f.weightTonsTextField.getText());
         Assert.assertEquals("car color", "Red", f.colorComboBox.getSelectedItem());
-        Assert.assertEquals("car load", "L", f.loadComboBox.getSelectedItem());
-        Assert.assertEquals("car built", "2009", f.builtTextField.getText());
-        Assert.assertEquals("car owner", "Owner2", f.ownerComboBox.getSelectedItem());
-        Assert.assertEquals("car comment", "Test Car NH 1 Comment", f.commentTextField.getText());
+        Assert.assertEquals("car load", "E", f.loadComboBox.getSelectedItem());
+        Assert.assertEquals("car built", "1980", f.builtTextField.getText());
+        Assert.assertEquals("car owner", "AT", f.ownerComboBox.getSelectedItem());
+        Assert.assertEquals("car comment", "Test Car CP C10099 Comment", f.commentTextField.getText());
 
         Assert.assertTrue("car is a caboose", f.cabooseCheckBox.isSelected());
         Assert.assertFalse("car does not have a fred", f.fredCheckBox.isSelected());
@@ -306,19 +856,20 @@ public class CarEditFrameTest extends OperationsTestCase {
         // test delete button
         JemmyUtil.enterClickAndLeave(f.deleteButton);
 
-        // should have 5 cars now
-        Assert.assertEquals("number of cars", 4, cManager.getNumEntries());
+        // should have one less car
+        Assert.assertEquals("number of cars", 8, cManager.getNumEntries());
+        Assert.assertNull("car doesn't exist", cManager.getByRoadAndNumber("CP", "C10099"));
 
         JUnitUtil.dispose(f);
     }
 
     @Test
-    public void testCarEditFrameLoadNewCarRoad() {
+    public void testAddNewCarRoad() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        loadCars(); // load cars
+        JUnitOperationsUtil.initOperationsData(); // load cars
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
 
-        Car c1 = cManager.getByRoadAndNumber("NH", "1");
+        Car c1 = cManager.getByRoadAndNumber("CP", "777");
         c1.setRoadName("TEST_ROAD");
 
         CarEditFrame f = new CarEditFrame();
@@ -340,9 +891,11 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("addRoad"), Bundle.getMessage("ButtonNo"));
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return load.getState().equals(Thread.State.TERMINATED);
-        }, "wait to terminate");
+        try {
+            load.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
 
         Assert.assertFalse(InstanceManager.getDefault(CarRoads.class).containsName("TEST_ROAD"));
 
@@ -362,9 +915,11 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("addRoad"), Bundle.getMessage("ButtonYes"));
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return load2.getState().equals(Thread.State.TERMINATED);
-        }, "wait to terminate");
+        try {
+            load2.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
 
         Assert.assertTrue(InstanceManager.getDefault(CarRoads.class).containsName("TEST_ROAD"));
 
@@ -372,12 +927,12 @@ public class CarEditFrameTest extends OperationsTestCase {
     }
 
     @Test
-    public void testCarEditFrameLoadNewCarType() {
+    public void testAddNewCarType() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        loadCars(); // load cars
+        JUnitOperationsUtil.initOperationsData(); // load cars
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
 
-        Car c1 = cManager.getByRoadAndNumber("NH", "1");
+        Car c1 = cManager.getByRoadAndNumber("CP", "777");
         c1.setTypeName("TEST_TYPE");
 
         CarEditFrame f = new CarEditFrame();
@@ -399,9 +954,11 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("addType"), Bundle.getMessage("ButtonNo"));
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return load.getState().equals(Thread.State.TERMINATED);
-        }, "wait to terminate");
+        try {
+            load.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
 
         Assert.assertFalse(InstanceManager.getDefault(CarTypes.class).containsName("TEST_TYPE"));
 
@@ -421,9 +978,11 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("addType"), Bundle.getMessage("ButtonYes"));
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return load2.getState().equals(Thread.State.TERMINATED);
-        }, "wait to terminate");
+        try {
+            load2.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
 
         Assert.assertTrue(InstanceManager.getDefault(CarTypes.class).containsName("TEST_TYPE"));
 
@@ -431,12 +990,12 @@ public class CarEditFrameTest extends OperationsTestCase {
     }
 
     @Test
-    public void testCarEditFrameLoadNewCarLength() {
+    public void testAddNewCarLength() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        loadCars(); // load cars
+        JUnitOperationsUtil.initOperationsData(); // load cars
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
 
-        Car c1 = cManager.getByRoadAndNumber("NH", "1");
+        Car c1 = cManager.getByRoadAndNumber("CP", "777");
         c1.setLength("123");
 
         CarEditFrame f = new CarEditFrame();
@@ -458,9 +1017,11 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("addLength"), Bundle.getMessage("ButtonNo"));
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return load.getState().equals(Thread.State.TERMINATED);
-        }, "wait to terminate");
+        try {
+            load.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
 
         Assert.assertFalse(InstanceManager.getDefault(CarLengths.class).containsName("123"));
 
@@ -480,9 +1041,11 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("addLength"), Bundle.getMessage("ButtonYes"));
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return load2.getState().equals(Thread.State.TERMINATED);
-        }, "wait to terminate");
+        try {
+            load2.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
 
         Assert.assertTrue(InstanceManager.getDefault(CarLengths.class).containsName("123"));
 
@@ -490,12 +1053,12 @@ public class CarEditFrameTest extends OperationsTestCase {
     }
 
     @Test
-    public void testCarEditFrameLoadNewCarOwner() {
+    public void testAddNewCarOwner() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        loadCars(); // load cars
+        JUnitOperationsUtil.initOperationsData(); // load cars
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
 
-        Car c1 = cManager.getByRoadAndNumber("NH", "1");
+        Car c1 = cManager.getByRoadAndNumber("CP", "777");
         c1.setOwner("TEST_OWNER");
 
         CarEditFrame f = new CarEditFrame();
@@ -517,9 +1080,11 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("addOwner"), Bundle.getMessage("ButtonNo"));
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return load.getState().equals(Thread.State.TERMINATED);
-        }, "wait to terminate");
+        try {
+            load.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
 
         Assert.assertFalse(InstanceManager.getDefault(CarOwners.class).containsName("TEST_OWNER"));
 
@@ -539,9 +1104,11 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("addOwner"), Bundle.getMessage("ButtonYes"));
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return load2.getState().equals(Thread.State.TERMINATED);
-        }, "wait to terminate");
+        try {
+            load2.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
 
         Assert.assertTrue(InstanceManager.getDefault(CarOwners.class).containsName("TEST_OWNER"));
 
@@ -549,12 +1116,12 @@ public class CarEditFrameTest extends OperationsTestCase {
     }
 
     @Test
-    public void testCarEditFrameLoadNewCarColor() {
+    public void testAddNewCarColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        loadCars(); // load cars
+        JUnitOperationsUtil.initOperationsData(); // load cars
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
 
-        Car c1 = cManager.getByRoadAndNumber("NH", "1");
+        Car c1 = cManager.getByRoadAndNumber("CP", "777");
         c1.setColor("TEST_COLOR");
 
         CarEditFrame f = new CarEditFrame();
@@ -576,9 +1143,11 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("carAddColor"), Bundle.getMessage("ButtonNo"));
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return load.getState().equals(Thread.State.TERMINATED);
-        }, "wait to terminate");
+        try {
+            load.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
 
         Assert.assertFalse(InstanceManager.getDefault(CarColors.class).containsName("TEST_COLOR"));
 
@@ -598,9 +1167,11 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("carAddColor"), Bundle.getMessage("ButtonYes"));
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return load2.getState().equals(Thread.State.TERMINATED);
-        }, "wait to terminate");
+        try {
+            load2.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
 
         Assert.assertTrue(InstanceManager.getDefault(CarColors.class).containsName("TEST_COLOR"));
 
@@ -608,12 +1179,12 @@ public class CarEditFrameTest extends OperationsTestCase {
     }
 
     @Test
-    public void testCarEditFrameLoadNewCarLoad() {
+    public void testAddNewCarLoad() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        loadCars(); // load cars
+        JUnitOperationsUtil.initOperationsData(); // load cars
         CarManager cManager = InstanceManager.getDefault(CarManager.class);
 
-        Car c1 = cManager.getByRoadAndNumber("NH", "1");
+        Car c1 = cManager.getByRoadAndNumber("CP", "777");
         c1.setLoadName("TEST_LOAD");
 
         CarEditFrame f = new CarEditFrame();
@@ -635,9 +1206,11 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("addLoad"), Bundle.getMessage("ButtonNo"));
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return load.getState().equals(Thread.State.TERMINATED);
-        }, "wait to terminate");
+        try {
+            load.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
 
         Assert.assertFalse(InstanceManager.getDefault(CarLoads.class).containsName(c1.getTypeName(), "TEST_LOAD"));
 
@@ -657,104 +1230,15 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("addLoad"), Bundle.getMessage("ButtonYes"));
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return load2.getState().equals(Thread.State.TERMINATED);
-        }, "wait to terminate");
+        try {
+            load2.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
 
         Assert.assertTrue(InstanceManager.getDefault(CarLoads.class).containsName(c1.getTypeName(), "TEST_LOAD"));
 
         JUnitUtil.dispose(f);
-    }
-
-    private void loadCars() {
-
-        Setup.setValueEnabled(true);
-        Setup.setRfidEnabled(true);
-        CarManager cManager = InstanceManager.getDefault(CarManager.class);
-
-        // add Owner1 and Owner2
-        CarOwners co = InstanceManager.getDefault(CarOwners.class);
-        co.addName("Owner1");
-        co.addName("Owner2");
-        // register the road names used
-        CarRoads cr = InstanceManager.getDefault(CarRoads.class);
-        cr.addName("UP");
-        cr.addName("SP");
-        cr.addName("NH");
-        CarLengths cl = InstanceManager.getDefault(CarLengths.class);
-        cl.addName("40");
-        cl.addName("38");
-        CarTypes ct = InstanceManager.getDefault(CarTypes.class);
-        ct.addName(Bundle.getMessage("Caboose"));
-        // add 5 cars to table
-        Car c1 = cManager.newRS("NH", "1");
-        c1.setBuilt("2009");
-        c1.setColor("Red");
-        c1.setLength("40");
-        c1.setLoadName("L");
-        c1.setMoves(55);
-        c1.setOwner("Owner2");
-        // make sure the ID tags exist before we
-        // try to add it to a car.
-        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 3");
-        c1.setRfid("RFID 3");
-        c1.setTypeName(Bundle.getMessage("Caboose"));
-        c1.setWeight("1.4");
-        c1.setWeightTons("Tons of Weight");
-        c1.setCaboose(true);
-        c1.setComment("Test Car NH 1 Comment");
-
-        Car c2 = cManager.newRS("UP", "22");
-        c2.setBuilt("2004");
-        c2.setColor("Blue");
-        c2.setLength("50");
-        c2.setLoadName("E");
-        c2.setMoves(50);
-        c2.setOwner("AT");
-        // make sure the ID tags exist before we
-        // try to add it to a car.
-        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 2");
-        c2.setRfid("RFID 2");
-        c2.setTypeName("Boxcar");
-
-        Car c3 = cManager.newRS("AA", "3");
-        c3.setBuilt("2006");
-        c3.setColor("White");
-        c3.setLength("30");
-        c3.setLoadName("LA");
-        c3.setMoves(40);
-        c3.setOwner("AB");
-        // make sure the ID tags exist before we
-        // try to add it to a car.
-        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 5");
-        c3.setRfid("RFID 5");
-        c3.setTypeName("Gondola");
-
-        Car c4 = cManager.newRS("SP", "2");
-        c4.setBuilt("1990");
-        c4.setColor("Black");
-        c4.setLength("45");
-        c4.setLoadName("EA");
-        c4.setMoves(30);
-        c4.setOwner("AAA");
-        // make sure the ID tags exist before we
-        // try to add it to a car.
-        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 4");
-        c4.setRfid("RFID 4");
-        c4.setTypeName("Tank Food");
-
-        Car c5 = cManager.newRS("NH", "5");
-        c5.setBuilt("1956");
-        c5.setColor("Brown");
-        c5.setLength("25");
-        c5.setLoadName("LL");
-        c5.setMoves(25);
-        c5.setOwner("DAB");
-        // make sure the ID tags exist before we
-        // try to add it to a car.
-        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 1");
-        c5.setRfid("RFID 1");
-        c5.setTypeName("Coilcar");
     }
 
     // Ensure minimal setup for log4J

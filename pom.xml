@@ -18,6 +18,7 @@
         dependency source) -->
         <cucumber.version>2.0.1</cucumber.version>
         <jetty.version>9.4.7.v20170914</jetty.version>
+        <jemmy.version>22-00c9f753cd0a</jemmy.version> <!-- this is a custom version, see lib/README.md -->
         <slf4j.version>1.7.25</slf4j.version>
         <jackson.version>2.8.11</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
@@ -984,8 +985,8 @@
         -->
         <dependency>
             <groupId>org.netbeans.external</groupId>
-            <artifactId>jemmy-2.3.1.1</artifactId>
-            <version>RELEASE802</version>
+            <artifactId>jemmy</artifactId>
+            <version>${jemmy.version}</version>
             <scope>test</scope>
         </dependency>
         <!--

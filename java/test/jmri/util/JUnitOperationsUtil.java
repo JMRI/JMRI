@@ -12,7 +12,7 @@ import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.automation.Automation;
 import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.automation.AutomationManager;
-import jmri.jmrit.operations.automation.actions.ActivateTimetableAction;
+import jmri.jmrit.operations.automation.actions.ActivateTrainScheduleAction;
 import jmri.jmrit.operations.automation.actions.BuildTrainAction;
 import jmri.jmrit.operations.automation.actions.GotoAction;
 import jmri.jmrit.operations.automation.actions.MoveTrainAction;
@@ -29,6 +29,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarLengths;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
+import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Consist;
@@ -47,8 +48,8 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.schedules.TrainSchedule;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import org.junit.Assert;
 
 /**
@@ -137,12 +138,16 @@ public class JUnitOperationsUtil {
         EngineManager emanager = InstanceManager.getDefault(EngineManager.class);
         CarTypes ct = InstanceManager.getDefault(CarTypes.class);
         EngineTypes et = InstanceManager.getDefault(EngineTypes.class);
+        CarOwners co = InstanceManager.getDefault(CarOwners.class);
 
         // register the car and engine types used
         ct.addName("Boxcar");
         ct.addName(rb.getString("Caboose"));
         ct.addName("Flat");
         et.addName("Diesel");
+        
+        co.addName("AT");
+        co.addName("DAB");
 
         // Set up four engines in two consists
         Consist con1 = emanager.newConsist("C16");
@@ -221,6 +226,13 @@ public class JUnitOperationsUtil {
         createAndPlaceCar("CP", "777", "Flat", "50", "AT", "1990", l20yard1, 6);
         createAndPlaceCar("CP", "888", "Boxcar", "60", "DAB", "1985", l20yard1, 0);
         createAndPlaceCar("CP", "99", "Flat", "90", "AT", "6-80", l20yard1, 0);
+        
+        c1.setColor("Red");
+        // make sure the ID tags exist before we
+        // try to add it to a car.
+        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 3");
+        c1.setRfid("RFID 3");
+        c1.setComment("Test Car CP C10099 Comment");
 
         // Define the route.
         Route route1 = new Route("1", "Southbound Main Route");
@@ -625,7 +637,7 @@ public class JUnitOperationsUtil {
         item3.setRouteLocation(new RouteLocation("id", new Location("id", "testLocationName")));
 
         AutomationItem item4 = automation.addItem();
-        item4.setAction(new ActivateTimetableAction());
+        item4.setAction(new ActivateTrainScheduleAction());
         TrainSchedule trainSchedule = InstanceManager.getDefault(TrainScheduleManager.class).newSchedule("train schedule name");
         item4.setOther(trainSchedule);
 
