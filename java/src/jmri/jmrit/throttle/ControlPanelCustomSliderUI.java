@@ -20,12 +20,12 @@ public class ControlPanelCustomSliderUI extends BasicSliderUI {
     // Color are coming from the Tango themes color palette (as well as icons on the Throttle window, for look consistency)
     private final static Color TRACK_COLOR_BACK = new Color(0x88, 0x8a, 0x85, 0x88);
     private final static Color TRACK_COLOR_FRONT = new Color(0xf5, 0x79, 0x00, 0xCC);
-    private final static Color TRACK_COLOR_TICKS = new Color(0x888a85);
+//    private final static Color TRACK_COLOR_TICKS = new Color(0x888a85);
     private final static Color THUMB_INNER_COLOR_STOP = new Color(0xcc0000);
     private final static Color THUMB_INNER_COLOR_RUN = new Color(0xd7d27A);
     private final static Color THUMB_CONTOUR_COLOR = new Color(0x555753);
-    private final static Color ZERO_CONTOUR_COLOR = new Color(0x555753);    
-    private final static int ZERO_THICKNESS = 5;
+//    private final static Color ZERO_CONTOUR_COLOR = new Color(0x555753);    
+//    private final static int ZERO_THICKNESS = 5;
     
     public ControlPanelCustomSliderUI(JSlider b) {
         super(b);
@@ -51,10 +51,10 @@ public class ControlPanelCustomSliderUI extends BasicSliderUI {
     public void paintTrack(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         Paint oldPaint = g2d.getPaint();
-        // Track rectangle
+        // Track back rectangle
         g2d.setPaint(TRACK_COLOR_BACK);
         g2d.fillRect(trackRect.x, trackRect.y, trackRect.width, trackRect.height);
-/*        // Track ticks
+/*        // Track ticks 
         g2d.setPaint(TRACK_COLOR_TICKS);
         // only if it fits 
         if (slider.getOrientation() == SwingConstants.VERTICAL && trackRect.height > (slider.getMaximum()-slider.getMinimum())*2) {
@@ -72,7 +72,7 @@ public class ControlPanelCustomSliderUI extends BasicSliderUI {
                         trackRect.y+trackRect.height );
             }            
         }*/
-        // Track zero
+        // Track front
         g2d.setPaint(TRACK_COLOR_FRONT);        
         if (slider.getOrientation() == SwingConstants.HORIZONTAL) {
             if (slider.getMinimum()<0 && slider.getMaximum()>0) {
@@ -84,6 +84,7 @@ public class ControlPanelCustomSliderUI extends BasicSliderUI {
                 } else {
                     g2d.fillRect( (int)Math.round(x0+widthRect), trackRect.y, (int)Math.round(-widthRect), trackRect.height);
                 }
+                // Zero marker
 //                g2d.setPaint(ZERO_CONTOUR_COLOR);
 //                g2d.fillRect( (int)Math.round(x0- ZERO_THICKNESS/2) , trackRect.y+ZERO_THICKNESS/2, ZERO_THICKNESS, trackRect.height-ZERO_THICKNESS );     
             } else {           
@@ -99,6 +100,7 @@ public class ControlPanelCustomSliderUI extends BasicSliderUI {
                 } else {
                     g2d.fillRect( trackRect.x, (int)Math.round(y0+heightRect), trackRect.width, (int)Math.round(-heightRect));
                 }
+                // Zero marker
 //                g2d.setPaint(ZERO_CONTOUR_COLOR);
 //                g2d.fillRect( trackRect.x+ZERO_THICKNESS/2, (int)Math.round(y0- ZERO_THICKNESS/2), trackRect.width-ZERO_THICKNESS, ZERO_THICKNESS );     
                 
