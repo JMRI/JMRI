@@ -9,7 +9,6 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
-import jmri.jmrit.operations.rollingstock.engines.EngineEditFrame;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
@@ -31,7 +30,7 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
     public void testEngineAttributeEditFrameModel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EngineAttributeEditFrame f = new EngineAttributeEditFrame();
-        f.initComponents(EngineEditFrame.MODEL);
+        f.initComponents(EngineAttributeEditFrame.MODEL);
         // confirm that the right number of models were loaded
         Assert.assertEquals(27, f.comboBox.getItemCount());
         // now add a new model name
@@ -61,16 +60,16 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
     public void testEngineAttributeEditFrame2() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EngineAttributeEditFrame f = new EngineAttributeEditFrame();
-        f.initComponents(EngineEditFrame.LENGTH);
+        f.initComponents(EngineAttributeEditFrame.LENGTH);
         JUnitUtil.dispose(f);
         f = new EngineAttributeEditFrame();
-        f.initComponents(EngineEditFrame.OWNER);
+        f.initComponents(EngineAttributeEditFrame.OWNER);
         JUnitUtil.dispose(f);
         f = new EngineAttributeEditFrame();
-        f.initComponents(EngineEditFrame.ROAD);
+        f.initComponents(EngineAttributeEditFrame.ROAD);
         JUnitUtil.dispose(f);
         f = new EngineAttributeEditFrame();
-        f.initComponents(EngineEditFrame.TYPE);
+        f.initComponents(EngineAttributeEditFrame.TYPE);
         JUnitUtil.dispose(f);
     }
 
