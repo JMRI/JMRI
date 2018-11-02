@@ -3,15 +3,12 @@ package jmri.jmrix.pricom.pockettester;
 
 /**
  * Simple GUI for access to PRICOM Pocket Monitor.
- * <P>
+ * <p>
  * For more info on the product, see http://www.pricom.com
  *
  * @author	Bob Jacobsen Copyright (C) 2005
-  */
+ */
 public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements DataListener {
-
-    static java.util.ResourceBundle rb
-            = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
 
     public MonitorFrame() {
         super();
@@ -27,8 +24,8 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements DataLis
         if (filter == null) {
             title = "";
         }
-        return java.text.MessageFormat.format(rb.getString("TitleMonitor"),
-                (Object[]) new String[]{title});
+        return java.text.MessageFormat.format(Bundle.getMessage("TitleMonitor"),
+                new Object[]{title});
     }
 
     @Override

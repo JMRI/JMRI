@@ -1,6 +1,5 @@
 package jmri.configurexml;
 
-import apps.tests.Log4JFixture;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,6 +11,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -63,7 +63,6 @@ public class SchemaTestBase {
      *         validate and a boolean matching the pass parameter
      */
     public static Collection<Object[]> getFiles(File directory, boolean recurse, boolean pass) {
-        Log4JFixture.setUp(); // setup logging early so this method can log
         ArrayList<Object[]> files = new ArrayList<>();
         if (directory.isDirectory()) {
             for (File file : directory.listFiles()) {
@@ -96,7 +95,6 @@ public class SchemaTestBase {
      * @throws IllegalArgumentException if directory is a file
      */
     public static Collection<Object[]> getDirectories(File directory, boolean recurse, boolean pass) throws IllegalArgumentException {
-        Log4JFixture.setUp(); // setup logging early so this method can log
         ArrayList<Object[]> files = new ArrayList<>();
         if (directory.isDirectory()) {
             for (File file : directory.listFiles()) {
@@ -111,12 +109,15 @@ public class SchemaTestBase {
     }
 
     @Before
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         this.validate = XmlFile.getDefaultValidate();
     }
 
     @After
+    @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown() throws Exception {
         XmlFile.setDefaultValidate(this.validate);
         JUnitUtil.tearDown();

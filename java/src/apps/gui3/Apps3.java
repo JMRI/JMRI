@@ -154,24 +154,6 @@ public abstract class Apps3 extends AppsBase {
     }
 
     /**
-     * Provides a list of {@link apps.startup.AbstractActionModel} objects that
-     * could be used with the implementing class in {@link #addToActionModel()}.
-     *
-     * @return the list of action models.
-     * @deprecated since 4.5.3
-     */
-    @Deprecated
-    protected ResourceBundle getActionModelResourceBundle() { return null; }
-
-    /**
-     * @deprecated since 4.5.1
-     */
-    @Deprecated
-    protected final void addToActionModel() {
-        // StartupActionModelUtil populates itself, so do nothing
-    }
-
-    /**
      * Set a toolbar to be initially floating. This doesn't quite work right.
      *
      * @param toolBar the toolbar to float
@@ -261,14 +243,18 @@ public abstract class Apps3 extends AppsBase {
 
     private void prepareFontLists() {
         // Prepare font lists
-        new Thread(new Runnable() {
+        Thread fontThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 log.debug("Prepare font lists...");
                 FontComboUtil.prepareFontLists();
                 log.debug("...Font lists built");
             }
-        }).start();
+        });
+        
+        fontThread.setDaemon(true);
+        fontThread.setPriority(Thread.MIN_PRIORITY);
+        fontThread.start();
     }
 
     protected void initMacOSXMenus() {
@@ -317,6 +303,7 @@ public abstract class Apps3 extends AppsBase {
         } else {
             profileFile = new File(profileFilename);
         }
+
         ProfileManager.getDefault().setConfigFile(profileFile);
         // See if the profile to use has been specified on the command line as
         // a system property org.jmri.profile as a profile id.
@@ -325,6 +312,7 @@ public abstract class Apps3 extends AppsBase {
         }
         // @see jmri.profile.ProfileManager#migrateToProfiles Javadoc for conditions handled here
         if (!profileFile.exists()) { // no profile config for this app
+            log.trace("profileFile {} doesn't exist", profileFile);
             try {
                 if (ProfileManager.getDefault().migrateToProfiles(getConfigFileName())) { // migration or first use
                     // notify user of change only if migration occurred
@@ -348,7 +336,10 @@ public abstract class Apps3 extends AppsBase {
             // Apps.setConfigFilename() does not reset the system property
             System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
             Profile profile = ProfileManager.getDefault().getActiveProfile();
-            log.info("Starting with profile {}", profile != null ? profile.getId() : "<none>");
+            log.info("Starting with profile {}", profile.getId());
+
+            // rapid language set; must follow up later with full setting as part of preferences
+            apps.gui.GuiLafPreferencesManager.setLocaleMinimally(profile);
         } catch (IOException ex) {
             log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
         }
@@ -371,7 +362,7 @@ public abstract class Apps3 extends AppsBase {
             Profile profile = ProfileManager.getDefault().getActiveProfile();
             if (!GraphicsEnvironment.isHeadless()) {
                 JOptionPane.showMessageDialog(sp,
-                        Bundle.getMessage("SingleConfigMigratedToSharedConfig", profile != null ? profile.getName() : "<none>"),
+                        Bundle.getMessage("SingleConfigMigratedToSharedConfig", profile.getName()),
                         jmri.Application.getApplicationName(),
                         JOptionPane.INFORMATION_MESSAGE);
             }

@@ -18,57 +18,57 @@ public class NceMessageCheck {
         if (m != null) {
             switch (m.getOpCode()) {
                 /* NCE USB can now address the full range of accessory addresses dboudreau 1/18/2012
-                 case NceBinaryCommand.ACC_CMD: checkACC_CMD(memo, m);
+                 case NceMessage.ACC_CMD: checkACC_CMD(memo, m);
                  break;*/
-                case NceBinaryCommand.READ1_CMD:
+                case NceMessage.READ1_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.READ16_CMD:
+                case NceMessage.READ16_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.WRITE_N_CMD:
+                case NceMessage.WRITE_N_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.WRITE1_CMD:
+                case NceMessage.WRITE1_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.WRITE2_CMD:
+                case NceMessage.WRITE2_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.WRITE4_CMD:
+                case NceMessage.WRITE4_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.WRITE8_CMD:
+                case NceMessage.WRITE8_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.STOP_CLOCK_CMD:
+                case NceMessage.STOP_CLOCK_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.START_CLOCK_CMD:
+                case NceMessage.START_CLOCK_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.SET_CLOCK_CMD:
+                case NceMessage.SET_CLOCK_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.CLOCK_1224_CMD:
+                case NceMessage.CLOCK_1224_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.CLOCK_RATIO_CMD:
+                case NceMessage.CLOCK_RATIO_CMD:
                     checkSerial_CMD(memo, m);
                     break;
-                case NceBinaryCommand.OPS_PROG_LOCO_CMD:
+                case NceMessage.OPS_PROG_LOCO_CMD:
                     checkOPS_PROG_CMD(memo, m);
                     break;
-                case NceBinaryCommand.OPS_PROG_ACCY_CMD:
+                case NceMessage.OPS_PROG_ACCY_CMD:
                     checkOPS_PROG_CMD(memo, m);
                     break;
-                case NceBinaryCommand.USB_MEM_POINTER_CMD:
+                case NceMessage.USB_MEM_POINTER_CMD:
                     checkUsbMem_CMD(memo, m);
                     break;
-                case NceBinaryCommand.USB_MEM_READ_CMD:
+                case NceMessage.USB_MEM_READ_CMD:
                     checkUsbMem_CMD(memo, m);
                     break;
-                case NceBinaryCommand.USB_MEM_WRITE_CMD:
+                case NceMessage.USB_MEM_WRITE_CMD:
                     checkUsbMem_CMD(memo, m);
                     break;
                 default:

@@ -754,7 +754,6 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
      *
      * @param e The Element for this object.
      */
-    @SuppressWarnings("unchecked")
     public void setXml(Element e) {
         if (e == null) {
             return;

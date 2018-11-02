@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Petr</firstname><surname>Šídlo</surname></personname>
+        <email>sidlo64@hotmail.com</email>
+    </author>    
+  </authorgroup>
+    
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2016-11-19</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2018-09-21</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Panel indicators</revremark>
+    </revision>    
+  </revhistory>
+
+  <aspecttable>CSD-1962-zakladni</aspecttable>
+  <name>Předvěsti oddílové</name>
+  <description>Předvěsti oddílových návěstidel.</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Volno</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/001_volno_ph.gif</imagelink>
+      <imagelink type="AŽD z">../../../resources/icons/smallschematics/aspects/CSD/AZD/01_g.png</imagelink>
+      <imagelink type="ESP z">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_g.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Výstraha</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/002_vystraha_ph.gif</imagelink>
+      <imagelink type="AŽD z">../../../resources/icons/smallschematics/aspects/CSD/AZD/02_g.png</imagelink>
+      <imagelink type="ESP z">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_g.png</imagelink>
+    </appearance>
+
+  </appearances>
+  
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Volno</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stůj</advancedAspect>
+      <ourAspect>Výstraha</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+  
+</appearancetable>  

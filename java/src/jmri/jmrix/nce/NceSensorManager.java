@@ -44,7 +44,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     NceTrafficController tc = null;
     String prefix = "N";
 
-    private NceSensorManager mInstance = null;
+    private final NceSensorManager mInstance = null;
 
     @Override
     public String getSystemPrefix() {
@@ -70,7 +70,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
 
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
-        int number = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
+        int number = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
 
         Sensor s = new NceSensor(systemName);
         s.setUserName(userName);
@@ -189,8 +189,8 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     private NceMessage makeAIUPoll4ByteReply(int aiuNo) {
         NceMessage m = new NceMessage(2);
         m.setBinary(true);
-        m.setReplyLen(4);
-        m.setElement(0, NceBinaryCommand.READ_AUI4_CMD);
+        m.setReplyLen(NceMessage.REPLY_4);
+        m.setElement(0, NceMessage.READ_AUI4_CMD);
         m.setElement(1, aiuNo);
         m.setTimeout(pollTimeout);
         return m;
@@ -205,8 +205,8 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     private NceMessage makeAIUPoll2ByteReply(int aiuNo) {
         NceMessage m = new NceMessage(2);
         m.setBinary(true);
-        m.setReplyLen(2);
-        m.setElement(0, NceBinaryCommand.READ_AUI2_CMD);
+        m.setReplyLen(NceMessage.REPLY_2);
+        m.setElement(0, NceMessage.READ_AUI2_CMD);
         m.setElement(1, aiuNo);
         m.setTimeout(pollTimeout);
         return m;
@@ -356,8 +356,8 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
             // Yes we should, added check for valid AIU and pin ranges DBoudreau 2/13/2013
             int seperator = curAddress.indexOf(":");
             try {
-                aiucab = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
-                pin = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
+                aiucab = Integer.parseInt(curAddress.substring(0, seperator));
+                pin = Integer.parseInt(curAddress.substring(seperator + 1));
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert " + curAddress + " into the cab and pin format of nn:xx");
                 throw new JmriException("Hardware Address passed should be a number");
@@ -443,9 +443,9 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         // system name must be in the NLnnnnn format (N is user configurable)
         int num = 0;
         try {
-            num = Integer.valueOf(systemName.substring(
+            num = Integer.parseInt(systemName.substring(
                     getSystemPrefix().length() + 1, systemName.length())
-            ).intValue();
+                  );
         } catch (Exception e) {
             log.debug("illegal character in number field of system name: " + systemName);
             return (0);
@@ -477,8 +477,8 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
             int _pin;
             log.debug(curAddress);
             try {
-                _aiucab = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
-                _pin = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
+                _aiucab = Integer.parseInt(curAddress.substring(0, seperator));
+                _pin = Integer.parseInt(curAddress.substring(seperator + 1));
             } catch (NumberFormatException ex) {
                 log.debug("Unable to convert " + curAddress + " into the cab and pin format of nn:xx");
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).

@@ -306,7 +306,13 @@
       <ourAspect>Medium Approach</ourAspect>
     </aspectMapping>
 
-     <aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Slow Approach</advancedAspect>
+      <ourAspect>Approach Slow</ourAspect>
+      <ourAspect>Medium Approach Slow</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
       <advancedAspect>Restricting</advancedAspect>
       <ourAspect>Medium Approach</ourAspect>
       <ourAspect>Slow Approach</ourAspect>

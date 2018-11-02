@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2014 All rights reserved                            -->
-<!-- $Id$             -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -34,7 +33,8 @@
     </revision>
   <!-- Uhlenbrock Decoder Configuration CV 51 - analog operation -->
   </revhistory>
-  <variable item="Analog (DC) Mode" CV="51" default="3">
+  <variable item="Analog (DC) Mode" CV="51" default="3" mask="XXXXXXVV">
+    <!-- CV51 was expanded in 2016+ IntelliSound4 decoders eg. 365x -->
     <enumVal>
       <!--
       <enumChoice choice="Not used">
@@ -42,23 +42,27 @@
       </enumChoice>
       -->
       <enumChoice choice="Digital operation only" value="1">
-        <choice>Digital operation only</choice>
-        <choice xml:lang="de">nur Digital Betrieb</choice>
-        <choice xml:lang="it">Solo DCC</choice>
+        <choice>DC operation only</choice>
+        <choice xml:lang="de">nur Gleichstrom</choice>
+        <choice xml:lang="it">Solo DC</choice>
+        <choice xml:lang="nl">Alleen gelijkstroom</choice>
       </enumChoice>
-      <enumChoice choice="Analog operation only">
-        <choice>Analog operation only</choice>
-        <choice xml:lang="de">nur Analog Betrieb</choice>
-        <choice xml:lang="it">Solo Analogico</choice>
+      <enumChoice choice="Analog operation only" value="2">
+        <choice>AC operation only</choice>
+        <choice xml:lang="de">nur Wechselstrom</choice>
+        <choice xml:lang="it">Solo AC</choice>
+        <choice xml:lang="nl">Alleen wisselstroom</choice>
       </enumChoice>
-      <enumChoice choice="Auto Detection">
-        <choice>Auto Detection</choice>
-        <choice xml:lang="de">automatischer Erkennung</choice>
-        <choice xml:lang="it">Rilevazione Automatica</choice>			
+      <enumChoice choice="Auto Detection" value="3">
+        <choice>Both AC and DC</choice>
+        <choice xml:lang="de">Gleich- u. Wechselstrom</choice>
+        <choice xml:lang="it">AC e DC</choice>
+        <choice xml:lang="nl">Gelijk- en Wisselstroom</choice>
       </enumChoice>
     </enumVal>
-    <label>Analog/Digital operation</label>
-    <label xml:lang="de">Analogen/Digital Betriebsart</label>	
-    <label xml:lang="it">Operatività in Analogico / DCC</label>		
+    <label>Analog operation</label>
+    <label xml:lang="de">Analogen Betriebsart</label>
+    <label xml:lang="nl">Analoog rijden</label>
+    <label xml:lang="it">Operatività in Analogico</label>
   </variable>
 </variables>

@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
     BundleTest.class,
     IEEE802154MonActionTest.class,
-    IEEE802154MonFrameTest.class
+    IEEE802154MonPaneTest.class
 })
 
 /**

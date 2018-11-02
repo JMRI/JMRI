@@ -26,10 +26,12 @@ public class VSDecoderFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
     }
 
     @After
     public void tearDown() {
+        jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
         JUnitUtil.tearDown();
     }
 

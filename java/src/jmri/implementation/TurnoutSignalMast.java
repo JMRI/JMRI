@@ -1,7 +1,6 @@
 package jmri.implementation;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
@@ -14,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * A Signalmast that is built up using turnouts to control a specific
  * appearance. System name specifies the creation information:
  * <pre>
- * IF$tsm:basic:one-searchlight:(IT1)(IT2)
+ * IF$tsm:basic:one-searchlight(IT1)(IT2)
  * </pre> The name is a colon-separated series of terms:
  * <ul>
  * <li>IF$tsm - defines signal masts of this type
@@ -51,6 +50,8 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         String mast = parts[2];
 
         mast = mast.substring(0, mast.indexOf("("));
+        setMastType(mast);
+
         String tmp = parts[2].substring(parts[2].indexOf("($") + 2, parts[2].indexOf(")"));
         try {
             int autoNumber = Integer.parseInt(tmp);
@@ -79,14 +80,16 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         if (getLit()) { //If the signalmast is lit, then send the commands to change the aspect.
             if (resetPreviousStates) {
                 //Clear all the current states, this will result in the signalmast going blank for a very short time.
-                for (String appearances : turnouts.keySet()) {
+                for (Map.Entry<String, TurnoutAspect> entry : turnouts.entrySet()) {
+                    String appearances = entry.getKey();
+                    TurnoutAspect aspt = entry.getValue();
                     if (!isAspectDisabled(appearances)) {
                         int setState = Turnout.CLOSED;
-                        if (turnouts.get(appearances).getTurnoutState() == Turnout.CLOSED) {
+                        if (aspt.getTurnoutState() == Turnout.CLOSED) {
                             setState = Turnout.THROWN;
                         }
-                        if (turnouts.get(appearances).getTurnout().getKnownState() != setState) {
-                            turnouts.get(appearances).getTurnout().setCommandedState(setState);
+                        if (aspt.getTurnout().getKnownState() != setState) {
+                            aspt.getTurnout().setCommandedState(setState);
                         }
                     }
                 }
@@ -148,13 +151,13 @@ public class TurnoutSignalMast extends AbstractSignalMast {
                 }
                 // set all Heads to state
             } else {
-                for (String appearances : turnouts.keySet()) {
+                for (TurnoutAspect aspect : turnouts.values()) {
                     int setState = Turnout.CLOSED;
-                    if (turnouts.get(appearances).getTurnoutState() == Turnout.CLOSED) {
+                    if (aspect.getTurnoutState() == Turnout.CLOSED) {
                         setState = Turnout.THROWN;
                     }
-                    if (turnouts.get(appearances).getTurnout().getKnownState() != setState) {
-                        turnouts.get(appearances).getTurnout().setCommandedState(setState);
+                    if (aspect.getTurnout().getKnownState() != setState) {
+                        aspect.getTurnout().setCommandedState(setState);
                     }
                 }
             }
@@ -211,9 +214,13 @@ public class TurnoutSignalMast extends AbstractSignalMast {
 
         TurnoutAspect(String turnoutName, int turnoutState) {
             if (turnoutName != null && !turnoutName.equals("")) {
-                Turnout turn = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
-                namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turn);
                 state = turnoutState;
+                Turnout turn = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
+                if (turn == null) {  
+                    log.error("TurnoutAspect couldn't locate turnout {}", turnoutName);
+                    return;
+                }
+                namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turn);
             }
         }
 

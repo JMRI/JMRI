@@ -178,6 +178,11 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
     }
 
     @Override
+    public String getCurrentPortName(){
+        return "";
+    }
+
+    @Override
     public void run() { // start a new thread
         // This thread has one task. It repeatedly reads from the input pipe
         // and writes an appropriate response to the output pipe. This is the heart
@@ -245,7 +250,6 @@ public class SimulatorAdapter extends EasyDccPortController implements jmri.jmri
      *
      * As yet, not all messages receive a meaningful reply. TODO: Throttle, Program
      */
-    @SuppressWarnings("fallthrough")
     private EasyDccReply generateReply(EasyDccMessage msg) {
         log.debug("Generate Reply to message type {} (string = {})", msg.toString().charAt(0), msg.toString());
 

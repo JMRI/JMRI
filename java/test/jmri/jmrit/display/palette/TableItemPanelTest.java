@@ -1,6 +1,7 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.GraphicsEnvironment;
+import jmri.Turnout;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorScaffold;
@@ -21,11 +22,11 @@ public class TableItemPanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PickListModel tableModel = PickListModel.turnoutPickModelInstance(); // N11N
-        DisplayFrame df = new DisplayFrame("Table Item Panel Test");
+        PickListModel<Turnout> tableModel = PickListModel.turnoutPickModelInstance();
+        DisplayFrame df = new DisplayFrame("Table Item Panel Test"); // NOI18N
         Editor editor = new EditorScaffold();
-        TableItemPanel t = new TableItemPanel(df,"IS01","",tableModel,editor);
-        Assert.assertNotNull("exists",t);
+        TableItemPanel<Turnout> t = new TableItemPanel<Turnout>(df,"IS01","",tableModel,editor); // NOI18N
+        Assert.assertNotNull("exists",t); // NOI18N
         JUnitUtil.dispose(df);
     }
 
@@ -33,6 +34,7 @@ public class TableItemPanelTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

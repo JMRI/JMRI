@@ -202,6 +202,11 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
     }
 
     @Override
+    public String getCurrentPortName(){
+        return "";
+    }
+
+    @Override
     public void run() { // start a new thread
         // This thread has one task. It repeatedly reads from the input pipe
         // and writes an appropriate response to the output pipe. This is the heart
@@ -263,7 +268,6 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
      * Based on SPROG information from A. Crosland.
      * @see jmri.jmrix.sprog.SprogReply#value()
      */
-    @SuppressWarnings("fallthrough")
     private SprogReply generateReply(SprogMessage msg) {
         log.debug("Generate Reply to message type {} (string = {})", msg.toString().charAt(0), msg.toString());
 

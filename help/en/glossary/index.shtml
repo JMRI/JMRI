@@ -49,9 +49,9 @@ table.sortable th {
       definitions for JMRI-specific terms, and links to additional
       information.<br>
       Feel free to submit suggestions for improvements or additions
-      to the <a href=
-      "https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI
-      users</a> Yahoo group, titled "Glossary".</p>
+      to <a href=
+      "https://groups.io/g/jmriusers">JMRI
+      users</a> at Groups.io, posts titled "Glossary".</p>
 
       <p>Click a heading to sort the list up or down.</p>
 
@@ -1230,7 +1230,7 @@ table.sortable th {
 
           2. In JMRI OperationsPro: a table defining which trains
           will run on any given day of the week. <a href=
-          "../package/jmri/jmrit/operations/Operations.shtml#Timetable">
+          "../package/jmri/jmrit/operations/Operations.shtml#TrainSchedules">
           ...</a></td>
 
           <td class="de">Fahrplan/Kursbuch</td>

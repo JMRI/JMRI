@@ -444,7 +444,7 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
         for (int i = 0; i < loads.size(); i++) {
             loadNames[i] = loads.get(i).getName();
         }
-        jmri.util.StringUtil.sort(loadNames);
+        java.util.Arrays.sort(loadNames);
         // return a list sorted by load name
         for (int i = loadNames.length - 1; i >= 0; i--) {
             for (int j = 0; j < loads.size(); j++) {
@@ -542,7 +542,6 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                 _emptyName = a.getValue();
             }
         }
-        @SuppressWarnings("unchecked")
         List<Element> eLoads = e.getChild(Xml.LOADS).getChildren(Xml.LOAD);
         log.debug("readFile sees {} car loads", eLoads.size());
         for (Element eLoad : eLoads) {
@@ -553,7 +552,7 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                 if ((a = eLoad.getAttribute(Xml.NAMES)) != null) {
                     String names = a.getValue();
                     String[] loadNames = names.split("%%");// NOI18N
-                    jmri.util.StringUtil.sort(loadNames);
+                    java.util.Arrays.sort(loadNames);
                     log.debug("Car load type: {} loads: {}", type, names);
                     // addName puts new items at the start, so reverse load
                     for (int j = loadNames.length; j > 0;) {
@@ -561,7 +560,6 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                     }
                 }
                 // new style load and comments
-                @SuppressWarnings("unchecked")
                 List<Element> eCarLoads = eLoad.getChildren(Xml.CAR_LOAD);
                 log.debug("{} car loads for type: {}", eCarLoads.size(), type);
                 for (Element eCarLoad : eCarLoads) {

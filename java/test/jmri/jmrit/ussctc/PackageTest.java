@@ -5,10 +5,10 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        jmri.jmrit.ussctc.FollowerTest.class,
-        jmri.jmrit.ussctc.FollowerActionTest.class,
-        jmri.jmrit.ussctc.OsIndicatorTest.class,
-        jmri.jmrit.ussctc.OsIndicatorActionTest.class,
+        FollowerTest.class,
+        FollowerActionTest.class,
+        OsIndicatorTest.class,
+        OsIndicatorActionTest.class,
         BasePanelTest.class,
         FollowerFrameTest.class,
         FollowerPanelTest.class,
@@ -16,23 +16,26 @@ import org.junit.runners.Suite;
         OsIndicatorPanelTest.class,
         ToolsMenuTest.class,
         
+        BundleTest.class,
+        
         // new classes last
-        jmri.jmrit.ussctc.CombinedLockTest.class,
-        jmri.jmrit.ussctc.OccupancyLockTest.class,
-        jmri.jmrit.ussctc.TurnoutLockTest.class,
-        jmri.jmrit.ussctc.RouteLockTest.class,
-        jmri.jmrit.ussctc.TrafficLockTest.class,
-        jmri.jmrit.ussctc.TimeLockTest.class,
-        jmri.jmrit.ussctc.StationTest.class,
-        jmri.jmrit.ussctc.CodeLineTest.class,
-        jmri.jmrit.ussctc.CodeButtonTest.class,
-        jmri.jmrit.ussctc.PhysicalBellTest.class,
-        jmri.jmrit.ussctc.VetoedBellTest.class,
-        jmri.jmrit.ussctc.TrafficRelayTest.class,
-        jmri.jmrit.ussctc.MaintainerCallSectionTest.class,
-        jmri.jmrit.ussctc.TrackCircuitSectionTest.class,
-        jmri.jmrit.ussctc.TurnoutSectionTest.class,
-        jmri.jmrit.ussctc.SignalHeadSectionTest.class,
+        CombinedLockTest.class,
+        OccupancyLockTest.class,
+        TurnoutLockTest.class,
+        RouteLockTest.class,
+        TrafficLockTest.class,
+        TimeLockTest.class,
+        StationTest.class,
+        CodeLineTest.class,
+        CodeButtonTest.class,
+        PhysicalBellTest.class,
+        VetoedBellTest.class,
+        TrafficRelayTest.class,
+        MaintainerCallSectionTest.class,
+        TrackCircuitSectionTest.class,
+        TurnoutSectionTest.class,
+        SignalHeadSectionTest.class,
+        LockTest.class,
 })
 
 /**

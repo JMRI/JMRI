@@ -8,8 +8,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 import jmri.jmrix.loconet.sdf.SdfBuffer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide tools for reading, writing and accessing Digitrax SPJ files.
@@ -57,12 +55,10 @@ public class SpjFile {
 
     /**
      * Find the map entry (character string) that corresponds to a particular
-     * handle number
+     * handle number.
      */
     public String getMapEntry(int i) {
-        if (log.isDebugEnabled()) {
-            log.debug("getMapEntry(" + i + ")");
-        }
+        log.debug("getMapEntry({})", i);
         loadMapCache();
         String wanted = "" + i + " ";
         for (int j = 0; j < mapCache.length; j++) {
@@ -96,7 +92,7 @@ public class SpjFile {
 
         // here found it, count lines
         byte[] buffer = headers[map].getByteArray();
-        log.debug("map buffer length " + buffer.length);
+        log.debug("map buffer length {}", buffer.length);
         int count = 0;
         for (int i = 0; i < buffer.length; i++) {
             if (buffer[i] == 0x0D) {
@@ -106,28 +102,22 @@ public class SpjFile {
 
         mapCache = new String[count];
 
-        log.debug("found " + count + " map entries");
+        log.debug("found {} map entries", count);
 
         int start = 0;
         int end = 0;
         int index = 0;
 
         // loop through the string, look for each line
-        if (log.isDebugEnabled()) {
-            log.debug("start loop over map with buffer length = " + buffer.length);
-        }
+        log.debug("start loop over map with buffer length = {}", buffer.length);
         while ((++end) < buffer.length) {
             if (buffer[end] == 0x0D || buffer[end] == 0x0A) {
                 // sound end; make string
                 String next = new String(buffer, start, end - start);
                 // increment pointers
                 start = ++end;
-                if (log.isDebugEnabled()) {
-                    log.debug("new start value is " + start);
-                }
-                if (log.isDebugEnabled()) {
-                    log.debug("new end value is   " + end);
-                }
+                log.debug("new start value is {}", start);
+                log.debug("new end value is   {}", end);
 
                 // if another linefeed or newline is present, skip it too
                 if ((buffer[end - 1] == 0x0D || ((end < buffer.length) && buffer[end] == 0x0A))
@@ -136,9 +126,7 @@ public class SpjFile {
                     end++;
                 }
                 // store entry
-                if (log.isDebugEnabled()) {
-                    log.debug(" store entry " + index);
-                }
+                log.debug(" store entry {}", index);
                 mapCache[index++] = next;
             }
         }
@@ -146,7 +134,7 @@ public class SpjFile {
 
     /**
      * Save this file. It lays the file out again, changing the record start
-     * addresses into a sequential series
+     * addresses into a sequential series.
      *
      * @throws java.io.IOException if anything goes wrong
      */
@@ -154,59 +142,59 @@ public class SpjFile {
         if (name == null) {
             throw new java.io.IOException("Null name during write"); // NOI18N
         }
-        OutputStream s = new java.io.BufferedOutputStream(
-                new java.io.FileOutputStream(new java.io.File(name)));
+        try (OutputStream s = new java.io.BufferedOutputStream(
+                new java.io.FileOutputStream(new java.io.File(name)))) {
 
-        // find size of output file
-        int length = Header.HEADERSIZE * h0.numHeaders();  // allow header space at start
-        for (int i = 1; i < h0.numHeaders(); i++) {
-            length += headers[i].getRecordLength();
-        }
-        byte[] buffer = new byte[length];
-        for (int i = 0; i < length; i++) {
-            buffer[i] = 0;
-        }
-
-        // start with first header
-        int index = 0;
-        index = h0.store(buffer, index);
-
-        if (index != Header.HEADERSIZE) {
-            log.error("Unexpected 1st header length: " + index);
-        }
-
-        int datastart = index * h0.numHeaders(); //index is the length of the 1st header
-
-        // rest of the headers
-        for (int i = 1; i < h0.numHeaders(); i++) {  // header 0 already done
-            // Update header pointers.
-            headers[i].updateStart(datastart);
-            datastart += headers[i].getRecordLength();
-
-            // copy contents into output buffer
-            index = headers[i].store(buffer, index);
-        }
-
-        // copy the chunks; skip the first header, with no data
-        for (int i = 1; i < h0.numHeaders(); i++) {
-            int start = headers[i].getRecordStart();
-            int count = headers[i].getRecordLength();  // stored one long
-
-            byte[] content = headers[i].getByteArray();
-            if (count != content.length) {
-                log.error("header count " + count + " != content length " + content.length);
+            // find size of output file
+            int length = Header.HEADERSIZE * h0.numHeaders();  // allow header space at start
+            for (int i = 1; i < h0.numHeaders(); i++) {
+                length += headers[i].getRecordLength();
             }
-            for (int j = 0; j < count; j++) {
-                buffer[start + j] = content[j];
+            byte[] buffer = new byte[length];
+            for (int i = 0; i < length; i++) {
+                buffer[i] = 0;
             }
+
+            // start with first header
+            int index = 0;
+            index = h0.store(buffer, index);
+
+            if (index != Header.HEADERSIZE) {
+                log.error("Unexpected 1st header length: {}", index);
+            }
+
+            int datastart = index * h0.numHeaders(); //index is the length of the 1st header
+
+            // rest of the headers
+            for (int i = 1; i < h0.numHeaders(); i++) {  // header 0 already done
+                // Update header pointers.
+                headers[i].updateStart(datastart);
+                datastart += headers[i].getRecordLength();
+
+                // copy contents into output buffer
+                index = headers[i].store(buffer, index);
+            }
+
+            // copy the chunks; skip the first header, with no data
+            for (int i = 1; i < h0.numHeaders(); i++) {
+                int start = headers[i].getRecordStart();
+                int count = headers[i].getRecordLength();  // stored one long
+
+                byte[] content = headers[i].getByteArray();
+                if (count != content.length) {
+                    log.error("header count {} != content length {}", count, content.length);
+                }
+                for (int j = 0; j < count; j++) {
+                    buffer[start + j] = content[j];
+                }
+            }
+
+            // write out the buffer
+            s.write(buffer);
+
+            // purge buffers
+            s.close();
         }
-
-        // write out the buffer
-        s.write(buffer);
-
-        // purge buffers
-        s.close();
-
     }
 
     /**
@@ -216,88 +204,85 @@ public class SpjFile {
         if (file == null) {
             throw new java.io.IOException("Null file during read"); // NOI18N
         }
-        InputStream s = new java.io.BufferedInputStream(new java.io.FileInputStream(file));
+        int n;
+        try (InputStream s = new java.io.BufferedInputStream(new java.io.FileInputStream(file))) {
 
-        // get first header record
-        h0 = new FirstHeader();
-        h0.load(s);
-        if (log.isDebugEnabled()) {
-            log.debug(h0.toString());
-        }
-        int n = h0.numHeaders();
-        headers = new Header[n];
-        headers[0] = h0;
-
-        for (int i = 1; i < n; i++) {  // header 0 already read
-            headers[i] = new Header();
-            headers[i].load(s);
+            // get first header record
+            h0 = new FirstHeader();
+            h0.load(s);
             if (log.isDebugEnabled()) {
-                log.debug("Header " + i + " " + headers[i].toString());
+                log.debug(h0.toString());
             }
-        }
+            n = h0.numHeaders();
+            headers = new Header[n];
+            headers[0] = h0;
 
-        // now read the rest of the file, loading bytes
-        // first, scan for things we can't handle
-        for (int i = 1; i < n; i++) {
-            if (log.isDebugEnabled()) {
-                log.debug("Header " + i + " length " + headers[i].getDataLength() + " type " + headers[i].getType()); // NOI18N
-            }
-            if (headers[i].getDataLength() > headers[i].getRecordLength()) {
-                log.error("header " + i + " has data length " + headers[i].getDataLength() // NOI18N
-                        + " greater than record length " + headers[i].getRecordLength()); // NOI18N
+            for (int i = 1; i < n; i++) {  // header 0 already read
+                headers[i] = new Header();
+                headers[i].load(s);
+                log.debug("Header {} {}", i, headers[i].toString());
             }
 
-            for (int j = 1; j < i; j++) {
-                if (headers[i].getHandle() == headers[j].getHandle()
-                        && headers[i].getType() == 1
-                        && headers[j].getType() == 1) {
-                    log.error("Duplicate handle number in records " + i + "(" + headers[i].getHandle() + ") and "
-                            + j + "(" + headers[j].getHandle() + ")");
+            // now read the rest of the file, loading bytes
+            // first, scan for things we can't handle
+            for (int i = 1; i < n; i++) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Header {}  length {} type {}", i, headers[i].getDataLength(), headers[i].getType()); // NOI18N
+                }
+                if (headers[i].getDataLength() > headers[i].getRecordLength()) {
+                    log.error("header {} has data length {} greater than record length {}",
+                            i, headers[i].getDataLength(), headers[i].getRecordLength()); // NOI18N
+                }
+
+                for (int j = 1; j < i; j++) {
+                    if (headers[i].getHandle() == headers[j].getHandle()
+                            && headers[i].getType() == 1
+                            && headers[j].getType() == 1) {
+                        log.error("Duplicate handle number in records " + i + "(" + headers[i].getHandle() + ") and "
+                                + j + "(" + headers[j].getHandle() + ")");
+                    }
+                }
+                if (headers[i].getType() > 6) {
+                    log.error("Type field unexpected value: {}", headers[i].getType());
+                }
+                if (headers[i].getType() == 0) {
+                    log.error("Type field unexpected value: {}", headers[i].getType());
+                }
+                if (headers[i].getType() < -1) {
+                    log.error("Type field unexpected value: {}", headers[i].getType());
                 }
             }
-            if (headers[i].getType() > 6) {
-                log.error("Type field unexpected value: " + headers[i].getType());
-            }
-            if (headers[i].getType() == 0) {
-                log.error("Type field unexpected value: " + headers[i].getType());
-            }
-            if (headers[i].getType() < -1) {
-                log.error("Type field unexpected value: " + headers[i].getType());
-            }
-        }
 
-        // find end of last part
-        int length = 0;
-        for (int i = 1; i < n; i++) {
-            if (length < headers[i].getRecordStart() + headers[i].getRecordLength()) {
-                length = headers[i].getRecordStart() + headers[i].getRecordLength();
+            // find end of last part
+            int length = 0;
+            for (int i = 1; i < n; i++) {
+                if (length < headers[i].getRecordStart() + headers[i].getRecordLength()) {
+                    length = headers[i].getRecordStart() + headers[i].getRecordLength();
+                }
             }
-        }
 
-        if (log.isDebugEnabled()) {
-            log.debug("Last byte at " + length);
+            log.debug("Last byte at {}", length);
+            s.close();
         }
-
+        
         // inefficient way to read, hecause of all the skips (instead
         // of seeks)  But it handles non-consecutive and overlapping definitions.
         for (int i = 1; i < n; i++) {
-            s.close();
-            s = new java.io.BufferedInputStream(new java.io.FileInputStream(file));
-            long count = s.skip(headers[i].getRecordStart());
-            if (count != headers[i].getRecordStart()) {
-                log.warn("Only skipped {} characters, should have skipped {}", count, headers[i].getRecordStart());
-            }
-            byte[] array = new byte[headers[i].getRecordLength()];
-            int read = s.read(array);
-            if (read != headers[i].getRecordLength()) {
-                log.error("header " + i + " read " + read + ", expected " + headers[i].getRecordLength());
-            }
+            try (InputStream s = new java.io.BufferedInputStream(new java.io.FileInputStream(file))) {
+                long count = s.skip(headers[i].getRecordStart());
+                if (count != headers[i].getRecordStart()) {
+                    log.warn("Only skipped {} characters, should have skipped {}", count, headers[i].getRecordStart());
+                }
+                byte[] array = new byte[headers[i].getRecordLength()];
+                int read = s.read(array);
+                if (read != headers[i].getRecordLength()) {
+                    log.error("header {} read {}, expected {}", i, read, headers[i].getRecordLength());
+                }
 
-            headers[i].setByteArray(array);
+                headers[i].setByteArray(array);
+                s.close();
+            }
         }
-
-        s.close();
-
     }
 
     /**
@@ -327,7 +312,7 @@ public class SpjFile {
     }
 
     /**
-     * Write the content from a specific header as a new "subfile"
+     * Write the content from a specific header as a new "subfile".
      *
      * @param i    index of the specific header
      * @param name filename
@@ -350,7 +335,7 @@ public class SpjFile {
     Header[] headers;
 
     /**
-     * Class representing a header record
+     * Class representing a header record.
      */
     public class Header {
 
@@ -431,7 +416,7 @@ public class SpjFile {
 
         /**
          * This method, in addition to returning the needed record size, will
-         * also pull a SdfBuffer back into the record if one exists
+         * also pull a SdfBuffer back into the record if one exists.
          */
         public int getRecordLength() {
             if (sdfBuffer != null) {
@@ -454,7 +439,7 @@ public class SpjFile {
 
         public void setName(String name) {
             if (name.length() > 72) {
-                log.error("new filename too long: " + filename.length());
+                log.error("new filename too long: {}", filename.length());
             }
             filename = name;
         }
@@ -462,7 +447,7 @@ public class SpjFile {
         byte[] bytes;
 
         /**
-         * Copy new data into the local byte array
+         * Copy new data into the local byte array.
          */
         private void setByteArray(byte[] a) {
             bytes = new byte[a.length];
@@ -477,7 +462,7 @@ public class SpjFile {
 
         /**
          * Get as a SDF buffer. This buffer then becomes associated, and a later
-         * write will use the buffer's contents
+         * write will use the buffer's contents.
          */
         public SdfBuffer getSdfBuffer() {
             sdfBuffer = new SdfBuffer(getByteArray());
@@ -487,7 +472,7 @@ public class SpjFile {
         SdfBuffer sdfBuffer = null;
 
         /**
-         * Data record associated with this header is being being repositioned
+         * Data record associated with this header is being being repositioned.
          */
         void updateStart(int newRecordStart) {
             //int oldRecordStart = getRecordStart();
@@ -505,7 +490,7 @@ public class SpjFile {
          * @param length data length in bytes (not record length)
          */
         public void setContent(byte[] array, int start, int length) {
-            log.debug("setContent length = 0x" + Integer.toHexString(length));
+            log.debug("setContent length = 0x{}", Integer.toHexString(length));
             setByteArray(array);
             setDataStart(getRecordStart() + start);
             setDataLength(length);
@@ -532,7 +517,7 @@ public class SpjFile {
             // name is written in zero-filled array
             byte[] name = filename.getBytes();
             if (name.length > 72) {
-                log.error("Name too long: " + name.length);
+                log.error("Name too long: {}", name.length);
             }
             for (int i = 0; i < name.length; i++) {
                 buffer[index + i] = name[i];
@@ -561,7 +546,7 @@ public class SpjFile {
             // name is written in zero-filled array
             byte[] name = filename.getBytes();
             if (name.length > 72) {
-                log.error("Name too long: " + name.length);
+                log.error("Name too long: {}", name.length);
             }
             byte[] buffer = new byte[72];
             for (int i = 0; i < 72; i++) {
@@ -632,7 +617,7 @@ public class SpjFile {
         }
 
         /**
-         * Read a 4-byte integer, handling endian-ness of SPJ files
+         * Read a 4-byte integer, handling endian-ness of SPJ files.
          */
         private int readInt4(InputStream s) throws java.io.IOException {
             int i1 = s.read() & 0xFF;
@@ -643,7 +628,7 @@ public class SpjFile {
         }
 
         /**
-         * Write a 4-byte integer, handling endian-ness of SPJ files
+         * Write a 4-byte integer, handling endian-ness of SPJ files.
          */
         private void writeInt4(OutputStream s, int i) throws java.io.IOException {
             byte i1 = (byte) (i & 0xFF);
@@ -659,7 +644,7 @@ public class SpjFile {
 
         /**
          * Copy a 4-byte integer to byte buffer, handling little-endian-ness of
-         * SPJ files
+         * SPJ files.
          */
         private int copyInt4(byte[] buffer, int index, int i) {
             buffer[index++] = (byte) (i & 0xFF);
@@ -684,8 +669,8 @@ public class SpjFile {
                 return names[type];
             }
             // unexpected answer
-            log.warn("Unexpected type = " + type); // NOI18N
-            return "Uknown " + type; // NOI18N
+            log.warn("Unexpected type = {}", type); // NOI18N
+            return "Unknown " + type; // NOI18N
         }
     }
 
@@ -716,6 +701,6 @@ public class SpjFile {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpjFile.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SpjFile.class);
 
 }

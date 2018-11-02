@@ -21,6 +21,9 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStockSetFrame;
+import jmri.jmrit.operations.rollingstock.cars.tools.CarAttributeEditFrame;
+import jmri.jmrit.operations.rollingstock.cars.tools.CarLoadEditFrame;
+import jmri.jmrit.operations.rollingstock.cars.tools.EnableDestinationAction;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import org.slf4j.Logger;
@@ -79,6 +82,11 @@ public class CarSetFrame extends RollingStockSetFrame<Car> implements java.beans
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_CarsSet", true); // NOI18N
+        
+        editLoadButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
+                new Object[]{Bundle.getMessage("load")})); // initial caps for some languages i.e. German
+        editKernelButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
+                new Object[]{Bundle.getMessage("Kernel").toLowerCase()}));
 
         // optional panel return when empty, load, and kernel
         paneOptional.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutOptional")));
@@ -157,6 +165,11 @@ public class CarSetFrame extends RollingStockSetFrame<Car> implements java.beans
         load(car);
         updateLoadComboBox();
         updateKernelComboBox();
+    }
+    
+    @Override
+    protected ResourceBundle getRb() {
+        return rb;
     }
 
     @Override
@@ -289,7 +302,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> implements java.beans
                     finalDestTrack = (Track) finalDestTrackBox.getSelectedItem();
                 }
                 if (finalDestTrack != null && car.getFinalDestinationTrack() != finalDestTrack
-                        && finalDestTrack.getTrackType().equals(Track.STAGING)) {
+                        && finalDestTrack.isStaging()) {
                     log.debug("Destination track ({}) is staging", finalDestTrack.getName());
                     JOptionPane.showMessageDialog(this, Bundle.getMessage("rsDoNotSelectStaging"), Bundle
                             .getMessage("rsCanNotFinal"), JOptionPane.ERROR_MESSAGE);
@@ -344,7 +357,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> implements java.beans
                 if (trackReturnWhenEmptyBox.getSelectedItem() != null) {
                     Track trackRWE = (Track) trackReturnWhenEmptyBox.getSelectedItem();
                     // warn user if they selected a staging track
-                    if (trackRWE != null && trackRWE.getTrackType().equals(Track.STAGING)) {
+                    if (trackRWE != null && trackRWE.isStaging()) {
                         log.debug("Return when empty track ({}) is staging", trackRWE.getName());
                         JOptionPane.showMessageDialog(this, Bundle.getMessage("rsDoNotSelectStaging"), Bundle
                                 .getMessage("rsCanNotRWE"), JOptionPane.ERROR_MESSAGE);

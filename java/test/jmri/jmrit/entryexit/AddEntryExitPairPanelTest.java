@@ -57,13 +57,17 @@ public class AddEntryExitPairPanelTest {
         tbl.clickOnCell(3, 5);
         Assert.assertEquals("After delete row count", 6, tbl.getModel().getRowCount());  // NOI18N
 
-        // Open the Options window
-        String[] optionPath = {"Options", "Options"};  // NOI18N
-        JMenuBarOperator nxMenu = new JMenuBarOperator(nxFrame);
+        // Open the Options window - we've commented out the Jemmy approach
+        //  String[] optionPath = {"Options", "Options"};  // NOI18N
+        //  JMenuBarOperator nxMenu = new JMenuBarOperator(nxFrame);
+        //  nxMenu.getTimeouts().setTimeout("JMenuOperator.WaitBeforePopupTimeout", 30L);
+        //  nxMenu.pushMenu(optionPath);
+        // and are doing it directly; see Issue #6081
+        java.util.List<AddEntryExitPairFrame>  frames = jmri.util.JmriJFrame.getFrameList(AddEntryExitPairFrame.class);
+        Assert.assertEquals("Should be only one frame", 1, frames.size());
+        frames.get(0).nxPanel.optionWindow(null);
         
-        nxMenu.getTimeouts().setTimeout("JMenuOperator.WaitBeforePopupTimeout", 30L);
-        nxMenu.pushMenu(optionPath);
-
+        
         // Close the options window
         JFrameOperator optionFrame = new JFrameOperator(Bundle.getMessage("OptionsTitle"));  // NOI18N
         Assert.assertNotNull("optionFrame", optionFrame);  // NOI18N
@@ -77,14 +81,16 @@ public class AddEntryExitPairPanelTest {
     public static void setUp() throws Exception {
         JUnitUtil.setUp();
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        tools = new EntryExitTestTools();
-        panels = tools.getPanels();
+        jmri.util.JUnitUtil.resetProfileManager();
+
+        panels = EntryExitTestTools.getPanels();
         Assert.assertEquals("Get LE panels", 2, panels.size());  // NOI18N
     }
 
     @AfterClass
     public static void tearDown() {
         panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
+        panels = null;
         JUnitUtil.tearDown();
     }
 

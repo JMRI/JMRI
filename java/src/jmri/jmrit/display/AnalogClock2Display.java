@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Date;
 import javax.swing.ButtonGroup;
-import javax.swing.JColorChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -24,6 +23,7 @@ import jmri.InstanceManager;
 import jmri.Timebase;
 import jmri.TimebaseRateException;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.util.swing.JmriColorChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -190,7 +190,7 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
         popup.addSeparator();
         JMenuItem colorMenuItem = new JMenuItem(Bundle.getMessage("Color"));
         colorMenuItem.addActionListener((ActionEvent event) -> {
-            Color desiredColor = JColorChooser.showDialog(this,
+            Color desiredColor = JmriColorChooser.showDialog(this,
                                  Bundle.getMessage("DefaultTextColor", ""),
                                  color);
             if (desiredColor!=null && !color.equals(desiredColor)) {
@@ -262,6 +262,7 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
     public void setColor(Color color) {
         this.color = color;
         update();
+        JmriColorChooser.addRecentColor(color);
     }
 
     @Override

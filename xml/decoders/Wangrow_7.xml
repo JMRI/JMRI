@@ -79,10 +79,7 @@
         <decVal/>
         <label>F2, F3 blink control</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable item="Reverse Trim" CV="95" default="84">
         <decVal/>
         <label>Reverse Trim</label>

@@ -3,7 +3,7 @@ package jmri;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
+import org.junit.*;
 
 /**
  *
@@ -38,6 +38,16 @@ public class VersionTest {
         assertTrue(Version.compareCanonicalVersions("1.2.3-P", "1.2.3") == 0);
         assertTrue(Version.compareCanonicalVersions("213.1.1", "213.1.1") == 0);
         assertTrue(Version.compareCanonicalVersions("213.1.1", "213.1.10") < 0);
+    }
+
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

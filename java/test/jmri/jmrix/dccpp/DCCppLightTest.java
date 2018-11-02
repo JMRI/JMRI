@@ -38,7 +38,7 @@ public class DCCppLightTest extends jmri.implementation.AbstractLightTestBase {
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         // prepare an interface
         xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
         DCCppLightManager xlm = new DCCppLightManager(xnis, "DCCpp");

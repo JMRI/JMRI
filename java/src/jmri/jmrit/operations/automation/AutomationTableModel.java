@@ -76,7 +76,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
         }
     }
 
-    List<AutomationItem> _list = new ArrayList<AutomationItem>();
+    List<AutomationItem> _list = new ArrayList<>();
 
     protected void initTable(AutomationTableFrame frame, JTable table, Automation automation) {
         _automation = automation;
@@ -361,7 +361,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     private JComboBox<Action> getActionComboBox(AutomationItem item) {
-        JComboBox<Action> cb = item.getActionComboBox();
+        JComboBox<Action> cb = AutomationItem.getActionComboBox();
         //      cb.setSelectedItem(item.getAction()); TODO understand why this didn't work, class?
         for (int index = 0; index < cb.getItemCount(); index++) {
             // select the action based on it's action code
@@ -382,7 +382,7 @@ public class AutomationTableModel extends javax.swing.table.AbstractTableModel i
     }
 
     private JComboBox<RouteLocation> getRouteLocationComboBox(AutomationItem item) {
-        JComboBox<RouteLocation> cb = new JComboBox<RouteLocation>();
+        JComboBox<RouteLocation> cb = new JComboBox<>();
         if (item.getTrain() != null && item.getTrain().getRoute() != null) {
             cb = item.getTrain().getRoute().getComboBox();
             cb.setSelectedItem(item.getRouteLocation());

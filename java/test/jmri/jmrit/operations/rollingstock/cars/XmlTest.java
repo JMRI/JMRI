@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.util.List;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.jdom2.JDOMException;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations RollingStock Cars XML class Last manually
@@ -24,6 +25,7 @@ public class XmlTest extends OperationsTestCase {
      * @throws JDOMException exception
      * @throws IOException exception
      */
+    @Test
     public void testXMLCreate() throws JDOMException, IOException {
 
         // confirm that file name has been modified for testing
@@ -37,9 +39,9 @@ public class XmlTest extends OperationsTestCase {
         List<Car> tempcarList = manager.getByIdList();
 
         Assert.assertEquals("Starting Number of Cars", 0, tempcarList.size());
-        Car c1 = manager.newCar("CP", "Test Number 1");
-        Car c2 = manager.newCar("ACL", "Test Number 2");
-        Car c3 = manager.newCar("CP", "Test Number 3");
+        Car c1 = manager.newRS("CP", "Test Number 1");
+        Car c2 = manager.newRS("ACL", "Test Number 2");
+        Car c3 = manager.newRS("CP", "Test Number 3");
 
         // modify car attributes
         c1.setBuilt("5619");
@@ -106,9 +108,9 @@ public class XmlTest extends OperationsTestCase {
 
         // Add some more cars and write file again
         // so we can test the backup facility
-        Car c4 = manager.newCar("PC", "Test Number 4");
-        Car c5 = manager.newCar("BM", "Test Number 5");
-        Car c6 = manager.newCar("SP", "Test Number 6");
+        Car c4 = manager.newRS("PC", "Test Number 4");
+        Car c5 = manager.newRS("BM", "Test Number 5");
+        Car c6 = manager.newRS("SP", "Test Number 6");
 
         Assert.assertNotNull("car c4 exists", c4);
         Assert.assertNotNull("car c5 exists", c5);
@@ -383,28 +385,14 @@ public class XmlTest extends OperationsTestCase {
     // TODO: Add test to create xml file
     // TODO: Add test to read xml file
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
     }
 
-    public XmlTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XmlTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XmlTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         super.tearDown();
     }
 }

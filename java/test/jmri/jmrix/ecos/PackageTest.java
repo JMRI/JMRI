@@ -27,6 +27,7 @@ import org.junit.runners.Suite;
         EcosPowerManagerTest.class,
         EcosProgrammerManagerTest.class,
         EcosProgrammerTest.class,
+        EcosOpsModeProgrammerTest.class,
         EcosReporterTest.class,
         EcosSensorTest.class,
         EcosTurnoutTest.class,

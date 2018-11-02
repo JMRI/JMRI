@@ -18,15 +18,14 @@ import java.util.Enumeration;
  * Insertion order is preserved when retrieving keys.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2009
  */
@@ -56,7 +55,7 @@ public interface SignalSystem extends NamedBean {
      *
      * @return all aspects or an empty list
      */
-    public Enumeration<String> getAspects();
+    public Enumeration<String> getAspects();  // eventually, change to return Set<>
 
     /**
      * Get all keys currently defined on any aspect.
@@ -67,7 +66,7 @@ public interface SignalSystem extends NamedBean {
      *
      * @return all keys or an empty list
      */
-    public Enumeration<String> getKeys();
+    public Enumeration<String> getKeys(); // eventually, change to return Set<>
 
     /**
      * Is this aspect known?
@@ -80,5 +79,13 @@ public interface SignalSystem extends NamedBean {
     public String getAspect(Object obj, String key);
 
     public float getMaximumLineSpeed();
+    
+    /**
+     * Provide a multi-line summary of the signal system content,
+     * typically for printing. Not intended for further parsing, 
+     * i.e. for persistance, as format likely to differ from type 
+     * to type, and to change often.
+     */
+    public String summary();
 
 }

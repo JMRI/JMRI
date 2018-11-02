@@ -9,6 +9,9 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -34,6 +37,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import jmri.Audio;
 import jmri.Conditional;
+import jmri.Conditional.Operator;
 import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.InstanceManager;
@@ -124,10 +128,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
     // ------------ Select Logix/Conditional Variables ------------
     JPanel _selectLogixPanel = null;
     JPanel _selectConditionalPanel = null;
-    JComboBox<String> _selectLogixBox = new JComboBox<String>();
-    JComboBox<String> _selectConditionalBox = new JComboBox<String>();
-    ArrayList<String> _selectLogixList = new ArrayList<String>();
-    ArrayList<String> _selectConditionalList = new ArrayList<String>();
+    JComboBox<String> _selectLogixBox = new JComboBox<>();
+    JComboBox<String> _selectConditionalBox = new JComboBox<>();
+    TreeMap<String, String> _selectLogixMap = new TreeMap<>();
+    ArrayList<String> _selectConditionalList = new ArrayList<>();
 
     // ------------ Edit Conditional Variables ------------
     boolean _inEditConditionalMode = false;
@@ -186,14 +190,14 @@ public class ConditionalListEdit extends ConditionalEditBase {
     JPanel _textPanel;
 
     // ------------ Current Variable Information ------------
-    ArrayList<ConditionalVariable> _variableList;
+    List<ConditionalVariable> _variableList;
     ConditionalVariable _curVariable;
     int _curVariableRowNumber;
     int _curVariableItem = 0;
     TreeSet<String> _oldTargetNames = new TreeSet<String>();
 
     // ------------ Current Action Information ------------
-    ArrayList<ConditionalAction> _actionList;
+    List<ConditionalAction> _actionList;
     ConditionalAction _curAction;
     int _curActionRowNumber;
     int _curActionItem = 0;
@@ -1050,9 +1054,9 @@ public class ConditionalListEdit extends ConditionalEditBase {
         // default of operator for postion 0 (row 1) is Conditional.OPERATOR_NONE
         if (size > 1) {
             if (_logicType == Conditional.ALL_OR) {
-                variable.setOpern(Conditional.OPERATOR_OR);
+                variable.setOpern(Conditional.Operator.OR);
             } else {
-                variable.setOpern(Conditional.OPERATOR_AND);
+                variable.setOpern(Conditional.Operator.AND);
             }
         }
         size--;
@@ -1110,13 +1114,13 @@ public class ConditionalListEdit extends ConditionalEditBase {
         }
 
         // Adjust operator type
-        int oper;
+        Operator oper;
         if (_nextInOrder == 0) {
-            oper = Conditional.OPERATOR_NONE;
+            oper = Conditional.Operator.NONE;
         } else {
             oper = (_logicType == Conditional.ALL_AND)
-                    ? Conditional.OPERATOR_AND
-                    : Conditional.OPERATOR_OR;
+                    ? Conditional.Operator.AND
+                    : Conditional.Operator.OR;
         }
 
         temp.setOpern(oper);
@@ -1155,15 +1159,15 @@ public class ConditionalListEdit extends ConditionalEditBase {
      */
     void variableOperatorChanged(int row, String oper) {
         ConditionalVariable variable = _variableList.get(row);
-        int oldOper = variable.getOpern();
+        Operator oldOper = variable.getOpern();
         if (row > 0) {
             if (oper.equals(Bundle.getMessage("LogicOR"))) {  // NOI18N
-                variable.setOpern(Conditional.OPERATOR_OR);
+                variable.setOpern(Conditional.Operator.OR);
             } else {
-                variable.setOpern(Conditional.OPERATOR_AND);
+                variable.setOpern(Conditional.Operator.AND);
             }
         } else {
-            variable.setOpern(Conditional.OPERATOR_NONE);
+            variable.setOpern(Conditional.Operator.NONE);
         }
         if (variable.getOpern() != oldOper) {
             makeAntecedent();
@@ -1401,9 +1405,9 @@ public class ConditionalListEdit extends ConditionalEditBase {
             _antecedentPanel.setVisible(true);
             _reorderVarButton.setEnabled(false);
         } else {
-            int oper = (type == Conditional.ALL_AND)
-                    ? Conditional.OPERATOR_AND
-                    : Conditional.OPERATOR_OR;
+            Operator oper = (type == Conditional.ALL_AND)
+                    ? Conditional.Operator.AND
+                    : Conditional.Operator.OR;
             for (int i = 1; i < _variableList.size(); i++) {
                 _variableList.get(i).setOpern(oper);
             }
@@ -1795,9 +1799,9 @@ public class ConditionalListEdit extends ConditionalEditBase {
                         _curVariable = new ConditionalVariable();
                         if (_curVariableRowNumber > 0) {
                             if (_logicType == Conditional.ALL_OR) {
-                                _curVariable.setOpern(Conditional.OPERATOR_OR);
+                                _curVariable.setOpern(Conditional.Operator.OR);
                             } else {
-                                _curVariable.setOpern(Conditional.OPERATOR_AND);
+                                _curVariable.setOpern(Conditional.Operator.AND);
                             }
                         }
                         _variableList.set(_curVariableRowNumber, _curVariable);
@@ -2294,30 +2298,36 @@ public class ConditionalListEdit extends ConditionalEditBase {
         }
 
         _selectLogixBox.removeAllItems();
-        _selectLogixList.clear();
+        _selectLogixMap.clear();
 
+        // Create Logix list sorted by a custom display name
         String itemKey = "";
-        for (String xName : _logixManager.getSystemNameList()) {
-            if (xName.equals("SYS")) {  // NOI18N
+        for (Logix lgx : _logixManager.getNamedBeanSet()) {
+            String sName = lgx.getSystemName();
+            if (sName.equals("SYS")) {  // NOI18N
                 // Cannot refer to sensor name groups
                 continue;
             }
-            Logix x = _logixManager.getLogix(xName);
-            String uName = x.getUserName();
+            String uName = lgx.getUserName();
             String itemName = "";
             if (uName == null || uName.length() < 1) {
-                itemName = xName;
+                itemName = sName;
             } else {
-                itemName = uName + " ( " + xName + " )";
+                itemName = uName + " ( " + sName + " )";
             }
-            _selectLogixBox.addItem(itemName);
-            _selectLogixList.add(xName);
-            if (lgxName.equals(xName)) {
+            _selectLogixMap.put(itemName, sName);
+            if (lgxName.equals(sName)) {
                 itemKey = itemName;
             }
         }
-        _selectLogixBox.setSelectedItem(itemKey);
+
+        // Load the combo box
+        for (String item : _selectLogixMap.keySet()) {
+            _selectLogixBox.addItem(item);
+        }
+
         JComboBoxUtil.setupComboBoxMaxRows(_selectLogixBox);
+        _selectLogixBox.setSelectedItem(itemKey);
         loadSelectConditionalBox(lgxName);
     }
 
@@ -2367,8 +2377,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 itemKey = itemName;
             }
         }
-        _selectConditionalBox.setSelectedItem(itemKey);
         JComboBoxUtil.setupComboBoxMaxRows(_selectConditionalBox);
+        _selectConditionalBox.setSelectedItem(itemKey);
     }
 
     // ------------ Variable update processes ------------
@@ -2637,10 +2647,12 @@ public class ConditionalListEdit extends ConditionalEditBase {
     transient ActionListener selectLogixBoxListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            int lgxIndex = _selectLogixBox.getSelectedIndex();
-            if (lgxIndex >= 0 && lgxIndex < _selectLogixList.size()) {
-                String lgxName = _selectLogixList.get(lgxIndex);
-                loadSelectConditionalBox(lgxName);
+            String lgxItem = (String) _selectLogixBox.getSelectedItem();
+            if (lgxItem != null) {
+                String lgxName = _selectLogixMap.get(lgxItem);
+                if (lgxName != null) {
+                    loadSelectConditionalBox(lgxName);
+                }
             }
         }
     };
@@ -4282,7 +4294,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     if (refList != null) {
                         for (String ref : refList) {
                             Conditional cRef = _conditionalManager.getBySystemName(ref);
-                            ArrayList<ConditionalVariable> varList = cRef.getCopyOfStateVariables();
+                            List<ConditionalVariable> varList = cRef.getCopyOfStateVariables();
                             for (ConditionalVariable var : varList) {
                                 // Find the affected conditional variable
                                 if (var.getName().equals(sName)) {

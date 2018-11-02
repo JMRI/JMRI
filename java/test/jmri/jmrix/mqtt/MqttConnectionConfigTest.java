@@ -12,21 +12,18 @@ import org.junit.Test;
  * @author Bob Jacobsen Copyright (C) 2018
  * @since 4.11.5
  */
-public class MqttConnectionConfigTest {
-
-    @Test
-    public void ConstructorTest() {
-        Assert.assertNotNull("constructor", new MqttConnectionConfig());
-    }
+public class MqttConnectionConfigTest extends jmri.jmrix.AbstractNetworkConnectionConfigTestBase {
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        cc = new MqttConnectionConfig();
     }
 
     @After
     public void tearDown() {
+        cc=null;
         JUnitUtil.tearDown();
     }
 }

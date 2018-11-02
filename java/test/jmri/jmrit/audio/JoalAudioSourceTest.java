@@ -21,6 +21,13 @@ public class JoalAudioSourceTest {
         Assert.assertNotNull("exists", l);
     }
 
+    @Test(expected = java.lang.NullPointerException.class)
+    public void testCtorFail() {
+        Assume.assumeTrue(null == JoalAudioFactory.getAL());
+        JoalAudioSource l = new JoalAudioSource("test");
+        Assert.assertNotNull("exists", l);
+    }
+
     @Test
     public void testC2Stringtor() {
         Assume.assumeNotNull(JoalAudioFactory.getAL());
@@ -37,5 +44,8 @@ public class JoalAudioSourceTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
+        JUnitUtil.tearDown(); 
+    }
 }

@@ -19,6 +19,8 @@ public class TrainsScriptFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TrainsScriptFrame t = new TrainsScriptFrame();
         Assert.assertNotNull("exists",t);
+        t.initComponents();
+        Assert.assertTrue(t.isShowing());
         JUnitUtil.dispose(t);
     }
 
@@ -26,6 +28,7 @@ public class TrainsScriptFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

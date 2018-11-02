@@ -148,7 +148,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
         }
         if (ae.getSource() == applyButton) {
             if (value != JOptionPane.YES_OPTION) {
-                value = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
+                value = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
                         .getMessage("UpdateTrainIconRoute"), new Object[]{_route.getName()}), Bundle
                                 .getMessage("DoYouWantThisRoute"),
                         JOptionPane.YES_NO_OPTION);
@@ -229,9 +229,9 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
         updateRouteLocation(NONE);
     }
 
-    private int FORWARD = 1;
-    private int BACK = -1;
-    private int NONE = 0;
+    private final int FORWARD = 1;
+    private final int BACK = -1;
+    private final int NONE = 0;
 
     private void updateRouteLocation(int direction) {
         if (direction == FORWARD) {
@@ -259,6 +259,10 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
             loadSpinners(_rl);
             routeLocationName.setText(_rl.getName());
         }
+        // disable or enable previous and next buttons
+        previousButton.setEnabled(_routeIndex != 0);
+        nextButton.setEnabled(_routeIndex != _routeList.size() - 1);
+        
         setTrainIconNameAndColor();
     }
 

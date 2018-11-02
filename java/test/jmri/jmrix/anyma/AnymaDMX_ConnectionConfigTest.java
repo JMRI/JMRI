@@ -12,21 +12,18 @@ import org.junit.Test;
  * @author George Warner Copyright (C) 2017
  * @since 4.9.6
  */
-public class AnymaDMX_ConnectionConfigTest {
-
-    @Test
-    public void ConstructorTest() {
-        Assert.assertNotNull("ConnectionConfig constructor", new AnymaDMX_ConnectionConfig());
-    }
+public class AnymaDMX_ConnectionConfigTest extends jmri.jmrix.AbstractUsbConnectionConfigTestBase {
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        cc = new AnymaDMX_ConnectionConfig();
     }
 
     @After
     public void tearDown() {
+        cc=null;
         JUnitUtil.tearDown();
     }
 }

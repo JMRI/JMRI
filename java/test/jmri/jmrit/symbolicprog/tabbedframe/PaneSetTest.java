@@ -31,12 +31,15 @@ public class PaneSetTest {
         };
         PaneSet t = new PaneSet(pc,re,p);
         Assert.assertNotNull("exists",t);
+        new org.netbeans.jemmy.QueueTool().waitEmpty(10);
+        pc.dispose();
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDebugProgrammerManager();
     }
 

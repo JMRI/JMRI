@@ -1,5 +1,7 @@
 package jmri.jmrix.dccpp;
 
+import java.util.concurrent.Delayed;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender Copyright (C) 2003-2010
  * @author Mark Underwood Copyright (C) 2015
+ * @author Costin Grigoras Copyright (C) 2018
  *
  * Based on XNetMessage by Bob Jacobsen and Paul Bender
  */
@@ -36,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * the higher level code from needing to know what order/format the actual message is
  * in.
  */
-public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
+public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delayed {
 
     static private int _nRetries = 5;
 
@@ -69,6 +72,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         }
         _nDataChars = len;
         myRegex = "";
+	myMessage = new StringBuilder(len);
     }
 
     /**
@@ -2456,6 +2460,98 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
                    DCCppConstants.LIST_REGISTER_CONTENTS_REGEX));
     }
 
+    /**
+     * This implementation of equals is targeted to the background function refreshing in SerialDCCppPacketizer.
+     * To keep only one function group in the refresh queue the logic is as follows. Two messages are equal if they are:
+     * <ul>
+     * <li>actually identical, or</li>
+     * <li>a function call to the same address and same function group</li>
+     * </ul>
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (obj == null) return false;
+        if (! (obj instanceof DCCppMessage)) return false;
+        
+        final DCCppMessage other = (DCCppMessage) obj;
+
+        final String myCmd = this.toString();
+        final String otherCmd = other.toString();
+
+        if (myCmd.equals(otherCmd))
+            return true;
+
+        if (!isFunctionMessage() || !other.isFunctionMessage())
+            return false;
+
+        return getFuncBaseByte1(this.getFuncByte1Int()) == getFuncBaseByte1(other.getFuncByte1Int());
+    }
+
+    public int hashCode() {
+        return myMessage.hashCode();
+    }
+    
+    /**
+     * Get the function group from the first byte of the function setting call.
+     * 
+     * @param byte1 first byte (mixed in with function bits for groups 1 to 3, or standalone value for groups 4 and 5)
+     * @return the base group
+     */
+    private static final int getFuncBaseByte1(final int byte1) {
+        if (byte1 == DCCppConstants.FUNCTION_GROUP4_BYTE1 || byte1 == DCCppConstants.FUNCTION_GROUP5_BYTE1)
+            return byte1;
+
+        if (byte1 < 160)
+            return 128;
+
+        if (byte1 < 176)
+            return 160;
+
+        return 176;
+    }
+
+    /**
+     * When is this message supposed to be resent.
+     * 
+     * @see SerialDCCppPacketizer
+     */
+    private long expireTime;
+
+    /**
+     * Before adding the message to the delay queue call this method to set when the message should be repeated.
+     * The only time guarantee is that it will be repeated after <u>at least</u> this much time, but it can be
+     * significantly longer until it is repeated, function of the message queue length.
+     * 
+     * @param millis milliseconds in the future
+     */
+    public void delayFor(final long millis) {
+        expireTime = System.currentTimeMillis() + millis;
+    }
+
+    /**
+     * Comparing two queued message for refreshing the function calls, based on their expected execution time.
+     */
+    @Override
+    public int compareTo(final Delayed o) {
+        final long diff = this.expireTime - ((DCCppMessage) o).expireTime;
+
+        if (diff < 0)
+            return -1;
+
+        if (diff > 0)
+            return 1;
+
+        return 0;
+    }
+
+    /**
+     * From the {@link Delayed} interface, how long this message still has until it should be executed.
+     */
+    @Override
+    public long getDelay(final TimeUnit unit) {
+        return unit.convert(expireTime - System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+    }
+    
     // initialize logging    
     private final static Logger log = LoggerFactory.getLogger(DCCppMessage.class);
 

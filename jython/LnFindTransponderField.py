@@ -9,6 +9,9 @@ import jmri
 import java
 import javax.swing
 
+# set the intended LocoNet connection by its index; when you have just 1 connection index = 0
+connectionIndex = 0
+
 # create a frame to hold the button, set up for nice layout
 f = javax.swing.JFrame("Find Transponder")       # argument is the frames title
 f.contentPane.setLayout(javax.swing.BoxLayout(f.contentPane, javax.swing.BoxLayout.Y_AXIS))
@@ -22,7 +25,7 @@ address = javax.swing.JTextField(5)
 temppanel1 = javax.swing.JPanel()
 temppanel1.add(javax.swing.JLabel("Address"))
 temppanel1.add(address)
-
+        
 # have that text field send the message when entered
 def whenAddressChanged(event) : 
     addr = (int)(event.source.getText())
@@ -41,7 +44,7 @@ def whenAddressChanged(event) :
     m.setElement(5,0x00)
     m.setElement(6,0x00)
     m.setElement(7,0x00)
-    jmri.jmrix.loconet.LnTrafficController.instance().sendLocoNetMessage(m)
+    jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get(connectionIndex).getLnTrafficController().sendLocoNetMessage(m)
     
     # now force sending of null packets to same DCC address
     c = jmri.InstanceManager.getDefault(jmri.CommandStation)

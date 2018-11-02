@@ -62,7 +62,6 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         memo = new OakTreeSystemConnectionMemo("O", "Oak Tree");
         SerialTrafficController t = new SerialTrafficController(memo) {
             SerialTrafficController test() {
-                setInstance();
                 return this;
             }
         }.test();

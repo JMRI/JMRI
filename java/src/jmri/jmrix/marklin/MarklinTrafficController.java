@@ -65,8 +65,9 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
      * CommandStation implementation, not yet supported.
      */
     @Override
-    public void sendPacket(byte[] packet, int count) {
+    public boolean sendPacket(byte[] packet, int count) {
 
+        return true;
     }
 
     /**
@@ -108,36 +109,6 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
     protected AbstractMRMessage enterNormalMode() {
         return MarklinMessage.getExitProgMode();
     }
-
-    /**
-     * static function returning the MarklinTrafficController instance to use.
-     *
-     * @return The registered MarklinTrafficController instance for general use,
-     *         if need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public MarklinTrafficController instance() {
-        return self;
-    }
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Override
-    @Deprecated
-    //This can be removed once multi-connection is complete
-    public void setInstance() {
-    }
-
-    /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    @SuppressFBWarnings(value = "MS_PKGPROTECT")
-    // SpotBugs wants this package protected, but we're removing it when multi-connection
-    // migration is complete
-    final static protected MarklinTrafficController self = null;
 
     @Override
     protected AbstractMRReply newReply() {

@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.11.5-SNAPSHOT</version>
+    <version>4.13.5-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -18,6 +18,7 @@
         dependency source) -->
         <cucumber.version>2.0.1</cucumber.version>
         <jetty.version>9.4.7.v20170914</jetty.version>
+        <jemmy.version>22-00c9f753cd0a</jemmy.version> <!-- this is a custom version, see lib/README.md -->
         <slf4j.version>1.7.25</slf4j.version>
         <jackson.version>2.8.11</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
@@ -29,7 +30,7 @@
         <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
         <ant.version>1.10.1</ant.version>
         <ant.jvm.args></ant.jvm.args>
-        <argLine>-Xmx1536m</argLine>
+        <argLine>-Xmx1536m -Duser.language=en -Duser.region=US</argLine>
         <surefire.version>2.20</surefire.version>
     </properties>
     <scm>
@@ -122,8 +123,8 @@
                     <plugin>
                         <groupId>com.github.spotbugs</groupId>
                         <artifactId>spotbugs-maven-plugin</artifactId>
-                        <version>3.1.1</version>
-                        <!-- configured to fail on High priority bugs during test phase -->
+                        <version>3.1.6</version>
+                        <!-- configured to fail on Medium priority bugs during test phase (needs to be done two places) -->
                         <executions>
                             <execution>
                                 <id>failing-on-high</id>
@@ -132,9 +133,9 @@
                                     <goal>check</goal>
                                 </goals>
                                 <configuration>
-                                    <excludeFilterFile>.spotbugs.xml</excludeFilterFile>
+                                    <excludeFilterFile>.spotbugs-check.xml</excludeFilterFile>
                                     <effort>Max</effort>
-                                    <threshold>High</threshold>
+                                    <threshold>Low</threshold>
                                     <maxHeap>1536</maxHeap>
                                     <timeout>1200000</timeout><!-- 20 minutes -->
                                 </configuration>
@@ -269,12 +270,12 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>3.1.1</version>
-                <!-- configured to fail on High priority bugs -->
+                <version>3.1.6</version>
+                <!-- configured to fail on medium priority bugs (needs to be done two places)-->
                 <configuration>
-                    <excludeFilterFile>.spotbugs.xml</excludeFilterFile>
+                    <excludeFilterFile>.spotbugs-check.xml</excludeFilterFile>
                     <effort>Max</effort>
-                    <threshold>High</threshold>
+                    <threshold>Low</threshold>
                     <maxHeap>1536</maxHeap>
                     <timeout>1200000</timeout><!-- 20 minutes -->
                 </configuration>
@@ -456,9 +457,9 @@
                     <bottom><![CDATA[<i>Copyright &copy; ${project.inceptionYear}&#x2013;{currentYear} JMRI Community.
                     <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
-                       <br>Site hosted by:
-                       <a href="http://sourceforge.net/projects/jmri">
-                       <img src="https://sourceforge.net/sflogo.php?type=13&group_id=26788" border="0" alt="JMRI Model Railroad Interface at SourceForge.net"/></a>
+                       <br>Site hosted by: <br/>
+                        <a href="http://www.tagadab.com/">
+                        <img src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab logo"/></a>
                 ]]>
                     </bottom>
                     <links>
@@ -479,7 +480,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.9</version>
+                <version>0.8.2</version>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
@@ -506,6 +507,23 @@
                                 <File>apps/tests/Log4JFixture.class</File>
                                 <File>jmri/jmrit/display/EditorFrameOperator.class</File>
                                 <File>jmri/util/web/BrowserFactory.class</File>
+                                <!-- pure interfaces and classes of constants -->
+                                <File>jmri/AddressedProgrammerManager.class</File>
+                                <File>jmri/PhysicalLocationReporter.class</File>
+                                <File>jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class</File>
+                                <File>jmri/jmris/srcp/parser/SRCPParserTreeConstants.class</File>
+                                <File>jmri/jmrit/audio/AudioSource.class</File>
+                                <File>jmri/jmrit/operations/locations/Xml.class</File>
+                                <File>jmri/jmrit/operations/rollingstock/cars/Xml.class</File>
+                                <File>jmri/jmrit/operations/rollingstock/engines/Xml.class</File>
+                                <File>jmri/jmrit/operations/trains/Xml.class</File>
+                                <File>jmri/jmrit/ussctc/Lock.class</File>
+                                <File>jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class</File>
+                                <File>jmri/server/json/roster/JsonRoster.class</File>
+                                <File>jmri/server/json/reporter/JsonReporter.class</File>
+                                <File>jmri/server/json/signalMast/JsonSignalMast.class</File>
+                                <!-- deprecated classes -->
+                                <File>jmri/jmrix/loconet/AbstractAlmImplementation.class</File>
                             </excludes>
                             <rules>
                                 <rule>
@@ -514,12 +532,12 @@
                                         <limit>
                                             <counter>LINE</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.35</minimum>
+                                            <minimum>0.40</minimum>
                                         </limit>
                                         <limit>
                                             <counter>CLASS</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.75</minimum>
+                                            <minimum>0.80</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
@@ -528,6 +546,16 @@
                                     <limits>
                                         <limit>
                                             <counter>CLASS</counter>
+                                            <value>COVEREDCOUNT</value>
+                                            <minimum>1</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                                <rule>
+                                    <element>SOURCEFILE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>LINE</counter>
                                             <value>COVEREDCOUNT</value>
                                             <minimum>1</minimum>
                                         </limit>
@@ -901,7 +929,7 @@
         <dependency>
             <groupId>com.github.spotbugs</groupId>
             <artifactId>spotbugs-annotations</artifactId>
-            <version>3.1.1</version>
+            <version>3.1.7</version>
         </dependency>
         <!--
         <dependency>
@@ -913,7 +941,7 @@
         <dependency>
             <groupId>com.digi.xbee</groupId>
             <artifactId>xbee-java-library</artifactId>
-            <version>1.2.0</version>
+            <version>1.2.1</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
@@ -957,8 +985,8 @@
         -->
         <dependency>
             <groupId>org.netbeans.external</groupId>
-            <artifactId>jemmy-2.3.1.1</artifactId>
-            <version>RELEASE802</version>
+            <artifactId>jemmy</artifactId>
+            <version>${jemmy.version}</version>
             <scope>test</scope>
         </dependency>
         <!--
@@ -984,13 +1012,18 @@
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>json-schema-validator</artifactId>
-            <version>0.1.16</version>
+            <version>0.1.19</version>
         </dependency>
-	<dependency>
-	    <groupId>org.eclipse.paho</groupId>
-	    <artifactId>mqtt-client</artifactId>
-	    <version>0.4.0</version>
-	</dependency>
+        <dependency>
+	         <groupId>org.eclipse.paho</groupId>
+	         <artifactId>mqtt-client</artifactId>
+	         <version>0.4.0</version>
+	    </dependency>
+        <dependency>
+             <groupId>com.alexandriasoftware.swing</groupId>
+             <artifactId>jsplitbutton</artifactId>
+             <version>1.3.1</version>
+        </dependency>
     </dependencies>
 
     <repositories>

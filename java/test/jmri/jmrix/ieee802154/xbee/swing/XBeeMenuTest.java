@@ -32,10 +32,6 @@ public class XBeeMenuTest {
         JUnitUtil.setUp();
         tc = new XBeeTrafficController() {
             @Override
-            public void setInstance() {
-            }
-
-            @Override
             protected jmri.jmrix.AbstractMRReply newReply() {
                 return null;
             }

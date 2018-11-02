@@ -13,7 +13,7 @@ public class LoopbackTrafficControllerTest extends jmri.jmrix.can.TrafficControl
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp(); 
+        jmri.util.JUnitUtil.setUp(); 
         JUnitUtil.resetInstanceManager();
         tc = new LoopbackTrafficController();
     }

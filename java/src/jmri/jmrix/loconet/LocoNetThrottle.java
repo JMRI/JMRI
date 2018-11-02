@@ -14,10 +14,10 @@ import jmri.ThrottleListener;
 /**
  * An implementation of DccThrottle via AbstractThrottle with code specific to a
  * LocoNet connection.
- * <P>
+ * <p>
  * Speed in the Throttle interfaces and AbstractThrottle is a float, but in
  * LocoNet is an int with values from 0 to 127.
- * <P>
+ *
  * @author Glen Oberhauser, Bob Jacobsen Copyright (C) 2003, 2004
  * @author Stephen Williams Copyright (C) 2008
  * @author B. Milhaupt, Copyright (C) 2018
@@ -94,6 +94,10 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         this.f26 = slot.isF26();
         this.f27 = slot.isF27();
         this.f28 = slot.isF28();
+
+	// for LocoNet throttles, the default is f2 momentary (for the horn)
+	// all other functions are continuos (as set in AbstractThrottle).
+        this.f2Momentary = true;
 
         this.address = slot.locoAddr();
         this.isForward = slot.isForward();
@@ -281,7 +285,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
     /**
      * Send a LocoNet message to set the loco speed speed.
-     * <P>
+     *
      * @param speed Number from 0 to 1; less than zero is "emergency stop"
      */
     @Override
@@ -334,7 +338,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
         int new_spd = intSpeed(speed);
 
-        // decide whether to send a new loconet message
+        // decide whether to send a new LocoNet message
         boolean sendLoconetMessage = false;
         if (new_spd != layout_spd) {
             // the new speed is different - send a message
@@ -360,7 +364,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         }
 
         // reset timeout
-        if (mRefreshTimer != null) { // got NullPointerException sometimes
+        if (mRefreshTimer != null) {
             mRefreshTimer.stop();
             mRefreshTimer.setRepeats(true);     // refresh until stopped by dispose
             mRefreshTimer.start();
@@ -705,15 +709,13 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             this.f28 = slot.isF28();
             notifyPropertyChangeListener(Throttle.F28, Boolean.valueOf(temp), Boolean.valueOf(slot.isF28()));
         }
-
     }
 
     /**
-     * setSpeedStepMode - set the speed step value and the related
-     *                    speedIncrement value.
-     * <P>
-     * @param Mode - the current speed step mode - default should be 128
-     *              speed step mode in most cases
+     * Set the speed step value and the related speedIncrement value.
+     *
+     * @param Mode the current speed step mode - default should be 128
+     *             speed step mode in most cases
      */
     @Override
     public void setSpeedStepMode(int Mode) {
@@ -767,9 +769,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     }
 
     /**
-     * Returns the address controlled by this throttle.  If the throttle is controlling
-     * 
-     * 
+     * Get the address controlled by this throttle. If the throttle is controlling.
+     *
      * @return a LocoAddress for the address controlled by this throttle
      */
     @Override
@@ -788,7 +789,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     /**
      * "Dispatch" a LocoNet throttle by setting the slot as "common" then performing
      * a slot move to slot 0.
-     * 
+     * <p>
      * The throttle being dispatched no longer has control of the loco, but other
      * throttles may continue to control the loco. 
      * 
@@ -817,7 +818,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 32);
         }
     }
-
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(LocoNetThrottle.class);

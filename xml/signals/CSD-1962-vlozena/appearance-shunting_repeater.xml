@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Petr</firstname><surname>Šídlo</surname></personname>
+        <email>sidlo64@hotmail.com</email>
+    </author>    
+  </authorgroup>
+    
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2016-11-27</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2018-09-22</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Panel indicators</revremark>
+    </revision>    
+  </revhistory>
+
+  <aspecttable>CSD-1962-vlozena</aspecttable>
+  <name>Opakovací seřaďovací návěstidla</name>
+  <description>Opakovací seřaďovací návěstidla.</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Posun zakázán opakovaná</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/225_pz_sno.gif</imagelink>
+      <imagelink type="AŽD b">../../../resources/icons/smallschematics/aspects/CSD/AZD/27_w.png</imagelink>
+      <imagelink type="ESP b">../../../resources/icons/smallschematics/aspects/CSD/ESP/27_w.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Posun dovolen</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/228_pd_sno.gif</imagelink>
+      <imagelink type="AŽD b">../../../resources/icons/smallschematics/aspects/CSD/AZD/28_w.png</imagelink>
+      <imagelink type="ESP b">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_w.png</imagelink>
+    </appearance>
+
+  </appearances>
+</appearancetable>  

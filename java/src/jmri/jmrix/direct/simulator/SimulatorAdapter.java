@@ -183,6 +183,11 @@ public class SimulatorAdapter extends PortController implements jmri.jmrix.Seria
     }
 
     @Override
+    public String getCurrentPortName(){
+        return "";
+    }
+
+    @Override
     public void run() { // start a new thread
         // This thread has one task. It repeatedly reads from the input pipe
         // and writes an appropriate response to the output pipe. This is the heart
@@ -254,7 +259,6 @@ public class SimulatorAdapter extends PortController implements jmri.jmrix.Seria
      * @return a single Direct message to confirm the requested operation.
      * To ignore certain commands, return null.
      */
-    @SuppressWarnings("fallthrough")
     private Reply generateReply(Message msg) {
         log.debug("Generate Reply to message (string = {})", msg.toString());
 

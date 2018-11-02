@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.util.List;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.jdom2.JDOMException;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations RollingStock Engine class Last manually
@@ -23,6 +24,7 @@ import org.junit.Assert;
 public class XmlTest extends OperationsTestCase {
 
     // test Xml create support
+    @Test
     public void testXMLCreate() throws JDOMException, IOException {
 
         // confirm that file name has been modified for testing
@@ -32,9 +34,9 @@ public class XmlTest extends OperationsTestCase {
         List<Engine> tempengineList = manager.getByIdList();
 
         Assert.assertEquals("Starting Number of Engines", 0, tempengineList.size());
-        Engine e1 = manager.newEngine("CP", "Test Number 1");
-        Engine e2 = manager.newEngine("ACL", "Test Number 2");
-        Engine e3 = manager.newEngine("CP", "Test Number 3");
+        Engine e1 = manager.newRS("CP", "Test Number 1");
+        Engine e2 = manager.newRS("ACL", "Test Number 2");
+        Engine e3 = manager.newRS("CP", "Test Number 3");
 
         // modify engine attributes
         e1.setBuilt("5619");
@@ -98,9 +100,9 @@ public class XmlTest extends OperationsTestCase {
 
         // Add some more engines and write file again
         // so we can test the backup facility
-        Engine e4 = manager.newEngine("PC", "Test Number 4");
-        Engine e5 = manager.newEngine("BM", "Test Number 5");
-        Engine e6 = manager.newEngine("SP", "Test Number 6");
+        Engine e4 = manager.newRS("PC", "Test Number 4");
+        Engine e5 = manager.newRS("BM", "Test Number 5");
+        Engine e6 = manager.newRS("SP", "Test Number 6");
 
         Assert.assertNotNull("engine e4 exists", e4);
         Assert.assertNotNull("engine e5 exists", e5);
@@ -369,28 +371,14 @@ public class XmlTest extends OperationsTestCase {
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
     }
 
-    public XmlTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", XmlTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(XmlTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         super.tearDown();
     }
 

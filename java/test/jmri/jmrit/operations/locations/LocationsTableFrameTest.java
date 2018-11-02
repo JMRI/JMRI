@@ -1,8 +1,8 @@
 package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
-import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import org.junit.After;
@@ -17,7 +17,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  *
  * @author Dan Boudreau Copyright (C) 2009
  */
-public class LocationsTableFrameTest extends OperationsSwingTestCase {
+public class LocationsTableFrameTest extends OperationsTestCase {
 
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
 
@@ -96,7 +96,7 @@ public class LocationsTableFrameTest extends OperationsSwingTestCase {
         // create add location frame by clicking add button
         f.addButton.doClick();
         // the following fails on 13" laptops
-        //enterClickAndLeave(f.addButton);
+        //JemmyUtil.enterClickAndLeave(f.addButton);
 
         // confirm location add frame creation
         JUnitUtil.waitFor(() -> {
@@ -114,34 +114,18 @@ public class LocationsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertNull(JmriJFrame.getFrame(Bundle.getMessage("AddLocation")));
     }
 
-    private void loadLocations() {
-        // create 5 locations
-        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
-        Location l1 = lManager.newLocation("Test Loc E");
-        l1.setLength(1001);
-        Location l2 = lManager.newLocation("Test Loc D");
-        l2.setLength(1002);
-        Location l3 = lManager.newLocation("Test Loc C");
-        l3.setLength(1003);
-        Location l4 = lManager.newLocation("Test Loc B");
-        l4.setLength(1004);
-        Location l5 = lManager.newLocation("Test Loc A");
-        l5.setLength(1005);
-
-    }
-
     // Ensure minimal setup for log4J
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
 
-        loadLocations();
+        JUnitOperationsUtil.loadFiveLocations();
     }
 
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

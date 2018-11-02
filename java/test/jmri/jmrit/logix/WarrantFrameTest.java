@@ -19,12 +19,14 @@ public class WarrantFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         WarrantFrame t = new WarrantFrame(new Warrant("IW0", "AllTestWarrant"));
         Assert.assertNotNull("exists",t);
+        JUnitUtil.dispose(t);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
     }
 
     @After

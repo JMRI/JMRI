@@ -19,6 +19,10 @@ import sys
 import thread
 
 import java
+import java.awt
+import java.awt.event
+import java.beans
+import java.util
 import jmri
 import java.beans.PropertyChangeListener as PropertyChangeListener
 import java.util.Calendar as Calendar
@@ -538,7 +542,7 @@ class ControllerItemListener( java.awt.event.ItemListener):
 
     def itemStateChanged(self, evt):
         if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED ):
-            self.jyns.setSelectedController( self.ctrl, evt.getItem() )		
+            self.jyns.setSelectedController( self.ctrl, evt.getItem() )     
                 
 # Speed timer class, to increase speed regularly once button pushed, thread stopped on button release
 class SpeedAction( java.awt.event.ActionListener):

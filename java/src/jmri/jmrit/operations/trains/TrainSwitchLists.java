@@ -22,8 +22,8 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.schedules.TrainSchedule;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -100,24 +100,21 @@ public class TrainSwitchLists extends TrainCommon {
 
             String valid = MessageFormat.format(messageFormatText = TrainManifestText.getStringValid(),
                     new Object[]{getDate(true)});
-            if (Setup.isPrintTimetableNameEnabled()) {
-                TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(
-                        trainManager.getTrainScheduleActiveId());
+            if (Setup.isPrintTrainScheduleNameEnabled()) {
+                TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getActiveSchedule();
                 if (sch != null) {
                     valid = valid + " (" + sch.getName() + ")";
                 }
             }
 
-            // get a list of trains sorted by arrival time
+            // get a list of built trains sorted by arrival time
             List<Train> trains = trainManager.getTrainsArrivingThisLocationList(location);
             for (Train train : trains) {
-                if (!train.isBuilt()) {
-                    continue; // train wasn't built so skip
-                }
                 if (newTrainsOnly && train.getSwitchListStatus().equals(Train.PRINTED)) {
                     continue; // already printed this train
                 }
                 Route route = train.getRoute();
+                // TODO throw exception? only built trains should be in the list, so no route is an error
                 if (route == null) {
                     continue; // no route for this train
                 } // determine if train works this location
@@ -452,15 +449,15 @@ public class TrainSwitchLists extends TrainCommon {
     }
 
     public void printSwitchList(Location location, boolean isPreview) {
-        File buildFile = InstanceManager.getDefault(TrainManagerXml.class).getSwitchListFile(location.getName());
-        if (!buildFile.exists()) {
+        File switchListFile = InstanceManager.getDefault(TrainManagerXml.class).getSwitchListFile(location.getName());
+        if (!switchListFile.exists()) {
             log.warn("Switch list file missing for location ({})", location.getName());
             return;
         }
         if (isPreview && Setup.isManifestEditorEnabled()) {
-            TrainUtilities.openDesktop(buildFile);
+            TrainUtilities.openDesktop(switchListFile);
         } else {
-            TrainPrintUtilities.printReport(buildFile, location.getName(), isPreview, Setup.getFontName(), false,
+            TrainPrintUtilities.printReport(switchListFile, location.getName(), isPreview, Setup.getFontName(), false,
                     FileUtil.getExternalFilename(Setup.getManifestLogoURL()), location.getDefaultPrinterName(), Setup
                             .getSwitchListOrientation(),
                     Setup.getManifestFontSize());

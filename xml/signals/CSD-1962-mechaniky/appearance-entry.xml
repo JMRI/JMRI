@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Petr</firstname><surname>Šídlo</surname></personname>
+        <email>sidlo64@hotmail.com</email>
+    </author>    
+  </authorgroup>
+    
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2016-12-28</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+  </revhistory>
+
+  <aspecttable>CSD-1962-mechaniky</aspecttable>
+  <name>Vjezdová návěstidla dvouramenná</name>
+  <description>Vjezdová návěstidla.</description>
+
+  <appearances>
+
+    <appearance>
+      <aspectname>Stůj</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/400_stuj_2v.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/400_stuj_2v_n.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Volno</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_2v.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_2v_n.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Vjezd odbočkou</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/407_vo_2v.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/407_vo_2v_n.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Opatrně na přivolávací návěst</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/431_opn_2v.gif</imagelink>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/431_opn_2v_n.gif</imagelink>
+    </appearance>
+
+  </appearances>
+  
+  <specificappearances>
+      <danger>
+          <aspect>Stůj</aspect>
+      </danger>
+      <permissive>
+          <aspect>Opatrně na přivolávací návěst</aspect>
+      </permissive>
+  </specificappearances>
+  
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Volno</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stůj</advancedAspect>
+      <ourAspect>Vjezd odbočkou</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+  
+</appearancetable>  

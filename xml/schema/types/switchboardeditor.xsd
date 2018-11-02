@@ -44,6 +44,7 @@
       <xs:attribute name="panelmenu" type="yesNoType" default="yes"></xs:attribute>
       <xs:attribute name="scrollable" type="scrollableType"></xs:attribute>
       <xs:attribute name="hideunconnected" type="yesNoType" default="no"></xs:attribute>
+      <xs:attribute name="autoitemrange" type="yesNoType" default="yes"></xs:attribute>
       <xs:attribute name="rangemin" type="xs:int" default="1"></xs:attribute>
       <xs:attribute name="rangemax" type="xs:int" default="32"></xs:attribute>
       <xs:attribute name="type" type="xs:string"></xs:attribute>

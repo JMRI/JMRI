@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2010, 2011
  * @param <T> the type of RollingStock managed by this manager
  */
-public class RollingStockManager<T extends RollingStock> {
+public abstract class RollingStockManager<T extends RollingStock> {
 
     public static final String NONE = "";
 
@@ -24,6 +24,8 @@ public class RollingStockManager<T extends RollingStock> {
     protected Hashtable<String, T> _hashTable = new Hashtable<>();
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "RollingStockListLength"; // NOI18N
+    
+    abstract public RollingStock newRS(String road, String number);
 
     public RollingStockManager() {
     }
@@ -174,7 +176,7 @@ public class RollingStockManager<T extends RollingStock> {
             arr[i] = en.nextElement();
             i++;
         }
-        jmri.util.StringUtil.sort(arr);
+        java.util.Arrays.sort(arr);
         for (i = 0; i < arr.length; i++) {
             out.add(getById(arr[i]));
         }

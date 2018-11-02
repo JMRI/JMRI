@@ -2,6 +2,7 @@ package jmri.jmrit.symbolicprog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import javax.swing.JLabel;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.decoderdefn.DecoderFile;
@@ -256,6 +257,44 @@ public class VariableTableModelTest extends TestCase {
 
     }
 
+    public void testSetDefault() {
+        // set up a decoder to match against
+        DecoderFile df = createDecoderFile("p", "m", "f");
+
+        String[] args = {"CV", "Name"};
+        VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p)) {
+            { _df = df; }
+        };
+        HashMap<String, CvValue> map = new HashMap<>();
+        map.put("17", new CvValue("17", null));
+
+        VariableValue v = new DecVariableValue("label17", "comment17", "", false, false, false, false, "17", "VVVVVVVV", 0, 255, map, null, null);
+
+        Assert.assertEquals("default start", "0", v.getValueString());
+
+        // set default with normal element
+        Element el0 = new Element("variable")
+                                .setAttribute("default", "21");
+
+        t.setDefaultValue(el0, v);
+        Assert.assertEquals("default start", "21", v.getValueString());
+
+        // set default with defaultItem elements
+        Element el1 = new Element("variable")
+                                .addContent(new Element("defaultItem")
+                                        .setAttribute("default", "31")
+                                        .setAttribute("include", "x")
+                                )
+                                .addContent(new Element("defaultItem")
+                                        .setAttribute("default", "32")
+                                        .setAttribute("include", "m")
+                                )
+                                .setAttribute("default", "21");
+
+        t.setDefaultValue(el1, v);
+        Assert.assertEquals("default start", "32", v.getValueString());
+    }
+    
     // Check creating an enumvar with various groupings and element-based includes/excludes
     public void testVarEnumVarIncludeExclude0() {
         //set up the test

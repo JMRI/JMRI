@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extend jmri.SignalMast for signals implemented by an LNCP
- * <P>
+ * <p>
  * This implementation writes out to the physical signal when it's commanded to
  * change appearance, and updates its internal state when it hears commands from
  * other places.
@@ -41,7 +41,7 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
             tc = jmri.InstanceManager.getDefault(LnTrafficController.class);
         }
 
-        //We cheat, and store the two bytes that make up an NMRA packet for later use in decoding a message from the loconet
+        //We cheat, and store the two bytes that make up an NMRA packet for later use in decoding a message from the LocoNet
         int lowAddr = ((dccSignalDecoderAddress - 1) & 0x03);  // Output Pair Address
         int boardAddr = ((dccSignalDecoderAddress - 1) >> 2); // Board Address
         int midAddr = boardAddr & 0x3F;

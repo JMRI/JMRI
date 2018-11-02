@@ -16,11 +16,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableColumn;
-import jmri.NamedBean;
+import jmri.Sensor;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
@@ -30,21 +31,20 @@ import jmri.jmrit.picker.PickListModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MultiSensorItemPanel extends TableItemPanel {
+public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
 
     JPanel _multiSensorPanel;
     MultiSensorSelectionModel _selectionModel;
     boolean _upDown = false;
 
-    public MultiSensorItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
+    public MultiSensorItemPanel(DisplayFrame parentFrame, String type, String family, PickListModel<Sensor> model, Editor editor) {
         super(parentFrame, type, family, model, editor);
         setToolTipText(Bundle.getMessage("ToolTipDragSelection"));
     }
 
     @Override
-    protected JPanel initTablePanel(PickListModel model, Editor editor) {
+    protected JPanel initTablePanel(PickListModel<Sensor> model, Editor editor) {
         _table = model.makePickTable();
-        ROW_HEIGHT = _table.getRowHeight();
         TableColumn column = new TableColumn(PickListModel.POSITION_COL);
         column.setHeaderValue("Position");
         _table.addColumn(column);
@@ -57,6 +57,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         topPanel.add(new JLabel(model.getName(), SwingConstants.CENTER), BorderLayout.NORTH);
         _scrollPane = new JScrollPane(_table);
         topPanel.add(_scrollPane, BorderLayout.CENTER);
+        _scrollPane.getVerticalScrollBar().setMaximum(100);
         topPanel.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
 
         JPanel panel = new JPanel();
@@ -73,7 +74,9 @@ public class MultiSensorItemPanel extends TableItemPanel {
         int size = 6;
         if (_family != null) {
             HashMap<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
-            size = map.size();
+            if (map != null) {
+                size = map.size();
+            }
         }
         _selectionModel.setPositionRange(size - 3);
         JButton clearSelectionButton = new JButton(Bundle.getMessage("ClearSelection"));
@@ -99,8 +102,9 @@ public class MultiSensorItemPanel extends TableItemPanel {
         //     HashMap<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
         //     size = map.size();
         // }
-        if (_currentIconMap != null) {
-            size = _currentIconMap.size();
+        HashMap<String, NamedIcon> map = getIconMap();
+        if (map != null) {
+            size = map.size();
         }
         _selectionModel.setPositionRange(size - 3);
     }
@@ -174,13 +178,12 @@ public class MultiSensorItemPanel extends TableItemPanel {
     protected void openDialog(String type, String family, HashMap<String, NamedIcon> iconMap) {
         closeDialogs();
         _dialog = new MultiSensorIconDialog(type, family, this, iconMap);
-        _dialog.sizeLocate();
     }
 
-    /**
+    /*
      * Used by Panel Editor to make updates the icon(s) into the user's Panel.
      */
-    public ArrayList<NamedBean> getTableSelections() {
+    public ArrayList<Sensor> getTableSelections() {
         return _selectionModel.getSelections();
     }
 
@@ -193,11 +196,13 @@ public class MultiSensorItemPanel extends TableItemPanel {
     }
 
     @Override
-    public void setSelection(NamedBean bean) {
+    public void setSelection(Sensor bean) {
         int row = _model.getIndexOf(bean);
         if (row >= 0) {
             _selectionModel.setSelectionInterval(row, row);
-            _scrollPane.getVerticalScrollBar().setValue(row * ROW_HEIGHT);
+            JScrollBar bar = _scrollPane.getVerticalScrollBar();
+            int numRows = _model.getRowCount();
+            bar.setValue((int)((float)(row * bar.getMaximum())/numRows));
         } else {
             valueChanged(null);
         }
@@ -215,18 +220,18 @@ public class MultiSensorItemPanel extends TableItemPanel {
     }
 
     protected class MultiSensorSelectionModel extends DefaultListSelectionModel {
-        ArrayList<NamedBean> _selections;
+        ArrayList<Sensor> _selections;
         int[] _positions;
         int _nextPosition;
-        PickListModel _tableModel;
+        PickListModel<Sensor> _tableModel;
 
-        MultiSensorSelectionModel(PickListModel tableModel) {
+        MultiSensorSelectionModel(PickListModel<Sensor> tableModel) {
             super();
             _tableModel = tableModel;
             setPositionRange(0);
         }
 
-        protected ArrayList<NamedBean> getSelections() {
+        protected ArrayList<Sensor> getSelections() {
             if (log.isDebugEnabled()) {
                 log.debug("getSelections: size = {}, _nextPosition = {}", _selections.size(), _nextPosition);
             }
@@ -278,7 +283,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
             log.debug("clearSelection()");
             for (int i = 0; i < _positions.length; i++) {
                 if (_positions[i] >= 0) {
-                    _tableModel.setValueAt(null, _positions[i], PickListModel.POSITION_COL);
+                    _table.setValueAt(null, _positions[i], PickListModel.POSITION_COL);
                     super.setSelectionInterval(_positions[i], _positions[i]);
                     super.clearSelection();
                     _positions[i] = -1;
@@ -305,7 +310,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
             if (log.isDebugEnabled()) {
                 log.debug("setSelectionInterval({}, {})", row, index1);
             }
-            NamedBean bean = _tableModel.getBeanAt(row);
+            Sensor bean = _tableModel.getBySystemName((String) _table.getValueAt(row, 0));
             String position = (String) _tableModel.getValueAt(row, PickListModel.POSITION_COL);
             if (position != null && position.length() > 0) {
                 JOptionPane.showMessageDialog(_paletteFrame,
@@ -313,7 +318,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
                                 new Object[]{bean.getDisplayName(), position}),
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             } else {
-                _tableModel.setValueAt(Bundle.getMessage(POSITION[_nextPosition]), row, PickListModel.POSITION_COL);
+                _table.setValueAt(Bundle.getMessage(POSITION[_nextPosition]), row, PickListModel.POSITION_COL);
                 _selections.add(_nextPosition, bean);
                 _positions[_nextPosition] = row;
                 _nextPosition++;
@@ -327,6 +332,27 @@ public class MultiSensorItemPanel extends TableItemPanel {
         return new IconDragJLabel(flavor, map, icon);
     }
 
+    @Override
+    public boolean oktoUpdate() {
+        ArrayList<Sensor> selections = _selectionModel.getSelections();
+        if (selections == null) {
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        if (selections.size() < _selectionModel.getPositions().length) {
+            JOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("NeedPosition", _selectionModel.getPositions().length),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        if (getIconMap() == null) {
+            return false;
+        }
+        return true;
+    }
+
+
     protected class IconDragJLabel extends DragJLabel {
 
         HashMap<String, NamedIcon> iconMap;
@@ -338,19 +364,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
 
         @Override
         protected boolean okToDrag() {
-            ArrayList<NamedBean> selections = _selectionModel.getSelections();
-            if (selections == null) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-                return false;
-            }
-            if (selections.size() < _selectionModel.getPositions().length) {
-                JOptionPane.showMessageDialog(this,
-                        Bundle.getMessage("NeedPosition", _selectionModel.getPositions().length),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-                return false;
-            }
-            return true;
+            return oktoUpdate();
         }
 
         @Override
@@ -362,7 +376,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
                 log.error("IconDragJLabel.getTransferData: iconMap is null!");
                 return null;
             }
-            ArrayList<NamedBean> selections = _selectionModel.getSelections();
+            ArrayList<Sensor> selections = _selectionModel.getSelections();
             if (selections == null || selections.size() < _selectionModel.getPositions().length) {
                 return null;
             }
@@ -393,7 +407,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
                 }
                 return  sb.toString();
             }
-                
+
             return null;
         }
     }

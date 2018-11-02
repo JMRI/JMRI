@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Petr</firstname><surname>Šídlo</surname></personname>
+        <email>sidlo64@hotmail.com</email>
+    </author>    
+  </authorgroup>
+    
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2016-11-19</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2018-09-22</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Panel indicators</revremark>
+    </revision>    
+  </revhistory>
+
+  <aspecttable>SZDC-2015-zakladni</aspecttable>
+  <name>Odjezdová návěstidla</name>
+  <description>Odjezdová návěstidla.</description>
+
+  <appearances>
+
+    <appearance>
+      <aspectname>Stůj</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/300_stuj_5o.gif</imagelink>
+      <imagelink type="AŽD žzb">../../../resources/icons/smallschematics/aspects/CSD/AZD/00_ygw.png</imagelink>
+      <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/00_ygwg.png</imagelink>
+      <imagelink type="AŽD zb">../../../resources/icons/smallschematics/aspects/CSD/AZD/00_gw.png</imagelink>
+      <imagelink type="AŽD z">../../../resources/icons/smallschematics/aspects/CSD/AZD/00_g.png</imagelink>
+      <imagelink type="ESP žzb">../../../resources/icons/smallschematics/aspects/CSD/ESP/00_ygw.png</imagelink>
+      <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/00_ygwg.png</imagelink>
+      <imagelink type="ESP zb">../../../resources/icons/smallschematics/aspects/CSD/ESP/00_gw.png</imagelink>
+      <imagelink type="ESP z">../../../resources/icons/smallschematics/aspects/CSD/ESP/00_g.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Volno</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/301_volno_5o.gif</imagelink>
+      <imagelink type="AŽD žzb">../../../resources/icons/smallschematics/aspects/CSD/AZD/01_ygw.png</imagelink>
+      <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/01_ygwg.png</imagelink>
+      <imagelink type="AŽD zb">../../../resources/icons/smallschematics/aspects/CSD/AZD/01_gw.png</imagelink>
+      <imagelink type="AŽD z">../../../resources/icons/smallschematics/aspects/CSD/AZD/01_g.png</imagelink>
+      <imagelink type="ESP žzb">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_ygw.png</imagelink>
+      <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_ygwg.png</imagelink>
+      <imagelink type="ESP zb">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_gw.png</imagelink>
+      <imagelink type="ESP z">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_g.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Výstraha</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/302_vystraha_5o.gif</imagelink>
+      <imagelink type="AŽD žzb">../../../resources/icons/smallschematics/aspects/CSD/AZD/02_ygw.png</imagelink>
+      <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/02_ygwg.png</imagelink>
+      <imagelink type="ESP žzb">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ygw.png</imagelink>
+      <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ygwg.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Očekávej 40</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/303_o40_5o.gif</imagelink>
+      <imagelink type="AŽD žzb">../../../resources/icons/smallschematics/aspects/CSD/AZD/02_ygw.png</imagelink>
+      <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/02_ygwg.png</imagelink>
+      <imagelink type="ESP žzb">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ygw.png</imagelink>
+      <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ygwg.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Očekávej 60</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/304_o60_5o.gif</imagelink>
+      <imagelink type="AŽD žzb">../../../resources/icons/smallschematics/aspects/CSD/AZD/02_ygw.png</imagelink>
+      <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/02_ygwg.png</imagelink>
+      <imagelink type="ESP žzb">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ygw.png</imagelink>
+      <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ygwg.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 40 a volno</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/306_40_volno_5o.gif</imagelink>
+      <imagelink type="AŽD žzb">../../../resources/icons/smallschematics/aspects/CSD/AZD/01_ygw.png</imagelink>
+      <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/01_ygwg.png</imagelink>
+      <imagelink type="AŽD zb">../../../resources/icons/smallschematics/aspects/CSD/AZD/01_gw.png</imagelink>
+      <imagelink type="AŽD z">../../../resources/icons/smallschematics/aspects/CSD/AZD/01_g.png</imagelink>
+      <imagelink type="ESP žzb">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_ygw.png</imagelink>
+      <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_ygwg.png</imagelink>
+      <imagelink type="ESP zb">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_gw.png</imagelink>
+      <imagelink type="ESP z">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_g.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 40 a výstraha</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/307_40_vystraha_5o.gif</imagelink>
+      <imagelink type="AŽD žzb">../../../resources/icons/smallschematics/aspects/CSD/AZD/02_ygw.png</imagelink>
+      <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/02_ygwg.png</imagelink>
+      <imagelink type="ESP žzb">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ygw.png</imagelink>
+      <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ygwg.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 40 a očekávej 40</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/308_40_o40_5o.gif</imagelink>
+      <imagelink type="AŽD žzb">../../../resources/icons/smallschematics/aspects/CSD/AZD/02_ygw.png</imagelink>
+      <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/02_ygwg.png</imagelink>
+      <imagelink type="ESP žzb">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ygw.png</imagelink>
+      <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ygwg.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 40 a očekávej 60</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/309_40_o60_5o.gif</imagelink>
+      <imagelink type="AŽD žzb">../../../resources/icons/smallschematics/aspects/CSD/AZD/02_ygw.png</imagelink>
+      <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/02_ygwg.png</imagelink>
+      <imagelink type="ESP žzb">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ygw.png</imagelink>
+      <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_ygwg.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 60 a volno</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/311_60_volno_5o.gif</imagelink>
+      <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/11_ygwg.png</imagelink>
+      <imagelink type="AŽD zbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/11_gwg.png</imagelink>
+      <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/11_ygwg.png</imagelink>
+      <imagelink type="ESP zbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/11_gwg.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 60 a výstraha</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/312_60_vystraha_5o.gif</imagelink>
+      <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/12_ygwg.png</imagelink>
+      <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/12_ygwg.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 60 a očekávej 40</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/313_60_o40_5o.gif</imagelink>
+      <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/12_ygwg.png</imagelink>
+      <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/12_ygwg.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 60 a očekávej 60</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/314_60_o60_5o.gif</imagelink>
+      <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/12_ygwg.png</imagelink>
+      <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/12_ygwg.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Posun dovolen</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/328_pd_5o.gif</imagelink>
+      <imagelink type="AŽD žzb">../../../resources/icons/smallschematics/aspects/CSD/AZD/28_ygw.png</imagelink>
+      <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/28_ygwg.png</imagelink>
+      <imagelink type="AŽD zb">../../../resources/icons/smallschematics/aspects/CSD/AZD/28_gw.png</imagelink>
+      <imagelink type="AŽD zbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/28_gwg.png</imagelink>
+      <imagelink type="ESP žzb">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_ygw.png</imagelink>
+      <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_ygwg.png</imagelink>
+      <imagelink type="ESP zb">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_gw.png</imagelink>
+      <imagelink type="ESP zbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_gwg.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Posun dovolen - nezabezpečený</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/329_npd_3o.gif</imagelink>
+      <imagelink type="AŽD žzb">../../../resources/icons/smallschematics/aspects/CSD/AZD/28_ygw.png</imagelink>
+      <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/28_ygwg.png</imagelink>
+      <imagelink type="AŽD zb">../../../resources/icons/smallschematics/aspects/CSD/AZD/28_gw.png</imagelink>
+      <imagelink type="AŽD zbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/28_gwg.png</imagelink>
+      <imagelink type="ESP žzb">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_ygw.png</imagelink>
+      <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_ygwg.png</imagelink>
+      <imagelink type="ESP zb">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_gw.png</imagelink>
+      <imagelink type="ESP zbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_gwg.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Opatrně na přivolávací návěst bez červené</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/330_opn2_5o.gif</imagelink>
+      <imagelink type="AŽD žzb">../../../resources/icons/smallschematics/aspects/CSD/AZD/31_ygw.png</imagelink>
+      <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/31_ygwg.png</imagelink>
+      <imagelink type="AŽD zb">../../../resources/icons/smallschematics/aspects/CSD/AZD/31_gw.png</imagelink>
+      <imagelink type="AŽD zbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/31_gwg.png</imagelink>
+      <imagelink type="ESP žzb">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_ygw.png</imagelink>
+      <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_ygwg.png</imagelink>
+      <imagelink type="ESP zb">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_gw.png</imagelink>
+      <imagelink type="ESP zbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_gwg.png</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Opatrně na přivolávací návěst</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/331_opn_5o.gif</imagelink>
+      <imagelink type="AŽD žzb">../../../resources/icons/smallschematics/aspects/CSD/AZD/31_ygw.png</imagelink>
+      <imagelink type="AŽD žzbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/31_ygwg.png</imagelink>
+      <imagelink type="AŽD zb">../../../resources/icons/smallschematics/aspects/CSD/AZD/31_gw.png</imagelink>
+      <imagelink type="AŽD zbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/31_gwg.png</imagelink>
+      <imagelink type="ESP žzb">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_ygw.png</imagelink>
+      <imagelink type="ESP žzbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_ygwg.png</imagelink>
+      <imagelink type="ESP zb">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_gw.png</imagelink>
+      <imagelink type="ESP zbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_gwg.png</imagelink>
+    </appearance>
+
+  </appearances>
+  
+  <specificappearances>
+      <danger>
+          <aspect>Stůj</aspect>
+      </danger>
+      <permissive>
+          <aspect>Opatrně na přivolávací návěst</aspect>
+      </permissive>
+  </specificappearances>
+    
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Volno</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+      <ourAspect>Rychlost 40 a volno</ourAspect>
+      <ourAspect>Rychlost 60 a volno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stůj</advancedAspect>
+      <ourAspect>Výstraha</ourAspect>
+      <ourAspect>Rychlost 40 a výstraha</ourAspect>
+      <ourAspect>Rychlost 60 a výstraha</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 40 a volno</advancedAspect>
+      <ourAspect>Očekávej 40</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 40</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 40</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 60 a volno</advancedAspect>
+      <ourAspect>Očekávej 60</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 60</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 60</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+  
+</appearancetable>  

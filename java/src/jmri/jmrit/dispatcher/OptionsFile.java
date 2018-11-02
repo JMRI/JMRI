@@ -52,8 +52,11 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
     private Element root = null;
 
     /**
-     *  Read Dispatcher Options from a file in the user's preferences directory.
-     *  If the file containing Dispatcher Options does not exist, this routine returns quietly.
+     * Read Dispatcher Options from a file in the user's preferences directory.
+     * If the file containing Dispatcher Options does not exist, this routine returns quietly.
+     * @param f   The dispatcher instance.
+     * @throws org.jdom2.JDOMException  if dispatcher parameter logically incorrect
+     * @throws java.io.IOException    if dispatcher parameter not found
      */
     public void readDispatcherOptions(DispatcherFrame f) throws org.jdom2.JDOMException, java.io.IOException {
         // check if file exists
@@ -199,6 +202,9 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                             dispatcher.setRosterEntryInBlock(true);
                         }
                     }
+                    if (options.getAttribute("stoppingspeedname") != null) {
+                        dispatcher.setStoppingSpeedName((options.getAttribute("stoppingspeedname")).getValue());
+                    }
                 }
             }
         } else {
@@ -207,7 +213,9 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
     }
 
     /**
-     *  Write out Dispatcher options to a file in the user's preferences directory.
+     * Write out Dispatcher options to a file in the user's preferences directory.
+     * @param f Dispatcher instance.
+     * @throws java.io.IOException Thrown if dispatcher option file not found
      */
     public void writeDispatcherOptions(DispatcherFrame f) throws java.io.IOException {
         log.debug("Saving Dispatcher options to file {}", defaultFileName);
@@ -246,6 +254,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
         options.setAttribute("layoutscale", Scale.getShortScaleID(dispatcher.getScale()));
         options.setAttribute("usescalemeters", "" + (dispatcher.getUseScaleMeters() ? "yes" : "no"));
         options.setAttribute("userosterentryinblock", "" + (dispatcher.getRosterEntryInBlock() ? "yes" : "no"));
+        options.setAttribute("stoppingspeedname", dispatcher.getStoppingSpeedName());
         if (dispatcher.getSignalType() == 0x00) {
             options.setAttribute("usesignaltype", "signalhead");
         } else {

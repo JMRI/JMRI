@@ -1,4 +1,3 @@
-// DCCppInterface
 package jmri.jmrix.dccpp;
 
 /**

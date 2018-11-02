@@ -1,6 +1,8 @@
 # basic setup for JavaOne demo
 
 import java
+import java.beans
+import java.io
 
 # define constants
 

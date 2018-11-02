@@ -102,6 +102,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             this.setGraphicTableState(preferences.getBoolean(GRAPHICTABLESTATE, this.isGraphicTableState()));
             this.setToolTipDismissDelay(preferences.getInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay()));
 
+            log.debug("About to setDefault Locale", new Exception(""));
             Locale.setDefault(this.getLocale());
             javax.swing.JComponent.setDefaultLocale(this.getLocale());
             javax.swing.JOptionPane.setDefaultLocale(this.getLocale());
@@ -457,6 +458,23 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
                 logAllFonts();
             }
         }
+    }
+    
+    /**
+     * Stand-alone service routine to 
+     * set the default Locale.
+     *
+     * Intended to be invoked early, as soon as a profile is
+     * available, to ensure the correct language is set as 
+     * startup proceeds. Must be followed eventually
+     * by a complete {@link #setLocale}.
+     */
+    public static void setLocaleMinimally(Profile profile) {
+        String name = ProfileUtils.getPreferences(profile, GuiLafPreferencesManager.class, true).get("locale","en"); // "en" is default if not found
+        log.debug("setLocaleMinimally found language {}, setting", name);
+        Locale.setDefault(new Locale(name));
+        javax.swing.JComponent.setDefaultLocale(new Locale(name));
+        javax.swing.JOptionPane.setDefaultLocale(new Locale(name));
     }
 
     /**

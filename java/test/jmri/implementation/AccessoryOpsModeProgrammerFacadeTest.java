@@ -142,8 +142,9 @@ public class AccessoryOpsModeProgrammerFacadeTest {
     class MockCommandStation implements CommandStation {
 
         @Override
-        public void sendPacket(byte[] packet, int repeats) {
+        public boolean sendPacket(byte[] packet, int repeats) {
             lastPacket = packet;
+            return true;
         }
 
         @Override
@@ -172,7 +173,7 @@ public class AccessoryOpsModeProgrammerFacadeTest {
     // The minimal setup for log4J
     @Before
     public void setUp() throws Exception {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         InstanceManager.setDefault(CommandStation.class, new MockCommandStation());
         lastPacket = null;

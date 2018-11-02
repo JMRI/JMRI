@@ -42,7 +42,10 @@ public class SectionTableActionTest extends AbstractTableActionBase {
     @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        a = new SectionTableAction();
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+        helpTarget = "package.jmri.jmrit.beantable.SectionTable"; 
+        a = new SectionTableAction();
     }
 
     @Override

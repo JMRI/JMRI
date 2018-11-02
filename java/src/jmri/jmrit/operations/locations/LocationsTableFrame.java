@@ -13,12 +13,14 @@ import javax.swing.ScrollPaneConstants;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.schedules.SchedulesTableAction;
+import jmri.jmrit.operations.locations.tools.ExportLocationsRosterAction;
 import jmri.jmrit.operations.locations.tools.LocationCopyAction;
 import jmri.jmrit.operations.locations.tools.ModifyLocationsAction;
 import jmri.jmrit.operations.locations.tools.ModifyLocationsCarLoadsAction;
 import jmri.jmrit.operations.locations.tools.PrintLocationsAction;
 import jmri.jmrit.operations.locations.tools.SetPhysicalLocationAction;
 import jmri.jmrit.operations.locations.tools.ShowCarsByLocationAction;
+import jmri.jmrit.operations.locations.tools.TrackCopyAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.swing.JTablePersistenceManager;
@@ -86,10 +88,12 @@ public class LocationsTableFrame extends OperationsFrame {
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new LocationCopyAction());
+        toolMenu.add(new TrackCopyAction());
         toolMenu.add(new SchedulesTableAction(Bundle.getMessage("Schedules")));
         toolMenu.add(new ModifyLocationsAction(Bundle.getMessage("TitleModifyLocations")));
         toolMenu.add(new ModifyLocationsCarLoadsAction());
         toolMenu.add(new ShowCarsByLocationAction(false, null, null));
+        toolMenu.add(new ExportLocationsRosterAction(Bundle.getMessage("TitleExportLocations")));
         if (Setup.isVsdPhysicalLocationEnabled()) {
             toolMenu.add(new SetPhysicalLocationAction(Bundle.getMessage("MenuSetPhysicalLocation"), null));
         }

@@ -28,6 +28,7 @@ public class RosterEntryToGroupActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

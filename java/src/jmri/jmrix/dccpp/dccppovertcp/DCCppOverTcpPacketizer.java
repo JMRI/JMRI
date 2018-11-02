@@ -206,7 +206,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
 
         // readline is deprecated, but there are no problems
         // with multi-byte characters here.
-        @SuppressWarnings({"deprecation", "null"})
+        @SuppressWarnings("deprecation")
         @Override
         public void run() {
 
@@ -275,7 +275,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                     }
 
                     final DCCppReply thisMsg = msg;
-                    //final DCCppPacketizer thisTC = trafficController;
+                    //final DCCppPacketizer thisTc = trafficController;
                     // return a notification via the queue to ensure end
                     Runnable r = new Runnable() {
                             DCCppReply msgForLater = thisMsg;

@@ -27,6 +27,7 @@ public class BeanSwitchTest {
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             swe = new SwitchboardEditor("Test Layout");
         }

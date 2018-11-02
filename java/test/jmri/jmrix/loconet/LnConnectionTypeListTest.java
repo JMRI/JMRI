@@ -15,10 +15,9 @@ public class LnConnectionTypeListTest {
     @Test
     public void testCTor() {
         LnConnectionTypeList t = new LnConnectionTypeList();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

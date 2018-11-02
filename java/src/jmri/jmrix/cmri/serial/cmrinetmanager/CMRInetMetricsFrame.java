@@ -1,5 +1,3 @@
-// CMRInetMetricsFrame.java
-
 package jmri.jmrix.cmri.serial.cmrinetmanager;
 
 import java.awt.BorderLayout;
@@ -316,8 +314,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
                 logStream.close();
               }   
 
-            } catch (Exception ex)
-            {
+            } catch (RuntimeException | java.io.IOException ex) {
                 log.error("exception "+ex);
             }
         }
@@ -353,16 +350,16 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
                 default:
                     return Object.class;
             }
-        };
+        }
 	public boolean isCellEditable(int r,int c) { return false;}
         public int getColumnCount () {return NUMCOLUMNS;}
-        public int getRowCount () {return metricsData.CMRInetMetricErrName.length;}
+        public int getRowCount () {return CMRInetMetricsData.CMRInetMetricErrName.length;}
         public Object getValueAt (final int r,int c)
         {           
             switch (c)
             {
                 case ERRORNAME_COLUMN :
-                    return metricsData.CMRInetMetricErrName[r]; 
+                    return CMRInetMetricsData.CMRInetMetricErrName[r]; 
                 case ERRORCOUNT_COLUMN :
                     return metricsData.getMetricErrorCount(r);
                 case ERRORRESET_COLUMN :
@@ -385,10 +382,11 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
         
 	public void setValueAt(int value, int r, int c)
         {
-            switch (c)
+            switch (c)  // leave this as a switch in case other columns get added
             {
                 case ERRORCOUNT_COLUMN :
                     metricsData.setMetricErrorValue(r,value);
+                    break;
                 default:
             }
             fireTableDataChanged();
@@ -458,7 +456,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
                 default:
                     return Object.class;
             }
-        };
+        }
 	public boolean isCellEditable(int r,int c) { return false;}
         public int getColumnCount () {return DATANUMCOLUMNS;}
         public int getRowCount () {return CMRInetMetricsData.CMRInetMetricDataName.length;}
@@ -467,7 +465,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
             switch (c)
             {
                 case DATANAME_COLUMN :
-                    return metricsData.CMRInetMetricDataName[r]; 
+                    return CMRInetMetricsData.CMRInetMetricDataName[r]; 
                 case DATACOUNT_COLUMN :
                     return metricsData.CMRInetMetricDataCount[r];
                 case DATARESET_COLUMN :
@@ -490,10 +488,11 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
         
 	public void setValueAt(int value, int r, int c)
         {
-            switch (c)
+            switch (c)  // leave this as a switch in case other columns get added
             {
                 case DATACOUNT_COLUMN :
                     metricsData.setMetricDataValue(r,value);
+                    break;
                 default:
             }
             fireTableDataChanged();
@@ -552,5 +551,3 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CMRInetMetricsFrame.class.getName());
 	
 }
-
-/* @(#)CMRInetMetricsFrame.java */

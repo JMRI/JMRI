@@ -261,6 +261,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         if (userName != null) {
             _tuser.remove(userName);
         }
+        _originalOrderList.remove(systemName);
         
         // notifications
         firePropertyChange("length", null, _beans.size());
@@ -321,7 +322,11 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
+    @Deprecated  // will be removed when Manager method is removed due to @Override
     public String[] getSystemNameArray() {
+        jmri.util.Log4JUtil.warnOnce(log, "Manager#getSystemNameArray() is deprecated");
+        if (log.isTraceEnabled()) log.trace("Manager#getSystemNameArray() called", new Exception("traceback"));
+
         if (cachedSystemNameArray == null) {
             cachedSystemNameArray = getSystemNameList().toArray(new String[_beans.size()]);
         }
@@ -331,6 +336,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     
     /** {@inheritDoc} */
     @Override
+    @Deprecated  // will be removed when Manager method is removed due to @Override
     public List<String> getSystemNameList() {
         if (cachedSystemNameList == null) {
             cachedSystemNameList = new ArrayList<>();
@@ -344,6 +350,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
+    @Deprecated  // will be removed when Manager method is removed due to @Override
     public List<String> getSystemNameAddedOrderList() {
         return Collections.unmodifiableList(_originalOrderList);
     }
@@ -351,6 +358,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
+    @Deprecated  // will be removed when Manager method is removed due to @Override
     public List<E> getNamedBeanList() {
         if (cachedNamedBeanList == null) {
             cachedNamedBeanList = new ArrayList<>(_beans);
@@ -508,11 +516,13 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     }
 
     /** {@inheritDoc} */
+    @Override
     public void addDataListener(ManagerDataListener<E> e) {
         if (e != null) listeners.add(e);
     }
 
     /** {@inheritDoc} */
+    @Override
     public void removeDataListener(ManagerDataListener<E> e) {
         if (e != null) listeners.remove(e);
     }
@@ -522,6 +532,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     private boolean muted = false;
     
     /** {@inheritDoc} */
+    @Override
     public void setDataListenerMute(boolean m) {
         if (muted && !m) {
             // send a total update, as we haven't kept track of specifics

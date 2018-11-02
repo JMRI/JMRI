@@ -26,11 +26,9 @@ public class AbstractMRNodeTrafficControllerTest extends AbstractMRTrafficContro
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp(); 
+        JUnitUtil.setUp(); 
         JUnitUtil.resetInstanceManager();
         tc = new AbstractMRNodeTrafficController(){
-           @Override
-           protected void setInstance() {}
            @Override
            protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m){
            }

@@ -3,6 +3,7 @@ package jmri.jmrix.dccpp;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
+import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
@@ -123,7 +124,8 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
     // programming interface
 
     @Override
-    synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    @Deprecated // 4.1.1
+    synchronized public void writeCV(int CV, int val, ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
         }
@@ -156,19 +158,20 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
     }
 
     @Override
-    synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void confirmCV(String CV, int val, ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
     @Override
-    synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+    @Deprecated // 4.1.1
+    synchronized public void readCV(int CV, ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
         }
         // If can't read (e.g. multiMaus CS), this shouldnt be invoked, but
         // still we need to do something rational by returning a NotImplemented error
         if (!getCanRead()) {
-            p.programmingOpReply(CV, jmri.ProgListener.NotImplemented);
+            notifyProgListenerEnd(p,CV,ProgListener.NotImplemented);
             return;
         }
         useProgrammer(p);
@@ -198,10 +201,10 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
 
     }
 
-    private jmri.ProgListener _usingProgrammer = null;
+    private ProgListener _usingProgrammer = null;
 
     // internal method to remember who's using the programmer
-    protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
+    protected void useProgrammer(ProgListener p) throws jmri.ProgrammerException {
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
             if (log.isInfoEnabled()) {
@@ -230,10 +233,10 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
      progState = NOTPROGRAMMING;
             if (_val == -1) {
                 log.debug("Reporting NoAck");
-                notifyProgListenerEnd(_val, jmri.ProgListener.NoAck);
+                notifyProgListenerEnd(_val, ProgListener.NoAck);
             } else {
                 log.debug("Reporting OK");
-                notifyProgListenerEnd(_val, jmri.ProgListener.OK);
+                notifyProgListenerEnd(_val, ProgListener.OK);
             }
  }
     }
@@ -272,9 +275,9 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
             // perhaps no loco present? Fail back to end of programming
             progState = NOTPROGRAMMING;
             if (getCanRead()) {
-                notifyProgListenerEnd(_val, jmri.ProgListener.FailedTimeout);
+                notifyProgListenerEnd(_val, ProgListener.FailedTimeout);
             } else {
-                notifyProgListenerEnd(_val, jmri.ProgListener.OK);
+                notifyProgListenerEnd(_val, ProgListener.OK);
             }
         }
     }
@@ -288,7 +291,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
         // clear the current listener _first_
         jmri.ProgListener temp = _usingProgrammer;
         _usingProgrammer = null;
-        temp.programmingOpReply(value, status);
+        notifyProgListenerEnd(temp,value,status);
     }
 
     DCCppTrafficController _controller = null;

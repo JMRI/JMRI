@@ -42,6 +42,15 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
         if (log.isDebugEnabled()) {
             log.debug("Requesting Throttle: " + address);
         }
+        // range check for LH200 and Compact/Commander
+        if (tc.getCommandStation().getCommandStationType() == 0x01 ||
+            tc.getCommandStation().getCommandStationType() == 0x02 ) {
+            if(address.getNumber()>=100) {
+               String typeString = Bundle.getMessage(tc.getCommandStation().getCommandStationType() == 0x01?"CSTypeLH200":"CSTypeCompact");
+               failedThrottleRequest(address,Bundle.getMessage("ThrottleErrorCSTwoDigit",typeString));
+               return;
+            }
+        }
         if (throttles.containsKey(address)) {
             notifyThrottleKnown(throttles.get(address), address);
         } else {

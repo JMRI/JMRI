@@ -180,6 +180,11 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     }
 
     @Override
+    public String getCurrentPortName(){
+        return "";
+    }
+
+    @Override
     public void run() { // start a new thread
         // This thread has one task. It repeatedly reads from the input pipe
         // and writes an appropriate response to the output pipe. This is the heart
@@ -252,7 +257,6 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      * @return a single Maple message to confirm the requested operation, or a series
      * of messages for each (fictitious) node/pin/state. To ignore certain commands, return null.
      */
-    @SuppressWarnings("fallthrough")
     private SerialReply generateReply(SerialMessage msg) {
         log.debug("Generate Reply to message from node {} (string = {})", msg.getAddress(), msg.toString());
 
@@ -410,8 +414,8 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         return r;
     }
 
-    int SignalBankSize = 16; // theoretically: 16
-    int SensorBankSize = 64; // theoretically: 0x3F
+    int signalBankSize = 16; // theoretically: 16
+    int sensorBankSize = 64; // theoretically: 0x3F
     javax.swing.Timer timer;
 
     // streams to share with user class

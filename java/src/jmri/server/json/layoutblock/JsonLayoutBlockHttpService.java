@@ -26,7 +26,7 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpService;
 /**
  *
- * @author mstevetodd Copyright (C) 2016 (copied from JsonMemoryHttpService)
+ * @author mstevetodd Copyright (C) 2018 (copied from JsonMemoryHttpService)
  * @author Randall Wood
  */
 public class JsonLayoutBlockHttpService extends JsonNamedBeanHttpService {

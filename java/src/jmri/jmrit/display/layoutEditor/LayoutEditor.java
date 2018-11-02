@@ -38,54 +38,15 @@ import java.beans.PropertyVetoException;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.ResourceBundle;
+
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 import javax.annotation.*;
 import javax.imageio.ImageIO;
-import javax.swing.AbstractAction;
-import javax.swing.AbstractButton;
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JColorChooser;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JRadioButton;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JRootPane;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.JViewport;
-import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -95,29 +56,11 @@ import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import jmri.Block;
-import jmri.BlockManager;
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Manager;
-import jmri.Memory;
-import jmri.MemoryManager;
-import jmri.NamedBean;
-import jmri.Reporter;
-import jmri.ReporterManager;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.SignalHead;
-import jmri.SignalHeadManager;
-import jmri.SignalMast;
-import jmri.SignalMastLogic;
-import jmri.SignalMastLogicManager;
-import jmri.SignalMastManager;
-import jmri.TransitManager;
-import jmri.Turnout;
-import jmri.UserPreferencesManager;
+
+import jmri.*;
+
 import jmri.configurexml.StoreXmlUserAction;
+
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.dispatcher.DispatcherAction;
 import jmri.jmrit.dispatcher.DispatcherFrame;
@@ -145,6 +88,8 @@ import jmri.util.MathUtil;
 import jmri.util.SystemType;
 import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.JmriBeanComboBox;
+import jmri.util.swing.JmriColorChooser;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -761,13 +706,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 Object o = event.getSource();
                 if (o instanceof JmriBeanComboBox) {
                     JmriBeanComboBox jbcb = (JmriBeanComboBox) o;
-                    Manager m = jbcb.getManager();
-                    if (m != null) {
-                        String[] systemNames = m.getSystemNameArray();
-                        for (int idx = 0; idx < systemNames.length; idx++) {
-                            String systemName = systemNames[idx];
-                            jbcb.setItemEnabled(idx, validatePhysicalTurnout(systemName, null));
-                        }
+                    for (int idx = 0; idx < jbcb.getItemCount(); idx++) {
+                        jbcb.setItemEnabled(idx, validatePhysicalTurnout(jbcb.getItemAt(idx), null));
                     }
                 }
             }
@@ -1132,6 +1072,18 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 }
             }
         });
+    }
+
+    @Override
+    public void newPanelDefaults() {
+        getLayoutTrackDrawingOptions().setMainRailWidth(2);
+        getLayoutTrackDrawingOptions().setSideRailWidth(1);
+        setBackgroundColor(defaultBackgroundColor);
+        JmriColorChooser.addRecentColor(defaultTrackColor);
+        JmriColorChooser.addRecentColor(defaultOccupiedTrackColor);
+        JmriColorChooser.addRecentColor(defaultAlternativeTrackColor);
+        JmriColorChooser.addRecentColor(defaultBackgroundColor);
+        JmriColorChooser.addRecentColor(defaultTextColor);
     }
 
     private final LayoutEditorComponent layoutEditorComponent = new LayoutEditorComponent(this);
@@ -2486,6 +2438,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     } else {
                         setTitle(newName);
                         setLayoutName(newName);
+                        getLayoutTrackDrawingOptions().setName(newName);
                         InstanceManager.getDefault(PanelMenu.class).renameEditorPanel(LayoutEditor.this);
                         setDirty();
 
@@ -2505,7 +2458,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JMenuItem backgroundColorMenuItem = new JMenuItem(Bundle.getMessage("SetBackgroundColor", "..."));
         optionMenu.add(backgroundColorMenuItem);
         backgroundColorMenuItem.addActionListener((ActionEvent event) -> {
-            Color desiredColor = JColorChooser.showDialog(this,
+            Color desiredColor = JmriColorChooser.showDialog(this,
                     Bundle.getMessage("SetBackgroundColor", ""),
                     defaultBackgroundColor);
             if (desiredColor != null && !defaultBackgroundColor.equals(desiredColor)) {
@@ -2522,7 +2475,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JMenuItem textColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTextColor", "..."));
         optionMenu.add(textColorMenuItem);
         textColorMenuItem.addActionListener((ActionEvent event) -> {
-            Color desiredColor = JColorChooser.showDialog(this,
+            Color desiredColor = JmriColorChooser.showDialog(this,
                     Bundle.getMessage("DefaultTextColor", ""),
                     defaultTextColor);
             if (desiredColor != null && !defaultTextColor.equals(desiredColor)) {
@@ -2677,7 +2630,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JMenuItem trackColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTrackColor"));
         trkColourMenu.add(trackColorMenuItem);
         trackColorMenuItem.addActionListener((ActionEvent event) -> {
-            Color desiredColor = JColorChooser.showDialog(this,
+            Color desiredColor = JmriColorChooser.showDialog(this,
                     Bundle.getMessage("DefaultTrackColor"),
                     defaultTrackColor);
             if (desiredColor != null && !defaultTrackColor.equals(desiredColor)) {
@@ -2690,7 +2643,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JMenuItem trackOccupiedColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultOccupiedTrackColor"));
         trkColourMenu.add(trackOccupiedColorMenuItem);
         trackOccupiedColorMenuItem.addActionListener((ActionEvent event) -> {
-            Color desiredColor = JColorChooser.showDialog(this,
+            Color desiredColor = JmriColorChooser.showDialog(this,
                     Bundle.getMessage("DefaultOccupiedTrackColor"),
                     defaultOccupiedTrackColor);
             if (desiredColor != null && !defaultOccupiedTrackColor.equals(desiredColor)) {
@@ -2703,7 +2656,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JMenuItem trackAlternativeColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultAlternativeTrackColor"));
         trkColourMenu.add(trackAlternativeColorMenuItem);
         trackAlternativeColorMenuItem.addActionListener((ActionEvent event) -> {
-            Color desiredColor = JColorChooser.showDialog(this,
+            Color desiredColor = JmriColorChooser.showDialog(this,
                     Bundle.getMessage("DefaultAlternativeTrackColor"),
                     defaultAlternativeTrackColor);
             if (desiredColor != null && !defaultAlternativeTrackColor.equals(desiredColor)) {
@@ -2766,7 +2719,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JMenuItem turnoutCircleColorMenuItem = new JMenuItem(Bundle.getMessage("TurnoutCircleColor"));
 
         turnoutCircleColorMenuItem.addActionListener((ActionEvent event) -> {
-            Color desiredColor = JColorChooser.showDialog(this,
+            Color desiredColor = JmriColorChooser.showDialog(this,
                     Bundle.getMessage("TurnoutCircleColor"),
                     turnoutCircleColor);
             if (desiredColor != null && !turnoutCircleColor.equals(desiredColor)) {
@@ -2816,10 +2769,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             // integrate LayoutEditor drawing options with previous drawing options
             layoutTrackDrawingOptions.setMainBlockLineWidth((int) mainlineTrackWidth);
             layoutTrackDrawingOptions.setSideBlockLineWidth((int) sidelineTrackWidth);
-            //layoutTrackDrawingOptions.setMainRailWidth((int) mainlineTrackWidth);
-            //layoutTrackDrawingOptions.setSideRailWidth((int) sidelineTrackWidth);
-            //layoutTrackDrawingOptions.setMainRailColor(defaultTrackColor);
-            //layoutTrackDrawingOptions.setSideRailColor(defaultTrackColor);
+            layoutTrackDrawingOptions.setMainRailWidth((int) mainlineTrackWidth);
+            layoutTrackDrawingOptions.setSideRailWidth((int) sidelineTrackWidth);
+            layoutTrackDrawingOptions.setMainRailColor(defaultTrackColor);
+            layoutTrackDrawingOptions.setSideRailColor(defaultTrackColor);
         }
         return layoutTrackDrawingOptions;
     }
@@ -5300,7 +5253,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             double w = 10.0;
             double h = 5.0;
 
-            if (s.isIcon() || s.isRotated()) {
+            if (s.isIcon() || s.isRotated() || s.getPopupUtility().getOrientation() != PositionablePopupUtil.HORIZONTAL) {
                 w = s.maxWidth();
                 h = s.maxHeight();
             } else if (s.isText()) {
@@ -6086,6 +6039,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     if ((ft.getTurnoutType() == LayoutTurnout.RH_TURNOUT) || (ft.getTurnoutType() == LayoutTurnout.LH_TURNOUT)) {
                         rotateTurnout(ft);
                     }
+
+                    // Assign a block to the new zero length track segment.
+                    ft.setTrackSegmentBlock(foundPointType, true);
                     break;
                 }
 
@@ -9052,6 +9008,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public void setDefaultTrackColor(@Nonnull Color color) {
         LayoutTrack.setDefaultTrackColor(color);
         defaultTrackColor = color;
+        JmriColorChooser.addRecentColor(color);
     }
 
     /**
@@ -9068,6 +9025,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     public void setDefaultOccupiedTrackColor(@Nonnull Color color) {
         defaultOccupiedTrackColor = color;
+        JmriColorChooser.addRecentColor(color);
     }
 
     /**
@@ -9084,6 +9042,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     public void setDefaultAlternativeTrackColor(@Nonnull Color color) {
         defaultAlternativeTrackColor = color;
+        JmriColorChooser.addRecentColor(color);
     }
 
     /**
@@ -9106,6 +9065,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             turnoutCircleColor = ColorUtil.stringToColor(getDefaultTrackColor());
         } else {
             turnoutCircleColor = color;
+            JmriColorChooser.addRecentColor(color);
         }
     }
 
@@ -9120,6 +9080,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         setOptionMenuTurnoutCircleSize();
     }
 
+    /**
+     * Should only be invoked on the GUI (Swing) thread
+     */
+    @InvokeOnGuiThread
     public void setTurnoutDrawUnselectedLeg(boolean state) {
         if (turnoutDrawUnselectedLeg != state) {
             turnoutDrawUnselectedLeg = state;
@@ -9140,6 +9104,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     public void setDefaultTextColor(@Nonnull Color color) {
         defaultTextColor = color;
+        JmriColorChooser.addRecentColor(color);
     }
 
     /**
@@ -9156,6 +9121,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     public void setDefaultBackgroundColor(@Nonnull Color color) {
         defaultBackgroundColor = color;
+        JmriColorChooser.addRecentColor(color);
     }
 
     public void setXScale(double xSc) {
@@ -9170,6 +9136,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         layoutName = name;
     }
 
+    /**
+     * Should only be invoked on the GUI (Swing) thread
+     */
+    @InvokeOnGuiThread  // due to the setSelected call on a possibly-visible item
     public void setShowHelpBar(boolean state) {
         if (showHelpBar != state) {
             showHelpBar = state;
@@ -9196,6 +9166,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
+    /**
+     * Should only be invoked on the GUI (Swing) thread
+     */
+    @InvokeOnGuiThread
     public void setDrawGrid(boolean state) {
         if (drawGrid != state) {
             drawGrid = state;
@@ -9203,6 +9177,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
+    /**
+     * Should only be invoked on the GUI (Swing) thread
+     */
+    @InvokeOnGuiThread
     public void setSnapOnAdd(boolean state) {
         if (snapToGridOnAdd != state) {
             snapToGridOnAdd = state;
@@ -9210,6 +9188,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
+    /**
+     * Should only be invoked on the GUI (Swing) thread
+     */
+    @InvokeOnGuiThread
     public void setSnapOnMove(boolean state) {
         if (snapToGridOnMove != state) {
             snapToGridOnMove = state;
@@ -9217,6 +9199,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
+    /**
+     * Should only be invoked on the GUI (Swing) thread
+     */
+    @InvokeOnGuiThread
     public void setAntialiasingOn(boolean state) {
         if (antialiasingOn != state) {
             antialiasingOn = state;
@@ -9279,13 +9265,15 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param inBlock the block
      * @return true if block was highlighted
      */
+    @SuppressWarnings("unchecked") // Annotate the List<Block> l assignment 
+                                   // First, make JmriBeanComboBox generic on <E extends NamedBean> (and manager) to fix this.
     public boolean highlightBlock(@Nullable Block inBlock) {
         boolean result = false; //assume failure (pessimist!)
 
         blockIDComboBox.setSelectedBean(inBlock);
 
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
-        List<NamedBean> l = blockIDComboBox.getManager().getNamedBeanList();
+        Set<NamedBean> l = blockIDComboBox.getManager().getNamedBeanSet();
         for (NamedBean nb : l) {
             Block b = (Block) nb;
             LayoutBlock lb = lbm.getLayoutBlock(b);
@@ -9454,10 +9442,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     //these are convenience methods to return circles used to draw onscreen
     //
-    //compute the control point rect at inPoint
+    //compute the control point rect at inPoint; use the turnout circle size
     public Ellipse2D trackEditControlCircleAt(@Nonnull Point2D inPoint) {
-        return new Ellipse2D.Double(inPoint.getX() - SIZE,
-                inPoint.getY() - SIZE, SIZE2, SIZE2);
+        return trackControlCircleAt(inPoint);
     }
 
     //compute the turnout circle at inPoint (used for drawing)
@@ -9548,11 +9535,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         draw1(g2, main, block, hidden, dashed = true);
 
         //setup for drawing mainline rails
+        main = true;
         g2.setColor(ltdo.getMainRailColor());
         g2.setStroke(stroke);
         draw1(g2, main, block, hidden, dashed = false);
         g2.setStroke(dashedStroke);
-        draw1(g2, main, block, hidden, dashed = true);
+        dashed = true;
+        draw1(g2, main, block, hidden, dashed);
     }
 
     //
@@ -9622,7 +9611,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             g2.setStroke(new BasicStroke(ballastWidth,
                     BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             g2.setColor(ltdo.getMainBallastColor());
-            draw1(g2, main = true, block, hidden, dashed);
+            main = true;
+            draw1(g2, main, block, hidden, dashed);
         }
     }
 
@@ -9703,7 +9693,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     railWidth,
                     BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             g2.setColor(railColor);
-            draw1(g2, main, block, hidden, dashed = false);
+            dashed = false;
+            draw1(g2, main, block, hidden, dashed);
         }
     }   // drawLayoutTracksRails
 
@@ -9770,7 +9761,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //note: color is set in layout track's draw1 when isBlock is true
         draw1(g2, main = true, block, hidden, dashed = true);
         g2.setStroke(blockLineStroke);
-        draw1(g2, main, block, hidden, dashed = false);
+        dashed = false;
+        draw1(g2, main, block, hidden, dashed);
     }
 
     // isDashed defaults to false

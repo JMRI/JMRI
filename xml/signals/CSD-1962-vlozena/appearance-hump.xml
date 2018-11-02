@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Petr</firstname><surname>Šídlo</surname></personname>
+        <email>sidlo64@hotmail.com</email>
+    </author>    
+  </authorgroup>
+    
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2016-11-27</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+  </revhistory>
+
+  <aspecttable>CSD-1962-vlozena</aspecttable>
+  <name>Spádovištní návěstidla</name>
+  <description>Spádovištní návěstidla.</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Sunout zakázáno</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/216_su_zakazano_sp.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Sunout pomalu</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/217_su_pomalu_sp.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Sunout rychleji</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/218_su_rychle_sp.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Zpět</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/219_su_zpet_sp.gif</imagelink>
+    </appearance>
+
+  </appearances>
+</appearancetable>  

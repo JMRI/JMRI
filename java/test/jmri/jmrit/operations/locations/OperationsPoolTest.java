@@ -1,4 +1,3 @@
-//OperationsPoolTest.java
 package jmri.jmrit.operations.locations;
 
 import java.util.List;
@@ -6,9 +5,10 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.OpsPropertyChangeListener;
 import jmri.jmrit.operations.rollingstock.cars.Car;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Pool class Last manually cross-checked on ?????
@@ -34,6 +34,7 @@ public class OperationsPoolTest extends OperationsTestCase {
     // {
     // // There is currently no default constructor...
     // }
+    @Test
     public void testCreateNormal() {
         p = new Pool("Id1", "Name1");
         Assert.assertEquals("Pool Id", "Id1", p.getId());
@@ -43,6 +44,7 @@ public class OperationsPoolTest extends OperationsTestCase {
     }
 
     // test property set
+    @Test
     public void testProperties() {
         p = new Pool("Id2", "Name2");
 
@@ -51,6 +53,7 @@ public class OperationsPoolTest extends OperationsTestCase {
     }
 
     // test PropertyChanged event
+    @Test
     public void testPropertyChangedEvent() {
         p = new Pool("Id3", "Name3");
         // Boolean fired = false;
@@ -73,12 +76,14 @@ public class OperationsPoolTest extends OperationsTestCase {
     }
 
     // test methods
+    @Test
     public void testToString() {
         p = new Pool("Id4", "Name4");
 
         Assert.assertEquals("ToString()", "Name4", p.toString());
     }
 
+    @Test
     public void testAddTrack() {
         t1 = new Track("Id1", "Track1", "Type1", null);
         p = new Pool("P1", "Pool1");
@@ -99,6 +104,7 @@ public class OperationsPoolTest extends OperationsTestCase {
         Assert.assertNull("No event", opcl.getEvent());
     }
 
+    @Test
     public void testRemoveTrack() {
         t1 = new Track("Id1", "Track1", "Type1", null);
         p = new Pool("P1", "Pool1");
@@ -142,6 +148,7 @@ public class OperationsPoolTest extends OperationsTestCase {
         return p;
     }
 
+    @Test
     public void testGetTracks() {
         Create2TrackPool();
 
@@ -151,6 +158,7 @@ public class OperationsPoolTest extends OperationsTestCase {
         Assert.assertEquals("Second track", t2, p.getTracks().get(1));
     }
 
+    @Test
     public void testTrackListIsCopy() {
         // Make sure the collection is not the internal one.
         Create2TrackPool();
@@ -164,6 +172,7 @@ public class OperationsPoolTest extends OperationsTestCase {
         Assert.assertEquals("Original list size is unchanged", 2, p.getTracks().size());
     }
 
+    @Test
     public void testLengthenTrack1() {
 		// Track 1 is 100 feet, minimum 50, available 50
         // Track 2 is 120 feet, minimum 40, available 80
@@ -178,6 +187,7 @@ public class OperationsPoolTest extends OperationsTestCase {
         Assert.assertEquals("Length 2", 100, t2.getLength());
     }
 
+    @Test
     public void testLengthenTrack1Maximum() {
 		// Track 1 is 100 feet, minimum 50, available 50
         // Track 2 is 120 feet, minimum 40, available 80
@@ -193,6 +203,7 @@ public class OperationsPoolTest extends OperationsTestCase {
         Assert.assertEquals("Length 2", 40, t2.getLength());
     }
 
+    @Test
     public void testLengthenTrack1TooLong() {
 		// Track 1 is 100 feet, minimum 50, available 50
         // Track 2 is 120 feet, minimum 40, available 80
@@ -208,6 +219,7 @@ public class OperationsPoolTest extends OperationsTestCase {
         // Assert.assertEquals("Length 2", 40, t2.getLength());
     }
 
+    @Test
     public void testShortenTrack1() {
 		// Track 1 is 100 feet, minimum 50, available 50
         // Track 2 is 120 feet, minimum 40, available 80
@@ -222,6 +234,7 @@ public class OperationsPoolTest extends OperationsTestCase {
         Assert.assertEquals("Length 2", 140, t2.getLength());
     }
 
+    @Test
     public void testShortenTrack1BelowMinimum() {
 		// Track 1 is 100 feet, minimum 50, available 50
         // Track 2 is 120 feet, minimum 40, available 80
@@ -236,6 +249,7 @@ public class OperationsPoolTest extends OperationsTestCase {
         Assert.assertEquals("Length 2", 200, t2.getLength());
     }
 
+    @Test
     public void testTrackPools() {
         LocationManager locMan = new LocationManager();
         Location l = locMan.newLocation("TestTrackPoolsLocation");
@@ -359,30 +373,16 @@ public class OperationsPoolTest extends OperationsTestCase {
     }
 
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
         InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarTypes.class).addName("Boxcar");
     }
 
-    public OperationsPoolTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OperationsPoolTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OperationsPoolTest.class);
-        return suite;
-    }
-
     // The minimal setup for log4J
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         super.tearDown();
     }
 }

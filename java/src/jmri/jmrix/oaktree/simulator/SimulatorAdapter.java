@@ -179,6 +179,11 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     }
 
     @Override
+    public String getCurrentPortName(){
+        return "";
+    }
+
+    @Override
     public void run() { // start a new thread
         // This thread has one task. It repeatedly reads from the input pipe
         // and writes an appropriate response to the output pipe. This is the heart
@@ -252,7 +257,6 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      * @return a single AokTree message to confirm the requested operation, or a series
      * of messages for each (fictitious) node/pin/state. To ignore certain commands, return null.
      */
-    @SuppressWarnings("fallthrough")
     private SerialReply generateReply(SerialMessage msg) {
         int nodeaddr = msg.getAddr();
         log.debug("Generate Reply to message for node {} (string = {})", nodeaddr, msg.toString());
@@ -260,11 +264,19 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
          switch (msg.getElement(1)) {
              case 48: // OakTree poll message
                  reply.setElement(0, nodeaddr);
-                 if (((OakTreeSystemConnectionMemo) getSystemConnectionMemo()).getTrafficController().getNode(nodeaddr).getSensorsActive()) { // input (sensors) status reply
-                     int payload = 0b0001; // dummy stand in for sensor status report; should we fetch known state from jmri node?
-                     for (int j = 0; j < 3; j++) {
-                         payload |= j << 4;
-                         reply.setElement(j + 1, payload); // there could be > 5 elements TODO see SerialNode#markChanges
+                 reply.setElement(1, 0x50);
+                 if (((OakTreeSystemConnectionMemo) getSystemConnectionMemo()).getTrafficController().getNode(nodeaddr) == null) {
+                     log.debug("OakTree Sim generateReply getNode({}) = null", nodeaddr);
+                 } else {
+                     if (((OakTreeSystemConnectionMemo) getSystemConnectionMemo()).getTrafficController().getNode(nodeaddr).getSensorsActive()) { // input (sensors) status reply
+                         log.debug("OakTree Sim generateReply for node {}", nodeaddr);
+                         int payload = 0b0001; // dummy stand in for sensor status report; should we fetch known state from jmri node?
+                         for (int j = 1; j < 3; j++) {
+                             payload |= j << 4;
+                             reply.setElement(j + 1, payload); // there could be > 5 elements TODO see SerialNode#markChanges
+                         }
+                     } else {
+                         return null; // prevent NPE
                      }
                  }
                  log.debug("Status Reply generated {}", reply.toString());

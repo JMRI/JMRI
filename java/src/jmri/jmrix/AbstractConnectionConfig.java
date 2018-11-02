@@ -26,8 +26,37 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
      */
     public AbstractConnectionConfig() {
         try {
+            // The next commented-out line replacing the following when Issue #4670 is resolved; see Manager
             // systemPrefixField = new JFormattedTextField(new jmri.util.swing.RegexFormatter("[A-Za-z]\\d*"));
-            systemPrefixField = new JFormattedTextField(new SystemPrefixFormatter());
+            systemPrefixField = new JFormattedTextField(new SystemPrefixFormatter()) {
+                @Override
+                public void setValue(Object value) {
+                    log.debug("setValue {} {}", value, getBackground());
+                    if (getBackground().equals(java.awt.Color.RED)) { // only if might have set before, leaving default otherwise
+                        setBackground(java.awt.Color.WHITE); 
+                        setToolTipText(null);
+                    }
+                    super.setValue(value);
+                    // check for legacy, and if so paint red (will have not gotten here if not valid)
+                    if (jmri.Manager.isLegacySystemPrefix(value.toString())) {
+                        setBackground(java.awt.Color.RED);
+                        setToolTipText("This is a legacy prefix that should be migrated, ask on JMRIusers");
+                    }                    
+                }
+                public void setText(String value) {
+                    log.debug("setText {} {}", value, getBackground());
+                    if (getBackground().equals(java.awt.Color.RED)) { // only if might have set before, leaving default otherwise
+                        setBackground(java.awt.Color.WHITE); 
+                        setToolTipText(null);
+                    }
+                    super.setText(value);
+                    // check for legacy, and if so paint red (will have not gotten here if not valid)
+                    if (jmri.Manager.isLegacySystemPrefix(value)) {
+                        setBackground(java.awt.Color.RED);
+                        setToolTipText("This is a legacy prefix that should be migrated, ask on JMRIusers");
+                    }                    
+                }
+            };
             
             systemPrefixField.setPreferredSize(new JTextField("P123").getPreferredSize());
             systemPrefixField.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);

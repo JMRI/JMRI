@@ -25,5 +25,8 @@ public class VSDListenerTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {        
+        jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
+        JUnitUtil.tearDown();
+    }
 }

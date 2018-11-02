@@ -3,9 +3,7 @@ package jmri.jmrix.lenz.swing.packetgen;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.lenz.XNetMessage;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Tests for the jmri.jmrix.lenz.packetgen.PacketGenFrame class
@@ -43,5 +41,15 @@ public class PacketGenFrameTest {
         Assert.assertEquals("5th byte", 0x06, m.getElement(5) & 0xFF);
         Assert.assertEquals("6th byte", 0x0B, m.getElement(6) & 0xFF);
         Assert.assertEquals("7th byte", 0xB1, m.getElement(7) & 0xFF);
+    }
+
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
     }
 }

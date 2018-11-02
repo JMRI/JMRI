@@ -85,15 +85,12 @@
         <label>Consist Deceleration Adjustment Sign</label>
       </variable>
       <!-- CV=29 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29AdvAck.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable item="Reverse Trim" CV="95" default="84">
         <decVal/>
         <label>Reverse Trim</label>

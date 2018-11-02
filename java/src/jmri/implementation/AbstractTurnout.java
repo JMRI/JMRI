@@ -1,7 +1,9 @@
 package jmri.implementation;
 
+import java.beans.*;
 import java.util.Arrays;
-import javax.annotation.CheckReturnValue;
+import javax.annotation.*
+;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBeanHandle;
@@ -38,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001, 2009
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements
-        Turnout, java.beans.PropertyChangeListener {
+        Turnout, PropertyChangeListener {
 
     protected AbstractTurnout(String systemName) {
         super(systemName.toUpperCase());
@@ -53,8 +55,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         return Bundle.getMessage("BeanNameTurnout");
     }
 
-    private String closedText = InstanceManager.turnoutManagerInstance().getClosedText();
-    private String thrownText = InstanceManager.turnoutManagerInstance().getThrownText();
+    private final String closedText = InstanceManager.turnoutManagerInstance().getClosedText();
+    private final String thrownText = InstanceManager.turnoutManagerInstance().getThrownText();
 
     /**
      * Handle a request to change state, typically by sending a message to the
@@ -291,6 +293,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         for (int i = 0; i < _validFeedbackNames.length; i++) {
             if (mode.equals(_validFeedbackNames[i])) {
                 setFeedbackMode(_validFeedbackModes[i]);
+                setInitialKnownStateFromFeedback();
                 return;
             }
         }
@@ -605,7 +608,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             if (myTurnoutOperation != null) {
                 to = myTurnoutOperation.getOperator(this);
             } else {
-                TurnoutOperation toper = TurnoutOperationManager.getInstance()
+                TurnoutOperation toper = InstanceManager.getDefault(TurnoutOperationManager.class)
                         .getMatchingOperation(this,
                                 getFeedbackModeForOperation());
                 if (toper != null) {
@@ -664,7 +667,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         if (temp != null) {
             temp.addPropertyChangeListener(this, s.getName(), "Feedback Sensor for " + getDisplayName());
         }
-
+        // set initial state
+        setInitialKnownStateFromFeedback();
     }
 
     @Override
@@ -709,6 +713,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         if (temp != null) {
             temp.addPropertyChangeListener(this, s.getName(), "Feedback Sensor for " + getDisplayName());
         }
+        // set initial state 
+        setInitialKnownStateFromFeedback();
     }
 
     @Override
@@ -772,7 +778,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * appropriate sensor mode.
      */
     @Override
-    public void propertyChange(java.beans.PropertyChangeEvent evt) {
+    public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getSource() == myTurnoutOperation) {
             operationPropertyChange(evt);
         } else if (evt.getSource() == getFirstSensor()
@@ -781,7 +787,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         }
     }
 
-    protected void sensorPropertyChange(java.beans.PropertyChangeEvent evt) {
+    protected void sensorPropertyChange(PropertyChangeEvent evt) {
         // top level, find the mode
         if (_activeFeedbackType == ONESENSOR) {
             // check for match

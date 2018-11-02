@@ -9,7 +9,7 @@ import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.automation.AutomationManager;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.util.FileUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -300,7 +300,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     }
 
     private String getDefaultManifestFileName(String name, String ext) {
-        return OperationsManager.getInstance().getPath(JSON_MANIFESTS) + File.separator + "train-" + name + "." + ext; // NOI18N
+        return InstanceManager.getDefault(OperationsManager.class).getPath(JSON_MANIFESTS) + File.separator + "train-" + name + "." + ext; // NOI18N
     }
 
     /**

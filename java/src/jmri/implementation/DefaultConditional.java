@@ -76,9 +76,9 @@ public class DefaultConditional extends AbstractNamedBean
     private String _antecedent = "";
     private int _logicType = Conditional.ALL_AND;
     // variables (antecedent) parameters
-    private ArrayList<ConditionalVariable> _variableList = new ArrayList<>();
+    private List<ConditionalVariable> _variableList = new ArrayList<>();
     // actions (consequent) parameters
-    protected ArrayList<ConditionalAction> _actionList = new ArrayList<>();
+    protected List<ConditionalAction> _actionList = new ArrayList<>();
 
     private int _currentState = NamedBean.UNKNOWN;
     private boolean _triggerActionsOnChange = true;
@@ -140,7 +140,7 @@ public class DefaultConditional extends AbstractNamedBean
      * This method assumes that all information has been validated.
      */
     @Override
-    public void setStateVariables(ArrayList<ConditionalVariable> arrayList) {
+    public void setStateVariables(List<ConditionalVariable> arrayList) {
         log.debug("Conditional \"{}\" ({}) updated ConditionalVariable list.",
                 getUserName(), getSystemName());  // NOI18N
         _variableList = arrayList;
@@ -175,7 +175,7 @@ public class DefaultConditional extends AbstractNamedBean
      *
      * @return the list of state variables
      */
-    public ArrayList<ConditionalVariable> getStateVariableList() {
+    public List<ConditionalVariable> getStateVariableList() {
         return _variableList;
     }
 
@@ -183,7 +183,7 @@ public class DefaultConditional extends AbstractNamedBean
      * Set list of actions.
      */
     @Override
-    public void setAction(ArrayList<ConditionalAction> arrayList) {
+    public void setAction(List<ConditionalAction> arrayList) {
         _actionList = arrayList;
     }
 
@@ -211,7 +211,7 @@ public class DefaultConditional extends AbstractNamedBean
      *
      * @return the list of actions
      */
-    public ArrayList<ConditionalAction> getActionList() {
+    public List<ConditionalAction> getActionList() {
         return _actionList;
     }
 
@@ -347,7 +347,7 @@ public class DefaultConditional extends AbstractNamedBean
      * @return error message string if not well formed
      */
     @Override
-    public String validateAntecedent(String ant, ArrayList<ConditionalVariable> variableList) {
+    public String validateAntecedent(String ant, List<ConditionalVariable> variableList) {
         char[] ch = ant.toCharArray();
         int n = 0;
         for (int j = 0; j < ch.length; j++) {
@@ -409,7 +409,7 @@ public class DefaultConditional extends AbstractNamedBean
      *         variable indices used.
      * @throws jmri.JmriException if unable to compute the logic
      */
-    DataPair parseCalculate(String s, ArrayList<ConditionalVariable> variableList)
+    DataPair parseCalculate(String s, List<ConditionalVariable> variableList)
             throws JmriException {
 
         // for simplicity, we force the string to upper case before scanning
@@ -1077,9 +1077,6 @@ public class DefaultConditional extends AbstractNamedBean
                         } else {
                             jmri.jmrit.logix.WarrantTableFrame frame = jmri.jmrit.logix.WarrantTableFrame.getDefault();
                             String err = frame.runTrain(w, Warrant.MODE_RUN);
-                            if (err != null) {
-                                w.stopWarrant(true);
-                            }
                             if (err != null) {
                                 errorList.add("runAutoTrain error - " + err);  // NOI18N
                                 w.stopWarrant(true);

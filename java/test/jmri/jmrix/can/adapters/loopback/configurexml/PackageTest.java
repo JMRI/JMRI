@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   ConnectionConfigXmlTest.class
+   ConnectionConfigXmlTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.can.adapters.loopback.configurexml package.

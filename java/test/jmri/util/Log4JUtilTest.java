@@ -1,9 +1,6 @@
 package jmri.util;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,8 +9,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright 2003, 2009, 2010, 2015
  */
-public class Log4JUtilTest extends TestCase {
+public class Log4JUtilTest {
 
+    @Test
     public void testLog4JWarnMessage() {
         log.warn("WARN message");
         jmri.util.JUnitAppender.assertWarnMessage("WARN message");
@@ -23,6 +21,7 @@ public class Log4JUtilTest extends TestCase {
         Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());        
     }
 
+    @Test
     public void testWarnOnceCounts() {
         Assert.assertTrue(Log4JUtil.warnOnce(log, "WARN message")); // string has to be same until further notice
         Assert.assertFalse(Log4JUtil.warnOnce(log, "WARN message"));
@@ -39,12 +38,14 @@ public class Log4JUtilTest extends TestCase {
         jmri.util.JUnitAppender.assertWarnMessage("WARN message 2");        
     }
 
+    @Test
     public void testWarnOnceArguments() {
         Assert.assertTrue(Log4JUtil.warnOnce(log, "Test {} {}", "A", "B"));
         jmri.util.JUnitAppender.assertWarnMessage("Test A B");
         Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
     }
     
+    @Test
     public void testSendJavaUtilLogInfoMessage() {
         // test that java.util.logging is getting to Log4J
         java.util.logging.Logger logger =
@@ -56,35 +57,24 @@ public class Log4JUtilTest extends TestCase {
 
         Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
     }
-
-    // from here down is testing infrastructure
-    public Log4JUtilTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", Log4JUtilTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(Log4JUtilTest.class);
-        return suite;
+    
+    @Test
+    public void testShortenStacktrace() {
+        IllegalArgumentException ex = new IllegalArgumentException("for test");
+        Assert.assertTrue("Needs long enough trace for test", ex.getStackTrace().length > 3);
+        
+        Assert.assertEquals(3, Log4JUtil.shortenStacktrace(ex, 3).getStackTrace().length);
     }
 
     // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        apps.tests.Log4JFixture.setUp();
+    @Before
+    public void setUp() throws Exception {
+        jmri.util.JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
+        jmri.util.JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(Log4JUtilTest.class);

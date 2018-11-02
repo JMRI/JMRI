@@ -73,7 +73,7 @@
 				<choice xml:lang="fr">Utiliser tableau de vitesse (CV's 67-94)</choice>
 				<choice xml:lang="de">Geschwindigkeitskennlinie nutzen (CV's 67-94)</choice>
 				<choice xml:lang="cs">Použít rychlostní tabulku (CV 67-94)</choice>
-				<choice xml:lang="nl">Gebruik de snelheids tabel (CV's 67-94)</choice>
+				<choice xml:lang="nl">Gebruik de snelheidsgrafiek (CV's 67-94)</choice>
 			</enumChoice>
 		</enumVal>
 		<label>Use Speed Table</label>
@@ -81,6 +81,6 @@
 		<label xml:lang="fr">Tableau de vitesse</label>
 		<label xml:lang="de">Geschwindigkeitskennlinie nutzen</label>
 		<label xml:lang="cs">Použití rychlostní tabulky</label>
-		<label xml:lang="nl">Gebruik de snelheids tabel</label>
+		<label xml:lang="nl">Gebruik de snelheidsgrafiek</label>
 	</variable>
 </variables>

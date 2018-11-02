@@ -4,18 +4,16 @@ import java.beans.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import jmri.*;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import org.junit.*;
 
 /**
  * Tests for the jmri.util.PropertyChangeEventQueue class.
  *
  * @author	Bob Jacobsen Copyright 2017
  */
-public class PropertyChangeEventQueueTest extends TestCase {
+public class PropertyChangeEventQueueTest {
 
+    @Test
     public void testArraySingleListen() throws jmri.JmriException, InterruptedException {
         PropertyChangeEventQueue pq = new PropertyChangeEventQueue(new NamedBean[]{is1, is2});
 
@@ -32,6 +30,7 @@ public class PropertyChangeEventQueueTest extends TestCase {
         Assert.assertTrue(another == null);
     }
 
+    @Test
     public void testListSingleListen() throws jmri.JmriException, InterruptedException {
         PropertyChangeEventQueue pq = new PropertyChangeEventQueue(Arrays.asList(new NamedBean[]{is1, is2}));
 
@@ -48,12 +47,14 @@ public class PropertyChangeEventQueueTest extends TestCase {
         Assert.assertTrue(another == null);
     }
 
+    @Test
     public void testToString() throws jmri.JmriException {
         PropertyChangeEventQueue pq = new PropertyChangeEventQueue(new NamedBean[]{is1, is2});
 
         Assert.assertEquals("PropertyChangeEventQueue for (\"IS1\") (\"IS2\")", pq.toString());
     }
 
+    @Test
     public void testDispose() throws jmri.JmriException, InterruptedException {
         PropertyChangeEventQueue pq = new PropertyChangeEventQueue(Arrays.asList(new NamedBean[]{is1, is2}));
 
@@ -69,31 +70,13 @@ public class PropertyChangeEventQueueTest extends TestCase {
         Assert.assertEquals(start - 1, is1.getNumPropertyChangeListeners());
     }
 
-    // from here down is testing infrastructure
-    public PropertyChangeEventQueueTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", PropertyChangeEventQueueTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(PropertyChangeEventQueueTest.class);
-        return suite;
-    }
-
     Sensor is1;
     Sensor is2;
     volatile boolean flag1;
 
     // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.initInternalSensorManager();
         is1 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS1");
@@ -101,10 +84,9 @@ public class PropertyChangeEventQueueTest extends TestCase {
         flag1 = false;
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
+        jmri.util.JUnitUtil.tearDown();
     }
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PropertyChangeEventQueueTest.class);

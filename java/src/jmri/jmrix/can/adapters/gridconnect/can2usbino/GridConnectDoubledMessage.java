@@ -7,13 +7,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Class for GridConnectDoubled messages for a CAN hardware adapter.
- * <P>
+ * <p>
  * The GridConnect protocol encodes messages as an ASCII string of up to 24
  * characters of the form: :ShhhhNd0d1d2d3d4d5d6d7; The S indicates a standard
  * CAN frame :XhhhhhhhhNd0d1d2d3d4d5d6d7; The X indicates an extended CAN frame
  * hhhh is the two byte header N or R indicates a normal or remote frame, in
  * position 6 or 10 d0 - d7 are the (up to) 8 data bytes
- * <P>
+ * <p>
  * On transmit, this is doubled and starts with an "!" character.
  *
  * @author Andrew Crosland Copyright (C) 2012
@@ -48,9 +48,7 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
         int offset = isExtended() ? 11 : 6;
         setElement(offset + m.getNumDataElements() * 2, ';');
         setNumDataElements(offset + 1 + m.getNumDataElements() * 2);
-        if (log.isDebugEnabled()) {
-            log.debug("encoded as " + this.toString());
-        }
+        log.debug("encoded as {}", this.toString());
     }
 
     // accessors to the bulk data
@@ -131,7 +129,7 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
 
     /**
      * Set a byte as two ASCII hex digits
-     * <P>
+     * <p>
      * Data bytes are encoded as two ASCII hex digits starting at byte 7 of the
      * message.
      *
@@ -162,6 +160,5 @@ public class GridConnectDoubledMessage extends GridConnectMessage {
     }
 
     private final static Logger log = LoggerFactory.getLogger(GridConnectDoubledMessage.class);
+
 }
-
-

@@ -21,7 +21,7 @@ public class PiGpioProviderScaffold extends WiringPiGpioProviderBase {
 
      @Override
      public boolean hasPin(Pin pin) {
-        return false;
+        return true;
      }
 
      @Override

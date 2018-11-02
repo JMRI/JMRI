@@ -13,12 +13,11 @@ package jmri.jmrix.loconet;
  *  <li>RE - Re-engineered, not from the LocoNet documentations
  *  <li>STAT1 - bits in status byte 1
  *  <li>STAT2 - bits in status byte 2
- *  <li>
  *  </ul>
  *<p>
  * Slot Status byte definitions and macros
- * <UL>
- * <li>D7-SL_SPURGE : 1=SLOT purge en,  ALSO adrSEL (INTERNAL use only) (not seen on NET!)
+ * <ul>
+ * <li>D7-SL_SPURGE : 1=SLOT purge en, ALSO adrSEL (INTERNAL use only) (not seen on NET!)
  *
  * <li>D6-SL_CONUP : CONDN/CONUP: bit encoding-Control double
  * linked Consist List
@@ -63,22 +62,22 @@ package jmri.jmrix.loconet;
  *      <li>111=128 Step decoder, Allow Advanced DCC consisting
  *      <li>100=28 Step decoder ,Allow Advanced DCC consisting
  *      </ul>
- * </ul><p>
+ * </ul>
  * Note that the values in this class have been taken from the llnmom C program
  * of Ron W. Auld, which included some work of John Kabat. The symbol names are
  * copied from the loconet.h file, CVS revision 1.1.1.1, program release 0.3.0
  * Those parts are (C) Copyright 2001 Ron W. Auld, and are used with direct
  * permission of the copyright holder.
- * <P>
+ * <p>
  * Most major comment blocks here are quotes from the Digitrax Loconet(r) OPCODE
  * SUMMARY found in the Loconet(r) Personal Edition 1.
- * <P>
+ * <p>
  * Al Silverstein provided the reverse-engineering effort for the
  * OPC_MULTI_SENSE message.
- * <P>
+ * <p>
  * Alain Le Marchand completed the list of constants for Uhlenbrock Intellibox-I
  * and -II, from observations of Intellibox traffic.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
@@ -86,11 +85,10 @@ package jmri.jmrix.loconet;
  * Inc for separate permission.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2015
- * @author  Ron W. Auld
- * @author  John Kabat
- * @author  Alain Le Marchand
+ * @author Ron W. Auld
+ * @author John Kabat
+ * @author Alain Le Marchand
  * @author B. Milhaupt Copyright (C) 2018
- *
  */
 public final class LnConstants {
 
@@ -183,7 +181,12 @@ public final class LnConstants {
     public final static int CONSIST_SUB = STAT1_SL_CONUP;
     public final static int CONSIST_NO = 0;
 
-    /** Encode consisting status as a string */
+    /**
+     * Encode consisting status as a string
+     * <p>
+     * @param s - consist status bits
+     * @return string contaning a description of the consisting state
+     */
     public final static String CONSIST_STAT(int s) {
         return ((s & CONSIST_MASK) == CONSIST_MID) ? "Mid Consist" // NOI18N
                 : (((s & CONSIST_MASK) == CONSIST_TOP) ? "Consist TOP" // NOI18N
@@ -191,7 +194,7 @@ public final class LnConstants {
                                 : "Not Consisted")); // NOI18N
     }
 
-    /** Mask for locomotive use determination.
+   /** Mask for locomotive use determination.
     * Compare value to {@link #LOCO_IN_USE},  {@link #LOCO_IDLE},
     * {@link #LOCO_COMMON},  {@link #LOCO_FREE}
     */
@@ -205,7 +208,12 @@ public final class LnConstants {
     /** Value for locomotive use determination */
     public final static int LOCO_FREE = 0;
 
-    /**Encode loco status as a string */
+    /**
+     * Encode loco status as a string
+     * <p>
+     * @param s - integer containing loco "status"
+     * @return string containing a description of the loco "status"
+     */
     public final static String LOCO_STAT(int s) {
         return ((s & LOCOSTAT_MASK) == LOCO_IN_USE) ? "In-Use" // NOI18N
                 : (((s & LOCOSTAT_MASK) == LOCO_IDLE) ? "Idle" // NOI18N
@@ -213,7 +221,7 @@ public final class LnConstants {
                                 : "Free")); // NOI18N
     }
 
-    /** Mask for decoder type encoding for this slot.
+   /** Mask for decoder type encoding for this slot.
     * Compare value to
     * {@link #DEC_MODE_128A}, {@link #DEC_MODE_28A}, {@link #DEC_MODE_128},
     * {@link #DEC_MODE_14}, {@link #DEC_MODE_28TRI}, {@link #DEC_MODE_28}
@@ -242,18 +250,18 @@ public final class LnConstants {
     }
 
     /* values for track status encoding for this slot */
-    public final static int GTRK_PROG_BUSY = 0x08;      /* 1 = programming track in this master is Busy         */
+    public final static int GTRK_PROG_BUSY = 0x08; /* 1 = programming track in this master is Busy         */
 
-    public final static int GTRK_MLOK1 = 0x04;      /* 0 = Master is DT200, 1=Master implements LocoNet 1.1 */
+    public final static int GTRK_MLOK1 = 0x04;     /* 0 = Master is DT200, 1=Master implements LocoNet 1.1 */
 
     public final static int GTRK_IDLE = 0x02;      /* 0=TRACK is PAUSED, B'cast EMERG STOP.                */
 
-    public final static int GTRK_POWER = 0x01;      /* 1=DCC packets are ON in MASTER, Global POWER up      */
+    public final static int GTRK_POWER = 0x01;     /* 1=DCC packets are ON in MASTER, Global POWER up      */
 
     /** Fast clock is in this slot                           */
     public final static int FC_SLOT = 0x7b;
 
-     /** This slot communicates with the programming track    */
+     /** This slot communicates with the programming track   */
     public final static int PRG_SLOT = 0x7c;
 
     /** This slot holds extended configuration bits for some command stations */
@@ -263,19 +271,19 @@ public final class LnConstants {
     public final static int CFG_SLOT = 0x7f;
 
     /** Values and macros to decode programming messages */
-    public final static int PCMD_RW = 0x40;      /* 1 = write, 0 = read                                  */
+    public final static int PCMD_RW = 0x40;        /* 1 = write, 0 = read                                  */
 
-    public final static int PCMD_BYTE_MODE = 0x20;      /* 1 = byte operation, 0 = bit operation (if possible)  */
+    public final static int PCMD_BYTE_MODE = 0x20; /* 1 = byte operation, 0 = bit operation (if possible)  */
 
-    public final static int PCMD_TY1 = 0x10;      /* TY1 Programming type select bit                      */
+    public final static int PCMD_TY1 = 0x10;       /* TY1 Programming type select bit                      */
 
-    public final static int PCMD_TY0 = 0x08;      /* TY0 Programming type select bit                      */
+    public final static int PCMD_TY0 = 0x08;       /* TY0 Programming type select bit                      */
 
-    public final static int PCMD_OPS_MODE = 0x04;      /* 1 = Ops mode, 0 = Service Mode                       */
+    public final static int PCMD_OPS_MODE = 0x04;  /* 1 = Ops Mode, 0 = Service Mode                       */
 
-    public final static int PCMD_RSVRD1 = 0x02;      /* reserved                                             */
+    public final static int PCMD_RSVRD1 = 0x02;    /* reserved                                             */
 
-    public final static int PCMD_RSVRD0 = 0x01;      /* reserved                                             */
+    public final static int PCMD_RSVRD0 = 0x01;    /* reserved                                             */
 
     /** Programming mode mask */
     public final static int PCMD_MODE_MASK = PCMD_BYTE_MODE | PCMD_OPS_MODE | PCMD_TY1 | PCMD_TY0;
@@ -320,11 +328,11 @@ public final class LnConstants {
     public final static int PSTAT_NO_DECODER = 0x01;
 
     /* bit masks for CVH */
-    public final static int CVH_CV8_CV9 = 0x30;    /* mask for CV# bits 8 and 9    */
+    public final static int CVH_CV8_CV9 = 0x30; /* mask for CV# bits 8 and 9 */
 
-    public final static int CVH_CV7 = 0x01;    /* mask for CV# bit 7           */
+    public final static int CVH_CV7 = 0x01;     /* mask for CV# bit 7        */
 
-    public final static int CVH_D7 = 0x02;    /* MSbit for data value         */
+    public final static int CVH_D7 = 0x02;      /* MSbit for data value      */
 
 // The following two are commented out pending some decisions as to (a) whether
 // they belong here or in the parser and (b) understanding what they say about
@@ -337,7 +345,7 @@ public final class LnConstants {
 //public final static int PROG_CV_NUM(ptr)    (((((ptr->cvh & CVH_CV8_CV9) >> 3) | (ptr->cvh & CVH_CV7)) * 128)   \
 //                            + (ptr->cvl & 0x7f))
 
-    /* loconet opcodes */
+    /* LocoNet opcodes */
     public final static int OPC_GPBUSY = 0x81;
     public final static int OPC_GPOFF = 0x82;
     public final static int OPC_GPON = 0x83;
@@ -374,7 +382,12 @@ public final class LnConstants {
     public final static int OPC_MASK = 0x7f;  /* mask for acknowledge opcodes */
 
 
-    /** Encode LocoNet Opcode as a string */
+    /**
+     * Encode LocoNet Opcode as a string
+     * <p>
+     * @param opcode - a LocoNet opcode value
+     * @return string containing the opcode "name"
+     */
     public final static String OPC_NAME(int opcode) {
         switch (opcode) {
             case OPC_GPBUSY     : return "OPC_GPBUSY"; // NOI18N
@@ -433,7 +446,7 @@ public final class LnConstants {
     public final static int EXPD_F27_F21 = 9;
 
 //  opcode keys used to express interest in various messages
-//            note these are _not_ the loconet opcode values!
+//            note these are _not_ the LocoNet opcode values!
     public final static int KEY_GPBUSY = 1 << 0;
     public final static int KEY_GPOFF = 1 << 1;
     public final static int KEY_GPON = 1 << 2;
@@ -479,6 +492,7 @@ public final class LnConstants {
     public final static int RE_IPL_DIGITRAX_HOST_DT402 = 0x2A;
     public final static int RE_IPL_DIGITRAX_HOST_DT500 = 0x32;
     public final static int RE_IPL_DIGITRAX_HOST_DCS51 = 0x33;
+    public final static int RE_IPL_DIGITRAX_HOST_BXPA1 = 0x51;
     public final static int RE_IPL_DIGITRAX_HOST_UR92 = 0x5C;
     public final static int RE_IPL_DIGITRAX_HOST_BXP88 = 0x58;
     public final static int RE_IPL_DIGITRAX_HOST_LNWI = 0x63;
@@ -498,6 +512,13 @@ public final class LnConstants {
 // Below data is assumed, based on firmware files available from RR-Cirkits web site
     public final static int RE_IPL_MFR_RR_CIRKITS = 87;
     public final static int RE_IPL_RRCIRKITS_HOST_TC64 = 11;
+    public final static int RE_IPL_RRCIRKITS_HOST_LNCP = 12;
+    public final static int RE_IPL_RRCIRKITS_HOST_SIGNALMAN = 21;
+    public final static int RE_IPL_RRCIRKITS_HOST_TOWERMAN = 22;
+    public final static int RE_IPL_RRCIRKITS_HOST_WATCHMAN = 23;
+    public final static int RE_IPL_RRCIRKITS_HOST_TC64_MKII = 24;
+    public final static int RE_IPL_RRCIRKITS_HOST_MOTORMAN = 25;
+    public final static int RE_IPL_RRCIRKITS_HOST_MOTORMAN_II = 28;
     public final static int RE_IPL_RRCIRKITS_SLAVE_ALL = 00;
 
 // Constants associated with OPC_PEER_XFR for Duplex operations

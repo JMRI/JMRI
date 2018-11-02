@@ -60,7 +60,6 @@ public class BlockValueFile extends XmlFile {
      * @throws JDOMException on rootFromName if all methods fail
      * @throws IOException   if an I/O error occurs while reading a file
      */
-    @SuppressWarnings("unchecked")
     public void readBlockValues() throws JDOMException, IOException {
         log.debug("entered readBlockValues");
         List<String> blocks = blockManager.getSystemNameList();

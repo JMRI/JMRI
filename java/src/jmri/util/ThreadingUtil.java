@@ -35,10 +35,11 @@ public class ThreadingUtil {
      * Run some layout-specific code before returning.
      * <p>
      * Typical uses:
-     * <p>
-     * {@code ThreadingUtil.runOnLayout(() -> {
+     * <p> {@code
+     * ThreadingUtil.runOnLayout(() -> {
      *     sensor.setState(value);
-     * }); }
+     * }); 
+     * }
      *
      * @param ta What to run, usually as a lambda expression
      */
@@ -53,10 +54,11 @@ public class ThreadingUtil {
      * later. No long-term guarantees.
      * <p>
      * Typical uses:
-     * <p>
-     * {@code ThreadingUtil.runOnLayoutEventually(() -> {
+     * <p> {@code
+     * ThreadingUtil.runOnLayoutEventually(() -> {
      *     sensor.setState(value);
-     * }); }
+     * }); 
+     * }
      *
      * @param ta What to run, usually as a lambda expression
      */
@@ -71,10 +73,11 @@ public class ThreadingUtil {
      * There is no long-term guarantee about the accuracy of the interval.
      * <p>
      * Typical uses:
-     * <p>
-     * {@code ThreadingUtil.runOnLayoutEventually(() -> {
+     * <p> {@code
+     * ThreadingUtil.runOnLayoutEventually(() -> {
      *     sensor.setState(value);
-     * }, 1000); }
+     * }, 1000); 
+     * }
      *
      * @param ta    What to run, usually as a lambda expression
      * @param delay interval in milliseconds
@@ -98,11 +101,12 @@ public class ThreadingUtil {
      * Run some GUI-specific code before returning
      * <p>
      * Typical uses:
-     * <p>
-     * {@code ThreadingUtil.runOnGUI(() -> {
+     * <p> {@code
+     * ThreadingUtil.runOnGUI(() -> {
      *     mine.setVisible();
-     * }); }
-     *
+     * });
+     * }
+     * <p>
      * If an InterruptedException is encountered, it'll be deferred to the 
      * next blocking call via Thread.currentThread().interrupt()
      * 
@@ -114,6 +118,7 @@ public class ThreadingUtil {
             ta.run();
         } else {
             // dispatch to Swing
+            warnLocks();
             try {
                 SwingUtilities.invokeAndWait(ta);
             } catch (InterruptedException e) {
@@ -121,11 +126,55 @@ public class ThreadingUtil {
                 Thread.currentThread().interrupt();
             } catch (InvocationTargetException e) {
                 log.error("Error while on GUI thread", e.getCause());
+                log.error("   Came from call to runOnGUI:", e);
                 // should have been handled inside the ThreadAction
             }
         }
     }
 
+    /**
+     * Run some GUI-specific code before returning a value
+     * <p>
+     * Typical uses:
+     * <p> {@code
+     * ThreadingUtil.runOnGUI(() -> {
+     *     mine.setVisible();
+     * });
+     * }
+     * <p>
+     * If an InterruptedException is encountered, it'll be deferred to the 
+     * next blocking call via Thread.currentThread().interrupt()
+     * 
+     * @param ta What to run, usually as a lambda expression
+     */
+    static public <E> E runOnGUIwithReturn(@Nonnull ReturningThreadAction<E> ta) {
+        if (isGUIThread()) {
+            // run now
+            return ta.run();
+        } else {
+            warnLocks();
+            // dispatch to Swing
+            final java.util.concurrent.atomic.AtomicReference<E> result = new java.util.concurrent.atomic.AtomicReference<>();
+            try {
+                SwingUtilities.invokeAndWait(() -> {
+                    result.set(ta.run());
+                });
+            } catch (InterruptedException e) {
+                log.debug("Interrupted while running on GUI thread");
+                Thread.currentThread().interrupt();
+            } catch (InvocationTargetException e) {
+                log.error("Error while on GUI thread", e.getCause());
+                log.error("   Came from call to runOnGUIwithReturn:", e);
+                // should have been handled inside the ThreadAction
+            }
+            return result.get();
+        }
+    }
+
+    public interface ReturningThreadAction<E> {
+        public E run();
+    }
+    
     /**
      * Run some GUI-specific code at some later point.
      * <p>
@@ -133,8 +182,11 @@ public class ThreadingUtil {
      * after the current routine has returned.
      * <p>
      * Typical uses:
-     * <p>
-     * {@code ThreadingUtil.runOnGUIEventually( ()->{ mine.setVisible(); } ); }
+     * <p> {@code 
+     * ThreadingUtil.runOnGUIEventually( ()->{ 
+     *      mine.setVisible();
+     * } ); 
+     * }
      *
      * @param ta What to run, usually as a lambda expression
      */
@@ -151,8 +203,11 @@ public class ThreadingUtil {
      * <p>
      * Typical uses:
      * <p>
-     * {@code ThreadingUtil.runOnGUIEventually( ()->{ mine.setVisible(); }, 1000
-     * ); }
+     * {@code 
+     * ThreadingUtil.runOnGUIEventually( ()->{ 
+     *  mine.setVisible(); 
+     * }, 1000);
+     * }
      *
      * @param ta    What to run, usually as a lambda expression
      * @param delay interval in milliseconds
@@ -207,5 +262,38 @@ public class ThreadingUtil {
         return s.equals(Thread.State.BLOCKED) || s.equals(Thread.State.WAITING) || s.equals(Thread.State.TIMED_WAITING);
     }
 
+
+    /**
+     * Warn if a thread is holding locks. Used when transitioning to another context.
+     */
+    static public void warnLocks() {
+        if ( log.isDebugEnabled() ) {
+            try {
+                java.lang.management.ThreadInfo threadInfo = java.lang.management.ManagementFactory
+                                                    .getThreadMXBean()
+                                                        .getThreadInfo(new long[]{Thread.currentThread().getId()}, true, true)[0];
+
+                java.lang.management.MonitorInfo[] monitors = threadInfo.getLockedMonitors();
+                for (java.lang.management.MonitorInfo mon : monitors) {
+                    log.warn("Thread was holding monitor {} from {}", mon, mon.getLockedStackFrame()); // yes, warn - for re-enable later
+                }
+
+                java.lang.management.LockInfo[] locks = threadInfo.getLockedSynchronizers();
+                for (java.lang.management.LockInfo lock : locks) {
+                    log.warn("Thread was holding lock {} from {}", lock);  // yes, warn - for re-enable later
+                }
+            } catch (RuntimeException ex) {
+                // just record exceptions for later pick up during debugging
+                if (!lastWarnLocksLimit) log.warn("Exception in warnLocks", ex);
+                lastWarnLocksLimit = true;
+                lastWarnLocksException = ex;
+            }
+        }
+    }
+    private static boolean lastWarnLocksLimit = false;
+    public static RuntimeException lastWarnLocksException = null;
+    
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ThreadingUtil.class);
+
 }
+

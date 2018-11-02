@@ -34,6 +34,15 @@ public class XpaPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase
     }
 
     @Override
+    protected void sendIdleReply() {
+        ((XpaPowerManager) p).reply(new XpaMessage("ATDT0;"));
+    }
+
+    @Override
+    protected void hearIdle() {
+    }
+
+    @Override
     protected int numListeners() {
         return tc.numListeners();
     }
@@ -53,6 +62,11 @@ public class XpaPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase
         return ((tc.outbound.get(index))).toString().equals("ATDT0;");
     }
 
+    @Override
+    protected boolean outboundIdleOK(int index) {
+        return ((tc.outbound.get(index))).toString().equals("ATDT0;");
+    }
+
     @Test
     @Override
     @Ignore("unsolicited state changes are currently ignored")
@@ -69,14 +83,14 @@ public class XpaPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         tc = new XpaTrafficControlScaffold();
         p = new XpaPowerManager(tc);
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
         tc = null;
     }
 

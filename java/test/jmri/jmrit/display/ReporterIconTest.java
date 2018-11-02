@@ -52,6 +52,7 @@ public class ReporterIconTest extends PositionableTestBase {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initReporterManager();
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new PanelEditor("Test ReporterIcon Panel");

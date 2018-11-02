@@ -6,8 +6,8 @@ import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.automation.actions.Action;
 import jmri.jmrit.operations.automation.actions.ActionCodes;
-import jmri.jmrit.operations.automation.actions.ActivateTimetableAction;
-import jmri.jmrit.operations.automation.actions.ApplyTimetableAction;
+import jmri.jmrit.operations.automation.actions.ActivateTrainScheduleAction;
+import jmri.jmrit.operations.automation.actions.ApplyTrainScheduleAction;
 import jmri.jmrit.operations.automation.actions.BuildTrainAction;
 import jmri.jmrit.operations.automation.actions.BuildTrainIfSelectedAction;
 import jmri.jmrit.operations.automation.actions.DeselectTrainAction;
@@ -40,8 +40,8 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.schedules.TrainSchedule;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,6 +72,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
     protected RouteLocation _routeLocation = null;
     protected String _automationIdToRun = NONE;
     protected String _gotoAutomationItemId = NONE; // the goto automationItem
+    protected boolean _gotoAutomationBranched = false;
     protected String _trainScheduleId = NONE;
 
     public static final String DISPOSE = "automationItemDispose"; // NOI18N
@@ -130,14 +131,6 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
             return getAction().getCode();
         }
         return ActionCodes.NO_ACTION;
-    }
-    
-    public Action getActionByCode(int code) {
-        for (Action action : getActionList()) {
-            if (action.getCode() == code)
-                return action;
-        }
-        return new NoAction(); // default if code not found
     }
 
     public void doAction() {
@@ -250,6 +243,14 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         }
         return null;
     }
+    
+    public void setGotoBranched(boolean branched) {
+        _gotoAutomationBranched = branched;
+    }
+    
+    public boolean isGotoBranched() {
+        return _gotoAutomationBranched;
+    }
 
     public void setTrainSchedule(TrainSchedule trainSchedule) {
         String old = _trainScheduleId;
@@ -355,7 +356,12 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
             return isActionSuccessful() ? getAction().getActionSuccessfulString() : getAction().getActionFailedString();
         else
             return "unknown"; // NOI18N
-
+    }
+    
+    public void reset() {
+        setActionRan(false);
+        setActionSuccessful(false);
+        setGotoBranched(false);
     }
 
     /**
@@ -363,7 +369,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
      * @param item The item to copy.
      */
     public void copyItem(AutomationItem item) {
-        setAction(item.getActionByCode(item.getActionCode())); // must create a new action for each item
+        setAction(getActionByCode(item.getActionCode())); // must create a new action for each item
         setAutomationToRun(item.getAutomationToRun());
         setGotoAutomationItem(item.getGotoAutomationItem()); //needs an adjustment to work properly
         setTrain(item.getTrain()); // must set train before route location
@@ -374,14 +380,22 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         setMessageFail(item.getMessageFail());
         setHaltFailureEnabled(item.isHaltFailureEnabled());
     }
+    
+    public static Action getActionByCode(int code) {
+        for (Action action : getActionList()) {
+            if (action.getCode() == code)
+                return action;
+        }
+        return new NoAction(); // default if code not found
+    }
 
     /**
      * Gets a list of all known automation actions
      * 
      * @return list of automation actions
      */
-    public List<Action> getActionList() {
-        List<Action> list = new ArrayList<Action>();
+    public static List<Action> getActionList() {
+        List<Action> list = new ArrayList<>();
         list.add(new NoAction());
         list.add(new BuildTrainAction());
         list.add(new BuildTrainIfSelectedAction());
@@ -394,8 +408,8 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         list.add(new IsTrainEnRouteAction());
         list.add(new WaitTrainAction());
         list.add(new WaitTrainTerminatedAction());
-        list.add(new ActivateTimetableAction());
-        list.add(new ApplyTimetableAction());
+        list.add(new ActivateTrainScheduleAction());
+        list.add(new ApplyTrainScheduleAction());
         list.add(new SelectTrainAction());
         list.add(new DeselectTrainAction());
         list.add(new PrintSwitchListAction());
@@ -415,7 +429,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         return list;
     }
 
-    public JComboBox<Action> getActionComboBox() {
+    public static JComboBox<Action> getActionComboBox() {
         JComboBox<Action> box = new JComboBox<>();
         for (Action action : getActionList())
             box.addItem(action);
@@ -468,6 +482,9 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
             // in the process of loading automations, so we can't get them now, save id and get later.
             _gotoAutomationItemId = a.getValue();
         }
+        if ((a = e.getAttribute(Xml.GOTO_AUTOMATION_BRANCHED)) != null) {
+            _gotoAutomationBranched = a.getValue().equals(Xml.TRUE);
+        }
         if ((a = e.getAttribute(Xml.TRAIN_SCHEDULE_ID)) != null) {
             _trainScheduleId = a.getValue();
         }
@@ -510,6 +527,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         }
         if (getGotoAutomationItem() != null) {
             e.setAttribute(Xml.GOTO_AUTOMATION_ID, getGotoAutomationItem().getId());
+            e.setAttribute(Xml.GOTO_AUTOMATION_BRANCHED, isGotoBranched() ? Xml.TRUE : Xml.FALSE);
         }
         if (getTrainSchedule() != null) {
             e.setAttribute(Xml.TRAIN_SCHEDULE_ID, getTrainSchedule().getId());

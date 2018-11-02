@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * Tests for the jmri.managers.InternalTurnoutManager class.
+ * Tests for the jmri.managers.DefaultSignalSystemManager class.
  *
  * @author	Bob Jacobsen Copyright 2009
  */

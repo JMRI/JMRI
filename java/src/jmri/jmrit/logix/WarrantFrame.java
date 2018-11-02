@@ -473,7 +473,7 @@ public class WarrantFrame extends WarrantRoute {
     
     private void addSpeeds() {
         setAddress();
-        RosterSpeedProfile speedProfile =  _speedUtil.getMergeProfile();         
+        RosterSpeedProfile speedProfile =  _speedUtil.getSpeedProfile();         
         boolean isForward = true;
         for (ThrottleSetting ts :_throttleCommands) {
             if ("FORWARD".equalsIgnoreCase(ts.getCommand())) {
@@ -545,6 +545,7 @@ public class WarrantFrame extends WarrantRoute {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                clearTempWarrant();
                 showCommands(true);
                 runLearnModeTrain();
             }
@@ -1204,13 +1205,13 @@ public class WarrantFrame extends WarrantRoute {
                                             _warrant.getTrainName(),
                                             newBlock.getDisplayName());
                         }
-                    } else if (e.getPropertyName().equals("blockRelease")) {
+                    /*} else if (e.getPropertyName().equals("blockRelease")) {
                         OBlock block = (OBlock) e.getNewValue();
                         long et = (System.currentTimeMillis() - block._entryTime) / 1000;
                         msg = Bundle.getMessage("TrackerBlockLeave",
                                 _warrant.getTrainName(), block.getDisplayName(), et / 60,
-                                et % 60);
-                    } else if (e.getPropertyName().equals("Command")) {
+                                et % 60);*/
+                    } else if (e.getPropertyName().equals("ReadyToRun")) {
                         msg = _warrant.getRunningMessage();
                     } else if (e.getPropertyName().equals("SpeedChange")) {
                         msg = _warrant.getRunningMessage();
@@ -1702,6 +1703,10 @@ public class WarrantFrame extends WarrantRoute {
                     }
                     break;
                 case BLOCK_COLUMN:
+                    if (ts==null || ts.getCommand()==null ) {
+                        msg = Bundle.getMessage("nullValue", Bundle.getMessage("CommandCol"));
+                        break;
+                    }
                     cmd = ts.getCommand().toUpperCase();
                     if ("SET SENSOR".equals(cmd) || "WAIT SENSOR".equals(cmd)) {
                         try {

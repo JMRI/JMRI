@@ -27,16 +27,21 @@ public class OBlockTest {
 
     @Test
     public void testCTor(){
+       setUp();
        Assert.assertNotNull("OBlock Creation",new OBlock("OB01"));
+       tearDown();
     }
  
    @Test
     public void testCTor2Param(){
+       setUp();
        Assert.assertNotNull("OBlock Creation",new OBlock("OB01","test OBlock"));
+       tearDown();
     }
 
     @Test
     public void testSeparateCoding() {
+        setUp();
         Assert.assertTrue("Block.OCCUPIED != OBlock.ALLOCATED", Block.OCCUPIED != OBlock.ALLOCATED);
         Assert.assertTrue("Block.OCCUPIED != OBlock.RUNNING", Block.OCCUPIED != OBlock.RUNNING);
         Assert.assertTrue("Block.OCCUPIED != OBlock.OUT_OF_SERVICE", Block.OCCUPIED != OBlock.OUT_OF_SERVICE);
@@ -59,10 +64,12 @@ public class OBlockTest {
         Assert.assertTrue("Block.UNKNOWN != OBlock.OUT_OF_SERVICE", Block.UNKNOWN != OBlock.OUT_OF_SERVICE);
         Assert.assertTrue("Block.UNKNOWN != OBlock.TRACK_ERROR", Block.UNKNOWN != OBlock.TRACK_ERROR);
         Assert.assertTrue("Block.UNKNOWN != OBlock.UNOCCUPIED", Block.UNKNOWN != OBlock.UNOCCUPIED);
+        tearDown();
     }
     
     @Test
     public void testSetSensor()  throws Exception {
+        setUp();
         OBlock b = blkMgr.createNewOBlock("OB100", "a");
         Assert.assertFalse("setSensor", b.setSensor("foo"));
         Assert.assertNull("getSensor", b.getSensor());
@@ -87,10 +94,12 @@ public class OBlockTest {
         s1.setState(Sensor.ACTIVE);
         Assert.assertTrue("setSensor sensor1", b.setSensor("sensor1"));
         Assert.assertEquals("state allocated&running", OBlock.OCCUPIED|OBlock.ALLOCATED|OBlock.RUNNING, b.getState());
+        tearDown();
     }
 
     @Test
     public void testSetErrorSensor() throws Exception {
+        setUp();
         OBlock b = blkMgr.createNewOBlock("OB101", "b");
         Assert.assertFalse("setErrorSensor foo", b.setErrorSensor("foo"));
         Assert.assertNull("getErrorSensor foo", b.getErrorSensor());
@@ -111,10 +120,12 @@ public class OBlockTest {
         Assert.assertTrue("setErrorSensor", b.setErrorSensor("  "));
         Assert.assertNull("getErrorSensor none", b.getErrorSensor());
         Assert.assertEquals("state dark", OBlock.OCCUPIED, b.getState());
+        tearDown();
     }
 
     @Test
     public void testAllocate() {
+        setUp();
         Warrant w1 = new Warrant("IW1", null);
         Warrant w2 = new Warrant("IW2", null);
         OBlock b = blkMgr.createNewOBlock("OB102", "c");
@@ -133,10 +144,12 @@ public class OBlockTest {
         b.setOutOfService(true);
         Assert.assertEquals("Allocate oos", Bundle.getMessage("BlockOutOfService", b.getDisplayName()), b.allocate(w2));
         Assert.assertEquals("state not allocated, dark", OBlock.UNDETECTED|OBlock.OUT_OF_SERVICE, b.getState());
+        tearDown();
     }
     
     @Test
     public void testSensorChanges() throws Exception {
+        setUp();
         OBlock b = blkMgr.createNewOBlock("OB103", null);
         Warrant w0 = new Warrant("IW0", "war0");
         b.setOutOfService(true);
@@ -160,13 +173,15 @@ public class OBlockTest {
         Assert.assertEquals("state  OutOfService & inconsistent", OBlock.OUT_OF_SERVICE|OBlock.INCONSISTENT, b.getState());
         Assert.assertTrue("setSensor none", b.setSensor(null));
         Assert.assertEquals("state  OutOfService & dark", OBlock.OUT_OF_SERVICE|OBlock.UNDETECTED, b.getState());
+        tearDown();
     }
 
     @Test
     public void testAddPortal() {
+        setUp();
         OBlock b = blkMgr.createNewOBlock("OB0", "");
         PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);
-        Portal p = portalMgr.providePortal("foop");
+        Portal p = portalMgr.providePortal("Doop");
         b.addPortal(p);
         Assert.assertEquals("No portals", 0, b.getPortals().size());
 
@@ -182,17 +197,20 @@ public class OBlockTest {
         Assert.assertEquals("Two portals", 2, b.getPortals().size());
 
         Assert.assertEquals("Same Portal", p, b.getPortalByName("barp"));
-        p = b.getPortalByName("foop");
+        p = b.getPortalByName("Doop");
         Assert.assertNotNull("Get Portal", p);
         b.removePortal(p);
         Assert.assertEquals("One portals", 1, b.getPortals().size());
         
-        jmri.util.JUnitAppender.assertWarnMessage("Portal \"foop\" from block \"null\" to block \"null\" not in block OB0"); 
-        jmri.util.JUnitAppender.assertWarnMessage("Portal \"barp\" from block \"null\" to block \"null\" not in block OB0"); 
+        jmri.util.JUnitAppender.assertWarnMessage("Portal \"Doop\" between OBlocks \"null\" and \"null\" not in block OB0"); 
+        jmri.util.JUnitAppender.assertWarnMessage("Portal \"barp\" between OBlocks \"null\"and \"null\" not in block OB0");
+        portalMgr = null;
+        tearDown();
     }
         
     @Test
     public void testAddPath() {
+        setUp();
         OBlock b = blkMgr.createNewOBlock("OB1", "");
         OPath path1 = new OPath(b, "path1");
         // also test the "add" method checks
@@ -225,26 +243,32 @@ public class OBlockTest {
         b.removePath(path1);
         b.removePath(path2);
         Assert.assertEquals("no paths", 0, b.getPaths().size());
+        portalMgr = null;
+        tearDown();
     }
 
     @Test
     public void testAddUserName() {
+        setUp();
         OBlock b = blkMgr.provideOBlock("OB99");
         b.setUserName("99user");
         b = blkMgr.getBySystemName("OB99");
         Assert.assertEquals("UserName not kept", "99user", b.getUserName());
+        tearDown();
     }
     
     // from here down is testing infrastructure
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        blkMgr = new OBlockManager();
+        JUnitUtil.setUp();
+        blkMgr = new OBlockManager();
     }
 
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
+        blkMgr = null;
     }
 
 }

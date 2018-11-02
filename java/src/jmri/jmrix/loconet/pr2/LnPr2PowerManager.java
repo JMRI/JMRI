@@ -13,14 +13,14 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.SlotManager;
 
 /**
- * PowerManager implementation for controlling layout power via PR2
- * <P>
+ * PowerManager implementation for controlling layout power via PR2.
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public class LnPr2PowerManager extends LnPowerManager {
@@ -140,6 +140,15 @@ public class LnPr2PowerManager extends LnPowerManager {
                 }
             }
         }
+    }
+    
+    /**
+     * Returns false to indicate PR2 does not implement an "IDLE" power state.
+     * @return false
+     */
+    @Override
+    public boolean implementsIdle() {
+        return false;
     }
 
     // timer support to send updates & keep power alive

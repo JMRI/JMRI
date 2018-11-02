@@ -10,7 +10,7 @@ import java.text.MessageFormat;
 import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.operations.rollingstock.cars.ExportCars;
+import jmri.jmrit.operations.rollingstock.cars.tools.ExportCars;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.Train;
@@ -43,7 +43,7 @@ public class ExportTrains extends XmlFile {
      * Store the all of the operation car objects in the default place,
      * including making a backup if needed
      */
-    public void writeOperationsCarFile() {
+    public void writeOperationsTrainsFile() {
         makeBackupFile(defaultOperationsFilename());
         try {
             if (!checkFile(defaultOperationsFilename())) {

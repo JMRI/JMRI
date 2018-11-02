@@ -10,7 +10,6 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -22,6 +21,7 @@ import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.TableItemPanel;
 import jmri.jmrit.picker.PickListModel;
+import jmri.util.swing.JmriColorChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -432,7 +432,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         updateSize();
     }
 
-    TableItemPanel _itemPanel;
+    TableItemPanel<Sensor> _itemPanel;
 
     @Override
     public boolean setEditItemMenu(JPopupMenu popup) {
@@ -447,8 +447,8 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     protected void editItem() {
-        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSensor")));
-        _itemPanel = new TableItemPanel(_paletteFrame, "Sensor", _iconFamily,
+        _paletteFrame = makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameSensor")));
+        _itemPanel = new TableItemPanel<>(_paletteFrame, "Sensor", _iconFamily,
                 PickListModel.sensorPickModelInstance(), _editor); // NOI18N
         ActionListener updateAction = (ActionEvent a) -> {
             updateItem();
@@ -467,12 +467,13 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         }
         _itemPanel.init(updateAction, map);
         _itemPanel.setSelection(getSensor());
-        _paletteFrame.add(_itemPanel);
-        _paletteFrame.pack();
-        _paletteFrame.setVisible(true);
+        initPaletteFrame(_paletteFrame, _itemPanel);
     }
 
     void updateItem() {
+        if (!_itemPanel.oktoUpdate()) {
+            return;
+        }
         HashMap<String, NamedIcon> oldMap = cloneMap(_iconMap, this);
         setSensor(_itemPanel.getTableSelection().getSystemName());
         _iconFamily = _itemPanel.getFamilyName();
@@ -491,12 +492,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                 setIcon(entry.getKey(), newIcon);
             }
         }   // otherwise retain current map
-//        jmri.jmrit.catalog.InstanceManager.getDefault(ImageIndexEditor.class).checkImageIndex();
-        _paletteFrame.dispose();
-        _paletteFrame = null;
-        _itemPanel.dispose();
-        _itemPanel = null;
-        invalidate();
+        finishItemUpdate(_paletteFrame, _itemPanel);
     }
 
     @Override
@@ -676,6 +672,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     public void setTextActive(Color color) {
         textColorActive = color;
         displayState(sensorState());
+        JmriColorChooser.addRecentColor(color);
     }
 
     public Color getTextActive() {
@@ -687,6 +684,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     public void setTextInActive(Color color) {
         textColorInActive = color;
         displayState(sensorState());
+        JmriColorChooser.addRecentColor(color);
     }
 
     public Color getTextInActive() {
@@ -698,6 +696,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     public void setTextUnknown(Color color) {
         textColorUnknown = color;
         displayState(sensorState());
+        JmriColorChooser.addRecentColor(color);
     }
 
     public Color getTextUnknown() {
@@ -709,6 +708,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     public void setTextInconsistent(Color color) {
         textColorInconsistent = color;
         displayState(sensorState());
+        JmriColorChooser.addRecentColor(color);
     }
 
     public Color getTextInconsistent() {
@@ -720,6 +720,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     public void setBackgroundActive(Color color) {
         backgroundColorActive = color;
         displayState(sensorState());
+        JmriColorChooser.addRecentColor(color);
     }
 
     public Color getBackgroundActive() {
@@ -731,6 +732,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     public void setBackgroundInActive(Color color) {
         backgroundColorInActive = color;
         displayState(sensorState());
+        JmriColorChooser.addRecentColor(color);
     }
 
     public Color getBackgroundInActive() {
@@ -742,6 +744,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     public void setBackgroundUnknown(Color color) {
         backgroundColorUnknown = color;
         displayState(sensorState());
+        JmriColorChooser.addRecentColor(color);
     }
 
     public Color getBackgroundUnknown() {
@@ -753,6 +756,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     public void setBackgroundInconsistent(Color color) {
         backgroundColorInconsistent = color;
         displayState(sensorState());
+        JmriColorChooser.addRecentColor(color);
     }
 
     public Color getBackgroundInconsistent() {
@@ -807,7 +811,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         JMenu menu = new JMenu(name);
         JMenuItem colorMenu = new JMenuItem(Bundle.getMessage("FontColor"));
         colorMenu.addActionListener((ActionEvent event) -> {
-            Color desiredColor = JColorChooser.showDialog(this,
+            Color desiredColor = JmriColorChooser.showDialog(this,
                                  Bundle.getMessage("FontColor"),
                                  getColor(state));
             if (desiredColor!=null ) {
@@ -817,7 +821,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         menu.add(colorMenu);
         colorMenu = new JMenuItem(Bundle.getMessage("FontBackgroundColor"));
         colorMenu.addActionListener((ActionEvent event) -> {
-            Color desiredColor = JColorChooser.showDialog(this,
+            Color desiredColor = JmriColorChooser.showDialog(this,
                                  Bundle.getMessage("FontBackgroundColor"),
                                  getColor(state+1));
             if (desiredColor!=null ) {
@@ -829,7 +833,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     private void setColor(Color desiredColor, int state){
-        SensorPopupUtil util = (SensorPopupUtil) getPopupUtility();        
+        SensorPopupUtil util = (SensorPopupUtil) getPopupUtility();
         switch (state) {
            case PositionablePopupUtil.FONT_COLOR:
               util.setForeground(desiredColor);
@@ -874,7 +878,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     private Color getColor(int state){
-        SensorPopupUtil util = (SensorPopupUtil) getPopupUtility();        
+        SensorPopupUtil util = (SensorPopupUtil) getPopupUtility();
         switch (state) {
            case PositionablePopupUtil.FONT_COLOR:
               return util.getForeground();

@@ -64,7 +64,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
             for (int x = 0; x < comboItem.size(); x++) {
                 String combo = comboItem.get(x).getAttribute("name").getValue();
                 String setting = comboItem.get(x).getAttribute("lastSelected").getValue();
-                p.addComboBoxLastSelection(combo, setting);
+                p.setComboBoxLastSelection(combo, setting);
             }
         }
 

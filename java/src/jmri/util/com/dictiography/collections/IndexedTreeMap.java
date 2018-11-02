@@ -23,21 +23,21 @@ import java.util.*;
  * creation time, depending on which constructor is used.
  * 
  * <p>This implementation provides guaranteed log(n) time cost for the
- * <tt>containsKey</tt>, <tt>get</tt>, <tt>put</tt> and <tt>remove</tt>
+ * {@code containsKey}, {@code get}, {@code put} and {@code remove}
  * operations.  Algorithms are adaptations of those in Cormen, Leiserson, and
  * Rivest's <I>Introduction to Algorithms</I>.
  * 
  * <p>Note that the ordering maintained by a sorted map (whether or not an
  * explicit comparator is provided) must be <i>consistent with equals</i> if
- * this sorted map is to correctly implement the <tt>Map</tt> interface.  (See
- * <tt>Comparable</tt> or <tt>Comparator</tt> for a precise definition of
- * <i>consistent with equals</i>.)  This is so because the <tt>Map</tt>
+ * this sorted map is to correctly implement the {@code Map} interface.  (See
+ * {@code Comparable} or {@code Comparator} for a precise definition of
+ * <i>consistent with equals</i>.)  This is so because the {@code Map}
  * interface is defined in terms of the equals operation, but a map performs
- * all key comparisons using its <tt>compareTo</tt> (or <tt>compare</tt>)
+ * all key comparisons using its {@code compareTo} (or {@code compare})
  * method, so two keys that are deemed equal by this method are, from the
  * standpoint of the sorted map, equal.  The behavior of a sorted map
  * <i>is</i> well-defined even if its ordering is inconsistent with equals; it
- * just fails to obey the general contract of the <tt>Map</tt> interface.
+ * just fails to obey the general contract of the {@code Map} interface.
  * 
  * <p><strong>Note that this implementation is not synchronized.</strong>
  * If multiple threads access a map concurrently, and at least one of the
@@ -53,11 +53,11 @@ import java.util.*;
  * unsynchronized access to the map: <pre>
  *   SortedMap m = Collections.synchronizedSortedMap(new IndexedTreeMap(...));</pre>
  * 
- * <p>The iterators returned by the <tt>iterator</tt> method of the collections
+ * <p>The iterators returned by the {@code iterator} method of the collections
  * returned by all of this class's "collection view methods" are
  * <i>fail-fast</i>: if the map is structurally modified at any time after the
  * iterator is created, in any way except through the iterator's own
- * <tt>remove</tt> method, the iterator will throw a {@link
+ * {@code remove} method, the iterator will throw a {@link
  * java.util.ConcurrentModificationException}.  Thus, in the face of concurrent
  * modification, the iterator fails quickly and cleanly, rather than risking
  * arbitrary, non-deterministic behavior at an undetermined time in the future.
@@ -65,16 +65,16 @@ import java.util.*;
  * <p>Note that the fail-fast behavior of an iterator cannot be guaranteed
  * as it is, generally speaking, impossible to make any hard guarantees in the
  * presence of unsynchronized concurrent modification.  Fail-fast iterators
- * throw <tt>ConcurrentModificationException</tt> on a best-effort basis.
+ * throw {@code ConcurrentModificationException} on a best-effort basis.
  * Therefore, it would be wrong to write a program that depended on this
  * exception for its correctness:   <i>the fail-fast behavior of iterators
  * should be used only to detect bugs.</i>
  * 
- * <p>All <tt>Map.Entry</tt> pairs returned by methods in this class
+ * <p>All {@code Map.Entry} pairs returned by methods in this class
  * and its views represent snapshots of mappings at the time they were
- * produced. They do <em>not</em> support the <tt>Entry.setValue</tt>
+ * produced. They do <em>not</em> support the {@code Entry.setValue}
  * method. (Note however that it is possible to change mappings in the
- * associated map using <tt>put</tt>.)
+ * associated map using {@code put}.)
  * 
  * <p>This class is a member of the
  * <a href="{@docRoot}/../technotes/guides/collections/index.html">
@@ -120,13 +120,13 @@ public class IndexedTreeMap<K, V>
      * Constructs a new, empty tree map, using the natural ordering of its
      * keys.  All keys inserted into the map must implement the {@link
      * Comparable} interface.  Furthermore, all such keys must be
-     * <i>mutually comparable</i>: <tt>k1.compareTo(k2)</tt> must not throw
-     * a <tt>ClassCastException</tt> for any keys <tt>k1</tt> and
-     * <tt>k2</tt> in the map.  If the user attempts to put a key into the
+     * <i>mutually comparable</i>: {@code k1.compareTo(k2)} must not throw
+     * a {@code ClassCastException} for any keys {@code k1} and
+     * {@code k2} in the map.  If the user attempts to put a key into the
      * map that violates this constraint (for example, the user attempts to
      * put a string key into a map whose keys are integers), the
-     * <tt>put(Object key, Object value)</tt> call will throw a
-     * <tt>ClassCastException</tt>.
+     * {@code put(Object key, Object value)} call will throw a
+     * {@code ClassCastException}.
      */
     public IndexedTreeMap() {
         comparator = null;
@@ -135,15 +135,15 @@ public class IndexedTreeMap<K, V>
     /**
      * Constructs a new, empty tree map, ordered according to the given
      * comparator.  All keys inserted into the map must be <i>mutually
-     * comparable</i> by the given comparator: <tt>comparator.compare(k1,
-     * k2)</tt> must not throw a <tt>ClassCastException</tt> for any keys
-     * <tt>k1</tt> and <tt>k2</tt> in the map.  If the user attempts to put
-     * a key into the map that violates this constraint, the <tt>put(Object
-     * key, Object value)</tt> call will throw a
-     * <tt>ClassCastException</tt>.
+     * comparable</i> by the given comparator: {@code comparator.compare(k1,
+     * k2)} must not throw a {@code ClassCastException} for any keys
+     * {@code k1} and {@code k2} in the map.  If the user attempts to put
+     * a key into the map that violates this constraint, the {@code put(Object
+     * key, Object value)} call will throw a
+     * {@code ClassCastException}.
      *
      * @param comparator the comparator that will be used to order this map.
-     *                   If <tt>null</tt>, the {@linkplain Comparable natural
+     *                   If {@code null}, the {@linkplain Comparable natural
      *                   ordering} of the keys will be used.
      */
     public IndexedTreeMap(Comparator<? super K> comparator) {
@@ -155,9 +155,9 @@ public class IndexedTreeMap<K, V>
      * map, ordered according to the <i>natural ordering</i> of its keys.
      * All keys inserted into the new map must implement the {@link
      * Comparable} interface.  Furthermore, all such keys must be
-     * <i>mutually comparable</i>: <tt>k1.compareTo(k2)</tt> must not throw
-     * a <tt>ClassCastException</tt> for any keys <tt>k1</tt> and
-     * <tt>k2</tt> in the map.  This method runs in n*log(n) time.
+     * <i>mutually comparable</i>: {@code k1.compareTo(k2)} must not throw
+     * a {@code ClassCastException} for any keys {@code k1} and
+     * {@code k2} in the map.  This method runs in n*log(n) time.
      *
      * @param m the map whose mappings are to be placed in this map
      * @throws ClassCastException   if the keys in m are not {@link Comparable},
@@ -178,12 +178,14 @@ public class IndexedTreeMap<K, V>
      *          and whose comparator is to be used to sort this map
      * @throws NullPointerException if the specified map is null
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
+                    justification = "Exception cannot happen because stream argument was provided as null")
     public IndexedTreeMap(SortedMap<K, ? extends V> m) {
         comparator = m.comparator();
         try {
             buildFromSorted(m.size(), m.entrySet().iterator(), null, null);
-        } catch (java.io.IOException cannotHappen) {
-        } catch (ClassNotFoundException cannotHappen) {
+        } catch (java.io.IOException | ClassNotFoundException cannotHappen) {
+            // cannot happen because stream argument was provided as null
         }
     }
 
@@ -200,11 +202,11 @@ public class IndexedTreeMap<K, V>
     }
 
     /**
-     * Returns <tt>true</tt> if this map contains a mapping for the specified
+     * Returns {@code true} if this map contains a mapping for the specified
      * key.
      *
      * @param key key whose presence in this map is to be tested
-     * @return <tt>true</tt> if this map contains a mapping for the
+     * @return {@code true} if this map contains a mapping for the
      *         specified key
      * @throws ClassCastException   if the specified key cannot be compared
      *                              with the keys currently in the map
@@ -217,16 +219,16 @@ public class IndexedTreeMap<K, V>
     }
 
     /**
-     * Returns <tt>true</tt> if this map maps one or more keys to the
-     * specified value.  More formally, returns <tt>true</tt> if and only if
-     * this map contains at least one mapping to a value <tt>v</tt> such
-     * that <tt>(value==null ? v==null : value.equals(v))</tt>.  This
+     * Returns {@code true} if this map maps one or more keys to the
+     * specified value.  More formally, returns {@code true} if and only if
+     * this map contains at least one mapping to a value {@code v} such
+     * that {@code (value==null ? v==null : value.equals(v))}.  This
      * operation will probably require time linear in the map size for
      * most implementations.
      *
      * @param value value whose presence in this map is to be tested
-     * @return <tt>true</tt> if a mapping to <tt>value</tt> exists;
-     *         <tt>false</tt> otherwise
+     * @return {@code true} if a mapping to {@code value} exists;
+     *         {@code false} otherwise
      * @since 1.2
      */
     public boolean containsValue(Object value) {
@@ -271,7 +273,7 @@ public class IndexedTreeMap<K, V>
      * @throws java.util.NoSuchElementException
      *          {@inheritDoc}
      */
-    public K firstKey() {
+    public K firstKey() throws NoSuchElementException {
         return key(getFirstEntry());
     }
 
@@ -279,7 +281,7 @@ public class IndexedTreeMap<K, V>
      * @throws java.util.NoSuchElementException
      *          {@inheritDoc}
      */
-    public K lastKey() {
+    public K lastKey() throws NoSuchElementException {
         return key(getLastEntry());
     }
 
@@ -295,6 +297,8 @@ public class IndexedTreeMap<K, V>
      *                              the specified map contains a null key and this map does not
      *                              permit null keys
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
+                    justification = "Exception cannot happen because stream argument was provided as null")
     public void putAll(Map<? extends K, ? extends V> map) {
         int mapSize = map.size();
         if (size == 0 && mapSize != 0 && map instanceof SortedMap) {
@@ -304,8 +308,8 @@ public class IndexedTreeMap<K, V>
                 try {
                     buildFromSorted(mapSize, map.entrySet().iterator(),
                             null, null);
-                } catch (java.io.IOException cannotHappen) {
-                } catch (ClassNotFoundException cannotHappen) {
+                } catch (java.io.IOException | ClassNotFoundException cannotHappen) {
+                    // cannot happen because stream argument was provided as null
                 }
                 return;
             }
@@ -314,10 +318,10 @@ public class IndexedTreeMap<K, V>
     }
 
     /**
-     * Returns this map's entry for the given key, or <tt>null</tt> if the map
+     * Returns this map's entry for the given key, or {@code null} if the map
      * does not contain an entry for the key.
      *
-     * @return this map's entry for the given key, or <tt>null</tt> if the map
+     * @return this map's entry for the given key, or {@code null} if the map
      *         does not contain an entry for the key
      * @throws ClassCastException   if the specified key cannot be compared
      *                              with the keys currently in the map
@@ -375,7 +379,7 @@ public class IndexedTreeMap<K, V>
      * Gets the entry corresponding to the specified key; if no such entry
      * exists, returns the entry for the least key greater than the specified
      * key; if no such entry exists (i.e., the greatest key in the Tree is less
-     * than the specified key), returns <tt>null</tt>.
+     * than the specified key), returns {@code null}.
      */
     final Entry<K, V> getCeilingEntry(K key) {
         Entry<K, V> p = root;
@@ -407,7 +411,7 @@ public class IndexedTreeMap<K, V>
     /**
      * Gets the entry corresponding to the specified key; if no such entry
      * exists, returns the entry for the greatest key less than the specified
-     * key; if no such entry exists, returns <tt>null</tt>.
+     * key; if no such entry exists, returns {@code null}.
      */
     final Entry<K, V> getFloorEntry(K key) {
         Entry<K, V> p = root;
@@ -465,7 +469,7 @@ public class IndexedTreeMap<K, V>
      * Gets the entry for the least key greater than the specified
      * key; if no such entry exists, returns the entry for the least
      * key greater than the specified key; if no such entry exists
-     * returns <tt>null</tt>.
+     * returns {@code null}.
      */
     final Entry<K, V> getHigherEntry(K key) {
         Entry<K, V> p = root;
@@ -496,7 +500,7 @@ public class IndexedTreeMap<K, V>
     /**
      * Returns the entry for the greatest key less than the specified key; if
      * no such entry exists (i.e., the least key in the Tree is greater than
-     * the specified key), returns <tt>null</tt>.
+     * the specified key), returns {@code null}.
      */
     final Entry<K, V> getLowerEntry(K key) {
         Entry<K, V> p = root;
@@ -531,10 +535,10 @@ public class IndexedTreeMap<K, V>
      *
      * @param key   key with which the specified value is to be associated
      * @param value value to be associated with the specified key
-     * @return the previous value associated with <tt>key</tt>, or
-     *         <tt>null</tt> if there was no mapping for <tt>key</tt>.
-     *         (A <tt>null</tt> return can also indicate that the map
-     *         previously associated <tt>null</tt> with <tt>key</tt>.)
+     * @return the previous value associated with {@code key}, or
+     *         {@code null} if there was no mapping for {@code key}.
+     *         (A {@code null} return can also indicate that the map
+     *         previously associated {@code null} with {@code key}.)
      * @throws ClassCastException   if the specified key cannot be compared
      *                              with the keys currently in the map
      * @throws NullPointerException if the specified key is null
@@ -604,10 +608,10 @@ public class IndexedTreeMap<K, V>
      * Removes the mapping for this key from this IndexedTreeMap if present.
      *
      * @param key key for which mapping should be removed
-     * @return the previous value associated with <tt>key</tt>, or
-     *         <tt>null</tt> if there was no mapping for <tt>key</tt>.
-     *         (A <tt>null</tt> return can also indicate that the map
-     *         previously associated <tt>null</tt> with <tt>key</tt>.)
+     * @return the previous value associated with {@code key}, or
+     *         {@code null} if there was no mapping for {@code key}.
+     *         (A {@code null} return can also indicate that the map
+     *         previously associated {@code null} with {@code key}.)
      * @throws ClassCastException   if the specified key cannot be compared
      *                              with the keys currently in the map
      * @throws NullPointerException if the specified key is null
@@ -635,12 +639,14 @@ public class IndexedTreeMap<K, V>
     }
 
     /**
-     * Returns a shallow copy of this <tt>IndexedTreeMap</tt> instance. (The keys and
+     * Returns a shallow copy of this {@code IndexedTreeMap} instance. (The keys and
      * values themselves are not cloned.)
      *
      * @return a shallow copy of this map
      */
     @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
+                    justification = "Exception cannot happen because stream argument was provided as null")
     public Object clone() {
         IndexedTreeMap<K, V> clone = null;
         try {
@@ -660,8 +666,8 @@ public class IndexedTreeMap<K, V>
         // Initialize clone with our mappings
         try {
             clone.buildFromSorted(size, entrySet().iterator(), null, null);
-        } catch (java.io.IOException cannotHappen) {
-        } catch (ClassNotFoundException cannotHappen) {
+        } catch (java.io.IOException | ClassNotFoundException cannotHappen) {
+            // cannot happen because stream argument was provided as null
         }
 
         return clone;
@@ -893,12 +899,12 @@ public class IndexedTreeMap<K, V>
      * The set is backed by the map, so changes to the map are
      * reflected in the set, and vice-versa.  If the map is modified
      * while an iteration over the set is in progress (except through
-     * the iterator's own <tt>remove</tt> operation), the results of
+     * the iterator's own {@code remove} operation), the results of
      * the iteration are undefined.  The set supports element removal,
      * which removes the corresponding mapping from the map, via the
-     * <tt>Iterator.remove</tt>, <tt>Set.remove</tt>,
-     * <tt>removeAll</tt>, <tt>retainAll</tt>, and <tt>clear</tt>
-     * operations.  It does not support the <tt>add</tt> or <tt>addAll</tt>
+     * {@code Iterator.remove}, {@code Set.remove},
+     * {@code removeAll}, {@code retainAll}, and {@code clear}
+     * operations.  It does not support the {@code add} or {@code addAll}
      * operations.
      */
     public Set<K> keySet() {
@@ -928,13 +934,13 @@ public class IndexedTreeMap<K, V>
      * The collection is backed by the map, so changes to the map are
      * reflected in the collection, and vice-versa.  If the map is
      * modified while an iteration over the collection is in progress
-     * (except through the iterator's own <tt>remove</tt> operation),
+     * (except through the iterator's own {@code remove} operation),
      * the results of the iteration are undefined.  The collection
      * supports element removal, which removes the corresponding
-     * mapping from the map, via the <tt>Iterator.remove</tt>,
-     * <tt>Collection.remove</tt>, <tt>removeAll</tt>,
-     * <tt>retainAll</tt> and <tt>clear</tt> operations.  It does not
-     * support the <tt>add</tt> or <tt>addAll</tt> operations.
+     * mapping from the map, via the {@code Iterator.remove},
+     * {@code Collection.remove}, {@code removeAll},
+     * {@code retainAll} and {@code clear} operations.  It does not
+     * support the {@code add} or {@code addAll} operations.
      */
     public Collection<V> values() {
         Collection<V> vs = values;
@@ -947,14 +953,14 @@ public class IndexedTreeMap<K, V>
      * The set is backed by the map, so changes to the map are
      * reflected in the set, and vice-versa.  If the map is modified
      * while an iteration over the set is in progress (except through
-     * the iterator's own <tt>remove</tt> operation, or through the
-     * <tt>setValue</tt> operation on a map entry returned by the
+     * the iterator's own {@code remove} operation, or through the
+     * {@code setValue} operation on a map entry returned by the
      * iterator) the results of the iteration are undefined.  The set
      * supports element removal, which removes the corresponding
-     * mapping from the map, via the <tt>Iterator.remove</tt>,
-     * <tt>Set.remove</tt>, <tt>removeAll</tt>, <tt>retainAll</tt> and
-     * <tt>clear</tt> operations.  It does not support the
-     * <tt>add</tt> or <tt>addAll</tt> operations.
+     * mapping from the map, via the {@code Iterator.remove},
+     * {@code Set.remove}, {@code removeAll}, {@code retainAll} and
+     * {@code clear} operations.  It does not support the
+     * {@code add} or {@code addAll} operations.
      */
     public Set<Map.Entry<K, V>> entrySet() {
         EntrySet es = entrySet;
@@ -975,7 +981,7 @@ public class IndexedTreeMap<K, V>
 
     /**
      * @throws ClassCastException       {@inheritDoc}
-     * @throws NullPointerException     if <tt>fromKey</tt> or <tt>toKey</tt> is
+     * @throws NullPointerException     if {@code fromKey} or {@code toKey} is
      *                                  null and this map uses natural ordering, or its comparator
      *                                  does not permit null keys
      * @throws IllegalArgumentException {@inheritDoc}
@@ -991,7 +997,7 @@ public class IndexedTreeMap<K, V>
 
     /**
      * @throws ClassCastException       {@inheritDoc}
-     * @throws NullPointerException     if <tt>toKey</tt> is null
+     * @throws NullPointerException     if {@code toKey} is null
      *                                  and this map uses natural ordering, or its comparator
      *                                  does not permit null keys
      * @throws IllegalArgumentException {@inheritDoc}
@@ -1006,7 +1012,7 @@ public class IndexedTreeMap<K, V>
 
     /**
      * @throws ClassCastException       {@inheritDoc}
-     * @throws NullPointerException     if <tt>fromKey</tt> is null
+     * @throws NullPointerException     if {@code fromKey} is null
      *                                  and this map uses natural ordering, or its comparator
      *                                  does not permit null keys
      * @throws IllegalArgumentException {@inheritDoc}
@@ -1021,7 +1027,7 @@ public class IndexedTreeMap<K, V>
 
     /**
      * @throws ClassCastException       {@inheritDoc}
-     * @throws NullPointerException     if <tt>fromKey</tt> or <tt>toKey</tt> is
+     * @throws NullPointerException     if {@code fromKey} or {@code toKey} is
      *                                  null and this map uses natural ordering, or its comparator
      *                                  does not permit null keys
      * @throws IllegalArgumentException {@inheritDoc}
@@ -1032,7 +1038,7 @@ public class IndexedTreeMap<K, V>
 
     /**
      * @throws ClassCastException       {@inheritDoc}
-     * @throws NullPointerException     if <tt>toKey</tt> is null
+     * @throws NullPointerException     if {@code toKey} is null
      *                                  and this map uses natural ordering, or its comparator
      *                                  does not permit null keys
      * @throws IllegalArgumentException {@inheritDoc}
@@ -1043,7 +1049,7 @@ public class IndexedTreeMap<K, V>
 
     /**
      * @throws ClassCastException       {@inheritDoc}
-     * @throws NullPointerException     if <tt>fromKey</tt> is null
+     * @throws NullPointerException     if {@code fromKey} is null
      *                                  and this map uses natural ordering, or its comparator
      *                                  does not permit null keys
      * @throws IllegalArgumentException {@inheritDoc}
@@ -1139,8 +1145,6 @@ public class IndexedTreeMap<K, V>
 
     static final class KeySet<E> extends AbstractSet<E> implements NavigableSet<E> {
         private final NavigableMap<E, Object> m;
-
-        @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
         KeySet(NavigableMap<E, Object> map) {
             m = map;
         }
@@ -1271,7 +1275,7 @@ public class IndexedTreeMap<K, V>
             return next != null;
         }
 
-        final Entry<K, V> nextEntry() {
+        final Entry<K, V> nextEntry() throws NoSuchElementException {
             Entry<K, V> e = next;
             if (e == null)
                 throw new NoSuchElementException();
@@ -1282,7 +1286,7 @@ public class IndexedTreeMap<K, V>
             return e;
         }
 
-        final Entry<K, V> prevEntry() {
+        final Entry<K, V> prevEntry() throws NoSuchElementException {
             Entry<K, V> e = next;
             if (e == null)
                 throw new NoSuchElementException();
@@ -1342,7 +1346,9 @@ public class IndexedTreeMap<K, V>
             super(first);
         }
 
-        public K next() {
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IT_NO_SUCH_ELEMENT", 
+                justification = "Seems to be a false positive")
+        public K next() throws NoSuchElementException {
             return prevEntry().key;
         }
     }
@@ -1360,7 +1366,7 @@ public class IndexedTreeMap<K, V>
 
     /**
      * Test two values for equality.  Differs from o1.equals(o2) only in
-     * that it copes with <tt>null</tt> o1 properly.
+     * that it copes with {@code null} o1 properly.
      */
     final static boolean valEquals(Object o1, Object o2) {
         return (o1 == null ? o2 == null : o1.equals(o2));
@@ -1386,7 +1392,7 @@ public class IndexedTreeMap<K, V>
      *
      * @throws NoSuchElementException if the Entry is null
      */
-    static <K> K key(Entry<K, ?> e) {
+    static <K> K key(Entry<K, ?> e) throws NoSuchElementException {
         if (e == null)
             throw new NoSuchElementException();
         return e.key;
@@ -1417,6 +1423,8 @@ public class IndexedTreeMap<K, V>
         final boolean fromStart, toEnd;
         final boolean loInclusive, hiInclusive;
 
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT",
+                    justification = "Comparison was originally in 3rd party code")
         NavigableSubMap(IndexedTreeMap<K, V> m,
                         boolean fromStart, K lo, boolean loInclusive,
                         boolean toEnd, K hi, boolean hiInclusive) {
@@ -1425,9 +1433,9 @@ public class IndexedTreeMap<K, V>
                     throw new IllegalArgumentException("fromKey > toKey");
             } else {
                 if (!fromStart) // type check
-                    m.compare(lo, lo);
+                    m.compare(lo, lo);  // RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT here
                 if (!toEnd)
-                    m.compare(hi, hi);
+                    m.compare(hi, hi); // RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT
             }
 
             this.m = m;
@@ -1765,7 +1773,7 @@ public class IndexedTreeMap<K, V>
                 return next != null && next.key != fenceKey;
             }
 
-            final IndexedTreeMap.Entry<K, V> nextEntry() {
+            final IndexedTreeMap.Entry<K, V> nextEntry() throws NoSuchElementException {
                 IndexedTreeMap.Entry<K, V> e = next;
                 if (e == null || e.key == fenceKey)
                     throw new NoSuchElementException();
@@ -1776,7 +1784,7 @@ public class IndexedTreeMap<K, V>
                 return e;
             }
 
-            final IndexedTreeMap.Entry<K, V> prevEntry() {
+            final IndexedTreeMap.Entry<K, V> prevEntry() throws NoSuchElementException {
                 IndexedTreeMap.Entry<K, V> e = next;
                 if (e == null || e.key == fenceKey)
                     throw new NoSuchElementException();
@@ -1848,7 +1856,9 @@ public class IndexedTreeMap<K, V>
                 super(last, fence);
             }
 
-            public Map.Entry<K, V> next() {
+            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IT_NO_SUCH_ELEMENT", 
+                    justification = "Seems to be a false positive")
+            public Map.Entry<K, V> next() throws NoSuchElementException {
                 return prevEntry();
             }
 
@@ -1863,7 +1873,9 @@ public class IndexedTreeMap<K, V>
                 super(last, fence);
             }
 
-            public K next() {
+            @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "IT_NO_SUCH_ELEMENT", 
+                    justification = "Seems to be a false positive")
+            public K next() throws NoSuchElementException {
                 return prevEntry().key;
             }
 
@@ -2093,7 +2105,7 @@ public class IndexedTreeMap<K, V>
         private K fromKey, toKey;
 
         private Object readResolve() {
-            return new AscendingSubMap(IndexedTreeMap.this,
+            return new AscendingSubMap<K,V>(IndexedTreeMap.this,
                     fromStart, fromKey, true,
                     toEnd, toKey, false);
         }
@@ -2164,7 +2176,7 @@ public class IndexedTreeMap<K, V>
 
         /**
          * Make a new cell with given key, value, and parent, and with
-         * <tt>null</tt> child links, and BLACK color.
+         * {@code null} child links, and BLACK color.
          */
         Entry(K key, V value, Entry<K, V> parent) {
             this.key = key;
@@ -2577,7 +2589,7 @@ public class IndexedTreeMap<K, V>
     private static final long serialVersionUID = 919286545866124006L;
 
     /**
-     * Save the state of the <tt>IndexedTreeMap</tt> instance to a stream (i.e.,
+     * Save the state of the {@code IndexedTreeMap} instance to a stream (i.e.,
      * serialize it).
      *
      * @serialData The <i>size</i> of the IndexedTreeMap (the number of key-value
@@ -2605,7 +2617,7 @@ public class IndexedTreeMap<K, V>
     }
 
     /**
-     * Reconstitute the <tt>IndexedTreeMap</tt> instance from a stream (i.e.,
+     * Reconstitute the {@code IndexedTreeMap} instance from a stream (i.e.,
      * deserialize it).
      */
     private void readObject(final java.io.ObjectInputStream s)
@@ -2641,11 +2653,13 @@ public class IndexedTreeMap<K, V>
     /**
      * Intended to be called only from IndexedTreeSet.addAll
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
+                    justification = "Exception cannot happen because stream argument was provided as null")
     void addAllForTreeSet(SortedSet<? extends K> set, V defaultVal) {
         try {
             buildFromSorted(set.size(), set.iterator(), null, defaultVal);
-        } catch (java.io.IOException cannotHappen) {
-        } catch (ClassNotFoundException cannotHappen) {
+        } catch (java.io.IOException | ClassNotFoundException cannotHappen) {
+            // cannot happen because stream argument was provided as null
         }
     }
 

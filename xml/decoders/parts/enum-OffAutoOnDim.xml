@@ -11,6 +11,7 @@
   </enumChoice>
   <enumChoice choice="Automatic" value="1">
     <choice>Automatic</choice>
+	<choice xml:lang="da">Automatisk</choice>
     <choice xml:lang="cs">Automaticky</choice>
     <choice xml:lang="fr">Automatique</choice>
     <choice xml:lang="it">Automatico</choice>
@@ -27,6 +28,7 @@
   </enumChoice>
   <enumChoice choice="Dim" value="4">
     <choice>Dim</choice>
+	<choice xml:lang="da">Dæmpet</choice>
     <choice xml:lang="cs">Tlumené</choice>
     <choice xml:lang="fr">Atténué</choice>
     <choice xml:lang="it">Smorzato</choice>

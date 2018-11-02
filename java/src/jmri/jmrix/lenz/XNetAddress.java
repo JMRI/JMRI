@@ -7,9 +7,17 @@ import org.slf4j.LoggerFactory;
 /**
  * Utility Class supporting parsing and testing of addresses for Lenz XpressNet
  * <P>
- * One address format is supported: Xtxxxx where: t is the type code, 'T' for
- * turnouts, 'S' for sensors, and 'L' for lights xxxx is a int for the hardware address
- * (1-1024) examples: XT2 (address 2), XS1003 (address 1003), XL134 (address 134)
+ * Two address format are supported: 
+ * <ul>
+ * <li> 
+ * Xtxxxx where: t is the type code, 'T' for turnouts, 'S' for sensors, 
+ * and 'L' for lights xxxx is a int for the hardware address (1-1024) 
+ * examples: XT2 (address 2), XS1003 (address 1003), XL134 (address 134)
+ * </li>
+ * <li>
+ * XSmm:pp where mm is the module address (1-128) and pp is the contact pin number (1-8).
+ * </li>
+ * </ul>
  *
  * @author Dave Duchamp, Copyright (C) 2004 - 2006
  * @author Bob Coleman Copyright (C) 2007, 2008, 2009
@@ -36,10 +44,22 @@ public class XNetAddress {
             log.error("invalid character in header field of XpressNet system name: {}", systemName);
             return (-1);
         }
-        // name must be in the Xtnnnnn format (X is user configurable)
+        // name must be in the Xtnnnnn or XSmm:pp format (X is user 
+        // configurable)
         int num = 0;
         try {
-            num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
+            String curAddress = systemName.substring(prefix.length() + 1);
+            if( ( systemName.charAt(prefix.length())=='S' ||
+                  systemName.charAt(prefix.length())=='s' ) && 
+                  curAddress.contains(":")) {
+               //Address format passed is in the form of encoderAddress:input or T:turnout address
+               int seperator = curAddress.indexOf(":");
+               int encoderAddress = Integer.parseInt(curAddress.substring(0, seperator));
+               int input = Integer.parseInt(curAddress.substring(seperator + 1));
+               num = ((encoderAddress - 1) * 8) + input;
+            } else {
+               num = Integer.parseInt(curAddress);
+            }
         } catch (NumberFormatException e) {
             log.warn("invalid character in number field of system name: {}", systemName);
             return (-1);

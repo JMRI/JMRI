@@ -15,13 +15,6 @@ public class SRCPPowerManager implements PowerManager, SRCPListener {
     int _bus = 0;
     SRCPBusConnectionMemo _memo;
 
-    @Deprecated
-    public SRCPPowerManager() {
-        // connect to the TrafficManager
-        tc = SRCPTrafficController.instance();
-        tc.addSRCPListener(this);
-    }
-
     public SRCPPowerManager(SRCPBusConnectionMemo memo, int bus) {
         // connect to the TrafficManager
         _memo = memo;

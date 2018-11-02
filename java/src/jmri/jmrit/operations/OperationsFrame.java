@@ -1,4 +1,3 @@
-//OperationsFrame.java
 package jmri.jmrit.operations;
 
 import java.awt.Container;
@@ -8,16 +7,12 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
 import javax.swing.event.ChangeEvent;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.JmriJFrame;
@@ -27,7 +22,7 @@ import jmri.util.JmriJFrame;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2012
  */
-public class OperationsFrame extends JmriJFrame implements AncestorListener {
+public class OperationsFrame extends JmriJFrame {
 
     public static final String NEW_LINE = "\n"; // NOI18N
     public static final String NONE = ""; // NOI18N
@@ -72,13 +67,13 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
         this.getContentPane().addItem(c, x, y);
     }
 
-    protected void addItemLeft(JComponent c, int x, int y) {
-        this.getContentPane().addItemLeft(c, x, y);
-    }
+//    protected void addItemLeft(JComponent c, int x, int y) {
+//        this.getContentPane().addItemLeft(c, x, y);
+//    }
 
-    protected void addItemWidth(JComponent c, int width, int x, int y) {
-        this.getContentPane().addItemWidth(c, width, x, y);
-    }
+//    protected void addItemWidth(JComponent c, int width, int x, int y) {
+//        this.getContentPane().addItemWidth(c, width, x, y);
+//    }
 
     protected void addItem(JPanel p, JComponent c, int x, int y) {
         this.getContentPane().addItem(p, c, x, y);
@@ -191,40 +186,25 @@ public class OperationsFrame extends JmriJFrame implements AncestorListener {
         this.getContentPane().storeValues();
     }
 
-    protected String lineWrap(String s) {
-        return this.getContentPane().lineWrap(s, this.getPreferredSize());
-    }
-
-    // Kludge fix for horizontal scrollbar encroaching buttons at bottom of a scrollable window.
-    protected JPanel pad; // used to pad out lower part of window to fix horizontal scrollbar issue
-
+//    // Kludge fix for horizontal scrollbar encroaching buttons at bottom of a scrollable window.
     protected void addHorizontalScrollBarKludgeFix(JScrollPane pane, JPanel panel) {
-        pad = new JPanel(); // kludge fix for horizontal scrollbar
-        pad.add(new JLabel(" "));
-        panel.add(pad);
-
-        // make sure control panel is the right size
-        pane.setMinimumSize(new Dimension(500, 130));
-        pane.setMaximumSize(new Dimension(2000, 170));
-        pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-
-        pane.addAncestorListener(this); // used to determine if scrollbar is showing
+        this.getContentPane().addHorizontalScrollBarKludgeFix(pane, panel);
     }
 
-    @Override
-    public void ancestorAdded(AncestorEvent event) {
-        this.getContentPane().ancestorAdded(event);
-    }
-
-    @Override
-    public void ancestorRemoved(AncestorEvent event) {
-        this.getContentPane().ancestorRemoved(event);
-    }
-
-    @Override
-    public void ancestorMoved(AncestorEvent event) {
-        this.getContentPane().ancestorMoved(event);
-    }
+//    @Override
+//    public void ancestorAdded(AncestorEvent event) {
+//        this.getContentPane().ancestorAdded(event);
+//    }
+//
+//    @Override
+//    public void ancestorRemoved(AncestorEvent event) {
+//        this.getContentPane().ancestorRemoved(event);
+//    }
+//
+//    @Override
+//    public void ancestorMoved(AncestorEvent event) {
+//        this.getContentPane().ancestorMoved(event);
+//    }
 
     /**
      * {@inheritDoc}

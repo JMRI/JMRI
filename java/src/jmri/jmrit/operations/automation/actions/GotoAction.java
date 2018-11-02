@@ -23,19 +23,35 @@ public class GotoAction extends Action {
     @Override
     public void doAction() {
         if (getAutomationItem() != null) {
-            AutomationItem automationItem = getAutomationItem().getGotoAutomationItem();
-            if (automationItem != null) {
+            AutomationItem gotoAutomationItem = getAutomationItem().getGotoAutomationItem();
+            if (gotoAutomationItem != null) {
                 setRunning(true);
                 // the old property = null unconditional branch
-                firePropertyChange(ACTION_GOTO_CHANGED_PROPERTY, null, automationItem);
+                firePropertyChange(ACTION_GOTO_CHANGED_PROPERTY, null, gotoAutomationItem);
             }
-            finishAction(automationItem != null);
+            finishAction(gotoAutomationItem != null);
         }
     }
 
     @Override
     public void cancelAction() {
-        // no cancel for this action
+        setRunning(false);
+    }
+    
+    @Override
+    public String getActionSuccessfulString() {
+        return Bundle.getMessage("ButtonOK") + getGotoAutomationItemId();
+    }
+    
+    private String getGotoAutomationItemId() {
+        String id = "";
+        if (getAutomationItem() != null) {
+            AutomationItem gotoAutomationItem = getAutomationItem().getGotoAutomationItem();
+            if (gotoAutomationItem != null && getAutomationItem().isGotoBranched()) {
+                id = " -> " + gotoAutomationItem.getId();
+            }
+        }
+        return id;
     }
 
     @Override
@@ -43,6 +59,7 @@ public class GotoAction extends Action {
         if (getAutomationItem() != null) {
             Automation automation = InstanceManager.getDefault(AutomationManager.class).getAutomationById(getAutomationItem().getId().split(Automation.REGEX)[0]);
             JComboBox<AutomationItem> cb = automation.getComboBox();
+            cb.removeItem(getAutomationItem());
             cb.setSelectedItem(getAutomationItem().getGotoAutomationItem());
             return cb;
         }

@@ -13,24 +13,21 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class RaspberryPiConnectionConfigTest {
-
-    @Test
-    public void ConstructorTest() {
-        Assert.assertNotNull("ConnectionConfig constructor", new RaspberryPiConnectionConfig());
-    }
+public class RaspberryPiConnectionConfigTest extends jmri.jmrix.AbstractConnectionConfigTestBase {
 
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         GpioProvider myprovider = new PiGpioProviderScaffold();
         GpioFactory.setDefaultProvider(myprovider);
 
         JUnitUtil.setUp();
+        cc = new RaspberryPiConnectionConfig();
     }
 
     @After
     public void tearDown() {
+        cc=null;
         JUnitUtil.tearDown();
     }
 

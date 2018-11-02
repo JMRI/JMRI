@@ -23,7 +23,7 @@ public class PackageTest{
 
     // Main entry point
     static public void main(String[] args) {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         org.junit.runner.Result result = org.junit.runner.JUnitCore
                  .runClasses(PackageTest.class);
         for(org.junit.runner.notification.Failure fail: result.getFailures()) {

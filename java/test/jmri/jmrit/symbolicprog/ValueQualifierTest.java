@@ -111,7 +111,7 @@ public class ValueQualifierTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         v = createCvMap();
         cv1 = new CvValue("81", p);
         cv1.setValue(3);

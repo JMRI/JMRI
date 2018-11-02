@@ -34,6 +34,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 import jmri.Conditional;
+import jmri.Conditional.Operator;
 import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.InstanceManager;
@@ -1495,11 +1496,11 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                 // exclude toggled outputs
                 switch (rTurnout.getState()) {
                     case Turnout.CLOSED:
-                        variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND,
+                        variableList.add(new ConditionalVariable(false, Conditional.Operator.AND,
                                 Conditional.TYPE_TURNOUT_CLOSED, name, true));
                         break;
                     case Turnout.THROWN:
-                        variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND,
+                        variableList.add(new ConditionalVariable(false, Conditional.Operator.AND,
                                 Conditional.TYPE_TURNOUT_THROWN, name, true));
                         break;
                     default:
@@ -1534,7 +1535,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             if (mode == Route.ONTHROWN) {
                 type = Conditional.TYPE_TURNOUT_THROWN;
             }
-            variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_NONE,
+            variableList.add(new ConditionalVariable(false, Conditional.Operator.NONE,
                     type, turnoutLockSystemName, true));
 
             actionList = new ArrayList<>();
@@ -1728,7 +1729,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         if (jmriBox.getSelectedBean() == null /*|| devName.length() == 0*/) {
             return null;
         }
-        int oper = Conditional.OPERATOR_AND;
+        Operator oper = Conditional.Operator.AND;
         int mode = sensorModeFromBox(sensorbox);
         boolean trigger = true;
         boolean negated = false;
@@ -1783,7 +1784,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         }
         String devName = jmriBox.getSelectedDisplayName();
         int mode = turnoutModeFromBox(box);
-        int oper = Conditional.OPERATOR_AND;
+        Operator oper = Conditional.Operator.AND;
         int type;
         boolean negated = false;
         boolean trigger = true;
@@ -2245,7 +2246,8 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
     @Override
     public void setMessagePreferencesDetails() {
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "remindSaveRoute", Bundle.getMessage("HideSaveReminder"));
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class)
+                .setPreferenceItemDetails(getClassName(), "remindSaveRoute", Bundle.getMessage("HideSaveReminder"));
         super.setMessagePreferencesDetails();
     }
 

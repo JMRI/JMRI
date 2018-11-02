@@ -187,10 +187,7 @@
         <label>Rail clack volume</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart_63.xml"/>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <!-- CV 105-106 -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <!-- MRC CVs continue -->

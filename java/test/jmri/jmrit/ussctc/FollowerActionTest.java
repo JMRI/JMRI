@@ -28,7 +28,7 @@ public class FollowerActionTest {
     public void testActionCreateAndFire() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         new FollowerAction("test").actionPerformed(null);
-        JFrame f = JFrameOperator.waitJFrame(FollowerPanel.rb.getString("TitleFollower"), true, true);
+        JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("TitleFollower"), true, true);
         Assert.assertNotNull(f);
         JUnitUtil.dispose(f);
     }
@@ -36,6 +36,7 @@ public class FollowerActionTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initRouteManager();
     }
 

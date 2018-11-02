@@ -12,6 +12,7 @@ import org.junit.runners.Suite;
         jmri.jmrix.loconet.locomon.PackageTest.class,
         jmri.jmrix.loconet.soundloader.PackageTest.class,
         jmri.jmrix.loconet.spjfile.PackageTest.class,
+        jmri.jmrix.loconet.messageinterp.PackageTest.class,
         SlotManagerTest.class,
         LocoNetSlotTest.class,
         LnOpsModeProgrammerTest.class,
@@ -84,7 +85,7 @@ import org.junit.runners.Suite;
         UhlenbrockSlotTest.class,
         jmri.jmrix.loconet.streamport.PackageTest.class,
         CsOpSwAccessTest.class,
-        LnPacketizerTest.class,
+        LnPacketizerStrictTest.class,
 })
 
 /**

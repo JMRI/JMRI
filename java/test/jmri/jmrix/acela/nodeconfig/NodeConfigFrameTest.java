@@ -49,9 +49,13 @@ public class NodeConfigFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+
         memo = new AcelaSystemConnectionMemo(); 
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 }

@@ -6,8 +6,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * DCCppThrottleTest.java
@@ -18,8 +16,6 @@ import org.slf4j.LoggerFactory;
  * @author	Mark Underwood
  */
 public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
-
-    private final static Logger log = LoggerFactory.getLogger(DCCppTurnoutTest.class);
 
     @Override
     public int numListeners() {
@@ -67,41 +63,6 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         
     }
    
-    @Test 
-    public void testDirectMode() throws Exception {
-
-        // Default mode is DIRECT
-        Assert.assertEquals(Turnout.DIRECT, t.getFeedbackMode());
-        
-        // Check that state changes appropriately
-        t.setCommandedState(Turnout.THROWN);
-        //Assert.assertEquals(t.getState(), Turnout.THROWN);
-        DCCppMessage m = dnis.outbound.elementAt(0);
-        Assert.assertTrue(m.isAccessoryMessage());
-        Assert.assertEquals(1, m.getAccessoryStateInt());
-        t.setCommandedState(Turnout.CLOSED);
-        //Assert.assertEquals(t.getState(), Turnout.CLOSED);
-        m = dnis.outbound.elementAt(1);
-        Assert.assertTrue(m.isAccessoryMessage());
-        Assert.assertEquals(0, m.getAccessoryStateInt());
-        
-        // Test Inverted state
-        // Check that state changes appropriately
-        t.setInverted(true);
-        t.setCommandedState(Turnout.THROWN);
-        //Assert.assertEquals(t.getState(), Turnout.THROWN);
-        m = dnis.outbound.elementAt(2);
-        log.debug("Inverted Direct: {}", m.toString());
-        Assert.assertTrue(m.isAccessoryMessage());
-        Assert.assertEquals(0, m.getAccessoryStateInt());
-        t.setCommandedState(Turnout.CLOSED);
-        //Assert.assertEquals(t.getState(), Turnout.CLOSED);
-        m = dnis.outbound.elementAt(3);
-        Assert.assertTrue(m.isAccessoryMessage());
-        Assert.assertEquals(1, m.getAccessoryStateInt());        
-    }
-
-    @Test    
     public void testMonitoringMode() throws Exception {
         // Set mode to Monitoring
         t.setFeedbackMode(Turnout.MONITORING);
@@ -210,7 +171,7 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         // infrastructure objects
         dnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
         t = new DCCppTurnout("DCCPP", 42, dnis);

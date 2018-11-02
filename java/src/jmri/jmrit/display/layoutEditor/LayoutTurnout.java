@@ -157,6 +157,7 @@ public class LayoutTurnout extends LayoutTrack {
 
     // operational instance variables (not saved between sessions)
     public static final int UNKNOWN = Turnout.UNKNOWN;
+    public static final int INCONSISTENT = Turnout.INCONSISTENT;
     public static final int STATE_AC = 0x02;
     public static final int STATE_BD = 0x04;
     public static final int STATE_AD = 0x06;
@@ -1050,6 +1051,7 @@ public class LayoutTurnout extends LayoutTrack {
         } else {
             turnoutName = "";
             namedTurnout = null;
+            setDisableWhenOccupied(false);
         }
     }
 
@@ -1524,12 +1526,14 @@ public class LayoutTurnout extends LayoutTrack {
                 blockName = b.getId();
             } else {
                 blockName = "";
+                setDisableWhenOccupied(false);
             }
             // decrement use if block was already counted
             if ((block != null)
                     && ((block == blockB) || (block == blockC) || (block == blockD))) {
                 block.decrementUse();
             }
+            setTrackSegmentBlocks();
         }
     }
 
@@ -1558,6 +1562,7 @@ public class LayoutTurnout extends LayoutTrack {
                         && ((blockB == block) || (blockB == blockC) || (blockB == blockD))) {
                     blockB.decrementUse();
                 }
+                setTrackSegmentBlocks();
             }
         } else {
             log.error("Attempt to set block B, but not a crossover");
@@ -1589,6 +1594,7 @@ public class LayoutTurnout extends LayoutTrack {
                         && ((blockC == block) || (blockC == blockB) || (blockC == blockD))) {
                     blockC.decrementUse();
                 }
+                setTrackSegmentBlocks();
             }
         } else {
             log.error("Attempt to set block C, but not a crossover");
@@ -1620,6 +1626,7 @@ public class LayoutTurnout extends LayoutTrack {
                         && ((blockD == block) || (blockD == blockB) || (blockD == blockC))) {
                     blockD.decrementUse();
                 }
+                setTrackSegmentBlocks();
             }
         } else {
             log.error("Attempt to set block D, but not a crossover");
@@ -1663,6 +1670,110 @@ public class LayoutTurnout extends LayoutTrack {
             blockDName = name;
         } else {
             log.error("Attempt to set block D name ('{}') on Layout Turnout {}, but not a crossover or slip", name, getName());
+        }
+    }
+
+    /**
+     * Check each connection point and update the block value for very short track segments.
+     * @since 4.11.6
+     */
+    void setTrackSegmentBlocks() {
+        setTrackSegmentBlock(TURNOUT_A, false);
+        setTrackSegmentBlock(TURNOUT_B, false);
+        setTrackSegmentBlock(TURNOUT_C, false);
+        if (getTurnoutType() > WYE_TURNOUT) {
+            setTrackSegmentBlock(TURNOUT_D, false);
+        }
+    }
+
+    /**
+     * Update the block for a track segment that provides a short connection
+     * between a turnout and another object, normally another turnout.
+     * These are hard to see and are frequently missed.
+     * <p>
+     * Skip block changes if signal heads, masts or sensors have been assigned.
+     * Only track segments with a length less than the turnout circle radius will be changed.
+     * @since 4.11.6
+     * @param pointType The point type which indicates which turnout connection.
+     * @param isAutomatic True for the automatically generated track segment created
+     * by the drag-n-drop process.  False for existing connections which require
+     * a track segment length calculation.
+     */
+    void setTrackSegmentBlock(int pointType, boolean isAutomatic) {
+        TrackSegment trkSeg;
+        Point2D pointCoord;
+        LayoutBlock currBlk = block;
+        boolean xOver = getTurnoutType() > WYE_TURNOUT && getTurnoutType() < SINGLE_SLIP;
+        switch (pointType) {
+            case TURNOUT_A:
+            case SLIP_A:
+                if (signalA1HeadNamed != null) return;
+                if (signalA2HeadNamed != null) return;
+                if (signalA3HeadNamed != null) return;
+                if (getSignalAMast() != null) return;
+                if (getSensorA() != null) return;
+                trkSeg = (TrackSegment) connectA;
+                pointCoord = getCoordsA();
+                break;
+            case TURNOUT_B:
+            case SLIP_B:
+                if (signalB1HeadNamed != null) return;
+                if (signalB2HeadNamed != null) return;
+                if (getSignalBMast() != null) return;
+                if (getSensorB() != null) return;
+                trkSeg = (TrackSegment) connectB;
+                pointCoord = getCoordsB();
+                if (xOver) {
+                    currBlk = blockB != null ? blockB : block;
+                }
+                break;
+            case TURNOUT_C:
+            case SLIP_C:
+                if (signalC1HeadNamed != null) return;
+                if (signalC2HeadNamed != null) return;
+                if (getSignalCMast() != null) return;
+                if (getSensorC() != null) return;
+                trkSeg = (TrackSegment) connectC;
+                pointCoord = getCoordsC();
+                if (xOver) {
+                    currBlk = blockC != null ? blockC : block;
+                }
+                break;
+            case TURNOUT_D:
+            case SLIP_D:
+                if (signalD1HeadNamed != null) return;
+                if (signalD2HeadNamed != null) return;
+                if (getSignalDMast() != null) return;
+                if (getSensorD() != null) return;
+                trkSeg = (TrackSegment) connectD;
+                pointCoord = getCoordsD();
+                if (xOver) {
+                    currBlk = blockD != null ? blockD : block;
+                }
+                break;
+            default:
+                log.error("setTrackSegmentBlock: Invalid pointType: {}", pointType);
+                return;
+        }
+        if (trkSeg != null) {
+            double chkSize = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
+            double segLength = 0;
+            if (!isAutomatic) {
+                Point2D segCenter = trkSeg.getCoordsCenter();
+                segLength = MathUtil.distance(pointCoord, segCenter) * 2;
+            }
+            if (segLength < chkSize) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Set block:");
+                    log.debug("    seg: {}", trkSeg);
+                    log.debug("    cor: {}", pointCoord);
+                    log.debug("    blk: {}", (currBlk == null) ? "null" : currBlk.getDisplayName());
+                    log.debug("    len: {}", segLength);
+                }
+
+                trkSeg.setLayoutBlock(currBlk);
+                layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
+            }
         }
     }
 
@@ -2490,6 +2601,9 @@ public class LayoutTurnout extends LayoutTrack {
             });
 
             cbmi = new JCheckBoxMenuItem(Bundle.getMessage("DisabledWhenOccupied"));
+            if (getTurnout() == null || getBlockName().isEmpty()) {
+                cbmi.setEnabled(false);
+            }
             cbmi.setSelected(disableWhenOccupied);
             popup.add(cbmi);
             cbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
@@ -2651,7 +2765,7 @@ public class LayoutTurnout extends LayoutTrack {
                             for (Map.Entry<String, LayoutBlock> entry : map.entrySet()) {
                                 String blockName = entry.getKey();
                                 LayoutBlock layoutBlock = entry.getValue();
-                                viewRouting.add(new AbstractActionImpl(getBlockBName(), blockName, layoutBlock));
+                                viewRouting.add(new AbstractActionImpl(blockName, getBlockBName(), layoutBlock));
                             }
                             popup.add(viewRouting);
                         }
@@ -3091,7 +3205,7 @@ public class LayoutTurnout extends LayoutTrack {
 
         int type = getTurnoutType();
         if (type == DOUBLE_XOVER) {
-            if (state != Turnout.THROWN) { // unknown or continuing path - not crossed over
+            if (state != Turnout.THROWN && state != INCONSISTENT) { // unknown or continuing path - not crossed over
                 if (isMain == mainlineA) {
                     g2.setColor(colorA);
                     g2.draw(new Line2D.Double(pA, pABM));
@@ -3121,7 +3235,7 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 }
             }
-            if (state != Turnout.CLOSED) { // unknown or diverting path - crossed over
+            if (state != Turnout.CLOSED && state != INCONSISTENT) { // unknown or diverting path - crossed over
                 if (isMain == mainlineA) {
                     g2.setColor(colorA);
                     g2.draw(new Line2D.Double(pA, pAM));
@@ -3155,13 +3269,49 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 }
             }
+            if (state == INCONSISTENT) {
+                if (isMain == mainlineA) {
+                    g2.setColor(colorA);
+                    g2.draw(new Line2D.Double(pA, pAM));
+                }
+                if (isMain == mainlineB) {
+                    g2.setColor(colorB);
+                    g2.draw(new Line2D.Double(pB, pBM));
+                }
+                if (isMain == mainlineC) {
+                    g2.setColor(colorC);
+                    g2.draw(new Line2D.Double(pC, pCM));
+                }
+                if (isMain == mainlineD) {
+                    g2.setColor(colorD);
+                    g2.draw(new Line2D.Double(pD, pDM));
+                }
+                if (!isBlock || drawUnselectedLeg) {
+                    if (isMain == mainlineA) {
+                        g2.setColor(colorA);
+                        g2.draw(new Line2D.Double(pAF, pM));
+                    }
+                    if (isMain == mainlineC) {
+                        g2.setColor(colorC);
+                        g2.draw(new Line2D.Double(pCF, pM));
+                    }
+                    if (isMain == mainlineB) {
+                        g2.setColor(colorB);
+                        g2.draw(new Line2D.Double(pBF, pM));
+                    }
+                    if (isMain == mainlineD) {
+                        g2.setColor(colorD);
+                        g2.draw(new Line2D.Double(pDF, pM));
+                    }
+                }
+            }
         } else if ((type == RH_XOVER)
                 || (type == LH_XOVER)) {    // draw (rh & lh) cross overs
             pAF = MathUtil.midPoint(pABM, pM);
             pBF = MathUtil.midPoint(pABM, pM);
             pCF = MathUtil.midPoint(pCDM, pM);
             pDF = MathUtil.midPoint(pCDM, pM);
-            if (state != Turnout.THROWN) { // unknown or continuing path - not crossed over
+            if (state != Turnout.THROWN && state != INCONSISTENT) { // unknown or continuing path - not crossed over
                 if (isMain == mainlineA) {
                     g2.setColor(colorA);
                     g2.draw(new Line2D.Double(pA, pABM));
@@ -3200,7 +3350,7 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 }
             }
-            if (state != Turnout.CLOSED) { // unknown or diverting path - crossed over
+            if (state != Turnout.CLOSED && state != INCONSISTENT) { // unknown or diverting path - crossed over
                 if (getTurnoutType() == RH_XOVER) {
                     if (isMain == mainlineA) {
                         g2.setColor(colorA);
@@ -3249,6 +3399,45 @@ public class LayoutTurnout extends LayoutTrack {
                     }
                 }
             }
+            if (state == INCONSISTENT) {
+                if (isMain == mainlineA) {
+                    g2.setColor(colorA);
+                    g2.draw(new Line2D.Double(pA, pAM));
+                }
+                if (isMain == mainlineB) {
+                    g2.setColor(colorB);
+                    g2.draw(new Line2D.Double(pB, pBM));
+                }
+                if (isMain == mainlineC) {
+                    g2.setColor(colorC);
+                    g2.draw(new Line2D.Double(pC, pCM));
+                }
+                if (isMain == mainlineD) {
+                    g2.setColor(colorD);
+                    g2.draw(new Line2D.Double(pD, pDM));
+                }
+                if (!isBlock || drawUnselectedLeg) {
+                    if (getTurnoutType() == RH_XOVER) {
+                        if (isMain == mainlineA) {
+                            g2.setColor(colorA);
+                            g2.draw(new Line2D.Double(pAF, pM));
+                        }
+                        if (isMain == mainlineC) {
+                            g2.setColor(colorC);
+                            g2.draw(new Line2D.Double(pCF, pM));
+                        }
+                    } else if (getTurnoutType() == LH_XOVER) {
+                        if (isMain == mainlineB) {
+                            g2.setColor(colorB);
+                            g2.draw(new Line2D.Double(pBF, pM));
+                        }
+                        if (isMain == mainlineD) {
+                            g2.setColor(colorD);
+                            g2.draw(new Line2D.Double(pDF, pM));
+                        }
+                    }
+                }
+            }
         } else if ((type == SINGLE_SLIP) || (type == DOUBLE_SLIP)) {
             log.error("slips should be being drawn by LayoutSlip sub-class");
         } else {    // LH, RH, or WYE Turnouts
@@ -3257,7 +3446,8 @@ public class LayoutTurnout extends LayoutTrack {
                 g2.setColor(colorA);
                 g2.draw(new Line2D.Double(pA, pM));
             }
-            if (state == UNKNOWN || continuingSense == state) { // unknown or continuing path
+
+            if (state == UNKNOWN || (continuingSense == state && state != INCONSISTENT)) { // unknown or continuing path
                 // draw center<===>B
                 if (isMain == mainlineB) {
                     g2.setColor(colorB);
@@ -3270,7 +3460,8 @@ public class LayoutTurnout extends LayoutTrack {
                     g2.draw(new Line2D.Double(MathUtil.twoThirdsPoint(pM, pB), pB));
                 }
             }
-            if (continuingSense != state) { // unknown or diverting path
+
+            if (state == UNKNOWN || (continuingSense != state && state != INCONSISTENT)) { // unknown or diverting path
                 // draw center<===>C
                 if (isMain == mainlineC) {
                     g2.setColor(colorC);
