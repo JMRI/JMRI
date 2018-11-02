@@ -191,8 +191,7 @@ public class Z21XNetThrottle extends jmri.jmrix.roco.RocoXNetThrottle {
     // Handle incoming messages for this throttle.
     @Override
     public void message(XNetReply l) {
-        if (log.isDebugEnabled()) 
-            log.debug("Throttle " + getDccAddress() + " - received message " + l.toString());
+        log.debug("Throttle {} - received message {}",getDccAddress(),l.toString());
         if((l.getElement(0)&0xE0)==0xE0 && ((l.getElement(0)&0x0f) >= 7 && (l.getElement(0)&0x0f) <=15 )){
             //This is a Roco specific throttle information message.
             //Data Byte 0 and 1 contain the locomotive address
@@ -218,13 +217,13 @@ public class Z21XNetThrottle extends jmri.jmrix.roco.RocoXNetThrottle {
                parseFunctionInformation(b4,b5);
                // byte 6 and 7 contain function information for F13-F28
                parseFunctionHighInformation(b6,b7);
-               
-                // Always end by setting the state to idle
-                // (z21 always responds with the same messge, regardless of
-                // request).
-                requestState = THROTTLEIDLE;
-                // and send any queued messages.
-                sendQueuedMessage();
+              
+               if(requestState != THROTTLEIDLE ) { 
+                  // set the request state to idle
+                  requestState = THROTTLEIDLE;
+                  // and send any queued messages.
+                  sendQueuedMessage();
+               }
            } 
         } else {
             // let the standard XpressNet Throttle have a chance to look
