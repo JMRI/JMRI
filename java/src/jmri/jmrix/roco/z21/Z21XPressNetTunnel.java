@@ -76,7 +76,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
         // of the command station simulation.
         log.debug("Simulator Thread Started");
         for (;;) {
-            XNetMessage m = readMessage();
+            Z21XNetMessage m = readMessage();
             if(m != null) {
                // don't forward a null message.
                message(m);
@@ -88,8 +88,8 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
      * Read one incoming message from the buffer and set
      * outputBufferEmpty to true.
      */
-    private XNetMessage readMessage() {
-        XNetMessage msg = null;
+    private Z21XNetMessage readMessage() {
+        Z21XNetMessage msg = null;
         try {
             msg = loadChars();
         } catch (java.io.IOException e) {
@@ -109,7 +109,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
      * @return filled message
      * @throws IOException when presented by the input source.
      */
-    private XNetMessage loadChars() throws java.io.IOException {
+    private Z21XNetMessage loadChars() throws java.io.IOException {
         int i;
         byte char1;
         char1 = readByteProtected(inpipe);
@@ -121,7 +121,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
         {
            len=4;
         }
-        XNetMessage msg = new XNetMessage(len);
+        Z21XNetMessage msg = new Z21XNetMessage(len);
         msg.setElement(0, char1 & 0xFF);
         for (i = 1; i < len; i++) {
             char1 = readByteProtected(inpipe);
@@ -164,7 +164,7 @@ public class Z21XPressNetTunnel implements Z21Listener, XNetListener, Runnable {
         // tunneled in a z21 message and forwards it to the XpressNet
         // implementation's input stream.
         if (msg.isXPressNetTunnelMessage()) {
-            XNetReply reply = msg.getXNetReply();
+            Z21XNetReply reply = msg.getXNetReply();
             log.debug("Z21 Reply {} forwarded to XpressNet implementation as {}",
                     msg, reply);
             for (int i = 0; i < reply.getNumDataElements(); i++) {
