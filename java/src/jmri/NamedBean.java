@@ -367,7 +367,7 @@ public interface NamedBean extends Comparable<NamedBean> {
         jmri.util.AlphanumComparator ac = new jmri.util.AlphanumComparator();
         String o1 = this.getSystemName();
         String o2 = n2.getSystemName();
-        
+
         int p1len = Manager.getSystemPrefixLength(o1);
         int p2len = Manager.getSystemPrefixLength(o2);
         
@@ -402,4 +402,5 @@ public interface NamedBean extends Comparable<NamedBean> {
 
     public class BadSystemNameException extends IllegalArgumentException {
     }
+
 }

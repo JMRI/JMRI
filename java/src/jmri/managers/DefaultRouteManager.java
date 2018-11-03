@@ -42,7 +42,7 @@ public class DefaultRouteManager extends AbstractManager<Route>
     }
 
     /**
-     * Method to provide a Route whether or not is already exists.
+     * Method to provide a Route whether or not it already exists.
      */
     @Override
     public Route provideRoute(String systemName, String userName) {
@@ -59,9 +59,9 @@ public class DefaultRouteManager extends AbstractManager<Route>
         r = new DefaultRoute(systemName, userName);
         // save in the maps
         register(r);
-        /*The following keeps track of the last created auto system name.
+        /* The following keeps track of the last created auto system name.
          currently we do not reuse numbers, although there is nothing to stop the
-         user from manually recreating them*/
+         user from manually recreating them */
         if (systemName.startsWith("IR:AUTO:")) {
             try {
                 int autoNumber = Integer.parseInt(systemName.substring(8));
@@ -69,7 +69,7 @@ public class DefaultRouteManager extends AbstractManager<Route>
                     lastAutoRouteRef = autoNumber;
                 }
             } catch (NumberFormatException e) {
-                log.warn("Auto generated SystemName " + systemName + " is not in the correct format");
+                log.warn("Auto generated SystemName {} is not in the correct format", systemName);
             }
         }
         return r;
@@ -152,4 +152,5 @@ public class DefaultRouteManager extends AbstractManager<Route>
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultRouteManager.class);
+
 }

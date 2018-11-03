@@ -78,7 +78,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     public RouteTableAction(String s) {
         super(s);
         // disable ourself if there is no primary Route manager available
-        if (jmri.InstanceManager.getNullableDefault(jmri.RouteManager.class) == null) {
+        if (InstanceManager.getNullableDefault(jmri.RouteManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -310,17 +310,17 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
             @Override
             public RouteManager getManager() {
-                return jmri.InstanceManager.getDefault(RouteManager.class);
+                return InstanceManager.getDefault(RouteManager.class);
             }
 
             @Override
             public Route getBySystemName(String name) {
-                return jmri.InstanceManager.getDefault(RouteManager.class).getBySystemName(name);
+                return InstanceManager.getDefault(RouteManager.class).getBySystemName(name);
             }
 
             @Override
             public Route getByUserName(String name) {
-                return jmri.InstanceManager.getDefault(RouteManager.class).getByUserName(name);
+                return InstanceManager.getDefault(RouteManager.class).getByUserName(name);
             }
 
             @Override
@@ -446,10 +446,10 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
     JButton exportButton = new JButton(Bundle.getMessage("ButtonExport"));
 
-    static String createInst = Bundle.getMessage("RouteAddStatusInitial1", Bundle.getMessage("ButtonCreate")); // I18N to include original button name in help string
-    static String editInst = Bundle.getMessage("RouteAddStatusInitial2", Bundle.getMessage("ButtonEdit"));
-    static String updateInst = Bundle.getMessage("RouteAddStatusInitial3", Bundle.getMessage("ButtonUpdate"));
-    static String cancelInst = Bundle.getMessage("RouteAddStatusInitial4", Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit")));
+    static final String createInst = Bundle.getMessage("RouteAddStatusInitial1", Bundle.getMessage("ButtonCreate")); // I18N to include original button name in help string
+    static final String editInst = Bundle.getMessage("RouteAddStatusInitial2", Bundle.getMessage("ButtonEdit"));
+    static final String updateInst = Bundle.getMessage("RouteAddStatusInitial3", Bundle.getMessage("ButtonUpdate"));
+    static final String cancelInst = Bundle.getMessage("RouteAddStatusInitial4", Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit")));
 
     JLabel status1 = new JLabel(createInst);
     JLabel status2 = new JLabel(editInst);
@@ -463,7 +463,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
     @Override
     protected void addPressed(ActionEvent e) {
-        pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        pref = InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (editMode) {
             cancelEdit();
         }
@@ -916,7 +916,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     }
 
     /**
-     * Respond to the Add button.
+     * Respond to the Create button.
      *
      * @param e the action event
      */
@@ -944,7 +944,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         Route g;
         // check if a Route with the same user name exists
         if (!uName.equals("")) {
-            g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(uName);
+            g = InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(uName);
             if (g != null) {
                 // Route with this user name already exists
                 status1.setText(Bundle.getMessage("LightError8"));
@@ -952,8 +952,8 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             }
         }
         // check if a Route with this system name already exists
-        sName = jmri.InstanceManager.getDefault(jmri.RouteManager.class).normalizeSystemName(sName);
-        g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(sName);
+        sName = InstanceManager.getDefault(jmri.RouteManager.class).normalizeSystemName(sName);
+        g = InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(sName);
         if (g != null) {
             // Route already exists
             status1.setText(Bundle.getMessage("LightError1"));
@@ -969,22 +969,22 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         Route g;
         if (_autoSystemName.isSelected() && !editMode) {
             // create new Route with auto system name
-            g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).newRoute(uName);
+            g = InstanceManager.getDefault(jmri.RouteManager.class).newRoute(uName);
         } else {
             if (sName.length() == 0) {
                 status1.setText(Bundle.getMessage("AddBeanStatusEnter"));
                 return null;
             }
             try {
-                sName = jmri.InstanceManager.getDefault(jmri.RouteManager.class).normalizeSystemName(sName);
-                g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).provideRoute(sName, uName);
+                sName = InstanceManager.getDefault(jmri.RouteManager.class).normalizeSystemName(sName);
+                g = InstanceManager.getDefault(jmri.RouteManager.class).provideRoute(sName, uName);
             } catch (IllegalArgumentException ex) {
                 g = null; // for later check
             }
         }
         if (g == null) {
             // should never get here
-            log.error("Unknown failure to create Route with System Name: " + sName); //NOI18N
+            log.error("Unknown failure to create Route with System Name: {}", sName); // NOI18N
         } else {
             g.deActivateRoute();
         }
@@ -1130,10 +1130,10 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     void editPressed(ActionEvent e) {
         // identify the Route with this name if it already exists
         String sName = _systemName.getText();
-        Route g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(sName);
+        Route g = InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(sName);
         if (g == null) {
             sName = _userName.getText();
-            g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(sName);
+            g = InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(sName);
             if (g == null) {
                 // Route does not exist, so cannot be edited
                 status1.setText(Bundle.getMessage("RouteAddStatusErrorNotFound"));
@@ -1242,7 +1242,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         _systemName.setVisible(false);
         addFrame.setTitle(Bundle.getMessage("TitleEditRoute"));
         editMode = true;
-    }   // editPressed
+    }
 
     /**
      * Respond to the Delete button.
@@ -1579,7 +1579,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         }
         logix.activateLogix();
         if (curRoute != null) {
-            jmri.InstanceManager.getDefault(jmri.RouteManager.class).deleteRoute(curRoute);
+            InstanceManager.getDefault(jmri.RouteManager.class).deleteRoute(curRoute);
             curRoute = null;
         }
         status1.setText(Bundle.getMessage("BeanNameRoute") + "\"" + uName + "\" " + Bundle.getMessage("RouteAddStatusExported") + " (" + _includedTurnoutList.size()
@@ -2246,7 +2246,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
     @Override
     public void setMessagePreferencesDetails() {
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class)
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class)
                 .setPreferenceItemDetails(getClassName(), "remindSaveRoute", Bundle.getMessage("HideSaveReminder"));
         super.setMessagePreferencesDetails();
     }

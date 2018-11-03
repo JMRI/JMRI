@@ -524,7 +524,7 @@ public class SignalGroupSubTableAction {
                     updateSubPressed(e, false);
                 }
             });
-            updateSubButton.setToolTipText(Bundle.getMessage("TooltipUpdate"));
+            updateSubButton.setToolTipText(Bundle.getMessage("TooltipUpdateGroup"));
 
             p2xtSpace.setVisible(false);
             p2xsSpace.setVisible(false);

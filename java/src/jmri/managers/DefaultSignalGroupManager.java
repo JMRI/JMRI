@@ -2,6 +2,7 @@ package jmri.managers;
 
 import java.io.File;
 import java.net.URISyntaxException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Default implementation of a SignalGroupManager.
- * <P>
+ * <p>
  * This loads automatically the first time used.
  *
  * @author Bob Jacobsen Copyright (C) 2009
@@ -48,7 +49,7 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
 
     @Override
     public char typeLetter() {
-        return 'F';
+        return 'G'; // according to JMRI: Names and Naming
     }
 
     @Override
@@ -71,27 +72,34 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
         return _tuser.get(key);
     }
 
+    @Override
+    public SignalGroup newSignalGroup(String userName) {
+        int nextAutoRouteRef = lastAutoRouteRef + 1;
+        StringBuilder b = new StringBuilder("IG:AUTO:");
+        String nextNumber = paddedNumber.format(nextAutoRouteRef);
+        b.append(nextNumber);
+        return provideSignalGroup(b.toString(), userName);
+    }
+
+    DecimalFormat paddedNumber = new DecimalFormat("0000");
+
+    int lastAutoRouteRef = 0;
+
     /**
      * {@inheritDoc}
      * 
      * Forces upper case and trims leading and trailing whitespace.
-     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
+     * The IG prefix is added if necessary.
      */
     @CheckReturnValue
     @Override
     public @Nonnull
     String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
-        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
+        // does not check for valid system connection prefix, hence doesn't throw NamedBean.BadSystemNameException
+        if (inputName.length() < 3 || !inputName.startsWith("IG")) {
+            inputName = "IG" + inputName;
+        }
         return inputName.toUpperCase().trim();
-    }
-
-    @Override
-    public SignalGroup newSignalGroup(String sys) {
-        SignalGroup g;
-        g = new DefaultSignalGroup(sys);
-        register(g);
-        return g;
-
     }
 
     @Override
@@ -132,7 +140,7 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
                 // check that there's an aspects.xml file
                 File aspects = new File(file.getPath() + File.separator + "aspects.xml");
                 if (aspects.exists()) {
-                    log.debug("found system: " + file.getName());
+                    log.debug("found system: {}", file.getName());
                     retval.add(file.getName());
                 }
             }
@@ -160,4 +168,5 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManager.class);
+
 }

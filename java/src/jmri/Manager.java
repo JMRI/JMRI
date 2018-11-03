@@ -9,21 +9,21 @@ import javax.annotation.Nonnull;
 
 /**
  * Basic interface for access to named, managed objects.
- * <P>
+ * <p>
  * {@link NamedBean} objects represent various real elements, and have a "system
  * name" and perhaps "user name". A specific Manager object provides access to
  * them by name, and serves as a factory for new objects.
- * <P>
+ * <p>
  * Right now, this interface just contains the members needed by
  * {@link InstanceManager} to handle managers for more than one system.
- * <P>
+ * <p>
  * Although they are not defined here because their return type differs, any
  * specific Manager subclass provides "get" methods to locate specific objects,
  * and a "new" method to create a new one via the Factory pattern. The "get"
  * methods will return an existing object or null, and will never create a new
  * object. The "new" method will log a warning if an object already exists with
  * that system name.
- * <P>
+ * <p>
  * add/remove PropertyChangeListener methods are provided. At a minimum,
  * subclasses must notify of changes to the list of available NamedBeans; they
  * may have other properties that will also notify.
@@ -31,11 +31,11 @@ import javax.annotation.Nonnull;
  * Probably should have been called NamedBeanManager
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
@@ -390,7 +390,7 @@ public interface Manager<E extends NamedBean> {
      * This is a common operation across JMRI, as the system prefix can be
      * parsed out without knowledge of the type of NamedBean involved.
      *
-     * @param inputName System name to provide the prefix
+     * @param inputName System Name to provide the prefix
      * @throws NamedBean.BadSystemNameException If the inputName can't be
      *                                          converted to normalized form
      * @return The length of the system-prefix part of the system name in
@@ -405,7 +405,7 @@ public interface Manager<E extends NamedBean> {
             throw new NamedBean.BadSystemNameException();
         }
 
-        // As a very special case, check for legacy prefixs - to be removed
+        // As a very special case, check for legacy prefixes - to be removed
         // This is also quite a bit slower than the tuned implementation below
         int p = startsWithLegacySystemPrefix(inputName);
         if (p > 0) {
@@ -420,7 +420,6 @@ public interface Manager<E extends NamedBean> {
                                 .register(legacyReportTask);
             }
             legacyNameSet.add(inputName);
-            
             return p;
         }
 
@@ -473,7 +472,6 @@ public interface Manager<E extends NamedBean> {
         return inputName.substring(0, getSystemPrefixLength(inputName));
     }
 
-    
     /**
      * Indicate whether a system-prefix is one of the legacy non-parsable ones
      * that are being removed during the JMRI 4.11 cycle.
