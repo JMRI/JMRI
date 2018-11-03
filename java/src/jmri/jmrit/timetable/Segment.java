@@ -10,7 +10,7 @@ public class Segment {
     public Segment(int segmentId, int layoutId, String segmentName) {
         _segmentId = segmentId;
         _layoutId = layoutId;
-        _segmentName = segmentName;
+        setSegmentName(segmentName);
     }
 
     private int _segmentId = 0;

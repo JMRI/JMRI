@@ -138,6 +138,7 @@ public class TimeTableImport {
 // "Sierra Western","Default","08/01/11",0,24,"5:1","HO",5
 //         _layoutId = layoutId;
 //         _layoutName = layoutName;
+//         _scale = scale;
 //         _fastClock = fastClock;
 //         _throttles = throttles;
 //         _metric = metric;
@@ -148,6 +149,7 @@ public class TimeTableImport {
         _layoutId = _dm.getNextId("Layout");  // NOI18N
         Layout layout = new Layout(_layoutId,
                 lineStrings[0],
+                lineStrings[6],
                 clock,
                 throttles,
                 false);

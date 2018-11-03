@@ -173,7 +173,7 @@ public class TimeTableFrameTest {
         _jtxt = new JTextFieldOperator(_jfo, 1);
         _jtxt.clickMouse();
         _jtxt.setText("20");
-        new JSpinnerOperator(_jfo, 0).setValue(1);
+//         new JSpinnerOperator(_jfo, 0).setValue(1);
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
 
         JLabelOperator jlo = new JLabelOperator(_jfo, 7);
@@ -236,13 +236,13 @@ public class TimeTableFrameTest {
         new JSpinnerOperator(_jfo, 1).setValue(30);
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
 
-        _jtxt = new JTextFieldOperator(_jfo, 0);
-        _jtxt.clickMouse();  // Activate Update button
-        new JSpinnerOperator(_jfo, 0).setValue(1);
-        new JSpinnerOperator(_jfo, 1).setValue(22);
-        Thread edit5 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"), "edit5");  // NOI18N
-        new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
-        JUnitUtil.waitFor(()->{return !(edit5.isAlive());}, "edit5 finished");
+//         _jtxt = new JTextFieldOperator(_jfo, 0);
+//         _jtxt.clickMouse();  // Activate Update button
+//         new JSpinnerOperator(_jfo, 0).setValue(1);
+//         new JSpinnerOperator(_jfo, 1).setValue(22);
+//         Thread edit5 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"), "edit5");  // NOI18N
+//         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
+//         JUnitUtil.waitFor(()->{return !(edit5.isAlive());}, "edit5 finished");
 
         // Train:  Speed, Start time, Notes
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample", "Schedule", "114", "AMX"}));  // NOI18N

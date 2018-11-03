@@ -24,20 +24,20 @@ public class StopTest {
         s.setSeq(2);
         Assert.assertEquals(2, s.getSeq());
 
-        s.setStationId(1);
-        Assert.assertEquals(1, s.getStationId());
-        s.setDuration(15);
-        Assert.assertEquals(15, s.getDuration());
-        s.setNextSpeed(30);
-        Assert.assertEquals(30, s.getNextSpeed());
-        s.setArriveTime(600);
-        Assert.assertEquals(600, s.getArriveTime());
-        s.setDepartTime(630);
-        Assert.assertEquals(630, s.getDepartTime());
-        s.setStagingTrack(2);
-        Assert.assertEquals(2, s.getStagingTrack());
-        s.setStopNotes("none");  // NOI18N
-        Assert.assertEquals("none", s.getStopNotes());  // NOI18N
+//         s.setStationId(1);
+//         Assert.assertEquals(1, s.getStationId());
+//         s.setDuration(15);
+//         Assert.assertEquals(15, s.getDuration());
+//         s.setNextSpeed(30);
+//         Assert.assertEquals(30, s.getNextSpeed());
+//         s.setArriveTime(600);
+//         Assert.assertEquals(600, s.getArriveTime());
+//         s.setDepartTime(630);
+//         Assert.assertEquals(630, s.getDepartTime());
+//         s.setStagingTrack(2);
+//         Assert.assertEquals(2, s.getStagingTrack());
+//         s.setStopNotes("none");  // NOI18N
+//         Assert.assertEquals("none", s.getStopNotes());  // NOI18N
     }
 
     @Test
@@ -48,8 +48,8 @@ public class StopTest {
         station.setStationName("test station");  // NOI18N
         dm.addStation(1, station);
         Stop stop = new Stop(1, 1, 1);
-        stop.setStationId(1);
-        Assert.assertEquals("1 :: test station", stop.toString());  // NOI18N
+//         stop.setStationId(1);
+//         Assert.assertEquals("1 :: test station", stop.toString());  // NOI18N
     }
 
     @Before

@@ -50,6 +50,7 @@ public class TimeTableXml {
             Element e = new Element("layout");
             e.addContent(new Element("layout_id").addContent("" + layout.getLayoutId()));
             e.addContent(new Element("layout_name").addContent(layout.getLayoutName()));
+            e.addContent(new Element("scale").addContent("" + layout.getScale()));
             e.addContent(new Element("fast_clock").addContent("" + layout.getFastClock()));
             e.addContent(new Element("throttles").addContent("" + layout.getThrottles()));
             e.addContent(new Element("metric").addContent((layout.getMetric()) ? "yes" : "no"));
@@ -186,17 +187,19 @@ public class TimeTableXml {
                 int layoutId = (layout_id == null) ? 0 : Integer.parseInt(layout_id.getValue());
                 Element layout_name = layout.getChild("layout_name");
                 String layoutName = (layout_name == null) ? "" : layout_name.getValue();
+                Element scaleE = layout.getChild("scale");
+                String scale = (scaleE == null) ? "" : scaleE.getValue();
                 Element fast_clock = layout.getChild("fast_clock");
                 int fastClock = (fast_clock == null) ? 1 : Integer.parseInt(fast_clock.getValue());
                 Element throttlesE = layout.getChild("throttles");
                 int throttles = (throttlesE == null) ? 0 : Integer.parseInt(throttlesE.getValue());
                 Element metricE = layout.getChild("metric");
                 boolean metric = (metricE == null) ? false : metricE.getValue().equals("yes");
-                log.debug("  Layout: {} - {} - {} - {} - {}",
-                    layoutId, layoutName, fastClock, throttles, metric);
+                log.debug("  Layout: {} - {} - {} - {} - {} - {}",
+                    layoutId, layoutName, scale, fastClock, throttles, metric);
 
                 // Create a Layout
-                Layout newLayout = new Layout(layoutId, layoutName, fastClock, throttles, metric);
+                Layout newLayout = new Layout(layoutId, layoutName, scale, fastClock, throttles, metric);
                 dataMgr.addLayout(layoutId, newLayout);
                 checkLayoutIds.add(layoutId);
             }

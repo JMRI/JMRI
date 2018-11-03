@@ -19,7 +19,7 @@ public class LayoutTest {
         Assert.assertEquals(1, l.getLayoutId());
         l.setLayoutName("Test Name");  // NOI18N
         Assert.assertEquals("Test Name", l.getLayoutName());  // NOI18N
-        Assert.assertEquals(87.1, l.getScale(), 1.0);
+        Assert.assertEquals("HO", l.getScale());  // NOI18N
         l.setFastClock(6);
         Assert.assertEquals(6, l.getFastClock());
         l.setThrottles(3);

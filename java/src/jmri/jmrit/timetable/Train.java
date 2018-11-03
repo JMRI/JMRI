@@ -16,14 +16,14 @@ public class Train {
                 int defaultSpeed, int startTime, int throttle, int routeDuration, String trainNotes) {
         _trainId = trainId;
         _scheduleId = scheduleId;
-        _typeId = typeId;
-        _trainName = trainName;
-        _trainDesc = trainDesc;
-        _defaultSpeed = defaultSpeed;
-        _startTime = startTime;
-        _throttle = throttle;
-        _routeDuration = routeDuration;
-        _trainNotes = trainNotes;
+        setTypeId(typeId);
+        setTrainName(trainName);
+        setTrainDesc(trainDesc);
+        setDefaultSpeed(defaultSpeed);
+        setStartTime(startTime);
+        setThrottle(throttle);
+        setRouteDuration(routeDuration);
+        setTrainNotes(trainNotes);
     }
 
     private int _trainId = 0;
@@ -73,23 +73,58 @@ public class Train {
         return _defaultSpeed;
     }
 
-    public void setDefaultSpeed(int newSpeed) {
+    public void setDefaultSpeed(int newSpeed) throws IllegalArgumentException {
+        TimeTableDataManager dm = TimeTableDataManager.getDataManager();
+        if (newSpeed < 0) {
+            throw new IllegalArgumentException(dm.DEFAULT_SPEED_LT_0);
+        }
+        int oldSpeed = _defaultSpeed;
         _defaultSpeed = newSpeed;
+
+        try {
+            dm.calculateTrain(_trainId, false);
+            dm.calculateTrain(_trainId, true);
+        } catch (IllegalArgumentException ex) {
+            _defaultSpeed = oldSpeed;  // Roll back default speed change
+            throw ex;
+        }
     }
 
     public int getStartTime() {
         return _startTime;
     }
 
-    public void setStartTime(int newStartTime) {
+    public void setStartTime(int newStartTime) throws IllegalArgumentException  {
+        TimeTableDataManager dm = TimeTableDataManager.getDataManager();
+        Schedule schedule = dm.getSchedule(_scheduleId);
+        if (!dm.validateTime(schedule.getStartHour(), schedule.getDuration(), newStartTime)) {
+            throw new IllegalArgumentException(String.format("%s~%d~%d",
+                    dm.START_TIME_RANGE, schedule.getStartHour(), schedule.getStartHour() + schedule.getDuration()));
+        }
+        int oldStartTime = _startTime;
         _startTime = newStartTime;
+
+        try {
+            dm.calculateTrain(_trainId, false);
+            dm.calculateTrain(_trainId, true);
+        } catch (IllegalArgumentException ex) {
+            _startTime = oldStartTime;  // Roll back start time change
+            throw ex;
+        }
     }
 
     public int getThrottle() {
         return _throttle;
     }
 
-    public void setThrottle(int newThrottle) {
+    public void setThrottle(int newThrottle) throws IllegalArgumentException  {
+        TimeTableDataManager dm = TimeTableDataManager.getDataManager();
+//         Schedule schedule = dm.getSchedule(_scheduleId);
+        Layout layout = dm.getLayout(dm.getSchedule(_scheduleId).getLayoutId());
+        if (newThrottle < 0 || newThrottle > layout.getThrottles()) {
+            throw new IllegalArgumentException(dm.THROTTLE_RANGE);
+        }
+
         _throttle = newThrottle;
     }
 

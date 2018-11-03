@@ -12,7 +12,7 @@ public class TrainType {
     public TrainType(int typeId, int layoutId, String typeName, String typeColor) {
         _typeId = typeId;
         _layoutId = layoutId;
-        _typeName = typeName;
+        setTypeName(typeName);
         setTypeColor(typeColor);
     }
 

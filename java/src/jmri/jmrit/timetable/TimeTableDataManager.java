@@ -34,9 +34,11 @@ public class TimeTableDataManager {
     public TimeTableDataManager(boolean loadData) {
         jmri.InstanceManager.setDefault(TimeTableDataManager.class, this);
         if (loadData) {
+            _lockCalculate = true;
             if (!jmri.jmrit.timetable.configurexml.TimeTableXml.doLoad()) {
                 log.error("Unabled to load the time table data");  // NOI18N
             }
+            _lockCalculate = false;
         }
     }
 
@@ -52,19 +54,29 @@ public class TimeTableDataManager {
         return new TimeTableDataManager(true);
     }
 
-    /**
-     * Reset all of the database tables.
-     */
-//     public void resetDataManager() {
-//         _layoutMap.clear();
-//         _trainTypeMap.clear();
-//         _segmentMap.clear();
-//         _stationMap.clear();
-//         _scheduleMap.clear();
-//         _trainMap.clear();
-//         _stopMap.clear();
-//         _segmentStations.clear();
-//     }
+    boolean _lockCalculate = false;
+
+    // Exception key words
+    public static final String CLOCK_LT_1 = "FastClockLt1";    // NOI18N
+    public static final String DURATION_LT_0 = "DurationLt0";    // NOI18N
+    public static final String THROTTLES_LT_0 = "ThrottlesLt0";    // NOI18N
+    public static final String THROTTLES_IN_USE = "ThrottlesInUse";    // NOI18N
+    public static final String SCALE_NF = "ScaleNotFound";    // NOI18N
+    public static final String TIME_OUT_OF_RANGE = "TimeOutOfRange";    // NOI18N
+    public static final String SEGMENT_CHANGE_ERROR = "SegmentChangeError";    // NOI18N
+    public static final String DISTANCE_LT_0 = "DistanceLt0";    // NOI18N
+    public static final String SIDINGS_LT_0 = "SidingsLt0";    // NOI18N
+    public static final String STAGING_LT_0 = "StagingLt0";    // NOI18N
+    public static final String STAGING_IN_USE = "StagingInUse";    // NOI18N
+    public static final String START_HOUR_RANGE = "StartHourRange";    // NOI18N
+    public static final String DURATION_RANGE = "DurationRange";    // NOI18N
+    public static final String DEFAULT_SPEED_LT_0 = "DefaultSpeedLt0";    // NOI18N
+    public static final String START_TIME_FORMAT = "StartTimeFormat";    // NOI18N
+    public static final String START_TIME_RANGE = "StartTimeRange";    // NOI18N
+    public static final String THROTTLE_RANGE = "ThrottleRange";    // NOI18N
+    public static final String STAGING_RANGE = "StagingRange";    // NOI18N
+    public static final String STOP_DURATION_LT_0 = "StopDurationLt0";    // NOI18N
+    public static final String NEXT_SPEED_LT_0 = "NextSpeedLt0";    // NOI18N
 
     private TreeMap<Integer, Layout> _layoutMap = new TreeMap<>();
     private TreeMap<Integer, TrainType> _trainTypeMap = new TreeMap<>();
@@ -152,7 +164,9 @@ public class TimeTableDataManager {
     }
 
     public void deleteStop(int id) {
+        int trainId = getStop(id).getTrainId();
         _stopMap.remove(id);
+        calculateTrain(trainId, true);
     }
 
     // ------------ Map access methods: get by id  ------------ //
@@ -371,6 +385,194 @@ public class TimeTableDataManager {
         }
         Collections.sort(list, (o1, o2) -> o1.toString().compareTo(o2.toString()));
         return list;
+    }
+
+    // ------------  Calculate Train Times ------------
+
+    /**
+     * Update the stops for all of the trains for this layout.
+     * Invoked by updates to fast clock speed, metric, scale and station distances.
+     * @param layoutId The id for the layout that has been updated.
+     */
+    void calculateLayoutTrains(int layoutId, boolean updateStops) {
+        if (_lockCalculate) return;
+        for (Schedule schedule : getSchedules(layoutId, false)) {
+            calculateScheduleTrains(schedule.getScheduleId(), updateStops);
+        }
+    }
+
+    /**
+     * Update the stop times for all of the trains that use this schedule.
+     * @param scheduleId The id for the schedule that has been updated.
+     */
+    void calculateScheduleTrains(int scheduleId, boolean updateStops) {
+        if (_lockCalculate) return;
+        for (Train train : getTrains(scheduleId, 0, false)) {
+            calculateTrain(train.getTrainId(), updateStops);
+        }
+    }
+
+    /**
+     * Calculate the arrival and departure times for all of the stops.
+     * @param trainId The id of the train to be updated.
+     * @param updateStops When true, update the arrive and depart times.
+     * @throws IllegalArgumentException when stop times are outside of the
+     * schedule times or a segment change failed.  The TIME_OUT_OF_RANGE
+     * exception message includes the stop id and train name.  The SEGMENT_CHANGE_ERROR
+     * message includes the segment name and the station name.  The tilde
+     * character is used as the string separator.
+     */
+    public void calculateTrain(int trainId, boolean updateStops) throws IllegalArgumentException {
+        if (_lockCalculate) return;
+        Train train = getTrain(trainId);
+        Schedule schedule = getSchedule(train.getScheduleId());
+        Layout layout = getLayout(schedule.getLayoutId());
+        ArrayList<Stop> stops = getStops(trainId, 0, true);
+
+        float smile = layout.getScaleMK();
+        int startHH = schedule.getStartHour();
+        int duration = schedule.getDuration();
+        int currentTime = train.getStartTime();
+        int defaultSpeed = train.getDefaultSpeed();
+
+        int checkStart = startHH;
+        int checkDuration = duration;
+
+        String currentStationName = "";
+        double currentDistance = 0.0;
+        int currentSegment = 0;
+        int currentSpeed = 0;
+        int newArrive = 0;
+        int newDepart = 0;
+        int elapseTime = 0;
+        boolean firstStop = true;
+
+        for (Stop stop : stops) {
+            Station station = getStation(stop.getStationId());
+            Segment segment = getSegment(station.getSegmentId());
+            if (firstStop) {
+                newArrive = currentTime;
+                currentTime += stop.getDuration();
+                newDepart = currentTime;
+                currentDistance = station.getDistance();
+                currentSpeed = (stop.getNextSpeed() > 0) ? stop.getNextSpeed() : defaultSpeed;
+                currentStationName = station.getStationName();
+                currentSegment = segment.getSegmentId();
+
+                if (validateTime(checkStart, checkDuration, newArrive) && validateTime(checkStart, checkDuration, newDepart)) {
+                    if (updateStops) {
+                        stop.setArriveTime(newArrive);
+                        stop.setDepartTime(newDepart);
+                    }
+                } else {
+                    throw new IllegalArgumentException(TIME_OUT_OF_RANGE);
+//                     JOptionPane.showMessageDialog(null,
+//                             Bundle.getMessage("TimeOutOfRange", stop.getSeq(), train.getTrainName()),  // NOI18N
+//                             Bundle.getMessage("WarningTitle"),  // NOI18N
+//                             JOptionPane.WARNING_MESSAGE);
+//                     return false;
+                }
+                firstStop = false;
+                continue;
+            }
+
+            // Calculate times for remaining stops
+            double wrkDistance = Math.abs(currentDistance - station.getDistance());
+
+            // If the segment has changed, a new distance will need to be calculated.
+            if (segment.getSegmentId() != currentSegment) {
+                // Find the station in the current segment that has the same name
+                // as the station in the previous segment.
+                Station wrkStation = null;
+                for (Station findStation : getStations(segment.getSegmentId(), false)) {
+                    if (findStation.getStationName().equals(currentStationName)) {
+                        wrkStation = findStation;
+                        break;
+                    }
+                }
+                if (wrkStation == null) {
+                    throw new IllegalArgumentException(SEGMENT_CHANGE_ERROR);
+//                     JOptionPane.showMessageDialog(null,
+//                             Bundle.getMessage("SegmentChangeError", currentStationName, segment.getSegmentName()),  // NOI18N
+//                             Bundle.getMessage("WarningTitle"),  // NOI18N
+//                             JOptionPane.WARNING_MESSAGE);
+//                     return false;
+                }
+                wrkDistance = Math.abs(station.getDistance() - wrkStation.getDistance());
+            }
+
+            elapseTime = (int) Math.round(wrkDistance / smile / currentSpeed * 60);
+            if (elapseTime < 1) {
+                elapseTime = 1;
+            }
+            currentTime += elapseTime;
+            if (currentTime > 1439)
+                currentTime -= 1440;
+            newArrive = currentTime;
+            currentTime += stop.getDuration();
+            if (currentTime > 1439)
+                currentTime -= 1440;
+            newDepart = currentTime;
+
+            currentDistance = station.getDistance();
+            currentSpeed = (stop.getNextSpeed() > 0) ? stop.getNextSpeed() : defaultSpeed;
+            currentSegment = station.getSegmentId();
+            currentStationName = station.getStationName();
+
+            if (validateTime(checkStart, checkDuration, newArrive) && validateTime(checkStart, checkDuration, newDepart)) {
+                if (updateStops) {
+                    stop.setArriveTime(newArrive);
+                    stop.setDepartTime(newDepart);
+                }
+            } else {
+                throw new IllegalArgumentException(String.format("%s~%d~%s", TIME_OUT_OF_RANGE, stop.getSeq(), train.getTrainName()));
+//                 JOptionPane.showMessageDialog(null,
+//                         Bundle.getMessage("TimeOutOfRange", stop.getSeq(), train.getTrainName()),  // NOI18N
+//                         Bundle.getMessage("WarningTitle"),  // NOI18N
+//                         JOptionPane.WARNING_MESSAGE);
+//                 return false;
+            }
+        }
+    }
+
+    /**
+     * Check to see if the supplied time is within the time range for the supplied schedule.
+     * If the duration is 24 hours, then all times are valid.
+     * Otherwise, we need to calculate the valid range, which can span midnight.
+     * @param checkStart The schedule start hour.
+     * @param checkDuration The schedule duration.
+     * @param checkTime The time value to be check.
+     * @return true if the time is valid.
+     */
+    boolean validateTime(int checkStart, int checkDuration, int checkTime) {
+        if (checkDuration == 24 && checkTime < 1440) {
+            return true;
+        }
+
+        boolean dayWrap;
+        int lowLimit;
+        int highLimit;
+
+        if (checkStart + checkDuration > 24) {
+            dayWrap = true;
+            lowLimit = checkStart * 60;
+            highLimit = ((checkStart + checkDuration - 24) * 60) - 1;
+        } else {
+            dayWrap = false;
+            lowLimit = checkStart * 60;
+            highLimit = ((checkStart + checkDuration) * 60) - 1;
+        }
+
+        if (dayWrap) {
+            if (checkTime < 1440 && (checkTime >= lowLimit || checkTime <= highLimit)) {
+                return true;
+            }
+        } else {
+            if (checkTime < 1440 && (checkTime >= lowLimit && checkTime <= highLimit)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
