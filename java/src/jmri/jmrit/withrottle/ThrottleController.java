@@ -575,7 +575,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
         float newSpeed = (rawSpeed * speedMultiplier);
 
         log.debug("raw: {}, NewSpd: {}", rawSpeed, newSpeed);
-        while(lastSentSpeed.offer(new Float(newSpeed))==false){
+        while(lastSentSpeed.offer(Float.valueOf(newSpeed))==false){
               log.debug("failed attempting to add speed to queue");
         }
         throttle.setSpeedSetting(newSpeed);

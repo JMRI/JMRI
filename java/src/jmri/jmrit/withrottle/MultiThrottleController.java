@@ -97,7 +97,8 @@ public class MultiThrottleController extends ThrottleController {
                }
             } else {
                if( Math.abs(lastSentSpeed.peek().floatValue()-currentSpeed)<0.0005 ) {
-                  lastSentSpeed.poll(); // remove the value from the list.
+                  Float f = (Float)lastSentSpeed.poll(); // remove the value from the list.
+                  log.debug("removed value {} from queue",f);
                }
             }
         }
