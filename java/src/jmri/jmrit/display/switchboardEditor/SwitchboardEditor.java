@@ -96,7 +96,7 @@ public class SwitchboardEditor extends Editor {
     ImageIcon iconNext = new ImageIcon("resources/icons/misc/gui3/LafRightArrow_m.gif");
     private final JLabel next = new JLabel(iconNext);
     private final int rangeBottom = 1;
-    private final int rangeTop = 10000;
+    private final int rangeTop = 100000; // for MERG etc where thousands = node number, total number on board limited to unconnectedRangeLimit anyway
     private final int unconnectedRangeLimit = 400;
     private final int rangeSizeWarning = 250;
     private final int initialMax = 24;
@@ -477,6 +477,11 @@ public class SwitchboardEditor extends Editor {
             switchboardLayeredPane.add(_switch);
             switchlist.add(name); // add to total number of switches on JLayeredPane
             log.debug("Added switch {}", name);
+            // keep total number of switches below practical total of 400 (20 x 20 items)
+            if (switchlist.size() >= unconnectedRangeLimit) {
+                log.warn("switchboards are limited to {} items", unconnectedRangeLimit);
+                break;
+            }
         }
     }
 
