@@ -31,7 +31,7 @@ public class Z21XNetThrottle extends jmri.jmrix.roco.RocoXNetThrottle {
     }
 
     /**
-     * {@inhertDoc}
+     * {@inheritDoc}
      */
     @Override
     public void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
