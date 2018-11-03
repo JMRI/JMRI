@@ -35,6 +35,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.LinkedList;
+import java.util.Queue;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -53,19 +55,20 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     DccLocoAddress leadAddress;
     char whichThrottle;
     float speedMultiplier;
-    protected float lastSentSpeed;
+    protected Queue<Float> lastSentSpeed;
+    protected float newSpeed;
     boolean isAddressSet;
     protected ArrayList<ThrottleControllerListener> listeners;
     protected ArrayList<ControllerInterface> controllerListeners;
     boolean useLeadLocoF;
     ConsistFunctionController leadLocoF = null;
     String locoKey = "";
-    protected boolean internalAdjust = false;
 
     final boolean isMomF2 = InstanceManager.getDefault(WiThrottlePreferences.class).isUseMomF2();
 
     public ThrottleController() {
         speedMultiplier = 1.0f / 126.0f;
+        lastSentSpeed = new LinkedList<Float>();
     }
 
     public ThrottleController(char whichThrottleChar, ThrottleControllerListener tcl, ControllerInterface cl) {
@@ -569,11 +572,12 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
      */
     synchronized protected void setSpeed(int rawSpeed) {
 
-        internalAdjust = true;
         float newSpeed = (rawSpeed * speedMultiplier);
 
         log.debug("raw: {}, NewSpd: {}", rawSpeed, newSpeed);
-        lastSentSpeed = newSpeed;
+        while(lastSentSpeed.offer(new Float(newSpeed))==false){
+              log.debug("failed attempting to add speed to queue");
+        }
         throttle.setSpeedSetting(newSpeed);
     }
 
@@ -752,7 +756,12 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     protected void handleRequest(String inPackage) {
         switch (inPackage.charAt(0)) {
             case 'V': {
-                sendCurrentSpeed(throttle);
+                if(lastSentSpeed.isEmpty()){
+                   // send the current speed only
+                   // if we aren't waiting for the back end
+                   // to update the speed.
+                   sendCurrentSpeed(throttle);
+                }
                 break;
             }
             case 'R': {

@@ -87,17 +87,19 @@ public class MultiThrottleController extends ThrottleController {
         }
         if (eventName.matches("SpeedSetting")) {
             float currentSpeed = ((Float) event.getNewValue()).floatValue();
-            if(internalAdjust && Math.abs(lastSentSpeed-currentSpeed)>0.0005 ) {
-               return;
+            log.debug("Speed Setting: {} head of queue {}",currentSpeed, lastSentSpeed.peek());
+            if(lastSentSpeed.isEmpty()) { 
+               StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
+               message.append("V");
+               message.append(Math.round(currentSpeed / speedMultiplier));
+               for (ControllerInterface listener : controllerListeners) {
+                   listener.sendPacketToDevice(message.toString());
+               }
+            } else {
+               if( Math.abs(lastSentSpeed.peek().floatValue()-currentSpeed)<0.0005 ) {
+                  lastSentSpeed.poll(); // remove the value from the list.
+               }
             }
-            StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
-            message.append("V");
-            message.append(Math.round(currentSpeed / speedMultiplier));
-            for (ControllerInterface listener : controllerListeners) {
-                listener.sendPacketToDevice(message.toString());
-            }
-            lastSentSpeed=currentSpeed;
-            internalAdjust = false;
         }
     }
 
@@ -165,8 +167,6 @@ public class MultiThrottleController extends ThrottleController {
         for (ControllerInterface listener : controllerListeners) {
             listener.sendPacketToDevice(message.toString());
         }
-        lastSentSpeed=currentSpeed;
-        internalAdjust = false;
     }
 
     /**
