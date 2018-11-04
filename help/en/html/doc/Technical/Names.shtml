@@ -109,20 +109,19 @@
 
       <h2 id="format">System Name Format</h2>
       
-      A system name is formed from a
-      short "system prefix" representing the hardware system, followed by a
-      single upper case "type letter" indicating the type of the object, 
-      followed by a
-      system- and type-specific "suffix string" identifying a specific
-      object. 
+      A system name is formed from a short "system prefix" representing
+      the hardware system, followed by a single upper case "type letter"
+      indicating the type of the object, followed by a system- and
+      type-specific "suffix string" identifying a specific object.
       <ul>
-        <li>The system prefix is a single uppercase or lowercase letter, optionally followed
-            by one or more digits. Special characters are not allowed.
-            This simple form allows us to always fine the system prefix
+        <li>The system prefix is a single uppercase or lowercase letter,
+            optionally followed by one or more digits. Special characters
+            are not allowed.
+            This simple form allows us to always find the system prefix
             and type letter even if we don't know the full list of 
             hardware systems involved.
         <li>The type letter defines the type of model-railroad object, 
-            such as (T)urnout or (S)ensor.
+            such as (T)urnout or (S)ensor, see <a href="#types">below</a>.
         <li>The suffix string is meant to be related to the hardware
             addressing for the specific hardware system, but is otherwise unconstrained.
             Some are simple numbers, such as a device address. Others
@@ -133,7 +132,7 @@
       <p>Examples:</p>
 
       Note: These assume the default values of system prefix letters,
-      but they certainly could have been defined to be something else.
+      but they certainly could have been defined differently.
       
       <ul>
         <li>LT23 - <u>L</u>ocoNet <u>T</u>urnout <u>23</u>.</li>
@@ -168,9 +167,9 @@
       "Y". You can also use an upper case letter followed by
       digits, e.g. "N1" and "N2".</p>
 
-      <h4>Default System Letters</h4>Note that some of these are
-      placeholders, and have no underlying implementation. (Links
-      are to JMRI pages with more information)
+      <h4>Default System Letters</h4>
+      <p>Note that some of these are placeholders, and have no underlying
+      implementation. (Links are to JMRI pages with more information)</p>
 
       <ul>
         <li>A CTI <a href=
@@ -295,6 +294,13 @@
         mast with two heads looks like an F from the side? All the
         good letters were taken)</li>
 
+        <li>G signal Group - A set of signal heads to a main masts.
+        For new items using IG at the start is recommended; the example
+        name is "IG12". For historical reasons, Groups were not required to have
+        a system prefix or type letter until late;
+        <span class="since">Since JMRI 4.13.4</span>Using only one single letter
+        in the system name is no longer compatible with system name normalization.
+
         <li>H signal Head - One part of a signal (which may have
         multiple heads). Also interpreted to include indicators on
         control panels that are acting to display signal
@@ -335,12 +341,6 @@
         <li>Y Sections - holds a map of trackwork.
         Section system names are all upper case, have no trailing whitespace and start with IY.</li>
         
-        <li>SignalGroups - hold a set of signal heads or masts.
-            SignalGroup system names are all upper case and have no trailing whitespace.
-            For historical reasons, they're not required to have a system prefix or 
-            type letter; the example name is "R12".  This might change, so
-            using "IG" at the start is recommended.
-
         <li>T Turnout - actually a general purpose output on the
         layout</li>
 
