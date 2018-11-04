@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Basic Implementation of a RouteManager.
- * <P>
+ * <p>
  * Note that this does not enforce any particular system naming convention
  *
  * @author Dave Duchamp Copyright (C) 2004
@@ -42,7 +42,10 @@ public class DefaultRouteManager extends AbstractManager<Route>
     }
 
     /**
-     * Method to provide a Route whether or not it already exists.
+     * {@inheritDoc}
+     *
+     * Keep autostring in line with {@link #newRoute(userName)},
+     * {@link #getSystemPrefix()} and {@link #typeLetter()}
      */
     @Override
     public Route provideRoute(String systemName, String userName) {
@@ -60,8 +63,8 @@ public class DefaultRouteManager extends AbstractManager<Route>
         // save in the maps
         register(r);
         /* The following keeps track of the last created auto system name.
-         currently we do not reuse numbers, although there is nothing to stop the
-         user from manually recreating them */
+         Currently we do not reuse numbers, although there is nothing to stop the
+         user from manually recreating them. */
         if (systemName.startsWith("IR:AUTO:")) {
             try {
                 int autoNumber = Integer.parseInt(systemName.substring(8));
@@ -75,6 +78,12 @@ public class DefaultRouteManager extends AbstractManager<Route>
         return r;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * Keep autostring in line with {@link #provideRoute(systemName, userName)},
+     * {@link #getSystemPrefix()} and {@link #typeLetter()}
+     */
     @Override
     public Route newRoute(String userName) {
         int nextAutoRouteRef = lastAutoRouteRef + 1;

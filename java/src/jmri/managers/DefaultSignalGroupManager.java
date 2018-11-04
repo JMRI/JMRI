@@ -72,19 +72,6 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
         return _tuser.get(key);
     }
 
-    @Override
-    public SignalGroup newSignalGroup(String userName) {
-        int nextAutoRouteRef = lastAutoRouteRef + 1;
-        StringBuilder b = new StringBuilder("IG:AUTO:");
-        String nextNumber = paddedNumber.format(nextAutoRouteRef);
-        b.append(nextNumber);
-        return provideSignalGroup(b.toString(), userName);
-    }
-
-    DecimalFormat paddedNumber = new DecimalFormat("0000");
-
-    int lastAutoRouteRef = 0;
-
     /**
      * {@inheritDoc}
      * 
@@ -94,7 +81,7 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
     @CheckReturnValue
     @Override
     public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
+    String normalizeSystemName(@Nonnull String inputName) {
         // does not check for valid system connection prefix, hence doesn't throw NamedBean.BadSystemNameException
         if (inputName.length() < 3 || !inputName.startsWith("IG")) {
             inputName = "IG" + inputName;
@@ -102,6 +89,12 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
         return inputName.toUpperCase().trim();
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * Keep autostring in line with {@link #newSignalGroup(userName)},
+     * {@link #getSystemPrefix()} and {@link #typeLetter()}
+     */
     @Override
     public SignalGroup provideSignalGroup(String systemName, String userName) {
         SignalGroup r;
@@ -113,12 +106,44 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
         if (r != null) {
             return r;
         }
-        // Group does not exist, create a new group
+        // Group does not exist, create a new signal group
         r = new DefaultSignalGroup(systemName, userName);
         // save in the maps
         register(r);
+        /* The following keeps track of the last created auto system name.
+         Currently we do not reuse numbers, although there is nothing to stop the
+         user from manually recreating them. */
+        if (systemName.startsWith("IG:AUTO:")) {
+            try {
+                int autoNumber = Integer.parseInt(systemName.substring(8));
+                if (autoNumber > lastAutoGroupRef) {
+                    lastAutoGroupRef = autoNumber;
+                }
+            } catch (NumberFormatException e) {
+                log.warn("Auto generated SystemName {} is not in the correct format", systemName);
+            }
+        }
         return r;
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Keep autostring in line with {@link #provideSignalGroup(systemName, userName)},
+     * {@link #getSystemPrefix()} and {@link #typeLetter()}
+     */
+    @Override
+    public SignalGroup newSignalGroup(String userName) {
+        int nextAutoGroupRef = lastAutoGroupRef + 1;
+        StringBuilder b = new StringBuilder("IG:AUTO:");
+        String nextNumber = paddedNumber.format(nextAutoGroupRef);
+        b.append(nextNumber);
+        return provideSignalGroup(b.toString(), userName);
+    }
+
+    DecimalFormat paddedNumber = new DecimalFormat("0000");
+
+    int lastAutoGroupRef = 0;
 
     List<String> getListOfNames() {
         List<String> retval = new ArrayList<String>();

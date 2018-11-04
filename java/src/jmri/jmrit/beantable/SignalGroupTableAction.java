@@ -64,7 +64,7 @@ import org.slf4j.LoggerFactory;
  * Based in part on RouteTableAction.java by Bob Jacobsen
  *
  * @author Kevin Dickerson Copyright (C) 2010
- * @author Egbert Broerse 2017
+ * @author Egbert Broerse 2017, 2018
  */
 public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> implements PropertyChangeListener {
 
@@ -401,17 +401,16 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
 
     JLabel nameLabel = new JLabel(Bundle.getMessage("LabelSystemName"), JLabel.TRAILING);
     JLabel userLabel = new JLabel(Bundle.getMessage("LabelUserName"), JLabel.TRAILING);
-    JLabel fixedSystemName = new JLabel("IG1234567");
+    JLabel fixedSystemName = new JLabel("xxxxxxxxxxx");
 
-    JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
     JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete") + " " + Bundle.getMessage("BeanNameSignalGroup"));
-    JButton updateButton = new JButton(Bundle.getMessage("ButtonApply"));
     JButton createButton = new JButton(Bundle.getMessage("ButtonCreate"));
+    JButton updateButton = new JButton(Bundle.getMessage("ButtonApply"));
+    JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
 
     static final String createInst = Bundle.getMessage("SignalGroupAddStatusInitial1", Bundle.getMessage("ButtonCreate")); // I18N to include original button name in help string
-    //static final String editInst = Bundle.getMessage("SignalGroupAddStatusInitial2", Bundle.getMessage("ButtonEdit"));
-    static final String updateInst = Bundle.getMessage("SignalGroupAddStatusInitial3", Bundle.getMessage("ButtonUpdate"));
-    static final String cancelInst = Bundle.getMessage("SignalGroupAddStatusInitial4", Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit")));
+    static final String updateInst = Bundle.getMessage("SignalGroupAddStatusInitial3", Bundle.getMessage("ButtonApply"));
+    static final String cancelInst = Bundle.getMessage("SignalGroupAddStatusInitial4", Bundle.getMessage("ButtonCancel"));
 
     JLabel status1 = new JLabel(createInst);
     JLabel status2 = new JLabel(cancelInst);
@@ -497,6 +496,9 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             JPanel ps = new JPanel();
             ps.setLayout(new BoxLayout(ps, BoxLayout.X_AXIS));
             ps.add(_systemName);
+            _systemName.setToolTipText(Bundle.getMessage("SignalGroupSysNameTooltip"));
+            ps.add(fixedSystemName);
+            fixedSystemName.setVisible(false);
             ps.add(_autoSystemName);
             _autoSystemName.addActionListener((ActionEvent e1) -> {
                 autoSystemName();
@@ -504,11 +506,8 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             if (pref.getSimplePreferenceState(systemNameAuto)) {
                 _autoSystemName.setSelected(true);
             }
-            _systemName.setToolTipText(Bundle.getMessage("SignalGroupSysNameTooltip"));
-            ps.add(fixedSystemName);
-            fixedSystemName.setVisible(false);
             namesGrid.add(ps);
-            // add user name label + field
+            // row 2: add user name label + field
             namesGrid.add(userLabel);
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
@@ -756,8 +755,9 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         } else {
             mainSignalComboBox.setSelectedBean(null);
             addFrame.setTitle(Bundle.getMessage("AddSignalGroup")); // reset title for new group
-            status1.setText(createInst);
         }
+        status1.setText(createInst);
+        _autoSystemName.setVisible(true);
         updateButton.setVisible(false);
         createButton.setVisible(true);
         // set listener for window closing
@@ -838,31 +838,30 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
     void createPressed(ActionEvent e) {
         if (!_autoSystemName.isSelected()) {
             if (!checkNewNamesOK()) {
+                log.debug("NewNames not OK");
                 return;
             }
         }
-        updatePressed(e, true, false);
-        status1.setText(updateInst);
+        updatePressed(e, true, true); // close pane after creating
+        // status1.setText(updateInst);
         pref.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
-        // activate the group
+        // activate the signal group
     }
 
     /**
      * Check name for a new SignalGroup object using the _systemName field on
-     * the addFrame pane
+     * the addFrame pane.
      *
-     * @return Whether name is allowed
+     * @return whether name entered is allowed
      */
     boolean checkNewNamesOK() {
         // Get system name and user name from Add Signal Group pane
-        String sName = InstanceManager.getDefault(SignalGroupManager.class).normalizeSystemName(_systemName.getText());
-        // seems field _systemName is not properly filled in when editing an existing mast
-        // so prevent it from being called (in line 900)
+        String sName = _systemName.getText();
+        String uName = _userName.getText(); // may be empty // N11N
         if (sName.length() == 0) {
             status1.setText(Bundle.getMessage("AddBeanStatusEnter"));
             return false;
         }
-        String uName = _userName.getText(); // may be empty // N11N
         SignalGroup g = null;
         // check if a SignalGroup with the same user name exists
         if (!uName.equals("")) {
@@ -874,6 +873,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             }
         }
         // check if a SignalGroup with this system name already exists
+        sName = InstanceManager.getDefault(SignalGroupManager.class).normalizeSystemName(sName);
         g = InstanceManager.getDefault(SignalGroupManager.class).getBySystemName(sName);
         if (g != null) {
             // SignalGroup already exists
@@ -916,7 +916,6 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         if (_autoSystemName.isSelected() && !inEditMode) {
             // create new Signal Group with auto system name
             g = jmri.InstanceManager.getDefault(jmri.SignalGroupManager.class).newSignalGroup(uName);
-            return g;
         } else {
             if (sName.length() == 0) {
                 status1.setText(Bundle.getMessage("AddBeanStatusEnter"));
@@ -925,13 +924,18 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             try {
                 sName = InstanceManager.getDefault(SignalGroupManager.class).normalizeSystemName(sName);
                 g = InstanceManager.getDefault(SignalGroupManager.class).provideSignalGroup(sName, uName);
-                return g;
             } catch (IllegalArgumentException ex) {
                 // should never get here
                 log.error("checkNamesOK; Unknown failure to create Signal Group with System Name: {}", sName); // NOI18N
-                throw ex;
+                //throw ex;
+                g = null; // for later check
             }
         }
+        if (g == null) {
+            // should never get here
+            log.error("Unknown failure to create Signal Group with System Name: {}", sName); // NOI18N
+        }
+        return g;
     }
 
     /**
@@ -1003,21 +1007,31 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
     }
 
     /**
-     * When user clicks Cancel during editing a Signal Group, closes the
-     * Add/Edit pane and reset default entries
+     * When user clicks Cancel during editing a Signal Group, close the
+     * Add/Edit pane and reset default entries.
      *
      * @param e Event from origin
      */
     void cancelPressed(ActionEvent e) {
-        log.debug("Cancelled; addFrame exists = {}", (addFrame != null));
+        cancelEdit();
+    }
+
+    /**
+     * Cancels edit mode
+     */
+    void cancelEdit() {
+        if (inEditMode) {
+            status1.setText(createInst);
+            // get out of edit mode
+            inEditMode = false;
+        }
         if (addFrame != null) {
             addFrame.setVisible(false);
-        } // hide first, may cause NPE uncheked
+        } // hide first, may cause NPE unchecked
         inEditMode = false; // release editing soon, as NPEs may occur in the following methods
         finishUpdate();
         _SignalGroupHeadModel.dispose();
         _AspectModel.dispose();
-        log.debug("cancelPressed in SGTA line 880");
     }
 
     /**
@@ -1094,10 +1108,11 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         initializeIncludedList();
 
         signalGroupDirty = true;  // to fire reminder to save work
-        // set up buttons and notes
+        // set up buttons and notes fot Edit
         status1.setText(updateInst);
         updateButton.setVisible(true);
         createButton.setVisible(false);
+        _autoSystemName.setVisible(false);
         fixedSystemName.setVisible(true);
         _systemName.setVisible(false);
         addFrame.setTitle(Bundle.getMessage("EditSignalGroup"));
@@ -1127,43 +1142,37 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
      * @param close          True if the pane is closing, False if it stays open
      */
     void updatePressed(ActionEvent e, boolean newSignalGroup, boolean close) {
-        log.debug("Update found Signal Group system name: {}/{}", _systemName.getText(), fixedSystemName.getText());
-        if (_systemName.getText().isEmpty()) {
-            _systemName.setText(fixedSystemName.getText());
-            // NPE in checkNewNamesOK() because the _systemName field seems to be empty
-        }
+        // Check if the User Name has been changed
         String uName = _userName.getText();
-        if (curSignalGroup == null) {
-            log.debug("Catch NPE during Update. curSignalGroup = null");
-            // We might want to check if the User Name has been changed. But there's
-            // nothing to compare with so this is propably a newly created Signal Group.
-            // TODO cannot be compared since curSignalGroup is null, causes NPE
-            // method sends repeated false warning when editing an existing Signal Group
-            // for which a system name is visibly filled in
-            if (!checkNewNamesOK()) {
-                return;
-            }
-        }
-        if (!checkValidSignalMast()) {
-            return;
-        }
-        SignalGroup g = checkNamesOK(); // if this fails, we are stuck
+        //String sName = _systemName.getText();
+        SignalGroup g = checkNamesOK(); // look up signal group under edit. If this fails, we are stuck
         if (g == null) { // error logging/dialog handled in checkNamesOK()
+            log.debug("null signalGroup under edit");
             return;
         }
-        curSignalGroup = g;
+        // We might want to check if the User Name has been changed. But there's
+        // nothing to compare with so this is propably a newly created Signal Group.
+        // TODO cannot be compared since curSignalGroup is null, causes NPE
+        // Method sends repeated false warning when editing an existing Signal Group
+        // for which a system name is visibly filled in.
+        if (!checkValidSignalMast()) {
+            log.debug("invalid signal mast under edit");
+            return;
+        }
         // user name is unique, change it
         g.setUserName(uName);
         initializeIncludedList();
         setHeadInformation(g);
         setMastAspectInformation(g);
-
         g.setSignalMast((SignalMast) mainSignalComboBox.getSelectedBean(), mainSignalComboBox.getSelectedDisplayName());
+
         signalGroupDirty = true;  // to fire reminder to save work
+        curSignalGroup = g;
         if (close) {
             finishUpdate();
-            inEditMode = false;
         }
+        status1.setText((newSignalGroup ? Bundle.getMessage("RouteAddStatusCreated") : Bundle.getMessage("RouteAddStatusUpdated")) + ": \""
+                + uName + "\")");
     }
 
     /**
@@ -1177,9 +1186,12 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         fixedSystemName.setVisible(false);
         _systemName.setText("");
         _userName.setText("");
+        _autoSystemName.setVisible(true);
+        autoSystemName();
+        // clear page
         mainSignalComboBox.setSelectedBean(null); // empty the "main mast" comboBox
         if (_signalHeadsList == null) {
-            // prevent NPE when clicking Cancel/close pane with no work done, after first showing (no mast selected)
+            // prevent NPE when clicking Cancel/close pane with no work done, after first display of pane (no mast selected)
             log.debug("FinishUpdate; _signalHeadsList empty; no heads present");
         } else {
             for (int i = _signalHeadsList.size() - 1; i >= 0; i--) {
@@ -1187,13 +1199,14 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             }
         }
         if (_mastAspectsList == null) {
-            // prevent NPE when clicking Cancel/close pane with no work done, after first showing (no mast selected)
+            // prevent NPE when clicking Cancel/close pane with no work done, after first display of pane (no mast selected)
             log.debug("FinishUpdate; _mastAspectsList empty; no mast was selected");
         } else {
             for (int i = _mastAspectsList.size() - 1; i >= 0; i--) {
                 _mastAspectsList.get(i).setIncluded(false);
             }
         }
+        inEditMode = false;
         showAll = true;
         curSignalGroup = null;
         log.debug("FinishUpdate; curSignalGroup set to null. Hiding addFrame next");
@@ -1203,7 +1216,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
     }
 
     /**
-     * Table Model for masts and their set to aspect.
+     * Table Model for masts and their "Set To" aspect.
      */
     public class SignalMastAspectModel extends AbstractTableModel implements PropertyChangeListener {
 

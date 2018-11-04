@@ -921,20 +921,25 @@ public class RouteTableAction extends AbstractTableAction<Route> {
      * @param e the action event
      */
     void createPressed(ActionEvent e) {
-
         if (!_autoSystemName.isSelected()) {
             if (!checkNewNamesOK()) {
                 return;
             }
         }
-        updatePressed(e, true);
+        updatePressed(e, true); // close pane after creating
         status2.setText(editInst);
         pref.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
         // activate the route
     }
 
+    /**
+     * Check name for a new Route object using the _systemName field on
+     * the addFrame pane.
+     *
+     * @return whether name entered is allowed
+     */
     boolean checkNewNamesOK() {
-        // Get system name and user name
+        // Get system name and user name from Add Route pane
         String sName = _systemName.getText();
         String uName = _userName.getText();
         if (sName.length() == 0) {
@@ -1142,7 +1147,6 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         }
         // Route was found, make its system name not changeable
         curRoute = g;
-        _autoSystemName.setVisible(false);
         fixedSystemName.setText(sName);
         fixedSystemName.setVisible(true);
         _systemName.setVisible(false);
