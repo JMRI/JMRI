@@ -75,6 +75,10 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
         getContentPane().removeAll();
 
         setTitle(MessageFormat.format(Bundle.getMessage("TitleEngineEditAtrribute"), new Object[]{comboboxName}));
+        
+        deleteButton.setToolTipText( MessageFormat.format(Bundle.getMessage("TipDeleteAttributeName"), new Object[]{comboboxName}));
+        addButton.setToolTipText( MessageFormat.format(Bundle.getMessage("TipAddAttributeName"), new Object[]{comboboxName}));
+        replaceButton.setToolTipText( MessageFormat.format(Bundle.getMessage("TipReplaceAttributeName"), new Object[]{comboboxName}));
 
         // track which combo box is being edited
         _comboboxName = comboboxName;
