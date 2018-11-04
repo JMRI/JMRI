@@ -361,7 +361,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         int result = StringUtil.getStateFromName(mode, signalStatesValues, signalStates);
 
         if (result < 0) {
-            log.warn("unexpected mode string in signalState Aspect: " + mode);
+            log.warn("unexpected mode string in signalState Aspect: {}", mode);
             throw new IllegalArgumentException();
         }
         return result;
@@ -777,8 +777,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
                 // hide addFrame
                 if (addFrame != null) {
                     addFrame.setVisible(false);
-                } // hide first, could be gone by the time of the close event,
-                // so prevent NPE
+                } // hide first, could be gone by the time of the close event, so prevent NPE
                 inEditMode = false; // release editing soon, as long as NPEs occor in the following methods
                 finishUpdate();
                 _SignalGroupHeadModel.dispose();
@@ -844,14 +843,13 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             }
         }
         updatePressed(e, true, true); // to close pane after creating
-        // status1.setText(updateInst);
         pref.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
         // activate the signal group
     }
 
     /**
      * Check name for a new SignalGroup object using the _systemName field on
-     * the addFrame pane.
+     * the addFrame pane. Not used when autoSystemName is checked.
      *
      * @return whether name entered is allowed
      */
@@ -859,7 +857,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         // Get system name and user name from Add Signal Group pane
         String sName = _systemName.getText();
         String uName = _userName.getText(); // may be empty // N11N
-        if (sName.length() == 0) {
+        if (sName.length() == 0) { // show warning in status bar
             status1.setText(Bundle.getMessage("AddBeanStatusEnter"));
             status1.setForeground(Color.red);
             return false;
@@ -869,8 +867,8 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         if (!uName.equals("")) {
             g = InstanceManager.getDefault(SignalGroupManager.class).getByUserName(uName);
             if (g != null) {
-                // SignalGroup with this user name already exists
-                status1.setText(Bundle.getMessage("SignalGroupDuplicateUserNameWarning"));
+                // SignalGroup already exists
+                status1.setText(Bundle.getMessage("SignalGroupDuplicateUserNameWarning", uName));
                 return false;
             }
         }
@@ -879,7 +877,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         g = InstanceManager.getDefault(SignalGroupManager.class).getBySystemName(sName);
         if (g != null) {
             // SignalGroup already exists
-            status1.setText(Bundle.getMessage("SignalGroupDuplicateSystemNameWarning"));
+            status1.setText(Bundle.getMessage("SignalGroupDuplicateSystemNameWarning", sName));
             return false;
         }
         return true;
@@ -920,7 +918,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             log.debug("SignalGroupTableAction checkNamesOK new autogroup");
             g = InstanceManager.getDefault(jmri.SignalGroupManager.class).newSignalGroup(uName);
         } else {
-            if (sName.length() == 0) {
+            if (sName.length() == 0) { // show warning in status bar
                 status1.setText(Bundle.getMessage("AddBeanStatusEnter"));
                 status1.setForeground(Color.red);
                 return null;
@@ -1561,8 +1559,8 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
     /**
      * Open an editor to set the details of a Signal Head as part of a Signal
      * Group when user clicks the Edit button in the Signal Head table in the
-     * lower half of the Edit Signal Group pane. (renamed from signalEditPressed
-     * in 4.7.1 to explain what's in here)
+     * lower half of the Edit Signal Group pane.
+     * (renamed from signalEditPressed in 4.7.1 to explain what's in here)
      *
      * @see SignalGroupSubTableAction#editHead(SignalGroup, String)
      * SignalGroupSubTableAction.editHead
@@ -1571,10 +1569,12 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
      */
     void signalHeadEditPressed(int row) {
         if (curSignalGroup == null) {
-            log.debug("From signalHeadEditPressed");
-            if (!checkNewNamesOK()) {
-                log.debug("signalHeadEditPressed: checkNewNamesOK = false");
-                return;
+            log.debug("From signalHeadCreatePressed");
+            if (!_autoSystemName.isSelected()) { // when creating a new Group with autoSystemName, allow empty sName field
+                if (!checkNewNamesOK()) {
+                    log.debug("signalHeadEditPressed: checkNewNamesOK = false");
+                    return;
+                }
             }
             if (!checkValidSignalMast()) {
                 return;

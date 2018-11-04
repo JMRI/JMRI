@@ -216,14 +216,14 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             public void setValueAt(Object value, int row, int col) {
                 switch (col) {
                     case USERNAMECOL:
-                        //Directly changing the username should only be possible if the username was previously null or ""
+                        // Directly changing the username should only be possible if the username was previously null or ""
                         // check to see if user name already exists
                         if (((String) value).equals("")) {
                             value = null;
                         } else {
                             Route nB = getByUserName((String) value);
                             if (nB != null) {
-                                log.error("User Name is not unique " + value);
+                                log.error("User Name is not unique {}", value);
                                 String msg;
                                 msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
                                 JOptionPane.showMessageDialog(null, msg,
@@ -372,7 +372,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         int result = jmri.util.StringUtil.getStateFromName(mode, sensorInputModeValues, sensorInputModes);
 
         if (result < 0) {
-            log.warn("unexpected mode string in sensorMode: " + mode);
+            log.warn("unexpected mode string in sensorMode: {}", mode);
             throw new IllegalArgumentException();
         }
         return result;
@@ -388,7 +388,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         int result = jmri.util.StringUtil.getStateFromName(mode, turnoutInputModeValues, turnoutInputModes);
 
         if (result < 0) {
-            log.warn("unexpected mode string in turnoutMode: " + mode);
+            log.warn("unexpected mode string in turnoutMode: {}", mode);
             throw new IllegalArgumentException();
         }
         return result;
@@ -952,7 +952,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         if (!uName.equals("")) {
             g = InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(uName);
             if (g != null) {
-                // Route with this user name already exists
+                // Route already exists
                 status1.setText(Bundle.getMessage("LightError8"));
                 return false;
             }
@@ -968,6 +968,12 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         return true;
     }
 
+    /**
+     * Check name and return a new or existing Route object with the name
+     * as entered in the _systemName field on the addFrame pane.
+     *
+     * @return The new/updated Route object
+     */
     Route checkNamesOK() {
         // Get system name and user name
         String sName = _systemName.getText();
@@ -1037,22 +1043,22 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         // Get sensor control information if any
         if (sensor1.getSelectedBean() != null) {
             if ((!g.addSensorToRoute(sensor1.getSelectedDisplayName(), sensorModeFromBox(sensor1mode)))) {
-                log.error("Unexpected failure to add Sensor '" + sensor1.getSelectedDisplayName()
-                        + "' to Route '" + g.getSystemName() + "'.");
+                log.error("Unexpected failure to add Sensor '{}' to route '{}'.",
+                        sensor1.getSelectedDisplayName(), g.getSystemName());
             }
         }
 
         if (sensor2.getSelectedBean() != null) {
             if ((!g.addSensorToRoute(sensor2.getSelectedDisplayName(), sensorModeFromBox(sensor2mode)))) {
-                log.error("Unexpected failure to add Sensor '" + sensor2.getSelectedDisplayName()
-                        + "' to Route '" + g.getSystemName() + "'.");
+                log.error("Unexpected failure to add Sensor '{}' to Route '{}'.",
+                        sensor2.getSelectedDisplayName(), g.getSystemName());
             }
         }
 
         if (sensor3.getSelectedBean() != null) {
             if ((!g.addSensorToRoute(sensor3.getSelectedDisplayName(), sensorModeFromBox(sensor3mode)))) {
-                log.error("Unexpected failure to add Sensor '" + sensor3.getSelectedDisplayName()
-                        + "' to Route '" + g.getSystemName() + "'.");
+                log.error("Unexpected failure to add Sensor '{}' to Route '{}'.",
+                        sensor3.getSelectedDisplayName(), g.getSystemName());
             }
         }
 
@@ -1104,7 +1110,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             try {
                 soundFile.setText(soundChooser.getSelectedFile().getCanonicalPath());
             } catch (java.io.IOException e) {
-                log.error("exception setting sound file: " + e);
+                log.error("exception setting sound file: ", e);
             }
         }
     }
@@ -1125,7 +1131,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             try {
                 scriptFile.setText(scriptChooser.getSelectedFile().getCanonicalPath());
             } catch (java.io.IOException e) {
-                log.error("exception setting script file: " + e);
+                log.error("exception setting script file: ", e);
             }
         }
     }
@@ -1369,7 +1375,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         if (logix == null) {
             logix = InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix(logixSystemName, uName);
             if (logix == null) {
-                log.error("Failed to create Logix " + logixSystemName + ", " + uName);
+                log.error("Failed to create Logix {}, {}", logixSystemName, uName);
                 return;
             }
         }
@@ -1779,7 +1785,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                 trigger = false;
                 break;
             default:
-                log.error("Control Sensor " + devName + " has bad mode= " + mode);
+                log.error("Control Sensor {} has bad mode= {}", devName, mode);
                 return null;
         }
         return new ConditionalVariable(negated, oper, type, devName, trigger);
@@ -1833,7 +1839,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                 negated = true;
                 break;
             default:
-                log.error("Control Turnout " + devName + " has bad mode= " + mode);
+                log.error("Control Turnout {} has bad mode= {}", devName, mode);
                 return null;
         }
         return new ConditionalVariable(negated, oper, type, devName, trigger);
