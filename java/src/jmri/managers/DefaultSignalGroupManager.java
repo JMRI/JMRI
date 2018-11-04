@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * This loads automatically the first time used.
  *
- * @author Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009, 2018
  */
 public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
         implements SignalGroupManager, java.beans.PropertyChangeListener {
@@ -92,7 +92,7 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
     /**
      * {@inheritDoc}
      *
-     * Keep autostring in line with {@link #newSignalGroup(userName)},
+     * Keep autostring in line with {@link #newSignalGroup(String)},
      * {@link #getSystemPrefix()} and {@link #typeLetter()}
      */
     @Override
@@ -130,7 +130,7 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
     /**
      * {@inheritDoc}
      *
-     * Keep autostring in line with {@link #provideSignalGroup(systemName, userName)},
+     * Keep autostring in line with {@link #provideSignalGroup(String, String)},
      * {@link #getSystemPrefix()} and {@link #typeLetter()}
      */
     @Override

@@ -37,7 +37,7 @@ public interface SignalGroupManager extends Manager<SignalGroup> {
      * User GUI, to allow the auto generation of systemNames, where the user can
      * optionally supply a username.
      *
-     * @param userName user name for the new group
+     * @param sys user name for the new group
      * @return null if a Group with the same userName already exists or if there
      *         is trouble creating a new Group
      */
@@ -59,7 +59,7 @@ public interface SignalGroupManager extends Manager<SignalGroup> {
      * Delete Group by removing it from the manager. The Group must first be
      * deactivated so it stops processing.
      *
-     * @param r the group to remove
+     * @param s the group to remove
      */
     void deleteSignalGroup(@Nonnull SignalGroup s);
 

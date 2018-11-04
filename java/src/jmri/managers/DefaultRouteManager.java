@@ -44,7 +44,7 @@ public class DefaultRouteManager extends AbstractManager<Route>
     /**
      * {@inheritDoc}
      *
-     * Keep autostring in line with {@link #newRoute(userName)},
+     * Keep autostring in line with {@link #newRoute(String)},
      * {@link #getSystemPrefix()} and {@link #typeLetter()}
      */
     @Override
@@ -82,7 +82,7 @@ public class DefaultRouteManager extends AbstractManager<Route>
     /**
      * {@inheritDoc}
      *
-     * Keep autostring in line with {@link #provideRoute(systemName, userName)},
+     * Keep autostring in line with {@link #provideRoute(String, String)},
      * {@link #getSystemPrefix()} and {@link #typeLetter()}
      */
     @Override
