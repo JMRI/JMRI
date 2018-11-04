@@ -600,7 +600,7 @@ d&#233;crire comment ils diff&#232;rent maintenant.
 Durant le d&#233;marrage, JMRI obtients des informations suppl&#233;mentaires de plusieurs sources:
 <ul>
 <li>Si pr&#233;sent, un fichier "python.properties" configure l'environnement interpr&#233;teur Jython
-<li>Les propres <a href="../../profiles.shtml">informations de profiles et de configuration</a> de JMRI.
+<li>Les propres <a href="../../setup/profiles.shtml">informations de profiles et de configuration</a> de JMRI.
 </ul>
 
 <a name="linux">
@@ -740,7 +740,7 @@ Dans cette section, nous d&#233;crivons bri&#232;vement les options de la ligne 
 <dd>Si cette option est pr&#233;cis&#233;e dans la ligne de commande, le lanceur forcera l'utilisation du Java Run Time 32 bits sur les machines 64 bits.
 		cette option est sans effets sur les machines 32 bits
 <dt>/profile &lt;profileID&gt; ( facultatif - depuis JMRI 3.7.1 )
-Si cette option est pr&#233;cis&#233;e dans la ligne de commande, le lanceur utilisera le profil &lt;profileID&gt; comme le <a href="/help/en/html/profiles.shtml"> profil de configuration de JMRI</a>pour l'utiliser au lieu de celui par d&#233;faut.
+Si cette option est pr&#233;cis&#233;e dans la ligne de commande, le lanceur utilisera le profil &lt;profileID&gt; comme le <a href="../../setup/profiles.shtml">profil de configuration de JMRI</a> pour l'utiliser au lieu de celui par d&#233;faut.
 <dt>Param&#232;tre Classe 
 <dd>Le premier param&#232;tre de LaunchJMRI.exe, apr&#232;s l'une des options ci-dessus, est le nom de la classe principale &#224; ex&#233;cuter.
 <dd>Un exemple pour lancer DecoderPro serait "apps.DecoderPro.DecoderPro"
