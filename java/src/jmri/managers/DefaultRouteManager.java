@@ -49,6 +49,7 @@ public class DefaultRouteManager extends AbstractManager<Route>
      */
     @Override
     public Route provideRoute(String systemName, String userName) {
+        log.debug("provideRoute({})", systemName);
         Route r;
         r = getByUserName(systemName);
         if (r != null) {

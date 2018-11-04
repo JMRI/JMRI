@@ -973,6 +973,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         String uName = _userName.getText();
         Route g;
         if (_autoSystemName.isSelected() && !editMode) {
+            log.debug("RouteTableAction checkNamesOK new autogroup");
             // create new Route with auto system name
             g = InstanceManager.getDefault(jmri.RouteManager.class).newRoute(uName);
         } else {
@@ -1147,6 +1148,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         }
         // Route was found, make its system name not changeable
         curRoute = g;
+        _autoSystemName.setVisible(false);
         fixedSystemName.setText(sName);
         fixedSystemName.setVisible(true);
         _systemName.setVisible(false);

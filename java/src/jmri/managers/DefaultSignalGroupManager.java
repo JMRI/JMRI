@@ -97,6 +97,7 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
      */
     @Override
     public SignalGroup provideSignalGroup(String systemName, String userName) {
+        log.debug("provideGroup({})", systemName);
         SignalGroup r;
         r = getByUserName(systemName);
         if (r != null) {
@@ -138,6 +139,7 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
         StringBuilder b = new StringBuilder("IG:AUTO:");
         String nextNumber = paddedNumber.format(nextAutoGroupRef);
         b.append(nextNumber);
+        log.debug("SignalGroupManager - new autogroup with sName: {}", b);
         return provideSignalGroup(b.toString(), userName);
     }
 

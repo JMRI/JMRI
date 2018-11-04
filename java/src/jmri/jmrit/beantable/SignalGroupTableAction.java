@@ -433,7 +433,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
      */
     @Override
     protected void addPressed(ActionEvent e) {
-        pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        pref = InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (inEditMode) {
             log.debug("Can not open another editing session for Signal Groups.");
             // add user warning that a 2nd session not allowed (cf. Logix)
@@ -915,7 +915,8 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         SignalGroup g;
         if (_autoSystemName.isSelected() && !inEditMode) {
             // create new Signal Group with auto system name
-            g = jmri.InstanceManager.getDefault(jmri.SignalGroupManager.class).newSignalGroup(uName);
+            log.debug("SignalGroupTableAction checkNamesOK new autogroup");
+            g = InstanceManager.getDefault(jmri.SignalGroupManager.class).newSignalGroup(uName);
         } else {
             if (sName.length() == 0) {
                 status1.setText(Bundle.getMessage("AddBeanStatusEnter"));
@@ -925,9 +926,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
                 sName = InstanceManager.getDefault(SignalGroupManager.class).normalizeSystemName(sName);
                 g = InstanceManager.getDefault(SignalGroupManager.class).provideSignalGroup(sName, uName);
             } catch (IllegalArgumentException ex) {
-                // should never get here
                 log.error("checkNamesOK; Unknown failure to create Signal Group with System Name: {}", sName); // NOI18N
-                //throw ex;
                 g = null; // for later check
             }
         }
@@ -1153,8 +1152,6 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         // We might want to check if the User Name has been changed. But there's
         // nothing to compare with so this is propably a newly created Signal Group.
         // TODO cannot be compared since curSignalGroup is null, causes NPE
-        // Method sends repeated false warning when editing an existing Signal Group
-        // for which a system name is visibly filled in.
         if (!checkValidSignalMast()) {
             log.debug("invalid signal mast under edit");
             return;
@@ -1171,7 +1168,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         if (close) {
             finishUpdate();
         }
-        status1.setText((newSignalGroup ? Bundle.getMessage("RouteAddStatusCreated") : Bundle.getMessage("RouteAddStatusUpdated")) + ": \""
+        status1.setText((newSignalGroup ? Bundle.getMessage("SignalGroupAddStatusCreated") : Bundle.getMessage("SignalGroupAddStatusUpdated")) + ": \""
                 + uName + "\")");
     }
 
