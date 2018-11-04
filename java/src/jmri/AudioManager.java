@@ -8,7 +8,7 @@ import jmri.jmrit.audio.AudioFactory;
 /**
  * Locate an Audio object representing some specific audio information.
  * <P>
- * Audo objects are obtained from an AudioManager, which in turn is generally
+ * Audio objects are obtained from an AudioManager, which in turn is generally
  * located from the InstanceManager. A typical call sequence might be:
  * <PRE>
  * Audio audio = InstanceManager.getDefault(jmri.AudioManager.class).provideAudio("myAudio");

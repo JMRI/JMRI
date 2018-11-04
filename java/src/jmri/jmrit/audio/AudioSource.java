@@ -360,7 +360,7 @@ public interface AudioSource extends Audio {
      * Default value = 1.0f
      * <p>
      * The Reference Distance is one of the main parameters you have for
-     * controlling the way that sounds attenutate with distance. A Source with
+     * controlling the way that sounds attenuate with distance. A Source with
      * Reference Distance set to 5 (meters) will be at maximum volume while it
      * is within 5 metere of the listener, and start to fade out as it moves
      * further away. At 10 meters it will be at half volume, and at 20 meters at
