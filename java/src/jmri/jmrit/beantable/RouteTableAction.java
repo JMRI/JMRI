@@ -944,6 +944,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         String uName = _userName.getText();
         if (sName.length() == 0) {
             status1.setText(Bundle.getMessage("AddBeanStatusEnter"));
+            status1.setForeground(Color.red);
             return false;
         }
         Route g;
@@ -979,6 +980,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         } else {
             if (sName.length() == 0) {
                 status1.setText(Bundle.getMessage("AddBeanStatusEnter"));
+                status1.setForeground(Color.red);
                 return null;
             }
             try {
@@ -1295,6 +1297,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         setControlInformation(g);
         curRoute = g;
         finishUpdate();
+        status1.setForeground(Color.gray);
         status1.setText((newRoute ? Bundle.getMessage("RouteAddStatusCreated") : Bundle.getMessage("RouteAddStatusUpdated")) + ": \""
                 + uName + "\" (" + _includedTurnoutList.size() + " "
                 + Bundle.getMessage("Turnouts") + ", " + _includedSensorList.size() + " " + Bundle.getMessage("Sensors") + ")");

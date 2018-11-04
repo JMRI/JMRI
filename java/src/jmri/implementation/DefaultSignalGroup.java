@@ -40,6 +40,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
      */
     public DefaultSignalGroup(String systemName) {
         super(systemName.toUpperCase(), null);
+        log.debug("default SignalGroup {} created", systemName);
     }
 
     @Override

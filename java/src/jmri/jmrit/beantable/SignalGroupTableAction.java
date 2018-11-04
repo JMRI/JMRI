@@ -447,10 +447,11 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
                     Bundle.getMessage("SigGroupEditBusyWarning", workingTitle),
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
+            // cancelEdit(); not needed as second edit is blocked
             return;
         }
 
-        inEditMode = true;
+        //inEditMode = true;
         _mastAspectsList = null;
 
         SignalHeadManager shm = InstanceManager.getDefault(SignalHeadManager.class);
@@ -743,7 +744,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
             updateButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    updatePressed(e, false, true);
+                    updatePressed(e, false, false);
                 }
             });
             updateButton.setToolTipText(Bundle.getMessage("TooltipUpdateGroup"));
@@ -842,7 +843,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
                 return;
             }
         }
-        updatePressed(e, true, true); // close pane after creating
+        updatePressed(e, true, true); // to close pane after creating
         // status1.setText(updateInst);
         pref.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
         // activate the signal group
@@ -860,6 +861,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         String uName = _userName.getText(); // may be empty // N11N
         if (sName.length() == 0) {
             status1.setText(Bundle.getMessage("AddBeanStatusEnter"));
+            status1.setForeground(Color.red);
             return false;
         }
         SignalGroup g = null;
@@ -920,6 +922,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         } else {
             if (sName.length() == 0) {
                 status1.setText(Bundle.getMessage("AddBeanStatusEnter"));
+                status1.setForeground(Color.red);
                 return null;
             }
             try {
@@ -1021,8 +1024,6 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
     void cancelEdit() {
         if (inEditMode) {
             status1.setText(createInst);
-            // get out of edit mode
-            inEditMode = false;
         }
         if (addFrame != null) {
             addFrame.setVisible(false);
@@ -1044,7 +1045,8 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
      */
     void editPressed(ActionEvent e) {
         // identify the Signal Group with this name if it already exists
-        String sName = InstanceManager.getDefault(SignalGroupManager.class).normalizeSystemName(_systemName.getText()); // is already filled in from the Signal Group table by addPressed()
+        String sName = InstanceManager.getDefault(SignalGroupManager.class).normalizeSystemName(_systemName.getText());
+        // sName is already filled in from the Signal Group table by addPressed()
         SignalGroup g = InstanceManager.getDefault(SignalGroupManager.class).getBySystemName(sName);
         if (g == null) {
             // Signal Group does not exist, so cannot be edited
@@ -1065,9 +1067,10 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
                 _mastAspectsList.add(new SignalMastAspect(aspects.get(i)));
             }
         } else {
-            log.error("Failed to get signal mast {}", g.getSignalMastName()); // false indicates Can't find mast (but quoted name stands for a head) TODO
+            log.error("Failed to get signal mast {}", g.getSignalMastName()); // false indicates Can't find mast
         }
 
+        nameLabel.setEnabled(true);
         fixedSystemName.setText(sName);
         fixedSystemName.setVisible(true);
         _systemName.setVisible(false);
@@ -1143,7 +1146,6 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
     void updatePressed(ActionEvent e, boolean newSignalGroup, boolean close) {
         // Check if the User Name has been changed
         String uName = _userName.getText();
-        //String sName = _systemName.getText();
         SignalGroup g = checkNamesOK(); // look up signal group under edit. If this fails, we are stuck
         if (g == null) { // error logging/dialog handled in checkNamesOK()
             log.debug("null signalGroup under edit");
@@ -1168,8 +1170,9 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         if (close) {
             finishUpdate();
         }
-        status1.setText((newSignalGroup ? Bundle.getMessage("SignalGroupAddStatusCreated") : Bundle.getMessage("SignalGroupAddStatusUpdated")) + ": \""
-                + uName + "\")");
+        status1.setForeground(Color.gray);
+        status1.setText((newSignalGroup ? Bundle.getMessage("SignalGroupAddStatusCreated") : Bundle.getMessage("SignalGroupAddStatusUpdated"))
+                + ": \"" + uName + "\"");
     }
 
     /**

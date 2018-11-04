@@ -47,6 +47,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
      */
     public DefaultRoute(String systemName) {
         super(systemName.toUpperCase());
+        log.debug("default Route {} created", systemName);
     }
 
     @Override

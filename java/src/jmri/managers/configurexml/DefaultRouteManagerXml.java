@@ -24,7 +24,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
     }
 
     /**
-     * Default implementation for storing the contents of a RouteManager
+     * Default implementation for storing the contents of a RouteManager.
      *
      * @param o Object to store, of type RouteManager
      * @return Element containing the complete info
@@ -280,16 +280,13 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 routeLockedTxt = routeList.get(i).getAttribute("routeLocked").getValue();
             }
 
-            if (log.isDebugEnabled()) {
-                log.debug("create route: (" + sysName + ")("
-                        + (userName == null ? "<null>" : userName) + ")");
-            }
+            log.debug("create route: ({})({})", sysName, (userName == null ? "<null>" : userName));
             
             Route r;
             try {
                 r = tm.provideRoute(sysName, userName);
             } catch (IllegalArgumentException ex) {
-                log.error("failed to create Route: " + sysName);
+                log.error("failed to create Route: {}", sysName);
                 return;
             }
 
@@ -345,8 +342,8 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 // This route has turnouts
                 for (int k = 0; k < routeTurnoutList.size(); k++) {
                     if (((routeTurnoutList.get(k))).getAttribute("systemName") == null) {
-                        log.warn("unexpected null in systemName " + ((routeTurnoutList.get(k)))
-                                + " " + ((routeTurnoutList.get(k))).getAttributes());
+                        log.warn("unexpected null in systemName {} {}", ((routeTurnoutList.get(k))),
+                                ((routeTurnoutList.get(k))).getAttributes());
                         break;
                     }
                     String tSysName = ((routeTurnoutList.get(k)))
@@ -369,8 +366,8 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 // This route has turnouts
                 for (int k = 0; k < routeTurnoutList.size(); k++) {
                     if (routeTurnoutList.get(k).getAttribute("systemName") == null) {
-                        log.warn("unexpected null in systemName " + routeTurnoutList.get(k)
-                                + " " + routeTurnoutList.get(k).getAttributes());
+                        log.warn("unexpected null in systemName {} {}", routeTurnoutList.get(k),
+                                routeTurnoutList.get(k).getAttributes());
                         break;
                     }
                     String tSysName = routeTurnoutList.get(k)
@@ -404,8 +401,8 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 // This route has turnouts
                 for (int k = 0; k < routeTurnoutList.size(); k++) {
                     if (routeTurnoutList.get(k).getAttribute("systemName") == null) {
-                        log.warn("unexpected null in systemName " + routeTurnoutList.get(k)
-                                + " " + routeTurnoutList.get(k).getAttributes());
+                        log.warn("unexpected null in systemName {} {}", routeTurnoutList.get(k),
+                                routeTurnoutList.get(k).getAttributes());
                         break;
                     }
                     String tSysName = routeTurnoutList.get(k)
@@ -453,8 +450,8 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                 // This route has sensors
                 for (int k = 0; k < routeSensorList.size(); k++) {
                     if (routeSensorList.get(k).getAttribute("systemName") == null) {
-                        log.warn("unexpected null in systemName " + routeSensorList.get(k)
-                                + " " + routeSensorList.get(k).getAttributes());
+                        log.warn("unexpected null in systemName {} {}", routeSensorList.get(k),
+                                routeSensorList.get(k).getAttributes());
                         break;
                     }
                     int mode = Route.ONACTIVE;  // default mode
@@ -471,7 +468,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                         } else if (sm.equals("vetoInactive")) {
                             mode = Route.VETOINACTIVE;
                         } else {
-                            log.warn("unexpected sensor mode in route " + sysName + " was " + sm);
+                            log.warn("unexpected sensor mode in route {} was {}", sysName, sm);
                         }
                     }
 
