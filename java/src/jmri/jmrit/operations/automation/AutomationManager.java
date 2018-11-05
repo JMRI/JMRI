@@ -41,7 +41,7 @@ public class AutomationManager implements InstanceManagerAutoDefault, PropertyCh
     }
 
     // stores known Automation instances by id
-    protected Hashtable<String, Automation> _automationHashTable = new Hashtable<String, Automation>();
+    protected Hashtable<String, Automation> _automationHashTable = new Hashtable<>();
 
     /**
      * @return Number of automations
@@ -133,16 +133,16 @@ public class AutomationManager implements InstanceManagerAutoDefault, PropertyCh
     public List<Automation> getAutomationsByNameList() {
         List<Automation> sortList = getList();
         // now re-sort
-        List<Automation> out = new ArrayList<Automation>();
-        for (Automation sch : sortList) {
+        List<Automation> out = new ArrayList<>();
+        for (Automation automation : sortList) {
             for (int j = 0; j < out.size(); j++) {
-                if (sch.getName().compareToIgnoreCase(out.get(j).getName()) < 0) {
-                    out.add(j, sch);
+                if (automation.getName().compareToIgnoreCase(out.get(j).getName()) < 0) {
+                    out.add(j, automation);
                     break;
                 }
             }
-            if (!out.contains(sch)) {
-                out.add(sch);
+            if (!out.contains(automation)) {
+                out.add(automation);
             }
         }
         return out;
@@ -157,27 +157,27 @@ public class AutomationManager implements InstanceManagerAutoDefault, PropertyCh
     public List<Automation> getAutomationsByIdList() {
         List<Automation> sortList = getList();
         // now re-sort
-        List<Automation> out = new ArrayList<Automation>();
-        for (Automation sch : sortList) {
+        List<Automation> out = new ArrayList<>();
+        for (Automation automation : sortList) {
             for (int j = 0; j < out.size(); j++) {
                 try {
-                    if (Integer.parseInt(sch.getId()) < Integer.parseInt(out.get(j).getId())) {
-                        out.add(j, sch);
+                    if (Integer.parseInt(automation.getId()) < Integer.parseInt(out.get(j).getId())) {
+                        out.add(j, automation);
                         break;
                     }
                 } catch (NumberFormatException e) {
                     log.debug("list id number isn't a number");
                 }
             }
-            if (!out.contains(sch)) {
-                out.add(sch);
+            if (!out.contains(automation)) {
+                out.add(automation);
             }
         }
         return out;
     }
 
     private List<Automation> getList() {
-        List<Automation> out = new ArrayList<Automation>();
+        List<Automation> out = new ArrayList<>();
         Enumeration<Automation> en = _automationHashTable.elements();
         while (en.hasMoreElements()) {
             out.add(en.nextElement());
@@ -220,6 +220,11 @@ public class AutomationManager implements InstanceManagerAutoDefault, PropertyCh
         Automation newAutomation = newAutomation(newName);
         newAutomation.copyAutomation(automation);
         return newAutomation;
+    }
+    
+    public void dispose() {
+        _automationHashTable.clear();
+        _id = 0;
     }
 
     /**

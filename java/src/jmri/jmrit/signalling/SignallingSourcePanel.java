@@ -58,7 +58,7 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
         super();
         sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sourceMast);
         this.sourceMast = sourceMast;
-        fixedSourceMastLabel = new JLabel(Bundle.getMessage("SourceMast") + ": " + sourceMast.getDisplayName());  // NOI18N
+        fixedSourceMastLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("SourceMast")) + " " + sourceMast.getDisplayName());  // NOI18N
         if (sml != null) {
             _signalMastList = sml.getDestinationList();
         }

@@ -24,8 +24,8 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.schedules.TrainSchedule;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -1965,7 +1965,7 @@ public class Track {
 
     private String checkScheduleItem(ScheduleItem si, Car car) {
         if (!si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) &&
-                !InstanceManager.getDefault(TrainManager.class).getTrainScheduleActiveId().equals(si.getSetoutTrainScheduleId())) {
+                !InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId().equals(si.getSetoutTrainScheduleId())) {
             TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(si.getSetoutTrainScheduleId());
             if (sch != null) {
                 return SCHEDULE +
@@ -2093,7 +2093,7 @@ public class Track {
         log.debug("Destination track ({}) has schedule ({}) item id ({}) mode: {} ({})", getName(), getScheduleName(),
                 getScheduleItemId(), getScheduleMode(), getScheduleMode() == SEQUENTIAL ? "Sequential" : "Match"); // NOI18N
         if (currentSi != null &&
-                (currentSi.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) || InstanceManager.getDefault(TrainManager.class)
+                (currentSi.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) || InstanceManager.getDefault(TrainScheduleManager.class)
                         .getTrainScheduleActiveId().equals(currentSi.getSetoutTrainScheduleId())) &&
                 car.getTypeName().equals(currentSi.getTypeName()) &&
                 (currentSi.getRoadName().equals(ScheduleItem.NONE) || car.getRoadName().equals(
@@ -2109,16 +2109,16 @@ public class Track {
             // + getLoad() + ") arrived out of sequence, needed type (" + currentSi.getType() // NOI18N
             // + ") road (" + currentSi.getRoad() + ") load (" + currentSi.getLoad() + ")"); // NOI18N
             // build return message
-            String timetableName = "";
-            String currentTimetableName = "";
+            String scheduleName = "";
+            String currentTrainScheduleName = "";
             TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(
-                    InstanceManager.getDefault(TrainManager.class).getTrainScheduleActiveId());
+                    InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId());
             if (sch != null) {
-                timetableName = sch.getName();
+                scheduleName = sch.getName();
             }
             sch = InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(currentSi.getSetoutTrainScheduleId());
             if (sch != null) {
-                currentTimetableName = sch.getName();
+                currentTrainScheduleName = sch.getName();
             }
             String mode = Bundle.getMessage("sequential");
             if (getScheduleMode() == 1) {
@@ -2126,8 +2126,8 @@ public class Track {
             }
             return SCHEDULE +
                     MessageFormat.format(Bundle.getMessage("sequentialMessage"), new Object[]{getScheduleName(),
-                            mode, car.toString(), car.getTypeName(), timetableName, car.getRoadName(),
-                            car.getLoadName(), currentSi.getTypeName(), currentTimetableName, currentSi.getRoadName(),
+                            mode, car.toString(), car.getTypeName(), scheduleName, car.getRoadName(),
+                            car.getLoadName(), currentSi.getTypeName(), currentTrainScheduleName, currentSi.getRoadName(),
                             currentSi.getReceiveLoadName()});
         } else {
             log.error("ERROR Track " + getName() + " current schedule item is null!");

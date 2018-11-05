@@ -33,8 +33,8 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.schedules.TrainSchedule;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -145,13 +145,13 @@ public class TrainBuilder extends TrainCommon {
                 _train.getName(), _startTime}));
         addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("BuildReportVersion"), new Object[]{Version
                 .name()}));
-        if (!trainManager.getTrainScheduleActiveId().equals(TrainManager.NONE)) {
-            if (trainManager.getTrainScheduleActiveId().equals(TrainSchedule.ANY)) {
+        if (!trainScheduleManager.getTrainScheduleActiveId().equals(TrainScheduleManager.NONE)) {
+            if (trainScheduleManager.getTrainScheduleActiveId().equals(TrainSchedule.ANY)) {
                 addLine(_buildReport, ONE,
                         MessageFormat.format(Bundle.getMessage("buildActiveSchedule"),
                                 new Object[]{Bundle.getMessage("Any")}));
             } else {
-                TrainSchedule sch = trainScheduleManager.getScheduleById(trainManager.getTrainScheduleActiveId());
+                TrainSchedule sch = trainScheduleManager.getActiveSchedule();
                 if (sch != null) {
                     addLine(_buildReport, ONE,
                             MessageFormat.format(Bundle.getMessage("buildActiveSchedule"),
@@ -1857,8 +1857,8 @@ public class TrainBuilder extends TrainCommon {
                     continue;
                 }
                 if (!car.getPickupScheduleId().equals(Car.NONE)) {
-                    if (trainManager.getTrainScheduleActiveId().equals(TrainSchedule.ANY) ||
-                            car.getPickupScheduleId().equals(trainManager.getTrainScheduleActiveId())) {
+                    if (trainScheduleManager.getTrainScheduleActiveId().equals(TrainSchedule.ANY) ||
+                            car.getPickupScheduleId().equals(trainScheduleManager.getTrainScheduleActiveId())) {
                         car.setPickupScheduleId(Car.NONE);
                     } else {
                         TrainSchedule sch = trainScheduleManager.getScheduleById(car.getPickupScheduleId());
@@ -3730,10 +3730,10 @@ public class TrainBuilder extends TrainCommon {
             return null;
         }
         if (!si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) &&
-                !trainManager.getTrainScheduleActiveId().equals(si.getSetoutTrainScheduleId())) {
+                !trainScheduleManager.getTrainScheduleActiveId().equals(si.getSetoutTrainScheduleId())) {
             log.debug("Schedule item isn't active");
             // build the status message
-            TrainSchedule aSch = trainScheduleManager.getScheduleById(trainManager.getTrainScheduleActiveId());
+            TrainSchedule aSch = trainScheduleManager.getScheduleById(trainScheduleManager.getTrainScheduleActiveId());
             TrainSchedule tSch = trainScheduleManager.getScheduleById(si.getSetoutTrainScheduleId());
             String aName = "";
             String tName = "";

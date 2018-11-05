@@ -39,9 +39,9 @@ public class XmlTest extends OperationsTestCase {
         List<Car> tempcarList = manager.getByIdList();
 
         Assert.assertEquals("Starting Number of Cars", 0, tempcarList.size());
-        Car c1 = manager.newCar("CP", "Test Number 1");
-        Car c2 = manager.newCar("ACL", "Test Number 2");
-        Car c3 = manager.newCar("CP", "Test Number 3");
+        Car c1 = manager.newRS("CP", "Test Number 1");
+        Car c2 = manager.newRS("ACL", "Test Number 2");
+        Car c3 = manager.newRS("CP", "Test Number 3");
 
         // modify car attributes
         c1.setBuilt("5619");
@@ -108,9 +108,9 @@ public class XmlTest extends OperationsTestCase {
 
         // Add some more cars and write file again
         // so we can test the backup facility
-        Car c4 = manager.newCar("PC", "Test Number 4");
-        Car c5 = manager.newCar("BM", "Test Number 5");
-        Car c6 = manager.newCar("SP", "Test Number 6");
+        Car c4 = manager.newRS("PC", "Test Number 4");
+        Car c5 = manager.newRS("BM", "Test Number 5");
+        Car c6 = manager.newRS("SP", "Test Number 6");
 
         Assert.assertNotNull("car c4 exists", c4);
         Assert.assertNotNull("car c5 exists", c5);

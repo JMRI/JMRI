@@ -6,8 +6,8 @@ import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.automation.actions.Action;
 import jmri.jmrit.operations.automation.actions.ActionCodes;
-import jmri.jmrit.operations.automation.actions.ActivateTimetableAction;
-import jmri.jmrit.operations.automation.actions.ApplyTimetableAction;
+import jmri.jmrit.operations.automation.actions.ActivateTrainScheduleAction;
+import jmri.jmrit.operations.automation.actions.ApplyTrainScheduleAction;
 import jmri.jmrit.operations.automation.actions.BuildTrainAction;
 import jmri.jmrit.operations.automation.actions.BuildTrainIfSelectedAction;
 import jmri.jmrit.operations.automation.actions.DeselectTrainAction;
@@ -40,8 +40,8 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.schedules.TrainSchedule;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -131,14 +131,6 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
             return getAction().getCode();
         }
         return ActionCodes.NO_ACTION;
-    }
-    
-    public Action getActionByCode(int code) {
-        for (Action action : getActionList()) {
-            if (action.getCode() == code)
-                return action;
-        }
-        return new NoAction(); // default if code not found
     }
 
     public void doAction() {
@@ -377,7 +369,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
      * @param item The item to copy.
      */
     public void copyItem(AutomationItem item) {
-        setAction(item.getActionByCode(item.getActionCode())); // must create a new action for each item
+        setAction(getActionByCode(item.getActionCode())); // must create a new action for each item
         setAutomationToRun(item.getAutomationToRun());
         setGotoAutomationItem(item.getGotoAutomationItem()); //needs an adjustment to work properly
         setTrain(item.getTrain()); // must set train before route location
@@ -388,13 +380,21 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         setMessageFail(item.getMessageFail());
         setHaltFailureEnabled(item.isHaltFailureEnabled());
     }
+    
+    public static Action getActionByCode(int code) {
+        for (Action action : getActionList()) {
+            if (action.getCode() == code)
+                return action;
+        }
+        return new NoAction(); // default if code not found
+    }
 
     /**
      * Gets a list of all known automation actions
      * 
      * @return list of automation actions
      */
-    public List<Action> getActionList() {
+    public static List<Action> getActionList() {
         List<Action> list = new ArrayList<>();
         list.add(new NoAction());
         list.add(new BuildTrainAction());
@@ -408,8 +408,8 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         list.add(new IsTrainEnRouteAction());
         list.add(new WaitTrainAction());
         list.add(new WaitTrainTerminatedAction());
-        list.add(new ActivateTimetableAction());
-        list.add(new ApplyTimetableAction());
+        list.add(new ActivateTrainScheduleAction());
+        list.add(new ApplyTrainScheduleAction());
         list.add(new SelectTrainAction());
         list.add(new DeselectTrainAction());
         list.add(new PrintSwitchListAction());
@@ -429,7 +429,7 @@ public class AutomationItem implements java.beans.PropertyChangeListener {
         return list;
     }
 
-    public JComboBox<Action> getActionComboBox() {
+    public static JComboBox<Action> getActionComboBox() {
         JComboBox<Action> box = new JComboBox<>();
         for (Action action : getActionList())
             box.addItem(action);

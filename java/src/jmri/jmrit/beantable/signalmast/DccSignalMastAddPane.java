@@ -314,10 +314,9 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
 
     @Nonnull JComboBox<String> copyFromMastSelection() {
         JComboBox<String> mastSelect = new JComboBox<>();
-        List<String> names = InstanceManager.getDefault(jmri.SignalMastManager.class).getSystemNameList();
-        for (String name : names) {
-            if ((InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(name) instanceof DccSignalMast)){
-                mastSelect.addItem(InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(name).getDisplayName());
+        for (SignalMast mast : InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBeanSet()) {
+            if (mast instanceof DccSignalMast){
+                mastSelect.addItem(mast.getDisplayName());
             }
         }
         if (mastSelect.getItemCount() == 0) {

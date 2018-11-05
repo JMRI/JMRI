@@ -62,7 +62,11 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 <!-- Index through manufacturers -->
 <xsl:template match="decoderIndex-config/decoderIndex/mfgList/manufacturer">
 <xsl:if test="not( @mfg = 'NMRA' )" >
-<h3><xsl:value-of select="@mfg"/> CV8=<xsl:value-of select="@mfgID"/></h3>
+    <xsl:element name="a">
+        <xsl:attribute name="name"><xsl:value-of select="@mfgID"/></xsl:attribute>
+        <xsl:attribute name="id"><xsl:value-of select="@mfgID"/></xsl:attribute>
+    </xsl:element>
+    <h3><xsl:value-of select="@mfg"/> CV8=<xsl:value-of select="@mfgID"/></h3>
         <xsl:call-template name="familyTable">
                 <xsl:with-param name="mfgname" select="@mfg"/>
         </xsl:call-template>

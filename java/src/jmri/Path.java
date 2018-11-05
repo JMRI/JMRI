@@ -257,16 +257,11 @@ public class Path {
 
     /**
      * Set path length.
-     *
+     * Length may override the block length default
      * @param l length in millimeters
      */
     public void setLength(float l) {
         _length = l;
-        if (_block != null) {
-            if (l > _block.getLengthMm()) {
-                _length = _block.getLengthMm();
-            }
-        }
     }
 
     /**

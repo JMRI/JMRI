@@ -18,8 +18,6 @@ import org.slf4j.LoggerFactory;
  */
 public class OlcbThrottle extends AbstractThrottle {
         
-    private OlcbInterface iface = null; 
-
     /**
      * Constructor
      * @param address Dcc loco address

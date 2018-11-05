@@ -899,10 +899,7 @@
         <label>Track Voltage Reference</label>
         <comment>160=16v track volts</comment>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable CV="105" default="0" item="User Id #1">
         <decVal/>
         <label>User Identification #1</label>

@@ -22,6 +22,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.ColorUtil;
 import org.jdom2.Attribute;
@@ -55,8 +56,6 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     private String _rowColorTrainEnRoute = NONE; // row color when train is en route
     private String _rowColorTerminated = NONE; // row color when train is terminated
 
-    private String _trainScheduleActiveId = NONE;
-
     // Scripts
     protected List<String> _startUpScripts = new ArrayList<>(); // list of script pathnames to run at start up
     protected List<String> _shutDownScripts = new ArrayList<>(); // list of script pathnames to run at shut down
@@ -67,7 +66,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     public static final String OPEN_FILE_CHANGED_PROPERTY = "TrainsOpenFile"; // NOI18N
     public static final String RUN_FILE_CHANGED_PROPERTY = "TrainsRunFile"; // NOI18N
     public static final String TRAIN_ACTION_CHANGED_PROPERTY = "TrainsAction"; // NOI18N
-    public static final String ACTIVE_TRAIN_SCHEDULE_ID = "ActiveTrainScheduleId"; // NOI18N
+//    public static final String ACTIVE_TRAIN_SCHEDULE_ID = "ActiveTrainScheduleId"; // NOI18N
     public static final String ROW_COLOR_NAME_CHANGED_PROPERTY = "TrainsRowColorChange"; // NOI18N
     public static final String TRAINS_BUILT_CHANGED_PROPERTY = "TrainsBuiltChange"; // NOI18N
 
@@ -187,16 +186,14 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
      *
      * @param id Selected schedule id
      */
+    @Deprecated
     public void setTrainSecheduleActiveId(String id) {
-        String old = _trainScheduleActiveId;
-        _trainScheduleActiveId = id;
-        if (!old.equals(id)) {
-            setDirtyAndFirePropertyChange(ACTIVE_TRAIN_SCHEDULE_ID, old, id);
-        }
+        InstanceManager.getDefault(TrainScheduleManager.class).setTrainScheduleActiveId(id);
     }
 
+    @Deprecated
     public String getTrainScheduleActiveId() {
-        return _trainScheduleActiveId;
+        return InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId();
     }
 
     /**
@@ -275,6 +272,24 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
                 log.error("Problem with script: {}", scriptPathName);
             }
         }
+    }
+    
+    public boolean hasRoadRestrictions() {
+        for (Train train : getList()) {
+            if (!train.getRoadOption().equals(Train.ALL_ROADS)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean hasLoadRestrictions() {
+        for (Train train : getList()) {
+            if (!train.getLoadOption().equals(Train.ALL_LOADS)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void dispose() {
@@ -1018,10 +1033,11 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
                 }
             }
 
-            e = options.getChild(Xml.TRAIN_SCHEDULE_OPTIONS);
+            // moved to train schedule manager
+            e = options.getChild(jmri.jmrit.operations.trains.schedules.Xml.TRAIN_SCHEDULE_OPTIONS);
             if (e != null) {
-                if ((a = e.getAttribute(Xml.ACTIVE_ID)) != null) {
-                    _trainScheduleActiveId = a.getValue();
+                if ((a = e.getAttribute(jmri.jmrit.operations.trains.schedules.Xml.ACTIVE_ID)) != null) {
+                    InstanceManager.getDefault(TrainScheduleManager.class).setTrainScheduleActiveId(a.getValue());
                 }
             }
             // check for scripts
@@ -1074,11 +1090,6 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
         e.setAttribute(Xml.ROW_COLOR_BUILT, getRowColorNameForBuilt());
         e.setAttribute(Xml.ROW_COLOR_TRAIN_EN_ROUTE, getRowColorNameForTrainEnRoute());
         e.setAttribute(Xml.ROW_COLOR_TERMINATED, getRowColorNameForTerminated());
-        options.addContent(e);
-
-        // now save train schedule options
-        e = new Element(Xml.TRAIN_SCHEDULE_OPTIONS);
-        e.setAttribute(Xml.ACTIVE_ID, getTrainScheduleActiveId());
         options.addContent(e);
 
         if (getStartUpScripts().size() > 0 || getShutDownScripts().size() > 0) {

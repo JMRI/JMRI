@@ -3,6 +3,13 @@ package apps.DecoderPro;
 import java.awt.GraphicsEnvironment;
 import java.io.*;
 
+import jmri.InstanceManager;
+import jmri.managers.DefaultShutDownManager;
+import jmri.util.JUnitUtil;
+import jmri.util.JmriJFrame;
+import jmri.util.JUnitAppender;
+import jmri.util.junit.rules.RetryRule;
+
 import org.apache.commons.io.*;
 import org.junit.After;
 import org.junit.Assume;
@@ -12,16 +19,9 @@ import org.junit.Test;
 import org.junit.Rule;
 import org.junit.rules.TemporaryFolder;
 import org.junit.rules.Timeout;
-import jmri.InstanceManager;
-import jmri.managers.DefaultShutDownManager;
-
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
-import jmri.util.JUnitAppender;
-import jmri.util.junit.rules.RetryRule;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 /**
  * This is more of an acceptance test than a unit test. It confirms that the entire
@@ -39,10 +39,10 @@ public class DecoderProTest {
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Rule
-    public Timeout globalTimeout = Timeout.seconds(TESTMAXTIME);
+    public RetryRule retryRule = new RetryRule(2); // allow 1 retry
 
     @Rule
-    public RetryRule retryRule = new RetryRule(1); // allow 1 retry
+    public Timeout globalTimeout = Timeout.seconds(TESTMAXTIME);
 
     @Test
     public void testLaunchLocoNet() throws IOException {

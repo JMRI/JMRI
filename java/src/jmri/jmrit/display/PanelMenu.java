@@ -67,7 +67,7 @@ public class PanelMenu extends JMenu {
     private final ArrayList<Editor> panelsList = new ArrayList<>();
 
     /**
-     * Provide method to reference this panel menu
+     * Provide method to reference this panel menu.
      *
      * @return get the single instance of this menu
      * @deprecated since 4.9.3; use
@@ -90,7 +90,7 @@ public class PanelMenu extends JMenu {
     }
 
     /**
-     * Utility routine for getting the number of panels in the Panels sub menu
+     * Utility routine for getting the number of panels in the Panels sub menu.
      *
      * @return the number of panels
      */
@@ -99,7 +99,7 @@ public class PanelMenu extends JMenu {
     }
 
     /**
-     * Delete a panel from Show Panel sub menu
+     * Delete a panel from Show Panel sub menu.
      *
      * @param panel the panel to remove from the menu
      */
@@ -128,7 +128,7 @@ public class PanelMenu extends JMenu {
     }
 
     /**
-     * Add an Editor panel to Show Panels sub menu
+     * Add an Editor panel to Show Panels sub menu.
      *
      * @param panel the panel to add to the menu
      */
@@ -154,7 +154,7 @@ public class PanelMenu extends JMenu {
     }
 
     /**
-     * Update an Editor type panel in Show Panels sub menu
+     * Update an Editor type panel in Show Panels sub menu.
      *
      * @param panel the panel to update
      */
@@ -185,7 +185,7 @@ public class PanelMenu extends JMenu {
     }
 
     /**
-     * Rename an Editor type panel in Show Panels sub menu
+     * Rename an Editor type panel in Show Panels sub menu.
      *
      * @param panel the panel to rename
      */
@@ -205,7 +205,7 @@ public class PanelMenu extends JMenu {
 
     /**
      * Determine if named panel already exists returns true if named panel
-     * already loaded
+     * already loaded.
      *
      * @param name the name to test
      * @return true if name is in use; false otherwise
@@ -268,4 +268,5 @@ public class PanelMenu extends JMenu {
     }
 
     private final static Logger log = LoggerFactory.getLogger(PanelMenu.class);
+
 }

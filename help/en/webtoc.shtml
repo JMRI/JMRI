@@ -1052,7 +1052,7 @@
 
    
 <li>
-<a href="html/tools/scripting/FAQ.shtml">Frequently Asked Questions </a>
+<a href="">Frequently Asked Questions </a>
 <ul></ul>
 </li>
 
@@ -1231,6 +1231,12 @@
   
 </ul>
 </li>
+  
+<li>
+<a href="html/tools/TimeTable.shtml">Timetable </a>
+<ul></ul>
+</li>
+
   
 <li>
 <a href="html/tools/tracker/index.shtml">Tracker (Blocks) </a>
